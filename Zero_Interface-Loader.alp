@@ -7,9 +7,9 @@
 <AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
-	<Name><![CDATA[Zero_Interface]]></Name>
+	<Name><![CDATA[Zero_Interface-Loader]]></Name>
 	<EngineVersion>6</EngineVersion>
-	<JavaPackageName><![CDATA[zerointerface]]></JavaPackageName>
+	<JavaPackageName><![CDATA[zerointerfaceloader]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Hour]]></ModelTimeUnit>
 	<OptionLists>
 		<OptionList>
@@ -5473,12 +5473,12 @@ traceln("DID NOT OVERRIDE THE PROJECT SPECIFIC STYLING!");]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[UI_company]]></ClassName>
 					</ActiveObjectClass>
 					<GenericParameterSubstitute>
 						<GenericParameterSubstituteReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[UI_company]]></ClassName>
 							<ItemName><![CDATA[1708522361868]]></ItemName>
 						</GenericParameterSubstituteReference>
@@ -5549,12 +5549,12 @@ traceln("DID NOT OVERRIDE THE PROJECT SPECIFIC STYLING!");]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[UI_Battery]]></ClassName>
 					</ActiveObjectClass>
 					<GenericParameterSubstitute>
 						<GenericParameterSubstituteReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[UI_Battery]]></ClassName>
 							<ItemName><![CDATA[1709049456141]]></ItemName>
 						</GenericParameterSubstituteReference>
@@ -5683,12 +5683,12 @@ traceln("DID NOT OVERRIDE THE PROJECT SPECIFIC STYLING!");]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[UI_Hydrogen]]></ClassName>
 					</ActiveObjectClass>
 					<GenericParameterSubstitute>
 						<GenericParameterSubstituteReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[UI_Hydrogen]]></ClassName>
 							<ItemName><![CDATA[1717506309785]]></ItemName>
 						</GenericParameterSubstituteReference>
@@ -5751,12 +5751,12 @@ traceln("DID NOT OVERRIDE THE PROJECT SPECIFIC STYLING!");]]></Body>
 					<ShowLabel>true</ShowLabel>
 					<PresentationId>1722252542596</PresentationId>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[UI_Tabs]]></ClassName>
 					</ActiveObjectClass>
 					<GenericParameterSubstitute>
 						<GenericParameterSubstituteReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[UI_Tabs]]></ClassName>
 							<ItemName><![CDATA[1722245292191]]></ItemName>
 						</GenericParameterSubstituteReference>
@@ -5943,7 +5943,7 @@ traceln("DID NOT OVERRIDE THE PROJECT SPECIFIC STYLING!");]]></Body>
 					<Rotation>0.0</Rotation>
 					<ImageFiles>
 						<ImageResourceReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[logo_zenmo.png]]></ClassName>
 						</ImageResourceReference>
 					</ImageFiles>
@@ -6088,11 +6088,11 @@ traceln("DID NOT OVERRIDE THE PROJECT SPECIFIC STYLING!");]]></Body>
 					<Rotation>0.0</Rotation>
 					<ImageFiles>
 						<ImageResourceReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[logo_TUe_red.png]]></ClassName>
 						</ImageResourceReference>
 						<ImageResourceReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[logo_TUe_white.png]]></ClassName>
 						</ImageResourceReference>
 					</ImageFiles>
@@ -6361,7 +6361,7 @@ traceln("gr_compareResultsButton is not functional!");]]></OnClickCode>
 					<Rotation>270.0</Rotation>
 					<ImageFiles>
 						<ImageResourceReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[icon_arrow.png]]></ClassName>
 						</ImageResourceReference>
 					</ImageFiles>
@@ -9138,7 +9138,7 @@ b_resultsUpToDate = true;
 					<Rotation>0.0</Rotation>
 					<ImageFiles>
 						<ImageResourceReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[icon_greater_than.png]]></ClassName>
 						</ImageResourceReference>
 					</ImageFiles>
@@ -9203,7 +9203,7 @@ b_resultsUpToDate = true;
 					<Rotation>0.0</Rotation>
 					<ImageFiles>
 						<ImageResourceReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[icon_loading.gif]]></ClassName>
 						</ImageResourceReference>
 					</ImageFiles>
@@ -10052,7 +10052,7 @@ b_resultsUpToDate = true;
 					<Rotation>0.0</Rotation>
 					<ImageFiles>
 						<ImageResourceReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[icon_i.png]]></ClassName>
 						</ImageResourceReference>
 					</ImageFiles>
@@ -13245,7 +13245,7 @@ sl_GCCapacityCompany.setValue(v_defaultGCCapacitySlider, false);]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[Zero_Interface]]></ClassName>
 					</ActiveObjectClass>
 				</ContainerLink>
@@ -15204,7 +15204,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 					<Rotation>0.0</Rotation>
 					<ImageFiles>
 						<ImageResourceReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[noun-electricity-3408805.png]]></ClassName>
 						</ImageResourceReference>
 					</ImageFiles>
@@ -15265,7 +15265,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 					<Rotation>0.0</Rotation>
 					<ImageFiles>
 						<ImageResourceReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[noun-fire-2429630.png]]></ClassName>
 						</ImageResourceReference>
 					</ImageFiles>
@@ -15328,7 +15328,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 					<Rotation>0.0</Rotation>
 					<ImageFiles>
 						<ImageResourceReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[noun-car-1777731.png]]></ClassName>
 						</ImageResourceReference>
 					</ImageFiles>
@@ -15990,7 +15990,7 @@ zero_Interface.b_resultsUpToDate = true;
 					<Rotation>0.0</Rotation>
 					<ImageFiles>
 						<ImageResourceReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[icon_greater_than.png]]></ClassName>
 						</ImageResourceReference>
 					</ImageFiles>
@@ -16097,7 +16097,7 @@ zero_Interface.b_resultsUpToDate = true;
 					<Rotation>0.0</Rotation>
 					<ImageFiles>
 						<ImageResourceReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[icon_loading.gif]]></ClassName>
 						</ImageResourceReference>
 					</ImageFiles>
@@ -16735,7 +16735,7 @@ rb_scenariosPrivateUI.setValue(0, false);]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[Zero_Interface]]></ClassName>
 					</ActiveObjectClass>
 				</ContainerLink>
@@ -18417,7 +18417,7 @@ rb_scenariosPrivateUI.setValue(0, false);]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[Zero_Interface]]></ClassName>
 					</ActiveObjectClass>
 				</ContainerLink>
@@ -19586,7 +19586,7 @@ f_showCorrectTab();
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[Zero_Interface]]></ClassName>
 					</ActiveObjectClass>
 				</ContainerLink>
@@ -19602,12 +19602,12 @@ f_showCorrectTab();
 					<ShowLabel>true</ShowLabel>
 					<PresentationId>1722246229996</PresentationId>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[TabMobility]]></ClassName>
 					</ActiveObjectClass>
 					<GenericParameterSubstitute>
 						<GenericParameterSubstituteReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[TabMobility]]></ClassName>
 							<ItemName><![CDATA[1722245324901]]></ItemName>
 						</GenericParameterSubstituteReference>
@@ -19664,12 +19664,12 @@ f_showCorrectTab();
 					<ShowLabel>true</ShowLabel>
 					<PresentationId>1722249987797</PresentationId>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[tabElectricity]]></ClassName>
 					</ActiveObjectClass>
 					<GenericParameterSubstitute>
 						<GenericParameterSubstituteReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[tabElectricity]]></ClassName>
 							<ItemName><![CDATA[1722247653567]]></ItemName>
 						</GenericParameterSubstituteReference>
@@ -19735,12 +19735,12 @@ f_showCorrectTab();
 					<ShowLabel>true</ShowLabel>
 					<PresentationId>1722255804160</PresentationId>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[tabHeating]]></ClassName>
 					</ActiveObjectClass>
 					<GenericParameterSubstitute>
 						<GenericParameterSubstituteReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[tabHeating]]></ClassName>
 							<ItemName><![CDATA[1722253108631]]></ItemName>
 						</GenericParameterSubstituteReference>
@@ -19797,12 +19797,12 @@ f_showCorrectTab();
 					<ShowLabel>true</ShowLabel>
 					<PresentationId>1722255810189</PresentationId>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[tabEHub]]></ClassName>
 					</ActiveObjectClass>
 					<GenericParameterSubstitute>
 						<GenericParameterSubstituteReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[tabEHub]]></ClassName>
 							<ItemName><![CDATA[1722253463901]]></ItemName>
 						</GenericParameterSubstituteReference>
@@ -19952,7 +19952,7 @@ f_showCorrectTab();]]></OnClickCode>
 					<Rotation>0.0</Rotation>
 					<ImageFiles>
 						<ImageResourceReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[noun-electricity-3408805.png]]></ClassName>
 						</ImageResourceReference>
 					</ImageFiles>
@@ -20015,7 +20015,7 @@ f_showCorrectTab();]]></OnClickCode>
 					<Rotation>0.0</Rotation>
 					<ImageFiles>
 						<ImageResourceReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[noun-fire-2429630.png]]></ClassName>
 						</ImageResourceReference>
 					</ImageFiles>
@@ -20078,7 +20078,7 @@ f_showCorrectTab();]]></OnClickCode>
 					<Rotation>0.0</Rotation>
 					<ImageFiles>
 						<ImageResourceReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[noun-car-1777731.png]]></ClassName>
 						</ImageResourceReference>
 					</ImageFiles>
@@ -21041,7 +21041,7 @@ zero_Interface.f_resetSettings();]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[UI_Tabs]]></ClassName>
 					</ActiveObjectClass>
 				</ContainerLink>
@@ -21054,7 +21054,7 @@ zero_Interface.f_resetSettings();]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[Zero_Interface]]></ClassName>
 					</ActiveObjectClass>
 				</ContainerLink>
@@ -22670,7 +22670,7 @@ v_currentNbChargers ++;]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[UI_Tabs]]></ClassName>
 					</ActiveObjectClass>
 				</ContainerLink>
@@ -22683,7 +22683,7 @@ v_currentNbChargers ++;]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[Zero_Interface]]></ClassName>
 					</ActiveObjectClass>
 				</ContainerLink>
@@ -24831,7 +24831,7 @@ v_heatDemandReduction_pct = newHeatDemandReduction_pct;]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[UI_Tabs]]></ClassName>
 					</ActiveObjectClass>
 				</ContainerLink>
@@ -24844,7 +24844,7 @@ v_heatDemandReduction_pct = newHeatDemandReduction_pct;]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[Zero_Interface]]></ClassName>
 					</ActiveObjectClass>
 				</ContainerLink>
@@ -27225,7 +27225,7 @@ else {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[UI_Tabs]]></ClassName>
 					</ActiveObjectClass>
 				</ContainerLink>
@@ -27238,7 +27238,7 @@ else {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[Zero_Interface]]></ClassName>
 					</ActiveObjectClass>
 				</ContainerLink>
@@ -29787,7 +29787,7 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[Loader]]></ClassName>
 					</ActiveObjectClass>
 				</ContainerLink>
@@ -34636,7 +34636,7 @@ f_createGISCables();]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ResourceReference>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[data_Generic/AlbatrossProcessedVehicleTrips.xlsx]]></ClassName>
 					</ResourceReference>
 					<SaveInSnapshot>false</SaveInSnapshot>
@@ -34652,7 +34652,7 @@ f_createGISCables();]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ResourceReference>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[data_Generic/inputTruckTripPatterns.xlsx]]></ClassName>
 					</ResourceReference>
 					<SaveInSnapshot>false</SaveInSnapshot>
@@ -34668,7 +34668,7 @@ f_createGISCables();]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ResourceReference>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[data_Generic/inputECookerPatterns.xlsx]]></ClassName>
 					</ResourceReference>
 					<SaveInSnapshot>false</SaveInSnapshot>
@@ -34685,7 +34685,7 @@ f_createGISCables();]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ResourceReference>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[GridNode Timeseries Output.xlsx]]></ClassName>
 					</ResourceReference>
 					<SaveInSnapshot>false</SaveInSnapshot>
@@ -34847,12 +34847,12 @@ f_createGISCables();]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
-						<PackageName><![CDATA[zerointerface]]></PackageName>
+						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 						<ClassName><![CDATA[AVGC_data]]></ClassName>
 					</ActiveObjectClass>
 					<GenericParameterSubstitute>
 						<GenericParameterSubstituteReference>
-							<PackageName><![CDATA[zerointerface]]></PackageName>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 							<ClassName><![CDATA[AVGC_data]]></ClassName>
 							<ItemName><![CDATA[1726584205523]]></ItemName>
 						</GenericParameterSubstituteReference>
@@ -36875,7 +36875,7 @@ public class Windfarm_data {
     </RequiredLibraryReference>
 	<ClassPathEntry>
 		<ResourceReference>
-			<PackageName><![CDATA[zerointerface]]></PackageName>
+			<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 			<ClassName><![CDATA[vallum-main-265-4c146ef-all.jar]]></ClassName>
 		</ResourceReference>
 		<Imported>true</Imported>
@@ -36883,7 +36883,7 @@ public class Windfarm_data {
 	</ClassPathEntry>
 	<ClassPathEntry>
 		<ResourceReference>
-			<PackageName><![CDATA[zerointerface]]></PackageName>
+			<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
 			<ClassName><![CDATA[lombok.jar]]></ClassName>
 		</ResourceReference>
 		<Imported>true</Imported>
