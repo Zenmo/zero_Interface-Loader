@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_Interface-Loader]]></Name>
@@ -21857,6 +21857,14 @@ f_setElectricVans( sl_electricVans_pct.getValue() );]]></ActionCode>
 		<ActiveObjectClass>
 			<Id>1722247653561</Id>
 			<Name><![CDATA[tabElectricity]]></Name>
+			<AdditionalClassCode><![CDATA[public ShapeSlider getWindSlider(){
+	return sl_largeScaleWind_MW;
+}
+
+public ShapeSlider getCompanyPVSlider(){
+	return sl_rooftopPVCompanies_pct;
+}
+]]></AdditionalClassCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1722247653567</Id>
@@ -23641,7 +23649,7 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
 						<Orientation>HORIZONTAL</Orientation>
-						<MinValue><![CDATA[10]]></MinValue>
+						<MinValue><![CDATA[0]]></MinValue>
 						<MaxValue><![CDATA[100]]></MaxValue>
 						<Step><![CDATA[1]]></Step>
 						<LinkTo>false</LinkTo>
@@ -31421,20 +31429,22 @@ for (Solarfarm_data dataSolarfarm : c_Solarfarm_data) { // MOET NOG CHECK OF ZON
 
 	}
 	
-	//Create GIS object for the solar park
-	GIS_Object area = f_createGISObject( dataSolarfarm.gc_name(), dataSolarfarm.latitude(), dataSolarfarm.longitude(), dataSolarfarm.polygon() );
-	
-	//Set area type
-	area.p_GISObjectType = OL_GISObjectType.SOLARFARM;
-	
-	//Add to collections
-	area.c_containedGridConnections.add(solarpark);
-	solarpark.c_connectedGISObjects.add(area);
-	
-	//Style building
-	area.set_p_defaultFillColor( zero_Interface.v_solarParkColor );
-	area.set_p_defaultLineColor( zero_Interface.v_solarParkLineColor );
-	zero_Interface.f_styleAreas(area);
+	if (dataSolarfarm.polygon() != null) {
+		//Create GIS object for the solar park
+		GIS_Object area = f_createGISObject( dataSolarfarm.gc_name(), dataSolarfarm.latitude(), dataSolarfarm.longitude(), dataSolarfarm.polygon() );
+		
+		//Set area type
+		area.p_GISObjectType = OL_GISObjectType.SOLARFARM;
+		
+		//Add to collections
+		area.c_containedGridConnections.add(solarpark);
+		solarpark.c_connectedGISObjects.add(area);
+		
+		//Style building
+		area.set_p_defaultFillColor( zero_Interface.v_solarParkColor );
+		area.set_p_defaultLineColor( zero_Interface.v_solarParkLineColor );
+		zero_Interface.f_styleAreas(area);
+	}
 }
 ]]></Body>
 				</Function>
@@ -31484,22 +31494,22 @@ for (Solarfarm_data dataSolarfarm : c_Solarfarm_data) { // MOET NOG CHECK OF ZON
 	//Get initial state
 	gridbattery.v_isActive = dataBattery.initially_active();
 
-
-	//Create gis object for the battery
-	GIS_Object area =  f_createGISObject( dataBattery.gc_name(), dataBattery.latitude(), dataBattery.longitude(), dataBattery.polygon() );
-	
-	//Set area type
-	area.p_GISObjectType = OL_GISObjectType.BATTERY;
-	
-	//Add to collections
-	gridbattery.c_connectedGISObjects.add(area);
-	area.c_containedGridConnections.add(gridbattery);
+	if (dataBattery.polygon() != null) {
+		//Create gis object for the battery
+		GIS_Object area =  f_createGISObject( dataBattery.gc_name(), dataBattery.latitude(), dataBattery.longitude(), dataBattery.polygon() );
 		
-	//Style building
-	area.set_p_defaultFillColor( zero_Interface.v_batteryColor );
-	area.set_p_defaultLineColor( zero_Interface.v_batteryLineColor );
-	zero_Interface.f_styleAreas(area);
-	
+		//Set area type
+		area.p_GISObjectType = OL_GISObjectType.BATTERY;
+		
+		//Add to collections
+		gridbattery.c_connectedGISObjects.add(area);
+		area.c_containedGridConnections.add(gridbattery);
+			
+		//Style building
+		area.set_p_defaultFillColor( zero_Interface.v_batteryColor );
+		area.set_p_defaultLineColor( zero_Interface.v_batteryLineColor );
+		zero_Interface.f_styleAreas(area);
+	}
 	//Create energy asset for the battery
 	f_addStorage(gridbattery, dataBattery.capacity_electric_kw(), dataBattery.storage_capacity_kwh(), OL_EnergyAssetType.STORAGE_ELECTRIC );	
 	
@@ -31564,22 +31574,24 @@ for (Electrolyser_data dataElectrolyser : c_Electrolyser_data) {
 	}
 	
 	H2Electrolyser.set_p_owner( owner );
-		
-	//Create GIS object for the electrolyser
-	GIS_Object area = f_createGISObject( dataElectrolyser.gc_name(), dataElectrolyser.latitude(), dataElectrolyser.longitude(), dataElectrolyser.polygon() );
-	
-	//Set area type
-	area.p_GISObjectType = OL_GISObjectType.ELECTROLYSER;
-	
-	//Add to collections
-	area.c_containedGridConnections.add(H2Electrolyser);
-	H2Electrolyser.c_connectedGISObjects.add(area);
 
+	if (dataElectrolyser.polygon() != null) {			
+		//Create GIS object for the electrolyser
+		GIS_Object area = f_createGISObject( dataElectrolyser.gc_name(), dataElectrolyser.latitude(), dataElectrolyser.longitude(), dataElectrolyser.polygon() );
+		
+		//Set area type
+		area.p_GISObjectType = OL_GISObjectType.ELECTROLYSER;
+		
+		//Add to collections
+		area.c_containedGridConnections.add(H2Electrolyser);
+		H2Electrolyser.c_connectedGISObjects.add(area);
 	
-	//Style building
-	area.set_p_defaultFillColor( zero_Interface.v_electrolyserColor );
-	area.set_p_defaultLineColor( zero_Interface.v_electrolyserLineColor );
-	zero_Interface.f_styleAreas(area);
+		
+		//Style building
+		area.set_p_defaultFillColor( zero_Interface.v_electrolyserColor );
+		area.set_p_defaultLineColor( zero_Interface.v_electrolyserLineColor );
+		zero_Interface.f_styleAreas(area);
+	}
 }]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
@@ -31644,20 +31656,22 @@ for (Windfarm_data dataWindfarm : c_Windfarm_data) {
 	}
 	
 	//Create GIS object for the windfarm
-	GIS_Object area = f_createGISObject( dataWindfarm.gc_name(), dataWindfarm.latitude(), dataWindfarm.longitude(), dataWindfarm.polygon() );
+	if (dataWindfarm.polygon() != null) {
+		GIS_Object area = f_createGISObject( dataWindfarm.gc_name(), dataWindfarm.latitude(), dataWindfarm.longitude(), dataWindfarm.polygon() );
 	
-	//Set area type
-	area.p_GISObjectType = OL_GISObjectType.WINDFARM;
-	
-	//Add to collections
-	area.c_containedGridConnections.add(windfarm);
-	windfarm.c_connectedGISObjects.add(area);
-	
-	//Style building
-	area.set_p_defaultFillColor( zero_Interface.v_windFarmColor );
-	area.set_p_defaultLineColor( zero_Interface.v_windFarmLineColor );
-	area.set_p_defaultLineWidth( 3.0 );
-	zero_Interface.f_styleAreas(area);
+		//Set area type
+		area.p_GISObjectType = OL_GISObjectType.WINDFARM;
+		
+		//Add to collections
+		area.c_containedGridConnections.add(windfarm);
+		windfarm.c_connectedGISObjects.add(area);
+		
+		//Style building
+		area.set_p_defaultFillColor( zero_Interface.v_windFarmColor );
+		area.set_p_defaultLineColor( zero_Interface.v_windFarmLineColor );
+		area.set_p_defaultLineWidth( 3.0 );
+		zero_Interface.f_styleAreas(area);
+	}
 }]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
@@ -33890,45 +33904,49 @@ for (Chargingstation_data dataChargingStation : c_Chargingstation_data){
 		//Set vehicle type
 		chargingStation.p_chargingVehicleType = dataChargingStation.vehicle_type();		
 		
-		//Create EA GIS object (building) for the charging centre
-		GIS_Object area = f_createGISObject( dataChargingStation.gc_name(), dataChargingStation.latitude(), dataChargingStation.longitude(), dataChargingStation.polygon() );
-		
-		//Set gis object type
-		area.p_GISObjectType = OL_GISObjectType.CHARGER;
-		
-		//Add to collections
-		area.c_containedGridConnections.add(chargingStation);
-		chargingStation.c_connectedGISObjects.add(area);
-		
-		//Style building
-		area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
-		area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
-		zero_Interface.f_styleAreas(area);
+		if (dataChargingStation.polygon() != null) {
+			//Create EA GIS object (building) for the charging centre
+			GIS_Object area = f_createGISObject( dataChargingStation.gc_name(), dataChargingStation.latitude(), dataChargingStation.longitude(), dataChargingStation.polygon() );
+			
+			//Set gis object type
+			area.p_GISObjectType = OL_GISObjectType.CHARGER;
+			
+			//Add to collections
+			area.c_containedGridConnections.add(chargingStation);
+			chargingStation.c_connectedGISObjects.add(area);
+			
+			//Style building
+			area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
+			area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
+			zero_Interface.f_styleAreas(area);
+		}
 	
 	}
 	else {
-		//Create GIS object for the chargingStation			
-		GIS_Object area = energyModel.add_pop_GIS_Objects();
-		
-		//area.p_id = name;
-
-		//position and coordinates
-		area.p_latitude = dataChargingStation.latitude();
-		area.p_longitude = dataChargingStation.longitude();
-		area.setLatLon(area.p_latitude, area.p_longitude);		
-
-		//area.p_GISRegion_coords = polygon;
-		
-		//Create gisregion
-		area.gisRegion = f_createGISRegionChargingStation( area.p_latitude, area.p_longitude );	
-		
-		chargingStation.c_connectedGISObjects.add(area);
-		area.c_containedGridConnections.add(chargingStation);
-		//owner.c_ownedBuildings.add(area);
-		
-		area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
-		area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
-		zero_Interface.f_styleAreas(area);
+		if (dataChargingStation.polygon() != null) {
+			//Create GIS object for the chargingStation			
+			GIS_Object area = energyModel.add_pop_GIS_Objects();
+			
+			//area.p_id = name;
+	
+			//position and coordinates
+			area.p_latitude = dataChargingStation.latitude();
+			area.p_longitude = dataChargingStation.longitude();
+			area.setLatLon(area.p_latitude, area.p_longitude);		
+	
+			//area.p_GISRegion_coords = polygon;
+			
+			//Create gisregion
+			area.gisRegion = f_createGISRegionChargingStation( area.p_latitude, area.p_longitude );	
+			
+			chargingStation.c_connectedGISObjects.add(area);
+			area.c_containedGridConnections.add(chargingStation);
+			//owner.c_ownedBuildings.add(area);
+			
+			area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
+			area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
+			zero_Interface.f_styleAreas(area);
+		}
 	}
 }
 
