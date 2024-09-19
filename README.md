@@ -13,9 +13,9 @@ This means that this repository does not have to and should not contain and proj
 - No images (other than the basic logos and interface images)
 
 
-### Structure
+## Structure
 
-## Loader
+### Loader
 The basic purpose of the loader is to configure the engine and interface.
 
 The loader contains collections that should be filled by (lombok) packages created by the project specific child loader.
@@ -25,7 +25,7 @@ If you want to deviate from this structure, you can override and add functions t
 
 
 
-## Interface
+### Interface
 The interface contains all the visual aspects of the model. This includes the GIS map, sliders, scenario buttons, legenda, etc.
 The resultsUI.alp is configured by and connected to the interface as well, which shows all the graphs and KPIs of the model.
 By overriding certain functions (f_projectSpecificSettings, f_projectSpecificStyling, etc.) in the project specific child interface, one can set variables, colors and other settings to whatever way they like.
