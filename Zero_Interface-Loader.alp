@@ -137,7 +137,7 @@ import java.io.IOException;
 //import java.util.Date;  
 import java.text.SimpleDateFormat;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import org.bouncycastle.crypto.StreamBlockCipher;
+//import org.bouncycastle.crypto.StreamBlockCipher;
 
 
 //Possibility to turn of traceln
@@ -9091,6 +9091,7 @@ new Thread( () -> {
 	//gr_simulateCostsScreen.setVisible(false);
 	//gr_scopeRadioButtons.setVisible(true);
 	f_updateUIresultsMainArea();
+	uI_Results.f_showCorrectChart();
 }).start();
 
 //gr_netbelastingDuurkrommes.setVisible(false);
@@ -30295,7 +30296,7 @@ import java.io.IOException;
 //import java.util.Date;  
 import java.text.SimpleDateFormat;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import org.bouncycastle.crypto.StreamBlockCipher;
+//import org.bouncycastle.crypto.StreamBlockCipher;
 
 
 //Possibility to turn of traceln
@@ -34317,6 +34318,8 @@ traceln(" ");
 if( settings.runHeadlessAtStartup() ){
 	energyModel.f_runRapidSimulation(); // Do a full year run to have KPIs right away!
 	zero_Interface.f_updateUIresultsMainArea();
+	zero_Interface.gr_simulateYearScreenSmall.setVisible(false);
+	zero_Interface.gr_loadIconSmall.setVisible(false);
 	if (energyModel.UtilityConnections.size() > 0) {
 		//zero_Interface.f_updateUIresultsGridConnection( zero_Interface.uI_Results.v_gridConnection, energyModel.UtilityConnections.get(0));
 	}
