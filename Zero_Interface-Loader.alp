@@ -33945,8 +33945,7 @@ for (int i=0; i < nb_points ; i++){
 
 //Create the region
 GISRegion gisregion = zero_Interface.f_createGISObject( GISCoords );
-traceln("TESTTEST");
-traceln(GISCoords);
+
 return gisregion;
 ]]></Body>
 				</Function>
