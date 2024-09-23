@@ -1676,21 +1676,6 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 
 				</Variable>
 				<Variable Class="CollectionVariable">
-					<Id>1713429834896</Id>
-					<Name><![CDATA[c_scenarioMap_Hydrogen]]></Name>
-					<X>-280</X><Y>240</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[LinkedHashMap]]></CollectionClass>
-						<ElementClass><![CDATA[GridConnection]]></ElementClass>
-						<ValueElementClass><![CDATA[J_scenario_Hydrogen]]></ValueElementClass>
-					</Properties>
-
-				</Variable>
-				<Variable Class="CollectionVariable">
 					<Id>1713874283959</Id>
 					<Name><![CDATA[c_scenarioMap_Current]]></Name>
 					<X>-280</X><Y>200</Y>
@@ -2624,7 +2609,6 @@ while (v_connectionOwnerIndexNr < c_COCompanies.size()){
 	for (int k = 0; k < companyUI.c_ownedGridConnections.size() ; k++){
 		companyUI.c_scenarioSettings_Current.add(c_scenarioMap_Current.get(companyUI.c_ownedGridConnections.get(k)));
 		companyUI.c_scenarioSettings_Future.add(c_scenarioMap_Future.get(companyUI.c_ownedGridConnections.get(k)));
-		companyUI.c_scenarioSettings_Hydrogen.add(c_scenarioMap_Hydrogen.get(companyUI.c_ownedGridConnections.get(k)));
 	}
 
 	//Initialize the companyUI
@@ -2772,12 +2756,41 @@ uI_Results.f_initialize();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1709716821856</Id>
 					<Name><![CDATA[f_updateUIresultsMainArea]]></Name>
-					<X>-650</X><Y>630</Y>
+					<X>-650</X><Y>650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[AreaCollection area = uI_Results.v_area;
+
+//Previous totals
+area.v_previousTotals.setPreviousTotalConsumedEnergy_MWh(area.v_annualTotalConsumedEnergy_MWh);
+area.v_previousTotals.setPreviousTotalProducedEnergy_MWh(area.v_annualTotalProducedEnergy_MWh);
+area.v_previousTotals.setPreviousSelfConsumedEnergy_MWh(area.v_annualSelfConsumedEnergy_MWh);
+area.v_previousTotals.setPreviousImportedEnergy_MWh(area.v_annualImportedEnergy_MWh);
+area.v_previousTotals.setPreviousExportedEnergy_MWh(area.v_annualExportedEnergy_MWh);
+area.v_previousTotals.setPreviousDistrictHeatingHeatDemand_MWh(area.v_annualDistrictHeatingHeatDemand_MWh);
+area.v_previousTotals.setPreviousHeatPumpHeatGeneration_MWh(area.v_annualHeatPumpHeatGeneration_MWh);
+area.v_previousTotals.setPreviousNaturalGasDemand_MWh(area.v_annualNaturalGasDemand_MWh);
+area.v_previousTotals.setPreviousPetroleumProductsDemand_MWh(area.v_annualPetroleumProductsDemand_MWh);
+area.v_previousTotals.setPreviousHydrogenDemand_MWh(area.v_annualHydrogenDemand_MWh);
+area.v_previousTotals.setPreviousHydrogenSupply_MWh(area.v_annualHydrogenSupply_MWh);
+area.v_previousTotals.setPreviousHeatDemand_MWh(area.v_annualHeatDemand_MWh);
+area.v_previousTotals.setPreviousSelfConsumedElectricity_MWh(area.v_annualSelfConsumedElectricity_MWh);
+area.v_previousTotals.setPreviousSelfProducedElectricity_MWh(area.v_annualSelfProducedElectricity_MWh);
+area.v_previousTotals.setPreviousElectricityImport_MWh(area.v_annualElectricityImport_MWh);
+area.v_previousTotals.setPreviousElectricityExport_MWh(area.v_annualElectricityExport_MWh);
+area.v_previousTotals.setPreviousElectricityConsumed_MWh(area.v_annualElectricityConsumed_MWh);
+area.v_previousTotals.setPreviousElectricityForTransportDemand_MWh(area.v_annualElectricityForTransportDemand_MWh);
+area.v_previousTotals.setPreviousHydrogenForTransportDemand_MWh(area.v_annualHydrogenForTransportDemand_MWh);
+area.v_previousTotals.setPreviousTransportEnergyDemand_MWh(area.v_annualTransportEnergyDemand_MWh);
+area.v_previousTotals.setPreviousWindSupply_MWh(area.v_annualWindSupply_MWh);
+area.v_previousTotals.setPreviousWindSupplyRemainingPotential_MWh(area.v_annualWindSupplyRemainingPotential_MWh);
+area.v_previousTotals.setPreviousPVSupply_MWh(area.v_annualPVSupply_MWh);
+area.v_previousTotals.setPreviousPVSupplyRemainingPotential_MWh(area.v_annualPVSupplyRemainingPotential_MWh);
+area.v_previousTotals.setPreviousHeatSupply_MWh(area.v_annualHeatSupply_MWh);
+area.v_previousTotals.setPreviousHeatSupplyRemainingPotential_MWh(area.v_annualHeatSupplyRemainingPotential_MWh);
+area.v_previousTotals.setPreviousTotalTimeOverloadedTransformers_hr(area.v_totalTimeOverloadedTransformers_h);
 
 // Net Load
 area.v_dataNetLoadYear_kW = energyModel.acc_annualElectricityBalance_kW.getTimeSeries();
@@ -2918,6 +2931,8 @@ area.v_modelSelfSufficiency_fr = energyModel.v_modelSelfSufficiency_fr;
 area.v_totalTimeOverloadedTransformers_h = energyModel.v_gridOverloadDuration_h;
 
 //Yearly
+area.v_annualTotalConsumedEnergy_MWh = energyModel.v_totalEnergyUsed_MWh;
+area.v_annualTotalProducedEnergy_MWh = energyModel.v_totalEnergyProduced_MWh;
 area.v_annualImportedEnergy_MWh = energyModel.v_totalImportedEnergy_MWh;
 area.v_annualExportedEnergy_MWh = energyModel.v_totalExportedEnergy_MWh;
 area.v_annualSelfConsumedEnergy_MWh = energyModel.v_totalSelfConsumedEnergy_MWh;
@@ -3019,7 +3034,7 @@ area.v_hydrogenExportWeekend_MWh = energyModel.v_weekendHydrogenExport_MWh;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1709716821860</Id>
 					<Name><![CDATA[f_updateUIresultsEnergyCoop]]></Name>
-					<X>-650</X><Y>669.467</Y>
+					<X>-650</X><Y>689.467</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3229,7 +3244,7 @@ runSimulation();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1712584842532</Id>
 					<Name><![CDATA[f_updateUIresultsGridNode]]></Name>
-					<X>-650</X><Y>650</Y>
+					<X>-650</X><Y>670</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3944,7 +3959,7 @@ f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConne
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720799287420</Id>
 					<Name><![CDATA[f_updateUIresultsGridConnection]]></Name>
-					<X>-650</X><Y>690</Y>
+					<X>-650</X><Y>710</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3957,27 +3972,20 @@ f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConne
 						<Name><![CDATA[gcList]]></Name>
 						<Type><![CDATA[ArrayList<GridConnection>]]></Type>
 					</Parameter>
-					<Body><![CDATA[
+					<Body><![CDATA[//Update to new variables
 f_updateVariablesOfGCData(area, gcList);
 f_updateLiveDataSets(area, gcList);
 f_updateYearlyGCData(area, gcList);
 f_updateWeeklyGCData(area, gcList);
 f_updateBelastingduurKromme(area, gcList);
-
-/*
-f_updateVariablesOfGCData(area, gcList);
-f_updateLiveDataSets(area, gcList);
-f_updateYearlyGCData(area, gcList);
-f_updateWeeklyGCData(area, gcList);
-f_updateBelastingduurKromme(area, gcList);
-*/]]></Body>
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720820424632</Id>
 					<Name><![CDATA[f_updateYearlyGCData]]></Name>
-					<X>-620</X><Y>750</Y>
+					<X>-620</X><Y>770</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4076,7 +4084,7 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720820539394</Id>
 					<Name><![CDATA[f_updateWeeklyGCData]]></Name>
-					<X>-620</X><Y>770</Y>
+					<X>-620</X><Y>790</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4280,7 +4288,7 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720820656291</Id>
 					<Name><![CDATA[f_updateVariablesOfGCData]]></Name>
-					<X>-620</X><Y>710</Y>
+					<X>-620</X><Y>730</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4306,10 +4314,13 @@ area.v_modelSelfSufficiency_fr = sum(gcList, x -> x.v_totalEnergyProduced_MWh) >
 //area.v_totalTimeOverloadedTransformers_h = GC.v_netOverloadDuration_h;
 
 //Yearly
+area.v_annualTotalConsumedEnergy_MWh = sum(gcList, x -> x.v_totalEnergyConsumed_MWh);
+area.v_annualTotalProducedEnergy_MWh = sum(gcList, x -> x.v_totalEnergyProduced_MWh);
 area.v_annualImportedEnergy_MWh = sum(gcList, x -> x.v_totalImport_MWh);
 area.v_annualExportedEnergy_MWh = sum(gcList, x -> x.v_totalExport_MWh);
 area.v_annualSelfConsumedEnergy_MWh = sum(gcList, x -> x.v_totalSelfConsumedEnergy_MWh);
 
+area.v_annualElectricityConsumed_MWh = sum(gcList, x -> x.v_totalElectricityConsumed_MWh);
 area.v_annualElectricityImport_MWh = sum(gcList, x -> x.v_electricityDrawnFromGrid_kWh) / 1000;
 area.v_annualElectricityExport_MWh = sum(gcList, x -> x.v_electricityDeliveredToGrid_kWh) / 1000;
 area.v_annualSelfConsumedElectricity_MWh = sum(gcList, x -> x.v_totalElectricitySelfConsumed_MWh);
@@ -4318,6 +4329,14 @@ area.v_annualNaturalGasDemand_MWh = sum(gcList, x -> x.v_methaneDrawn_kWh) / 100
 area.v_annualPetroleumProductsDemand_MWh = sum(gcList, x -> x.v_dieselDrawn_kWh) / 1000;
 area.v_annualHydrogenDemand_MWh = sum(gcList, x -> x.v_hydrogenDrawn_kWh) / 1000;
 area.v_annualHydrogenSupply_MWh = sum(gcList, x -> x.v_hydrogenDelivered_kWh) / 1000;
+
+//Overload duration (for multiple GC this does not really make sense right?, would be more interesting to see the influence of their combined contract capacity)
+area.v_annualOverloadDurationDelivery_hr = sum(gcList, x -> x.v_totalOverloadDurationDelivery_hr);
+area.v_annualOverloadDurationFeedin_hr = sum(gcList, x -> x.v_totalOverloadDurationFeedin_hr);
+
+//Previous annual values: does not work (yet) for multiselect.
+area.v_previousTotals = uI_Results.c_previousTotals_GC.get(gcList.get(0));
+
 
 // Summer/winter
 area.v_importedEnergySummerWeek_MWh = sum(gcList, x -> x.v_summerWeekTotalImport_MWh);
@@ -4405,7 +4424,7 @@ area.v_hydrogenExportWeekend_MWh = sum(gcList, x -> x.v_weekendHydrogenExport_MW
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720820777814</Id>
 					<Name><![CDATA[f_updateLiveDataSets]]></Name>
-					<X>-620</X><Y>730</Y>
+					<X>-620</X><Y>750</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4542,7 +4561,7 @@ for (int i=0; i < liveWeekSize; i++){ //we go back to update the existing live w
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720820888674</Id>
 					<Name><![CDATA[f_updateBelastingduurKromme]]></Name>
-					<X>-620</X><Y>790</Y>
+					<X>-620</X><Y>810</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4796,7 +4815,7 @@ uI_Results.f_showCorrectChart();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1721305389703</Id>
 					<Name><![CDATA[f_addTimeStepLiveDataSets]]></Name>
-					<X>-620</X><Y>810</Y>
+					<X>-620</X><Y>830</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5255,7 +5274,7 @@ return gisroute;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725439643960</Id>
 					<Name><![CDATA[f_updateTotalLiveDataSets]]></Name>
-					<X>-650</X><Y>830</Y>
+					<X>-650</X><Y>850</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5296,7 +5315,7 @@ return gisroute;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725440073691</Id>
 					<Name><![CDATA[f_addTimeStepTotalLiveDataSets]]></Name>
-					<X>-625</X><Y>850</Y>
+					<X>-625</X><Y>870</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5336,7 +5355,7 @@ for (int j = 0; j < c_selectedGridConnections.size(); j++) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725442474483</Id>
 					<Name><![CDATA[f_updateTotalYearlyDataSets]]></Name>
-					<X>-645</X><Y>870</Y>
+					<X>-645</X><Y>890</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5376,7 +5395,7 @@ for (int j = 0; j < c_selectedGridConnections.size(); j++) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725442517475</Id>
 					<Name><![CDATA[f_updateTotalWeeklyDataSets]]></Name>
-					<X>-645</X><Y>890</Y>
+					<X>-645</X><Y>910</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5473,6 +5492,58 @@ traceln("Forgot to override project specific slider settings!!");]]></Body>
 					<Body><![CDATA[//Function used to set the colors, styling, and other parameters/functions for each specific project
 //Should be overridden!!
 traceln("DID NOT OVERRIDE THE PROJECT SPECIFIC STYLING!");]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1727085747538</Id>
+					<Name><![CDATA[f_updatePreviousTotalsGC]]></Name>
+					<X>-650</X><Y>630</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[for (GridConnection GC : energyModel.f_getGridConnections()){	
+	J_previousTotals previousTotals = uI_Results.c_previousTotals_GC.get(GC);
+	
+	previousTotals.setPreviousTotalConsumedEnergy_MWh(GC.v_totalEnergyConsumed_MWh);
+	previousTotals.setPreviousTotalProducedEnergy_MWh(GC.v_totalEnergyProduced_MWh);
+	previousTotals.setPreviousSelfConsumedEnergy_MWh(GC.v_totalSelfConsumedEnergy_MWh);
+	previousTotals.setPreviousImportedEnergy_MWh(GC.v_totalImport_MWh);
+	previousTotals.setPreviousExportedEnergy_MWh(GC.v_totalExport_MWh);
+		
+	previousTotals.setPreviousNaturalGasDemand_MWh(GC.v_methaneDrawn_kWh);
+	previousTotals.setPreviousPetroleumProductsDemand_MWh(GC.v_dieselDrawn_kWh);
+	previousTotals.setPreviousHydrogenDemand_MWh(GC.v_hydrogenDrawn_kWh);
+	previousTotals.setPreviousHydrogenSupply_MWh(GC.v_hydrogenDelivered_kWh);
+	
+	previousTotals.setPreviousSelfConsumedElectricity_MWh(GC.v_totalElectricitySelfConsumed_MWh);
+	//previousTotals.setPreviousSelfProducedElectricity_MWh(GC.v_totalElectricitySelfProduced_MWh);
+	previousTotals.setPreviousElectricityImport_MWh(GC.v_electricityDrawnFromGrid_kWh);
+	previousTotals.setPreviousElectricityExport_MWh(GC.v_electricityDeliveredToGrid_kWh);
+	previousTotals.setPreviousElectricityConsumed_MWh(GC.v_totalElectricityConsumed_MWh);
+	
+	//Overload
+	previousTotals.setPreviousOverloadDurationDelivery_hr(GC.v_totalOverloadDurationDelivery_hr);
+	previousTotals.setPreviousOverloadDurationFeedin_hr(GC.v_totalOverloadDurationFeedin_hr);
+	//Unused parameters
+	/*
+		previousTotals.setPreviousHeatDemand_MWh(GC.v_annualHeatDemand_MWh
+		previousTotals.setPreviousDistrictHeatingHeatDemand_MWh(GC.v_annualDistrictHeatingHeatDemand_MWh
+		previousTotals.setPreviousHeatPumpHeatGeneration_MWh(GC.v_annualHeatPumpHeatGeneration_MWh
+		previousTotals.setPreviousElectricityForTransportDemand_MWh(GC.v_annualElectricityForTransportDemand_MWh);
+		previousTotals.setPreviousHydrogenForTransportDemand_MWh(GC.v_annualHydrogenForTransportDemand_MWh);
+		previousTotals.setPreviousTransportEnergyDemand_MWh(GC.v_annualTransportEnergyDemand_MWh);
+		previousTotals.setPreviousWindSupply_MWh(GC.v_annualWindSupply_MWh);
+		previousTotals.setPreviousWindSupplyRemainingPotential_MWh(GC.v_annualWindSupplyRemainingPotential_MWh);
+		previousTotals.setPreviousPVSupply_MWh(GC.v_annualPVSupply_MWh);
+		previousTotals.setPreviousPVSupplyRemainingPotential_MWh(GC.v_annualPVSupplyRemainingPotential_MWh);
+		previousTotals.setPreviousHeatSupply_MWh(GC.v_annualHeatSupply_MWh);
+		previousTotals.setPreviousHeatSupplyRemainingPotential_MWh(GC.v_annualHeatSupplyRemainingPotential_MWh);
+	*/
+
+}
+]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -5667,6 +5738,9 @@ traceln("DID NOT OVERRIDE THE PROJECT SPECIFIC STYLING!");]]></Body>
 							<Value Class="CodeValue">
 								<Code><![CDATA[energyModel]]></Code>
 							</Value>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_previousTotals_Region]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -9119,17 +9193,25 @@ gr_simulateYearScreenSmall.setVisible(false);
 gr_loadIconSmall.setVisible(true);
 		
 
-new Thread( () -> {	
+new Thread( () -> {
+	//Save previous totals
+	f_updatePreviousTotalsGC();
+	
+	//Run rapid run
 	energyModel.f_runRapidSimulation();
+	
+	//After rapid run: remove loading screen
 	gr_loadIconSmall.setVisible(false);
-	//gr_simulateCostsScreen.setVisible(false);
-	//gr_scopeRadioButtons.setVisible(true);
+	
+	//Update main area collection
 	f_updateUIresultsMainArea();
+	
+	//Update and show kpi summary chart after run
+	uI_Results.chartKPISummary.f_setKPISummaryChart();
 }).start();
 
-//gr_netbelastingDuurkrommes.setVisible(false);
 b_resultsUpToDate = true;
-//f_setCharts();]]></OnClickCode>
+]]></OnClickCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -11331,21 +11413,6 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;]]></Import>
 					</Properties>
 
 				</Variable>
-				<Variable Class="CollectionVariable">
-					<Id>1713947325917</Id>
-					<Name><![CDATA[c_scenarioSettings_Hydrogen]]></Name>
-					<X>-740</X><Y>350</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[J_scenario_Hydrogen]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-					</Properties>
-
-				</Variable>
 			</Variables>
 			<Functions>
 				<Function AccessType="default" StaticFunction="false">
@@ -11363,7 +11430,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;]]></Import>
 						<Type><![CDATA[GridConnection]]></Type>
 					</Parameter>
 					<Body><![CDATA[//Set button to custom early on, so traceln will get ignored.
-rb_scenariosPrivateUI.setValue(3, false);
+rb_scenariosPrivateUI.setValue(2, false);
 
 
 ////Heating
@@ -11438,21 +11505,6 @@ sl_hydrogenTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelect
 //Reset button to future, due to sliders putting it on custom
 rb_scenariosPrivateUI.setValue(1, false);]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1713445296599</Id>
-					<Name><![CDATA[f_setScenarioHydrogen]]></Name>
-					<X>-380</X><Y>570</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[GC]]></Name>
-						<Type><![CDATA[GridConnection]]></Type>
-					</Parameter>
-				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
@@ -11487,18 +11539,12 @@ rb_scenariosPrivateUI.setValue(1, false);]]></Body>
 		//traceln("Selected scenario: Future");
 	break;
 	
-	case 2: // Hydrogen
-		//c_ownedGridConnections.forEach(GC -> f_setScenarioHydrogen(GC));
-		
-		traceln("Selected scenario: Hydrogen : DOES NOTHING YET");
-	break;
-	
-	case 3: // Custom
+	case 2: // Custom
 
-		if(rb_scenariosPrivateUI.getValue() == 3){
+		if(rb_scenariosPrivateUI.getValue() == 2){
 		return;
 		}
-		rb_scenariosPrivateUI.setValue(3, false);
+		rb_scenariosPrivateUI.setValue(2, false);
 		traceln("Selected scenario: Custom");
 	break;
 	
@@ -11524,7 +11570,7 @@ zero_Interface.b_resultsUpToDate = false;]]></Body>
 						<Type><![CDATA[GridConnection]]></Type>
 					</Parameter>
 					<Body><![CDATA[//Set button to custom early on, so traceln will get ignored.
-rb_scenariosPrivateUI.setValue(3, false);
+rb_scenariosPrivateUI.setValue(2, false);
 
 
 ////Heating
@@ -13311,6 +13357,9 @@ sl_GCCapacityCompany.setValue(v_defaultGCCapacitySlider, false);]]></Body>
 								<Code><![CDATA[zero_Interface.energyModel]]></Code>
 							</Value>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_previousTotals_Region]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -13594,7 +13643,6 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 						<Orientation>VERTICAL</Orientation>
 						<Button><![CDATA[Huidig - 2023]]></Button>
 						<Button><![CDATA[Toekomstplannen]]></Button>
-						<Button><![CDATA[Waterstof]]></Button>
 						<Button><![CDATA[Custom]]></Button>
 						<LinkTo>false</LinkTo>
 					</ExtendedProperties>
@@ -13864,7 +13912,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 t_GCCapacityCompany.setText(roundToInt(sl_GCCapacityCompany.getValue()) + " kW");
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -13939,7 +13987,7 @@ v_heatDemandReduction_pct = newHeatDemandReduction_pct;
 t_heatDemandReductionCompanies.setText(newHeatDemandReduction_pct + "%");
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14087,7 +14135,7 @@ v_electricityDemandReduction_pct = newElectricityDemandReduction_pct;
 t_electricityDemandReductionCompany.setText(newElectricityDemandReduction_pct + "%");
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14163,7 +14211,7 @@ t_numberOfHydrogenVansCompany.setText(v_nbHydrogenVans);
 t_numberOfDieselVansCompany.setText(v_nbDieselVans);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14247,7 +14295,7 @@ t_numberOfElectricVansCompany.setText(v_nbEVVans);
 t_numberOfDieselVansCompany.setText(v_nbDieselVans);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14331,7 +14379,7 @@ t_numberOfElectricVansCompany.setText(v_nbEVVans);
 t_numberOfHydrogenVansCompany.setText(v_nbHydrogenVans);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14562,7 +14610,7 @@ t_numberOfElectricTrucksCompany.setText(v_nbEVTrucks);
 t_numberOfDieselTrucksCompany.setText(v_nbDieselTrucks);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14625,7 +14673,7 @@ t_numberOfHydrogenTrucksCompany.setText(v_nbHydrogenTrucks);
 t_numberOfDieselTrucksCompany.setText(v_nbDieselTrucks);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14667,7 +14715,7 @@ t_numberOfElectricTrucksCompany.setText(v_nbEVTrucks);
 t_numberOfHydrogenTrucksCompany.setText(v_nbHydrogenTrucks);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14709,7 +14757,7 @@ t_numberOfHydrogenCarsCompany.setText(v_nbHydrogenCars);
 t_numberOfDieselCarsCompany.setText(v_nbDieselCars);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14804,7 +14852,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 t_mobilityDemandReductionCompany.setText(roundToInt(sl_mobilityDemandCompanyReduction.getValue()) + "%");
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14866,7 +14914,7 @@ t_numberOfElectricCarsCompany.setText(v_nbEVCars);
 t_numberOfDieselCarsCompany.setText(v_nbDieselCars);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14950,7 +14998,7 @@ t_numberOfElectricCarsCompany.setText(v_nbEVCars);
 t_numberOfHydrogenCarsCompany.setText(v_nbHydrogenCars);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -15115,7 +15163,7 @@ f_setBattery(c_ownedGridConnections.get(v_currentSelectedGCnr), sl_batteryCompan
 t_batteryCompany.setText(roundToInt(sl_batteryCompany.getValue()) + " kWh");
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -15415,7 +15463,7 @@ switch (rb_heatingTypePrivateUI.getValue()){
 f_setHeatingType(c_ownedGridConnections.get(v_currentSelectedGCnr), selectedHeatingType);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -15469,7 +15517,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 t_rooftopSolarCompany.setText(roundToInt(sl_rooftopPVCompany.getValue()) + " kW");
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -15971,10 +16019,16 @@ gr_loadIcon.setVisible(true);
 
 //Run simulation
 new Thread( () -> {	
+	//Save previous totals
+	zero_Interface.f_updatePreviousTotalsGC();
+
 	zero_Interface.energyModel.f_runRapidSimulation();
 	zero_Interface.f_updateUIresultsMainArea();
 	f_setSelectedGCGraphs();
 	gr_loadIcon.setVisible(false);
+	
+	//Update and show kpi summary chart after run
+	uI_Results.chartKPISummary.f_setKPISummaryChart();
 }).start();
 
 
@@ -16627,7 +16681,7 @@ rb_batteryMode.setValue(rb_value, false);]]></Body>
 						<Type><![CDATA[GridConnection]]></Type>
 					</Parameter>
 					<Body><![CDATA[//Set button to custom early on, so traceln will get ignored.
-rb_scenariosPrivateUI.setValue(3, false);
+rb_scenariosPrivateUI.setValue(2, false);
 
 
 //Scenario code here
@@ -16635,21 +16689,6 @@ rb_scenariosPrivateUI.setValue(3, false);
 
 //Reset button to current, due to sliders putting it on custom
 rb_scenariosPrivateUI.setValue(1, false);]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1724947743371</Id>
-					<Name><![CDATA[f_setScenarioHydrogen]]></Name>
-					<X>-290</X><Y>510</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[GC]]></Name>
-						<Type><![CDATA[GridConnection]]></Type>
-					</Parameter>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -16681,10 +16720,10 @@ rb_scenariosPrivateUI.setValue(1, false);]]></Body>
 	
 	case 3: // Custom
 
-		if(rb_scenariosPrivateUI.getValue() == 3){
+		if(rb_scenariosPrivateUI.getValue() == 2){
 		return;
 		}
-		rb_scenariosPrivateUI.setValue(3, false);
+		rb_scenariosPrivateUI.setValue(2, false);
 		traceln("Selected scenario: Custom");
 	break;
 	
@@ -16710,7 +16749,7 @@ zero_Interface.b_resultsUpToDate = false;]]></Body>
 						<Type><![CDATA[GridConnection]]></Type>
 					</Parameter>
 					<Body><![CDATA[//Set button to custom early on, so traceln will get ignored.
-rb_scenariosPrivateUI.setValue(3, false);
+rb_scenariosPrivateUI.setValue(2, false);
 
 
 //Scenario code here
@@ -17055,7 +17094,7 @@ rb_scenariosPrivateUI.setValue(0, false);]]></Body>
 t_electricityPriceLimit.setText( "€" + sl_batteryElectricityPriceLimit.getValue());
 
 //Set scenario to custom
-f_setScenario(3);]]></ActionCode>
+f_setScenario(2);]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[v_sliderStartValue_priceLimit]]></DefaultValueCode>
@@ -17153,7 +17192,7 @@ t_powerBattery.setText(sl_batteryPower.getValue() + " MW");
 
 
 //Set scenario to custom
-f_setScenario(3);]]></ActionCode>
+f_setScenario(2);]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
@@ -17324,7 +17363,7 @@ switch (rb_batteryMode.getValue()){
 t_electricityBalanceLimit.setText( sl_batteryElectricityBalanceLimit.getValue() + " MW" );
 
 //Set scenario to custom
-f_setScenario(3);]]></ActionCode>
+f_setScenario(2);]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[v_sliderStartValue_balanceLimit]]></DefaultValueCode>
@@ -17395,7 +17434,6 @@ f_setScenario(3);]]></ActionCode>
 						<Orientation>VERTICAL</Orientation>
 						<Button><![CDATA[Huidig - 2023]]></Button>
 						<Button><![CDATA[Toekomstplannen]]></Button>
-						<Button><![CDATA[Waterstof]]></Button>
 						<Button><![CDATA[Custom]]></Button>
 						<LinkTo>false</LinkTo>
 					</ExtendedProperties>
@@ -17592,7 +17630,7 @@ t_capacityBattery.setText(sl_batteryCapacity.getValue() + " MWh");
 
 
 //Set scenario to custom
-f_setScenario(3);]]></ActionCode>
+f_setScenario(2);]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
@@ -18309,7 +18347,7 @@ rb_electrolyserMode.setValue(rb_value, false);]]></Body>
 						<Type><![CDATA[GridConnection]]></Type>
 					</Parameter>
 					<Body><![CDATA[//Set button to custom early on, so traceln will get ignored.
-rb_scenariosPrivateUI.setValue(3, false);
+rb_scenariosPrivateUI.setValue(2, false);
 
 
 //Scenario code here
@@ -18317,21 +18355,6 @@ rb_scenariosPrivateUI.setValue(3, false);
 
 //Reset button to current, due to sliders putting it on custom
 rb_scenariosPrivateUI.setValue(1, false);]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1724859526074</Id>
-					<Name><![CDATA[f_setScenarioHydrogen]]></Name>
-					<X>-340</X><Y>450</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[GC]]></Name>
-						<Type><![CDATA[GridConnection]]></Type>
-					</Parameter>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -18363,10 +18386,10 @@ rb_scenariosPrivateUI.setValue(1, false);]]></Body>
 	
 	case 3: // Custom
 
-		if(rb_scenariosPrivateUI.getValue() == 3){
+		if(rb_scenariosPrivateUI.getValue() == 2){
 		return;
 		}
-		rb_scenariosPrivateUI.setValue(3, false);
+		rb_scenariosPrivateUI.setValue(2, false);
 		traceln("Selected scenario: Custom");
 	break;
 	
@@ -18392,7 +18415,7 @@ zero_Interface.b_resultsUpToDate = false;]]></Body>
 						<Type><![CDATA[GridConnection]]></Type>
 					</Parameter>
 					<Body><![CDATA[//Set button to custom early on, so traceln will get ignored.
-rb_scenariosPrivateUI.setValue(3, false);
+rb_scenariosPrivateUI.setValue(2, false);
 
 
 //Scenario code here
@@ -18739,7 +18762,7 @@ t_electricityPriceLimit.setText( "€" + sl_electrolyserElectricityPriceLimit.ge
 
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 ]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -18838,7 +18861,7 @@ t_powerElectrolyser.setText(sl_electrolyserPower.getValue() + " MW");
 
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 ]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -19010,7 +19033,7 @@ f_setScenario(3);
 t_electricityBalanceLimit.setText( sl_electrolyserElectricityBalanceLimit.getValue() + " MW" );
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 ]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -19145,7 +19168,6 @@ f_setScenario(3);
 						<Orientation>VERTICAL</Orientation>
 						<Button><![CDATA[Huidig - 2023]]></Button>
 						<Button><![CDATA[Toekomstplannen]]></Button>
-						<Button><![CDATA[Waterstof]]></Button>
 						<Button><![CDATA[Custom]]></Button>
 						<LinkTo>false</LinkTo>
 					</ExtendedProperties>
@@ -36448,34 +36470,6 @@ public class J_scenario_Future implements Serializable {
     
     
        
-	@Override
-	public String toString() {
-		return super.toString();
-	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
-}]]></Text>
-		</JavaClass>
-		<!--   =========   Java Class   ========  -->
-		<JavaClass>
-			<Id>1715862317312</Id>
-			<Name><![CDATA[J_scenario_Hydrogen]]></Name>
-			<Text><![CDATA[/**
- * J_scenario_Hydrogen
- */	
-public class J_scenario_Hydrogen implements Serializable {
-
-    /**
-     * Default constructor
-     */
-    public J_scenario_Hydrogen() {
-    }
-
 	@Override
 	public String toString() {
 		return super.toString();
