@@ -9144,13 +9144,13 @@ voor verwarming.]]></Text>
 				<Group>
 					<Id>1709717180367</Id>
 					<Name><![CDATA[gr_simulateYearScreenSmall]]></Name>
-					<X>2268</X><Y>175</Y>
+					<X>2185</X><Y>175</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<XCode><![CDATA[1668]]></XCode>
+					<XCode><![CDATA[1670]]></XCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -9169,7 +9169,7 @@ voor verwarming.]]></Text>
 					<Z>0</Z>
 					<ZHeight>10</ZHeight>
 					<LineWidth>1</LineWidth>
-					<LineColor>-6943</LineColor>
+					<LineColor/>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>DASHED</LineStyle>
 					<Width>460</Width>
@@ -9181,7 +9181,7 @@ voor verwarming.]]></Text>
 				</Rectangle>
 				<Group>
 					<Id>1709717180371</Id>
-					<Name><![CDATA[gr_simulateYearToCalculateCostsSmall]]></Name>
+					<Name><![CDATA[gr_simulateYearToCalculateKPIsSmall]]></Name>
 					<X>10</X><Y>70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -9269,7 +9269,7 @@ b_resultsUpToDate = true;
 				<Group>
 					<Id>1709717180404</Id>
 					<Name><![CDATA[gr_loadIconSmall]]></Name>
-					<X>1660</X><Y>135</Y>
+					<X>1659</X><Y>135</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -9283,7 +9283,7 @@ b_resultsUpToDate = true;
 				<Rectangle>
 					<Id>1709717180406</Id>
 					<Name><![CDATA[rect_loadIconSmall]]></Name>
-					<X>-220</X><Y>-50</Y>
+					<X>-219</X><Y>-50</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13641,7 +13641,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 						<Font Name="Dialog" Size="14" Style="0"/>
 						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
 						<Orientation>VERTICAL</Orientation>
-						<Button><![CDATA[Huidig - 2023]]></Button>
+						<Button><![CDATA[Huidige situatie]]></Button>
 						<Button><![CDATA[Toekomstplannen]]></Button>
 						<Button><![CDATA[Custom]]></Button>
 						<LinkTo>false</LinkTo>
@@ -31419,8 +31419,8 @@ for (Building_data dataBuilding : scopedBuilding_data) {
 ]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[A_SubTenant]]></ReturnType>
 					<Id>1726584205783</Id>
 					<Name><![CDATA[f_createSubtenant]]></Name>
 					<Description><![CDATA[function used to connect the subtenant to the main tenant (connection owner), based on adres data of subtenant and Grid connection. ]]></Description>
@@ -31440,30 +31440,17 @@ for (Building_data dataBuilding : scopedBuilding_data) {
 					<Body><![CDATA[A_SubTenant subtenant = energyModel.add_pop_subTenants();
 
 subtenant.p_actorID = survey.getCompanyName();
-
-subtenant.p_streetName = address.getStreet().substring(0,1).toUpperCase() + address.getStreet().substring(1).toLowerCase(); 
-subtenant.p_houseNumber = address.getHouseNumber();
-subtenant.p_houseLetter = address.getHouseLetter().equals("") ? null : address.getHouseLetter();
-subtenant.p_houseAddition = address.getHouseNumberSuffix().equals("") ? null : address.getHouseNumberSuffix();
-subtenant.p_postalcode = address.getPostalCode().equals("") ? null : address.getPostalCode().toUpperCase().replaceAll("\\s","");
-subtenant.p_city = address.getCity().substring(0,1).toUpperCase() + address.getCity().substring(1).toLowerCase();
+			
+//Adress data
+subtenant.p_address = new J_Address();
+subtenant.p_address.setStreetName(address.getStreet().substring(0,1).toUpperCase() + address.getStreet().substring(1).toLowerCase());
+subtenant.p_address.setHouseNumber(address.getHouseNumber());
+subtenant.p_address.setHouseLetter(address.getHouseLetter().equals("") ? null : address.getHouseLetter());
+subtenant.p_address.setHouseAddition(address.getHouseNumberSuffix().equals("") ? null : address.getHouseNumberSuffix());
+subtenant.p_address.setPostalcode(address.getPostalCode().equals("") ? null : address.getPostalCode().toUpperCase().replaceAll("\\s",""));
+subtenant.p_address.setCity(address.getCity().substring(0,1).toUpperCase() + address.getCity().substring(1).toLowerCase());
 				
-				
-//Find grid connection that feeds the subtenant (achter de meter)
-GridConnection GC = findFirst(energyModel.pop_gridConnections, 
-GCU -> Objects.equals(subtenant.p_streetName, GCU.p_address.getAddress()));
-
-if (GC != null){
-	subtenant.p_mainTenantID = GC.p_ownerID;
-	subtenant.p_connectedGridConnection = GC;
-	
-	ConnectionOwner owner = findFirst(energyModel.pop_connectionOwners, p -> p.p_actorID.equals(GC.p_ownerID));
-	//owner.l_subTenant.connectTo(subtenant);
-	owner.c_subTenants.add(subtenant);
-}
-else {
-	traceln("Subtenant '" + subtenant.p_actorID + "' at " + subtenant.p_streetName + " " + subtenant.p_houseNumber + ", does not have a main tenant");
-}
+return subtenant;
 
 ]]></Body>
 				</Function>
@@ -32124,7 +32111,6 @@ for (Building_data genericCompany : c_GenericCompanyBuilding_data) {
 //Amount of generic companies created
 traceln("Number of companies created without survey: " + v_numberOfCompaniesNoSurvey);
 v_remainingNumberOfCompaniesNoSurvey = v_numberOfCompaniesNoSurvey;
-//traceln("v_remainingNumberOfCompaniesNoSurvey: %s", v_remainingNumberOfCompaniesNoSurvey);
 
 //Create EA after all grid connections have been made -> needed because total surfaces are unkown before that
 for (GridConnection GCcompany : generic_company_GCs ) {
@@ -32139,7 +32125,6 @@ for (GridConnection GCcompany : generic_company_GCs ) {
 	
 	//create the energy assets for each GC
 	f_iEAGenericCompanies(GCcompany);
-	//v_remainingNumberOfCompaniesNoSurvey--;
 }]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
@@ -32324,19 +32309,17 @@ if (parentGC.p_heatingType != OL_GridConnectionHeatingType.GASBURNER || yearlyGa
 }
 /*
 if(hasHourlyGasData){
-	J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarrierType.GAS, null, energyModel.p_timeStep_h);		
-	profile.energyAssetName = parentGC.p_ownerID + " custom gas profile";
+	J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarrierType.HEAT, null, OL_ProfileAssetType. ,energyModel.p_timeStep_h);		
+	profile.energyAssetName = parentGC.p_ownerID + " custom heat profile";
 	
-	List<Double> hourlyHeatDemand_kWh = selectValues(double.class, "SELECT " + profileName + "_demand FROM comp_elec_consumption;");		
-	profile.a_energyProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> max(0,d)).toArray();
-	energyModel.c_energyAssets.add(profile);
-	parentGC.f_connectToJ_EA(profile);
-	 // 
-	//AFMAKEN!! ??? GAS PROFIEL IN LADEN EN DAN VERVOLGENS OMZETTEN NAAR HEAT DEMAND CONSUMPTIE PATROON
-	ratioGasUsedForHeating*GAS_CONSUMPTION_PER_HOUR --> TO GET ACTUAL GAS USAGE FOR HEATING
+	List<Double> hourlyGasDemand_kWh = selectValues(double.class, "SELECT " + profileName + "_demand FROM comp_gas_consumption;");
+	List<Double> hourlyHeatDemand_kWh;
+	for (int i = 0; i < hourlyGasDemand_kWh.size(); i++) {
+    	hourlyHeatDemand_kWh.add(i, hourlyGasDemand_kWh.get(i) * avgc_data.p_gas_kWhpm3 * ratioGasUsedForHeating);
+	}	
+	profile.a_energyProfile_kWh = hourlyHeatDemand_kWh.stream().mapToDouble(d -> max(0,d)).toArray();
 }
-*/
-//else{
+else{*/
 	//Determine heatdemand
 	double yearlyDemandHeat_kWh = yearlyGasDemand_m3 * avgc_data.p_gas_kWhpm3; 
 	heatDemand = new J_EAConsumption(parentGC, OL_EnergyAssetType.HEAT_DEMAND, "Building_heat_demand", 0.0, yearlyDemandHeat_kWh, 0.0, 0.0, 0.0, energyModel.p_timeStep_h);
@@ -32572,6 +32555,9 @@ else{
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[traceln("Companies that filled in the survey:");
 
+//Initialize parameters
+List<A_SubTenant> subTenants = new ArrayList<A_SubTenant>();
+
 //Get the survey data
 List<com.zenmo.zummon.companysurvey.Survey> surveys = f_getSurveys();
 
@@ -32585,7 +32571,7 @@ for (var survey : surveys) {
 		 	//Check if it has (or will have) a direct connection with the grid (either gas or electric), if not: create subtenant	
 		 	boolean hasNaturalGasConnection = (gridConnection.getNaturalGas().getHasConnection() != null)? gridConnection.getNaturalGas().getHasConnection() : false;	 	
 		 	if (!gridConnection.getElectricity().getHasConnection() && !gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() && !hasNaturalGasConnection){
-				f_createSubtenant(survey, address);	
+				subTenants.add(f_createSubtenant(survey, address));	
 			 	continue;
 		 	}
 		 	else if(survey_owner == null){// Connection owner does not exist yet: create and initialize new one
@@ -32655,8 +32641,24 @@ for (var survey : surveys) {
     }
 }
 
-//Create subtenants (after other companies have been created, cause otherwise no use.
-]]></Body>
+//Add created subtenants to main tenant(should happen after the other companies have been created)
+for(A_SubTenant subtenant : subTenants){
+
+	//Find grid connection that feeds the subtenant (achter de meter)
+	GridConnection GC = findFirst(energyModel.f_getGridConnections(), 
+	GCU -> GCU.p_address != null && GCU.p_address.getAddress().equals(subtenant.p_address.getAddress()));
+	
+	if (GC != null){
+		subtenant.p_mainTenantID = GC.p_ownerID;
+		subtenant.p_connectedGridConnection = GC;
+		
+		ConnectionOwner owner = findFirst(energyModel.pop_connectionOwners, p -> p.p_actorID.equals(GC.p_ownerID));
+		owner.c_subTenants.add(subtenant);
+	}
+	else {
+		traceln("Subtenant '" + subtenant.p_actorID + "' at " + subtenant.p_address.getAddress()+ ", does not have a main tenant");
+	}
+}]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -34714,14 +34716,6 @@ f_createGenericCompanies();]]></Body>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[row]]></Name>
-						<Type><![CDATA[Tuple]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[companyGC]]></Name>
-						<Type><![CDATA[GridConnection]]></Type>
-					</Parameter>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
