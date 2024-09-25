@@ -138,7 +138,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
-
 //Possibility to turn of traceln
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -3397,7 +3396,7 @@ else {
 // Find all the GCs with PV at the start of the simulation
 ArrayList<GridConnection> GCsWithPV = GCs.stream().filter(gc -> gc.v_hasPV).collect(Collectors.toCollection(ArrayList::new));
 ArrayList<GridConnection> otherGCs = GCs.stream().filter(gc -> !gc.v_hasPV).collect(Collectors.toCollection(ArrayList::new));
-Collections.shuffle(otherGCs);
+//Collections.shuffle(otherGCs);
 // We make sure that the GCs with PV at the start of the simulation are the last in the list
 
 //traceln("amount of GCs with PV at start: " + GCsWithPV.size());
@@ -9205,6 +9204,7 @@ new Thread( () -> {
 	
 	//Update main area collection
 	f_updateUIresultsMainArea();
+	uI_Results.f_showCorrectChart();
 	
 	//Update and show kpi summary chart after run
 	uI_Results.chartKPISummary.f_setKPISummaryChart();
@@ -13004,7 +13004,7 @@ double timestep_h 					= zero_Interface.energyModel.p_timeStep_h;
 double outputTemperature_degC 		= 0;
 parentGC.v_hasPV = true;
 
-J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, capacityElectric_kW , capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, timestep_h, outputTemperature_degC);
+J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, capacityElectric_kW , capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, timestep_h, outputTemperature_degC, zero_Interface.energyModel.pp_solarPVproduction);
 
 ]]></Body>
 				</Function>
@@ -22192,7 +22192,7 @@ else {
 			double yearlyProductionMethane_kWh = 0.0;
 			double outputTemperature_degC = 0.0;
 			
-			J_EAProduction productionAsset = new J_EAProduction ( gc, assetType, assetName, capacityElectricity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC );
+			J_EAProduction productionAsset = new J_EAProduction ( gc, assetType, assetName, capacityElectricity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC, zero_Interface.energyModel.pp_solarPVproduction );
 
 			zero_Interface.c_orderedPVSystems.remove(gc);
 			zero_Interface.c_orderedPVSystems.add(0, gc);
@@ -22298,7 +22298,7 @@ else {
 			double outputTemperature_degC = 0.0;
 			double installedPVCapacity_kW = uniform(3,6);
 
-			J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, installedPVCapacity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC );
+			J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, installedPVCapacity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC, zero_Interface.energyModel.pp_solarPVproduction );
 			zero_Interface.c_orderedPVSystems.remove(house);
 			zero_Interface.c_orderedPVSystems.add(0, house);
 			zero_Interface.energyModel.v_totalInstalledPVPower_kW += installedPVCapacity_kW;
@@ -30401,7 +30401,6 @@ import java.text.SimpleDateFormat;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
 
-
 //Possibility to turn of traceln
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -31958,7 +31957,7 @@ if (project_data.energy_supplier() != null && !project_data.energy_supplier().eq
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726584205797</Id>
-					<Name><![CDATA[f_setWeatherMarketData]]></Name>
+					<Name><![CDATA[f_setEngineProfiles]]></Name>
 					<Description><![CDATA[Functie van gillis voor inladen weer data!]]></Description>
 					<X>79</X><Y>119</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -32016,20 +32015,74 @@ for(int i = 0; i < argumentsList.size(); i++) {
        a_logisticsFleetEdemand[i] = logisticsFleetEdemandList.get(i);        
        a_epexValues[i] = epexList.get(i);
 }
- 
-energyModel.tf_p_wind_e_normalized.setArgumentsAndValues(a_arguments, a_windValues);
-energyModel.tf_p_solar_e_normalized.setArgumentsAndValues(a_arguments, a_solarValues);
+
+
+J_profilePointer profilePointer;
+// 'ambient' conditions:
 energyModel.tf_ambientTemperature_degC.setArgumentsAndValues(a_arguments, a_tempValues);
-energyModel.tf_p_house_e_demand_other.setArgumentsAndValues(a_arguments, a_houseEdemand);
-energyModel.tf_p_house_h_demand_hot_water.setArgumentsAndValues(a_arguments, a_houseDHWdemand);
-energyModel.tf_p_building_e_demand_other.setArgumentsAndValues(a_arguments, a_buildingEdemand);
-energyModel.tf_p_building_h_demand.setArgumentsAndValues(a_arguments, a_buildingHeatDemand);
-energyModel.tf_p_industry_other_e_demand.setArgumentsAndValues(a_arguments, a_industryOtherEdemand);
-energyModel.tf_p_industry_other_h_demand.setArgumentsAndValues(a_arguments, a_industryOtherHdemand);
-energyModel.tf_p_industry_steel_e_demand.setArgumentsAndValues(a_arguments, a_industrySteelEdemand);
-energyModel.tf_p_industry_steel_h_demand.setArgumentsAndValues(a_arguments, a_industrySteelHdemand);
-energyModel.tf_p_logistics_fleet_e_hgv.setArgumentsAndValues(a_arguments, a_logisticsFleetEdemand);
 energyModel.tf_dayAheadElectricityPricing_eurpMWh.setArgumentsAndValues(a_arguments, a_epexValues);
+
+energyModel.tf_p_wind_e_normalized.setArgumentsAndValues(a_arguments, a_windValues);
+profilePointer = new J_profilePointer("normalized onshore wind production", energyModel.tf_p_wind_e_normalized);
+energyModel.f_addProfile(profilePointer);
+energyModel.pp_windOnshoreProduction = profilePointer;
+
+energyModel.tf_p_solar_e_normalized.setArgumentsAndValues(a_arguments, a_solarValues);
+profilePointer = new J_profilePointer("normalized_PV_production", energyModel.tf_p_solar_e_normalized);
+energyModel.f_addProfile(profilePointer);
+energyModel.pp_solarPVproduction = profilePointer;
+
+// Consumption profiles:
+
+//energyModel.tf_p_house_e_demand_other.setArgumentsAndValues(a_arguments, a_houseEdemand);
+TableFunction tf_p_house_e_demand_other = new TableFunction(a_arguments, a_houseEdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+profilePointer = new J_profilePointer("house_other_electricity_demand", tf_p_house_e_demand_other);
+energyModel.f_addProfile(profilePointer);
+
+//energyModel.tf_p_house_h_demand_hot_water.setArgumentsAndValues(a_arguments, a_houseDHWdemand);
+TableFunction tf_p_house_h_demand_hot_water = new TableFunction(a_arguments, a_houseDHWdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+profilePointer = new J_profilePointer("house_hot_water_demand", tf_p_house_h_demand_hot_water);
+energyModel.f_addProfile(profilePointer);
+
+//energyModel.tf_p_building_e_demand_other.setArgumentsAndValues(a_arguments, a_buildingEdemand);
+TableFunction tf_p_building_e_demand_other = new TableFunction(a_arguments, a_buildingEdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+profilePointer = new J_profilePointer("Office_other_electricity", tf_p_building_e_demand_other);
+energyModel.f_addProfile(profilePointer);
+
+//energyModel.tf_p_building_h_demand.setArgumentsAndValues(a_arguments, a_buildingHeatDemand);
+TableFunction tf_p_building_h_demand = new TableFunction(a_arguments, a_buildingHeatDemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+profilePointer = new J_profilePointer("Building_heat_demand", tf_p_building_h_demand);
+energyModel.f_addProfile(profilePointer);
+
+//energyModel.tf_p_industry_other_e_demand.setArgumentsAndValues(a_arguments, a_industryOtherEdemand);
+TableFunction tf_p_industry_other_e_demand = new TableFunction(a_arguments, a_industryOtherEdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+profilePointer = new J_profilePointer("Industry_other_electricity", tf_p_industry_other_e_demand);
+energyModel.f_addProfile(profilePointer);
+
+//energyModel.tf_p_industry_other_h_demand.setArgumentsAndValues(a_arguments, a_industryOtherHdemand);
+TableFunction tf_p_industry_other_h_demand = new TableFunction(a_arguments, a_industryOtherHdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+profilePointer = new J_profilePointer("Industry_other_heat", tf_p_industry_other_h_demand);
+energyModel.f_addProfile(profilePointer);
+
+//energyModel.tf_p_industry_steel_e_demand.setArgumentsAndValues(a_arguments, a_industrySteelEdemand);
+TableFunction tf_p_industry_steel_e_demand = new TableFunction(a_arguments, a_industrySteelEdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+profilePointer = new J_profilePointer("Industry_steel_electricity", tf_p_industry_steel_e_demand);
+energyModel.f_addProfile(profilePointer);
+
+//energyModel.tf_p_industry_steel_h_demand.setArgumentsAndValues(a_arguments, a_industrySteelHdemand);
+TableFunction tf_p_industry_steel_h_demand = new TableFunction(a_arguments, a_industrySteelHdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+profilePointer = new J_profilePointer("Industry_steel_heat", tf_p_industry_steel_h_demand);
+energyModel.f_addProfile(profilePointer);
+
+//energyModel.tf_p_logistics_fleet_e_hgv.setArgumentsAndValues(a_arguments, a_logisticsFleetEdemand);
+TableFunction tf_p_logistics_fleet_e_hgv = new TableFunction(a_arguments, a_logisticsFleetEdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+profilePointer = new J_profilePointer("LOGISTICS_FLEET_HGV_E", tf_p_logistics_fleet_e_hgv);
+energyModel.f_addProfile(profilePointer);
+
+
+
+
+
 
 ]]></Body>
 				</Function>
@@ -32286,7 +32339,7 @@ return b;]]></Body>
 } 
 
 else { // Add regular electricity and consumption profiles
-	J_EAConsumption profile = new J_EAConsumption(parentGC, OL_EnergyAssetType.ELECTRICITY_DEMAND, profileName, yearlyElectricityDemand_kWh, 0.0, 0.0, 0.0, 0.0, energyModel.p_timeStep_h);
+	J_EAConsumption profile = new J_EAConsumption(parentGC, OL_EnergyAssetType.ELECTRICITY_DEMAND, profileName, yearlyElectricityDemand_kWh, 0.0, 0.0, 0.0, 0.0, energyModel.p_timeStep_h, null);
 }
 ]]></Body>
 				</Function>
@@ -32339,7 +32392,7 @@ if(hasHourlyGasData){
 //else{
 	//Determine heatdemand
 	double yearlyDemandHeat_kWh = yearlyGasDemand_m3 * avgc_data.p_gas_kWhpm3; 
-	heatDemand = new J_EAConsumption(parentGC, OL_EnergyAssetType.HEAT_DEMAND, "Building_heat_demand", 0.0, yearlyDemandHeat_kWh, 0.0, 0.0, 0.0, energyModel.p_timeStep_h);
+	heatDemand = new J_EAConsumption(parentGC, OL_EnergyAssetType.HEAT_DEMAND, "Building_heat_demand", 0.0, yearlyDemandHeat_kWh, 0.0, 0.0, 0.0, energyModel.p_timeStep_h, null);
 	
 //}
 
@@ -32436,17 +32489,19 @@ double yearlyProductionMethane_kWh 	= 0;
 double yearlyProductionHydrogen_kWh = 0;
 double timestep_h 					= energyModel.p_timeStep_h;
 double outputTemperature_degC 		= 0;
-
+J_profilePointer profilePointer = null;
 
 switch (asset_type){
 
 case PHOTOVOLTAIC: 
 	//asset_name = "Solar Panels";
+	profilePointer = energyModel.pp_solarPVproduction;
 	capacityElectric_kW = installedPower_kW;
 break;
 
 case WINDMILL:
-	//asset_name = "Windmill onshore";
+	//asset_name = "Windmill onshore";'
+	profilePointer=energyModel.pp_windOnshoreProduction;
 	capacityElectric_kW = installedPower_kW;
 break;
 
@@ -32458,8 +32513,7 @@ case PHOTOTHERMAL: //NOT USED YET
 break;
 }
 
-
-J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, capacityElectric_kW , capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, timestep_h, outputTemperature_degC);
+J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, capacityElectric_kW , capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, timestep_h, outputTemperature_degC, profilePointer);
 
 ]]></Body>
 				</Function>
@@ -34419,7 +34473,7 @@ f_importExcelTablesToDB();
 f_readDatabase();
 
 //Weather market data
-f_setWeatherMarketData();
+f_setEngineProfiles();
 
 //Create the project interface
 f_createInterface();
@@ -34452,6 +34506,8 @@ traceln(" ");
 if( settings.runHeadlessAtStartup() ){
 	energyModel.f_runRapidSimulation(); // Do a full year run to have KPIs right away!
 	zero_Interface.f_updateUIresultsMainArea();
+	zero_Interface.gr_simulateYearScreenSmall.setVisible(false);
+	zero_Interface.gr_loadIconSmall.setVisible(false);
 	if (energyModel.UtilityConnections.size() > 0) {
 		//zero_Interface.f_updateUIresultsGridConnection( zero_Interface.uI_Results.v_gridConnection, energyModel.UtilityConnections.get(0));
 	}
