@@ -10553,7 +10553,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1713543883957</Id>
 					<Name><![CDATA[v_currentSelectedGCnr]]></Name>
-					<X>-410</X><Y>920</Y>
+					<X>-410</X><Y>940</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10568,7 +10568,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1713544066407</Id>
 					<Name><![CDATA[v_heatDemandReduction_pct]]></Name>
-					<X>-410</X><Y>940</Y>
+					<X>-410</X><Y>960</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10583,7 +10583,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1713544066409</Id>
 					<Name><![CDATA[v_electricityDemandReduction_pct]]></Name>
-					<X>-410</X><Y>960</Y>
+					<X>-410</X><Y>980</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11708,7 +11708,7 @@ if (GC.p_secondaryHeatingAsset != null){
 }
 
 
-//Select heat demand profile asset 
+//Select heat demand consumption asset 
 J_EAConsumption heatDemandAsset = findFirst(GC.c_consumptionAssets, j_ea->j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
 
 //Check heating demand asset is null (shouldnt be possible)
@@ -11892,7 +11892,7 @@ if(((J_EAStorageElectric)batteryAsset).getCapacityElectric_kW() != 0){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713546575512</Id>
 					<Name><![CDATA[f_instantiateSliderVariables]]></Name>
-					<X>-410</X><Y>900</Y>
+					<X>-410</X><Y>920</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13718,7 +13718,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1713544087067</Id>
 					<Name><![CDATA[txt_sliderVariables]]></Name>
-					<X>-420</X><Y>870</Y>
+					<X>-420</X><Y>890</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14000,11 +14000,20 @@ f_setSimulateYearScreen();]]></ActionCode>
 						<ActionCode><![CDATA[double newHeatDemandReduction_pct = sl_heatDemandCompanyReduction.getValue();
 double consumptionScaling_fr = 1  - newHeatDemandReduction_pct/100;
 
-for (J_EA j_ea : c_ownedGridConnections.get(v_currentSelectedGCnr).c_consumptionAssets){
-	if (j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND) {
-		((J_EAConsumption)j_ea).setConsumptionScaling_fr(consumptionScaling_fr);
+for (J_EA j_ea : c_ownedGridConnections.get(v_currentSelectedGCnr).c_energyAssets){
+	if (j_ea instanceof J_EAConsumption) {
+		if (j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND) {
+			((J_EAConsumption)j_ea).setConsumptionScaling_fr(consumptionScaling_fr);
+		}
+	}
+	if (j_ea instanceof J_EAProfile) {
+		if (((J_EAProfile) j_ea).energyCarrierConsumed == OL_EnergyCarrierType.HEAT) {
+			((J_EAProfile) j_ea).resetEnergyProfile();
+			((J_EAProfile) j_ea).scaleEnergyProfile(consumptionScaling_fr);
+		}
 	}
 }
+
 
 v_heatDemandReduction_pct = newHeatDemandReduction_pct;
 t_heatDemandReductionCompanies.setText(newHeatDemandReduction_pct + "%");
@@ -14148,9 +14157,17 @@ f_setSimulateYearScreen();]]></ActionCode>
 						<ActionCode><![CDATA[double newElectricityDemandReduction_pct = sl_electricityDemandCompanyReduction.getValue();
 double consumptionScaling_fr = 1  - newElectricityDemandReduction_pct/100;
 
-for (J_EA j_ea : c_ownedGridConnections.get(v_currentSelectedGCnr).c_consumptionAssets) {
-	if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND) {
-		((J_EAConsumption)j_ea).setConsumptionScaling_fr(consumptionScaling_fr);
+for (J_EA j_ea : c_ownedGridConnections.get(v_currentSelectedGCnr).c_energyAssets) {
+	if (j_ea instanceof J_EAConsumption) {
+		if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND) {
+			((J_EAConsumption)j_ea).setConsumptionScaling_fr(consumptionScaling_fr);
+		}
+	}
+	if (j_ea instanceof J_EAProfile) {
+		if (((J_EAProfile) j_ea).energyCarrierConsumed == OL_EnergyCarrierType.ELECTRICITY) {
+			((J_EAProfile) j_ea).resetEnergyProfile();
+			((J_EAProfile) j_ea).scaleEnergyProfile(consumptionScaling_fr);
+		}
 	}
 }
 
@@ -14161,7 +14178,8 @@ t_electricityDemandReductionCompany.setText(newElectricityDemandReduction_pct + 
 f_setScenario(2);
 
 // Simulate Year screen
-f_setSimulateYearScreen();]]></ActionCode>
+f_setSimulateYearScreen();
+]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
@@ -22517,14 +22535,20 @@ zero_Interface.f_resetSettings();]]></Body>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
 					<Body><![CDATA[double newElectricityDemandReduction_pct = demandReduction_pct;
-
+ 
 for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()) {
 	if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND) {
 		((J_EAConsumption)j_ea).yearlyDemandElectricity_kWh = ((J_EAConsumption)j_ea).yearlyDemandElectricity_kWh / (1 - v_electricityDemandReduction_pct/100) * ( 1  - newElectricityDemandReduction_pct/100);
 	}
+	if (j_ea instanceof J_EAProfile) {
+		if (((J_EAProfile) j_ea).energyCarrierConsumed == OL_EnergyCarrierType.ELECTRICITY) {
+			((J_EAProfile) j_ea).resetEnergyProfile();
+			((J_EAProfile) j_ea).scaleEnergyProfile(1 - demandReduction_pct / 100);
+		}
+	}
 }
 v_electricityDemandReduction_pct = newElectricityDemandReduction_pct;
-
+ 
 zero_Interface.f_resetSettings();]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -24595,8 +24619,23 @@ f_setPublicChargingStationsScale(sliderValue);]]></ActionCode>
 			<Variables>
 				<Variable Class="PlainVariable">
 					<Id>1722258576600</Id>
-					<Name><![CDATA[v_heatDemandReduction_pct]]></Name>
-					<X>90</X><Y>620</Y>
+					<Name><![CDATA[v_heatDemandReductionCompanies_pct]]></Name>
+					<X>90</X><Y>610</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727269173561</Id>
+					<Name><![CDATA[v_heatDemandReductionHouses_pct]]></Name>
+					<X>90</X><Y>650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24616,7 +24655,7 @@ f_setPublicChargingStationsScale(sliderValue);]]></ActionCode>
 					<Id>1722256102007</Id>
 					<Name><![CDATA[f_setHeatingSystemsCompanies]]></Name>
 					<Description><![CDATA[Function that adds or removes heatpumps to utility connections. Takes a percentage as a parameter and runs untill that percentage of all the utility connections has a heatpump. If a new heatpump is created it determines its heat demand on a heat_demand consumption asset if it exists, else it looks for a heat profile asset. The function also updates the radio button in the company UI.]]></Description>
-					<X>60</X><Y>790</Y>
+					<X>110</X><Y>790</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24722,7 +24761,7 @@ if( targetHeatPumpAmount < nbHeatPumps){
 					<Id>1722256221655</Id>
 					<Name><![CDATA[f_setHeatingSystemsHouseholds]]></Name>
 					<Description><![CDATA[Function that adds or removes heatpumps to houses. Takes a percentage as a parameter and runs untill that percentage of all the houses has a heatpump. If a new heatpump is created it determines its heat demand on a heat_demand consumption asset if it exists, else it looks for a heat profile asset.]]></Description>
-					<X>60</X><Y>810</Y>
+					<X>110</X><Y>810</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24798,7 +24837,7 @@ else {
 					<Id>1722256269495</Id>
 					<Name><![CDATA[f_setHeatingSliders]]></Name>
 					<Description><![CDATA[Function that calculates all the values of the other sliders and sets them without calling an action. Takes as parameters the index of the slider which should not be touched as well as all the sliders. HybridHeatPump and DistrictHeating sliders are optional and an argument of null can be passed. ]]></Description>
-					<X>60</X><Y>770</Y>
+					<X>110</X><Y>770</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24863,9 +24902,9 @@ if ( districtHeatingSlider != null ) {
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722335783993</Id>
-					<Name><![CDATA[f_setDemandReduction]]></Name>
+					<Name><![CDATA[f_setDemandReductionHeatingCompanies]]></Name>
 					<Description><![CDATA[Function that reduces the heat demand of all consumption assets. Takes as an argument a percentage to reduce by compared to the default value of the consumption assets.]]></Description>
-					<X>70</X><Y>600</Y>
+					<X>70</X><Y>590</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24877,12 +24916,57 @@ if ( districtHeatingSlider != null ) {
 					<Body><![CDATA[double newHeatDemandReduction_pct = demandReduction_pct;
 
 for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()) {
-	if (j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND) {
-		((J_EAConsumption)j_ea).yearlyDemandHeat_kWh = ((J_EAConsumption)j_ea).yearlyDemandHeat_kWh / (1 - v_heatDemandReduction_pct/100) * ( 1  - newHeatDemandReduction_pct/100);
+	Agent parentGC = j_ea.getParentAgent();
+	if(parentGC != null && parentGC instanceof GCUtility){
+		if (j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND) {
+			((J_EAConsumption)j_ea).yearlyDemandHeat_kWh = ((J_EAConsumption)j_ea).yearlyDemandHeat_kWh / (1 - v_heatDemandReductionCompanies_pct/100) * ( 1  - newHeatDemandReduction_pct/100);
+		}
+		if (j_ea instanceof J_EAProfile) {
+			if (((J_EAProfile) j_ea).energyCarrierConsumed == OL_EnergyCarrierType.HEAT) {
+				((J_EAProfile) j_ea).resetEnergyProfile();
+				((J_EAProfile) j_ea).scaleEnergyProfile(1 - demandReduction_pct / 100);
+			}
+		}
 	}
 }
+v_heatDemandReductionCompanies_pct = newHeatDemandReduction_pct;
+ 
+zero_Interface.f_resetSettings();]]></Body>
+				</Function>
+				<Function AccessType="protected" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1727269173559</Id>
+					<Name><![CDATA[f_setDemandReductionHeatingHouses]]></Name>
+					<Description><![CDATA[Function that reduces the heat demand of all consumption assets. Takes as an argument a percentage to reduce by compared to the default value of the consumption assets.]]></Description>
+					<X>70</X><Y>630</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[demandReduction_pct]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[double newHeatDemandReduction_pct = demandReduction_pct;
 
-v_heatDemandReduction_pct = newHeatDemandReduction_pct;]]></Body>
+for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()) {
+	Agent parentGC = j_ea.getParentAgent();
+	if(parentGC != null && parentGC instanceof GCHouse){
+		if (j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND) {
+			((J_EAConsumption)j_ea).yearlyDemandHeat_kWh = ((J_EAConsumption)j_ea).yearlyDemandHeat_kWh / (1 - v_heatDemandReductionHouses_pct/100) * ( 1  - newHeatDemandReduction_pct/100);
+		}
+		if (j_ea instanceof J_EAProfile) {
+			if (((J_EAProfile) j_ea).energyCarrierConsumed == OL_EnergyCarrierType.HEAT) {
+				((J_EAProfile) j_ea).resetEnergyProfile();
+				((J_EAProfile) j_ea).scaleEnergyProfile(1 - demandReduction_pct / 100);
+			}
+		}
+	}
+}
+v_heatDemandReductionHouses_pct = newHeatDemandReduction_pct;
+ 
+zero_Interface.f_resetSettings();]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -24966,7 +25050,7 @@ v_heatDemandReduction_pct = newHeatDemandReduction_pct;]]></Body>
 					<LineColor>-4144960</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>370</Width>
+					<Width>450</Width>
 					<Height>470</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
@@ -25327,11 +25411,7 @@ f_setHeatingSystemsHouseholds( sl_electricHeatPumpHouseholds_pct.getValue() );
 					<BasicProperties Width="100" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[traceln("Slider doet nog niets!!");
-//p_heatDemandReduction = (100 - sl_heatDemandReduction.getValue()) / 100;
-//t_heatDemandReduction.setText(sl_heatDemandReduction.getValue() + "%");
-
-zero_Interface.f_resetSettings();]]></ActionCode>
+						<ActionCode><![CDATA[f_setDemandReductionHeatingHouses( sl_heatDemandReductionHouseholds_pct.getValue() );]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
@@ -25419,17 +25499,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 					<BasicProperties Width="100" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[double newHeatDemandReduction_pct = sl_heatDemandReductionCompanies_pct.getValue();
-
-for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()) {
-	if (j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND) {
-		((J_EAConsumption)j_ea).yearlyDemandHeat_kWh = ((J_EAConsumption)j_ea).yearlyDemandHeat_kWh / (1 - v_heatDemandReduction_pct/100) * ( 1  - newHeatDemandReduction_pct/100);
-	}
-}
-v_heatDemandReduction_pct = newHeatDemandReduction_pct;
-//t_heatDemandReductionCompanies.setText((int) newHeatDemandReduction_pct + "%");
-
-zero_Interface.f_resetSettings();]]></ActionCode>
+						<ActionCode><![CDATA[f_setDemandReductionHeatingCompanies( sl_heatDemandReductionCompanies_pct.getValue() );]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
@@ -26281,17 +26351,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 					<BasicProperties Width="100" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[double newHeatDemandReduction_pct = sl_heatDemandReductionCompanies_pct1.getValue();
-
-for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()) {
-	if (j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND) {
-		((J_EAConsumption)j_ea).yearlyDemandHeat_kWh = ((J_EAConsumption)j_ea).yearlyDemandHeat_kWh / (1 - v_heatDemandReduction_pct/100) * ( 1  - newHeatDemandReduction_pct/100);
-	}
-}
-v_heatDemandReduction_pct = newHeatDemandReduction_pct;
-//t_heatDemandReductionCompanies.setText((int) newHeatDemandReduction_pct + "%");
-
-zero_Interface.f_resetSettings();]]></ActionCode>
+						<ActionCode><![CDATA[f_setDemandReductionHeatingCompanies( sl_heatDemandReductionCompanies_pct.getValue() );]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
@@ -26670,8 +26730,8 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 					<LineColor>-8355840</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>300</Width>
-					<Height>100</Height>
+					<Width>390</Width>
+					<Height>150</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -26679,7 +26739,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722335783991</Id>
 					<Name><![CDATA[t_demandFunctionsDescription]]></Name>
-					<X>190</X><Y>550</Y>
+					<X>240</X><Y>550</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -26700,7 +26760,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Rectangle>
 					<Id>1722338183031</Id>
 					<Name><![CDATA[rect_heatingFunctions]]></Name>
-					<X>40</X><Y>710</Y>
+					<X>90</X><Y>710</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -26722,7 +26782,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722338183033</Id>
 					<Name><![CDATA[t_heatingFunctionsDescription]]></Name>
-					<X>190</X><Y>720</Y>
+					<X>240</X><Y>720</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32324,36 +32384,42 @@ else { // Add regular electricity and consumption profiles
 						<Name><![CDATA[ratioGasUsedForHeating]]></Name>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
+					<Parameter>
+						<Name><![CDATA[profileName]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
 					<Body><![CDATA[J_EAConsumption heatDemand;
+double yearlyDemandHeat_kWh = 0;
+double profileTimeStep_hr = 1;
 
 if (parentGC.p_heatingType != OL_GridConnectionHeatingType.GASBURNER || yearlyGasDemand_m3 <= 0 ){// FOR NOW CHECK THIS
 	traceln("NO SUPPORTED HEATING TYPE DETECTED, OR NO GAS DEMAND DETECTED!!");
 	return;
 }
-/*
+
 if(hasHourlyGasData){
-	J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarrierType.HEAT, null, OL_ProfileAssetType. ,energyModel.p_timeStep_h);		
+	J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarrierType.HEAT, null, OL_ProfileAssetType.HEATDEMAND ,profileTimeStep_hr);		
 	profile.energyAssetName = parentGC.p_ownerID + " custom heat profile";
 	
 	List<Double> hourlyGasDemand_kWh = selectValues(double.class, "SELECT " + profileName + "_demand FROM comp_gas_consumption;");
-	List<Double> hourlyHeatDemand_kWh;
+	List<Double> hourlyHeatDemand_kWh = new ArrayList<Double>();
 	for (int i = 0; i < hourlyGasDemand_kWh.size(); i++) {
-    	hourlyHeatDemand_kWh.add(i, hourlyGasDemand_kWh.get(i) * avgc_data.p_gas_kWhpm3 * ratioGasUsedForHeating);
+		double gasHeatingValue_timestep_kWh = hourlyGasDemand_kWh.get(i) * avgc_data.p_gas_kWhpm3 * ratioGasUsedForHeating;
+		yearlyDemandHeat_kWh += gasHeatingValue_timestep_kWh;
+    	hourlyHeatDemand_kWh.add(i, gasHeatingValue_timestep_kWh);
 	}	
 	profile.a_energyProfile_kWh = hourlyHeatDemand_kWh.stream().mapToDouble(d -> max(0,d)).toArray();
 }
-else{*/
+else{
 	//Determine heatdemand
-	double yearlyDemandHeat_kWh = yearlyGasDemand_m3 * avgc_data.p_gas_kWhpm3; 
-	heatDemand = new J_EAConsumption(parentGC, OL_EnergyAssetType.HEAT_DEMAND, "Building_heat_demand", 0.0, yearlyDemandHeat_kWh, 0.0, 0.0, 0.0, energyModel.p_timeStep_h);
-	
-//}
+	yearlyDemandHeat_kWh = yearlyGasDemand_m3 * avgc_data.p_gas_kWhpm3; 
+	heatDemand = new J_EAConsumption(parentGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, 0.0, yearlyDemandHeat_kWh, 0.0, 0.0, 0.0, energyModel.p_timeStep_h);
+}
 
 switch (parentGC.p_heatingType){ // HOE gaan we om met meerdere heating types in survey???
 
 	case GASBURNER:
-		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, OL_EnergyAssetType.GAS_BURNER, heatDemand.yearlyDemandHeat_kWh / 8760 * 10, 0.99, energyModel.p_timeStep_h, 90);
-		// Waarom hierboven in de JEA een factor /8760 * 10 ?????
+		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, OL_EnergyAssetType.GAS_BURNER, yearlyDemandHeat_kWh / 8760 * 10, 0.99, energyModel.p_timeStep_h, 90);
 	break;
 	
 	case HYBRID_HEATPUMP:
@@ -32363,12 +32429,6 @@ switch (parentGC.p_heatingType){ // HOE gaan we om met meerdere heating types in
 	case ELECTRIC_HEATPUMP:
 		traceln("GC HAS ELECTRIC_HEATPUMP, NO EA MADE");
 	break;
-	
-	/*
-	case HYDROGENBURNER:
-		traceln("GC HAS HYDROGEN_BURNER, NO EA MADE");
-	break;
-	*/
 	
 	default:
 	traceln("HEATING TYPE NOT FOUND FOR GC ");
@@ -32550,7 +32610,7 @@ if (project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 	
 }
 else{
-	f_addHeatDemandProfile(house, jaarlijksGasVerbruik, false, 1);
+	f_addHeatDemandProfile(house, jaarlijksGasVerbruik, false, 1, "Building_heat_demand");
 }
 
 if( randomTrue ( 0.1 )){
@@ -32818,7 +32878,7 @@ if (gridConnection.getElectricity().getHasConnection()){
 	companyGC.v_hasQuarterHourlyValues = false;
 	if (selectFirstValue(Double.class, "SELECT " + "ccid" + gridConnection.getSequence().toString() + "_demand FROM comp_elec_consumption LIMIT 1;") != null){
 		companyGC.v_hasQuarterHourlyValues = true;
-		profileName = "ccid" + companyGC.p_gridConnectionID; //gridConnection.getSequence().toString();
+		profileName = "ccid" + companyGC.p_gridConnectionID;
 		
 		
 		if (!settings.createCurrentElectricityEA()){//input boolean: Dont create current electric energy assets if electricity profile is present.
@@ -32898,7 +32958,8 @@ if (gridConnection.getSupply().getWindPlannedKw() != null && gridConnection.getS
 boolean hasHourlyGasData = false;
 double yearlyGasConsumption_m3 = 0;
 double ratioGasUsedForHeating = 1;
- 
+String heatProfileName = "Building_heat_demand";
+
 if (gridConnection.getNaturalGas().getHasConnection() != null && gridConnection.getNaturalGas().getHasConnection()){
 	
 	yearlyGasConsumption_m3 = (gridConnection.getNaturalGas().getAnnualDemandM3() != null) ? gridConnection.getNaturalGas().getAnnualDemandM3() : 0; // Yearly electricity consumption (0 if value is null)
@@ -32906,10 +32967,11 @@ if (gridConnection.getNaturalGas().getHasConnection() != null && gridConnection.
 	//Check if quarter hourly values are available 
 	if (selectFirstValue(Double.class, "SELECT " + "ccid" + gridConnection.getSequence().toString() + "_demand FROM comp_gas_consumption LIMIT 1;") != null){
 		hasHourlyGasData = true;
+		heatProfileName = "ccid" + companyGC.p_gridConnectionID;
 	}
 	
 	//Determine how much gas goes towards heating
-	ratioGasUsedForHeating = (gridConnection.getNaturalGas().getPercentageUsedForHeating() != null) ? gridConnection.getNaturalGas().getPercentageUsedForHeating() : 1;
+	ratioGasUsedForHeating = ((gridConnection.getNaturalGas().getPercentageUsedForHeating() != null) ? gridConnection.getNaturalGas().getPercentageUsedForHeating() : 100)/100;
 
 	//Update total Yearly gas consumption
 	v_remainingGasConsumption_m3 -= yearlyGasConsumption_m3;
@@ -32923,7 +32985,7 @@ if (gridConnection.getNaturalGas().getHasConnection() != null && gridConnection.
 f_setHeatingTypeSurvey(companyGC, gridConnection);
 
 //Set the heating demand profile
-f_addHeatDemandProfile(companyGC, yearlyGasConsumption_m3, hasHourlyGasData, ratioGasUsedForHeating);
+f_addHeatDemandProfile(companyGC, yearlyGasConsumption_m3, hasHourlyGasData, ratioGasUsedForHeating, heatProfileName);
 
 //add to scenario: current
 current_scenario_list.setCurrentHeatingType(companyGC.p_heatingType);
@@ -33490,7 +33552,7 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 	double yearlyGasDemand_m3 = Remaining_gas_demand_m3_p_m2_yr*companyGC.p_floorSurfaceArea_m2;
 	double ratioGasUsedForHeating = 1;
 	//Add heat demand profile
-	f_addHeatDemandProfile(companyGC, yearlyGasDemand_m3, false, ratioGasUsedForHeating);
+	f_addHeatDemandProfile(companyGC, yearlyGasDemand_m3, false, ratioGasUsedForHeating, "Building_heat_demand");
 	
 	//Set current scenario heating type
 	current_scenario_list.setCurrentHeatingType(companyGC.p_heatingType);
