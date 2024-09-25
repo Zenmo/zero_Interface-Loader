@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_Interface-Loader]]></Name>
@@ -137,8 +137,6 @@ import java.io.IOException;
 //import java.util.Date;  
 import java.text.SimpleDateFormat;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-//import org.bouncycastle.crypto.StreamBlockCipher;
-
 
 //Possibility to turn of traceln
 import java.io.OutputStream;
@@ -1190,7 +1188,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1719311576065</Id>
 					<Name><![CDATA[v_newChargingStationColor]]></Name>
-					<X>690</X><Y>1510</Y>
+					<X>690</X><Y>1550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1205,7 +1203,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1719311576067</Id>
 					<Name><![CDATA[v_newChargingStationLineColor]]></Name>
-					<X>690</X><Y>1530</Y>
+					<X>690</X><Y>1570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1355,7 +1353,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1721729327873</Id>
 					<Name><![CDATA[v_parcelColor]]></Name>
-					<X>690</X><Y>1560</Y>
+					<X>690</X><Y>1600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1370,7 +1368,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1721729331151</Id>
 					<Name><![CDATA[v_parcelLineColor]]></Name>
-					<X>690</X><Y>1580</Y>
+					<X>690</X><Y>1620</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1469,6 +1467,36 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 						<Type><![CDATA[boolean]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[false]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1726752465730</Id>
+					<Name><![CDATA[v_chargingStationColor_centre]]></Name>
+					<X>690</X><Y>1500</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[Color]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[purple]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1726752465732</Id>
+					<Name><![CDATA[v_chargingStationLineColor_centre]]></Name>
+					<X>690</X><Y>1520</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[Color]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new Color(48, 25, 52)]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -1643,21 +1671,6 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 						<CollectionClass><![CDATA[LinkedHashMap]]></CollectionClass>
 						<ElementClass><![CDATA[GridConnection]]></ElementClass>
 						<ValueElementClass><![CDATA[J_scenario_Future]]></ValueElementClass>
-					</Properties>
-
-				</Variable>
-				<Variable Class="CollectionVariable">
-					<Id>1713429834896</Id>
-					<Name><![CDATA[c_scenarioMap_Hydrogen]]></Name>
-					<X>-280</X><Y>240</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[LinkedHashMap]]></CollectionClass>
-						<ElementClass><![CDATA[GridConnection]]></ElementClass>
-						<ValueElementClass><![CDATA[J_scenario_Hydrogen]]></ValueElementClass>
 					</Properties>
 
 				</Variable>
@@ -2455,7 +2468,7 @@ else {
 	}
 	
 	//Set adres text
-	if (v_clickedBuilding.c_containedGridConnections.get(0).p_address.getAddress() == null) {
+	if (v_clickedBuilding.c_containedGridConnections.get(0).p_address == null || v_clickedBuilding.c_containedGridConnections.get(0).p_address.getAddress() == null) {
 		text = text + "Onbekend adres";
 	}
 	else {
@@ -2595,7 +2608,6 @@ while (v_connectionOwnerIndexNr < c_COCompanies.size()){
 	for (int k = 0; k < companyUI.c_ownedGridConnections.size() ; k++){
 		companyUI.c_scenarioSettings_Current.add(c_scenarioMap_Current.get(companyUI.c_ownedGridConnections.get(k)));
 		companyUI.c_scenarioSettings_Future.add(c_scenarioMap_Future.get(companyUI.c_ownedGridConnections.get(k)));
-		companyUI.c_scenarioSettings_Hydrogen.add(c_scenarioMap_Hydrogen.get(companyUI.c_ownedGridConnections.get(k)));
 	}
 
 	//Initialize the companyUI
@@ -2743,12 +2755,41 @@ uI_Results.f_initialize();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1709716821856</Id>
 					<Name><![CDATA[f_updateUIresultsMainArea]]></Name>
-					<X>-650</X><Y>630</Y>
+					<X>-650</X><Y>650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[AreaCollection area = uI_Results.v_area;
+
+//Previous totals
+area.v_previousTotals.setPreviousTotalConsumedEnergy_MWh(area.v_annualTotalConsumedEnergy_MWh);
+area.v_previousTotals.setPreviousTotalProducedEnergy_MWh(area.v_annualTotalProducedEnergy_MWh);
+area.v_previousTotals.setPreviousSelfConsumedEnergy_MWh(area.v_annualSelfConsumedEnergy_MWh);
+area.v_previousTotals.setPreviousImportedEnergy_MWh(area.v_annualImportedEnergy_MWh);
+area.v_previousTotals.setPreviousExportedEnergy_MWh(area.v_annualExportedEnergy_MWh);
+area.v_previousTotals.setPreviousDistrictHeatingHeatDemand_MWh(area.v_annualDistrictHeatingHeatDemand_MWh);
+area.v_previousTotals.setPreviousHeatPumpHeatGeneration_MWh(area.v_annualHeatPumpHeatGeneration_MWh);
+area.v_previousTotals.setPreviousNaturalGasDemand_MWh(area.v_annualNaturalGasDemand_MWh);
+area.v_previousTotals.setPreviousPetroleumProductsDemand_MWh(area.v_annualPetroleumProductsDemand_MWh);
+area.v_previousTotals.setPreviousHydrogenDemand_MWh(area.v_annualHydrogenDemand_MWh);
+area.v_previousTotals.setPreviousHydrogenSupply_MWh(area.v_annualHydrogenSupply_MWh);
+area.v_previousTotals.setPreviousHeatDemand_MWh(area.v_annualHeatDemand_MWh);
+area.v_previousTotals.setPreviousSelfConsumedElectricity_MWh(area.v_annualSelfConsumedElectricity_MWh);
+area.v_previousTotals.setPreviousSelfProducedElectricity_MWh(area.v_annualSelfProducedElectricity_MWh);
+area.v_previousTotals.setPreviousElectricityImport_MWh(area.v_annualElectricityImport_MWh);
+area.v_previousTotals.setPreviousElectricityExport_MWh(area.v_annualElectricityExport_MWh);
+area.v_previousTotals.setPreviousElectricityConsumed_MWh(area.v_annualElectricityConsumed_MWh);
+area.v_previousTotals.setPreviousElectricityForTransportDemand_MWh(area.v_annualElectricityForTransportDemand_MWh);
+area.v_previousTotals.setPreviousHydrogenForTransportDemand_MWh(area.v_annualHydrogenForTransportDemand_MWh);
+area.v_previousTotals.setPreviousTransportEnergyDemand_MWh(area.v_annualTransportEnergyDemand_MWh);
+area.v_previousTotals.setPreviousWindSupply_MWh(area.v_annualWindSupply_MWh);
+area.v_previousTotals.setPreviousWindSupplyRemainingPotential_MWh(area.v_annualWindSupplyRemainingPotential_MWh);
+area.v_previousTotals.setPreviousPVSupply_MWh(area.v_annualPVSupply_MWh);
+area.v_previousTotals.setPreviousPVSupplyRemainingPotential_MWh(area.v_annualPVSupplyRemainingPotential_MWh);
+area.v_previousTotals.setPreviousHeatSupply_MWh(area.v_annualHeatSupply_MWh);
+area.v_previousTotals.setPreviousHeatSupplyRemainingPotential_MWh(area.v_annualHeatSupplyRemainingPotential_MWh);
+area.v_previousTotals.setPreviousTotalTimeOverloadedTransformers_hr(area.v_totalTimeOverloadedTransformers_h);
 
 // Net Load
 area.v_dataNetLoadYear_kW = energyModel.acc_annualElectricityBalance_kW.getTimeSeries();
@@ -2889,6 +2930,8 @@ area.v_modelSelfSufficiency_fr = energyModel.v_modelSelfSufficiency_fr;
 area.v_totalTimeOverloadedTransformers_h = energyModel.v_gridOverloadDuration_h;
 
 //Yearly
+area.v_annualTotalConsumedEnergy_MWh = energyModel.v_totalEnergyUsed_MWh;
+area.v_annualTotalProducedEnergy_MWh = energyModel.v_totalEnergyProduced_MWh;
 area.v_annualImportedEnergy_MWh = energyModel.v_totalImportedEnergy_MWh;
 area.v_annualExportedEnergy_MWh = energyModel.v_totalExportedEnergy_MWh;
 area.v_annualSelfConsumedEnergy_MWh = energyModel.v_totalSelfConsumedEnergy_MWh;
@@ -2990,7 +3033,7 @@ area.v_hydrogenExportWeekend_MWh = energyModel.v_weekendHydrogenExport_MWh;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1709716821860</Id>
 					<Name><![CDATA[f_updateUIresultsEnergyCoop]]></Name>
-					<X>-650</X><Y>669.467</Y>
+					<X>-650</X><Y>689.467</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3200,7 +3243,7 @@ runSimulation();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1712584842532</Id>
 					<Name><![CDATA[f_updateUIresultsGridNode]]></Name>
-					<X>-650</X><Y>650</Y>
+					<X>-650</X><Y>670</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3812,7 +3855,12 @@ objectGIS.gisRegion.setLineColor( orange );
 
 //set info text
 v_clickedObjectText = ""; //charger.p_CPOName + " laadpunt, ";
-v_clickedObjectAdress = charger.p_address.getStreetName();
+if (charger.p_address == null || charger.p_address.getAddress() == null) {
+	v_clickedObjectAdress = "Onbekend adres";
+}
+else{
+	v_clickedObjectAdress = charger.p_address.getStreetName();
+}
 v_clickedObjectDetails = "No detaild info of charger available";
 
 //v_clickedGridConnection = charger;
@@ -3910,7 +3958,7 @@ f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConne
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720799287420</Id>
 					<Name><![CDATA[f_updateUIresultsGridConnection]]></Name>
-					<X>-650</X><Y>690</Y>
+					<X>-650</X><Y>710</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3923,27 +3971,20 @@ f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConne
 						<Name><![CDATA[gcList]]></Name>
 						<Type><![CDATA[ArrayList<GridConnection>]]></Type>
 					</Parameter>
-					<Body><![CDATA[
+					<Body><![CDATA[//Update to new variables
 f_updateVariablesOfGCData(area, gcList);
 f_updateLiveDataSets(area, gcList);
 f_updateYearlyGCData(area, gcList);
 f_updateWeeklyGCData(area, gcList);
 f_updateBelastingduurKromme(area, gcList);
-
-/*
-f_updateVariablesOfGCData(area, gcList);
-f_updateLiveDataSets(area, gcList);
-f_updateYearlyGCData(area, gcList);
-f_updateWeeklyGCData(area, gcList);
-f_updateBelastingduurKromme(area, gcList);
-*/]]></Body>
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720820424632</Id>
 					<Name><![CDATA[f_updateYearlyGCData]]></Name>
-					<X>-620</X><Y>750</Y>
+					<X>-620</X><Y>770</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4042,7 +4083,7 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720820539394</Id>
 					<Name><![CDATA[f_updateWeeklyGCData]]></Name>
-					<X>-620</X><Y>770</Y>
+					<X>-620</X><Y>790</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4246,7 +4287,7 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720820656291</Id>
 					<Name><![CDATA[f_updateVariablesOfGCData]]></Name>
-					<X>-620</X><Y>710</Y>
+					<X>-620</X><Y>730</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4272,10 +4313,13 @@ area.v_modelSelfSufficiency_fr = sum(gcList, x -> x.v_totalEnergyProduced_MWh) >
 //area.v_totalTimeOverloadedTransformers_h = GC.v_netOverloadDuration_h;
 
 //Yearly
+area.v_annualTotalConsumedEnergy_MWh = sum(gcList, x -> x.v_totalEnergyConsumed_MWh);
+area.v_annualTotalProducedEnergy_MWh = sum(gcList, x -> x.v_totalEnergyProduced_MWh);
 area.v_annualImportedEnergy_MWh = sum(gcList, x -> x.v_totalImport_MWh);
 area.v_annualExportedEnergy_MWh = sum(gcList, x -> x.v_totalExport_MWh);
 area.v_annualSelfConsumedEnergy_MWh = sum(gcList, x -> x.v_totalSelfConsumedEnergy_MWh);
 
+area.v_annualElectricityConsumed_MWh = sum(gcList, x -> x.v_totalElectricityConsumed_MWh);
 area.v_annualElectricityImport_MWh = sum(gcList, x -> x.v_electricityDrawnFromGrid_kWh) / 1000;
 area.v_annualElectricityExport_MWh = sum(gcList, x -> x.v_electricityDeliveredToGrid_kWh) / 1000;
 area.v_annualSelfConsumedElectricity_MWh = sum(gcList, x -> x.v_totalElectricitySelfConsumed_MWh);
@@ -4284,6 +4328,14 @@ area.v_annualNaturalGasDemand_MWh = sum(gcList, x -> x.v_methaneDrawn_kWh) / 100
 area.v_annualPetroleumProductsDemand_MWh = sum(gcList, x -> x.v_dieselDrawn_kWh) / 1000;
 area.v_annualHydrogenDemand_MWh = sum(gcList, x -> x.v_hydrogenDrawn_kWh) / 1000;
 area.v_annualHydrogenSupply_MWh = sum(gcList, x -> x.v_hydrogenDelivered_kWh) / 1000;
+
+//Overload duration (for multiple GC this does not really make sense right?, would be more interesting to see the influence of their combined contract capacity)
+area.v_annualOverloadDurationDelivery_hr = sum(gcList, x -> x.v_totalOverloadDurationDelivery_hr);
+area.v_annualOverloadDurationFeedin_hr = sum(gcList, x -> x.v_totalOverloadDurationFeedin_hr);
+
+//Previous annual values: does not work (yet) for multiselect.
+area.v_previousTotals = uI_Results.c_previousTotals_GC.get(gcList.get(0));
+
 
 // Summer/winter
 area.v_importedEnergySummerWeek_MWh = sum(gcList, x -> x.v_summerWeekTotalImport_MWh);
@@ -4371,7 +4423,7 @@ area.v_hydrogenExportWeekend_MWh = sum(gcList, x -> x.v_weekendHydrogenExport_MW
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720820777814</Id>
 					<Name><![CDATA[f_updateLiveDataSets]]></Name>
-					<X>-620</X><Y>730</Y>
+					<X>-620</X><Y>750</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4508,7 +4560,7 @@ for (int i=0; i < liveWeekSize; i++){ //we go back to update the existing live w
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720820888674</Id>
 					<Name><![CDATA[f_updateBelastingduurKromme]]></Name>
-					<X>-620</X><Y>790</Y>
+					<X>-620</X><Y>810</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4762,7 +4814,7 @@ uI_Results.f_showCorrectChart();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1721305389703</Id>
 					<Name><![CDATA[f_addTimeStepLiveDataSets]]></Name>
-					<X>-620</X><Y>810</Y>
+					<X>-620</X><Y>830</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5221,7 +5273,7 @@ return gisroute;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725439643960</Id>
 					<Name><![CDATA[f_updateTotalLiveDataSets]]></Name>
-					<X>-650</X><Y>830</Y>
+					<X>-650</X><Y>850</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5262,7 +5314,7 @@ return gisroute;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725440073691</Id>
 					<Name><![CDATA[f_addTimeStepTotalLiveDataSets]]></Name>
-					<X>-625</X><Y>850</Y>
+					<X>-625</X><Y>870</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5302,7 +5354,7 @@ for (int j = 0; j < c_selectedGridConnections.size(); j++) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725442474483</Id>
 					<Name><![CDATA[f_updateTotalYearlyDataSets]]></Name>
-					<X>-645</X><Y>870</Y>
+					<X>-645</X><Y>890</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5342,7 +5394,7 @@ for (int j = 0; j < c_selectedGridConnections.size(); j++) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725442517475</Id>
 					<Name><![CDATA[f_updateTotalWeeklyDataSets]]></Name>
-					<X>-645</X><Y>890</Y>
+					<X>-645</X><Y>910</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5439,6 +5491,58 @@ traceln("Forgot to override project specific slider settings!!");]]></Body>
 					<Body><![CDATA[//Function used to set the colors, styling, and other parameters/functions for each specific project
 //Should be overridden!!
 traceln("DID NOT OVERRIDE THE PROJECT SPECIFIC STYLING!");]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1727085747538</Id>
+					<Name><![CDATA[f_updatePreviousTotalsGC]]></Name>
+					<X>-650</X><Y>630</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[for (GridConnection GC : energyModel.f_getGridConnections()){	
+	J_previousTotals previousTotals = uI_Results.c_previousTotals_GC.get(GC);
+	
+	previousTotals.setPreviousTotalConsumedEnergy_MWh(GC.v_totalEnergyConsumed_MWh);
+	previousTotals.setPreviousTotalProducedEnergy_MWh(GC.v_totalEnergyProduced_MWh);
+	previousTotals.setPreviousSelfConsumedEnergy_MWh(GC.v_totalSelfConsumedEnergy_MWh);
+	previousTotals.setPreviousImportedEnergy_MWh(GC.v_totalImport_MWh);
+	previousTotals.setPreviousExportedEnergy_MWh(GC.v_totalExport_MWh);
+		
+	previousTotals.setPreviousNaturalGasDemand_MWh(GC.v_methaneDrawn_kWh);
+	previousTotals.setPreviousPetroleumProductsDemand_MWh(GC.v_dieselDrawn_kWh);
+	previousTotals.setPreviousHydrogenDemand_MWh(GC.v_hydrogenDrawn_kWh);
+	previousTotals.setPreviousHydrogenSupply_MWh(GC.v_hydrogenDelivered_kWh);
+	
+	previousTotals.setPreviousSelfConsumedElectricity_MWh(GC.v_totalElectricitySelfConsumed_MWh);
+	//previousTotals.setPreviousSelfProducedElectricity_MWh(GC.v_totalElectricitySelfProduced_MWh);
+	previousTotals.setPreviousElectricityImport_MWh(GC.v_electricityDrawnFromGrid_kWh);
+	previousTotals.setPreviousElectricityExport_MWh(GC.v_electricityDeliveredToGrid_kWh);
+	previousTotals.setPreviousElectricityConsumed_MWh(GC.v_totalElectricityConsumed_MWh);
+	
+	//Overload
+	previousTotals.setPreviousOverloadDurationDelivery_hr(GC.v_totalOverloadDurationDelivery_hr);
+	previousTotals.setPreviousOverloadDurationFeedin_hr(GC.v_totalOverloadDurationFeedin_hr);
+	//Unused parameters
+	/*
+		previousTotals.setPreviousHeatDemand_MWh(GC.v_annualHeatDemand_MWh
+		previousTotals.setPreviousDistrictHeatingHeatDemand_MWh(GC.v_annualDistrictHeatingHeatDemand_MWh
+		previousTotals.setPreviousHeatPumpHeatGeneration_MWh(GC.v_annualHeatPumpHeatGeneration_MWh
+		previousTotals.setPreviousElectricityForTransportDemand_MWh(GC.v_annualElectricityForTransportDemand_MWh);
+		previousTotals.setPreviousHydrogenForTransportDemand_MWh(GC.v_annualHydrogenForTransportDemand_MWh);
+		previousTotals.setPreviousTransportEnergyDemand_MWh(GC.v_annualTransportEnergyDemand_MWh);
+		previousTotals.setPreviousWindSupply_MWh(GC.v_annualWindSupply_MWh);
+		previousTotals.setPreviousWindSupplyRemainingPotential_MWh(GC.v_annualWindSupplyRemainingPotential_MWh);
+		previousTotals.setPreviousPVSupply_MWh(GC.v_annualPVSupply_MWh);
+		previousTotals.setPreviousPVSupplyRemainingPotential_MWh(GC.v_annualPVSupplyRemainingPotential_MWh);
+		previousTotals.setPreviousHeatSupply_MWh(GC.v_annualHeatSupply_MWh);
+		previousTotals.setPreviousHeatSupplyRemainingPotential_MWh(GC.v_annualHeatSupplyRemainingPotential_MWh);
+	*/
+
+}
+]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -5633,6 +5737,9 @@ traceln("DID NOT OVERRIDE THE PROJECT SPECIFIC STYLING!");]]></Body>
 							<Value Class="CodeValue">
 								<Code><![CDATA[energyModel]]></Code>
 							</Value>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_previousTotals_Region]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -8285,14 +8392,14 @@ b_updateCongestionColors = false;
 					<ZHeight>10</ZHeight>
 					<LineWidth>3</LineWidth>
 					<LineColor>-16777216</LineColor>
-					<LineColorCode><![CDATA[v_chargingStationLineColor]]></LineColorCode>
+					<LineColorCode><![CDATA[v_chargingStationLineColor_centre]]></LineColorCode>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
 					<Width>15</Width>
 					<Height>15</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
-					<FillColorCode><![CDATA[v_chargingStationColor]]></FillColorCode>
+					<FillColorCode><![CDATA[v_chargingStationColor_centre]]></FillColorCode>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
 				<Text>
@@ -8329,7 +8436,7 @@ b_updateCongestionColors = false;
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[Laadplein E-trucks]]></Text>
+					<Text><![CDATA[Laadplein]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>12</Size>
@@ -9085,18 +9192,26 @@ gr_simulateYearScreenSmall.setVisible(false);
 gr_loadIconSmall.setVisible(true);
 		
 
-new Thread( () -> {	
+new Thread( () -> {
+	//Save previous totals
+	f_updatePreviousTotalsGC();
+	
+	//Run rapid run
 	energyModel.f_runRapidSimulation();
+	
+	//After rapid run: remove loading screen
 	gr_loadIconSmall.setVisible(false);
-	//gr_simulateCostsScreen.setVisible(false);
-	//gr_scopeRadioButtons.setVisible(true);
+	
+	//Update main area collection
 	f_updateUIresultsMainArea();
 	uI_Results.f_showCorrectChart();
+	
+	//Update and show kpi summary chart after run
+	uI_Results.chartKPISummary.f_setKPISummaryChart();
 }).start();
 
-//gr_netbelastingDuurkrommes.setVisible(false);
 b_resultsUpToDate = true;
-//f_setCharts();]]></OnClickCode>
+]]></OnClickCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -11298,21 +11413,6 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;]]></Import>
 					</Properties>
 
 				</Variable>
-				<Variable Class="CollectionVariable">
-					<Id>1713947325917</Id>
-					<Name><![CDATA[c_scenarioSettings_Hydrogen]]></Name>
-					<X>-740</X><Y>350</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[J_scenario_Hydrogen]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-					</Properties>
-
-				</Variable>
 			</Variables>
 			<Functions>
 				<Function AccessType="default" StaticFunction="false">
@@ -11330,7 +11430,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;]]></Import>
 						<Type><![CDATA[GridConnection]]></Type>
 					</Parameter>
 					<Body><![CDATA[//Set button to custom early on, so traceln will get ignored.
-rb_scenariosPrivateUI.setValue(3, false);
+rb_scenariosPrivateUI.setValue(2, false);
 
 
 ////Heating
@@ -11405,21 +11505,6 @@ sl_hydrogenTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelect
 //Reset button to future, due to sliders putting it on custom
 rb_scenariosPrivateUI.setValue(1, false);]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1713445296599</Id>
-					<Name><![CDATA[f_setScenarioHydrogen]]></Name>
-					<X>-380</X><Y>570</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[GC]]></Name>
-						<Type><![CDATA[GridConnection]]></Type>
-					</Parameter>
-				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
@@ -11454,18 +11539,12 @@ rb_scenariosPrivateUI.setValue(1, false);]]></Body>
 		//traceln("Selected scenario: Future");
 	break;
 	
-	case 2: // Hydrogen
-		//c_ownedGridConnections.forEach(GC -> f_setScenarioHydrogen(GC));
-		
-		traceln("Selected scenario: Hydrogen : DOES NOTHING YET");
-	break;
-	
-	case 3: // Custom
+	case 2: // Custom
 
-		if(rb_scenariosPrivateUI.getValue() == 3){
+		if(rb_scenariosPrivateUI.getValue() == 2){
 		return;
 		}
-		rb_scenariosPrivateUI.setValue(3, false);
+		rb_scenariosPrivateUI.setValue(2, false);
 		traceln("Selected scenario: Custom");
 	break;
 	
@@ -11491,7 +11570,7 @@ zero_Interface.b_resultsUpToDate = false;]]></Body>
 						<Type><![CDATA[GridConnection]]></Type>
 					</Parameter>
 					<Body><![CDATA[//Set button to custom early on, so traceln will get ignored.
-rb_scenariosPrivateUI.setValue(3, false);
+rb_scenariosPrivateUI.setValue(2, false);
 
 
 ////Heating
@@ -13005,7 +13084,6 @@ int currentElectricitySavings = 0; // FIX THIS!
 J_EAConsumption consumptionEAELECTRIC = findFirst(c_ownedGridConnections.get(v_currentSelectedGCnr).c_consumptionAssets, consumptionAsset -> consumptionAsset.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND);
 if (consumptionEAELECTRIC != null){
 	currentElectricitySavings = roundToInt((consumptionEAELECTRIC.getConsumptionScaling_fr() - 1)*-100);
-	traceln("Electric savings SET");
 }
 
 //Find the current Connection capacity
@@ -13278,6 +13356,9 @@ sl_GCCapacityCompany.setValue(v_defaultGCCapacitySlider, false);]]></Body>
 							<Value Class="CodeValue">
 								<Code><![CDATA[zero_Interface.energyModel]]></Code>
 							</Value>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_previousTotals_Region]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -13562,7 +13643,6 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 						<Orientation>VERTICAL</Orientation>
 						<Button><![CDATA[Huidig - 2023]]></Button>
 						<Button><![CDATA[Toekomstplannen]]></Button>
-						<Button><![CDATA[Waterstof]]></Button>
 						<Button><![CDATA[Custom]]></Button>
 						<LinkTo>false</LinkTo>
 					</ExtendedProperties>
@@ -13832,7 +13912,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 t_GCCapacityCompany.setText(roundToInt(sl_GCCapacityCompany.getValue()) + " kW");
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -13907,7 +13987,7 @@ v_heatDemandReduction_pct = newHeatDemandReduction_pct;
 t_heatDemandReductionCompanies.setText(newHeatDemandReduction_pct + "%");
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14055,7 +14135,7 @@ v_electricityDemandReduction_pct = newElectricityDemandReduction_pct;
 t_electricityDemandReductionCompany.setText(newElectricityDemandReduction_pct + "%");
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14131,7 +14211,7 @@ t_numberOfHydrogenVansCompany.setText(v_nbHydrogenVans);
 t_numberOfDieselVansCompany.setText(v_nbDieselVans);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14215,7 +14295,7 @@ t_numberOfElectricVansCompany.setText(v_nbEVVans);
 t_numberOfDieselVansCompany.setText(v_nbDieselVans);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14299,7 +14379,7 @@ t_numberOfElectricVansCompany.setText(v_nbEVVans);
 t_numberOfHydrogenVansCompany.setText(v_nbHydrogenVans);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14530,7 +14610,7 @@ t_numberOfElectricTrucksCompany.setText(v_nbEVTrucks);
 t_numberOfDieselTrucksCompany.setText(v_nbDieselTrucks);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14593,7 +14673,7 @@ t_numberOfHydrogenTrucksCompany.setText(v_nbHydrogenTrucks);
 t_numberOfDieselTrucksCompany.setText(v_nbDieselTrucks);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14635,7 +14715,7 @@ t_numberOfElectricTrucksCompany.setText(v_nbEVTrucks);
 t_numberOfHydrogenTrucksCompany.setText(v_nbHydrogenTrucks);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14677,7 +14757,7 @@ t_numberOfHydrogenCarsCompany.setText(v_nbHydrogenCars);
 t_numberOfDieselCarsCompany.setText(v_nbDieselCars);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14772,7 +14852,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 t_mobilityDemandReductionCompany.setText(roundToInt(sl_mobilityDemandCompanyReduction.getValue()) + "%");
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14834,7 +14914,7 @@ t_numberOfElectricCarsCompany.setText(v_nbEVCars);
 t_numberOfDieselCarsCompany.setText(v_nbDieselCars);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -14918,7 +14998,7 @@ t_numberOfElectricCarsCompany.setText(v_nbEVCars);
 t_numberOfHydrogenCarsCompany.setText(v_nbHydrogenCars);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -15083,7 +15163,7 @@ f_setBattery(c_ownedGridConnections.get(v_currentSelectedGCnr), sl_batteryCompan
 t_batteryCompany.setText(roundToInt(sl_batteryCompany.getValue()) + " kWh");
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -15383,7 +15463,7 @@ switch (rb_heatingTypePrivateUI.getValue()){
 f_setHeatingType(c_ownedGridConnections.get(v_currentSelectedGCnr), selectedHeatingType);
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -15437,7 +15517,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 t_rooftopSolarCompany.setText(roundToInt(sl_rooftopPVCompany.getValue()) + " kW");
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 
 // Simulate Year screen
 f_setSimulateYearScreen();]]></ActionCode>
@@ -15939,10 +16019,16 @@ gr_loadIcon.setVisible(true);
 
 //Run simulation
 new Thread( () -> {	
+	//Save previous totals
+	zero_Interface.f_updatePreviousTotalsGC();
+
 	zero_Interface.energyModel.f_runRapidSimulation();
 	zero_Interface.f_updateUIresultsMainArea();
 	f_setSelectedGCGraphs();
 	gr_loadIcon.setVisible(false);
+	
+	//Update and show kpi summary chart after run
+	uI_Results.chartKPISummary.f_setKPISummaryChart();
 }).start();
 
 
@@ -16595,7 +16681,7 @@ rb_batteryMode.setValue(rb_value, false);]]></Body>
 						<Type><![CDATA[GridConnection]]></Type>
 					</Parameter>
 					<Body><![CDATA[//Set button to custom early on, so traceln will get ignored.
-rb_scenariosPrivateUI.setValue(3, false);
+rb_scenariosPrivateUI.setValue(2, false);
 
 
 //Scenario code here
@@ -16603,21 +16689,6 @@ rb_scenariosPrivateUI.setValue(3, false);
 
 //Reset button to current, due to sliders putting it on custom
 rb_scenariosPrivateUI.setValue(1, false);]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1724947743371</Id>
-					<Name><![CDATA[f_setScenarioHydrogen]]></Name>
-					<X>-290</X><Y>510</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[GC]]></Name>
-						<Type><![CDATA[GridConnection]]></Type>
-					</Parameter>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -16649,10 +16720,10 @@ rb_scenariosPrivateUI.setValue(1, false);]]></Body>
 	
 	case 3: // Custom
 
-		if(rb_scenariosPrivateUI.getValue() == 3){
+		if(rb_scenariosPrivateUI.getValue() == 2){
 		return;
 		}
-		rb_scenariosPrivateUI.setValue(3, false);
+		rb_scenariosPrivateUI.setValue(2, false);
 		traceln("Selected scenario: Custom");
 	break;
 	
@@ -16678,7 +16749,7 @@ zero_Interface.b_resultsUpToDate = false;]]></Body>
 						<Type><![CDATA[GridConnection]]></Type>
 					</Parameter>
 					<Body><![CDATA[//Set button to custom early on, so traceln will get ignored.
-rb_scenariosPrivateUI.setValue(3, false);
+rb_scenariosPrivateUI.setValue(2, false);
 
 
 //Scenario code here
@@ -17023,7 +17094,7 @@ rb_scenariosPrivateUI.setValue(0, false);]]></Body>
 t_electricityPriceLimit.setText( "€" + sl_batteryElectricityPriceLimit.getValue());
 
 //Set scenario to custom
-f_setScenario(3);]]></ActionCode>
+f_setScenario(2);]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[v_sliderStartValue_priceLimit]]></DefaultValueCode>
@@ -17121,7 +17192,7 @@ t_powerBattery.setText(sl_batteryPower.getValue() + " MW");
 
 
 //Set scenario to custom
-f_setScenario(3);]]></ActionCode>
+f_setScenario(2);]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
@@ -17292,7 +17363,7 @@ switch (rb_batteryMode.getValue()){
 t_electricityBalanceLimit.setText( sl_batteryElectricityBalanceLimit.getValue() + " MW" );
 
 //Set scenario to custom
-f_setScenario(3);]]></ActionCode>
+f_setScenario(2);]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[v_sliderStartValue_balanceLimit]]></DefaultValueCode>
@@ -17363,7 +17434,6 @@ f_setScenario(3);]]></ActionCode>
 						<Orientation>VERTICAL</Orientation>
 						<Button><![CDATA[Huidig - 2023]]></Button>
 						<Button><![CDATA[Toekomstplannen]]></Button>
-						<Button><![CDATA[Waterstof]]></Button>
 						<Button><![CDATA[Custom]]></Button>
 						<LinkTo>false</LinkTo>
 					</ExtendedProperties>
@@ -17560,7 +17630,7 @@ t_capacityBattery.setText(sl_batteryCapacity.getValue() + " MWh");
 
 
 //Set scenario to custom
-f_setScenario(3);]]></ActionCode>
+f_setScenario(2);]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
@@ -18277,7 +18347,7 @@ rb_electrolyserMode.setValue(rb_value, false);]]></Body>
 						<Type><![CDATA[GridConnection]]></Type>
 					</Parameter>
 					<Body><![CDATA[//Set button to custom early on, so traceln will get ignored.
-rb_scenariosPrivateUI.setValue(3, false);
+rb_scenariosPrivateUI.setValue(2, false);
 
 
 //Scenario code here
@@ -18285,21 +18355,6 @@ rb_scenariosPrivateUI.setValue(3, false);
 
 //Reset button to current, due to sliders putting it on custom
 rb_scenariosPrivateUI.setValue(1, false);]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1724859526074</Id>
-					<Name><![CDATA[f_setScenarioHydrogen]]></Name>
-					<X>-340</X><Y>450</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[GC]]></Name>
-						<Type><![CDATA[GridConnection]]></Type>
-					</Parameter>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -18331,10 +18386,10 @@ rb_scenariosPrivateUI.setValue(1, false);]]></Body>
 	
 	case 3: // Custom
 
-		if(rb_scenariosPrivateUI.getValue() == 3){
+		if(rb_scenariosPrivateUI.getValue() == 2){
 		return;
 		}
-		rb_scenariosPrivateUI.setValue(3, false);
+		rb_scenariosPrivateUI.setValue(2, false);
 		traceln("Selected scenario: Custom");
 	break;
 	
@@ -18360,7 +18415,7 @@ zero_Interface.b_resultsUpToDate = false;]]></Body>
 						<Type><![CDATA[GridConnection]]></Type>
 					</Parameter>
 					<Body><![CDATA[//Set button to custom early on, so traceln will get ignored.
-rb_scenariosPrivateUI.setValue(3, false);
+rb_scenariosPrivateUI.setValue(2, false);
 
 
 //Scenario code here
@@ -18707,7 +18762,7 @@ t_electricityPriceLimit.setText( "€" + sl_electrolyserElectricityPriceLimit.ge
 
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 ]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -18806,7 +18861,7 @@ t_powerElectrolyser.setText(sl_electrolyserPower.getValue() + " MW");
 
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 ]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -18978,7 +19033,7 @@ f_setScenario(3);
 t_electricityBalanceLimit.setText( sl_electrolyserElectricityBalanceLimit.getValue() + " MW" );
 
 //Set scenario to custom
-f_setScenario(3);
+f_setScenario(2);
 ]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -19113,7 +19168,6 @@ f_setScenario(3);
 						<Orientation>VERTICAL</Orientation>
 						<Button><![CDATA[Huidig - 2023]]></Button>
 						<Button><![CDATA[Toekomstplannen]]></Button>
-						<Button><![CDATA[Waterstof]]></Button>
 						<Button><![CDATA[Custom]]></Button>
 						<LinkTo>false</LinkTo>
 					</ExtendedProperties>
@@ -28366,7 +28420,7 @@ f_resetNFATOSettings();]]></ActionCode>
 					<Id>1726584205532</Id>
 					<Name><![CDATA[hourOfYearPerMonth]]></Name>
 					<Description><![CDATA[Hour of year per month (not leap year) --> Houdt dit rekening met zomer/winter tijd?]]></Description>
-					<X>1110</X><Y>120</Y>
+					<X>1070</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28383,7 +28437,7 @@ f_resetNFATOSettings();]]></ActionCode>
 					<Name><![CDATA[p_avgHouseConnectionCapacity_kW]]></Name>
 					<Description><![CDATA[https://www.enexis.nl/aansluitingen/welke-aansluiting-heb-ik-nodig
 3*25 A --> 3*25*230 = 17.25 kW]]></Description>
-					<X>60</X><Y>160</Y>
+					<X>50</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28407,7 +28461,7 @@ f_resetNFATOSettings();]]></ActionCode>
 				<Variable Class="Parameter">
 					<Id>1726584205582</Id>
 					<Name><![CDATA[p_avgHouseHeatingMethod]]></Name>
-					<X>60</X><Y>178.976</Y>
+					<X>50</X><Y>188.976</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28432,7 +28486,7 @@ f_resetNFATOSettings();]]></ActionCode>
 					<Id>1726584205585</Id>
 					<Name><![CDATA[p_avgUtilityConnectionCapacity_kW]]></Name>
 					<Description><![CDATA[https://www.enexis.nl/aansluitingen/welke-aansluiting-heb-ik-nodig]]></Description>
-					<X>60</X><Y>340</Y>
+					<X>50</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28456,7 +28510,7 @@ f_resetNFATOSettings();]]></ActionCode>
 				<Variable Class="Parameter">
 					<Id>1726584205588</Id>
 					<Name><![CDATA[p_avgUtilityHeatingMethod]]></Name>
-					<X>60</X><Y>320</Y>
+					<X>50</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28485,7 +28539,7 @@ f_resetNFATOSettings();]]></ActionCode>
 --> 2479 kWh/yr is the average of NL
 --> Overwrite if numbers are available in the project selection agent
 ]]></Description>
-					<X>60</X><Y>138.976</Y>
+					<X>50</X><Y>148.976</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28514,7 +28568,7 @@ f_resetNFATOSettings();]]></ActionCode>
  --> 1169 m3 is the average of NL
 --> Overwrite if numbers are available in the project selection agent
 ]]></Description>
-					<X>60</X><Y>118.976</Y>
+					<X>50</X><Y>128.976</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28541,7 +28595,7 @@ f_resetNFATOSettings();]]></ActionCode>
 					<Description><![CDATA[share of EVs in the netherlands. --> 5% (feb 2024).
 
 https://www.rvo.nl/onderwerpen/elektrisch-vervoer/stand-van-zaken ]]></Description>
-					<X>60</X><Y>198.976</Y>
+					<X>50</X><Y>208.976</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28567,7 +28621,7 @@ https://www.rvo.nl/onderwerpen/elektrisch-vervoer/stand-van-zaken ]]></Descripti
 					<Name><![CDATA[p_ratioHouseInstalledPV]]></Name>
 					<Description><![CDATA[How many houses have installed PV in The Netherlands: 25% (end of 2022)
 https://solarmagazine.nl/nieuws-zonne-energie/i34591/de-harde-cijfers-drenthe-verstevigt-koppositie-38-procent-woningen-heeft-zonnepanelen]]></Description>
-					<X>60</X><Y>220</Y>
+					<X>50</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28592,7 +28646,7 @@ https://solarmagazine.nl/nieuws-zonne-energie/i34591/de-harde-cijfers-drenthe-ve
 					<Id>1726584205603</Id>
 					<Name><![CDATA[p_avgHousePVInstallationPower_kWp]]></Name>
 					<Description><![CDATA[volgens gegevens van het CBS (Centraal Bureau voor de Statistiek) en RVO (Rijksdienst voor Ondernemend Nederland), was het gemiddelde geïnstalleerde piekvermogen van residentiële zonnepanelen in Nederland in 2020 ongeveer 4 kilowatt piek (kWp) per huishouden. --> 4kWp]]></Description>
-					<X>60</X><Y>240</Y>
+					<X>50</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28627,7 +28681,7 @@ https://solarmagazine.nl/nieuws-zonne-energie/i34591/de-harde-cijfers-drenthe-ve
 80-100 kWh (grote autos)
 
 Minimaal: 116 kWh minimum nodig, anders soms negatieve SOC.]]></Description>
-					<X>410</X><Y>190</Y>
+					<X>570</X><Y>190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28652,7 +28706,7 @@ Minimaal: 116 kWh minimum nodig, anders soms negatieve SOC.]]></Description>
 					<Id>1726584205609</Id>
 					<Name><![CDATA[p_avgEVMaxChargePowerCar_kW]]></Name>
 					<Description><![CDATA[Bron???]]></Description>
-					<X>410</X><Y>120</Y>
+					<X>570</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28677,7 +28731,7 @@ Minimaal: 116 kWh minimum nodig, anders soms negatieve SOC.]]></Description>
 					<Id>1726584205612</Id>
 					<Name><![CDATA[p_avgEVStorageVan_kWh]]></Name>
 					<Description><![CDATA[????]]></Description>
-					<X>410</X><Y>210</Y>
+					<X>570</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28702,7 +28756,7 @@ Minimaal: 116 kWh minimum nodig, anders soms negatieve SOC.]]></Description>
 					<Id>1726584205615</Id>
 					<Name><![CDATA[p_avgEVStorageTruck_kWh]]></Name>
 					<Description><![CDATA[??]]></Description>
-					<X>410</X><Y>230</Y>
+					<X>570</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28727,7 +28781,7 @@ Minimaal: 116 kWh minimum nodig, anders soms negatieve SOC.]]></Description>
 					<Id>1726584205618</Id>
 					<Name><![CDATA[p_avgEVMaxChargePowerVan_kW]]></Name>
 					<Description><![CDATA[Bron???]]></Description>
-					<X>410</X><Y>140</Y>
+					<X>570</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28752,7 +28806,7 @@ Minimaal: 116 kWh minimum nodig, anders soms negatieve SOC.]]></Description>
 					<Id>1726584205621</Id>
 					<Name><![CDATA[p_avgEVMaxChargePowerTruck_kW]]></Name>
 					<Description><![CDATA[Bron???]]></Description>
-					<X>410</X><Y>160</Y>
+					<X>570</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28783,7 +28837,7 @@ https://www.vattenfall.nl/elektrische-auto/verbruik/
 --> Tesla model 3: 15.1 kWh per 100 km --> 0.151 kWh/km
 --> Kia niro: 17.1 kWh per 100 km --> 0.171 kWh/km
 --> taking 0.16 kWh/km as the average]]></Description>
-					<X>410</X><Y>260</Y>
+					<X>570</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28809,7 +28863,7 @@ https://www.vattenfall.nl/elektrische-auto/verbruik/
 					<Name><![CDATA[p_avgEVEnergyConsumptionVan_kWhpkm]]></Name>
 					<Description><![CDATA[praktijkverbruik van 26,9 kWh per 100 kilometer:
 https://www.debedrijfswagenadviseurs.nl/praktijkverbruik-elektrische-bedrijfswagen/ ]]></Description>
-					<X>410</X><Y>280</Y>
+					<X>570</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28836,7 +28890,7 @@ https://www.debedrijfswagenadviseurs.nl/praktijkverbruik-elektrische-bedrijfswag
 					<Description><![CDATA[https://www.elektrischevrachtwagen.nl/post/hoe-ver-kan-een-elektrische-vrachtwagen-rijden, https://topsectorlogistiek.nl/wp-content/uploads/2024/06/20240126_Stappenplan-ZE-vrachtwagens.pdf
 0.9 - 1.7 kWh/km
 --> pak gemiddelde: 1.3]]></Description>
-					<X>410</X><Y>300</Y>
+					<X>570</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28863,7 +28917,7 @@ https://www.debedrijfswagenadviseurs.nl/praktijkverbruik-elektrische-bedrijfswag
 					<Description><![CDATA[- https://www.greenchoice.nl/stroom-en-gas/bosgecompenseerd-gas/hoeveel-is-1-kuub-gas/
 
 - https://www.joostdevree.nl/shtmls/calorische_waarde.shtml]]></Description>
-					<X>760</X><Y>120</Y>
+					<X>1070</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28892,7 +28946,7 @@ https://www.debedrijfswagenadviseurs.nl/praktijkverbruik-elektrische-bedrijfswag
 
 LHV = 3.00 kWh/Nm3
 HHV = 3.54 kWh/Nm3]]></Description>
-					<X>760</X><Y>300</Y>
+					<X>1590</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28917,7 +28971,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 					<Id>1726584205639</Id>
 					<Name><![CDATA[p_hydrogenDensity_kg_Nm3]]></Name>
 					<Description><![CDATA[https://keengas.com/gases/hydrogen/]]></Description>
-					<X>760</X><Y>350</Y>
+					<X>1590</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28942,7 +28996,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 					<Id>1726584205642</Id>
 					<Name><![CDATA[p_oxygenDensity_kg_Nm3]]></Name>
 					<Description><![CDATA[http://www.uigi.com/o2_conv.html]]></Description>
-					<X>760</X><Y>370</Y>
+					<X>1590</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28974,7 +29028,7 @@ MM O = 16 g/mol
 1-0.126 = 0.874 g zuurstof per gram water conversie.
 
 --> 1/0.126 =7.9365 gram zuurstof productie per gram waterstof productie.]]></Description>
-					<X>760</X><Y>400</Y>
+					<X>1590</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28999,7 +29053,7 @@ MM O = 16 g/mol
 					<Id>1726584205648</Id>
 					<Name><![CDATA[p_hydrogenSpecificEnergy_kWh_kg]]></Name>
 					<Description><![CDATA[https://www.cenex.co.uk/app/uploads/2021/05/Intro-to-hydrogen-1.pdf --> 33.6]]></Description>
-					<X>760</X><Y>320</Y>
+					<X>1590</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29024,7 +29078,7 @@ MM O = 16 g/mol
 					<Id>1726584205651</Id>
 					<Name><![CDATA[p_diesel_kWhpl]]></Name>
 					<Description><![CDATA[https://www.joostdevree.nl/shtmls/calorische_waarde.shtml]]></Description>
-					<X>760</X><Y>140</Y>
+					<X>1070</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29049,7 +29103,7 @@ MM O = 16 g/mol
 					<Id>1726584205654</Id>
 					<Name><![CDATA[p_avgDieselConsumptionCar_kmpl]]></Name>
 					<Description><![CDATA[https://www.unitedconsumers.com/blog/auto/zuinig-rijden.jsp]]></Description>
-					<X>410</X><Y>360</Y>
+					<X>570</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29074,7 +29128,7 @@ MM O = 16 g/mol
 					<Id>1726584205657</Id>
 					<Name><![CDATA[p_avgGasolineConsumptionCar_kmpl]]></Name>
 					<Description><![CDATA[https://www.unitedconsumers.com/blog/auto/zuinig-rijden.jsp]]></Description>
-					<X>410</X><Y>380</Y>
+					<X>570</X><Y>380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29099,7 +29153,7 @@ MM O = 16 g/mol
 					<Id>1726584205660</Id>
 					<Name><![CDATA[p_gasoline_kWhpl]]></Name>
 					<Description><![CDATA[https://www.joostdevree.nl/shtmls/calorische_waarde.shtml]]></Description>
-					<X>760</X><Y>160</Y>
+					<X>1070</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29123,7 +29177,7 @@ MM O = 16 g/mol
 				<Variable Class="Parameter">
 					<Id>1726584205663</Id>
 					<Name><![CDATA[p_avgDieselConsumptionCar_kWhpkm]]></Name>
-					<X>410</X><Y>410</Y>
+					<X>570</X><Y>410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29147,7 +29201,7 @@ MM O = 16 g/mol
 				<Variable Class="Parameter">
 					<Id>1726584205666</Id>
 					<Name><![CDATA[p_avgGasolineConsumptionCar_kWhpkm]]></Name>
-					<X>410</X><Y>430</Y>
+					<X>570</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29175,7 +29229,7 @@ MM O = 16 g/mol
 
 11 liter per 100 km = 9.1 km per liter.
 ]]></Description>
-					<X>410</X><Y>470</Y>
+					<X>570</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29199,7 +29253,7 @@ MM O = 16 g/mol
 				<Variable Class="Parameter">
 					<Id>1726584205672</Id>
 					<Name><![CDATA[p_avgDieselConsumptionVan_kWhpkm]]></Name>
-					<X>410</X><Y>490</Y>
+					<X>570</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29228,7 +29282,7 @@ MM O = 16 g/mol
 --> 25 - 30 - 40 liter per 100 km. = 4 - 3.33 - 2.5 km per l
 Heavely dependend on load, city/highway, etc.
 For now: Picking 3.33 km per l]]></Description>
-					<X>410</X><Y>520</Y>
+					<X>570</X><Y>520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29252,7 +29306,7 @@ For now: Picking 3.33 km per l]]></Description>
 				<Variable Class="Parameter">
 					<Id>1726584205678</Id>
 					<Name><![CDATA[p_avgDieselConsumptionTruck_kWhpkm]]></Name>
-					<X>410</X><Y>540</Y>
+					<X>570</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29279,7 +29333,7 @@ For now: Picking 3.33 km per l]]></Description>
 					<Description><![CDATA[https://www.vaillant.be/consumenten/ons-advies/blog/het-rendement-van-een-warmtepomp/
 
 Gemiddelde COP is 4.]]></Description>
-					<X>90</X><Y>550</Y>
+					<X>70</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29304,7 +29358,7 @@ Gemiddelde COP is 4.]]></Description>
 					<Id>1726584205684</Id>
 					<Name><![CDATA[p_avgUtilityPVPower_kWp]]></Name>
 					<Description><![CDATA[FIND SOURCE!!! ????????]]></Description>
-					<X>60</X><Y>360</Y>
+					<X>50</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29331,7 +29385,7 @@ Gemiddelde COP is 4.]]></Description>
 					<Description><![CDATA[Ratio of how many trucks are electric vs diesel.
 ???
 https://nos.nl/artikel/2483604-elektrische-vrachtwagens-blijven-achter-door-complexe-serie-aan-uitdagingen --> 'volgens cbs nog geen half procent.']]></Description>
-					<X>60</X><Y>380</Y>
+					<X>50</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29356,7 +29410,7 @@ https://nos.nl/artikel/2483604-elektrische-vrachtwagens-blijven-achter-door-comp
 					<Id>1726584205690</Id>
 					<Name><![CDATA[p_avgCompanyHeatingMethod]]></Name>
 					<Description><![CDATA[Source?? --> Should definatly be still the case in 2024]]></Description>
-					<X>60</X><Y>400</Y>
+					<X>50</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29383,7 +29437,7 @@ https://nos.nl/artikel/2483604-elektrische-vrachtwagens-blijven-achter-door-comp
 					<Description><![CDATA[https://hallostroom.nl/zonnepanelen/opbrengst/per-m2/ --> 177 W/m2
 https://www.zonneplan.nl/kenniscentrum/zonnepanelen/vermogen --> 212 W/m2
 https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Description>
-					<X>70</X><Y>785</Y>
+					<X>50</X><Y>700</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29409,7 +29463,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Name><![CDATA[p_avgRatioBatteryCapacity_v_Power]]></Name>
 					<Description><![CDATA[Average ratio of battery capacity over battery power.
 --> If battery capacity (in kWh) is twice the battery power (in kW) --> ratio = 2.]]></Description>
-					<X>70</X><Y>845</Y>
+					<X>50</X><Y>770</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29437,7 +29491,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 
 --> avg: 29 kWh per 100 km --> 0.29 kWh/km
 ]]></Description>
-					<X>410</X><Y>600</Y>
+					<X>570</X><Y>600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29464,7 +29518,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Description><![CDATA[https://www.huiskes-kokkeler.nl/bedrijfswagens/volkswagen-bedrijfswagens/modellen/crafter-hymotion-concept
 --> 1.4 kg Waterstof per 100 km = 0.014 kg/km
 -->  0.014 * 33.6 (p_hydrogenSpecificEnergy_kWh_kg = 0.47 kWh/kg]]></Description>
-					<X>410</X><Y>620</Y>
+					<X>570</X><Y>620</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29491,7 +29545,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Description><![CDATA[https://transportenmilieu.nl/nieuwsarchief/item/hyundai-op-waterstof-voor-havi-zwitserland
 --> 6.6 kg Waterstof per 100 km = 0.066 kg/km
 --> 0.066 * 33.6 (p_hydrogenSpecificEnergy_kWh_kg = 2.22 kWh/kg]]></Description>
-					<X>410</X><Y>640</Y>
+					<X>570</X><Y>640</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29516,7 +29570,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Id>1726584205708</Id>
 					<Name><![CDATA[p_avgRatioRoofPotentialPV]]></Name>
 					<Description><![CDATA[value for ratio that]]></Description>
-					<X>70</X><Y>805</Y>
+					<X>50</X><Y>720</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29540,7 +29594,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Description><![CDATA[Efficiency (eta_r) used to calculate the COP in the energy asset based on temperature differences. 
 
 '0.5' comes from old code, no source found for it yet.]]></Description>
-					<X>90</X><Y>570</Y>
+					<X>70</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29565,7 +29619,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Id>1726584205714</Id>
 					<Name><![CDATA[p_avgOutputTemperatureHeatpump_degC]]></Name>
 					<Description><![CDATA[The avg output temperature of a heatpump in degC. Can be set manually, as an average 60 has been taken. ]]></Description>
-					<X>90</X><Y>590</Y>
+					<X>70</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29592,7 +29646,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Description><![CDATA[Average heating efficiency of a gas burner.
 
 --> SOURCE?]]></Description>
-					<X>90</X><Y>640</Y>
+					<X>70</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29619,7 +29673,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Description><![CDATA[Average output temperature of a gas burner unit in degC.
 
 --> Source?]]></Description>
-					<X>90</X><Y>660</Y>
+					<X>70</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29648,7 +29702,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 - https://h2sciencecoalition.com/blog/hydrogen-for-heating-a-comparison-with-heat-pumps-part-1/
 
 - https://www.csrf.ac.uk/blog/hydrogen-for-heating/]]></Description>
-					<X>90</X><Y>710</Y>
+					<X>70</X><Y>630</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29675,7 +29729,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Description><![CDATA[Average output temperature of a hydrogen burner unit in degC.
 
 --> Source?]]></Description>
-					<X>90</X><Y>730</Y>
+					<X>70</X><Y>650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29696,6 +29750,30 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1726746753360</Id>
+					<Name><![CDATA[p_avgVehiclesPerChargePoint]]></Name>
+					<X>50</X><Y>820</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[int]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[6]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1726746753358</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 			</Variables>
 			<Functions>
 				<Function AccessType="default" StaticFunction="false">
@@ -29703,7 +29781,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726584205530</Id>
 					<Name><![CDATA[f_setAVGC_data]]></Name>
-					<X>60</X><Y>50</Y>
+					<X>30</X><Y>50</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29818,8 +29896,8 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 			<Presentation>
 				<Rectangle>
 					<Id>1726584205536</Id>
-					<Name><![CDATA[rectangle1]]></Name>
-					<X>700</X><Y>0</Y>
+					<Name><![CDATA[rect_constants]]></Name>
+					<X>958.816</X><Y>0</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29833,7 +29911,7 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 					<LineColor>-16777216</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>700</Width>
+					<Width>958.0782918149466</Width>
 					<Height>980</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
@@ -29841,8 +29919,8 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				</Rectangle>
 				<Rectangle>
 					<Id>1726584205538</Id>
-					<Name><![CDATA[rectangle]]></Name>
-					<X>0</X><Y>0</Y>
+					<Name><![CDATA[rect_avg]]></Name>
+					<X>0.737</X><Y>0</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29856,7 +29934,7 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 					<LineColor>-16777216</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>700</Width>
+					<Width>958.0782918149466</Width>
 					<Height>980</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
@@ -29864,8 +29942,8 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				</Rectangle>
 				<Text>
 					<Id>1726584205540</Id>
-					<Name><![CDATA[text]]></Name>
-					<X>50</X><Y>90</Y>
+					<Name><![CDATA[txt_houses]]></Name>
+					<X>40</X><Y>100</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29885,8 +29963,8 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				</Text>
 				<Text>
 					<Id>1726584205542</Id>
-					<Name><![CDATA[text1]]></Name>
-					<X>50</X><Y>290</Y>
+					<Name><![CDATA[txt_avgCompanies]]></Name>
+					<X>40</X><Y>280</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29906,8 +29984,8 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				</Text>
 				<Text>
 					<Id>1726584205544</Id>
-					<Name><![CDATA[text2]]></Name>
-					<X>400</X><Y>90</Y>
+					<Name><![CDATA[txt_avgEV]]></Name>
+					<X>560</X><Y>90</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29928,11 +30006,12 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				<Text>
 					<Id>1726584205546</Id>
 					<Name><![CDATA[text3]]></Name>
-					<X>1000</X><Y>30</Y>
+					<X>1440</X><Y>40</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -29941,15 +30020,15 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 					<Text><![CDATA[Constants]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
-						<Size>18</Size>
+						<Size>24</Size>
 						<Style>1</Style>
 					</Font>
-					<Alignment>LEFT</Alignment>
+					<Alignment>CENTER</Alignment>
 				</Text>
 				<Text>
 					<Id>1726584205548</Id>
 					<Name><![CDATA[text4]]></Name>
-					<X>750</X><Y>90</Y>
+					<X>1060</X><Y>200</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29970,11 +30049,12 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				<Text>
 					<Id>1726584205550</Id>
 					<Name><![CDATA[text5]]></Name>
-					<X>300</X><Y>30</Y>
+					<X>480</X><Y>40</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -29983,15 +30063,15 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 					<Text><![CDATA[Averages]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
-						<Size>20</Size>
+						<Size>24</Size>
 						<Style>1</Style>
 					</Font>
-					<Alignment>LEFT</Alignment>
+					<Alignment>CENTER</Alignment>
 				</Text>
 				<Rectangle>
 					<Id>1726584205552</Id>
-					<Name><![CDATA[rectangle6]]></Name>
-					<X>740</X><Y>250</Y>
+					<Name><![CDATA[rect_hydrogenC]]></Name>
+					<X>1560</X><Y>100</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30004,7 +30084,7 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 					<LineColor>-16711681</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>280</Width>
+					<Width>340</Width>
 					<Height>200</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
@@ -30012,8 +30092,8 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				</Rectangle>
 				<Text>
 					<Id>1726584205554</Id>
-					<Name><![CDATA[text19]]></Name>
-					<X>750</X><Y>260</Y>
+					<Name><![CDATA[txt_hydrogenC]]></Name>
+					<X>1580</X><Y>120</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30033,8 +30113,8 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				</Text>
 				<Text>
 					<Id>1726584205556</Id>
-					<Name><![CDATA[text6]]></Name>
-					<X>400</X><Y>330</Y>
+					<Name><![CDATA[txt_avgFossil]]></Name>
+					<X>560</X><Y>330</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30054,8 +30134,8 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				</Text>
 				<Text>
 					<Id>1726584205558</Id>
-					<Name><![CDATA[text7]]></Name>
-					<X>60</X><Y>500</Y>
+					<Name><![CDATA[txt_Heatassets]]></Name>
+					<X>40</X><Y>420</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30075,8 +30155,8 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				</Text>
 				<Text>
 					<Id>1726584205560</Id>
-					<Name><![CDATA[text8]]></Name>
-					<X>60</X><Y>755</Y>
+					<Name><![CDATA[txt_avgPV]]></Name>
+					<X>40</X><Y>680</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30096,8 +30176,8 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				</Text>
 				<Text>
 					<Id>1726584205562</Id>
-					<Name><![CDATA[text9]]></Name>
-					<X>60</X><Y>820</Y>
+					<Name><![CDATA[txt_avgBat]]></Name>
+					<X>40</X><Y>745</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30117,8 +30197,8 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				</Text>
 				<Text>
 					<Id>1726584205564</Id>
-					<Name><![CDATA[text10]]></Name>
-					<X>400</X><Y>570</Y>
+					<Name><![CDATA[txt_avgFCV]]></Name>
+					<X>560</X><Y>570</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30138,8 +30218,8 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				</Text>
 				<Text>
 					<Id>1726584205566</Id>
-					<Name><![CDATA[text11]]></Name>
-					<X>80</X><Y>520</Y>
+					<Name><![CDATA[txt_heatpumps]]></Name>
+					<X>60</X><Y>440</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30159,8 +30239,8 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				</Text>
 				<Text>
 					<Id>1726584205568</Id>
-					<Name><![CDATA[text12]]></Name>
-					<X>80</X><Y>610</Y>
+					<Name><![CDATA[txt_gasburners]]></Name>
+					<X>60</X><Y>530</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30180,8 +30260,8 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				</Text>
 				<Text>
 					<Id>1726584205570</Id>
-					<Name><![CDATA[text13]]></Name>
-					<X>80</X><Y>680</Y>
+					<Name><![CDATA[txt_hydrogenburners]]></Name>
+					<X>60</X><Y>600</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30201,12 +30281,13 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				</Text>
 				<Rectangle>
 					<Id>1726584205572</Id>
-					<Name><![CDATA[rectangle2]]></Name>
-					<X>40</X><Y>10</Y>
+					<Name><![CDATA[rect_sendToEngine]]></Name>
+					<X>10</X><Y>10</Y>
 					<Label><X>10</X><Y>10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -30215,7 +30296,7 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 					<LineColor>-65536</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>140</Width>
+					<Width>170</Width>
 					<Height>60</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
@@ -30223,12 +30304,13 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				</Rectangle>
 				<Text>
 					<Id>1726584205574</Id>
-					<Name><![CDATA[text14]]></Name>
-					<X>50</X><Y>20</Y>
+					<Name><![CDATA[txt_valuesToEngine]]></Name>
+					<X>20</X><Y>20</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -30244,8 +30326,8 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				</Text>
 				<Text>
 					<Id>1726584205576</Id>
-					<Name><![CDATA[text15]]></Name>
-					<X>1100</X><Y>90</Y>
+					<Name><![CDATA[txt_timeC]]></Name>
+					<X>1060</X><Y>120</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30259,6 +30341,27 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1726743791200</Id>
+					<Name><![CDATA[text]]></Name>
+					<X>40</X><Y>790</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Chargingcentres]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
 						<Style>0</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
@@ -30296,7 +30399,6 @@ import java.io.IOException;
 //import java.util.Date;  
 import java.text.SimpleDateFormat;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-//import org.bouncycastle.crypto.StreamBlockCipher;
 
 
 //Possibility to turn of traceln
@@ -30735,7 +30837,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205747</Id>
 					<Name><![CDATA[c_Solarfarm_data]]></Name>
-					<X>-370</X><Y>382</Y>
+					<X>-370</X><Y>402</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30750,7 +30852,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205749</Id>
 					<Name><![CDATA[c_Windfarm_data]]></Name>
-					<X>-370</X><Y>402</Y>
+					<X>-370</X><Y>422</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30765,7 +30867,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205751</Id>
 					<Name><![CDATA[c_Electrolyser_data]]></Name>
-					<X>-370</X><Y>421</Y>
+					<X>-370</X><Y>441</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30780,7 +30882,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205753</Id>
 					<Name><![CDATA[c_Battery_data]]></Name>
-					<X>-370</X><Y>440</Y>
+					<X>-370</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30795,7 +30897,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205755</Id>
 					<Name><![CDATA[c_Cable_data_LV]]></Name>
-					<X>-370</X><Y>530</Y>
+					<X>-370</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30810,7 +30912,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205757</Id>
 					<Name><![CDATA[c_Neighbourhood_data]]></Name>
-					<X>-370</X><Y>490</Y>
+					<X>-370</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30825,7 +30927,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205759</Id>
 					<Name><![CDATA[c_remainingBuilding_data]]></Name>
-					<X>-370</X><Y>570</Y>
+					<X>-370</X><Y>375</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30861,7 +30963,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205763</Id>
 					<Name><![CDATA[c_Chargingstation_data]]></Name>
-					<X>-370</X><Y>460</Y>
+					<X>-370</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30876,7 +30978,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205765</Id>
 					<Name><![CDATA[c_Parcel_data]]></Name>
-					<X>-370</X><Y>510</Y>
+					<X>-370</X><Y>530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30891,7 +30993,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205767</Id>
 					<Name><![CDATA[c_Cable_data_MV]]></Name>
-					<X>-370</X><Y>550</Y>
+					<X>-370</X><Y>570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30952,7 +31054,7 @@ f_generateWindFarms();
 //Other infra assets
 f_generateElectrolysers();
 f_generateBatteries();
-//f_createChargingStations();
+f_createChargingStations();
 
 //Consumers
 switch(project_data.project_type()){
@@ -32009,7 +32111,7 @@ for (Building_data genericCompany : c_GenericCompanyBuilding_data) {
 	generic_company_GCs.add(companyGC);
 	
 	//Set parameters for the Grid Connection
-	companyGC.p_gridConnectionID = genericCompany.address_id(); //row.get( buildings.adress_id );
+	companyGC.p_gridConnectionID = genericCompany.address_id();
 	
 	// Check that is needed until connectioncapacity is no longer in 'Panden' excel
 	if (genericCompany.contracted_capacity_kw() == null || genericCompany.contracted_capacity_kw() <= 0) {
@@ -33895,10 +33997,9 @@ for (int i=0; i < nb_points ; i++){
 	GISCoords[i * 2 + 1] = 1.64 * size * sin( i * ( 2 * Math.PI ) / nb_points) + lon;
 }
 
-// TODO: end function here and return token? Not in my (ate) opinion, why?
-
 //Create the region
 GISRegion gisregion = zero_Interface.f_createGISObject( GISCoords );
+
 return gisregion;
 ]]></Body>
 				</Function>
@@ -33912,11 +34013,9 @@ return gisregion;
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[//
-//WORK IN PROGRESS!!!!!!!!!!!!!!!!!!!!!!!!!\\
-//
-//Initialize parameters
+					<Body><![CDATA[//Initialize parameters
 int laadpaal_nr = 1;
+int laadstation_nr = 1;
 
 //Loop over charging stations
 for (Chargingstation_data dataChargingStation : c_Chargingstation_data){
@@ -33925,40 +34024,59 @@ for (Chargingstation_data dataChargingStation : c_Chargingstation_data){
 
 	chargingStation.set_p_gridConnectionID( dataChargingStation.gc_id());
 	chargingStation.set_p_name( dataChargingStation.gc_name() );
+	
+	//Electric Capacity
 	if (dataChargingStation.connection_capacity_kw() != null) {
 		// Assume the connection capacity is both physical and contracted.
 		chargingStation.set_p_physicalConnectionCapacity_kW( dataChargingStation.connection_capacity_kw() );
 		chargingStation.set_p_contractedDeliveryCapacity_kW( dataChargingStation.connection_capacity_kw() );
 	}
+	
 	chargingStation.set_p_heatingType( OL_GridConnectionHeatingType.NONE );
+	
+	//Set parent node
 	chargingStation.p_parentNodeElectricID = dataChargingStation.trafo_id();
 	
+	//Is active at start?
 	chargingStation.v_isActive = dataChargingStation.initially_active();
-	
-	//traceln("Charging station trafoID: %s", chargingStation.p_parentNodeElectricID);	
-	chargingStation.set_p_ownerID( dataChargingStation.owner_id());	
-	if (chargingStation.p_ownerID == null){
-		chargingStation.p_ownerID = "Publieke laadpaal " + laadpaal_nr;
-		laadpaal_nr++;
-	}
 
+	//Set charging attitude: MAX_POWER should always be the starting case for charge stations to prevent more charging than possible
+	chargingStation.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.MAX_POWER);
+			
 	//Create and connect owner
 	ConnectionOwner owner = energyModel.add_pop_connectionOwners();
-			
+
+	chargingStation.set_p_ownerID( dataChargingStation.owner_id());				
 	owner.set_p_actorID( chargingStation.p_ownerID );
 	owner.set_p_actorType( OL_ActorType.CONNECTIONOWNER );
 	owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.CHARGEPOINT_OP );
-			 
-	
 	chargingStation.set_p_owner( owner );
 	
+	
+	//Check if centre or single
 	if (dataChargingStation.is_charging_centre()) {
-		//Create EA for the charging Station (???) --> For now add parameters to the canvas	
+	
+		if (chargingStation.p_ownerID == null){
+			chargingStation.p_ownerID = "Publiek laadstation " + laadstation_nr;
+			laadstation_nr++;
+		}
+
 		chargingStation.set_p_nbOfChargers( dataChargingStation.number_of_chargers() );
 		chargingStation.set_p_maxChargingPower_kW( dataChargingStation.power_per_charger_kw() );
 		
+		//If check on connection capacity to prevent more charging than possible
+		if(chargingStation.p_contractedDeliveryCapacity_kW > chargingStation.p_nbOfChargers*chargingStation.p_maxChargingPower_kW){
+			chargingStation.p_contractedDeliveryCapacity_kW = chargingStation.p_nbOfChargers*chargingStation.p_maxChargingPower_kW;
+		}
+		
 		//Set vehicle type
 		chargingStation.p_chargingVehicleType = dataChargingStation.vehicle_type();		
+		
+		//Create vehicles that charge at the charging centre
+		for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerChargePoint; k++ ){
+			f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
+		}
+		
 		
 		if (dataChargingStation.polygon() != null) {
 			//Create EA GIS object (building) for the charging centre
@@ -33972,37 +34090,52 @@ for (Chargingstation_data dataChargingStation : c_Chargingstation_data){
 			chargingStation.c_connectedGISObjects.add(area);
 			
 			//Style building
-			area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
-			area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
+			area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor_centre );
+			area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor_centre );
 			zero_Interface.f_styleAreas(area);
 		}
-	
+		else{
+			traceln("No gisobject created for charge centre: " + chargingStation.p_name);
+		}
 	}
 	else {
-		if (dataChargingStation.polygon() != null) {
+	
+			if (chargingStation.p_ownerID == null){
+				chargingStation.p_ownerID = "Publieke laadpaal " + laadpaal_nr;
+				laadpaal_nr++;
+			}
+			
+			//Set charging power
+			chargingStation.set_p_maxChargingPower_kW( dataChargingStation.power_per_charger_kw() );
+			
+			//Set vehicle type
+			chargingStation.p_chargingVehicleType = dataChargingStation.vehicle_type();		
+			
+			//Create vehicles that charge at the charging centre
+			for(int k = 0; k < avgc_data.p_avgVehiclesPerChargePoint; k++ ){
+				f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
+			}
+		
 			//Create GIS object for the chargingStation			
 			GIS_Object area = energyModel.add_pop_GIS_Objects();
-			
-			//area.p_id = name;
 	
 			//position and coordinates
 			area.p_latitude = dataChargingStation.latitude();
 			area.p_longitude = dataChargingStation.longitude();
 			area.setLatLon(area.p_latitude, area.p_longitude);		
-	
-			//area.p_GISRegion_coords = polygon;
 			
 			//Create gisregion
 			area.gisRegion = f_createGISRegionChargingStation( area.p_latitude, area.p_longitude );	
 			
+			//Set area type
+			area.p_GISObjectType = OL_GISObjectType.CHARGER;
+		
 			chargingStation.c_connectedGISObjects.add(area);
 			area.c_containedGridConnections.add(chargingStation);
-			//owner.c_ownedBuildings.add(area);
 			
 			area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
 			area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
 			zero_Interface.f_styleAreas(area);
-		}
 	}
 }
 
@@ -34422,6 +34555,7 @@ c_GridNode_data.clear();
 c_SurveyCompanyBuilding_data.clear();
 c_GenericCompanyBuilding_data.clear();
 c_HouseBuilding_data.clear();
+c_remainingBuilding_data.clear();
 c_Solarfarm_data.clear();
 c_Windfarm_data.clear();
 c_Electrolyser_data.clear();
@@ -34429,7 +34563,7 @@ c_Battery_data.clear();
 c_Neighbourhood_data.clear();
 c_Cable_data_LV.clear();
 c_Cable_data_MV.clear();
-c_remainingBuilding_data.clear();
+
 ]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
@@ -34670,10 +34804,10 @@ f_createGenericCompanies();]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//Create houses
-//f_createHousesFromDatabase();
+f_createHousesFromDatabase();
 
 //Create companies
-//f_createCompaniesFromDatabase();
+f_createCompaniesFromDatabase();
 
 //Charge stations?
 //f_createChargingStationsScale();
@@ -35083,6 +35217,9 @@ f_createGISCables();]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_avgOutputTemperatureHydrogenBurner_degC]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_avgVehiclesPerChargePoint]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -36403,34 +36540,6 @@ public class J_scenario_Future implements Serializable {
 		</JavaClass>
 		<!--   =========   Java Class   ========  -->
 		<JavaClass>
-			<Id>1715862317312</Id>
-			<Name><![CDATA[J_scenario_Hydrogen]]></Name>
-			<Text><![CDATA[/**
- * J_scenario_Hydrogen
- */	
-public class J_scenario_Hydrogen implements Serializable {
-
-    /**
-     * Default constructor
-     */
-    public J_scenario_Hydrogen() {
-    }
-
-	@Override
-	public String toString() {
-		return super.toString();
-	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
-}]]></Text>
-		</JavaClass>
-		<!--   =========   Java Class   ========  -->
-		<JavaClass>
 			<Id>1726584206084</Id>
 			<Name><![CDATA[Battery_data]]></Name>
 			<Text><![CDATA[/**
@@ -36555,7 +36664,6 @@ public class Chargingstation_data {
 	int number_of_chargers;
 	double power_per_charger_kw;
 	boolean initially_active;
-	OL_ChargingAttitude default_charging_mode;
 	double latitude;
 	double longitude;
 	String polygon;
@@ -36896,11 +37004,6 @@ public class Windfarm_data {
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
-			<Path><![CDATA[zero_loader/project_info.xlsx]]></Path>
-			<ReferencedFromUserCode>true</ReferencedFromUserCode>
-			<Location>FILE_SYSTEM</Location>
-		</Resource>
-		<Resource>
 			<Path><![CDATA[data_Generic/AlbatrossProcessedVehicleTrips.xlsx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
@@ -36912,11 +37015,6 @@ public class Windfarm_data {
 		</Resource>
 		<Resource>
 			<Path><![CDATA[data_Generic/inputECookerPatterns.xlsx]]></Path>
-			<ReferencedFromUserCode>false</ReferencedFromUserCode>
-			<Location>FILE_SYSTEM</Location>
-		</Resource>
-		<Resource>
-			<Path><![CDATA[GridNode Timeseries Output.xlsx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
