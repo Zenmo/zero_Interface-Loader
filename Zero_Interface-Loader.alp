@@ -1585,6 +1585,27 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1727251571552</Id>
+					<Name><![CDATA[settings]]></Name>
+					<X>-280</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[Settings]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1727251571550</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1705660898756</Id>
 					<Name><![CDATA[c_GISNodes]]></Name>
@@ -9207,7 +9228,9 @@ new Thread( () -> {
 	f_updateUIresultsMainArea();
 	
 	//Update and show kpi summary chart after run
-	uI_Results.chartKPISummary.f_setKPISummaryChart();
+	if(settings.showKPISummary() != null && settings.showKPISummary()){
+		uI_Results.chartKPISummary.f_setKPISummaryChart();
+	}
 }).start();
 
 b_resultsUpToDate = true;
@@ -34202,7 +34225,8 @@ for (Building_data dataBuilding : scopedBuilding_data) {
 //Set parameters/pointers in the interface
 zero_Interface.energyModel = energyModel;
 zero_Interface.uI_Results.energyModel = energyModel;
-zero_Interface.p_selectedProjectType = project_data.project_type();]]></Body>
+zero_Interface.p_selectedProjectType = project_data.project_type();
+zero_Interface.settings = settings;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -36805,6 +36829,7 @@ public class Settings {
 		boolean reloadDatabase;
 		boolean createCurrentElectricityEA;
 		boolean runHeadlessAtStartup;
+		Boolean showKPISummary;
 		ArrayList<String> subscopesToSimulate;
 }]]></Text>
 		</JavaClass>
