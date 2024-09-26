@@ -2356,7 +2356,7 @@ gisregion.setLineStyle( LINE_STYLE_SOLID );
 gisregion.setLineColor( navy );
 gisregion.setLineWidth(2);]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1705925024602</Id>
@@ -2368,10 +2368,31 @@ gisregion.setLineWidth(2);]]></Body>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// CHOOSE WHICH TABS YOU WANT TO BE ABLE TO SHOW FOR YOUR PROJECT 
 // (OVERRIDE FUNCTION IN CHILD IF YOU WANT OTHER THAN DEFAULT)
-uI_Tabs.tabElectricity.gr_electricityDemandSliders.setVisible(true);
-uI_Tabs.tabHeating.gr_heatDemandSliders.setVisible(true);
-uI_Tabs.tabMobility.gr_mobilityDemandSliders.setVisible(true);
-uI_Tabs.tabEHub.gr_hubSliders.setVisible(true);
+
+// Adding the (child) tabs to the tabArea population
+
+// If you use an extension of a tab, you must update the pointer to the instance of the interface
+// Something like: tabElectricity.zero_Interface = loader_Project.zero_Interface;
+// No update to the pointer is needed for the generic tabs
+
+tabElectricity electricityTab = new tabElectricity();
+electricityTab.goToPopulation(uI_Tabs.pop_tabElectricity);
+
+tabHeating heatingTab = new tabHeating();
+heatingTab.goToPopulation(uI_Tabs.pop_tabHeating);
+
+tabMobility mobilityTab = new tabMobility();
+mobilityTab.goToPopulation(uI_Tabs.pop_tabMobility);
+
+tabEHub EHubTab = new tabEHub();
+EHubTab.goToPopulation(uI_Tabs.pop_tabEHub);
+
+// Group visibilities
+// When using an extension of a generic tab don't forget to typecast it!
+((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders().setVisible(true);
+((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersCompanies().setVisible(true);
+((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
+((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
 
 uI_Tabs.f_showCorrectTab();]]></Body>
 				</Function>
@@ -3568,12 +3589,12 @@ f_connectResultsUI();
 //Initialize the UI elements (positioning, etc.)
 f_setUITabs();
 
+//Project specific settings
+f_projectSpecificSettings();
+
 // Create the Private UI for companies
 f_createAdditionalUIs();
 button_goToUI.setVisible(false);
-
-//Initialize the sliders of the main UI
-f_setSliderPresets();
 
 // Now that the sliders are set we can load the correct starting values
 f_initalAssetOrdering();
@@ -3581,8 +3602,8 @@ f_initalAssetOrdering();
 //Create and set the grid topology colors (Netvlakken)
 f_setGridTopologyColors();
 
-//Project specific settings
-f_projectSpecificSettings();
+//Initialize the sliders of the main UI
+f_setSliderPresets();
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -3723,17 +3744,23 @@ gis_area.f_style( rect_householdNoProduction.getFillColor(), null, null, null );
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// PV SYSTEMS:
+					<Body><![CDATA[// ATTENTION: If you have custom tabs it may be neccesary to override this function and add updates to your custom sliders!
+
+// PV SYSTEMS:
 double PVsystems = count(energyModel.UtilityConnections, x->x.v_hasPV == true);		
 int PV_pct = roundToInt(100 * PVsystems / energyModel.UtilityConnections.size());
-uI_Tabs.tabElectricity.sl_rooftopPVCompanies_pct.setValue(PV_pct, false);
-//uI_Tabs.tabElectricity.sl_rooftopPVCompanies_pct1.setValue(PV_pct, false);
+uI_Tabs.pop_tabElectricity.get(0).getSliderRooftopPVCompanies_pct().setValue(PV_pct, false);
 
 // GAS_BURNER / HEATING SYSTEMS: // Still a slight error. GasBurners + HeatPumps != total, because some GC have primary heating asset null
 int GasBurners = count(energyModel.UtilityConnections, gc->gc.p_primaryHeatingAsset instanceof J_EAConversionGasBurner);
 int GasBurners_pct = roundToInt(100 * GasBurners / energyModel.UtilityConnections.size());
-uI_Tabs.tabHeating.sl_gasBurnerCompanies_pct.setValue(GasBurners_pct, false);
-uI_Tabs.tabHeating.f_setHeatingSliders( 0, uI_Tabs.tabHeating.sl_gasBurnerCompanies_pct, uI_Tabs.tabHeating.sl_electricHeatPumpCompanies_pct, null, null );
+
+uI_Tabs.pop_tabHeating.get(0).getSliderGasBurnerCompanies_pct().setValue(GasBurners_pct, false);
+uI_Tabs.pop_tabHeating.get(0).f_setHeatingSliders( 0, uI_Tabs.pop_tabHeating.get(0).getSliderGasBurnerCompanies_pct(), uI_Tabs.pop_tabHeating.get(0).getSliderElectricHeatPumpCompanies_pct(), null, null );
+
+uI_Tabs.pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct().setValue(GasBurners_pct, false);
+uI_Tabs.pop_tabHeating.get(0).f_setHeatingSliders( 0, uI_Tabs.pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct(), uI_Tabs.pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesElectricHeatPumpCompanies_pct(), null, null );
+
 
 // HEAT_PUMP_AIR:
 //		int HeatPumps = count(energyModel.UtilityConnections, gc->gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump);
@@ -3767,10 +3794,10 @@ if (totalTrucks != 0) {
 	ElectricTrucks_pct = roundToInt(100 * ElectricTrucks / totalTrucks);
 	HydrogenTrucks_pct = roundToInt(100 * HydrogenTrucks / totalTrucks);
 }
-uI_Tabs.tabMobility.sl_fossilFuelTrucks_pct.setValue(DieselTrucks_pct, false);
-uI_Tabs.tabMobility.sl_electricTrucks_pct.setValue(ElectricTrucks_pct, false);
-uI_Tabs.tabMobility.sl_hydrogenTrucks_pct.setValue(HydrogenTrucks_pct, false);
-	
+uI_Tabs.pop_tabMobility.get(0).getSliderFossilFuelTrucks_pct().setValue(DieselTrucks_pct, false);
+uI_Tabs.pop_tabMobility.get(0).getSliderElectricTrucks_pct().setValue(ElectricTrucks_pct, false);
+uI_Tabs.pop_tabMobility.get(0).getSliderHydrogenTrucks_pct().setValue(HydrogenTrucks_pct, false);
+
 // VANS:
 int DieselVans = 0;
 int ElectricVans = 0;
@@ -3797,8 +3824,8 @@ if (totalVans != 0) {
 	ElectricVans_pct = roundToInt(100 * ElectricVans / totalVans);
 	HydrogenVans_pct = roundToInt(100 * HydrogenVans / totalVans);
 }
-uI_Tabs.tabMobility.sl_fossilFuelVans_pct.setValue(DieselVans_pct, false);
-uI_Tabs.tabMobility.sl_electricVans_pct.setValue(ElectricVans_pct, false);
+uI_Tabs.pop_tabMobility.get(0).getSliderFossilFuelVans_pct().setValue(DieselVans_pct, false);
+uI_Tabs.pop_tabMobility.get(0).getSliderElectricVans_pct().setValue(ElectricVans_pct, false);
 //sl_hydrogenVans.setValue(HydrogenVans_pct, false);
 		
 // DIESEL_VEHICLE:  // Currently only for Company Cars not household Cars / EVs
@@ -3827,8 +3854,8 @@ if (totalCars != 0) {
 	ElectricCars_pct = roundToInt(100 * ElectricCars / totalCars);
 	HydrogenCars_pct = roundToInt(100 * HydrogenCars / totalCars);
 }
-uI_Tabs.tabMobility.sl_fossilFuelCars_pct.setValue(DieselCars_pct, false);
-uI_Tabs.tabMobility.sl_electricCars_pct.setValue(ElectricCars_pct, false);
+uI_Tabs.pop_tabMobility.get(0).getSliderFossilFuelCars_pct().setValue(DieselCars_pct, false);
+uI_Tabs.pop_tabMobility.get(0).getSliderElectricCars_pct().setValue(ElectricCars_pct, false);
 //sl_hydrogenCars.setValue(HydrogenCars_pct, false);
 ]]></Body>
 				</Function>
@@ -10260,8 +10287,8 @@ for(GISRoute GISCable : c_MVCables){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<OnClickCode><![CDATA[if (uI_Tabs.tabEHub.b_NFATOListener) {
-	uI_Tabs.tabEHub.f_checkGISRegion(clickx, clicky);
+					<OnClickCode><![CDATA[if (uI_Tabs.pop_tabEHub.get(0).b_NFATOListener) {
+	uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
 }
 else if (b_multiSelect) {
 	f_multiSelect(clickx, clicky);
@@ -10273,8 +10300,8 @@ else {
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Width>1000</Width>
 					<Height>620</Height>
-					<OnClickCode><![CDATA[if (uI_Tabs.tabEHub.b_NFATOListener) {
-	uI_Tabs.tabEHub.f_checkGISRegion(clickx, clicky);
+					<OnClickCode><![CDATA[if (uI_Tabs.pop_tabEHub.get(0).b_NFATOListener) {
+	uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
 }
 else if (b_multiSelect) {
 	f_multiSelect(clickx, clicky);
@@ -11210,7 +11237,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;]]></Import>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[boolean]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[false]]></Code>
+							<Code><![CDATA[true]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -17845,6 +17872,279 @@ f_setScenario(2);]]></ActionCode>
 		</ActiveObjectClass>
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
+			<Id>1709049506453</Id>
+			<Name><![CDATA[Z_UnusedAgent2]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<Generic>false</Generic>
+			<GenericParameter>
+				<Id>1709049506460</Id>
+				<Name><![CDATA[1709049506460]]></Name>
+				<GenericParameterValue Class="CodeValue">
+					<Code><![CDATA[T extends Agent]]></Code>
+				</GenericParameterValue>
+				<GenericParameterLabel><![CDATA[Generic parameter:]]></GenericParameterLabel>
+			</GenericParameter>
+			<FlowChartsUsage>ENTITY</FlowChartsUsage>
+			<SamplesToKeep>100</SamplesToKeep>
+			<LimitNumberOfArrayElements>false</LimitNumberOfArrayElements>
+			<ElementsLimitValue>100</ElementsLimitValue>
+			<MakeDefaultViewArea>true</MakeDefaultViewArea>
+			<SceneGridColor/>
+			<SceneBackgroundColor/>
+			<SceneSkybox>null</SceneSkybox>
+			<AgentProperties>
+				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
+				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
+				<RotateAnimationVertically>false</RotateAnimationVertically>
+				<VelocityCode Class="CodeUnitValue">
+					<Code><![CDATA[10]]></Code>
+					<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
+				</VelocityCode>
+				<PhysicalLength Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalLength>
+				<PhysicalWidth Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalWidth>
+				<PhysicalHeight Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalHeight>
+			</AgentProperties>
+			<EnvironmentProperties>
+					<EnableSteps>false</EnableSteps>
+					<StepDurationCode Class="CodeUnitValue">
+						<Code><![CDATA[1.0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</StepDurationCode>
+					<SpaceType>CONTINUOUS</SpaceType>
+					<WidthCode><![CDATA[500]]></WidthCode>
+					<HeightCode><![CDATA[500]]></HeightCode>
+					<ZHeightCode><![CDATA[0]]></ZHeightCode>
+					<ColumnsCountCode><![CDATA[100]]></ColumnsCountCode>
+					<RowsCountCode><![CDATA[100]]></RowsCountCode>
+					<NeigborhoodType>MOORE</NeigborhoodType>
+					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
+					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
+					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
+					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
+					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
+					<MCode><![CDATA[10]]></MCode>
+			</EnvironmentProperties>
+			<DatasetsCreationProperties>
+				<AutoCreate>true</AutoCreate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1709107200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+			</DatasetsCreationProperties>
+			<ScaleRuler>
+				<Id>1709049506456</Id>
+				<Name><![CDATA[scale]]></Name>
+				<X>0</X><Y>-150</Y>
+				<PublicFlag>false</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<Length>100</Length>
+				<Rotation>0</Rotation>
+				<ScaleType>BASED_ON_LENGTH</ScaleType>
+				<ModelLength>10</ModelLength>
+				<LengthUnits>METER</LengthUnits>
+				<Scale>10</Scale>
+				<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
+			</ScaleRuler>
+			<CurrentLevel>1709049506460</CurrentLevel>
+			<ConnectionsId>1709049506454</ConnectionsId>
+			<AgentLinks>
+				<AgentLink>
+					<Id>1709049506454</Id>
+					<Name><![CDATA[connections]]></Name>
+					<X>50</X><Y>-50</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<HandleReceiveInConnections>false</HandleReceiveInConnections>
+					<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
+					<AgentLinkBidirectional>true</AgentLinkBidirectional>
+					<MessageType><![CDATA[Object]]></MessageType>
+					<LineStyle>SOLID</LineStyle>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineZOrder>UNDER_AGENTS</LineZOrder>
+					<LineArrow>NONE</LineArrow>
+					<LineArrowPosition>END</LineArrowPosition>
+				</AgentLink>
+			</AgentLinks>
+
+
+			<Presentation>
+				<Level>
+					<Id>1709049506460</Id>
+					<Name><![CDATA[level]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<Z>0</Z>
+					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
+
+
+				</Level>
+			</Presentation>
+
+		</ActiveObjectClass>
+		<!--   =========   Active Object Class   ========  -->
+		<ActiveObjectClass>
+			<Id>1709049506453</Id>
+			<Name><![CDATA[tabArea]]></Name>
+			<Generic>false</Generic>
+			<GenericParameter>
+				<Id>1709049506461</Id>
+				<Name><![CDATA[1709049506461]]></Name>
+				<GenericParameterValue Class="CodeValue">
+					<Code><![CDATA[T extends Agent]]></Code>
+				</GenericParameterValue>
+				<GenericParameterLabel><![CDATA[Generic parameter:]]></GenericParameterLabel>
+			</GenericParameter>
+			<FlowChartsUsage>ENTITY</FlowChartsUsage>
+			<SamplesToKeep>100</SamplesToKeep>
+			<LimitNumberOfArrayElements>false</LimitNumberOfArrayElements>
+			<ElementsLimitValue>100</ElementsLimitValue>
+			<MakeDefaultViewArea>true</MakeDefaultViewArea>
+			<SceneGridColor/>
+			<SceneBackgroundColor/>
+			<SceneSkybox>null</SceneSkybox>
+			<AgentProperties>
+				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
+				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
+				<RotateAnimationVertically>false</RotateAnimationVertically>
+				<VelocityCode Class="CodeUnitValue">
+					<Code><![CDATA[10]]></Code>
+					<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
+				</VelocityCode>
+				<PhysicalLength Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalLength>
+				<PhysicalWidth Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalWidth>
+				<PhysicalHeight Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalHeight>
+			</AgentProperties>
+			<EnvironmentProperties>
+					<EnableSteps>false</EnableSteps>
+					<StepDurationCode Class="CodeUnitValue">
+						<Code><![CDATA[1.0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</StepDurationCode>
+					<SpaceType>CONTINUOUS</SpaceType>
+					<WidthCode><![CDATA[500]]></WidthCode>
+					<HeightCode><![CDATA[500]]></HeightCode>
+					<ZHeightCode><![CDATA[0]]></ZHeightCode>
+					<ColumnsCountCode><![CDATA[100]]></ColumnsCountCode>
+					<RowsCountCode><![CDATA[100]]></RowsCountCode>
+					<NeigborhoodType>MOORE</NeigborhoodType>
+					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
+					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
+					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
+					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
+					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
+					<MCode><![CDATA[10]]></MCode>
+			</EnvironmentProperties>
+			<DatasetsCreationProperties>
+				<AutoCreate>true</AutoCreate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1709107200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+			</DatasetsCreationProperties>
+			<ScaleRuler>
+				<Id>1709049506456</Id>
+				<Name><![CDATA[scale]]></Name>
+				<X>0</X><Y>-150</Y>
+				<PublicFlag>false</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<Length>100</Length>
+				<Rotation>0</Rotation>
+				<ScaleType>BASED_ON_LENGTH</ScaleType>
+				<ModelLength>10</ModelLength>
+				<LengthUnits>METER</LengthUnits>
+				<Scale>10</Scale>
+				<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
+			</ScaleRuler>
+			<CurrentLevel>1709049506460</CurrentLevel>
+			<ConnectionsId>1709049506454</ConnectionsId>
+			<AgentLinks>
+				<AgentLink>
+					<Id>1709049506454</Id>
+					<Name><![CDATA[connections]]></Name>
+					<X>50</X><Y>-50</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<HandleReceiveInConnections>false</HandleReceiveInConnections>
+					<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
+					<AgentLinkBidirectional>true</AgentLinkBidirectional>
+					<MessageType><![CDATA[Object]]></MessageType>
+					<LineStyle>SOLID</LineStyle>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineZOrder>UNDER_AGENTS</LineZOrder>
+					<LineArrow>NONE</LineArrow>
+					<LineArrowPosition>END</LineArrowPosition>
+				</AgentLink>
+			</AgentLinks>
+
+
+			<Presentation>
+				<Level>
+					<Id>1709049506460</Id>
+					<Name><![CDATA[level]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<Z>0</Z>
+					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
+
+
+				</Level>
+			</Presentation>
+
+		</ActiveObjectClass>
+		<!--   =========   Active Object Class   ========  -->
+		<ActiveObjectClass>
 			<Id>1717506309790</Id>
 			<Name><![CDATA[UI_Hydrogen]]></Name>
 			<Generic>false</Generic>
@@ -19543,7 +19843,7 @@ f_setScenario(2);
 				<Variable Class="PlainVariable">
 					<Id>1722245555993</Id>
 					<Name><![CDATA[v_selectedTabType]]></Name>
-					<X>240</X><Y>40</Y>
+					<X>250</X><Y>40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19562,29 +19862,29 @@ f_setScenario(2);
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722245473562</Id>
 					<Name><![CDATA[f_showCorrectTab]]></Name>
-					<X>240</X><Y>70</Y>
+					<X>250</X><Y>70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[tabElectricity_presentation.setVisible(false);
-tabHeating_presentation.setVisible(false);
-tabMobility_presentation.setVisible(false);
-tabEHub_presentation.setVisible(false);
+					<Body><![CDATA[pop_tabElectricity_presentation.setVisible(false);
+pop_tabHeating_presentation.setVisible(false);
+pop_tabMobility_presentation.setVisible(false);
+pop_tabEHub_presentation.setVisible(false);
 
 switch (v_selectedTabType) {
 	case ELECTRICITY:
-		tabElectricity_presentation.setVisible(true);
+		pop_tabElectricity_presentation.setVisible(true);
 		break;
 	case HEAT:
-		tabHeating_presentation.setVisible(true);
+		pop_tabHeating_presentation.setVisible(true);
 		break;
 	case MOBILITY:
-		tabMobility_presentation.setVisible(true);
+		pop_tabMobility_presentation.setVisible(true);
 		break;
 	case HUB:
 	case NFATO:
-		tabEHub_presentation.setVisible(true);
+		pop_tabEHub_presentation.setVisible(true);
 		//tabEHub.f_setTab();
 		break;
 }
@@ -19595,7 +19895,7 @@ switch (v_selectedTabType) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722259092945</Id>
 					<Name><![CDATA[f_setTab]]></Name>
-					<X>240</X><Y>100</Y>
+					<X>250</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19649,7 +19949,7 @@ f_showCorrectTab();
 			<EmbeddedObjects>
 				<EmbeddedObject>
 					<Id>1722245482640</Id>
-					<Name><![CDATA[tabMobility]]></Name>
+					<Name><![CDATA[pop_tabMobility]]></Name>
 					<X>50</X><Y>80</Y>
 					<Label><X>10</X><Y>2</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -19658,20 +19958,20 @@ f_showCorrectTab();
 					<PresentationId>1722246229996</PresentationId>
 					<ActiveObjectClass>
 						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
-						<ClassName><![CDATA[TabMobility]]></ClassName>
+						<ClassName><![CDATA[tabMobility]]></ClassName>
 					</ActiveObjectClass>
 					<GenericParameterSubstitute>
 						<GenericParameterSubstituteReference>
 							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
-							<ClassName><![CDATA[TabMobility]]></ClassName>
+							<ClassName><![CDATA[tabMobility]]></ClassName>
 							<ItemName><![CDATA[1722245324901]]></ItemName>
 						</GenericParameterSubstituteReference>
 					</GenericParameterSubstitute>
 					<Parameters>
 					</Parameters>
-					<ReplicationFlag>false</ReplicationFlag>
+					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
-						<Code><![CDATA[100]]></Code>
+						<Code><![CDATA[0]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
@@ -19711,7 +20011,7 @@ f_showCorrectTab();
 				</EmbeddedObject>
 				<EmbeddedObject>
 					<Id>1722249956639</Id>
-					<Name><![CDATA[tabElectricity]]></Name>
+					<Name><![CDATA[pop_tabElectricity]]></Name>
 					<X>50</X><Y>35</Y>
 					<Label><X>10</X><Y>1</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -19740,9 +20040,9 @@ f_showCorrectTab();
 							<Name><![CDATA[p_minPVHouseholdSlider]]></Name>
 						</Parameter>
 					</Parameters>
-					<ReplicationFlag>false</ReplicationFlag>
+					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
-						<Code><![CDATA[100]]></Code>
+						<Code><![CDATA[0]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
@@ -19782,7 +20082,7 @@ f_showCorrectTab();
 				</EmbeddedObject>
 				<EmbeddedObject>
 					<Id>1722253113248</Id>
-					<Name><![CDATA[tabHeating]]></Name>
+					<Name><![CDATA[pop_tabHeating]]></Name>
 					<X>50</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -19802,9 +20102,9 @@ f_showCorrectTab();
 					</GenericParameterSubstitute>
 					<Parameters>
 					</Parameters>
-					<ReplicationFlag>false</ReplicationFlag>
+					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
-						<Code><![CDATA[100]]></Code>
+						<Code><![CDATA[0]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
@@ -19844,7 +20144,7 @@ f_showCorrectTab();
 				</EmbeddedObject>
 				<EmbeddedObject>
 					<Id>1722253478328</Id>
-					<Name><![CDATA[tabEHub]]></Name>
+					<Name><![CDATA[pop_tabEHub]]></Name>
 					<X>50</X><Y>105</Y>
 					<Label><X>10</X><Y>1</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -19864,9 +20164,9 @@ f_showCorrectTab();
 					</GenericParameterSubstitute>
 					<Parameters>
 					</Parameters>
-					<ReplicationFlag>false</ReplicationFlag>
+					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
-						<Code><![CDATA[100]]></Code>
+						<Code><![CDATA[0]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
@@ -19920,25 +20220,6 @@ f_showCorrectTab();
 					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
 
 			<Presentation>
-				<EmbeddedObjectPresentation>
-					<Id>1722246229996</Id>
-					<Name><![CDATA[tabMobility_presentation]]></Name>
-					<X>15</X><Y>630</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<DrawingMode>AGENT_CURRENT_POSITION</DrawingMode>
-					<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
-					<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
-					<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
-					<Latitude>0.0</Latitude>
-					<Longitude>0.0</Longitude>
-				</EmbeddedObjectPresentation>
 				<Group>
 					<Id>1722248369298</Id>
 					<Name><![CDATA[g_energyDemandSettings]]></Name>
@@ -20455,8 +20736,27 @@ f_showCorrectTab();]]></OnClickCode>
 
 				</Group>
 				<EmbeddedObjectPresentation>
+					<Id>1722246229996</Id>
+					<Name><![CDATA[pop_tabMobility_presentation]]></Name>
+					<X>15</X><Y>630</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<DrawingMode>AGENT_CURRENT_POSITION</DrawingMode>
+					<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
+					<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
+					<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
+					<Latitude>0.0</Latitude>
+					<Longitude>0.0</Longitude>
+				</EmbeddedObjectPresentation>
+				<EmbeddedObjectPresentation>
 					<Id>1722249987797</Id>
-					<Name><![CDATA[tabElectricity_presentation]]></Name>
+					<Name><![CDATA[pop_tabElectricity_presentation]]></Name>
 					<X>15</X><Y>630</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -20475,7 +20775,7 @@ f_showCorrectTab();]]></OnClickCode>
 				</EmbeddedObjectPresentation>
 				<EmbeddedObjectPresentation>
 					<Id>1722255804160</Id>
-					<Name><![CDATA[tabHeating_presentation]]></Name>
+					<Name><![CDATA[pop_tabHeating_presentation]]></Name>
 					<X>15</X><Y>630</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -20494,7 +20794,7 @@ f_showCorrectTab();]]></OnClickCode>
 				</EmbeddedObjectPresentation>
 				<EmbeddedObjectPresentation>
 					<Id>1722255810189</Id>
-					<Name><![CDATA[tabEHub_presentation]]></Name>
+					<Name><![CDATA[pop_tabEHub_presentation]]></Name>
 					<X>15</X><Y>630</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -20520,7 +20820,49 @@ f_showCorrectTab();]]></OnClickCode>
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
 			<Id>1722245324895</Id>
-			<Name><![CDATA[TabMobility]]></Name>
+			<Name><![CDATA[tabMobility]]></Name>
+			<AdditionalClassCode><![CDATA[// Default Sliders
+public ShapeGroup getGroupMobilityDemandSliders() {
+	return this.gr_mobilityDemandSliders;
+}
+
+public ShapeSlider getSliderMobilityDemandReduction_pct () {
+	return this.sl_mobilityDemandReduction_pct;
+}
+
+public ShapeSlider getSliderElectricTrucks_pct() {
+	return this.sl_electricTrucks_pct;
+}
+
+public ShapeSlider getSliderHydrogenTrucks_pct() {
+	return this.sl_hydrogenTrucks_pct;
+}
+
+public ShapeSlider getSliderFossilFuelTrucks_pct() {
+	return this.sl_fossilFuelTrucks_pct;
+}
+
+public ShapeSlider getSliderElectricVans_pct() {
+	return this.sl_electricVans_pct;
+}
+
+public ShapeSlider getSliderFossilFuelVans_pct() {
+	return this.sl_fossilFuelVans_pct;
+}
+
+public ShapeSlider getSliderElectricCars_pct() {
+	return this.sl_electricCars_pct;
+}
+
+public ShapeSlider getSliderFossilFuelCars_pct() {
+	return this.sl_fossilFuelCars_pct;
+}
+
+]]></AdditionalClassCode>
+			<ExtendsReference>
+				<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
+				<ClassName><![CDATA[tabArea]]></ClassName>
+			</ExtendsReference>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1722245324901</Id>
@@ -21912,7 +22254,12 @@ f_setElectricVans( sl_electricVans_pct.getValue() );]]></ActionCode>
 		<ActiveObjectClass>
 			<Id>1722247653561</Id>
 			<Name><![CDATA[tabElectricity]]></Name>
-			<AdditionalClassCode><![CDATA[public ShapeSlider getSliderElectricityDemandReduction_pct() {
+			<AdditionalClassCode><![CDATA[// Default Sliders
+public ShapeGroup getGroupElectricityDemandSliders() {
+	return this.gr_electricityDemandSliders;
+}
+
+public ShapeSlider getSliderElectricityDemandReduction_pct() {
 	return this.sl_electricityDemandReduction_pct;
 }
 
@@ -21932,6 +22279,10 @@ public ShapeSlider getWindSlider(){
 	return this.sl_largeScaleWind_MW;
 }
 ]]></AdditionalClassCode>
+			<ExtendsReference>
+				<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
+				<ClassName><![CDATA[tabArea]]></ClassName>
+			</ExtendsReference>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1722247653567</Id>
@@ -24491,51 +24842,67 @@ f_setPublicChargingStationsScale(sliderValue);]]></ActionCode>
 			<Id>1722253108625</Id>
 			<Name><![CDATA[tabHeating]]></Name>
 			<AdditionalClassCode><![CDATA[// Default Sliders
+public ShapeGroup getGroupHeatDemandSliders() {
+	return this.gr_heatDemandSliders;
+}
+
 public ShapeSlider getSliderHeatDemandReductionCompanies_pct() { 
-        return this.sl_heatDemandReductionCompanies_pct;
+	return this.sl_heatDemandReductionCompanies_pct;
 }
 
 public ShapeSlider getSliderGasBurnerCompanies_pct() { 
-        return this.sl_gasBurnerCompanies_pct;
+	return this.sl_gasBurnerCompanies_pct;
 }
 
 public ShapeSlider getSliderElectricHeatPumpCompanies_pct() { 
-        return this.sl_electricHeatPumpCompanies_pct;
+	return this.sl_electricHeatPumpCompanies_pct;
 }
 
 public ShapeSlider getSliderHeatDemandReductionHouseholds_pct() { 
-        return this.sl_heatDemandReductionHouseholds_pct;
+	return this.sl_heatDemandReductionHouseholds_pct;
 }
 
 public ShapeSlider getSliderGasBurnerHouseholds_pct() { 
-        return this.sl_gasBurnerHouseholds_pct;
+	return this.sl_gasBurnerHouseholds_pct;
 }
 
 public ShapeSlider getSliderElectricHeatPumpHouseholds_pct() { 
-        return this.sl_electricHeatPumpHouseholds_pct;
+	return this.sl_electricHeatPumpHouseholds_pct;
 }
 
 // Residential Tab Sliders
+public ShapeGroup getGroupHeatDemandSlidersResidentialArea() {
+	return this.gr_heatDemandSlidersResidentialArea;
+}
+
 public ShapeSlider getSliderHeatDemandSlidersResidentialAreaHouseholdsGasBurner_pct() { 
-        return this.sl_heatDemandSlidersResidentialAreaHouseholdsGasBurner_pct;
+	return this.sl_heatDemandSlidersResidentialAreaHouseholdsGasBurner_pct;
 }
 
 public ShapeSlider getSliderHeatDemandSlidersResidentialAreaHouseholdsElectricHeatPump_pct() { 
-        return this.sl_heatDemandSlidersResidentialAreaHouseholdsElectricHeatPump_pct;
+	return this.sl_heatDemandSlidersResidentialAreaHouseholdsElectricHeatPump_pct;
 }
 
 // Company Tab Sliders
+public ShapeGroup getGroupHeatDemandSlidersCompanies() {
+	return this.gr_heatDemandSlidersCompanies;
+}
+
 public ShapeSlider getSliderHeatDemandSlidersCompaniesHeatDemandReductionCompanies_pct() { 
-        return this.sl_heatDemandSlidersCompaniesHeatDemandReductionCompanies_pct;
+	return this.sl_heatDemandSlidersCompaniesHeatDemandReductionCompanies_pct;
 }
 
 public ShapeSlider getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct() { 
-        return this.sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct;
+	return this.sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct;
 }
 
 public ShapeSlider getSliderHeatDemandSlidersCompaniesElectricHeatPumpCompanies_pct() { 
-        return this.sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct;
+	return this.sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct;
 }]]></AdditionalClassCode>
+			<ExtendsReference>
+				<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
+				<ClassName><![CDATA[tabArea]]></ClassName>
+			</ExtendsReference>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1722253108631</Id>
@@ -24827,7 +25194,7 @@ else {
 	}	
 }]]></Body>
 				</Function>
-				<Function AccessType="protected" StaticFunction="false">
+				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722256269495</Id>
@@ -26785,6 +27152,13 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 		<ActiveObjectClass>
 			<Id>1722253463895</Id>
 			<Name><![CDATA[tabEHub]]></Name>
+			<AdditionalClassCode><![CDATA[public ShapeGroup getGroupHubSliders() {
+	return this.gr_hubSliders;
+}]]></AdditionalClassCode>
+			<ExtendsReference>
+				<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
+				<ClassName><![CDATA[tabArea]]></ClassName>
+			</ExtendsReference>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1722253463901</Id>
@@ -27728,7 +28102,7 @@ if (zero_Interface.v_clickedObjectType != null && zero_Interface.v_clickedObject
 
 // When this boolean is true clicking on the GIS Map will select another building for the NF ATO
 b_NFATOListener = true;
-uI_Tabs.f_setTab(NFATO);
+f_setTab(NFATO);
 
 
 if (b_nfatoWeekendDistinction) {
@@ -28050,7 +28424,7 @@ else {
 	
 	if (f_checkNFATO(weekCapacities, weekendCapacities)) {	
 		f_setNFATO(weekCapacities, weekendCapacities);
-		uI_Tabs.f_setTab(HUB);
+		f_setTab(HUB);
 		// reset the nfato settings
 		f_resetNFATOSettings();
 		zero_Interface.f_resetSettings();
@@ -28078,7 +28452,7 @@ else {
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[uI_Tabs.f_setTab(HUB);
+						<ActionCode><![CDATA[f_setTab(HUB);
 f_resetNFATOSettings();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -29901,7 +30275,7 @@ dataAVGC.p_avgPVPower_kWpm2= p_avgPVPower_kWpm2;
 dataAVGC.p_avgRatioRoofPotentialPV = p_avgRatioRoofPotentialPV;
 dataAVGC.p_avgRatioBatteryCapacity_v_Power = p_avgRatioBatteryCapacity_v_Power;
 
-loader.energyModel.avgc_data = dataAVGC;]]></Body>
+zero_Loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -29929,7 +30303,7 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 			<ContainerLinks>
 				<ContainerLink>
 					<Id>1726584830548</Id>
-					<Name><![CDATA[loader]]></Name>
+					<Name><![CDATA[zero_Loader]]></Name>
 					<X>50</X><Y>-100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -29937,7 +30311,7 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
 						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
-						<ClassName><![CDATA[Loader]]></ClassName>
+						<ClassName><![CDATA[Zero_Loader]]></ClassName>
 					</ActiveObjectClass>
 				</ContainerLink>
 			</ContainerLinks>
@@ -30437,7 +30811,7 @@ loader.energyModel.avgc_data = dataAVGC;]]></Body>
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
 			<Id>1726584205735</Id>
-			<Name><![CDATA[Loader]]></Name>
+			<Name><![CDATA[Zero_Loader]]></Name>
 			<Import><![CDATA[import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.JsonMappingException;
