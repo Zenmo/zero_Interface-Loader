@@ -3964,7 +3964,6 @@ uI_Tabs.tabElectricity.sl_EVsWoonwijk.setRange(uI_Tabs.tabElectricity.sl_EVsWoon
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[v_selectedGridConnectionIndex = 0;
-//v_clickedGridConnection = v_clickedBuilding.c_containedGridConnections.get(0);
 
 for (GridConnection gc : v_clickedBuilding.c_containedGridConnections) {
 	if (!c_selectedGridConnections.contains(gc)) {
@@ -9225,6 +9224,11 @@ new Thread( () -> {
 	
 	//Update main area collection
 	f_updateUIresultsMainArea();
+	
+	//Update selected GC area collection
+	if (c_selectedGridConnections.size() > 0){
+		f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+	}
 	uI_Results.f_showCorrectChart();
 	
 	//Update and show kpi summary chart after run
@@ -13093,20 +13097,32 @@ switch (c_ownedGridConnections.get(v_currentSelectedGCnr).p_heatingType){
 }
 
 
-//Find the current heat saving percentage !!!!!!!!!!!!!!!!!!!!
-int currentHeatSavings = 0; // FIX THIS!
+//Find the current heat saving percentage
+int currentHeatSavings = 0;
 
 J_EAConsumption consumptionEAHEAT = findFirst(c_ownedGridConnections.get(v_currentSelectedGCnr).c_consumptionAssets, consumptionAsset -> consumptionAsset.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
 if (consumptionEAHEAT != null){
 	currentHeatSavings = roundToInt((consumptionEAHEAT.getConsumptionScaling_fr() - 1)*-100);
 }
+else{   
+	J_EAProfile profileEAHEAT = findFirst(c_ownedGridConnections.get(v_currentSelectedGCnr).c_profileAssets, profileAsset -> profileAsset.profileType == OL_ProfileAssetType.HEATDEMAND);
+	if (profileEAHEAT != null){
+		currentHeatSavings = roundToInt((profileEAHEAT.getProfileScaling_fr() - 1)*-100);
+	}
+}
 
-//Find the current electricity savings percentage !!!!!!!!!!!!!!!!
-int currentElectricitySavings = 0; // FIX THIS!
+//Find the current electricity savings percentage
+int currentElectricitySavings = 0;
 
 J_EAConsumption consumptionEAELECTRIC = findFirst(c_ownedGridConnections.get(v_currentSelectedGCnr).c_consumptionAssets, consumptionAsset -> consumptionAsset.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND);
 if (consumptionEAELECTRIC != null){
 	currentElectricitySavings = roundToInt((consumptionEAELECTRIC.getConsumptionScaling_fr() - 1)*-100);
+}
+else{
+	J_EAProfile profileEAELECTRIC = findFirst(c_ownedGridConnections.get(v_currentSelectedGCnr).c_profileAssets, profileAsset -> profileAsset.profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD);
+	if (profileEAELECTRIC != null){
+		currentElectricitySavings = roundToInt((profileEAELECTRIC.getProfileScaling_fr() - 1)*-100);
+	}
 }
 
 //Find the current Connection capacity
@@ -22535,21 +22551,26 @@ zero_Interface.f_resetSettings();]]></Body>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
 					<Body><![CDATA[double newElectricityDemandReduction_pct = demandReduction_pct;
- 
+double consumptionScaling_fr = 1  - newElectricityDemandReduction_pct/100;
+
 for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()) {
-	if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND) {
-		((J_EAConsumption)j_ea).yearlyDemandElectricity_kWh = ((J_EAConsumption)j_ea).yearlyDemandElectricity_kWh / (1 - v_electricityDemandReduction_pct/100) * ( 1  - newElectricityDemandReduction_pct/100);
+	if (j_ea instanceof J_EAConsumption) {
+		if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND) {
+			((J_EAConsumption)j_ea).setConsumptionScaling_fr(consumptionScaling_fr);
+		}
 	}
 	if (j_ea instanceof J_EAProfile) {
 		if (((J_EAProfile) j_ea).energyCarrierConsumed == OL_EnergyCarrierType.ELECTRICITY) {
 			((J_EAProfile) j_ea).resetEnergyProfile();
-			((J_EAProfile) j_ea).scaleEnergyProfile(1 - demandReduction_pct / 100);
+			((J_EAProfile) j_ea).scaleEnergyProfile(consumptionScaling_fr);
 		}
 	}
 }
+
 v_electricityDemandReduction_pct = newElectricityDemandReduction_pct;
  
-zero_Interface.f_resetSettings();]]></Body>
+zero_Interface.f_resetSettings();
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -24914,21 +24935,26 @@ if ( districtHeatingSlider != null ) {
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
 					<Body><![CDATA[double newHeatDemandReduction_pct = demandReduction_pct;
+double consumptionScaling_fr = 1  - newHeatDemandReduction_pct/100;
 
-for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()) {
+for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()){
 	Agent parentGC = j_ea.getParentAgent();
 	if(parentGC != null && parentGC instanceof GCUtility){
-		if (j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND) {
-			((J_EAConsumption)j_ea).yearlyDemandHeat_kWh = ((J_EAConsumption)j_ea).yearlyDemandHeat_kWh / (1 - v_heatDemandReductionCompanies_pct/100) * ( 1  - newHeatDemandReduction_pct/100);
+		if (j_ea instanceof J_EAConsumption) {
+			if (j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND) {
+				((J_EAConsumption)j_ea).setConsumptionScaling_fr(consumptionScaling_fr);
+			}
 		}
 		if (j_ea instanceof J_EAProfile) {
 			if (((J_EAProfile) j_ea).energyCarrierConsumed == OL_EnergyCarrierType.HEAT) {
 				((J_EAProfile) j_ea).resetEnergyProfile();
-				((J_EAProfile) j_ea).scaleEnergyProfile(1 - demandReduction_pct / 100);
+				((J_EAProfile) j_ea).scaleEnergyProfile(consumptionScaling_fr);
 			}
 		}
 	}
 }
+
+
 v_heatDemandReductionCompanies_pct = newHeatDemandReduction_pct;
  
 zero_Interface.f_resetSettings();]]></Body>
@@ -24949,21 +24975,26 @@ zero_Interface.f_resetSettings();]]></Body>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
 					<Body><![CDATA[double newHeatDemandReduction_pct = demandReduction_pct;
+double consumptionScaling_fr = 1  - newHeatDemandReduction_pct/100;
 
-for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()) {
+for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()){
 	Agent parentGC = j_ea.getParentAgent();
 	if(parentGC != null && parentGC instanceof GCHouse){
-		if (j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND) {
-			((J_EAConsumption)j_ea).yearlyDemandHeat_kWh = ((J_EAConsumption)j_ea).yearlyDemandHeat_kWh / (1 - v_heatDemandReductionHouses_pct/100) * ( 1  - newHeatDemandReduction_pct/100);
+		if (j_ea instanceof J_EAConsumption) {
+			if (j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND) {
+				((J_EAConsumption)j_ea).setConsumptionScaling_fr(consumptionScaling_fr);
+			}
 		}
 		if (j_ea instanceof J_EAProfile) {
 			if (((J_EAProfile) j_ea).energyCarrierConsumed == OL_EnergyCarrierType.HEAT) {
 				((J_EAProfile) j_ea).resetEnergyProfile();
-				((J_EAProfile) j_ea).scaleEnergyProfile(1 - demandReduction_pct / 100);
+				((J_EAProfile) j_ea).scaleEnergyProfile(consumptionScaling_fr);
 			}
 		}
 	}
 }
+
+
 v_heatDemandReductionHouses_pct = newHeatDemandReduction_pct;
  
 zero_Interface.f_resetSettings();]]></Body>
@@ -29846,7 +29877,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[6]]></Code>
+							<Code><![CDATA[5]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1726746753358</Id>
@@ -32408,8 +32439,7 @@ return b;]]></Body>
 
 else { // Add regular electricity and consumption profiles
 	J_EAConsumption profile = new J_EAConsumption(parentGC, OL_EnergyAssetType.ELECTRICITY_DEMAND, profileName, yearlyElectricityDemand_kWh, 0.0, 0.0, 0.0, 0.0, energyModel.p_timeStep_h, null);
-}
-]]></Body>
+}]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -32444,6 +32474,7 @@ else { // Add regular electricity and consumption profiles
 					<Body><![CDATA[J_EAConsumption heatDemand;
 double yearlyDemandHeat_kWh = 0;
 double profileTimeStep_hr = 1;
+double maxPowerGasburner = 0;
 
 if (parentGC.p_heatingType != OL_GridConnectionHeatingType.GASBURNER || yearlyGasDemand_m3 <= 0 ){// FOR NOW CHECK THIS
 	traceln("NO SUPPORTED HEATING TYPE DETECTED, OR NO GAS DEMAND DETECTED!!");
@@ -32460,6 +32491,11 @@ if(hasHourlyGasData){
 		double gasHeatingValue_timestep_kWh = hourlyGasDemand_kWh.get(i) * avgc_data.p_gas_kWhpm3 * ratioGasUsedForHeating;
 		yearlyDemandHeat_kWh += gasHeatingValue_timestep_kWh;
     	hourlyHeatDemand_kWh.add(i, gasHeatingValue_timestep_kWh);
+    	
+    	//Keep track of max value
+    	if((gasHeatingValue_timestep_kWh/energyModel.p_timeStep_h) > maxPowerGasburner){
+    		maxPowerGasburner = gasHeatingValue_timestep_kWh/energyModel.p_timeStep_h;
+    	}
 	}	
 	profile.a_energyProfile_kWh = hourlyHeatDemand_kWh.stream().mapToDouble(d -> max(0,d)).toArray();
 }
@@ -32467,12 +32503,13 @@ else{
 	//Determine heatdemand
 	yearlyDemandHeat_kWh = yearlyGasDemand_m3 * avgc_data.p_gas_kWhpm3; 
 	heatDemand = new J_EAConsumption(parentGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, 0.0, yearlyDemandHeat_kWh, 0.0, 0.0, 0.0, energyModel.p_timeStep_h, null);
+	maxPowerGasburner = (yearlyDemandHeat_kWh / 8760 * 10);
 }
 
 switch (parentGC.p_heatingType){ // HOE gaan we om met meerdere heating types in survey???
 
 	case GASBURNER:
-		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, OL_EnergyAssetType.GAS_BURNER, yearlyDemandHeat_kWh / 8760 * 10, 0.99, energyModel.p_timeStep_h, 90);
+		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, OL_EnergyAssetType.GAS_BURNER, maxPowerGasburner , 0.99, energyModel.p_timeStep_h, 90);
 	break;
 	
 	case HYBRID_HEATPUMP:
@@ -32686,7 +32723,7 @@ else{
 					<Id>1726584205815</Id>
 					<Name><![CDATA[f_createSurveyCompanies_Zorm]]></Name>
 					<X>439.001</X><Y>159</Y>
-					<Label><X>10</X><Y>0</Y></Label>
+					<Label><X>10.999</X><Y>1</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
@@ -34225,10 +34262,6 @@ for (Chargingstation_data dataChargingStation : c_Chargingstation_data){
 			zero_Interface.f_styleAreas(area);
 	}
 }
-
-
-
-
 ]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
@@ -34648,7 +34681,9 @@ c_Solarfarm_data.clear();
 c_Windfarm_data.clear();
 c_Electrolyser_data.clear();
 c_Battery_data.clear();
+c_Chargingstation_data.clear();
 c_Neighbourhood_data.clear();
+c_Parcel_data.clear();
 c_Cable_data_LV.clear();
 c_Cable_data_MV.clear();
 
