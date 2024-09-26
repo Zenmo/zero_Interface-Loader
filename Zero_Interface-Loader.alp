@@ -5540,7 +5540,8 @@ traceln("Forgot to override project specific slider settings!!");]]></Body>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//Function used to set the colors, styling, and other parameters/functions for each specific project
 //Should be overridden!!
-traceln("DID NOT OVERRIDE THE PROJECT SPECIFIC STYLING!");]]></Body>
+
+//traceln("DID NOT OVERRIDE THE PROJECT SPECIFIC STYLING!");]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -28799,7 +28800,7 @@ f_resetNFATOSettings();]]></ActionCode>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="70" Height="70">
+					<BasicProperties Width="95" Height="70">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
@@ -28808,9 +28809,9 @@ f_resetNFATOSettings();]]></ActionCode>
 						<Font Name="Dialog" Size="11" Style="0"/>
 						<DefaultValueCode><![CDATA[2]]></DefaultValueCode>
 						<Orientation>VERTICAL</Orientation>
-						<Button><![CDATA[Delivery]]></Button>
-						<Button><![CDATA[Feed in]]></Button>
-						<Button><![CDATA[Both]]></Button>
+						<Button><![CDATA[Levering]]></Button>
+						<Button><![CDATA[Teruglevering]]></Button>
+						<Button><![CDATA[Beide]]></Button>
 						<LinkTo>false</LinkTo>
 					</ExtendedProperties>
 				</Control>
@@ -35012,7 +35013,7 @@ if (yearlyElectricityProduction_kWh != null && yearlyElectricityFeedin_kWh != nu
 }
 //traceln(Arrays.stream(profile.a_energyProfile_kWh).sum() + " kWh per jaar at grid connection " + parentGC.p_ownerID + " " + profileName);
 v_remainingElectricityDelivery_kWh -= nettDelivery_kWh;
- 
+
 if (v_remainingElectricityDelivery_kWh < 0){
 	traceln("v_remainingElectricityConsumption_kWh became negative at GC: %s", parentGC);
 }]]></Body>
