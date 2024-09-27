@@ -3628,7 +3628,11 @@ f_setGridTopologyColors();
 
 //Initialize the sliders of the main UI
 f_setSliderPresets();
-]]></Body>
+
+//Disable cable button if no cables have been loaded in
+if(c_LVCables.size() == 0 && c_MVCables.size() == 0){
+	checkbox_cabels.setVisible(false);
+}]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -10313,7 +10317,7 @@ b_resultsUpToDate = true;
 				<Control Type="CheckBox">
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1725017697644</Id>
-					<Name><![CDATA[checkbox_kabels]]></Name>
+					<Name><![CDATA[checkbox_cabels]]></Name>
 					<X>20</X><Y>460</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -27992,72 +27996,9 @@ else {
 				</Rectangle>
 				<Control Type="CheckBox">
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1722253487929</Id>
-					<Name><![CDATA[cb_useLocalPV]]></Name>
-					<X>-126</X><Y>-144</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="266" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="14" Style="0"/>
-						<LabelText><![CDATA[Lokale zonnestroom inzetten]]></LabelText>
-						<LinkTo>false</LinkTo>
-	 				</ExtendedProperties>
-				</Control>
-				<Control Type="CheckBox">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1722253487931</Id>
-					<Name><![CDATA[cb_useLocalWind]]></Name>
-					<X>-126</X><Y>-114</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="276" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="14" Style="0"/>
-						<LabelText><![CDATA[Windmolen voor H2 productie]]></LabelText>
-						<LinkTo>false</LinkTo>
-	 				</ExtendedProperties>
-				</Control>
-				<Control Type="CheckBox">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1722253487933</Id>
-					<Name><![CDATA[cb_hydrogenNetwork]]></Name>
-					<X>-125</X><Y>-86</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="255" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="14" Style="0"/>
-						<LabelText><![CDATA[Waterstof netwerk]]></LabelText>
-						<LinkTo>false</LinkTo>
-	 				</ExtendedProperties>
-				</Control>
-				<Control Type="CheckBox">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722253487935</Id>
 					<Name><![CDATA[cb_spreadChargingEVs]]></Name>
-					<X>75</X><Y>-22</Y>
+					<X>75</X><Y>-112</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28084,7 +28025,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722253487937</Id>
 					<Name><![CDATA[t_collectiveBatteries1]]></Name>
-					<X>35</X><Y>45</Y>
+					<X>35</X><Y>-45</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28106,7 +28047,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722253487939</Id>
 					<Name><![CDATA[t_spreadChargingEVsDescription]]></Name>
-					<X>-170</X><Y>-15</Y>
+					<X>-170</X><Y>-105</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28128,7 +28069,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722253487941</Id>
 					<Name><![CDATA[sl_collectiveBattery_MWh]]></Name>
-					<X>70</X><Y>40</Y>
+					<X>70</X><Y>-50</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28153,7 +28094,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722253487943</Id>
 					<Name><![CDATA[t_curtailmentDescription]]></Name>
-					<X>-170</X><Y>-40</Y>
+					<X>-170</X><Y>-130</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28174,7 +28115,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722253487945</Id>
 					<Name><![CDATA[t_collectiveBatteryDescription]]></Name>
-					<X>-170</X><Y>45</Y>
+					<X>-170</X><Y>-45</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28196,7 +28137,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722253487947</Id>
 					<Name><![CDATA[cb_curtailment]]></Name>
-					<X>75</X><Y>-48</Y>
+					<X>75</X><Y>-138</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28228,7 +28169,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722253487949</Id>
 					<Name><![CDATA[button_add_nfato]]></Name>
-					<X>-170</X><Y>105</Y>
+					<X>-170</X><Y>15</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28285,7 +28226,7 @@ else {
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722253487951</Id>
 					<Name><![CDATA[button_remove_nfato]]></Name>
-					<X>0</X><Y>105</Y>
+					<X>0</X><Y>15</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28314,7 +28255,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1725277950476</Id>
 					<Name><![CDATA[cb_powerChargingEVs]]></Name>
-					<X>75</X><Y>4</Y>
+					<X>75</X><Y>-86</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28341,7 +28282,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1725277950478</Id>
 					<Name><![CDATA[t_powerChargingEVsDescription]]></Name>
-					<X>-170</X><Y>11</Y>
+					<X>-170</X><Y>-79</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
