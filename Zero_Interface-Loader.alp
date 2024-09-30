@@ -3632,6 +3632,11 @@ f_setSliderPresets();
 //Disable cable button if no cables have been loaded in
 if(c_LVCables.size() == 0 && c_MVCables.size() == 0){
 	checkbox_cabels.setVisible(false);
+}
+
+//Disable summary button if summary is not selected
+if(settings.showKPISummary() == null || !settings.showKPISummary()){
+	uI_Results.getCheckbox_KPISummary().setVisible(false);
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -9300,7 +9305,7 @@ new Thread( () -> {
 	
 	//Update and show kpi summary chart after run
 	if(settings.showKPISummary() != null && settings.showKPISummary()){
-		uI_Results.chartKPISummary.f_setKPISummaryChart();
+		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
 	}
 }).start();
 
@@ -10087,7 +10092,7 @@ b_resultsUpToDate = true;
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1721290473524</Id>
 					<Name><![CDATA[checkbox_multiSelect]]></Name>
-					<X>790</X><Y>50</Y>
+					<X>20</X><Y>480</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10498,7 +10503,8 @@ public ShapeGroup getChartGroupWeek() {
 */
 ]]></AdditionalClassCode>
 			<Import><![CDATA[//import kotlinx.serialization.internal.ArrayListClassDesc;
-import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;]]></Import>
+import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
+]]></Import>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1708522361868</Id>
@@ -12041,7 +12047,7 @@ f_setVehicleSliderPresets();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713961813474</Id>
 					<Name><![CDATA[f_setComboBoxGC]]></Name>
-					<X>-1070</X><Y>70</Y>
+					<X>-1070</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12963,17 +12969,26 @@ zero_Interface.f_updateMainInterfaceSliders();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1714654645264</Id>
 					<Name><![CDATA[f_setResultsUIPresets]]></Name>
-					<X>-1070</X><Y>90</Y>
+					<X>-1070</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[//Set the locations and visibilities of the ResultsUI agents
+					<Body><![CDATA[//Set the order of the resultsUI to front
+presentation.remove(uI_Results_presentation);
+presentation.insert(presentation.size()-3, uI_Results_presentation);
+
+//Set the locations and visibilities of the ResultsUI agents
 uI_Results.f_setChartProfiles_Presentation(0, 0, true);
 uI_Results.f_setChartBalance_Presentation(530, 0, true);
 uI_Results.f_setChartGridLoad_Presentation(null, null, false);
 uI_Results.f_setChartSankey_Presentation(1060, 0, true);
 uI_Results.f_setRadioButtons(null, null, false);
+
+//Disable KPIsummary button if KPIsummary is not selected
+if(zero_Interface.settings.showKPISummary() == null || !zero_Interface.settings.showKPISummary()){
+	uI_Results.getCheckbox_KPISummary().setVisible(false);
+}
 
 //Set the color of the charts
 uI_Results.f_styleAllCharts(v_chartBackgroundColor, v_companyUILineColor, v_chartLineWidth, LINE_STYLE_SOLID);]]></Body>
@@ -12983,7 +12998,7 @@ uI_Results.f_styleAllCharts(v_chartBackgroundColor, v_companyUILineColor, v_char
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1714655282643</Id>
 					<Name><![CDATA[f_initializeCompanyUI]]></Name>
-					<X>-1090</X><Y>50</Y>
+					<X>-1090</X><Y>40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12995,7 +13010,10 @@ f_setComboBoxGC();
 f_setResultsUIPresets();
 
 //Initialize the sliders
-f_setSliderPresets();]]></Body>
+f_setSliderPresets();
+
+//Scale companyName to the box size
+f_setNameTextSize();]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -13395,6 +13413,29 @@ t_GCCapacityCompany.setText(roundToInt(v_defaultGCCapacitySlider) + " kW");
 
 //Set slider knob
 sl_GCCapacityCompany.setValue(v_defaultGCCapacitySlider, false);]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1727712593952</Id>
+					<Name><![CDATA[f_setNameTextSize]]></Name>
+					<X>-1070</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[int nameLength = p_companyName.length();
+
+int i = 0;
+if(nameLength > 24){
+	while(24+i != nameLength){
+	
+		t_companyName.setScale(0.95);
+		i++;
+	}
+}
+//Works for now: Possible to make it more accurate using getFontMetrics package and comparing width of text with the name text box width.
+//--> Not done for now, as it feels unnecessary.]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -13909,7 +13950,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1714655090415</Id>
 					<Name><![CDATA[txt_onStartup]]></Name>
-					<X>-1100</X><Y>20</Y>
+					<X>-1100</X><Y>10</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15848,7 +15889,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
 					<Width>470</Width>
-					<Height>160</Height>
+					<Height>110</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -16089,6 +16130,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<VisibleCode><![CDATA[!uI_Results.b_showKPISummary]]></VisibleCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<ZHeight>10</ZHeight>
@@ -16155,7 +16197,13 @@ new Thread( () -> {
 	gr_loadIcon.setVisible(false);
 	
 	//Update and show kpi summary chart after run
-	uI_Results.chartKPISummary.f_setKPISummaryChart();
+	//uI_Results.chartKPISummary.f_setKPISummaryChart();
+	
+	//Update and show kpi summary chart after run
+	if(zero_Interface.settings.showKPISummary() != null && zero_Interface.settings.showKPISummary()){
+		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
+	}
+	
 }).start();
 
 
