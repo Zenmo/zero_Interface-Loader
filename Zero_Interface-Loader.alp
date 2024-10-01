@@ -10495,12 +10495,6 @@ public ShapeRadioButtonGroup getRb_scenariosPrivateUI() {
 	return this.rb_scenariosPrivateUI;
 }
 
-
-/*
-public ShapeGroup getChartGroupWeek() {
-	return this.group_week;
-}
-*/
 ]]></AdditionalClassCode>
 			<Import><![CDATA[//import kotlinx.serialization.internal.ArrayListClassDesc;
 import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
@@ -10675,7 +10669,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1713957213075</Id>
 					<Name><![CDATA[v_minPVSlider]]></Name>
-					<X>-1060</X><Y>290</Y>
+					<X>-1060</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10690,7 +10684,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1713957229701</Id>
 					<Name><![CDATA[v_maxPVSlider]]></Name>
-					<X>-1060</X><Y>310</Y>
+					<X>-1060</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10705,7 +10699,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1713957233827</Id>
 					<Name><![CDATA[v_defaultPVSlider]]></Name>
-					<X>-1060</X><Y>330</Y>
+					<X>-1060</X><Y>410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10720,7 +10714,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1713971707023</Id>
 					<Name><![CDATA[v_minBatSlider]]></Name>
-					<X>-1060</X><Y>370</Y>
+					<X>-1060</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10735,7 +10729,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1713971707027</Id>
 					<Name><![CDATA[v_maxBatSlider]]></Name>
-					<X>-1060</X><Y>390</Y>
+					<X>-1060</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10750,7 +10744,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1713971707029</Id>
 					<Name><![CDATA[v_defaultBatSlider]]></Name>
-					<X>-1060</X><Y>410</Y>
+					<X>-1060</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10765,7 +10759,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714139274247</Id>
 					<Name><![CDATA[v_nbEVCars]]></Name>
-					<X>-1050</X><Y>590</Y>
+					<X>-1050</X><Y>670</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10780,7 +10774,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714139294087</Id>
 					<Name><![CDATA[v_nbHydrogenCars]]></Name>
-					<X>-1050</X><Y>630</Y>
+					<X>-1050</X><Y>710</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10795,7 +10789,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714139299844</Id>
 					<Name><![CDATA[v_nbDieselCars]]></Name>
-					<X>-1050</X><Y>610</Y>
+					<X>-1050</X><Y>690</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10810,7 +10804,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714139304156</Id>
 					<Name><![CDATA[v_nbEVVans]]></Name>
-					<X>-1050</X><Y>790</Y>
+					<X>-1050</X><Y>870</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10825,7 +10819,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714139320416</Id>
 					<Name><![CDATA[v_nbEVTrucks]]></Name>
-					<X>-1050</X><Y>990</Y>
+					<X>-1050</X><Y>1070</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10840,7 +10834,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714139381294</Id>
 					<Name><![CDATA[v_nbDieselVans]]></Name>
-					<X>-1050</X><Y>810</Y>
+					<X>-1050</X><Y>890</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10855,7 +10849,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714139385293</Id>
 					<Name><![CDATA[v_nbDieselTrucks]]></Name>
-					<X>-1050</X><Y>1010</Y>
+					<X>-1050</X><Y>1090</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10870,7 +10864,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714139405729</Id>
 					<Name><![CDATA[v_nbHydrogenVans]]></Name>
-					<X>-1050</X><Y>830</Y>
+					<X>-1050</X><Y>910</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10885,7 +10879,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714139413565</Id>
 					<Name><![CDATA[v_nbHydrogenTrucks]]></Name>
-					<X>-1050</X><Y>1030</Y>
+					<X>-1050</X><Y>1110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10900,7 +10894,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714139966993</Id>
 					<Name><![CDATA[v_minEVCarSlider]]></Name>
-					<X>-1050</X><Y>470</Y>
+					<X>-1050</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10915,7 +10909,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714139997786</Id>
 					<Name><![CDATA[v_minHydrogenCarSlider]]></Name>
-					<X>-1050</X><Y>510</Y>
+					<X>-1050</X><Y>590</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10930,7 +10924,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714140003906</Id>
 					<Name><![CDATA[v_maxEVCarSlider]]></Name>
-					<X>-1050</X><Y>530</Y>
+					<X>-1050</X><Y>610</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10945,7 +10939,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714140007855</Id>
 					<Name><![CDATA[v_minDieselCarSlider]]></Name>
-					<X>-1050</X><Y>490</Y>
+					<X>-1050</X><Y>570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10960,7 +10954,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714140012482</Id>
 					<Name><![CDATA[v_maxHydrogenCarSlider]]></Name>
-					<X>-1050</X><Y>570</Y>
+					<X>-1050</X><Y>650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10975,7 +10969,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714140056511</Id>
 					<Name><![CDATA[v_maxDieselCarSlider]]></Name>
-					<X>-1050</X><Y>550</Y>
+					<X>-1050</X><Y>630</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10990,7 +10984,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714141906262</Id>
 					<Name><![CDATA[v_minEVVanSlider]]></Name>
-					<X>-1050</X><Y>670</Y>
+					<X>-1050</X><Y>750</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11005,7 +10999,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714141906264</Id>
 					<Name><![CDATA[v_minHydrogenVanSlider]]></Name>
-					<X>-1050</X><Y>710</Y>
+					<X>-1050</X><Y>790</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11020,7 +11014,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714141906266</Id>
 					<Name><![CDATA[v_maxEVVanSlider]]></Name>
-					<X>-1050</X><Y>730</Y>
+					<X>-1050</X><Y>810</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11035,7 +11029,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714141906268</Id>
 					<Name><![CDATA[v_minDieselVanSlider]]></Name>
-					<X>-1050</X><Y>690</Y>
+					<X>-1050</X><Y>770</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11050,7 +11044,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714141906270</Id>
 					<Name><![CDATA[v_maxHydrogenVanSlider]]></Name>
-					<X>-1050</X><Y>770</Y>
+					<X>-1050</X><Y>850</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11065,7 +11059,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714141906272</Id>
 					<Name><![CDATA[v_maxDieselVanSlider]]></Name>
-					<X>-1050</X><Y>750</Y>
+					<X>-1050</X><Y>830</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11080,7 +11074,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714142030261</Id>
 					<Name><![CDATA[v_minEVTruckSlider]]></Name>
-					<X>-1050</X><Y>870</Y>
+					<X>-1050</X><Y>950</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11095,7 +11089,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714142030263</Id>
 					<Name><![CDATA[v_minHydrogenTruckSlider]]></Name>
-					<X>-1050</X><Y>910</Y>
+					<X>-1050</X><Y>990</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11110,7 +11104,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714142030265</Id>
 					<Name><![CDATA[v_maxEVTruckSlider]]></Name>
-					<X>-1050</X><Y>930</Y>
+					<X>-1050</X><Y>1010</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11125,7 +11119,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714142030267</Id>
 					<Name><![CDATA[v_minDieselTruckSlider]]></Name>
-					<X>-1050</X><Y>890</Y>
+					<X>-1050</X><Y>970</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11140,7 +11134,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714142030269</Id>
 					<Name><![CDATA[v_maxDieselTruckSlider]]></Name>
-					<X>-1050</X><Y>950</Y>
+					<X>-1050</X><Y>1030</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11155,7 +11149,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1714142035660</Id>
 					<Name><![CDATA[v_maxHydrogenTruckSlider]]></Name>
-					<X>-1050</X><Y>970</Y>
+					<X>-1050</X><Y>1050</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11314,6 +11308,51 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727798399505</Id>
+					<Name><![CDATA[v_minGCCapacitySlider_Feedin]]></Name>
+					<X>-1060</X><Y>290</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727798399507</Id>
+					<Name><![CDATA[v_maxGCCapacitySlider_Feedin]]></Name>
+					<X>-1060</X><Y>310</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[100]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727798399509</Id>
+					<Name><![CDATA[v_defaultGCCapacitySlider_Feedin]]></Name>
+					<X>-1060</X><Y>330</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1708522385741</Id>
 					<Name><![CDATA[p_companyName]]></Name>
@@ -11402,7 +11441,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 					<Id>1715181661645</Id>
 					<Name><![CDATA[p_maxAddedVehicles]]></Name>
 					<Description><![CDATA[Amount of vehicles that can additionally be added on the already existing ones]]></Description>
-					<X>-1060</X><Y>1050</Y>
+					<X>-1060</X><Y>1130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11571,8 +11610,12 @@ rb_heatingTypePrivateUI.setValue(nr_currentHeatingType, true);
 //Electricity savings
 sl_electricityDemandCompanyReduction.setValue(0, true);
 
-//Connection capacity
+//Connection capacity (Delivery)
 sl_GCCapacityCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getRequestedContractDeliveryCapacity_kW(), true);
+
+//Connection capacity (Feedin)
+//sl_GCCapacityCompany_Feedin.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getRequestedContractFeedinCapacity_kW(), true); DOES NOT EXIST FOR NOW, TAKE SAME AS CURRENT
+sl_GCCapacityCompany_Feedin.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractFeedinCapacity_kW(), true);
 
 //Solar panel power
 sl_rooftopPVCompany.setValue(v_minPVSlider + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedPV_kW(), true);
@@ -11580,6 +11623,8 @@ sl_rooftopPVCompany.setValue(v_minPVSlider + c_scenarioSettings_Future.get(v_cur
 //Battery capacity
 sl_batteryCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedBatteryCapacity_kWh(), true);
 
+//Curtailment setting
+cb_curtailmentCompany.setSelected(false, false);
 
 ////Mobility
 
@@ -11711,8 +11756,11 @@ rb_heatingTypePrivateUI.setValue(nr_currentHeatingType, true);
 //Electricity savings
 sl_electricityDemandCompanyReduction.setValue(0, true);
 
-//Connection capacity
+//Connection capacity (Delivery)
 sl_GCCapacityCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractDeliveryCapacity_kW(), true);
+
+//Connection capacity (Feedin)
+sl_GCCapacityCompany_Feedin.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractFeedinCapacity_kW(), true);
 
 //Solar panel power
 sl_rooftopPVCompany.setValue(v_minPVSlider, true);
@@ -11720,6 +11768,8 @@ sl_rooftopPVCompany.setValue(v_minPVSlider, true);
 //Battery capacity
 sl_batteryCompany.setValue(v_minBatSlider, true);
 
+//Curtailment setting
+cb_curtailmentCompany.setSelected(false, false);
 
 ////Mobility
 
@@ -11893,10 +11943,21 @@ zero_Interface.f_updateMainInterfaceSliders();]]></Body>
 						<Name><![CDATA[setGridConnectionCapacity_kW]]></Name>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
-					<Body><![CDATA[GC.p_contractedDeliveryCapacity_kW = setGridConnectionCapacity_kW;
-
-//Update main interface sliders (NOT NEEDED, THIS SLIDER DOES NOT EXIST THERE)
-//zero_Interface.f_updateMainInterfaceSliders();]]></Body>
+					<Parameter>
+						<Name><![CDATA[type]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Body><![CDATA[switch(type){
+	case "DELIVERY":
+		GC.p_contractedDeliveryCapacity_kW = setGridConnectionCapacity_kW;
+		break;
+	case "FEEDIN":
+		GC.p_contractedFeedinCapacity_kW = setGridConnectionCapacity_kW;
+		break;
+	case "PHYSICAL":
+		GC.p_physicalConnectionCapacity_kW = setGridConnectionCapacity_kW;
+		break;
+}]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -12029,8 +12090,11 @@ zero_Interface.f_updateMainInterfaceSliders();]]></Body>
 					<Body><![CDATA[//Heating radio button
 f_setHeatingRB();
 
-//Set grid capacity slider
+//Set grid capacity slider (delivery)
 f_setGCCapacitySliderPresets();
+
+//Set connection capacity slider (feedin)
+f_setGCCapacitySliderPresets_Feedin();
 
 //PV slider
 f_setPVSliderPresets();
@@ -12061,7 +12125,7 @@ f_setVehicleSliderPresets();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1714139629738</Id>
 					<Name><![CDATA[f_setPVSliderPresets]]></Name>
-					<X>-1070</X><Y>270</Y>
+					<X>-1070</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12080,7 +12144,7 @@ t_rooftopSolarCompany.setText(roundToInt(v_defaultPVSlider) + " kW");]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1714139648227</Id>
 					<Name><![CDATA[f_setBatSliderPresets]]></Name>
-					<X>-1070</X><Y>350</Y>
+					<X>-1070</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12095,7 +12159,7 @@ t_batteryCompany.setText(roundToInt(v_defaultBatSlider) + " kWh");]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1714139684603</Id>
 					<Name><![CDATA[f_setVehicleSliderPresets]]></Name>
-					<X>-1070</X><Y>430</Y>
+					<X>-1070</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12114,7 +12178,7 @@ f_setTruckSliderPresets();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1714140108358</Id>
 					<Name><![CDATA[f_setCarSliderPresets]]></Name>
-					<X>-1060</X><Y>450</Y>
+					<X>-1060</X><Y>530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12165,7 +12229,7 @@ sl_hydrogenCarsCompany.setValue(v_nbHydrogenCars, false);
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1714140134819</Id>
 					<Name><![CDATA[f_setVanSliderPresets]]></Name>
-					<X>-1060</X><Y>650</Y>
+					<X>-1060</X><Y>730</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12214,7 +12278,7 @@ sl_hydrogenVansCompany.setValue(v_nbHydrogenVans, false);
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1714140156233</Id>
 					<Name><![CDATA[f_setTruckSliderPresets]]></Name>
-					<X>-1060</X><Y>850</Y>
+					<X>-1060</X><Y>930</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12974,9 +13038,11 @@ zero_Interface.f_updateMainInterfaceSliders();]]></Body>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[//Set the order of the resultsUI to front
+					<Body><![CDATA[//Set the order of the resultsUI to front but behind simulation screen group
 presentation.remove(uI_Results_presentation);
-presentation.insert(presentation.size()-3, uI_Results_presentation);
+presentation.insert(presentation.size()-1, uI_Results_presentation);
+presentation.remove(gr_simulateYearScreen);
+presentation.insert(presentation.size()-1, gr_simulateYearScreen);
 
 //Set the locations and visibilities of the ResultsUI agents
 uI_Results.f_setChartProfiles_Presentation(0, 0, true);
@@ -13003,7 +13069,8 @@ uI_Results.f_styleAllCharts(v_chartBackgroundColor, v_companyUILineColor, v_char
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[//Set GC combobox 
+					<Body><![CDATA[//traceln(p_companyName);
+//Set GC combobox 
 f_setComboBoxGC();
 
 //Initialize graph locations and visibility
@@ -13210,15 +13277,11 @@ else{
 	}
 }
 
-//Find the current Connection capacity
-double GCCapacityCurrent = c_ownedGridConnections.get(v_currentSelectedGCnr).p_contractedDeliveryCapacity_kW;
+//Find the current Connection capacity (delivery)
+int GCContractCapacityCurrent_Delivery = roundToInt(c_ownedGridConnections.get(v_currentSelectedGCnr).p_contractedDeliveryCapacity_kW);
 
-//Find the current PV capacity
-int PVCapacityCurrent = 0;
-if (c_ownedGridConnections.get(v_currentSelectedGCnr).v_hasPV){
-	J_EAProduction pvAsset = findFirst(c_ownedGridConnections.get(v_currentSelectedGCnr).c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
-	PVCapacityCurrent = roundToInt(pvAsset.getCapacityElectric_kW());
-}
+//Find the current Connection capacity (feedin)
+int GCContractCapacityCurrent_Feedin = roundToInt(c_ownedGridConnections.get(v_currentSelectedGCnr).p_contractedFeedinCapacity_kW);
 
 //Find the current battery capacity
 int BatteryCapacityCurrent = 0;
@@ -13227,13 +13290,21 @@ if (batteryAsset != null){
 	BatteryCapacityCurrent = roundToInt(((J_EAStorageElectric)batteryAsset).getStorageCapacity_kWh());
 }
 
+//Find the current PV capacity
+int PVCapacityCurrent = 0;
+if (c_ownedGridConnections.get(v_currentSelectedGCnr).v_hasPV){
+	J_EAProduction pvAsset = findFirst(c_ownedGridConnections.get(v_currentSelectedGCnr).c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
+	PVCapacityCurrent = roundToInt(pvAsset.getCapacityElectric_kW());
+}
+
+//Find the current curtailment setting
+boolean currentCurtailmentSetting = c_ownedGridConnections.get(v_currentSelectedGCnr).v_enableCurtailment;
 
 //Find the current transport savings
 int currentTransportSavings = 0;
 if (c_ownedGridConnections.get(v_currentSelectedGCnr).c_tripTrackers.size() > 0){
 	currentTransportSavings = - roundToInt(c_ownedGridConnections.get(v_currentSelectedGCnr).c_tripTrackers.get(0).getDistanceScaling_fr()*100) + 100;
 }
-
 
 
 //Find the current number of vehicles for each type
@@ -13279,20 +13350,29 @@ sl_electricityDemandCompanyReduction.setValue(currentElectricitySavings, false);
 t_electricityDemandReductionCompany.setText(currentElectricitySavings + "%");
 v_electricityDemandReduction_pct = currentElectricitySavings;
 
-//Solar panel power
-sl_rooftopPVCompany.setValue(PVCapacityCurrent, false);
-t_rooftopSolarCompany.setText(PVCapacityCurrent + " kW");
-v_defaultPVSlider = PVCapacityCurrent;
+//Contract connection capacity (delivery)
+sl_GCCapacityCompany.setValue(GCContractCapacityCurrent_Delivery, false);
+t_GCCapacityCompany.setText(GCContractCapacityCurrent_Delivery + " kW");
+v_defaultGCCapacitySlider = GCContractCapacityCurrent_Delivery;
 
-//Grid connection capacity
-sl_GCCapacityCompany.setValue(GCCapacityCurrent, false);
-t_GCCapacityCompany.setText(GCCapacityCurrent + " kW");
-v_defaultGCCapacitySlider = GCCapacityCurrent;
+//Contract connection capacity (feedin)
+sl_GCCapacityCompany_Feedin.setValue(GCContractCapacityCurrent_Feedin, false);
+t_GCCapacityCompany_Feedin.setText(GCContractCapacityCurrent_Feedin + " kW");
+v_defaultGCCapacitySlider_Feedin = GCContractCapacityCurrent_Feedin;
 
 //Battery capacity
 sl_batteryCompany.setValue(BatteryCapacityCurrent, false);
 t_batteryCompany.setText(BatteryCapacityCurrent + " kWh");
 v_defaultBatSlider = BatteryCapacityCurrent;
+
+//Solar panel power
+sl_rooftopPVCompany.setValue(PVCapacityCurrent, false);
+t_rooftopSolarCompany.setText(PVCapacityCurrent + " kW");
+v_defaultPVSlider = PVCapacityCurrent;
+
+//Curtailment setting
+cb_curtailmentCompany.setSelected(currentCurtailmentSetting, false);
+
 
 //Mobility savings
 sl_mobilityDemandCompanyReduction.setValue(currentTransportSavings, false);
@@ -13430,12 +13510,48 @@ int i = 0;
 if(nameLength > 24){
 	while(24+i != nameLength){
 	
-		t_companyName.setScale(0.95);
+		t_companyName.setScale(0.9);
 		i++;
 	}
 }
 //Works for now: Possible to make it more accurate using getFontMetrics package and comparing width of text with the name text box width.
 //--> Not done for now, as it feels unnecessary.]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1727798399503</Id>
+					<Name><![CDATA[f_setGCCapacitySliderPresets_Feedin]]></Name>
+					<X>-1070</X><Y>270</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[//Set back end range (to prevent anylogic errors)
+sl_GCCapacityCompany_Feedin.setRange(0, 10000);
+
+//Get current grid capacity
+double defaultGCCapacitySlider_Feedin = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractFeedinCapacity_kW();
+
+//Set range specific for specific intervals of capacity
+v_minGCCapacitySlider_Feedin = 0;
+
+if(defaultGCCapacitySlider_Feedin < 100){
+	v_maxGCCapacitySlider_Feedin = 150;
+}
+else if(defaultGCCapacitySlider_Feedin < 1000){
+	v_maxGCCapacitySlider_Feedin = 2000;
+}
+else{
+	v_maxGCCapacitySlider_Feedin = 10000;
+}
+
+v_defaultGCCapacitySlider_Feedin = roundToInt(defaultGCCapacitySlider_Feedin);
+
+t_GCCapacityCompany_Feedin.setText(roundToInt(v_defaultGCCapacitySlider_Feedin) + " kW");
+
+//Set slider knob
+sl_GCCapacityCompany_Feedin.setValue(v_defaultGCCapacitySlider_Feedin, false);]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -13619,7 +13735,7 @@ if(nameLength > 24){
 				<Rectangle>
 					<Id>1713446065829</Id>
 					<Name><![CDATA[rect_sliders]]></Name>
-					<X>0</X><Y>170</Y>
+					<X>0</X><Y>140</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13636,7 +13752,7 @@ if(nameLength > 24){
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
 					<Width>360</Width>
-					<Height>810</Height>
+					<Height>840</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillColorCode><![CDATA[v_companyUIBackgroundColorSliders]]></FillColorCode>
@@ -13662,7 +13778,7 @@ if(nameLength > 24){
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
 					<Width>360</Width>
-					<Height>170</Height>
+					<Height>140</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillColorCode><![CDATA[v_companyUIBackgroundColorSliders]]></FillColorCode>
@@ -13992,7 +14108,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Group>
 					<Id>1715626747942</Id>
 					<Name><![CDATA[gr_companyUISliders]]></Name>
-					<X>310</X><Y>480</Y>
+					<X>310</X><Y>445</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14058,7 +14174,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 					<BasicProperties Width="100" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[f_setGCCapacity(c_ownedGridConnections.get(v_currentSelectedGCnr), sl_GCCapacityCompany.getValue());
+						<ActionCode><![CDATA[f_setGCCapacity(c_ownedGridConnections.get(v_currentSelectedGCnr), sl_GCCapacityCompany.getValue(), "DELIVERY");
 t_GCCapacityCompany.setText(roundToInt(sl_GCCapacityCompany.getValue()) + " kW");
 
 //Set scenario to custom
@@ -14089,7 +14205,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[Aansluit capaciteit]]></Text>
+					<Text><![CDATA[Contr. capaciteit (af.)]]></Text>
 					<Font>
 						<Name>Dialog</Name>
 						<Size>14</Size>
@@ -14143,7 +14259,7 @@ for (J_EA j_ea : c_ownedGridConnections.get(v_currentSelectedGCnr).c_energyAsset
 
 
 v_heatDemandReduction_pct = newHeatDemandReduction_pct;
-t_heatDemandReductionCompanies.setText(newHeatDemandReduction_pct + "%");
+t_heatDemandReductionCompanies.setText(roundToInt(newHeatDemandReduction_pct) + "%");
 
 //Set scenario to custom
 f_setScenario(2);
@@ -14229,7 +14345,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Text>
 					<Id>1713446438059</Id>
 					<Name><![CDATA[txt_mobiliteit]]></Name>
-					<X>-240</X><Y>115</Y>
+					<X>-240</X><Y>160</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14299,7 +14415,7 @@ for (J_EA j_ea : c_ownedGridConnections.get(v_currentSelectedGCnr).c_energyAsset
 }
 
 v_electricityDemandReduction_pct = newElectricityDemandReduction_pct;
-t_electricityDemandReductionCompany.setText(newElectricityDemandReduction_pct + "%");
+t_electricityDemandReductionCompany.setText(roundToInt(newElectricityDemandReduction_pct) + "%");
 
 //Set scenario to custom
 f_setScenario(2);
@@ -14341,7 +14457,7 @@ f_setSimulateYearScreen();
 				<Group>
 					<Id>1713447888398</Id>
 					<Name><![CDATA[gr_companyMobilitySliders]]></Name>
-					<X>-120</X><Y>320</Y>
+					<X>-120</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15317,7 +15433,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1713963799790</Id>
 					<Name><![CDATA[sl_batteryCompany]]></Name>
-					<X>-58</X><Y>25</Y>
+					<X>-58</X><Y>55</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15348,7 +15464,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Text>
 					<Id>1713963799825</Id>
 					<Name><![CDATA[t_batteryCompany]]></Name>
-					<X>-85</X><Y>30</Y>
+					<X>-85</X><Y>60</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15369,7 +15485,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Text>
 					<Id>1713963799827</Id>
 					<Name><![CDATA[text283]]></Name>
-					<X>-290</X><Y>30</Y>
+					<X>-290</X><Y>60</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15526,7 +15642,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Group>
 					<Id>1715084970842</Id>
 					<Name><![CDATA[gr_transportButton1]]></Name>
-					<X>-560</X><Y>225</Y>
+					<X>-560</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15650,7 +15766,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Text>
 					<Id>1725618990626</Id>
 					<Name><![CDATA[t_rooftopSolarCompany]]></Name>
-					<X>-85</X><Y>60</Y>
+					<X>-85</X><Y>90</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15672,7 +15788,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1725618990628</Id>
 					<Name><![CDATA[sl_rooftopPVCompany]]></Name>
-					<X>-58</X><Y>55</Y>
+					<X>-58</X><Y>85</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15702,7 +15818,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Text>
 					<Id>1725618990630</Id>
 					<Name><![CDATA[txt_PVPower]]></Name>
-					<X>-290</X><Y>60</Y>
+					<X>-290</X><Y>90</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15713,6 +15829,79 @@ f_setSimulateYearScreen();]]></ActionCode>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[PV vermogen]]></Text>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1727796446739</Id>
+					<Name><![CDATA[t_GCCapacityCompany_Feedin]]></Name>
+					<X>-85</X><Y>30</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[0 kW]]></Text>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>RIGHT</Alignment>
+				</Text>
+				<Control Type="Slider">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1727796446741</Id>
+					<Name><![CDATA[sl_GCCapacityCompany_Feedin]]></Name>
+					<X>-58</X><Y>25</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="100" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[f_setGCCapacity(c_ownedGridConnections.get(v_currentSelectedGCnr), sl_GCCapacityCompany_Feedin.getValue(), "FEEDIN");
+t_GCCapacityCompany_Feedin.setText(roundToInt(sl_GCCapacityCompany_Feedin.getValue()) + " kW");
+
+//Set scenario to custom
+f_setScenario(2);
+
+// Simulate Year screen
+f_setSimulateYearScreen();]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<DefaultValueCode><![CDATA[v_defaultGCCapacitySlider_Feedin]]></DefaultValueCode>
+						<Orientation>HORIZONTAL</Orientation>
+						<MinValue><![CDATA[v_minGCCapacitySlider_Feedin]]></MinValue>
+						<MaxValue><![CDATA[v_maxGCCapacitySlider_Feedin]]></MaxValue>
+						<Step><![CDATA[1]]></Step>
+						<LinkTo>false</LinkTo>
+					</ExtendedProperties>
+				</Control>
+				<Text>
+					<Id>1727796446743</Id>
+					<Name><![CDATA[txt_GCCapacityCompany_Feedin]]></Name>
+					<X>-290</X><Y>30</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Contr. capaciteit (Te.)]]></Text>
 					<Font>
 						<Name>Dialog</Name>
 						<Size>14</Size>
@@ -16392,6 +16581,60 @@ zero_Interface.b_resultsUpToDate = true;
 			</Presentation>
 
 				</Group>
+				<Text>
+					<Id>1727797637172</Id>
+					<Name><![CDATA[txt_curtailmentDescriptionCompany]]></Name>
+					<X>20</X><Y>565</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Curtailment opwek]]></Text>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Control Type="CheckBox">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1727797637174</Id>
+					<Name><![CDATA[cb_curtailmentCompany]]></Name>
+					<X>291</X><Y>558</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="20" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[if (cb_curtailmentCompany.isSelected()) {
+	c_ownedGridConnections.get(v_currentSelectedGCnr).v_enableCurtailment = true;
+}
+else {
+	c_ownedGridConnections.get(v_currentSelectedGCnr).v_enableCurtailment = false;
+}
+
+//Set scenario to custom
+f_setScenario(2);
+
+// Simulate Year screen
+f_setSimulateYearScreen();]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="11" Style="0"/>
+						<LabelText><![CDATA[]]></LabelText>
+						<LinkTo>false</LinkTo>
+	 				</ExtendedProperties>
+				</Control>
 			</Presentation>
 
 				</Level>
@@ -29063,7 +29306,8 @@ f_resetNFATOSettings();]]></ActionCode>
 				<Variable Class="Parameter">
 					<Id>1726584205585</Id>
 					<Name><![CDATA[p_avgUtilityConnectionCapacity_kW]]></Name>
-					<Description><![CDATA[https://www.enexis.nl/aansluitingen/welke-aansluiting-heb-ik-nodig]]></Description>
+					<Description><![CDATA[https://www.enexis.nl/aansluitingen/welke-aansluiting-heb-ik-nodig
+-> 17.25 -> set to 17, to prevent slider errors (stepsize cant be double, otherwise to small for user experience)]]></Description>
 					<X>50</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -31254,7 +31498,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="Parameter">
 					<Id>1726584206070</Id>
 					<Name><![CDATA[genericProfiles_data]]></Name>
-					<X>-370</X><Y>260</Y>
+					<X>-370</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31276,7 +31520,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 					<Id>1726584206073</Id>
 					<Name><![CDATA[project_data]]></Name>
 					<Description><![CDATA[Should be filled with the Project_data record created in the startup of the project model]]></Description>
-					<X>-370</X><Y>210</Y>
+					<X>-370</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31298,7 +31542,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 					<Id>1726584206076</Id>
 					<Name><![CDATA[settings]]></Name>
 					<Description><![CDATA[Should be filled with the settings record created in the startup of the project model]]></Description>
-					<X>-370</X><Y>230</Y>
+					<X>-370</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31319,7 +31563,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="Parameter">
 					<Id>1726584206079</Id>
 					<Name><![CDATA[user]]></Name>
-					<X>-370</X><Y>190</Y>
+					<X>-370</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -31355,7 +31599,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205739</Id>
 					<Name><![CDATA[c_GenericCompanyBuilding_data]]></Name>
-					<X>-370</X><Y>335</Y>
+					<X>-370</X><Y>375</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31370,7 +31614,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205741</Id>
 					<Name><![CDATA[c_GridNode_data]]></Name>
-					<X>-370</X><Y>290</Y>
+					<X>-370</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31385,7 +31629,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205743</Id>
 					<Name><![CDATA[c_SurveyCompanyBuilding_data]]></Name>
-					<X>-370</X><Y>315</Y>
+					<X>-370</X><Y>355</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31400,7 +31644,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205745</Id>
 					<Name><![CDATA[c_HouseBuilding_data]]></Name>
-					<X>-370</X><Y>355</Y>
+					<X>-370</X><Y>395</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31415,7 +31659,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205747</Id>
 					<Name><![CDATA[c_Solarfarm_data]]></Name>
-					<X>-370</X><Y>402</Y>
+					<X>-370</X><Y>442</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31430,7 +31674,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205749</Id>
 					<Name><![CDATA[c_Windfarm_data]]></Name>
-					<X>-370</X><Y>422</Y>
+					<X>-370</X><Y>462</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31445,7 +31689,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205751</Id>
 					<Name><![CDATA[c_Electrolyser_data]]></Name>
-					<X>-370</X><Y>441</Y>
+					<X>-370</X><Y>481</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31460,7 +31704,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205753</Id>
 					<Name><![CDATA[c_Battery_data]]></Name>
-					<X>-370</X><Y>460</Y>
+					<X>-370</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31475,7 +31719,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205755</Id>
 					<Name><![CDATA[c_Cable_data_LV]]></Name>
-					<X>-370</X><Y>550</Y>
+					<X>-370</X><Y>590</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31490,7 +31734,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205757</Id>
 					<Name><![CDATA[c_Neighbourhood_data]]></Name>
-					<X>-370</X><Y>510</Y>
+					<X>-370</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31505,7 +31749,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205759</Id>
 					<Name><![CDATA[c_remainingBuilding_data]]></Name>
-					<X>-370</X><Y>375</Y>
+					<X>-370</X><Y>415</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31541,7 +31785,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205763</Id>
 					<Name><![CDATA[c_Chargingstation_data]]></Name>
-					<X>-370</X><Y>480</Y>
+					<X>-370</X><Y>520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31556,7 +31800,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205765</Id>
 					<Name><![CDATA[c_Parcel_data]]></Name>
-					<X>-370</X><Y>530</Y>
+					<X>-370</X><Y>570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31571,7 +31815,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205767</Id>
 					<Name><![CDATA[c_Cable_data_MV]]></Name>
-					<X>-370</X><Y>570</Y>
+					<X>-370</X><Y>610</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31866,9 +32110,13 @@ return GISCoords;]]></Body>
 		Database myFile = new Database(this, databaseName[1], "data_" + project_data.project_name() + "/" + databaseName[0] + "_" + project_data.project_name() + ".xlsx");
 		modelDB.importFromExternalDB(myFile.getConnection(), databaseName[1], databaseName[1], true, false);	
 	}
+
+	//Overwrite specific database values
+	f_overwriteSpecificDatabaseValues();
 	
 	//Update
 	traceln("Database has been updated.");
+
 }]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
@@ -32941,10 +33189,6 @@ double yearlyDemandHeat_kWh = 0;
 double profileTimeStep_hr = 1;
 double maxPowerGasburner = 0;
 
-if (parentGC.p_heatingType != OL_GridConnectionHeatingType.GASBURNER || yearlyGasDemand_m3 <= 0 ){// FOR NOW CHECK THIS
-	traceln("NO SUPPORTED HEATING TYPE DETECTED, OR NO GAS DEMAND DETECTED!!");
-	return;
-}
 
 if(hasHourlyGasData){
 	J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarrierType.HEAT, null, OL_ProfileAssetType.HEATDEMAND ,profileTimeStep_hr);		
@@ -32965,6 +33209,12 @@ if(hasHourlyGasData){
 	profile.a_energyProfile_kWh = hourlyHeatDemand_kWh.stream().mapToDouble(d -> max(0,d)).toArray();
 }
 else{
+
+	if (parentGC.p_heatingType != OL_GridConnectionHeatingType.GASBURNER || yearlyGasDemand_m3 <= 0 ){
+		traceln("NO SUPPORTED HEATING TYPE DETECTED, OR NO GAS DEMAND DETECTED!!");
+	return;
+	}
+	
 	//Determine heatdemand
 	yearlyDemandHeat_kWh = yearlyGasDemand_m3 * avgc_data.p_gas_kWhpm3; 
 	heatDemand = new J_EAConsumption(parentGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, 0.0, yearlyDemandHeat_kWh, 0.0, 0.0, 0.0, energyModel.p_timeStep_h, null);
@@ -35107,7 +35357,7 @@ f_clearDataRecords();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726584205867</Id>
 					<Name><![CDATA[f_readDatabase]]></Name>
-					<X>-390</X><Y>170</Y>
+					<X>-390</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -35120,7 +35370,7 @@ f_clearDataRecords();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726584205869</Id>
 					<Name><![CDATA[f_clearDataRecords]]></Name>
-					<X>-390</X><Y>600</Y>
+					<X>-390</X><Y>640</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -35407,12 +35657,48 @@ f_createRemainingBuildings();
 //Cables
 f_createGISCables();]]></Body>
 				</Function>
+				<Function AccessType="protected" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1727792666396</Id>
+					<Name><![CDATA[f_overwriteSpecificDatabaseValues]]></Name>
+					<X>-390</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[//SHOULD BE OVERRIDDEN
+
+//Function used to overwrite specific database values after the databases have been loaded in
+//Usecases for example are adjusting floor surface area to 0, to cause no consumption, etc.
+// --> without the loss of data in your database sources itself
+
+//Example code
+/*
+//Adjust building floor surface area to 0 to cause no consumption (empty buildings)
+
+List<String> buildingIDS = new ArrayList<String>();
+
+// Define the building ids that need to have no consumption
+String buildingID_XXXX = "XXXX";
+
+buildingIDS.add(buildingID_XXXX);
+
+
+for(String buildingID : buildingIDS){
+	update(buildings)
+  	.where(buildings.building_id.eq(buildingID))
+  	.set(buildings.cumulative_floor_surface_m2, 0.0)
+  	.execute();
+}
+*/]]></Body>
+				</Function>
 			</Functions>
 			<Connectivity>
 				<ExcelFile>
 					<Id>1726584205977</Id>
 					<Name><![CDATA[inputHouseholdTrips]]></Name>
-					<X>-389.5</X><Y>739</Y>
+					<X>-389.5</X><Y>779</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -35428,7 +35714,7 @@ f_createGISCables();]]></Body>
 				<ExcelFile>
 					<Id>1726584205979</Id>
 					<Name><![CDATA[inputTruckTrips]]></Name>
-					<X>-389.5</X><Y>719</Y>
+					<X>-389.5</X><Y>759</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -35444,7 +35730,7 @@ f_createGISCables();]]></Body>
 				<ExcelFile>
 					<Id>1726584205981</Id>
 					<Name><![CDATA[inputCookingActivities]]></Name>
-					<X>-390</X><Y>700</Y>
+					<X>-390</X><Y>740</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -35623,7 +35909,7 @@ f_createGISCables();]]></Body>
 				<EmbeddedObject>
 					<Id>1726584829907</Id>
 					<Name><![CDATA[avgc_data]]></Name>
-					<X>-380</X><Y>800</Y>
+					<X>-380</X><Y>840</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -36202,7 +36488,7 @@ f_createGISCables();]]></Body>
 				<Text>
 					<Id>1726584205937</Id>
 					<Name><![CDATA[t_inputFiles]]></Name>
-					<X>-400</X><Y>660</Y>
+					<X>-400</X><Y>700</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -36244,7 +36530,7 @@ f_createGISCables();]]></Body>
 				<Text>
 					<Id>1726584205941</Id>
 					<Name><![CDATA[txt_dataCollectionFill]]></Name>
-					<X>-400</X><Y>140</Y>
+					<X>-400</X><Y>180</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -36591,6 +36877,27 @@ f_createGISCables();]]></Body>
 			</Presentation>
 
 				</Group>
+				<Text>
+					<Id>1727792637339</Id>
+					<Name><![CDATA[txt_overwriteDatabaseValues]]></Name>
+					<X>-400</X><Y>130</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Overwrite specific database values:]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
