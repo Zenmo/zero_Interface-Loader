@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_Interface-Loader]]></Name>
@@ -30628,6 +30628,21 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 						<Type><![CDATA[int]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727683925084</Id>
+					<Name><![CDATA[v_nbCreatedVans]]></Name>
+					<X>1480</X><Y>370</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1726584206064</Id>
 					<Name><![CDATA[zero_Interface]]></Name>
@@ -31284,12 +31299,22 @@ return GISCoords;]]></Body>
 	//Loop over all databases
 	for(String[] databaseName : databaseNames){
 		//Loading in the specific company data
-		Database myFile = new Database(this, databaseName[1], "data_" + project_data.project_name() + "/" + databaseName[0] + "_" + project_data.project_name() + ".xlsx");
-		modelDB.importFromExternalDB(myFile.getConnection(), databaseName[1], databaseName[1], true, false);	
+		String filePathString = "data_" + project_data.project_name() + "/" + databaseName[0] + "_" + project_data.project_name() + ".xlsx";
+		File f = new File(filePathString);
+		if(f.exists() && !f.isDirectory()) { 			
+			Database myFileDatabase = new Database(this, databaseName[1], filePathString);
+			modelDB.importFromExternalDB(myFileDatabase.getConnection(), databaseName[1], databaseName[1], true, false);
+			traceln("Database %s has been updated.", databaseName[1]);	
+		} else { // clear comp_connections database!
+			executeStatement("DELETE FROM " + databaseName[1] + " c");
+			traceln("File not found, database %s has been cleared!", databaseName[1]);
+		}
+		//Update
+		
 	}
 	
-	//Update
-	traceln("Database has been updated.");
+	
+
 }]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
@@ -31439,14 +31464,14 @@ for (Building_data dataBuilding : scopedBuilding_data) {
 					<Body><![CDATA[A_SubTenant subtenant = energyModel.add_pop_subTenants();
 
 subtenant.p_actorID = survey.getCompanyName();
-
+/*
 subtenant.p_streetName = address.getStreet().substring(0,1).toUpperCase() + address.getStreet().substring(1).toLowerCase(); 
 subtenant.p_houseNumber = address.getHouseNumber();
 subtenant.p_houseLetter = address.getHouseLetter().equals("") ? null : address.getHouseLetter();
 subtenant.p_houseAddition = address.getHouseNumberSuffix().equals("") ? null : address.getHouseNumberSuffix();
 subtenant.p_postalcode = address.getPostalCode().equals("") ? null : address.getPostalCode().toUpperCase().replaceAll("\\s","");
 subtenant.p_city = address.getCity().substring(0,1).toUpperCase() + address.getCity().substring(1).toLowerCase();
-				
+			
 				
 //Find grid connection that feeds the subtenant (achter de meter)
 GridConnection GC = findFirst(energyModel.pop_gridConnections, 
@@ -31464,7 +31489,7 @@ else {
 	traceln("Subtenant '" + subtenant.p_actorID + "' at " + subtenant.p_streetName + " " + subtenant.p_houseNumber + ", does not have a main tenant");
 }
 
-]]></Body>
+*/]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -32339,7 +32364,7 @@ return b;]]></Body>
 } 
 
 else { // Add regular electricity and consumption profiles
-	J_EAConsumption profile = new J_EAConsumption(parentGC, OL_EnergyAssetType.ELECTRICITY_DEMAND, profileName, yearlyElectricityDemand_kWh, 0.0, 0.0, 0.0, 0.0, energyModel.p_timeStep_h, null);
+	J_EAConsumption profile = new J_EAConsumption(parentGC, OL_EnergyAssetType.ELECTRICITY_DEMAND, null, yearlyElectricityDemand_kWh, 0.0, 0.0, 0.0, 0.0, energyModel.p_timeStep_h, energyModel.f_findProfile(profileName));
 }
 ]]></Body>
 				</Function>
@@ -32497,6 +32522,8 @@ case PHOTOVOLTAIC:
 	//asset_name = "Solar Panels";
 	profilePointer = energyModel.pp_solarPVproduction;
 	capacityElectric_kW = installedPower_kW;
+	//traceln("Installing PV for %s with power %s", parentGC.p_ownerID, capacityElectric_kW);
+	
 break;
 
 case WINDMILL:
@@ -33412,6 +33439,7 @@ switch (vehicle_type){
 	
 	case DIESEL_VAN:
 		energyConsumption_kWhpkm = avgc_data.p_avgDieselConsumptionVan_kWhpkm;
+		v_nbCreatedVans++;
 	break;
 	
 	case DIESEL_TRUCK:
@@ -33766,12 +33794,12 @@ int nbEVans =  row.get( comp_connections.nb_evans );
 if (nbVans>0) {
 	for (int i = 0; i<nbEVans; i++) {
 		f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VAN, true, 0, 0);
-		v_remainingAmountOfVans--;
+		v_remainingNumberOfVans--;
 		
 	}
 	for (int i = 0; i<(nbVans-nbEVans); i++) {
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VAN, true, 0);	
-		v_remainingAmountOfVans--;
+		v_remainingNumberOfVans--;
 	}
 }
 
@@ -34487,7 +34515,7 @@ f_configureEngine_default();
 //send the GIS map centre location to the Interface 
 zero_Interface.map_centre_latitude = project_data.map_centre_latitude();
 zero_Interface.map_centre_longitude = project_data.map_centre_longitude();
-
+//zero_Interface.f_setMapScale(1/25000);
 //Start up of the User Interface (Needs to happen after configuring the engine)
 zero_Interface.f_UIStartup();
 
@@ -34550,6 +34578,7 @@ f_clearDataRecords();]]></Body>
 					<Body><![CDATA[//Function used to clear all data record collections after the loader is done
 //-> no longer needed, by clearing it is send to the garbage collector -> saves memory
 
+/*
 genericProfiles_data = null;
 c_GridNode_data.clear();
 c_SurveyCompanyBuilding_data.clear();
@@ -34563,7 +34592,7 @@ c_Battery_data.clear();
 c_Neighbourhood_data.clear();
 c_Cable_data_LV.clear();
 c_Cable_data_MV.clear();
-
+*/
 ]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
