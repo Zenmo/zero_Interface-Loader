@@ -37572,12 +37572,12 @@ public class Windfarm_data {
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
-			<Path><![CDATA[vallum-main-265-4c146ef-all.jar]]></Path>
+			<Path><![CDATA[lombok.jar]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
-			<Path><![CDATA[lombok.jar]]></Path>
+			<Path><![CDATA[vallum-production-335-32bd3fc-all.jar]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
@@ -37603,7 +37603,7 @@ public class Windfarm_data {
 	<ClassPathEntry>
 		<ResourceReference>
 			<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
-			<ClassName><![CDATA[vallum-main-265-4c146ef-all.jar]]></ClassName>
+			<ClassName><![CDATA[lombok.jar]]></ClassName>
 		</ResourceReference>
 		<Imported>true</Imported>
 		<Folder>false</Folder>
@@ -37611,7 +37611,7 @@ public class Windfarm_data {
 	<ClassPathEntry>
 		<ResourceReference>
 			<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
-			<ClassName><![CDATA[lombok.jar]]></ClassName>
+			<ClassName><![CDATA[vallum-production-335-32bd3fc-all.jar]]></ClassName>
 		</ResourceReference>
 		<Imported>true</Imported>
 		<Folder>false</Folder>
