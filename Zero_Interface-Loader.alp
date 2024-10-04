@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_Interface-Loader]]></Name>
@@ -33438,7 +33438,7 @@ if(companyGC.p_contractedDeliveryCapacity_kW == 0 && companyGC.p_contractedFeedi
 		
 //Grid expansion request
 future_scenario_list.setRequestedContractDeliveryCapacity_kW(companyGC.p_contractedDeliveryCapacity_kW);
-if (gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator()){
+if (gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() != null && gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator()){
 	future_scenario_list.setRequestedContractDeliveryCapacity_kW((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0 + companyGC.p_contractedDeliveryCapacity_kW);
 	future_scenario_list.setRequestedContractFeedinCapacity_kW((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0 + companyGC.p_contractedDeliveryCapacity_kW);
 	future_scenario_list.setRequestedPhysicalConnectionCapacity_kW((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0 + companyGC.p_contractedDeliveryCapacity_kW);
