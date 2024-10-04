@@ -1587,7 +1587,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1727251571552</Id>
 					<Name><![CDATA[settings]]></Name>
-					<X>-280</X><Y>150</Y>
+					<X>-280</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1598,6 +1598,27 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1727251571550</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1728030131094</Id>
+					<Name><![CDATA[map_scale]]></Name>
+					<X>-280</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[Double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1728030131092</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -1683,7 +1704,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1713429665418</Id>
 					<Name><![CDATA[c_scenarioMap_Future]]></Name>
-					<X>-280</X><Y>220</Y>
+					<X>-280</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1698,7 +1719,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1713874283959</Id>
 					<Name><![CDATA[c_scenarioMap_Current]]></Name>
-					<X>-280</X><Y>200</Y>
+					<X>-280</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1986,8 +2007,10 @@ if (c_selectedGridConnections.size() > 0) {
 }
 
 // Update the NFATO values in the selected companyUI
-if(c_companyUIs.get(v_connectionOwnerIndexNr).v_NFATO_active){
-	c_companyUIs.get(v_connectionOwnerIndexNr).f_getNFATOValues();
+if(c_selectedGridConnections.size() > 0 && c_selectedGridConnections.get(0).v_enableNFato){
+	if(c_companyUIs.get(v_connectionOwnerIndexNr).v_NFATO_active){
+		c_companyUIs.get(v_connectionOwnerIndexNr).f_getNFATOValues();
+	}
 }
 
 // Get the weather info
@@ -3676,6 +3699,11 @@ return gisregion;]]></Body>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[map.setCenterLatitude(map_centre_latitude);
 map.setCenterLongitude(map_centre_longitude);
+
+if(map_scale != null){
+	map.setMapScale(map_scale);
+}
+
 va_Interface.navigateTo();]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
@@ -5071,7 +5099,7 @@ gisregion.setLineWidth(2);
 	*/
 }]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1724857887019</Id>
@@ -9200,7 +9228,7 @@ voor verwarming.]]></Text>
 				<Text>
 					<Id>1713429772427</Id>
 					<Name><![CDATA[t_scenarioDictionaries]]></Name>
-					<X>-290</X><Y>170</Y>
+					<X>-290</X><Y>190</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31159,6 +31187,73 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1728032263201</Id>
+					<Name><![CDATA[p_avgAnnualTravelDistanceVan_km]]></Name>
+					<Description><![CDATA[??]]></Description>
+					<X>570</X><Y>730</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[30000]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1728032263199</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1728032304301</Id>
+					<Name><![CDATA[p_avgAnnualTravelDistanceCar_km]]></Name>
+					<X>570</X><Y>710</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1728032304299</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1728032305440</Id>
+					<Name><![CDATA[p_avgAnnualTravelDistanceTruck_km]]></Name>
+					<X>570</X><Y>750</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1728032305438</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 			</Variables>
 			<Functions>
 				<Function AccessType="default" StaticFunction="false">
@@ -31751,6 +31846,27 @@ zero_Loader.energyModel.avgc_data = dataAVGC;]]></Body>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
+				<Text>
+					<Id>1728032240347</Id>
+					<Name><![CDATA[txt_avgTravelDistances]]></Name>
+					<X>560</X><Y>680</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Average travel distances per vehicle type]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -32076,7 +32192,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="Parameter">
 					<Id>1726584206070</Id>
 					<Name><![CDATA[genericProfiles_data]]></Name>
-					<X>-370</X><Y>300</Y>
+					<X>-370</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32098,7 +32214,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 					<Id>1726584206073</Id>
 					<Name><![CDATA[project_data]]></Name>
 					<Description><![CDATA[Should be filled with the Project_data record created in the startup of the project model]]></Description>
-					<X>-370</X><Y>250</Y>
+					<X>-370</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32120,7 +32236,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 					<Id>1726584206076</Id>
 					<Name><![CDATA[settings]]></Name>
 					<Description><![CDATA[Should be filled with the settings record created in the startup of the project model]]></Description>
-					<X>-370</X><Y>270</Y>
+					<X>-370</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32141,7 +32257,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="Parameter">
 					<Id>1726584206079</Id>
 					<Name><![CDATA[user]]></Name>
-					<X>-370</X><Y>230</Y>
+					<X>-370</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -32177,7 +32293,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205739</Id>
 					<Name><![CDATA[c_GenericCompanyBuilding_data]]></Name>
-					<X>-370</X><Y>375</Y>
+					<X>-370</X><Y>355</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32192,7 +32308,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205741</Id>
 					<Name><![CDATA[c_GridNode_data]]></Name>
-					<X>-370</X><Y>330</Y>
+					<X>-370</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32207,7 +32323,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205743</Id>
 					<Name><![CDATA[c_SurveyCompanyBuilding_data]]></Name>
-					<X>-370</X><Y>355</Y>
+					<X>-370</X><Y>335</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32222,7 +32338,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205745</Id>
 					<Name><![CDATA[c_HouseBuilding_data]]></Name>
-					<X>-370</X><Y>395</Y>
+					<X>-370</X><Y>375</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32237,7 +32353,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205747</Id>
 					<Name><![CDATA[c_Solarfarm_data]]></Name>
-					<X>-370</X><Y>442</Y>
+					<X>-370</X><Y>422</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32252,7 +32368,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205749</Id>
 					<Name><![CDATA[c_Windfarm_data]]></Name>
-					<X>-370</X><Y>462</Y>
+					<X>-370</X><Y>442</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32267,7 +32383,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205751</Id>
 					<Name><![CDATA[c_Electrolyser_data]]></Name>
-					<X>-370</X><Y>481</Y>
+					<X>-370</X><Y>461</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32282,7 +32398,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205753</Id>
 					<Name><![CDATA[c_Battery_data]]></Name>
-					<X>-370</X><Y>500</Y>
+					<X>-370</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32297,7 +32413,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205755</Id>
 					<Name><![CDATA[c_Cable_data_LV]]></Name>
-					<X>-370</X><Y>590</Y>
+					<X>-370</X><Y>570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32312,7 +32428,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205757</Id>
 					<Name><![CDATA[c_Neighbourhood_data]]></Name>
-					<X>-370</X><Y>550</Y>
+					<X>-370</X><Y>530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32327,7 +32443,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205759</Id>
 					<Name><![CDATA[c_remainingBuilding_data]]></Name>
-					<X>-370</X><Y>415</Y>
+					<X>-370</X><Y>395</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32340,30 +32456,9 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 
 				</Variable>
 				<Variable Class="CollectionVariable">
-					<Id>1726584205761</Id>
-					<Name><![CDATA[c_defaultDatabaseNames]]></Name>
-					<X>-370</X><Y>110</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[String[]]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-						<CollectionInitializer Class="CodeValue">
-							<Code><![CDATA[{
-{"Buildings", "buildings"},
-{"GridNodes", "gridnodes"}
-}]]></Code>
-						</CollectionInitializer>
-					</Properties>
-
-				</Variable>
-				<Variable Class="CollectionVariable">
 					<Id>1726584205763</Id>
 					<Name><![CDATA[c_Chargingstation_data]]></Name>
-					<X>-370</X><Y>520</Y>
+					<X>-370</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32378,7 +32473,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205765</Id>
 					<Name><![CDATA[c_Parcel_data]]></Name>
-					<X>-370</X><Y>570</Y>
+					<X>-370</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32393,7 +32488,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="CollectionVariable">
 					<Id>1726584205767</Id>
 					<Name><![CDATA[c_Cable_data_MV]]></Name>
-					<X>-370</X><Y>610</Y>
+					<X>-370</X><Y>590</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32616,17 +32711,22 @@ for (GridNode_data GN_data : c_GridNode_data) {
 						<Name><![CDATA[RegionCoords]]></Name>
 						<Type><![CDATA[String]]></Type>
 					</Parameter>
-					<Body><![CDATA[if (RegionCoords.startsWith( "MultiPolygon")){
+					<Body><![CDATA[if (RegionCoords.startsWith("MultiPolygon")){
 	RegionCoords = RegionCoords.replace("MultiPolygon (((","");
 	RegionCoords = RegionCoords.replace(",","");
 	RegionCoords = RegionCoords.replace(")))","");
 }
-else if( RegionCoords.startsWith( "Poly") ){
+else if(RegionCoords.startsWith("MULTIPOLYGON")){
+	RegionCoords = RegionCoords.replace("MULTIPOLYGON ","");
+	RegionCoords = RegionCoords.replace(",","");
+	RegionCoords = RegionCoords.replace(")))","");
+}
+else if(RegionCoords.startsWith("Poly")){
 	RegionCoords = RegionCoords.replace("Polygon ((","");
 	RegionCoords = RegionCoords.replace(",","");
 	RegionCoords = RegionCoords.replace("))","");
 }
-else if(RegionCoords.startsWith( "MultiLineString")){
+else if(RegionCoords.startsWith("MultiLineString")){
 	RegionCoords = RegionCoords.replace("MultiLineString ((","");
 	RegionCoords = RegionCoords.replace(",","");
 	RegionCoords = RegionCoords.replace("))","");
@@ -32671,38 +32771,32 @@ return GISCoords;]]></Body>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[if(settings.reloadDatabase()){
 	
+	//Get the database names that are selected for reloading
 	List<String[]> databaseNames = project_data.databaseNames();
-	//If not given as argument, get the default databases that should be loaded in
-	if(databaseNames == null || databaseNames.size() == 0){ 
-		return;
-		//databaseNames = c_defaultDatabaseNames;
-	}
 	
 	//Get the model database
 	ModelDatabase modelDB = getEngine().getModelDatabase();
 	
 	//Loop over all databases
 	for(String[] databaseName : databaseNames){
-		//Loading in the specific company data
+	
+		//Create the file path string
 		String filePathString = "data_" + project_data.project_name() + "/" + databaseName[0] + "_" + project_data.project_name() + ".xlsx";
+		
+		//If file exists, load it into the database
 		File f = new File(filePathString);
 		if(f.exists() && !f.isDirectory()) { 			
 			Database myFileDatabase = new Database(this, databaseName[1], filePathString);
 			modelDB.importFromExternalDB(myFileDatabase.getConnection(), databaseName[1], databaseName[1], true, false);
 			traceln("Database %s has been updated.", databaseName[1]);	
-		} else { // clear comp_connections database!
+		} else { // if file does not exist, clear the database to make sure there are no wrong values in the simulation!
 			executeStatement("DELETE FROM " + databaseName[1] + " c");
 			traceln("File not found, database %s has been cleared!", databaseName[1]);
 		}
-		//Update
-		
 	}
 
 	//Overwrite specific database values
 	f_overwriteSpecificDatabaseValues();
-	
-	
-
 }]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
@@ -34797,7 +34891,9 @@ J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCap
 if (!isDefaultVehicle && annualTravelDistance_km > 1000){
 		electricVehicle.tripTracker.setAnnualDistance_km(annualTravelDistance_km);
 }
-
+else if (vehicle_type == OL_EnergyAssetType.ELECTRIC_VAN){
+		electricVehicle.tripTracker.setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
+}
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -34853,7 +34949,9 @@ J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(parentGC, energyConsumpt
 if (!isDefaultVehicle && annualTravelDistance_km > 1000){
 		dieselVehicle.tripTracker.setAnnualDistance_km(annualTravelDistance_km);
 }
-]]></Body>
+else if (vehicle_type == OL_EnergyAssetType.DIESEL_VAN){
+		dieselVehicle.tripTracker.setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
+}]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -35076,6 +35174,9 @@ J_EAHydrogenVehicle hydrogenVehicle = new J_EAHydrogenVehicle(parentGC, energyCo
 //Set annual travel distance
 if (!isDefaultVehicle && annualTravelDistance_km > 1000){
 		hydrogenVehicle.tripTracker.setAnnualDistance_km(annualTravelDistance_km);
+}
+else if (vehicle_type == OL_EnergyAssetType.HYDROGEN_VAN){
+		hydrogenVehicle.tripTracker.setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
 }]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
@@ -35908,7 +36009,8 @@ f_configureEngine_default();
 //send the GIS map centre location to the Interface 
 zero_Interface.map_centre_latitude = project_data.map_centre_latitude();
 zero_Interface.map_centre_longitude = project_data.map_centre_longitude();
-//zero_Interface.f_setMapScale(1/25000);
+zero_Interface.map_scale = project_data.map_scale();
+
 //Start up of the User Interface (Needs to happen after configuring the engine)
 zero_Interface.f_UIStartup();
 
@@ -35950,7 +36052,7 @@ f_clearDataRecords();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726584205867</Id>
 					<Name><![CDATA[f_readDatabase]]></Name>
-					<X>-390</X><Y>210</Y>
+					<X>-390</X><Y>190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -35963,7 +36065,7 @@ f_clearDataRecords();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726584205869</Id>
 					<Name><![CDATA[f_clearDataRecords]]></Name>
-					<X>-390</X><Y>640</Y>
+					<X>-390</X><Y>620</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -36256,7 +36358,7 @@ f_createGISCables();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1727792666396</Id>
 					<Name><![CDATA[f_overwriteSpecificDatabaseValues]]></Name>
-					<X>-390</X><Y>160</Y>
+					<X>-390</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -36292,7 +36394,7 @@ for(String buildingID : buildingIDS){
 				<ExcelFile>
 					<Id>1726584205977</Id>
 					<Name><![CDATA[inputHouseholdTrips]]></Name>
-					<X>-389.5</X><Y>779</Y>
+					<X>-389.5</X><Y>759</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -36308,7 +36410,7 @@ for(String buildingID : buildingIDS){
 				<ExcelFile>
 					<Id>1726584205979</Id>
 					<Name><![CDATA[inputTruckTrips]]></Name>
-					<X>-389.5</X><Y>759</Y>
+					<X>-389.5</X><Y>739</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -36324,7 +36426,7 @@ for(String buildingID : buildingIDS){
 				<ExcelFile>
 					<Id>1726584205981</Id>
 					<Name><![CDATA[inputCookingActivities]]></Name>
-					<X>-390</X><Y>740</Y>
+					<X>-390</X><Y>720</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -36503,7 +36605,7 @@ for(String buildingID : buildingIDS){
 				<EmbeddedObject>
 					<Id>1726584829907</Id>
 					<Name><![CDATA[avgc_data]]></Name>
-					<X>-380</X><Y>840</Y>
+					<X>-380</X><Y>820</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -36672,6 +36774,15 @@ for(String buildingID : buildingIDS){
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_avgVehiclesPerChargePoint]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_avgAnnualTravelDistanceVan_km]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_avgAnnualTravelDistanceCar_km]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_avgAnnualTravelDistanceTruck_km]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -37082,7 +37193,7 @@ for(String buildingID : buildingIDS){
 				<Text>
 					<Id>1726584205937</Id>
 					<Name><![CDATA[t_inputFiles]]></Name>
-					<X>-400</X><Y>700</Y>
+					<X>-400</X><Y>680</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -37124,7 +37235,7 @@ for(String buildingID : buildingIDS){
 				<Text>
 					<Id>1726584205941</Id>
 					<Name><![CDATA[txt_dataCollectionFill]]></Name>
-					<X>-400</X><Y>180</Y>
+					<X>-400</X><Y>160</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -37474,7 +37585,7 @@ for(String buildingID : buildingIDS){
 				<Text>
 					<Id>1727792637339</Id>
 					<Name><![CDATA[txt_overwriteDatabaseValues]]></Name>
-					<X>-400</X><Y>130</Y>
+					<X>-400</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -38306,7 +38417,7 @@ public class Project_data {
 		//Map centre coordinates
 		double map_centre_latitude;
 		double map_centre_longitude;
-		double map_zoomlevel;
+		Double map_scale;
 		
 		//Project specific actors
 		String grid_operator;
