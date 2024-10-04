@@ -34547,7 +34547,7 @@ if (gridConnection.getElectricity().getHasConnection()){
 		double[] yearlyElectricityProduction_kWh_array = (gridConnection.getElectricity().getQuarterHourlyProduction_kWh() != null && gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues()): null;
 		
 		//Check if solar was already producing in simualtion year (Check for now: if year production = 0 , no solar yet, if year production = null, no data: so assume there was solar already)
-		if(gridConnection.getElectricity().getAnnualElectricityProductionKwh() != null && gridConnection.getElectricity().getAnnualElectricityProductionKwh  () == 0){
+		if(gridConnection.getElectricity().getAnnualElectricityProduction_kWh() != null && gridConnection.getElectricity().getAnnualElectricityProduction_kWh  () == 0){
 			pvPower_kW = null;
 		}
 		
@@ -34569,7 +34569,7 @@ if (gridConnection.getElectricity().getHasConnection()){
 				profileName = "ccid" + companyGC.p_gridConnectionID;
 				
 				//Check if solar was already producing in simualtion year (Check for now: if year production = 0 , no solar yet, if year production = null, no data: so assume there was solar already)
-				if(gridConnection.getElectricity().getAnnualElectricityProductionKwh() != null && gridConnection.getElectricity().getAnnualElectricityProductionKwh  () == 0){
+				if(gridConnection.getElectricity().getAnnualElectricityProduction_kWh() != null && gridConnection.getElectricity().getAnnualElectricityProduction_kWh  () == 0){
 					pvPower_kW = null;
 				}
 		
@@ -34583,7 +34583,7 @@ if (gridConnection.getElectricity().getHasConnection()){
 			//Get totals
 			double yearlyElectricityDelivery_kWh = (gridConnection.getElectricity().getAnnualElectricityDemandKwh() != null) ? gridConnection.getElectricity().getAnnualElectricityDemandKwh() : 0; // Yearly electricity consumption (0 if value is null)
 			Integer yearlyElectricityFeedin_kWh = gridConnection.getElectricity().getAnnualElectricityFeedIn_kWh();
-			Integer yearlyElectricityProduction_kWh = gridConnection.getElectricity().getAnnualElectricityProductionKwh();
+			Integer yearlyElectricityProduction_kWh = gridConnection.getElectricity().getAnnualElectricityProduction_kWh();
 			
 			//Calculate consumption
 			yearlyElectricityConsumption_kWh = f_getPreprocessedConsumptionTotal(companyGC, yearlyElectricityDelivery_kWh, yearlyElectricityFeedin_kWh, yearlyElectricityProduction_kWh, pvPower_kW);
@@ -38873,7 +38873,7 @@ public class Windfarm_data {
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
-			<Path><![CDATA[vallum-production-335-32bd3fc-all.jar]]></Path>
+			<Path><![CDATA[vallum-production-345-bcc71b6-all.jar]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
@@ -38907,11 +38907,11 @@ public class Windfarm_data {
 	<ClassPathEntry>
 		<ResourceReference>
 			<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
-			<ClassName><![CDATA[vallum-production-335-32bd3fc-all.jar]]></ClassName>
+			<ClassName><![CDATA[vallum-production-345-bcc71b6-all.jar]]></ClassName>
 		</ResourceReference>
 		<Imported>true</Imported>
 		<Folder>false</Folder>
 	</ClassPathEntry>
-	<CloudModelUuid><![CDATA[123b8977-3095-438e-bc2b-3605a67e7159]]></CloudModelUuid>
+	<CloudModelUuid><![CDATA[ef56800d-21f5-4d5c-87b7-60ca98f451d3]]></CloudModelUuid>
 </Model>
 </AnyLogicWorkspace>
