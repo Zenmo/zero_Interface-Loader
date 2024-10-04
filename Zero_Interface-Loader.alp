@@ -30876,7 +30876,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Name><![CDATA[p_avgRatioBatteryCapacity_v_Power]]></Name>
 					<Description><![CDATA[Average ratio of battery capacity over battery power.
 --> If battery capacity (in kWh) is twice the battery power (in kW) --> ratio = 2.]]></Description>
-					<X>50</X><Y>770</Y>
+					<X>50</X><Y>790</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31166,7 +31166,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 				<Variable Class="Parameter">
 					<Id>1726746753360</Id>
 					<Name><![CDATA[p_avgVehiclesPerChargePoint]]></Name>
-					<X>50</X><Y>820</Y>
+					<X>50</X><Y>840</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31247,6 +31247,32 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1728032305438</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1728034204646</Id>
+					<Name><![CDATA[p_avgFullLoadHoursPV_hr]]></Name>
+					<Description><![CDATA[Parameter used to estimate the total solar production in a year in a function like:
+p_avgFullLoadHoursPV_hr * kWp_of_PV_panels = XXX kWh pv production in a year.]]></Description>
+					<X>50</X><Y>740</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[920]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1728034204644</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -31657,7 +31683,7 @@ zero_Loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				<Text>
 					<Id>1726584205562</Id>
 					<Name><![CDATA[txt_avgBat]]></Name>
-					<X>40</X><Y>745</Y>
+					<X>40</X><Y>765</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31828,7 +31854,7 @@ zero_Loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				<Text>
 					<Id>1726743791200</Id>
 					<Name><![CDATA[text]]></Name>
-					<X>40</X><Y>790</Y>
+					<X>40</X><Y>810</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32805,7 +32831,7 @@ return GISCoords;]]></Body>
 					<Id>1726584205781</Id>
 					<Name><![CDATA[f_createHousesFromDatabase]]></Name>
 					<Description><![CDATA[Creates the houses using a single GC, and their building. After creation, they will be simulated using average values.]]></Description>
-					<X>440</X><Y>540</Y>
+					<X>440</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32966,7 +32992,7 @@ return subtenant;
 					<Id>1726584205785</Id>
 					<Name><![CDATA[f_generateSolarParks]]></Name>
 					<Description><![CDATA[Function used to generate solar parks: grid connections and park owner (connection owner actor)]]></Description>
-					<X>430.001</X><Y>730.001</Y>
+					<X>430.001</X><Y>690.001</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33051,7 +33077,7 @@ for (Solarfarm_data dataSolarfarm : c_Solarfarm_data) { // MOET NOG CHECK OF ZON
 					<Id>1726584205787</Id>
 					<Name><![CDATA[f_generateBatteries]]></Name>
 					<Description><![CDATA[Function used to create (neighborhood) battery grid connection and actor]]></Description>
-					<X>430.001</X><Y>790</Y>
+					<X>430.001</X><Y>750</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33118,7 +33144,7 @@ for (Solarfarm_data dataSolarfarm : c_Solarfarm_data) { // MOET NOG CHECK OF ZON
 					<Id>1726584205789</Id>
 					<Name><![CDATA[f_generateElectrolysers]]></Name>
 					<Description><![CDATA[Function used to create electrolyser grid connections and actors]]></Description>
-					<X>430</X><Y>770</Y>
+					<X>430</X><Y>730</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33197,7 +33223,7 @@ for (Electrolyser_data dataElectrolyser : c_Electrolyser_data) {
 					<Id>1726584205791</Id>
 					<Name><![CDATA[f_generateWindFarms]]></Name>
 					<Description><![CDATA[Function used to create all windfarm grid connections, actors, EAs and GISObjects]]></Description>
-					<X>430.001</X><Y>750</Y>
+					<X>430.001</X><Y>710</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33586,7 +33612,7 @@ energyModel.f_addProfile(profilePointer);
 					<Id>1726584205799</Id>
 					<Name><![CDATA[f_createGenericCompanies]]></Name>
 					<Description><![CDATA[Creating the companies (using a single GC) + owned buildings, that have not filled in the survey. If created, they will be simulated using average values, scaled with the totals (CBS data) of the area.]]></Description>
-					<X>440</X><Y>360</Y>
+					<X>440</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33821,12 +33847,12 @@ return b;]]></Body>
 	List<Double> yearlyElectricityDelivery_kWh_list = selectValues(double.class, "SELECT " + profileName + "_demand FROM comp_elec_consumption;");
 	
 	//Convert lists into arrays
-	double[] yearlyElectricityDelivery_kWh = (yearlyElectricityDelivery_kWh_list != null) ? yearlyElectricityDelivery_kWh_list.stream().mapToDouble(d -> max(0,d)).toArray() : null;
-	double[] yearlyElectricityFeedin_kWh = 	(yearlyElectricityFeedin_kWh_list != null) ? yearlyElectricityFeedin_kWh_list.stream().mapToDouble(d -> max(0,d)).toArray() : null;
-	double[] yearlyElectricityProduction_kWh = (yearlyElectricityProduction_kWh_list != null) ? yearlyElectricityProduction_kWh_list.stream().mapToDouble(d -> max(0,d)).toArray() : null;
+	double[] yearlyElectricityDelivery_kWh_array = (yearlyElectricityDelivery_kWh_list != null) ? yearlyElectricityDelivery_kWh_list.stream().mapToDouble(d -> max(0,d)).toArray() : null;
+	double[] yearlyElectricityFeedin_kWh_array = 	(yearlyElectricityFeedin_kWh_list != null) ? yearlyElectricityFeedin_kWh_list.stream().mapToDouble(d -> max(0,d)).toArray() : null;
+	double[] yearlyElectricityProduction_kWh_array = (yearlyElectricityProduction_kWh_list != null) ? yearlyElectricityProduction_kWh_list.stream().mapToDouble(d -> max(0,d)).toArray() : null;
 	
 	//Preprocess and add the profiles
-	f_createPreprocessedElectricityProfile(parentGC, yearlyElectricityDelivery_kWh, yearlyElectricityFeedin_kWh, yearlyElectricityProduction_kWh, pvPower_kW);
+	f_createPreprocessedElectricityProfile(parentGC, yearlyElectricityDelivery_kWh_array, yearlyElectricityFeedin_kWh_array, yearlyElectricityProduction_kWh_array, pvPower_kW);
 
 } 
 
@@ -34067,7 +34093,7 @@ return area;
 					<Id>1726584205813</Id>
 					<Name><![CDATA[f_addEnergyAssetsToHouses]]></Name>
 					<Description><![CDATA[Initialisation of the Energy assets using average values for houses]]></Description>
-					<X>459</X><Y>559</Y>
+					<X>459</X><Y>519</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -34322,7 +34348,7 @@ companyGC.p_contractedDeliveryCapacity_kW = 0;
 companyGC.p_contractedFeedinCapacity_kW = 0;
 companyGC.p_physicalConnectionCapacity_kW = 0;
 
-//Check for electricity connection
+//Check for electricity connection and data
 if (gridConnection.getElectricity().getHasConnection()){
 	
 	if (gridConnection.getElectricity().getContractedConnectionCapacityKw() == null) {
@@ -34360,24 +34386,49 @@ if (gridConnection.getElectricity().getHasConnection()){
 	//Electricity consumption profile
 	double yearlyElectricityConsumption_kWh = (gridConnection.getElectricity().getAnnualElectricityDemandKwh() != null) ? gridConnection.getElectricity().getAnnualElectricityDemandKwh() : 0; // Yearly electricity consumption (0 if value is null)
 	String profileName = "Office_other_electricity";
-
-	//Check if quarter hourly values are available 
-	companyGC.v_hasQuarterHourlyValues = false;
-	if (selectFirstValue(Double.class, "SELECT " + "ccid" + gridConnection.getSequence().toString() + "_demand FROM comp_elec_consumption LIMIT 1;") != null){
-		companyGC.v_hasQuarterHourlyValues = true;
-		profileName = "ccid" + companyGC.p_gridConnectionID;
-		
-		
-		if (!settings.createCurrentElectricityEA()){//input boolean: Dont create current electric energy assets if electricity profile is present.
-			createElectricEA = false;
-		}
-	}
+	
 	
 	//Get PV power (used for preprocessing)
 	Double pvPower_kW = (gridConnection.getSupply().getPvInstalledKwp() != null) ? new Double(gridConnection.getSupply().getPvInstalledKwp()) : null;
 	
-	//Add base electricity demand profile (with profile if available, with generic pattern if only yearly data is available)
-	f_addElectricityDemandProfile(companyGC, yearlyElectricityConsumption_kWh, pvPower_kW, companyGC.v_hasQuarterHourlyValues, profileName);
+	//Check if quarter hourly values are available 
+	companyGC.v_hasQuarterHourlyValues = false;
+	
+	if(gridConnection.getElectricity().getQuarterHourlyDelivery_kWh() != null && gridConnection.getElectricity().getQuarterHourlyDelivery_kWh().getValues().length != 0){
+		double[] yearlyElectricityDelivery_kWh_array = f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyDelivery_kWh().getValues());
+		double[] yearlyElectricityFeedin_kWh_array = (gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh() != null && gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh().getValues()): null;
+		double[] yearlyElectricityProduction_kWh_array = (gridConnection.getElectricity().getQuarterHourlyProduction_kWh() != null && gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues()): null;
+		
+		//Preprocess the arrays and create the consumption pattern
+		f_createPreprocessedElectricityProfile(companyGC, yearlyElectricityDelivery_kWh_array, yearlyElectricityFeedin_kWh_array, yearlyElectricityProduction_kWh_array, pvPower_kW);
+	
+		companyGC.v_hasQuarterHourlyValues = true;
+		profileName = "ccid" + companyGC.p_gridConnectionID; //Not needed I think
+				
+		if (!settings.createCurrentElectricityEA()){//input boolean: Dont create current electric energy assets if electricity profile is present.
+		createElectricEA = false;
+		}
+	}
+	else{
+		try {
+			if(selectFirstValue(Double.class, "SELECT " + "ccid" + gridConnection.getSequence().toString() + "_demand FROM comp_elec_consumption LIMIT 1;") != null){
+		  		companyGC.v_hasQuarterHourlyValues = true;
+				profileName = "ccid" + companyGC.p_gridConnectionID;
+				
+				if (!settings.createCurrentElectricityEA()){//input boolean: Dont create current electric energy assets if electricity profile is present.
+				createElectricEA = false;
+				}
+			}
+		}
+		catch(Exception e) {
+			//Calculate yearly consumption based on yearly delivery (and yearly feedin, production or solarpanels if available)
+		
+			
+		}
+		
+		//Add base electricity demand profile (with profile if available, with generic pattern if only yearly data is available)
+		f_addElectricityDemandProfile(companyGC, yearlyElectricityConsumption_kWh, pvPower_kW, companyGC.v_hasQuarterHourlyValues, profileName);
+	}
 		
 	//Update total Yearly electricity consumption (only when no timestep data available, cause when thats avaiable, it happens in the preprocessing function)
 	if (companyGC.v_hasQuarterHourlyValues == false){
@@ -35009,7 +35060,7 @@ switch (storageType){
 					<Id>1726584205833</Id>
 					<Name><![CDATA[f_iEAGenericCompanies]]></Name>
 					<Description><![CDATA[Initialisation of the Energy assets using average values for companies that have not filled in the survey (yet) combined with totals (floor surface, electricity/yr, gas/yr and trucks)  of the simulated area.]]></Description>
-					<X>470</X><Y>380</Y>
+					<X>460</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -35385,7 +35436,7 @@ parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, l
 					<Id>1726584205843</Id>
 					<Name><![CDATA[f_createChargingStationsScale]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>440</X><Y>580</Y>
+					<X>440</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -35533,7 +35584,7 @@ return gisregion;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726584205849</Id>
 					<Name><![CDATA[f_createChargingStations]]></Name>
-					<X>431</X><Y>811</Y>
+					<X>431</X><Y>771</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -35671,7 +35722,7 @@ for (Chargingstation_data dataChargingStation : c_Chargingstation_data){
 					<Id>1726584205851</Id>
 					<Name><![CDATA[f_createCompaniesFromDatabase]]></Name>
 					<Description><![CDATA[Creates the houses using a single GC, and their building. After creation, they will be simulated using average values.]]></Description>
-					<X>440</X><Y>520</Y>
+					<X>440</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -35800,7 +35851,7 @@ for(GridNode gn : energyModel.pop_gridNodes){
 					<ReturnType><![CDATA[List<Building_data>]]></ReturnType>
 					<Id>1726584205857</Id>
 					<Name><![CDATA[f_getScopedBuildingList]]></Name>
-					<X>440</X><Y>620</Y>
+					<X>440</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -35955,7 +36006,7 @@ if (v_remainingElectricityDelivery_kWh < 0){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726584205863</Id>
 					<Name><![CDATA[f_setHouseHeatingPreferences]]></Name>
-					<X>440</X><Y>600</Y>
+					<X>440</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -36288,35 +36339,9 @@ f_createGenericCompanies();]]></Body>
 				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1726584205875</Id>
-					<Name><![CDATA[f_iEASurveyCompanies_Zummon]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>460</X><Y>330</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-				</Function>
-				<Function AccessType="protected" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1726584205877</Id>
-					<Name><![CDATA[f_createSurveyCompanies_Zummon]]></Name>
-					<X>440</X><Y>310</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[traceln("Companies that filled in the survey:");
-
-]]></Body>
-				</Function>
-				<Function AccessType="protected" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726584205879</Id>
 					<Name><![CDATA[f_createConsumerGC_Residential]]></Name>
-					<X>420</X><Y>490</Y>
+					<X>420</X><Y>450</Y>
 					<Label><X>11</X><Y>1</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -36388,6 +36413,29 @@ for(String buildingID : buildingIDS){
   	.execute();
 }
 */]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[double[]]]></ReturnType>
+					<Id>1728035809860</Id>
+					<Name><![CDATA[f_convertFloatArrayToDoubleArray]]></Name>
+					<X>560</X><Y>-190</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[floatArray]]></Name>
+						<Type><![CDATA[float[]]]></Type>
+					</Parameter>
+					<Body><![CDATA[if (floatArray == null) {
+        return null;
+}
+double[] doubleArray = new double[floatArray.length];
+for (int i = 0; i < floatArray.length; i++) {
+    doubleArray[i] = floatArray[i];
+}
+return doubleArray;]]></Body>
 				</Function>
 			</Functions>
 			<Connectivity>
@@ -36783,6 +36831,9 @@ for(String buildingID : buildingIDS){
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_avgAnnualTravelDistanceTruck_km]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_avgFullLoadHoursPV_hr]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -37299,7 +37350,7 @@ for(String buildingID : buildingIDS){
 				<Rectangle>
 					<Id>1726584205947</Id>
 					<Name><![CDATA[rect_createEnergyGC]]></Name>
-					<X>400</X><Y>680</Y>
+					<X>400</X><Y>640</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -37321,7 +37372,7 @@ for(String buildingID : buildingIDS){
 				<Text>
 					<Id>1726584205949</Id>
 					<Name><![CDATA[txt_createEnergyGC]]></Name>
-					<X>410</X><Y>690</Y>
+					<X>410</X><Y>650</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -37343,7 +37394,7 @@ for(String buildingID : buildingIDS){
 				<Group>
 					<Id>1726584205951</Id>
 					<Name><![CDATA[gr_consumerGC_residential]]></Name>
-					<X>570</X><Y>530</Y>
+					<X>570</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -37405,7 +37456,7 @@ for(String buildingID : buildingIDS){
 					<Id>1726584205957</Id>
 					<Name><![CDATA[gr_consumerGC_businesspark]]></Name>
 					<X>570</X><Y>230</Y>
-					<Label><X>10</X><Y>0</Y></Label>
+					<Label><X>9.883</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
@@ -37418,7 +37469,7 @@ for(String buildingID : buildingIDS){
 				<Rectangle>
 					<Id>1726584205959</Id>
 					<Name><![CDATA[rect_createConsumerGC_Businesspark]]></Name>
-					<X>-170</X><Y>-170</Y>
+					<X>-170</X><Y>-168.017</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -37432,7 +37483,7 @@ for(String buildingID : buildingIDS){
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
 					<Width>340</Width>
-					<Height>340</Height>
+					<Height>298.017</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -37440,7 +37491,7 @@ for(String buildingID : buildingIDS){
 				<Text>
 					<Id>1726584205961</Id>
 					<Name><![CDATA[txt_createConsumerGC_Businesspark]]></Name>
-					<X>-160</X><Y>-160</Y>
+					<X>-158.134</X><Y>-158.134</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
