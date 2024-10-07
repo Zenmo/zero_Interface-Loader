@@ -3038,6 +3038,7 @@ area.v_annualSelfConsumedEnergy_MWh = energyModel.v_totalSelfConsumedEnergy_MWh;
 area.v_annualElectricityImport_MWh = energyModel.v_totalElectricityImport_MWh;
 area.v_annualElectricityExport_MWh = energyModel.v_totalElectricityExport_MWh;
 area.v_annualSelfConsumedElectricity_MWh = energyModel.v_totalElectricitySelfConsumed_MWh;
+area.v_annualElectricityConsumed_MWh = energyModel.v_totalElectricityConsumed_MWh;
 
 area.v_annualNaturalGasDemand_MWh = energyModel.v_totalMethaneImport_MWh;
 area.v_annualPetroleumProductsDemand_MWh= energyModel.v_totalDieselImport_MWh;
@@ -5629,15 +5630,15 @@ traceln("DID NOT OVERRIDE THE PROJECT SPECIFIC STYLING!");]]></Body>
 	previousTotals.setPreviousImportedEnergy_MWh(GC.v_totalImport_MWh);
 	previousTotals.setPreviousExportedEnergy_MWh(GC.v_totalExport_MWh);
 		
-	previousTotals.setPreviousNaturalGasDemand_MWh(GC.v_methaneDrawn_kWh);
-	previousTotals.setPreviousPetroleumProductsDemand_MWh(GC.v_dieselDrawn_kWh);
-	previousTotals.setPreviousHydrogenDemand_MWh(GC.v_hydrogenDrawn_kWh);
-	previousTotals.setPreviousHydrogenSupply_MWh(GC.v_hydrogenDelivered_kWh);
+	previousTotals.setPreviousNaturalGasDemand_MWh(GC.v_methaneDrawn_kWh/1000);
+	previousTotals.setPreviousPetroleumProductsDemand_MWh(GC.v_dieselDrawn_kWh/1000);
+	previousTotals.setPreviousHydrogenDemand_MWh(GC.v_hydrogenDrawn_kWh/1000);
+	previousTotals.setPreviousHydrogenSupply_MWh(GC.v_hydrogenDelivered_kWh/1000);
 	
 	previousTotals.setPreviousSelfConsumedElectricity_MWh(GC.v_totalElectricitySelfConsumed_MWh);
 	//previousTotals.setPreviousSelfProducedElectricity_MWh(GC.v_totalElectricitySelfProduced_MWh);
-	previousTotals.setPreviousElectricityImport_MWh(GC.v_electricityDrawnFromGrid_kWh);
-	previousTotals.setPreviousElectricityExport_MWh(GC.v_electricityDeliveredToGrid_kWh);
+	previousTotals.setPreviousElectricityImport_MWh(GC.v_electricityDrawnFromGrid_kWh/1000);
+	previousTotals.setPreviousElectricityExport_MWh(GC.v_electricityDeliveredToGrid_kWh/1000);
 	previousTotals.setPreviousElectricityConsumed_MWh(GC.v_totalElectricityConsumed_MWh);
 	
 	//Overload
@@ -35889,6 +35890,7 @@ for (Chargingstation_data dataChargingStation : c_Chargingstation_data){
 			area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
 			zero_Interface.f_styleAreas(area);
 	}
+	
 }
 ]]></Body>
 				</Function>
