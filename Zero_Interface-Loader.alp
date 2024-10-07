@@ -34375,9 +34375,6 @@ for (var survey : surveys) {
 			companyGC.p_latitude = companyGC.c_connectedGISObjects.get(0).p_latitude; // Get latitude of first building (only used to get nearest trafo)
 			companyGC.setLatLon(companyGC.p_latitude, companyGC.p_longitude);  
 			
-			//Calculate remaining floor surface area for the unknown company calculations
-			//v_remainingFloorArea_m2 -= totalFloorSurfaceAreaGC_m2;
-			
 			//Energy asset initialization
 			f_iEASurveyCompanies_Zorm(companyGC, gridConnection); 
 			
@@ -34498,14 +34495,25 @@ companyGC.p_physicalConnectionCapacity_kW = 0;
 //Check for electricity connection and data
 if (gridConnection.getElectricity().getHasConnection()){
 	
-	if (gridConnection.getElectricity().getContractedConnectionCapacityKw() == null) {
-		traceln("SURVEYOWNER HAS NOT FILLED IN CONNECTION CAPACITY!!! AVG value taken");
+	if ((gridConnection.getElectricity().getContractedConnectionCapacityKw() == null || 
+		gridConnection.getElectricity().getContractedConnectionCapacityKw() <= 0) &&
+		(gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw() == null || 
+		gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw() <= 0)) {
+		
+		traceln("SURVEYOWNER HAS NOT FILLED IN CONNECTION CAPACITY!!! AVG values taken");
 		companyGC.p_contractedDeliveryCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
 		companyGC.p_contractedFeedinCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
 		companyGC.p_physicalConnectionCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
 	}
 	else{
-		companyGC.p_contractedDeliveryCapacity_kW = gridConnection.getElectricity().getContractedConnectionCapacityKw(); //Contracted connection capacity
+	
+		if(gridConnection.getElectricity().getContractedConnectionCapacityKw() != null && gridConnection.getElectricity().getContractedConnectionCapacityKw() > 0){
+			companyGC.p_contractedDeliveryCapacity_kW = gridConnection.getElectricity().getContractedConnectionCapacityKw(); //Contracted connection capacity
+		}
+		else{
+			companyGC.p_contractedDeliveryCapacity_kW = gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw(); //Contracted connection capacity
+		}
+		
 		
 		//Check if contract capacity feedin has been filled in: if not, make the same as contract delivery
 		if(gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw() != null && gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw() > 0){
@@ -34665,10 +34673,15 @@ if (gridConnection.getNaturalGas().getHasConnection() != null && gridConnection.
 	
 	yearlyGasConsumption_m3 = (gridConnection.getNaturalGas().getAnnualDemandM3() != null) ? gridConnection.getNaturalGas().getAnnualDemandM3() : 0; // Yearly electricity consumption (0 if value is null)
 
-	//Check if quarter hourly values are available 
-	if (selectFirstValue(Double.class, "SELECT " + "ccid" + gridConnection.getSequence().toString() + "_demand FROM comp_gas_consumption LIMIT 1;") != null){
-		hasHourlyGasData = true;
-		heatProfileName = "ccid" + companyGC.p_gridConnectionID;
+	//Check if hourly gas consumption values are available 
+	try{
+		if (selectFirstValue(Double.class, "SELECT " + "ccid" + gridConnection.getSequence().toString() + "_demand FROM comp_gas_consumption LIMIT 1;") != null){
+			hasHourlyGasData = true;
+			heatProfileName = "ccid" + companyGC.p_gridConnectionID;
+		}
+	}
+	catch(Exception e) {
+		//No hourly data available? Do nothing
 	}
 	
 	//Determine how much gas goes towards heating
