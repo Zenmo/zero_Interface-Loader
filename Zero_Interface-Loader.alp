@@ -7660,7 +7660,6 @@ b_updateCongestionColors = false;
 						<Button><![CDATA[Elektriciteitsverbruik]]></Button>
 						<Button><![CDATA[PV opwek]]></Button>
 						<Button><![CDATA[Energie Buren]]></Button>
-						<Button><![CDATA[Pand functie]]></Button>
 						<LinkTo>false</LinkTo>
 					</ExtendedProperties>
 				</Control>
@@ -11971,18 +11970,34 @@ if (GC.p_secondaryHeatingAsset != null){
 }
 
 
+//Get needed cacacity
+double capacityThermal_kW;
+
 //Select heat demand consumption asset 
 J_EAConsumption heatDemandAsset = findFirst(GC.c_consumptionAssets, j_ea->j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
 
 //Check heating demand asset is null (shouldnt be possible)
-if (heatDemandAsset == null){
-	traceln("No heating demand asset found for GC:" + GC.p_gridConnectionID);
-	traceln("--> No heating asset created");		
+if (heatDemandAsset != null){
+	capacityThermal_kW = heatDemandAsset.yearlyDemandHeat_kWh/8760*10; // --> average hourly consumption * 10 --> to always have enough capacity
 }
+else{
+	//Select profile heat demand asset 
+	J_EAProfile heatDemandAsset_Profile = findFirst(GC.c_profileAssets, j_ea->j_ea.energyCarrierConsumed == OL_EnergyCarrierType.HEAT);
+	
+	if(heatDemandAsset_Profile != null){
+	capacityThermal_kW = max(heatDemandAsset_Profile.a_energyProfile_kWh)*4;
+	}
+	else{
+		traceln("No heating demand asset found for GC:" + GC.p_gridConnectionID);
+		traceln("--> No heating asset created");
+		return;
+	}
+		
+}
+
 
 //Algemeen
 double timestep_h = zero_Interface.energyModel.p_timeStep_h;
-double capacityThermal_kW = heatDemandAsset.yearlyDemandHeat_kWh/8760*10; // --> average hourly consumption * 10 --> to always have enough capacity
 double efficiency;
 double outputTemperature_degC;
 
@@ -33419,6 +33434,7 @@ for (Windfarm_data dataWindfarm : c_Windfarm_data) {
 		
 		windfarm.set_p_owner( owner );
 		
+		existing_windFarms.add(windfarm.p_gridConnectionID);	
 	}
 	else { // winfarm and its owner exist already, only create new gis building which is added to the farm
 		windfarm = findFirst(energyModel.EnergyProductionSites, p -> p.p_gridConnectionID.equals(dataWindfarm.gc_id()) );
@@ -33994,10 +34010,12 @@ return b;]]></Body>
 	//Get the delivery values
 	List<Double> yearlyElectricityDelivery_kWh_list = selectValues(double.class, "SELECT " + profileName + "_demand FROM comp_elec_consumption;");
 	
+	
 	//Convert lists into arrays
 	double[] yearlyElectricityDelivery_kWh_array = (yearlyElectricityDelivery_kWh_list != null) ? yearlyElectricityDelivery_kWh_list.stream().mapToDouble(d -> max(0,d)).toArray() : null;
 	double[] yearlyElectricityFeedin_kWh_array = 	(yearlyElectricityFeedin_kWh_list != null) ? yearlyElectricityFeedin_kWh_list.stream().mapToDouble(d -> max(0,d)).toArray() : null;
 	double[] yearlyElectricityProduction_kWh_array = (yearlyElectricityProduction_kWh_list != null) ? yearlyElectricityProduction_kWh_list.stream().mapToDouble(d -> max(0,d)).toArray() : null;
+
 	
 	//Preprocess and add the profiles
 	f_createPreprocessedElectricityProfile(parentGC, yearlyElectricityDelivery_kWh_array, yearlyElectricityFeedin_kWh_array, yearlyElectricityProduction_kWh_array, pvPower_kW);
@@ -34061,6 +34079,9 @@ if(hasHourlyGasData){
     	}
 	}	
 	profile.a_energyProfile_kWh = hourlyHeatDemand_kWh.stream().mapToDouble(d -> max(0,d)).toArray();
+	
+	//Update v_remainingGasConsumption_m3
+	v_remainingGasConsumption_m3 -= yearlyDemandHeat_kWh/(avgc_data.p_gas_kWhpm3 * ratioGasUsedForHeating);
 }
 else{
 
@@ -34441,6 +34462,8 @@ surveys = vallum.getSurveysByProject(project_data.project_name());
 //Clear user data
 user = null;
 
+traceln(surveys.size());
+
 return surveys;]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
@@ -34682,14 +34705,16 @@ if (gridConnection.getNaturalGas().getHasConnection() != null && gridConnection.
 		}
 	}
 	catch(Exception e) {
-		//No hourly data available? Do nothing
+		//No hourly data available?
+		//Update total Yearly gas consumption (if it is available it happens in the function where data is imported)
+		v_remainingGasConsumption_m3 -= yearlyGasConsumption_m3;
+		
 	}
 	
 	//Determine how much gas goes towards heating
 	ratioGasUsedForHeating = ((gridConnection.getNaturalGas().getPercentageUsedForHeating() != null) ? gridConnection.getNaturalGas().getPercentageUsedForHeating() : 100)/100;
 
-	//Update total Yearly gas consumption
-	v_remainingGasConsumption_m3 -= yearlyGasConsumption_m3;
+
 }
 
 
@@ -34697,7 +34722,7 @@ if (gridConnection.getNaturalGas().getHasConnection() != null && gridConnection.
 	
 ////Heating
 //Determine the current heating type
-f_setHeatingTypeSurvey(companyGC, gridConnection);
+f_setHeatingTypeSurvey(companyGC, gridConnection, hasHourlyGasData);
 
 //Set the heating demand profile
 f_addHeatDemandProfile(companyGC, yearlyGasConsumption_m3, hasHourlyGasData, ratioGasUsedForHeating, heatProfileName);
@@ -34966,6 +34991,10 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 						<Name><![CDATA[gridConnection]]></Name>
 						<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
 					</Parameter>
+					<Parameter>
+						<Name><![CDATA[hasHourlyGasData]]></Name>
+						<Type><![CDATA[boolean]]></Type>
+					</Parameter>
 					<Body><![CDATA[int i = 0;
 
 if(gridConnection.getHeat().getHeatingTypes().size() == 0){
@@ -35015,18 +35044,28 @@ while (i < gridConnection.getHeat().getHeatingTypes().size()){
 
 //Set correct primary heating method (p_heatingType) (needed for now, till model can support multiple heating types)
 if (companyGC.c_heatingTypes.size()>1){
-	if (companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP)){
-		companyGC.p_heatingType = OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP;
+	if (hasHourlyGasData){
+		companyGC.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
 		return;
 	}
-	else if(companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.HYBRID_HEATPUMP)){
+	
+	if(companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.HYBRID_HEATPUMP)){
 		companyGC.p_heatingType = OL_GridConnectionHeatingType.HYBRID_HEATPUMP;
+		return;
+	}
+	else if(companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.GASBURNER) && (companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP))){
+		companyGC.p_heatingType = OL_GridConnectionHeatingType.HYBRID_HEATPUMP;
+		return;
+	}
+	else if (companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP)){
+		companyGC.p_heatingType = OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP;
 		return;
 	}
 	else if(companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.GASBURNER)){
 		companyGC.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
 		return;
 	}
+
 }
 
 
@@ -35263,21 +35302,23 @@ future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(companyGC.p_contr
 
 //Basic heating and electricity demand profiles
 if (companyGC.p_floorSurfaceArea_m2 > 0){
-
-	//Buidling Base electricity load
-	double Remaining_electricity_demand_kWh_p_m2_yr = v_remainingElectricityDelivery_kWh / v_totalFloorAreaAnonymousCompanies_m2;
-	double yearlyElectricityDemand_kWh = Remaining_electricity_demand_kWh_p_m2_yr * companyGC.p_floorSurfaceArea_m2;
-	//Add base load profile
-	f_addElectricityDemandProfile(companyGC, yearlyElectricityDemand_kWh, null, false, "Office_other_electricity");
-
-
-	//Building Gas demand profile (purely heating)
-	double Remaining_gas_demand_m3_p_m2_yr = v_remainingGasConsumption_m3/v_totalFloorAreaAnonymousCompanies_m2;
-	double yearlyGasDemand_m3 = Remaining_gas_demand_m3_p_m2_yr*companyGC.p_floorSurfaceArea_m2;
-	double ratioGasUsedForHeating = 1;
-	//Add heat demand profile
-	f_addHeatDemandProfile(companyGC, yearlyGasDemand_m3, false, ratioGasUsedForHeating, "Building_heat_demand");
 	
+	if(v_remainingElectricityDelivery_kWh > 0){
+		//Buidling Base electricity load
+		double Remaining_electricity_demand_kWh_p_m2_yr = v_remainingElectricityDelivery_kWh / v_totalFloorAreaAnonymousCompanies_m2;
+		double yearlyElectricityDemand_kWh = Remaining_electricity_demand_kWh_p_m2_yr * companyGC.p_floorSurfaceArea_m2;
+		//Add base load profile
+		f_addElectricityDemandProfile(companyGC, yearlyElectricityDemand_kWh, null, false, "Office_other_electricity");
+	}
+	
+	if(v_remainingGasConsumption_m3 > 0){
+		//Building Gas demand profile (purely heating)
+		double Remaining_gas_demand_m3_p_m2_yr = v_remainingGasConsumption_m3/v_totalFloorAreaAnonymousCompanies_m2;
+		double yearlyGasDemand_m3 = Remaining_gas_demand_m3_p_m2_yr*companyGC.p_floorSurfaceArea_m2;
+		double ratioGasUsedForHeating = 1;
+		//Add heat demand profile
+		f_addHeatDemandProfile(companyGC, yearlyGasDemand_m3, false, ratioGasUsedForHeating, "Building_heat_demand");
+	}
 	//Set current scenario heating type
 	current_scenario_list.setCurrentHeatingType(companyGC.p_heatingType);
 }
@@ -36156,11 +36197,14 @@ if (yearlyElectricityProduction_kWh != null && yearlyElectricityFeedin_kWh != nu
 		double addedConsumption_kWh = 0;
 		for (int i = 0; i < yearlyElectricityDelivery_kWh.length; i++) {
 			pvPowerEstimate_kW = pvPower_kW * energyModel.tf_p_solar_e_normalized(i*0.25);
+			
 			if (yearlyElectricityDelivery_kWh[i] != 0) { // Only update consumption if delivery is non-zero, otherwise hold previously estimated consumption constant
 				estimatedConsumption_kWh = yearlyElectricityDelivery_kWh[i] + pvPowerEstimate_kW*0.25;
-				addedConsumption_kWh += pvPowerEstimate_kW * 0.25;
+				//addedConsumption_kWh += pvPowerEstimate_kW * 0.25;
 			} else {
-				addedConsumption_kWh += estimatedConsumption_kWh * 0.25;
+				estimatedConsumption_kWh = min(pvPowerEstimate_kW*0.25, estimatedConsumption_kWh); // Take minimum to prevent to much consumption when there is not enough sun in model sun, compared to real sun data!!
+				
+				//addedConsumption_kWh += max(0, estimatedConsumption_kWh - pvPowerEstimate_kW*0.25);//* 0.25;
 			}
 			yearlyElectricityConsumption_kWh[i] = max(0,estimatedConsumption_kWh);
 		}
@@ -38888,7 +38932,7 @@ public class Windfarm_data {
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
-			<Path><![CDATA[vallum-production-345-bcc71b6-all.jar]]></Path>
+			<Path><![CDATA[vallum-production-348-5bc03e5-all.jar]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
@@ -38922,7 +38966,7 @@ public class Windfarm_data {
 	<ClassPathEntry>
 		<ResourceReference>
 			<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
-			<ClassName><![CDATA[vallum-production-345-bcc71b6-all.jar]]></ClassName>
+			<ClassName><![CDATA[vallum-production-348-5bc03e5-all.jar]]></ClassName>
 		</ResourceReference>
 		<Imported>true</Imported>
 		<Folder>false</Folder>
