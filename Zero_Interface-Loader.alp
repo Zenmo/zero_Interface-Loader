@@ -615,7 +615,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1704450852556</Id>
 					<Name><![CDATA[v_solarParkColor]]></Name>
-					<X>690</X><Y>1280</Y>
+					<X>690</X><Y>1310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -721,7 +721,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1705664070254</Id>
 					<Name><![CDATA[v_solarParkLineColor]]></Name>
-					<X>690</X><Y>1300</Y>
+					<X>690</X><Y>1330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -736,7 +736,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1705664575869</Id>
 					<Name><![CDATA[v_electrolyserColor]]></Name>
-					<X>690</X><Y>1415</Y>
+					<X>690</X><Y>1445</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -751,7 +751,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1705664587285</Id>
 					<Name><![CDATA[v_chargingStationColor]]></Name>
-					<X>690</X><Y>1460</Y>
+					<X>690</X><Y>1490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -781,7 +781,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1705668569794</Id>
 					<Name><![CDATA[v_electrolyserLineColor]]></Name>
-					<X>690</X><Y>1435</Y>
+					<X>690</X><Y>1465</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -796,7 +796,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1705668590932</Id>
 					<Name><![CDATA[v_chargingStationLineColor]]></Name>
-					<X>690</X><Y>1480</Y>
+					<X>690</X><Y>1510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1008,7 +1008,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1710162245199</Id>
 					<Name><![CDATA[v_batteryColor]]></Name>
-					<X>690</X><Y>1370</Y>
+					<X>690</X><Y>1400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1023,7 +1023,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1710162245201</Id>
 					<Name><![CDATA[v_batteryLineColor]]></Name>
-					<X>690</X><Y>1390</Y>
+					<X>690</X><Y>1420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1038,7 +1038,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1710166484674</Id>
 					<Name><![CDATA[v_windFarmColor]]></Name>
-					<X>690</X><Y>1325</Y>
+					<X>690</X><Y>1355</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1053,7 +1053,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1710166484676</Id>
 					<Name><![CDATA[v_windFarmLineColor]]></Name>
-					<X>690</X><Y>1345</Y>
+					<X>690</X><Y>1375</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1188,7 +1188,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1719311576065</Id>
 					<Name><![CDATA[v_newChargingStationColor]]></Name>
-					<X>690</X><Y>1550</Y>
+					<X>690</X><Y>1580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1203,7 +1203,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1719311576067</Id>
 					<Name><![CDATA[v_newChargingStationLineColor]]></Name>
-					<X>690</X><Y>1570</Y>
+					<X>690</X><Y>1600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1353,7 +1353,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1721729327873</Id>
 					<Name><![CDATA[v_parcelColor]]></Name>
-					<X>690</X><Y>1600</Y>
+					<X>690</X><Y>1630</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1368,7 +1368,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1721729331151</Id>
 					<Name><![CDATA[v_parcelLineColor]]></Name>
-					<X>690</X><Y>1620</Y>
+					<X>690</X><Y>1650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1473,7 +1473,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1726752465730</Id>
 					<Name><![CDATA[v_chargingStationColor_centre]]></Name>
-					<X>690</X><Y>1500</Y>
+					<X>690</X><Y>1530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1488,7 +1488,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1726752465732</Id>
 					<Name><![CDATA[v_chargingStationLineColor_centre]]></Name>
-					<X>690</X><Y>1520</Y>
+					<X>690</X><Y>1550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1497,6 +1497,21 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 						<Type><![CDATA[Color]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[new Color(48, 25, 52)]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728404379677</Id>
+					<Name><![CDATA[v_energyAssetLineWidth]]></Name>
+					<X>690</X><Y>1280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[2]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -3590,12 +3605,16 @@ f_initialHeatingSystemsOrder();
 						<Name><![CDATA[gis_area]]></Name>
 						<Type><![CDATA[GIS_Object]]></Type>
 					</Parameter>
-					<Body><![CDATA[double yearlyEnergyConsumption = sum( gis_area.c_containedGridConnections, x -> x.v_totalElectricityConsumed_MWh);
-if ( yearlyEnergyConsumption < 10){ gis_area.f_style( rect_tinyCosumption.getFillColor(), null, null, null);}
-else if ( yearlyEnergyConsumption < 50){ gis_area.f_style( rect_smallCosumption.getFillColor(), null, null, null);}
-else if ( yearlyEnergyConsumption < 150){ gis_area.f_style( rect_mediumCosumption.getFillColor(), null, null, null);}
-else if ( yearlyEnergyConsumption < 500){ gis_area.f_style( rect_largeCosumption.getFillColor(), null, null, null);}
-else if ( yearlyEnergyConsumption > 500){ gis_area.f_style( rect_hugeCosumption.getFillColor(), null, null, null);}]]></Body>
+					<Body><![CDATA[if(gis_area.c_containedGridConnections.size() > 0){
+
+	double yearlyEnergyConsumption = sum( gis_area.c_containedGridConnections, x -> x.v_totalElectricityConsumed_MWh);
+	
+	if ( yearlyEnergyConsumption < 10){ gis_area.f_style( rect_tinyCosumption.getFillColor(), null, null, null);}
+	else if ( yearlyEnergyConsumption < 50){ gis_area.f_style( rect_smallCosumption.getFillColor(), null, null, null);}
+	else if ( yearlyEnergyConsumption < 150){ gis_area.f_style( rect_mediumCosumption.getFillColor(), null, null, null);}
+	else if ( yearlyEnergyConsumption < 500){ gis_area.f_style( rect_largeCosumption.getFillColor(), null, null, null);}
+	else if ( yearlyEnergyConsumption > 500){ gis_area.f_style( rect_hugeCosumption.getFillColor(), null, null, null);}
+}]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -3619,6 +3638,7 @@ for (GIS_Building building : energyModel.pop_GIS_Buildings){
 	else if ( electricityDeliveredToGrid_kWh > 50){ building.f_setFillColor( lime);}
 }
 */
+
 if (gis_area.c_containedGridConnections.size() > 0) {
 	if (gis_area.c_containedGridConnections.get(0).v_hasPV) {
 		if (gis_area.c_containedGridConnections.get(0).c_productionAssets.get(0).getCapacityElectric_kW() < 100){
@@ -3629,9 +3649,10 @@ if (gis_area.c_containedGridConnections.size() > 0) {
 		}
 		return;
 	}
+	gis_area.f_style(rect_noProduction.getFillColor(), null, null, null);
 }
 
-gis_area.f_style(rect_noProduction.getFillColor(), null, null, null);
+
 ]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
@@ -5143,11 +5164,11 @@ if (p_selectedProjectType == BUSINESSPARK){
 }
 
 //Create Hydrogen UI
-f_createHydrogenUI();
+//f_createHydrogenUI();
 
 
 //Create Battery UI
-f_createBatteryUI();]]></Body>
+//f_createBatteryUI();]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -5285,13 +5306,17 @@ case BUILDING:
 	break;
 	
 case ELECTROLYSER:
-	button_goToUI.setText("Ga naar het Waterstof Dashboard");
-	button_goToUI.setVisible(true);
+	if(ui_Hydrogen.size() > 0){
+		button_goToUI.setText("Ga naar het Waterstof Dashboard");
+		button_goToUI.setVisible(true);
+	}
 	break;
 	
 case BATTERY:
-	button_goToUI.setText("Ga naar het Batterijen Dashboard");
-	button_goToUI.setVisible(true);
+	if(ui_Battery.size() > 0){
+		button_goToUI.setText("Ga naar het Batterijen Dashboard");
+		button_goToUI.setVisible(true);
+	}
 	break;	
 
 case CHARGER:
@@ -7609,6 +7634,9 @@ if ( rb_buildingColors.getValue() == 0){
 	for (GIS_Building b: energyModel.pop_GIS_Buildings) { // Loop over other areas aswell?
 		f_styleAreas(b);
 	}
+	for (GIS_Object object : energyModel.pop_GIS_Objects){
+		f_styleAreas(object);
+	}
 }
 else if ( rb_buildingColors.getValue() == 1){
 	if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL){
@@ -7622,6 +7650,9 @@ else if ( rb_buildingColors.getValue() == 1){
 		gr_consumptionColorsLegenda.setVisible(true);
 		for (GIS_Building building : energyModel.pop_GIS_Buildings){
 			f_setColorsBasedOnConsumpion(building);
+		}
+		for (GIS_Object object : energyModel.pop_GIS_Objects){
+			f_setColorsBasedOnConsumpion(object);
 		}
 	}
 }
@@ -7637,12 +7668,18 @@ else if ( rb_buildingColors.getValue() == 2){
 		for (GIS_Building building : energyModel.pop_GIS_Buildings){
 			f_setColorsBasedOnProduction(building);
 		}
+		for (GIS_Object object : energyModel.pop_GIS_Objects){
+			f_setColorsBasedOnProduction(object);
+		}
 	}
 }
 else if ( rb_buildingColors.getValue() == 3){
 	b_updateCongestionColors = false;
 	for (GIS_Building building : energyModel.pop_GIS_Buildings){
 		f_setColorsBasedOnGridTopology_objects(building);
+	}
+	for (GIS_Object object : energyModel.pop_GIS_Objects){
+		f_setColorsBasedOnGridTopology_objects(object);
 	}
 	for (GridNode GN : energyModel.pop_gridNodes){
 		f_setColorsBasedOnGridTopology_gridnodes(GN);
@@ -9364,7 +9401,7 @@ new Thread( () -> {
 	uI_Results.f_showCorrectChart();
 	
 	//Update and show kpi summary chart after run
-	if(settings.showKPISummary() != null && settings.showKPISummary()){
+	if(settings.showKPISummary() != null && settings.showKPISummary() && !b_multiSelect){
 		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
 	}
 }).start();
@@ -10179,6 +10216,17 @@ b_resultsUpToDate = true;
 	uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
 	uI_Results.f_showCorrectChart();
 	
+	//Reset the KPI summary button
+	uI_Results.getCheckbox_KPISummary().setEnabled(true);
+	
+}
+else{
+	//Make the companyUI button invisible
+	button_goToUI.setVisible(false);
+	
+	//Disable the KPI summary (button)
+	uI_Results.getCheckbox_KPISummary().setSelected(false, true);
+	uI_Results.getCheckbox_KPISummary().setEnabled(false);
 }]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -23404,6 +23452,10 @@ public ShapeGroup getGroupElectricityDemandSliders() {
 	return this.gr_electricityDemandSliders;
 }
 
+public ShapeGroup getGroupElectricityDemandSliders_Businesspark() {
+	return this.gr_electricityDemandSliders_Businesspark;
+}
+
 public ShapeSlider getSliderElectricityDemandReduction_pct() {
 	return this.sl_electricityDemandReduction_pct;
 }
@@ -23414,6 +23466,10 @@ public ShapeSlider getSliderRooftopPVCompanies_pct(){
 
 public ShapeSlider getSliderLargeScalePV_ha(){
 	return this.sl_largeScalePV_ha;
+}
+
+public ShapeSlider getSliderLargeScalePV_ha_Businesspark(){
+	return this.sl_largeScalePV_ha_Businesspark;
 }
 
 public ShapeSlider getSliderRooftopPVHouses_pct(){
@@ -23554,7 +23610,7 @@ public ShapeSlider getWindSlider(){
 					<Id>1722258980135</Id>
 					<Name><![CDATA[v_currentNbChargers]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>450</X><Y>470</Y>
+					<X>830</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23567,7 +23623,7 @@ public ShapeSlider getWindSlider(){
 					<Id>1722259487682</Id>
 					<Name><![CDATA[p_nbChargersInDatabase]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>448</X><Y>450</Y>
+					<X>828</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23592,7 +23648,7 @@ public ShapeSlider getWindSlider(){
 					<Id>1722259487696</Id>
 					<Name><![CDATA[p_minPublicChargerSlider]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>428</X><Y>620</Y>
+					<X>808</X><Y>620</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23614,7 +23670,7 @@ public ShapeSlider getWindSlider(){
 					<Id>1722259487705</Id>
 					<Name><![CDATA[p_minPVHouseholdSlider]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>428</X><Y>640</Y>
+					<X>808</X><Y>640</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23823,7 +23879,7 @@ zero_Interface.f_resetSettings();]]></Body>
 					<Id>1722256239566</Id>
 					<Name><![CDATA[f_setPublicChargingStations]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>430</X><Y>430</Y>
+					<X>810</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23886,7 +23942,7 @@ zero_Interface.f_resetSettings();
 					<Id>1722256239578</Id>
 					<Name><![CDATA[f_setDieselVehiclesAtPublicParkingHouses]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>450</X><Y>490</Y>
+					<X>830</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23914,7 +23970,7 @@ zero_Interface.f_resetSettings();
 
 for ( GCEnergyProduction GCEP : zero_Interface.energyModel.EnergyProductionSites) {
 	for(J_EAProduction j_ea : GCEP.c_productionAssets) {
-		if (j_ea.getEAType() == OL_EnergyAssetType.WINDMILL) {
+		if (j_ea.getEAType() == OL_EnergyAssetType.WINDMILL && GCEP.p_isSliderGC) {
 			if (!GCEP.v_isActive) {
 				GCEP.f_setActive(true);
 			}
@@ -23934,7 +23990,7 @@ zero_Interface.f_resetSettings();]]></Body>
 					<Id>1722256291599</Id>
 					<Name><![CDATA[f_setResidentialBatteries]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>430</X><Y>570</Y>
+					<X>810</X><Y>570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23980,7 +24036,7 @@ zero_Interface.f_resetSettings();]]></Body>
 					<Id>1722261212790</Id>
 					<Name><![CDATA[f_setEVsAtPrivateParkingHouses]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>430</X><Y>540</Y>
+					<X>810</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24030,7 +24086,7 @@ zero_Interface.f_resetSettings();
 					<Name><![CDATA[f_setGridBatteries]]></Name>
 					<Description><![CDATA[Function that changes the electric capacity of the energy asset of the "Wind Farm". Takes an amount of MW as a parameter. The variables for amount of installed Wind are updated automatically in the zero_engine. The function also modifies the connection capacity of the energy production site to match the new installed Wind Power.]]></Description>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>430</X><Y>674</Y>
+					<X>810</X><Y>674</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24311,7 +24367,7 @@ v_currentNbChargers ++;]]></Body>
 					<Id>1722249610010</Id>
 					<Name><![CDATA[gr_electricityDemandSlidersResidentialArea]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>585</X><Y>175</Y>
+					<X>965</X><Y>175</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -25343,7 +25399,7 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 					<Id>1722334712260</Id>
 					<Name><![CDATA[rect_residentialFunctions]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>400</X><Y>370</Y>
+					<X>780</X><Y>370</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -25366,7 +25422,7 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 					<Id>1722334744018</Id>
 					<Name><![CDATA[t_residentialFunctionsDescription]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>600</X><Y>380</Y>
+					<X>980</X><Y>380</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -25987,6 +26043,355 @@ f_setPublicChargingStationsScale(sliderValue);]]></ActionCode>
 					</Font>
 					<Alignment>CENTER</Alignment>
 				</Text>
+				<Group>
+					<Id>1728384392418</Id>
+					<Name><![CDATA[gr_electricityDemandSliders_Businesspark]]></Name>
+					<X>580</X><Y>180</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+
+			<Presentation>
+				<Rectangle>
+					<Id>1728384392420</Id>
+					<Name><![CDATA[rect_electricityDemandSliders_Businesspark]]></Name>
+					<X>-185</X><Y>-175</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>3</LineWidth>
+					<LineColor/>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>370</Width>
+					<Height>350</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-32</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Text>
+					<Id>1728384392422</Id>
+					<Name><![CDATA[t_electricityDemandReduction_pct_Businesspark]]></Name>
+					<X>45</X><Y>-155</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[#]]></Text>
+					<TextCode><![CDATA[sl_electricityDemandReduction_pct_Businesspark.getIntValue() + "%"]]></TextCode>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Control Type="Slider">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1728384392424</Id>
+					<Name><![CDATA[sl_electricityDemandReduction_pct_Businesspark]]></Name>
+					<X>75</X><Y>-160</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="100" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[f_setDemandReduction( sl_electricityDemandReduction_pct_Businesspark.getValue() );]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
+						<Orientation>HORIZONTAL</Orientation>
+						<MinValue><![CDATA[0]]></MinValue>
+						<MaxValue><![CDATA[50]]></MaxValue>
+						<Step><![CDATA[1]]></Step>
+						<LinkTo>false</LinkTo>
+					</ExtendedProperties>
+				</Control>
+				<Text>
+					<Id>1728384392426</Id>
+					<Name><![CDATA[txt_electricityDemandReductionDescription_Businesspark]]></Name>
+					<X>-175</X><Y>-155</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Besparing elektriciteitsverbruik]]></Text>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1728384392428</Id>
+					<Name><![CDATA[txt_solarDescription_Businesspark]]></Name>
+					<X>-170</X><Y>-120</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Zon]]></Text>
+					<Font>
+						<Name>Calibri</Name>
+						<Size>18</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1728384392430</Id>
+					<Name><![CDATA[t_rooftopPVCompanies_pct_Businesspark]]></Name>
+					<X>45</X><Y>-95</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[#]]></Text>
+					<TextCode><![CDATA[sl_rooftopPVCompanies_pct_Businesspark.getIntValue() + "%"]]></TextCode>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Control Type="Slider">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1728384392432</Id>
+					<Name><![CDATA[sl_rooftopPVCompanies_pct_Businesspark]]></Name>
+					<X>75</X><Y>-100</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="100" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[f_setPVSystemCompanies(sl_rooftopPVCompanies_pct_Businesspark.getValue());]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
+						<Orientation>HORIZONTAL</Orientation>
+						<MinValue><![CDATA[0]]></MinValue>
+						<MaxValue><![CDATA[100]]></MaxValue>
+						<Step><![CDATA[1]]></Step>
+						<LinkTo>false</LinkTo>
+					</ExtendedProperties>
+				</Control>
+				<Text>
+					<Id>1728384392434</Id>
+					<Name><![CDATA[txt_rooftopPVCompaniesDescription_Businesspark]]></Name>
+					<X>-170</X><Y>-95</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Zon op dak bedrijven]]></Text>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1728384392436</Id>
+					<Name><![CDATA[t_largeScalePV_ha_Businesspark]]></Name>
+					<X>45</X><Y>-65</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[#]]></Text>
+					<TextCode><![CDATA[sl_largeScalePV_ha_Businesspark.getIntValue() + " ha"]]></TextCode>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Control Type="Slider">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1728384392438</Id>
+					<Name><![CDATA[sl_largeScalePV_ha_Businesspark]]></Name>
+					<X>75</X><Y>-70</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="100" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[f_setPVOnLand(sl_largeScalePV_ha_Businesspark.getValue());]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
+						<Orientation>HORIZONTAL</Orientation>
+						<MinValue><![CDATA[0]]></MinValue>
+						<MaxValue><![CDATA[50]]></MaxValue>
+						<Step><![CDATA[1]]></Step>
+						<LinkTo>false</LinkTo>
+					</ExtendedProperties>
+				</Control>
+				<Text>
+					<Id>1728384392440</Id>
+					<Name><![CDATA[txt_largeScalePVDescription_Businesspark]]></Name>
+					<X>-170</X><Y>-65</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Zon op land]]></Text>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1728384392442</Id>
+					<Name><![CDATA[txt_windDescription_Businesspark]]></Name>
+					<X>-170</X><Y>-20</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Wind]]></Text>
+					<Font>
+						<Name>Calibri</Name>
+						<Size>18</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Control Type="Slider">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1728384392444</Id>
+					<Name><![CDATA[sl_largeScaleWind_MW_Businesspark]]></Name>
+					<X>75</X><Y>5</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="100" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[f_setWindTurbines( sl_largeScaleWind_MW_Businesspark.getValue() );]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
+						<Orientation>HORIZONTAL</Orientation>
+						<MinValue><![CDATA[0]]></MinValue>
+						<MaxValue><![CDATA[10]]></MaxValue>
+						<Step><![CDATA[1]]></Step>
+						<LinkTo>false</LinkTo>
+					</ExtendedProperties>
+				</Control>
+				<Text>
+					<Id>1728384392446</Id>
+					<Name><![CDATA[txt_largeScaleWindDescription_Businesspark]]></Name>
+					<X>-170</X><Y>10</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Wind op land]]></Text>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1728384392448</Id>
+					<Name><![CDATA[t_largeScaleWind_MW_Businesspark]]></Name>
+					<X>45</X><Y>10</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[#]]></Text>
+					<TextCode><![CDATA[sl_largeScaleWind_MW_Businesspark.getIntValue() + " MW"]]></TextCode>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+			</Presentation>
+
+				</Group>
 			</Presentation>
 
 				</Level>
@@ -29043,7 +29448,7 @@ else {
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722253487935</Id>
 					<Name><![CDATA[cb_spreadChargingEVs]]></Name>
-					<X>75</X><Y>-112</Y>
+					<X>75</X><Y>-132</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29070,7 +29475,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722253487937</Id>
 					<Name><![CDATA[t_collectiveBatteries1]]></Name>
-					<X>35</X><Y>-45</Y>
+					<X>35</X><Y>-65</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29092,7 +29497,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722253487939</Id>
 					<Name><![CDATA[t_spreadChargingEVsDescription]]></Name>
-					<X>-170</X><Y>-105</Y>
+					<X>-170</X><Y>-125</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29114,7 +29519,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722253487941</Id>
 					<Name><![CDATA[sl_collectiveBattery_MWh]]></Name>
-					<X>70</X><Y>-50</Y>
+					<X>70</X><Y>-70</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29139,7 +29544,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722253487943</Id>
 					<Name><![CDATA[t_curtailmentDescription]]></Name>
-					<X>-170</X><Y>-130</Y>
+					<X>-170</X><Y>-150</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29160,7 +29565,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722253487945</Id>
 					<Name><![CDATA[t_collectiveBatteryDescription]]></Name>
-					<X>-170</X><Y>-45</Y>
+					<X>-170</X><Y>-65</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29182,7 +29587,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722253487947</Id>
 					<Name><![CDATA[cb_curtailment]]></Name>
-					<X>75</X><Y>-138</Y>
+					<X>75</X><Y>-158</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29214,7 +29619,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722253487949</Id>
 					<Name><![CDATA[button_add_nfato]]></Name>
-					<X>-170</X><Y>15</Y>
+					<X>-170</X><Y>-5</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29271,7 +29676,7 @@ else {
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722253487951</Id>
 					<Name><![CDATA[button_remove_nfato]]></Name>
-					<X>0</X><Y>15</Y>
+					<X>0</X><Y>-5</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29300,7 +29705,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1725277950476</Id>
 					<Name><![CDATA[cb_powerChargingEVs]]></Name>
-					<X>75</X><Y>-86</Y>
+					<X>75</X><Y>-106</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29327,7 +29732,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1725277950478</Id>
 					<Name><![CDATA[t_powerChargingEVsDescription]]></Name>
-					<X>-170</X><Y>-79</Y>
+					<X>-170</X><Y>-99</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30909,7 +31314,7 @@ For now: Picking 3.33 km per l]]></Description>
 					<Description><![CDATA[https://www.vaillant.be/consumenten/ons-advies/blog/het-rendement-van-een-warmtepomp/
 
 Gemiddelde COP is 4.]]></Description>
-					<X>70</X><Y>470</Y>
+					<X>70</X><Y>520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31013,7 +31418,7 @@ https://nos.nl/artikel/2483604-elektrische-vrachtwagens-blijven-achter-door-comp
 					<Description><![CDATA[https://hallostroom.nl/zonnepanelen/opbrengst/per-m2/ --> 177 W/m2
 https://www.zonneplan.nl/kenniscentrum/zonnepanelen/vermogen --> 212 W/m2
 https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Description>
-					<X>50</X><Y>700</Y>
+					<X>50</X><Y>760</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31039,7 +31444,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Name><![CDATA[p_avgRatioBatteryCapacity_v_Power]]></Name>
 					<Description><![CDATA[Average ratio of battery capacity over battery power.
 --> If battery capacity (in kWh) is twice the battery power (in kW) --> ratio = 2.]]></Description>
-					<X>50</X><Y>790</Y>
+					<X>50</X><Y>840</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31146,7 +31551,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Id>1726584205708</Id>
 					<Name><![CDATA[p_avgRatioRoofPotentialPV]]></Name>
 					<Description><![CDATA[value for ratio that]]></Description>
-					<X>50</X><Y>720</Y>
+					<X>50</X><Y>780</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31170,7 +31575,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Description><![CDATA[Efficiency (eta_r) used to calculate the COP in the energy asset based on temperature differences. 
 
 '0.5' comes from old code, no source found for it yet.]]></Description>
-					<X>70</X><Y>490</Y>
+					<X>70</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31195,7 +31600,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Id>1726584205714</Id>
 					<Name><![CDATA[p_avgOutputTemperatureHeatpump_degC]]></Name>
 					<Description><![CDATA[The avg output temperature of a heatpump in degC. Can be set manually, as an average 60 has been taken. ]]></Description>
-					<X>70</X><Y>510</Y>
+					<X>70</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31222,7 +31627,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Description><![CDATA[Average heating efficiency of a gas burner.
 
 --> SOURCE?]]></Description>
-					<X>70</X><Y>560</Y>
+					<X>70</X><Y>610</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31249,7 +31654,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Description><![CDATA[Average output temperature of a gas burner unit in degC.
 
 --> Source?]]></Description>
-					<X>70</X><Y>580</Y>
+					<X>70</X><Y>630</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31278,7 +31683,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 - https://h2sciencecoalition.com/blog/hydrogen-for-heating-a-comparison-with-heat-pumps-part-1/
 
 - https://www.csrf.ac.uk/blog/hydrogen-for-heating/]]></Description>
-					<X>70</X><Y>630</Y>
+					<X>70</X><Y>680</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31305,7 +31710,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Description><![CDATA[Average output temperature of a hydrogen burner unit in degC.
 
 --> Source?]]></Description>
-					<X>70</X><Y>650</Y>
+					<X>70</X><Y>700</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31329,7 +31734,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 				<Variable Class="Parameter">
 					<Id>1726746753360</Id>
 					<Name><![CDATA[p_avgVehiclesPerChargePoint]]></Name>
-					<X>50</X><Y>840</Y>
+					<X>50</X><Y>890</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31422,7 +31827,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Name><![CDATA[p_avgFullLoadHoursPV_hr]]></Name>
 					<Description><![CDATA[Parameter used to estimate the total solar production in a year in a function like:
 p_avgFullLoadHoursPV_hr * kWp_of_PV_panels = XXX kWh pv production in a year.]]></Description>
-					<X>50</X><Y>740</Y>
+					<X>50</X><Y>800</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31436,6 +31841,91 @@ p_avgFullLoadHoursPV_hr * kWp_of_PV_panels = XXX kWh pv production in a year.]]>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1728034204644</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1728390983761</Id>
+					<Name><![CDATA[p_avgCompanyElectricityConsumption_kWhpm2]]></Name>
+					<Description><![CDATA[https://www.odyssee-mure.eu/publications/efficiency-by-sector/services/offices-specific-energy-and-electricity-consumption.html
+
+--> 188 kWh/m2 for offices in NL]]></Description>
+					<X>50</X><Y>410</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[188]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1728390983759</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1728391035656</Id>
+					<Name><![CDATA[p_avgCompanyGasConsumption_m3pm2]]></Name>
+					<Description><![CDATA[https://publications.tno.nl/publication/34629408/3xJn98/e16056.pdf -> page 28
+
+9 m3 p m2 for label A
+12 m3 p m2 for label B
+to 18 m3 p m2 for label G
+
+--> take 10 for now.]]></Description>
+					<X>50</X><Y>430</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[10]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1728391035654</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1728394646404</Id>
+					<Name><![CDATA[p_avgCompanyHeatConsumption_kWhpm2]]></Name>
+					<Description><![CDATA[https://www.wearepossible.org/parks-toolkit/5-investigating-heat-demand
+
+--> estimated benchmark 100 kWh/m2]]></Description>
+					<X>50</X><Y>450</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[100]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1728394646402</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -31804,7 +32294,7 @@ zero_Loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				<Text>
 					<Id>1726584205558</Id>
 					<Name><![CDATA[txt_Heatassets]]></Name>
-					<X>40</X><Y>420</Y>
+					<X>40</X><Y>470</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31825,7 +32315,7 @@ zero_Loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				<Text>
 					<Id>1726584205560</Id>
 					<Name><![CDATA[txt_avgPV]]></Name>
-					<X>40</X><Y>680</Y>
+					<X>40</X><Y>730</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31846,7 +32336,7 @@ zero_Loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				<Text>
 					<Id>1726584205562</Id>
 					<Name><![CDATA[txt_avgBat]]></Name>
-					<X>40</X><Y>765</Y>
+					<X>40</X><Y>815</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31888,7 +32378,7 @@ zero_Loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				<Text>
 					<Id>1726584205566</Id>
 					<Name><![CDATA[txt_heatpumps]]></Name>
-					<X>60</X><Y>440</Y>
+					<X>60</X><Y>490</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31909,7 +32399,7 @@ zero_Loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				<Text>
 					<Id>1726584205568</Id>
 					<Name><![CDATA[txt_gasburners]]></Name>
-					<X>60</X><Y>530</Y>
+					<X>60</X><Y>580</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31930,7 +32420,7 @@ zero_Loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				<Text>
 					<Id>1726584205570</Id>
 					<Name><![CDATA[txt_hydrogenburners]]></Name>
-					<X>60</X><Y>600</Y>
+					<X>60</X><Y>650</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32017,7 +32507,7 @@ zero_Loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				<Text>
 					<Id>1726743791200</Id>
 					<Name><![CDATA[text]]></Name>
-					<X>40</X><Y>810</Y>
+					<X>40</X><Y>860</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33229,6 +33719,7 @@ for (Solarfarm_data dataSolarfarm : c_Solarfarm_data) { // MOET NOG CHECK OF ZON
 		//Style building
 		area.set_p_defaultFillColor( zero_Interface.v_solarParkColor );
 		area.set_p_defaultLineColor( zero_Interface.v_solarParkLineColor );
+		area.set_p_defaultLineWidth( zero_Interface.v_energyAssetLineWidth);
 		zero_Interface.f_styleAreas(area);
 	}
 }
@@ -33294,6 +33785,7 @@ for (Solarfarm_data dataSolarfarm : c_Solarfarm_data) { // MOET NOG CHECK OF ZON
 		//Style building
 		area.set_p_defaultFillColor( zero_Interface.v_batteryColor );
 		area.set_p_defaultLineColor( zero_Interface.v_batteryLineColor );
+		area.set_p_defaultLineWidth( zero_Interface.v_energyAssetLineWidth);
 		zero_Interface.f_styleAreas(area);
 	}
 	//Create energy asset for the battery
@@ -33376,6 +33868,7 @@ for (Electrolyser_data dataElectrolyser : c_Electrolyser_data) {
 		//Style building
 		area.set_p_defaultFillColor( zero_Interface.v_electrolyserColor );
 		area.set_p_defaultLineColor( zero_Interface.v_electrolyserLineColor );
+		area.set_p_defaultLineWidth( zero_Interface.v_energyAssetLineWidth);
 		zero_Interface.f_styleAreas(area);
 	}
 }]]></Body>
@@ -33404,6 +33897,10 @@ for (Windfarm_data dataWindfarm : c_Windfarm_data) {
 		windfarm.set_p_gridConnectionID( dataWindfarm.gc_id() );
 		windfarm.set_p_name( dataWindfarm.gc_name() );
 		windfarm.set_p_physicalConnectionCapacity_kW( dataWindfarm.connection_capacity_kw() );
+		
+		if(windfarm.p_gridConnectionID.equals("SLIDER_WF")){
+			windfarm.p_isSliderGC = true;
+		}
 		//windfarm.set_p_contractedDeliveryCapacity_kW( dataWindfarm.contracted_delivery_capacity_kw() );
 		if ( dataWindfarm.contracted_feed_in_capacity_kw() != null ) {
 			windfarm.set_p_contractedFeedinCapacity_kW( dataWindfarm.contracted_feed_in_capacity_kw() );
@@ -33456,7 +33953,7 @@ for (Windfarm_data dataWindfarm : c_Windfarm_data) {
 		//Style building
 		area.set_p_defaultFillColor( zero_Interface.v_windFarmColor );
 		area.set_p_defaultLineColor( zero_Interface.v_windFarmLineColor );
-		area.set_p_defaultLineWidth( 3.0 );
+		area.set_p_defaultLineWidth( zero_Interface.v_energyAssetLineWidth);
 		zero_Interface.f_styleAreas(area);
 	}
 }]]></Body>
@@ -34084,17 +34581,27 @@ if(hasHourlyGasData){
 	v_remainingGasConsumption_m3 -= yearlyDemandHeat_kWh/(avgc_data.p_gas_kWhpm3 * ratioGasUsedForHeating);
 }
 else{
-
-	if (parentGC.p_heatingType != OL_GridConnectionHeatingType.GASBURNER || yearlyGasDemand_m3 <= 0 ){
-		traceln("NO SUPPORTED HEATING TYPE DETECTED, OR NO GAS DEMAND DETECTED!!");
-	return;
+	
+	
+	if (parentGC.p_heatingType == null || parentGC.p_heatingType == OL_GridConnectionHeatingType.NONE){ 
+		//traceln("NO HEATING TYPE DETECTED");
+		return;
 	}
 	
 	//Determine heatdemand
 	yearlyDemandHeat_kWh = yearlyGasDemand_m3 * avgc_data.p_gas_kWhpm3; 
+	
+	if (yearlyDemandHeat_kWh <= 0 ){// If heat demand = 0, make estimation based on floor surface area
+		yearlyDemandHeat_kWh = avgc_data.p_avgCompanyGasConsumption_m3pm2*parentGC.p_floorSurfaceArea_m2 * avgc_data.p_gas_kWhpm3;
+		//traceln("NO HEAT DEMAND DETECTED: ESTIMATION MADE BASED ON FLOOR SURFACE AREA!");
+	}
+	
+	//Determine heatdemand
 	heatDemand = new J_EAConsumption(parentGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, 0.0, yearlyDemandHeat_kWh, 0.0, 0.0, 0.0, energyModel.p_timeStep_h, null);
-	maxPowerGasburner = (yearlyDemandHeat_kWh / 8760 * 10);
+	maxPowerGasburner = yearlyDemandHeat_kWh*genericProfiles_data.buildingHeatDemandList_maximum();//(yearlyDemandHeat_kWh / 8760 * 10);
 }
+
+//Initialize parameters
 
 switch (parentGC.p_heatingType){ // HOE gaan we om met meerdere heating types in survey???
 
@@ -34103,11 +34610,41 @@ switch (parentGC.p_heatingType){ // HOE gaan we om met meerdere heating types in
 	break;
 	
 	case HYBRID_HEATPUMP:
-		traceln("GC HAS HYBRID_HEATPUMP, NO EA MADE");
+		
+		//Add primary heating asset (heatpump)
+		double capacityElectric_kW = maxPowerGasburner / 3; //-- /3, want is hybride, dus kleiner
+		double efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
+		double baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
+		double outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
+		String ambientTempType = "AIR";
+		double sourceAssetHeatPower_kW = 0;
+		double belowZeroHeatpumpEtaReductionFactor = 1;
+		
+		J_EAConversionHeatPump heatPumpHybrid = new J_EAConversionHeatPump(parentGC, energyModel.p_timeStep_h, capacityElectric_kW, efficiency, baseTemperature_degC, outputTemperature_degC, ambientTempType, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );
+		zero_Interface.energyModel.c_ambientAirDependentAssets.add(heatPumpHybrid);
+		
+		//Add secondary heating asset (gasburner)
+		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner;
+		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC;
+		
+		J_EAConversionGasBurner gasBurnerHybrid = new J_EAConversionGasBurner(parentGC, OL_EnergyAssetType.GAS_BURNER, maxPowerGasburner, efficiency, energyModel.p_timeStep_h, outputTemperature_degC);
+		parentGC.p_secondaryHeatingAsset = gasBurnerHybrid;
+				
+	 
 	break;
 	
 	case ELECTRIC_HEATPUMP:
-		traceln("GC HAS ELECTRIC_HEATPUMP, NO EA MADE");
+
+		//Add primary heating asset (heatpump)
+		capacityElectric_kW = maxPowerGasburner;
+		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
+		baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
+		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
+		ambientTempType = "AIR";
+		sourceAssetHeatPower_kW = 0;
+		belowZeroHeatpumpEtaReductionFactor = 1;
+		
+		J_EAConversionHeatPump heatPumpElectric = new J_EAConversionHeatPump(parentGC, energyModel.p_timeStep_h, capacityElectric_kW, efficiency, baseTemperature_degC, outputTemperature_degC, ambientTempType, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );		
 	break;
 	
 	default:
@@ -34565,8 +35102,7 @@ if (gridConnection.getElectricity().getHasConnection()){
 	//Electricity consumption profile
 	String profileName = "Office_other_electricity";
 	
-	
-	
+
 	//Get PV power (used for preprocessing)
 	Double pvPower_kW = (gridConnection.getSupply().getPvInstalledKwp() != null) ? new Double(gridConnection.getSupply().getPvInstalledKwp()) : null;
 	
@@ -34610,8 +35146,11 @@ if (gridConnection.getElectricity().getHasConnection()){
 				}
 			}
 		}
-		catch(Exception e) {//Calculate yearly consumption based on yearly delivery (and yearly feedin, production or solarpanels if available)
+		catch(Exception e) {
+		//Data not available, do nothing and leave v_hasQuarterHourlyValues on false.
+		}
 		
+		if(companyGC.v_hasQuarterHourlyValues == false){//Calculate yearly consumption based on yearly delivery (and yearly feedin, production or solarpanels if available)
 			//Get totals
 			double yearlyElectricityDelivery_kWh = (gridConnection.getElectricity().getAnnualElectricityDemandKwh() != null) ? gridConnection.getElectricity().getAnnualElectricityDemandKwh() : 0; // Yearly electricity consumption (0 if value is null)
 			Integer yearlyElectricityFeedin_kWh = gridConnection.getElectricity().getAnnualElectricityFeedIn_kWh();
@@ -34619,9 +35158,25 @@ if (gridConnection.getElectricity().getHasConnection()){
 			
 			//Calculate consumption
 			yearlyElectricityConsumption_kWh = f_getPreprocessedConsumptionTotal(companyGC, yearlyElectricityDelivery_kWh, yearlyElectricityFeedin_kWh, yearlyElectricityProduction_kWh, pvPower_kW);
-		
+			
+			//If no electricity consumption, determine the consumption based on average values and floor surface and connection capacity
+			if(yearlyElectricityConsumption_kWh == 0){
+				yearlyElectricityConsumption_kWh = avgc_data.p_avgCompanyElectricityConsumption_kWhpm2*companyGC.p_floorSurfaceArea_m2;
+				
+				//Check if it is within the contracted limits (peak should at least be 20% lower than contracted capacity
+				if(yearlyElectricityConsumption_kWh*genericProfiles_data.buildingEdemandList_maximum() > 0.8*companyGC.p_contractedDeliveryCapacity_kW){
+					yearlyElectricityConsumption_kWh = 0.8*companyGC.p_contractedDeliveryCapacity_kW/genericProfiles_data.buildingEdemandList_maximum();
+				}
+				 
+			}
+			
 			//Update total Yearly electricity consumption (only when no timestep data available, cause when thats avaiable, it happens in the preprocessing function)
-			v_remainingElectricityDelivery_kWh -= yearlyElectricityDelivery_kWh;
+			if (yearlyElectricityDelivery_kWh != 0){
+				v_remainingElectricityDelivery_kWh -= yearlyElectricityDelivery_kWh;
+			}
+			else{
+				v_remainingElectricityDelivery_kWh -= yearlyElectricityConsumption_kWh;
+			}
 		}
 		
 		//Add base electricity demand profile (with profile if available, with generic pattern if only yearly data is available)
@@ -34713,8 +35268,6 @@ if (gridConnection.getNaturalGas().getHasConnection() != null && gridConnection.
 	
 	//Determine how much gas goes towards heating
 	ratioGasUsedForHeating = ((gridConnection.getNaturalGas().getPercentageUsedForHeating() != null) ? gridConnection.getNaturalGas().getPercentageUsedForHeating() : 100)/100;
-
-
 }
 
 
@@ -34725,7 +35278,12 @@ if (gridConnection.getNaturalGas().getHasConnection() != null && gridConnection.
 f_setHeatingTypeSurvey(companyGC, gridConnection, hasHourlyGasData);
 
 //Set the heating demand profile
-f_addHeatDemandProfile(companyGC, yearlyGasConsumption_m3, hasHourlyGasData, ratioGasUsedForHeating, heatProfileName);
+if(!createElectricEA && (companyGC.p_heatingType == OL_GridConnectionHeatingType.HYBRID_HEATPUMP || companyGC.p_heatingType == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP)){
+	//Dont create additional Electric heating assets on top of Electricity profile
+}
+else{
+	f_addHeatDemandProfile(companyGC, yearlyGasConsumption_m3, hasHourlyGasData, ratioGasUsedForHeating, heatProfileName);
+}
 
 //add to scenario: current
 current_scenario_list.setCurrentHeatingType(companyGC.p_heatingType);
@@ -35886,6 +36444,7 @@ for (Chargingstation_data dataChargingStation : c_Chargingstation_data){
 			//Style building
 			area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor_centre );
 			area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor_centre );
+			area.set_p_defaultLineWidth( zero_Interface.v_energyAssetLineWidth);
 			zero_Interface.f_styleAreas(area);
 		}
 		else{
@@ -36700,7 +37259,8 @@ if(annualElectricityFeedin_kWh != null){
 	}
 }
 else if(pvPower_kW != null && pvPower_kW > 0){
-	//WAT HIER??
+	//WAT HIER?? Voor nu: doe niks
+	annualElectricityConsumption_kWh = annualElectricityDelivery_kWh;
 }
 else{
 	annualElectricityConsumption_kWh = annualElectricityDelivery_kWh;
@@ -36925,7 +37485,7 @@ return annualElectricityConsumption_kWh;
 				<EmbeddedObject>
 					<Id>1726584829907</Id>
 					<Name><![CDATA[avgc_data]]></Name>
-					<X>-380</X><Y>820</Y>
+					<X>-390</X><Y>790</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -37106,6 +37666,15 @@ return annualElectricityConsumption_kWh;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_avgFullLoadHoursPV_hr]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_avgCompanyElectricityConsumption_kWhpm2]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_avgCompanyGasConsumption_m3pm2]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_avgCompanyHeatConsumption_kWhpm2]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -38715,6 +39284,17 @@ public class Profiles_data {
 		List<Double> solarList;
 		List<Double> tempList;
 		List<Double> epexList;
+		
+		// Maximums of demand profile
+		Double houseEdemandList_maximum;
+		Double houseHDHWdemandList_maximum;
+		Double buildingEdemandList_maximum;
+		Double buildingHeatDemandList_maximum;
+		Double industrySteelEdemandList_maximum;
+		Double industrySteelHdemandList_maximum;
+		Double industryOtherEdemandList_maximum;
+		Double industryOtherHdemandList_maximum;
+		Double logisticsFleetEdemandList_maximum;
 }]]></Text>
 		</JavaClass>
 		<!--   =========   Java Class   ========  -->
