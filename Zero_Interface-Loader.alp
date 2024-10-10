@@ -22189,6 +22189,7 @@ if( nbEtruckCurrent > nbElectricTrucksGoal){
 			GridConnection gc = (GridConnection)ev.getParentAgent();
 			
 			// update UI company
+			if(zero_Interface.c_companyUIs.size() > 0){
 			UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
 			//if (companyUI.c_ownedGridConnections.get(0) == gc) { // should also check the setting of selected GC
 				int nbGCElectricTrucks = count(gc.c_vehicleAssets, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK);
@@ -22205,7 +22206,8 @@ if( nbEtruckCurrent > nbElectricTrucksGoal){
 					companyUI.v_nbDieselTrucks++;
 				}
 			//}
-		
+			}
+			
 			J_ActivityTrackerTrips tripTracker = ev.tripTracker;
 			boolean available = true;
 			//h.c_storageAssets.remove(EA);
@@ -22236,6 +22238,7 @@ if( nbEtruckCurrent > nbElectricTrucksGoal){
 			
 			
 			// update UI company
+			if(zero_Interface.c_companyUIs.size() > 0){
 			UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
 			//if (companyUI.c_ownedGridConnections.get(0) == gc) { // should also check the setting of selected GC
 				int nbGCElectricTrucks = count(gc.c_vehicleAssets, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK);
@@ -22247,7 +22250,7 @@ if( nbEtruckCurrent > nbElectricTrucksGoal){
 				companyUI.t_numberOfDieselTrucksCompany.setText(nbGCDieselTrucks-1);
 				companyUI.v_nbDieselTrucks--;
 			//}
-			
+			}
 			J_ActivityTrackerTrips tripTracker = dieselVehicle.tripTracker;
 			boolean available = true;
 			//h.c_consumptionAssets.remove(dieselVehicle);
@@ -22366,6 +22369,7 @@ if( nbEVansCurrent > nbElectricVansGoal){
 			GridConnection gc = (GridConnection)ev.getParentAgent();
 			
 			// update UI company
+			if(zero_Interface.c_companyUIs.size() > 0){
 			UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
 			//if (companyUI.c_ownedGridConnections.get(0) == gc) { // should also check the setting of selected GC
 				int nbGCElectricVans = count(gc.c_vehicleAssets, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN);
@@ -22382,7 +22386,8 @@ if( nbEVansCurrent > nbElectricVansGoal){
 					companyUI.v_nbDieselVans++;
 				}
 			//}
-		
+			}
+			
 			J_ActivityTrackerTrips tripTracker = ev.tripTracker;
 			boolean available = true;
 			//h.c_storageAssets.remove(EA);
@@ -22413,6 +22418,7 @@ if( nbEVansCurrent > nbElectricVansGoal){
 			
 			
 			// update UI company
+			if(zero_Interface.c_companyUIs.size() > 0){
 			UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
 			//if (companyUI.c_ownedGridConnections.get(0) == gc) { // should also check the setting of selected GC
 				int nbGCElectricVans = count(gc.c_vehicleAssets, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN);
@@ -22424,6 +22430,7 @@ if( nbEVansCurrent > nbElectricVansGoal){
 				companyUI.t_numberOfDieselVansCompany.setText(nbGCDieselVans-1);
 				companyUI.v_nbDieselVans--;
 			//}
+			}
 			
 			J_ActivityTrackerTrips tripTracker = dieselVehicle.tripTracker;
 			boolean available = true;
@@ -22488,6 +22495,7 @@ if( nbEVsCurrent > nbEVsGoal){
 			GridConnection gc = (GridConnection)ev.getParentAgent();
 			
 			// update UI company
+			if(zero_Interface.c_companyUIs.size() > 0){
 			UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
 			//if (companyUI.c_ownedGridConnections.get(0) == gc) { // should also check the setting of selected GC
 				int nbGCEVs = count(gc.c_vehicleAssets, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE);
@@ -22504,7 +22512,8 @@ if( nbEVsCurrent > nbEVsGoal){
 					companyUI.v_nbDieselCars++;
 				}
 			//}
-		
+			}
+			
 			J_ActivityTrackerTrips tripTracker = ev.tripTracker;
 			boolean available = true;
 			//h.c_storageAssets.remove(EA);
@@ -22535,6 +22544,7 @@ if( nbEVsCurrent > nbEVsGoal){
 			
 			
 			// update UI company
+			if(zero_Interface.c_companyUIs.size() > 0){
 			UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
 			//if (companyUI.c_ownedGridConnections.get(0) == gc) { // should also check the setting of selected GC
 				int nbGCEVs = count(gc.c_vehicleAssets, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE);
@@ -22546,6 +22556,7 @@ if( nbEVsCurrent > nbEVsGoal){
 				companyUI.t_numberOfDieselCarsCompany.setText(nbGCDieselCars-1);
 				companyUI.v_nbDieselCars--;
 			//}
+			}
 			
 			J_ActivityTrackerTrips tripTracker = dieselVehicle.tripTracker;
 			boolean available = true;
@@ -23725,6 +23736,7 @@ if( PV_pct/100.0 < PVsystems/zero_Interface.energyModel.UtilityConnections.size(
 		
 		
 		// update UI company
+		if(zero_Interface.c_companyUIs.size() > 0){
 		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
 		//if (companyUI.c_ownedGridConnections.get(0) == gc) { // should also check the setting of selected GC
 			if (companyUI.v_minPVSlider != 0) {
@@ -23734,6 +23746,7 @@ if( PV_pct/100.0 < PVsystems/zero_Interface.energyModel.UtilityConnections.size(
 				companyUI.sl_rooftopPVCompany.setValue(0, false);
 				companyUI.t_rooftopSolarCompany.setText("0 kW");
 			}
+		}
 		//}
 		
 		J_EA pvAsset = findFirst(gc.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
@@ -23778,11 +23791,13 @@ else {
 		
 			
 			// update UI company
+			if(zero_Interface.c_companyUIs.size() > 0){
 			UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
 			//if (companyUI.c_ownedGridConnections.get(0) == gc) { // should also check the setting of selected GC
 				companyUI.sl_rooftopPVCompany.setValue(roundToInt(capacityElectricity_kW), false);
 				companyUI.t_rooftopSolarCompany.setText(roundToInt(capacityElectricity_kW) + " kW");
 			//}
+			}
 		}
 	}
 }	
