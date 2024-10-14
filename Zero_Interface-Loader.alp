@@ -5918,13 +5918,19 @@ return p_legendsScope;]]></Body>
 					</GenericParameterSubstitute>
 					<Parameters>
 						<Parameter>
-							<Name><![CDATA[energyModel]]></Name>
+							<Name><![CDATA[p_gebied]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_legendsScope]]></Name>
+							<Name><![CDATA[p_startHourWinterWeek]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_previousTotals_Region]]></Name>
+							<Name><![CDATA[p_startHourSummerWeek]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_timeWindow]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_energyModel]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -13979,13 +13985,19 @@ else{
 					</GenericParameterSubstitute>
 					<Parameters>
 						<Parameter>
-							<Name><![CDATA[energyModel]]></Name>
+							<Name><![CDATA[p_gebied]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_legendsScope]]></Name>
+							<Name><![CDATA[p_startHourWinterWeek]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_previousTotals_Region]]></Name>
+							<Name><![CDATA[p_startHourSummerWeek]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_timeWindow]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_energyModel]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
