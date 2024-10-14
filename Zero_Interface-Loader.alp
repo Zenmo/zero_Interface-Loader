@@ -5919,15 +5919,12 @@ return p_legendsScope;]]></Body>
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[energyModel]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[energyModel]]></Code>
-							</Value>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_previousTotals_Region]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_legendsScope]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_previousTotals_Region]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -13983,15 +13980,12 @@ else{
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[energyModel]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[zero_Interface.energyModel]]></Code>
-							</Value>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_previousTotals_Region]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_legendsScope]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_previousTotals_Region]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -35061,8 +35055,6 @@ surveys = vallum.getSurveysByProject(project_data.project_name());
 
 //Clear user data
 user = null;
-
-traceln(surveys.size());
 
 return surveys;]]></Body>
 				</Function>
