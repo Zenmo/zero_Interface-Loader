@@ -2789,7 +2789,7 @@ mainArea.v_dataNetbelastingDuurkrommeWeekday_kW = energyModel.data_weekdayNetbel
 
 uI_Results.v_gridConnection = uI_Results.add_pop_areaResults(OL_GISObjectType.BUILDING, "GC");
 uI_Results.v_trafo = uI_Results.add_pop_areaResults(OL_GISObjectType.GRIDNODE, "GN");
-//uI_Results.v_collective = uI_Results.add_pop_areaResults(AreaTypes.COLLECTIVE);
+uI_Results.v_collective = uI_Results.add_pop_areaResults();
 
 //uI_Results.energyModel = energyModel;
 uI_Results.f_initialize();
