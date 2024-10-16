@@ -5544,7 +5544,8 @@ traceln("Forgot to override project specific slider settings!!");]]></Body>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//Function used to set the colors, styling, and other parameters/functions for each specific project
 //Should be overridden!!
-traceln("DID NOT OVERRIDE THE PROJECT SPECIFIC STYLING!");]]></Body>
+
+//traceln("DID NOT OVERRIDE THE PROJECT SPECIFIC STYLING!");]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -28740,7 +28741,7 @@ f_resetNFATOSettings();]]></ActionCode>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="70" Height="70">
+					<BasicProperties Width="95" Height="70">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
@@ -28749,9 +28750,9 @@ f_resetNFATOSettings();]]></ActionCode>
 						<Font Name="Dialog" Size="11" Style="0"/>
 						<DefaultValueCode><![CDATA[2]]></DefaultValueCode>
 						<Orientation>VERTICAL</Orientation>
-						<Button><![CDATA[Delivery]]></Button>
-						<Button><![CDATA[Feed in]]></Button>
-						<Button><![CDATA[Both]]></Button>
+						<Button><![CDATA[Levering]]></Button>
+						<Button><![CDATA[Teruglevering]]></Button>
+						<Button><![CDATA[Beide]]></Button>
 						<LinkTo>false</LinkTo>
 					</ExtendedProperties>
 				</Control>
@@ -32559,18 +32560,18 @@ for(int i = 0; i < argumentsList.size(); i++) {
 }
 
 
-J_profilePointer profilePointer;
+J_ProfilePointer profilePointer;
 // 'ambient' conditions:
 energyModel.tf_ambientTemperature_degC.setArgumentsAndValues(a_arguments, a_tempValues);
 energyModel.tf_dayAheadElectricityPricing_eurpMWh.setArgumentsAndValues(a_arguments, a_epexValues);
 
 energyModel.tf_p_wind_e_normalized.setArgumentsAndValues(a_arguments, a_windValues);
-profilePointer = new J_profilePointer("normalized onshore wind production", energyModel.tf_p_wind_e_normalized);
+profilePointer = new J_ProfilePointer("normalized onshore wind production", energyModel.tf_p_wind_e_normalized);
 energyModel.f_addProfile(profilePointer);
 energyModel.pp_windOnshoreProduction = profilePointer;
 
 energyModel.tf_p_solar_e_normalized.setArgumentsAndValues(a_arguments, a_solarValues);
-profilePointer = new J_profilePointer("normalized_PV_production", energyModel.tf_p_solar_e_normalized);
+profilePointer = new J_ProfilePointer("normalized_PV_production", energyModel.tf_p_solar_e_normalized);
 energyModel.f_addProfile(profilePointer);
 energyModel.pp_solarPVproduction = profilePointer;
 
@@ -32578,47 +32579,47 @@ energyModel.pp_solarPVproduction = profilePointer;
 
 //energyModel.tf_p_house_e_demand_other.setArgumentsAndValues(a_arguments, a_houseEdemand);
 TableFunction tf_p_house_e_demand_other = new TableFunction(a_arguments, a_houseEdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_profilePointer("house_other_electricity_demand", tf_p_house_e_demand_other);
+profilePointer = new J_ProfilePointer("house_other_electricity_demand", tf_p_house_e_demand_other);
 energyModel.f_addProfile(profilePointer);
 
 //energyModel.tf_p_house_h_demand_hot_water.setArgumentsAndValues(a_arguments, a_houseDHWdemand);
 TableFunction tf_p_house_h_demand_hot_water = new TableFunction(a_arguments, a_houseDHWdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_profilePointer("house_hot_water_demand", tf_p_house_h_demand_hot_water);
+profilePointer = new J_ProfilePointer("house_hot_water_demand", tf_p_house_h_demand_hot_water);
 energyModel.f_addProfile(profilePointer);
 
 //energyModel.tf_p_building_e_demand_other.setArgumentsAndValues(a_arguments, a_buildingEdemand);
 TableFunction tf_p_building_e_demand_other = new TableFunction(a_arguments, a_buildingEdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_profilePointer("Office_other_electricity", tf_p_building_e_demand_other);
+profilePointer = new J_ProfilePointer("Office_other_electricity", tf_p_building_e_demand_other);
 energyModel.f_addProfile(profilePointer);
 
 //energyModel.tf_p_building_h_demand.setArgumentsAndValues(a_arguments, a_buildingHeatDemand);
 TableFunction tf_p_building_h_demand = new TableFunction(a_arguments, a_buildingHeatDemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_profilePointer("Building_heat_demand", tf_p_building_h_demand);
+profilePointer = new J_ProfilePointer("Building_heat_demand", tf_p_building_h_demand);
 energyModel.f_addProfile(profilePointer);
 
 //energyModel.tf_p_industry_other_e_demand.setArgumentsAndValues(a_arguments, a_industryOtherEdemand);
 TableFunction tf_p_industry_other_e_demand = new TableFunction(a_arguments, a_industryOtherEdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_profilePointer("Industry_other_electricity", tf_p_industry_other_e_demand);
+profilePointer = new J_ProfilePointer("Industry_other_electricity", tf_p_industry_other_e_demand);
 energyModel.f_addProfile(profilePointer);
 
 //energyModel.tf_p_industry_other_h_demand.setArgumentsAndValues(a_arguments, a_industryOtherHdemand);
 TableFunction tf_p_industry_other_h_demand = new TableFunction(a_arguments, a_industryOtherHdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_profilePointer("Industry_other_heat", tf_p_industry_other_h_demand);
+profilePointer = new J_ProfilePointer("Industry_other_heat", tf_p_industry_other_h_demand);
 energyModel.f_addProfile(profilePointer);
 
 //energyModel.tf_p_industry_steel_e_demand.setArgumentsAndValues(a_arguments, a_industrySteelEdemand);
 TableFunction tf_p_industry_steel_e_demand = new TableFunction(a_arguments, a_industrySteelEdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_profilePointer("Industry_steel_electricity", tf_p_industry_steel_e_demand);
+profilePointer = new J_ProfilePointer("Industry_steel_electricity", tf_p_industry_steel_e_demand);
 energyModel.f_addProfile(profilePointer);
 
 //energyModel.tf_p_industry_steel_h_demand.setArgumentsAndValues(a_arguments, a_industrySteelHdemand);
 TableFunction tf_p_industry_steel_h_demand = new TableFunction(a_arguments, a_industrySteelHdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_profilePointer("Industry_steel_heat", tf_p_industry_steel_h_demand);
+profilePointer = new J_ProfilePointer("Industry_steel_heat", tf_p_industry_steel_h_demand);
 energyModel.f_addProfile(profilePointer);
 
 //energyModel.tf_p_logistics_fleet_e_hgv.setArgumentsAndValues(a_arguments, a_logisticsFleetEdemand);
 TableFunction tf_p_logistics_fleet_e_hgv = new TableFunction(a_arguments, a_logisticsFleetEdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_profilePointer("LOGISTICS_FLEET_HGV_E", tf_p_logistics_fleet_e_hgv);
+profilePointer = new J_ProfilePointer("LOGISTICS_FLEET_HGV_E", tf_p_logistics_fleet_e_hgv);
 energyModel.f_addProfile(profilePointer);
 
 
@@ -33033,7 +33034,7 @@ double yearlyProductionMethane_kWh 	= 0;
 double yearlyProductionHydrogen_kWh = 0;
 double timestep_h 					= energyModel.p_timeStep_h;
 double outputTemperature_degC 		= 0;
-J_profilePointer profilePointer = null;
+J_ProfilePointer profilePointer = null;
 
 switch (asset_type){
 
@@ -34980,7 +34981,7 @@ if (yearlyElectricityProduction_kWh != null && yearlyElectricityFeedin_kWh != nu
 }
 //traceln(Arrays.stream(profile.a_energyProfile_kWh).sum() + " kWh per jaar at grid connection " + parentGC.p_ownerID + " " + profileName);
 v_remainingElectricityDelivery_kWh -= nettDelivery_kWh;
- 
+
 if (v_remainingElectricityDelivery_kWh < 0){
 	traceln("v_remainingElectricityConsumption_kWh became negative at GC: %s", parentGC);
 }]]></Body>
