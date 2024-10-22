@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_Interface-Loader]]></Name>
@@ -13981,6 +13981,9 @@ else{
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[energyModel]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[zero_Interface.energyModel]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_legendsScope]]></Name>
@@ -34922,10 +34925,12 @@ List<A_SubTenant> subTenants = new ArrayList<A_SubTenant>();
 //Get the survey data
 List<com.zenmo.zummon.companysurvey.Survey> surveys = f_getSurveys();
 
+traceln("Size of survey List: %s", surveys.size());
+
 for (var survey : surveys) {
 	for (var address : survey.getAddresses()) {
         for (var gridConnection: address.getGridConnections()) {
-	 		
+	 		//gridConnection.getPandIds();
 	 		//Find the survey_owner (if it already exists)
 	 		ConnectionOwner survey_owner = findFirst(energyModel.pop_connectionOwners, CO -> CO.p_actorID.equals(survey.getCompanyName()));
 	 		
@@ -34943,7 +34948,7 @@ for (var survey : surveys) {
 				survey_owner.p_detailedCompany = true;
 			 	traceln(survey.getCompanyName());
 		 	}
-
+			
 		 	//Create GC
 		 	GCUtility companyGC = energyModel.add_UtilityConnections();		  
 		 	
@@ -34966,8 +34971,28 @@ for (var survey : surveys) {
 		 	//Find buildings, and connect 
 		 	double totalFloorSurfaceAreaGC_m2 = 0;
 		 	double totalRoofSurfaceAreaGC_m2 = 0;
-		 	List<Building_data> buildings = findAll(c_SurveyCompanyBuilding_data, b -> b.gc_id().equals(companyGC.p_gridConnectionID));
-		 	//selectFrom(c_S).where(buildings.gc_id.eq(companyGC.p_gridConnectionID)).list();
+
+		 	List<Building_data> buildings = new ArrayList<Building_data>();
+			if ( gridConnection.getPandIds() != null) {
+				traceln("PandIDs: %s", gridConnection.getPandIds());
+				//gridConnection.getPandI
+				for (var PID : gridConnection.getPandIds() ) {
+					//traceln("PandID: %s", PID.getValue());
+					Building_data building = findFirst(c_GenericCompanyBuilding_data, b -> b.building_id().equals(PID.getValue()));
+					if (building!=null) {
+						buildings.add(building);
+						c_GenericCompanyBuilding_data.remove(building);
+						c_SurveyCompanyBuilding_data.add(building);
+						traceln("Building found: %s", building);
+					} else {
+						traceln("No building found with panduid %s!", PID.getValue());
+					}
+				}
+				//buildings = gridConnection.getPandIds();
+			} else {				
+				buildings = findAll(c_SurveyCompanyBuilding_data, b -> b.gc_id().equals(companyGC.p_gridConnectionID));
+			}
+			
 			for (Building_data building : buildings) {
 				GIS_Building b = f_createGISBuilding( building, companyGC);				
 				
@@ -35867,7 +35892,7 @@ switch (storageType){
 	case STORAGE_ELECTRIC:
 	
 		storage = new J_EAStorageElectric(parentGC, storagePower_kw, storageCapacity_kWh, 0, energyModel.p_timeStep_h);
-
+		//traceln("Battery with StorageCapacity_kWh: %s", storageCapacity_kWh);
 	break;
 	
 	case STORAGE_HEAT:
@@ -39568,7 +39593,7 @@ public class Windfarm_data {
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
-			<Path><![CDATA[vallum-production-348-5bc03e5-all.jar]]></Path>
+			<Path><![CDATA[vallum-production-387-d8049df-all.jar]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
@@ -39602,7 +39627,7 @@ public class Windfarm_data {
 	<ClassPathEntry>
 		<ResourceReference>
 			<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
-			<ClassName><![CDATA[vallum-production-348-5bc03e5-all.jar]]></ClassName>
+			<ClassName><![CDATA[vallum-production-387-d8049df-all.jar]]></ClassName>
 		</ResourceReference>
 		<Imported>true</Imported>
 		<Folder>false</Folder>
