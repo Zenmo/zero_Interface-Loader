@@ -3744,7 +3744,7 @@ if(settings.showKPISummary() == null || !settings.showKPISummary()){
 					<Body><![CDATA[GISRegion gisregion = new GISRegion(map, gisTokens);
 return gisregion;]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1715869498509</Id>
@@ -26719,7 +26719,7 @@ if( targetHeatPumpAmount < nbHeatPumps){
 	}	
 }]]></Body>
 				</Function>
-				<Function AccessType="protected" StaticFunction="false">
+				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722256221655</Id>
@@ -26757,7 +26757,8 @@ if( targetHeatPumpAmount < nbHeatPumps){
 				J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(gc.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrierConsumed == OL_EnergyCarrierType.HEAT);
 				double peakHeatDemand_kW = Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
 				gasBurner = new J_EAConversionGasBurner(gc, OL_EnergyAssetType.GAS_BURNER, peakHeatDemand_kW, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
-			}			
+			}	
+			gc.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;		
 		}
 	}
  
@@ -26786,7 +26787,8 @@ else {
 			}
 			nbHeatPumps ++;
 			zero_Interface.c_orderedHeatingSystemsHouses.remove(gc);
-			zero_Interface.c_orderedHeatingSystemsHouses.add(0, gc);		 
+			zero_Interface.c_orderedHeatingSystemsHouses.add(0, gc);
+			gc.p_heatingType = OL_GridConnectionHeatingType.HEATPUMP_AIR;
 		} 
 		else {
 			traceln("No more gasburners to replace!");
