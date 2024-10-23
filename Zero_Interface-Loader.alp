@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_Interface-Loader]]></Name>
@@ -12321,7 +12321,11 @@ sl_rooftopPVCompany.setRange(0, 20000);
 //Set range specific for each company
 v_minPVSlider = roundToInt(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentPV_kW());
 v_maxPVSlider = roundToInt(c_ownedGridConnections.get(v_currentSelectedGCnr).p_roofSurfaceArea_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2);
+if(v_maxPVSlider <= v_minPVSlider){
+	v_maxPVSlider = v_minPVSlider + 1000;
+}
 v_defaultPVSlider = v_minPVSlider;
+
 t_rooftopSolarCompany.setText(roundToInt(v_defaultPVSlider) + " kW");]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
