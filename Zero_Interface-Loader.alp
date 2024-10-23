@@ -33820,7 +33820,7 @@ for (Solarfarm_data dataSolarfarm : c_Solarfarm_data) { // MOET NOG CHECK OF ZON
 	}
 	gridbattery.set_p_parentNodeElectricID( dataBattery.trafo_id() );	
 	gridbattery.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
-	
+	gridbattery.set_p_batteryOperationMode( OL_BatteryOperationMode.valueOf(dataBattery.default_operation_mode()) );
 	
 	//Get initial state
 	gridbattery.v_isActive = dataBattery.initially_active();
