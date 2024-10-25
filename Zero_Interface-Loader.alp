@@ -35328,7 +35328,12 @@ else{
 	
 	//Determine heatdemand
 	heatDemand = new J_EAConsumption(parentGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, 0.0, yearlyDemandHeat_kWh, 0.0, 0.0, 0.0, energyModel.p_timeStep_h, null);
-	maxPowerGasburner = yearlyDemandHeat_kWh*genericProfiles_data.buildingHeatDemandList_maximum();//(yearlyDemandHeat_kWh / 8760 * 10);
+	if(genericProfiles_data.buildingHeatDemandList_maximum() != null){
+		maxPowerGasburner = yearlyDemandHeat_kWh*genericProfiles_data.buildingHeatDemandList_maximum();
+	}
+	else{
+		maxPowerGasburner = yearlyDemandHeat_kWh / 8760 * 10;
+	}
 }
 
 //Initialize parameters
