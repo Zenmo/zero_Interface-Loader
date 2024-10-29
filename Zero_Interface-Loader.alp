@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_Interface-Loader]]></Name>
@@ -12012,7 +12012,7 @@ if (heatDemandAsset != null){
 }
 else{
 	//Select profile heat demand asset 
-	J_EAProfile heatDemandAsset_Profile = findFirst(GC.c_profileAssets, j_ea->j_ea.energyCarrierConsumed == OL_EnergyCarrierType.HEAT);
+	J_EAProfile heatDemandAsset_Profile = findFirst(GC.c_profileAssets, j_ea->j_ea.energyCarrier == OL_EnergyCarriers.HEAT);
 	
 	if(heatDemandAsset_Profile != null){
 	capacityThermal_kW = max(heatDemandAsset_Profile.a_energyProfile_kWh)*4;
@@ -14577,7 +14577,7 @@ for (J_EA j_ea : c_ownedGridConnections.get(v_currentSelectedGCnr).c_energyAsset
 		}
 	}
 	if (j_ea instanceof J_EAProfile) {
-		if (((J_EAProfile) j_ea).energyCarrierConsumed == OL_EnergyCarriers.HEAT) {
+		if (((J_EAProfile) j_ea).energyCarrier== OL_EnergyCarriers.HEAT) {
 			((J_EAProfile) j_ea).resetEnergyProfile();
 			((J_EAProfile) j_ea).scaleEnergyProfile(consumptionScaling_fr);
 		}
@@ -14734,7 +14734,7 @@ for (J_EA j_ea : c_ownedGridConnections.get(v_currentSelectedGCnr).c_energyAsset
 		}
 	}
 	if (j_ea instanceof J_EAProfile) {
-		if (((J_EAProfile) j_ea).energyCarrierConsumed == OL_EnergyCarriers.ELECTRICITY) {
+		if (((J_EAProfile) j_ea).energyCarrier  == OL_EnergyCarriers.ELECTRICITY) {
 			((J_EAProfile) j_ea).resetEnergyProfile();
 			((J_EAProfile) j_ea).scaleEnergyProfile(consumptionScaling_fr);
 		}
@@ -23973,7 +23973,7 @@ for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()) {
 		}
 	}
 	if (j_ea instanceof J_EAProfile) {
-		if (((J_EAProfile) j_ea).energyCarrierConsumed == OL_EnergyCarriers.ELECTRICITY) {
+		if (((J_EAProfile) j_ea).energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 			((J_EAProfile) j_ea).resetEnergyProfile();
 			((J_EAProfile) j_ea).scaleEnergyProfile(consumptionScaling_fr);
 		}
@@ -26551,7 +26551,7 @@ if( targetHeatPumpAmount < nbHeatPumps){
 			if (heatDemandAsset != null) {
 				gasBurner = new J_EAConversionGasBurner(gc, OL_EnergyAssetType.GAS_BURNER, heatDemandAsset.yearlyDemandHeat_kWh/8760*10, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
 			} else {
-				J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(gc.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrierConsumed == OL_EnergyCarriers.HEAT);
+				J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(gc.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrier == OL_EnergyCarriers.HEAT);
 				double peakHeatDemand_kW = Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
 				gasBurner = new J_EAConversionGasBurner(gc, OL_EnergyAssetType.GAS_BURNER, peakHeatDemand_kW, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
 			}			
@@ -26582,7 +26582,7 @@ if( targetHeatPumpAmount < nbHeatPumps){
 			if (heatDemandAsset != null) {
 				heatPump = new J_EAConversionHeatPump(gc, zero_Interface.energyModel.p_timeStep_h, heatDemandAsset.yearlyDemandHeat_kWh/8760*10 / 3, 0.5, zero_Interface.energyModel.v_currentAmbientTemperature_degC, 60, "AIR", 0, 1);
 			} else {
-				J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(gc.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrierConsumed == OL_EnergyCarriers.HEAT);
+				J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(gc.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrier == OL_EnergyCarriers.HEAT);
 				double peakHeatDemand_kW = Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
 				heatPump = new J_EAConversionHeatPump(gc, zero_Interface.energyModel.p_timeStep_h, peakHeatDemand_kW / 3, 0.5, zero_Interface.energyModel.v_currentAmbientTemperature_degC, 60, "AIR", 0, 1);
 			}
@@ -26633,7 +26633,7 @@ if( targetHeatPumpAmount < nbHeatPumps){
 				gasBurner = new J_EAConversionGasBurner(gc, OL_EnergyAssetType.GAS_BURNER, heatDemandAsset.yearlyDemandHeat_kWh/8760*10, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
 			}
 			else {
-				J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(gc.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrierConsumed == OL_EnergyCarriers.HEAT);
+				J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(gc.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrier == OL_EnergyCarriers.HEAT);
 				double peakHeatDemand_kW = Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
 				gasBurner = new J_EAConversionGasBurner(gc, OL_EnergyAssetType.GAS_BURNER, peakHeatDemand_kW, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
 			}	
@@ -26660,7 +26660,7 @@ else {
 				//voeg heatbuffer toe
 			}
 			else { //anders moet het huis een heatProfiel krijgen
-				J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(gc.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrierConsumed == OL_EnergyCarriers.HEAT);
+				J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(gc.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrier == OL_EnergyCarriers.HEAT);
 				double peakHeatDemand_kW = Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
 				heatPump = new J_EAConversionHeatPump(gc, zero_Interface.energyModel.p_timeStep_h, peakHeatDemand_kW / 3, 0.5, zero_Interface.energyModel.v_currentAmbientTemperature_degC, 60, "AIR", 0, 1);
 			}
@@ -26770,7 +26770,7 @@ for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()){
 			}
 		}
 		if (j_ea instanceof J_EAProfile) {
-			if (((J_EAProfile) j_ea).energyCarrierConsumed == OL_EnergyCarriers.HEAT) {
+			if (((J_EAProfile) j_ea).energyCarrier == OL_EnergyCarriers.HEAT) {
 				((J_EAProfile) j_ea).resetEnergyProfile();
 				((J_EAProfile) j_ea).scaleEnergyProfile(consumptionScaling_fr);
 			}
@@ -26810,7 +26810,7 @@ for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()){
 			}
 		}
 		if (j_ea instanceof J_EAProfile) {
-			if (((J_EAProfile) j_ea).energyCarrierConsumed == OL_EnergyCarriers.HEAT) {
+			if (((J_EAProfile) j_ea).energyCarrier == OL_EnergyCarriers.HEAT) {
 				((J_EAProfile) j_ea).resetEnergyProfile();
 				((J_EAProfile) j_ea).scaleEnergyProfile(consumptionScaling_fr);
 			}
