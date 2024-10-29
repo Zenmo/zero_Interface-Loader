@@ -1537,7 +1537,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1715867611441</Id>
 					<Name><![CDATA[map_centre_latitude]]></Name>
-					<X>-280</X><Y>110</Y>
+					<X>-670</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1558,7 +1558,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1715867648777</Id>
 					<Name><![CDATA[map_centre_longitude]]></Name>
-					<X>-280</X><Y>130</Y>
+					<X>-670</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1579,7 +1579,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1724757837316</Id>
 					<Name><![CDATA[p_selectedProjectType]]></Name>
-					<X>-280</X><Y>90</Y>
+					<X>-670</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1600,7 +1600,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1727251571552</Id>
 					<Name><![CDATA[settings]]></Name>
-					<X>-280</X><Y>170</Y>
+					<X>-670</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1621,7 +1621,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1728030131094</Id>
 					<Name><![CDATA[map_scale]]></Name>
-					<X>-280</X><Y>150</Y>
+					<X>-670</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2219,7 +2219,7 @@ uI_Results.getCheckbox_KPISummary().setEnabled(true);]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1702045084338</Id>
 					<Name><![CDATA[f_styleAreas]]></Name>
-					<X>-670</X><Y>330</Y>
+					<X>-670</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2272,7 +2272,7 @@ switch(rb_buildingColors.getValue()) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1702385530773</Id>
 					<Name><![CDATA[f_styleSimulationAreas]]></Name>
-					<X>-670</X><Y>310</Y>
+					<X>-670</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2307,7 +2307,7 @@ switch( area.p_GISObjectType ) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1705499586056</Id>
 					<Name><![CDATA[f_styleGridNodes]]></Name>
-					<X>-670</X><Y>360</Y>
+					<X>-670</X><Y>380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2359,7 +2359,7 @@ switch( area.p_GISObjectType ) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1705505495599</Id>
 					<Name><![CDATA[f_styleMVLV]]></Name>
-					<X>-650</X><Y>440</Y>
+					<X>-650</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2408,7 +2408,7 @@ if ( nodeStatus != null && nodeStatus.equals("x")){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1705505509120</Id>
 					<Name><![CDATA[f_styleHVMV]]></Name>
-					<X>-650</X><Y>380</Y>
+					<X>-650</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3454,7 +3454,7 @@ area.v_dataNetbelastingDuurkrommeWeekend_kW = GN.data_weekendNetbelastingDuurkro
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1714043663127</Id>
 					<Name><![CDATA[f_setGridNodeCongestionColor]]></Name>
-					<X>-650</X><Y>480</Y>
+					<X>-650</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3660,7 +3660,7 @@ if (gis_area.c_containedGridConnections.size() > 0) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1715157302225</Id>
 					<Name><![CDATA[f_projectSpecificSettings]]></Name>
-					<X>-670</X><Y>130</Y>
+					<X>-670</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -3673,7 +3673,7 @@ traceln("Forgot to override project specific settings!!");]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1715859145993</Id>
 					<Name><![CDATA[f_UIStartup]]></Name>
-					<X>-670</X><Y>90</Y>
+					<X>-670</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3721,7 +3721,7 @@ if(settings.showKPISummary() == null || !settings.showKPISummary()){
 					<Id>1715868403475</Id>
 					<Name><![CDATA[f_createGISObject]]></Name>
 					<Description><![CDATA[Functino used by the loader to create new GIS objects on the GIS map]]></Description>
-					<X>-670</X><Y>200</Y>
+					<X>-280</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3739,7 +3739,7 @@ return gisregion;]]></Body>
 					<Id>1715869498509</Id>
 					<Name><![CDATA[f_setStartView]]></Name>
 					<Description><![CDATA[Function used to set the starting view of the simulation.]]></Description>
-					<X>-670</X><Y>110</Y>
+					<X>-670</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5040,7 +5040,7 @@ area.v_dataHydrogenSupplyLiveWeek_kW.add(timeAxisValue, hydrogenSupplyLiveWeek_k
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1721991420806</Id>
 					<Name><![CDATA[f_setGridTopologyColors]]></Name>
-					<X>-650</X><Y>460</Y>
+					<X>-650</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5078,7 +5078,7 @@ HVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1721991963719</Id>
 					<Name><![CDATA[f_styleSUBMV]]></Name>
-					<X>-650</X><Y>420</Y>
+					<X>-650</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5095,7 +5095,7 @@ HVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1721992103665</Id>
 					<Name><![CDATA[f_styleMVMV]]></Name>
-					<X>-650</X><Y>400</Y>
+					<X>-650</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5334,7 +5334,7 @@ default:
 					<ReturnType><![CDATA[GISRoute]]></ReturnType>
 					<Id>1725266804325</Id>
 					<Name><![CDATA[f_createGISLine]]></Name>
-					<X>-670</X><Y>220</Y>
+					<X>-280</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5390,7 +5390,7 @@ return gisroute;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725274862894</Id>
 					<Name><![CDATA[f_createGISNetwork]]></Name>
-					<X>-670</X><Y>240</Y>
+					<X>-280</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5628,7 +5628,7 @@ traceln("Forgot to override project specific slider settings!!");]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726068314849</Id>
 					<Name><![CDATA[f_projectSpecificStyling]]></Name>
-					<X>-670</X><Y>150</Y>
+					<X>-670</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8711,7 +8711,7 @@ b_updateCongestionColors = false;
 				<Text>
 					<Id>1702552223737</Id>
 					<Name><![CDATA[t_stylingFunctions]]></Name>
-					<X>-680</X><Y>280</Y>
+					<X>-680</X><Y>300</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9267,7 +9267,7 @@ voor verwarming.]]></Text>
 				<Text>
 					<Id>1713431901010</Id>
 					<Name><![CDATA[t_initializationFunctions]]></Name>
-					<X>-680</X><Y>60</Y>
+					<X>-680</X><Y>190</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9482,7 +9482,7 @@ voor verwarming.]]></Text>
 				<Text>
 					<Id>1715951689412</Id>
 					<Name><![CDATA[t_inputParameters]]></Name>
-					<X>-290</X><Y>60</Y>
+					<X>-680</X><Y>60</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10280,7 +10280,7 @@ else {
 				<Text>
 					<Id>1725525689286</Id>
 					<Name><![CDATA[txt_GISObjectCreationFunctions]]></Name>
-					<X>-680</X><Y>170</Y>
+					<X>-290</X><Y>60</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -35530,21 +35530,33 @@ for (var survey : surveys) {
 
 		 	List<Building_data> buildings = new ArrayList<Building_data>();
 			if ( gridConnection.getPandIds() != null) {
-				traceln("PandIDs: %s", gridConnection.getPandIds());
 				//gridConnection.getPandI
 				for (var PID : gridConnection.getPandIds() ) {
-					//traceln("PandID: %s", PID.getValue());
 					Building_data building = findFirst(c_GenericCompanyBuilding_data, b -> b.building_id().equals(PID.getValue()));
 					if (building!=null) {
 						buildings.add(building);
 						c_GenericCompanyBuilding_data.remove(building);
 						c_SurveyCompanyBuilding_data.add(building);
-						traceln("Building found: %s", building);
-					} else {
-						traceln("No building found with panduid %s!", PID.getValue());
+					}
+					else{
+						GIS_Building gisbuilding = findFirst(energyModel.pop_GIS_Buildings, b -> b.p_id.equals(PID.getValue()));
+						if(gisbuilding != null){
+							
+							//Building already exists: add existing building to GC c_gisObjects and don't make a new one.
+							companyGC.c_connectedGISObjects.add(gisbuilding);
+
+							//Accumulate surface areas
+							totalFloorSurfaceAreaGC_m2 += gisbuilding.p_floorSurfaceArea_m2; // Gaat dan dubbel !?
+							totalRoofSurfaceAreaGC_m2 += gisbuilding.p_roofSurfaceArea_m2; // Gaat dan dubbel !?
+							
+							//Set trafo ID
+							companyGC.p_parentNodeElectricID = building.trafo_id();
+						}
+						else{
+							traceln("No building found with panduid %s!", PID.getValue());
+						}
 					}
 				}
-				//buildings = gridConnection.getPandIds();
 			} else {				
 				buildings = findAll(c_SurveyCompanyBuilding_data, b -> b.gc_id().equals(companyGC.p_gridConnectionID));
 			}
@@ -37845,7 +37857,7 @@ for(String buildingID : buildingIDS){
 					<ReturnType><![CDATA[double[]]]></ReturnType>
 					<Id>1728035809860</Id>
 					<Name><![CDATA[f_convertFloatArrayToDoubleArray]]></Name>
-					<X>560</X><Y>-190</Y>
+					<X>1610</X><Y>810</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -39125,6 +39137,49 @@ return annualElectricityConsumption_kWh;
 						<Name>SansSerif</Name>
 						<Size>14</Size>
 						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Rectangle>
+					<Id>1730217549237</Id>
+					<Name><![CDATA[rect_supportFunctions]]></Name>
+					<X>1580</X><Y>750</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>3</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>330</Width>
+					<Height>220</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Text>
+					<Id>1730217578770</Id>
+					<Name><![CDATA[txt_supportFunctions]]></Name>
+					<X>1590</X><Y>770</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Support Functions]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
