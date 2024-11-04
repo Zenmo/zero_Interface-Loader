@@ -145,7 +145,8 @@ import java.io.PrintStream;
 //Curves
 import com.anylogic.engine.markup.AbstractCurve;
 import com.anylogic.engine.markup.GISMarkupSegment;
-import com.anylogic.engine.markup.GISPoint;]]></Import>
+import com.anylogic.engine.markup.GISPoint;
+import zero_engine.OL_EnergyCarriers;]]></Import>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1658477103138</Id>
@@ -4202,14 +4203,25 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 		electricityForHeatDemandYear_kW += gc.data_annualHeatPumpElectricityDemand_kW.getY(i);
 		electricityForTransportDemandYear_kW += gc.data_annualElectricVehicleDemand_kW.getY(i);
 		electricityForStorageDemandYear_kW += gc.data_annualBatteriesDemand_kW.getY(i);
-		naturalGasDemandYear_kW += gc.data_annualNaturalGasDemand_kW.getY(i);
-		petroleumProductsDemandYear_kW += gc.data_annualDieselDemand_kW.getY(i);
-		electricityForHydrogenDemandYear_kW += gc.data_annualHydrogenDemand_kW.getY(i);
+		
+		// These if statements can be removed if the AreaCollection is updated and we can loop over keysets.
+		if ( gc.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
+			naturalGasDemandYear_kW += gc.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.METHANE).getY(i);
+		}
+		if ( gc.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) != null ) {
+			petroleumProductsDemandYear_kW += gc.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL).getY(i);
+		}
+		if ( gc.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+			electricityForHydrogenDemandYear_kW += gc.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
+		}
+		
 		electricityPVSupplyYear_kW += gc.data_annualPVGeneration_kW.getY(i);
 		electricityWindSupplyYear_kW += gc.data_annualWindGeneration_kW.getY(i);
 		electricityStorageSupplyYear_kW += gc.data_annualBatteriesSupply_kW.getY(i);
 		electricityV2GSupplyYear_kW += gc.data_annualV2GSupply_kW.getY(i);
-		hydrogenSupplyYear_kW += gc.data_annualHydrogenSupply_kW.getY(i);
+		if ( gc.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+			hydrogenSupplyYear_kW += gc.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
+		}
 	}
 	
 	//add accumulated values to dataset
@@ -4366,28 +4378,49 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 		electricityForHeatDemandSummerWeek_kW += gc.data_summerWeekHeatPumpElectricityDemand_kW.getY(i);
 		electricityForTransportDemandSummerWeek_kW += gc.data_summerWeekElectricVehicleDemand_kW.getY(i);
 		electricityForStorageDemandSummerWeek_kW += gc.data_summerWeekBatteriesDemand_kW.getY(i);
-		naturalGasDemandSummerWeek_kW += gc.data_summerWeekNaturalGasDemand_kW.getY(i);
-		petroleumProductsDemandSummerWeek_kW += gc.data_summerWeekDieselDemand_kW.getY(i);
-		electricityForHydrogenDemandSummerWeek_kW += gc.data_summerWeekHydrogenDemand_kW.getY(i);
+		
+		if ( gc.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
+			naturalGasDemandSummerWeek_kW += gc.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE).getY(i);
+		}
+		if ( gc.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) != null ) {
+			petroleumProductsDemandSummerWeek_kW += gc.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL).getY(i);
+		}
+		if ( gc.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+			electricityForHydrogenDemandSummerWeek_kW += gc.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
+		}
+		
 		electricityPVSupplySummerWeek_kW += gc.data_summerWeekPVGeneration_kW.getY(i);
 		electricityWindSupplySummerWeek_kW += gc.data_summerWeekWindGeneration_kW.getY(i);
 		electricityStorageSupplySummerWeek_kW += gc.data_summerWeekBatteriesSupply_kW.getY(i);
 		electricityV2GSupplySummerWeek_kW += gc.data_summerWeekV2GSupply_kW.getY(i);
-		hydrogenSupplySummerWeek_kW += gc.data_summerWeekHydrogenSupply_kW.getY(i);
+		
+		if ( gc.v_summerWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+			hydrogenSupplySummerWeek_kW += gc.v_summerWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
+		}
 		
 		electricityBaseloadDemandWinterWeek_kW += gc.data_winterWeekBaseloadElectricityDemand_kW.getY(i);
 		electricityForHeatDemandWinterWeek_kW += gc.data_winterWeekHeatPumpElectricityDemand_kW.getY(i);
 		electricityForTransportDemandWinterWeek_kW += gc.data_winterWeekElectricVehicleDemand_kW.getY(i);
 		electricityForStorageDemandWinterWeek_kW += gc.data_winterWeekBatteriesDemand_kW.getY(i);
-		naturalGasDemandWinterWeek_kW += gc.data_winterWeekNaturalGasDemand_kW.getY(i);
-		petroleumProductsDemandWinterWeek_kW += gc.data_winterWeekDieselDemand_kW.getY(i);
-		electricityForHydrogenDemandWinterWeek_kW += gc.data_winterWeekHydrogenDemand_kW.getY(i);
+		
+		if ( gc.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
+			naturalGasDemandWinterWeek_kW += gc.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE).getY(i);
+		}
+		if ( gc.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) != null ) {
+			petroleumProductsDemandWinterWeek_kW += gc.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL).getY(i);
+		}
+		if ( gc.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+			electricityForHydrogenDemandWinterWeek_kW += gc.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
+		}
+		
 		electricityPVSupplyWinterWeek_kW += gc.data_winterWeekPVGeneration_kW.getY(i);
 		electricityWindSupplyWinterWeek_kW += gc.data_winterWeekWindGeneration_kW.getY(i);
 		electricityStorageSupplyWinterWeek_kW += gc.data_winterWeekBatteriesSupply_kW.getY(i);
 		electricityV2GSupplyWinterWeek_kW += gc.data_winterWeekV2GSupply_kW.getY(i);
-		hydrogenSupplyWinterWeek_kW += gc.data_winterWeekHydrogenSupply_kW.getY(i);
-	
+		
+		if ( gc.v_winterWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+			hydrogenSupplyWinterWeek_kW += gc.v_winterWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
+		}
 		//netLoadSummerWeek_kW += gc.acc_summerElectricityBalance_kW.getY(i);
 		netLoadWinterWeek_kW += gc.v_winterWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getY(i);
 		electricityDemandCapacitySummerWeek_kW += gc.acc_summerWeekDeliveryCapacity_kW.getY(i);
