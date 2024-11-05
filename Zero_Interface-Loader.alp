@@ -1603,7 +1603,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 					<X>-670</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
 						<Type><![CDATA[Settings]]></Type>
@@ -1890,7 +1890,7 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[LinkedHashMap]]></CollectionClass>
 						<ElementClass><![CDATA[String]]></ElementClass>
-						<ValueElementClass><![CDATA[GIS_Object]]></ValueElementClass>
+						<ValueElementClass><![CDATA[GISRegion]]></ValueElementClass>
 					</Properties>
 
 				</Variable>
@@ -33805,7 +33805,7 @@ for (Neighbourhood_data NBH : c_Neighbourhood_data) {
 	area.p_GISObjectType = OL_GISObjectType.valueOf(NBH.neighbourhoodtype());
 
 	//Create gisregion
-	area.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(NBH.polygon()));
+	area.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(NBH.polygon(), area.p_GISObjectType));
 	
 	//Style area 
 	zero_Interface.f_styleSimulationAreas(area);
@@ -33968,7 +33968,8 @@ for (GridNode_data GN_data : c_GridNode_data) {
 			//Gridnode service area
 			if (GN_data.service_area_polygon() != null){
 				//Create service area gis object
-				GIS_Object serviceArea = f_createGISObject(GN.p_gridNodeID + ": service area", GN.p_latitude, GN.p_longitude, GN_data.service_area_polygon());
+				//GIS_Object serviceArea = f_createGISObject(GN.p_gridNodeID + ": service area", GN.p_latitude, GN.p_longitude, GN_data.service_area_polygon());
+				GISRegion serviceArea = zero_Interface.f_createGISObject(f_createGISObjectsTokens(GN_data.service_area_polygon(), OL_GISObjectType.GN_SERVICE_AREA));
 				
 				//Add to hashmap
 				zero_Interface.c_GISNetplanes.put(GN.p_gridNodeID, serviceArea );
@@ -33993,34 +33994,47 @@ for (GridNode_data GN_data : c_GridNode_data) {
 						<Name><![CDATA[RegionCoords]]></Name>
 						<Type><![CDATA[String]]></Type>
 					</Parameter>
+					<Parameter>
+						<Name><![CDATA[GISObjectType]]></Name>
+						<Type><![CDATA[OL_GISObjectType]]></Type>
+					</Parameter>
 					<Body><![CDATA[if (RegionCoords.startsWith("MultiPolygon")){
 	RegionCoords = RegionCoords.replace("MultiPolygon (((","");
-	RegionCoords = RegionCoords.replace(",","");
+	RegionCoords = RegionCoords.replace(","," ");
 	RegionCoords = RegionCoords.replace(")))","");
 }
 else if(RegionCoords.startsWith("MULTIPOLYGON")){
-	RegionCoords = RegionCoords.replace("MULTIPOLYGON ","");
-	RegionCoords = RegionCoords.replace(",","");
+	RegionCoords = RegionCoords.replace("MULTIPOLYGON (((","");
+	RegionCoords = RegionCoords.replace(","," ");
 	RegionCoords = RegionCoords.replace(")))","");
 }
 else if(RegionCoords.startsWith("Poly")){
 	RegionCoords = RegionCoords.replace("Polygon ((","");
-	RegionCoords = RegionCoords.replace(",","");
+	RegionCoords = RegionCoords.replace(","," ");
 	RegionCoords = RegionCoords.replace("))","");
 }
 else if(RegionCoords.startsWith("MultiLineString")){
 	RegionCoords = RegionCoords.replace("MultiLineString ((","");
-	RegionCoords = RegionCoords.replace(",","");
+	RegionCoords = RegionCoords.replace(","," ");
 	RegionCoords = RegionCoords.replace("))","");
 }
 else {
 	traceln("GIS coordinaten in de excel data die niet starten met Multi of Poly");
 }
 
-if (RegionCoords.contains(")(")) {
-	RegionCoords = RegionCoords.split("\\)")[0];
+
+
+if(RegionCoords.contains(")(") || RegionCoords.contains(") (")){
+	if (GISObjectType == OL_GISObjectType.ANTI_LAYER){
+		RegionCoords = RegionCoords.replace(")("," "); // Combine all polies into one!
+		RegionCoords = RegionCoords.replace(") ("," "); // Combine all polies into one!
+	}
+	else{
+		RegionCoords = RegionCoords.split("\\)")[0];
+	}
 }
 
+RegionCoords = RegionCoords.replace("  "," ");
 String delims = " ";
 String[] tokens;
 tokens = RegionCoords.split(delims);
@@ -34310,10 +34324,7 @@ for (Solarfarm_data dataSolarfarm : c_Solarfarm_data) { // MOET NOG CHECK OF ZON
 	
 	if (dataSolarfarm.polygon() != null) {
 		//Create GIS object for the solar park
-		GIS_Object area = f_createGISObject( dataSolarfarm.gc_name(), dataSolarfarm.latitude(), dataSolarfarm.longitude(), dataSolarfarm.polygon() );
-		
-		//Set area type
-		area.p_GISObjectType = OL_GISObjectType.SOLARFARM;
+		GIS_Object area = f_createGISObject( dataSolarfarm.gc_name(), dataSolarfarm.latitude(), dataSolarfarm.longitude(), dataSolarfarm.polygon(), OL_GISObjectType.SOLARFARM);
 		
 		//Add to collections
 		area.c_containedGridConnections.add(solarpark);
@@ -34376,11 +34387,8 @@ for (Solarfarm_data dataSolarfarm : c_Solarfarm_data) { // MOET NOG CHECK OF ZON
 
 	if (dataBattery.polygon() != null) {
 		//Create gis object for the battery
-		GIS_Object area =  f_createGISObject( dataBattery.gc_name(), dataBattery.latitude(), dataBattery.longitude(), dataBattery.polygon() );
-		
-		//Set area type
-		area.p_GISObjectType = OL_GISObjectType.BATTERY;
-		
+		GIS_Object area =  f_createGISObject( dataBattery.gc_name(), dataBattery.latitude(), dataBattery.longitude(), dataBattery.polygon(), OL_GISObjectType.BATTERY);
+
 		//Add to collections
 		gridbattery.c_connectedGISObjects.add(area);
 		area.c_containedGridConnections.add(gridbattery);
@@ -34458,11 +34466,8 @@ for (Electrolyser_data dataElectrolyser : c_Electrolyser_data) {
 
 	if (dataElectrolyser.polygon() != null) {			
 		//Create GIS object for the electrolyser
-		GIS_Object area = f_createGISObject( dataElectrolyser.gc_name(), dataElectrolyser.latitude(), dataElectrolyser.longitude(), dataElectrolyser.polygon() );
-		
-		//Set area type
-		area.p_GISObjectType = OL_GISObjectType.ELECTROLYSER;
-		
+		GIS_Object area = f_createGISObject( dataElectrolyser.gc_name(), dataElectrolyser.latitude(), dataElectrolyser.longitude(), dataElectrolyser.polygon(), OL_GISObjectType.ELECTROLYSER);
+
 		//Add to collections
 		area.c_containedGridConnections.add(H2Electrolyser);
 		H2Electrolyser.c_connectedGISObjects.add(area);
@@ -34544,10 +34549,7 @@ for (Windfarm_data dataWindfarm : c_Windfarm_data) {
 	
 	//Create GIS object for the windfarm
 	if (dataWindfarm.polygon() != null) {
-		GIS_Object area = f_createGISObject( dataWindfarm.gc_name(), dataWindfarm.latitude(), dataWindfarm.longitude(), dataWindfarm.polygon() );
-	
-		//Set area type
-		area.p_GISObjectType = OL_GISObjectType.WINDFARM;
+		GIS_Object area = f_createGISObject( dataWindfarm.gc_name(), dataWindfarm.latitude(), dataWindfarm.longitude(), dataWindfarm.polygon(), OL_GISObjectType.WINDFARM );
 		
 		//Add to collections
 		area.c_containedGridConnections.add(windfarm);
@@ -35019,7 +35021,7 @@ if(buildingData.pandcluster_nr() != null && buildingData.pandcluster_nr() > 0) {
 }
 
 //Create gisregion
-b.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(buildingData.polygon()));
+b.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(buildingData.polygon(), b.p_GISObjectType));
 
 
 //Define surface area (with Null checks)
@@ -35293,7 +35295,7 @@ switch (parentGC.p_heatingType){ // HOE gaan we om met meerdere heating types in
 	parcel.set_p_GISObjectType(OL_GISObjectType.PARCEL);
 	
 	//Building + styling the gisregion and putting it on the map
-	GISRegion gisregion = zero_Interface.f_createGISObject(f_createGISObjectsTokens( dataParcel.polygon()));
+	GISRegion gisregion = zero_Interface.f_createGISObject(f_createGISObjectsTokens( dataParcel.polygon(), parcel.p_GISObjectType));
 	parcel.gisRegion = gisregion;
 	
 	parcel.set_p_defaultFillColor( zero_Interface.v_parcelColor );
@@ -35393,9 +35395,14 @@ J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset
 						<Name><![CDATA[polygon]]></Name>
 						<Type><![CDATA[String]]></Type>
 					</Parameter>
+					<Parameter>
+						<Name><![CDATA[GISObjectType]]></Name>
+						<Type><![CDATA[OL_GISObjectType]]></Type>
+					</Parameter>
 					<Body><![CDATA[GIS_Object area = energyModel.add_pop_GIS_Objects();
 
 area.p_id = name;
+area.p_GISObjectType = GISObjectType;
 
 //position and coordinates
 area.p_latitude = latitude;
@@ -35403,7 +35410,7 @@ area.p_longitude = longitude;
 area.setLatLon(area.p_latitude, area.p_longitude);		
 
 //Create gisregion
-area.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(polygon));
+area.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(polygon, area.p_GISObjectType));
 
 //zero_Interface.c_GISBuildingShapes.add(b.gisRegion);		
 
@@ -36598,9 +36605,10 @@ if (v_remainingNumberOfTrucks > 0){
 	building.p_longitude = remainingBuilding_data.longitude();
 	building.p_latitude = remainingBuilding_data.latitude();
 	building.setLatLon(building.p_latitude, building.p_longitude);		
+	building.p_GISObjectType = OL_GISObjectType.REMAINING_BUILDING;
 	
 	//Building + styling the gisregion and putting it on the map		
-	building.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(remainingBuilding_data.polygon()));
+	building.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(remainingBuilding_data.polygon(), building.p_GISObjectType));
 	
 	building.p_defaultFillColor = zero_Interface.v_restBuildingColor;
 	building.p_defaultLineColor = zero_Interface.v_restBuildingLineColor;
@@ -37089,7 +37097,7 @@ for (Chargingstation_data dataChargingStation : c_Chargingstation_data){
 		
 		if (dataChargingStation.polygon() != null) {
 			//Create EA GIS object (building) for the charging centre
-			GIS_Object area = f_createGISObject( dataChargingStation.gc_name(), dataChargingStation.latitude(), dataChargingStation.longitude(), dataChargingStation.polygon() );
+			GIS_Object area = f_createGISObject( dataChargingStation.gc_name(), dataChargingStation.latitude(), dataChargingStation.longitude(), dataChargingStation.polygon(), OL_GISObjectType.CHARGER );
 			
 			//Set gis object type
 			area.p_GISObjectType = OL_GISObjectType.CHARGER;
@@ -37325,7 +37333,7 @@ int i = 0;
 
 
 for (Cable_data dataCableLV : c_Cable_data_LV) {
-	gisroutesLV[i] = zero_Interface.f_createGISLine(f_createGISObjectsTokens(dataCableLV.line()), "LVGrid");
+	gisroutesLV[i] = zero_Interface.f_createGISLine(f_createGISObjectsTokens(dataCableLV.line(), OL_GISObjectType.LV_CABLE), "LVGrid");
 	i++;
 }
 
@@ -37340,7 +37348,7 @@ int k = 0;
 
 
 for (Cable_data dataCableMV : c_Cable_data_MV) {
-	gisroutesMV[k] = zero_Interface.f_createGISLine(f_createGISObjectsTokens(dataCableMV.line()), "MVGrid");
+	gisroutesMV[k] = zero_Interface.f_createGISLine(f_createGISObjectsTokens(dataCableMV.line(), OL_GISObjectType.MV_CABLE), "MVGrid");
 	k++;
 }
 
