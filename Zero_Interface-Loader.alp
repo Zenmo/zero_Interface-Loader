@@ -2784,22 +2784,32 @@ mainArea.v_dataHydrogenSupplyLiveWeek_kW = energyModel.data_hydrogenSupply_kW;
 
 //Datasets for live summerWeek chart
 //Demand
+if ( energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
+	mainArea.v_dataNaturalGasDemandSummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE);
+}
+if ( energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) != null ) {
+	mainArea.v_dataPetroleumProductsDemandSummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL);
+}
+if ( energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+	mainArea.v_dataElectricityForHydrogenDemandSummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
+}
+
 //mainArea.v_dataPetroleumProductsDemandSummerWeek_kW = energyModel.data_summerWeekDieselDemand_kW;
 //mainArea.v_dataNaturalGasDemandSummerWeek_kW = energyModel.data_summerWeekNaturalGasDemand_kW;
 mainArea.v_dataElectricityBaseloadDemandSummerWeek_kW = energyModel.data_summerWeekBaseloadElectricityDemand_kW;
 mainArea.v_dataElectricityForHeatDemandSummerWeek_kW = energyModel.data_summerWeekHeatPumpElectricityDemand_kW;
 mainArea.v_dataElectricityForTransportDemandSummerWeek_kW = energyModel.data_summerWeekElectricVehicleDemand_kW;
 mainArea.v_dataElectricityForStorageDemandSummerWeek_kW = energyModel.data_summerWeekBatteriesDemand_kW;
-mainArea.v_dataNaturalGasDemandSummerWeek_kW = energyModel.data_summerWeekNaturalGasDemand_kW;
-mainArea.v_dataPetroleumProductsDemandSummerWeek_kW = energyModel.data_summerWeekDieselDemand_kW;
-mainArea.v_dataElectricityForHydrogenDemandSummerWeek_kW = energyModel.data_summerWeekHydrogenDemand_kW;
 
 //Supply
+if ( energyModel.v_summerWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+	mainArea.v_dataHydrogenSupplySummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
+}
+
 mainArea.v_dataElectricityWindSupplySummerWeek_kW = energyModel.data_summerWeekWindGeneration_kW;
 mainArea.v_dataElectricityPVSupplySummerWeek_kW = energyModel.data_summerWeekPVGeneration_kW;
 mainArea.v_dataElectricityStorageSupplySummerWeek_kW = energyModel.data_summerWeekBatteriesSupply_kW;
 mainArea.v_dataElectricityV2GSupplySummerWeek_kW = energyModel.data_summerWeekV2GSupply_kW;
-mainArea.v_dataHydrogenSupplySummerWeek_kW = energyModel.data_summerWeekHydrogenSupply_kW;
 //mainArea.v_dataPetroleumProductsSupplySummerWeek_MWh
 //District heating
 
@@ -2812,42 +2822,62 @@ mainArea.v_dataElectricitySupplyCapacitySummerWeek_kW.add(energyModel.p_startHou
 
 //Datasets for live winterWeek chart
 //Demand
+if ( energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
+	mainArea.v_dataNaturalGasDemandWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE);
+}
+if ( energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) != null ) {
+	mainArea.v_dataPetroleumProductsDemandWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL);
+}
+if ( energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+	mainArea.v_dataElectricityForHydrogenDemandWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
+}
+
 //mainArea.v_dataPetroleumProductsDemandWinterWeek_kW = energyModel.data_winterWeekDieselDemand_kW;
 //mainArea.v_dataNaturalGasDemandWinterWeek_kW = energyModel.data_winterWeekNaturalGasDemand_kW;
 mainArea.v_dataElectricityBaseloadDemandWinterWeek_kW = energyModel.data_winterWeekBaseloadElectricityDemand_kW;
 mainArea.v_dataElectricityForHeatDemandWinterWeek_kW = energyModel.data_winterWeekHeatPumpElectricityDemand_kW;
 mainArea.v_dataElectricityForTransportDemandWinterWeek_kW = energyModel.data_winterWeekElectricVehicleDemand_kW;
 mainArea.v_dataElectricityForStorageDemandWinterWeek_kW = energyModel.data_winterWeekBatteriesDemand_kW;
-mainArea.v_dataNaturalGasDemandWinterWeek_kW = energyModel.data_winterWeekNaturalGasDemand_kW;
-mainArea.v_dataPetroleumProductsDemandWinterWeek_kW = energyModel.data_winterWeekDieselDemand_kW;
-mainArea.v_dataElectricityForHydrogenDemandWinterWeek_kW = energyModel.data_winterWeekHydrogenDemand_kW;
 
 //Supply
+if ( energyModel.v_winterWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+	mainArea.v_dataHydrogenSupplyWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
+}
+
 mainArea.v_dataElectricityWindSupplyWinterWeek_kW = energyModel.data_winterWeekWindGeneration_kW;
 mainArea.v_dataElectricityPVSupplyWinterWeek_kW = energyModel.data_winterWeekPVGeneration_kW;
 mainArea.v_dataElectricityStorageSupplyWinterWeek_kW = energyModel.data_winterWeekBatteriesSupply_kW;
 mainArea.v_dataElectricityV2GSupplyWinterWeek_kW = energyModel.data_winterWeekV2GSupply_kW;
-mainArea.v_dataHydrogenSupplyWinterWeek_kW = energyModel.data_winterWeekHydrogenSupply_kW;
 
 //mainArea.v_dataPetroleumProductsSupplyWinterWeek_MWh
 //District heating
 
 //Datasets for yearly profiles chart
 //Demand
+if ( energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
+	mainArea.v_dataNaturalGasDemandYear_kW = energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.METHANE);
+}
+if ( energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) != null ) {
+	mainArea.v_dataPetroleumProductsDemandYear_kW = energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL);
+}
+if ( energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+	mainArea.v_dataElectricityForHydrogenDemandYear_kW = energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
+}
+
 mainArea.v_dataElectricityBaseloadDemandYear_kW = energyModel.data_annualBaseloadElectricityDemand_kW;
 mainArea.v_dataElectricityForHeatDemandYear_kW = energyModel.data_annualHeatPumpElectricityDemand_kW;
 mainArea.v_dataElectricityForTransportDemandYear_kW = energyModel.data_annualElectricVehicleDemand_kW;
 mainArea.v_dataElectricityForStorageDemandYear_kW = energyModel.data_annualBatteriesDemand_kW;
-mainArea.v_dataNaturalGasDemandYear_kW = energyModel.data_annualNaturalGasDemand_kW;
-mainArea.v_dataPetroleumProductsDemandYear_kW = energyModel.data_annualDieselDemand_kW;
-mainArea.v_dataElectricityForHydrogenDemandYear_kW = energyModel.data_annualHydrogenDemand_kW;
 
 //Supply
+if ( energyModel.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+	mainArea.v_dataHydrogenSupplyYear_kW = energyModel.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
+}
+
 mainArea.v_dataElectricityWindSupplyYear_kW = energyModel.data_annualWindGeneration_kW;
 mainArea.v_dataElectricityPVSupplyYear_kW = energyModel.data_annualPVGeneration_kW;
 mainArea.v_dataElectricityStorageSupplyYear_kW = energyModel.data_annualBatteriesSupply_kW;
 mainArea.v_dataElectricityV2GSupplyYear_kW = energyModel.data_annualV2GSupply_kW;
-mainArea.v_dataHydrogenSupplyYear_kW = energyModel.data_annualHydrogenSupply_kW;
 //mainArea.v_dataPetroleumProductsSupplyYear_MWh
 //District heating
 
@@ -2948,82 +2978,102 @@ area.v_dataNetLoadLiveWeek_kW = energyModel.data_totalNetLoad_kW;
 area.v_dataElectricityDemandCapacityLiveWeek_kW = energyModel.data_gridCapacityDemand_kW;
 area.v_dataElectricitySupplyCapacityLiveWeek_kW = energyModel.data_gridCapacitySupply_kW;
 
+
 //Datasets for live summerWeek chart
 //Demand
-//area.v_dataPetroleumProductsDemandSummerWeek_kW = energyModel.data_summerWeekDieselDemand_kW;
-//area.v_dataNaturalGasDemandSummerWeek_kW = energyModel.data_summerWeekNaturalGasDemand_kW;
+if ( energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
+	area.v_dataNaturalGasDemandSummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE);
+}
+if ( energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) != null ) {
+	area.v_dataPetroleumProductsDemandSummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL);
+}
+if ( energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+	area.v_dataElectricityForHydrogenDemandSummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
+}
+
 area.v_dataElectricityBaseloadDemandSummerWeek_kW = energyModel.data_summerWeekBaseloadElectricityDemand_kW;
 area.v_dataElectricityForHeatDemandSummerWeek_kW = energyModel.data_summerWeekHeatPumpElectricityDemand_kW;
 area.v_dataElectricityForTransportDemandSummerWeek_kW = energyModel.data_summerWeekElectricVehicleDemand_kW;
-area.v_dataElectricityForStorageDemandSummerWeek_kW = energyModel.data_summerWeekBatteriesSupply_kW;
-area.v_dataNaturalGasDemandSummerWeek_kW = energyModel.data_summerWeekNaturalGasDemand_kW;
-area.v_dataPetroleumProductsDemandSummerWeek_kW = energyModel.data_summerWeekDieselDemand_kW;
-area.v_dataElectricityForHydrogenDemandSummerWeek_kW = energyModel.data_summerWeekHydrogenDemand_kW;
+area.v_dataElectricityForStorageDemandSummerWeek_kW = energyModel.data_summerWeekBatteriesDemand_kW;
 
 //Supply
+if ( energyModel.v_summerWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+	area.v_dataHydrogenSupplySummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
+}
+
 area.v_dataElectricityWindSupplySummerWeek_kW = energyModel.data_summerWeekWindGeneration_kW;
 area.v_dataElectricityPVSupplySummerWeek_kW = energyModel.data_summerWeekPVGeneration_kW;
 area.v_dataElectricityStorageSupplySummerWeek_kW = energyModel.data_summerWeekBatteriesSupply_kW;
 area.v_dataElectricityV2GSupplySummerWeek_kW = energyModel.data_summerWeekV2GSupply_kW;
-area.v_dataHydrogenSupplySummerWeek_kW = energyModel.data_summerWeekHydrogenSupply_kW;
-//area.v_dataPetroleumProductsSupplySummerWeek_MWh
+
 //District heating
 
-// Net Load
 area.v_dataNetLoadSummerWeek_kW = energyModel.data_summerWeekNetLoad_kW;
 area.v_dataElectricityDemandCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek, energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 area.v_dataElectricityDemandCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek + 7*24, energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 area.v_dataElectricitySupplyCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek, -energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 area.v_dataElectricitySupplyCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek + 7*24, -energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 
+
 //Datasets for live winterWeek chart
 //Demand
-//area.v_dataPetroleumProductsDemandWinterWeek_kW = energyModel.data_winterWeekDieselDemand_kW;
-//area.v_dataNaturalGasDemandWinterWeek_kW = energyModel.data_winterWeekNaturalGasDemand_kW;
+if ( energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
+	area.v_dataNaturalGasDemandWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE);
+}
+if ( energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) != null ) {
+	area.v_dataPetroleumProductsDemandWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL);
+}
+if ( energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+	area.v_dataElectricityForHydrogenDemandWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
+}
+
 area.v_dataElectricityBaseloadDemandWinterWeek_kW = energyModel.data_winterWeekBaseloadElectricityDemand_kW;
 area.v_dataElectricityForHeatDemandWinterWeek_kW = energyModel.data_winterWeekHeatPumpElectricityDemand_kW;
 area.v_dataElectricityForTransportDemandWinterWeek_kW = energyModel.data_winterWeekElectricVehicleDemand_kW;
 area.v_dataElectricityForStorageDemandWinterWeek_kW = energyModel.data_winterWeekBatteriesDemand_kW;
-area.v_dataNaturalGasDemandWinterWeek_kW = energyModel.data_winterWeekNaturalGasDemand_kW;
-area.v_dataPetroleumProductsDemandWinterWeek_kW = energyModel.data_winterWeekDieselDemand_kW;
-area.v_dataElectricityForHydrogenDemandWinterWeek_kW = energyModel.data_winterWeekHydrogenDemand_kW;
 
 //Supply
+if ( energyModel.v_winterWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+	area.v_dataHydrogenSupplyWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
+}
+
 area.v_dataElectricityWindSupplyWinterWeek_kW = energyModel.data_winterWeekWindGeneration_kW;
 area.v_dataElectricityPVSupplyWinterWeek_kW = energyModel.data_winterWeekPVGeneration_kW;
 area.v_dataElectricityStorageSupplyWinterWeek_kW = energyModel.data_winterWeekBatteriesSupply_kW;
 area.v_dataElectricityV2GSupplyWinterWeek_kW = energyModel.data_winterWeekV2GSupply_kW;
-area.v_dataHydrogenSupplyWinterWeek_kW = energyModel.data_winterWeekHydrogenSupply_kW;
 
-//area.v_dataPetroleumProductsSupplyWinterWeek_MWh
 //District heating
-
-// Net Load
-area.v_dataNetLoadWinterWeek_kW = energyModel.data_winterWeekNetLoad_kW;
-area.v_dataElectricityDemandCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek, energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
-area.v_dataElectricityDemandCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek + 7*24, energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
-area.v_dataElectricitySupplyCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek, -energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
-area.v_dataElectricitySupplyCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek + 7*24, -energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 
 
 
 //Datasets for yearly profiles chart
 //Demand
+if ( energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
+	area.v_dataNaturalGasDemandYear_kW = energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.METHANE);
+}
+if ( energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) != null ) {
+	area.v_dataPetroleumProductsDemandYear_kW = energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL);
+}
+if ( energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+	area.v_dataElectricityForHydrogenDemandYear_kW = energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
+}
+
 area.v_dataElectricityBaseloadDemandYear_kW = energyModel.data_annualBaseloadElectricityDemand_kW;
 area.v_dataElectricityForHeatDemandYear_kW = energyModel.data_annualHeatPumpElectricityDemand_kW;
 area.v_dataElectricityForTransportDemandYear_kW = energyModel.data_annualElectricVehicleDemand_kW;
 area.v_dataElectricityForStorageDemandYear_kW = energyModel.data_annualBatteriesDemand_kW;
-area.v_dataNaturalGasDemandYear_kW = energyModel.data_annualNaturalGasDemand_kW;
-area.v_dataPetroleumProductsDemandYear_kW = energyModel.data_annualDieselDemand_kW;
-area.v_dataElectricityForHydrogenDemandYear_kW = energyModel.data_annualHydrogenDemand_kW;
 
 //Supply
+if ( energyModel.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+	area.v_dataHydrogenSupplyYear_kW = energyModel.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
+}
+
 area.v_dataElectricityWindSupplyYear_kW = energyModel.data_annualWindGeneration_kW;
 area.v_dataElectricityPVSupplyYear_kW = energyModel.data_annualPVGeneration_kW;
 area.v_dataElectricityStorageSupplyYear_kW = energyModel.data_annualBatteriesSupply_kW;
 area.v_dataElectricityV2GSupplyYear_kW = energyModel.data_annualV2GSupply_kW;
-area.v_dataHydrogenSupplyYear_kW = energyModel.data_annualHydrogenSupply_kW;
-//area.v_dataPetroleumProductsSupplyYear_MWh
+//mainArea.v_dataPetroleumProductsSupplyYear_MWh
+
 //District heating
 
 // Data for gespreksleidraad1
@@ -3388,14 +3438,14 @@ area.v_gridCapacitySupply_kW = -GN.p_capacity_kW;
 
 
 // Datasets for profile plot
-area.v_dataBaseloadElectricityDemandLiveWeek_kW = GN.data_liveElectricityLoad_kW;
-area.v_dataBaseloadElectricityDemandYear_kW = GN.data_electricityLoadYear_kW;
-area.v_dataElectricityBaseloadDemandSummerWeek_kW = GN.data_electricityLoadSummerWeek_kW;
-area.v_dataElectricityBaseloadDemandWinterWeek_kW = GN.data_electricityLoadWinterWeek_kW;
+area.v_dataBaseloadElectricityDemandLiveWeek_kW = GN.data_liveLoad_kW;
+area.v_dataBaseloadElectricityDemandYear_kW = GN.data_totalLoad_kW;
+area.v_dataElectricityBaseloadDemandSummerWeek_kW = GN.data_summerWeekLoad_kW;
+area.v_dataElectricityBaseloadDemandWinterWeek_kW = GN.data_winterWeekLoad_kW;
 
 
-area.v_dataElectricityDemandCapacityLiveWeek_kW = GN.data_gridCapacityDemand_kW;
-area.v_dataElectricitySupplyCapacityLiveWeek_kW = GN.data_gridCapacitySupply_kW;
+area.v_dataElectricityDemandCapacityLiveWeek_kW = GN.data_liveCapacityDemand_kW;
+area.v_dataElectricitySupplyCapacityLiveWeek_kW = GN.data_liveCapacitySupply_kW;
 area.data_gridCapacityDemandYear_kW.add(0, GN.p_capacity_kW);
 area.data_gridCapacityDemandYear_kW.add(8760, GN.p_capacity_kW);
 area.data_gridCapacitySupplyYear_kW.add(0, -GN.p_capacity_kW);
@@ -3411,41 +3461,41 @@ area.data_gridCapacitySupplyWinterWeek_kW.add(energyModel.p_startHourWinterWeek+
 
 // Data for Opwek & Verbruik
 // Year
-area.v_annualSelfConsumedElectricity_MWh = GN.v_annualElectricityDrawn_MWh;
-area.v_annualSelfProducedElectricity_MWh = GN.v_annualElectricityDelivered_MWh;
+area.v_annualSelfConsumedElectricity_MWh = GN.v_totalImport_MWh;
+area.v_annualSelfProducedElectricity_MWh = GN.v_totalExport_MWh;
 area.v_annualExcessImport_MWh = GN.v_annualExcessImport_MWh;
 area.v_annualExcessExport_MWh = GN.v_annualExcessExport_MWh;
 
 // Summer / Winter
-area.v_selfConsumedElectricitySummerWeek_MWh = GN.v_summerWeekElectricityDrawn_MWh;
-area.v_selfProducedElectricitySummerWeek_MWh = GN.v_summerWeekElectricityDelivered_MWh;
+area.v_selfConsumedElectricitySummerWeek_MWh = GN.v_summerWeekImport_MWh;
+area.v_selfProducedElectricitySummerWeek_MWh = GN.v_summerWeekExport_MWh;
 area.v_summerWeekExcessImport_MWh = GN.v_summerWeekExcessImport_MWh;
 area.v_summerWeekExcessExport_MWh = GN.v_summerWeekExcessExport_MWh;
 
-area.v_selfConsumedElectricityWinterWeek_MWh = GN.v_winterWeekElectricityDrawn_MWh;
-area.v_selfProducedElectricityWinterWeek_MWh = GN.v_winterWeekElectricityDelivered_MWh;
+area.v_selfConsumedElectricityWinterWeek_MWh = GN.v_winterWeekImport_MWh;
+area.v_selfProducedElectricityWinterWeek_MWh = GN.v_winterWeekExport_MWh;
 area.v_winterWeekExcessImport_MWh = GN.v_winterWeekExcessImport_MWh;
 area.v_winterWeekExcessExport_MWh = GN.v_winterWeekExcessExport_MWh;
 
 // Day / Night
-area.v_selfConsumedElectricityDaytime_MWh = GN.v_daytimeElectricityDrawn_MWh;
-area.v_selfProducedElectricityDaytime_MWh = GN.v_daytimeElectricityDelivered_MWh;
+area.v_selfConsumedElectricityDaytime_MWh = GN.v_daytimeImport_MWh;
+area.v_selfProducedElectricityDaytime_MWh = GN.v_daytimeExport_MWh;
 area.v_daytimeExcessImport_MWh = GN.v_daytimeExcessImport_MWh;
 area.v_daytimeExcessExport_MWh = GN.v_daytimeExcessExport_MWh;
 
-area.v_selfConsumedElectricityNighttime_MWh = GN.v_nighttimeElectricityDrawn_MWh;
-area.v_selfProducedElectricityNighttime_MWh = GN.v_nighttimeElectricityDelivered_MWh;
+area.v_selfConsumedElectricityNighttime_MWh = GN.v_nighttimeImport_MWh;
+area.v_selfProducedElectricityNighttime_MWh = GN.v_nighttimeExport_MWh;
 area.v_nighttimeExcessImport_MWh = GN.v_nighttimeExcessImport_MWh;
 area.v_nighttimeExcessExport_MWh = GN.v_nighttimeExcessExport_MWh;
 
 // Weekday / Weekend
-area.v_selfConsumedElectricityWeekday_MWh = GN.v_weekdayElectricityDrawn_MWh;
-area.v_selfProducedElectricityWeekday_MWh = GN.v_weekdayElectricityDelivered_MWh;
+area.v_selfConsumedElectricityWeekday_MWh = GN.v_weekdayImport_MWh;
+area.v_selfProducedElectricityWeekday_MWh = GN.v_weekdayExport_MWh;
 area.v_weekdayExcessImport_MWh = GN.v_weekdayExcessImport_MWh;
 area.v_weekdayExcessExport_MWh = GN.v_weekdayExcessExport_MWh;
 
-area.v_selfConsumedElectricityWeekend_MWh = GN.v_weekendElectricityDrawn_MWh;
-area.v_selfProducedElectricityWeekend_MWh = GN.v_weekendElectricityDelivered_MWh;
+area.v_selfConsumedElectricityWeekend_MWh = GN.v_weekendImport_MWh;
+area.v_selfProducedElectricityWeekend_MWh = GN.v_weekendExport_MWh;
 area.v_weekendExcessImport_MWh = GN.v_weekendExcessImport_MWh;
 area.v_weekendExcessExport_MWh = GN.v_weekendExcessExport_MWh;
 
@@ -3483,7 +3533,7 @@ area.v_dataNetbelastingDuurkrommeWeekend_kW = GN.data_weekendNetbelastingDuurkro
 						<Type><![CDATA[GridNode]]></Type>
 					</Parameter>
 					<Body><![CDATA[
-double maxLoad_fr = abs(gn.v_currentLoadElectricity_kW)/gn.p_capacity_kW;
+double maxLoad_fr = abs(gn.v_currentLoad_kW)/gn.p_capacity_kW;
 if (maxLoad_fr > 1) {
 	gn.gisRegion.setFillColor(v_gridNodeColorCongested);
 	gn.gisRegion.setLineColor(v_gridLineColorCongested);
@@ -33292,19 +33342,19 @@ for (GridNode_data GN_data : c_GridNode_data) {
 			switch (nodeTypeString) {
 			    case "MVLV":
 			        GN.p_nodeType = OL_GridNodeType.MVLV;
-			        GN.p_energyType = OL_EnergyCarriers.ELECTRICITY;
+			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 			        break;
 			    case "SUBMV":
 			        GN.p_nodeType = OL_GridNodeType.SUBMV;
-			        GN.p_energyType = OL_EnergyCarriers.ELECTRICITY;
+			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 			        break;
 			    case "MVMV":
 			        GN.p_nodeType = OL_GridNodeType.MVMV;
-			        GN.p_energyType = OL_EnergyCarriers.ELECTRICITY;
+			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 			        break;
 			    case "HVMV":
 			        GN.p_nodeType = OL_GridNodeType.HVMV;
-			        GN.p_energyType = OL_EnergyCarriers.ELECTRICITY;
+			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 			        break;
 			    default:
 			        traceln("There is a gridnode in your input file with an incorrect node type");
