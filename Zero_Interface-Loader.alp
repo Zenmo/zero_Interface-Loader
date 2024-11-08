@@ -146,6 +146,7 @@ import java.io.PrintStream;
 import com.anylogic.engine.markup.AbstractCurve;
 import com.anylogic.engine.markup.GISMarkupSegment;
 import com.anylogic.engine.markup.GISPoint;
+import zero_engine.OL_EnergyCarriers;
 import zero_engine.OL_EnergyCarriers;]]></Import>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -2918,32 +2919,34 @@ uI_Results.f_initialize();
 					<Body><![CDATA[AreaCollection area = uI_Results.v_area;
 
 //Previous totals
-area.v_previousTotals.setPreviousTotalConsumedEnergy_MWh(area.v_annualTotalConsumedEnergy_MWh);
-area.v_previousTotals.setPreviousTotalProducedEnergy_MWh(area.v_annualTotalProducedEnergy_MWh);
-area.v_previousTotals.setPreviousSelfConsumedEnergy_MWh(area.v_annualSelfConsumedEnergy_MWh);
-area.v_previousTotals.setPreviousImportedEnergy_MWh(area.v_annualImportedEnergy_MWh);
-area.v_previousTotals.setPreviousExportedEnergy_MWh(area.v_annualExportedEnergy_MWh);
+area.v_previousTotals.setPreviousTotalImports_MWh(area.v_totalImports_MWh);
+area.v_previousTotals.setPreviousTotalExports_MWh(area.v_totalExports_MWh);
+area.v_previousTotals.setPreviousTotalConsumedEnergy_MWh(area.v_totalEnergyConsumed_MWh);
+area.v_previousTotals.setPreviousTotalProducedEnergy_MWh(area.v_totalEnergyProduced_MWh);
+area.v_previousTotals.setPreviousSelfConsumedEnergy_MWh(area.v_totalEnergySelfConsumed_MWh);
+area.v_previousTotals.setPreviousImportedEnergy_MWh(area.v_totalEnergyImport_MWh);
+area.v_previousTotals.setPreviousExportedEnergy_MWh(area.v_totalEnergyExport_MWh);
 area.v_previousTotals.setPreviousDistrictHeatingHeatDemand_MWh(area.v_annualDistrictHeatingHeatDemand_MWh);
 area.v_previousTotals.setPreviousHeatPumpHeatGeneration_MWh(area.v_annualHeatPumpHeatGeneration_MWh);
-area.v_previousTotals.setPreviousNaturalGasDemand_MWh(area.v_annualNaturalGasDemand_MWh);
-area.v_previousTotals.setPreviousPetroleumProductsDemand_MWh(area.v_annualPetroleumProductsDemand_MWh);
-area.v_previousTotals.setPreviousHydrogenDemand_MWh(area.v_annualHydrogenDemand_MWh);
-area.v_previousTotals.setPreviousHydrogenSupply_MWh(area.v_annualHydrogenSupply_MWh);
-area.v_previousTotals.setPreviousHeatDemand_MWh(area.v_annualHeatDemand_MWh);
-area.v_previousTotals.setPreviousSelfConsumedElectricity_MWh(area.v_annualSelfConsumedElectricity_MWh);
-area.v_previousTotals.setPreviousSelfProducedElectricity_MWh(area.v_annualSelfProducedElectricity_MWh);
-area.v_previousTotals.setPreviousElectricityImport_MWh(area.v_annualElectricityImport_MWh);
-area.v_previousTotals.setPreviousElectricityExport_MWh(area.v_annualElectricityExport_MWh);
-area.v_previousTotals.setPreviousElectricityConsumed_MWh(area.v_annualElectricityConsumed_MWh);
+//area.v_previousTotals.setPreviousNaturalGasDemand_MWh(area.v_annualNaturalGasDemand_MWh);
+//area.v_previousTotals.setPreviousPetroleumProductsDemand_MWh(area.v_annualPetroleumProductsDemand_MWh);
+//area.v_previousTotals.setPreviousHydrogenDemand_MWh(area.v_annualHydrogenDemand_MWh);
+//area.v_previousTotals.setPreviousHydrogenSupply_MWh(area.v_annualHydrogenSupply_MWh);
+//area.v_previousTotals.setPreviousHeatDemand_MWh(area.v_annualHeatDemand_MWh);
+area.v_previousTotals.setPreviousSelfConsumedElectricity_MWh(area.v_totalElectricitySelfConsumed_MWh);
+//area.v_previousTotals.setPreviousSelfProducedElectricity_MWh(area.v_annualSelfProducedElectricity_MWh);
+//area.v_previousTotals.setPreviousElectricityImport_MWh(area.v_annualElectricityImport_MWh);
+//area.v_previousTotals.setPreviousElectricityExport_MWh(area.v_annualElectricityExport_MWh);
+area.v_previousTotals.setPreviousElectricityConsumed_MWh(area.v_totalElectricityConsumed_MWh);
 area.v_previousTotals.setPreviousElectricityForTransportDemand_MWh(area.v_annualElectricityForTransportDemand_MWh);
 area.v_previousTotals.setPreviousHydrogenForTransportDemand_MWh(area.v_annualHydrogenForTransportDemand_MWh);
 area.v_previousTotals.setPreviousTransportEnergyDemand_MWh(area.v_annualTransportEnergyDemand_MWh);
-area.v_previousTotals.setPreviousWindSupply_MWh(area.v_annualWindSupply_MWh);
-area.v_previousTotals.setPreviousWindSupplyRemainingPotential_MWh(area.v_annualWindSupplyRemainingPotential_MWh);
-area.v_previousTotals.setPreviousPVSupply_MWh(area.v_annualPVSupply_MWh);
-area.v_previousTotals.setPreviousPVSupplyRemainingPotential_MWh(area.v_annualPVSupplyRemainingPotential_MWh);
-area.v_previousTotals.setPreviousHeatSupply_MWh(area.v_annualHeatSupply_MWh);
-area.v_previousTotals.setPreviousHeatSupplyRemainingPotential_MWh(area.v_annualHeatSupplyRemainingPotential_MWh);
+//area.v_previousTotals.setPreviousWindSupply_MWh(area.v_annualWindSupply_MWh);
+//area.v_previousTotals.setPreviousWindSupplyRemainingPotential_MWh(area.v_annualWindSupplyRemainingPotential_MWh);
+//area.v_previousTotals.setPreviousPVSupply_MWh(area.v_annualPVSupply_MWh);
+//area.v_previousTotals.setPreviousPVSupplyRemainingPotential_MWh(area.v_annualPVSupplyRemainingPotential_MWh);
+//area.v_previousTotals.setPreviousHeatSupply_MWh(area.v_annualHeatSupply_MWh);
+//area.v_previousTotals.setPreviousHeatSupplyRemainingPotential_MWh(area.v_annualHeatSupplyRemainingPotential_MWh);
 area.v_previousTotals.setPreviousTotalTimeOverloadedTransformers_hr(area.v_totalTimeOverloadedTransformers_h);
 
 // Net Load
@@ -3104,103 +3107,111 @@ area.v_individualSelfconsumption_fr = energyModel.v_individualSelfConsumption_fr
 area.v_modelSelfSufficiency_fr = energyModel.v_modelSelfSufficiency_fr;
 area.v_totalTimeOverloadedTransformers_h = energyModel.v_gridOverloadDuration_h;
 
+
 //Yearly
-area.v_annualTotalConsumedEnergy_MWh = energyModel.v_totalEnergyConsumed_MWh;
-area.v_annualTotalProducedEnergy_MWh = energyModel.v_totalEnergyProduced_MWh;
-area.v_annualImportedEnergy_MWh = energyModel.v_totalEnergyImport_MWh;
-area.v_annualExportedEnergy_MWh = energyModel.v_totalEnergyExport_MWh;
-area.v_annualSelfConsumedEnergy_MWh = energyModel.v_totalEnergySelfConsumed_MWh;
+area.v_totalImports_MWh = energyModel.v_totalImports_MWh;
+area.v_totalExports_MWh = energyModel.v_totalExports_MWh;
 
-area.v_annualElectricityImport_MWh = energyModel.v_totalImports_MWh.get(OL_EnergyCarriers.ELECTRICITY);
-area.v_annualElectricityExport_MWh = energyModel.v_totalExports_MWh.get(OL_EnergyCarriers.ELECTRICITY);
-area.v_annualSelfConsumedElectricity_MWh = energyModel.v_totalElectricitySelfConsumed_MWh;
-area.v_annualElectricityConsumed_MWh = energyModel.v_totalElectricityConsumed_MWh;
+area.v_totalEnergyImport_MWh = energyModel.v_totalEnergyImport_MWh;
+area.v_totalEnergyExport_MWh = energyModel.v_totalEnergyExport_MWh;
 
-area.v_annualNaturalGasDemand_MWh = energyModel.v_totalImports_MWh.get(OL_EnergyCarriers.METHANE);
-area.v_annualPetroleumProductsDemand_MWh= energyModel.v_totalImports_MWh.get(OL_EnergyCarriers.DIESEL);
-area.v_annualHydrogenDemand_MWh= energyModel.v_totalImports_MWh.get(OL_EnergyCarriers.HYDROGEN);
-area.v_annualHydrogenSupply_MWh= energyModel.v_totalExports_MWh.get(OL_EnergyCarriers.HYDROGEN);
+area.v_totalEnergyProduced_MWh = energyModel.v_totalEnergyProduced_MWh;
+area.v_totalEnergyConsumed_MWh = energyModel.v_totalEnergyConsumed_MWh;
+area.v_totalEnergySelfConsumed_MWh = energyModel.v_totalEnergySelfConsumed_MWh;
+
+// Where is the Produced Electricity ???
+area.v_totalElectricityConsumed_MWh = energyModel.v_totalElectricityConsumed_MWh;
+area.v_totalElectricitySelfConsumed_MWh = energyModel.v_totalElectricitySelfConsumed_MWh;
 
 // Summer/winter
-area.v_importedEnergySummerWeek_MWh = energyModel.v_summerWeekEnergyImport_MWh;
-area.v_exportedEnergySummerWeek_MWh = energyModel.v_summerWeekEnergyExport_MWh;
-area.v_selfConsumedEnergySummerWeek_MWh = energyModel.v_summerWeekEnergySelfConsumed_MWh;
+for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
+	area.v_summerWeekImports_MWh.put( EC, energyModel.v_summerWeekImports_MWh.get(EC) );
+	area.v_summerWeekExports_MWh.put( EC, energyModel.v_summerWeekExports_MWh.get(EC) );
+	area.v_winterWeekImports_MWh.put( EC, energyModel.v_winterWeekImports_MWh.get(EC) );
+	area.v_winterWeekExports_MWh.put( EC, energyModel.v_winterWeekExports_MWh.get(EC) );
+}
 
-area.v_importedElectricitySummerWeek_MWh = energyModel.v_summerWeekImports_MWh.get(OL_EnergyCarriers.ELECTRICITY);
-area.v_exportedElectricitySummerWeek_MWh = energyModel.v_summerWeekExports_MWh.get(OL_EnergyCarriers.ELECTRICITY);
-area.v_selfConsumedElectricitySummerWeek_MWh = energyModel.v_summerWeekElectricitySelfConsumed_MWh;
+area.v_summerWeekEnergyImport_MWh = energyModel.v_summerWeekEnergyImport_MWh;
+area.v_summerWeekEnergyExport_MWh = energyModel.v_summerWeekEnergyExport_MWh;
 
-area.v_naturalGasDemandSummerWeek_MWh = energyModel.v_summerWeekImports_MWh.get(OL_EnergyCarriers.METHANE);
-area.v_petroleumProductsDemandSummerWeek_MWh= energyModel.v_summerWeekImports_MWh.get(OL_EnergyCarriers.DIESEL);
-area.v_hydrogenImportSummerWeek_MWh = energyModel.v_summerWeekImports_MWh.get(OL_EnergyCarriers.HYDROGEN);
-area.v_hydrogenExportSummerWeek_MWh = energyModel.v_summerWeekExports_MWh.get(OL_EnergyCarriers.HYDROGEN);
+area.v_summerWeekEnergyProduced_MWh = energyModel.v_summerWeekEnergyProduced_MWh;
+area.v_summerWeekEnergyConsumed_MWh = energyModel.v_summerWeekEnergyConsumed_MWh;
+area.v_summerWeekEnergySelfConsumed_MWh = energyModel.v_summerWeekEnergySelfConsumed_MWh;
 
-area.v_importedEnergyWinterWeek_MWh = energyModel.v_winterWeekEnergyImport_MWh;
-area.v_exportedEnergyWinterWeek_MWh = energyModel.v_winterWeekEnergyExport_MWh;
-area.v_selfConsumedEnergyWinterWeek_MWh = energyModel.v_winterWeekEnergySelfConsumed_MWh;
+area.v_summerWeekElectricityProduced_MWh = energyModel.v_summerWeekElectricityProduced_MWh;
+area.v_summerWeekElectricityConsumed_MWh = energyModel.v_summerWeekElectricityConsumed_MWh;
+area.v_summerWeekElectricitySelfConsumed_MWh = energyModel.v_summerWeekElectricitySelfConsumed_MWh;
 
-area.v_importedElectricityWinterWeek_MWh = energyModel.v_winterWeekImports_MWh.get(OL_EnergyCarriers.ELECTRICITY);
-area.v_exportedElectricityWinterWeek_MWh = energyModel.v_winterWeekExports_MWh.get(OL_EnergyCarriers.ELECTRICITY);
-area.v_selfConsumedElectricityWinterWeek_MWh = energyModel.v_winterWeekElectricitySelfConsumed_MWh;
+area.v_winterWeekEnergyImport_MWh = energyModel.v_winterWeekEnergyImport_MWh;
+area.v_winterWeekEnergyExport_MWh = energyModel.v_winterWeekEnergyExport_MWh;
 
-area.v_naturalGasDemandWinterWeek_MWh = energyModel.v_winterWeekImports_MWh.get(OL_EnergyCarriers.METHANE);
-area.v_petroleumProductsDemandWinterWeek_MWh= energyModel.v_winterWeekImports_MWh.get(OL_EnergyCarriers.DIESEL);
-area.v_hydrogenImportWinterWeek_MWh = energyModel.v_winterWeekImports_MWh.get(OL_EnergyCarriers.HYDROGEN);
-area.v_hydrogenExportWinterWeek_MWh = energyModel.v_winterWeekExports_MWh.get(OL_EnergyCarriers.HYDROGEN);
+area.v_winterWeekEnergyProduced_MWh = energyModel.v_winterWeekEnergyProduced_MWh;
+area.v_winterWeekEnergyConsumed_MWh = energyModel.v_winterWeekEnergyConsumed_MWh;
+area.v_winterWeekEnergySelfConsumed_MWh = energyModel.v_winterWeekEnergySelfConsumed_MWh;
+
+area.v_winterWeekElectricityProduced_MWh = energyModel.v_winterWeekElectricityProduced_MWh;
+area.v_winterWeekElectricityConsumed_MWh = energyModel.v_winterWeekElectricityConsumed_MWh;
+area.v_winterWeekElectricitySelfConsumed_MWh = energyModel.v_winterWeekElectricitySelfConsumed_MWh;
 
 // Day/night
-area.v_importedEnergyDaytime_MWh = energyModel.v_daytimeEnergyImport_MWh;
-area.v_exportedEnergyDaytime_MWh = energyModel.v_daytimeEnergyExport_MWh;
-area.v_selfConsumedEnergyDaytime_MWh = energyModel.v_daytimeEnergySelfConsumed_MWh;
+for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
+	area.v_daytimeImports_MWh.put( EC, energyModel.v_daytimeImports_MWh.get(EC) );
+	area.v_daytimeExports_MWh.put( EC, energyModel.v_daytimeExports_MWh.get(EC) );
+	area.v_nighttimeImports_MWh.put( EC, energyModel.v_nighttimeImports_MWh.get(EC) );
+	area.v_nighttimeExports_MWh.put( EC, energyModel.v_nighttimeExports_MWh.get(EC) );
+}
 
-area.v_importedElectricityDaytime_MWh = energyModel.v_daytimeImports_MWh.get(OL_EnergyCarriers.ELECTRICITY);
-area.v_exportedElectricityDaytime_MWh = energyModel.v_daytimeExports_MWh.get(OL_EnergyCarriers.ELECTRICITY);
-area.v_selfConsumedElectricityDaytime_MWh = energyModel.v_daytimeElectricitySelfConsumed_MWh;
+area.v_daytimeEnergyImport_MWh = energyModel.v_daytimeEnergyImport_MWh;
+area.v_daytimeEnergyExport_MWh = energyModel.v_daytimeEnergyExport_MWh;
 
-area.v_naturalGasDemandDaytime_MWh = energyModel.v_daytimeImports_MWh.get(OL_EnergyCarriers.METHANE);
-area.v_petroleumProductsDemandDaytime_MWh= energyModel.v_daytimeImports_MWh.get(OL_EnergyCarriers.DIESEL);
-area.v_hydrogenImportDaytime_MWh = energyModel.v_daytimeImports_MWh.get(OL_EnergyCarriers.HYDROGEN);
-area.v_hydrogenExportDaytime_MWh = energyModel.v_daytimeExports_MWh.get(OL_EnergyCarriers.HYDROGEN);
+area.v_daytimeEnergyProduced_MWh = energyModel.v_daytimeEnergyProduced_MWh;
+area.v_daytimeEnergyConsumed_MWh = energyModel.v_daytimeEnergyConsumed_MWh;
+area.v_daytimeEnergySelfConsumed_MWh = energyModel.v_daytimeEnergySelfConsumed_MWh;
 
-area.v_importedEnergyNighttime_MWh = energyModel.v_nighttimeEnergyImport_MWh;
-area.v_exportedEnergyNighttime_MWh = energyModel.v_nighttimeEnergyExport_MWh;
-area.v_selfConsumedEnergyNighttime_MWh = energyModel.v_nighttimeEnergySelfConsumed_MWh;
+area.v_daytimeElectricityProduced_MWh = energyModel.v_daytimeElectricityProduced_MWh;
+area.v_daytimeElectricityConsumed_MWh = energyModel.v_daytimeElectricityConsumed_MWh;
+area.v_daytimeElectricitySelfConsumed_MWh = energyModel.v_daytimeElectricitySelfConsumed_MWh;
 
-area.v_importedElectricityNighttime_MWh = energyModel.v_nighttimeImports_MWh.get(OL_EnergyCarriers.ELECTRICITY);
-area.v_exportedElectricityNighttime_MWh = energyModel.v_nighttimeExports_MWh.get(OL_EnergyCarriers.ELECTRICITY);
-area.v_selfConsumedElectricityNighttime_MWh = energyModel.v_nighttimeElectricitySelfConsumed_MWh;
+area.v_nighttimeEnergyImport_MWh = energyModel.v_nighttimeEnergyImport_MWh;
+area.v_nighttimeEnergyExport_MWh = energyModel.v_nighttimeEnergyExport_MWh;
 
-area.v_naturalGasDemandNighttime_MWh = energyModel.v_nighttimeImports_MWh.get(OL_EnergyCarriers.METHANE);
-area.v_petroleumProductsDemandNighttime_MWh= energyModel.v_nighttimeImports_MWh.get(OL_EnergyCarriers.DIESEL);
-area.v_hydrogenImportNighttime_MWh = energyModel.v_nighttimeImports_MWh.get(OL_EnergyCarriers.HYDROGEN);
-area.v_hydrogenExportNighttime_MWh = energyModel.v_nighttimeExports_MWh.get(OL_EnergyCarriers.HYDROGEN);
+area.v_nighttimeEnergyProduced_MWh = energyModel.v_nighttimeEnergyProduced_MWh;
+area.v_nighttimeEnergyConsumed_MWh = energyModel.v_nighttimeEnergyConsumed_MWh;
+area.v_nighttimeEnergySelfConsumed_MWh = energyModel.v_nighttimeEnergySelfConsumed_MWh;
+
+area.v_nighttimeElectricityProduced_MWh = energyModel.v_nighttimeElectricityProduced_MWh;
+area.v_nighttimeElectricityConsumed_MWh = energyModel.v_nighttimeElectricityConsumed_MWh;
+area.v_nighttimeElectricitySelfConsumed_MWh = energyModel.v_nighttimeElectricitySelfConsumed_MWh;
 
 // Week/weekend
-area.v_importedEnergyWeekday_MWh = energyModel.v_weekdayEnergyImport_MWh;
-area.v_exportedEnergyWeekday_MWh = energyModel.v_weekdayEnergyExport_MWh;
-area.v_selfConsumedEnergyWeekday_MWh = energyModel.v_weekdayEnergySelfConsumed_MWh;
+for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
+	area.v_weekdayImports_MWh.put( EC, energyModel.v_weekdayImports_MWh.get(EC) );
+	area.v_weekdayExports_MWh.put( EC, energyModel.v_weekdayExports_MWh.get(EC) );
+	area.v_weekendImports_MWh.put( EC, energyModel.v_weekendImports_MWh.get(EC) );
+	area.v_weekendExports_MWh.put( EC, energyModel.v_weekendExports_MWh.get(EC) );
+}
 
-area.v_importedElectricityWeekday_MWh = energyModel.v_weekdayImports_MWh.get(OL_EnergyCarriers.ELECTRICITY);
-area.v_exportedElectricityWeekday_MWh = energyModel.v_weekdayExports_MWh.get(OL_EnergyCarriers.ELECTRICITY);
-area.v_selfConsumedElectricityWeekday_MWh = energyModel.v_weekdayElectricitySelfConsumed_MWh;
+area.v_weekdayEnergyImport_MWh = energyModel.v_weekdayEnergyImport_MWh;
+area.v_weekdayEnergyExport_MWh = energyModel.v_weekdayEnergyExport_MWh;
 
-area.v_naturalGasDemandWeekday_MWh = energyModel.v_weekdayImports_MWh.get(OL_EnergyCarriers.METHANE);
-area.v_petroleumProductsDemandWeekday_MWh= energyModel.v_weekdayImports_MWh.get(OL_EnergyCarriers.DIESEL);
-area.v_hydrogenImportWeekday_MWh = energyModel.v_weekdayImports_MWh.get(OL_EnergyCarriers.HYDROGEN);
-area.v_hydrogenExportWeekday_MWh = energyModel.v_weekdayExports_MWh.get(OL_EnergyCarriers.HYDROGEN);
+area.v_weekdayEnergyProduced_MWh = energyModel.v_weekdayEnergyProduced_MWh;
+area.v_weekdayEnergyConsumed_MWh = energyModel.v_weekdayEnergyConsumed_MWh;
+area.v_weekdayEnergySelfConsumed_MWh = energyModel.v_weekdayEnergySelfConsumed_MWh;
 
-area.v_importedEnergyWeekend_MWh = energyModel.v_weekendEnergyImport_MWh;
-area.v_exportedEnergyWeekend_MWh = energyModel.v_weekendEnergyExport_MWh;
-area.v_selfConsumedEnergyWeekend_MWh = energyModel.v_weekendEnergySelfConsumed_MWh;
+area.v_weekdayElectricityProduced_MWh = energyModel.v_weekdayElectricityProduced_MWh;
+area.v_weekdayElectricityConsumed_MWh = energyModel.v_weekdayElectricityConsumed_MWh;
+area.v_weekdayElectricitySelfConsumed_MWh = energyModel.v_weekdayElectricitySelfConsumed_MWh;
 
-area.v_importedElectricityWeekend_MWh = energyModel.v_weekendImports_MWh.get(OL_EnergyCarriers.ELECTRICITY);
-area.v_exportedElectricityWeekend_MWh = energyModel.v_weekendExports_MWh.get(OL_EnergyCarriers.ELECTRICITY);
-area.v_selfConsumedElectricityWeekend_MWh = energyModel.v_weekendElectricitySelfConsumed_MWh;
+area.v_weekendEnergyImport_MWh = energyModel.v_weekendEnergyImport_MWh;
+area.v_weekendEnergyExport_MWh = energyModel.v_weekendEnergyExport_MWh;
 
-area.v_naturalGasDemandWeekend_MWh = energyModel.v_weekendImports_MWh.get(OL_EnergyCarriers.METHANE);
-area.v_petroleumProductsDemandWeekend_MWh= energyModel.v_weekendImports_MWh.get(OL_EnergyCarriers.DIESEL);
-area.v_hydrogenImportWeekend_MWh = energyModel.v_weekendImports_MWh.get(OL_EnergyCarriers.HYDROGEN);
-area.v_hydrogenExportWeekend_MWh = energyModel.v_weekendExports_MWh.get(OL_EnergyCarriers.HYDROGEN);
+area.v_weekendEnergyProduced_MWh = energyModel.v_weekendEnergyProduced_MWh;
+area.v_weekendEnergyConsumed_MWh = energyModel.v_weekendEnergyConsumed_MWh;
+area.v_weekendEnergySelfConsumed_MWh = energyModel.v_weekendEnergySelfConsumed_MWh;
+
+area.v_weekendElectricityProduced_MWh = energyModel.v_weekendElectricityProduced_MWh;
+area.v_weekendElectricityConsumed_MWh = energyModel.v_weekendElectricityConsumed_MWh;
+area.v_weekendElectricitySelfConsumed_MWh = energyModel.v_weekendElectricitySelfConsumed_MWh;
 
 //gr_simulateYearScreenSmall.setVisible(false);]]></Body>
 				</Function>
@@ -3229,100 +3240,10 @@ area.v_gridCapacityDemand_kW = EC.p_connectionCapacity_kW;
 area.v_gridCapacitySupply_kW = EC.p_connectionCapacity_kW;
 
 // KPIs for 'samenvatting' 
-area.v_modelSelfConsumption_fr = EC.v_totalEnergyProduced_MWh > 0 ? EC.v_totalSelfConsumedEnergy_MWh/EC.v_totalEnergyProduced_MWh : 0.0;
+area.v_modelSelfConsumption_fr = EC.v_totalEnergyProduced_MWh > 0 ? EC.v_totalEnergySelfConsumed_MWh/EC.v_totalEnergyProduced_MWh : 0.0;
 //area.v_individualSelfSufficiency_fr = EC.v_individualSelfSufficiency_fr;
-area.v_modelSelfSufficiency_fr = EC.v_totalEnergyProduced_MWh > 0 ? EC.v_totalSelfConsumedEnergy_MWh/EC.v_totalEnergyConsumed_MWh: 0.0;
+area.v_modelSelfSufficiency_fr = EC.v_totalEnergyProduced_MWh > 0 ? EC.v_totalEnergySelfConsumed_MWh/EC.v_totalEnergyConsumed_MWh: 0.0;
 //area.v_totalTimeOverloadedTransformers_h = EC.v_netOverloadDuration_h;
-
-//Yearly
-area.v_annualImportedEnergy_MWh = EC.v_totalImport_MWh;
-area.v_annualExportedEnergy_MWh = EC.v_totalExport_MWh;
-area.v_annualSelfConsumedEnergy_MWh = EC.v_totalSelfConsumedEnergy_MWh;
-
-area.v_annualElectricityImport_MWh = EC.v_electricityImported_kWh/1000;
-area.v_annualElectricityExport_MWh = EC.v_electricityExported_kWh/1000;
-area.v_annualSelfConsumedElectricity_MWh = EC.v_totalElectricitySelfConsumed_MWh;
-
-//area.v_annualNaturalGasDemand_MWh = EC.v_methaneDrawn_kWh/1000;
-//area.v_annualPetroleumProductsDemand_MWh= EC.v_dieselDrawn_kWh/1000;
-//area.v_annualHydrogenDemand_MWh= EC.v_hydrogenDrawn_kWh/1000;
-
-// Summer/winter
-area.v_importedEnergySummerWeek_MWh = EC.v_summerWeekTotalImport_MWh;
-area.v_exportedEnergySummerWeek_MWh = EC.v_summerWeekTotalExport_MWh;
-area.v_selfConsumedEnergySummerWeek_MWh = EC.v_summerWeekSelfConsumedEnergy_MWh;
-
-area.v_importedElectricitySummerWeek_MWh = EC.v_summerWeekElectricityImport_MWh;
-area.v_exportedElectricitySummerWeek_MWh = EC.v_summerWeekElectricityExport_MWh;
-area.v_selfConsumedElectricitySummerWeek_MWh = EC.v_summerWeekElectricitySelfConsumed_MWh;
-
-/*area.v_naturalGasDemandSummerWeek_MWh = EC.v_summerWeekMethaneImport_MWh;
-area.v_petroleumProductsDemandSummerWeek_MWh= EC.v_summerWeekDieselImport_MWh;
-area.v_hydrogenImportSummerWeek_MWh = EC.v_summerWeekHydrogenImport_MWh;*/
-
-area.v_importedEnergyWinterWeek_MWh = EC.v_winterWeekTotalImport_MWh;
-area.v_exportedEnergyWinterWeek_MWh = EC.v_winterWeekTotalExport_MWh;
-area.v_selfConsumedEnergyWinterWeek_MWh = EC.v_winterWeekSelfConsumedEnergy_MWh;
-
-area.v_importedElectricityWinterWeek_MWh = EC.v_winterWeekElectricityImport_MWh;
-area.v_exportedElectricityWinterWeek_MWh = EC.v_winterWeekElectricityExport_MWh;
-area.v_selfConsumedElectricityWinterWeek_MWh = EC.v_winterWeekElectricitySelfConsumed_MWh;
-
-/*area.v_naturalGasDemandWinterWeek_MWh = EC.v_winterWeekMethaneImport_MWh;
-area.v_petroleumProductsDemandWinterWeek_MWh= EC.v_winterWeekDieselImport_MWh;
-area.v_hydrogenImportWinterWeek_MWh = EC.v_winterWeekHydrogenImport_MWh;*/
-
-// Day/night
-area.v_importedEnergyDaytime_MWh = EC.v_daytimeTotalImport_MWh;
-area.v_exportedEnergyDaytime_MWh = EC.v_daytimeTotalExport_MWh;
-area.v_selfConsumedEnergyDaytime_MWh = EC.v_daytimeSelfConsumedEnergy_MWh;
-
-area.v_importedElectricityDaytime_MWh = EC.v_daytimeElectricityImport_MWh;
-area.v_exportedElectricityDaytime_MWh = EC.v_daytimeElectricityExport_MWh;
-area.v_selfConsumedElectricityDaytime_MWh = EC.v_daytimeElectricitySelfConsumed_MWh;
-
-/*area.v_naturalGasDemandDaytime_MWh = EC.v_daytimeMethaneImport_MWh;
-area.v_petroleumProductsDemandDaytime_MWh= EC.v_daytimeDieselImport_MWh;
-area.v_hydrogenImportDaytime_MWh = EC.v_daytimeHydrogenImport_MWh;*/
-
-area.v_importedEnergyNighttime_MWh = EC.v_nighttimeTotalImport_MWh;
-area.v_exportedEnergyNighttime_MWh = EC.v_nighttimeTotalExport_MWh;
-area.v_selfConsumedEnergyNighttime_MWh = EC.v_nighttimeSelfConsumedEnergy_MWh;
-
-area.v_importedElectricityNighttime_MWh = EC.v_nighttimeElectricityImport_MWh;
-area.v_exportedElectricityNighttime_MWh = EC.v_nighttimeElectricityExport_MWh;
-area.v_selfConsumedElectricityNighttime_MWh = EC.v_nighttimeElectricitySelfConsumed_MWh;
-
-/*area.v_naturalGasDemandNighttime_MWh = EC.v_nighttimeMethaneImport_MWh;
-area.v_petroleumProductsDemandNighttime_MWh= EC.v_nighttimeDieselImport_MWh;
-area.v_hydrogenImportNighttime_MWh = EC.v_nighttimeHydrogenImport_MWh;*/
-
-// Week/weekend
-area.v_importedEnergyWeekday_MWh = EC.v_weekdayTotalImport_MWh;
-area.v_exportedEnergyWeekday_MWh = EC.v_weekdayTotalExport_MWh;
-area.v_selfConsumedEnergyWeekday_MWh = EC.v_weekdaySelfConsumedEnergy_MWh;
-
-area.v_importedElectricityWeekday_MWh = EC.v_weekdayElectricityImport_MWh;
-area.v_exportedElectricityWeekday_MWh = EC.v_weekdayElectricityExport_MWh;
-area.v_selfConsumedElectricityWeekday_MWh = EC.v_weekdayElectricitySelfConsumed_MWh;
-
-/*area.v_naturalGasDemandWeekday_MWh = EC.v_weekdayMethaneImport_MWh;
-area.v_petroleumProductsDemandWeekday_MWh= EC.v_weekdayDieselImport_MWh;
-area.v_hydrogenImportWeekday_MWh = EC.v_weekdayHydrogenImport_MWh;*/
-
-area.v_importedEnergyWeekend_MWh = EC.v_weekendTotalImport_MWh;
-area.v_exportedEnergyWeekend_MWh = EC.v_weekendTotalExport_MWh;
-area.v_selfConsumedEnergyWeekend_MWh = EC.v_weekendSelfConsumedEnergy_MWh;
-
-area.v_importedElectricityWeekend_MWh = EC.v_weekendElectricityImport_MWh;
-area.v_exportedElectricityWeekend_MWh = EC.v_weekendElectricityExport_MWh;
-area.v_selfConsumedElectricityWeekend_MWh = EC.v_weekendElectricitySelfConsumed_MWh;
-
-/*area.v_naturalGasDemandWeekend_MWh = EC.v_weekendMethaneImport_MWh;
-area.v_petroleumProductsDemandWeekend_MWh= EC.v_weekendDieselImport_MWh;
-area.v_hydrogenImportWeekend_MWh = EC.v_weekendHydrogenImport_MWh;*/
-
-//gr_simulateYearScreenSmall.setVisible(false);
 
 //Datasets for live demand chart
 //Demand
@@ -3386,7 +3307,7 @@ area.v_dataElectricityV2GSupplyYear_MWh = EC.data_annualV2GSupply_MWh;
 // Data for gespreksleidraad1
 area.v_dataElectricityDemandYear_MWh = EC.data_annualElectricityDemand_MWh;
 area.v_dataElectricitySupplyYear_MWh = EC.data_annualElectricitySupply_MWh;*/
-area.v_dataNetLoadYear_kW = EC.acc_annualElectricityBalance_kW.getTimeSeries();
+area.v_dataNetLoadYear_kW = EC.v_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries();
 
 //Datasets for netloaddurationcurves
 //EC.f_duurkrommes();
@@ -3397,6 +3318,120 @@ area.v_dataNetbelastingDuurkrommeDaytime_kW = EC.data_daytimeNetbelastingDuurkro
 area.v_dataNetbelastingDuurkrommeNighttime_kW = EC.data_nighttimeNetbelastingDuurkromme_kW;
 area.v_dataNetbelastingDuurkrommeWeekend_kW = EC.data_weekendNetbelastingDuurkromme_kW;
 area.v_dataNetbelastingDuurkrommeWeekday_kW = EC.data_weekdayNetbelastingDuurkromme_kW;*/
+
+
+
+/////////////////////////////////////////
+
+
+//Yearly
+for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
+	area.v_totalImports_MWh.put( energyCarrier, EC.v_totalImports_MWh.get(energyCarrier));
+	area.v_totalExports_MWh.put( energyCarrier, EC.v_totalExports_MWh.get(energyCarrier));
+}
+area.v_totalEnergyImport_MWh = EC.v_totalEnergyImport_MWh;
+area.v_totalEnergyExport_MWh = EC.v_totalEnergyExport_MWh;
+
+area.v_totalEnergyProduced_MWh = EC.v_totalEnergyProduced_MWh;
+area.v_totalEnergyConsumed_MWh = EC.v_totalEnergyConsumed_MWh;
+area.v_totalEnergySelfConsumed_MWh = EC.v_totalEnergySelfConsumed_MWh;
+
+area.v_totalElectricityProduced_MWh = EC.v_totalElectricityProduced_MWh;
+area.v_totalElectricityConsumed_MWh = EC.v_totalElectricityConsumed_MWh;
+area.v_totalElectricitySelfConsumed_MWh = EC.v_totalElectricitySelfConsumed_MWh;
+
+
+// Summer/winter
+for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
+	area.v_summerWeekImports_MWh.put( energyCarrier, EC.v_summerWeekImports_MWh.get(energyCarrier));
+	area.v_summerWeekExports_MWh.put( energyCarrier, EC.v_summerWeekExports_MWh.get(energyCarrier));
+	area.v_winterWeekImports_MWh.put( energyCarrier, EC.v_winterWeekImports_MWh.get(energyCarrier));
+	area.v_winterWeekExports_MWh.put( energyCarrier, EC.v_winterWeekExports_MWh.get(energyCarrier));
+}
+
+area.v_summerWeekEnergyImport_MWh = EC.v_summerWeekEnergyImport_MWh;
+area.v_summerWeekEnergyExport_MWh = EC.v_summerWeekEnergyExport_MWh;
+
+area.v_summerWeekEnergyProduced_MWh = EC.v_summerWeekEnergyProduced_MWh;
+area.v_summerWeekEnergyConsumed_MWh = EC.v_summerWeekEnergyConsumed_MWh;
+area.v_summerWeekEnergySelfConsumed_MWh = EC.v_summerWeekEnergySelfConsumed_MWh;
+
+area.v_summerWeekElectricityProduced_MWh = EC.v_summerWeekElectricityProduced_MWh;
+area.v_summerWeekElectricityConsumed_MWh = EC.v_summerWeekElectricityConsumed_MWh;
+area.v_summerWeekElectricitySelfConsumed_MWh = EC.v_summerWeekElectricitySelfConsumed_MWh;
+
+area.v_winterWeekEnergyImport_MWh = EC.v_winterWeekEnergyImport_MWh;
+area.v_winterWeekEnergyExport_MWh = EC.v_winterWeekEnergyExport_MWh;
+
+area.v_winterWeekEnergyProduced_MWh = EC.v_winterWeekEnergyProduced_MWh;
+area.v_winterWeekEnergyConsumed_MWh = EC.v_winterWeekEnergyConsumed_MWh;
+area.v_winterWeekEnergySelfConsumed_MWh = EC.v_winterWeekEnergySelfConsumed_MWh;
+
+area.v_winterWeekElectricityProduced_MWh = EC.v_winterWeekElectricityProduced_MWh;
+area.v_winterWeekElectricityConsumed_MWh = EC.v_winterWeekElectricityConsumed_MWh;
+area.v_winterWeekElectricitySelfConsumed_MWh = EC.v_winterWeekElectricitySelfConsumed_MWh;
+
+// Day/night
+for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
+	area.v_daytimeImports_MWh.put( energyCarrier, EC.v_daytimeImports_MWh.get(energyCarrier));
+	area.v_daytimeExports_MWh.put( energyCarrier, EC.v_daytimeExports_MWh.get(energyCarrier));
+	area.v_nighttimeImports_MWh.put( energyCarrier, EC.v_nighttimeImports_MWh.get(energyCarrier));
+	area.v_nighttimeExports_MWh.put( energyCarrier, EC.v_nighttimeExports_MWh.get(energyCarrier));
+}
+
+area.v_daytimeEnergyImport_MWh = EC.v_daytimeEnergyImport_MWh;
+area.v_daytimeEnergyExport_MWh = EC.v_daytimeEnergyExport_MWh;
+
+area.v_daytimeEnergyProduced_MWh = EC.v_daytimeEnergyProduced_MWh;
+area.v_daytimeEnergyConsumed_MWh = EC.v_daytimeEnergyConsumed_MWh;
+area.v_daytimeEnergySelfConsumed_MWh = EC.v_daytimeEnergySelfConsumed_MWh;
+
+area.v_daytimeElectricityProduced_MWh = EC.v_daytimeElectricityProduced_MWh;
+area.v_daytimeElectricityConsumed_MWh = EC.v_daytimeElectricityConsumed_MWh;
+area.v_daytimeElectricitySelfConsumed_MWh = EC.v_daytimeElectricitySelfConsumed_MWh;
+
+
+area.v_nighttimeEnergyImport_MWh = EC.v_nighttimeEnergyImport_MWh;
+area.v_nighttimeEnergyExport_MWh = EC.v_nighttimeEnergyExport_MWh;
+
+area.v_nighttimeEnergyProduced_MWh = EC.v_nighttimeEnergyProduced_MWh;
+area.v_nighttimeEnergyConsumed_MWh = EC.v_nighttimeEnergyConsumed_MWh;
+area.v_nighttimeEnergySelfConsumed_MWh = EC.v_nighttimeEnergySelfConsumed_MWh;
+
+area.v_nighttimeElectricityProduced_MWh = EC.v_nighttimeElectricityProduced_MWh;
+area.v_nighttimeElectricityConsumed_MWh = EC.v_nighttimeElectricityConsumed_MWh;
+area.v_nighttimeElectricitySelfConsumed_MWh = EC.v_nighttimeElectricitySelfConsumed_MWh;
+
+// Week/weekend
+for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
+	area.v_weekdayImports_MWh.put( energyCarrier, EC.v_weekdayImports_MWh.get(energyCarrier));
+	area.v_weekdayExports_MWh.put( energyCarrier, EC.v_weekdayExports_MWh.get(energyCarrier));
+	area.v_weekendImports_MWh.put( energyCarrier, EC.v_weekendImports_MWh.get(energyCarrier));
+	area.v_weekendExports_MWh.put( energyCarrier, EC.v_weekendExports_MWh.get(energyCarrier));
+}
+
+area.v_weekdayEnergyImport_MWh = EC.v_weekdayEnergyImport_MWh;
+area.v_weekdayEnergyExport_MWh = EC.v_weekdayEnergyExport_MWh;
+
+area.v_weekdayEnergyProduced_MWh = EC.v_weekdayEnergyProduced_MWh;
+area.v_weekdayEnergyConsumed_MWh = EC.v_weekdayEnergyConsumed_MWh;
+area.v_weekdayEnergySelfConsumed_MWh = EC.v_weekdayEnergySelfConsumed_MWh;
+
+area.v_weekdayElectricityProduced_MWh = EC.v_weekdayElectricityProduced_MWh;
+area.v_weekdayElectricityConsumed_MWh = EC.v_weekdayElectricityConsumed_MWh;
+area.v_weekdayElectricitySelfConsumed_MWh = EC.v_weekdayElectricitySelfConsumed_MWh;
+
+
+area.v_weekendEnergyImport_MWh = EC.v_weekendEnergyImport_MWh;
+area.v_weekendEnergyExport_MWh = EC.v_weekendEnergyExport_MWh;
+
+area.v_weekendEnergyProduced_MWh = EC.v_weekendEnergyProduced_MWh;
+area.v_weekendEnergyConsumed_MWh = EC.v_weekendEnergyConsumed_MWh;
+area.v_weekendEnergySelfConsumed_MWh = EC.v_weekendEnergySelfConsumed_MWh;
+
+area.v_weekendElectricityProduced_MWh = EC.v_weekendElectricityProduced_MWh;
+area.v_weekendElectricityConsumed_MWh = EC.v_weekendElectricityConsumed_MWh;
+area.v_weekendElectricitySelfConsumed_MWh = EC.v_weekendElectricitySelfConsumed_MWh;
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -3461,44 +3496,43 @@ area.data_gridCapacitySupplyWinterWeek_kW.add(energyModel.p_startHourWinterWeek+
 
 // Data for Opwek & Verbruik
 // Year
-area.v_annualSelfConsumedElectricity_MWh = GN.v_totalImport_MWh;
-area.v_annualSelfProducedElectricity_MWh = GN.v_totalExport_MWh;
+area.v_totalImports_MWh.put(GN.p_energyCarrier, GN.v_totalImport_MWh);
+area.v_totalExports_MWh.put(GN.p_energyCarrier, GN.v_totalExport_MWh);
 area.v_annualExcessImport_MWh = GN.v_annualExcessImport_MWh;
 area.v_annualExcessExport_MWh = GN.v_annualExcessExport_MWh;
 
 // Summer / Winter
-area.v_selfConsumedElectricitySummerWeek_MWh = GN.v_summerWeekImport_MWh;
-area.v_selfProducedElectricitySummerWeek_MWh = GN.v_summerWeekExport_MWh;
+area.v_summerWeekImports_MWh.put(GN.p_energyCarrier, GN.v_summerWeekImport_MWh);
+area.v_summerWeekExports_MWh.put(GN.p_energyCarrier, GN.v_summerWeekExport_MWh);
 area.v_summerWeekExcessImport_MWh = GN.v_summerWeekExcessImport_MWh;
 area.v_summerWeekExcessExport_MWh = GN.v_summerWeekExcessExport_MWh;
 
-area.v_selfConsumedElectricityWinterWeek_MWh = GN.v_winterWeekImport_MWh;
-area.v_selfProducedElectricityWinterWeek_MWh = GN.v_winterWeekExport_MWh;
+area.v_winterWeekImports_MWh.put(GN.p_energyCarrier, GN.v_winterWeekImport_MWh);
+area.v_winterWeekExports_MWh.put(GN.p_energyCarrier, GN.v_winterWeekExport_MWh);
 area.v_winterWeekExcessImport_MWh = GN.v_winterWeekExcessImport_MWh;
 area.v_winterWeekExcessExport_MWh = GN.v_winterWeekExcessExport_MWh;
 
 // Day / Night
-area.v_selfConsumedElectricityDaytime_MWh = GN.v_daytimeImport_MWh;
-area.v_selfProducedElectricityDaytime_MWh = GN.v_daytimeExport_MWh;
+area.v_daytimeImports_MWh.put(GN.p_energyCarrier, GN.v_daytimeImport_MWh);
+area.v_daytimeExports_MWh.put(GN.p_energyCarrier, GN.v_daytimeExport_MWh);
 area.v_daytimeExcessImport_MWh = GN.v_daytimeExcessImport_MWh;
 area.v_daytimeExcessExport_MWh = GN.v_daytimeExcessExport_MWh;
 
-area.v_selfConsumedElectricityNighttime_MWh = GN.v_nighttimeImport_MWh;
-area.v_selfProducedElectricityNighttime_MWh = GN.v_nighttimeExport_MWh;
+area.v_nighttimeImports_MWh.put(GN.p_energyCarrier, GN.v_nighttimeImport_MWh);
+area.v_nighttimeExports_MWh.put(GN.p_energyCarrier, GN.v_nighttimeExport_MWh);
 area.v_nighttimeExcessImport_MWh = GN.v_nighttimeExcessImport_MWh;
 area.v_nighttimeExcessExport_MWh = GN.v_nighttimeExcessExport_MWh;
 
 // Weekday / Weekend
-area.v_selfConsumedElectricityWeekday_MWh = GN.v_weekdayImport_MWh;
-area.v_selfProducedElectricityWeekday_MWh = GN.v_weekdayExport_MWh;
+area.v_weekdayImports_MWh.put(GN.p_energyCarrier, GN.v_weekdayImport_MWh);
+area.v_weekdayExports_MWh.put(GN.p_energyCarrier, GN.v_weekdayExport_MWh);
 area.v_weekdayExcessImport_MWh = GN.v_weekdayExcessImport_MWh;
 area.v_weekdayExcessExport_MWh = GN.v_weekdayExcessExport_MWh;
 
-area.v_selfConsumedElectricityWeekend_MWh = GN.v_weekendImport_MWh;
-area.v_selfProducedElectricityWeekend_MWh = GN.v_weekendExport_MWh;
+area.v_weekendImports_MWh.put(GN.p_energyCarrier, GN.v_weekendImport_MWh);
+area.v_weekendExports_MWh.put(GN.p_energyCarrier, GN.v_weekendExport_MWh);
 area.v_weekendExcessImport_MWh = GN.v_weekendExcessImport_MWh;
 area.v_weekendExcessExport_MWh = GN.v_weekendExcessExport_MWh;
-
 
 // Datasets for netloaddurationcurves
 area.v_dataNetLoadYear_kW = GN.acc_annualElectricityBalance_kW.getTimeSeries();
@@ -4546,21 +4580,20 @@ area.v_modelSelfSufficiency_fr = sum(gcList, x -> x.v_totalEnergyProduced_MWh) >
 //area.v_totalTimeOverloadedTransformers_h = GC.v_netOverloadDuration_h;
 
 //Yearly
-area.v_annualTotalConsumedEnergy_MWh = sum(gcList, x -> x.v_totalEnergyConsumed_MWh);
-area.v_annualTotalProducedEnergy_MWh = sum(gcList, x -> x.v_totalEnergyProduced_MWh);
-area.v_annualImportedEnergy_MWh = sum(gcList, x -> x.v_totalEnergyImport_MWh);
-area.v_annualExportedEnergy_MWh = sum(gcList, x -> x.v_totalEnergyExport_MWh);
-area.v_annualSelfConsumedEnergy_MWh = sum(gcList, x -> x.v_totalEnergySelfConsumed_MWh);
+for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
+	area.v_totalImports_MWh.put( EC, sum(gcList, x -> x.v_totalImports_MWh.get(EC)) );
+	area.v_totalExports_MWh.put( EC, sum(gcList, x -> x.v_totalExports_MWh.get(EC)) );
+}
+area.v_totalEnergyImport_MWh = sum(gcList, x -> x.v_totalEnergyImport_MWh);
+area.v_totalEnergyExport_MWh = sum(gcList, x -> x.v_totalEnergyExport_MWh);
 
-area.v_annualElectricityConsumed_MWh = sum(gcList, x -> x.v_totalElectricityConsumed_MWh);
-area.v_annualElectricityImport_MWh = sum(gcList, x -> x.v_totalImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-area.v_annualElectricityExport_MWh = sum(gcList, x -> x.v_totalExports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-area.v_annualSelfConsumedElectricity_MWh = sum(gcList, x -> x.v_totalElectricitySelfConsumed_MWh);
+area.v_totalEnergyProduced_MWh = sum(gcList, x -> x.v_totalEnergyProduced_MWh);
+area.v_totalEnergyConsumed_MWh = sum(gcList, x -> x.v_totalEnergyConsumed_MWh);
+area.v_totalEnergySelfConsumed_MWh = sum(gcList, x -> x.v_totalEnergySelfConsumed_MWh);
 
-area.v_annualNaturalGasDemand_MWh = sum(gcList, x -> x.v_totalImports_MWh.get(OL_EnergyCarriers.METHANE));
-area.v_annualPetroleumProductsDemand_MWh = sum(gcList, x -> x.v_totalImports_MWh.get(OL_EnergyCarriers.DIESEL));
-area.v_annualHydrogenDemand_MWh = sum(gcList, x -> x.v_totalImports_MWh.get(OL_EnergyCarriers.HYDROGEN));
-area.v_annualHydrogenSupply_MWh = sum(gcList, x -> x.v_totalExports_MWh.get(OL_EnergyCarriers.HYDROGEN));
+area.v_totalElectricityProduced_MWh = sum(gcList, x -> x.v_totalElectricityProduced_MWh);
+area.v_totalElectricityConsumed_MWh = sum(gcList, x -> x.v_totalElectricityConsumed_MWh);
+area.v_totalElectricitySelfConsumed_MWh = sum(gcList, x -> x.v_totalElectricitySelfConsumed_MWh);
 
 //Overload duration (for multiple GC this does not really make sense right?, would be more interesting to see the influence of their combined contract capacity)
 area.v_annualOverloadDurationDelivery_hr = sum(gcList, x -> x.v_totalOverloadDurationDelivery_hr);
@@ -4571,85 +4604,97 @@ area.v_previousTotals = uI_Results.c_previousTotals_GC.get(gcList.get(0));
 
 
 // Summer/winter
-area.v_importedEnergySummerWeek_MWh = sum(gcList, x -> x.v_summerWeekEnergyImport_MWh);
-area.v_exportedEnergySummerWeek_MWh = sum(gcList, x -> x.v_summerWeekEnergyExport_MWh);
-area.v_selfConsumedEnergySummerWeek_MWh = sum(gcList, x -> x.v_summerWeekEnergySelfConsumed_MWh);
+for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
+	area.v_summerWeekImports_MWh.put( EC, sum(gcList, x -> x.v_summerWeekImports_MWh.get(EC)) );
+	area.v_summerWeekExports_MWh.put( EC, sum(gcList, x -> x.v_summerWeekExports_MWh.get(EC)) );
+	area.v_winterWeekImports_MWh.put( EC, sum(gcList, x -> x.v_winterWeekImports_MWh.get(EC)) );
+	area.v_winterWeekExports_MWh.put( EC, sum(gcList, x -> x.v_winterWeekExports_MWh.get(EC)) );
+}
 
-area.v_importedElectricitySummerWeek_MWh = sum(gcList, x -> x.v_summerWeekImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-area.v_exportedElectricitySummerWeek_MWh = sum(gcList, x -> x.v_summerWeekExports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-area.v_selfConsumedElectricitySummerWeek_MWh = sum(gcList, x -> x.v_summerWeekElectricitySelfConsumed_MWh);
+area.v_summerWeekEnergyImport_MWh = sum(gcList, x -> x.v_summerWeekEnergyImport_MWh);
+area.v_summerWeekEnergyExport_MWh = sum(gcList, x -> x.v_summerWeekEnergyExport_MWh);
 
-area.v_naturalGasDemandSummerWeek_MWh = sum(gcList, x -> x.v_summerWeekImports_MWh.get(OL_EnergyCarriers.METHANE));
-area.v_petroleumProductsDemandSummerWeek_MWh= sum(gcList, x -> x.v_summerWeekImports_MWh.get(OL_EnergyCarriers.DIESEL));
-area.v_hydrogenImportSummerWeek_MWh = sum(gcList, x -> x.v_summerWeekImports_MWh.get(OL_EnergyCarriers.HYDROGEN));
-area.v_hydrogenExportSummerWeek_MWh = sum(gcList, x -> x.v_summerWeekExports_MWh.get(OL_EnergyCarriers.HYDROGEN));
+area.v_summerWeekEnergyProduced_MWh = sum(gcList, x -> x.v_summerWeekEnergyProduced_MWh);
+area.v_summerWeekEnergyConsumed_MWh = sum(gcList, x -> x.v_summerWeekEnergyConsumed_MWh);
+area.v_summerWeekEnergySelfConsumed_MWh = sum(gcList, x -> x.v_summerWeekEnergySelfConsumed_MWh);
 
-area.v_importedEnergyWinterWeek_MWh = sum(gcList, x -> x.v_winterWeekEnergyImport_MWh);
-area.v_exportedEnergyWinterWeek_MWh = sum(gcList, x -> x.v_winterWeekEnergyExport_MWh);
-area.v_selfConsumedEnergyWinterWeek_MWh = sum(gcList, x -> x.v_winterWeekEnergySelfConsumed_MWh);
+area.v_summerWeekElectricityProduced_MWh = sum(gcList, x -> x.v_summerWeekElectricityProduced_MWh);
+area.v_summerWeekElectricityConsumed_MWh = sum(gcList, x -> x.v_summerWeekElectricityConsumed_MWh);
+area.v_summerWeekElectricitySelfConsumed_MWh = sum(gcList, x -> x.v_summerWeekElectricitySelfConsumed_MWh);
 
-area.v_importedElectricityWinterWeek_MWh = sum(gcList, x -> x.v_winterWeekImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-area.v_exportedElectricityWinterWeek_MWh = sum(gcList, x -> x.v_winterWeekExports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-area.v_selfConsumedElectricityWinterWeek_MWh = sum(gcList, x -> x.v_winterWeekElectricitySelfConsumed_MWh);
+area.v_winterWeekEnergyImport_MWh = sum(gcList, x -> x.v_winterWeekEnergyImport_MWh);
+area.v_winterWeekEnergyExport_MWh = sum(gcList, x -> x.v_winterWeekEnergyExport_MWh);
 
-area.v_naturalGasDemandWinterWeek_MWh = sum(gcList, x -> x.v_winterWeekImports_MWh.get(OL_EnergyCarriers.METHANE));
-area.v_petroleumProductsDemandWinterWeek_MWh= sum(gcList, x -> x.v_winterWeekImports_MWh.get(OL_EnergyCarriers.DIESEL));
-area.v_hydrogenImportWinterWeek_MWh = sum(gcList, x -> x.v_winterWeekImports_MWh.get(OL_EnergyCarriers.HYDROGEN));
-area.v_hydrogenExportWinterWeek_MWh = sum(gcList, x -> x.v_winterWeekExports_MWh.get(OL_EnergyCarriers.HYDROGEN));
+area.v_winterWeekEnergyProduced_MWh = sum(gcList, x -> x.v_winterWeekEnergyProduced_MWh);
+area.v_winterWeekEnergyConsumed_MWh = sum(gcList, x -> x.v_winterWeekEnergyConsumed_MWh);
+area.v_winterWeekEnergySelfConsumed_MWh = sum(gcList, x -> x.v_winterWeekEnergySelfConsumed_MWh);
+
+area.v_winterWeekElectricityProduced_MWh = sum(gcList, x -> x.v_winterWeekElectricityProduced_MWh);
+area.v_winterWeekElectricityConsumed_MWh = sum(gcList, x -> x.v_winterWeekElectricityConsumed_MWh);
+area.v_winterWeekElectricitySelfConsumed_MWh = sum(gcList, x -> x.v_winterWeekElectricitySelfConsumed_MWh);
 
 // Day/night
-area.v_importedEnergyDaytime_MWh = sum(gcList, x -> x.v_daytimeEnergyImport_MWh);
-area.v_exportedEnergyDaytime_MWh = sum(gcList, x -> x.v_daytimeEnergyExport_MWh);
-area.v_selfConsumedEnergyDaytime_MWh = sum(gcList, x -> x.v_daytimeEnergySelfConsumed_MWh);
+for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
+	area.v_daytimeImports_MWh.put( EC, sum(gcList, x -> x.v_daytimeImports_MWh.get(EC)) );
+	area.v_daytimeExports_MWh.put( EC, sum(gcList, x -> x.v_daytimeExports_MWh.get(EC)) );
+	area.v_nighttimeImports_MWh.put( EC, sum(gcList, x -> x.v_nighttimeImports_MWh.get(EC)) );
+	area.v_nighttimeExports_MWh.put( EC, sum(gcList, x -> x.v_nighttimeExports_MWh.get(EC)) );
+}
 
-area.v_importedElectricityDaytime_MWh = sum(gcList, x -> x.v_daytimeImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-area.v_exportedElectricityDaytime_MWh = sum(gcList, x -> x.v_daytimeExports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-area.v_selfConsumedElectricityDaytime_MWh = sum(gcList, x -> x.v_daytimeElectricitySelfConsumed_MWh);
+area.v_daytimeEnergyImport_MWh = sum(gcList, x -> x.v_daytimeEnergyImport_MWh);
+area.v_daytimeEnergyExport_MWh = sum(gcList, x -> x.v_daytimeEnergyExport_MWh);
 
-area.v_naturalGasDemandDaytime_MWh = sum(gcList, x -> x.v_daytimeImports_MWh.get(OL_EnergyCarriers.METHANE));
-area.v_petroleumProductsDemandDaytime_MWh= sum(gcList, x -> x.v_daytimeImports_MWh.get(OL_EnergyCarriers.DIESEL));
-area.v_hydrogenImportDaytime_MWh = sum(gcList, x -> x.v_daytimeImports_MWh.get(OL_EnergyCarriers.HYDROGEN));
-area.v_hydrogenExportDaytime_MWh = sum(gcList, x -> x.v_daytimeExports_MWh.get(OL_EnergyCarriers.HYDROGEN));
+area.v_daytimeEnergyProduced_MWh = sum(gcList, x -> x.v_daytimeEnergyProduced_MWh);
+area.v_daytimeEnergyConsumed_MWh = sum(gcList, x -> x.v_daytimeEnergyConsumed_MWh);
+area.v_daytimeEnergySelfConsumed_MWh = sum(gcList, x -> x.v_daytimeEnergySelfConsumed_MWh);
 
-area.v_importedEnergyNighttime_MWh = sum(gcList, x -> x.v_nighttimeEnergyImport_MWh);
-area.v_exportedEnergyNighttime_MWh = sum(gcList, x -> x.v_nighttimeEnergyExport_MWh);
-area.v_selfConsumedEnergyNighttime_MWh = sum(gcList, x -> x.v_nighttimeEnergySelfConsumed_MWh);
+area.v_daytimeElectricityProduced_MWh = sum(gcList, x -> x.v_daytimeElectricityProduced_MWh);
+area.v_daytimeElectricityConsumed_MWh = sum(gcList, x -> x.v_daytimeElectricityConsumed_MWh);
+area.v_daytimeElectricitySelfConsumed_MWh = sum(gcList, x -> x.v_daytimeElectricitySelfConsumed_MWh);
 
-area.v_importedElectricityNighttime_MWh = sum(gcList, x -> x.v_nighttimeImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-area.v_exportedElectricityNighttime_MWh = sum(gcList, x -> x.v_nighttimeExports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-area.v_selfConsumedElectricityNighttime_MWh = sum(gcList, x -> x.v_nighttimeElectricitySelfConsumed_MWh);
 
-area.v_naturalGasDemandNighttime_MWh = sum(gcList, x -> x.v_nighttimeImports_MWh.get(OL_EnergyCarriers.METHANE));
-area.v_petroleumProductsDemandNighttime_MWh= sum(gcList, x -> x.v_nighttimeImports_MWh.get(OL_EnergyCarriers.DIESEL));
-area.v_hydrogenImportNighttime_MWh = sum(gcList, x -> x.v_nighttimeImports_MWh.get(OL_EnergyCarriers.HYDROGEN));
-area.v_hydrogenExportNighttime_MWh = sum(gcList, x -> x.v_nighttimeExports_MWh.get(OL_EnergyCarriers.HYDROGEN));
+area.v_nighttimeEnergyImport_MWh = sum(gcList, x -> x.v_nighttimeEnergyImport_MWh);
+area.v_nighttimeEnergyExport_MWh = sum(gcList, x -> x.v_nighttimeEnergyExport_MWh);
+
+area.v_nighttimeEnergyProduced_MWh = sum(gcList, x -> x.v_nighttimeEnergyProduced_MWh);
+area.v_nighttimeEnergyConsumed_MWh = sum(gcList, x -> x.v_nighttimeEnergyConsumed_MWh);
+area.v_nighttimeEnergySelfConsumed_MWh = sum(gcList, x -> x.v_nighttimeEnergySelfConsumed_MWh);
+
+area.v_nighttimeElectricityProduced_MWh = sum(gcList, x -> x.v_nighttimeElectricityProduced_MWh);
+area.v_nighttimeElectricityConsumed_MWh = sum(gcList, x -> x.v_nighttimeElectricityConsumed_MWh);
+area.v_nighttimeElectricitySelfConsumed_MWh = sum(gcList, x -> x.v_nighttimeElectricitySelfConsumed_MWh);
 
 // Week/weekend
-area.v_importedEnergyWeekday_MWh = sum(gcList, x -> x.v_weekdayEnergyImport_MWh);
-area.v_exportedEnergyWeekday_MWh = sum(gcList, x -> x.v_weekdayEnergyExport_MWh);
-area.v_selfConsumedEnergyWeekday_MWh = sum(gcList, x -> x.v_weekdayEnergySelfConsumed_MWh);
+for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
+	area.v_weekdayImports_MWh.put( EC, sum(gcList, x -> x.v_weekdayImports_MWh.get(EC)) );
+	area.v_weekdayExports_MWh.put( EC, sum(gcList, x -> x.v_weekdayExports_MWh.get(EC)) );
+	area.v_weekendImports_MWh.put( EC, sum(gcList, x -> x.v_weekendImports_MWh.get(EC)) );
+	area.v_weekendExports_MWh.put( EC, sum(gcList, x -> x.v_weekendExports_MWh.get(EC)) );
+}
 
-area.v_importedElectricityWeekday_MWh = sum(gcList, x -> x.v_weekdayImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-area.v_exportedElectricityWeekday_MWh = sum(gcList, x -> x.v_weekdayExports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-area.v_selfConsumedElectricityWeekday_MWh = sum(gcList, x -> x.v_weekdayElectricitySelfConsumed_MWh);
+area.v_weekdayEnergyImport_MWh = sum(gcList, x -> x.v_weekdayEnergyImport_MWh);
+area.v_weekdayEnergyExport_MWh = sum(gcList, x -> x.v_weekdayEnergyExport_MWh);
 
-area.v_naturalGasDemandWeekday_MWh = sum(gcList, x -> x.v_weekdayImports_MWh.get(OL_EnergyCarriers.METHANE));
-area.v_petroleumProductsDemandWeekday_MWh= sum(gcList, x -> x.v_weekdayImports_MWh.get(OL_EnergyCarriers.DIESEL));
-area.v_hydrogenImportWeekday_MWh = sum(gcList, x -> x.v_weekdayImports_MWh.get(OL_EnergyCarriers.HYDROGEN));
-area.v_hydrogenExportWeekday_MWh = sum(gcList, x -> x.v_weekdayExports_MWh.get(OL_EnergyCarriers.HYDROGEN));
+area.v_weekdayEnergyProduced_MWh = sum(gcList, x -> x.v_weekdayEnergyProduced_MWh);
+area.v_weekdayEnergyConsumed_MWh = sum(gcList, x -> x.v_weekdayEnergyConsumed_MWh);
+area.v_weekdayEnergySelfConsumed_MWh = sum(gcList, x -> x.v_weekdayEnergySelfConsumed_MWh);
 
-area.v_importedEnergyWeekend_MWh = sum(gcList, x -> x.v_weekendEnergyImport_MWh);
-area.v_exportedEnergyWeekend_MWh = sum(gcList, x -> x.v_weekendEnergyExport_MWh);
-area.v_selfConsumedEnergyWeekend_MWh = sum(gcList, x -> x.v_weekendEnergySelfConsumed_MWh);
+area.v_weekdayElectricityProduced_MWh = sum(gcList, x -> x.v_weekdayElectricityProduced_MWh);
+area.v_weekdayElectricityConsumed_MWh = sum(gcList, x -> x.v_weekdayElectricityConsumed_MWh);
+area.v_weekdayElectricitySelfConsumed_MWh = sum(gcList, x -> x.v_weekdayElectricitySelfConsumed_MWh);
 
-area.v_importedElectricityWeekend_MWh = sum(gcList, x -> x.v_weekendImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-area.v_exportedElectricityWeekend_MWh = sum(gcList, x -> x.v_weekendExports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-area.v_selfConsumedElectricityWeekend_MWh = sum(gcList, x -> x.v_weekendElectricitySelfConsumed_MWh);
 
-area.v_naturalGasDemandWeekend_MWh = sum(gcList, x -> x.v_weekendImports_MWh.get(OL_EnergyCarriers.METHANE));
-area.v_petroleumProductsDemandWeekend_MWh= sum(gcList, x -> x.v_weekendImports_MWh.get(OL_EnergyCarriers.DIESEL));
-area.v_hydrogenImportWeekend_MWh = sum(gcList, x -> x.v_weekendImports_MWh.get(OL_EnergyCarriers.HYDROGEN));
-area.v_hydrogenExportWeekend_MWh = sum(gcList, x -> x.v_weekendExports_MWh.get(OL_EnergyCarriers.HYDROGEN));]]></Body>
+area.v_weekendEnergyImport_MWh = sum(gcList, x -> x.v_weekendEnergyImport_MWh);
+area.v_weekendEnergyExport_MWh = sum(gcList, x -> x.v_weekendEnergyExport_MWh);
+
+area.v_weekendEnergyProduced_MWh = sum(gcList, x -> x.v_weekendEnergyProduced_MWh);
+area.v_weekendEnergyConsumed_MWh = sum(gcList, x -> x.v_weekendEnergyConsumed_MWh);
+area.v_weekendEnergySelfConsumed_MWh = sum(gcList, x -> x.v_weekendEnergySelfConsumed_MWh);
+
+area.v_weekendElectricityProduced_MWh = sum(gcList, x -> x.v_weekendElectricityProduced_MWh);
+area.v_weekendElectricityConsumed_MWh = sum(gcList, x -> x.v_weekendElectricityConsumed_MWh);
+area.v_weekendElectricitySelfConsumed_MWh = sum(gcList, x -> x.v_weekendElectricitySelfConsumed_MWh);
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
