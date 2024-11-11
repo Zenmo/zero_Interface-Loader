@@ -2785,6 +2785,8 @@ mainArea.v_dataHydrogenSupplyLiveWeek_kW = energyModel.data_hydrogenSupply_kW;
 
 //Datasets for live summerWeek chart
 //Demand
+mainArea.v_summerWeekDemandDataSets_kW = energyModel.v_summerWeekDemandDataSets_kW;
+/*
 if ( energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
 	mainArea.v_dataNaturalGasDemandSummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE);
 }
@@ -2793,7 +2795,7 @@ if ( energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) != 
 }
 if ( energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 	mainArea.v_dataElectricityForHydrogenDemandSummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
-}
+}*/
 
 //mainArea.v_dataPetroleumProductsDemandSummerWeek_kW = energyModel.data_summerWeekDieselDemand_kW;
 //mainArea.v_dataNaturalGasDemandSummerWeek_kW = energyModel.data_summerWeekNaturalGasDemand_kW;
@@ -2803,9 +2805,12 @@ mainArea.v_dataElectricityForTransportDemandSummerWeek_kW = energyModel.data_sum
 mainArea.v_dataElectricityForStorageDemandSummerWeek_kW = energyModel.data_summerWeekBatteriesDemand_kW;
 
 //Supply
+/*
 if ( energyModel.v_summerWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 	mainArea.v_dataHydrogenSupplySummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
 }
+*/
+mainArea.v_summerWeekSupplyDataSets_kW = energyModel.v_summerWeekSupplyDataSets_kW;
 
 mainArea.v_dataElectricityWindSupplySummerWeek_kW = energyModel.data_summerWeekWindGeneration_kW;
 mainArea.v_dataElectricityPVSupplySummerWeek_kW = energyModel.data_summerWeekPVGeneration_kW;
@@ -2823,6 +2828,8 @@ mainArea.v_dataElectricitySupplyCapacitySummerWeek_kW.add(energyModel.p_startHou
 
 //Datasets for live winterWeek chart
 //Demand
+mainArea.v_winterWeekDemandDataSets_kW = energyModel.v_winterWeekDemandDataSets_kW;
+/*
 if ( energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
 	mainArea.v_dataNaturalGasDemandWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE);
 }
@@ -2831,7 +2838,7 @@ if ( energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) != 
 }
 if ( energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 	mainArea.v_dataElectricityForHydrogenDemandWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
-}
+}*/
 
 //mainArea.v_dataPetroleumProductsDemandWinterWeek_kW = energyModel.data_winterWeekDieselDemand_kW;
 //mainArea.v_dataNaturalGasDemandWinterWeek_kW = energyModel.data_winterWeekNaturalGasDemand_kW;
@@ -2841,9 +2848,12 @@ mainArea.v_dataElectricityForTransportDemandWinterWeek_kW = energyModel.data_win
 mainArea.v_dataElectricityForStorageDemandWinterWeek_kW = energyModel.data_winterWeekBatteriesDemand_kW;
 
 //Supply
+mainArea.v_winterWeekSupplyDataSets_kW = energyModel.v_winterWeekSupplyDataSets_kW;
+
+/*
 if ( energyModel.v_winterWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 	mainArea.v_dataHydrogenSupplyWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
-}
+}*/
 
 mainArea.v_dataElectricityWindSupplyWinterWeek_kW = energyModel.data_winterWeekWindGeneration_kW;
 mainArea.v_dataElectricityPVSupplyWinterWeek_kW = energyModel.data_winterWeekPVGeneration_kW;
@@ -2855,6 +2865,12 @@ mainArea.v_dataElectricityV2GSupplyWinterWeek_kW = energyModel.data_winterWeekV2
 
 //Datasets for yearly profiles chart
 //Demand
+//for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
+	mainArea.v_dailyAverageDemandDataSets_kW = energyModel.v_dailyAverageDemandDataSets_kW;
+	mainArea.v_dailyAverageSupplyDataSets_kW = energyModel.v_dailyAverageSupplyDataSets_kW;
+//}
+
+/*
 if ( energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
 	mainArea.v_dataNaturalGasDemandYear_kW = energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.METHANE);
 }
@@ -2864,16 +2880,17 @@ if ( energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) !
 if ( energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 	mainArea.v_dataElectricityForHydrogenDemandYear_kW = energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
 }
-
+*/
 mainArea.v_dataElectricityBaseloadDemandYear_kW = energyModel.data_annualBaseloadElectricityDemand_kW;
 mainArea.v_dataElectricityForHeatDemandYear_kW = energyModel.data_annualHeatPumpElectricityDemand_kW;
 mainArea.v_dataElectricityForTransportDemandYear_kW = energyModel.data_annualElectricVehicleDemand_kW;
 mainArea.v_dataElectricityForStorageDemandYear_kW = energyModel.data_annualBatteriesDemand_kW;
 
 //Supply
-if ( energyModel.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+
+/*if ( energyModel.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 	mainArea.v_dataHydrogenSupplyYear_kW = energyModel.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
-}
+}*/
 
 mainArea.v_dataElectricityWindSupplyYear_kW = energyModel.data_annualWindGeneration_kW;
 mainArea.v_dataElectricityPVSupplyYear_kW = energyModel.data_annualPVGeneration_kW;
@@ -2883,8 +2900,8 @@ mainArea.v_dataElectricityV2GSupplyYear_kW = energyModel.data_annualV2GSupply_kW
 //District heating
 
 // Data for gespreksleidraad1
-mainArea.v_dataElectricityDemandYear_kW = energyModel.data_annualElectricityDemand_kW;
-mainArea.v_dataElectricitySupplyYear_kW = energyModel.data_annualElectricitySupply_kW;
+//mainArea.v_dataElectricityDemandYear_kW = energyModel.data_annualElectricityDemand_kW;
+//mainArea.v_dataElectricitySupplyYear_kW = energyModel.data_annualElectricitySupply_kW;
 
 //Datasets for netloaddurationcurves
 mainArea.v_dataNetbelastingDuurkrommeYear_kW = energyModel.data_netbelastingDuurkromme_kW;
@@ -2984,6 +3001,9 @@ area.v_dataElectricitySupplyCapacityLiveWeek_kW = energyModel.data_gridCapacityS
 
 //Datasets for live summerWeek chart
 //Demand
+area.v_summerWeekDemandDataSets_kW = energyModel.v_summerWeekDemandDataSets_kW;
+
+/*
 if ( energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
 	area.v_dataNaturalGasDemandSummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE);
 }
@@ -2992,7 +3012,7 @@ if ( energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) != 
 }
 if ( energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 	area.v_dataElectricityForHydrogenDemandSummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
-}
+}*/
 
 area.v_dataElectricityBaseloadDemandSummerWeek_kW = energyModel.data_summerWeekBaseloadElectricityDemand_kW;
 area.v_dataElectricityForHeatDemandSummerWeek_kW = energyModel.data_summerWeekHeatPumpElectricityDemand_kW;
@@ -3000,9 +3020,12 @@ area.v_dataElectricityForTransportDemandSummerWeek_kW = energyModel.data_summerW
 area.v_dataElectricityForStorageDemandSummerWeek_kW = energyModel.data_summerWeekBatteriesDemand_kW;
 
 //Supply
+area.v_summerWeekSupplyDataSets_kW = energyModel.v_summerWeekSupplyDataSets_kW;
+
+/*
 if ( energyModel.v_summerWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 	area.v_dataHydrogenSupplySummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
-}
+}*/
 
 area.v_dataElectricityWindSupplySummerWeek_kW = energyModel.data_summerWeekWindGeneration_kW;
 area.v_dataElectricityPVSupplySummerWeek_kW = energyModel.data_summerWeekPVGeneration_kW;
@@ -3020,6 +3043,9 @@ area.v_dataElectricitySupplyCapacitySummerWeek_kW.add(energyModel.p_startHourSum
 
 //Datasets for live winterWeek chart
 //Demand
+area.v_winterWeekDemandDataSets_kW = energyModel.v_winterWeekDemandDataSets_kW;
+
+/*
 if ( energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
 	area.v_dataNaturalGasDemandWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE);
 }
@@ -3028,7 +3054,7 @@ if ( energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) != 
 }
 if ( energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 	area.v_dataElectricityForHydrogenDemandWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
-}
+}*/
 
 area.v_dataElectricityBaseloadDemandWinterWeek_kW = energyModel.data_winterWeekBaseloadElectricityDemand_kW;
 area.v_dataElectricityForHeatDemandWinterWeek_kW = energyModel.data_winterWeekHeatPumpElectricityDemand_kW;
@@ -3036,9 +3062,12 @@ area.v_dataElectricityForTransportDemandWinterWeek_kW = energyModel.data_winterW
 area.v_dataElectricityForStorageDemandWinterWeek_kW = energyModel.data_winterWeekBatteriesDemand_kW;
 
 //Supply
+area.v_winterWeekSupplyDataSets_kW = energyModel.v_winterWeekSupplyDataSets_kW;
+
+/*
 if ( energyModel.v_winterWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 	area.v_dataHydrogenSupplyWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
-}
+}*/
 
 area.v_dataElectricityWindSupplyWinterWeek_kW = energyModel.data_winterWeekWindGeneration_kW;
 area.v_dataElectricityPVSupplyWinterWeek_kW = energyModel.data_winterWeekPVGeneration_kW;
@@ -3051,6 +3080,11 @@ area.v_dataElectricityV2GSupplyWinterWeek_kW = energyModel.data_winterWeekV2GSup
 
 //Datasets for yearly profiles chart
 //Demand
+
+	area.v_dailyAverageDemandDataSets_kW = energyModel.v_dailyAverageDemandDataSets_kW;
+	area.v_dailyAverageSupplyDataSets_kW = energyModel.v_dailyAverageSupplyDataSets_kW;
+	
+/*
 if ( energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
 	area.v_dataNaturalGasDemandYear_kW = energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.METHANE);
 }
@@ -3059,7 +3093,7 @@ if ( energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) !
 }
 if ( energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 	area.v_dataElectricityForHydrogenDemandYear_kW = energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
-}
+}*/
 
 area.v_dataElectricityBaseloadDemandYear_kW = energyModel.data_annualBaseloadElectricityDemand_kW;
 area.v_dataElectricityForHeatDemandYear_kW = energyModel.data_annualHeatPumpElectricityDemand_kW;
@@ -3067,9 +3101,9 @@ area.v_dataElectricityForTransportDemandYear_kW = energyModel.data_annualElectri
 area.v_dataElectricityForStorageDemandYear_kW = energyModel.data_annualBatteriesDemand_kW;
 
 //Supply
-if ( energyModel.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
+/*if ( energyModel.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 	area.v_dataHydrogenSupplyYear_kW = energyModel.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
-}
+}*/
 
 area.v_dataElectricityWindSupplyYear_kW = energyModel.data_annualWindGeneration_kW;
 area.v_dataElectricityPVSupplyYear_kW = energyModel.data_annualPVGeneration_kW;
@@ -3080,8 +3114,8 @@ area.v_dataElectricityV2GSupplyYear_kW = energyModel.data_annualV2GSupply_kW;
 //District heating
 
 // Data for gespreksleidraad1
-area.v_dataElectricityDemandYear_kW = energyModel.data_annualElectricityDemand_kW;
-area.v_dataElectricitySupplyYear_kW = energyModel.data_annualElectricitySupply_kW;
+//area.v_dataElectricityDemandYear_kW = energyModel.data_annualElectricityDemand_kW;
+//area.v_dataElectricitySupplyYear_kW = energyModel.data_annualElectricitySupply_kW;
 area.v_dataNetLoadYear_kW = energyModel.v_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries();
 
 //Datasets for netloaddurationcurves
@@ -4240,54 +4274,65 @@ if( area.v_dataElectricityBaseloadDemandYear_kW != null ){
 	area.v_dataElectricityForHeatDemandYear_kW.reset();
 	area.v_dataElectricityForTransportDemandYear_kW.reset();
 	area.v_dataElectricityForStorageDemandYear_kW.reset();
-	area.v_dataNaturalGasDemandYear_kW.reset();
-	area.v_dataPetroleumProductsDemandYear_kW.reset();
-	area.v_dataElectricityForHydrogenDemandYear_kW.reset();
+	//area.v_dataNaturalGasDemandYear_kW.reset();
+	//area.v_dataPetroleumProductsDemandYear_kW.reset();
+	//area.v_dataElectricityForHydrogenDemandYear_kW.reset();
 	area.v_dataElectricityPVSupplyYear_kW.reset();
 	area.v_dataElectricityWindSupplyYear_kW.reset(); 
 	area.v_dataElectricityStorageSupplyYear_kW.reset();
 	area.v_dataElectricityV2GSupplyYear_kW.reset();
-	area.v_dataHydrogenSupplyYear_kW.reset();
+	//area.v_dataHydrogenSupplyYear_kW.reset();
 }
 else{
 	area.v_dataElectricityBaseloadDemandYear_kW= new DataSet(365);
 	area.v_dataElectricityForHeatDemandYear_kW= new DataSet(365);
 	area.v_dataElectricityForTransportDemandYear_kW= new DataSet(365);
 	area.v_dataElectricityForStorageDemandYear_kW= new DataSet(365);
-	area.v_dataNaturalGasDemandYear_kW= new DataSet(365);
-	area.v_dataPetroleumProductsDemandYear_kW= new DataSet(365);
-	area.v_dataElectricityForHydrogenDemandYear_kW= new DataSet(365);
+	//area.v_dataNaturalGasDemandYear_kW= new DataSet(365);
+	//area.v_dataPetroleumProductsDemandYear_kW= new DataSet(365);
+	//area.v_dataElectricityForHydrogenDemandYear_kW= new DataSet(365);
 	area.v_dataElectricityPVSupplyYear_kW= new DataSet(365);
 	area.v_dataElectricityWindSupplyYear_kW= new DataSet(365);
 	area.v_dataElectricityStorageSupplyYear_kW= new DataSet(365);
 	area.v_dataElectricityV2GSupplyYear_kW= new DataSet(365);
-	area.v_dataHydrogenSupplyYear_kW= new DataSet(365);
+	//area.v_dataHydrogenSupplyYear_kW= new DataSet(365);
 }
 
 for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); i++){ //we sume over the size of a random dataset (all datasets in this loop should ahve same size)
 	
 	//Create local variables
 	double timeAxisValue = gcList.get(0).data_annualBaseloadElectricityDemand_kW.getX(i); // we get the X value from a random dataset 
+	
+	double dailyAverageDemand_kW = 0;
+	double dailyAverageSupply_kW = 0;
+	
 	double electricityBaseloadDemandYear_kW = 0;
 	double electricityForHeatDemandYear_kW = 0;
 	double electricityForTransportDemandYear_kW = 0;
 	double electricityForStorageDemandYear_kW = 0;
-	double naturalGasDemandYear_kW = 0;
-	double petroleumProductsDemandYear_kW = 0;
-	double electricityForHydrogenDemandYear_kW = 0;
+	//double naturalGasDemandYear_kW = 0;
+	//double petroleumProductsDemandYear_kW = 0;
+	//double electricityForHydrogenDemandYear_kW = 0;
 	double electricityPVSupplyYear_kW = 0;
 	double electricityWindSupplyYear_kW = 0;
 	double electricityStorageSupplyYear_kW = 0;
 	double electricityV2GSupplyYear_kW = 0;
-	double hydrogenSupplyYear_kW = 0;
+	//double hydrogenSupplyYear_kW = 0;
 	
 	//accumulate values over gridcongestion
 	for (GridConnection gc : gcList){
+		
+		for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
+			dailyAverageDemand_kW += gc.v_dailyAverageDemandDataSets_kW.get(EC).getY(i);
+			dailyAverageSupply_kW += gc.v_dailyAverageSupplyDataSets_kW.get(EC).getY(i);
+		}
+	
 		electricityBaseloadDemandYear_kW += gc.data_annualBaseloadElectricityDemand_kW.getY(i);
 		electricityForHeatDemandYear_kW += gc.data_annualHeatPumpElectricityDemand_kW.getY(i);
 		electricityForTransportDemandYear_kW += gc.data_annualElectricVehicleDemand_kW.getY(i);
 		electricityForStorageDemandYear_kW += gc.data_annualBatteriesDemand_kW.getY(i);
 		
+		/*
 		// These if statements can be removed if the AreaCollection is updated and we can loop over keysets.
 		if ( gc.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
 			naturalGasDemandYear_kW += gc.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.METHANE).getY(i);
@@ -4298,14 +4343,17 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 		if ( gc.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 			electricityForHydrogenDemandYear_kW += gc.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
 		}
+		*/
 		
 		electricityPVSupplyYear_kW += gc.data_annualPVGeneration_kW.getY(i);
 		electricityWindSupplyYear_kW += gc.data_annualWindGeneration_kW.getY(i);
 		electricityStorageSupplyYear_kW += gc.data_annualBatteriesSupply_kW.getY(i);
 		electricityV2GSupplyYear_kW += gc.data_annualV2GSupply_kW.getY(i);
+		/*
 		if ( gc.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 			hydrogenSupplyYear_kW += gc.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
 		}
+		*/
 	}
 	
 	//add accumulated values to dataset
@@ -4313,15 +4361,19 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 	area.v_dataElectricityForHeatDemandYear_kW.add(timeAxisValue, electricityForHeatDemandYear_kW);
 	area.v_dataElectricityForTransportDemandYear_kW.add(timeAxisValue, electricityForTransportDemandYear_kW);
 	area.v_dataElectricityForStorageDemandYear_kW.add(timeAxisValue, electricityForStorageDemandYear_kW);
-	area.v_dataNaturalGasDemandYear_kW.add(timeAxisValue, naturalGasDemandYear_kW);
-	area.v_dataPetroleumProductsDemandYear_kW.add(timeAxisValue, petroleumProductsDemandYear_kW);
-	area.v_dataElectricityForHydrogenDemandYear_kW.add(timeAxisValue, electricityForHydrogenDemandYear_kW);
+	//area.v_dataNaturalGasDemandYear_kW.add(timeAxisValue, naturalGasDemandYear_kW);
+	//area.v_dataPetroleumProductsDemandYear_kW.add(timeAxisValue, petroleumProductsDemandYear_kW);
+	//area.v_dataElectricityForHydrogenDemandYear_kW.add(timeAxisValue, electricityForHydrogenDemandYear_kW);
 	
 	area.v_dataElectricityPVSupplyYear_kW.add(timeAxisValue, electricityPVSupplyYear_kW);
 	area.v_dataElectricityWindSupplyYear_kW.add(timeAxisValue, electricityWindSupplyYear_kW);
 	area.v_dataElectricityStorageSupplyYear_kW.add(timeAxisValue, electricityStorageSupplyYear_kW);
 	area.v_dataElectricityV2GSupplyYear_kW.add(timeAxisValue, electricityV2GSupplyYear_kW);
-	area.v_dataHydrogenSupplyYear_kW.add(timeAxisValue, hydrogenSupplyYear_kW);
+	//area.v_dataHydrogenSupplyYear_kW.add(timeAxisValue, hydrogenSupplyYear_kW);
+	for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
+		area.v_dailyAverageDemandDataSets_kW.get(EC).add(timeAxisValue, dailyAverageDemand_kW);
+		area.v_dailyAverageSupplyDataSets_kW.get(EC).add(timeAxisValue, dailyAverageSupply_kW);
+	}
 }]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -4351,27 +4403,27 @@ if( area.v_dataElectricityBaseloadDemandSummerWeek_kW != null ){
 	area.v_dataElectricityForHeatDemandSummerWeek_kW.reset();
 	area.v_dataElectricityForTransportDemandSummerWeek_kW.reset();
 	area.v_dataElectricityForStorageDemandSummerWeek_kW.reset();
-	area.v_dataNaturalGasDemandSummerWeek_kW.reset();
-	area.v_dataPetroleumProductsDemandSummerWeek_kW.reset();
-	area.v_dataElectricityForHydrogenDemandSummerWeek_kW.reset();
+	//area.v_dataNaturalGasDemandSummerWeek_kW.reset();
+	//area.v_dataPetroleumProductsDemandSummerWeek_kW.reset();
+	//area.v_dataElectricityForHydrogenDemandSummerWeek_kW.reset();
 	area.v_dataElectricityPVSupplySummerWeek_kW.reset();
 	area.v_dataElectricityWindSupplySummerWeek_kW.reset(); 
 	area.v_dataElectricityStorageSupplySummerWeek_kW.reset();
 	area.v_dataElectricityV2GSupplySummerWeek_kW.reset();
-	area.v_dataHydrogenSupplySummerWeek_kW.reset();
+	//area.v_dataHydrogenSupplySummerWeek_kW.reset();
 	
 	area.v_dataElectricityBaseloadDemandWinterWeek_kW.reset();
 	area.v_dataElectricityForHeatDemandWinterWeek_kW.reset();
 	area.v_dataElectricityForTransportDemandWinterWeek_kW.reset();
 	area.v_dataElectricityForStorageDemandWinterWeek_kW.reset();
-	area.v_dataNaturalGasDemandWinterWeek_kW.reset();
-	area.v_dataPetroleumProductsDemandWinterWeek_kW.reset();
-	area.v_dataElectricityForHydrogenDemandWinterWeek_kW.reset();
+	//area.v_dataNaturalGasDemandWinterWeek_kW.reset();
+	//area.v_dataPetroleumProductsDemandWinterWeek_kW.reset();
+	//area.v_dataElectricityForHydrogenDemandWinterWeek_kW.reset();
 	area.v_dataElectricityPVSupplyWinterWeek_kW.reset();
 	area.v_dataElectricityWindSupplyWinterWeek_kW.reset(); 
 	area.v_dataElectricityStorageSupplyWinterWeek_kW.reset();
 	area.v_dataElectricityV2GSupplyWinterWeek_kW.reset();
-	area.v_dataHydrogenSupplyWinterWeek_kW.reset();
+	//area.v_dataHydrogenSupplyWinterWeek_kW.reset();
 	
 	area.v_dataNetLoadSummerWeek_kW.reset();
 	area.v_dataNetLoadWinterWeek_kW.reset();
@@ -4386,27 +4438,27 @@ else {
 	area.v_dataElectricityForHeatDemandSummerWeek_kW = new DataSet(672);
 	area.v_dataElectricityForTransportDemandSummerWeek_kW = new DataSet(672);
 	area.v_dataElectricityForStorageDemandSummerWeek_kW = new DataSet(672);
-	area.v_dataNaturalGasDemandSummerWeek_kW = new DataSet(672);
-	area.v_dataPetroleumProductsDemandSummerWeek_kW = new DataSet(672);
-	area.v_dataElectricityForHydrogenDemandSummerWeek_kW = new DataSet(672);
+	//area.v_dataNaturalGasDemandSummerWeek_kW = new DataSet(672);
+	//area.v_dataPetroleumProductsDemandSummerWeek_kW = new DataSet(672);
+	//area.v_dataElectricityForHydrogenDemandSummerWeek_kW = new DataSet(672);
 	area.v_dataElectricityPVSupplySummerWeek_kW = new DataSet(672);
 	area.v_dataElectricityWindSupplySummerWeek_kW = new DataSet(672);
 	area.v_dataElectricityStorageSupplySummerWeek_kW = new DataSet(672);
 	area.v_dataElectricityV2GSupplySummerWeek_kW = new DataSet(672);
-	area.v_dataHydrogenSupplySummerWeek_kW = new DataSet(672);
+	//area.v_dataHydrogenSupplySummerWeek_kW = new DataSet(672);
 	
 	area.v_dataElectricityBaseloadDemandWinterWeek_kW = new DataSet(672);
 	area.v_dataElectricityForHeatDemandWinterWeek_kW = new DataSet(672);
 	area.v_dataElectricityForTransportDemandWinterWeek_kW = new DataSet(672);
 	area.v_dataElectricityForStorageDemandWinterWeek_kW = new DataSet(672);
-	area.v_dataNaturalGasDemandWinterWeek_kW = new DataSet(672);
-	area.v_dataPetroleumProductsDemandWinterWeek_kW = new DataSet(672);
-	area.v_dataElectricityForHydrogenDemandWinterWeek_kW = new DataSet(672);
+	//area.v_dataNaturalGasDemandWinterWeek_kW = new DataSet(672);
+	//area.v_dataPetroleumProductsDemandWinterWeek_kW = new DataSet(672);
+	//area.v_dataElectricityForHydrogenDemandWinterWeek_kW = new DataSet(672);
 	area.v_dataElectricityPVSupplyWinterWeek_kW = new DataSet(672);
 	area.v_dataElectricityWindSupplyWinterWeek_kW = new DataSet(672);
 	area.v_dataElectricityStorageSupplyWinterWeek_kW = new DataSet(672);
 	area.v_dataElectricityV2GSupplyWinterWeek_kW = new DataSet(672);
-	area.v_dataHydrogenSupplyWinterWeek_kW = new DataSet(672);
+	//area.v_dataHydrogenSupplyWinterWeek_kW = new DataSet(672);
 	
 	area.v_dataNetLoadSummerWeek_kW = new DataSet(672);
 	area.v_dataNetLoadWinterWeek_kW = new DataSet(672);
@@ -4414,6 +4466,12 @@ else {
 	area.v_dataElectricityDemandCapacityWinterWeek_kW = new DataSet(672);
 	area.v_dataElectricitySupplyCapacitySummerWeek_kW = new DataSet(672);
 	area.v_dataElectricitySupplyCapacityWinterWeek_kW = new DataSet(672);
+	
+	
+	area.v_summerWeekDemandDataSets_kW.createEmptyDataSets(energyModel.c_activeEnergyCarriers, (int) (672 / energyModel.p_timeStep_h));
+	area.v_summerWeekSupplyDataSets_kW.createEmptyDataSets(energyModel.c_activeEnergyCarriers, (int) (672 / energyModel.p_timeStep_h));
+	area.v_winterWeekDemandDataSets_kW.createEmptyDataSets(energyModel.c_activeEnergyCarriers, (int) (672 / energyModel.p_timeStep_h));
+	area.v_winterWeekSupplyDataSets_kW.createEmptyDataSets(energyModel.c_activeEnergyCarriers, (int) (672 / energyModel.p_timeStep_h));
 }
 
 
@@ -4423,31 +4481,38 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 	double timeAxisValueSummer = gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.getX(i); // we get the X value from a random dataset 
 	double timeAxisValueWinter = gcList.get(0).data_winterWeekBaseloadElectricityDemand_kW.getX(i); // we get the X value from a random dataset 
 	
+	J_FlowsMap demandSummerWeek_kW = new J_FlowsMap();
+	J_FlowsMap supplySummerWeek_kW = new J_FlowsMap();
+	
+	J_FlowsMap demandWinterWeek_kW = new J_FlowsMap();
+	J_FlowsMap supplyWinterWeek_kW = new J_FlowsMap();
+	
+	
 	double electricityBaseloadDemandSummerWeek_kW = 0;
 	double electricityForHeatDemandSummerWeek_kW = 0;
 	double electricityForTransportDemandSummerWeek_kW = 0;
 	double electricityForStorageDemandSummerWeek_kW = 0;
-	double naturalGasDemandSummerWeek_kW = 0;
-	double petroleumProductsDemandSummerWeek_kW = 0;
-	double electricityForHydrogenDemandSummerWeek_kW = 0;
+	//double naturalGasDemandSummerWeek_kW = 0;
+	//double petroleumProductsDemandSummerWeek_kW = 0;
+	//double electricityForHydrogenDemandSummerWeek_kW = 0;
 	double electricityPVSupplySummerWeek_kW = 0;
 	double electricityWindSupplySummerWeek_kW = 0;
 	double electricityStorageSupplySummerWeek_kW = 0;
 	double electricityV2GSupplySummerWeek_kW = 0;
-	double hydrogenSupplySummerWeek_kW = 0;
+	//double hydrogenSupplySummerWeek_kW = 0;
 	
 	double electricityBaseloadDemandWinterWeek_kW = 0;
 	double electricityForHeatDemandWinterWeek_kW = 0;
 	double electricityForTransportDemandWinterWeek_kW = 0;
 	double electricityForStorageDemandWinterWeek_kW = 0;
-	double naturalGasDemandWinterWeek_kW = 0;
-	double petroleumProductsDemandWinterWeek_kW = 0;
-	double electricityForHydrogenDemandWinterWeek_kW = 0;
+	//double naturalGasDemandWinterWeek_kW = 0;
+	//double petroleumProductsDemandWinterWeek_kW = 0;
+	//double electricityForHydrogenDemandWinterWeek_kW = 0;
 	double electricityPVSupplyWinterWeek_kW = 0;
 	double electricityWindSupplyWinterWeek_kW = 0;
 	double electricityStorageSupplyWinterWeek_kW = 0;
 	double electricityV2GSupplyWinterWeek_kW = 0;
-	double hydrogenSupplyWinterWeek_kW = 0;
+	//double hydrogenSupplyWinterWeek_kW = 0;
 	
 	double netLoadSummerWeek_kW = 0;
 	double netLoadWinterWeek_kW = 0;
@@ -4458,11 +4523,19 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 	
 	//accumulate values over gridcongestion
 	for (GridConnection gc : gcList){
+		for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
+			demandSummerWeek_kW.addFlow(EC, gc.v_summerWeekDemandDataSets_kW.get(EC).getY(i));
+			supplySummerWeek_kW.addFlow(EC, gc.v_summerWeekSupplyDataSets_kW.get(EC).getY(i));
+			demandWinterWeek_kW.addFlow(EC, gc.v_winterWeekDemandDataSets_kW.get(EC).getY(i));
+			supplyWinterWeek_kW.addFlow(EC, gc.v_winterWeekSupplyDataSets_kW.get(EC).getY(i));
+		}
+	
 		electricityBaseloadDemandSummerWeek_kW += gc.data_summerWeekBaseloadElectricityDemand_kW.getY(i);
 		electricityForHeatDemandSummerWeek_kW += gc.data_summerWeekHeatPumpElectricityDemand_kW.getY(i);
 		electricityForTransportDemandSummerWeek_kW += gc.data_summerWeekElectricVehicleDemand_kW.getY(i);
 		electricityForStorageDemandSummerWeek_kW += gc.data_summerWeekBatteriesDemand_kW.getY(i);
 		
+		/*
 		if ( gc.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
 			naturalGasDemandSummerWeek_kW += gc.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE).getY(i);
 		}
@@ -4471,22 +4544,24 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 		}
 		if ( gc.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 			electricityForHydrogenDemandSummerWeek_kW += gc.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
-		}
+		}*/
 		
 		electricityPVSupplySummerWeek_kW += gc.data_summerWeekPVGeneration_kW.getY(i);
 		electricityWindSupplySummerWeek_kW += gc.data_summerWeekWindGeneration_kW.getY(i);
 		electricityStorageSupplySummerWeek_kW += gc.data_summerWeekBatteriesSupply_kW.getY(i);
 		electricityV2GSupplySummerWeek_kW += gc.data_summerWeekV2GSupply_kW.getY(i);
 		
+		/*
 		if ( gc.v_summerWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 			hydrogenSupplySummerWeek_kW += gc.v_summerWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
-		}
+		}*/
 		
 		electricityBaseloadDemandWinterWeek_kW += gc.data_winterWeekBaseloadElectricityDemand_kW.getY(i);
 		electricityForHeatDemandWinterWeek_kW += gc.data_winterWeekHeatPumpElectricityDemand_kW.getY(i);
 		electricityForTransportDemandWinterWeek_kW += gc.data_winterWeekElectricVehicleDemand_kW.getY(i);
 		electricityForStorageDemandWinterWeek_kW += gc.data_winterWeekBatteriesDemand_kW.getY(i);
 		
+		/*
 		if ( gc.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
 			naturalGasDemandWinterWeek_kW += gc.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE).getY(i);
 		}
@@ -4495,16 +4570,18 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 		}
 		if ( gc.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 			electricityForHydrogenDemandWinterWeek_kW += gc.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
-		}
+		}*/
 		
 		electricityPVSupplyWinterWeek_kW += gc.data_winterWeekPVGeneration_kW.getY(i);
 		electricityWindSupplyWinterWeek_kW += gc.data_winterWeekWindGeneration_kW.getY(i);
 		electricityStorageSupplyWinterWeek_kW += gc.data_winterWeekBatteriesSupply_kW.getY(i);
 		electricityV2GSupplyWinterWeek_kW += gc.data_winterWeekV2GSupply_kW.getY(i);
 		
+		/*
 		if ( gc.v_winterWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 			hydrogenSupplyWinterWeek_kW += gc.v_winterWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
-		}
+		}*/
+		
 		//netLoadSummerWeek_kW += gc.acc_summerElectricityBalance_kW.getY(i);
 		netLoadWinterWeek_kW += gc.v_winterWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getY(i);
 		electricityDemandCapacitySummerWeek_kW += gc.acc_summerWeekDeliveryCapacity_kW.getY(i);
@@ -4518,14 +4595,14 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 	area.v_dataElectricityForHeatDemandSummerWeek_kW.add(timeAxisValueSummer, electricityForHeatDemandSummerWeek_kW);
 	area.v_dataElectricityForTransportDemandSummerWeek_kW.add(timeAxisValueSummer, electricityForTransportDemandSummerWeek_kW);
 	area.v_dataElectricityForStorageDemandSummerWeek_kW.add(timeAxisValueSummer, electricityForStorageDemandSummerWeek_kW);
-	area.v_dataNaturalGasDemandSummerWeek_kW.add(timeAxisValueSummer, naturalGasDemandSummerWeek_kW);
-	area.v_dataPetroleumProductsDemandSummerWeek_kW.add(timeAxisValueSummer, petroleumProductsDemandSummerWeek_kW);
-	area.v_dataElectricityForHydrogenDemandSummerWeek_kW.add(timeAxisValueSummer, electricityForHydrogenDemandSummerWeek_kW);
+	//area.v_dataNaturalGasDemandSummerWeek_kW.add(timeAxisValueSummer, naturalGasDemandSummerWeek_kW);
+	//area.v_dataPetroleumProductsDemandSummerWeek_kW.add(timeAxisValueSummer, petroleumProductsDemandSummerWeek_kW);
+	//area.v_dataElectricityForHydrogenDemandSummerWeek_kW.add(timeAxisValueSummer, electricityForHydrogenDemandSummerWeek_kW);
 	area.v_dataElectricityPVSupplySummerWeek_kW.add(timeAxisValueSummer, electricityPVSupplySummerWeek_kW);
 	area.v_dataElectricityWindSupplySummerWeek_kW.add(timeAxisValueSummer, electricityWindSupplySummerWeek_kW);
 	area.v_dataElectricityStorageSupplySummerWeek_kW.add(timeAxisValueSummer, electricityStorageSupplySummerWeek_kW);
 	area.v_dataElectricityV2GSupplySummerWeek_kW.add(timeAxisValueSummer, electricityV2GSupplySummerWeek_kW);
-	area.v_dataHydrogenSupplySummerWeek_kW.add(timeAxisValueSummer, hydrogenSupplySummerWeek_kW);
+	//area.v_dataHydrogenSupplySummerWeek_kW.add(timeAxisValueSummer, hydrogenSupplySummerWeek_kW);
 	
 	area.v_dataNetLoadSummerWeek_kW.add(timeAxisValueSummer, netLoadSummerWeek_kW);
 	area.v_dataElectricityDemandCapacitySummerWeek_kW.add(timeAxisValueSummer, electricityDemandCapacitySummerWeek_kW);
@@ -4535,18 +4612,25 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 	area.v_dataElectricityForHeatDemandWinterWeek_kW.add(timeAxisValueWinter, electricityForHeatDemandWinterWeek_kW);
 	area.v_dataElectricityForTransportDemandWinterWeek_kW.add(timeAxisValueWinter, electricityForTransportDemandWinterWeek_kW);
 	area.v_dataElectricityForStorageDemandWinterWeek_kW.add(timeAxisValueWinter, electricityForStorageDemandWinterWeek_kW);
-	area.v_dataNaturalGasDemandWinterWeek_kW.add(timeAxisValueWinter, naturalGasDemandWinterWeek_kW);
-	area.v_dataPetroleumProductsDemandWinterWeek_kW.add(timeAxisValueWinter, petroleumProductsDemandWinterWeek_kW);
-	area.v_dataElectricityForHydrogenDemandWinterWeek_kW.add(timeAxisValueWinter, electricityForHydrogenDemandWinterWeek_kW);
+	//area.v_dataNaturalGasDemandWinterWeek_kW.add(timeAxisValueWinter, naturalGasDemandWinterWeek_kW);
+	//area.v_dataPetroleumProductsDemandWinterWeek_kW.add(timeAxisValueWinter, petroleumProductsDemandWinterWeek_kW);
+	//area.v_dataElectricityForHydrogenDemandWinterWeek_kW.add(timeAxisValueWinter, electricityForHydrogenDemandWinterWeek_kW);
 	area.v_dataElectricityPVSupplyWinterWeek_kW.add(timeAxisValueWinter, electricityPVSupplyWinterWeek_kW);
 	area.v_dataElectricityWindSupplyWinterWeek_kW.add(timeAxisValueWinter, electricityWindSupplyWinterWeek_kW);
 	area.v_dataElectricityStorageSupplyWinterWeek_kW.add(timeAxisValueWinter, electricityStorageSupplyWinterWeek_kW);
 	area.v_dataElectricityV2GSupplyWinterWeek_kW.add(timeAxisValueWinter, electricityV2GSupplyWinterWeek_kW);
-	area.v_dataHydrogenSupplyWinterWeek_kW.add(timeAxisValueWinter, hydrogenSupplyWinterWeek_kW);	
+	//area.v_dataHydrogenSupplyWinterWeek_kW.add(timeAxisValueWinter, hydrogenSupplyWinterWeek_kW);	
 
 	area.v_dataNetLoadWinterWeek_kW.add(timeAxisValueWinter, netLoadWinterWeek_kW);
 	area.v_dataElectricityDemandCapacityWinterWeek_kW.add(timeAxisValueWinter, electricityDemandCapacityWinterWeek_kW);
 	area.v_dataElectricitySupplyCapacityWinterWeek_kW.add(timeAxisValueWinter, electricitySupplyCapacityWinterWeek_kW);
+	
+	for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
+		area.v_summerWeekDemandDataSets_kW.get(EC).add(timeAxisValueSummer, demandSummerWeek_kW.get(EC));
+		area.v_summerWeekSupplyDataSets_kW.get(EC).add(timeAxisValueSummer, supplySummerWeek_kW.get(EC));
+		area.v_winterWeekDemandDataSets_kW.get(EC).add(timeAxisValueSummer, demandWinterWeek_kW.get(EC));
+		area.v_winterWeekSupplyDataSets_kW.get(EC).add(timeAxisValueSummer, supplyWinterWeek_kW.get(EC));
+	}
 }]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -5076,8 +5160,8 @@ if (c_selectedGridConnections.size() > 0) {
 			}
 			
 			f_updateTotalLiveDataSets();
-			f_updateTotalYearlyDataSets();
-			f_updateTotalWeeklyDataSets();
+			//f_updateTotalYearlyDataSets();
+			//f_updateTotalWeeklyDataSets();
 	
 		}
 	}
@@ -5636,6 +5720,7 @@ for (int j = 0; j < c_selectedGridConnections.size(); j++) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725442474483</Id>
 					<Name><![CDATA[f_updateTotalYearlyDataSets]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-645</X><Y>890</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -5647,8 +5732,8 @@ for (int j = 0; j < c_selectedGridConnections.size(); j++) {
 	AC.v_dataTotalElectricityDemandYear_kW = new DataSet(365);
 	AC.v_dataTotalElectricitySupplyYear_kW = new DataSet(365);
 
-	int yearSize = AC.v_dataElectricityBaseloadDemandYear_kW.size();
-	for (int k = 0; k < yearSize; k++) {
+	int dataSetSize = AC.v_dataElectricityBaseloadDemandYear_kW.size();
+	for (int k = 0; k < dataSetSize; k++) {
 		double timeAxisValue = AC.v_dataElectricityBaseloadDemandYear_kW.getX(k);
 		
 		double totalElectricityDemandYear = 0;
@@ -5676,6 +5761,7 @@ for (int j = 0; j < c_selectedGridConnections.size(); j++) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725442517475</Id>
 					<Name><![CDATA[f_updateTotalWeeklyDataSets]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-645</X><Y>910</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
