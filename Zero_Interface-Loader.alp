@@ -2785,7 +2785,7 @@ mainArea.v_dataHydrogenSupplyLiveWeek_kW = energyModel.data_hydrogenSupply_kW;
 
 //Datasets for live summerWeek chart
 //Demand
-mainArea.v_summerWeekDemandDataSets_kW = energyModel.v_summerWeekDemandDataSets_kW;
+mainArea.dsm_summerWeekDemandDataSets_kW = energyModel.dsm_summerWeekDemandDataSets_kW;
 /*
 if ( energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
 	mainArea.v_dataNaturalGasDemandSummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE);
@@ -2810,7 +2810,7 @@ if ( energyModel.v_summerWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) !
 	mainArea.v_dataHydrogenSupplySummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
 }
 */
-mainArea.v_summerWeekSupplyDataSets_kW = energyModel.v_summerWeekSupplyDataSets_kW;
+mainArea.dsm_summerWeekSupplyDataSets_kW = energyModel.dsm_summerWeekSupplyDataSets_kW;
 
 mainArea.v_dataElectricityWindSupplySummerWeek_kW = energyModel.data_summerWeekWindGeneration_kW;
 mainArea.v_dataElectricityPVSupplySummerWeek_kW = energyModel.data_summerWeekPVGeneration_kW;
@@ -2828,7 +2828,7 @@ mainArea.v_dataElectricitySupplyCapacitySummerWeek_kW.add(energyModel.p_startHou
 
 //Datasets for live winterWeek chart
 //Demand
-mainArea.v_winterWeekDemandDataSets_kW = energyModel.v_winterWeekDemandDataSets_kW;
+mainArea.dsm_winterWeekDemandDataSets_kW = energyModel.dsm_winterWeekDemandDataSets_kW;
 /*
 if ( energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
 	mainArea.v_dataNaturalGasDemandWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE);
@@ -2848,7 +2848,7 @@ mainArea.v_dataElectricityForTransportDemandWinterWeek_kW = energyModel.data_win
 mainArea.v_dataElectricityForStorageDemandWinterWeek_kW = energyModel.data_winterWeekBatteriesDemand_kW;
 
 //Supply
-mainArea.v_winterWeekSupplyDataSets_kW = energyModel.v_winterWeekSupplyDataSets_kW;
+mainArea.dsm_winterWeekSupplyDataSets_kW = energyModel.dsm_winterWeekSupplyDataSets_kW;
 
 /*
 if ( energyModel.v_winterWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
@@ -2866,8 +2866,8 @@ mainArea.v_dataElectricityV2GSupplyWinterWeek_kW = energyModel.data_winterWeekV2
 //Datasets for yearly profiles chart
 //Demand
 //for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
-	mainArea.v_dailyAverageDemandDataSets_kW = energyModel.v_dailyAverageDemandDataSets_kW;
-	mainArea.v_dailyAverageSupplyDataSets_kW = energyModel.v_dailyAverageSupplyDataSets_kW;
+	mainArea.dsm_dailyAverageDemandDataSets_kW = energyModel.dsm_dailyAverageDemandDataSets_kW;
+	mainArea.dsm_dailyAverageSupplyDataSets_kW = energyModel.dsm_dailyAverageSupplyDataSets_kW;
 //}
 
 /*
@@ -2936,8 +2936,8 @@ uI_Results.f_initialize();
 					<Body><![CDATA[AreaCollection area = uI_Results.v_area;
 
 //Previous totals
-area.v_previousTotals.setPreviousTotalImports_MWh(area.v_totalImports_MWh);
-area.v_previousTotals.setPreviousTotalExports_MWh(area.v_totalExports_MWh);
+area.v_previousTotals.setPreviousTotalImports_MWh(area.fm_totalImports_MWh);
+area.v_previousTotals.setPreviousTotalExports_MWh(area.fm_totalExports_MWh);
 area.v_previousTotals.setPreviousTotalConsumedEnergy_MWh(area.v_totalEnergyConsumed_MWh);
 area.v_previousTotals.setPreviousTotalProducedEnergy_MWh(area.v_totalEnergyProduced_MWh);
 area.v_previousTotals.setPreviousSelfConsumedEnergy_MWh(area.v_totalEnergySelfConsumed_MWh);
@@ -2967,7 +2967,7 @@ area.v_previousTotals.setPreviousTransportEnergyDemand_MWh(area.v_annualTranspor
 area.v_previousTotals.setPreviousTotalTimeOverloadedTransformers_hr(area.v_totalTimeOverloadedTransformers_h);
 
 // Net Load
-area.v_dataNetLoadYear_kW = energyModel.v_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries();
+area.v_dataNetLoadYear_kW = energyModel.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries();
 area.data_gridCapacityDemandYear_kW.add(0, energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 area.data_gridCapacityDemandYear_kW.add(8760, energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 area.data_gridCapacitySupplyYear_kW.add(0, -energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
@@ -2992,7 +2992,7 @@ area.v_dataV2GElectricitySupplyLiveWeek_kW = energyModel.data_V2GSupply_kW;
 area.v_dataHydrogenSupplyLiveWeek_kW = energyModel.data_hydrogenSupply_kW;
 
 //Total
-area.v_dataNetLoadLiveWeek_kW = energyModel.data_totalNetLoad_kW;
+area.v_dataNetLoadLiveWeek_kW = energyModel.data_totalGridLoad_kW;
 
 //Capacity
 area.v_dataElectricityDemandCapacityLiveWeek_kW = energyModel.data_gridCapacityDemand_kW;
@@ -3001,7 +3001,7 @@ area.v_dataElectricitySupplyCapacityLiveWeek_kW = energyModel.data_gridCapacityS
 
 //Datasets for live summerWeek chart
 //Demand
-area.v_summerWeekDemandDataSets_kW = energyModel.v_summerWeekDemandDataSets_kW;
+area.dsm_summerWeekDemandDataSets_kW = energyModel.dsm_summerWeekDemandDataSets_kW;
 
 /*
 if ( energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
@@ -3020,7 +3020,7 @@ area.v_dataElectricityForTransportDemandSummerWeek_kW = energyModel.data_summerW
 area.v_dataElectricityForStorageDemandSummerWeek_kW = energyModel.data_summerWeekBatteriesDemand_kW;
 
 //Supply
-area.v_summerWeekSupplyDataSets_kW = energyModel.v_summerWeekSupplyDataSets_kW;
+area.dsm_summerWeekSupplyDataSets_kW = energyModel.dsm_summerWeekSupplyDataSets_kW;
 
 /*
 if ( energyModel.v_summerWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
@@ -3043,7 +3043,7 @@ area.v_dataElectricitySupplyCapacitySummerWeek_kW.add(energyModel.p_startHourSum
 
 //Datasets for live winterWeek chart
 //Demand
-area.v_winterWeekDemandDataSets_kW = energyModel.v_winterWeekDemandDataSets_kW;
+area.dsm_winterWeekDemandDataSets_kW = energyModel.dsm_winterWeekDemandDataSets_kW;
 
 /*
 if ( energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
@@ -3062,7 +3062,7 @@ area.v_dataElectricityForTransportDemandWinterWeek_kW = energyModel.data_winterW
 area.v_dataElectricityForStorageDemandWinterWeek_kW = energyModel.data_winterWeekBatteriesDemand_kW;
 
 //Supply
-area.v_winterWeekSupplyDataSets_kW = energyModel.v_winterWeekSupplyDataSets_kW;
+area.dsm_winterWeekSupplyDataSets_kW = energyModel.dsm_winterWeekSupplyDataSets_kW;
 
 /*
 if ( energyModel.v_winterWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
@@ -3081,8 +3081,8 @@ area.v_dataElectricityV2GSupplyWinterWeek_kW = energyModel.data_winterWeekV2GSup
 //Datasets for yearly profiles chart
 //Demand
 
-	area.v_dailyAverageDemandDataSets_kW = energyModel.v_dailyAverageDemandDataSets_kW;
-	area.v_dailyAverageSupplyDataSets_kW = energyModel.v_dailyAverageSupplyDataSets_kW;
+	area.dsm_dailyAverageDemandDataSets_kW = energyModel.dsm_dailyAverageDemandDataSets_kW;
+	area.dsm_dailyAverageSupplyDataSets_kW = energyModel.dsm_dailyAverageSupplyDataSets_kW;
 	
 /*
 if ( energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
@@ -3116,7 +3116,7 @@ area.v_dataElectricityV2GSupplyYear_kW = energyModel.data_annualV2GSupply_kW;
 // Data for gespreksleidraad1
 //area.v_dataElectricityDemandYear_kW = energyModel.data_annualElectricityDemand_kW;
 //area.v_dataElectricitySupplyYear_kW = energyModel.data_annualElectricitySupply_kW;
-area.v_dataNetLoadYear_kW = energyModel.v_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries();
+area.v_dataNetLoadYear_kW = energyModel.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries();
 
 //Datasets for netloaddurationcurves
 area.v_dataNetbelastingDuurkrommeYear_kW = energyModel.data_netbelastingDuurkromme_kW;
@@ -3143,8 +3143,8 @@ area.v_totalTimeOverloadedTransformers_h = energyModel.v_gridOverloadDuration_h;
 
 
 //Yearly
-area.v_totalImports_MWh = energyModel.v_totalImports_MWh;
-area.v_totalExports_MWh = energyModel.v_totalExports_MWh;
+area.fm_totalImports_MWh = energyModel.fm_totalImports_MWh;
+area.fm_totalExports_MWh = energyModel.fm_totalExports_MWh;
 
 area.v_totalEnergyImport_MWh = energyModel.v_totalEnergyImport_MWh;
 area.v_totalEnergyExport_MWh = energyModel.v_totalEnergyExport_MWh;
@@ -3159,10 +3159,10 @@ area.v_totalElectricitySelfConsumed_MWh = energyModel.v_totalElectricitySelfCons
 
 // Summer/winter
 for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
-	area.v_summerWeekImports_MWh.put( EC, energyModel.v_summerWeekImports_MWh.get(EC) );
-	area.v_summerWeekExports_MWh.put( EC, energyModel.v_summerWeekExports_MWh.get(EC) );
-	area.v_winterWeekImports_MWh.put( EC, energyModel.v_winterWeekImports_MWh.get(EC) );
-	area.v_winterWeekExports_MWh.put( EC, energyModel.v_winterWeekExports_MWh.get(EC) );
+	area.fm_summerWeekImports_MWh.put( EC, energyModel.fm_summerWeekImports_MWh.get(EC) );
+	area.fm_summerWeekExports_MWh.put( EC, energyModel.fm_summerWeekExports_MWh.get(EC) );
+	area.fm_winterWeekImports_MWh.put( EC, energyModel.fm_winterWeekImports_MWh.get(EC) );
+	area.fm_winterWeekExports_MWh.put( EC, energyModel.fm_winterWeekExports_MWh.get(EC) );
 }
 
 area.v_summerWeekEnergyImport_MWh = energyModel.v_summerWeekEnergyImport_MWh;
@@ -3189,10 +3189,10 @@ area.v_winterWeekElectricitySelfConsumed_MWh = energyModel.v_winterWeekElectrici
 
 // Day/night
 for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
-	area.v_daytimeImports_MWh.put( EC, energyModel.v_daytimeImports_MWh.get(EC) );
-	area.v_daytimeExports_MWh.put( EC, energyModel.v_daytimeExports_MWh.get(EC) );
-	area.v_nighttimeImports_MWh.put( EC, energyModel.v_nighttimeImports_MWh.get(EC) );
-	area.v_nighttimeExports_MWh.put( EC, energyModel.v_nighttimeExports_MWh.get(EC) );
+	area.v_daytimeImports_MWh.put( EC, energyModel.fm_daytimeImports_MWh.get(EC) );
+	area.v_daytimeExports_MWh.put( EC, energyModel.fm_daytimeExports_MWh.get(EC) );
+	area.v_nighttimeImports_MWh.put( EC, energyModel.fm_nighttimeImports_MWh.get(EC) );
+	area.v_nighttimeExports_MWh.put( EC, energyModel.fm_nighttimeExports_MWh.get(EC) );
 }
 
 area.v_daytimeEnergyImport_MWh = energyModel.v_daytimeEnergyImport_MWh;
@@ -3219,10 +3219,10 @@ area.v_nighttimeElectricitySelfConsumed_MWh = energyModel.v_nighttimeElectricity
 
 // Week/weekend
 for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
-	area.v_weekdayImports_MWh.put( EC, energyModel.v_weekdayImports_MWh.get(EC) );
-	area.v_weekdayExports_MWh.put( EC, energyModel.v_weekdayExports_MWh.get(EC) );
-	area.v_weekendImports_MWh.put( EC, energyModel.v_weekendImports_MWh.get(EC) );
-	area.v_weekendExports_MWh.put( EC, energyModel.v_weekendExports_MWh.get(EC) );
+	area.v_weekdayImports_MWh.put( EC, energyModel.fm_weekdayImports_MWh.get(EC) );
+	area.v_weekdayExports_MWh.put( EC, energyModel.fm_weekdayExports_MWh.get(EC) );
+	area.v_weekendImports_MWh.put( EC, energyModel.fm_weekendImports_MWh.get(EC) );
+	area.v_weekendExports_MWh.put( EC, energyModel.fm_weekendExports_MWh.get(EC) );
 }
 
 area.v_weekdayEnergyImport_MWh = energyModel.v_weekdayEnergyImport_MWh;
@@ -3341,7 +3341,7 @@ area.v_dataElectricityV2GSupplyYear_MWh = EC.data_annualV2GSupply_MWh;
 // Data for gespreksleidraad1
 area.v_dataElectricityDemandYear_MWh = EC.data_annualElectricityDemand_MWh;
 area.v_dataElectricitySupplyYear_MWh = EC.data_annualElectricitySupply_MWh;*/
-area.v_dataNetLoadYear_kW = EC.v_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries();
+area.v_dataNetLoadYear_kW = EC.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries();
 
 //Datasets for netloaddurationcurves
 //EC.f_duurkrommes();
@@ -3360,8 +3360,8 @@ area.v_dataNetbelastingDuurkrommeWeekday_kW = EC.data_weekdayNetbelastingDuurkro
 
 //Yearly
 for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
-	area.v_totalImports_MWh.put( energyCarrier, EC.v_totalImports_MWh.get(energyCarrier));
-	area.v_totalExports_MWh.put( energyCarrier, EC.v_totalExports_MWh.get(energyCarrier));
+	area.fm_totalImports_MWh.put( energyCarrier, EC.fm_totalImports_MWh.get(energyCarrier));
+	area.fm_totalExports_MWh.put( energyCarrier, EC.fm_totalExports_MWh.get(energyCarrier));
 }
 area.v_totalEnergyImport_MWh = EC.v_totalEnergyImport_MWh;
 area.v_totalEnergyExport_MWh = EC.v_totalEnergyExport_MWh;
@@ -3377,10 +3377,10 @@ area.v_totalElectricitySelfConsumed_MWh = EC.v_totalElectricitySelfConsumed_MWh;
 
 // Summer/winter
 for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
-	area.v_summerWeekImports_MWh.put( energyCarrier, EC.v_summerWeekImports_MWh.get(energyCarrier));
-	area.v_summerWeekExports_MWh.put( energyCarrier, EC.v_summerWeekExports_MWh.get(energyCarrier));
-	area.v_winterWeekImports_MWh.put( energyCarrier, EC.v_winterWeekImports_MWh.get(energyCarrier));
-	area.v_winterWeekExports_MWh.put( energyCarrier, EC.v_winterWeekExports_MWh.get(energyCarrier));
+	area.fm_summerWeekImports_MWh.put( energyCarrier, EC.fm_summerWeekImports_MWh.get(energyCarrier));
+	area.fm_summerWeekExports_MWh.put( energyCarrier, EC.fm_summerWeekExports_MWh.get(energyCarrier));
+	area.fm_winterWeekImports_MWh.put( energyCarrier, EC.fm_winterWeekImports_MWh.get(energyCarrier));
+	area.fm_winterWeekExports_MWh.put( energyCarrier, EC.fm_winterWeekExports_MWh.get(energyCarrier));
 }
 
 area.v_summerWeekEnergyImport_MWh = EC.v_summerWeekEnergyImport_MWh;
@@ -3407,10 +3407,10 @@ area.v_winterWeekElectricitySelfConsumed_MWh = EC.v_winterWeekElectricitySelfCon
 
 // Day/night
 for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
-	area.v_daytimeImports_MWh.put( energyCarrier, EC.v_daytimeImports_MWh.get(energyCarrier));
-	area.v_daytimeExports_MWh.put( energyCarrier, EC.v_daytimeExports_MWh.get(energyCarrier));
-	area.v_nighttimeImports_MWh.put( energyCarrier, EC.v_nighttimeImports_MWh.get(energyCarrier));
-	area.v_nighttimeExports_MWh.put( energyCarrier, EC.v_nighttimeExports_MWh.get(energyCarrier));
+	area.v_daytimeImports_MWh.put( energyCarrier, EC.fm_daytimeImports_MWh.get(energyCarrier));
+	area.v_daytimeExports_MWh.put( energyCarrier, EC.fm_daytimeExports_MWh.get(energyCarrier));
+	area.v_nighttimeImports_MWh.put( energyCarrier, EC.fm_nighttimeImports_MWh.get(energyCarrier));
+	area.v_nighttimeExports_MWh.put( energyCarrier, EC.fm_nighttimeExports_MWh.get(energyCarrier));
 }
 
 area.v_daytimeEnergyImport_MWh = EC.v_daytimeEnergyImport_MWh;
@@ -3438,10 +3438,10 @@ area.v_nighttimeElectricitySelfConsumed_MWh = EC.v_nighttimeElectricitySelfConsu
 
 // Week/weekend
 for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
-	area.v_weekdayImports_MWh.put( energyCarrier, EC.v_weekdayImports_MWh.get(energyCarrier));
-	area.v_weekdayExports_MWh.put( energyCarrier, EC.v_weekdayExports_MWh.get(energyCarrier));
-	area.v_weekendImports_MWh.put( energyCarrier, EC.v_weekendImports_MWh.get(energyCarrier));
-	area.v_weekendExports_MWh.put( energyCarrier, EC.v_weekendExports_MWh.get(energyCarrier));
+	area.v_weekdayImports_MWh.put( energyCarrier, EC.fm_weekdayImports_MWh.get(energyCarrier));
+	area.v_weekdayExports_MWh.put( energyCarrier, EC.fm_weekdayExports_MWh.get(energyCarrier));
+	area.v_weekendImports_MWh.put( energyCarrier, EC.fm_weekendImports_MWh.get(energyCarrier));
+	area.v_weekendExports_MWh.put( energyCarrier, EC.fm_weekendExports_MWh.get(energyCarrier));
 }
 
 area.v_weekdayEnergyImport_MWh = EC.v_weekdayEnergyImport_MWh;
@@ -3530,19 +3530,19 @@ area.data_gridCapacitySupplyWinterWeek_kW.add(energyModel.p_startHourWinterWeek+
 
 // Data for Opwek & Verbruik
 // Year
-area.v_totalImports_MWh.put(GN.p_energyCarrier, GN.v_totalImport_MWh);
-area.v_totalExports_MWh.put(GN.p_energyCarrier, GN.v_totalExport_MWh);
+area.fm_totalImports_MWh.put(GN.p_energyCarrier, GN.v_totalImport_MWh);
+area.fm_totalExports_MWh.put(GN.p_energyCarrier, GN.v_totalExport_MWh);
 area.v_annualExcessImport_MWh = GN.v_annualExcessImport_MWh;
 area.v_annualExcessExport_MWh = GN.v_annualExcessExport_MWh;
 
 // Summer / Winter
-area.v_summerWeekImports_MWh.put(GN.p_energyCarrier, GN.v_summerWeekImport_MWh);
-area.v_summerWeekExports_MWh.put(GN.p_energyCarrier, GN.v_summerWeekExport_MWh);
+area.fm_summerWeekImports_MWh.put(GN.p_energyCarrier, GN.v_summerWeekImport_MWh);
+area.fm_summerWeekExports_MWh.put(GN.p_energyCarrier, GN.v_summerWeekExport_MWh);
 area.v_summerWeekExcessImport_MWh = GN.v_summerWeekExcessImport_MWh;
 area.v_summerWeekExcessExport_MWh = GN.v_summerWeekExcessExport_MWh;
 
-area.v_winterWeekImports_MWh.put(GN.p_energyCarrier, GN.v_winterWeekImport_MWh);
-area.v_winterWeekExports_MWh.put(GN.p_energyCarrier, GN.v_winterWeekExport_MWh);
+area.fm_winterWeekImports_MWh.put(GN.p_energyCarrier, GN.v_winterWeekImport_MWh);
+area.fm_winterWeekExports_MWh.put(GN.p_energyCarrier, GN.v_winterWeekExport_MWh);
 area.v_winterWeekExcessImport_MWh = GN.v_winterWeekExcessImport_MWh;
 area.v_winterWeekExcessExport_MWh = GN.v_winterWeekExcessExport_MWh;
 
@@ -4323,8 +4323,8 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 	for (GridConnection gc : gcList){
 		
 		for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
-			dailyAverageDemand_kW += gc.v_dailyAverageDemandDataSets_kW.get(EC).getY(i);
-			dailyAverageSupply_kW += gc.v_dailyAverageSupplyDataSets_kW.get(EC).getY(i);
+			dailyAverageDemand_kW += gc.dsm_dailyAverageDemandDataSets_kW.get(EC).getY(i);
+			dailyAverageSupply_kW += gc.dsm_dailyAverageSupplyDataSets_kW.get(EC).getY(i);
 		}
 	
 		electricityBaseloadDemandYear_kW += gc.data_annualBaseloadElectricityDemand_kW.getY(i);
@@ -4371,8 +4371,8 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 	area.v_dataElectricityV2GSupplyYear_kW.add(timeAxisValue, electricityV2GSupplyYear_kW);
 	//area.v_dataHydrogenSupplyYear_kW.add(timeAxisValue, hydrogenSupplyYear_kW);
 	for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
-		area.v_dailyAverageDemandDataSets_kW.get(EC).add(timeAxisValue, dailyAverageDemand_kW);
-		area.v_dailyAverageSupplyDataSets_kW.get(EC).add(timeAxisValue, dailyAverageSupply_kW);
+		area.dsm_dailyAverageDemandDataSets_kW.get(EC).add(timeAxisValue, dailyAverageDemand_kW);
+		area.dsm_dailyAverageSupplyDataSets_kW.get(EC).add(timeAxisValue, dailyAverageSupply_kW);
 	}
 }]]></Body>
 				</Function>
@@ -4468,10 +4468,10 @@ else {
 	area.v_dataElectricitySupplyCapacityWinterWeek_kW = new DataSet(672);
 	
 	
-	area.v_summerWeekDemandDataSets_kW.createEmptyDataSets(energyModel.c_activeEnergyCarriers, (int) (672 / energyModel.p_timeStep_h));
-	area.v_summerWeekSupplyDataSets_kW.createEmptyDataSets(energyModel.c_activeEnergyCarriers, (int) (672 / energyModel.p_timeStep_h));
-	area.v_winterWeekDemandDataSets_kW.createEmptyDataSets(energyModel.c_activeEnergyCarriers, (int) (672 / energyModel.p_timeStep_h));
-	area.v_winterWeekSupplyDataSets_kW.createEmptyDataSets(energyModel.c_activeEnergyCarriers, (int) (672 / energyModel.p_timeStep_h));
+	area.dsm_summerWeekDemandDataSets_kW.createEmptyDataSets(energyModel.c_activeEnergyCarriers, (int) (672 / energyModel.p_timeStep_h));
+	area.dsm_summerWeekSupplyDataSets_kW.createEmptyDataSets(energyModel.c_activeEnergyCarriers, (int) (672 / energyModel.p_timeStep_h));
+	area.dsm_winterWeekDemandDataSets_kW.createEmptyDataSets(energyModel.c_activeEnergyCarriers, (int) (672 / energyModel.p_timeStep_h));
+	area.dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(energyModel.c_activeEnergyCarriers, (int) (672 / energyModel.p_timeStep_h));
 }
 
 
@@ -4524,10 +4524,10 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 	//accumulate values over gridcongestion
 	for (GridConnection gc : gcList){
 		for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
-			demandSummerWeek_kW.addFlow(EC, gc.v_summerWeekDemandDataSets_kW.get(EC).getY(i));
-			supplySummerWeek_kW.addFlow(EC, gc.v_summerWeekSupplyDataSets_kW.get(EC).getY(i));
-			demandWinterWeek_kW.addFlow(EC, gc.v_winterWeekDemandDataSets_kW.get(EC).getY(i));
-			supplyWinterWeek_kW.addFlow(EC, gc.v_winterWeekSupplyDataSets_kW.get(EC).getY(i));
+			demandSummerWeek_kW.addFlow(EC, gc.dsm_summerWeekDemandDataSets_kW.get(EC).getY(i));
+			supplySummerWeek_kW.addFlow(EC, gc.dsm_summerWeekSupplyDataSets_kW.get(EC).getY(i));
+			demandWinterWeek_kW.addFlow(EC, gc.dsm_winterWeekDemandDataSets_kW.get(EC).getY(i));
+			supplyWinterWeek_kW.addFlow(EC, gc.dsm_winterWeekSupplyDataSets_kW.get(EC).getY(i));
 		}
 	
 		electricityBaseloadDemandSummerWeek_kW += gc.data_summerWeekBaseloadElectricityDemand_kW.getY(i);
@@ -4583,7 +4583,7 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 		}*/
 		
 		//netLoadSummerWeek_kW += gc.acc_summerElectricityBalance_kW.getY(i);
-		netLoadWinterWeek_kW += gc.v_winterWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getY(i);
+		netLoadWinterWeek_kW += gc.am_winterWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getY(i);
 		electricityDemandCapacitySummerWeek_kW += gc.acc_summerWeekDeliveryCapacity_kW.getY(i);
 		electricityDemandCapacityWinterWeek_kW += gc.acc_winterWeekDeliveryCapacity_kW.getY(i);
 		electricitySupplyCapacitySummerWeek_kW -= gc.acc_summerWeekFeedinCapacity_kW.getY(i);
@@ -4626,10 +4626,10 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 	area.v_dataElectricitySupplyCapacityWinterWeek_kW.add(timeAxisValueWinter, electricitySupplyCapacityWinterWeek_kW);
 	
 	for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
-		area.v_summerWeekDemandDataSets_kW.get(EC).add(timeAxisValueSummer, demandSummerWeek_kW.get(EC));
-		area.v_summerWeekSupplyDataSets_kW.get(EC).add(timeAxisValueSummer, supplySummerWeek_kW.get(EC));
-		area.v_winterWeekDemandDataSets_kW.get(EC).add(timeAxisValueSummer, demandWinterWeek_kW.get(EC));
-		area.v_winterWeekSupplyDataSets_kW.get(EC).add(timeAxisValueSummer, supplyWinterWeek_kW.get(EC));
+		area.dsm_summerWeekDemandDataSets_kW.get(EC).add(timeAxisValueSummer, demandSummerWeek_kW.get(EC));
+		area.dsm_summerWeekSupplyDataSets_kW.get(EC).add(timeAxisValueSummer, supplySummerWeek_kW.get(EC));
+		area.dsm_winterWeekDemandDataSets_kW.get(EC).add(timeAxisValueSummer, demandWinterWeek_kW.get(EC));
+		area.dsm_winterWeekSupplyDataSets_kW.get(EC).add(timeAxisValueSummer, supplyWinterWeek_kW.get(EC));
 	}
 }]]></Body>
 				</Function>
@@ -4665,8 +4665,8 @@ area.v_modelSelfSufficiency_fr = sum(gcList, x -> x.v_totalEnergyProduced_MWh) >
 
 //Yearly
 for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
-	area.v_totalImports_MWh.put( EC, sum(gcList, x -> x.v_totalImports_MWh.get(EC)) );
-	area.v_totalExports_MWh.put( EC, sum(gcList, x -> x.v_totalExports_MWh.get(EC)) );
+	area.fm_totalImports_MWh.put( EC, sum(gcList, x -> x.fm_totalImports_MWh.get(EC)) );
+	area.fm_totalExports_MWh.put( EC, sum(gcList, x -> x.fm_totalExports_MWh.get(EC)) );
 }
 area.v_totalEnergyImport_MWh = sum(gcList, x -> x.v_totalEnergyImport_MWh);
 area.v_totalEnergyExport_MWh = sum(gcList, x -> x.v_totalEnergyExport_MWh);
@@ -4689,10 +4689,10 @@ area.v_previousTotals = uI_Results.c_previousTotals_GC.get(gcList.get(0));
 
 // Summer/winter
 for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
-	area.v_summerWeekImports_MWh.put( EC, sum(gcList, x -> x.v_summerWeekImports_MWh.get(EC)) );
-	area.v_summerWeekExports_MWh.put( EC, sum(gcList, x -> x.v_summerWeekExports_MWh.get(EC)) );
-	area.v_winterWeekImports_MWh.put( EC, sum(gcList, x -> x.v_winterWeekImports_MWh.get(EC)) );
-	area.v_winterWeekExports_MWh.put( EC, sum(gcList, x -> x.v_winterWeekExports_MWh.get(EC)) );
+	area.fm_summerWeekImports_MWh.put( EC, sum(gcList, x -> x.fm_summerWeekImports_MWh.get(EC)) );
+	area.fm_summerWeekExports_MWh.put( EC, sum(gcList, x -> x.fm_summerWeekExports_MWh.get(EC)) );
+	area.fm_winterWeekImports_MWh.put( EC, sum(gcList, x -> x.fm_winterWeekImports_MWh.get(EC)) );
+	area.fm_winterWeekExports_MWh.put( EC, sum(gcList, x -> x.fm_winterWeekExports_MWh.get(EC)) );
 }
 
 area.v_summerWeekEnergyImport_MWh = sum(gcList, x -> x.v_summerWeekEnergyImport_MWh);
@@ -4719,10 +4719,10 @@ area.v_winterWeekElectricitySelfConsumed_MWh = sum(gcList, x -> x.v_winterWeekEl
 
 // Day/night
 for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
-	area.v_daytimeImports_MWh.put( EC, sum(gcList, x -> x.v_daytimeImports_MWh.get(EC)) );
-	area.v_daytimeExports_MWh.put( EC, sum(gcList, x -> x.v_daytimeExports_MWh.get(EC)) );
-	area.v_nighttimeImports_MWh.put( EC, sum(gcList, x -> x.v_nighttimeImports_MWh.get(EC)) );
-	area.v_nighttimeExports_MWh.put( EC, sum(gcList, x -> x.v_nighttimeExports_MWh.get(EC)) );
+	area.v_daytimeImports_MWh.put( EC, sum(gcList, x -> x.fm_daytimeImports_MWh.get(EC)) );
+	area.v_daytimeExports_MWh.put( EC, sum(gcList, x -> x.fm_daytimeExports_MWh.get(EC)) );
+	area.v_nighttimeImports_MWh.put( EC, sum(gcList, x -> x.fm_nighttimeImports_MWh.get(EC)) );
+	area.v_nighttimeExports_MWh.put( EC, sum(gcList, x -> x.fm_nighttimeExports_MWh.get(EC)) );
 }
 
 area.v_daytimeEnergyImport_MWh = sum(gcList, x -> x.v_daytimeEnergyImport_MWh);
@@ -4750,10 +4750,10 @@ area.v_nighttimeElectricitySelfConsumed_MWh = sum(gcList, x -> x.v_nighttimeElec
 
 // Week/weekend
 for (OL_EnergyCarriers EC : energyModel.c_activeEnergyCarriers) {
-	area.v_weekdayImports_MWh.put( EC, sum(gcList, x -> x.v_weekdayImports_MWh.get(EC)) );
-	area.v_weekdayExports_MWh.put( EC, sum(gcList, x -> x.v_weekdayExports_MWh.get(EC)) );
-	area.v_weekendImports_MWh.put( EC, sum(gcList, x -> x.v_weekendImports_MWh.get(EC)) );
-	area.v_weekendExports_MWh.put( EC, sum(gcList, x -> x.v_weekendExports_MWh.get(EC)) );
+	area.v_weekdayImports_MWh.put( EC, sum(gcList, x -> x.fm_weekdayImports_MWh.get(EC)) );
+	area.v_weekdayExports_MWh.put( EC, sum(gcList, x -> x.fm_weekdayExports_MWh.get(EC)) );
+	area.v_weekendImports_MWh.put( EC, sum(gcList, x -> x.fm_weekendImports_MWh.get(EC)) );
+	area.v_weekendExports_MWh.put( EC, sum(gcList, x -> x.fm_weekendExports_MWh.get(EC)) );
 }
 
 area.v_weekdayEnergyImport_MWh = sum(gcList, x -> x.v_weekdayEnergyImport_MWh);
@@ -5880,15 +5880,15 @@ traceln("Forgot to override project specific slider settings!!");]]></Body>
 	previousTotals.setPreviousImportedEnergy_MWh(GC.v_totalEnergyImport_MWh);
 	previousTotals.setPreviousExportedEnergy_MWh(GC.v_totalEnergyExport_MWh);
 		
-	previousTotals.setPreviousNaturalGasDemand_MWh(GC.v_totalImports_MWh.get(OL_EnergyCarriers.METHANE));
-	previousTotals.setPreviousPetroleumProductsDemand_MWh(GC.v_totalImports_MWh.get(OL_EnergyCarriers.DIESEL));
-	previousTotals.setPreviousHydrogenDemand_MWh(GC.v_totalImports_MWh.get(OL_EnergyCarriers.HYDROGEN));
-	previousTotals.setPreviousHydrogenSupply_MWh(GC.v_totalExports_MWh.get(OL_EnergyCarriers.HYDROGEN));
+	previousTotals.setPreviousNaturalGasDemand_MWh(GC.fm_totalImports_MWh.get(OL_EnergyCarriers.METHANE));
+	previousTotals.setPreviousPetroleumProductsDemand_MWh(GC.fm_totalImports_MWh.get(OL_EnergyCarriers.DIESEL));
+	previousTotals.setPreviousHydrogenDemand_MWh(GC.fm_totalImports_MWh.get(OL_EnergyCarriers.HYDROGEN));
+	previousTotals.setPreviousHydrogenSupply_MWh(GC.fm_totalExports_MWh.get(OL_EnergyCarriers.HYDROGEN));
 	
 	previousTotals.setPreviousSelfConsumedElectricity_MWh(GC.v_totalElectricitySelfConsumed_MWh);
 	//previousTotals.setPreviousSelfProducedElectricity_MWh(GC.v_totalElectricitySelfProduced_MWh);
-	previousTotals.setPreviousElectricityImport_MWh(GC.v_totalImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-	previousTotals.setPreviousElectricityExport_MWh(GC.v_totalExports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
+	previousTotals.setPreviousElectricityImport_MWh(GC.fm_totalImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
+	previousTotals.setPreviousElectricityExport_MWh(GC.fm_totalExports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
 	previousTotals.setPreviousElectricityConsumed_MWh(GC.v_totalElectricityConsumed_MWh);
 	
 	//Overload
@@ -37610,6 +37610,12 @@ return annualElectricityConsumption_kWh;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_gridNodeTimeSeriesExcel]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_runStartTime_h]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_runEndTime_h]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
