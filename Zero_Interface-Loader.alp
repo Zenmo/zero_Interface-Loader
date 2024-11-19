@@ -6203,7 +6203,7 @@ return p_legendsScope;]]></Body>
 				<Image>
 					<Id>1724074975228</Id>
 					<Name><![CDATA[image_zenmoLogo]]></Name>
-					<X>819</X><Y>19</Y>
+					<X>625</X><Y>20</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6275,7 +6275,7 @@ return p_legendsScope;]]></Body>
 				<Rectangle>
 					<Id>1724074980258</Id>
 					<Name><![CDATA[rect_menuViewOpen2]]></Name>
-					<X>440</X><Y>-70</Y>
+					<X>400</X><Y>-70</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -6289,7 +6289,7 @@ return p_legendsScope;]]></Body>
 					<LineColor/>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>320</Width>
+					<Width>360</Width>
 					<Height>160</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>682673374</FillColor>
@@ -6348,7 +6348,7 @@ return p_legendsScope;]]></Body>
 				<Image>
 					<Id>1724074987235</Id>
 					<Name><![CDATA[image_tueLogo]]></Name>
-					<X>575</X><Y>17</Y>
+					<X>410</X><Y>20</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9628,7 +9628,7 @@ voor verwarming.]]></Text>
 				<Text>
 					<Id>1719829894799</Id>
 					<Name><![CDATA[t_outsideTemperature]]></Name>
-					<X>1326</X><Y>17</Y>
+					<X>1236</X><Y>17</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9650,7 +9650,7 @@ voor verwarming.]]></Text>
 				<Text>
 					<Id>1719829988146</Id>
 					<Name><![CDATA[t_solarIrradiance]]></Name>
-					<X>1326</X><Y>42</Y>
+					<X>1236</X><Y>42</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9672,7 +9672,7 @@ voor verwarming.]]></Text>
 				<Text>
 					<Id>1719829993001</Id>
 					<Name><![CDATA[t_windSpeed]]></Name>
-					<X>1326</X><Y>67</Y>
+					<X>1236</X><Y>67</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9694,7 +9694,7 @@ voor verwarming.]]></Text>
     			<TimePlot>
 					<Id>1719847144211</Id>
 					<Name><![CDATA[plot_outsideTemperature]]></Name>
-					<X>1335</X><Y>12</Y>
+					<X>1245</X><Y>12</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9761,7 +9761,7 @@ voor verwarming.]]></Text>
     			<TimePlot>
 					<Id>1719848137592</Id>
 					<Name><![CDATA[plot_solarIrradiance]]></Name>
-					<X>1335</X><Y>38</Y>
+					<X>1245</X><Y>38</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10587,6 +10587,28 @@ b_resultsUpToDate = true;
 			</Presentation>
 
 				</Group>
+				<Image>
+					<Id>1731938214224</Id>
+					<Name><![CDATA[image]]></Name>
+					<X>1720</X><Y>5</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Width>190</Width>
+					<Height>70</Height>
+					<Rotation>0.0</Rotation>
+					<ImageFiles>
+						<ImageResourceReference>
+							<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
+							<ClassName><![CDATA[logo holon.png]]></ClassName>
+						</ImageResourceReference>
+					</ImageFiles>
+					<OriginalSize>false</OriginalSize>
+				</Image>
 			</Presentation>
 
 				</Level>
@@ -40253,6 +40275,11 @@ public class Windfarm_data {
 		</Resource>
 		<Resource>
 			<Path><![CDATA[vallum-production-387-d8049df-all.jar]]></Path>
+			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
+		</Resource>
+		<Resource>
+			<Path><![CDATA[logo holon.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
