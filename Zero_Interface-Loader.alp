@@ -1516,7 +1516,22 @@ import com.anylogic.engine.markup.GISPoint;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1731425176471</Id>
 					<Name><![CDATA[b_changeToCustomScenario]]></Name>
-					<X>-280</X><Y>670</Y>
+					<X>-300</X><Y>690</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1732027307811</Id>
+					<Name><![CDATA[b_runningMainInterfaceScenarios]]></Name>
+					<X>-300</X><Y>670</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2442,7 +2457,7 @@ gisregion.setLineWidth(2);]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1705925024602</Id>
 					<Name><![CDATA[f_setUITabs]]></Name>
-					<X>-280</X><Y>610</Y>
+					<X>-300</X><Y>610</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3873,7 +3888,7 @@ gis_area.f_style( rect_householdNoProduction.getFillColor(), null, null, null );
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1718288402102</Id>
 					<Name><![CDATA[f_updateMainInterfaceSliders]]></Name>
-					<X>-280</X><Y>650</Y>
+					<X>-300</X><Y>650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5634,7 +5649,7 @@ GN.gisRegion.setLineColor(GN.p_uniqueColor.brighter());]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725977409304</Id>
 					<Name><![CDATA[f_setSliderPresets]]></Name>
-					<X>-280</X><Y>630</Y>
+					<X>-300</X><Y>630</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -6038,7 +6053,7 @@ return p_legendsScope;]]></Body>
 				<EmbeddedObject>
 					<Id>1722252541830</Id>
 					<Name><![CDATA[uI_Tabs]]></Name>
-					<X>-280</X><Y>590</Y>
+					<X>-300</X><Y>590</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10279,7 +10294,7 @@ else {
 				<Text>
 					<Id>1725456122345</Id>
 					<Name><![CDATA[txt_sliderInitialization]]></Name>
-					<X>-290</X><Y>560</Y>
+					<X>-310</X><Y>560</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22340,7 +22355,12 @@ public ShapeSlider getSliderFossilFuelCars_pct() {
 						<Name><![CDATA[sliderFFTrucks]]></Name>
 						<Type><![CDATA[ShapeSlider]]></Type>
 					</Parameter>
-					<Body><![CDATA[//Get totals
+					<Body><![CDATA[//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+//Get totals
 int nbEtruckCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK && !(p.getParentAgent() instanceof GCPublicCharger) && ((GridConnection)p.getParentAgent()).v_isActive) + v_totalNumberOfGhostVehicle_Trucks;
 int nbDieseltrucksCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
 int nbElectricTrucksGoal = roundToInt((nbEtruckCurrent + nbDieseltrucksCurrent)*pctElectricTrucksGoal/100.0);
@@ -22572,7 +22592,12 @@ if (hydrogenSlider != null) {
 						<Name><![CDATA[sliderFFVans]]></Name>
 						<Type><![CDATA[ShapeSlider]]></Type>
 					</Parameter>
-					<Body><![CDATA[int nbEVansCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN && !(p.getParentAgent() instanceof GCPublicCharger) && ((GridConnection)p.getParentAgent()).v_isActive) + v_totalNumberOfGhostVehicle_Vans;
+					<Body><![CDATA[//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+int nbEVansCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN && !(p.getParentAgent() instanceof GCPublicCharger) && ((GridConnection)p.getParentAgent()).v_isActive) + v_totalNumberOfGhostVehicle_Vans;
 int nbDieselVansCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.DIESEL_VAN && ((GridConnection)p.getParentAgent()).v_isActive);
 int nbElectricVansGoal = roundToInt((nbEVansCurrent + nbDieselVansCurrent)*pctElectricVansGoal/100.0);
 
@@ -22747,7 +22772,12 @@ zero_Interface.f_resetSettings();]]></Body>
 						<Name><![CDATA[sliderFFCars]]></Name>
 						<Type><![CDATA[ShapeSlider]]></Type>
 					</Parameter>
-					<Body><![CDATA[int nbEVsCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && !(p.getParentAgent() instanceof GCPublicCharger) && ((GridConnection)p.getParentAgent()).v_isActive) + v_totalNumberOfGhostVehicle_Cars;
+					<Body><![CDATA[//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+int nbEVsCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && !(p.getParentAgent() instanceof GCPublicCharger) && ((GridConnection)p.getParentAgent()).v_isActive) + v_totalNumberOfGhostVehicle_Cars;
 int nbDieselCarsCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.DIESEL_VEHICLE && ((GridConnection)p.getParentAgent()).v_isActive);
 int nbEVsGoal = roundToInt((nbEVsCurrent + nbDieselCarsCurrent)*pctEVsGoal/100.0);
 
@@ -22928,6 +22958,11 @@ for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()) {
 			}
 		}	
 	}
+}
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
 }
 
 zero_Interface.f_resetSettings();]]></Body>
@@ -24088,7 +24123,12 @@ public ShapeSlider getWindSlider(){
 						<Name><![CDATA[usedSlider]]></Name>
 						<Type><![CDATA[ShapeSlider]]></Type>
 					</Parameter>
-					<Body><![CDATA[double PVsystems = count(zero_Interface.energyModel.UtilityConnections, x->x.v_hasPV == true && x.v_isActive);
+					<Body><![CDATA[//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+double PVsystems = count(zero_Interface.energyModel.UtilityConnections, x->x.v_hasPV == true && x.v_isActive);
 double totalActiveUtilityConnections = count(zero_Interface.energyModel.UtilityConnections, gc -> gc.v_isActive);
 
 if( PV_pct/100.0 < PVsystems/totalActiveUtilityConnections ){
@@ -24221,6 +24261,11 @@ for ( GCEnergyProduction GCEP : zero_Interface.energyModel.EnergyProductionSites
 	}
 }
 
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
 zero_Interface.f_resetSettings();]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
@@ -24239,7 +24284,12 @@ zero_Interface.f_resetSettings();]]></Body>
 						<Name><![CDATA[PV_pct]]></Name>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
-					<Body><![CDATA[double nbHousesWithPV = count(zero_Interface.energyModel.Houses, x -> x.v_hasPV == true);
+					<Body><![CDATA[//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+double nbHousesWithPV = count(zero_Interface.energyModel.Houses, x -> x.v_hasPV == true);
 
 if( PV_pct /100.0 < nbHousesWithPV / zero_Interface.energyModel.Houses.size() ){
 	while ( PV_pct / 100.0 * zero_Interface.energyModel.Houses.size() < nbHousesWithPV ) { // remove excess PV systems
@@ -24392,6 +24442,11 @@ for ( GCEnergyProduction GCEP : zero_Interface.energyModel.EnergyProductionSites
 	}
 }
 
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
 zero_Interface.f_resetSettings();]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -24499,7 +24554,12 @@ for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()) {
 }
 
 v_electricityDemandReduction_pct = newElectricityDemandReduction_pct;
- 
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
 zero_Interface.f_resetSettings();
 ]]></Body>
 				</Function>
@@ -27059,7 +27119,12 @@ public ShapeSlider getSliderHeatDemandSlidersCompaniesElectricHeatPumpCompanies_
 						<Name><![CDATA[sliderHeatpump]]></Name>
 						<Type><![CDATA[ShapeSlider]]></Type>
 					</Parameter>
-					<Body><![CDATA[double targetHeatPump_pct = sliderHeatpump.getValue();
+					<Body><![CDATA[//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+double targetHeatPump_pct = sliderHeatpump.getValue();
 
 
 //Set the sliders if companyUI is present using the companyUI functions, if not: do it the normal way
@@ -27171,7 +27236,12 @@ else{
 						<Name><![CDATA[targetHeatPump_pct]]></Name>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
-					<Body><![CDATA[double nbHeatPumps = count(zero_Interface.energyModel.Houses, house -> house.p_primaryHeatingAsset instanceof J_EAConversionHeatPump);
+					<Body><![CDATA[//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+double nbHeatPumps = count(zero_Interface.energyModel.Houses, house -> house.p_primaryHeatingAsset instanceof J_EAConversionHeatPump);
 int targetHeatPumpAmount = roundToInt( targetHeatPump_pct / 100.0 *(zero_Interface.energyModel.Houses.size()));
 
 if( targetHeatPumpAmount < nbHeatPumps){
@@ -27299,6 +27369,9 @@ if ( hybridHeatPumpSlider != null ) {
 if ( districtHeatingSlider != null ) {
 	districtHeatingSlider.setValue(pctArray[3], false);
 }
+
+
+
 ]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
@@ -27351,7 +27424,12 @@ for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()){
 
 
 v_heatDemandReductionCompanies_pct = newHeatDemandReduction_pct;
- 
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
 zero_Interface.f_resetSettings();]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
@@ -27391,7 +27469,12 @@ for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()){
 
 
 v_heatDemandReductionHouses_pct = newHeatDemandReduction_pct;
- 
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
 zero_Interface.f_resetSettings();]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -29550,7 +29633,12 @@ public ShapeButton getButton_remove_nfato() {
 					<Body><![CDATA[// TODO: make this work nicer with the new pause function (when setting capacity to 0 pause again?)
 
 if ( zero_Interface.energyModel.GridBatteries.size() > 0 ){	
-	GCGridBattery GC = findFirst(zero_Interface.energyModel.GridBatteries, GB -> GB.p_gridConnectionID.equals("SLIDER_GB"));
+	GCGridBattery GC = findFirst(zero_Interface.energyModel.GridBatteries, GB -> GB.p_isSliderGC);
+	if(GC == null){
+		traceln("WARNING: no specified slider grid battery in the model: random grid battery selected");
+		GC = zero_Interface.energyModel.GridBatteries.get(0);
+	}
+
 	if (!GC.v_isActive) {
 		GC.f_setActive(true);
 	}
@@ -30093,6 +30181,13 @@ else {
 	}
 	
 }
+
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
 zero_Interface.f_resetSettings();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -30158,6 +30253,11 @@ zero_Interface.f_resetSettings();]]></ActionCode>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[f_setGridBatteries(sl_collectiveBattery_MWh.getValue());
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
 
 zero_Interface.f_resetSettings();]]></ActionCode>
 					</BasicProperties>
@@ -30250,6 +30350,12 @@ else {
 		}
 	}
 }
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
 zero_Interface.f_resetSettings();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -30335,7 +30441,15 @@ else {
 	GC.v_nfatoWeekDeliveryCapacity_kW = new double[24];
 	GC.v_nfatoWeekendDeliveryCapacity_kW = new double[24];
 	GC.v_nfatoWeekFeedinCapacity_kW = new double[24];
-	GC.v_nfatoWeekendFeedinCapacity_kW = new double[24];}
+	GC.v_nfatoWeekendFeedinCapacity_kW = new double[24];
+}
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+button_remove_nfato.setEnabled(false);
 
 zero_Interface.f_resetSettings();]]></ActionCode>
 					</BasicProperties>
@@ -30380,6 +30494,12 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 	}
 	//zero_Interface.energyModel.f_getGridConnections().forEach(x -> x.p_chargingAttitudeVehicles = OL_ChargingAttitude.SIMPLE);
 }
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
 zero_Interface.f_resetSettings();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -30632,6 +30752,13 @@ else {
 		// reset the nfato settings
 		f_resetNFATOSettings();
 		zero_Interface.f_resetSettings();
+		
+		button_remove_nfato.setEnabled(true);
+		
+		//Update variable to change to custom scenario
+		if(!zero_Interface.b_runningMainInterfaceScenarios){
+			zero_Interface.b_changeToCustomScenario = true;
+		}
 	}
 }
 
@@ -31124,7 +31251,9 @@ f_resetNFATOSettings();]]></ActionCode>
 					<Id>1726584205585</Id>
 					<Name><![CDATA[p_avgUtilityConnectionCapacity_kW]]></Name>
 					<Description><![CDATA[https://www.enexis.nl/aansluitingen/welke-aansluiting-heb-ik-nodig
--> 17.25 -> set to 17, to prevent slider errors (stepsize cant be double, otherwise to small for user experience)]]></Description>
+-> 17.25 -> set to 17, to prevent slider errors (stepsize cant be double, otherwise to small for user experience)
+
+--> 17.25 is way to small -> 3x80 is taken : 55 kW]]></Description>
 					<X>50</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -31135,7 +31264,7 @@ f_resetNFATOSettings();]]></ActionCode>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[17.25]]></Code>
+							<Code><![CDATA[55]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1726584205583</Id>
@@ -34420,6 +34549,11 @@ for (Solarfarm_data dataSolarfarm : c_Solarfarm_data) { // MOET NOG CHECK OF ZON
 	gridbattery.set_p_ownerID( dataBattery.owner_id() );
 	gridbattery.set_p_owner( owner );	
 	gridbattery.set_p_physicalConnectionCapacity_kW( dataBattery.connection_capacity_kw() );
+	
+	if(gridbattery.p_gridConnectionID.equals("SLIDER_GB")){
+		gridbattery.p_isSliderGC = true;
+	}
+	
 	if (dataBattery.contracted_delivery_capacity_kw() != null) {
 		gridbattery.set_p_contractedDeliveryCapacity_kW( dataBattery.contracted_delivery_capacity_kw() );
 	}
