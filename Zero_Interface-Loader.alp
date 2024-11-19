@@ -2760,6 +2760,11 @@ uI_Results.p_legendsScope = f_setLegendsScope();
 AreaCollection mainArea = uI_Results.add_pop_areaResults(OL_GISObjectType.REGION, "Main");
 uI_Results.v_area = mainArea;
 
+//Set ResultsUI radiobutton setup
+if(settings.resultsUIRadioButtonSetup() != null){
+	uI_Results.v_selectedRadioButton = settings.resultsUIRadioButtonSetup();
+}
+
 //Datasets for live charts
 //Demand
 mainArea.v_dataPetroleumProductsDemandLiveWeek_kW = energyModel.data_dieselDemand_kW;
@@ -8949,7 +8954,7 @@ v_clickedObjectText]]></TextCode>
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[v_themeColor = new Color( uniform_discr(255),  uniform_discr(255),  uniform_discr(255) );
 uI_Results.f_styleAllCharts(white, v_themeColor, 1, LINE_STYLE_SOLID);
-uI_Results.f_styleRadioButtons(v_themeColor, v_themeColor, 1, LINE_STYLE_SOLID);
+uI_Results.f_styleResultsUIHeader(v_themeColor, v_themeColor, 1, LINE_STYLE_SOLID);
 traceln( v_themeColor.getRGB() );]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -13389,7 +13394,7 @@ uI_Results.f_setChartProfiles_Presentation(0, 0, true);
 uI_Results.f_setChartBalance_Presentation(530, 0, true);
 uI_Results.f_setChartGridLoad_Presentation(null, null, false);
 uI_Results.f_setChartSankey_Presentation(1060, 0, true);
-uI_Results.f_setRadioButtons(null, null, false);
+uI_Results.f_setResultsUIHeader(null, null, false);
 
 //Disable KPIsummary button if KPIsummary is not selected
 if(zero_Interface.settings.showKPISummary() == null || !zero_Interface.settings.showKPISummary()){
@@ -40118,6 +40123,7 @@ public class Settings {
 		boolean runHeadlessAtStartup;
 		Boolean showKPISummary;
 		ArrayList<String> subscopesToSimulate;
+		OL_RadioButtonSetup resultsUIRadioButtonSetup;
 }]]></Text>
 		</JavaClass>
 		<!--   =========   Java Class   ========  -->
