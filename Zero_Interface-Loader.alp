@@ -3832,7 +3832,7 @@ if(settings.showKPISummary() == null || !settings.showKPISummary()){
 					<Body><![CDATA[GISRegion gisregion = new GISRegion(map, gisTokens);
 return gisregion;]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1715869498509</Id>
