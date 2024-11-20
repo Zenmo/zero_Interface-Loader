@@ -2760,7 +2760,7 @@ v_connectionOwnerIndexNr = 0;
 uI_Tabs.pop_tabMobility.get(0).f_getNumberOfGhostVehicles();
 
 //Get the ghost heating systems
-uI_Tabs.pop_tabHeating.get(0).f_getNumberOfGhostHeatingSystems();
+uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfGhostHeatingSystems();
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -2974,25 +2974,9 @@ area.v_previousTotals.setPreviousImportedEnergy_MWh(area.v_totalEnergyImport_MWh
 area.v_previousTotals.setPreviousExportedEnergy_MWh(area.v_totalEnergyExport_MWh);
 area.v_previousTotals.setPreviousDistrictHeatingHeatDemand_MWh(area.v_annualDistrictHeatingHeatDemand_MWh);
 area.v_previousTotals.setPreviousHeatPumpHeatGeneration_MWh(area.v_annualHeatPumpHeatGeneration_MWh);
-//area.v_previousTotals.setPreviousNaturalGasDemand_MWh(area.v_annualNaturalGasDemand_MWh);
-//area.v_previousTotals.setPreviousPetroleumProductsDemand_MWh(area.v_annualPetroleumProductsDemand_MWh);
-//area.v_previousTotals.setPreviousHydrogenDemand_MWh(area.v_annualHydrogenDemand_MWh);
-//area.v_previousTotals.setPreviousHydrogenSupply_MWh(area.v_annualHydrogenSupply_MWh);
-//area.v_previousTotals.setPreviousHeatDemand_MWh(area.v_annualHeatDemand_MWh);
 area.v_previousTotals.setPreviousSelfConsumedElectricity_MWh(area.v_totalElectricitySelfConsumed_MWh);
-//area.v_previousTotals.setPreviousSelfProducedElectricity_MWh(area.v_annualSelfProducedElectricity_MWh);
-//area.v_previousTotals.setPreviousElectricityImport_MWh(area.v_annualElectricityImport_MWh);
-//area.v_previousTotals.setPreviousElectricityExport_MWh(area.v_annualElectricityExport_MWh);
 area.v_previousTotals.setPreviousElectricityConsumed_MWh(area.v_totalElectricityConsumed_MWh);
 area.v_previousTotals.setPreviousElectricityForTransportDemand_MWh(area.v_annualElectricityForTransportDemand_MWh);
-area.v_previousTotals.setPreviousHydrogenForTransportDemand_MWh(area.v_annualHydrogenForTransportDemand_MWh);
-area.v_previousTotals.setPreviousTransportEnergyDemand_MWh(area.v_annualTransportEnergyDemand_MWh);
-//area.v_previousTotals.setPreviousWindSupply_MWh(area.v_annualWindSupply_MWh);
-//area.v_previousTotals.setPreviousWindSupplyRemainingPotential_MWh(area.v_annualWindSupplyRemainingPotential_MWh);
-//area.v_previousTotals.setPreviousPVSupply_MWh(area.v_annualPVSupply_MWh);
-//area.v_previousTotals.setPreviousPVSupplyRemainingPotential_MWh(area.v_annualPVSupplyRemainingPotential_MWh);
-//area.v_previousTotals.setPreviousHeatSupply_MWh(area.v_annualHeatSupply_MWh);
-//area.v_previousTotals.setPreviousHeatSupplyRemainingPotential_MWh(area.v_annualHeatSupplyRemainingPotential_MWh);
 area.v_previousTotals.setPreviousTotalTimeOverloadedTransformers_hr(area.v_totalTimeOverloadedTransformers_h);
 
 // Net Load
@@ -3005,9 +2989,6 @@ area.data_gridCapacitySupplyYear_kW.add(8760, -energyModel.f_getGridNodesTopLeve
 //Datasets for live charts
 //Demand
 area.dsm_liveDemand_kW = energyModel.dsm_liveDemand_kW;
-//area.v_dataPetroleumProductsDemandLiveWeek_kW = energyModel.data_dieselDemand_kW;
-//area.v_dataNaturalGasDemandLiveWeek_kW = energyModel.data_naturalGasDemand_kW;
-//area.v_dataHydrogenDemandLiveWeek_kW = energyModel.data_hydrogenDemand_kW;
 area.v_dataBaseloadElectricityDemandLiveWeek_kW = energyModel.data_baseloadElectricityDemand_kW;
 area.v_dataElectricityForHeatDemandLiveWeek_kW = energyModel.data_heatPumpElectricityDemand_kW;
 area.v_dataElectricityForTransportDemandLiveWeek_kW = energyModel.data_electricVehicleDemand_kW;
@@ -3033,18 +3014,6 @@ area.v_dataElectricitySupplyCapacityLiveWeek_kW = energyModel.data_gridCapacityS
 //Datasets for live summerWeek chart
 //Demand
 area.dsm_summerWeekDemandDataSets_kW = energyModel.dsm_summerWeekDemandDataSets_kW;
-
-/*
-if ( energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
-	area.v_dataNaturalGasDemandSummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE);
-}
-if ( energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) != null ) {
-	area.v_dataPetroleumProductsDemandSummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL);
-}
-if ( energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
-	area.v_dataElectricityForHydrogenDemandSummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
-}*/
-
 area.v_dataElectricityBaseloadDemandSummerWeek_kW = energyModel.data_summerWeekBaseloadElectricityDemand_kW;
 area.v_dataElectricityForHeatDemandSummerWeek_kW = energyModel.data_summerWeekHeatPumpElectricityDemand_kW;
 area.v_dataElectricityForTransportDemandSummerWeek_kW = energyModel.data_summerWeekElectricVehicleDemand_kW;
@@ -3053,12 +3022,6 @@ area.v_dataElectricityForHydrogenDemandSummerWeek_kW = energyModel.data_summerWe
 
 //Supply
 area.dsm_summerWeekSupplyDataSets_kW = energyModel.dsm_summerWeekSupplyDataSets_kW;
-
-/*
-if ( energyModel.v_summerWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
-	area.v_dataHydrogenSupplySummerWeek_kW = energyModel.v_summerWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
-}*/
-
 area.v_dataElectricityWindSupplySummerWeek_kW = energyModel.data_summerWeekWindGeneration_kW;
 area.v_dataElectricityPVSupplySummerWeek_kW = energyModel.data_summerWeekPVGeneration_kW;
 area.v_dataElectricityStorageSupplySummerWeek_kW = energyModel.data_summerWeekBatteriesSupply_kW;
@@ -3076,18 +3039,6 @@ area.v_dataElectricitySupplyCapacitySummerWeek_kW.add(energyModel.p_startHourSum
 //Datasets for live winterWeek chart
 //Demand
 area.dsm_winterWeekDemandDataSets_kW = energyModel.dsm_winterWeekDemandDataSets_kW;
-
-/*
-if ( energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
-	area.v_dataNaturalGasDemandWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.METHANE);
-}
-if ( energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) != null ) {
-	area.v_dataPetroleumProductsDemandWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL);
-}
-if ( energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
-	area.v_dataElectricityForHydrogenDemandWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
-}*/
-
 area.v_dataElectricityBaseloadDemandWinterWeek_kW = energyModel.data_winterWeekBaseloadElectricityDemand_kW;
 area.v_dataElectricityForHeatDemandWinterWeek_kW = energyModel.data_winterWeekHeatPumpElectricityDemand_kW;
 area.v_dataElectricityForTransportDemandWinterWeek_kW = energyModel.data_winterWeekElectricVehicleDemand_kW;
@@ -3095,12 +3046,6 @@ area.v_dataElectricityForStorageDemandWinterWeek_kW = energyModel.data_winterWee
 
 //Supply
 area.dsm_winterWeekSupplyDataSets_kW = energyModel.dsm_winterWeekSupplyDataSets_kW;
-
-/*
-if ( energyModel.v_winterWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
-	area.v_dataHydrogenSupplyWinterWeek_kW = energyModel.v_winterWeekDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
-}*/
-
 area.v_dataElectricityWindSupplyWinterWeek_kW = energyModel.data_winterWeekWindGeneration_kW;
 area.v_dataElectricityPVSupplyWinterWeek_kW = energyModel.data_winterWeekPVGeneration_kW;
 area.v_dataElectricityStorageSupplyWinterWeek_kW = energyModel.data_winterWeekBatteriesSupply_kW;
@@ -3116,21 +3061,8 @@ area.v_dataElectricitySupplyCapacityWinterWeek_kW.add(energyModel.p_startHourWin
 
 //Datasets for yearly profiles chart
 //Demand
-
-	area.dsm_dailyAverageDemandDataSets_kW = energyModel.dsm_dailyAverageDemandDataSets_kW;
-	area.dsm_dailyAverageSupplyDataSets_kW = energyModel.dsm_dailyAverageSupplyDataSets_kW;
-	
-/*
-if ( energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
-	area.v_dataNaturalGasDemandYear_kW = energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.METHANE);
-}
-if ( energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) != null ) {
-	area.v_dataPetroleumProductsDemandYear_kW = energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL);
-}
-if ( energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
-	area.v_dataElectricityForHydrogenDemandYear_kW = energyModel.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
-}*/
-
+area.dsm_dailyAverageDemandDataSets_kW = energyModel.dsm_dailyAverageDemandDataSets_kW;
+area.dsm_dailyAverageSupplyDataSets_kW = energyModel.dsm_dailyAverageSupplyDataSets_kW;
 area.v_dataElectricityBaseloadDemandYear_kW = energyModel.data_annualBaseloadElectricityDemand_kW;
 area.v_dataElectricityForHeatDemandYear_kW = energyModel.data_annualHeatPumpElectricityDemand_kW;
 area.v_dataElectricityForTransportDemandYear_kW = energyModel.data_annualElectricVehicleDemand_kW;
@@ -3138,21 +3070,15 @@ area.v_dataElectricityForStorageDemandYear_kW = energyModel.data_annualBatteries
 area.v_dataElectricityForHydrogenDemandYear_kW = energyModel.data_annualElectrolyserDemand_kW;
 
 //Supply
-/*if ( energyModel.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
-	area.v_dataHydrogenSupplyYear_kW = energyModel.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN);
-}*/
-
 area.v_dataElectricityWindSupplyYear_kW = energyModel.data_annualWindGeneration_kW;
 area.v_dataElectricityPVSupplyYear_kW = energyModel.data_annualPVGeneration_kW;
 area.v_dataElectricityStorageSupplyYear_kW = energyModel.data_annualBatteriesSupply_kW;
 area.v_dataElectricityV2GSupplyYear_kW = energyModel.data_annualV2GSupply_kW;
-//mainArea.v_dataPetroleumProductsSupplyYear_MWh
 
 //District heating
 
+
 // Data for gespreksleidraad1
-//area.v_dataElectricityDemandYear_kW = energyModel.data_annualElectricityDemand_kW;
-//area.v_dataElectricitySupplyYear_kW = energyModel.data_annualElectricitySupply_kW;
 area.v_dataNetLoadYear_kW = energyModel.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries();
 
 //Datasets for netloaddurationcurves
@@ -3177,7 +3103,6 @@ area.v_individualSelfSufficiency_fr = energyModel.v_individualSelfSufficiency_fr
 area.v_individualSelfconsumption_fr = energyModel.v_individualSelfConsumption_fr;
 area.v_modelSelfSufficiency_fr = energyModel.v_modelSelfSufficiency_fr;
 area.v_totalTimeOverloadedTransformers_h = energyModel.v_gridOverloadDuration_h;
-
 
 //Yearly
 area.fm_totalImports_MWh = energyModel.fm_totalImports_MWh;
@@ -4035,7 +3960,7 @@ gis_area.f_style( rect_householdNoProduction.getFillColor(), null, null, null );
 					<Body><![CDATA[// ATTENTION: If you have custom tabs it may be neccesary to override this function and add updates to your custom sliders!
 
 if(c_companyUIs.size()>0){//Update ghost vehicles and heating systems present if there are companyUIs
-	uI_Tabs.pop_tabHeating.get(0).f_getNumberOfGhostHeatingSystems();
+	uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfGhostHeatingSystems();
 	uI_Tabs.pop_tabMobility.get(0).f_getNumberOfGhostVehicles();
 }
 
@@ -5995,42 +5920,20 @@ traceln("DID NOT OVERRIDE THE PROJECT SPECIFIC STYLING!");]]></Body>
 					<Body><![CDATA[for (GridConnection GC : energyModel.f_getGridConnections()){	
 	J_previousTotals previousTotals = uI_Results.c_previousTotals_GC.get(GC);
 	
+	previousTotals.setPreviousTotalImports_MWh(GC.fm_totalImports_MWh);
+	previousTotals.setPreviousTotalExports_MWh(GC.fm_totalExports_MWh);
+	
 	previousTotals.setPreviousTotalConsumedEnergy_MWh(GC.v_totalEnergyConsumed_MWh);
 	previousTotals.setPreviousTotalProducedEnergy_MWh(GC.v_totalEnergyProduced_MWh);
 	previousTotals.setPreviousSelfConsumedEnergy_MWh(GC.v_totalEnergySelfConsumed_MWh);
 	previousTotals.setPreviousImportedEnergy_MWh(GC.v_totalEnergyImport_MWh);
 	previousTotals.setPreviousExportedEnergy_MWh(GC.v_totalEnergyExport_MWh);
-		
-	previousTotals.setPreviousNaturalGasDemand_MWh(GC.fm_totalImports_MWh.get(OL_EnergyCarriers.METHANE));
-	previousTotals.setPreviousPetroleumProductsDemand_MWh(GC.fm_totalImports_MWh.get(OL_EnergyCarriers.DIESEL));
-	previousTotals.setPreviousHydrogenDemand_MWh(GC.fm_totalImports_MWh.get(OL_EnergyCarriers.HYDROGEN));
-	previousTotals.setPreviousHydrogenSupply_MWh(GC.fm_totalExports_MWh.get(OL_EnergyCarriers.HYDROGEN));
-	
 	previousTotals.setPreviousSelfConsumedElectricity_MWh(GC.v_totalElectricitySelfConsumed_MWh);
-	//previousTotals.setPreviousSelfProducedElectricity_MWh(GC.v_totalElectricitySelfProduced_MWh);
-	previousTotals.setPreviousElectricityImport_MWh(GC.fm_totalImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-	previousTotals.setPreviousElectricityExport_MWh(GC.fm_totalExports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
 	previousTotals.setPreviousElectricityConsumed_MWh(GC.v_totalElectricityConsumed_MWh);
 	
 	//Overload
 	previousTotals.setPreviousOverloadDurationDelivery_hr(GC.v_totalOverloadDurationDelivery_hr);
 	previousTotals.setPreviousOverloadDurationFeedin_hr(GC.v_totalOverloadDurationFeedin_hr);
-	//Unused parameters
-	/*
-		previousTotals.setPreviousHeatDemand_MWh(GC.v_annualHeatDemand_MWh
-		previousTotals.setPreviousDistrictHeatingHeatDemand_MWh(GC.v_annualDistrictHeatingHeatDemand_MWh
-		previousTotals.setPreviousHeatPumpHeatGeneration_MWh(GC.v_annualHeatPumpHeatGeneration_MWh
-		previousTotals.setPreviousElectricityForTransportDemand_MWh(GC.v_annualElectricityForTransportDemand_MWh);
-		previousTotals.setPreviousHydrogenForTransportDemand_MWh(GC.v_annualHydrogenForTransportDemand_MWh);
-		previousTotals.setPreviousTransportEnergyDemand_MWh(GC.v_annualTransportEnergyDemand_MWh);
-		previousTotals.setPreviousWindSupply_MWh(GC.v_annualWindSupply_MWh);
-		previousTotals.setPreviousWindSupplyRemainingPotential_MWh(GC.v_annualWindSupplyRemainingPotential_MWh);
-		previousTotals.setPreviousPVSupply_MWh(GC.v_annualPVSupply_MWh);
-		previousTotals.setPreviousPVSupplyRemainingPotential_MWh(GC.v_annualPVSupplyRemainingPotential_MWh);
-		previousTotals.setPreviousHeatSupply_MWh(GC.v_annualHeatSupply_MWh);
-		previousTotals.setPreviousHeatSupplyRemainingPotential_MWh(GC.v_annualHeatSupplyRemainingPotential_MWh);
-	*/
-
 }
 ]]></Body>
 				</Function>
@@ -6264,6 +6167,9 @@ return p_legendsScope;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_legendsScope]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_cutOff_MWh]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -27433,21 +27339,6 @@ else{
 			GridConnection gc = findFirst(zero_Interface.c_orderedHeatingSystemsCompanies, x->x.p_primaryHeatingAsset instanceof J_EAConversionHeatPump);
 			if (gc!=null) {
 				
-				/*
-				// update UI company
-				if (zero_Interface.c_companyUIs.size()>0){
-					UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-					if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc) { // should also check the setting of selected GC
-						if (companyUI.c_scenarioSettings_Current.get(0).getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP) {
-							traceln("Removed already existing Heatpump");
-						}
-						//else {
-							companyUI.rb_heatingTypePrivateUI.setValue(0, false);
-						//}
-					}
-				}
-				*/
-				
 				J_EA heatPump = gc.p_primaryHeatingAsset;
 				//traceln("Found heatpump: " + heatPump);		
 				heatPump.removeEnergyAsset();
@@ -27457,9 +27348,9 @@ else{
 				J_EAConsumption heatDemandAsset = findFirst(gc.c_consumptionAssets, j_ea->j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
 				J_EAConversionGasBurner gasBurner;
 				if (heatDemandAsset != null) {
-					gasBurner = new J_EAConversionGasBurner(gc, OL_EnergyAssetType.GAS_BURNER, heatDemandAsset.yearlyDemandHeat_kWh/8760*10, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
+					gasBurner = new J_EAConversionGasBurner(gc, OL_EnergyAssetType.GAS_BURNER, heatDemandAsset.yearlyDemand_kWh/8760*10, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
 				} else {
-					J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(gc.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrierConsumed == OL_EnergyCarrierType.HEAT);
+					J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(gc.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrier == OL_EnergyCarriers.HEAT);
 					double peakHeatDemand_kW = Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
 					gasBurner = new J_EAConversionGasBurner(gc, OL_EnergyAssetType.GAS_BURNER, peakHeatDemand_kW, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
 				}			
@@ -27475,25 +27366,16 @@ else{
 			GridConnection gc = findFirst(zero_Interface.c_orderedHeatingSystemsCompanies, x->x.p_primaryHeatingAsset instanceof J_EAConversionGasBurner);
 	
 			if (gc!=null) {
-				
-				/*
-				// update UI company
-				if (zero_Interface.c_companyUIs.size()>0){
-					UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-					if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc) { // should also check the setting of selected GC
-						companyUI.rb_heatingTypePrivateUI.setValue(2, false);
-					}
-				}
-				*/
+
 				J_EA gasBurner = gc.p_primaryHeatingAsset;
 				gasBurner.removeEnergyAsset();
 				
 				J_EAConversionHeatPump heatPump;
 				J_EAConsumption heatDemandAsset = findFirst(gc.c_consumptionAssets, j_ea->j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
 				if (heatDemandAsset != null) {
-					heatPump = new J_EAConversionHeatPump(gc, zero_Interface.energyModel.p_timeStep_h, heatDemandAsset.yearlyDemandHeat_kWh/8760*10 / 3, 0.5, zero_Interface.energyModel.v_currentAmbientTemperature_degC, 60, "AIR", 0, 1);
+					heatPump = new J_EAConversionHeatPump(gc, zero_Interface.energyModel.p_timeStep_h, heatDemandAsset.yearlyDemand_kWh/8760*10 / 3, 0.5, zero_Interface.energyModel.v_currentAmbientTemperature_degC, 60, "AIR", 0, 1);
 				} else {
-					J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(gc.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrierConsumed == OL_EnergyCarrierType.HEAT);
+					J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(gc.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrier == OL_EnergyCarriers.HEAT);
 					double peakHeatDemand_kW = Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
 					heatPump = new J_EAConversionHeatPump(gc, zero_Interface.energyModel.p_timeStep_h, peakHeatDemand_kW / 3, 0.5, zero_Interface.energyModel.v_currentAmbientTemperature_degC, 60, "AIR", 0, 1);
 				}
@@ -27871,7 +27753,7 @@ if( targetHeatPumpAmount < nbHeatPumps){
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1729262524479</Id>
-					<Name><![CDATA[f_getNumberOfGhostHeatingSystems]]></Name>
+					<Name><![CDATA[f_calculateNumberOfGhostHeatingSystems]]></Name>
 					<X>40</X><Y>1000</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
