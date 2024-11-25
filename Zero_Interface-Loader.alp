@@ -3129,12 +3129,10 @@ area.v_totalElectricityConsumed_MWh = energyModel.v_totalElectricityConsumed_MWh
 area.v_totalElectricitySelfConsumed_MWh = energyModel.v_totalElectricitySelfConsumed_MWh;
 
 // Summer/winter
-for (OL_EnergyCarriers EC : energyModel.v_activeEnergyCarriers) {
-	area.fm_summerWeekImports_MWh.put( EC, energyModel.fm_summerWeekImports_MWh.get(EC) );
-	area.fm_summerWeekExports_MWh.put( EC, energyModel.fm_summerWeekExports_MWh.get(EC) );
-	area.fm_winterWeekImports_MWh.put( EC, energyModel.fm_winterWeekImports_MWh.get(EC) );
-	area.fm_winterWeekExports_MWh.put( EC, energyModel.fm_winterWeekExports_MWh.get(EC) );
-}
+area.fm_summerWeekImports_MWh = energyModel.fm_summerWeekImports_MWh;
+area.fm_summerWeekExports_MWh = energyModel.fm_summerWeekImports_MWh;
+area.fm_winterWeekImports_MWh = energyModel.fm_summerWeekImports_MWh;
+area.fm_winterWeekExports_MWh = energyModel.fm_summerWeekImports_MWh;
 
 area.v_summerWeekEnergyImport_MWh = energyModel.v_summerWeekEnergyImport_MWh;
 area.v_summerWeekEnergyExport_MWh = energyModel.v_summerWeekEnergyExport_MWh;
@@ -3159,12 +3157,10 @@ area.v_winterWeekElectricityConsumed_MWh = energyModel.v_winterWeekElectricityCo
 area.v_winterWeekElectricitySelfConsumed_MWh = energyModel.v_winterWeekElectricitySelfConsumed_MWh;
 
 // Day/night
-for (OL_EnergyCarriers EC : energyModel.v_activeEnergyCarriers) {
-	area.fm_daytimeImports_MWh.put( EC, energyModel.fm_daytimeImports_MWh.get(EC) );
-	area.fm_daytimeExports_MWh.put( EC, energyModel.fm_daytimeExports_MWh.get(EC) );
-	area.fm_nighttimeImports_MWh.put( EC, energyModel.fm_nighttimeImports_MWh.get(EC) );
-	area.fm_nighttimeExports_MWh.put( EC, energyModel.fm_nighttimeExports_MWh.get(EC) );
-}
+area.fm_daytimeImports_MWh = energyModel.fm_daytimeImports_MWh;
+area.fm_daytimeExports_MWh = energyModel.fm_daytimeExports_MWh;
+area.fm_nighttimeImports_MWh = energyModel.fm_nighttimeImports_MWh;
+area.fm_nighttimeExports_MWh = energyModel.fm_nighttimeExports_MWh;
 
 area.v_daytimeEnergyImport_MWh = energyModel.v_daytimeEnergyImport_MWh;
 area.v_daytimeEnergyExport_MWh = energyModel.v_daytimeEnergyExport_MWh;
@@ -3189,12 +3185,10 @@ area.v_nighttimeElectricityConsumed_MWh = energyModel.v_nighttimeElectricityCons
 area.v_nighttimeElectricitySelfConsumed_MWh = energyModel.v_nighttimeElectricitySelfConsumed_MWh;
 
 // Week/weekend
-for (OL_EnergyCarriers EC : energyModel.v_activeEnergyCarriers) {
-	area.fm_weekdayImports_MWh.put( EC, energyModel.fm_weekdayImports_MWh.get(EC) );
-	area.fm_weekdayExports_MWh.put( EC, energyModel.fm_weekdayExports_MWh.get(EC) );
-	area.fm_weekendImports_MWh.put( EC, energyModel.fm_weekendImports_MWh.get(EC) );
-	area.fm_weekendExports_MWh.put( EC, energyModel.fm_weekendExports_MWh.get(EC) );
-}
+area.fm_weekdayImports_MWh = energyModel.fm_weekdayImports_MWh;
+area.fm_weekdayExports_MWh = energyModel.fm_weekdayExports_MWh;
+area.fm_weekendImports_MWh = energyModel.fm_weekendImports_MWh;
+area.fm_weekendExports_MWh = energyModel.fm_weekendExports_MWh;
 
 area.v_weekdayEnergyImport_MWh = energyModel.v_weekdayEnergyImport_MWh;
 area.v_weekdayEnergyExport_MWh = energyModel.v_weekdayEnergyExport_MWh;
@@ -4694,6 +4688,8 @@ area.v_modelSelfSufficiency_fr = sum(gcList, x -> x.v_totalEnergyProduced_MWh) >
 //area.v_totalTimeOverloadedTransformers_h = GC.v_netOverloadDuration_h;
 
 //Yearly
+area.fm_totalImports_MWh.clear();
+area.fm_totalExports_MWh.clear();
 for (OL_EnergyCarriers EC : activeEnergyCarriers) {
 	area.fm_totalImports_MWh.put( EC, sum(gcList, x -> x.fm_totalImports_MWh.get(EC)) );
 	area.fm_totalExports_MWh.put( EC, sum(gcList, x -> x.fm_totalExports_MWh.get(EC)) );
@@ -4718,6 +4714,10 @@ area.v_previousTotals = uI_Results.c_previousTotals_GC.get(gcList.get(0));
 
 
 // Summer/winter
+area.fm_summerWeekImports_MWh.clear();
+area.fm_summerWeekExports_MWh.clear();
+area.fm_winterWeekImports_MWh.clear();
+area.fm_winterWeekExports_MWh.clear();
 for (OL_EnergyCarriers EC : activeEnergyCarriers) {
 	area.fm_summerWeekImports_MWh.put( EC, sum(gcList, x -> x.fm_summerWeekImports_MWh.get(EC)) );
 	area.fm_summerWeekExports_MWh.put( EC, sum(gcList, x -> x.fm_summerWeekExports_MWh.get(EC)) );
@@ -4748,6 +4748,11 @@ area.v_winterWeekElectricityConsumed_MWh = sum(gcList, x -> x.v_winterWeekElectr
 area.v_winterWeekElectricitySelfConsumed_MWh = sum(gcList, x -> x.v_winterWeekElectricitySelfConsumed_MWh);
 
 // Day/night
+area.fm_daytimeImports_MWh.clear();
+area.fm_daytimeExports_MWh.clear();
+area.fm_nighttimeImports_MWh.clear();
+area.fm_nighttimeExports_MWh.clear();
+
 for (OL_EnergyCarriers EC : activeEnergyCarriers) {
 	area.fm_daytimeImports_MWh.put( EC, sum(gcList, x -> x.fm_daytimeImports_MWh.get(EC)) );
 	area.fm_daytimeExports_MWh.put( EC, sum(gcList, x -> x.fm_daytimeExports_MWh.get(EC)) );
@@ -4779,6 +4784,11 @@ area.v_nighttimeElectricityConsumed_MWh = sum(gcList, x -> x.v_nighttimeElectric
 area.v_nighttimeElectricitySelfConsumed_MWh = sum(gcList, x -> x.v_nighttimeElectricitySelfConsumed_MWh);
 
 // Week/weekend
+area.fm_weekdayImports_MWh.clear();
+area.fm_weekdayExports_MWh.clear();
+area.fm_weekendImports_MWh.clear();
+area.fm_weekendExports_MWh.clear();
+
 for (OL_EnergyCarriers EC : activeEnergyCarriers) {
 	area.fm_weekdayImports_MWh.put( EC, sum(gcList, x -> x.fm_weekdayImports_MWh.get(EC)) );
 	area.fm_weekdayExports_MWh.put( EC, sum(gcList, x -> x.fm_weekdayExports_MWh.get(EC)) );
@@ -24251,7 +24261,6 @@ public ShapeSlider getWindSlider(){
 				<Variable Class="PlainVariable">
 					<Id>1722258980135</Id>
 					<Name><![CDATA[v_currentNbChargers]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>830</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -24264,7 +24273,6 @@ public ShapeSlider getWindSlider(){
 				<Variable Class="Parameter">
 					<Id>1722259487682</Id>
 					<Name><![CDATA[p_nbChargersInDatabase]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>828</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -24289,7 +24297,6 @@ public ShapeSlider getWindSlider(){
 				<Variable Class="Parameter">
 					<Id>1722259487696</Id>
 					<Name><![CDATA[p_minPublicChargerSlider]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>808</X><Y>620</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -24311,7 +24318,6 @@ public ShapeSlider getWindSlider(){
 				<Variable Class="Parameter">
 					<Id>1722259487705</Id>
 					<Name><![CDATA[p_minPVHouseholdSlider]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>808</X><Y>640</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -24553,7 +24559,10 @@ else {
 			J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, installedPVCapacity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC, zero_Interface.energyModel.pp_solarPVproduction );
 			zero_Interface.c_orderedPVSystems.remove(house);
 			zero_Interface.c_orderedPVSystems.add(0, house);
-			zero_Interface.energyModel.v_totalInstalledPVPower_kW += installedPVCapacity_kW;
+			
+			// v_totalInstalledPVPower_kW is updated automatically in the engine now!
+			//zero_Interface.energyModel.v_totalInstalledPVPower_kW += installedPVCapacity_kW;
+			
 			nbHousesWithPV ++;	
 		}
 	}
@@ -24561,12 +24570,11 @@ else {
 
 zero_Interface.f_resetSettings();]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722256239566</Id>
 					<Name><![CDATA[f_setPublicChargingStations]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>810</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -24604,7 +24612,7 @@ else if ( v_currentNbChargers < desiredNbOfChargers ){
 		
 		if( charger != null ){
 			String profileName = charger.p_chargingProfileName;
-			J_EAProfile profile = new J_EAProfile(charger, OL_EnergyCarrierType.ELECTRICITY, null, OL_ProfileAssetType.CHARGING, zero_Interface.energyModel.p_timeStep_h);		
+			J_EAProfile profile = new J_EAProfile(charger, OL_EnergyCarriers.ELECTRICITY, null, OL_ProfileAssetType.CHARGING, zero_Interface.energyModel.p_timeStep_h);		
 			profile.energyAssetName = "charging profile";
 			List<Double> quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + profileName + " FROM charging_profiles;");			
 			profile.a_energyProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> max(0,d)).map( d -> d / 4).toArray();
@@ -24629,7 +24637,6 @@ zero_Interface.f_resetSettings();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722256239578</Id>
 					<Name><![CDATA[f_setDieselVehiclesAtPublicParkingHouses]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>830</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -24677,12 +24684,11 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 
 zero_Interface.f_resetSettings();]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722256291599</Id>
 					<Name><![CDATA[f_setResidentialBatteries]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>810</X><Y>570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -24723,12 +24729,11 @@ if( nbHousesWithPV > 0 ){
 
 zero_Interface.f_resetSettings();]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722261212790</Id>
 					<Name><![CDATA[f_setEVsAtPrivateParkingHouses]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>810</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -24791,13 +24796,12 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 ]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1724164287280</Id>
 					<Name><![CDATA[f_setGridBatteries]]></Name>
 					<Description><![CDATA[Function that changes the electric capacity of the energy asset of the "Wind Farm". Takes an amount of MW as a parameter. The variables for amount of installed Wind are updated automatically in the zero_engine. The function also modifies the connection capacity of the energy production site to match the new installed Wind Power.]]></Description>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>810</X><Y>674</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -26110,7 +26114,6 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 				<Rectangle>
 					<Id>1722334712260</Id>
 					<Name><![CDATA[rect_residentialFunctions]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>780</X><Y>370</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -26133,7 +26136,6 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 				<Text>
 					<Id>1722334744018</Id>
 					<Name><![CDATA[t_residentialFunctionsDescription]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>980</X><Y>380</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -37268,7 +37270,11 @@ solarAbsorptionFactor_m2 = floorArea_m2 * 0.01; //solar irradiance [W/m2]
 
 heatCapacity_JpK = floorArea_m2 * 500000;
 
-parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossfactor_WpK, energyModel.p_timeStep_h, initialTemp, heatCapacity_JpK, solarAbsorptionFactor_m2 );]]></Body>
+parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossfactor_WpK, energyModel.p_timeStep_h, initialTemp, heatCapacity_JpK, solarAbsorptionFactor_m2 );
+//    public J_EABuilding(Agent parentAgent, double capacityHeat_kW, double lossFactor_WpK, double timestep_h, 
+//	double initialTemperature_degC, double heatCapacity_JpK, double solarAbsorptionFactor_m2 ) {
+
+]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
