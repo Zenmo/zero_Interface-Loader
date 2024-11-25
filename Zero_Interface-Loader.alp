@@ -2034,7 +2034,9 @@ v_timeStepsElapsed ++;
 if ( b_updateCongestionColors ){
 	for (GridNode gn : energyModel.pop_gridNodes) {
 		if (v_clickedObjectType != OL_GISObjectType.GRIDNODE || v_clickedGridNode != gn) {
-			f_setGridNodeCongestionColor( gn );
+			if (gn.p_energyCarrier != OL_EnergyCarriers.HEAT) {
+				f_setGridNodeCongestionColor( gn );
+			}
 		}
 	}
 }
@@ -2388,7 +2390,7 @@ switch( area.p_GISObjectType ) {
 		break;
 }]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1705505495599</Id>
@@ -2437,7 +2439,7 @@ if ( nodeStatus != null && nodeStatus.equals("x")){
 }
 */]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1705505509120</Id>
@@ -5383,7 +5385,7 @@ MVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
 HVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
 ]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1721991963719</Id>
@@ -5400,7 +5402,7 @@ HVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
 					<Body><![CDATA[gisregion.setVisible(false);
 ]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1721992103665</Id>
@@ -5904,7 +5906,7 @@ for (int j = 0; j < c_selectedGridConnections.size(); j++) {
 	}
 }]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725968656820</Id>
