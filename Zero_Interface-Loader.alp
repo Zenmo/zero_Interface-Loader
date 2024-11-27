@@ -4532,11 +4532,12 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 	for (GridConnection gc : gcList){
 		for (OL_EnergyCarriers EC : activeEnergyCarriers) {
 			//if (gc.dsm_summerWeekDemandDataSets_kW.get(EC).getXMin() < i) {
-				demandSummerWeek_kW.addFlow(EC, gc.dsm_summerWeekDemandDataSets_kW.get(EC).getY(i));
-				supplySummerWeek_kW.addFlow(EC, gc.dsm_summerWeekSupplyDataSets_kW.get(EC).getY(i));
-				demandWinterWeek_kW.addFlow(EC, gc.dsm_winterWeekDemandDataSets_kW.get(EC).getY(i));
-				supplyWinterWeek_kW.addFlow(EC, gc.dsm_winterWeekSupplyDataSets_kW.get(EC).getY(i));
-			//}
+			if (gc.v_activeEnergyCarriers.contains(EC)) {
+					demandSummerWeek_kW.addFlow(EC, gc.dsm_summerWeekDemandDataSets_kW.get(EC).getY(i));
+					supplySummerWeek_kW.addFlow(EC, gc.dsm_summerWeekSupplyDataSets_kW.get(EC).getY(i));
+					demandWinterWeek_kW.addFlow(EC, gc.dsm_winterWeekDemandDataSets_kW.get(EC).getY(i));
+					supplyWinterWeek_kW.addFlow(EC, gc.dsm_winterWeekSupplyDataSets_kW.get(EC).getY(i));
+			}
 		}
 	
 		electricityBaseloadDemandSummerWeek_kW += gc.data_summerWeekBaseloadElectricityDemand_kW.getY(i);
