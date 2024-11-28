@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_Interface-Loader]]></Name>
@@ -3120,12 +3120,10 @@ area.v_totalElectricityConsumed_MWh = energyModel.v_totalElectricityConsumed_MWh
 area.v_totalElectricitySelfConsumed_MWh = energyModel.v_totalElectricitySelfConsumed_MWh;
 
 // Summer/winter
-for (OL_EnergyCarriers EC : energyModel.v_activeEnergyCarriers) {
-	area.fm_summerWeekImports_MWh.put( EC, energyModel.fm_summerWeekImports_MWh.get(EC) );
-	area.fm_summerWeekExports_MWh.put( EC, energyModel.fm_summerWeekExports_MWh.get(EC) );
-	area.fm_winterWeekImports_MWh.put( EC, energyModel.fm_winterWeekImports_MWh.get(EC) );
-	area.fm_winterWeekExports_MWh.put( EC, energyModel.fm_winterWeekExports_MWh.get(EC) );
-}
+area.fm_summerWeekImports_MWh = energyModel.fm_summerWeekImports_MWh;
+area.fm_summerWeekExports_MWh = energyModel.fm_summerWeekImports_MWh;
+area.fm_winterWeekImports_MWh = energyModel.fm_summerWeekImports_MWh;
+area.fm_winterWeekExports_MWh = energyModel.fm_summerWeekImports_MWh;
 
 area.v_summerWeekEnergyImport_MWh = energyModel.v_summerWeekEnergyImport_MWh;
 area.v_summerWeekEnergyExport_MWh = energyModel.v_summerWeekEnergyExport_MWh;
@@ -3150,12 +3148,10 @@ area.v_winterWeekElectricityConsumed_MWh = energyModel.v_winterWeekElectricityCo
 area.v_winterWeekElectricitySelfConsumed_MWh = energyModel.v_winterWeekElectricitySelfConsumed_MWh;
 
 // Day/night
-for (OL_EnergyCarriers EC : energyModel.v_activeEnergyCarriers) {
-	area.fm_daytimeImports_MWh.put( EC, energyModel.fm_daytimeImports_MWh.get(EC) );
-	area.fm_daytimeExports_MWh.put( EC, energyModel.fm_daytimeExports_MWh.get(EC) );
-	area.fm_nighttimeImports_MWh.put( EC, energyModel.fm_nighttimeImports_MWh.get(EC) );
-	area.fm_nighttimeExports_MWh.put( EC, energyModel.fm_nighttimeExports_MWh.get(EC) );
-}
+area.fm_daytimeImports_MWh = energyModel.fm_daytimeImports_MWh;
+area.fm_daytimeExports_MWh = energyModel.fm_daytimeExports_MWh;
+area.fm_nighttimeImports_MWh = energyModel.fm_nighttimeImports_MWh;
+area.fm_nighttimeExports_MWh = energyModel.fm_nighttimeExports_MWh;
 
 area.v_daytimeEnergyImport_MWh = energyModel.v_daytimeEnergyImport_MWh;
 area.v_daytimeEnergyExport_MWh = energyModel.v_daytimeEnergyExport_MWh;
@@ -3180,12 +3176,10 @@ area.v_nighttimeElectricityConsumed_MWh = energyModel.v_nighttimeElectricityCons
 area.v_nighttimeElectricitySelfConsumed_MWh = energyModel.v_nighttimeElectricitySelfConsumed_MWh;
 
 // Week/weekend
-for (OL_EnergyCarriers EC : energyModel.v_activeEnergyCarriers) {
-	area.fm_weekdayImports_MWh.put( EC, energyModel.fm_weekdayImports_MWh.get(EC) );
-	area.fm_weekdayExports_MWh.put( EC, energyModel.fm_weekdayExports_MWh.get(EC) );
-	area.fm_weekendImports_MWh.put( EC, energyModel.fm_weekendImports_MWh.get(EC) );
-	area.fm_weekendExports_MWh.put( EC, energyModel.fm_weekendExports_MWh.get(EC) );
-}
+area.fm_weekdayImports_MWh = energyModel.fm_weekdayImports_MWh;
+area.fm_weekdayExports_MWh = energyModel.fm_weekdayExports_MWh;
+area.fm_weekendImports_MWh = energyModel.fm_weekendImports_MWh;
+area.fm_weekendExports_MWh = energyModel.fm_weekendExports_MWh;
 
 area.v_weekdayEnergyImport_MWh = energyModel.v_weekdayEnergyImport_MWh;
 area.v_weekdayEnergyExport_MWh = energyModel.v_weekdayEnergyExport_MWh;
@@ -4667,6 +4661,8 @@ area.v_modelSelfSufficiency_fr = sum(gcList, x -> x.v_totalEnergyProduced_MWh) >
 //area.v_totalTimeOverloadedTransformers_h = GC.v_netOverloadDuration_h;
 
 //Yearly
+area.fm_totalImports_MWh.clear();
+area.fm_totalExports_MWh.clear();
 for (OL_EnergyCarriers EC : activeEnergyCarriers) {
 	area.fm_totalImports_MWh.put( EC, sum(gcList, x -> x.fm_totalImports_MWh.get(EC)) );
 	area.fm_totalExports_MWh.put( EC, sum(gcList, x -> x.fm_totalExports_MWh.get(EC)) );
@@ -4691,6 +4687,10 @@ area.v_previousTotals = uI_Results.c_previousTotals_GC.get(gcList.get(0));
 
 
 // Summer/winter
+area.fm_summerWeekImports_MWh.clear();
+area.fm_summerWeekExports_MWh.clear();
+area.fm_winterWeekImports_MWh.clear();
+area.fm_winterWeekExports_MWh.clear();
 for (OL_EnergyCarriers EC : activeEnergyCarriers) {
 	area.fm_summerWeekImports_MWh.put( EC, sum(gcList, x -> x.fm_summerWeekImports_MWh.get(EC)) );
 	area.fm_summerWeekExports_MWh.put( EC, sum(gcList, x -> x.fm_summerWeekExports_MWh.get(EC)) );
@@ -4721,6 +4721,10 @@ area.v_winterWeekElectricityConsumed_MWh = sum(gcList, x -> x.v_winterWeekElectr
 area.v_winterWeekElectricitySelfConsumed_MWh = sum(gcList, x -> x.v_winterWeekElectricitySelfConsumed_MWh);
 
 // Day/night
+area.fm_daytimeImports_MWh.clear();
+area.fm_daytimeExports_MWh.clear();
+area.fm_nighttimeImports_MWh.clear();
+area.fm_nighttimeExports_MWh.clear();
 for (OL_EnergyCarriers EC : activeEnergyCarriers) {
 	area.fm_daytimeImports_MWh.put( EC, sum(gcList, x -> x.fm_daytimeImports_MWh.get(EC)) );
 	area.fm_daytimeExports_MWh.put( EC, sum(gcList, x -> x.fm_daytimeExports_MWh.get(EC)) );
@@ -4752,6 +4756,10 @@ area.v_nighttimeElectricityConsumed_MWh = sum(gcList, x -> x.v_nighttimeElectric
 area.v_nighttimeElectricitySelfConsumed_MWh = sum(gcList, x -> x.v_nighttimeElectricitySelfConsumed_MWh);
 
 // Week/weekend
+area.fm_weekdayImports_MWh.clear();
+area.fm_weekdayExports_MWh.clear();
+area.fm_weekendImports_MWh.clear();
+area.fm_weekendExports_MWh.clear();
 for (OL_EnergyCarriers EC : activeEnergyCarriers) {
 	area.fm_weekdayImports_MWh.put( EC, sum(gcList, x -> x.fm_weekdayImports_MWh.get(EC)) );
 	area.fm_weekdayExports_MWh.put( EC, sum(gcList, x -> x.fm_weekdayExports_MWh.get(EC)) );
@@ -9184,7 +9192,7 @@ v_clickedObjectText]]></TextCode>
 						<TextColor/>
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[v_themeColor = new Color( uniform_discr(255),  uniform_discr(255),  uniform_discr(255) );
-uI_Results.f_styleAllCharts(white, v_themeColor, 1, LINE_STYLE_SOLID);
+uI_Results.f_styleAllCharts(white, v_themeColor, 1.0, LINE_STYLE_SOLID);
 uI_Results.f_styleResultsUIHeader(v_themeColor, v_themeColor, 1, LINE_STYLE_SOLID);
 traceln( v_themeColor.getRGB() );]]></ActionCode>
 					</BasicProperties>
