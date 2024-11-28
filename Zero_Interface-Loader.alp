@@ -12372,7 +12372,7 @@ switch (selectedHeatingType){
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHydrogenBurner_degC;
 	    
 		//Add primary heating asset (hydrogenburner)
-		J_EAConversionHydrogenBurner hydrogenBurner = new J_EAConversionHydrogenBurner(GC, OL_EnergyAssetType.HYDROGEN_BURNER, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
+		J_EAConversionHydrogenBurner hydrogenBurner = new J_EAConversionHydrogenBurner(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
 		
 	break;
 }
@@ -27694,7 +27694,11 @@ if( targetHeatPumpAmount < nbHeatPumps){
 				}
 			}
 			
+			// rbSetting Bugfix, does not change the heating system if the radiobutton was disabled!			
+			boolean rbSetting = companyUI.rb_heatingTypePrivateUI.isEnabled();
+			companyUI.rb_heatingTypePrivateUI.setEnabled(true);
 			companyUI.rb_heatingTypePrivateUI.setValue(0, true);
+			companyUI.rb_heatingTypePrivateUI.setEnabled(rbSetting);
 			companyUI.rb_scenariosPrivateUI.setValue(2, false);
 			companyUI.b_runningMainInterfaceSlider = false;
 
@@ -27728,7 +27732,12 @@ if( targetHeatPumpAmount < nbHeatPumps){
 					companyUI.GCnr_selection.setValue(selectedGC++, true);
 				}
 			}
+			
+			// rbSetting Bugfix, does not change the heating system if the radiobutton was disabled!
+			boolean rbSetting = companyUI.rb_heatingTypePrivateUI.isEnabled();
+			companyUI.rb_heatingTypePrivateUI.setEnabled(true);
 			companyUI.rb_heatingTypePrivateUI.setValue(2, true);
+			companyUI.rb_heatingTypePrivateUI.setEnabled(rbSetting);
 			companyUI.rb_scenariosPrivateUI.setValue(2, false);
 			companyUI.b_runningMainInterfaceSlider = false;
 			
