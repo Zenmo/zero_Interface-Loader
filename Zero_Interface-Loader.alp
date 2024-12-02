@@ -2992,10 +2992,10 @@ area.v_previousTotals.setPreviousTotalTimeOverloadedTransformers_hr(area.v_total
 
 // Net Load
 area.v_dataNetLoadYear_kW = energyModel.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries();
-area.data_gridCapacityDemandYear_kW.add(0, energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
-area.data_gridCapacityDemandYear_kW.add(8760, energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
-area.data_gridCapacitySupplyYear_kW.add(0, -energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
-area.data_gridCapacitySupplyYear_kW.add(8760, -energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
+area.data_gridCapacityDeliveryYear_kW.add(0, energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
+area.data_gridCapacityDeliveryYear_kW.add(8760, energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
+area.data_gridCapacityFeedInYear_kW.add(0, -energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
+area.data_gridCapacityFeedInYear_kW.add(8760, -energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 
 //Datasets for live charts
 //Demand
@@ -3105,8 +3105,8 @@ area.v_dataNetbelastingDuurkrommeWeekday_kW = energyModel.data_weekdayNetbelasti
 
 
 // Can't use pointer for (immutable) primitives in Java, so need to manually update results after a year-sim!!
-area.v_gridCapacityDemand_kW = energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW;
-area.v_gridCapacitySupply_kW = energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW;
+area.v_gridCapacityDelivery_kW = energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW;
+area.v_gridCapacityFeedIn_kW = energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW;
 
 // KPIs for 'samenvatting' 
 area.v_modelSelfConsumption_fr = energyModel.v_modelSelfConsumption_fr;
@@ -3237,8 +3237,8 @@ area.v_weekendElectricitySelfConsumed_MWh = energyModel.v_weekendElectricitySelf
 					<Body><![CDATA[area.v_activeEnergyCarriers = energyModel.v_activeEnergyCarriers;
 
 // Can't use pointer for (immutable) primitives in Java, so need to manually update results after a year-sim!!
-area.v_gridCapacityDemand_kW = EC.p_connectionCapacity_kW;
-area.v_gridCapacitySupply_kW = EC.p_connectionCapacity_kW;
+area.v_gridCapacityDelivery_kW = EC.p_connectionCapacity_kW;
+area.v_gridCapacityFeedIn_kW = EC.p_connectionCapacity_kW;
 
 // KPIs for 'samenvatting' 
 area.v_modelSelfConsumption_fr = EC.v_totalEnergyProduced_MWh > 0 ? EC.v_totalEnergySelfConsumed_MWh/EC.v_totalEnergyProduced_MWh : 0.0;
@@ -3471,8 +3471,8 @@ runSimulation();
 						<Type><![CDATA[GridNode]]></Type>
 					</Parameter>
 					<Body><![CDATA[// Can't use pointer for (immutable) primitives in Java, so need to manually update results after a year-sim!!
-area.v_gridCapacityDemand_kW = GN.p_capacity_kW;
-area.v_gridCapacitySupply_kW = -GN.p_capacity_kW;
+area.v_gridCapacityDelivery_kW = GN.p_capacity_kW;
+area.v_gridCapacityFeedIn_kW = GN.p_capacity_kW;
 
 
 // Datasets for profile plot
@@ -3484,18 +3484,18 @@ area.v_dataElectricityBaseloadConsumptionWinterWeek_kW = GN.data_winterWeekLoad_
 
 area.v_dataElectricityDeliveryCapacityLiveWeek_kW = GN.data_liveCapacityDemand_kW;
 area.v_dataElectricityFeedInCapacityLiveWeek_kW = GN.data_liveCapacitySupply_kW;
-area.data_gridCapacityDemandYear_kW.add(0, GN.p_capacity_kW);
-area.data_gridCapacityDemandYear_kW.add(8760, GN.p_capacity_kW);
-area.data_gridCapacitySupplyYear_kW.add(0, -GN.p_capacity_kW);
-area.data_gridCapacitySupplyYear_kW.add(8760, -GN.p_capacity_kW);
-area.data_gridCapacityDemandSummerWeek_kW.add(energyModel.p_startHourSummerWeek, GN.p_capacity_kW);
-area.data_gridCapacityDemandSummerWeek_kW.add(energyModel.p_startHourSummerWeek+24*7, GN.p_capacity_kW);
-area.data_gridCapacitySupplySummerWeek_kW.add(energyModel.p_startHourSummerWeek, -GN.p_capacity_kW);
-area.data_gridCapacitySupplySummerWeek_kW.add(energyModel.p_startHourSummerWeek+24*7, -GN.p_capacity_kW);
-area.data_gridCapacityDemandWinterWeek_kW.add(energyModel.p_startHourWinterWeek, GN.p_capacity_kW);
-area.data_gridCapacityDemandWinterWeek_kW.add(energyModel.p_startHourWinterWeek+24*7, GN.p_capacity_kW);
-area.data_gridCapacitySupplyWinterWeek_kW.add(energyModel.p_startHourWinterWeek, -GN.p_capacity_kW);
-area.data_gridCapacitySupplyWinterWeek_kW.add(energyModel.p_startHourWinterWeek+24*7, -GN.p_capacity_kW);
+area.data_gridCapacityDeliveryYear_kW.add(0, GN.p_capacity_kW);
+area.data_gridCapacityDeliveryYear_kW.add(8760, GN.p_capacity_kW);
+area.data_gridCapacityFeedInYear_kW.add(0, -GN.p_capacity_kW);
+area.data_gridCapacityFeedInYear_kW.add(8760, -GN.p_capacity_kW);
+area.data_gridCapacityDeliverySummerWeek_kW.add(energyModel.p_startHourSummerWeek, GN.p_capacity_kW);
+area.data_gridCapacityDeliverySummerWeek_kW.add(energyModel.p_startHourSummerWeek+24*7, GN.p_capacity_kW);
+area.data_gridCapacityFeedInSummerWeek_kW.add(energyModel.p_startHourSummerWeek, -GN.p_capacity_kW);
+area.data_gridCapacityFeedInSummerWeek_kW.add(energyModel.p_startHourSummerWeek+24*7, -GN.p_capacity_kW);
+area.data_gridCapacityDeliveryWinterWeek_kW.add(energyModel.p_startHourWinterWeek, GN.p_capacity_kW);
+area.data_gridCapacityDeliveryWinterWeek_kW.add(energyModel.p_startHourWinterWeek+24*7, GN.p_capacity_kW);
+area.data_gridCapacityFeedInWinterWeek_kW.add(energyModel.p_startHourWinterWeek, -GN.p_capacity_kW);
+area.data_gridCapacityFeedInWinterWeek_kW.add(energyModel.p_startHourWinterWeek+24*7, -GN.p_capacity_kW);
 
 // Data for Opwek & Verbruik
 // Year
@@ -4664,8 +4664,8 @@ for (GridConnection gc : gcList) {
 area.v_activeEnergyCarriers = activeEnergyCarriers;
 
 // Can't use pointer for (immutable) primitives in Java, so need to manually update results after a year-sim!!
-area.v_gridCapacityDemand_kW = sum(gcList, x -> x.p_contractedDeliveryCapacity_kW);
-area.v_gridCapacitySupply_kW = sum(gcList, x -> x.p_contractedFeedinCapacity_kW);
+area.v_gridCapacityDelivery_kW = sum(gcList, x -> x.p_contractedDeliveryCapacity_kW);
+area.v_gridCapacityFeedIn_kW = sum(gcList, x -> x.p_contractedFeedinCapacity_kW);
 
 // KPIs for 'samenvatting' 
 area.v_modelSelfConsumption_fr = sum(gcList, x -> x.v_totalEnergyProduced_MWh) > 0 ? sum(gcList, x -> x.v_totalEnergySelfConsumed_MWh) / sum(gcList, x -> x.v_totalEnergyProduced_MWh) : 0.0;
@@ -5142,10 +5142,10 @@ for(int i=0; i< arraySize; i++) {
 }
 
 // Connection Capacity
-area.data_gridCapacityDemandYear_kW.add(0, totalDeliveryCapacity_kW);
-area.data_gridCapacityDemandYear_kW.add(8760, totalDeliveryCapacity_kW);
-area.data_gridCapacitySupplyYear_kW.add(0, -totalFeedInCapacity_kW);
-area.data_gridCapacitySupplyYear_kW.add(8760, -totalFeedInCapacity_kW);]]></Body>
+area.data_gridCapacityDeliveryYear_kW.add(0, totalDeliveryCapacity_kW);
+area.data_gridCapacityDeliveryYear_kW.add(8760, totalDeliveryCapacity_kW);
+area.data_gridCapacityFeedInYear_kW.add(0, -totalFeedInCapacity_kW);
+area.data_gridCapacityFeedInYear_kW.add(8760, -totalFeedInCapacity_kW);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
