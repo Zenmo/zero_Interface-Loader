@@ -4518,7 +4518,7 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 	
 	//accumulate values over gridcongestion
 	for (GridConnection gc : gcList){
-		for (OL_EnergyCarriers EC : activeEnergyCarriers) {
+		for (OL_EnergyCarriers EC : gc.v_activeEnergyCarriers) {
 			//if (gc.dsm_summerWeekDemandDataSets_kW.get(EC).getXMin() < i) {
 				demandSummerWeek_kW.addFlow(EC, gc.dsm_summerWeekDemandDataSets_kW.get(EC).getY(i));
 				supplySummerWeek_kW.addFlow(EC, gc.dsm_summerWeekSupplyDataSets_kW.get(EC).getY(i));
