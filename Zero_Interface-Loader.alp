@@ -1546,6 +1546,30 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1733146691218</Id>
+					<Name><![CDATA[v_groupATODeliveryCapacity_kW]]></Name>
+					<X>-360</X><Y>1070</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1733146693366</Id>
+					<Name><![CDATA[v_groupATOFeedInCapacity_kW]]></Name>
+					<X>-360</X><Y>1090</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1715858732720</Id>
 					<Name><![CDATA[energyModel]]></Name>
@@ -5210,7 +5234,10 @@ if (c_selectedGridConnections.size() > 0) {
 			//f_updateTotalWeeklyDataSets();
 	
 		}
+		// Energy-Hub Check
+		f_calculateGroupATOConnectionCapacity(c_selectedGridConnections);
 	}
+
 }
 else {
 	uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
@@ -6004,6 +6031,99 @@ return p_legendsScope;]]></Body>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//Function that can be used to make project specific adjustments to the ordered collection
 //SHOULD BE OVERRIDEN IF YOU WANT TO USE THIS]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double[]]]></ReturnType>
+					<Id>1733145172830</Id>
+					<Name><![CDATA[f_calculateGroupATOConnectionCapacity]]></Name>
+					<Description><![CDATA[This function returns the delivery and feed in capacity (in kW) that a group of gridconnections would get from the grid operator if they formed an energy hub.]]></Description>
+					<X>-400</X><Y>1040</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[gcList]]></Name>
+						<Type><![CDATA[ArrayList<GridConnection>]]></Type>
+					</Parameter>
+					<Body><![CDATA[// TODO: Add as an argument the grid operator when different calculations are available.
+// For now only Stedin is implemented, so this calculation is always chosen.
+
+double deliveryCapacity_kW = 0;
+double feedInCapacity_kW = 0;
+
+//TODO: First we check if all the gridconnections are on a single ring in the grid topology. If not we add a warning
+HashSet<GridNode> parentNodes = new HashSet<>();
+
+for (GridConnection gc : gcList) {
+	// GridTopology Check
+	GridNode gn = gc.l_parentNodeElectric.getConnectedAgent();
+	// TODO: Improve this so it uses an OptionList instead of string comparison
+	if ( gn.p_description.contains("klantstation") ) {
+		GridNode parentNode = findFirst(energyModel.f_getGridNodesNotTopLevel(), p -> p.p_gridNodeID.equals(gn.p_parentNodeID));
+		if (parentNode.p_nodeType != OL_GridNodeType.SUBMV) {
+			// add warning, gc has klantstation, but this one is not on a ring
+			traceln("Warning! GC: " + gc.p_ownerID + " is not connected to a ring in the grid topology.");
+		}
+		parentNodes.add(parentNode);
+	}
+	else if ( gn.p_nodeType != OL_GridNodeType.SUBMV ) {
+		// add warning, this one is not on a ring
+		traceln("Warning! GC: " + gc.p_ownerID + " is not connected to a ring in the grid topology.");
+		parentNodes.add(gn);
+	}
+	else {
+		parentNodes.add(gn);	
+	}
+	
+	
+	// Calculation
+	// Stedin: remove the top 0.1% of peak loads of the past years quarterhourly values, then add the remaining maximum to the group capacity
+	// First we find the quarterhourly values, or if they are not available the assigned base load and add a warning that not all data was available
+	if (gc.v_hasQuarterHourlyValues) {
+		J_EAProfile j_ea = findFirst(gc.c_profileAssets, ea -> ea.profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD);
+		if (j_ea == null) {
+			throw new RuntimeException("When calculating group capacity, could not find the quarterhourly values of GC: " + gc.p_ownerID);
+		}
+		int amountOfDataPoints = j_ea.a_energyProfile_kWh.length;
+		double[] quarterHourlyValues = Arrays.copyOf( j_ea.a_energyProfile_kWh, amountOfDataPoints );
+		Arrays.sort(quarterHourlyValues); // Sorts in ascending order
+		double filteredMaximum_kW = 4 * quarterHourlyValues[amountOfDataPoints - (int) (amountOfDataPoints*0.001) - 1]; // multiply by 4 to go from kWh / quarterhour -> kW
+
+		deliveryCapacity_kW += filteredMaximum_kW;
+		
+		// TODO: Implement FeedIn calculation. Does it use a completely symmetric calculation?
+		feedInCapacity_kW += gc.p_contractedFeedinCapacity_kW;
+		
+	}
+	else {
+		J_EAConsumption j_ea = findFirst(gc.c_consumptionAssets, ea -> ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND);
+		if (j_ea == null) {
+			throw new RuntimeException("When calculating group capacity, could not find any base electricity demand of GC: " + gc.p_ownerID);
+		}
+		double yearlyDemand_kWh = j_ea.yearlyDemand_kWh;
+		double[] tfProfile = j_ea.getProfilePointer().getTableFunction().getValues();
+		int amountOfDataPoints = tfProfile.length;
+		Arrays.sort(tfProfile);
+		double filteredMaximum_kW = 4 * yearlyDemand_kWh * tfProfile[amountOfDataPoints - (int) (amountOfDataPoints*0.001) - 1]; // multiply by 4 to go from kWh / quarterhour -> kW
+		
+		deliveryCapacity_kW += filteredMaximum_kW;
+		
+		// TODO: Implement FeedIn calculation. Does it use a completely symmetric calculation?
+		feedInCapacity_kW += gc.p_contractedFeedinCapacity_kW;
+	}
+}
+
+if ( parentNodes.size() != 1 ) {
+	// add warning
+	traceln("Warning! Selected GridConnections for E-Hub are not on a single ring.");
+}
+
+v_groupATODeliveryCapacity_kW = deliveryCapacity_kW;
+v_groupATOFeedInCapacity_kW = feedInCapacity_kW;
+//double[] capacities_kW = new double[]{deliveryCapacity_kW, feedInCapacity_kW};
+//return capacities_kW;]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -10235,6 +10355,9 @@ voor verwarming.]]></Text>
 	//Reset the KPI summary button
 	uI_Results.getCheckbox_KPISummary().setEnabled(true);
 	
+	// Reset the groupATO Capacities
+	v_groupATODeliveryCapacity_kW = 0;
+	v_groupATOFeedInCapacity_kW = 0;
 }
 else{
 	//Make the companyUI button invisible
