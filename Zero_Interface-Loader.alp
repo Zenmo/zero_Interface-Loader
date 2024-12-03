@@ -114,6 +114,13 @@
 		<ActiveObjectClass>
 			<Id>1658477103140</Id>
 			<Name><![CDATA[Zero_Interface]]></Name>
+			<AdditionalClassCode><![CDATA[public ShapeButton getButton_goToUI() {
+	return this.button_goToUI;
+}
+
+public ShapeCheckBox getMultiSelect() {
+	return this.checkbox_multiSelect;
+}]]></AdditionalClassCode>
 			<Import><![CDATA[import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -1570,6 +1577,18 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1733219849177</Id>
+					<Name><![CDATA[b_EHubSelect]]></Name>
+					<X>-400</X><Y>1150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1715858732720</Id>
 					<Name><![CDATA[energyModel]]></Name>
@@ -2068,11 +2087,15 @@ if (c_selectedGridConnections.size() > 0) {
 	f_addTimeStepLiveDataSets(uI_Results.v_gridConnection, c_selectedGridConnections);
 	
 	if (p_selectedProjectType == OL_ProjectType.BUSINESSPARK) {
-		if (b_multiSelect && c_selectedGridConnections.size() > 1) {
+		if (( b_multiSelect || b_EHubSelect ) && c_selectedGridConnections.size() >= 1) {
 			for (int i = 0; i < c_selectedGridConnections.size(); i++) {
 				f_addTimeStepLiveDataSets(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
 			}
 			f_addTimeStepTotalLiveDataSets();
+			
+			if (b_EHubSelect) {
+				f_updateLiveEHubCapacityDataSets();
+			}
 		}
 	}
 }
@@ -4611,7 +4634,7 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 			hydrogenSupplyWinterWeek_kW += gc.v_winterWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
 		}*/
 		
-		//netLoadSummerWeek_kW += gc.acc_summerElectricityBalance_kW.getY(i);
+		netLoadSummerWeek_kW += gc.am_summerWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getY(i);
 		netLoadWinterWeek_kW += gc.am_winterWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getY(i);
 		electricityDemandCapacitySummerWeek_kW += gc.acc_summerWeekDeliveryCapacity_kW.getY(i);
 		electricityDemandCapacityWinterWeek_kW += gc.acc_winterWeekDeliveryCapacity_kW.getY(i);
@@ -5219,7 +5242,7 @@ if (c_selectedGridConnections.size() > 0) {
 	f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
 	uI_Results.v_selectedObjectType = OL_GISObjectType.BUILDING;
 	if (p_selectedProjectType == OL_ProjectType.BUSINESSPARK) {
-		if (c_selectedGridConnections.size() > 1) {
+		if (c_selectedGridConnections.size() >= 1) {
 			uI_Results.c_individualGridConnections = new ArrayList<AreaCollection>();
 			for (int i = 0; i < c_selectedGridConnections.size(); i++) {
 				AreaCollection AC = new AreaCollection();
@@ -5234,12 +5257,10 @@ if (c_selectedGridConnections.size() > 0) {
 			//f_updateTotalWeeklyDataSets();
 	
 		}
-		// Energy-Hub Check
-		f_calculateGroupATOConnectionCapacity(c_selectedGridConnections);
 	}
-
 }
 else {
+	uI_Results.c_individualGridConnections = new ArrayList<AreaCollection>();	
 	uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
 }
 uI_Results.f_showCorrectChart();]]></Body>
@@ -6032,7 +6053,7 @@ return p_legendsScope;]]></Body>
 					<Body><![CDATA[//Function that can be used to make project specific adjustments to the ordered collection
 //SHOULD BE OVERRIDEN IF YOU WANT TO USE THIS]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double[]]]></ReturnType>
 					<Id>1733145172830</Id>
@@ -6053,6 +6074,8 @@ return p_legendsScope;]]></Body>
 double deliveryCapacity_kW = 0;
 double feedInCapacity_kW = 0;
 
+ArrayList<String> warnings = new ArrayList<>();
+
 //TODO: First we check if all the gridconnections are on a single ring in the grid topology. If not we add a warning
 HashSet<GridNode> parentNodes = new HashSet<>();
 
@@ -6060,17 +6083,25 @@ for (GridConnection gc : gcList) {
 	// GridTopology Check
 	GridNode gn = gc.l_parentNodeElectric.getConnectedAgent();
 	// TODO: Improve this so it uses an OptionList instead of string comparison
-	if ( gn.p_description.contains("klantstation") ) {
-		GridNode parentNode = findFirst(energyModel.f_getGridNodesNotTopLevel(), p -> p.p_gridNodeID.equals(gn.p_parentNodeID));
-		if (parentNode.p_nodeType != OL_GridNodeType.SUBMV) {
+	if ( gn.p_description.toLowerCase().contains("klantstation") ) {
+		GridNode parentNode = findFirst(energyModel.pop_gridNodes, p -> p.p_gridNodeID.equals(gn.p_parentNodeID));
+		if (parentNode == null) {
+			traceln("Warning! Could not find parentnode of klantstation of GC: " + gc.p_ownerID);			
+		}
+		else if (parentNode.p_nodeType != OL_GridNodeType.SUBMV) {
 			// add warning, gc has klantstation, but this one is not on a ring
 			traceln("Warning! GC: " + gc.p_ownerID + " is not connected to a ring in the grid topology.");
+			warnings.add(gc.p_ownerID + " is niet aangesloten op een ring");
+			parentNodes.add(parentNode);
 		}
-		parentNodes.add(parentNode);
+		else {
+			parentNodes.add(parentNode);
+		}
 	}
 	else if ( gn.p_nodeType != OL_GridNodeType.SUBMV ) {
 		// add warning, this one is not on a ring
 		traceln("Warning! GC: " + gc.p_ownerID + " is not connected to a ring in the grid topology.");
+		warnings.add(gc.p_ownerID + " is niet aangesloten op een ring");
 		parentNodes.add(gn);
 	}
 	else {
@@ -6115,15 +6146,223 @@ for (GridConnection gc : gcList) {
 	}
 }
 
-if ( parentNodes.size() != 1 ) {
+if ( parentNodes.size() > 1 ) {
 	// add warning
 	traceln("Warning! Selected GridConnections for E-Hub are not on a single ring.");
+	warnings.add("Er zijn bedrijven op meer dan 1 ring gekozen");
 }
 
 v_groupATODeliveryCapacity_kW = deliveryCapacity_kW;
 v_groupATOFeedInCapacity_kW = feedInCapacity_kW;
-//double[] capacities_kW = new double[]{deliveryCapacity_kW, feedInCapacity_kW};
-//return capacities_kW;]]></Body>
+
+
+f_EHubTabCapacityInformation(true, null);
+if (gcList.size() > 0) {
+	f_EHubTabCapacityInformation(false, 
+		"De bedrijven hebben samen een leveringscapaciteit van " +
+		(int) sum(gcList, gc -> gc.p_contractedDeliveryCapacity_kW)  +
+		"  kW \nDe E-Hub zou een groepscontract kunnen krijgen van " +
+		(int) deliveryCapacity_kW + " kW \n"
+		);
+	if (warnings.size() > 0) {
+		f_EHubTabCapacityInformation(false, "Waarschuwingen: \n");
+		for (String str : warnings) {
+			f_EHubTabCapacityInformation(false, str);
+			f_EHubTabCapacityInformation(false, "\n");
+		}
+	}
+}
+else {
+	f_EHubTabCapacityInformation(false, "Nog geen E-Hub samengesteld");
+}]]></Body>
+				</Function>
+				<Function AccessType="protected" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1733220151648</Id>
+					<Name><![CDATA[f_resetEHubConfigurationButton]]></Name>
+					<X>-400</X><Y>1020</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[v_clickedObjectText = "None";
+b_EHubSelect = false;
+uI_Results.b_EHubConfiguration = false;
+uI_Tabs.pop_tabEHub.get(0).cb_EHubSelect.setSelected(false);
+uI_Tabs.pop_tabEHub.get(0).t_EHubConfigurationInformation.setText("Nog geen E-Hub samengesteld");]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1733223322788</Id>
+					<Name><![CDATA[f_EHubSelect]]></Name>
+					<X>-420</X><Y>1130</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[clickx]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[clicky]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[//Check if click was on Building
+for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
+	if( b.gisRegion != null && b.gisRegion.contains(clickx, clicky) ){
+		if (b.gisRegion.isVisible()) {
+			for (GridConnection GC : b.c_containedGridConnections) {
+				if (GC != null) {
+					if (c_selectedGridConnections.contains(GC)) {
+						c_selectedGridConnections.remove(GC);
+						for (GIS_Object a : GC.c_connectedGISObjects) {
+							f_styleAreas(a);
+						}
+					}
+					else {
+						c_selectedGridConnections.add(GC);
+						for (GIS_Object a : GC.c_connectedGISObjects) {
+							a.gisRegion.setFillColor(v_selectionColorAddBuildings);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+if (c_selectedGridConnections.size() > 0) {
+	f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+	uI_Results.v_selectedObjectType = OL_GISObjectType.BUILDING;
+	if (p_selectedProjectType == OL_ProjectType.BUSINESSPARK) {
+		if (c_selectedGridConnections.size() >= 1) {
+			uI_Results.c_individualGridConnections = new ArrayList<AreaCollection>();
+			for (int i = 0; i < c_selectedGridConnections.size(); i++) {
+				AreaCollection AC = new AreaCollection();
+				AC.f_initializeMaps();
+				uI_Results.c_individualGridConnections.add(AC);
+				uI_Results.c_individualGridConnections.get(i).p_name = c_selectedGridConnections.get(i).p_ownerID;
+				f_updateUIresultsGridConnection(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
+			}
+			
+			f_updateTotalLiveDataSets();
+			
+		}
+		// update in the resultsUI the plots with total connection capacity with the group capacity
+		f_calculateGroupATOConnectionCapacity(c_selectedGridConnections);
+		uI_Results.b_EHubConfiguration = true;
+		uI_Results.v_groupATODeliveryCapacity_kW = v_groupATODeliveryCapacity_kW;
+		uI_Results.v_groupATOFeedInCapacity_kW = v_groupATOFeedInCapacity_kW;
+		f_EHubCapacityDataSets();
+	}
+
+}
+else {
+	uI_Results.c_individualGridConnections = new ArrayList<AreaCollection>();
+	uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
+}
+uI_Results.f_showCorrectChart();]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1733224171057</Id>
+					<Name><![CDATA[f_EHubCapacityDataSets]]></Name>
+					<X>-420</X><Y>1190</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[if (c_selectedGridConnections.size() > 0) {
+	
+	uI_Results.v_dataEHubDeliveryCapacityLiveWeek_kW = new DataSet((int) (168 / energyModel.p_timeStep_h));
+	uI_Results.v_dataEHubFeedInCapacityLiveWeek_kW = new DataSet((int) (168 / energyModel.p_timeStep_h));
+	
+	int liveWeekSize = c_selectedGridConnections.get(0).data_gridCapacityDemand_kW.size();
+	
+	for (int i=0; i < liveWeekSize; i++){ //we go back to update the existing live week data
+		double timeAxisValue = c_selectedGridConnections.get(0).data_gridCapacityDemand_kW.getX(i); // we get the X value from a random dataset
+		uI_Results.v_dataEHubDeliveryCapacityLiveWeek_kW.add(timeAxisValue, v_groupATODeliveryCapacity_kW);
+		uI_Results.v_dataEHubFeedInCapacityLiveWeek_kW.add(timeAxisValue, -v_groupATOFeedInCapacity_kW);
+	}
+	
+	// Year
+	uI_Results.v_dataEHubDeliveryCapacityYear_kW = new DataSet(2);
+	uI_Results.v_dataEHubDeliveryCapacityYear_kW.add(energyModel.p_runStartTime_h, v_groupATODeliveryCapacity_kW);
+	uI_Results.v_dataEHubDeliveryCapacityYear_kW.add(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, v_groupATODeliveryCapacity_kW);
+	
+	uI_Results.v_dataEHubFeedInCapacityYear_kW = new DataSet(2);
+	uI_Results.v_dataEHubFeedInCapacityYear_kW.add(energyModel.p_runStartTime_h, -v_groupATOFeedInCapacity_kW);
+	uI_Results.v_dataEHubFeedInCapacityYear_kW.add(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, -v_groupATOFeedInCapacity_kW);
+	
+	// SummerWeek
+	uI_Results.v_dataEHubDeliveryCapacitySummerWeek_kW = new DataSet((int) (168 / energyModel.p_timeStep_h));
+	uI_Results.v_dataEHubDeliveryCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek, v_groupATODeliveryCapacity_kW);
+	uI_Results.v_dataEHubDeliveryCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek + 168, v_groupATODeliveryCapacity_kW);
+	
+	uI_Results.v_dataEHubFeedInCapacitySummerWeek_kW = new DataSet((int) (168 / energyModel.p_timeStep_h));
+	uI_Results.v_dataEHubFeedInCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek, -v_groupATOFeedInCapacity_kW);
+	uI_Results.v_dataEHubFeedInCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek + 168, -v_groupATOFeedInCapacity_kW);
+	
+	// WinterWeek
+	uI_Results.v_dataEHubDeliveryCapacityWinterWeek_kW = new DataSet((int) (168 / energyModel.p_timeStep_h));
+	uI_Results.v_dataEHubDeliveryCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek, v_groupATODeliveryCapacity_kW);
+	uI_Results.v_dataEHubDeliveryCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek + 168, v_groupATODeliveryCapacity_kW);
+	
+	uI_Results.v_dataEHubFeedInCapacityWinterWeek_kW = new DataSet((int) (168 / energyModel.p_timeStep_h));
+	uI_Results.v_dataEHubFeedInCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek, -v_groupATOFeedInCapacity_kW);
+	uI_Results.v_dataEHubFeedInCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek + 168, -v_groupATOFeedInCapacity_kW);
+	
+}
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1733224300579</Id>
+					<Name><![CDATA[f_updateLiveEHubCapacityDataSets]]></Name>
+					<X>-420</X><Y>1210</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[int i = max(0, c_selectedGridConnections.get(0).data_gridCapacityDemand_kW.size() - 1);	
+double timeAxisValue = c_selectedGridConnections.get(0).data_gridCapacityDemand_kW.getX(i); // we get the X value from a random dataset 
+
+uI_Results.v_dataEHubDeliveryCapacityLiveWeek_kW.add(timeAxisValue, v_groupATODeliveryCapacity_kW);
+uI_Results.v_dataEHubFeedInCapacityLiveWeek_kW.add(timeAxisValue, -v_groupATOFeedInCapacity_kW);
+]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1733228924178</Id>
+					<Name><![CDATA[f_EHubTabCapacityInformation]]></Name>
+					<X>-420</X><Y>1240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[reset]]></Name>
+						<Type><![CDATA[boolean]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[textToAdd]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Body><![CDATA[if (reset) {
+	uI_Tabs.pop_tabEHub.get(0).t_EHubConfigurationInformation.setText("");
+}
+else {
+	String currentString = uI_Tabs.pop_tabEHub.get(0).t_EHubConfigurationInformation.getText();
+	uI_Tabs.pop_tabEHub.get(0).t_EHubConfigurationInformation.setText(currentString + textToAdd);
+}
+
+]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -10354,10 +10593,7 @@ voor verwarming.]]></Text>
 	
 	//Reset the KPI summary button
 	uI_Results.getCheckbox_KPISummary().setEnabled(true);
-	
-	// Reset the groupATO Capacities
-	v_groupATODeliveryCapacity_kW = 0;
-	v_groupATOFeedInCapacity_kW = 0;
+
 }
 else{
 	//Make the companyUI button invisible
@@ -10366,7 +10602,12 @@ else{
 	//Disable the KPI summary (button)
 	uI_Results.getCheckbox_KPISummary().setSelected(false, true);
 	uI_Results.getCheckbox_KPISummary().setEnabled(false);
-}]]></ActionCode>
+	
+	//Disable E-Hub configuration
+	f_resetEHubConfigurationButton();
+}
+
+uI_Results.f_showCorrectChart();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="11" Style="0"/>
@@ -10611,6 +10852,9 @@ for(GISRoute GISCable : c_MVCables){
 else if (b_multiSelect) {
 	f_multiSelect(clickx, clicky);
 }
+else if (b_EHubSelect) {
+	f_EHubSelect(clickx, clicky);
+}
 else {
 	f_selectGISRegion(clickx, clicky);
 }
@@ -10623,6 +10867,9 @@ else {
 }
 else if (b_multiSelect) {
 	f_multiSelect(clickx, clicky);
+}
+else if (b_EHubSelect) {
+	f_EHubSelect(clickx, clicky);
 }
 else {
 	f_selectGISRegion(clickx, clicky);
@@ -31407,6 +31654,85 @@ f_resetNFATOSettings();]]></ActionCode>
 						<Style>0</Style>
 					</Font>
 					<Alignment>CENTER</Alignment>
+				</Text>
+				<Control Type="CheckBox">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1733220323004</Id>
+					<Name><![CDATA[cb_EHubSelect]]></Name>
+					<X>40</X><Y>880</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="230" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[if (!cb_EHubSelect.isSelected()) {
+	// Reset the building colors
+	for (GridConnection GC: zero_Interface.c_selectedGridConnections) {
+		for (GIS_Object GB : GC.c_connectedGISObjects) {
+			zero_Interface.f_styleAreas(GB);
+		}
+	}
+	
+	// Reset the list of selected GCs and the individual AreaCollections in the ResultsUI
+	zero_Interface.c_selectedGridConnections.clear();
+	zero_Interface.uI_Results.c_individualGridConnections = new ArrayList<AreaCollection>();
+	
+	// Reset the shown charts
+	zero_Interface.f_updateUIresultsMainArea();
+	zero_Interface.uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
+	zero_Interface.uI_Results.f_showCorrectChart();
+	
+	//Reset the KPI summary button
+	zero_Interface.uI_Results.getCheckbox_KPISummary().setEnabled(true);
+	
+	// Reset the groupATO Capacities
+	zero_Interface.v_groupATODeliveryCapacity_kW = 0;
+	zero_Interface.v_groupATOFeedInCapacity_kW = 0;
+}
+else{
+	//Make the companyUI button invisible
+	zero_Interface.button_goToUI.setVisible(false);
+	
+	//Disable the KPI summary (button)
+	zero_Interface.uI_Results.getCheckbox_KPISummary().setSelected(false, true);
+	zero_Interface.uI_Results.getCheckbox_KPISummary().setEnabled(false);
+	
+	zero_Interface.b_multiSelect = false;
+}
+
+// Energy-Hub Check
+zero_Interface.f_calculateGroupATOConnectionCapacity(zero_Interface.c_selectedGridConnections);]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="14" Style="0"/>
+						<LabelText><![CDATA[Stel E-Hub configuratie samen]]></LabelText>
+						<LinkTo>false</LinkTo>
+	 				</ExtendedProperties>
+				</Control>
+				<Text>
+					<Id>1733229120390</Id>
+					<Name><![CDATA[t_EHubConfigurationInformation]]></Name>
+					<X>50</X><Y>920</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Nog geen E-Hub samengesteld]]></Text>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
 				</Text>
 			</Presentation>
 
