@@ -141,7 +141,7 @@ import java.util.stream.Collectors;
 import java.io.*;
 import java.io.File;
 import java.io.IOException;
-//import java.util.Date;  
+//import java.util.Date;
 import java.text.SimpleDateFormat;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
@@ -452,7 +452,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1696863329257</Id>
 					<Name><![CDATA[v_clickedBuilding]]></Name>
-					<X>50</X><Y>1580</Y>
+					<X>50</X><Y>1650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -464,7 +464,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1696863329260</Id>
 					<Name><![CDATA[v_previousClickedBuilding]]></Name>
-					<X>50</X><Y>1600</Y>
+					<X>50</X><Y>1670</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -476,7 +476,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1696863329269</Id>
 					<Name><![CDATA[v_gridConnectionInBuildingIndex]]></Name>
-					<X>50</X><Y>1630</Y>
+					<X>50</X><Y>1700</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -503,7 +503,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1701879001472</Id>
 					<Name><![CDATA[v_clickedObjectText]]></Name>
-					<X>50</X><Y>1650</Y>
+					<X>50</X><Y>1720</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -518,7 +518,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1701879014361</Id>
 					<Name><![CDATA[v_clickedObjectAdress]]></Name>
-					<X>50</X><Y>1670</Y>
+					<X>50</X><Y>1740</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -608,7 +608,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1702046920293</Id>
 					<Name><![CDATA[v_clickedObjectDetails]]></Name>
-					<X>50</X><Y>1690</Y>
+					<X>50</X><Y>1760</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -638,7 +638,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1704463271534</Id>
 					<Name><![CDATA[v_selectionColor]]></Name>
-					<X>50</X><Y>1740</Y>
+					<X>50</X><Y>1810</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -653,7 +653,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1704463281781</Id>
 					<Name><![CDATA[v_selectionColorAddBuildings]]></Name>
-					<X>50</X><Y>1760</Y>
+					<X>50</X><Y>1830</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -819,7 +819,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1705673181898</Id>
 					<Name><![CDATA[v_clickedGridNode]]></Name>
-					<X>50</X><Y>1530</Y>
+					<X>50</X><Y>1600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -831,7 +831,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1705673647104</Id>
 					<Name><![CDATA[v_previousClickedObjectType]]></Name>
-					<X>50</X><Y>1500</Y>
+					<X>50</X><Y>1570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -843,7 +843,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1705673714784</Id>
 					<Name><![CDATA[v_previousClickedGridNode]]></Name>
-					<X>50</X><Y>1550</Y>
+					<X>50</X><Y>1620</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -932,7 +932,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1706892713276</Id>
 					<Name><![CDATA[GISregion_antiLaag]]></Name>
-					<X>50</X><Y>1710</Y>
+					<X>50</X><Y>1780</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -974,7 +974,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1707918668189</Id>
 					<Name><![CDATA[v_clickedObjectType]]></Name>
-					<X>50</X><Y>1480</Y>
+					<X>50</X><Y>1550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -986,7 +986,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1708597346305</Id>
 					<Name><![CDATA[v_connectionOwnerIndexNr]]></Name>
-					<X>50</X><Y>1450</Y>
+					<X>50</X><Y>1520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1001,7 +1001,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1709803708318</Id>
 					<Name><![CDATA[v_gridNodeFeedinColor]]></Name>
-					<X>50</X><Y>1780</Y>
+					<X>50</X><Y>1850</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1466,7 +1466,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1725018118872</Id>
 					<Name><![CDATA[b_showCables]]></Name>
-					<X>50</X><Y>1860</Y>
+					<X>50</X><Y>1930</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1556,7 +1556,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1733146691218</Id>
 					<Name><![CDATA[v_groupATODeliveryCapacity_kW]]></Name>
-					<X>-360</X><Y>1070</Y>
+					<X>1890</X><Y>1570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1568,7 +1568,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1733146693366</Id>
 					<Name><![CDATA[v_groupATOFeedInCapacity_kW]]></Name>
-					<X>-360</X><Y>1090</Y>
+					<X>1890</X><Y>1590</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1580,13 +1580,29 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1733219849177</Id>
 					<Name><![CDATA[b_EHubSelect]]></Name>
-					<X>-400</X><Y>1150</Y>
+					<X>70</X><Y>1280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[boolean]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1733325394697</Id>
+					<Name><![CDATA[v_GCGTOConnectionCapacities]]></Name>
+					<Description><![CDATA[Maps every gridconnection to the calculated contribution to a GTO (Groep Transport Overeenkomst). Delivery and FeedIn respectively.]]></Description>
+					<X>1900</X><Y>1490</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[HashMap<GridConnection, double[]>]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new HashMap<>();]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -1719,7 +1735,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1705660898756</Id>
 					<Name><![CDATA[c_GISNodes]]></Name>
-					<X>50</X><Y>1360</Y>
+					<X>50</X><Y>1430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1734,7 +1750,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1707918668146</Id>
 					<Name><![CDATA[c_GISPoints]]></Name>
-					<X>50</X><Y>1300</Y>
+					<X>50</X><Y>1370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1749,7 +1765,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1707918668148</Id>
 					<Name><![CDATA[c_GISRegions]]></Name>
-					<X>50</X><Y>1320</Y>
+					<X>50</X><Y>1390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1764,7 +1780,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1707918668154</Id>
 					<Name><![CDATA[c_GISBuildingShapes]]></Name>
-					<X>50</X><Y>1340</Y>
+					<X>50</X><Y>1410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1959,7 +1975,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1722344496313</Id>
 					<Name><![CDATA[c_GISNetplanes]]></Name>
-					<X>50</X><Y>1820</Y>
+					<X>50</X><Y>1890</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1974,7 +1990,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1721302080638</Id>
 					<Name><![CDATA[c_selectedGridConnections]]></Name>
-					<X>50</X><Y>1270</Y>
+					<X>50</X><Y>1340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1989,7 +2005,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1725270790750</Id>
 					<Name><![CDATA[c_GISNetworks]]></Name>
-					<X>50</X><Y>1380</Y>
+					<X>50</X><Y>1450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2004,7 +2020,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1725276677836</Id>
 					<Name><![CDATA[c_LVCables]]></Name>
-					<X>50</X><Y>1400</Y>
+					<X>50</X><Y>1470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2019,7 +2035,7 @@ import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1725276688077</Id>
 					<Name><![CDATA[c_MVCables]]></Name>
-					<X>50</X><Y>1420</Y>
+					<X>50</X><Y>1490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2310,6 +2326,13 @@ uI_Results.getCheckbox_KPISummary().setEnabled(true);]]></Body>
 						<Type><![CDATA[GIS_Object]]></Type>
 					</Parameter>
 					<Body><![CDATA[double width = 1;
+
+for (GridConnection gc : gis_area.c_containedGridConnections) {
+	if (c_selectedGridConnections.contains(gc)) {
+		gis_area.f_style(v_selectionColor, null, null, null);
+		return;
+	}
+}
 
 if (gis_area instanceof GIS_Parcel ||
 	gis_area.c_containedGridConnections.size() == 0 ||
@@ -2815,7 +2838,7 @@ uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfGhostHeatingSystems();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1709716821854</Id>
 					<Name><![CDATA[f_connectResultsUI]]></Name>
-					<X>-670</X><Y>590</Y>
+					<X>-670</X><Y>570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3013,7 +3036,7 @@ uI_Results.f_initialize();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1709716821856</Id>
 					<Name><![CDATA[f_updateUIresultsMainArea]]></Name>
-					<X>-650</X><Y>650</Y>
+					<X>-650</X><Y>630</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3268,7 +3291,7 @@ area.v_weekendElectricitySelfConsumed_MWh = energyModel.v_weekendElectricitySelf
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1709716821860</Id>
 					<Name><![CDATA[f_updateUIresultsEnergyCoop]]></Name>
-					<X>-650</X><Y>689.467</Y>
+					<X>-650</X><Y>669.467</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3504,7 +3527,7 @@ runSimulation();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1712584842532</Id>
 					<Name><![CDATA[f_updateUIresultsGridNode]]></Name>
-					<X>-650</X><Y>670</Y>
+					<X>-650</X><Y>650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4251,7 +4274,7 @@ f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConne
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720799287420</Id>
 					<Name><![CDATA[f_updateUIresultsGridConnection]]></Name>
-					<X>-650</X><Y>710</Y>
+					<X>-650</X><Y>690</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4277,7 +4300,7 @@ f_updateBelastingduurKromme(area, gcList);
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720820424632</Id>
 					<Name><![CDATA[f_updateYearlyGCData]]></Name>
-					<X>-620</X><Y>770</Y>
+					<X>-620</X><Y>750</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4420,7 +4443,7 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720820539394</Id>
 					<Name><![CDATA[f_updateWeeklyGCData]]></Name>
-					<X>-620</X><Y>790</Y>
+					<X>-620</X><Y>770</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4690,7 +4713,7 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720820656291</Id>
 					<Name><![CDATA[f_updateVariablesOfGCData]]></Name>
-					<X>-620</X><Y>730</Y>
+					<X>-620</X><Y>710</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4856,7 +4879,7 @@ area.v_weekendElectricitySelfConsumed_MWh = sum(gcList, x -> x.v_weekendElectric
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720820777814</Id>
 					<Name><![CDATA[f_updateLiveDataSets]]></Name>
-					<X>-620</X><Y>750</Y>
+					<X>-620</X><Y>730</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5018,7 +5041,7 @@ for (int i=0; i < liveWeekSize; i++){ //we go back to update the existing live w
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720820888674</Id>
 					<Name><![CDATA[f_updateBelastingduurKromme]]></Name>
-					<X>-620</X><Y>810</Y>
+					<X>-620</X><Y>790</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5242,21 +5265,7 @@ if (c_selectedGridConnections.size() > 0) {
 	f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
 	uI_Results.v_selectedObjectType = OL_GISObjectType.BUILDING;
 	if (p_selectedProjectType == OL_ProjectType.BUSINESSPARK) {
-		if (c_selectedGridConnections.size() >= 1) {
-			uI_Results.c_individualGridConnections = new ArrayList<AreaCollection>();
-			for (int i = 0; i < c_selectedGridConnections.size(); i++) {
-				AreaCollection AC = new AreaCollection();
-				AC.f_initializeMaps();
-				uI_Results.c_individualGridConnections.add(AC);
-				uI_Results.c_individualGridConnections.get(i).p_name = c_selectedGridConnections.get(i).p_ownerID;
-				f_updateUIresultsGridConnection(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
-			}
-			
-			f_updateTotalLiveDataSets();
-			//f_updateTotalYearlyDataSets();
-			//f_updateTotalWeeklyDataSets();
-	
-		}
+		f_fillAreaCollectionsOfIndividualGCs();
 	}
 }
 else {
@@ -5270,7 +5279,7 @@ uI_Results.f_showCorrectChart();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1721305389703</Id>
 					<Name><![CDATA[f_addTimeStepLiveDataSets]]></Name>
-					<X>-620</X><Y>830</Y>
+					<X>-620</X><Y>810</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5751,7 +5760,7 @@ return gisroute;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725439643960</Id>
 					<Name><![CDATA[f_updateTotalLiveDataSets]]></Name>
-					<X>-650</X><Y>850</Y>
+					<X>-650</X><Y>830</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5796,7 +5805,7 @@ return gisroute;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725440073691</Id>
 					<Name><![CDATA[f_addTimeStepTotalLiveDataSets]]></Name>
-					<X>-625</X><Y>870</Y>
+					<X>-625</X><Y>850</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5840,7 +5849,7 @@ for (int j = 0; j < c_selectedGridConnections.size(); j++) {
 					<Id>1725442474483</Id>
 					<Name><![CDATA[f_updateTotalYearlyDataSets]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-645</X><Y>890</Y>
+					<X>-645</X><Y>870</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5881,7 +5890,7 @@ for (int j = 0; j < c_selectedGridConnections.size(); j++) {
 					<Id>1725442517475</Id>
 					<Name><![CDATA[f_updateTotalWeeklyDataSets]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-645</X><Y>910</Y>
+					<X>-645</X><Y>890</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5985,7 +5994,7 @@ traceln("DID NOT OVERRIDE THE PROJECT SPECIFIC STYLING!");]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1727085747538</Id>
 					<Name><![CDATA[f_updatePreviousTotalsGC]]></Name>
-					<X>-650</X><Y>630</Y>
+					<X>-650</X><Y>610</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6015,7 +6024,7 @@ traceln("DID NOT OVERRIDE THE PROJECT SPECIFIC STYLING!");]]></Body>
 					<ReturnType><![CDATA[OL_LegendsScope]]></ReturnType>
 					<Id>1727355134954</Id>
 					<Name><![CDATA[f_setLegendsScope]]></Name>
-					<X>-650</X><Y>610</Y>
+					<X>-650</X><Y>590</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6059,7 +6068,7 @@ return p_legendsScope;]]></Body>
 					<Id>1733145172830</Id>
 					<Name><![CDATA[f_calculateGroupATOConnectionCapacity]]></Name>
 					<Description><![CDATA[This function returns the delivery and feed in capacity (in kW) that a group of gridconnections would get from the grid operator if they formed an energy hub.]]></Description>
-					<X>-400</X><Y>1040</Y>
+					<X>1870</X><Y>1550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6108,42 +6117,9 @@ for (GridConnection gc : gcList) {
 		parentNodes.add(gn);	
 	}
 	
-	
-	// Calculation
-	// Stedin: remove the top 0.1% of peak loads of the past years quarterhourly values, then add the remaining maximum to the group capacity
-	// First we find the quarterhourly values, or if they are not available the assigned base load and add a warning that not all data was available
-	if (gc.v_hasQuarterHourlyValues) {
-		J_EAProfile j_ea = findFirst(gc.c_profileAssets, ea -> ea.profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD);
-		if (j_ea == null) {
-			throw new RuntimeException("When calculating group capacity, could not find the quarterhourly values of GC: " + gc.p_ownerID);
-		}
-		int amountOfDataPoints = j_ea.a_energyProfile_kWh.length;
-		double[] quarterHourlyValues = Arrays.copyOf( j_ea.a_energyProfile_kWh, amountOfDataPoints );
-		Arrays.sort(quarterHourlyValues); // Sorts in ascending order
-		double filteredMaximum_kW = 4 * quarterHourlyValues[amountOfDataPoints - (int) (amountOfDataPoints*0.001) - 1]; // multiply by 4 to go from kWh / quarterhour -> kW
-
-		deliveryCapacity_kW += filteredMaximum_kW;
-		
-		// TODO: Implement FeedIn calculation. Does it use a completely symmetric calculation?
-		feedInCapacity_kW += gc.p_contractedFeedinCapacity_kW;
-		
-	}
-	else {
-		J_EAConsumption j_ea = findFirst(gc.c_consumptionAssets, ea -> ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND);
-		if (j_ea == null) {
-			throw new RuntimeException("When calculating group capacity, could not find any base electricity demand of GC: " + gc.p_ownerID);
-		}
-		double yearlyDemand_kWh = j_ea.yearlyDemand_kWh;
-		double[] tfProfile = j_ea.getProfilePointer().getTableFunction().getValues();
-		int amountOfDataPoints = tfProfile.length;
-		Arrays.sort(tfProfile);
-		double filteredMaximum_kW = 4 * yearlyDemand_kWh * tfProfile[amountOfDataPoints - (int) (amountOfDataPoints*0.001) - 1]; // multiply by 4 to go from kWh / quarterhour -> kW
-		
-		deliveryCapacity_kW += filteredMaximum_kW;
-		
-		// TODO: Implement FeedIn calculation. Does it use a completely symmetric calculation?
-		feedInCapacity_kW += gc.p_contractedFeedinCapacity_kW;
-	}
+	// Adding up the GTO Connection Capacity contributions
+	deliveryCapacity_kW += v_GCGTOConnectionCapacities.get(gc)[0];
+	feedInCapacity_kW += v_GCGTOConnectionCapacities.get(gc)[1];
 }
 
 if ( parentNodes.size() > 1 ) {
@@ -6181,7 +6157,7 @@ else {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1733220151648</Id>
 					<Name><![CDATA[f_resetEHubConfigurationButton]]></Name>
-					<X>-400</X><Y>1020</Y>
+					<X>1870</X><Y>1650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6197,7 +6173,7 @@ uI_Tabs.pop_tabEHub.get(0).t_EHubConfigurationInformation.setText("Nog geen E-Hu
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1733223322788</Id>
 					<Name><![CDATA[f_EHubSelect]]></Name>
-					<X>-420</X><Y>1130</Y>
+					<X>50</X><Y>1260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6238,19 +6214,7 @@ if (c_selectedGridConnections.size() > 0) {
 	f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
 	uI_Results.v_selectedObjectType = OL_GISObjectType.BUILDING;
 	if (p_selectedProjectType == OL_ProjectType.BUSINESSPARK) {
-		if (c_selectedGridConnections.size() >= 1) {
-			uI_Results.c_individualGridConnections = new ArrayList<AreaCollection>();
-			for (int i = 0; i < c_selectedGridConnections.size(); i++) {
-				AreaCollection AC = new AreaCollection();
-				AC.f_initializeMaps();
-				uI_Results.c_individualGridConnections.add(AC);
-				uI_Results.c_individualGridConnections.get(i).p_name = c_selectedGridConnections.get(i).p_ownerID;
-				f_updateUIresultsGridConnection(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
-			}
-			
-			f_updateTotalLiveDataSets();
-			
-		}
+		f_fillAreaCollectionsOfIndividualGCs();
 		// update in the resultsUI the plots with total connection capacity with the group capacity
 		f_calculateGroupATOConnectionCapacity(c_selectedGridConnections);
 		uI_Results.b_EHubConfiguration = true;
@@ -6271,7 +6235,7 @@ uI_Results.f_showCorrectChart();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1733224171057</Id>
 					<Name><![CDATA[f_EHubCapacityDataSets]]></Name>
-					<X>-420</X><Y>1190</Y>
+					<X>-650</X><Y>930</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6324,7 +6288,7 @@ uI_Results.f_showCorrectChart();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1733224300579</Id>
 					<Name><![CDATA[f_updateLiveEHubCapacityDataSets]]></Name>
-					<X>-420</X><Y>1210</Y>
+					<X>-650</X><Y>950</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6341,7 +6305,7 @@ uI_Results.v_dataEHubFeedInCapacityLiveWeek_kW.add(timeAxisValue, -v_groupATOFee
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1733228924178</Id>
 					<Name><![CDATA[f_EHubTabCapacityInformation]]></Name>
-					<X>-420</X><Y>1240</Y>
+					<X>1870</X><Y>1670</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6363,6 +6327,55 @@ else {
 }
 
 ]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1733306163949</Id>
+					<Name><![CDATA[f_fillAreaCollectionsOfIndividualGCs]]></Name>
+					<X>-650</X><Y>910</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[if (c_selectedGridConnections.size() >= 1) {
+	uI_Results.c_individualGridConnections = new ArrayList<AreaCollection>();
+	for (int i = 0; i < c_selectedGridConnections.size(); i++) {
+		AreaCollection AC = new AreaCollection();
+		AC.f_initializeMaps();
+		uI_Results.c_individualGridConnections.add(AC);
+		uI_Results.c_individualGridConnections.get(i).p_name = c_selectedGridConnections.get(i).p_ownerID;
+		f_updateUIresultsGridConnection(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
+	}
+	
+	f_updateTotalLiveDataSets();
+	//f_updateTotalYearlyDataSets();
+	//f_updateTotalWeeklyDataSets();
+}]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1733325374934</Id>
+					<Name><![CDATA[f_calculateGTOConnectionCapacities]]></Name>
+					<Description><![CDATA[Maps every gridconnection to the calculated contribution to a GTO (Groep Transport Overeenkomst). Delivery and FeedIn respectively.]]></Description>
+					<X>1880</X><Y>1470</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// Calculation
+// Stedin: remove the top 0.1% of peak loads of the past years quarterhourly values, then add the remaining maximum to the group capacity
+// First we find the quarterhourly values, or if they are not available the assigned base load and add a warning that not all data was available
+
+for (GridConnection gc : energyModel.f_getGridConnections()) {
+	int amountOfDataPoints = gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries().length;
+	double[] quarterHourlyValues = Arrays.copyOf(gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries(), amountOfDataPoints);
+	Arrays.sort(quarterHourlyValues);
+	double filteredMaximum_kW = min(gc.p_contractedDeliveryCapacity_kW , max(0, quarterHourlyValues[amountOfDataPoints - (int) (amountOfDataPoints*0.001) - 1]));
+	double filteredMinimum_kW = min(gc.p_contractedFeedinCapacity_kW, -min(0, quarterHourlyValues[(int)(amountOfDataPoints*0.001)]));
+	v_GCGTOConnectionCapacities.put(gc, new double[]{filteredMaximum_kW, filteredMinimum_kW});
+}]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -6522,7 +6535,7 @@ else {
 				<EmbeddedObject>
 					<Id>1716193013122</Id>
 					<Name><![CDATA[uI_Results]]></Name>
-					<X>-670</X><Y>570</Y>
+					<X>-670</X><Y>550</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9860,7 +9873,7 @@ voor verwarming.]]></Text>
 				<Text>
 					<Id>1710174312959</Id>
 					<Name><![CDATA[t_resultsUIFunctions]]></Name>
-					<X>-680</X><Y>540</Y>
+					<X>-680</X><Y>520</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10575,16 +10588,16 @@ voor verwarming.]]></Text>
 						<TextColor/>
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[if (!b_multiSelect) {
+	// Reset the list of selected GCs and the individual AreaCollections in the ResultsUI
+	c_selectedGridConnections.clear();
+	uI_Results.c_individualGridConnections = new ArrayList<AreaCollection>();
+	
 	// Reset the building colors
 	for (GridConnection GC: c_selectedGridConnections) {
 		for (GIS_Object GB : GC.c_connectedGISObjects) {
 			f_styleAreas(GB);
 		}
 	}
-	
-	// Reset the list of selected GCs and the individual AreaCollections in the ResultsUI
-	c_selectedGridConnections.clear();
-	uI_Results.c_individualGridConnections = new ArrayList<AreaCollection>();
 	
 	// Reset the shown charts
 	f_updateUIresultsMainArea();
@@ -10596,6 +10609,9 @@ voor verwarming.]]></Text>
 
 }
 else{
+	// we create areacollection(s) for the currently selected GC(s)
+	f_fillAreaCollectionsOfIndividualGCs();
+
 	//Make the companyUI button invisible
 	button_goToUI.setVisible(false);
 	
@@ -11112,6 +11128,28 @@ b_resultsUpToDate = true;
 			</Presentation>
 
 				</Group>
+				<Rectangle>
+					<Id>1733326839886</Id>
+					<Name><![CDATA[rect_EHub]]></Name>
+					<X>1840</X><Y>1410</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>3</LineWidth>
+					<LineColor>-16744448</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>470</Width>
+					<Height>290</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
 				<Group>
 					<Id>1709717180404</Id>
 					<Name><![CDATA[gr_loadIconSmall]]></Name>
@@ -11217,6 +11255,112 @@ b_resultsUpToDate = true;
 					</ImageFiles>
 					<OriginalSize>false</OriginalSize>
 				</Image>
+				<Text>
+					<Id>1733326860965</Id>
+					<Name><![CDATA[txt_EHubIni]]></Name>
+					<X>1860</X><Y>1430</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Initialization]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>18</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1733326970332</Id>
+					<Name><![CDATA[txt_EHubCalc]]></Name>
+					<X>1860</X><Y>1510</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Calculation]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>18</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1733326971574</Id>
+					<Name><![CDATA[txt_EHubTab]]></Name>
+					<X>1860</X><Y>1610</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[E-Hub Tab]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>18</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Rectangle>
+					<Id>1733327068296</Id>
+					<Name><![CDATA[rect_EHubSmall]]></Name>
+					<X>1995</X><Y>1410</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>3</LineWidth>
+					<LineColor>-16744448</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>100</Width>
+					<Height>30</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Text>
+					<Id>1733327032239</Id>
+					<Name><![CDATA[txt_EHub]]></Name>
+					<X>2010</X><Y>1410</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[E-HUB]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>22</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -12030,7 +12174,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1725625091022</Id>
 					<Name><![CDATA[b_runningMainInterfaceScenarioSettings]]></Name>
-					<X>-380</X><Y>860</Y>
+					<X>-380</X><Y>910</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12102,7 +12246,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1727883544535</Id>
 					<Name><![CDATA[v_NFATO_kW_delivery]]></Name>
-					<X>-410</X><Y>965</Y>
+					<X>-410</X><Y>1015</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12114,7 +12258,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1727883574908</Id>
 					<Name><![CDATA[v_NFATO_kW_feedin]]></Name>
-					<X>-410</X><Y>985</Y>
+					<X>-410</X><Y>1035</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12126,7 +12270,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1727941212434</Id>
 					<Name><![CDATA[v_NFATO_active]]></Name>
-					<X>-410</X><Y>945</Y>
+					<X>-410</X><Y>995</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12138,7 +12282,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1729686904963</Id>
 					<Name><![CDATA[b_runningMainInterfaceSlider]]></Name>
-					<X>-380</X><Y>880</Y>
+					<X>-380</X><Y>930</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12819,7 +12963,7 @@ GC.f_nfatoSetConnectionCapacity(false);]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713537591121</Id>
 					<Name><![CDATA[f_setBattery]]></Name>
-					<X>-400</X><Y>730</Y>
+					<X>-400</X><Y>780</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13129,7 +13273,7 @@ sl_hydrogenTrucksCompany.setValue(v_nbHydrogenTrucks, false);
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1714410040303</Id>
 					<Name><![CDATA[f_createVehicle]]></Name>
-					<X>-380</X><Y>810</Y>
+					<X>-380</X><Y>860</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13261,7 +13405,7 @@ else{ // (Hydrogen vehicles)
 					<ReturnType><![CDATA[int]]></ReturnType>
 					<Id>1714411599586</Id>
 					<Name><![CDATA[f_setElectricVehicleSliders]]></Name>
-					<X>-400</X><Y>750</Y>
+					<X>-400</X><Y>800</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13501,7 +13645,7 @@ if(!b_runningMainInterfaceSlider){
 					<ReturnType><![CDATA[int]]></ReturnType>
 					<Id>1714471183392</Id>
 					<Name><![CDATA[f_setDieselVehicleSliders]]></Name>
-					<X>-400</X><Y>790</Y>
+					<X>-400</X><Y>840</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13736,7 +13880,7 @@ if(!b_runningMainInterfaceSlider){
 					<ReturnType><![CDATA[int]]></ReturnType>
 					<Id>1714474430338</Id>
 					<Name><![CDATA[f_setHydrogenVehicleSliders]]></Name>
-					<X>-400</X><Y>770</Y>
+					<X>-400</X><Y>820</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14389,7 +14533,7 @@ uI_Results.f_setAllCharts();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725607045331</Id>
 					<Name><![CDATA[f_setSimulateYearScreen]]></Name>
-					<X>-400</X><Y>840</Y>
+					<X>-400</X><Y>890</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14507,7 +14651,7 @@ sl_GCCapacityCompany_Feedin.setValue(v_defaultGCCapacitySlider_Feedin, false);]]
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1727884380899</Id>
 					<Name><![CDATA[f_getNFATOValues]]></Name>
-					<X>-410</X><Y>925</Y>
+					<X>-410</X><Y>975</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14578,6 +14722,74 @@ sl_dieselTrucksCompany.setEnabled(enable);
 //Set heating rb to correct setting (no matter what input of this function is)
 f_setHeatingRB();]]></Body>
 				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1733307605544</Id>
+					<Name><![CDATA[f_setWindSystem]]></Name>
+					<X>-400</X><Y>730</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[GC]]></Name>
+						<Type><![CDATA[GridConnection]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[windPower_kW]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[J_EAProduction windAsset = findFirst(GC.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.WINDMILL );
+if (windAsset == null ) {
+	if (windPower_kW != 0) {
+		f_addWindAsset(GC, windPower_kW);
+	}
+}
+else {
+	if (windPower_kW == 0) {
+		windAsset.removeEnergyAsset();;
+	}
+	else {
+		windAsset.setCapacityElectric_kW(windPower_kW);
+	}
+}
+
+if(!b_runningMainInterfaceSlider){
+	zero_Interface.f_updateMainInterfaceSliders();
+}]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1733307614502</Id>
+					<Name><![CDATA[f_addWindAsset]]></Name>
+					<X>-380</X><Y>750</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[parentGC]]></Name>
+						<Type><![CDATA[GridConnection]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[installedPower_kW]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[String asset_name					= "Small Windmill";
+double capacityElectric_kW			= installedPower_kW;
+double capacityHeat_kW				= 0;
+double yearlyProductionMethane_kWh 	= 0;
+double yearlyProductionHydrogen_kWh = 0;
+double timestep_h 					= zero_Interface.energyModel.p_timeStep_h;
+double outputTemperature_degC 		= 0;
+OL_EnergyAssetType asset_type = OL_EnergyAssetType.WINDMILL;
+
+J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, capacityElectric_kW , capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, timestep_h, outputTemperature_degC, zero_Interface.energyModel.pp_windOnshoreProduction);
+
+]]></Body>
+				</Function>
 			</Functions>
 			<AgentLinks>
 				<AgentLink>
@@ -14624,7 +14836,7 @@ f_setHeatingRB();]]></Body>
 					<X>-400</X><Y>350</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<PresentationId>1714652081119</PresentationId>
 					<ActiveObjectClass>
@@ -15135,7 +15347,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1713446658919</Id>
 					<Name><![CDATA[t_GCCapacityCompany]]></Name>
-					<X>-85</X><Y>0</Y>
+					<X>-85</X><Y>-20</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15158,7 +15370,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1713446658921</Id>
 					<Name><![CDATA[sl_GCCapacityCompany]]></Name>
-					<X>-58</X><Y>-5</Y>
+					<X>-58</X><Y>-25</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15187,7 +15399,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Text>
 					<Id>1713446658933</Id>
 					<Name><![CDATA[txt_GCCapacity]]></Name>
-					<X>-290</X><Y>0</Y>
+					<X>-290</X><Y>-20</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15208,7 +15420,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Group>
 					<Id>1713446065831</Id>
 					<Name><![CDATA[gr_heatDemandReductionSlider]]></Name>
-					<X>-120</X><Y>-100</Y>
+					<X>-120</X><Y>-105</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15313,7 +15525,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Text>
 					<Id>1713446065985</Id>
 					<Name><![CDATA[txt_elektriciteit]]></Name>
-					<X>-240</X><Y>-80</Y>
+					<X>-240</X><Y>-90</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15334,7 +15546,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Text>
 					<Id>1713446438059</Id>
 					<Name><![CDATA[txt_mobiliteit]]></Name>
-					<X>-240</X><Y>160</Y>
+					<X>-240</X><Y>165</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15355,7 +15567,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Text>
 					<Id>1713446065961</Id>
 					<Name><![CDATA[t_electricityDemandReductionCompany]]></Name>
-					<X>-85</X><Y>-30</Y>
+					<X>-85</X><Y>-50</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15379,7 +15591,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1713446065963</Id>
 					<Name><![CDATA[sl_electricityDemandCompanyReduction]]></Name>
-					<X>-58</X><Y>-35</Y>
+					<X>-58</X><Y>-55</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15424,7 +15636,7 @@ f_setSimulateYearScreen();
 				<Text>
 					<Id>1713446065965</Id>
 					<Name><![CDATA[text279]]></Name>
-					<X>-290</X><Y>-30</Y>
+					<X>-290</X><Y>-50</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16377,7 +16589,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1713963799790</Id>
 					<Name><![CDATA[sl_batteryCompany]]></Name>
-					<X>-58</X><Y>55</Y>
+					<X>-58</X><Y>35</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16407,7 +16619,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Text>
 					<Id>1713963799825</Id>
 					<Name><![CDATA[t_batteryCompany]]></Name>
-					<X>-85</X><Y>60</Y>
+					<X>-85</X><Y>40</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16429,7 +16641,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Text>
 					<Id>1713963799827</Id>
 					<Name><![CDATA[text283]]></Name>
-					<X>-290</X><Y>60</Y>
+					<X>-290</X><Y>40</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16464,7 +16676,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Group>
 					<Id>1715084970830</Id>
 					<Name><![CDATA[gr_electricityButton1]]></Name>
-					<X>-560</X><Y>30</Y>
+					<X>-560</X><Y>20</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16586,7 +16798,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Group>
 					<Id>1715084970842</Id>
 					<Name><![CDATA[gr_transportButton1]]></Name>
-					<X>-560</X><Y>270</Y>
+					<X>-560</X><Y>275</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16653,7 +16865,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1715093089631</Id>
 					<Name><![CDATA[rb_heatingTypePrivateUI]]></Name>
-					<X>-290</X><Y>-200</Y>
+					<X>-290</X><Y>-205</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16710,7 +16922,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Text>
 					<Id>1725618990626</Id>
 					<Name><![CDATA[t_rooftopSolarCompany]]></Name>
-					<X>-85</X><Y>90</Y>
+					<X>-85</X><Y>70</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16733,7 +16945,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1725618990628</Id>
 					<Name><![CDATA[sl_rooftopPVCompany]]></Name>
-					<X>-58</X><Y>85</Y>
+					<X>-58</X><Y>65</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16762,7 +16974,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Text>
 					<Id>1725618990630</Id>
 					<Name><![CDATA[txt_PVPower]]></Name>
-					<X>-290</X><Y>90</Y>
+					<X>-290</X><Y>70</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16783,7 +16995,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Text>
 					<Id>1727796446739</Id>
 					<Name><![CDATA[t_GCCapacityCompany_Feedin]]></Name>
-					<X>-85</X><Y>30</Y>
+					<X>-85</X><Y>10</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16806,7 +17018,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1727796446741</Id>
 					<Name><![CDATA[sl_GCCapacityCompany_Feedin]]></Name>
-					<X>-58</X><Y>25</Y>
+					<X>-58</X><Y>5</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16835,7 +17047,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Text>
 					<Id>1727796446743</Id>
 					<Name><![CDATA[txt_GCCapacityCompany_Feedin]]></Name>
-					<X>-290</X><Y>30</Y>
+					<X>-290</X><Y>10</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16853,6 +17065,133 @@ f_setSimulateYearScreen();]]></ActionCode>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
+				<Text>
+					<Id>1733308315578</Id>
+					<Name><![CDATA[t_windCompany]]></Name>
+					<X>-85</X><Y>100</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[0 kW]]></Text>
+					<TextCode><![CDATA[sl_windCompany.getIntValue() + " kW"]]></TextCode>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>RIGHT</Alignment>
+				</Text>
+				<Control Type="Slider">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1733308315580</Id>
+					<Name><![CDATA[sl_windCompany]]></Name>
+					<X>-58</X><Y>95</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="100" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[f_setWindSystem(c_ownedGridConnections.get(v_currentSelectedGCnr), sl_windCompany.getValue());
+
+//Set scenario to custom
+f_setScenario(2);
+
+// Simulate Year screen
+f_setSimulateYearScreen();]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
+						<Orientation>HORIZONTAL</Orientation>
+						<MinValue><![CDATA[0]]></MinValue>
+						<MaxValue><![CDATA[150]]></MaxValue>
+						<Step><![CDATA[15]]></Step>
+						<LinkTo>false</LinkTo>
+					</ExtendedProperties>
+				</Control>
+				<Text>
+					<Id>1733308315582</Id>
+					<Name><![CDATA[txt_WindPower]]></Name>
+					<X>-290</X><Y>100</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Wind vermogen]]></Text>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1733308324390</Id>
+					<Name><![CDATA[txt_curtailmentDescriptionCompany]]></Name>
+					<X>-290</X><Y>130</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Curtailment opwek]]></Text>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Control Type="CheckBox">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1733308324392</Id>
+					<Name><![CDATA[cb_curtailmentCompany]]></Name>
+					<X>-19</X><Y>123</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="20" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[if (cb_curtailmentCompany.isSelected()) {
+	c_ownedGridConnections.get(v_currentSelectedGCnr).v_enableCurtailment = true;
+}
+else {
+	c_ownedGridConnections.get(v_currentSelectedGCnr).v_enableCurtailment = false;
+}
+
+//Set scenario to custom
+f_setScenario(2);
+
+// Simulate Year screen
+f_setSimulateYearScreen();]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="11" Style="0"/>
+						<LabelText><![CDATA[]]></LabelText>
+						<LinkTo>false</LinkTo>
+	 				</ExtendedProperties>
+				</Control>
 			</Presentation>
 
 				</Group>
@@ -17554,63 +17893,9 @@ zero_Interface.b_resultsUpToDate = true;
 
 				</Group>
 				<Text>
-					<Id>1727797637172</Id>
-					<Name><![CDATA[txt_curtailmentDescriptionCompany]]></Name>
-					<X>20</X><Y>565</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Curtailment opwek]]></Text>
-					<Font>
-						<Name>Dialog</Name>
-						<Size>14</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Control Type="CheckBox">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1727797637174</Id>
-					<Name><![CDATA[cb_curtailmentCompany]]></Name>
-					<X>291</X><Y>558</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="20" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[if (cb_curtailmentCompany.isSelected()) {
-	c_ownedGridConnections.get(v_currentSelectedGCnr).v_enableCurtailment = true;
-}
-else {
-	c_ownedGridConnections.get(v_currentSelectedGCnr).v_enableCurtailment = false;
-}
-
-//Set scenario to custom
-f_setScenario(2);
-
-// Simulate Year screen
-f_setSimulateYearScreen();]]></ActionCode>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LabelText><![CDATA[]]></LabelText>
-						<LinkTo>false</LinkTo>
-	 				</ExtendedProperties>
-				</Control>
-				<Text>
 					<Id>1727883464770</Id>
 					<Name><![CDATA[txt_nfatoValues]]></Name>
-					<X>-420</X><Y>900</Y>
+					<X>-420</X><Y>950</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31670,17 +31955,17 @@ f_resetNFATOSettings();]]></ActionCode>
 						<TextColor/>
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[if (!cb_EHubSelect.isSelected()) {
+	// Reset the list of selected GCs and the individual AreaCollections in the ResultsUI
+	zero_Interface.c_selectedGridConnections.clear();
+	zero_Interface.uI_Results.c_individualGridConnections = new ArrayList<AreaCollection>();
+	
 	// Reset the building colors
 	for (GridConnection GC: zero_Interface.c_selectedGridConnections) {
 		for (GIS_Object GB : GC.c_connectedGISObjects) {
 			zero_Interface.f_styleAreas(GB);
 		}
 	}
-	
-	// Reset the list of selected GCs and the individual AreaCollections in the ResultsUI
-	zero_Interface.c_selectedGridConnections.clear();
-	zero_Interface.uI_Results.c_individualGridConnections = new ArrayList<AreaCollection>();
-	
+		
 	// Reset the shown charts
 	zero_Interface.f_updateUIresultsMainArea();
 	zero_Interface.uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
@@ -31694,6 +31979,9 @@ f_resetNFATOSettings();]]></ActionCode>
 	zero_Interface.v_groupATOFeedInCapacity_kW = 0;
 }
 else{
+	// we create areacollection(s) for the currently selected GC(s) (could be multiple if the user was using multiselect before checking this box)
+	zero_Interface.f_fillAreaCollectionsOfIndividualGCs();
+
 	//Make the companyUI button invisible
 	zero_Interface.button_goToUI.setVisible(false);
 	
@@ -38382,6 +38670,12 @@ if( settings.runHeadlessAtStartup() ){
 		zero_Interface.f_updateUIresultsEnergyCoop( zero_Interface.uI_Results.v_collective, energyModel.pop_energyCoops.get(0));
 	}
 	zero_Interface.b_resultsUpToDate = true;
+	
+	if (zero_Interface.p_selectedProjectType == OL_ProjectType.BUSINESSPARK) {
+		// Note! This calculation is now done after the initialization of the interface, 
+		// which might include slider presets, that change the assets of certain GCs!
+		zero_Interface.f_calculateGTOConnectionCapacities();
+	}
 }
 else {
 		zero_Interface.f_resetSettings();
