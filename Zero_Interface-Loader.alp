@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_Interface-Loader]]></Name>
@@ -33728,6 +33728,7 @@ import zeroPackage.ZeroMath;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1726584205887</Id>
 					<Name><![CDATA[v_hourOfYearStart]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1480</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -33851,6 +33852,37 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[int]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1733389557748</Id>
+					<Name><![CDATA[v_simStartHour_h]]></Name>
+					<Description><![CDATA[The hour 0 is defined as january 1st, 00:00h in the year energyModel.p_year]]></Description>
+					<X>1610</X><Y>129</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1733390702422</Id>
+					<Name><![CDATA[v_simDuration_h]]></Name>
+					<X>1737</X><Y>128</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[8760-energyModel.p_timeStep_h]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -34307,6 +34339,8 @@ f_createGridConnections();
 f_createAdditionalGISObjects();
 
 //Initialize the engine
+energyModel.p_runStartTime_h = v_simStartHour_h;
+energyModel.p_runEndTime_h = v_simStartHour_h + v_simDuration_h;
 energyModel.f_initializeEngine();
 
 
@@ -37834,6 +37868,7 @@ for (Cable_data dataCableMV : c_Cable_data_MV) {
 					</Parameter>
 					<Body><![CDATA[//Create the profile 
 J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, null, OL_ProfileAssetType.ELECTRICITYBASELOAD, energyModel.p_timeStep_h);		
+profile.setStartTime_h(v_simStartHour_h);
 profile.energyAssetName = parentGC.p_ownerID + " custom profile";
 
 //Initialize parameters		
@@ -37929,7 +37964,7 @@ traceln("");
 
 double startTime = System.currentTimeMillis();
 v_timeOfModelStart_ms = startTime;
-v_hourOfYearStart= avgc_data.hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
+//v_hourOfYearStart= avgc_data.hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
 
 //Import excel data to the anylogic database
 f_importExcelTablesToDB();
@@ -38403,7 +38438,7 @@ return annualElectricityConsumption_kWh;
 						<Type><![CDATA[Double]]></Type>
 					</Parameter>
 					<Body><![CDATA[// Generate custom PV production asset using production data!
-double[] a_arguments = IntStream.range(0, 35040).mapToDouble(i -> i*0.25).toArray(); // time axis
+double[] a_arguments = IntStream.range(0, 35040).mapToDouble(i -> v_simStartHour_h + i*0.25).toArray(); // time axis
 
 // From kWh/quarter to normalized power
 double totalProduction_kWh = Arrays.stream(yearlyElectricityProduction_kWh).sum();
@@ -38413,7 +38448,7 @@ double[] a_normalizedPower_fr = Arrays.stream(yearlyElectricityProduction_kWh).m
 //traceln("Full load hours of a_normalizedPower_fr %s: ", Arrays.stream(a_normalizedPower_fr).sum()/4);
 //traceln("Max of a_normalizedPower_fr %s: ", Arrays.stream(a_normalizedPower_fr).max());
 
-TableFunction tf_customPVproduction_fr = new TableFunction(a_arguments, a_normalizedPower_fr, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+TableFunction tf_customPVproduction_fr = new TableFunction(a_arguments, a_normalizedPower_fr, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_ERROR, 0.0);
 J_ProfilePointer profilePointer = new J_ProfilePointer((parentGC.p_ownerID + "_PVproduction") , tf_customPVproduction_fr);
 energyModel.f_addProfile(profilePointer);
 J_EAProduction production_asset = new J_EAProduction(parentGC, OL_EnergyAssetType.PHOTOVOLTAIC, (parentGC.p_ownerID + "_rooftopPV"), (double)pvPower_kW, 0.0, 0.0, 0.0, energyModel.p_timeStep_h, 0.0, profilePointer);
@@ -38986,23 +39021,6 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 					<SaveInSnapshot>false</SaveInSnapshot>
 					<LoadOnStartup>true</LoadOnStartup>
 					<SaveOnDispose>false</SaveOnDispose>
-				</ExcelFile>
-				<ExcelFile>
-					<Id>1726584205983</Id>
-					<Name><![CDATA[e_gridnodeTimeSeries]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1490</X><Y>490</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<ResourceReference>
-						<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
-						<ClassName><![CDATA[GridNode Timeseries Output.xlsx]]></ClassName>
-					</ResourceReference>
-					<SaveInSnapshot>false</SaveInSnapshot>
-					<LoadOnStartup>true</LoadOnStartup>
-					<SaveOnDispose>true</SaveOnDispose>
 				</ExcelFile>
 			</Connectivity>
 			<AgentLinks>
