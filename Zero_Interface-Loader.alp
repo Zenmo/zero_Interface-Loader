@@ -3602,16 +3602,21 @@ area.v_dataNetbelastingDuurkrommeWeekend_kW = GN.data_weekendNetbelastingDuurkro
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// First we make a copy of all the Uitility GridConnections
 List<GridConnection> GCs = new ArrayList<>(energyModel.f_getGridConnections());
+List<GridConnection> GCs_detailedCompanies = new ArrayList<>(energyModel.f_getGridConnections());
 if( p_selectedProjectType == OL_ProjectType.RESIDENTIAL){
 	GCs = GCs.stream().filter(gc -> gc instanceof GCHouse).collect(Collectors.toList());
 }
 else {
-	GCs = GCs.stream().filter(gc -> gc instanceof GCUtility).collect(Collectors.toList());
+	GCs_detailedCompanies = GCs.stream().filter(gc -> gc instanceof GCUtility && gc.p_owner.p_detailedCompany).collect(Collectors.toList());
+	GCs = GCs.stream().filter(gc -> gc instanceof GCUtility && !gc.p_owner.p_detailedCompany).collect(Collectors.toList());
 }
 // Find all the GCs with PV at the start of the simulation
 ArrayList<GridConnection> GCsWithPV = GCs.stream().filter(gc -> gc.v_hasPV).collect(Collectors.toCollection(ArrayList::new));
 ArrayList<GridConnection> otherGCs = GCs.stream().filter(gc -> !gc.v_hasPV).collect(Collectors.toCollection(ArrayList::new));
 //Collections.shuffle(otherGCs);
+ArrayList<GridConnection> detailedCompanyGCsWithPV = GCs_detailedCompanies.stream().filter(gc -> gc.v_hasPV).collect(Collectors.toCollection(ArrayList::new));
+ArrayList<GridConnection> datailedCompanyGCsnoPV = GCs_detailedCompanies.stream().filter(gc -> !gc.v_hasPV).collect(Collectors.toCollection(ArrayList::new));
+
 // We make sure that the GCs with PV at the start of the simulation are the last in the list
 
 //traceln("amount of GCs with PV at start: " + GCsWithPV.size());
@@ -3621,7 +3626,8 @@ if(c_companyUIs.size() == 0){
 	otherGCs.addAll(GCsWithPV);
 }
 
-c_orderedPVSystems = otherGCs;]]></Body>
+c_orderedPVSystems = otherGCs;
+c_orderedPVSystems.addAll(datailedCompanyGCsnoPV);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
