@@ -2107,7 +2107,7 @@ if (c_selectedGridConnections.size() > 0) {
 			for (int i = 0; i < c_selectedGridConnections.size(); i++) {
 				f_addTimeStepLiveDataSets(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
 			}
-			f_addTimeStepTotalLiveDataSets();
+			//f_addTimeStepTotalLiveDataSets();
 			
 			if (b_EHubSelect) {
 				f_updateLiveEHubCapacityDataSets();
@@ -2638,7 +2638,12 @@ f_updateUIresultsGridNode(uI_Results.v_trafo, GN);]]></Body>
 v_clickedObjectType = b.p_GISObjectType;
 
 //Enable checkbox
-uI_Results.getCheckbox_KPISummary().setEnabled(true);
+if (b.p_GISObjectType == OL_GISObjectType.BUILDING ) { 
+	uI_Results.getCheckbox_KPISummary().setEnabled(true);
+}
+else {
+	uI_Results.getCheckbox_KPISummary().setEnabled(false);
+}
 
 // Color all buildings of the GridConnection associated with the selected building
 if (!v_clickedBuilding.c_containedGridConnections.get(0).p_ownerID.equals("-") && !v_clickedBuilding.c_containedGridConnections.get(0).p_ownerID.contains("woonfunctie") && !v_clickedBuilding.c_containedGridConnections.get(0).p_ownerID.contains("Onbekend")){
@@ -2725,6 +2730,7 @@ else if (v_previousClickedObjectType == OL_GISObjectType.BUILDING ||
 		 v_previousClickedObjectType == OL_GISObjectType.WINDFARM ||
 		 v_previousClickedObjectType == OL_GISObjectType.ELECTROLYSER ||
 		 v_previousClickedObjectType == OL_GISObjectType.BATTERY ||
+		 v_previousClickedObjectType == OL_GISObjectType.WKK ||
 		 v_previousClickedObjectType == OL_GISObjectType.CHARGER){
 	
 	v_previousClickedBuilding = v_clickedBuilding;
@@ -5760,6 +5766,7 @@ return gisroute;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725439643960</Id>
 					<Name><![CDATA[f_updateTotalLiveDataSets]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-650</X><Y>830</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -5805,6 +5812,7 @@ return gisroute;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725440073691</Id>
 					<Name><![CDATA[f_addTimeStepTotalLiveDataSets]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-625</X><Y>850</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -6134,11 +6142,14 @@ v_groupATOFeedInCapacity_kW = feedInCapacity_kW;
 
 f_EHubTabCapacityInformation(true, null);
 if (gcList.size() > 0) {
+	
+	f_EHubTabCapacityInformation(false, "De ring van " + gcList.get(0).p_ownerID + " is geselecteerd. \n");
+	
 	f_EHubTabCapacityInformation(false, 
 		"De bedrijven hebben samen een leveringscapaciteit van " +
 		(int) sum(gcList, gc -> gc.p_contractedDeliveryCapacity_kW)  +
-		"  kW \nDe E-Hub zou een groepscontract kunnen krijgen van " +
-		(int) deliveryCapacity_kW + " kW \n"
+		"  kW. \nDe E-Hub zou een groepscontract kunnen krijgen van " +
+		(int) deliveryCapacity_kW + " kW. \n"
 		);
 	if (warnings.size() > 0) {
 		f_EHubTabCapacityInformation(false, "Waarschuwingen: \n");
@@ -6348,7 +6359,7 @@ else {
 		f_updateUIresultsGridConnection(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
 	}
 	
-	f_updateTotalLiveDataSets();
+	//f_updateTotalLiveDataSets();
 	//f_updateTotalYearlyDataSets();
 	//f_updateTotalWeeklyDataSets();
 }]]></Body>
@@ -10593,7 +10604,8 @@ voor verwarming.]]></Text>
 	uI_Results.c_individualGridConnections = new ArrayList<AreaCollection>();
 	
 	// Reset the building colors
-	for (GridConnection GC: c_selectedGridConnections) {
+	for (GridConnection GC: energyModel.f_getGridConnections()
+	) {
 		for (GIS_Object GB : GC.c_connectedGISObjects) {
 			f_styleAreas(GB);
 		}
@@ -11067,7 +11079,8 @@ new Thread( () -> {
 	uI_Results.f_showCorrectChart();
 	
 	//Update and show kpi summary chart after run
-	if(settings.showKPISummary() != null && settings.showKPISummary() && !b_multiSelect && v_clickedObjectType != OL_GISObjectType.GRIDNODE){
+	// TODO: Clean up this if statement, I added the check if the show summary button is enabled. This could probably be the only thing to check for?
+	if(settings.showKPISummary() != null && settings.showKPISummary() && !b_multiSelect && v_clickedObjectType != OL_GISObjectType.GRIDNODE && uI_Results.getCheckbox_KPISummary().isEnabled()){
 		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
 	}
 }).start();
@@ -31960,7 +31973,7 @@ f_resetNFATOSettings();]]></ActionCode>
 	zero_Interface.uI_Results.c_individualGridConnections = new ArrayList<AreaCollection>();
 	
 	// Reset the building colors
-	for (GridConnection GC: zero_Interface.c_selectedGridConnections) {
+	for (GridConnection GC: zero_Interface.energyModel.f_getGridConnections()) {
 		for (GIS_Object GB : GC.c_connectedGISObjects) {
 			zero_Interface.f_styleAreas(GB);
 		}
