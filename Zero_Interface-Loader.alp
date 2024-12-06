@@ -4395,7 +4395,7 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 		electricityForHeatDemandYear_kW += gc.data_annualHeatPumpElectricityDemand_kW.getY(i);
 		electricityForTransportDemandYear_kW += gc.data_annualElectricVehicleDemand_kW.getY(i);
 		electricityForStorageDemandYear_kW += gc.data_annualBatteriesDemand_kW.getY(i);
-		if (gc instanceof GCEnergyConversion) {
+		if (gc instanceof GCEnergyConversion && gc.v_activeEnergyCarriers.contains(OL_EnergyCarriers.HYDROGEN)) {
 			electricityForElectrolyser_kW += ((GCEnergyConversion)gc).data_annualElectrolyserDemand_kW.getY(i);
 		}
 		/*
@@ -4623,7 +4623,7 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 		electricityWindSupplySummerWeek_kW += gc.data_summerWeekWindGeneration_kW.getY(i);
 		electricityStorageSupplySummerWeek_kW += gc.data_summerWeekBatteriesSupply_kW.getY(i);
 		electricityV2GSupplySummerWeek_kW += gc.data_summerWeekV2GSupply_kW.getY(i);
-		if (gc instanceof GCEnergyConversion) {
+		if (gc instanceof GCEnergyConversion && gc.v_activeEnergyCarriers.contains(OL_EnergyCarriers.HYDROGEN)) {
 			//if (((GCEnergyConversion)gc).data_summerWeekElectrolyserDemand_kW.getXMin() < i) {
 				electricityForHydrogenDemandSummerWeek_kW += ((GCEnergyConversion)gc).data_summerWeekElectrolyserDemand_kW.getY(i);
 			//}
@@ -4637,7 +4637,7 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 		electricityForHeatDemandWinterWeek_kW += gc.data_winterWeekHeatPumpElectricityDemand_kW.getY(i);
 		electricityForTransportDemandWinterWeek_kW += gc.data_winterWeekElectricVehicleDemand_kW.getY(i);
 		electricityForStorageDemandWinterWeek_kW += gc.data_winterWeekBatteriesDemand_kW.getY(i);
-		if (gc instanceof GCEnergyConversion) {
+		if (gc instanceof GCEnergyConversion && gc.v_activeEnergyCarriers.contains(OL_EnergyCarriers.HYDROGEN)) {
 			//if (((GCEnergyConversion)gc).data_winterWeekElectrolyserDemand_kW.getXMin() < i) {
 				electricityForHydrogenDemandWinterWeek_kW += ((GCEnergyConversion)gc).data_winterWeekElectrolyserDemand_kW.getY(i);
 			//}
@@ -4665,10 +4665,13 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 		
 		netLoadSummerWeek_kW += gc.am_summerWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getY(i);
 		netLoadWinterWeek_kW += gc.am_winterWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getY(i);
-		electricityDemandCapacitySummerWeek_kW += gc.acc_summerWeekDeliveryCapacity_kW.getY(i);
-		electricityDemandCapacityWinterWeek_kW += gc.acc_winterWeekDeliveryCapacity_kW.getY(i);
-		electricitySupplyCapacitySummerWeek_kW -= gc.acc_summerWeekFeedinCapacity_kW.getY(i);
-		electricitySupplyCapacityWinterWeek_kW -= gc.acc_winterWeekFeedinCapacity_kW.getY(i);
+
+		if ( !gc.p_gridConnectionID.equals("GCECS2")) {	// Fix for WKK
+				electricityDemandCapacitySummerWeek_kW += gc.acc_summerWeekDeliveryCapacity_kW.getY(i);
+				electricityDemandCapacityWinterWeek_kW += gc.acc_winterWeekDeliveryCapacity_kW.getY(i);
+				electricitySupplyCapacitySummerWeek_kW -= gc.acc_summerWeekFeedinCapacity_kW.getY(i);
+				electricitySupplyCapacityWinterWeek_kW -= gc.acc_winterWeekFeedinCapacity_kW.getY(i);
+		}
 	}
 	
 	//add accumulated values to dataset
@@ -4997,8 +5000,11 @@ for (int i=0; i < liveWeekSize; i++){ //we go back to update the existing live w
 			fm_supply_kW.addFlow( EC, gc.dsm_liveSupply_kW.get(EC).getY(i));
 		}
 		
-		electricityDemandCapacityLiveWeek_kW += gc.data_gridCapacityDemand_kW.getY(i);
-		electricitySupplyCapacityLiveWeek_kW += gc.data_gridCapacitySupply_kW.getY(i);
+
+		if ( !gc.p_gridConnectionID.equals("GCECS2")) {	// Fix for WKK
+			electricityDemandCapacityLiveWeek_kW += gc.data_gridCapacityDemand_kW.getY(i);
+			electricitySupplyCapacityLiveWeek_kW += gc.data_gridCapacitySupply_kW.getY(i);
+		}
 		netLoadLiveWeek_kW  += gc.data_liveElectricityBalance_kW.getY(i);
 	
 		baseloadElectricityDemandLiveWeek_kW  += gc.data_baseloadElectricityDemand_kW.getY(i);
@@ -5093,10 +5099,12 @@ double totalFeedInCapacity_kW = 0;
 
 for (GridConnection gc : gcList) {
 	gc.f_getDuurkromme();
-	gc.f_nfatoSetConnectionCapacity(true);
-	totalDeliveryCapacity_kW += gc.p_contractedDeliveryCapacity_kW;
-	totalFeedInCapacity_kW += gc.p_contractedFeedinCapacity_kW;
-	gc.f_nfatoSetConnectionCapacity(false);
+	if ( !gc.p_gridConnectionID.equals("GCECS2")) {	// Fix for WKK
+		gc.f_nfatoSetConnectionCapacity(true);
+		totalDeliveryCapacity_kW += gc.p_contractedDeliveryCapacity_kW;
+		totalFeedInCapacity_kW += gc.p_contractedFeedinCapacity_kW;
+		gc.f_nfatoSetConnectionCapacity(false);
+	}
 }
 
 double[] NetbelastingDuurkrommeYear_kW = new double[roundToInt(365*24/energyModel.p_timeStep_h)];
@@ -5338,8 +5346,10 @@ for (GridConnection gc : gcList){
 	}
 	
 	// Demand
-	electricityDemandCapacityLiveWeek_kW += gc.data_gridCapacityDemand_kW.getY(i);
-	electricitySupplyCapacityLiveWeek_kW += gc.data_gridCapacitySupply_kW.getY(i);
+	if ( !gc.p_gridConnectionID.equals("GCECS2")) {	
+		electricityDemandCapacityLiveWeek_kW += gc.data_gridCapacityDemand_kW.getY(i);
+		electricitySupplyCapacityLiveWeek_kW += gc.data_gridCapacitySupply_kW.getY(i);
+	}
 	netLoadLiveWeek_kW  += gc.data_liveElectricityBalance_kW.getY(i);
 
 	baseloadElectricityDemandLiveWeek_kW  += gc.data_baseloadElectricityDemand_kW.getY(i);
@@ -6141,13 +6151,21 @@ v_groupATOFeedInCapacity_kW = feedInCapacity_kW;
 
 
 f_EHubTabCapacityInformation(true, null);
+
 if (gcList.size() > 0) {
+	
+	// fix for the WKK
+	List<GridConnection> gcListWithoutWKK = new ArrayList<>(gcList);
+	GridConnection GCWKK = findFirst(energyModel.EnergyConversionSites, gc -> gc.p_name.toLowerCase().contains("wkk"));
+	//if (GCWKK != null) {
+	gcListWithoutWKK.remove(GCWKK);
+	//}
 	
 	f_EHubTabCapacityInformation(false, "De ring van " + gcList.get(0).p_ownerID + " is geselecteerd. \n");
 	
 	f_EHubTabCapacityInformation(false, 
 		"De bedrijven hebben samen een leveringscapaciteit van " +
-		(int) sum(gcList, gc -> gc.p_contractedDeliveryCapacity_kW)  +
+		(int) sum(gcListWithoutWKK, gc -> gc.p_contractedDeliveryCapacity_kW)  +
 		"  kW. \nDe E-Hub zou een groepscontract kunnen krijgen van " +
 		(int) deliveryCapacity_kW + " kW. \n"
 		);
@@ -6379,13 +6397,23 @@ else {
 // Stedin: remove the top 0.1% of peak loads of the past years quarterhourly values, then add the remaining maximum to the group capacity
 // First we find the quarterhourly values, or if they are not available the assigned base load and add a warning that not all data was available
 
-for (GridConnection gc : energyModel.f_getGridConnections()) {
+List<GridConnection> gcList = new ArrayList<>();
+gcList.addAll(energyModel.f_getGridConnections());
+//gcList.addAll(energyModel.f_getPausedGridConnections());
+
+for (GridConnection gc : gcList) {
 	int amountOfDataPoints = gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries().length;
 	double[] quarterHourlyValues = Arrays.copyOf(gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries(), amountOfDataPoints);
 	Arrays.sort(quarterHourlyValues);
 	double filteredMaximum_kW = min(gc.p_contractedDeliveryCapacity_kW , max(0, quarterHourlyValues[amountOfDataPoints - (int) (amountOfDataPoints*0.001) - 1]));
 	double filteredMinimum_kW = min(gc.p_contractedFeedinCapacity_kW, -min(0, quarterHourlyValues[(int)(amountOfDataPoints*0.001)]));
 	v_GCGTOConnectionCapacities.put(gc, new double[]{filteredMaximum_kW, filteredMinimum_kW});
+}
+
+// fix for the WKK
+GridConnection GCWKK = findFirst(energyModel.EnergyConversionSites, gc -> gc.p_name.toLowerCase().contains("wkk"));
+if (GCWKK != null) {
+	v_GCGTOConnectionCapacities.put(GCWKK, new double[]{0.0, 0.0});
 }]]></Body>
 				</Function>
 			</Functions>
@@ -10874,35 +10902,37 @@ for(GISRoute GISCable : c_MVCables){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<OnClickCode><![CDATA[if (uI_Tabs.pop_tabEHub.get(0).b_NFATOListener) {
-	uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
-}
-else if (b_multiSelect) {
-	f_multiSelect(clickx, clicky);
-}
-else if (b_EHubSelect) {
-	f_EHubSelect(clickx, clicky);
-}
-else {
-	f_selectGISRegion(clickx, clicky);
-}
-]]></OnClickCode>
+					<OnClickCode><![CDATA[if ( !settings.publicVersion()) {
+	if (uI_Tabs.pop_tabEHub.get(0).b_NFATOListener) {
+		uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
+	}
+	else if (b_multiSelect) {
+		f_multiSelect(clickx, clicky);
+	}
+	else if (b_EHubSelect) {
+		f_EHubSelect(clickx, clicky);
+	}
+	else {
+		f_selectGISRegion(clickx, clicky);
+	}
+}]]></OnClickCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Width>1000</Width>
 					<Height>620</Height>
-					<OnClickCode><![CDATA[if (uI_Tabs.pop_tabEHub.get(0).b_NFATOListener) {
-	uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
-}
-else if (b_multiSelect) {
-	f_multiSelect(clickx, clicky);
-}
-else if (b_EHubSelect) {
-	f_EHubSelect(clickx, clicky);
-}
-else {
-	f_selectGISRegion(clickx, clicky);
-}
-]]></OnClickCode>
+					<OnClickCode><![CDATA[if ( !settings.publicVersion()) {
+	if (uI_Tabs.pop_tabEHub.get(0).b_NFATOListener) {
+		uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
+	}
+	else if (b_multiSelect) {
+		f_multiSelect(clickx, clicky);
+	}
+	else if (b_EHubSelect) {
+		f_EHubSelect(clickx, clicky);
+	}
+	else {
+		f_selectGISRegion(clickx, clicky);
+	}
+}]]></OnClickCode>
 					<GISShapes>
 					</GISShapes>
 					<Latitude>52.539123187983904</Latitude>
@@ -41790,6 +41820,8 @@ public class Settings {
 		Boolean showKPISummary;
 		ArrayList<String> subscopesToSimulate;
 		OL_RadioButtonSetup resultsUIRadioButtonSetup;
+		Boolean publicVersion;
+		
 }]]></Text>
 		</JavaClass>
 		<!--   =========   Java Class   ========  -->
