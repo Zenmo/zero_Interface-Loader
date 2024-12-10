@@ -35576,7 +35576,7 @@ return b;]]></Body>
 		//Check for feedin values availability, if available: fill the list, if not, list = null;
 		try {
 			if(selectFirstValue(Double.class, "SELECT " + profileName + "_feedin FROM comp_elec_consumption LIMIT 1;") != null){
-		  		yearlyElectricityFeedin_kWh_list = selectValues(double.class, "SELECT " + profileName + "_feedin FROM comp_elec_consumption;");
+		  		yearlyElectricityFeedin_kWh_list = selectValues(double.class, "SELECT " + profileName + "_feedin FROM comp_elec_consumption;");			
 			}
 		}
 		catch(Exception e) {
@@ -35590,7 +35590,6 @@ return b;]]></Body>
 			}
 		}
 		catch(Exception e) {
-
 			//Do nothing, cause initialized with null;
 		}
 	}
@@ -38474,7 +38473,7 @@ J_ProfilePointer profilePointer = new J_ProfilePointer((parentGC.p_ownerID + "_P
 energyModel.f_addProfile(profilePointer);
 J_EAProduction production_asset = new J_EAProduction(parentGC, OL_EnergyAssetType.PHOTOVOLTAIC, (parentGC.p_ownerID + "_rooftopPV"), (double)pvPower_kW, 0.0, 0.0, 0.0, energyModel.p_timeStep_h, 0.0, profilePointer);
 
-traceln("Custom PV asset added to %s with installed power %s kW and %s full load hours!", parentGC.p_ownerID, pvPower_kW, fullLoadHours_h);
+//traceln("Custom PV asset added to %s with installed power %s kW and %s full load hours!", parentGC.p_ownerID, pvPower_kW, fullLoadHours_h);
 ]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
@@ -38682,6 +38681,17 @@ if (gridConnection.getSupply().getHasSupply() != null && gridConnection.getSuppl
 	//gridConnection.getElectricity().getAnnualElectricityProductionKwh() // Staat niet meer in het formulier!
 	
 	double[] yearlyElectricityProduction_kWh_array = (gridConnection.getElectricity().getQuarterHourlyProduction_kWh() != null && gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues()): null;
+	
+	if(yearlyElectricityProduction_kWh_array == null && gridConnection.getSupply().getPvInstalledKwp() != null && gridConnection.getSupply().getPvInstalledKwp() > 0){
+		try {
+			if(selectFirstValue(Double.class, "SELECT " + "ccid" + companyGC.p_gridConnectionID + "_production FROM comp_elec_consumption LIMIT 1;") != null){
+		  		List<Double> yearlyElectricityProduction_kWh_list = selectValues(double.class, "SELECT " + "ccid" + companyGC.p_gridConnectionID + "_production FROM comp_elec_consumption;");
+				yearlyElectricityProduction_kWh_array = (yearlyElectricityProduction_kWh_list != null) ? yearlyElectricityProduction_kWh_list.stream().mapToDouble(d -> max(0,d)).toArray() : null;
+			}
+		}
+		catch(Exception e) {
+		}
+	}
 	if (yearlyElectricityProduction_kWh_array != null && gridConnection.getSupply().getPvInstalledKwp() != null && gridConnection.getSupply().getPvInstalledKwp() > 0){
 		f_createCustomPVAsset(companyGC, yearlyElectricityProduction_kWh_array, (double)gridConnection.getSupply().getPvInstalledKwp()); // Create custom PV asset when production data is available!
 		current_scenario_list.setCurrentPV_kW(gridConnection.getSupply().getPvInstalledKwp());
