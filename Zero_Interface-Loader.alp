@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_Interface-Loader]]></Name>
@@ -35353,7 +35353,14 @@ TableFunction tf_p_logistics_fleet_e_hgv = new TableFunction(a_arguments, a_logi
 profilePointer = new J_ProfilePointer("LOGISTICS_FLEET_HGV_E", tf_p_logistics_fleet_e_hgv);
 energyModel.f_addProfile(profilePointer);
 
-
+//
+double[] a_flatProfile = new double[a_arguments.length];
+for (int i = 0; i<a_arguments.length; i++){
+	a_flatProfile[i] = 1;
+}
+TableFunction tf_p_flat_profile = new TableFunction(a_arguments, a_flatProfile, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+profilePointer = new J_ProfilePointer("FLAT_PROFILE", tf_p_flat_profile);
+energyModel.f_addProfile(profilePointer);
 
 
 
