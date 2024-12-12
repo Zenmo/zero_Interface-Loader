@@ -2879,6 +2879,9 @@ mainArea.v_dataElectricityForTransportConsumptionYear_kW = energyModel.data_annu
 mainArea.v_dataElectricityForStorageConsumptionYear_kW = energyModel.data_annualBatteriesDemand_kW;
 mainArea.v_dataElectricityForHydrogenConsumptionYear_kW = energyModel.data_annualElectrolyserDemand_kW;
 
+//Final energy consumption dataset year
+mainArea.data_dailyAverageFinalEnergyConsumption_kW = energyModel.data_totalFinalEnergyConsumption_kW;
+
 //Supply
 mainArea.v_dataElectricityWindProductionYear_kW = energyModel.data_annualWindGeneration_kW;
 mainArea.v_dataElectricityPVProductionYear_kW = energyModel.data_annualPVGeneration_kW;
@@ -3160,6 +3163,9 @@ area.v_weekendElectricityConsumed_MWh = energyModel.v_weekendElectricityConsumed
 area.v_weekendElectricitySelfConsumed_MWh = energyModel.v_weekendElectricitySelfConsumed_MWh;
 
 ////Gespreksleidraad Additions
+
+//Final energy consumption dataset year
+area.data_dailyAverageFinalEnergyConsumption_kW = energyModel.data_totalFinalEnergyConsumption_kW;
 
 //Subdivision of heating assets
 area.v_totalElectricityConsumptionHeatpumps_MWh = energyModel.v_totalElectricityConsumptionHeatpumps_MWh;
@@ -35739,7 +35745,7 @@ double belowZeroHeatpumpEtaReductionFactor;
 switch (parentGC.p_heatingType){ // HOE gaan we om met meerdere heating types in survey???
 
 	case GASBURNER:
-		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, maxPowerGasburner , 0.99, energyModel.p_timeStep_h, 90);
+		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, maxPowerGasburner , avgc_data.p_avgEfficiencyGasBurner, energyModel.p_timeStep_h, 90);
 	break;
 	
 	case HYBRID_HEATPUMP:
