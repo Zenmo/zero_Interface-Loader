@@ -2816,6 +2816,7 @@ mainArea.v_dataWindElectricityProductionLiveWeek_kW = energyModel.data_windGener
 mainArea.v_dataPVElectricityProductionLiveWeek_kW = energyModel.data_PVGeneration_kW;
 mainArea.v_dataStorageElectricityProductionLiveWeek_kW = energyModel.data_batteryDischarging_kW;
 mainArea.v_dataV2GElectricityProductionLiveWeek_kW = energyModel.data_V2GSupply_kW;
+mainArea.v_dataCHPElectricityProductionLiveWeek_kW = energyModel.data_CHPElectricityProductionLiveWeek_kW;
 
 //Datasets for live summerWeek chart
 //Demand
@@ -2887,6 +2888,7 @@ mainArea.v_dataElectricityWindProductionYear_kW = energyModel.data_annualWindGen
 mainArea.v_dataElectricityPVProductionYear_kW = energyModel.data_annualPVGeneration_kW;
 mainArea.v_dataElectricityStorageProductionYear_kW = energyModel.data_annualBatteriesSupply_kW;
 mainArea.v_dataElectricityV2GProductionYear_kW = energyModel.data_annualV2GSupply_kW;
+mainArea.v_dataElectricityCHPProductionYear_kW = energyModel.data_annualCHPElectricityProduction_kW;
 
 //Datasets for netloaddurationcurves
 mainArea.v_dataNetbelastingDuurkrommeYear_kW = energyModel.data_netbelastingDuurkromme_kW;
@@ -2959,6 +2961,7 @@ area.v_dataPVElectricityProductionLiveWeek_kW = energyModel.data_PVGeneration_kW
 area.v_dataStorageElectricityProductionLiveWeek_kW = energyModel.data_batteryDischarging_kW;
 area.v_dataV2GElectricityProductionLiveWeek_kW = energyModel.data_V2GSupply_kW;
 //area.v_dataHydrogenSupplyLiveWeek_kW = energyModel.data_hydrogenSupply_kW;
+area.v_dataCHPElectricityProductionLiveWeek_kW = energyModel.data_CHPElectricityProductionLiveWeek_kW;
 
 //Total
 area.v_dataNetLoadLiveWeek_kW = energyModel.data_totalGridLoad_kW;
@@ -2983,9 +2986,9 @@ area.v_dataElectricityWindProductionSummerWeek_kW = energyModel.data_summerWeekW
 area.v_dataElectricityPVProductionSummerWeek_kW = energyModel.data_summerWeekPVGeneration_kW;
 area.v_dataElectricityStorageProductionSummerWeek_kW = energyModel.data_summerWeekBatteriesSupply_kW;
 area.v_dataElectricityV2GProductionSummerWeek_kW = energyModel.data_summerWeekV2GSupply_kW;
+area.v_dataElectricityCHPProductionSummerWeek_kW = energyModel.data_summerWeekCHPElectricityProduction_kW;
 
-//District heating
-
+//Net load
 area.v_dataNetLoadSummerWeek_kW = energyModel.data_summerWeekNetLoad_kW;
 area.v_dataElectricityDeliveryCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek, energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 area.v_dataElectricityDeliveryCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek + 7*24, energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
@@ -3007,8 +3010,9 @@ area.v_dataElectricityWindProductionWinterWeek_kW = energyModel.data_winterWeekW
 area.v_dataElectricityPVProductionWinterWeek_kW = energyModel.data_winterWeekPVGeneration_kW;
 area.v_dataElectricityStorageProductionWinterWeek_kW = energyModel.data_winterWeekBatteriesSupply_kW;
 area.v_dataElectricityV2GProductionWinterWeek_kW = energyModel.data_winterWeekV2GSupply_kW;
+area.v_dataElectricityCHPProductionWinterWeek_kW = energyModel.data_winterWeekCHPElectricityProduction_kW;
 
-//District heating
+//Netload
 area.v_dataNetLoadWinterWeek_kW = energyModel.data_winterWeekNetLoad_kW;
 area.v_dataElectricityDeliveryCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek, energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 area.v_dataElectricityDeliveryCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek + 7*24, energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
@@ -3031,9 +3035,7 @@ area.v_dataElectricityWindProductionYear_kW = energyModel.data_annualWindGenerat
 area.v_dataElectricityPVProductionYear_kW = energyModel.data_annualPVGeneration_kW;
 area.v_dataElectricityStorageProductionYear_kW = energyModel.data_annualBatteriesSupply_kW;
 area.v_dataElectricityV2GProductionYear_kW = energyModel.data_annualV2GSupply_kW;
-
-//District heating
-
+area.v_dataElectricityCHPProductionYear_kW = energyModel.data_annualCHPElectricityProduction_kW;
 
 // Data for gespreksleidraad1
 area.v_dataNetLoadYear_kW = energyModel.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries();
@@ -4233,6 +4235,7 @@ if( area.v_dataElectricityBaseloadConsumptionYear_kW != null ){
 	area.v_dataElectricityStorageProductionYear_kW.reset();
 	area.v_dataElectricityV2GProductionYear_kW.reset();
 	//area.v_dataHydrogenSupplyYear_kW.reset();
+	area.v_dataElectricityCHPProductionYear_kW.reset();
 }
 else{
 	area.v_dataElectricityBaseloadConsumptionYear_kW = new DataSet(365);
@@ -4248,6 +4251,7 @@ else{
 	area.v_dataElectricityStorageProductionYear_kW = new DataSet(365);
 	area.v_dataElectricityV2GProductionYear_kW = new DataSet(365);
 	//area.v_dataHydrogenSupplyYear_kW= new DataSet(365);
+	area.v_dataElectricityCHPProductionYear_kW = new DataSet(365);
 }
 
 area.dsm_dailyAverageConsumptionDataSets_kW.createEmptyDataSets(activeEnergyCarriers, 365);
@@ -4274,6 +4278,7 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 	double electricityStorageSupplyYear_kW = 0;
 	double electricityV2GSupplyYear_kW = 0;
 	//double hydrogenSupplyYear_kW = 0;
+	double electricityCHPSupplyYear_kW = 0;
 	
 	//accumulate values over gridcongestion
 	for (GridConnection gc : gcList){
@@ -4309,6 +4314,7 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 		electricityWindSupplyYear_kW += gc.data_annualWindGeneration_kW.getY(i);
 		electricityStorageSupplyYear_kW += gc.data_annualBatteriesSupply_kW.getY(i);
 		electricityV2GSupplyYear_kW += gc.data_annualV2GSupply_kW.getY(i);
+		electricityCHPSupplyYear_kW += gc.data_annualCHPElectricitySupply_kW.getY(i);
 		/*
 		if ( gc.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 			hydrogenSupplyYear_kW += gc.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
@@ -4331,6 +4337,7 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 	area.v_dataElectricityStorageProductionYear_kW.add(timeAxisValue, electricityStorageSupplyYear_kW);
 	area.v_dataElectricityV2GProductionYear_kW.add(timeAxisValue, electricityV2GSupplyYear_kW);
 	//area.v_dataHydrogenSupplyYear_kW.add(timeAxisValue, hydrogenSupplyYear_kW);
+	area.v_dataElectricityCHPProductionYear_kW.add(timeAxisValue, electricityCHPSupplyYear_kW);
 	
 	for (OL_EnergyCarriers EC : activeEnergyCarriers) {
 		area.dsm_dailyAverageConsumptionDataSets_kW.get(EC).add(timeAxisValue, fm_dailyAverageDemand_kW.get(EC) );
@@ -4376,6 +4383,7 @@ if( area.v_dataElectricityBaseloadConsumptionSummerWeek_kW != null ){
 	area.v_dataElectricityStorageProductionSummerWeek_kW.reset();
 	area.v_dataElectricityV2GProductionSummerWeek_kW.reset();
 	//area.v_dataHydrogenSupplySummerWeek_kW.reset();
+	area.v_dataElectricityCHPProductionSummerWeek_kW.reset();
 	
 	area.v_dataElectricityBaseloadConsumptionWinterWeek_kW.reset();
 	area.v_dataElectricityForHeatConsumptionWinterWeek_kW.reset();
@@ -4389,6 +4397,7 @@ if( area.v_dataElectricityBaseloadConsumptionSummerWeek_kW != null ){
 	area.v_dataElectricityStorageProductionWinterWeek_kW.reset();
 	area.v_dataElectricityV2GProductionWinterWeek_kW.reset();
 	//area.v_dataHydrogenSupplyWinterWeek_kW.reset();
+	area.v_dataElectricityCHPProductionWinterWeek_kW.reset();
 	
 	area.v_dataNetLoadSummerWeek_kW.reset();
 	area.v_dataNetLoadWinterWeek_kW.reset();
@@ -4411,6 +4420,7 @@ else {
 	area.v_dataElectricityStorageProductionSummerWeek_kW = new DataSet(672);
 	area.v_dataElectricityV2GProductionSummerWeek_kW = new DataSet(672);
 	//area.v_dataHydrogenSupplySummerWeek_kW = new DataSet(672);
+	area.v_dataElectricityCHPProductionSummerWeek_kW = new DataSet(672);
 	
 	area.v_dataElectricityBaseloadConsumptionWinterWeek_kW = new DataSet(672);
 	area.v_dataElectricityForHeatConsumptionWinterWeek_kW = new DataSet(672);
@@ -4424,6 +4434,7 @@ else {
 	area.v_dataElectricityStorageProductionWinterWeek_kW = new DataSet(672);
 	area.v_dataElectricityV2GProductionWinterWeek_kW = new DataSet(672);
 	//area.v_dataHydrogenSupplyWinterWeek_kW = new DataSet(672);
+	area.v_dataElectricityCHPProductionWinterWeek_kW = new DataSet(672);
 	
 	area.v_dataNetLoadSummerWeek_kW = new DataSet(672);
 	area.v_dataNetLoadWinterWeek_kW = new DataSet(672);
@@ -4464,6 +4475,7 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 	double electricityWindSupplySummerWeek_kW = 0;
 	double electricityStorageSupplySummerWeek_kW = 0;
 	double electricityV2GSupplySummerWeek_kW = 0;
+	double electricityCHPSupplySummerWeek_kW = 0;
 	//double hydrogenSupplySummerWeek_kW = 0;
 	
 	double electricityBaseloadDemandWinterWeek_kW = 0;
@@ -4478,6 +4490,7 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 	double electricityStorageSupplyWinterWeek_kW = 0;
 	double electricityV2GSupplyWinterWeek_kW = 0;
 	//double hydrogenSupplyWinterWeek_kW = 0;
+	double electricityCHPSupplyWinterWeek_kW = 0;
 	
 	double netLoadSummerWeek_kW = 0;
 	double netLoadWinterWeek_kW = 0;
@@ -4517,6 +4530,8 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 		electricityWindSupplySummerWeek_kW += gc.data_summerWeekWindGeneration_kW.getY(i);
 		electricityStorageSupplySummerWeek_kW += gc.data_summerWeekBatteriesSupply_kW.getY(i);
 		electricityV2GSupplySummerWeek_kW += gc.data_summerWeekV2GSupply_kW.getY(i);
+		electricityCHPSupplySummerWeek_kW += gc.data_summerWeekCHPElectricityProduction_kW.getY(i);
+		
 		if (gc instanceof GCEnergyConversion) {
 			//if (((GCEnergyConversion)gc).data_summerWeekElectrolyserDemand_kW.getXMin() < i) {
 				electricityForHydrogenDemandSummerWeek_kW += ((GCEnergyConversion)gc).data_summerWeekElectrolyserDemand_kW.getY(i);
@@ -4551,7 +4566,7 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 		electricityWindSupplyWinterWeek_kW += gc.data_winterWeekWindGeneration_kW.getY(i);
 		electricityStorageSupplyWinterWeek_kW += gc.data_winterWeekBatteriesSupply_kW.getY(i);
 		electricityV2GSupplyWinterWeek_kW += gc.data_winterWeekV2GSupply_kW.getY(i);
-		
+		electricityCHPSupplyWinterWeek_kW += gc.data_winterWeekCHPElectricityProduction_kW.getY(i);
 		/*
 		if ( gc.v_winterWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 			hydrogenSupplyWinterWeek_kW += gc.v_winterWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
@@ -4577,6 +4592,8 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 	area.v_dataElectricityWindProductionSummerWeek_kW.add(timeAxisValueSummer, electricityWindSupplySummerWeek_kW);
 	area.v_dataElectricityStorageProductionSummerWeek_kW.add(timeAxisValueSummer, electricityStorageSupplySummerWeek_kW);
 	area.v_dataElectricityV2GProductionSummerWeek_kW.add(timeAxisValueSummer, electricityV2GSupplySummerWeek_kW);
+	area.v_dataElectricityCHPProductionSummerWeek_kW.add(timeAxisValueSummer, electricityCHPSupplySummerWeek_kW);
+	
 	//area.v_dataHydrogenSupplySummerWeek_kW.add(timeAxisValueSummer, hydrogenSupplySummerWeek_kW);
 	
 	area.v_dataNetLoadSummerWeek_kW.add(timeAxisValueSummer, netLoadSummerWeek_kW);
@@ -4595,7 +4612,8 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 	area.v_dataElectricityStorageProductionWinterWeek_kW.add(timeAxisValueWinter, electricityStorageSupplyWinterWeek_kW);
 	area.v_dataElectricityV2GProductionWinterWeek_kW.add(timeAxisValueWinter, electricityV2GSupplyWinterWeek_kW);
 	//area.v_dataHydrogenSupplyWinterWeek_kW.add(timeAxisValueWinter, hydrogenSupplyWinterWeek_kW);	
-
+	area.v_dataElectricityCHPProductionWinterWeek_kW.add(timeAxisValueWinter, electricityCHPSupplyWinterWeek_kW);
+	
 	area.v_dataNetLoadWinterWeek_kW.add(timeAxisValueWinter, netLoadWinterWeek_kW);
 	area.v_dataElectricityDeliveryCapacityWinterWeek_kW.add(timeAxisValueWinter, electricityDemandCapacityWinterWeek_kW);
 	area.v_dataElectricityFeedInCapacityWinterWeek_kW.add(timeAxisValueWinter, electricitySupplyCapacityWinterWeek_kW);
@@ -5800,6 +5818,7 @@ if( area.v_dataElectricityDeliveryCapacityLiveWeek_kW != null ){
 	area.v_dataPVElectricityProductionLiveWeek_kW.reset();
 	area.v_dataStorageElectricityProductionLiveWeek_kW.reset();
 	area.v_dataV2GElectricityProductionLiveWeek_kW.reset();
+	area.v_dataCHPElectricityProductionLiveWeek_kW.reset();
 }
 else {
 	// Demand
@@ -5824,7 +5843,8 @@ else {
 	area.v_dataPVElectricityProductionLiveWeek_kW = new DataSet(672);
 	area.v_dataStorageElectricityProductionLiveWeek_kW = new DataSet(672);
 	area.v_dataV2GElectricityProductionLiveWeek_kW = new DataSet(672);
-	}
+	area.v_dataCHPElectricityProductionLiveWeek_kW = new DataSet(672);
+}
 
 for (int i=0; i < liveWeekSize; i++){ //we go back to update the existing live week data
 	
@@ -5855,7 +5875,7 @@ for (int i=0; i < liveWeekSize; i++){ //we go back to update the existing live w
 	double storageElectricitySupplyLiveWeek_kW = 0;
 	double V2GElectricitySupplyLiveWeek_kW = 0;
 	double hydrogenSupplyLiveWeek_kW = 0;
-	
+	double CHPElectricitySupplyLiveWeek_kW = 0;
 	
 	for (GridConnection gc : gcList){
 		for (OL_EnergyCarriers EC_consumption : gc.v_activeConsumptionEnergyCarriers) {
@@ -5881,7 +5901,8 @@ for (int i=0; i < liveWeekSize; i++){ //we go back to update the existing live w
 		windElectricitySupplyLiveWeek_kW  += gc.data_windGeneration_kW.getY(i);
 		PVElectricitySupplyLiveWeek_kW  += gc.data_PVGeneration_kW.getY(i);
 		storageElectricitySupplyLiveWeek_kW  += gc.data_batteryDischarging_kW.getY(i);
-		V2GElectricitySupplyLiveWeek_kW  += gc.data_V2GSupply_kW.getY(i);	
+		V2GElectricitySupplyLiveWeek_kW  += gc.data_V2GSupply_kW.getY(i);
+		CHPElectricitySupplyLiveWeek_kW  += gc.data_CHPElectricityProductionLiveWeek_kW.getY(i);
 	}
 	
 	for (OL_EnergyCarriers EC_consumption : activeConsumptionEnergyCarriers) {
@@ -5909,6 +5930,7 @@ for (int i=0; i < liveWeekSize; i++){ //we go back to update the existing live w
 	area.v_dataPVElectricityProductionLiveWeek_kW.add(timeAxisValue, PVElectricitySupplyLiveWeek_kW);
 	area.v_dataStorageElectricityProductionLiveWeek_kW.add(timeAxisValue, storageElectricitySupplyLiveWeek_kW);
 	area.v_dataV2GElectricityProductionLiveWeek_kW.add(timeAxisValue, V2GElectricitySupplyLiveWeek_kW);
+	area.v_dataCHPElectricityProductionLiveWeek_kW.add(timeAxisValue, CHPElectricitySupplyLiveWeek_kW);	
 }
 ]]></Body>
 				</Function>
@@ -5964,7 +5986,7 @@ double windElectricitySupplyLiveWeek_kW = 0;
 double PVElectricitySupplyLiveWeek_kW = 0;
 double storageElectricitySupplyLiveWeek_kW = 0;
 double V2GElectricitySupplyLiveWeek_kW = 0;
-
+double CHPElectricitySupplyLiveWeek_kW = 0;
 for (GridConnection gc : gcList){
 	
 	for (OL_EnergyCarriers EC_consumption : gc.v_activeConsumptionEnergyCarriers) {
@@ -5993,6 +6015,7 @@ for (GridConnection gc : gcList){
 	PVElectricitySupplyLiveWeek_kW  += gc.data_PVGeneration_kW.getY(i);
 	storageElectricitySupplyLiveWeek_kW  += gc.data_batteryDischarging_kW.getY(i);
 	V2GElectricitySupplyLiveWeek_kW  += gc.data_V2GSupply_kW.getY(i);
+	CHPElectricitySupplyLiveWeek_kW  += gc.data_CHPElectricityProductionLiveWeek_kW.getY(i);		
 }
 
 for (OL_EnergyCarriers EC_consumption : activeConsumptionEnergyCarriers) {	
@@ -6021,7 +6044,8 @@ area.v_dataWindElectricityProductionLiveWeek_kW.add(timeAxisValue, windElectrici
 area.v_dataPVElectricityProductionLiveWeek_kW.add(timeAxisValue, PVElectricitySupplyLiveWeek_kW);
 area.v_dataStorageElectricityProductionLiveWeek_kW.add(timeAxisValue, storageElectricitySupplyLiveWeek_kW);
 area.v_dataV2GElectricityProductionLiveWeek_kW.add(timeAxisValue, V2GElectricitySupplyLiveWeek_kW);
-
+area.v_dataCHPElectricityProductionLiveWeek_kW.add(timeAxisValue, CHPElectricitySupplyLiveWeek_kW);
+		
 ]]></Body>
 				</Function>
 			</Functions>
@@ -6403,6 +6427,7 @@ area.v_dataV2GElectricityProductionLiveWeek_kW.add(timeAxisValue, V2GElectricity
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -6426,6 +6451,7 @@ area.v_dataV2GElectricityProductionLiveWeek_kW.add(timeAxisValue, V2GElectricity
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -7165,6 +7191,7 @@ traceln("gr_compareResultsButton is not functional!");]]></OnClickCode>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -9326,6 +9353,7 @@ traceln( v_themeColor.getRGB() );]]></ActionCode>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -9349,6 +9377,7 @@ traceln( v_themeColor.getRGB() );]]></ActionCode>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<BasicProperties Width="380" Height="135">
                         <EmbeddedIcon>false</EmbeddedIcon>	
@@ -9419,6 +9448,7 @@ traceln("Selected scenario: \"" + selected_scenario + "\"");]]></ActionCode>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -9440,6 +9470,7 @@ traceln("Selected scenario: \"" + selected_scenario + "\"");]]></ActionCode>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -10499,6 +10530,7 @@ for(GISRoute GISCable : c_MVCables){
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<OnClickCode><![CDATA[if (uI_Tabs.pop_tabEHub.get(0).b_NFATOListener) {
 	uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
@@ -11006,7 +11038,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1708611471928</Id>
 					<Name><![CDATA[v_companyUIBackgroundColor]]></Name>
-					<X>-410</X><Y>50</Y>
+					<X>-430</X><Y>50</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11021,7 +11053,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1709554407054</Id>
 					<Name><![CDATA[v_companyUILineColor]]></Name>
-					<X>-410</X><Y>90</Y>
+					<X>-430</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11036,7 +11068,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1713543883957</Id>
 					<Name><![CDATA[v_currentSelectedGCnr]]></Name>
-					<X>-400</X><Y>420</Y>
+					<X>-430</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11558,7 +11590,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1725373825534</Id>
 					<Name><![CDATA[v_chartBackgroundColor]]></Name>
-					<X>-410</X><Y>130</Y>
+					<X>-430</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11573,7 +11605,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1725381531538</Id>
 					<Name><![CDATA[v_companyUILineWidth]]></Name>
-					<X>-410</X><Y>110</Y>
+					<X>-430</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11588,7 +11620,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1725381554846</Id>
 					<Name><![CDATA[v_chartLineWidth]]></Name>
-					<X>-410</X><Y>150</Y>
+					<X>-430</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11603,7 +11635,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1725382988283</Id>
 					<Name><![CDATA[v_companyUIBackgroundColorSliders]]></Name>
-					<X>-410</X><Y>70</Y>
+					<X>-430</X><Y>70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11618,7 +11650,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1725609978738</Id>
 					<Name><![CDATA[v_loadScreenColor]]></Name>
-					<X>-410</X><Y>180</Y>
+					<X>-430</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11678,7 +11710,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1725625091022</Id>
 					<Name><![CDATA[b_runningMainInterfaceScenarioSettings]]></Name>
-					<X>-380</X><Y>860</Y>
+					<X>-410</X><Y>860</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11750,7 +11782,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1727883544535</Id>
 					<Name><![CDATA[v_NFATO_kW_delivery]]></Name>
-					<X>-410</X><Y>965</Y>
+					<X>-440</X><Y>965</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11762,7 +11794,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1727883574908</Id>
 					<Name><![CDATA[v_NFATO_kW_feedin]]></Name>
-					<X>-410</X><Y>985</Y>
+					<X>-440</X><Y>985</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11774,7 +11806,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1727941212434</Id>
 					<Name><![CDATA[v_NFATO_active]]></Name>
-					<X>-410</X><Y>945</Y>
+					<X>-440</X><Y>945</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11786,7 +11818,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1729686904963</Id>
 					<Name><![CDATA[b_runningMainInterfaceSlider]]></Name>
-					<X>-380</X><Y>880</Y>
+					<X>-410</X><Y>880</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12019,7 +12051,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713445281785</Id>
 					<Name><![CDATA[f_setScenarioFuture]]></Name>
-					<X>-380</X><Y>570</Y>
+					<X>-410</X><Y>570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12123,7 +12155,7 @@ rb_scenariosPrivateUI.setValue(1, false);]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713447383903</Id>
 					<Name><![CDATA[f_setScenario]]></Name>
-					<X>-400</X><Y>530</Y>
+					<X>-430</X><Y>530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12184,7 +12216,7 @@ zero_Interface.b_resultsUpToDate = false;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713447428490</Id>
 					<Name><![CDATA[f_setScenarioCurrent]]></Name>
-					<X>-380</X><Y>550</Y>
+					<X>-410</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12284,7 +12316,7 @@ rb_scenariosPrivateUI.setValue(0, false);]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713537591106</Id>
 					<Name><![CDATA[f_setHeatingType]]></Name>
-					<X>-400</X><Y>650</Y>
+					<X>-430</X><Y>650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12429,7 +12461,7 @@ if(!b_runningMainInterfaceSlider){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713537591117</Id>
 					<Name><![CDATA[f_setGCCapacity]]></Name>
-					<X>-400</X><Y>670</Y>
+					<X>-430</X><Y>670</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12467,7 +12499,7 @@ GC.f_nfatoSetConnectionCapacity(false);]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713537591121</Id>
 					<Name><![CDATA[f_setBattery]]></Name>
-					<X>-400</X><Y>730</Y>
+					<X>-430</X><Y>730</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12506,7 +12538,7 @@ if(((J_EAStorageElectric)batteryAsset).getCapacityElectric_kW() != 0){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713954180112</Id>
 					<Name><![CDATA[f_setPVSystem]]></Name>
-					<X>-400</X><Y>690</Y>
+					<X>-430</X><Y>690</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12593,11 +12625,11 @@ f_setVehicleSliderPresets();
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//Set back end range (to prevent anylogic errors)
-sl_rooftopPVCompany.setRange(0, 20000);
+sl_rooftopPVCompany.setRange(0, 2000000);
 
 //Set range specific for each company
 v_minPVSlider = roundToInt(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentPV_kW());
-v_maxPVSlider = roundToInt(0.5 * c_ownedGridConnections.get(v_currentSelectedGCnr).p_roofSurfaceArea_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2);
+v_maxPVSlider = roundToInt(zero_Interface.energyModel.avgc_data.p_avgRatioRoofPotentialPV* c_ownedGridConnections.get(v_currentSelectedGCnr).p_roofSurfaceArea_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2);
 if(v_maxPVSlider <= v_minPVSlider){
 	v_maxPVSlider = v_minPVSlider + 1000;
 }
@@ -12777,7 +12809,7 @@ sl_hydrogenTrucksCompany.setValue(v_nbHydrogenTrucks, false);
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1714410040303</Id>
 					<Name><![CDATA[f_createVehicle]]></Name>
-					<X>-380</X><Y>810</Y>
+					<X>-410</X><Y>810</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12909,7 +12941,7 @@ else{ // (Hydrogen vehicles)
 					<ReturnType><![CDATA[int]]></ReturnType>
 					<Id>1714411599586</Id>
 					<Name><![CDATA[f_setElectricVehicleSliders]]></Name>
-					<X>-400</X><Y>750</Y>
+					<X>-430</X><Y>750</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13149,7 +13181,7 @@ if(!b_runningMainInterfaceSlider){
 					<ReturnType><![CDATA[int]]></ReturnType>
 					<Id>1714471183392</Id>
 					<Name><![CDATA[f_setDieselVehicleSliders]]></Name>
-					<X>-400</X><Y>790</Y>
+					<X>-430</X><Y>790</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13384,7 +13416,7 @@ if(!b_runningMainInterfaceSlider){
 					<ReturnType><![CDATA[int]]></ReturnType>
 					<Id>1714474430338</Id>
 					<Name><![CDATA[f_setHydrogenVehicleSliders]]></Name>
-					<X>-400</X><Y>770</Y>
+					<X>-430</X><Y>770</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13688,7 +13720,7 @@ if(!c_ownedGridConnections.get(v_currentSelectedGCnr).v_isActive){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1714656835269</Id>
 					<Name><![CDATA[f_copyResultsUI]]></Name>
-					<X>-400</X><Y>370</Y>
+					<X>-430</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13765,7 +13797,7 @@ rb_heatingTypePrivateUI.setValue(nr_currentHeatingType, false);]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1715952034311</Id>
 					<Name><![CDATA[f_addPVAsset]]></Name>
-					<X>-380</X><Y>710</Y>
+					<X>-410</X><Y>710</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13801,7 +13833,7 @@ J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset
 					<Id>1717576974529</Id>
 					<Name><![CDATA[f_setSelectedGC]]></Name>
 					<Description><![CDATA[Function that sets the sliders to match the currently present settings of the energy assets owned by the selected GC. Used when a connection owner has multiple grid connections, and wants to set the sliders of a different GC. ]]></Description>
-					<X>-400</X><Y>440</Y>
+					<X>-430</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13822,7 +13854,7 @@ if(!b_runningMainInterfaceScenarioSettings && !b_runningMainInterfaceSlider && c
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725439625846</Id>
 					<Name><![CDATA[f_setSelectedGCSliders]]></Name>
-					<X>-370</X><Y>460</Y>
+					<X>-400</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14019,7 +14051,7 @@ c_ownedGridConnections.get(v_currentSelectedGCnr).f_nfatoSetConnectionCapacity(f
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725439635605</Id>
 					<Name><![CDATA[f_setSelectedGCGraphs]]></Name>
-					<X>-370</X><Y>480</Y>
+					<X>-400</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14037,7 +14069,7 @@ uI_Results.f_setAllCharts();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725607045331</Id>
 					<Name><![CDATA[f_setSimulateYearScreen]]></Name>
-					<X>-400</X><Y>840</Y>
+					<X>-430</X><Y>840</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14063,7 +14095,7 @@ zero_Interface.f_resetSettings();]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//Set back end range (to prevent anylogic errors)
-sl_GCCapacityCompany.setRange(0, 10000);
+sl_GCCapacityCompany.setRange(0, 100000);
 
 //Get current grid capacity
 double defaultGCCapacitySlider = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractDeliveryCapacity_kW();
@@ -14083,10 +14115,15 @@ if(futureGCCapacity_delivery_kW < 100 && defaultGCCapacitySlider < 100){
 else if(futureGCCapacity_delivery_kW < 1000 && defaultGCCapacitySlider < 1000){
 	v_maxGCCapacitySlider = 2000;
 }
-else{
+else if(futureGCCapacity_delivery_kW < 8000 && defaultGCCapacitySlider < 8000){
 	v_maxGCCapacitySlider = 10000;
 }
-
+else if(futureGCCapacity_delivery_kW < 15000 && defaultGCCapacitySlider < 15000){
+	v_maxGCCapacitySlider = 20000;
+}
+else{
+	v_maxGCCapacitySlider = max(futureGCCapacity_delivery_kW, defaultGCCapacitySlider);
+}
 
 v_defaultGCCapacitySlider = roundToInt(defaultGCCapacitySlider);
 
@@ -14127,7 +14164,7 @@ if(nameLength > 24){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//Set back end range (to prevent anylogic errors)
-sl_GCCapacityCompany_Feedin.setRange(0, 10000);
+sl_GCCapacityCompany_Feedin.setRange(0, 100000);
 
 //Get current grid capacity
 double defaultGCCapacitySlider_Feedin = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractFeedinCapacity_kW();
@@ -14141,8 +14178,14 @@ if(defaultGCCapacitySlider_Feedin < 100){
 else if(defaultGCCapacitySlider_Feedin < 1000){
 	v_maxGCCapacitySlider_Feedin = 2000;
 }
-else{
+else if(defaultGCCapacitySlider_Feedin < 8000){
 	v_maxGCCapacitySlider_Feedin = 10000;
+}
+else if(defaultGCCapacitySlider_Feedin < 15000){
+	v_maxGCCapacitySlider_Feedin = 20000;
+}
+else{
+	v_maxGCCapacitySlider_Feedin = defaultGCCapacitySlider_Feedin;
 }
 
 v_defaultGCCapacitySlider_Feedin = roundToInt(defaultGCCapacitySlider_Feedin);
@@ -14155,7 +14198,7 @@ sl_GCCapacityCompany_Feedin.setValue(v_defaultGCCapacitySlider_Feedin, false);]]
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1727884380899</Id>
 					<Name><![CDATA[f_getNFATOValues]]></Name>
-					<X>-410</X><Y>925</Y>
+					<X>-440</X><Y>925</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14269,7 +14312,7 @@ f_setHeatingRB();]]></Body>
 				<EmbeddedObject>
 					<Id>1714652079023</Id>
 					<Name><![CDATA[uI_Results]]></Name>
-					<X>-400</X><Y>350</Y>
+					<X>-430</X><Y>350</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14448,7 +14491,7 @@ f_setHeatingRB();]]></Body>
 				<Text>
 					<Id>1708611713278</Id>
 					<Name><![CDATA[text]]></Name>
-					<X>-420</X><Y>20</Y>
+					<X>-440</X><Y>20</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14601,7 +14644,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1713537625797</Id>
 					<Name><![CDATA[txt_scenarioSettings]]></Name>
-					<X>-410</X><Y>500</Y>
+					<X>-440</X><Y>500</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14643,7 +14686,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1713957196998</Id>
 					<Name><![CDATA[txt_sliderFunctions]]></Name>
-					<X>-410</X><Y>620</Y>
+					<X>-440</X><Y>620</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14727,7 +14770,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1714660279044</Id>
 					<Name><![CDATA[txt_uiResult]]></Name>
-					<X>-410</X><Y>320</Y>
+					<X>-440</X><Y>320</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16530,7 +16573,7 @@ zero_Interface.va_Interface.navigateTo();]]></ActionCode>
 				<Text>
 					<Id>1717514421993</Id>
 					<Name><![CDATA[txt_setSlidersToSelectedGC]]></Name>
-					<X>-410</X><Y>390</Y>
+					<X>-440</X><Y>390</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -17258,7 +17301,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Text>
 					<Id>1727883464770</Id>
 					<Name><![CDATA[txt_nfatoValues]]></Name>
-					<X>-420</X><Y>900</Y>
+					<X>-450</X><Y>900</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24676,6 +24719,10 @@ for ( GCEnergyProduction GCEP : zero_Interface.energyModel.EnergyProductionSites
 			j_ea.setCapacityElectric_kW(1000*AllocatedWindPower_MW);
 			GCEP.p_physicalConnectionCapacity_kW = 1000*AllocatedWindPower_MW;
 			GCEP.p_contractedFeedinCapacity_kW = 1000*AllocatedWindPower_MW;
+			
+			if(AllocatedWindPower_MW == 0){
+				GCEP.f_setActive(false);
+			}
 			break;
 		}
 	}
@@ -32454,7 +32501,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Name><![CDATA[p_avgRatioBatteryCapacity_v_Power]]></Name>
 					<Description><![CDATA[Average ratio of battery capacity over battery power.
 --> If battery capacity (in kWh) is twice the battery power (in kW) --> ratio = 2.]]></Description>
-					<X>50</X><Y>860</Y>
+					<X>50</X><Y>880</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32560,7 +32607,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 				<Variable Class="Parameter">
 					<Id>1726584205708</Id>
 					<Name><![CDATA[p_avgRatioRoofPotentialPV]]></Name>
-					<Description><![CDATA[value for ratio that]]></Description>
+					<Description><![CDATA[value for the ratio of the avg Usable Roof Area For PV fr]]></Description>
 					<X>50</X><Y>780</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -32570,6 +32617,9 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 						<Type><![CDATA[double]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[0.5]]></Code>
+						</DefaultValue>
 						<ParameterEditor>
 							<Id>1726584205706</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
@@ -32744,7 +32794,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 				<Variable Class="Parameter">
 					<Id>1726746753360</Id>
 					<Name><![CDATA[p_avgVehiclesPerChargePoint]]></Name>
-					<X>50</X><Y>910</Y>
+					<X>50</X><Y>930</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33371,7 +33421,7 @@ zero_Loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				<Text>
 					<Id>1726584205562</Id>
 					<Name><![CDATA[txt_avgBat]]></Name>
-					<X>40</X><Y>835</Y>
+					<X>40</X><Y>855</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33542,7 +33592,7 @@ zero_Loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				<Text>
 					<Id>1726743791200</Id>
 					<Name><![CDATA[text]]></Name>
-					<X>40</X><Y>880</Y>
+					<X>40</X><Y>900</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
