@@ -24598,7 +24598,7 @@ else {
 			OL_EnergyAssetType assetType = OL_EnergyAssetType.PHOTOVOLTAIC;
 			String assetName = "Rooftop PV";
 
-			double roofAreaForPV_m2 = 0.25 * gc.p_roofSurfaceArea_m2; // Should not be higher than 0.5!						
+			double roofAreaForPV_m2 = zero_Interface.energyModel.avgc_data.p_avgRatioRoofPotentialPV * gc.p_roofSurfaceArea_m2;					
 			double capacityElectricity_kW = max(0.1, roofAreaForPV_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2);
 			double capacityHeat_kW = 0.0;
 			double yearlyProductionHydrogen_kWh = 0.0;
@@ -24612,7 +24612,7 @@ else {
 			zero_Interface.c_orderedPVSystems.add(0, gc);
 		
 			PVsystems++;
-			//traceln("Added PV to GridConnection: " + h.p_gridConnectionID);
+			//traceln("Added PV to GridConnection: " + gc.p_gridConnectionID + "With capacity [kW]: " + capacityElectricity_kW);
 			
 			// update UI company
 			if (zero_Interface.c_companyUIs.size()>0){
@@ -29464,11 +29464,10 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722326800150</Id>
 					<Name><![CDATA[t_hybridHeatPumpCompaniesDescription1]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-165</X><Y>-55</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
@@ -29507,11 +29506,10 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722326800154</Id>
 					<Name><![CDATA[t_districtHeatingCompaniesDescription1]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-165</X><Y>-30</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
@@ -29573,11 +29571,10 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722326800160</Id>
 					<Name><![CDATA[t_districtHeatingCompanies_pct1]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>45</X><Y>-30</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
@@ -29596,11 +29593,10 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722326800162</Id>
 					<Name><![CDATA[t_hybridHeatPumpCompanies_pct1]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>45</X><Y>-55</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
@@ -29620,7 +29616,6 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722326800164</Id>
 					<Name><![CDATA[sl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>75</X><Y>-35</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -29629,8 +29624,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<BasicProperties Width="100" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
-						<VisibleCode><![CDATA[false]]></VisibleCode>
-						<Enabled>true</Enabled>
+						<Enabled>false</Enabled>
 						<ActionCode><![CDATA[traceln("Slider doet nog niets!!");//f_setHeatingSlidersCompanies(3);
 //f_resetNeighborhoodHeatingSystems(4);]]></ActionCode>
 					</BasicProperties>
@@ -29674,7 +29668,6 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722326800168</Id>
 					<Name><![CDATA[sl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>75</X><Y>-60</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -29683,8 +29676,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<BasicProperties Width="100" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
-						<VisibleCode><![CDATA[false]]></VisibleCode>
-						<Enabled>true</Enabled>
+						<Enabled>false</Enabled>
 						<ActionCode><![CDATA[traceln("Slider doet nog niets!!");//f_setHeatingSlidersCompanies(2);
 //f_resetNeighborhoodHeatingSystems(3);
 //sl_hybridHeatPumpCompanies.]]></ActionCode>
@@ -29743,6 +29735,74 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 						<Name>Calibri</Name>
 						<Size>18</Size>
 						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1734371025574</Id>
+					<Name><![CDATA[t_eBoilerCompanies_pct]]></Name>
+					<X>45</X><Y>-5</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[#]]></Text>
+					<TextCode><![CDATA[sl_heatDemandSlidersCompaniesEBoiler_pct.getIntValue() + "%"]]></TextCode>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Control Type="Slider">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1734371025600</Id>
+					<Name><![CDATA[sl_heatDemandSlidersCompaniesEBoiler_pct]]></Name>
+					<X>75</X><Y>-10</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="100" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<Enabled>false</Enabled>
+						<ActionCode><![CDATA[traceln("Slider doet nog niets!!");//f_setHeatingSlidersCompanies(3);
+//f_resetNeighborhoodHeatingSystems(4);]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
+						<Orientation>HORIZONTAL</Orientation>
+						<MinValue><![CDATA[0]]></MinValue>
+						<MaxValue><![CDATA[100]]></MaxValue>
+						<Step><![CDATA[1]]></Step>
+						<LinkTo>false</LinkTo>
+					</ExtendedProperties>
+				</Control>
+				<Text>
+					<Id>1734371025534</Id>
+					<Name><![CDATA[t_eBoilerCompaniesDescription]]></Name>
+					<X>-165</X><Y>-5</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[E-boiler]]></Text>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
@@ -33146,7 +33206,7 @@ to 18 m3 p m2 for label G
 				</Variable>
 			</Variables>
 			<Functions>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726584205530</Id>
