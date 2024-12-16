@@ -2790,7 +2790,6 @@ if(settings.resultsUIRadioButtonSetup() != null){
 	uI_Results.v_selectedRadioButton = settings.resultsUIRadioButtonSetup();
 }
 
-
 //Set boolean if it has connection with heatgrid
 for (GridNode GN : energyModel.f_getGridNodesTopLevel()) {
 	if(GN.p_energyCarrier == OL_EnergyCarriers.HEAT){
@@ -2798,7 +2797,8 @@ for (GridNode GN : energyModel.f_getGridNodesTopLevel()) {
 		break;
 	}
 }
-
+//Set booleans
+f_updateAssetBooleansGC(mainArea, energyModel.f_getGridConnections());
 
 //Datasets for live charts
 //Demand
@@ -3419,8 +3419,10 @@ area.v_weekendElectricitySelfConsumed_MWh = EC.v_weekendElectricitySelfConsumed_
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[b_resultsUpToDate = false;
 gr_simulateYearScreenSmall.setVisible(true);
+
+f_updateAssetBooleans();
 runSimulation();
-//pie_selfsufficiency.setVisible(false);]]></Body>
+]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -4191,6 +4193,7 @@ f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConne
 					</Parameter>
 					<Body><![CDATA[//Update to new variables
 f_updateVariablesOfGCData(area, gcList);
+f_updateAssetBooleansGC(area, gcList);
 f_updateLiveDataSets(area, gcList);
 f_updateYearlyGCData(area, gcList);
 f_updateWeeklyGCData(area, gcList);
@@ -5348,7 +5351,7 @@ for (int j = 0; j < c_selectedGridConnections.size(); j++) {
 					<Id>1725442474483</Id>
 					<Name><![CDATA[f_updateTotalYearlyDataSets]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-645</X><Y>890</Y>
+					<X>-990</X><Y>870</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5389,7 +5392,7 @@ for (int j = 0; j < c_selectedGridConnections.size(); j++) {
 					<Id>1725442517475</Id>
 					<Name><![CDATA[f_updateTotalWeeklyDataSets]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-645</X><Y>910</Y>
+					<X>-1000</X><Y>900</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5608,9 +5611,11 @@ boolean isRealFeedinCapacityAvailable = true;
 for(GridConnection GC : gcList){
 	if(!GC.b_isRealDeliveryCapacityAvailable){
 		isRealDeliveryCapacityAvailable = false;
+		break;
 	}
 	if(!GC.b_isRealFeedinCapacityAvailable){
 		isRealFeedinCapacityAvailable = false;
+		break;
 	}
 }
 area.b_isRealDeliveryCapacityAvailable = isRealDeliveryCapacityAvailable;
@@ -6047,6 +6052,128 @@ area.v_dataV2GElectricityProductionLiveWeek_kW.add(timeAxisValue, V2GElectricity
 area.v_dataCHPElectricityProductionLiveWeek_kW.add(timeAxisValue, CHPElectricitySupplyLiveWeek_kW);
 		
 ]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1734361725171</Id>
+					<Name><![CDATA[f_updateAssetBooleansGC]]></Name>
+					<X>-620</X><Y>910</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[area]]></Name>
+						<Type><![CDATA[AreaCollection]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[gcList]]></Name>
+						<Type><![CDATA[ArrayList<GridConnection>]]></Type>
+					</Parameter>
+					<Body><![CDATA[area.b_hasElectricHeating = false;
+area.b_hasElectricTransport = false;
+area.b_hasPV = false;
+area.b_hasWindturbine = false;
+area.b_hasBattery = false;
+area.b_hasHeatGridConnection = false;
+area.b_hasElectrolyser = false;
+area.b_hasCHP = false;
+area.b_hasV2G = false;
+area.b_hasElectricCooking = false;
+
+//Electric heating
+for(GridConnection GC : gcList){
+	if(GC.c_electricHeatpumpAssets.size()>0 && GC.v_isActive){
+		area.b_hasElectricHeating = true;
+		break;
+	}
+}
+//Electric vehicles
+for(GridConnection GC : gcList){
+	if(GC.c_EvAssets.size()>0 && GC.v_isActive){
+		area.b_hasElectricTransport = true;
+		break;
+	}
+}
+//PV
+for(GridConnection GC : gcList){
+	if(GC.c_pvAssets.size()>0 && GC.v_isActive){
+		area.b_hasPV = true;
+		break;
+	}
+}
+//Wind
+for(GridConnection GC : gcList){
+	if(GC.c_windAssets.size()>0 && GC.v_isActive){
+		area.b_hasWindturbine = true;
+		break;
+	}
+}
+//Battery
+for(GridConnection GC : gcList){
+	if(GC.c_batteryAssets.size()>0 && GC.v_isActive){
+		area.b_hasBattery = true;
+		break;
+	}
+}
+//Heat grid
+for(GridConnection GC : gcList){
+	if(GC.l_parentNodeHeat.getConnectedAgent() != null && GC.v_isActive){
+		area.b_hasHeatGridConnection = true;
+		break;
+	}
+}
+//Electrolyser
+for(GridConnection GC : gcList){
+	if(GC.c_electrolyserAssets.size()>0 && GC.v_isActive){
+		area.b_hasElectrolyser = true;
+		break;
+	}
+}
+//CHP
+for(GridConnection GC : gcList){
+	if(GC.c_chpAssets.size()>0 && GC.v_isActive){
+		area.b_hasCHP = true;
+		break;
+	}
+}
+//V2g
+for(GridConnection GC : gcList){
+	if(GC.p_chargingAttitudeVehicles == OL_ChargingAttitude.V2G && GC.c_EvAssets.size()>0 && GC.v_isActive){
+		area.b_hasV2G = true;
+		break;
+	}
+}
+//Electric cooking
+for(GridConnection GC : gcList){
+	if(GC.c_electricHobAssets.size()>0 && GC.v_isActive){
+		area.b_hasElectricCooking = true;
+		break;
+	}
+}
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1734368189128</Id>
+					<Name><![CDATA[f_updateAssetBooleans]]></Name>
+					<X>-650</X><Y>890</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[f_updateAssetBooleansGC(uI_Results.v_area, energyModel.f_getGridConnections());
+if(b_multiSelect && c_selectedGridConnections.size() > 1){
+	for (int i = 0; i < c_selectedGridConnections.size(); i++) {
+		f_updateAssetBooleansGC(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
+	}
+}
+else{
+	f_updateAssetBooleansGC(uI_Results.v_gridConnection, c_selectedGridConnections);
+}
+uI_Results.f_showCorrectChart();]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -9377,7 +9504,6 @@ traceln( v_themeColor.getRGB() );]]></ActionCode>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
-					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<BasicProperties Width="380" Height="135">
                         <EmbeddedIcon>false</EmbeddedIcon>	
