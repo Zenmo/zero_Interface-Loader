@@ -148,7 +148,8 @@ import com.anylogic.engine.markup.GISMarkupSegment;
 import com.anylogic.engine.markup.GISPoint;
 import zero_engine.OL_EnergyCarriers;
 import zero_engine.OL_EnergyCarriers;
-import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
+import com.querydsl.core.types.dsl.TimeExpression;
+import zero_engine.J_EAStorageElectric;]]></Import>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1658477103138</Id>
@@ -2798,7 +2799,7 @@ for (GridNode GN : energyModel.f_getGridNodesTopLevel()) {
 	}
 }
 //Set booleans
-f_updateAssetBooleansGC(mainArea, energyModel.f_getGridConnections());
+f_updateActiveAssetBooleansGC(mainArea, energyModel.f_getGridConnections());
 
 //Datasets for live charts
 //Demand
@@ -3420,7 +3421,7 @@ area.v_weekendElectricitySelfConsumed_MWh = EC.v_weekendElectricitySelfConsumed_
 					<Body><![CDATA[b_resultsUpToDate = false;
 gr_simulateYearScreenSmall.setVisible(true);
 
-f_updateAssetBooleans();
+f_updateActiveAssetBooleans();
 runSimulation();
 ]]></Body>
 				</Function>
@@ -4193,7 +4194,7 @@ f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConne
 					</Parameter>
 					<Body><![CDATA[//Update to new variables
 f_updateVariablesOfGCData(area, gcList);
-f_updateAssetBooleansGC(area, gcList);
+f_updateActiveAssetBooleansGC(area, gcList);
 f_updateLiveDataSets(area, gcList);
 f_updateYearlyGCData(area, gcList);
 f_updateWeeklyGCData(area, gcList);
@@ -6057,7 +6058,7 @@ area.v_dataCHPElectricityProductionLiveWeek_kW.add(timeAxisValue, CHPElectricity
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734361725171</Id>
-					<Name><![CDATA[f_updateAssetBooleansGC]]></Name>
+					<Name><![CDATA[f_updateActiveAssetBooleansGC]]></Name>
 					<X>-620</X><Y>910</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -6113,8 +6114,12 @@ for(GridConnection GC : gcList){
 //Battery
 for(GridConnection GC : gcList){
 	if(GC.c_batteryAssets.size()>0 && GC.v_isActive){
-		area.b_hasBattery = true;
-		break;
+		for(J_EA battery : GC.c_batteryAssets){
+			if(((J_EAStorageElectric)battery).getStorageCapacity_kWh() > 0){
+				area.b_hasBattery = true;
+				break;
+			}
+		}
 	}
 }
 //Heat grid
@@ -6158,20 +6163,20 @@ for(GridConnection GC : gcList){
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734368189128</Id>
-					<Name><![CDATA[f_updateAssetBooleans]]></Name>
+					<Name><![CDATA[f_updateActiveAssetBooleans]]></Name>
 					<X>-650</X><Y>890</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[f_updateAssetBooleansGC(uI_Results.v_area, energyModel.f_getGridConnections());
+					<Body><![CDATA[f_updateActiveAssetBooleansGC(uI_Results.v_area, energyModel.f_getGridConnections());
 if(b_multiSelect && c_selectedGridConnections.size() > 1){
 	for (int i = 0; i < c_selectedGridConnections.size(); i++) {
-		f_updateAssetBooleansGC(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
+		f_updateActiveAssetBooleansGC(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
 	}
 }
 else{
-	f_updateAssetBooleansGC(uI_Results.v_gridConnection, c_selectedGridConnections);
+	f_updateActiveAssetBooleansGC(uI_Results.v_gridConnection, c_selectedGridConnections);
 }
 uI_Results.f_showCorrectChart();]]></Body>
 				</Function>
