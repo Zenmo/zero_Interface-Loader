@@ -148,7 +148,8 @@ import com.anylogic.engine.markup.GISMarkupSegment;
 import com.anylogic.engine.markup.GISPoint;
 import zero_engine.OL_EnergyCarriers;
 import zero_engine.OL_EnergyCarriers;
-import com.querydsl.core.types.dsl.TimeExpression;]]></Import>
+import com.querydsl.core.types.dsl.TimeExpression;
+import zero_engine.J_EAStorageElectric;]]></Import>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1658477103138</Id>
@@ -2790,6 +2791,16 @@ if(settings.resultsUIRadioButtonSetup() != null){
 	uI_Results.v_selectedRadioButton = settings.resultsUIRadioButtonSetup();
 }
 
+//Set boolean if it has connection with heatgrid
+for (GridNode GN : energyModel.f_getGridNodesTopLevel()) {
+	if(GN.p_energyCarrier == OL_EnergyCarriers.HEAT){
+		mainArea.b_hasHeatGridConnection = true;
+		break;
+	}
+}
+//Set booleans
+f_updateActiveAssetBooleansGC(mainArea, energyModel.f_getGridConnections());
+
 //Datasets for live charts
 //Demand
 mainArea.dsm_liveConsumption_kW = energyModel.dsm_liveDemand_kW;
@@ -2806,6 +2817,7 @@ mainArea.v_dataWindElectricityProductionLiveWeek_kW = energyModel.data_windGener
 mainArea.v_dataPVElectricityProductionLiveWeek_kW = energyModel.data_PVGeneration_kW;
 mainArea.v_dataStorageElectricityProductionLiveWeek_kW = energyModel.data_batteryDischarging_kW;
 mainArea.v_dataV2GElectricityProductionLiveWeek_kW = energyModel.data_V2GSupply_kW;
+mainArea.v_dataCHPElectricityProductionLiveWeek_kW = energyModel.data_CHPElectricityProductionLiveWeek_kW;
 
 //Datasets for live summerWeek chart
 //Demand
@@ -2869,11 +2881,15 @@ mainArea.v_dataElectricityForTransportConsumptionYear_kW = energyModel.data_annu
 mainArea.v_dataElectricityForStorageConsumptionYear_kW = energyModel.data_annualBatteriesDemand_kW;
 mainArea.v_dataElectricityForHydrogenConsumptionYear_kW = energyModel.data_annualElectrolyserDemand_kW;
 
+//Final energy consumption dataset year
+mainArea.data_dailyAverageFinalEnergyConsumption_kW = energyModel.data_totalFinalEnergyConsumption_kW;
+
 //Supply
 mainArea.v_dataElectricityWindProductionYear_kW = energyModel.data_annualWindGeneration_kW;
 mainArea.v_dataElectricityPVProductionYear_kW = energyModel.data_annualPVGeneration_kW;
 mainArea.v_dataElectricityStorageProductionYear_kW = energyModel.data_annualBatteriesSupply_kW;
 mainArea.v_dataElectricityV2GProductionYear_kW = energyModel.data_annualV2GSupply_kW;
+mainArea.v_dataElectricityCHPProductionYear_kW = energyModel.data_annualCHPElectricityProduction_kW;
 
 //Datasets for netloaddurationcurves
 mainArea.v_dataNetbelastingDuurkrommeYear_kW = energyModel.data_netbelastingDuurkromme_kW;
@@ -2946,6 +2962,7 @@ area.v_dataPVElectricityProductionLiveWeek_kW = energyModel.data_PVGeneration_kW
 area.v_dataStorageElectricityProductionLiveWeek_kW = energyModel.data_batteryDischarging_kW;
 area.v_dataV2GElectricityProductionLiveWeek_kW = energyModel.data_V2GSupply_kW;
 //area.v_dataHydrogenSupplyLiveWeek_kW = energyModel.data_hydrogenSupply_kW;
+area.v_dataCHPElectricityProductionLiveWeek_kW = energyModel.data_CHPElectricityProductionLiveWeek_kW;
 
 //Total
 area.v_dataNetLoadLiveWeek_kW = energyModel.data_totalGridLoad_kW;
@@ -2970,9 +2987,9 @@ area.v_dataElectricityWindProductionSummerWeek_kW = energyModel.data_summerWeekW
 area.v_dataElectricityPVProductionSummerWeek_kW = energyModel.data_summerWeekPVGeneration_kW;
 area.v_dataElectricityStorageProductionSummerWeek_kW = energyModel.data_summerWeekBatteriesSupply_kW;
 area.v_dataElectricityV2GProductionSummerWeek_kW = energyModel.data_summerWeekV2GSupply_kW;
+area.v_dataElectricityCHPProductionSummerWeek_kW = energyModel.data_summerWeekCHPElectricityProduction_kW;
 
-//District heating
-
+//Net load
 area.v_dataNetLoadSummerWeek_kW = energyModel.data_summerWeekNetLoad_kW;
 area.v_dataElectricityDeliveryCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek, energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 area.v_dataElectricityDeliveryCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek + 7*24, energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
@@ -2994,8 +3011,9 @@ area.v_dataElectricityWindProductionWinterWeek_kW = energyModel.data_winterWeekW
 area.v_dataElectricityPVProductionWinterWeek_kW = energyModel.data_winterWeekPVGeneration_kW;
 area.v_dataElectricityStorageProductionWinterWeek_kW = energyModel.data_winterWeekBatteriesSupply_kW;
 area.v_dataElectricityV2GProductionWinterWeek_kW = energyModel.data_winterWeekV2GSupply_kW;
+area.v_dataElectricityCHPProductionWinterWeek_kW = energyModel.data_winterWeekCHPElectricityProduction_kW;
 
-//District heating
+//Netload
 area.v_dataNetLoadWinterWeek_kW = energyModel.data_winterWeekNetLoad_kW;
 area.v_dataElectricityDeliveryCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek, energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 area.v_dataElectricityDeliveryCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek + 7*24, energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
@@ -3018,9 +3036,7 @@ area.v_dataElectricityWindProductionYear_kW = energyModel.data_annualWindGenerat
 area.v_dataElectricityPVProductionYear_kW = energyModel.data_annualPVGeneration_kW;
 area.v_dataElectricityStorageProductionYear_kW = energyModel.data_annualBatteriesSupply_kW;
 area.v_dataElectricityV2GProductionYear_kW = energyModel.data_annualV2GSupply_kW;
-
-//District heating
-
+area.v_dataElectricityCHPProductionYear_kW = energyModel.data_annualCHPElectricityProduction_kW;
 
 // Data for gespreksleidraad1
 area.v_dataNetLoadYear_kW = energyModel.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries();
@@ -3150,6 +3166,9 @@ area.v_weekendElectricityConsumed_MWh = energyModel.v_weekendElectricityConsumed
 area.v_weekendElectricitySelfConsumed_MWh = energyModel.v_weekendElectricitySelfConsumed_MWh;
 
 ////Gespreksleidraad Additions
+
+//Final energy consumption dataset year
+area.data_dailyAverageFinalEnergyConsumption_kW = energyModel.data_totalFinalEnergyConsumption_kW;
 
 //Subdivision of heating assets
 area.v_totalElectricityConsumptionHeatpumps_MWh = energyModel.v_totalElectricityConsumptionHeatpumps_MWh;
@@ -3401,8 +3420,10 @@ area.v_weekendElectricitySelfConsumed_MWh = EC.v_weekendElectricitySelfConsumed_
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[b_resultsUpToDate = false;
 gr_simulateYearScreenSmall.setVisible(true);
+
+f_updateActiveAssetBooleans();
 runSimulation();
-//pie_selfsufficiency.setVisible(false);]]></Body>
+]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -4173,6 +4194,7 @@ f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConne
 					</Parameter>
 					<Body><![CDATA[//Update to new variables
 f_updateVariablesOfGCData(area, gcList);
+f_updateActiveAssetBooleansGC(area, gcList);
 f_updateLiveDataSets(area, gcList);
 f_updateYearlyGCData(area, gcList);
 f_updateWeeklyGCData(area, gcList);
@@ -4217,6 +4239,7 @@ if( area.v_dataElectricityBaseloadConsumptionYear_kW != null ){
 	area.v_dataElectricityStorageProductionYear_kW.reset();
 	area.v_dataElectricityV2GProductionYear_kW.reset();
 	//area.v_dataHydrogenSupplyYear_kW.reset();
+	area.v_dataElectricityCHPProductionYear_kW.reset();
 }
 else{
 	area.v_dataElectricityBaseloadConsumptionYear_kW = new DataSet(365);
@@ -4232,6 +4255,7 @@ else{
 	area.v_dataElectricityStorageProductionYear_kW = new DataSet(365);
 	area.v_dataElectricityV2GProductionYear_kW = new DataSet(365);
 	//area.v_dataHydrogenSupplyYear_kW= new DataSet(365);
+	area.v_dataElectricityCHPProductionYear_kW = new DataSet(365);
 }
 
 area.dsm_dailyAverageConsumptionDataSets_kW.createEmptyDataSets(activeEnergyCarriers, 365);
@@ -4258,6 +4282,7 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 	double electricityStorageSupplyYear_kW = 0;
 	double electricityV2GSupplyYear_kW = 0;
 	//double hydrogenSupplyYear_kW = 0;
+	double electricityCHPSupplyYear_kW = 0;
 	
 	//accumulate values over gridcongestion
 	for (GridConnection gc : gcList){
@@ -4293,6 +4318,7 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 		electricityWindSupplyYear_kW += gc.data_annualWindGeneration_kW.getY(i);
 		electricityStorageSupplyYear_kW += gc.data_annualBatteriesSupply_kW.getY(i);
 		electricityV2GSupplyYear_kW += gc.data_annualV2GSupply_kW.getY(i);
+		electricityCHPSupplyYear_kW += gc.data_annualCHPElectricitySupply_kW.getY(i);
 		/*
 		if ( gc.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 			hydrogenSupplyYear_kW += gc.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
@@ -4315,6 +4341,7 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 	area.v_dataElectricityStorageProductionYear_kW.add(timeAxisValue, electricityStorageSupplyYear_kW);
 	area.v_dataElectricityV2GProductionYear_kW.add(timeAxisValue, electricityV2GSupplyYear_kW);
 	//area.v_dataHydrogenSupplyYear_kW.add(timeAxisValue, hydrogenSupplyYear_kW);
+	area.v_dataElectricityCHPProductionYear_kW.add(timeAxisValue, electricityCHPSupplyYear_kW);
 	
 	for (OL_EnergyCarriers EC : activeEnergyCarriers) {
 		area.dsm_dailyAverageConsumptionDataSets_kW.get(EC).add(timeAxisValue, fm_dailyAverageDemand_kW.get(EC) );
@@ -4360,6 +4387,7 @@ if( area.v_dataElectricityBaseloadConsumptionSummerWeek_kW != null ){
 	area.v_dataElectricityStorageProductionSummerWeek_kW.reset();
 	area.v_dataElectricityV2GProductionSummerWeek_kW.reset();
 	//area.v_dataHydrogenSupplySummerWeek_kW.reset();
+	area.v_dataElectricityCHPProductionSummerWeek_kW.reset();
 	
 	area.v_dataElectricityBaseloadConsumptionWinterWeek_kW.reset();
 	area.v_dataElectricityForHeatConsumptionWinterWeek_kW.reset();
@@ -4373,6 +4401,7 @@ if( area.v_dataElectricityBaseloadConsumptionSummerWeek_kW != null ){
 	area.v_dataElectricityStorageProductionWinterWeek_kW.reset();
 	area.v_dataElectricityV2GProductionWinterWeek_kW.reset();
 	//area.v_dataHydrogenSupplyWinterWeek_kW.reset();
+	area.v_dataElectricityCHPProductionWinterWeek_kW.reset();
 	
 	area.v_dataNetLoadSummerWeek_kW.reset();
 	area.v_dataNetLoadWinterWeek_kW.reset();
@@ -4395,6 +4424,7 @@ else {
 	area.v_dataElectricityStorageProductionSummerWeek_kW = new DataSet(672);
 	area.v_dataElectricityV2GProductionSummerWeek_kW = new DataSet(672);
 	//area.v_dataHydrogenSupplySummerWeek_kW = new DataSet(672);
+	area.v_dataElectricityCHPProductionSummerWeek_kW = new DataSet(672);
 	
 	area.v_dataElectricityBaseloadConsumptionWinterWeek_kW = new DataSet(672);
 	area.v_dataElectricityForHeatConsumptionWinterWeek_kW = new DataSet(672);
@@ -4408,6 +4438,7 @@ else {
 	area.v_dataElectricityStorageProductionWinterWeek_kW = new DataSet(672);
 	area.v_dataElectricityV2GProductionWinterWeek_kW = new DataSet(672);
 	//area.v_dataHydrogenSupplyWinterWeek_kW = new DataSet(672);
+	area.v_dataElectricityCHPProductionWinterWeek_kW = new DataSet(672);
 	
 	area.v_dataNetLoadSummerWeek_kW = new DataSet(672);
 	area.v_dataNetLoadWinterWeek_kW = new DataSet(672);
@@ -4448,6 +4479,7 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 	double electricityWindSupplySummerWeek_kW = 0;
 	double electricityStorageSupplySummerWeek_kW = 0;
 	double electricityV2GSupplySummerWeek_kW = 0;
+	double electricityCHPSupplySummerWeek_kW = 0;
 	//double hydrogenSupplySummerWeek_kW = 0;
 	
 	double electricityBaseloadDemandWinterWeek_kW = 0;
@@ -4462,6 +4494,7 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 	double electricityStorageSupplyWinterWeek_kW = 0;
 	double electricityV2GSupplyWinterWeek_kW = 0;
 	//double hydrogenSupplyWinterWeek_kW = 0;
+	double electricityCHPSupplyWinterWeek_kW = 0;
 	
 	double netLoadSummerWeek_kW = 0;
 	double netLoadWinterWeek_kW = 0;
@@ -4501,6 +4534,8 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 		electricityWindSupplySummerWeek_kW += gc.data_summerWeekWindGeneration_kW.getY(i);
 		electricityStorageSupplySummerWeek_kW += gc.data_summerWeekBatteriesSupply_kW.getY(i);
 		electricityV2GSupplySummerWeek_kW += gc.data_summerWeekV2GSupply_kW.getY(i);
+		electricityCHPSupplySummerWeek_kW += gc.data_summerWeekCHPElectricityProduction_kW.getY(i);
+		
 		if (gc instanceof GCEnergyConversion) {
 			//if (((GCEnergyConversion)gc).data_summerWeekElectrolyserDemand_kW.getXMin() < i) {
 				electricityForHydrogenDemandSummerWeek_kW += ((GCEnergyConversion)gc).data_summerWeekElectrolyserDemand_kW.getY(i);
@@ -4535,7 +4570,7 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 		electricityWindSupplyWinterWeek_kW += gc.data_winterWeekWindGeneration_kW.getY(i);
 		electricityStorageSupplyWinterWeek_kW += gc.data_winterWeekBatteriesSupply_kW.getY(i);
 		electricityV2GSupplyWinterWeek_kW += gc.data_winterWeekV2GSupply_kW.getY(i);
-		
+		electricityCHPSupplyWinterWeek_kW += gc.data_winterWeekCHPElectricityProduction_kW.getY(i);
 		/*
 		if ( gc.v_winterWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 			hydrogenSupplyWinterWeek_kW += gc.v_winterWeekSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
@@ -4561,6 +4596,8 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 	area.v_dataElectricityWindProductionSummerWeek_kW.add(timeAxisValueSummer, electricityWindSupplySummerWeek_kW);
 	area.v_dataElectricityStorageProductionSummerWeek_kW.add(timeAxisValueSummer, electricityStorageSupplySummerWeek_kW);
 	area.v_dataElectricityV2GProductionSummerWeek_kW.add(timeAxisValueSummer, electricityV2GSupplySummerWeek_kW);
+	area.v_dataElectricityCHPProductionSummerWeek_kW.add(timeAxisValueSummer, electricityCHPSupplySummerWeek_kW);
+	
 	//area.v_dataHydrogenSupplySummerWeek_kW.add(timeAxisValueSummer, hydrogenSupplySummerWeek_kW);
 	
 	area.v_dataNetLoadSummerWeek_kW.add(timeAxisValueSummer, netLoadSummerWeek_kW);
@@ -4579,7 +4616,8 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 	area.v_dataElectricityStorageProductionWinterWeek_kW.add(timeAxisValueWinter, electricityStorageSupplyWinterWeek_kW);
 	area.v_dataElectricityV2GProductionWinterWeek_kW.add(timeAxisValueWinter, electricityV2GSupplyWinterWeek_kW);
 	//area.v_dataHydrogenSupplyWinterWeek_kW.add(timeAxisValueWinter, hydrogenSupplyWinterWeek_kW);	
-
+	area.v_dataElectricityCHPProductionWinterWeek_kW.add(timeAxisValueWinter, electricityCHPSupplyWinterWeek_kW);
+	
 	area.v_dataNetLoadWinterWeek_kW.add(timeAxisValueWinter, netLoadWinterWeek_kW);
 	area.v_dataElectricityDeliveryCapacityWinterWeek_kW.add(timeAxisValueWinter, electricityDemandCapacityWinterWeek_kW);
 	area.v_dataElectricityFeedInCapacityWinterWeek_kW.add(timeAxisValueWinter, electricitySupplyCapacityWinterWeek_kW);
@@ -4591,168 +4629,6 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 		area.dsm_winterWeekProductionDataSets_kW.get(EC).add(timeAxisValueWinter, supplyWinterWeek_kW.get(EC));
 	}
 }]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1720820777814</Id>
-					<Name><![CDATA[f_updateLiveDataSets]]></Name>
-					<X>-620</X><Y>750</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[area]]></Name>
-						<Type><![CDATA[AreaCollection]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[gcList]]></Name>
-						<Type><![CDATA[ArrayList<GridConnection>]]></Type>
-					</Parameter>
-					<Body><![CDATA[//ArrayList<GridConnection> gcList = c_gcList;
-EnumSet<OL_EnergyCarriers> activeEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class);
-for (GridConnection gc : gcList) {
-	activeEnergyCarriers.addAll(gc.v_activeEnergyCarriers);
-}
-
-int liveWeekSize = gcList.get(0).data_gridCapacityDemand_kW.size();
-
-//traceln("List of selected gridconnections " + gcList.toString());
-
-//reset the datasets (is this required)?
-if( area.v_dataElectricityDeliveryCapacityLiveWeek_kW != null ){
-	// Demand
-	area.dsm_liveConsumption_kW.createEmptyDataSets(energyModel.v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
-
-	area.v_dataElectricityDeliveryCapacityLiveWeek_kW.reset();		
-	area.v_dataElectricityFeedInCapacityLiveWeek_kW.reset();
-	area.v_dataNetLoadLiveWeek_kW.reset();
-	
-	area.v_dataElectricityBaseloadConsumptionLiveWeek_kW.reset();
-	area.v_dataElectricityForHeatConsumptionLiveWeek_kW.reset();
-	area.v_dataElectricityForTransportConsumptionLiveWeek_kW.reset();
-	//area.v_dataPetroleumProductsDemandLiveWeek_kW.reset();
-	//area.v_dataNaturalGasDemandLiveWeek_kW.reset();
-	area.v_dataElectricityForStorageConsumptionLiveWeek_kW.reset();
-	area.v_dataElectricityForHydrogenConsumptionLiveWeek_kW.reset();
-	
-	// Supply
-	area.dsm_liveProduction_kW.createEmptyDataSets(energyModel.v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
-
-	area.v_dataWindElectricityProductionLiveWeek_kW.reset();
-	area.v_dataPVElectricityProductionLiveWeek_kW.reset();
-	area.v_dataStorageElectricityProductionLiveWeek_kW.reset();
-	area.v_dataV2GElectricityProductionLiveWeek_kW.reset();
-	//area.v_dataHydrogenSupplyLiveWeek_kW.reset();
-}
-else {
-	// Demand
-	area.dsm_liveConsumption_kW.createEmptyDataSets(energyModel.v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
-	
-	area.v_dataElectricityDeliveryCapacityLiveWeek_kW = new DataSet(672);
-	area.v_dataElectricityFeedInCapacityLiveWeek_kW = new DataSet(672);
-	area.v_dataNetLoadLiveWeek_kW = new DataSet(672);
-	
-	area.v_dataElectricityBaseloadConsumptionLiveWeek_kW = new DataSet(672);
-	area.v_dataElectricityForHeatConsumptionLiveWeek_kW = new DataSet(672);
-	area.v_dataElectricityForTransportConsumptionLiveWeek_kW = new DataSet(672);
-	//area.v_dataPetroleumProductsDemandLiveWeek_kW = new DataSet(672);
-	//area.v_dataNaturalGasDemandLiveWeek_kW = new DataSet(672);
-	area.v_dataElectricityForStorageConsumptionLiveWeek_kW = new DataSet(672);
-	area.v_dataElectricityForHydrogenConsumptionLiveWeek_kW = new DataSet(672);
-	
-	// Supply
-	area.dsm_liveProduction_kW.createEmptyDataSets(energyModel.v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
-
-	area.v_dataWindElectricityProductionLiveWeek_kW = new DataSet(672);
-	area.v_dataPVElectricityProductionLiveWeek_kW = new DataSet(672);
-	area.v_dataStorageElectricityProductionLiveWeek_kW = new DataSet(672);
-	area.v_dataV2GElectricityProductionLiveWeek_kW = new DataSet(672);
-	//area.v_dataHydrogenSupplyLiveWeek_kW = new DataSet(672);
-	}
-
-for (int i=0; i < liveWeekSize; i++){ //we go back to update the existing live week data
-	
-	double timeAxisValue = gcList.get(0).data_gridCapacityDemand_kW.getX(i); // we get the X value from a random dataset 
-	
-	// Demand
-	J_FlowsMap fm_demand_kW = new J_FlowsMap();
-	
-	double electricityDemandCapacityLiveWeek_kW = 0;
-	double electricitySupplyCapacityLiveWeek_kW = 0;
-	double netLoadLiveWeek_kW = 0;
-	
-	double baseloadElectricityDemandLiveWeek_kW = 0;
-	double electricityForHeatDemandLiveWeek_kW = 0;
-	double electricityForTransportDemandLiveWeek_kW = 0;
-	double petroleumProductsDemandLiveWeek_kW = 0;
-	double naturalGasDemandLiveWeek_kW = 0;
-	double electricityForStorageDemandLiveWeek_kW = 0;
-	double electricityForHydrogenDemandLiveWeek_kW = 0;
-	
-	
-	// Supply
-	J_FlowsMap fm_supply_kW = new J_FlowsMap();
-
-	double windElectricitySupplyLiveWeek_kW = 0;
-	double PVElectricitySupplyLiveWeek_kW = 0;
-	double storageElectricitySupplyLiveWeek_kW = 0;
-	double V2GElectricitySupplyLiveWeek_kW = 0;
-	double hydrogenSupplyLiveWeek_kW = 0;
-	
-	
-	for (GridConnection gc : gcList){
-		// Demand
-		for (OL_EnergyCarriers EC : gc.v_activeEnergyCarriers) {
-			fm_demand_kW.addFlow( EC, gc.dsm_liveDemand_kW.get(EC).getY(i));
-			fm_supply_kW.addFlow( EC, gc.dsm_liveSupply_kW.get(EC).getY(i));
-		}
-		
-		electricityDemandCapacityLiveWeek_kW += gc.data_gridCapacityDemand_kW.getY(i);
-		electricitySupplyCapacityLiveWeek_kW += gc.data_gridCapacitySupply_kW.getY(i);
-		netLoadLiveWeek_kW  += gc.data_liveElectricityBalance_kW.getY(i);
-	
-		baseloadElectricityDemandLiveWeek_kW  += gc.data_baseloadElectricityDemand_kW.getY(i);
-		electricityForHeatDemandLiveWeek_kW  += gc.data_heatPumpElectricityDemand_kW.getY(i);
-		electricityForTransportDemandLiveWeek_kW += gc.data_electricVehicleDemand_kW.getY(i);
-		//petroleumProductsDemandLiveWeek_kW  += gc.data_dieselDemand_kW.getY(i);
-		//naturalGasDemandLiveWeek_kW  += gc.data_naturalGasDemand_kW.getY(i);
-		electricityForStorageDemandLiveWeek_kW  += gc.data_batteryCharging_kW.getY(i);
-		electricityForHydrogenDemandLiveWeek_kW  += gc.data_hydrogenElectricityDemand_kW.getY(i);
-		
-		// Supply
-		windElectricitySupplyLiveWeek_kW  += gc.data_windGeneration_kW.getY(i);
-		PVElectricitySupplyLiveWeek_kW  += gc.data_PVGeneration_kW.getY(i);
-		storageElectricitySupplyLiveWeek_kW  += gc.data_batteryDischarging_kW.getY(i);
-		V2GElectricitySupplyLiveWeek_kW  += gc.data_V2GSupply_kW.getY(i);
-		//hydrogenSupplyLiveWeek_kW  += gc.data_hydrogenSupply_kW.getY(i);	
-	}
-	
-	for (OL_EnergyCarriers EC : energyModel.v_activeEnergyCarriers) {	
-		area.dsm_liveConsumption_kW.get(EC).add(timeAxisValue, fm_demand_kW.get(EC));
-		area.dsm_liveProduction_kW.get(EC).add(timeAxisValue, fm_supply_kW.get(EC));	
-	}
-	area.v_dataElectricityDeliveryCapacityLiveWeek_kW.add(timeAxisValue, electricityDemandCapacityLiveWeek_kW);
-	area.v_dataElectricityFeedInCapacityLiveWeek_kW.add(timeAxisValue, electricitySupplyCapacityLiveWeek_kW);
-	area.v_dataNetLoadLiveWeek_kW.add(timeAxisValue, netLoadLiveWeek_kW);
-	
-	area.v_dataElectricityBaseloadConsumptionLiveWeek_kW.add(timeAxisValue, baseloadElectricityDemandLiveWeek_kW);
-	area.v_dataElectricityForHeatConsumptionLiveWeek_kW.add(timeAxisValue, electricityForHeatDemandLiveWeek_kW);
-	area.v_dataElectricityForTransportConsumptionLiveWeek_kW.add(timeAxisValue, electricityForTransportDemandLiveWeek_kW);
-	//area.v_dataPetroleumProductsDemandLiveWeek_kW.add(timeAxisValue, petroleumProductsDemandLiveWeek_kW);
-	//area.v_dataNaturalGasDemandLiveWeek_kW.add(timeAxisValue, naturalGasDemandLiveWeek_kW);
-	area.v_dataElectricityForStorageConsumptionLiveWeek_kW.add(timeAxisValue, electricityForStorageDemandLiveWeek_kW);
-	area.v_dataElectricityForHydrogenConsumptionLiveWeek_kW.add(timeAxisValue, electricityForHydrogenDemandLiveWeek_kW);
-	
-	// Supply
-	area.v_dataWindElectricityProductionLiveWeek_kW.add(timeAxisValue, windElectricitySupplyLiveWeek_kW);
-	area.v_dataPVElectricityProductionLiveWeek_kW.add(timeAxisValue, PVElectricitySupplyLiveWeek_kW);
-	area.v_dataStorageElectricityProductionLiveWeek_kW.add(timeAxisValue, storageElectricitySupplyLiveWeek_kW);
-	area.v_dataV2GElectricityProductionLiveWeek_kW.add(timeAxisValue, V2GElectricitySupplyLiveWeek_kW);
-	//area.v_dataHydrogenSupplyLiveWeek_kW.add(timeAxisValue, hydrogenSupplyLiveWeek_kW);
-}
-]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -5004,110 +4880,6 @@ else {
 	uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
 }
 uI_Results.f_showCorrectChart();]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1721305389703</Id>
-					<Name><![CDATA[f_addTimeStepLiveDataSets]]></Name>
-					<X>-620</X><Y>830</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[area]]></Name>
-						<Type><![CDATA[AreaCollection]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[gcList]]></Name>
-						<Type><![CDATA[ArrayList<GridConnection>]]></Type>
-					</Parameter>
-					<Body><![CDATA[//AreaCollection area = uI_Results.v_gridConnection;
-EnumSet<OL_EnergyCarriers> activeEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class);
-for (GridConnection gc : gcList) {
-	activeEnergyCarriers.addAll(gc.v_activeEnergyCarriers);
-}
-
-int i = max(0, gcList.get(0).data_gridCapacityDemand_kW.size() - 1);
-	
-double timeAxisValue = gcList.get(0).data_gridCapacityDemand_kW.getX(i); // we get the X value from a random dataset 
-
-// Demand
-J_FlowsMap fm_demand_kW = new J_FlowsMap();
-double electricityDemandCapacityLiveWeek_kW = 0;
-double electricitySupplyCapacityLiveWeek_kW = 0;
-double netLoadLiveWeek_kW = 0;
-
-double baseloadElectricityDemandLiveWeek_kW = 0;
-double electricityForHeatDemandLiveWeek_kW = 0;
-double electricityForTransportDemandLiveWeek_kW = 0;
-//double petroleumProductsDemandLiveWeek_kW = 0;
-//double naturalGasDemandLiveWeek_kW = 0;
-double electricityForStorageDemandLiveWeek_kW = 0;
-double electricityForHydrogenDemandLiveWeek_kW = 0;
-
-// Supply
-J_FlowsMap fm_supply_kW = new J_FlowsMap();
-double windElectricitySupplyLiveWeek_kW = 0;
-double PVElectricitySupplyLiveWeek_kW = 0;
-double storageElectricitySupplyLiveWeek_kW = 0;
-double V2GElectricitySupplyLiveWeek_kW = 0;
-//double hydrogenSupplyLiveWeek_kW = 0;
-
-for (GridConnection gc : gcList){
-	
-	for (OL_EnergyCarriers EC : gc.v_activeEnergyCarriers) {
-		fm_demand_kW.addFlow( EC, gc.dsm_liveDemand_kW.get(EC).getY(i));
-		fm_supply_kW.addFlow( EC, gc.dsm_liveSupply_kW.get(EC).getY(i));
-	}
-	
-	// Demand
-	electricityDemandCapacityLiveWeek_kW += gc.data_gridCapacityDemand_kW.getY(i);
-	electricitySupplyCapacityLiveWeek_kW += gc.data_gridCapacitySupply_kW.getY(i);
-	netLoadLiveWeek_kW  += gc.data_liveElectricityBalance_kW.getY(i);
-
-	baseloadElectricityDemandLiveWeek_kW  += gc.data_baseloadElectricityDemand_kW.getY(i);
-	electricityForHeatDemandLiveWeek_kW  += gc.data_heatPumpElectricityDemand_kW.getY(i);
-	electricityForTransportDemandLiveWeek_kW += gc.data_electricVehicleDemand_kW.getY(i);
-	//petroleumProductsDemandLiveWeek_kW  += gc.data_dieselDemand_kW.getY(i);
-	//naturalGasDemandLiveWeek_kW  += gc.data_naturalGasDemand_kW.getY(i);
-	electricityForStorageDemandLiveWeek_kW  += gc.data_batteryCharging_kW.getY(i);
-	electricityForHydrogenDemandLiveWeek_kW  += gc.data_hydrogenElectricityDemand_kW.getY(i);
-	
-	// Supply
-	windElectricitySupplyLiveWeek_kW  += gc.data_windGeneration_kW.getY(i);
-	PVElectricitySupplyLiveWeek_kW  += gc.data_PVGeneration_kW.getY(i);
-	storageElectricitySupplyLiveWeek_kW  += gc.data_batteryDischarging_kW.getY(i);
-	V2GElectricitySupplyLiveWeek_kW  += gc.data_V2GSupply_kW.getY(i);
-	//hydrogenSupplyLiveWeek_kW  += gc.data_hydrogenSupply_kW.getY(i);	
-}
-
-for (OL_EnergyCarriers EC : activeEnergyCarriers) {	
-	area.dsm_liveConsumption_kW.get(EC).add(timeAxisValue, fm_demand_kW.get(EC));
-	area.dsm_liveProduction_kW.get(EC).add(timeAxisValue, fm_supply_kW.get(EC));	
-}
-
-area.v_dataElectricityDeliveryCapacityLiveWeek_kW.add(timeAxisValue, electricityDemandCapacityLiveWeek_kW);
-area.v_dataElectricityFeedInCapacityLiveWeek_kW.add(timeAxisValue, electricitySupplyCapacityLiveWeek_kW);
-area.v_dataNetLoadLiveWeek_kW.add(timeAxisValue, netLoadLiveWeek_kW);
-
-area.v_dataElectricityBaseloadConsumptionLiveWeek_kW.add(timeAxisValue, baseloadElectricityDemandLiveWeek_kW);
-area.v_dataElectricityForHeatConsumptionLiveWeek_kW.add(timeAxisValue, electricityForHeatDemandLiveWeek_kW);
-area.v_dataElectricityForTransportConsumptionLiveWeek_kW.add(timeAxisValue, electricityForTransportDemandLiveWeek_kW);
-//area.v_dataPetroleumProductsDemandLiveWeek_kW.add(timeAxisValue, petroleumProductsDemandLiveWeek_kW);
-//area.v_dataNaturalGasDemandLiveWeek_kW.add(timeAxisValue, naturalGasDemandLiveWeek_kW);
-area.v_dataElectricityForStorageConsumptionLiveWeek_kW.add(timeAxisValue, electricityForStorageDemandLiveWeek_kW);
-area.v_dataElectricityForHydrogenConsumptionLiveWeek_kW.add(timeAxisValue, electricityForHydrogenDemandLiveWeek_kW);
-
-// Supply
-area.v_dataWindElectricityProductionLiveWeek_kW.add(timeAxisValue, windElectricitySupplyLiveWeek_kW);
-area.v_dataPVElectricityProductionLiveWeek_kW.add(timeAxisValue, PVElectricitySupplyLiveWeek_kW);
-area.v_dataStorageElectricityProductionLiveWeek_kW.add(timeAxisValue, storageElectricitySupplyLiveWeek_kW);
-area.v_dataV2GElectricityProductionLiveWeek_kW.add(timeAxisValue, V2GElectricitySupplyLiveWeek_kW);
-//area.v_dataHydrogenSupplyLiveWeek_kW.add(timeAxisValue, hydrogenSupplyLiveWeek_kW);
-
-]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -5580,7 +5352,7 @@ for (int j = 0; j < c_selectedGridConnections.size(); j++) {
 					<Id>1725442474483</Id>
 					<Name><![CDATA[f_updateTotalYearlyDataSets]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-645</X><Y>890</Y>
+					<X>-990</X><Y>870</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5621,7 +5393,7 @@ for (int j = 0; j < c_selectedGridConnections.size(); j++) {
 					<Id>1725442517475</Id>
 					<Name><![CDATA[f_updateTotalWeeklyDataSets]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-645</X><Y>910</Y>
+					<X>-1000</X><Y>900</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5824,6 +5596,14 @@ area.v_activeProductionEnergyCarriers = activeProductionEnergyCarriers;
 area.v_activeConsumptionEnergyCarriers = activeConsumptionEnergyCarriers;
 
 
+//Set boolean if it has connection with heatgrid
+boolean hasHeatGridConnection = false;
+for (GridConnection gc : gcList) {
+	if(gc.l_parentNodeHeat != null){
+		area.b_hasHeatGridConnection = true;
+	}
+}
+
 // Can't use pointer for (immutable) primitives in Java, so need to manually update results after a year-sim!!
 area.v_gridCapacityDelivery_kW = sum(gcList, x -> x.p_contractedDeliveryCapacity_kW);
 area.v_gridCapacityFeedIn_kW = sum(gcList, x -> x.p_contractedFeedinCapacity_kW);
@@ -5832,9 +5612,11 @@ boolean isRealFeedinCapacityAvailable = true;
 for(GridConnection GC : gcList){
 	if(!GC.b_isRealDeliveryCapacityAvailable){
 		isRealDeliveryCapacityAvailable = false;
+		break;
 	}
 	if(!GC.b_isRealFeedinCapacityAvailable){
 		isRealFeedinCapacityAvailable = false;
+		break;
 	}
 }
 area.b_isRealDeliveryCapacityAvailable = isRealDeliveryCapacityAvailable;
@@ -5987,6 +5769,416 @@ area.v_weekendElectricityProduced_MWh = sum(gcList, x -> x.v_weekendElectricityP
 area.v_weekendElectricityConsumed_MWh = sum(gcList, x -> x.v_weekendElectricityConsumed_MWh);
 area.v_weekendElectricitySelfConsumed_MWh = sum(gcList, x -> x.v_weekendElectricitySelfConsumed_MWh);
 ]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1733857321674</Id>
+					<Name><![CDATA[f_updateLiveDataSets]]></Name>
+					<X>-620</X><Y>750</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[area]]></Name>
+						<Type><![CDATA[AreaCollection]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[gcList]]></Name>
+						<Type><![CDATA[ArrayList<GridConnection>]]></Type>
+					</Parameter>
+					<Body><![CDATA[EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class);
+EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class);
+
+for (GridConnection gc : gcList) {	
+	activeConsumptionEnergyCarriers.addAll(gc.v_activeConsumptionEnergyCarriers);
+	activeProductionEnergyCarriers.addAll(gc.v_activeProductionEnergyCarriers);
+}
+
+int liveWeekSize = gcList.get(0).data_gridCapacityDemand_kW.size();
+
+//traceln("List of selected gridconnections " + gcList.toString());
+
+//reset the datasets (is this required)?
+if( area.v_dataElectricityDeliveryCapacityLiveWeek_kW != null ){
+	// Demand
+	area.dsm_liveConsumption_kW.createEmptyDataSets(energyModel.v_activeConsumptionEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
+
+	area.v_dataElectricityDeliveryCapacityLiveWeek_kW.reset();		
+	area.v_dataElectricityFeedInCapacityLiveWeek_kW.reset();
+	area.v_dataNetLoadLiveWeek_kW.reset();
+	
+	area.v_dataElectricityBaseloadConsumptionLiveWeek_kW.reset();
+	area.v_dataElectricityForHeatConsumptionLiveWeek_kW.reset();
+	area.v_dataElectricityForTransportConsumptionLiveWeek_kW.reset();
+	area.v_dataElectricityForStorageConsumptionLiveWeek_kW.reset();
+	area.v_dataElectricityForHydrogenConsumptionLiveWeek_kW.reset();
+	
+	area.v_dataDistrictHeatConsumptionLiveWeek_kW.reset();
+	
+	// Supply
+	area.dsm_liveProduction_kW.createEmptyDataSets(energyModel.v_activeProductionEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
+
+	area.v_dataWindElectricityProductionLiveWeek_kW.reset();
+	area.v_dataPVElectricityProductionLiveWeek_kW.reset();
+	area.v_dataStorageElectricityProductionLiveWeek_kW.reset();
+	area.v_dataV2GElectricityProductionLiveWeek_kW.reset();
+	area.v_dataCHPElectricityProductionLiveWeek_kW.reset();
+}
+else {
+	// Demand
+	area.dsm_liveConsumption_kW.createEmptyDataSets(energyModel.v_activeConsumptionEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
+	
+	area.v_dataElectricityDeliveryCapacityLiveWeek_kW = new DataSet(672);
+	area.v_dataElectricityFeedInCapacityLiveWeek_kW = new DataSet(672);
+	area.v_dataNetLoadLiveWeek_kW = new DataSet(672);
+	
+	area.v_dataElectricityBaseloadConsumptionLiveWeek_kW = new DataSet(672);
+	area.v_dataElectricityForHeatConsumptionLiveWeek_kW = new DataSet(672);
+	area.v_dataElectricityForTransportConsumptionLiveWeek_kW = new DataSet(672);
+	area.v_dataElectricityForStorageConsumptionLiveWeek_kW = new DataSet(672);
+	area.v_dataElectricityForHydrogenConsumptionLiveWeek_kW = new DataSet(672);
+	
+	area.v_dataDistrictHeatConsumptionLiveWeek_kW = new DataSet(672);
+	
+	// Supply
+	area.dsm_liveProduction_kW.createEmptyDataSets(energyModel.v_activeProductionEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
+
+	area.v_dataWindElectricityProductionLiveWeek_kW = new DataSet(672);
+	area.v_dataPVElectricityProductionLiveWeek_kW = new DataSet(672);
+	area.v_dataStorageElectricityProductionLiveWeek_kW = new DataSet(672);
+	area.v_dataV2GElectricityProductionLiveWeek_kW = new DataSet(672);
+	area.v_dataCHPElectricityProductionLiveWeek_kW = new DataSet(672);
+}
+
+for (int i=0; i < liveWeekSize; i++){ //we go back to update the existing live week data
+	
+	double timeAxisValue = gcList.get(0).data_gridCapacityDemand_kW.getX(i); // we get the X value from a random dataset 
+	
+	// Demand
+	J_FlowsMap fm_demand_kW = new J_FlowsMap();
+	
+	double electricityDemandCapacityLiveWeek_kW = 0;
+	double electricitySupplyCapacityLiveWeek_kW = 0;
+	double netLoadLiveWeek_kW = 0;
+	
+	double baseloadElectricityDemandLiveWeek_kW = 0;
+	double electricityForHeatDemandLiveWeek_kW = 0;
+	double electricityForTransportDemandLiveWeek_kW = 0;
+	double petroleumProductsDemandLiveWeek_kW = 0;
+	double naturalGasDemandLiveWeek_kW = 0;
+	double electricityForStorageDemandLiveWeek_kW = 0;
+	double electricityForHydrogenDemandLiveWeek_kW = 0;
+	
+	double districtHeatingDemandLiveWeek_kW = 0;
+	
+	// Supply
+	J_FlowsMap fm_supply_kW = new J_FlowsMap();
+
+	double windElectricitySupplyLiveWeek_kW = 0;
+	double PVElectricitySupplyLiveWeek_kW = 0;
+	double storageElectricitySupplyLiveWeek_kW = 0;
+	double V2GElectricitySupplyLiveWeek_kW = 0;
+	double hydrogenSupplyLiveWeek_kW = 0;
+	double CHPElectricitySupplyLiveWeek_kW = 0;
+	
+	for (GridConnection gc : gcList){
+		for (OL_EnergyCarriers EC_consumption : gc.v_activeConsumptionEnergyCarriers) {
+			fm_demand_kW.addFlow( EC_consumption, gc.dsm_liveDemand_kW.get(EC_consumption).getY(i));
+		}
+		for (OL_EnergyCarriers EC_production : gc.v_activeProductionEnergyCarriers) {
+			fm_supply_kW.addFlow( EC_production, gc.dsm_liveSupply_kW.get(EC_production).getY(i));
+		}
+		
+		electricityDemandCapacityLiveWeek_kW += gc.data_gridCapacityDemand_kW.getY(i);
+		electricitySupplyCapacityLiveWeek_kW += gc.data_gridCapacitySupply_kW.getY(i);
+		netLoadLiveWeek_kW  += gc.data_liveElectricityBalance_kW.getY(i);
+	
+		baseloadElectricityDemandLiveWeek_kW  += gc.data_baseloadElectricityDemand_kW.getY(i);
+		electricityForHeatDemandLiveWeek_kW  += gc.data_heatPumpElectricityDemand_kW.getY(i);
+		electricityForTransportDemandLiveWeek_kW += gc.data_electricVehicleDemand_kW.getY(i);
+		electricityForStorageDemandLiveWeek_kW  += gc.data_batteryCharging_kW.getY(i);
+		electricityForHydrogenDemandLiveWeek_kW  += gc.data_hydrogenElectricityDemand_kW.getY(i);
+		
+		districtHeatingDemandLiveWeek_kW += gc.data_districtHeatDelivery_kW.getY(i);
+		
+		// Supply
+		windElectricitySupplyLiveWeek_kW  += gc.data_windGeneration_kW.getY(i);
+		PVElectricitySupplyLiveWeek_kW  += gc.data_PVGeneration_kW.getY(i);
+		storageElectricitySupplyLiveWeek_kW  += gc.data_batteryDischarging_kW.getY(i);
+		V2GElectricitySupplyLiveWeek_kW  += gc.data_V2GSupply_kW.getY(i);
+		CHPElectricitySupplyLiveWeek_kW  += gc.data_CHPElectricityProductionLiveWeek_kW.getY(i);
+	}
+	
+	for (OL_EnergyCarriers EC_consumption : activeConsumptionEnergyCarriers) {
+		area.dsm_liveConsumption_kW.get(EC_consumption).add(timeAxisValue, fm_demand_kW.get(EC_consumption));
+	}
+	for (OL_EnergyCarriers EC_production : activeProductionEnergyCarriers) {
+		area.dsm_liveProduction_kW.get(EC_production).add(timeAxisValue, fm_supply_kW.get(EC_production));
+	}
+	
+		
+	area.v_dataElectricityDeliveryCapacityLiveWeek_kW.add(timeAxisValue, electricityDemandCapacityLiveWeek_kW);
+	area.v_dataElectricityFeedInCapacityLiveWeek_kW.add(timeAxisValue, electricitySupplyCapacityLiveWeek_kW);
+	area.v_dataNetLoadLiveWeek_kW.add(timeAxisValue, netLoadLiveWeek_kW);
+	
+	area.v_dataElectricityBaseloadConsumptionLiveWeek_kW.add(timeAxisValue, baseloadElectricityDemandLiveWeek_kW);
+	area.v_dataElectricityForHeatConsumptionLiveWeek_kW.add(timeAxisValue, electricityForHeatDemandLiveWeek_kW);
+	area.v_dataElectricityForTransportConsumptionLiveWeek_kW.add(timeAxisValue, electricityForTransportDemandLiveWeek_kW);
+	area.v_dataElectricityForStorageConsumptionLiveWeek_kW.add(timeAxisValue, electricityForStorageDemandLiveWeek_kW);
+	area.v_dataElectricityForHydrogenConsumptionLiveWeek_kW.add(timeAxisValue, electricityForHydrogenDemandLiveWeek_kW);
+	
+	area.v_dataDistrictHeatConsumptionLiveWeek_kW.add(timeAxisValue, districtHeatingDemandLiveWeek_kW);
+	
+	// Supply
+	area.v_dataWindElectricityProductionLiveWeek_kW.add(timeAxisValue, windElectricitySupplyLiveWeek_kW);
+	area.v_dataPVElectricityProductionLiveWeek_kW.add(timeAxisValue, PVElectricitySupplyLiveWeek_kW);
+	area.v_dataStorageElectricityProductionLiveWeek_kW.add(timeAxisValue, storageElectricitySupplyLiveWeek_kW);
+	area.v_dataV2GElectricityProductionLiveWeek_kW.add(timeAxisValue, V2GElectricitySupplyLiveWeek_kW);
+	area.v_dataCHPElectricityProductionLiveWeek_kW.add(timeAxisValue, CHPElectricitySupplyLiveWeek_kW);	
+}
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1733857328199</Id>
+					<Name><![CDATA[f_addTimeStepLiveDataSets]]></Name>
+					<X>-620</X><Y>830</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[area]]></Name>
+						<Type><![CDATA[AreaCollection]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[gcList]]></Name>
+						<Type><![CDATA[ArrayList<GridConnection>]]></Type>
+					</Parameter>
+					<Body><![CDATA[
+EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class);
+EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class);
+
+for (GridConnection gc : gcList) {	
+	activeConsumptionEnergyCarriers.addAll(gc.v_activeConsumptionEnergyCarriers);
+	activeProductionEnergyCarriers.addAll(gc.v_activeProductionEnergyCarriers);
+}
+
+
+int i = max(0, gcList.get(0).data_gridCapacityDemand_kW.size() - 1);
+	
+double timeAxisValue = gcList.get(0).data_gridCapacityDemand_kW.getX(i); // we get the X value from a random dataset 
+
+// Demand
+J_FlowsMap fm_demand_kW = new J_FlowsMap();
+double electricityDemandCapacityLiveWeek_kW = 0;
+double electricitySupplyCapacityLiveWeek_kW = 0;
+double netLoadLiveWeek_kW = 0;
+
+double baseloadElectricityDemandLiveWeek_kW = 0;
+double electricityForHeatDemandLiveWeek_kW = 0;
+double electricityForTransportDemandLiveWeek_kW = 0;
+double electricityForStorageDemandLiveWeek_kW = 0;
+double electricityForHydrogenDemandLiveWeek_kW = 0;
+
+double districtHeatingDemandLiveWeek_kW = 0;
+
+// Supply
+J_FlowsMap fm_supply_kW = new J_FlowsMap();
+double windElectricitySupplyLiveWeek_kW = 0;
+double PVElectricitySupplyLiveWeek_kW = 0;
+double storageElectricitySupplyLiveWeek_kW = 0;
+double V2GElectricitySupplyLiveWeek_kW = 0;
+double CHPElectricitySupplyLiveWeek_kW = 0;
+for (GridConnection gc : gcList){
+	
+	for (OL_EnergyCarriers EC_consumption : gc.v_activeConsumptionEnergyCarriers) {
+		fm_demand_kW.addFlow( EC_consumption, gc.dsm_liveDemand_kW.get(EC_consumption).getY(i));
+	}
+	for (OL_EnergyCarriers EC_production : gc.v_activeProductionEnergyCarriers) {
+		fm_supply_kW.addFlow( EC_production, gc.dsm_liveSupply_kW.get(EC_production).getY(i));
+	}
+	
+	// Demand
+	electricityDemandCapacityLiveWeek_kW += gc.data_gridCapacityDemand_kW.getY(i);
+	electricitySupplyCapacityLiveWeek_kW += gc.data_gridCapacitySupply_kW.getY(i);
+	netLoadLiveWeek_kW  += gc.data_liveElectricityBalance_kW.getY(i);
+
+	baseloadElectricityDemandLiveWeek_kW  += gc.data_baseloadElectricityDemand_kW.getY(i);
+	electricityForHeatDemandLiveWeek_kW  += gc.data_heatPumpElectricityDemand_kW.getY(i);
+	electricityForTransportDemandLiveWeek_kW += gc.data_electricVehicleDemand_kW.getY(i);
+	electricityForStorageDemandLiveWeek_kW  += gc.data_batteryCharging_kW.getY(i);
+	electricityForHydrogenDemandLiveWeek_kW  += gc.data_hydrogenElectricityDemand_kW.getY(i);
+	
+	districtHeatingDemandLiveWeek_kW += gc.data_districtHeatDelivery_kW.getY(i);
+	
+	
+	// Supply
+	windElectricitySupplyLiveWeek_kW  += gc.data_windGeneration_kW.getY(i);
+	PVElectricitySupplyLiveWeek_kW  += gc.data_PVGeneration_kW.getY(i);
+	storageElectricitySupplyLiveWeek_kW  += gc.data_batteryDischarging_kW.getY(i);
+	V2GElectricitySupplyLiveWeek_kW  += gc.data_V2GSupply_kW.getY(i);
+	CHPElectricitySupplyLiveWeek_kW  += gc.data_CHPElectricityProductionLiveWeek_kW.getY(i);		
+}
+
+for (OL_EnergyCarriers EC_consumption : activeConsumptionEnergyCarriers) {	
+	area.dsm_liveConsumption_kW.get(EC_consumption).add(timeAxisValue, fm_demand_kW.get(EC_consumption));	
+}
+
+for (OL_EnergyCarriers EC_production : activeProductionEnergyCarriers) {	
+	area.dsm_liveProduction_kW.get(EC_production).add(timeAxisValue, fm_supply_kW.get(EC_production));	
+}
+
+
+area.v_dataElectricityDeliveryCapacityLiveWeek_kW.add(timeAxisValue, electricityDemandCapacityLiveWeek_kW);
+area.v_dataElectricityFeedInCapacityLiveWeek_kW.add(timeAxisValue, electricitySupplyCapacityLiveWeek_kW);
+area.v_dataNetLoadLiveWeek_kW.add(timeAxisValue, netLoadLiveWeek_kW);
+
+area.v_dataElectricityBaseloadConsumptionLiveWeek_kW.add(timeAxisValue, baseloadElectricityDemandLiveWeek_kW);
+area.v_dataElectricityForHeatConsumptionLiveWeek_kW.add(timeAxisValue, electricityForHeatDemandLiveWeek_kW);
+area.v_dataElectricityForTransportConsumptionLiveWeek_kW.add(timeAxisValue, electricityForTransportDemandLiveWeek_kW);
+area.v_dataElectricityForStorageConsumptionLiveWeek_kW.add(timeAxisValue, electricityForStorageDemandLiveWeek_kW);
+area.v_dataElectricityForHydrogenConsumptionLiveWeek_kW.add(timeAxisValue, electricityForHydrogenDemandLiveWeek_kW);
+
+area.v_dataDistrictHeatConsumptionLiveWeek_kW.add(timeAxisValue, districtHeatingDemandLiveWeek_kW);
+
+// Supply
+area.v_dataWindElectricityProductionLiveWeek_kW.add(timeAxisValue, windElectricitySupplyLiveWeek_kW);
+area.v_dataPVElectricityProductionLiveWeek_kW.add(timeAxisValue, PVElectricitySupplyLiveWeek_kW);
+area.v_dataStorageElectricityProductionLiveWeek_kW.add(timeAxisValue, storageElectricitySupplyLiveWeek_kW);
+area.v_dataV2GElectricityProductionLiveWeek_kW.add(timeAxisValue, V2GElectricitySupplyLiveWeek_kW);
+area.v_dataCHPElectricityProductionLiveWeek_kW.add(timeAxisValue, CHPElectricitySupplyLiveWeek_kW);
+		
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1734361725171</Id>
+					<Name><![CDATA[f_updateActiveAssetBooleansGC]]></Name>
+					<X>-620</X><Y>910</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[area]]></Name>
+						<Type><![CDATA[AreaCollection]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[gcList]]></Name>
+						<Type><![CDATA[ArrayList<GridConnection>]]></Type>
+					</Parameter>
+					<Body><![CDATA[area.b_hasElectricHeating = false;
+area.b_hasElectricTransport = false;
+area.b_hasPV = false;
+area.b_hasWindturbine = false;
+area.b_hasBattery = false;
+area.b_hasHeatGridConnection = false;
+area.b_hasElectrolyser = false;
+area.b_hasCHP = false;
+area.b_hasV2G = false;
+area.b_hasElectricCooking = false;
+
+//Electric heating
+for(GridConnection GC : gcList){
+	if(GC.c_electricHeatpumpAssets.size()>0 && GC.v_isActive){
+		area.b_hasElectricHeating = true;
+		break;
+	}
+}
+//Electric vehicles
+for(GridConnection GC : gcList){
+	if(GC.c_EvAssets.size()>0 && GC.v_isActive){
+		area.b_hasElectricTransport = true;
+		break;
+	}
+}
+//PV
+for(GridConnection GC : gcList){
+	if(GC.c_pvAssets.size()>0 && GC.v_isActive){
+		area.b_hasPV = true;
+		break;
+	}
+}
+//Wind
+for(GridConnection GC : gcList){
+	if(GC.c_windAssets.size()>0 && GC.v_isActive){
+		area.b_hasWindturbine = true;
+		break;
+	}
+}
+//Battery
+for(GridConnection GC : gcList){
+	if(GC.c_batteryAssets.size()>0 && GC.v_isActive){
+		for(J_EA battery : GC.c_batteryAssets){
+			if(((J_EAStorageElectric)battery).getStorageCapacity_kWh() > 0){
+				area.b_hasBattery = true;
+				break;
+			}
+		}
+	}
+}
+//Heat grid
+for(GridConnection GC : gcList){
+	if(GC.l_parentNodeHeat.getConnectedAgent() != null && GC.v_isActive){
+		area.b_hasHeatGridConnection = true;
+		break;
+	}
+}
+//Electrolyser
+for(GridConnection GC : gcList){
+	if(GC.c_electrolyserAssets.size()>0 && GC.v_isActive){
+		area.b_hasElectrolyser = true;
+		break;
+	}
+}
+//CHP
+for(GridConnection GC : gcList){
+	if(GC.c_chpAssets.size()>0 && GC.v_isActive){
+		area.b_hasCHP = true;
+		break;
+	}
+}
+//V2g
+for(GridConnection GC : gcList){
+	if(GC.p_chargingAttitudeVehicles == OL_ChargingAttitude.V2G && GC.c_EvAssets.size()>0 && GC.v_isActive){
+		area.b_hasV2G = true;
+		break;
+	}
+}
+//Electric cooking
+for(GridConnection GC : gcList){
+	if(GC.c_electricHobAssets.size()>0 && GC.v_isActive){
+		area.b_hasElectricCooking = true;
+		break;
+	}
+}
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1734368189128</Id>
+					<Name><![CDATA[f_updateActiveAssetBooleans]]></Name>
+					<X>-650</X><Y>890</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[f_updateActiveAssetBooleansGC(uI_Results.v_area, energyModel.f_getGridConnections());
+if(b_multiSelect && c_selectedGridConnections.size() > 1){
+	for (int i = 0; i < c_selectedGridConnections.size(); i++) {
+		f_updateActiveAssetBooleansGC(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
+	}
+}
+else{
+	f_updateActiveAssetBooleansGC(uI_Results.v_gridConnection, c_selectedGridConnections);
+}
+uI_Results.f_showCorrectChart();]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -6367,6 +6559,7 @@ area.v_weekendElectricitySelfConsumed_MWh = sum(gcList, x -> x.v_weekendElectric
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -6390,6 +6583,7 @@ area.v_weekendElectricitySelfConsumed_MWh = sum(gcList, x -> x.v_weekendElectric
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -7129,6 +7323,7 @@ traceln("gr_compareResultsButton is not functional!");]]></OnClickCode>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -9290,6 +9485,7 @@ traceln( v_themeColor.getRGB() );]]></ActionCode>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -9383,6 +9579,7 @@ traceln("Selected scenario: \"" + selected_scenario + "\"");]]></ActionCode>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -9404,6 +9601,7 @@ traceln("Selected scenario: \"" + selected_scenario + "\"");]]></ActionCode>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -10463,6 +10661,7 @@ for(GISRoute GISCable : c_MVCables){
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<OnClickCode><![CDATA[if (uI_Tabs.pop_tabEHub.get(0).b_NFATOListener) {
 	uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
@@ -10970,7 +11169,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1708611471928</Id>
 					<Name><![CDATA[v_companyUIBackgroundColor]]></Name>
-					<X>-410</X><Y>50</Y>
+					<X>-430</X><Y>50</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10985,7 +11184,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1709554407054</Id>
 					<Name><![CDATA[v_companyUILineColor]]></Name>
-					<X>-410</X><Y>90</Y>
+					<X>-430</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11000,7 +11199,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1713543883957</Id>
 					<Name><![CDATA[v_currentSelectedGCnr]]></Name>
-					<X>-400</X><Y>420</Y>
+					<X>-430</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11522,7 +11721,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1725373825534</Id>
 					<Name><![CDATA[v_chartBackgroundColor]]></Name>
-					<X>-410</X><Y>130</Y>
+					<X>-430</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11537,7 +11736,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1725381531538</Id>
 					<Name><![CDATA[v_companyUILineWidth]]></Name>
-					<X>-410</X><Y>110</Y>
+					<X>-430</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11552,7 +11751,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1725381554846</Id>
 					<Name><![CDATA[v_chartLineWidth]]></Name>
-					<X>-410</X><Y>150</Y>
+					<X>-430</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11567,7 +11766,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1725382988283</Id>
 					<Name><![CDATA[v_companyUIBackgroundColorSliders]]></Name>
-					<X>-410</X><Y>70</Y>
+					<X>-430</X><Y>70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11582,7 +11781,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1725609978738</Id>
 					<Name><![CDATA[v_loadScreenColor]]></Name>
-					<X>-410</X><Y>180</Y>
+					<X>-430</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11642,7 +11841,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1725625091022</Id>
 					<Name><![CDATA[b_runningMainInterfaceScenarioSettings]]></Name>
-					<X>-380</X><Y>860</Y>
+					<X>-410</X><Y>860</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11714,7 +11913,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1727883544535</Id>
 					<Name><![CDATA[v_NFATO_kW_delivery]]></Name>
-					<X>-410</X><Y>965</Y>
+					<X>-440</X><Y>965</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11726,7 +11925,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1727883574908</Id>
 					<Name><![CDATA[v_NFATO_kW_feedin]]></Name>
-					<X>-410</X><Y>985</Y>
+					<X>-440</X><Y>985</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11738,7 +11937,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1727941212434</Id>
 					<Name><![CDATA[v_NFATO_active]]></Name>
-					<X>-410</X><Y>945</Y>
+					<X>-440</X><Y>945</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11750,7 +11949,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 				<Variable Class="PlainVariable">
 					<Id>1729686904963</Id>
 					<Name><![CDATA[b_runningMainInterfaceSlider]]></Name>
-					<X>-380</X><Y>880</Y>
+					<X>-410</X><Y>880</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11983,7 +12182,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713445281785</Id>
 					<Name><![CDATA[f_setScenarioFuture]]></Name>
-					<X>-380</X><Y>570</Y>
+					<X>-410</X><Y>570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12087,7 +12286,7 @@ rb_scenariosPrivateUI.setValue(1, false);]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713447383903</Id>
 					<Name><![CDATA[f_setScenario]]></Name>
-					<X>-400</X><Y>530</Y>
+					<X>-430</X><Y>530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12148,7 +12347,7 @@ zero_Interface.b_resultsUpToDate = false;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713447428490</Id>
 					<Name><![CDATA[f_setScenarioCurrent]]></Name>
-					<X>-380</X><Y>550</Y>
+					<X>-410</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12248,7 +12447,7 @@ rb_scenariosPrivateUI.setValue(0, false);]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713537591106</Id>
 					<Name><![CDATA[f_setHeatingType]]></Name>
-					<X>-400</X><Y>650</Y>
+					<X>-430</X><Y>650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12393,7 +12592,7 @@ if(!b_runningMainInterfaceSlider){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713537591117</Id>
 					<Name><![CDATA[f_setGCCapacity]]></Name>
-					<X>-400</X><Y>670</Y>
+					<X>-430</X><Y>670</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12431,7 +12630,7 @@ GC.f_nfatoSetConnectionCapacity(false);]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713537591121</Id>
 					<Name><![CDATA[f_setBattery]]></Name>
-					<X>-400</X><Y>730</Y>
+					<X>-430</X><Y>730</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12470,7 +12669,7 @@ if(((J_EAStorageElectric)batteryAsset).getCapacityElectric_kW() != 0){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713954180112</Id>
 					<Name><![CDATA[f_setPVSystem]]></Name>
-					<X>-400</X><Y>690</Y>
+					<X>-430</X><Y>690</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12557,11 +12756,11 @@ f_setVehicleSliderPresets();
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//Set back end range (to prevent anylogic errors)
-sl_rooftopPVCompany.setRange(0, 20000);
+sl_rooftopPVCompany.setRange(0, 2000000);
 
 //Set range specific for each company
 v_minPVSlider = roundToInt(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentPV_kW());
-v_maxPVSlider = roundToInt(0.5 * c_ownedGridConnections.get(v_currentSelectedGCnr).p_roofSurfaceArea_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2);
+v_maxPVSlider = roundToInt(zero_Interface.energyModel.avgc_data.p_avgRatioRoofPotentialPV* c_ownedGridConnections.get(v_currentSelectedGCnr).p_roofSurfaceArea_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2);
 if(v_maxPVSlider <= v_minPVSlider){
 	v_maxPVSlider = v_minPVSlider + 1000;
 }
@@ -12741,7 +12940,7 @@ sl_hydrogenTrucksCompany.setValue(v_nbHydrogenTrucks, false);
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1714410040303</Id>
 					<Name><![CDATA[f_createVehicle]]></Name>
-					<X>-380</X><Y>810</Y>
+					<X>-410</X><Y>810</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12873,7 +13072,7 @@ else{ // (Hydrogen vehicles)
 					<ReturnType><![CDATA[int]]></ReturnType>
 					<Id>1714411599586</Id>
 					<Name><![CDATA[f_setElectricVehicleSliders]]></Name>
-					<X>-400</X><Y>750</Y>
+					<X>-430</X><Y>750</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13113,7 +13312,7 @@ if(!b_runningMainInterfaceSlider){
 					<ReturnType><![CDATA[int]]></ReturnType>
 					<Id>1714471183392</Id>
 					<Name><![CDATA[f_setDieselVehicleSliders]]></Name>
-					<X>-400</X><Y>790</Y>
+					<X>-430</X><Y>790</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13348,7 +13547,7 @@ if(!b_runningMainInterfaceSlider){
 					<ReturnType><![CDATA[int]]></ReturnType>
 					<Id>1714474430338</Id>
 					<Name><![CDATA[f_setHydrogenVehicleSliders]]></Name>
-					<X>-400</X><Y>770</Y>
+					<X>-430</X><Y>770</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13652,7 +13851,7 @@ if(!c_ownedGridConnections.get(v_currentSelectedGCnr).v_isActive){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1714656835269</Id>
 					<Name><![CDATA[f_copyResultsUI]]></Name>
-					<X>-400</X><Y>370</Y>
+					<X>-430</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13729,7 +13928,7 @@ rb_heatingTypePrivateUI.setValue(nr_currentHeatingType, false);]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1715952034311</Id>
 					<Name><![CDATA[f_addPVAsset]]></Name>
-					<X>-380</X><Y>710</Y>
+					<X>-410</X><Y>710</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13765,7 +13964,7 @@ J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset
 					<Id>1717576974529</Id>
 					<Name><![CDATA[f_setSelectedGC]]></Name>
 					<Description><![CDATA[Function that sets the sliders to match the currently present settings of the energy assets owned by the selected GC. Used when a connection owner has multiple grid connections, and wants to set the sliders of a different GC. ]]></Description>
-					<X>-400</X><Y>440</Y>
+					<X>-430</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13786,7 +13985,7 @@ if(!b_runningMainInterfaceScenarioSettings && !b_runningMainInterfaceSlider && c
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725439625846</Id>
 					<Name><![CDATA[f_setSelectedGCSliders]]></Name>
-					<X>-370</X><Y>460</Y>
+					<X>-400</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13983,7 +14182,7 @@ c_ownedGridConnections.get(v_currentSelectedGCnr).f_nfatoSetConnectionCapacity(f
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725439635605</Id>
 					<Name><![CDATA[f_setSelectedGCGraphs]]></Name>
-					<X>-370</X><Y>480</Y>
+					<X>-400</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14001,7 +14200,7 @@ uI_Results.f_setAllCharts();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725607045331</Id>
 					<Name><![CDATA[f_setSimulateYearScreen]]></Name>
-					<X>-400</X><Y>840</Y>
+					<X>-430</X><Y>840</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14027,7 +14226,7 @@ zero_Interface.f_resetSettings();]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//Set back end range (to prevent anylogic errors)
-sl_GCCapacityCompany.setRange(0, 10000);
+sl_GCCapacityCompany.setRange(0, 100000);
 
 //Get current grid capacity
 double defaultGCCapacitySlider = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractDeliveryCapacity_kW();
@@ -14047,10 +14246,15 @@ if(futureGCCapacity_delivery_kW < 100 && defaultGCCapacitySlider < 100){
 else if(futureGCCapacity_delivery_kW < 1000 && defaultGCCapacitySlider < 1000){
 	v_maxGCCapacitySlider = 2000;
 }
-else{
+else if(futureGCCapacity_delivery_kW < 8000 && defaultGCCapacitySlider < 8000){
 	v_maxGCCapacitySlider = 10000;
 }
-
+else if(futureGCCapacity_delivery_kW < 15000 && defaultGCCapacitySlider < 15000){
+	v_maxGCCapacitySlider = 20000;
+}
+else{
+	v_maxGCCapacitySlider = max(futureGCCapacity_delivery_kW, defaultGCCapacitySlider);
+}
 
 v_defaultGCCapacitySlider = roundToInt(defaultGCCapacitySlider);
 
@@ -14091,7 +14295,7 @@ if(nameLength > 24){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//Set back end range (to prevent anylogic errors)
-sl_GCCapacityCompany_Feedin.setRange(0, 10000);
+sl_GCCapacityCompany_Feedin.setRange(0, 100000);
 
 //Get current grid capacity
 double defaultGCCapacitySlider_Feedin = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractFeedinCapacity_kW();
@@ -14105,8 +14309,14 @@ if(defaultGCCapacitySlider_Feedin < 100){
 else if(defaultGCCapacitySlider_Feedin < 1000){
 	v_maxGCCapacitySlider_Feedin = 2000;
 }
-else{
+else if(defaultGCCapacitySlider_Feedin < 8000){
 	v_maxGCCapacitySlider_Feedin = 10000;
+}
+else if(defaultGCCapacitySlider_Feedin < 15000){
+	v_maxGCCapacitySlider_Feedin = 20000;
+}
+else{
+	v_maxGCCapacitySlider_Feedin = defaultGCCapacitySlider_Feedin;
 }
 
 v_defaultGCCapacitySlider_Feedin = roundToInt(defaultGCCapacitySlider_Feedin);
@@ -14119,7 +14329,7 @@ sl_GCCapacityCompany_Feedin.setValue(v_defaultGCCapacitySlider_Feedin, false);]]
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1727884380899</Id>
 					<Name><![CDATA[f_getNFATOValues]]></Name>
-					<X>-410</X><Y>925</Y>
+					<X>-440</X><Y>925</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14233,7 +14443,7 @@ f_setHeatingRB();]]></Body>
 				<EmbeddedObject>
 					<Id>1714652079023</Id>
 					<Name><![CDATA[uI_Results]]></Name>
-					<X>-400</X><Y>350</Y>
+					<X>-430</X><Y>350</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14412,7 +14622,7 @@ f_setHeatingRB();]]></Body>
 				<Text>
 					<Id>1708611713278</Id>
 					<Name><![CDATA[text]]></Name>
-					<X>-420</X><Y>20</Y>
+					<X>-440</X><Y>20</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14565,7 +14775,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1713537625797</Id>
 					<Name><![CDATA[txt_scenarioSettings]]></Name>
-					<X>-410</X><Y>500</Y>
+					<X>-440</X><Y>500</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14607,7 +14817,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1713957196998</Id>
 					<Name><![CDATA[txt_sliderFunctions]]></Name>
-					<X>-410</X><Y>620</Y>
+					<X>-440</X><Y>620</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14691,7 +14901,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1714660279044</Id>
 					<Name><![CDATA[txt_uiResult]]></Name>
-					<X>-410</X><Y>320</Y>
+					<X>-440</X><Y>320</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16494,7 +16704,7 @@ zero_Interface.va_Interface.navigateTo();]]></ActionCode>
 				<Text>
 					<Id>1717514421993</Id>
 					<Name><![CDATA[txt_setSlidersToSelectedGC]]></Name>
-					<X>-410</X><Y>390</Y>
+					<X>-440</X><Y>390</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -17222,7 +17432,7 @@ f_setSimulateYearScreen();]]></ActionCode>
 				<Text>
 					<Id>1727883464770</Id>
 					<Name><![CDATA[txt_nfatoValues]]></Name>
-					<X>-420</X><Y>900</Y>
+					<X>-450</X><Y>900</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24393,7 +24603,7 @@ else {
 			OL_EnergyAssetType assetType = OL_EnergyAssetType.PHOTOVOLTAIC;
 			String assetName = "Rooftop PV";
 
-			double roofAreaForPV_m2 = 0.25 * gc.p_roofSurfaceArea_m2; // Should not be higher than 0.5!						
+			double roofAreaForPV_m2 = zero_Interface.energyModel.avgc_data.p_avgRatioRoofPotentialPV * gc.p_roofSurfaceArea_m2;					
 			double capacityElectricity_kW = max(0.1, roofAreaForPV_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2);
 			double capacityHeat_kW = 0.0;
 			double yearlyProductionHydrogen_kWh = 0.0;
@@ -24407,7 +24617,7 @@ else {
 			zero_Interface.c_orderedPVSystems.add(0, gc);
 		
 			PVsystems++;
-			//traceln("Added PV to GridConnection: " + h.p_gridConnectionID);
+			//traceln("Added PV to GridConnection: " + gc.p_gridConnectionID + "With capacity [kW]: " + capacityElectricity_kW);
 			
 			// update UI company
 			if (zero_Interface.c_companyUIs.size()>0){
@@ -24640,6 +24850,10 @@ for ( GCEnergyProduction GCEP : zero_Interface.energyModel.EnergyProductionSites
 			j_ea.setCapacityElectric_kW(1000*AllocatedWindPower_MW);
 			GCEP.p_physicalConnectionCapacity_kW = 1000*AllocatedWindPower_MW;
 			GCEP.p_contractedFeedinCapacity_kW = 1000*AllocatedWindPower_MW;
+			
+			if(AllocatedWindPower_MW == 0){
+				GCEP.f_setActive(false);
+			}
 			break;
 		}
 	}
@@ -29255,11 +29469,10 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722326800150</Id>
 					<Name><![CDATA[t_hybridHeatPumpCompaniesDescription1]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-165</X><Y>-55</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
@@ -29298,11 +29511,10 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722326800154</Id>
 					<Name><![CDATA[t_districtHeatingCompaniesDescription1]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-165</X><Y>-30</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
@@ -29364,11 +29576,10 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722326800160</Id>
 					<Name><![CDATA[t_districtHeatingCompanies_pct1]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>45</X><Y>-30</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
@@ -29387,11 +29598,10 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722326800162</Id>
 					<Name><![CDATA[t_hybridHeatPumpCompanies_pct1]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>45</X><Y>-55</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
@@ -29411,7 +29621,6 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722326800164</Id>
 					<Name><![CDATA[sl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>75</X><Y>-35</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -29420,8 +29629,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<BasicProperties Width="100" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
-						<VisibleCode><![CDATA[false]]></VisibleCode>
-						<Enabled>true</Enabled>
+						<Enabled>false</Enabled>
 						<ActionCode><![CDATA[traceln("Slider doet nog niets!!");//f_setHeatingSlidersCompanies(3);
 //f_resetNeighborhoodHeatingSystems(4);]]></ActionCode>
 					</BasicProperties>
@@ -29465,7 +29673,6 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722326800168</Id>
 					<Name><![CDATA[sl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>75</X><Y>-60</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -29474,8 +29681,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<BasicProperties Width="100" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
-						<VisibleCode><![CDATA[false]]></VisibleCode>
-						<Enabled>true</Enabled>
+						<Enabled>false</Enabled>
 						<ActionCode><![CDATA[traceln("Slider doet nog niets!!");//f_setHeatingSlidersCompanies(2);
 //f_resetNeighborhoodHeatingSystems(3);
 //sl_hybridHeatPumpCompanies.]]></ActionCode>
@@ -29534,6 +29740,74 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 						<Name>Calibri</Name>
 						<Size>18</Size>
 						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1734371025574</Id>
+					<Name><![CDATA[t_eBoilerCompanies_pct]]></Name>
+					<X>45</X><Y>-5</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[#]]></Text>
+					<TextCode><![CDATA[sl_heatDemandSlidersCompaniesEBoiler_pct.getIntValue() + "%"]]></TextCode>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Control Type="Slider">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1734371025600</Id>
+					<Name><![CDATA[sl_heatDemandSlidersCompaniesEBoiler_pct]]></Name>
+					<X>75</X><Y>-10</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="100" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<Enabled>false</Enabled>
+						<ActionCode><![CDATA[traceln("Slider doet nog niets!!");//f_setHeatingSlidersCompanies(3);
+//f_resetNeighborhoodHeatingSystems(4);]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
+						<Orientation>HORIZONTAL</Orientation>
+						<MinValue><![CDATA[0]]></MinValue>
+						<MaxValue><![CDATA[100]]></MaxValue>
+						<Step><![CDATA[1]]></Step>
+						<LinkTo>false</LinkTo>
+					</ExtendedProperties>
+				</Control>
+				<Text>
+					<Id>1734371025534</Id>
+					<Name><![CDATA[t_eBoilerCompaniesDescription]]></Name>
+					<X>-165</X><Y>-5</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[E-boiler]]></Text>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
@@ -32418,7 +32692,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 					<Name><![CDATA[p_avgRatioBatteryCapacity_v_Power]]></Name>
 					<Description><![CDATA[Average ratio of battery capacity over battery power.
 --> If battery capacity (in kWh) is twice the battery power (in kW) --> ratio = 2.]]></Description>
-					<X>50</X><Y>860</Y>
+					<X>50</X><Y>880</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32524,7 +32798,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 				<Variable Class="Parameter">
 					<Id>1726584205708</Id>
 					<Name><![CDATA[p_avgRatioRoofPotentialPV]]></Name>
-					<Description><![CDATA[value for ratio that]]></Description>
+					<Description><![CDATA[value for the ratio of the avg Usable Roof Area For PV fr]]></Description>
 					<X>50</X><Y>780</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -32534,6 +32808,9 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 						<Type><![CDATA[double]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[0.5]]></Code>
+						</DefaultValue>
 						<ParameterEditor>
 							<Id>1726584205706</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
@@ -32708,7 +32985,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 				<Variable Class="Parameter">
 					<Id>1726746753360</Id>
 					<Name><![CDATA[p_avgVehiclesPerChargePoint]]></Name>
-					<X>50</X><Y>910</Y>
+					<X>50</X><Y>930</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32934,7 +33211,7 @@ to 18 m3 p m2 for label G
 				</Variable>
 			</Variables>
 			<Functions>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726584205530</Id>
@@ -33335,7 +33612,7 @@ zero_Loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				<Text>
 					<Id>1726584205562</Id>
 					<Name><![CDATA[txt_avgBat]]></Name>
-					<X>40</X><Y>835</Y>
+					<X>40</X><Y>855</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33506,7 +33783,7 @@ zero_Loader.energyModel.avgc_data = dataAVGC;]]></Body>
 				<Text>
 					<Id>1726743791200</Id>
 					<Name><![CDATA[text]]></Name>
-					<X>40</X><Y>880</Y>
+					<X>40</X><Y>900</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -34230,7 +34507,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 					<Id>1726584205769</Id>
 					<Name><![CDATA[f_createGISRegionOutline]]></Name>
 					<Description><![CDATA[Creates the outline of the simulated area]]></Description>
-					<X>806.739</X><Y>499</Y>
+					<X>806.739</X><Y>519</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -34427,7 +34704,7 @@ for (GridNode_data GN_data : c_GridNode_data) {
 					<ReturnType><![CDATA[double[]]]></ReturnType>
 					<Id>1726584205777</Id>
 					<Name><![CDATA[f_createGISObjectsTokens]]></Name>
-					<X>825.241</X><Y>580</Y>
+					<X>825.241</X><Y>600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -35470,7 +35747,7 @@ for (GridConnection GCcompany : generic_company_GCs ) {
 					<Id>1726584205801</Id>
 					<Name><![CDATA[f_createGISBuilding]]></Name>
 					<Description><![CDATA[Creates the GIS object(s) building(s) for the companies and houses]]></Description>
-					<X>807.621</X><Y>460</Y>
+					<X>807.621</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -35576,7 +35853,7 @@ return b;]]></Body>
 		//Check for feedin values availability, if available: fill the list, if not, list = null;
 		try {
 			if(selectFirstValue(Double.class, "SELECT " + profileName + "_feedin FROM comp_elec_consumption LIMIT 1;") != null){
-		  		yearlyElectricityFeedin_kWh_list = selectValues(double.class, "SELECT " + profileName + "_feedin FROM comp_elec_consumption;");
+		  		yearlyElectricityFeedin_kWh_list = selectValues(double.class, "SELECT " + profileName + "_feedin FROM comp_elec_consumption;");			
 			}
 		}
 		catch(Exception e) {
@@ -35590,7 +35867,6 @@ return b;]]></Body>
 			}
 		}
 		catch(Exception e) {
-
 			//Do nothing, cause initialized with null;
 		}
 	}
@@ -35656,7 +35932,7 @@ if(hasHourlyGasData){
 	List<Double> hourlyGasDemand_kWh = selectValues(double.class, "SELECT " + profileName + "_demand FROM comp_gas_consumption;");
 	List<Double> hourlyHeatDemand_kWh = new ArrayList<Double>();
 	for (int i = 0; i < hourlyGasDemand_kWh.size(); i++) {
-		double gasHeatingValue_timestep_kWh = hourlyGasDemand_kWh.get(i) * avgc_data.p_gas_kWhpm3 * ratioGasUsedForHeating;
+		double gasHeatingValue_timestep_kWh = hourlyGasDemand_kWh.get(i) * avgc_data.p_gas_kWhpm3 * avgc_data.p_avgEfficiencyGasBurner * ratioGasUsedForHeating;
 		yearlyDemandHeat_kWh += gasHeatingValue_timestep_kWh;
     	hourlyHeatDemand_kWh.add(i, gasHeatingValue_timestep_kWh);
     	
@@ -35668,7 +35944,7 @@ if(hasHourlyGasData){
 	profile.a_energyProfile_kWh = hourlyHeatDemand_kWh.stream().mapToDouble(d -> max(0,d)).toArray();
 	
 	//Update v_remainingGasConsumption_m3
-	v_remainingGasConsumption_m3 -= yearlyDemandHeat_kWh/(avgc_data.p_gas_kWhpm3 * ratioGasUsedForHeating);
+	v_remainingGasConsumption_m3 -= yearlyDemandHeat_kWh/(avgc_data.p_gas_kWhpm3 * avgc_data.p_avgEfficiencyGasBurner * ratioGasUsedForHeating);
 }
 else{
 	
@@ -35679,10 +35955,10 @@ else{
 	}
 	
 	//Determine heatdemand
-	yearlyDemandHeat_kWh = yearlyGasDemand_m3 * avgc_data.p_gas_kWhpm3; 
+	yearlyDemandHeat_kWh = yearlyGasDemand_m3 * avgc_data.p_gas_kWhpm3 * avgc_data.p_avgEfficiencyGasBurner;
 	
 	if (yearlyDemandHeat_kWh <= 0 ){// If heat demand = 0, make estimation based on floor surface area
-		yearlyDemandHeat_kWh = avgc_data.p_avgCompanyGasConsumption_m3pm2*parentGC.p_floorSurfaceArea_m2 * avgc_data.p_gas_kWhpm3;
+		yearlyDemandHeat_kWh = avgc_data.p_avgCompanyGasConsumption_m3pm2*parentGC.p_floorSurfaceArea_m2 * avgc_data.p_gas_kWhpm3 * avgc_data.p_avgEfficiencyGasBurner;
 		//traceln("NO HEAT DEMAND DETECTED: ESTIMATION MADE BASED ON FLOOR SURFACE AREA!");
 	}
 	
@@ -35710,7 +35986,7 @@ double belowZeroHeatpumpEtaReductionFactor;
 switch (parentGC.p_heatingType){ // HOE gaan we om met meerdere heating types in survey???
 
 	case GASBURNER:
-		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, maxPowerGasburner , 0.99, energyModel.p_timeStep_h, 90);
+		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, maxPowerGasburner , avgc_data.p_avgEfficiencyGasBurner, energyModel.p_timeStep_h, 90);
 	break;
 	
 	case HYBRID_HEATPUMP:
@@ -35767,7 +36043,7 @@ switch (parentGC.p_heatingType){ // HOE gaan we om met meerdere heating types in
 					<Id>1726584205807</Id>
 					<Name><![CDATA[f_createGISParcels]]></Name>
 					<Description><![CDATA[Creates "empty" parcels on the gismap, these parcels do not contain buildings or gridconnections. Currently no need for the function to return the GIS_Object.]]></Description>
-					<X>807.621</X><Y>480</Y>
+					<X>807.621</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -35862,7 +36138,7 @@ J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset
 					<Id>1726584205811</Id>
 					<Name><![CDATA[f_createGISObject]]></Name>
 					<Description><![CDATA[Creates the GIS object for the area EA (windfarms, solarparks, electrolysers, batteries, etc.)]]></Description>
-					<X>807.621</X><Y>440</Y>
+					<X>807.621</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -36802,7 +37078,7 @@ if (companyGC.c_heatingTypes.size()>1 && !companyGC.c_heatingTypes.contains(OL_G
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726584205827</Id>
 					<Name><![CDATA[f_addElectricVehicle]]></Name>
-					<X>811</X><Y>291</Y>
+					<X>811</X><Y>311</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -36885,7 +37161,7 @@ else if (vehicle_type == OL_EnergyAssetType.ELECTRIC_VAN){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726584205829</Id>
 					<Name><![CDATA[f_addDieselVehicle]]></Name>
-					<X>811</X><Y>311</Y>
+					<X>811</X><Y>331</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -36942,7 +37218,7 @@ else if (vehicle_type == OL_EnergyAssetType.DIESEL_VAN){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726584205831</Id>
 					<Name><![CDATA[f_addStorage]]></Name>
-					<X>811</X><Y>271</Y>
+					<X>811</X><Y>291</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -37093,7 +37369,7 @@ if (v_remainingNumberOfTrucks > 0){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726584205835</Id>
 					<Name><![CDATA[f_createRemainingBuildings]]></Name>
-					<X>806.739</X><Y>539</Y>
+					<X>806.739</X><Y>559</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -37119,7 +37395,7 @@ if (v_remainingNumberOfTrucks > 0){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726584205837</Id>
 					<Name><![CDATA[f_addTransportHydrogen]]></Name>
-					<X>811</X><Y>331</Y>
+					<X>811</X><Y>351</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -37490,7 +37766,7 @@ profile.a_energyProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -
 					<ReturnType><![CDATA[GISRegion]]></ReturnType>
 					<Id>1726584205847</Id>
 					<Name><![CDATA[f_createGISRegionChargingStation]]></Name>
-					<X>807.621</X><Y>520</Y>
+					<X>807.621</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -37821,7 +38097,7 @@ return scopedList;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726584205859</Id>
 					<Name><![CDATA[f_createGISCables]]></Name>
-					<X>807.621</X><Y>560</Y>
+					<X>807.621</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -38441,7 +38717,7 @@ return annualElectricityConsumption_kWh;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1732112209863</Id>
 					<Name><![CDATA[f_createCustomPVAsset]]></Name>
-					<X>1160</X><Y>130</Y>
+					<X>810</X><Y>270</Y>
 					<Label><X>9</X><Y>-1</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -38474,7 +38750,8 @@ J_ProfilePointer profilePointer = new J_ProfilePointer((parentGC.p_ownerID + "_P
 energyModel.f_addProfile(profilePointer);
 J_EAProduction production_asset = new J_EAProduction(parentGC, OL_EnergyAssetType.PHOTOVOLTAIC, (parentGC.p_ownerID + "_rooftopPV"), (double)pvPower_kW, 0.0, 0.0, 0.0, energyModel.p_timeStep_h, 0.0, profilePointer);
 
-traceln("Custom PV asset added to %s with installed power %s kW and %s full load hours!", parentGC.p_ownerID, pvPower_kW, fullLoadHours_h);
+traceln("Custom PV asset added to GC: " + parentGC.p_gridConnectionID);
+//traceln("Custom PV asset added to %s with installed power %s kW and %s full load hours!", parentGC.p_ownerID, pvPower_kW, fullLoadHours_h);
 ]]></Body>
 				</Function>
 				<Function AccessType="protected" StaticFunction="false">
@@ -38682,6 +38959,17 @@ if (gridConnection.getSupply().getHasSupply() != null && gridConnection.getSuppl
 	//gridConnection.getElectricity().getAnnualElectricityProductionKwh() // Staat niet meer in het formulier!
 	
 	double[] yearlyElectricityProduction_kWh_array = (gridConnection.getElectricity().getQuarterHourlyProduction_kWh() != null && gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues()): null;
+	
+	if(yearlyElectricityProduction_kWh_array == null && gridConnection.getSupply().getPvInstalledKwp() != null && gridConnection.getSupply().getPvInstalledKwp() > 0){
+		try {
+			if(selectFirstValue(Double.class, "SELECT " + "ccid" + companyGC.p_gridConnectionID + "_production FROM comp_elec_consumption LIMIT 1;") != null){
+		  		List<Double> yearlyElectricityProduction_kWh_list = selectValues(double.class, "SELECT " + "ccid" + companyGC.p_gridConnectionID + "_production FROM comp_elec_consumption;");
+				yearlyElectricityProduction_kWh_array = (yearlyElectricityProduction_kWh_list != null) ? yearlyElectricityProduction_kWh_list.stream().mapToDouble(d -> max(0,d)).toArray() : null;
+			}
+		}
+		catch(Exception e) {
+		}
+	}
 	if (yearlyElectricityProduction_kWh_array != null && gridConnection.getSupply().getPvInstalledKwp() != null && gridConnection.getSupply().getPvInstalledKwp() > 0){
 		f_createCustomPVAsset(companyGC, yearlyElectricityProduction_kWh_array, (double)gridConnection.getSupply().getPvInstalledKwp()); // Create custom PV asset when production data is available!
 		current_scenario_list.setCurrentPV_kW(gridConnection.getSupply().getPvInstalledKwp());
@@ -40108,7 +40396,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
 					<Width>380</Width>
-					<Height>300</Height>
+					<Height>310</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -40140,7 +40428,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 				<Group>
 					<Id>1726584205969</Id>
 					<Name><![CDATA[gr_createGISObjects]]></Name>
-					<X>960</X><Y>510</Y>
+					<X>960</X><Y>530</Y>
 					<Label><X>9.938</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40154,7 +40442,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 				<Rectangle>
 					<Id>1726584205971</Id>
 					<Name><![CDATA[rect_createGISObjects]]></Name>
-					<X>-180</X><Y>-128.972</Y>
+					<X>-180</X><Y>-120</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
