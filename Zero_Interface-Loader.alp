@@ -6294,7 +6294,6 @@ switch(selectedFilter){
 		
 	case GRIDTOPOLOGY_SELECTEDLOOP:
 		if(v_selectedGridLoop != null){
-			f_removeFilter(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP, selectedFilterName);
 			f_filterGridLoop(toBeFilteredGC);
 		}
 		else if(c_selectedFilterOptions.size() > 1){
@@ -6448,11 +6447,17 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 					  	clickedGridConnectionConnectedGridNode.p_nodeType != OL_GridNodeType.SUBMV &&
 					  	clickedGridConnectionConnectedGridNode.p_nodeType != OL_GridNodeType.MVMV){
 					String parentNodeName = clickedGridConnectionConnectedGridNode.p_parentNodeID;
-					clickedGridConnectionConnectedGridNode = findFirst(allGridNodes, GN -> GN.p_gridNodeID.equals(parentNodeName));
+					if(parentNodeName != null && !parentNodeName.equals("-") && !parentNodeName.equals("")){
+						clickedGridConnectionConnectedGridNode = findFirst(allGridNodes, GN -> GN.p_gridNodeID.equals(parentNodeName));
+					}
+					else{ // At top node --> break out of while loop.
+						break;
+					}
 				}	
 				
 				v_selectedGridLoop = clickedGridConnectionConnectedGridNode;
-				f_applyFilter(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP, "Geselecteerde ring");
+				f_setFilter("Geselecteerde ring");
+				f_setFilter("Geselecteerde ring");
 				return;
 				
 			}
@@ -11668,8 +11673,8 @@ cb_filterOptions.setValueIndex(0);]]></ActionCode>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[Actieve filters: ]]></Text>
-					<TextCode><![CDATA[!t_activeFilters.getText().equals("") ? "Actieve filters:" : ""]]></TextCode>
+					<Text><![CDATA[Geen Actieve Filters.]]></Text>
+					<TextCode><![CDATA[!t_activeFilters.getText().equals("") ? "Actieve filters:" : "Geen Actieve Filters."]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>12</Size>
@@ -11680,7 +11685,7 @@ cb_filterOptions.setValueIndex(0);]]></ActionCode>
 				<Text>
 					<Id>1734444104065</Id>
 					<Name><![CDATA[t_activeFilters]]></Name>
-					<X>-130</X><Y>-80</Y>
+					<X>-130</X><Y>-90</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11757,7 +11762,7 @@ cb_filterOptions.setValueIndex(0);]]></ActionCode>
 					<TextCode><![CDATA[v_selectedGridLoop != null ? "Geselecteerde lus: " + v_selectedGridLoop.p_gridNodeID : ""]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
-						<Size>10</Size>
+						<Size>12</Size>
 						<Style>0</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
@@ -11778,7 +11783,7 @@ cb_filterOptions.setValueIndex(0);]]></ActionCode>
 					<BasicProperties Width="120" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
-						<Enabled>false</Enabled>
+						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[gr_filterInterface.setVisible(cb_showFilterInterface.isSelected());
 
 if(!cb_showFilterInterface.isSelected()){
