@@ -14,8 +14,39 @@
 	<OptionLists>
 		<OptionList>
 			<Id>1658478100573</Id>
-			<Name><![CDATA[OL_UNUSED1]]></Name>
-			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<Name><![CDATA[OL_FilterOptionsGC]]></Name>
+			<Option>
+				<Id>1734448498882</Id>
+				<Name><![CDATA[COMPANIES]]></Name>
+			</Option>
+			<Option>
+				<Id>1734442884762</Id>
+				<Name><![CDATA[HOUSES]]></Name>
+			</Option>
+			<Option>
+				<Id>1734442348652</Id>
+				<Name><![CDATA[DETAILED]]></Name>
+			</Option>
+			<Option>
+				<Id>1734442871159</Id>
+				<Name><![CDATA[NONDETAILED]]></Name>
+			</Option>
+			<Option>
+				<Id>1734442372415</Id>
+				<Name><![CDATA[HASPV]]></Name>
+			</Option>
+			<Option>
+				<Id>1734442386815</Id>
+				<Name><![CDATA[HASTRANSPORT]]></Name>
+			</Option>
+			<Option>
+				<Id>1734444382736</Id>
+				<Name><![CDATA[GRIDTOPOLOGY_SELECTEDLOOP]]></Name>
+			</Option>
+			<Option>
+				<Id>1734442896763</Id>
+				<Name><![CDATA[ENERGYASSETS]]></Name>
+			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1660743989698</Id>
@@ -444,33 +475,9 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1696863329257</Id>
-					<Name><![CDATA[v_clickedBuilding]]></Name>
-					<X>50</X><Y>1580</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[GIS_Object]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696863329260</Id>
-					<Name><![CDATA[v_previousClickedBuilding]]></Name>
-					<X>50</X><Y>1600</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[GIS_Object]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
 					<Id>1696863329269</Id>
 					<Name><![CDATA[v_gridConnectionInBuildingIndex]]></Name>
-					<X>50</X><Y>1630</Y>
+					<X>50</X><Y>1710</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -497,7 +504,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1701879001472</Id>
 					<Name><![CDATA[v_clickedObjectText]]></Name>
-					<X>50</X><Y>1650</Y>
+					<X>50</X><Y>1730</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -512,7 +519,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1701879014361</Id>
 					<Name><![CDATA[v_clickedObjectAdress]]></Name>
-					<X>50</X><Y>1670</Y>
+					<X>50</X><Y>1750</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -602,7 +609,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1702046920293</Id>
 					<Name><![CDATA[v_clickedObjectDetails]]></Name>
-					<X>50</X><Y>1690</Y>
+					<X>50</X><Y>1770</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -632,7 +639,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1704463271534</Id>
 					<Name><![CDATA[v_selectionColor]]></Name>
-					<X>50</X><Y>1740</Y>
+					<X>360</X><Y>1360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -647,7 +654,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1704463281781</Id>
 					<Name><![CDATA[v_selectionColorAddBuildings]]></Name>
-					<X>50</X><Y>1760</Y>
+					<X>360</X><Y>1380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -813,7 +820,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1705673181898</Id>
 					<Name><![CDATA[v_clickedGridNode]]></Name>
-					<X>50</X><Y>1530</Y>
+					<X>50</X><Y>1610</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -825,7 +832,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1705673647104</Id>
 					<Name><![CDATA[v_previousClickedObjectType]]></Name>
-					<X>50</X><Y>1500</Y>
+					<X>50</X><Y>1580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -837,7 +844,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1705673714784</Id>
 					<Name><![CDATA[v_previousClickedGridNode]]></Name>
-					<X>50</X><Y>1550</Y>
+					<X>50</X><Y>1630</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -926,7 +933,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1706892713276</Id>
 					<Name><![CDATA[GISregion_antiLaag]]></Name>
-					<X>50</X><Y>1710</Y>
+					<X>50</X><Y>1370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -968,7 +975,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1707918668189</Id>
 					<Name><![CDATA[v_clickedObjectType]]></Name>
-					<X>50</X><Y>1480</Y>
+					<X>50</X><Y>1560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -980,7 +987,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1708597346305</Id>
 					<Name><![CDATA[v_connectionOwnerIndexNr]]></Name>
-					<X>50</X><Y>1450</Y>
+					<X>50</X><Y>1530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -995,7 +1002,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1709803708318</Id>
 					<Name><![CDATA[v_gridNodeFeedinColor]]></Name>
-					<X>50</X><Y>1780</Y>
+					<X>360</X><Y>1400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1460,7 +1467,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1725018118872</Id>
 					<Name><![CDATA[b_showCables]]></Name>
-					<X>50</X><Y>1860</Y>
+					<X>50</X><Y>1810</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1545,6 +1552,18 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[false]]></Code>
 						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1734442989935</Id>
+					<Name><![CDATA[v_selectedGridLoop]]></Name>
+					<X>-1130</X><Y>1740</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[GridNode]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -1677,7 +1696,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1705660898756</Id>
 					<Name><![CDATA[c_GISNodes]]></Name>
-					<X>50</X><Y>1360</Y>
+					<X>50</X><Y>1410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1690,24 +1709,9 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 
 				</Variable>
 				<Variable Class="CollectionVariable">
-					<Id>1707918668146</Id>
-					<Name><![CDATA[c_GISPoints]]></Name>
-					<X>50</X><Y>1300</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[GISPoint]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-					</Properties>
-
-				</Variable>
-				<Variable Class="CollectionVariable">
 					<Id>1707918668148</Id>
 					<Name><![CDATA[c_GISRegions]]></Name>
-					<X>50</X><Y>1320</Y>
+					<X>50</X><Y>1350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1722,7 +1726,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1707918668154</Id>
 					<Name><![CDATA[c_GISBuildingShapes]]></Name>
-					<X>50</X><Y>1340</Y>
+					<X>50</X><Y>1390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1917,7 +1921,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1722344496313</Id>
 					<Name><![CDATA[c_GISNetplanes]]></Name>
-					<X>50</X><Y>1820</Y>
+					<X>50</X><Y>1490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1932,7 +1936,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1721302080638</Id>
 					<Name><![CDATA[c_selectedGridConnections]]></Name>
-					<X>50</X><Y>1270</Y>
+					<X>50</X><Y>1300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1947,7 +1951,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1725270790750</Id>
 					<Name><![CDATA[c_GISNetworks]]></Name>
-					<X>50</X><Y>1380</Y>
+					<X>50</X><Y>1430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1962,7 +1966,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1725276677836</Id>
 					<Name><![CDATA[c_LVCables]]></Name>
-					<X>50</X><Y>1400</Y>
+					<X>50</X><Y>1450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1977,7 +1981,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1725276688077</Id>
 					<Name><![CDATA[c_MVCables]]></Name>
-					<X>50</X><Y>1420</Y>
+					<X>50</X><Y>1470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1985,6 +1989,51 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[GISRoute]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1734442668540</Id>
+					<Name><![CDATA[c_selectedFilterOptions]]></Name>
+					<X>-1150</X><Y>1510</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[OL_FilterOptionsGC]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1734512815255</Id>
+					<Name><![CDATA[c_previousSelectedObjects]]></Name>
+					<X>50</X><Y>1680</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[GIS_Object]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1734513139372</Id>
+					<Name><![CDATA[c_selectedObjects]]></Name>
+					<X>50</X><Y>1660</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[GIS_Object]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
 					</Properties>
 
@@ -2042,8 +2091,12 @@ if ( b_updateCongestionColors ){
 
 // Update the live plot dataset of gcList
 if (c_selectedGridConnections.size() > 0) {
-	f_addTimeStepLiveDataSets(uI_Results.v_gridConnection, c_selectedGridConnections);
-	
+	//if(c_selectedFilterOptions.size()>0){
+		
+	//}
+	//else{
+		f_addTimeStepLiveDataSets(uI_Results.v_gridConnection, c_selectedGridConnections);
+	//}	
 	if (p_selectedProjectType == OL_ProjectType.BUSINESSPARK) {
 		if (b_multiSelect && c_selectedGridConnections.size() > 1) {
 			for (int i = 0; i < c_selectedGridConnections.size(); i++) {
@@ -2170,8 +2223,10 @@ else if (ra_legendaOptions.getValue() == 1){
 					</Parameter>
 					<Body><![CDATA[//After a click, reset previous clicked building/gridNode colors and text
 v_previousClickedObjectType = v_clickedObjectType;
+c_previousSelectedObjects = new ArrayList<GIS_Object>(c_selectedObjects);
 ArrayList<GIS_Object> buildingsConnectedToSelectedBuildingsList = new ArrayList<>();
-c_selectedGridConnections = new ArrayList();
+c_selectedGridConnections.clear();
+c_selectedObjects.clear();
 
 //Deselect previous selection
 if( v_previousClickedObjectType != null){
@@ -2217,7 +2272,7 @@ for ( GIS_Object GISobject : energyModel.pop_GIS_Objects ){
 				
 				//Set the selected GIS object type
 				v_clickedObjectType = GISobject.p_GISObjectType;
-				v_clickedBuilding = GISobject;
+				c_selectedObjects.add(GISobject);
 				
 				//Set the correct interface view for each object type
 				switch(v_clickedObjectType){
@@ -2562,18 +2617,18 @@ f_updateUIresultsGridNode(uI_Results.v_trafo, GN);]]></Body>
 						<Type><![CDATA[GIS_Object]]></Type>
 					</Parameter>
 					<Parameter>
-						<Name><![CDATA[buildingsConnectedToSelectedBuilding_list]]></Name>
+						<Name><![CDATA[buildingsConnectedToSelectedGC_list]]></Name>
 						<Type><![CDATA[ArrayList<GIS_Object>]]></Type>
 					</Parameter>
-					<Body><![CDATA[v_clickedBuilding = b;
+					<Body><![CDATA[c_selectedObjects = new ArrayList<GIS_Object>(buildingsConnectedToSelectedGC_list);
 v_clickedObjectType = b.p_GISObjectType;
 
 //Enable checkbox
 uI_Results.getCheckbox_KPISummary().setEnabled(true);
 
 // Color all buildings of the GridConnection associated with the selected building
-if (!v_clickedBuilding.c_containedGridConnections.get(0).p_ownerID.equals("-") && !v_clickedBuilding.c_containedGridConnections.get(0).p_ownerID.contains("woonfunctie") && !v_clickedBuilding.c_containedGridConnections.get(0).p_ownerID.contains("Onbekend")){
-	for (GIS_Object obj : buildingsConnectedToSelectedBuilding_list) { //Buildings that are grouped, select as well.
+if (!c_selectedObjects.get(0).c_containedGridConnections.get(0).p_ownerID.equals("-") && !c_selectedObjects.get(0).c_containedGridConnections.get(0).p_ownerID.contains("woonfunctie") && !c_selectedObjects.get(0).c_containedGridConnections.get(0).p_ownerID.contains("Onbekend")){
+	for (GIS_Object obj : c_selectedObjects) { //Buildings that are grouped, select as well.
 		obj.gisRegion.setFillColor(v_selectionColorAddBuildings);
 	}
 }
@@ -2600,11 +2655,11 @@ else {
 	}
 	
 	//Set adres text
-	if (v_clickedBuilding.c_containedGridConnections.get(0).p_address == null || v_clickedBuilding.c_containedGridConnections.get(0).p_address.getAddress() == null) {
+	if (c_selectedObjects.get(0).c_containedGridConnections.get(0).p_address == null || c_selectedObjects.get(0).c_containedGridConnections.get(0).p_address.getAddress() == null) {
 		text = text + "Onbekend adres";
 	}
 	else {
-		text = text + v_clickedBuilding.c_containedGridConnections.get(0).p_address.getAddress();
+		text = text + c_selectedObjects.get(0).c_containedGridConnections.get(0).p_address.getAddress();
 	}
 	
 	v_clickedObjectText = text;
@@ -2659,22 +2714,10 @@ else if (v_previousClickedObjectType == OL_GISObjectType.BUILDING ||
 		 v_previousClickedObjectType == OL_GISObjectType.ELECTROLYSER ||
 		 v_previousClickedObjectType == OL_GISObjectType.BATTERY ||
 		 v_previousClickedObjectType == OL_GISObjectType.CHARGER){
-	
-	v_previousClickedBuilding = v_clickedBuilding;
-
-	for (GridConnection gc : v_previousClickedBuilding.c_containedGridConnections) {
-		for (GIS_Object a : gc.c_connectedGISObjects) {
-			f_styleAreas(a);
-		}
+	for(GIS_Object previousClickedObject: c_previousSelectedObjects){
+		f_styleAreas(previousClickedObject);
 	}
-}
-
-/*
-else if( v_previousClickedObjectType == OL_GISObjectType.CHARGER){
-	v_previousClickedCharger = v_clickedCharger;
-	f_styleAreas(v_previousClickedCharger.c_connectedGISObjects.get(0));
-}
-*/]]></Body>
+}]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -4166,7 +4209,7 @@ else {
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[v_selectedGridConnectionIndex = 0;
 
-for (GridConnection gc : v_clickedBuilding.c_containedGridConnections) {
+for (GridConnection gc : c_selectedObjects.get(0).c_containedGridConnections) {
 	if (!c_selectedGridConnections.contains(gc)) {
 		c_selectedGridConnections.add(gc);
 	}
@@ -4966,12 +5009,12 @@ gisregion.setLineWidth(2);
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[if(v_clickedBuilding.c_containedGridConnections.size() > 1){
+					<Body><![CDATA[if(c_selectedObjects.get(0).c_containedGridConnections.size() > 1){
 	HashMap<String, Integer> functionsList = new HashMap<String, Integer>();
 	
-	for (int i = 0; i < v_clickedBuilding.c_containedGridConnections.size(); i++) {
+	for (int i = 0; i < c_selectedObjects.get(0).c_containedGridConnections.size(); i++) {
 		//split functies als er meerdere zijn
-		String[] splitFunctions = v_clickedBuilding.c_containedGridConnections.get(i).p_purposeBAG.split(",");
+		String[] splitFunctions = c_selectedObjects.get(0).c_containedGridConnections.get(i).p_purposeBAG.split(",");
 		
 		for (int j = 0; j < splitFunctions.length; j++) {
 			// als de key al bestaat, itereer
@@ -6179,6 +6222,428 @@ else{
 	f_updateActiveAssetBooleansGC(uI_Results.v_gridConnection, c_selectedGridConnections);
 }
 uI_Results.f_showCorrectChart();]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1734442458629</Id>
+					<Name><![CDATA[f_applyFilter]]></Name>
+					<X>-1175</X><Y>1560</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[selectedFilter]]></Name>
+						<Type><![CDATA[OL_FilterOptionsGC]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[selectedFilterName]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Body><![CDATA[c_selectedFilterOptions.add(selectedFilter);
+
+ArrayList<GridConnection> toBeFilteredGC = new ArrayList<GridConnection>();
+
+if(c_selectedFilterOptions.size()>1 && c_selectedGridConnections.size()> 0){ // Already filtering
+	toBeFilteredGC = new ArrayList<GridConnection>(c_selectedGridConnections);
+}
+else{ // First filter
+	toBeFilteredGC = new ArrayList<GridConnection>(energyModel.f_getGridConnections());
+}
+
+//After a filter selecttion, reset previous clicked building/gridNode colors and text
+v_previousClickedObjectType = v_clickedObjectType;
+c_previousSelectedObjects = new ArrayList<GIS_Object>(c_selectedObjects);
+c_selectedGridConnections.clear();
+c_selectedObjects.clear();
+
+
+//Deselect previous selection
+if( v_previousClickedObjectType != null){
+	f_deselectPreviousSelect();
+}
+
+//Can filter return 0? (Only allowed for filters who are not inmediately active (gridLoops, nbh, etc.)
+boolean filterCanReturnZero = false;
+
+switch(selectedFilter){
+	case COMPANIES:
+			f_filterCompanies(toBeFilteredGC);
+		break;
+		
+	case HOUSES:
+			f_filterHouses(toBeFilteredGC);
+		break;
+		
+	case DETAILED:
+			f_filterDetailed(toBeFilteredGC);
+		break;
+		
+	case NONDETAILED:
+			f_filterEstimated(toBeFilteredGC);
+		break;
+		
+	case HASPV:
+			f_filterHasPV(toBeFilteredGC);
+		break;
+		
+	case HASTRANSPORT:
+			f_filterHasTransport(toBeFilteredGC);
+		break;
+		
+	case GRIDTOPOLOGY_SELECTEDLOOP:
+		if(v_selectedGridLoop != null){
+			f_removeFilter(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP, selectedFilterName);
+			f_filterGridLoop(toBeFilteredGC);
+		}
+		else if(c_selectedFilterOptions.size() > 1){
+			c_selectedGridConnections = new ArrayList<>(toBeFilteredGC);	
+		}
+		else{
+			filterCanReturnZero = true;
+		}
+		break;
+}
+
+if(c_selectedGridConnections.size() == 0 && !filterCanReturnZero){ // Not allowed to return zero, while returning zero
+	f_removeFilter(selectedFilter, selectedFilterName);
+	 throw new RuntimeException("Filter results in an empty selection! -> Filter has been removed.");
+}
+else if(c_selectedGridConnections.size() == 0 && filterCanReturnZero){//Allowed to return zero filtered gc, while returning zero
+
+}
+else{//Filtered GC returns GC
+	//Set color of all gis objects of new filter selection
+	v_clickedObjectType = OL_GISObjectType.BUILDING;
+		
+	for (GridConnection GC: c_selectedGridConnections){
+		for (GIS_Object objectGIS : GC.c_connectedGISObjects) {
+			objectGIS.gisRegion.setFillColor(v_selectionColorAddBuildings);
+			c_selectedObjects.add(objectGIS);
+		}
+	}
+	
+	//Set graphs
+	f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+	uI_Results.v_selectedObjectType = v_clickedObjectType;				
+	uI_Results.f_showCorrectChart();
+}]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1734442462084</Id>
+					<Name><![CDATA[f_setFilter]]></Name>
+					<X>-1175</X><Y>1490</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[selectedFilterName]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Body><![CDATA[OL_FilterOptionsGC selectedFilter_OL = null;
+switch(selectedFilterName){
+	case "-":
+		//Do nothing
+		break;
+	case "Bedrijven":
+		selectedFilter_OL = OL_FilterOptionsGC.COMPANIES;
+		break;
+	case "Huizen":
+		selectedFilter_OL = OL_FilterOptionsGC.HOUSES;
+		break;
+	case "Detail":
+		selectedFilter_OL = OL_FilterOptionsGC.DETAILED;
+		break;
+	case "Geschatte":
+		selectedFilter_OL = OL_FilterOptionsGC.NONDETAILED;
+		break;
+	case "Zon op dak":
+		selectedFilter_OL = OL_FilterOptionsGC.HASPV;
+		break;
+	case "Transport":
+		selectedFilter_OL = OL_FilterOptionsGC.HASTRANSPORT;
+		break;
+	case "Geselecteerde ring":
+		selectedFilter_OL = OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP;
+		break;
+}
+
+
+if(!selectedFilterName.equals("-") && !c_selectedFilterOptions.contains(selectedFilter_OL)){ // Set filter
+	f_applyFilter(selectedFilter_OL, selectedFilterName);
+	t_activeFilters.setText( t_activeFilters.getText() + selectedFilterName + "\n");
+	traceln("Geselecteerde filter ( " + selectedFilterName + " ) toegevoegd.");
+}
+else if(c_selectedFilterOptions.contains(selectedFilter_OL)){ // Remove filter
+	f_removeFilter(selectedFilter_OL, selectedFilterName);
+}
+
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1734445008646</Id>
+					<Name><![CDATA[f_removeAllFilters]]></Name>
+					<X>-1170</X><Y>1780</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[c_selectedFilterOptions.clear();
+t_activeFilters.setText("");
+
+//Deselect everything and set region as main
+//After a filter selecttion, reset previous clicked building/gridNode colors and text
+v_previousClickedObjectType = v_clickedObjectType;
+c_previousSelectedObjects = new ArrayList<GIS_Object>(c_selectedObjects);
+c_selectedGridConnections.clear();
+c_selectedObjects.clear();
+
+//Deselect previous selection
+if( v_previousClickedObjectType != null){
+	f_deselectPreviousSelect();
+}
+
+v_clickedObjectType = OL_GISObjectType.REGION;
+uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
+uI_Results.f_showCorrectChart();
+
+traceln("Alle filters verwijderd.");]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1734447122780</Id>
+					<Name><![CDATA[f_selectGridLoop]]></Name>
+					<X>-1130</X><Y>1720</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[clickx]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[clicky]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[
+//Check if click was on Building, if yes, select grid building
+for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
+	if( b.gisRegion != null && b.gisRegion.contains(clickx, clicky) ){
+		if (b.gisRegion.isVisible()) { //only allow us to click on visible objects
+			if (b.c_containedGridConnections.size() > 0 ) { // only allow buildings with gridconnections
+				GridConnection clickedGridConnection = b.c_containedGridConnections.get(0); // Find buildings powered by the same GC as the clicked building
+				GridNode clickedGridConnectionConnectedGridNode = clickedGridConnection.l_parentNodeElectric.getConnectedAgent();
+				ArrayList<GridNode> allGridNodes = new ArrayList<GridNode>(energyModel.f_getGridNodesTopLevel());
+				allGridNodes.addAll(energyModel.f_getGridNodesNotTopLevel());
+				
+				while(	clickedGridConnectionConnectedGridNode.p_parentNodeID != null && 
+					  	clickedGridConnectionConnectedGridNode.p_nodeType != OL_GridNodeType.SUBMV &&
+					  	clickedGridConnectionConnectedGridNode.p_nodeType != OL_GridNodeType.MVMV){
+					String parentNodeName = clickedGridConnectionConnectedGridNode.p_parentNodeID;
+					clickedGridConnectionConnectedGridNode = findFirst(allGridNodes, GN -> GN.p_gridNodeID.equals(parentNodeName));
+				}	
+				
+				v_selectedGridLoop = clickedGridConnectionConnectedGridNode;
+				f_applyFilter(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP, "Geselecteerde ring");
+				return;
+				
+			}
+		}
+	}
+}
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1734448628428</Id>
+					<Name><![CDATA[f_filterCompanies]]></Name>
+					<X>-1150</X><Y>1580</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[toBeFilteredGC]]></Name>
+						<Type><![CDATA[ArrayList<GridConnection>]]></Type>
+					</Parameter>
+					<Body><![CDATA[c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC instanceof GCUtility));
+
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1734448687355</Id>
+					<Name><![CDATA[f_filterHouses]]></Name>
+					<X>-1150</X><Y>1600</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[toBeFilteredGC]]></Name>
+						<Type><![CDATA[ArrayList<GridConnection>]]></Type>
+					</Parameter>
+					<Body><![CDATA[c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC instanceof GCHouse));
+
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1734448688472</Id>
+					<Name><![CDATA[f_filterDetailed]]></Name>
+					<X>-1150</X><Y>1620</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[toBeFilteredGC]]></Name>
+						<Type><![CDATA[ArrayList<GridConnection>]]></Type>
+					</Parameter>
+					<Body><![CDATA[c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC.p_owner.p_detailedCompany));
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1734448689519</Id>
+					<Name><![CDATA[f_filterEstimated]]></Name>
+					<X>-1150</X><Y>1640</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[toBeFilteredGC]]></Name>
+						<Type><![CDATA[ArrayList<GridConnection>]]></Type>
+					</Parameter>
+					<Body><![CDATA[c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> !GC.p_owner.p_detailedCompany));
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1734448690487</Id>
+					<Name><![CDATA[f_filterHasPV]]></Name>
+					<X>-1150</X><Y>1660</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[toBeFilteredGC]]></Name>
+						<Type><![CDATA[ArrayList<GridConnection>]]></Type>
+					</Parameter>
+					<Body><![CDATA[c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC.v_hasPV));
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1734448691508</Id>
+					<Name><![CDATA[f_filterHasTransport]]></Name>
+					<X>-1150</X><Y>1680</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[toBeFilteredGC]]></Name>
+						<Type><![CDATA[ArrayList<GridConnection>]]></Type>
+					</Parameter>
+					<Body><![CDATA[c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC.c_vehicleAssets.size() > 0));
+
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1734451505770</Id>
+					<Name><![CDATA[f_removeFilter]]></Name>
+					<X>-1175</X><Y>1535</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[selectedFilter]]></Name>
+						<Type><![CDATA[OL_FilterOptionsGC]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[selectedFilterName]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Body><![CDATA[c_selectedFilterOptions.remove(selectedFilter);
+
+ArrayList<OL_FilterOptionsGC> toBeReappliedFilters = new ArrayList<OL_FilterOptionsGC>(c_selectedFilterOptions);
+c_selectedFilterOptions.clear();
+
+if(toBeReappliedFilters.size() > 0){
+	for(OL_FilterOptionsGC filterOption : toBeReappliedFilters){
+		f_applyFilter(filterOption, selectedFilterName);
+	}
+	String toBeAdjustedFilterText = t_activeFilters.getText();
+	String newActiveFilterText = toBeAdjustedFilterText.replace(selectedFilterName + "\n", "");
+	t_activeFilters.setText(newActiveFilterText);
+	
+	traceln("Filter ( " + selectedFilterName + " ) is verwijderd.");
+}
+else{ // All filters removed
+	traceln("Filter ( " + selectedFilterName + " ) is verwijderd.");
+	f_removeAllFilters();
+}]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1734517589341</Id>
+					<Name><![CDATA[f_filterGridLoop]]></Name>
+					<X>-1150</X><Y>1700</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[toBeFilteredGC]]></Name>
+						<Type><![CDATA[ArrayList<GridConnection>]]></Type>
+					</Parameter>
+					<Body><![CDATA[OL_GridNodeType loopTopNodeType= v_selectedGridLoop.p_nodeType;
+
+
+ArrayList<GridConnection> gridConnectionsOnLoop = new ArrayList<GridConnection>();
+
+switch(loopTopNodeType){
+case SUBMV:
+		ArrayList<GridNode> allGridNodesOnLoop = new ArrayList<GridNode>();
+		allGridNodesOnLoop.add(v_selectedGridLoop);
+		allGridNodesOnLoop.addAll(v_selectedGridLoop.f_getLowerLVLConnectedGridNodes());
+		for(GridConnection GC : toBeFilteredGC){
+			if(allGridNodesOnLoop.contains(GC.l_parentNodeElectric.getConnectedAgent())){
+				gridConnectionsOnLoop.add(GC);
+			}
+		}
+		c_selectedGridConnections = new ArrayList<>(gridConnectionsOnLoop);
+	break;
+
+case MVMV:
+		c_selectedGridConnections = new ArrayList<>(toBeFilteredGC);
+	break;
+	
+case HVMV:
+		c_selectedGridConnections = new ArrayList<>(toBeFilteredGC);
+	break; 
+}]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -10299,10 +10764,10 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 	//List<GridConnection> list = new ArrayList<>();
 	c_selectedGridConnections = new ArrayList<>();
 	if( v_selectedGridConnectionIndex > 0){
-		c_selectedGridConnections.add(v_clickedBuilding.c_containedGridConnections.get(v_selectedGridConnectionIndex -1));
+		c_selectedGridConnections.add(c_selectedObjects.get(0).c_containedGridConnections.get(v_selectedGridConnectionIndex -1));
 	}
 	else {
-		c_selectedGridConnections = v_clickedBuilding.c_containedGridConnections;
+		c_selectedGridConnections = c_selectedObjects.get(0).c_containedGridConnections;
 	}
 	f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
 	
@@ -10335,10 +10800,10 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 	c_selectedGridConnections = new ArrayList<>();
 	
 	if( v_selectedGridConnectionIndex > 0){
-		c_selectedGridConnections.add(v_clickedBuilding.c_containedGridConnections.get(v_selectedGridConnectionIndex -1));
+		c_selectedGridConnections.add(c_selectedObjects.get(0).c_containedGridConnections.get(v_selectedGridConnectionIndex -1));
 	}
 	else {
-		c_selectedGridConnections = v_clickedBuilding.c_containedGridConnections;
+		c_selectedGridConnections = c_selectedObjects.get(0).c_containedGridConnections;
 	}
 	f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
 	
@@ -10669,6 +11134,9 @@ for(GISRoute GISCable : c_MVCables){
 else if (b_multiSelect) {
 	f_multiSelect(clickx, clicky);
 }
+else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP)){
+	f_selectGridLoop(clickx, clicky);
+}
 else {
 	f_selectGISRegion(clickx, clicky);
 }
@@ -10681,6 +11149,9 @@ else {
 }
 else if (b_multiSelect) {
 	f_multiSelect(clickx, clicky);
+}
+else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP)){
+	f_selectGridLoop(clickx, clicky);
 }
 else {
 	f_selectGISRegion(clickx, clicky);
@@ -11028,6 +11499,298 @@ b_resultsUpToDate = true;
 					</ImageFiles>
 					<OriginalSize>false</OriginalSize>
 				</Image>
+				<Rectangle>
+					<Id>1734442437753</Id>
+					<Name><![CDATA[rect_filterFunctions]]></Name>
+					<X>-1200</X><Y>1430</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>3</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>350</Width>
+					<Height>660</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Text>
+					<Id>1734443343976</Id>
+					<Name><![CDATA[t_selectionColors]]></Name>
+					<X>340</X><Y>1330</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Selection colors]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1734443865835</Id>
+					<Name><![CDATA[txt_filterFunctions]]></Name>
+					<X>-1180</X><Y>1450</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Filter Functions]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Group>
+					<Id>1734444441402</Id>
+					<Name><![CDATA[gr_filterInterface]]></Name>
+					<X>-1040</X><Y>1200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<XCode><![CDATA[170]]></XCode>
+					<YCode><![CDATA[710]]></YCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+
+			<Presentation>
+				<Rectangle>
+					<Id>1734443987142</Id>
+					<Name><![CDATA[rect_filterInterface]]></Name>
+					<X>-150</X><Y>-180</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>3</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>340</Width>
+					<Height>350</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Text>
+					<Id>1734443492902</Id>
+					<Name><![CDATA[txt_filterDescription]]></Name>
+					<X>-130</X><Y>-140</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Filter gebouwen op basis van:]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Control Type="ComboBox">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1734442617547</Id>
+					<Name><![CDATA[cb_filterOptions]]></Name>
+					<X>40</X><Y>-140</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="140" Height="20">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<FillColor/>
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[f_setFilter(cb_filterOptions.getValue());
+
+cb_filterOptions.setValueIndex(0);]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="11" Style="0"/>
+						<Editable>false</Editable>
+						<Button><![CDATA[-]]></Button>
+						<Button><![CDATA[Bedrijven]]></Button>
+						<Button><![CDATA[Huizen]]></Button>
+						<Button><![CDATA[Detail]]></Button>
+						<Button><![CDATA[Geschatte]]></Button>
+						<Button><![CDATA[Zon op dak]]></Button>
+						<Button><![CDATA[Transport]]></Button>
+						<Button><![CDATA[Geselecteerde ring]]></Button>
+						<LinkTo>false</LinkTo>
+					</ExtendedProperties>
+				</Control>
+				<Text>
+					<Id>1734443541801</Id>
+					<Name><![CDATA[txt_activeFilters]]></Name>
+					<X>-130</X><Y>-110</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Actieve filters: ]]></Text>
+					<TextCode><![CDATA[!t_activeFilters.getText().equals("") ? "Actieve filters:" : ""]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1734444104065</Id>
+					<Name><![CDATA[t_activeFilters]]></Name>
+					<X>-130</X><Y>-80</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1734444671650</Id>
+					<Name><![CDATA[txt_filterInterface]]></Name>
+					<X>-40</X><Y>-170</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Filter opties]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Control Type="Button">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1734446701124</Id>
+					<Name><![CDATA[button_clearFilters]]></Name>
+					<X>30</X><Y>130</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="140" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[f_removeAllFilters();]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="11" Style="0"/>
+						<LabelText><![CDATA[Verwijder filters]]></LabelText>
+					</ExtendedProperties>
+				</Control>
+				<Text>
+					<Id>1734524446136</Id>
+					<Name><![CDATA[t_selectedGridLoop]]></Name>
+					<X>-130</X><Y>110</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[]]></Text>
+					<TextCode><![CDATA[v_selectedGridLoop != null ? "Geselecteerde lus: " + v_selectedGridLoop.p_gridNodeID : ""]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+			</Presentation>
+
+				</Group>
+				<Control Type="CheckBox">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1734444497900</Id>
+					<Name><![CDATA[cb_showFilterInterface]]></Name>
+					<X>20</X><Y>500</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="120" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>false</Enabled>
+						<ActionCode><![CDATA[gr_filterInterface.setVisible(cb_showFilterInterface.isSelected());
+
+if(!cb_showFilterInterface.isSelected()){
+	f_removeAllFilters();
+}]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="11" Style="0"/>
+						<LabelText><![CDATA[Filter opties]]></LabelText>
+						<LinkTo>false</LinkTo>
+	 				</ExtendedProperties>
+				</Control>
 			</Presentation>
 
 				</Level>
