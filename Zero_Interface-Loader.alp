@@ -11833,7 +11833,7 @@ cb_filterOptions.setValueIndex(0);]]></ActionCode>
 					<BasicProperties Width="120" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
-						<Enabled>true</Enabled>
+						<Enabled>false</Enabled>
 						<ActionCode><![CDATA[gr_filterInterface.setVisible(cb_showFilterInterface.isSelected());
 
 if(!cb_showFilterInterface.isSelected()){
