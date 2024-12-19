@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_Interface-Loader]]></Name>
@@ -11833,6 +11833,7 @@ cb_filterOptions.setValueIndex(0);]]></ActionCode>
 					<BasicProperties Width="120" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
+						<VisibleCode><![CDATA[false]]></VisibleCode>
 						<Enabled>false</Enabled>
 						<ActionCode><![CDATA[gr_filterInterface.setVisible(cb_showFilterInterface.isSelected());
 
