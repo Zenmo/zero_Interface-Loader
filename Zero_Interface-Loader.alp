@@ -6366,25 +6366,25 @@ switch(selectedFilterName){
 	case "-":
 		//Do nothing
 		break;
-	case "Bedrijven":
+	case "Bedrijfspanden":
 		selectedFilter_OL = OL_FilterOptionsGC.COMPANIES;
 		break;
-	case "Huizen":
+	case "Woonhuizen":
 		selectedFilter_OL = OL_FilterOptionsGC.HOUSES;
 		break;
-	case "Detail":
+	case "Met bekende data":
 		selectedFilter_OL = OL_FilterOptionsGC.DETAILED;
 		break;
-	case "Geschatte":
+	case "Met geschatte data":
 		selectedFilter_OL = OL_FilterOptionsGC.NONDETAILED;
 		break;
-	case "Zon op dak":
+	case "Met zonnepanelen":
 		selectedFilter_OL = OL_FilterOptionsGC.HASPV;
 		break;
-	case "Transport":
+	case "Met voertuigen":
 		selectedFilter_OL = OL_FilterOptionsGC.HASTRANSPORT;
 		break;
-	case "Geselecteerde ring":
+	case "In de aangewezen 'netbuurt'":
 		selectedFilter_OL = OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP;
 		break;
 }
@@ -6425,6 +6425,8 @@ c_selectedObjects.clear();
 if( v_previousClickedObjectType != null){
 	f_deselectPreviousSelect();
 }
+
+v_selectedGridLoop = null;
 
 v_clickedObjectType = OL_GISObjectType.REGION;
 uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
@@ -6474,9 +6476,13 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 					}
 				}	
 				
+				//This deselect the previous selected ring
+				f_setFilter("In de aangewezen 'netbuurt'");
+				
+				//This selects the new selected ring
 				v_selectedGridLoop = clickedGridConnectionConnectedGridNode;
-				f_setFilter("Geselecteerde ring");//This deselect the previous selected ring
-				f_setFilter("Geselecteerde ring");//This selects the new selected ring
+				f_setFilter("In de aangewezen 'netbuurt'");
+				
 				return;
 				
 			}
@@ -11615,7 +11621,7 @@ b_resultsUpToDate = true;
 				<Group>
 					<Id>1734444441402</Id>
 					<Name><![CDATA[gr_filterInterface]]></Name>
-					<X>-1040</X><Y>1200</Y>
+					<X>-1050</X><Y>1200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -11644,7 +11650,7 @@ b_resultsUpToDate = true;
 					<LineColor>-16777216</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>340</Width>
+					<Width>350</Width>
 					<Height>350</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
@@ -11663,7 +11669,7 @@ b_resultsUpToDate = true;
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[Filter gebouwen op basis van:]]></Text>
+					<Text><![CDATA[Selecteer gebouwen:]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>12</Size>
@@ -11675,13 +11681,13 @@ b_resultsUpToDate = true;
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1734442617547</Id>
 					<Name><![CDATA[cb_filterOptions]]></Name>
-					<X>40</X><Y>-140</Y>
+					<X>-10</X><Y>-140</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="140" Height="20">
+					<BasicProperties Width="200" Height="20">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<FillColor/>
 						<TextColor/>
@@ -11694,13 +11700,13 @@ cb_filterOptions.setValueIndex(0);]]></ActionCode>
 						<Font Name="Dialog" Size="11" Style="0"/>
 						<Editable>false</Editable>
 						<Button><![CDATA[-]]></Button>
-						<Button><![CDATA[Bedrijven]]></Button>
-						<Button><![CDATA[Huizen]]></Button>
-						<Button><![CDATA[Detail]]></Button>
-						<Button><![CDATA[Geschatte]]></Button>
-						<Button><![CDATA[Zon op dak]]></Button>
-						<Button><![CDATA[Transport]]></Button>
-						<Button><![CDATA[Geselecteerde ring]]></Button>
+						<Button><![CDATA[Bedrijfspanden]]></Button>
+						<Button><![CDATA[Woonhuizen]]></Button>
+						<Button><![CDATA[Met bekende data]]></Button>
+						<Button><![CDATA[Met geschatte data]]></Button>
+						<Button><![CDATA[Met zonnepanelen]]></Button>
+						<Button><![CDATA[Met voertuigen]]></Button>
+						<Button><![CDATA[In de aangewezen 'netbuurt']]></Button>
 						<LinkTo>false</LinkTo>
 					</ExtendedProperties>
 				</Control>
@@ -11750,7 +11756,7 @@ cb_filterOptions.setValueIndex(0);]]></ActionCode>
 				<Text>
 					<Id>1734444671650</Id>
 					<Name><![CDATA[txt_filterInterface]]></Name>
-					<X>-40</X><Y>-170</Y>
+					<X>25</X><Y>-170</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11766,7 +11772,7 @@ cb_filterOptions.setValueIndex(0);]]></ActionCode>
 						<Size>14</Size>
 						<Style>1</Style>
 					</Font>
-					<Alignment>LEFT</Alignment>
+					<Alignment>CENTER</Alignment>
 				</Text>
 				<Control Type="Button">
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
