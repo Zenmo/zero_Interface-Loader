@@ -6107,6 +6107,7 @@ ArrayList<String> warnings = new ArrayList<>();
 HashSet<GridNode> parentNodes = new HashSet<>();
 
 for (GridConnection gc : gcList) {
+	
 	// GridTopology Check
 	GridNode gn = gc.l_parentNodeElectric.getConnectedAgent();
 	// TODO: Improve this so it uses an OptionList instead of string comparison
@@ -6143,7 +6144,7 @@ for (GridConnection gc : gcList) {
 if ( parentNodes.size() > 1 ) {
 	// add warning
 	traceln("Warning! Selected GridConnections for E-Hub are not on a single ring.");
-	warnings.add("Er zijn bedrijven op meer dan 1 ring gekozen");
+	warnings.add("Let op! Er zijn bedrijven op verschillende ringen geselecteerd");
 }
 
 v_groupATODeliveryCapacity_kW = deliveryCapacity_kW;
@@ -6195,7 +6196,10 @@ else {
 b_EHubSelect = false;
 uI_Results.b_EHubConfiguration = false;
 uI_Tabs.pop_tabEHub.get(0).cb_EHubSelect.setSelected(false);
-uI_Tabs.pop_tabEHub.get(0).t_EHubConfigurationInformation.setText("Nog geen E-Hub samengesteld");]]></Body>
+uI_Tabs.pop_tabEHub.get(0).t_baseGroepInfo.setText("Selecteer minimaal twee panden");
+uI_Tabs.pop_tabEHub.get(0).t_groepsGTV_kW.setText("");
+uI_Tabs.pop_tabEHub.get(0).t_cumulatiefGTV_kW.setText("");
+uI_Tabs.pop_tabEHub.get(0).t_warnings.setText("");]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -6348,11 +6352,14 @@ uI_Results.v_dataEHubFeedInCapacityLiveWeek_kW.add(timeAxisValue, -v_groupATOFee
 						<Type><![CDATA[String]]></Type>
 					</Parameter>
 					<Body><![CDATA[if (reset) {
-	uI_Tabs.pop_tabEHub.get(0).t_EHubConfigurationInformation.setText("");
+	uI_Tabs.pop_tabEHub.get(0).t_baseGroepInfo.setText("");
+	uI_Tabs.pop_tabEHub.get(0).t_groepsGTV_kW.setText("");
+	uI_Tabs.pop_tabEHub.get(0).t_cumulatiefGTV_kW.setText("");
+	uI_Tabs.pop_tabEHub.get(0).t_warnings.setText("");
 }
 else {
-	String currentString = uI_Tabs.pop_tabEHub.get(0).t_EHubConfigurationInformation.getText();
-	uI_Tabs.pop_tabEHub.get(0).t_EHubConfigurationInformation.setText(currentString + textToAdd);
+	String currentWarningString = uI_Tabs.pop_tabEHub.get(0).t_warnings.getText();
+	uI_Tabs.pop_tabEHub.get(0).t_warnings.setText(currentWarningString + textToAdd);
 }
 
 ]]></Body>
@@ -26387,7 +26394,7 @@ f_setPublicChargingStations(sliderValue);]]></ActionCode>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[Besparing elektriciteitsverbruik]]></Text>
+					<Text><![CDATA[Reductie elektriciteitsverbruik]]></Text>
 					<Font>
 						<Name>Dialog</Name>
 						<Size>14</Size>
@@ -27541,7 +27548,7 @@ f_setPublicChargingStationsScale(sliderValue);]]></ActionCode>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[Besparing elektriciteitsverbruik]]></Text>
+					<Text><![CDATA[Reductie elektriciteitsverbruik]]></Text>
 					<Font>
 						<Name>Dialog</Name>
 						<Size>14</Size>
@@ -32046,8 +32053,8 @@ zero_Interface.f_calculateGroupATOConnectionCapacity(zero_Interface.c_selectedGr
 				</Control>
 				<Text>
 					<Id>1733229120390</Id>
-					<Name><![CDATA[t_EHubConfigurationInformation]]></Name>
-					<X>50</X><Y>920</Y>
+					<Name><![CDATA[t_warnings]]></Name>
+					<X>60</X><Y>990</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32061,6 +32068,69 @@ zero_Interface.f_calculateGroupATOConnectionCapacity(zero_Interface.c_selectedGr
 					<Font>
 						<Name>Dialog</Name>
 						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1734667373669</Id>
+					<Name><![CDATA[t_baseGroepInfo]]></Name>
+					<X>60</X><Y>920</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[t_base info]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1734667403955</Id>
+					<Name><![CDATA[t_groepsGTV_kW]]></Name>
+					<X>60</X><Y>950</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[text]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1734667433304</Id>
+					<Name><![CDATA[t_cumulatiefGTV_kW]]></Name>
+					<X>60</X><Y>970</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[text]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
 						<Style>0</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
