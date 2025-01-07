@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_Interface-Loader]]></Name>
@@ -11833,7 +11833,7 @@ cb_filterOptions.setValueIndex(0);]]></ActionCode>
 					<BasicProperties Width="120" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
-						<VisibleCode><![CDATA[false]]></VisibleCode>
+						<VisibleCode><![CDATA[cb_showFilterInterface.isEnabled()]]></VisibleCode>
 						<Enabled>false</Enabled>
 						<ActionCode><![CDATA[gr_filterInterface.setVisible(cb_showFilterInterface.isSelected());
 
@@ -34778,7 +34778,7 @@ import zeroPackage.ZeroMath;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1726584205883</Id>
 					<Name><![CDATA[v_timeOfModelStart_ms]]></Name>
-					<X>1480</X><Y>150</Y>
+					<X>1480</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -34790,7 +34790,7 @@ import zeroPackage.ZeroMath;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1726584205885</Id>
 					<Name><![CDATA[v_modelStartUpDuration_s]]></Name>
-					<X>1480</X><Y>170</Y>
+					<X>1480</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -34806,7 +34806,7 @@ import zeroPackage.ZeroMath;]]></Import>
 					<Id>1726584205887</Id>
 					<Name><![CDATA[v_hourOfYearStart]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1480</X><Y>130</Y>
+					<X>1480</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -34835,7 +34835,7 @@ import zeroPackage.ZeroMath;]]></Import>
 					<Name><![CDATA[v_totalFloorAreaAnonymousCompanies_m2]]></Name>
 					<Description><![CDATA[variable that tracks how much floor area remains for the average companies. (this will be used to determine the average m3 and kwh per m2 floor area to be used by the unkown companies (that have not filled in the survey). 
 Calculated by: initial value (total floor area of the area) - total floor area of the survey companies]]></Description>
-					<X>1481</X><Y>241</Y>
+					<X>1481</X><Y>211</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -34847,7 +34847,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="PlainVariable">
 					<Id>1726584205893</Id>
 					<Name><![CDATA[v_numberOfCompaniesNoSurvey]]></Name>
-					<X>1481</X><Y>221</Y>
+					<X>1481</X><Y>191</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -34859,7 +34859,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="PlainVariable">
 					<Id>1726584205895</Id>
 					<Name><![CDATA[v_remainingGasConsumption_m3]]></Name>
-					<X>1481</X><Y>281</Y>
+					<X>1481</X><Y>251</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -34871,7 +34871,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="PlainVariable">
 					<Id>1726584205897</Id>
 					<Name><![CDATA[v_remainingElectricityDelivery_kWh]]></Name>
-					<X>1481</X><Y>261</Y>
+					<X>1481</X><Y>231</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -34895,7 +34895,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="PlainVariable">
 					<Id>1726584205901</Id>
 					<Name><![CDATA[v_remainingNumberOfCompaniesNoSurvey]]></Name>
-					<X>1480</X><Y>300</Y>
+					<X>1480</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -34922,7 +34922,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="PlainVariable">
 					<Id>1733235094633</Id>
 					<Name><![CDATA[v_numberOfSurveyCompanies]]></Name>
-					<X>1480</X><Y>200</Y>
+					<X>1480</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -34935,7 +34935,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 					<Id>1733389557748</Id>
 					<Name><![CDATA[v_simStartHour_h]]></Name>
 					<Description><![CDATA[The hour 0 is defined as january 1st, 00:00h in the year energyModel.p_year]]></Description>
-					<X>1610</X><Y>129</Y>
+					<X>1610</X><Y>99</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -34950,7 +34950,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 				<Variable Class="PlainVariable">
 					<Id>1733390702422</Id>
 					<Name><![CDATA[v_simDuration_h]]></Name>
-					<X>1737</X><Y>128</Y>
+					<X>1737</X><Y>98</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -34960,6 +34960,18 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[8760-energyModel.p_timeStep_h]]></Code>
 						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1736255870137</Id>
+					<Name><![CDATA[v_remainingNumberOfCars]]></Name>
+					<X>1480</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -38156,7 +38168,20 @@ future_scenario_list.setPlannedBatteryPower_kW(0f);
 future_scenario_list.setPlannedBatteryCapacity_kWh(0f);
 
 	
-//Transport (total remaining vans and trucks (total as defined in project selection - survey company usage)
+//Transport (total remaining cars, vans and trucks (total as defined in project selection - survey company usage)
+
+//Vans
+if(v_remainingNumberOfCars > 0){
+	int nbCars = 0;
+	for (int k = 0; k< ceil((double)v_remainingNumberOfCars/(double)v_remainingNumberOfCompaniesNoSurvey); k++){
+		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
+		v_remainingNumberOfCars--;
+		nbCars++;
+	}
+	
+	//Set current scenario trucks
+	current_scenario_list.setCurrentDieselCars(nbCars);
+}
 
 //Vans
 if(v_remainingNumberOfVans > 0){
@@ -39958,6 +39983,10 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 	//Cars
 	if (gridConnection.getTransport().getCars().getNumCars() != null && gridConnection.getTransport().getCars().getNumCars() != 0){
 		
+		
+		//Update v_remaningAmount of cars (company owned only)
+		v_remainingNumberOfCars -= gridConnection.getTransport().getCars().getNumCars();
+		
 		//gridConnection.getTransport().getCars().getNumChargePoints(); // Wat doen we hier mee????????
 		
 		int nbEVCars = gridConnection.getTransport().getCars().getNumElectricCars();
@@ -40590,7 +40619,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 				<Rectangle>
 					<Id>1726584205907</Id>
 					<Name><![CDATA[rect_projectDataTracking]]></Name>
-					<X>1450</X><Y>60</Y>
+					<X>1450</X><Y>20</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40604,7 +40633,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
 					<Width>460</Width>
-					<Height>360</Height>
+					<Height>400</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -40657,7 +40686,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 				<Text>
 					<Id>1726584205913</Id>
 					<Name><![CDATA[txt_timeLoggers]]></Name>
-					<X>1470</X><Y>100</Y>
+					<X>1470</X><Y>70</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40742,7 +40771,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 				<Text>
 					<Id>1726584205921</Id>
 					<Name><![CDATA[txt_projectDataTracking]]></Name>
-					<X>1460</X><Y>70</Y>
+					<X>1460</X><Y>40</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42226,6 +42255,7 @@ public class Project_data {
 		Double avg_electricity_consumption_house_kWh_p_yr;
 		Double avg_gas_consumption_house_m3_p_yr;
 		Integer total_cars_houses;
+		Integer total_cars_companies;
 		Integer total_vans_companies;
 		Integer total_trucks_companies;
 }]]></Text>
