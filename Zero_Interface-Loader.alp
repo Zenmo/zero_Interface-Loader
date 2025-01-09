@@ -6331,10 +6331,13 @@ switch(selectedFilter){
 
 if(c_selectedGridConnections.size() == 0 && !filterCanReturnZero){ // Not allowed to return zero, while returning zero
 	f_removeFilter(selectedFilter, selectedFilterName);
-	 throw new RuntimeException("Filter results in an empty selection! -> Filter has been removed.");
+	//cb_showFilterInterface.setValueToDefault();
+	
+	//Notify filter has not been applied, cause no results are given
+	f_setErrorScreen("Geselecteerde filter geeft geen resultaten.\n" + "De filter is gedeactiveerd.");
 }
 else if(c_selectedGridConnections.size() == 0 && filterCanReturnZero){//Allowed to return zero filtered gc, while returning zero
-
+	//Do nothing
 }
 else{//Filtered GC returns GC
 	//Set color of all gis objects of new filter selection
@@ -6397,9 +6400,9 @@ switch(selectedFilterName){
 
 
 if(!selectedFilterName.equals("-") && !c_selectedFilterOptions.contains(selectedFilter_OL)){ // Set filter
-	f_applyFilter(selectedFilter_OL, selectedFilterName);
-	t_activeFilters.setText( t_activeFilters.getText() + selectedFilterName + "\n");
 	traceln("Geselecteerde filter ( " + selectedFilterName + " ) toegevoegd.");
+	t_activeFilters.setText( t_activeFilters.getText() + selectedFilterName + "\n");
+	f_applyFilter(selectedFilter_OL, selectedFilterName);
 }
 else if(c_selectedFilterOptions.contains(selectedFilter_OL)){ // Remove filter
 	f_removeFilter(selectedFilter_OL, selectedFilterName);
@@ -6438,7 +6441,7 @@ v_clickedObjectType = OL_GISObjectType.REGION;
 uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
 uI_Results.f_showCorrectChart();
 
-traceln("Alle filters verwijderd.");]]></Body>
+traceln("Alle filters zijn verwijderd.");]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -6705,6 +6708,27 @@ else{
 	}
 	c_selectedGridConnections = new ArrayList<>(gridConnectionsOnLoop);
 }]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1736344958050</Id>
+					<Name><![CDATA[f_setErrorScreen]]></Name>
+					<X>3420</X><Y>1040</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[errorMessage]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Body><![CDATA[//Set position above all other things
+presentation.remove(gr_errorScreen);
+presentation.insert(presentation.size(), gr_errorScreen);
+
+t_errorMessage.setText(errorMessage);
+gr_errorScreen.setVisible(true);]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -11199,6 +11223,9 @@ else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECT
 	f_selectGridLoop(clickx, clicky);
 }
 else {
+	if(c_selectedFilterOptions.size() > 0){
+		f_removeAllFilters();
+	}
 	f_selectGISRegion(clickx, clicky);
 }
 ]]></OnClickCode>
@@ -11215,6 +11242,9 @@ else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECT
 	f_selectGridLoop(clickx, clicky);
 }
 else {
+	if(c_selectedFilterOptions.size() > 0){
+		f_removeAllFilters();
+	}
 	f_selectGISRegion(clickx, clicky);
 }
 ]]></OnClickCode>
@@ -11810,12 +11840,13 @@ cb_filterOptions.setValueIndex(0);]]></ActionCode>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<VisibleCode><![CDATA[c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP)]]></VisibleCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[]]></Text>
-					<TextCode><![CDATA[v_selectedGridLoop != null ? "Geselecteerde lus: " + v_selectedGridLoop.p_gridNodeID : ""]]></TextCode>
+					<TextCode><![CDATA[v_selectedGridLoop != null ? "Geselecteerde lus: " + v_selectedGridLoop.p_gridNodeID : "Geen lus geselecteerd."]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>12</Size>
@@ -11853,6 +11884,152 @@ if(!cb_showFilterInterface.isSelected()){
 						<LinkTo>false</LinkTo>
 	 				</ExtendedProperties>
 				</Control>
+				<Group>
+					<Id>1736337963311</Id>
+					<Name><![CDATA[gr_errorScreen]]></Name>
+					<X>4360</X><Y>520</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<XCode><![CDATA[960]]></XCode>
+					<YCode><![CDATA[500]]></YCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+
+			<Presentation>
+				<Rectangle>
+					<Id>1736344526647</Id>
+					<Name><![CDATA[rect_errorScreenGrayOut]]></Name>
+					<X>-960</X><Y>-500</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<OnClickCode><![CDATA[//traceln();]]></OnClickCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-2049715245</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>1920</Width>
+					<Height>980</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-2049715245</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Rectangle>
+					<Id>1736337660961</Id>
+					<Name><![CDATA[rect_errorMessage]]></Name>
+					<X>-250</X><Y>-120</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>5</LineWidth>
+					<LineColor>-65536</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>500</Width>
+					<Height>200</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Text>
+					<Id>1736337707551</Id>
+					<Name><![CDATA[t_errorMessage]]></Name>
+					<X>0</X><Y>-70</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[TYPE YOUR ERROR MESSAGE HERE]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>24</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Group>
+					<Id>1736338014404</Id>
+					<Name><![CDATA[button_errorOK]]></Name>
+					<X>0</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<OnClickCode><![CDATA[gr_errorScreen.setVisible(false);]]></OnClickCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+
+			<Presentation>
+				<Rectangle>
+					<Id>1736338014406</Id>
+					<Name><![CDATA[rect_errorOK]]></Name>
+					<X>-60</X><Y>-20</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>120</Width>
+					<Height>40</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Text>
+					<Id>1736338014408</Id>
+					<Name><![CDATA[txt_errorOK]]></Name>
+					<X>0</X><Y>-10</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Ok]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>18</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+			</Presentation>
+
+				</Group>
+			</Presentation>
+
+				</Group>
 			</Presentation>
 
 				</Level>
