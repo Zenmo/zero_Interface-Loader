@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Variables>
+	<Variable Class="PlainVariable">
+		<Id>1722245555993</Id>
+		<Name><![CDATA[v_selectedTabType]]></Name>
+		<X>250</X>
+		<Y>40</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[EnergyDemandTab]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[ELECTRICITY]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+</Variables>

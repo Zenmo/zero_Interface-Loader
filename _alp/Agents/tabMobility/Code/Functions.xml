@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Functions>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1722256088432</Id>
+		<Name><![CDATA[f_setElectricTrucks]]></Name>
+		<Description><![CDATA[Function that adds or removes electric trucks to gridconnections. Takes a percentage as a parameter and runs untill that percentage of all the trucks is an electric truck. If a new electric truck is created it gets its characteristics from the AVGC data and keeps the triptracker from the fossil truck. The function also updates the sliders in the company UI.]]></Description>
+		<X>70</X>
+		<Y>770</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[pctElectricTrucksGoal]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[sliderElectricTrucks]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[sliderFFTrucks]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1722256088443</Id>
+		<Name><![CDATA[f_setVehicleSliders]]></Name>
+		<Description><![CDATA[Function that calculates the values of the other sliders and sets them without calling an action. Takes as parameters the index of the slider which should not be touched as well as all the slider objects. HydrogenVehicle slider is optional and an argument of null can be passed. ]]></Description>
+		<X>70</X>
+		<Y>740</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[sliderIndex]]></Name>
+			<Type><![CDATA[int]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[electricSlider]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[hydrogenSlider]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[fossilFuelSlider]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1722256088451</Id>
+		<Name><![CDATA[f_setElectricVans]]></Name>
+		<Description><![CDATA[Function that adds or removes electric vans to gridconnections. Takes a percentage as a parameter and runs untill that percentage of all the vans is an electric van. If a new electric van is created it gets its characteristics from the AVGC data and keeps the triptracker from the fossil van. The function also updates the sliders in the company UI.]]></Description>
+		<X>70</X>
+		<Y>790</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[pctElectricVansGoal]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[sliderElectricVans]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[sliderFFVans]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1722256088460</Id>
+		<Name><![CDATA[f_setElectricCars]]></Name>
+		<Description><![CDATA[Function that adds or removes electric cars to gridconnections. Takes a percentage as a parameter and runs untill that percentage of all the cars is an electric car. If a new electric car is created it gets its characteristics from the AVGC data and keeps the triptracker from the fossil car. The function also updates the sliders in the company UI.]]></Description>
+		<X>70</X>
+		<Y>810</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[pctEVsGoal]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[sliderElectricCars]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[sliderFFCars]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1722342449665</Id>
+		<Name><![CDATA[f_setDemandReduction]]></Name>
+		<Description><![CDATA[Function that reduces the distance of all triptrackers. Takes as an argument a percentage to reduce by compared to the default distance value of the triptrackers.]]></Description>
+		<X>70</X>
+		<Y>600</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[demandReduction_pct]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1729168033110</Id>
+		<Name><![CDATA[f_calculateNumberOfGhostVehicles]]></Name>
+		<X>20</X>
+		<Y>1000</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+</Functions>

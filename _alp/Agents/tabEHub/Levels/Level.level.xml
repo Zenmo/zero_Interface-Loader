@@ -1,0 +1,1644 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Presentation>
+	<Rectangle>
+		<Id>1722344806530</Id>
+		<Name><![CDATA[rect_generalFunctions]]></Name>
+		<X>450</X>
+		<Y>650</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>3</LineWidth>
+		<LineColor>-16777216</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>200</Width>
+		<Height>100</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Rectangle>
+	<Rectangle>
+		<Id>1722344586686</Id>
+		<Name><![CDATA[rect_nfatoFunctions]]></Name>
+		<X>700</X>
+		<Y>650</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>3</LineWidth>
+		<LineColor>-16711936</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>300</Width>
+		<Height>300</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Rectangle>
+	<Group>
+		<Id>1722253487925</Id>
+		<Name><![CDATA[gr_hubSliders]]></Name>
+		<X>185</X>
+		<Y>175</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Rectangle>
+				<Id>1722253487927</Id>
+				<Name><![CDATA[rect_hubSliders]]></Name>
+				<X>-185</X>
+				<Y>-175</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>3</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>370</Width>
+				<Height>350</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-3736634</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Rectangle>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1722253487935</Id>
+				<Name><![CDATA[cb_spreadChargingEVs]]></Name>
+				<X>75</X>
+				<Y>-142</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="40" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<ActionCode>if (cb_spreadChargingEVs.isSelected()) {
+	cb_powerChargingEVs.setSelected(false);
+	zero_Interface.energyModel.f_getGridConnections().forEach(x -&gt; x.p_chargingAttitudeVehicles = OL_ChargingAttitude.MAX_SPREAD);
+} else {
+	for(GridConnection GC : zero_Interface.energyModel.f_getGridConnections()){
+		if(GC instanceof GCPublicCharger){
+			//Leave it on basic setting (MAX_SPREAD)
+		}
+		else{
+			GC.p_chargingAttitudeVehicles = OL_ChargingAttitude.SIMPLE;
+		}
+	}
+	
+}
+
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText/>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1722253487937</Id>
+				<Name><![CDATA[t_collectiveBatteries1]]></Name>
+				<X>35</X>
+				<Y>-75</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[#]]></Text>
+				<TextCode>sl_collectiveBattery_MWh.getIntValue() + " MWh"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1722253487939</Id>
+				<Name><![CDATA[t_spreadChargingEVsDescription]]></Name>
+				<X>-170</X>
+				<Y>-135</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Slim laden]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1722253487941</Id>
+				<Name><![CDATA[sl_collectiveBattery_MWh]]></Name>
+				<X>70</X>
+				<Y>-80</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setGridBatteries(sl_collectiveBattery_MWh.getValue());
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>50</MaxValue>
+					<Step>1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1722253487943</Id>
+				<Name><![CDATA[t_curtailmentDescription]]></Name>
+				<X>-170</X>
+				<Y>-160</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Curtailment opwek]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1722253487945</Id>
+				<Name><![CDATA[t_collectiveBatteryDescription]]></Name>
+				<X>-170</X>
+				<Y>-75</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Collectieve batterijen]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1722253487947</Id>
+				<Name><![CDATA[cb_curtailment]]></Name>
+				<X>75</X>
+				<Y>-168</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="40" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<ActionCode>if (cb_curtailment.isSelected()) {
+	for (GridConnection GC : zero_Interface.energyModel.f_getGridConnections()) {
+		GC.v_enableCurtailment = true;
+		
+		if (zero_Interface.c_companyUIs.size()&gt;0){
+			UI_company companyUI = zero_Interface.c_companyUIs.get(GC.p_owner.p_connectionOwnerIndexNr);
+			if (companyUI != null &amp;&amp; companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == GC) { // should also check the setting of selected GC
+				companyUI.cb_curtailmentCompany.setSelected(true, false);
+			}
+		}
+	}
+}
+else {
+	for (GridConnection GC : zero_Interface.energyModel.f_getGridConnections()) {
+		GC.v_enableCurtailment = false;
+		
+		if (zero_Interface.c_companyUIs.size()&gt;0){
+			UI_company companyUI = zero_Interface.c_companyUIs.get(GC.p_owner.p_connectionOwnerIndexNr);
+			if (companyUI != null &amp;&amp; companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == GC) { // should also check the setting of selected GC
+				companyUI.cb_curtailmentCompany.setSelected(false, false);
+			}
+		}
+	}
+}
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText/>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1722253487949</Id>
+				<Name><![CDATA[button_add_nfato]]></Name>
+				<X>-170</X>
+				<Y>-45</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="160" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<ActionCode>/*
+if (v_NFATOListener) {
+	// This should not be reachable anymore
+	traceln("Quitting NF ATO settings");
+	v_NFATOListener = false;
+	return;
+}
+*/
+
+if (zero_Interface.v_clickedObjectType != null &amp;&amp; zero_Interface.v_clickedObjectType == OL_GISObjectType.BUILDING &amp;&amp; zero_Interface.c_selectedGridConnections.size() != 0) {
+	v_nfatoFirstGC = zero_Interface.c_selectedGridConnections.get(0);
+	t_nfatoFirstBuilding.setText(v_nfatoFirstGC.p_ownerID + " zal ontvangen");
+	t_nfatoSecondBuilding.setText("Klik op een gebouw dat zijn capaciteit gaat afstaan");	
+}
+
+// When this boolean is true clicking on the GIS Map will select another building for the NF ATO
+b_NFATOListener = true;
+f_setTab(NFATO);
+
+
+if (b_nfatoWeekendDistinction) {
+	t_nfatoWeek.setVisible(true);
+	t_nfatoWeekend.setVisible(true);
+	sl_nfatoWeekendStartTime.setVisible(true);
+	sl_nfatoWeekendEndTime.setVisible(true);
+	sl_nfatoWeekendCapacity.setVisible(true);
+}
+else {
+	t_nfatoWeek.setVisible(false);
+	t_nfatoWeekend.setVisible(false);
+	sl_nfatoWeekendStartTime.setVisible(false);
+	sl_nfatoWeekendEndTime.setVisible(false);
+	sl_nfatoWeekendCapacity.setVisible(false);
+}
+
+
+// TODO: Color the companies on the GIS Map (e.g. according to grid topology)</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Voeg Non-Firm ATO toe</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1722253487951</Id>
+				<Name><![CDATA[button_remove_nfato]]></Name>
+				<X>0</X>
+				<Y>-45</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="160" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<ActionCode>for (GridConnection GC : zero_Interface.energyModel.f_getGridConnections()) {
+	GC.f_nfatoSetConnectionCapacity(true);
+	GC.v_enableNFato = false;
+	GC.v_nfatoWeekDeliveryCapacity_kW = new double[24];
+	GC.v_nfatoWeekendDeliveryCapacity_kW = new double[24];
+	GC.v_nfatoWeekFeedinCapacity_kW = new double[24];
+	GC.v_nfatoWeekendFeedinCapacity_kW = new double[24];
+}
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+button_remove_nfato.setEnabled(false);
+
+zero_Interface.f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Verwijder alle NF ATOs</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1725277950476</Id>
+				<Name><![CDATA[cb_powerChargingEVs]]></Name>
+				<X>75</X>
+				<Y>-116</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="40" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<ActionCode>if (cb_powerChargingEVs.isSelected()) {
+	cb_spreadChargingEVs.setSelected(false);
+	for(GridConnection GC : zero_Interface.energyModel.f_getGridConnections()){
+		if(GC instanceof GCPublicCharger){
+			//Leave it on basic setting (MAX_SPREAD)
+		}
+		else{
+			GC.p_chargingAttitudeVehicles = OL_ChargingAttitude.MAX_POWER;
+		}
+	}
+	//zero_Interface.energyModel.f_getGridConnections().forEach(x -&gt; x.p_chargingAttitudeVehicles = OL_ChargingAttitude.MAX_POWER);
+} else {
+	for(GridConnection GC : zero_Interface.energyModel.f_getGridConnections()){
+		if(GC instanceof GCPublicCharger){
+			//Leave it on basic setting (MAX_SPREAD)
+		}
+		else{
+			GC.p_chargingAttitudeVehicles = OL_ChargingAttitude.SIMPLE;
+		}
+	}
+	//zero_Interface.energyModel.f_getGridConnections().forEach(x -&gt; x.p_chargingAttitudeVehicles = OL_ChargingAttitude.SIMPLE);
+}
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText/>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1725277950478</Id>
+				<Name><![CDATA[t_powerChargingEVsDescription]]></Name>
+				<X>-170</X>
+				<Y>-109</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>cb_powerChargingEVs.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Max Power laden elek. trucks]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1736425642857</Id>
+				<Name><![CDATA[cb_EHubSelect]]></Name>
+				<X>-165</X>
+				<Y>-5</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="230" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<ActionCode>if (!cb_EHubSelect.isSelected()) {
+	zero_Interface.b_EHubSelect = false;
+	zero_Interface.uI_Results.b_EHubConfiguration = false;
+	zero_Interface.v_clickedObjectText = "None";
+	
+	// Reset the list of selected GCs and the individual AreaCollections in the ResultsUI
+	zero_Interface.c_selectedGridConnections.clear();
+	zero_Interface.uI_Results.c_individualGridConnections = new ArrayList&lt;AreaCollection&gt;();
+	
+	// Reset the building colors
+	for (GridConnection GC: zero_Interface.energyModel.f_getGridConnections()) {
+		for (GIS_Object GB : GC.c_connectedGISObjects) {
+			zero_Interface.f_styleAreas(GB);
+		}
+	}
+	
+	// Reset the shown charts
+	zero_Interface.f_updateUIresultsMainArea();
+	zero_Interface.uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
+	zero_Interface.uI_Results.f_showCorrectChart();
+	
+	//Reset the KPI summary button
+	zero_Interface.uI_Results.getCheckbox_KPISummary().setEnabled(true);
+	
+	// Reset the groupATO Capacities
+	zero_Interface.v_groupATODeliveryCapacity_kW = 0;
+	zero_Interface.v_groupATOFeedInCapacity_kW = 0;
+	
+	// disable the WKK button
+	//cb_wkk.setSelected(false, true);
+	//cb_wkk.setEnabled(false);
+}
+else{
+
+	// we create areacollection(s) for the currently selected GC(s) (could be multiple if the user was using multiselect before checking this box)
+	zero_Interface.f_fillAreaCollectionsOfIndividualGCs();
+	
+	zero_Interface.b_EHubSelect = true;
+	zero_Interface.uI_Results.b_EHubConfiguration = true;
+	zero_Interface.v_clickedObjectText = "Selecteer een bedrijf om toe te voegen aan de E-Hub";
+	
+	//Make the companyUI button invisible
+	zero_Interface.getButton_goToUI().setVisible(false);
+	
+	//Disable the KPI summary (button)
+	zero_Interface.uI_Results.getCheckbox_KPISummary().setSelected(false, true);
+	zero_Interface.uI_Results.getCheckbox_KPISummary().setEnabled(false);
+	
+	// Reset multi-select
+	zero_Interface.b_multiSelect = false;
+	zero_Interface.getMultiSelect().setSelected(false);
+	
+	// disable the WKK button
+	//cb_wkk.setEnabled(true);
+}
+
+
+// Energy-Hub Group connection capacity calculation
+zero_Interface.f_calculateGroupATOConnectionCapacity(zero_Interface.c_selectedGridConnections);
+zero_Interface.f_EHubCapacityDataSets();
+
+zero_Interface.uI_Results.f_showCorrectChart();
+
+</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="14" Style="0"/>
+					<LabelText>Stel E-Hub configuratie samen</LabelText>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1736425642864</Id>
+				<Name><![CDATA[t_baseGroepInfo]]></Name>
+				<X>-155</X>
+				<Y>35</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[t_base info]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1736425642870</Id>
+				<Name><![CDATA[t_cumulatiefGTV_kW]]></Name>
+				<X>-155</X>
+				<Y>75</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[text]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1736425642875</Id>
+				<Name><![CDATA[t_warnings]]></Name>
+				<X>-155</X>
+				<Y>95</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Nog geen E-Hub samengesteld]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1736425642881</Id>
+				<Name><![CDATA[t_groepsGTV_kW]]></Name>
+				<X>-155</X>
+				<Y>55</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[text]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+		</Presentation>
+	</Group>
+	<Group>
+		<Id>1722253509588</Id>
+		<Name><![CDATA[gr_nfatoSettings]]></Name>
+		<X>185</X>
+		<Y>575</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>185</XCode>
+		<YCode>175</YCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Rectangle>
+				<Id>1722253509590</Id>
+				<Name><![CDATA[rect_nfatoSettings]]></Name>
+				<X>-185</X>
+				<Y>-175</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>3</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>370</Width>
+				<Height>350</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-3736634</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Rectangle>
+			<Text>
+				<Id>1722253509592</Id>
+				<Name><![CDATA[t_nfatoFirstBuilding]]></Name>
+				<X>-160</X>
+				<Y>-155</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Klik op een gebouw dat capaciteit gaat ontvangen]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1722253509594</Id>
+				<Name><![CDATA[t_nfatoSecondBuilding]]></Name>
+				<X>-160</X>
+				<Y>-125</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text/>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1722253509596</Id>
+				<Name><![CDATA[sl_nfatoWeekStartTime]]></Name>
+				<X>-60</X>
+				<Y>5</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>8</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>24</MaxValue>
+					<Step>1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1722253509598</Id>
+				<Name><![CDATA[cb_nfatoWeekendDistinction]]></Name>
+				<X>-160</X>
+				<Y>-100</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="190" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<ActionCode>if (b_nfatoWeekendDistinction) {
+	t_nfatoWeek.setVisible(true);
+	t_nfatoWeekend.setVisible(true);
+	sl_nfatoWeekendStartTime.setVisible(true);
+	sl_nfatoWeekendEndTime.setVisible(true);
+	sl_nfatoWeekendCapacity.setVisible(true);
+}
+else {
+	t_nfatoWeek.setVisible(false);
+	t_nfatoWeekend.setVisible(false);
+	sl_nfatoWeekendStartTime.setVisible(false);
+	sl_nfatoWeekendEndTime.setVisible(false);
+	sl_nfatoWeekendCapacity.setVisible(false);
+}</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="14" Style="0"/>
+					<LabelText>verschil week &amp; weekend</LabelText>
+					<LinkTo>true</LinkTo>
+					<Link>b_nfatoWeekendDistinction</Link>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1722253509600</Id>
+				<Name><![CDATA[sl_nfatoWeekEndTime]]></Name>
+				<X>-60</X>
+				<Y>35</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>20</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>24</MaxValue>
+					<Step>1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1722253509602</Id>
+				<Name><![CDATA[sl_nfatoWeekCapacity]]></Name>
+				<X>-60</X>
+				<Y>70</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>100</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>2000</MaxValue>
+					<Step>10</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1722253509604</Id>
+				<Name><![CDATA[button_confirm_nfato]]></Name>
+				<X>-140</X>
+				<Y>110</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="155" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<ActionCode>if (sl_nfatoWeekStartTime.getValue() == sl_nfatoWeekEndTime.getValue()) {
+	traceln("Week start time is the same as end time");
+}
+else if (sl_nfatoWeekendStartTime.getValue() == sl_nfatoWeekendEndTime.getValue()) {
+	traceln("Weekend start time is the same as end time");
+}
+else {
+	double[][] arr = f_constructNFATOArrays();
+	//traceln("f_constructNFATOArraysFromSliders: " + Arrays.toString(arr[0]));
+	//traceln("f_constructNFATOArraysFromSliders: " + Arrays.toString(arr[1]));
+	
+	double[] weekCapacities = arr[0];
+	double[] weekendCapacities = arr[1];
+	
+	if (f_checkNFATO(weekCapacities, weekendCapacities)) {	
+		f_setNFATO(weekCapacities, weekendCapacities);
+		f_setTab(HUB);
+		// reset the nfato settings
+		f_resetNFATOSettings();
+		zero_Interface.f_resetSettings();
+		
+		button_remove_nfato.setEnabled(true);
+		
+		//Update variable to change to custom scenario
+		if(!zero_Interface.b_runningMainInterfaceScenarios){
+			zero_Interface.b_changeToCustomScenario = true;
+		}
+	}
+}
+
+</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Voeg Non-Firm ATO toe</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1722253509606</Id>
+				<Name><![CDATA[button_cancel_nfato]]></Name>
+				<X>90</X>
+				<Y>110</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="75" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setTab(HUB);
+f_resetNFATOSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>cancel</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1722253509608</Id>
+				<Name><![CDATA[t_nfatoWeekStartTime]]></Name>
+				<X>-165</X>
+				<Y>10</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Start tijd (uur)]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1722253509610</Id>
+				<Name><![CDATA[t_nfatoWeekEndTime]]></Name>
+				<X>-165</X>
+				<Y>40</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Eind tijd (uur)]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1722253509612</Id>
+				<Name><![CDATA[t_nfatoWeekStartTime2]]></Name>
+				<X>-175</X>
+				<Y>75</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Capaciteit (kW)]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1722253509614</Id>
+				<Name><![CDATA[t_nfatoWeek]]></Name>
+				<X>-30</X>
+				<Y>-20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Week
+]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1722253509616</Id>
+				<Name><![CDATA[t_nfatoWeekend]]></Name>
+				<X>80</X>
+				<Y>-20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Weekend
+]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1722253509618</Id>
+				<Name><![CDATA[sl_nfatoWeekendStartTime]]></Name>
+				<X>62</X>
+				<Y>5</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>8</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>24</MaxValue>
+					<Step>1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1722253509620</Id>
+				<Name><![CDATA[sl_nfatoWeekendEndTime]]></Name>
+				<X>62</X>
+				<Y>35</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>20</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>24</MaxValue>
+					<Step>1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1722253509622</Id>
+				<Name><![CDATA[sl_nfatoWeekendCapacity]]></Name>
+				<X>62</X>
+				<Y>70</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>100</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>2000</MaxValue>
+					<Step>10</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="RadioButtons">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1725970287541</Id>
+				<Name><![CDATA[rb_deliveryOrFeedin]]></Name>
+				<X>-160</X>
+				<Y>-70</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="70" Height="70">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<DefaultValueCode>2</DefaultValueCode>
+					<Orientation>VERTICAL</Orientation>
+					<Button>Delivery</Button>
+					<Button>Feed in</Button>
+					<Button>Both</Button>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+		</Presentation>
+	</Group>
+	<Text>
+		<Id>1722256365442</Id>
+		<Name><![CDATA[t_nfatoFunctionsDescription]]></Name>
+		<X>850</X>
+		<Y>655</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[NF ATO Functions]]></Text>
+		<Font>
+			<Name><![CDATA[Dialog]]></Name>
+			<Size>18</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>CENTER</Alignment>
+	</Text>
+	<Text>
+		<Id>1722344870135</Id>
+		<Name><![CDATA[t_generalFunctionsDescription]]></Name>
+		<X>480</X>
+		<Y>660</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[General Functions]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>18</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Rectangle>
+		<Id>1722344920583</Id>
+		<Name><![CDATA[rect_batteryFunctions]]></Name>
+		<X>1050</X>
+		<Y>650</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>3</LineWidth>
+		<LineColor>-16744320</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>300</Width>
+		<Height>100</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Rectangle>
+	<Text>
+		<Id>1722344920585</Id>
+		<Name><![CDATA[t_batteryFunctionsDescription]]></Name>
+		<X>1200</X>
+		<Y>655</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Battery Functions]]></Text>
+		<Font>
+			<Name><![CDATA[Dialog]]></Name>
+			<Size>18</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>CENTER</Alignment>
+	</Text>
+	<Group>
+		<Id>1736429614133</Id>
+		<Name><![CDATA[gr_groepscontract]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>500</X>
+		<Y>-80</Y>
+		<Label>
+			<X>6.511</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>185</XCode>
+		<YCode>180</YCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Text>
+				<Id>1736429614135</Id>
+				<Name><![CDATA[text_basis1]]></Name>
+				<X>0</X>
+				<Y>-52.294</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Som huidige GTVs]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1736429614137</Id>
+				<Name><![CDATA[text_basis2]]></Name>
+				<X>-65.109</X>
+				<Y>-52.294</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Groeps GTV]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<RoundedRectangle>
+				<Id>1736429614139</Id>
+				<Name><![CDATA[roundRectangle]]></Name>
+				<X>-91.153</X>
+				<Y>-39.221</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>58.598</Width>
+				<Height>26.147</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-1</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>10</ArcRadius>
+			</RoundedRectangle>
+			<Text>
+				<Id>1736429614141</Id>
+				<Name><![CDATA[t_warnings1]]></Name>
+				<X>-104.174</X>
+				<Y>6.537</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Waarschuwingen: nog geen waarschuwingen]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1736429614143</Id>
+				<Name><![CDATA[cb_wkk]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<X>-114.174</X>
+				<Y>45.758</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="208" Height="26">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<ActionCode>GCEnergyConversion GCECS = findFirst(zero_Interface.energyModel.EnergyConversionSites, gc -&gt; gc.p_gridConnectionID.equals("GCECS2"));
+if (GCECS == null) {
+	throw new RuntimeException("Error: Could not find WKK");
+}
+if (cb_wkk.isSelected()) {
+	// First we find the ring of the currently selected E-Hub
+	if ( zero_Interface.c_selectedGridConnections.size() == 0 ) {
+		throw new RuntimeException("Stel eerst je E-Hub samen door op een bedrijf te klikken.");
+	}
+	GridConnection GC = zero_Interface.c_selectedGridConnections.get(0);
+	GridNode ringNode;
+	if (GC.l_parentNodeElectric.getConnectedAgent().p_description.toLowerCase().contains("klantstation")) {
+		ringNode = findFirst(zero_Interface.energyModel.pop_gridNodes, gn -&gt; gn.p_gridNodeID.equals( GC.l_parentNodeElectric.getConnectedAgent().p_parentNodeID) );
+	}
+	else {
+		ringNode = GC.l_parentNodeElectric.getConnectedAgent();
+	}
+	
+	// Remove from old gridnode
+	GCECS.l_parentNodeElectric.getConnectedAgent().f_getConnectedGridConnections().remove(GCECS);
+	GCECS.l_parentNodeElectric.disconnect();
+	
+	// Add to new gridnode
+	GCECS.p_parentNodeElectricID = ringNode.p_gridNodeID;
+	GCECS.l_parentNodeElectric.connectTo(ringNode);
+	ringNode.f_getConnectedGridConnections().add(GCECS);
+	
+	// Add WKK to the selectedgridconnections in interface
+	zero_Interface.c_selectedGridConnections.add(GCECS);
+	zero_Interface.f_fillAreaCollectionsOfIndividualGCs();
+	
+	// Activate GC
+	GCECS.f_setActive(true);
+	
+}
+else {
+	// Remove WKK from the selectedgridconnections in interface
+	zero_Interface.c_selectedGridConnections.remove(GCECS);
+	zero_Interface.f_fillAreaCollectionsOfIndividualGCs();
+	
+	GCECS.f_setActive(false);
+}
+
+zero_Interface.uI_Results.f_showCorrectChart();
+zero_Interface.f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="12" Style="0"/>
+					<LabelText>Voeg HR-WKK aan E-Hub toe</LabelText>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1736429614145</Id>
+				<Name><![CDATA[text_baseGroepInfo]]></Name>
+				<X>-104.174</X>
+				<Y>-78.442</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Selecteer minimaal twee panden]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1736429614149</Id>
+				<Name><![CDATA[t_cumulatiefGTV_kW1]]></Name>
+				<X>-61.854</X>
+				<Y>-30.069</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[text]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<RoundedRectangle>
+				<Id>1736429614151</Id>
+				<Name><![CDATA[roundRectangle1]]></Name>
+				<X>6.511</X>
+				<Y>-39.221</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>58.598</Width>
+				<Height>26.147</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-1</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>10</ArcRadius>
+			</RoundedRectangle>
+			<Text>
+				<Id>1736429614153</Id>
+				<Name><![CDATA[t_groepsGTV_kW1]]></Name>
+				<X>32.555</X>
+				<Y>-32.684</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[text]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+		</Presentation>
+	</Group>
+</Presentation>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Functions>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>int</ReturnType>
+		<Id>1722256102007</Id>
+		<Name><![CDATA[f_setHeatingSystemsCompanies]]></Name>
+		<Description><![CDATA[Function that adds or removes heatpumps to utility connections. Takes a percentage as a parameter and runs untill that percentage of all the utility connections has a heatpump. If a new heatpump is created it determines its heat demand on a heat_demand consumption asset if it exists, else it looks for a heat profile asset. The function also updates the radio button in the company UI.]]></Description>
+		<X>70</X>
+		<Y>790</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[sliderGasburner]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[sliderHeatpump]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1722256221655</Id>
+		<Name><![CDATA[f_setHeatingSystemsHouseholds]]></Name>
+		<Description><![CDATA[Function that adds or removes heatpumps to houses. Takes a percentage as a parameter and runs untill that percentage of all the houses has a heatpump. If a new heatpump is created it determines its heat demand on a heat_demand consumption asset if it exists, else it looks for a heat profile asset.]]></Description>
+		<X>70</X>
+		<Y>830</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[targetHeatPump_pct]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1722256269495</Id>
+		<Name><![CDATA[f_setHeatingSliders]]></Name>
+		<Description><![CDATA[Function that calculates all the values of the other sliders and sets them without calling an action. Takes as parameters the index of the slider which should not be touched as well as all the sliders. HybridHeatPump and DistrictHeating sliders are optional and an argument of null can be passed. ]]></Description>
+		<X>70</X>
+		<Y>770</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[sliderIndex]]></Name>
+			<Type><![CDATA[int]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[gasBurnerSlider]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[heatPumpSlider]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[hybridHeatPumpSlider]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[districtHeatingSlider]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1722335783993</Id>
+		<Name><![CDATA[f_setDemandReductionHeatingCompanies]]></Name>
+		<Description><![CDATA[Function that reduces the heat demand of all consumption assets. Takes as an argument a percentage to reduce by compared to the default value of the consumption assets.]]></Description>
+		<X>70</X>
+		<Y>590</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[demandReduction_pct]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1727269173559</Id>
+		<Name><![CDATA[f_setDemandReductionHeatingHouses]]></Name>
+		<Description><![CDATA[Function that reduces the heat demand of all consumption assets. Takes as an argument a percentage to reduce by compared to the default value of the consumption assets.]]></Description>
+		<X>70</X>
+		<Y>630</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[demandReduction_pct]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>int</ReturnType>
+		<Id>1729259449060</Id>
+		<Name><![CDATA[f_setHeatingSystemsWithCompanyUI]]></Name>
+		<X>90</X>
+		<Y>810</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[targetHeatPump_pct]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[sliderGasburner]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[sliderHeatpump]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1729262524479</Id>
+		<Name><![CDATA[f_calculateNumberOfGhostHeatingSystems]]></Name>
+		<X>40</X>
+		<Y>1000</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+</Functions>

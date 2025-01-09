@@ -1,0 +1,58 @@
+double f_setAVGC_data()
+{/*ALCODESTART::1726584205530*/
+J_AVGC_data dataAVGC = new J_AVGC_data();
+
+dataAVGC.p_avgHouseGasConsumption_m3_yr = p_avgHouseGasConsumption_m3_yr;
+dataAVGC.p_avgHouseElectricityConsumption_kWh_yr = p_avgHouseElectricityConsumption_kWh_yr;
+dataAVGC.p_avgEVMaxChargePowerVan_kW = p_avgEVMaxChargePowerVan_kW;
+dataAVGC.p_avgHouseConnectionCapacity_kW = p_avgHouseConnectionCapacity_kW;
+dataAVGC.p_avgHouseHeatingMethod = p_avgHouseHeatingMethod;
+dataAVGC.p_ratioEVHousePersonalCars = p_shareOfElectricVehicleOwnership;
+dataAVGC.p_avgEVMaxChargePowerCar_kW = p_avgEVMaxChargePowerCar_kW;
+dataAVGC.p_avgEVMaxChargePowerTruck_kW = p_avgEVMaxChargePowerTruck_kW;
+dataAVGC.p_avgEVStorageCar_kWh = p_avgEVStorageCar_kWh;
+dataAVGC.p_avgEVStorageVan_kWh = p_avgEVStorageVan_kWh;
+dataAVGC.p_avgHousePVInstallationPower_kWp = p_avgHousePVInstallationPower_kWp;
+dataAVGC.p_avgEVStorageTruck_kWh = p_avgEVStorageTruck_kWh;
+dataAVGC.p_ratioHouseInstalledPV = p_ratioHouseInstalledPV;
+dataAVGC.p_gas_kWhpm3 = p_gas_kWhpm3;
+dataAVGC.p_diesel_kWhpl = p_diesel_kWhpl;
+dataAVGC.p_gasoline_kWhpl = p_gasoline_kWhpl;
+dataAVGC.p_avgUtilityHeatingMethod = p_avgUtilityHeatingMethod;
+dataAVGC.p_avgUtilityConnectionCapacity_kW = p_avgUtilityConnectionCapacity_kW;
+dataAVGC.p_avgUtilityPVPower_kWp = p_avgUtilityPVPower_kWp;
+dataAVGC.p_ratioElectricTrucks = p_ratioElectricTrucks;
+dataAVGC.p_avgCompanyHeatingMethod = p_avgCompanyHeatingMethod;
+dataAVGC.p_avgEVEnergyConsumptionCar_kWhpkm = p_avgEVEnergyConsumptionCar_kWhpkm;
+dataAVGC.p_avgEVEnergyConsumptionVan_kWhpkm = p_avgEVEnergyConsumptionVan_kWhpkm;
+dataAVGC.p_avgEVEnergyConsumptionTruck_kWhpkm = p_avgEVEnergyConsumptionTruck_kWhpkm;
+dataAVGC.p_hydrogenEnergyDensity_kWh_Nm3 = p_hydrogenEnergyDensity_kWh_Nm3;
+dataAVGC.p_avgDieselConsumptionCar_kmpl = p_avgDieselConsumptionCar_kmpl;
+dataAVGC.p_avgGasolineConsumptionCar_kmpl = p_avgGasolineConsumptionCar_kmpl;
+dataAVGC.p_hydrogenSpecificEnergy_kWh_kg = p_hydrogenSpecificEnergy_kWh_kg;
+dataAVGC.p_hydrogenDensity_kg_Nm3 = p_hydrogenDensity_kg_Nm3;
+dataAVGC.p_oxygenDensity_kg_Nm3 = p_oxygenDensity_kg_Nm3;
+dataAVGC.p_avgCOPHeatpump = p_avgCOPHeatpump;
+dataAVGC.p_avgEfficiencyHeatpump = p_avgEfficiencyHeatpump;
+dataAVGC.p_avgDieselConsumptionCar_kWhpkm = p_avgDieselConsumptionCar_kWhpkm;
+dataAVGC.p_oxygenProduction_kgO2pkgH2 = p_oxygenProduction_kgO2pkgH2;
+dataAVGC.p_avgGasolineConsumptionCar_kWhpkm = p_avgGasolineConsumptionCar_kWhpkm;
+dataAVGC.p_avgDieselConsumptionVan_kmpl = p_avgDieselConsumptionVan_kmpl;
+dataAVGC.p_avgDieselConsumptionVan_kWhpkm = p_avgDieselConsumptionVan_kWhpkm;
+dataAVGC.p_avgDieselConsumptionTruck_kmpl = p_avgDieselConsumptionTruck_kmpl;
+dataAVGC.p_avgDieselConsumptionTruck_kWhpkm = p_avgDieselConsumptionTruck_kWhpkm;
+dataAVGC.p_avgOutputTemperatureHeatpump_degC = p_avgOutputTemperatureHeatpump_degC;
+dataAVGC.p_avgHydrogenConsumptionCar_kWhpkm = p_avgHydrogenConsumptionCar_kWhpkm;
+dataAVGC.p_avgEfficiencyGasBurner = p_avgEfficiencyGasBurner;
+dataAVGC.p_avgHydrogenConsumptionVan_kWhpkm = p_avgHydrogenConsumptionVan_kWhpkm;
+dataAVGC.p_avgHydrogenConsumptionTruck_kWhpkm = p_avgHydrogenConsumptionTruck_kWhpkm;
+dataAVGC.p_avgOutputTemperatureGasBurner_degC = p_avgOutputTemperatureGasBurner_degC;
+dataAVGC.p_avgEfficiencyHydrogenBurner = p_avgEfficiencyHydrogenBurner;
+dataAVGC.p_avgOutputTemperatureHydrogenBurner_degC = p_avgOutputTemperatureHydrogenBurner_degC;
+dataAVGC.p_avgPVPower_kWpm2= p_avgPVPower_kWpm2;
+dataAVGC.p_avgRatioRoofPotentialPV = p_avgRatioRoofPotentialPV;
+dataAVGC.p_avgRatioBatteryCapacity_v_Power = p_avgRatioBatteryCapacity_v_Power;
+
+zero_Loader.energyModel.avgc_data = dataAVGC;
+/*ALCODEEND*/}
+
