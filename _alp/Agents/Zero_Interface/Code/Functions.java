@@ -552,9 +552,15 @@ uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfGhostHeatingSystems();
 
 double f_connectResultsUI()
 {/*ALCODESTART::1709716821854*/
-//Set legend settings
-uI_Results.p_legendsScope = f_setLegendsScope();
+//Style resultsUI
+f_styleResultsUI();
 
+//Set ResultsUI radiobutton setup
+if(settings.resultsUIRadioButtonSetup() != null){
+	uI_Results.v_selectedRadioButton = settings.resultsUIRadioButtonSetup();
+}
+
+//Initialize main area collection
 AreaCollection mainArea = uI_Results.add_pop_areaResults(OL_GISObjectType.REGION, "Main");
 uI_Results.v_area = mainArea;
 
@@ -562,10 +568,7 @@ uI_Results.v_area = mainArea;
 mainArea.v_activeProductionEnergyCarriers = energyModel.v_activeProductionEnergyCarriers;
 mainArea.v_activeConsumptionEnergyCarriers = energyModel.v_activeConsumptionEnergyCarriers;
 
-//Set ResultsUI radiobutton setup
-if(settings.resultsUIRadioButtonSetup() != null){
-	uI_Results.v_selectedRadioButton = settings.resultsUIRadioButtonSetup();
-}
+
 
 //Set boolean if it has connection with heatgrid
 for (GridNode GN : energyModel.f_getGridNodesTopLevel()) {
@@ -2749,29 +2752,6 @@ for (GridConnection GC : energyModel.f_getGridConnections()){
 
 /*ALCODEEND*/}
 
-OL_LegendsScope f_setLegendsScope()
-{/*ALCODESTART::1727355134954*/
-//Can be overridden in child if other than default is preferred. 
-OL_LegendsScope p_legendsScope;
-
-switch(p_selectedProjectType){
-
-case BUSINESSPARK:
-	p_legendsScope = OL_LegendsScope.BUSINESSPARK;
-	break;
-	
-case RESIDENTIAL:
-	p_legendsScope = OL_LegendsScope.RESIDENTIAL;
-	break;
-
-default:
-	p_legendsScope = OL_LegendsScope.BUSINESSPARK;
-
-}
-
-return p_legendsScope;
-/*ALCODEEND*/}
-
 double f_projectSpecificOrderedCollectionAdjustments()
 {/*ALCODESTART::1729685968993*/
 //Function that can be used to make project specific adjustments to the ordered collection
@@ -3927,5 +3907,10 @@ else {
 	uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
 }
 uI_Results.f_showCorrectChart();
+/*ALCODEEND*/}
+
+double f_styleResultsUI()
+{/*ALCODESTART::1736442051389*/
+uI_Results.f_styleAllCharts(v_backgroundColor, lavender, 1.0, LINE_STYLE_SOLID);
 /*ALCODEEND*/}
 

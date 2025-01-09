@@ -3138,7 +3138,7 @@ b_updateCongestionColors = false;
 		<Id>1702552223737</Id>
 		<Name><![CDATA[t_stylingFunctions]]></Name>
 		<X>-680</X>
-		<Y>300</Y>
+		<Y>290</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -3730,7 +3730,7 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 		<Id>1710174312959</Id>
 		<Name><![CDATA[t_resultsUIFunctions]]></Name>
 		<X>-680</X>
-		<Y>540</Y>
+		<Y>510</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -3780,7 +3780,7 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 		<Id>1713431901010</Id>
 		<Name><![CDATA[t_initializationFunctions]]></Name>
 		<X>-680</X>
-		<Y>190</Y>
+		<Y>180</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -4033,7 +4033,7 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 		<Id>1715951689412</Id>
 		<Name><![CDATA[t_inputParameters]]></Name>
 		<X>-680</X>
-		<Y>60</Y>
+		<Y>50</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -5290,8 +5290,8 @@ b_resultsUpToDate = true;
 	<Rectangle>
 		<Id>1734442437753</Id>
 		<Name><![CDATA[rect_filterFunctions]]></Name>
-		<X>-1080</X>
-		<Y>360</Y>
+		<X>-1500</X>
+		<Y>0</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -5366,8 +5366,8 @@ b_resultsUpToDate = true;
 	<Group>
 		<Id>1734444441402</Id>
 		<Name><![CDATA[gr_filterInterface]]></Name>
-		<X>-1050</X>
-		<Y>1200</Y>
+		<X>-1350</X>
+		<Y>740</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

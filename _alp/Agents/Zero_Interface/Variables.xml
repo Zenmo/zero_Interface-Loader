@@ -2042,7 +2042,7 @@
 		<Id>1715867611441</Id>
 		<Name><![CDATA[map_centre_latitude]]></Name>
 		<X>-670</X>
-		<Y>110</Y>
+		<Y>100</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2067,7 +2067,7 @@
 		<Id>1715867648777</Id>
 		<Name><![CDATA[map_centre_longitude]]></Name>
 		<X>-670</X>
-		<Y>130</Y>
+		<Y>120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2092,7 +2092,7 @@
 		<Id>1724757837316</Id>
 		<Name><![CDATA[p_selectedProjectType]]></Name>
 		<X>-670</X>
-		<Y>90</Y>
+		<Y>80</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2117,7 +2117,7 @@
 		<Id>1727251571552</Id>
 		<Name><![CDATA[settings]]></Name>
 		<X>-670</X>
-		<Y>170</Y>
+		<Y>160</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2143,7 +2143,7 @@
 		<Id>1728030131094</Id>
 		<Name><![CDATA[map_scale]]></Name>
 		<X>-670</X>
-		<Y>150</Y>
+		<Y>140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
