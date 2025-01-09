@@ -39231,7 +39231,7 @@ if (yearlyElectricityProduction_kWh != null && yearlyElectricityFeedin_kWh != nu
 		}
 		//traceln("Added electricity consumed compared to delivery profile: %s MWh", addedConsumption_kWh/1000);
 	} else { // Zonder terugleveringsdata, alleen afname
-		//traceln("Estimating electricity consumption based on delivery profile and pv power for company %s with %s kWp PV", parentGC.p_gridConnectionID, pvPower_kW);
+		traceln("Estimating electricity consumption based on delivery profile and pv power for company %s with %s kWp PV", parentGC.p_gridConnectionID, pvPower_kW);
 		double pvPowerEstimate_kW = 0;
 		double estimatedConsumption_kWh = 0;
 		double addedConsumption_kWh = 0;
@@ -39793,7 +39793,7 @@ J_ProfilePointer profilePointer = new J_ProfilePointer((parentGC.p_ownerID + "_P
 energyModel.f_addProfile(profilePointer);
 J_EAProduction production_asset = new J_EAProduction(parentGC, OL_EnergyAssetType.PHOTOVOLTAIC, (parentGC.p_ownerID + "_rooftopPV"), (double)pvPower_kW, 0.0, 0.0, 0.0, energyModel.p_timeStep_h, 0.0, profilePointer);
 
-traceln("Custom PV asset added to GC: " + parentGC.p_gridConnectionID);
+traceln("Custom PV asset added to GC: " + parentGC.p_ownerID);
 //traceln("Custom PV asset added to %s with installed power %s kW and %s full load hours!", parentGC.p_ownerID, pvPower_kW, fullLoadHours_h);
 ]]></Body>
 				</Function>
@@ -42638,7 +42638,7 @@ public class Windfarm_data {
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
-			<Path><![CDATA[vallum-production-468-6ba0cd3-all.jar]]></Path>
+			<Path><![CDATA[vallum-production-561-2880623-all.jar]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
@@ -42672,7 +42672,7 @@ public class Windfarm_data {
 	<ClassPathEntry>
 		<ResourceReference>
 			<PackageName><![CDATA[zerointerfaceloader]]></PackageName>
-			<ClassName><![CDATA[vallum-production-468-6ba0cd3-all.jar]]></ClassName>
+			<ClassName><![CDATA[vallum-production-561-2880623-all.jar]]></ClassName>
 		</ResourceReference>
 		<Imported>true</Imported>
 		<Folder>false</Folder>
