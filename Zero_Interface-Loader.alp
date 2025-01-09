@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_Interface-Loader]]></Name>
@@ -3633,16 +3633,21 @@ area.v_dataNetbelastingDuurkrommeWeekend_kW = GN.data_weekendNetbelastingDuurkro
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// First we make a copy of all the Uitility GridConnections
 List<GridConnection> GCs = new ArrayList<>(energyModel.f_getGridConnections());
+List<GridConnection> GCs_detailedCompanies = new ArrayList<>(energyModel.f_getGridConnections());
 if( p_selectedProjectType == OL_ProjectType.RESIDENTIAL){
 	GCs = GCs.stream().filter(gc -> gc instanceof GCHouse).collect(Collectors.toList());
 }
 else {
-	GCs = GCs.stream().filter(gc -> gc instanceof GCUtility).collect(Collectors.toList());
+	GCs_detailedCompanies = GCs.stream().filter(gc -> gc instanceof GCUtility && gc.p_owner.p_detailedCompany).collect(Collectors.toList());
+	GCs = GCs.stream().filter(gc -> gc instanceof GCUtility && !gc.p_owner.p_detailedCompany).collect(Collectors.toList());
 }
 // Find all the GCs with PV at the start of the simulation
 ArrayList<GridConnection> GCsWithPV = GCs.stream().filter(gc -> gc.v_hasPV).collect(Collectors.toCollection(ArrayList::new));
 ArrayList<GridConnection> otherGCs = GCs.stream().filter(gc -> !gc.v_hasPV).collect(Collectors.toCollection(ArrayList::new));
 //Collections.shuffle(otherGCs);
+ArrayList<GridConnection> detailedCompanyGCsWithPV = GCs_detailedCompanies.stream().filter(gc -> gc.v_hasPV).collect(Collectors.toCollection(ArrayList::new));
+ArrayList<GridConnection> datailedCompanyGCsnoPV = GCs_detailedCompanies.stream().filter(gc -> !gc.v_hasPV).collect(Collectors.toCollection(ArrayList::new));
+
 // We make sure that the GCs with PV at the start of the simulation are the last in the list
 
 //traceln("amount of GCs with PV at start: " + GCsWithPV.size());
@@ -3652,7 +3657,8 @@ if(c_companyUIs.size() == 0){
 	otherGCs.addAll(GCsWithPV);
 }
 
-c_orderedPVSystems = otherGCs;]]></Body>
+c_orderedPVSystems = otherGCs;
+c_orderedPVSystems.addAll(datailedCompanyGCsnoPV);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -36456,7 +36462,14 @@ TableFunction tf_p_logistics_fleet_e_hgv = new TableFunction(a_arguments, a_logi
 profilePointer = new J_ProfilePointer("LOGISTICS_FLEET_HGV_E", tf_p_logistics_fleet_e_hgv);
 energyModel.f_addProfile(profilePointer);
 
-
+//
+double[] a_flatProfile = new double[a_arguments.length];
+for (int i = 0; i<a_arguments.length; i++){
+	a_flatProfile[i] = 1;
+}
+TableFunction tf_p_flat_profile = new TableFunction(a_arguments, a_flatProfile, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+profilePointer = new J_ProfilePointer("FLAT_PROFILE", tf_p_flat_profile);
+energyModel.f_addProfile(profilePointer);
 
 
 
@@ -39012,6 +39025,7 @@ for (Cable_data dataCableMV : c_Cable_data_MV) {
 J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, null, OL_ProfileAssetType.ELECTRICITYBASELOAD, energyModel.p_timeStep_h);		
 profile.setStartTime_h(v_simStartHour_h);
 profile.energyAssetName = parentGC.p_ownerID + " custom profile";
+double extraConsumption_kWh = 0;
 
 //Initialize parameters		
 double nettDelivery_kWh;
@@ -39021,6 +39035,8 @@ if (yearlyElectricityProduction_kWh != null && yearlyElectricityFeedin_kWh != nu
 	double[] yearlyElectricityConsumption_kWh = new double[yearlyElectricityDelivery_kWh.length];
 	for (int i = 0; i < yearlyElectricityDelivery_kWh.length; i++) {	
 		yearlyElectricityConsumption_kWh[i] = yearlyElectricityDelivery_kWh[i] - yearlyElectricityFeedin_kWh[i] + yearlyElectricityProduction_kWh[i];
+		extraConsumption_kWh += -min(yearlyElectricityConsumption_kWh[i],0);
+		yearlyElectricityConsumption_kWh[i] = max(0,yearlyElectricityConsumption_kWh[i]);
 	}
 	profile.a_energyProfile_kWh = yearlyElectricityConsumption_kWh;
 	nettDelivery_kWh = Arrays.stream(yearlyElectricityDelivery_kWh).sum() - Arrays.stream(yearlyElectricityFeedin_kWh).sum();
@@ -39065,6 +39081,11 @@ if (yearlyElectricityProduction_kWh != null && yearlyElectricityFeedin_kWh != nu
 }
 //traceln(Arrays.stream(profile.a_energyProfile_kWh).sum() + " kWh per jaar at grid connection " + parentGC.p_ownerID + " " + profileName);
 v_remainingElectricityDelivery_kWh -= nettDelivery_kWh;
+
+if (extraConsumption_kWh > 1) {
+	traceln("Preprocessing of delivery and production data led to negative consumption of: %s kWh", extraConsumption_kWh);
+	traceln("Consumption profile was capped to 0kW");
+}
  
 if (v_remainingElectricityDelivery_kWh < 0){
 	traceln("v_remainingElectricityConsumption_kWh became negative at GC: %s", parentGC);
