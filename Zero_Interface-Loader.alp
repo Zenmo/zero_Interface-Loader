@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_Interface-Loader]]></Name>
@@ -1564,7 +1564,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1734442989935</Id>
 					<Name><![CDATA[v_selectedGridLoop]]></Name>
-					<X>-1130</X><Y>1740</Y>
+					<X>-1410</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1576,7 +1576,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1734617425109</Id>
 					<Name><![CDATA[b_gridLoopsAreDefined]]></Name>
-					<X>-1130</X><Y>1760</Y>
+					<X>-1410</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2070,7 +2070,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1734442668540</Id>
 					<Name><![CDATA[c_selectedFilterOptions]]></Name>
-					<X>-1150</X><Y>1510</Y>
+					<X>-1430</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5458,107 +5458,6 @@ for (int j = 0; j < c_selectedGridConnections.size(); j++) {
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1725442474483</Id>
-					<Name><![CDATA[f_updateTotalYearlyDataSets]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-990</X><Y>870</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[for (int j = 0; j < c_selectedGridConnections.size(); j++) {
-	AreaCollection AC = uI_Results.c_individualGridConnections.get(j);
-	
-	AC.v_dataTotalElectricityDemandYear_kW = new DataSet(365);
-	AC.v_dataTotalElectricitySupplyYear_kW = new DataSet(365);
-
-	int dataSetSize = AC.v_dataElectricityBaseloadDemandYear_kW.size();
-	for (int k = 0; k < dataSetSize; k++) {
-		double timeAxisValue = AC.v_dataElectricityBaseloadDemandYear_kW.getX(k);
-		
-		double totalElectricityDemandYear = 0;
-		double totalElectricitySupplyYear = 0;
-		
-		totalElectricityDemandYear += AC.v_dataElectricityBaseloadDemandYear_kW.getY(k);
-		totalElectricityDemandYear += AC.v_dataElectricityForHeatDemandYear_kW.getY(k);
-		totalElectricityDemandYear += AC.v_dataElectricityForTransportDemandYear_kW.getY(k);
-		totalElectricityDemandYear += AC.v_dataElectricityForStorageDemandYear_kW.getY(k);
-		totalElectricityDemandYear += AC.v_dataElectricityForHydrogenDemandYear_kW.getY(k);
-		
-		totalElectricitySupplyYear += AC.v_dataElectricityWindSupplyYear_kW.getY(k);
-		totalElectricitySupplyYear += AC.v_dataElectricityPVSupplyYear_kW.getY(k);
-		totalElectricitySupplyYear += AC.v_dataElectricityStorageSupplyYear_kW.getY(k);
-		totalElectricitySupplyYear += AC.v_dataElectricityV2GSupplyYear_kW.getY(k);
-		totalElectricitySupplyYear += AC.v_dataHydrogenSupplyYear_kW.getY(k);
-
-		AC.v_dataTotalElectricityDemandYear_kW.add(timeAxisValue, totalElectricityDemandYear);
-		AC.v_dataTotalElectricitySupplyYear_kW.add(timeAxisValue, totalElectricitySupplyYear);
-	}
-}]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1725442517475</Id>
-					<Name><![CDATA[f_updateTotalWeeklyDataSets]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-1000</X><Y>900</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[for (int j = 0; j < c_selectedGridConnections.size(); j++) {
-	AreaCollection AC = uI_Results.c_individualGridConnections.get(j);
-	
-	AC.v_dataTotalElectricityDemandSummerWeek_kW = new DataSet(672);
-	AC.v_dataTotalElectricitySupplySummerWeek_kW = new DataSet(672);
-	AC.v_dataTotalElectricityDemandWinterWeek_kW = new DataSet(672);
-	AC.v_dataTotalElectricitySupplyWinterWeek_kW = new DataSet(672);
-
-	int weekSize = AC.v_dataElectricityBaseloadDemandSummerWeek_kW.size();
-	for (int k = 0; k < weekSize; k++) {
-		double timeAxisValueSummer = AC.v_dataElectricityBaseloadDemandSummerWeek_kW.getX(k);
-		double timeAxisValueWinter = AC.v_dataElectricityBaseloadDemandWinterWeek_kW.getX(k);
-		
-		double totalElectricityDemandSummerWeek = 0;
-		double totalElectricitySupplySummerWeek = 0;
-		double totalElectricityDemandWinterWeek = 0;
-		double totalElectricitySupplyWinterWeek = 0;
-		
-		totalElectricityDemandSummerWeek += AC.v_dataElectricityBaseloadDemandSummerWeek_kW.getY(k);
-		totalElectricityDemandSummerWeek += AC.v_dataElectricityForHeatDemandSummerWeek_kW.getY(k);
-		totalElectricityDemandSummerWeek += AC.v_dataElectricityForTransportDemandSummerWeek_kW.getY(k);
-		totalElectricityDemandSummerWeek += AC.v_dataElectricityForStorageDemandSummerWeek_kW.getY(k);
-		totalElectricityDemandSummerWeek += AC.v_dataElectricityForHydrogenDemandSummerWeek_kW.getY(k);
-		
-		totalElectricitySupplySummerWeek += AC.v_dataElectricityWindSupplySummerWeek_kW.getY(k);
-		totalElectricitySupplySummerWeek += AC.v_dataElectricityPVSupplySummerWeek_kW.getY(k);
-		totalElectricitySupplySummerWeek += AC.v_dataElectricityStorageSupplySummerWeek_kW.getY(k);
-		totalElectricitySupplySummerWeek += AC.v_dataElectricityV2GSupplySummerWeek_kW.getY(k);
-		totalElectricitySupplySummerWeek += AC.v_dataHydrogenSupplySummerWeek_kW.getY(k);
-
-		totalElectricityDemandWinterWeek += AC.v_dataElectricityBaseloadDemandWinterWeek_kW.getY(k);
-		totalElectricityDemandWinterWeek += AC.v_dataElectricityForHeatDemandWinterWeek_kW.getY(k);
-		totalElectricityDemandWinterWeek += AC.v_dataElectricityForTransportDemandWinterWeek_kW.getY(k);
-		totalElectricityDemandWinterWeek += AC.v_dataElectricityForStorageDemandWinterWeek_kW.getY(k);
-		totalElectricityDemandWinterWeek += AC.v_dataElectricityForHydrogenDemandWinterWeek_kW.getY(k);
-		
-		totalElectricitySupplyWinterWeek += AC.v_dataElectricityWindSupplyWinterWeek_kW.getY(k);
-		totalElectricitySupplyWinterWeek += AC.v_dataElectricityPVSupplyWinterWeek_kW.getY(k);
-		totalElectricitySupplyWinterWeek += AC.v_dataElectricityStorageSupplyWinterWeek_kW.getY(k);
-		totalElectricitySupplyWinterWeek += AC.v_dataElectricityV2GSupplyWinterWeek_kW.getY(k);
-		totalElectricitySupplyWinterWeek += AC.v_dataHydrogenSupplyWinterWeek_kW.getY(k);
-		
-		AC.v_dataTotalElectricityDemandSummerWeek_kW.add(timeAxisValueSummer, totalElectricityDemandSummerWeek);
-		AC.v_dataTotalElectricitySupplySummerWeek_kW.add(timeAxisValueSummer, totalElectricitySupplySummerWeek);
-		AC.v_dataTotalElectricityDemandWinterWeek_kW.add(timeAxisValueWinter, totalElectricityDemandWinterWeek);
-		AC.v_dataTotalElectricitySupplyWinterWeek_kW.add(timeAxisValueWinter, totalElectricitySupplyWinterWeek);
-	}
-}]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725968656820</Id>
 					<Name><![CDATA[f_setColorsBasedOnGridTopology_gridnodes]]></Name>
 					<X>1350</X><Y>1585</Y>
@@ -6296,7 +6195,7 @@ uI_Results.f_showCorrectChart();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734442458629</Id>
 					<Name><![CDATA[f_applyFilter]]></Name>
-					<X>-1175</X><Y>1560</Y>
+					<X>-1455</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6408,7 +6307,7 @@ else{//Filtered GC returns GC
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734442462084</Id>
 					<Name><![CDATA[f_setFilter]]></Name>
-					<X>-1175</X><Y>1490</Y>
+					<X>-1455</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6462,7 +6361,7 @@ else if(c_selectedFilterOptions.contains(selectedFilter_OL)){ // Remove filter
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734445008646</Id>
 					<Name><![CDATA[f_removeAllFilters]]></Name>
-					<X>-1170</X><Y>1800</Y>
+					<X>-1450</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6495,7 +6394,7 @@ traceln("Alle filters zijn verwijderd.");]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734447122780</Id>
 					<Name><![CDATA[f_selectGridLoop]]></Name>
-					<X>-1130</X><Y>1720</Y>
+					<X>-1410</X><Y>290</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6552,7 +6451,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734448628428</Id>
 					<Name><![CDATA[f_filterCompanies]]></Name>
-					<X>-1150</X><Y>1580</Y>
+					<X>-1430</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6570,7 +6469,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734448687355</Id>
 					<Name><![CDATA[f_filterHouses]]></Name>
-					<X>-1150</X><Y>1600</Y>
+					<X>-1430</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6588,7 +6487,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734448688472</Id>
 					<Name><![CDATA[f_filterDetailed]]></Name>
-					<X>-1150</X><Y>1620</Y>
+					<X>-1430</X><Y>190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6605,7 +6504,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734448689519</Id>
 					<Name><![CDATA[f_filterEstimated]]></Name>
-					<X>-1150</X><Y>1640</Y>
+					<X>-1430</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6622,7 +6521,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734448690487</Id>
 					<Name><![CDATA[f_filterHasPV]]></Name>
-					<X>-1150</X><Y>1660</Y>
+					<X>-1430</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6639,7 +6538,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734448691508</Id>
 					<Name><![CDATA[f_filterHasTransport]]></Name>
-					<X>-1150</X><Y>1680</Y>
+					<X>-1430</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6657,7 +6556,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734451505770</Id>
 					<Name><![CDATA[f_removeFilter]]></Name>
-					<X>-1175</X><Y>1535</Y>
+					<X>-1455</X><Y>105</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6695,7 +6594,7 @@ else{ // All filters removed
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734517589341</Id>
 					<Name><![CDATA[f_filterGridLoop]]></Name>
-					<X>-1150</X><Y>1700</Y>
+					<X>-1430</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6969,7 +6868,7 @@ if (GCWKK != null) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1736425260898</Id>
 					<Name><![CDATA[f_EHubCapacityDataSets]]></Name>
-					<X>-650</X><Y>1015</Y>
+					<X>-980</X><Y>925</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7022,7 +6921,7 @@ if (GCWKK != null) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1736425260900</Id>
 					<Name><![CDATA[f_updateLiveEHubCapacityDataSets]]></Name>
-					<X>-650</X><Y>1035</Y>
+					<X>-980</X><Y>945</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7039,7 +6938,7 @@ uI_Results.v_dataEHubFeedInCapacityLiveWeek_kW.add(timeAxisValue, -v_groupATOFee
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1736425260902</Id>
 					<Name><![CDATA[f_fillAreaCollectionsOfIndividualGCs]]></Name>
-					<X>-650</X><Y>995</Y>
+					<X>-980</X><Y>905</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11990,7 +11889,7 @@ b_resultsUpToDate = true;
 				<Rectangle>
 					<Id>1734442437753</Id>
 					<Name><![CDATA[rect_filterFunctions]]></Name>
-					<X>-1200</X><Y>1430</Y>
+					<X>-1080</X><Y>360</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12004,7 +11903,7 @@ b_resultsUpToDate = true;
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
 					<Width>350</Width>
-					<Height>660</Height>
+					<Height>500</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -12033,7 +11932,7 @@ b_resultsUpToDate = true;
 				<Text>
 					<Id>1734443865835</Id>
 					<Name><![CDATA[txt_filterFunctions]]></Name>
-					<X>-1180</X><Y>1450</Y>
+					<X>-1460</X><Y>20</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
