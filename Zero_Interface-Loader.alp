@@ -145,6 +145,13 @@
 		<ActiveObjectClass>
 			<Id>1658477103140</Id>
 			<Name><![CDATA[Zero_Interface]]></Name>
+			<AdditionalClassCode><![CDATA[public ShapeCheckBox getMultiSelect() {
+	return this.checkbox_multiSelect;
+}
+
+public ShapeButton getButton_goToUI() {
+	return this.button_goToUI;
+}]]></AdditionalClassCode>
 			<Import><![CDATA[import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -1557,7 +1564,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1734442989935</Id>
 					<Name><![CDATA[v_selectedGridLoop]]></Name>
-					<X>-1130</X><Y>1740</Y>
+					<X>-1410</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1569,7 +1576,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1734617425109</Id>
 					<Name><![CDATA[b_gridLoopsAreDefined]]></Name>
-					<X>-1130</X><Y>1760</Y>
+					<X>-1410</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1579,6 +1586,58 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[false]]></Code>
 						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1736425024539</Id>
+					<Name><![CDATA[v_groupATODeliveryCapacity_kW]]></Name>
+					<X>1890</X><Y>1570</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1736425024541</Id>
+					<Name><![CDATA[v_groupATOFeedInCapacity_kW]]></Name>
+					<X>1890</X><Y>1590</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1736425024543</Id>
+					<Name><![CDATA[v_GCGTOConnectionCapacities]]></Name>
+					<Description><![CDATA[Maps every gridconnection to the calculated contribution to a GTO (Groep Transport Overeenkomst). Delivery and FeedIn respectively.]]></Description>
+					<X>1900</X><Y>1490</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[HashMap<GridConnection, double[]>]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new HashMap<>();]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1736425463190</Id>
+					<Name><![CDATA[b_EHubSelect]]></Name>
+					<X>70</X><Y>1280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -2011,7 +2070,7 @@ import zero_engine.J_EAStorageElectric;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1734442668540</Id>
 					<Name><![CDATA[c_selectedFilterOptions]]></Name>
-					<X>-1150</X><Y>1510</Y>
+					<X>-1430</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2106,18 +2165,18 @@ if ( b_updateCongestionColors ){
 
 // Update the live plot dataset of gcList
 if (c_selectedGridConnections.size() > 0) {
-	//if(c_selectedFilterOptions.size()>0){
-		
-	//}
-	//else{
-		f_addTimeStepLiveDataSets(uI_Results.v_gridConnection, c_selectedGridConnections);
-	//}	
+	f_addTimeStepLiveDataSets(uI_Results.v_gridConnection, c_selectedGridConnections);
+	
 	if (p_selectedProjectType == OL_ProjectType.BUSINESSPARK) {
-		if (b_multiSelect && c_selectedGridConnections.size() > 1) {
+		if (( b_multiSelect || b_EHubSelect ) && c_selectedGridConnections.size() >= 1) {
 			for (int i = 0; i < c_selectedGridConnections.size(); i++) {
 				f_addTimeStepLiveDataSets(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
 			}
-			f_addTimeStepTotalLiveDataSets();
+			//f_addTimeStepTotalLiveDataSets();
+			
+			if (b_EHubSelect) {
+				f_updateLiveEHubCapacityDataSets();
+			}
 		}
 	}
 }
@@ -4923,21 +4982,7 @@ if (c_selectedGridConnections.size() > 0) {
 	f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
 	uI_Results.v_selectedObjectType = OL_GISObjectType.BUILDING;
 	if (p_selectedProjectType == OL_ProjectType.BUSINESSPARK) {
-		if (c_selectedGridConnections.size() > 1) {
-			uI_Results.c_individualGridConnections = new ArrayList<AreaCollection>();
-			for (int i = 0; i < c_selectedGridConnections.size(); i++) {
-				AreaCollection AC = new AreaCollection();
-				AC.f_initializeMaps();
-				uI_Results.c_individualGridConnections.add(AC);
-				uI_Results.c_individualGridConnections.get(i).p_name = c_selectedGridConnections.get(i).p_ownerID;
-				f_updateUIresultsGridConnection(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
-			}
-			
-			f_updateTotalLiveDataSets();
-			//f_updateTotalYearlyDataSets();
-			//f_updateTotalWeeklyDataSets();
-	
-		}
+		f_fillAreaCollectionsOfIndividualGCs();
 	}
 }
 else {
@@ -5413,107 +5458,6 @@ for (int j = 0; j < c_selectedGridConnections.size(); j++) {
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1725442474483</Id>
-					<Name><![CDATA[f_updateTotalYearlyDataSets]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-990</X><Y>870</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[for (int j = 0; j < c_selectedGridConnections.size(); j++) {
-	AreaCollection AC = uI_Results.c_individualGridConnections.get(j);
-	
-	AC.v_dataTotalElectricityDemandYear_kW = new DataSet(365);
-	AC.v_dataTotalElectricitySupplyYear_kW = new DataSet(365);
-
-	int dataSetSize = AC.v_dataElectricityBaseloadDemandYear_kW.size();
-	for (int k = 0; k < dataSetSize; k++) {
-		double timeAxisValue = AC.v_dataElectricityBaseloadDemandYear_kW.getX(k);
-		
-		double totalElectricityDemandYear = 0;
-		double totalElectricitySupplyYear = 0;
-		
-		totalElectricityDemandYear += AC.v_dataElectricityBaseloadDemandYear_kW.getY(k);
-		totalElectricityDemandYear += AC.v_dataElectricityForHeatDemandYear_kW.getY(k);
-		totalElectricityDemandYear += AC.v_dataElectricityForTransportDemandYear_kW.getY(k);
-		totalElectricityDemandYear += AC.v_dataElectricityForStorageDemandYear_kW.getY(k);
-		totalElectricityDemandYear += AC.v_dataElectricityForHydrogenDemandYear_kW.getY(k);
-		
-		totalElectricitySupplyYear += AC.v_dataElectricityWindSupplyYear_kW.getY(k);
-		totalElectricitySupplyYear += AC.v_dataElectricityPVSupplyYear_kW.getY(k);
-		totalElectricitySupplyYear += AC.v_dataElectricityStorageSupplyYear_kW.getY(k);
-		totalElectricitySupplyYear += AC.v_dataElectricityV2GSupplyYear_kW.getY(k);
-		totalElectricitySupplyYear += AC.v_dataHydrogenSupplyYear_kW.getY(k);
-
-		AC.v_dataTotalElectricityDemandYear_kW.add(timeAxisValue, totalElectricityDemandYear);
-		AC.v_dataTotalElectricitySupplyYear_kW.add(timeAxisValue, totalElectricitySupplyYear);
-	}
-}]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1725442517475</Id>
-					<Name><![CDATA[f_updateTotalWeeklyDataSets]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-1000</X><Y>900</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[for (int j = 0; j < c_selectedGridConnections.size(); j++) {
-	AreaCollection AC = uI_Results.c_individualGridConnections.get(j);
-	
-	AC.v_dataTotalElectricityDemandSummerWeek_kW = new DataSet(672);
-	AC.v_dataTotalElectricitySupplySummerWeek_kW = new DataSet(672);
-	AC.v_dataTotalElectricityDemandWinterWeek_kW = new DataSet(672);
-	AC.v_dataTotalElectricitySupplyWinterWeek_kW = new DataSet(672);
-
-	int weekSize = AC.v_dataElectricityBaseloadDemandSummerWeek_kW.size();
-	for (int k = 0; k < weekSize; k++) {
-		double timeAxisValueSummer = AC.v_dataElectricityBaseloadDemandSummerWeek_kW.getX(k);
-		double timeAxisValueWinter = AC.v_dataElectricityBaseloadDemandWinterWeek_kW.getX(k);
-		
-		double totalElectricityDemandSummerWeek = 0;
-		double totalElectricitySupplySummerWeek = 0;
-		double totalElectricityDemandWinterWeek = 0;
-		double totalElectricitySupplyWinterWeek = 0;
-		
-		totalElectricityDemandSummerWeek += AC.v_dataElectricityBaseloadDemandSummerWeek_kW.getY(k);
-		totalElectricityDemandSummerWeek += AC.v_dataElectricityForHeatDemandSummerWeek_kW.getY(k);
-		totalElectricityDemandSummerWeek += AC.v_dataElectricityForTransportDemandSummerWeek_kW.getY(k);
-		totalElectricityDemandSummerWeek += AC.v_dataElectricityForStorageDemandSummerWeek_kW.getY(k);
-		totalElectricityDemandSummerWeek += AC.v_dataElectricityForHydrogenDemandSummerWeek_kW.getY(k);
-		
-		totalElectricitySupplySummerWeek += AC.v_dataElectricityWindSupplySummerWeek_kW.getY(k);
-		totalElectricitySupplySummerWeek += AC.v_dataElectricityPVSupplySummerWeek_kW.getY(k);
-		totalElectricitySupplySummerWeek += AC.v_dataElectricityStorageSupplySummerWeek_kW.getY(k);
-		totalElectricitySupplySummerWeek += AC.v_dataElectricityV2GSupplySummerWeek_kW.getY(k);
-		totalElectricitySupplySummerWeek += AC.v_dataHydrogenSupplySummerWeek_kW.getY(k);
-
-		totalElectricityDemandWinterWeek += AC.v_dataElectricityBaseloadDemandWinterWeek_kW.getY(k);
-		totalElectricityDemandWinterWeek += AC.v_dataElectricityForHeatDemandWinterWeek_kW.getY(k);
-		totalElectricityDemandWinterWeek += AC.v_dataElectricityForTransportDemandWinterWeek_kW.getY(k);
-		totalElectricityDemandWinterWeek += AC.v_dataElectricityForStorageDemandWinterWeek_kW.getY(k);
-		totalElectricityDemandWinterWeek += AC.v_dataElectricityForHydrogenDemandWinterWeek_kW.getY(k);
-		
-		totalElectricitySupplyWinterWeek += AC.v_dataElectricityWindSupplyWinterWeek_kW.getY(k);
-		totalElectricitySupplyWinterWeek += AC.v_dataElectricityPVSupplyWinterWeek_kW.getY(k);
-		totalElectricitySupplyWinterWeek += AC.v_dataElectricityStorageSupplyWinterWeek_kW.getY(k);
-		totalElectricitySupplyWinterWeek += AC.v_dataElectricityV2GSupplyWinterWeek_kW.getY(k);
-		totalElectricitySupplyWinterWeek += AC.v_dataHydrogenSupplyWinterWeek_kW.getY(k);
-		
-		AC.v_dataTotalElectricityDemandSummerWeek_kW.add(timeAxisValueSummer, totalElectricityDemandSummerWeek);
-		AC.v_dataTotalElectricitySupplySummerWeek_kW.add(timeAxisValueSummer, totalElectricitySupplySummerWeek);
-		AC.v_dataTotalElectricityDemandWinterWeek_kW.add(timeAxisValueWinter, totalElectricityDemandWinterWeek);
-		AC.v_dataTotalElectricitySupplyWinterWeek_kW.add(timeAxisValueWinter, totalElectricitySupplyWinterWeek);
-	}
-}]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725968656820</Id>
 					<Name><![CDATA[f_setColorsBasedOnGridTopology_gridnodes]]></Name>
 					<X>1350</X><Y>1585</Y>
@@ -5678,6 +5622,8 @@ for(GridConnection GC : gcList){
 		isRealDeliveryCapacityAvailable = false;
 		break;
 	}
+}
+for(GridConnection GC : gcList){
 	if(!GC.b_isRealFeedinCapacityAvailable){
 		isRealFeedinCapacityAvailable = false;
 		break;
@@ -6249,7 +6195,7 @@ uI_Results.f_showCorrectChart();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734442458629</Id>
 					<Name><![CDATA[f_applyFilter]]></Name>
-					<X>-1175</X><Y>1560</Y>
+					<X>-1455</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6361,7 +6307,7 @@ else{//Filtered GC returns GC
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734442462084</Id>
 					<Name><![CDATA[f_setFilter]]></Name>
-					<X>-1175</X><Y>1490</Y>
+					<X>-1455</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6415,7 +6361,7 @@ else if(c_selectedFilterOptions.contains(selectedFilter_OL)){ // Remove filter
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734445008646</Id>
 					<Name><![CDATA[f_removeAllFilters]]></Name>
-					<X>-1170</X><Y>1800</Y>
+					<X>-1450</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6448,7 +6394,7 @@ traceln("Alle filters zijn verwijderd.");]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734447122780</Id>
 					<Name><![CDATA[f_selectGridLoop]]></Name>
-					<X>-1130</X><Y>1720</Y>
+					<X>-1410</X><Y>290</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6505,7 +6451,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734448628428</Id>
 					<Name><![CDATA[f_filterCompanies]]></Name>
-					<X>-1150</X><Y>1580</Y>
+					<X>-1430</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6523,7 +6469,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734448687355</Id>
 					<Name><![CDATA[f_filterHouses]]></Name>
-					<X>-1150</X><Y>1600</Y>
+					<X>-1430</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6541,7 +6487,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734448688472</Id>
 					<Name><![CDATA[f_filterDetailed]]></Name>
-					<X>-1150</X><Y>1620</Y>
+					<X>-1430</X><Y>190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6558,7 +6504,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734448689519</Id>
 					<Name><![CDATA[f_filterEstimated]]></Name>
-					<X>-1150</X><Y>1640</Y>
+					<X>-1430</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6575,7 +6521,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734448690487</Id>
 					<Name><![CDATA[f_filterHasPV]]></Name>
-					<X>-1150</X><Y>1660</Y>
+					<X>-1430</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6592,7 +6538,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734448691508</Id>
 					<Name><![CDATA[f_filterHasTransport]]></Name>
-					<X>-1150</X><Y>1680</Y>
+					<X>-1430</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6610,7 +6556,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734451505770</Id>
 					<Name><![CDATA[f_removeFilter]]></Name>
-					<X>-1175</X><Y>1535</Y>
+					<X>-1455</X><Y>105</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6648,7 +6594,7 @@ else{ // All filters removed
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1734517589341</Id>
 					<Name><![CDATA[f_filterGridLoop]]></Name>
-					<X>-1150</X><Y>1700</Y>
+					<X>-1430</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6729,6 +6675,350 @@ presentation.insert(presentation.size(), gr_errorScreen);
 
 t_errorMessage.setText(errorMessage);
 gr_errorScreen.setVisible(true);]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double[]]]></ReturnType>
+					<Id>1736425024531</Id>
+					<Name><![CDATA[f_calculateGroupATOConnectionCapacity]]></Name>
+					<Description><![CDATA[This function returns the delivery and feed in capacity (in kW) that a group of gridconnections would get from the grid operator if they formed an energy hub.]]></Description>
+					<X>1870</X><Y>1550</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[gcList]]></Name>
+						<Type><![CDATA[ArrayList<GridConnection>]]></Type>
+					</Parameter>
+					<Body><![CDATA[// TODO: Add as an argument the grid operator when different calculations are available.
+// For now only Stedin is implemented, so this calculation is always chosen.
+
+double deliveryCapacity_kW = 0;
+double feedInCapacity_kW = 0;
+
+ArrayList<String> warnings = new ArrayList<>();
+
+//TODO: First we check if all the gridconnections are on a single ring in the grid topology. If not we add a warning
+HashSet<GridNode> parentNodes = new HashSet<>();
+
+for (GridConnection gc : gcList) {
+	
+	// GridTopology Check
+	GridNode gn = gc.l_parentNodeElectric.getConnectedAgent();
+	// TODO: Improve this so it uses an OptionList instead of string comparison
+	if ( gn.p_description.toLowerCase().contains("klantstation") ) {
+		GridNode parentNode = findFirst(energyModel.pop_gridNodes, p -> p.p_gridNodeID.equals(gn.p_parentNodeID));
+		if (parentNode == null) {
+			traceln("Warning! Could not find parentnode of klantstation of GC: " + gc.p_ownerID);			
+		}
+		else if (parentNode.p_nodeType != OL_GridNodeType.SUBMV) {
+			// add warning, gc has klantstation, but this one is not on a ring
+			traceln("Warning! GC: " + gc.p_ownerID + " is not connected to a ring in the grid topology.");
+			warnings.add(gc.p_ownerID + " is niet aangesloten op een ring");
+			parentNodes.add(parentNode);
+		}
+		else {
+			parentNodes.add(parentNode);
+		}
+	}
+	else if ( gn.p_nodeType != OL_GridNodeType.SUBMV ) {
+		// add warning, this one is not on a ring
+		traceln("Warning! GC: " + gc.p_ownerID + " is not connected to a ring in the grid topology.");
+		warnings.add(gc.p_ownerID + " is niet aangesloten op een ring");
+		parentNodes.add(gn);
+	}
+	else {
+		parentNodes.add(gn);	
+	}
+	
+	// Adding up the GTO Connection Capacity contributions
+	traceln("gto capacities: " + Arrays.toString( v_GCGTOConnectionCapacities.get(gc)));
+	deliveryCapacity_kW += v_GCGTOConnectionCapacities.get(gc)[0];
+	feedInCapacity_kW += v_GCGTOConnectionCapacities.get(gc)[1];
+}
+
+if ( parentNodes.size() > 1 ) {
+	// add warning
+	traceln("Warning! Selected GridConnections for E-Hub are not on a single ring.");
+	warnings.add("Let op! Er zijn bedrijven op verschillende ringen geselecteerd");
+}
+
+v_groupATODeliveryCapacity_kW = deliveryCapacity_kW;
+v_groupATOFeedInCapacity_kW = feedInCapacity_kW;
+
+
+f_EHubTabCapacityInformation(true, null);
+
+if (gcList.size() > 0) {
+	
+	// fix for the WKK
+	List<GridConnection> gcListWithoutWKK = new ArrayList<>(gcList);
+	GridConnection GCWKK = findFirst(energyModel.EnergyConversionSites, gc -> gc.p_name.toLowerCase().contains("wkk"));
+	//if (GCWKK != null) {
+	gcListWithoutWKK.remove(GCWKK);
+	//}
+	
+	f_EHubTabCapacityInformation(false, "De ring van " + gcList.get(0).p_ownerID + " is geselecteerd. \n");
+	
+	f_EHubTabCapacityInformation(false, 
+		"De bedrijven hebben samen een leveringscapaciteit van " +
+		(int) sum(gcListWithoutWKK, gc -> gc.p_contractedDeliveryCapacity_kW)  +
+		"  kW. \nDe E-Hub zou een groepscontract kunnen krijgen van " +
+		(int) deliveryCapacity_kW + " kW. \n"
+		);
+	if (warnings.size() > 0) {
+		f_EHubTabCapacityInformation(false, "Waarschuwingen: \n");
+		for (String str : warnings) {
+			f_EHubTabCapacityInformation(false, str);
+			f_EHubTabCapacityInformation(false, "\n");
+		}
+	}
+}
+else {
+	f_EHubTabCapacityInformation(false, "Nog geen E-Hub samengesteld");
+}]]></Body>
+				</Function>
+				<Function AccessType="protected" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1736425024533</Id>
+					<Name><![CDATA[f_resetEHubConfigurationButton]]></Name>
+					<X>1870</X><Y>1650</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[v_clickedObjectText = "None";
+b_EHubSelect = false;
+uI_Results.b_EHubConfiguration = false;
+uI_Tabs.pop_tabEHub.get(0).cb_EHubSelect.setSelected(false);
+uI_Tabs.pop_tabEHub.get(0).t_baseGroepInfo.setText("Selecteer minimaal twee panden");
+uI_Tabs.pop_tabEHub.get(0).t_groepsGTV_kW.setText("");
+uI_Tabs.pop_tabEHub.get(0).t_cumulatiefGTV_kW.setText("");
+uI_Tabs.pop_tabEHub.get(0).t_warnings.setText("");]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1736425024535</Id>
+					<Name><![CDATA[f_EHubTabCapacityInformation]]></Name>
+					<X>1870</X><Y>1670</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[reset]]></Name>
+						<Type><![CDATA[boolean]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[textToAdd]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Body><![CDATA[if (reset) {
+	uI_Tabs.pop_tabEHub.get(0).t_baseGroepInfo.setText("");
+	uI_Tabs.pop_tabEHub.get(0).t_groepsGTV_kW.setText("");
+	uI_Tabs.pop_tabEHub.get(0).t_cumulatiefGTV_kW.setText("");
+	uI_Tabs.pop_tabEHub.get(0).t_warnings.setText("");
+}
+else {
+	String currentWarningString = uI_Tabs.pop_tabEHub.get(0).t_warnings.getText();
+	uI_Tabs.pop_tabEHub.get(0).t_warnings.setText(currentWarningString + textToAdd);
+}
+
+]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1736425024537</Id>
+					<Name><![CDATA[f_calculateGTOConnectionCapacities]]></Name>
+					<Description><![CDATA[Maps every gridconnection to the calculated contribution to a GTO (Groep Transport Overeenkomst). Delivery and FeedIn respectively.]]></Description>
+					<X>1880</X><Y>1470</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// Calculation
+// Stedin: remove the top 0.1% of peak loads of the past years quarterhourly values, then add the remaining maximum to the group capacity
+// First we find the quarterhourly values, or if they are not available the assigned base load and add a warning that not all data was available
+
+List<GridConnection> gcList = new ArrayList<>();
+gcList.addAll(energyModel.f_getGridConnections());
+//gcList.addAll(energyModel.f_getPausedGridConnections());
+
+for (GridConnection gc : gcList) {
+	int amountOfDataPoints = gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries().length;
+	double[] quarterHourlyValues = Arrays.copyOf(gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries(), amountOfDataPoints);
+	Arrays.sort(quarterHourlyValues);
+	double filteredMaximum_kW = min(gc.p_contractedDeliveryCapacity_kW , max(0, quarterHourlyValues[amountOfDataPoints - (int) (amountOfDataPoints*0.001) - 1]));
+	double filteredMinimum_kW = min(gc.p_contractedFeedinCapacity_kW, -min(0, quarterHourlyValues[(int)(amountOfDataPoints*0.001)]));
+	v_GCGTOConnectionCapacities.put(gc, new double[]{filteredMaximum_kW, filteredMinimum_kW});
+}
+
+// fix for the WKK
+GridConnection GCWKK = findFirst(energyModel.EnergyConversionSites, gc -> gc.p_name.toLowerCase().contains("wkk"));
+if (GCWKK != null) {
+	v_GCGTOConnectionCapacities.put(GCWKK, new double[]{0.0, 0.0});
+}]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1736425260898</Id>
+					<Name><![CDATA[f_EHubCapacityDataSets]]></Name>
+					<X>-980</X><Y>925</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[if (c_selectedGridConnections.size() > 0) {
+	
+	uI_Results.v_dataEHubDeliveryCapacityLiveWeek_kW = new DataSet((int) (168 / energyModel.p_timeStep_h));
+	uI_Results.v_dataEHubFeedInCapacityLiveWeek_kW = new DataSet((int) (168 / energyModel.p_timeStep_h));
+	
+	int liveWeekSize = c_selectedGridConnections.get(0).data_gridCapacityDemand_kW.size();
+	
+	for (int i=0; i < liveWeekSize; i++){ //we go back to update the existing live week data
+		double timeAxisValue = c_selectedGridConnections.get(0).data_gridCapacityDemand_kW.getX(i); // we get the X value from a random dataset
+		uI_Results.v_dataEHubDeliveryCapacityLiveWeek_kW.add(timeAxisValue, v_groupATODeliveryCapacity_kW);
+		uI_Results.v_dataEHubFeedInCapacityLiveWeek_kW.add(timeAxisValue, -v_groupATOFeedInCapacity_kW);
+	}
+	
+	// Year
+	uI_Results.v_dataEHubDeliveryCapacityYear_kW = new DataSet(2);
+	uI_Results.v_dataEHubDeliveryCapacityYear_kW.add(energyModel.p_runStartTime_h, v_groupATODeliveryCapacity_kW);
+	uI_Results.v_dataEHubDeliveryCapacityYear_kW.add(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, v_groupATODeliveryCapacity_kW);
+	
+	uI_Results.v_dataEHubFeedInCapacityYear_kW = new DataSet(2);
+	uI_Results.v_dataEHubFeedInCapacityYear_kW.add(energyModel.p_runStartTime_h, -v_groupATOFeedInCapacity_kW);
+	uI_Results.v_dataEHubFeedInCapacityYear_kW.add(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, -v_groupATOFeedInCapacity_kW);
+	
+	// SummerWeek
+	uI_Results.v_dataEHubDeliveryCapacitySummerWeek_kW = new DataSet((int) (168 / energyModel.p_timeStep_h));
+	uI_Results.v_dataEHubDeliveryCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek, v_groupATODeliveryCapacity_kW);
+	uI_Results.v_dataEHubDeliveryCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek + 168, v_groupATODeliveryCapacity_kW);
+	
+	uI_Results.v_dataEHubFeedInCapacitySummerWeek_kW = new DataSet((int) (168 / energyModel.p_timeStep_h));
+	uI_Results.v_dataEHubFeedInCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek, -v_groupATOFeedInCapacity_kW);
+	uI_Results.v_dataEHubFeedInCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek + 168, -v_groupATOFeedInCapacity_kW);
+	
+	// WinterWeek
+	uI_Results.v_dataEHubDeliveryCapacityWinterWeek_kW = new DataSet((int) (168 / energyModel.p_timeStep_h));
+	uI_Results.v_dataEHubDeliveryCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek, v_groupATODeliveryCapacity_kW);
+	uI_Results.v_dataEHubDeliveryCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek + 168, v_groupATODeliveryCapacity_kW);
+	
+	uI_Results.v_dataEHubFeedInCapacityWinterWeek_kW = new DataSet((int) (168 / energyModel.p_timeStep_h));
+	uI_Results.v_dataEHubFeedInCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek, -v_groupATOFeedInCapacity_kW);
+	uI_Results.v_dataEHubFeedInCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek + 168, -v_groupATOFeedInCapacity_kW);
+	
+}
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1736425260900</Id>
+					<Name><![CDATA[f_updateLiveEHubCapacityDataSets]]></Name>
+					<X>-980</X><Y>945</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[int i = max(0, c_selectedGridConnections.get(0).data_gridCapacityDemand_kW.size() - 1);	
+double timeAxisValue = c_selectedGridConnections.get(0).data_gridCapacityDemand_kW.getX(i); // we get the X value from a random dataset 
+
+uI_Results.v_dataEHubDeliveryCapacityLiveWeek_kW.add(timeAxisValue, v_groupATODeliveryCapacity_kW);
+uI_Results.v_dataEHubFeedInCapacityLiveWeek_kW.add(timeAxisValue, -v_groupATOFeedInCapacity_kW);
+]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1736425260902</Id>
+					<Name><![CDATA[f_fillAreaCollectionsOfIndividualGCs]]></Name>
+					<X>-980</X><Y>905</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[if (c_selectedGridConnections.size() >= 1) {
+	uI_Results.c_individualGridConnections = new ArrayList<AreaCollection>();
+	for (int i = 0; i < c_selectedGridConnections.size(); i++) {
+		AreaCollection AC = new AreaCollection();
+		AC.f_initializeMaps();
+		uI_Results.c_individualGridConnections.add(AC);
+		uI_Results.c_individualGridConnections.get(i).p_name = c_selectedGridConnections.get(i).p_ownerID;
+		f_updateUIresultsGridConnection(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
+	}
+	
+	//f_updateTotalLiveDataSets();
+	//f_updateTotalYearlyDataSets();
+	//f_updateTotalWeeklyDataSets();
+}]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1736425463188</Id>
+					<Name><![CDATA[f_EHubSelect]]></Name>
+					<X>50</X><Y>1260</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[clickx]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[clicky]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[//Check if click was on Building
+for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
+	if( b.gisRegion != null && b.gisRegion.contains(clickx, clicky) ){
+		if (b.gisRegion.isVisible()) {
+			for (GridConnection GC : b.c_containedGridConnections) {
+				if (GC != null) {
+					if (c_selectedGridConnections.contains(GC)) {
+						c_selectedGridConnections.remove(GC);
+						for (GIS_Object a : GC.c_connectedGISObjects) {
+							f_styleAreas(a);
+						}
+					}
+					else {
+						c_selectedGridConnections.add(GC);
+						for (GIS_Object a : GC.c_connectedGISObjects) {
+							a.gisRegion.setFillColor(v_selectionColorAddBuildings);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+if (c_selectedGridConnections.size() > 0) {
+	f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+	uI_Results.v_selectedObjectType = OL_GISObjectType.BUILDING;
+	if (p_selectedProjectType == OL_ProjectType.BUSINESSPARK) {
+		f_fillAreaCollectionsOfIndividualGCs();
+		// update in the resultsUI the plots with total connection capacity with the group capacity
+		f_calculateGroupATOConnectionCapacity(c_selectedGridConnections);
+		uI_Results.b_EHubConfiguration = true;
+		uI_Results.v_groupATODeliveryCapacity_kW = v_groupATODeliveryCapacity_kW;
+		uI_Results.v_groupATOFeedInCapacity_kW = v_groupATOFeedInCapacity_kW;
+		f_EHubCapacityDataSets();
+	}
+
+}
+else {
+	uI_Results.c_individualGridConnections = new ArrayList<AreaCollection>();
+	uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
+}
+uI_Results.f_showCorrectChart();]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -6913,10 +7203,10 @@ gr_errorScreen.setVisible(true);]]></Body>
 							</Value>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_previousTotals_Region]]></Name>
+							<Name><![CDATA[p_legendsScope]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_legendsScope]]></Name>
+							<Name><![CDATA[p_previousTotals_Region]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_cutOff_MWh]]></Name>
@@ -11219,6 +11509,9 @@ for(GISRoute GISCable : c_MVCables){
 else if (b_multiSelect) {
 	f_multiSelect(clickx, clicky);
 }
+else if (b_EHubSelect) {
+	f_EHubSelect(clickx, clicky);
+}
 else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP)){
 	f_selectGridLoop(clickx, clicky);
 }
@@ -11237,6 +11530,9 @@ else {
 }
 else if (b_multiSelect) {
 	f_multiSelect(clickx, clicky);
+}
+else if (b_EHubSelect) {
+	f_EHubSelect(clickx, clicky);
 }
 else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP)){
 	f_selectGridLoop(clickx, clicky);
@@ -11593,7 +11889,7 @@ b_resultsUpToDate = true;
 				<Rectangle>
 					<Id>1734442437753</Id>
 					<Name><![CDATA[rect_filterFunctions]]></Name>
-					<X>-1200</X><Y>1430</Y>
+					<X>-1080</X><Y>360</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11607,7 +11903,7 @@ b_resultsUpToDate = true;
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
 					<Width>350</Width>
-					<Height>660</Height>
+					<Height>500</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -11636,7 +11932,7 @@ b_resultsUpToDate = true;
 				<Text>
 					<Id>1734443865835</Id>
 					<Name><![CDATA[txt_filterFunctions]]></Name>
-					<X>-1180</X><Y>1450</Y>
+					<X>-1460</X><Y>20</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12030,6 +12326,134 @@ if(!cb_showFilterInterface.isSelected()){
 			</Presentation>
 
 				</Group>
+				<Text>
+					<Id>1736425024523</Id>
+					<Name><![CDATA[txt_EHubCalc]]></Name>
+					<X>1860</X><Y>1510</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Calculation]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>18</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1736425024525</Id>
+					<Name><![CDATA[txt_EHubTab]]></Name>
+					<X>1860</X><Y>1610</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[E-Hub Tab]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>18</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1736425024527</Id>
+					<Name><![CDATA[txt_EHubIni]]></Name>
+					<X>1860</X><Y>1430</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Initialization]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>18</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Rectangle>
+					<Id>1736425024529</Id>
+					<Name><![CDATA[rect_EHub]]></Name>
+					<X>1840</X><Y>1410</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>3</LineWidth>
+					<LineColor>-16744448</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>470</Width>
+					<Height>290</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Rectangle>
+					<Id>1736425024521</Id>
+					<Name><![CDATA[rect_EHubSmall]]></Name>
+					<X>1995</X><Y>1410</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>3</LineWidth>
+					<LineColor>-16744448</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>100</Width>
+					<Height>30</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Text>
+					<Id>1736425024519</Id>
+					<Name><![CDATA[txt_EHub]]></Name>
+					<X>2010</X><Y>1410</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[E-HUB]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>22</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -15470,10 +15894,10 @@ f_setHeatingRB();]]></Body>
 							</Value>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_previousTotals_Region]]></Name>
+							<Name><![CDATA[p_legendsScope]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_legendsScope]]></Name>
+							<Name><![CDATA[p_previousTotals_Region]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_cutOff_MWh]]></Name>
@@ -31620,7 +32044,7 @@ else {
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722253487935</Id>
 					<Name><![CDATA[cb_spreadChargingEVs]]></Name>
-					<X>75</X><Y>-132</Y>
+					<X>75</X><Y>-142</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31662,7 +32086,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722253487937</Id>
 					<Name><![CDATA[t_collectiveBatteries1]]></Name>
-					<X>35</X><Y>-65</Y>
+					<X>35</X><Y>-75</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31684,7 +32108,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722253487939</Id>
 					<Name><![CDATA[t_spreadChargingEVsDescription]]></Name>
-					<X>-170</X><Y>-125</Y>
+					<X>-170</X><Y>-135</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31706,7 +32130,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722253487941</Id>
 					<Name><![CDATA[sl_collectiveBattery_MWh]]></Name>
-					<X>70</X><Y>-70</Y>
+					<X>70</X><Y>-80</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31736,7 +32160,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722253487943</Id>
 					<Name><![CDATA[t_curtailmentDescription]]></Name>
-					<X>-170</X><Y>-150</Y>
+					<X>-170</X><Y>-160</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31757,7 +32181,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1722253487945</Id>
 					<Name><![CDATA[t_collectiveBatteryDescription]]></Name>
-					<X>-170</X><Y>-65</Y>
+					<X>-170</X><Y>-75</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31779,7 +32203,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722253487947</Id>
 					<Name><![CDATA[cb_curtailment]]></Name>
-					<X>75</X><Y>-158</Y>
+					<X>75</X><Y>-168</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31831,7 +32255,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722253487949</Id>
 					<Name><![CDATA[button_add_nfato]]></Name>
-					<X>-170</X><Y>-5</Y>
+					<X>-170</X><Y>-45</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31888,7 +32312,7 @@ else {
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722253487951</Id>
 					<Name><![CDATA[button_remove_nfato]]></Name>
-					<X>0</X><Y>-5</Y>
+					<X>0</X><Y>-45</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31925,7 +32349,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1725277950476</Id>
 					<Name><![CDATA[cb_powerChargingEVs]]></Name>
-					<X>75</X><Y>-106</Y>
+					<X>75</X><Y>-116</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31974,7 +32398,7 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 				<Text>
 					<Id>1725277950478</Id>
 					<Name><![CDATA[t_powerChargingEVsDescription]]></Name>
-					<X>-170</X><Y>-99</Y>
+					<X>-170</X><Y>-109</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31989,6 +32413,175 @@ zero_Interface.f_resetSettings();]]></ActionCode>
 					<Font>
 						<Name>Dialog</Name>
 						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Control Type="CheckBox">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1736425642857</Id>
+					<Name><![CDATA[cb_EHubSelect]]></Name>
+					<X>-165</X><Y>-5</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="230" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[if (!cb_EHubSelect.isSelected()) {
+	zero_Interface.b_EHubSelect = false;
+	zero_Interface.uI_Results.b_EHubConfiguration = false;
+	zero_Interface.v_clickedObjectText = "None";
+	
+	// Reset the list of selected GCs and the individual AreaCollections in the ResultsUI
+	zero_Interface.c_selectedGridConnections.clear();
+	zero_Interface.uI_Results.c_individualGridConnections = new ArrayList<AreaCollection>();
+	
+	// Reset the building colors
+	for (GridConnection GC: zero_Interface.energyModel.f_getGridConnections()) {
+		for (GIS_Object GB : GC.c_connectedGISObjects) {
+			zero_Interface.f_styleAreas(GB);
+		}
+	}
+	
+	// Reset the shown charts
+	zero_Interface.f_updateUIresultsMainArea();
+	zero_Interface.uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
+	zero_Interface.uI_Results.f_showCorrectChart();
+	
+	//Reset the KPI summary button
+	zero_Interface.uI_Results.getCheckbox_KPISummary().setEnabled(true);
+	
+	// Reset the groupATO Capacities
+	zero_Interface.v_groupATODeliveryCapacity_kW = 0;
+	zero_Interface.v_groupATOFeedInCapacity_kW = 0;
+	
+	// disable the WKK button
+	//cb_wkk.setSelected(false, true);
+	//cb_wkk.setEnabled(false);
+}
+else{
+
+	// we create areacollection(s) for the currently selected GC(s) (could be multiple if the user was using multiselect before checking this box)
+	zero_Interface.f_fillAreaCollectionsOfIndividualGCs();
+	
+	zero_Interface.b_EHubSelect = true;
+	zero_Interface.uI_Results.b_EHubConfiguration = true;
+	zero_Interface.v_clickedObjectText = "Selecteer een bedrijf om toe te voegen aan de E-Hub";
+	
+	//Make the companyUI button invisible
+	zero_Interface.getButton_goToUI().setVisible(false);
+	
+	//Disable the KPI summary (button)
+	zero_Interface.uI_Results.getCheckbox_KPISummary().setSelected(false, true);
+	zero_Interface.uI_Results.getCheckbox_KPISummary().setEnabled(false);
+	
+	// Reset multi-select
+	zero_Interface.b_multiSelect = false;
+	zero_Interface.getMultiSelect().setSelected(false);
+	
+	// disable the WKK button
+	//cb_wkk.setEnabled(true);
+}
+
+
+// Energy-Hub Group connection capacity calculation
+zero_Interface.f_calculateGroupATOConnectionCapacity(zero_Interface.c_selectedGridConnections);
+zero_Interface.f_EHubCapacityDataSets();
+
+zero_Interface.uI_Results.f_showCorrectChart();
+
+]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="14" Style="0"/>
+						<LabelText><![CDATA[Stel E-Hub configuratie samen]]></LabelText>
+						<LinkTo>false</LinkTo>
+	 				</ExtendedProperties>
+				</Control>
+				<Text>
+					<Id>1736425642864</Id>
+					<Name><![CDATA[t_baseGroepInfo]]></Name>
+					<X>-155</X><Y>35</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[t_base info]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1736425642870</Id>
+					<Name><![CDATA[t_cumulatiefGTV_kW]]></Name>
+					<X>-155</X><Y>75</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[text]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1736425642875</Id>
+					<Name><![CDATA[t_warnings]]></Name>
+					<X>-155</X><Y>95</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Nog geen E-Hub samengesteld]]></Text>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>14</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1736425642881</Id>
+					<Name><![CDATA[t_groepsGTV_kW]]></Name>
+					<X>-155</X><Y>55</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[text]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
 						<Style>0</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
@@ -32543,6 +33136,265 @@ f_resetNFATOSettings();]]></ActionCode>
 					</Font>
 					<Alignment>CENTER</Alignment>
 				</Text>
+				<Group>
+					<Id>1736429614133</Id>
+					<Name><![CDATA[gr_groepscontract]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>500</X><Y>-80</Y>
+					<Label><X>6.511</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<XCode><![CDATA[185]]></XCode>
+					<YCode><![CDATA[180]]></YCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+
+			<Presentation>
+				<Text>
+					<Id>1736429614135</Id>
+					<Name><![CDATA[text_basis1]]></Name>
+					<X>0</X><Y>-52.294</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Som huidige GTVs]]></Text>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1736429614137</Id>
+					<Name><![CDATA[text_basis2]]></Name>
+					<X>-65.109</X><Y>-52.294</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Groeps GTV]]></Text>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<RoundedRectangle>
+					<Id>1736429614139</Id>
+					<Name><![CDATA[roundRectangle]]></Name>
+					<X>-91.153</X><Y>-39.221</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor/>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>58.598</Width>
+					<Height>26.147</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+					<ArcRadius>10</ArcRadius>
+				</RoundedRectangle>
+				<Text>
+					<Id>1736429614141</Id>
+					<Name><![CDATA[t_warnings1]]></Name>
+					<X>-104.174</X><Y>6.537</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Waarschuwingen: nog geen waarschuwingen]]></Text>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Control Type="CheckBox">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1736429614143</Id>
+					<Name><![CDATA[cb_wkk]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-114.174</X><Y>45.758</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="208" Height="26">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[GCEnergyConversion GCECS = findFirst(zero_Interface.energyModel.EnergyConversionSites, gc -> gc.p_gridConnectionID.equals("GCECS2"));
+if (GCECS == null) {
+	throw new RuntimeException("Error: Could not find WKK");
+}
+if (cb_wkk.isSelected()) {
+	// First we find the ring of the currently selected E-Hub
+	if ( zero_Interface.c_selectedGridConnections.size() == 0 ) {
+		throw new RuntimeException("Stel eerst je E-Hub samen door op een bedrijf te klikken.");
+	}
+	GridConnection GC = zero_Interface.c_selectedGridConnections.get(0);
+	GridNode ringNode;
+	if (GC.l_parentNodeElectric.getConnectedAgent().p_description.toLowerCase().contains("klantstation")) {
+		ringNode = findFirst(zero_Interface.energyModel.pop_gridNodes, gn -> gn.p_gridNodeID.equals( GC.l_parentNodeElectric.getConnectedAgent().p_parentNodeID) );
+	}
+	else {
+		ringNode = GC.l_parentNodeElectric.getConnectedAgent();
+	}
+	
+	// Remove from old gridnode
+	GCECS.l_parentNodeElectric.getConnectedAgent().f_getConnectedGridConnections().remove(GCECS);
+	GCECS.l_parentNodeElectric.disconnect();
+	
+	// Add to new gridnode
+	GCECS.p_parentNodeElectricID = ringNode.p_gridNodeID;
+	GCECS.l_parentNodeElectric.connectTo(ringNode);
+	ringNode.f_getConnectedGridConnections().add(GCECS);
+	
+	// Add WKK to the selectedgridconnections in interface
+	zero_Interface.c_selectedGridConnections.add(GCECS);
+	zero_Interface.f_fillAreaCollectionsOfIndividualGCs();
+	
+	// Activate GC
+	GCECS.f_setActive(true);
+	
+}
+else {
+	// Remove WKK from the selectedgridconnections in interface
+	zero_Interface.c_selectedGridConnections.remove(GCECS);
+	zero_Interface.f_fillAreaCollectionsOfIndividualGCs();
+	
+	GCECS.f_setActive(false);
+}
+
+zero_Interface.uI_Results.f_showCorrectChart();
+zero_Interface.f_resetSettings();]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="12" Style="0"/>
+						<LabelText><![CDATA[Voeg HR-WKK aan E-Hub toe]]></LabelText>
+						<LinkTo>false</LinkTo>
+	 				</ExtendedProperties>
+				</Control>
+				<Text>
+					<Id>1736429614145</Id>
+					<Name><![CDATA[text_baseGroepInfo]]></Name>
+					<X>-104.174</X><Y>-78.442</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Selecteer minimaal twee panden]]></Text>
+					<Font>
+						<Name>Dialog</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1736429614149</Id>
+					<Name><![CDATA[t_cumulatiefGTV_kW1]]></Name>
+					<X>-61.854</X><Y>-30.069</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[text]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<RoundedRectangle>
+					<Id>1736429614151</Id>
+					<Name><![CDATA[roundRectangle1]]></Name>
+					<X>6.511</X><Y>-39.221</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor/>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>58.598</Width>
+					<Height>26.147</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+					<ArcRadius>10</ArcRadius>
+				</RoundedRectangle>
+				<Text>
+					<Id>1736429614153</Id>
+					<Name><![CDATA[t_groepsGTV_kW1]]></Name>
+					<X>32.555</X><Y>-32.684</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[text]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+			</Presentation>
+
+				</Group>
 			</Presentation>
 
 				</Level>
@@ -39356,6 +40208,7 @@ if( settings.runHeadlessAtStartup() ){
 	if (energyModel.pop_energyCoops.size()>0) {
 		zero_Interface.f_updateUIresultsEnergyCoop( zero_Interface.uI_Results.v_collective, energyModel.pop_energyCoops.get(0));
 	}
+	zero_Interface.f_calculateGTOConnectionCapacities();
 	zero_Interface.b_resultsUpToDate = true;
 }
 else {
