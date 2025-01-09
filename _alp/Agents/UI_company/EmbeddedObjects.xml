@@ -32,9 +32,6 @@
 				</Value>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_legendsScope]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_previousTotals_Region]]></Name>
 			</Parameter>
 			<Parameter>

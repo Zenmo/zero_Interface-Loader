@@ -139,7 +139,7 @@
 		<Id>1716193013122</Id>
 		<Name><![CDATA[uI_Results]]></Name>
 		<X>-670</X>
-		<Y>570</Y>
+		<Y>540</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -165,9 +165,6 @@
 				<Value Class="CodeValue">
 					<Code><![CDATA[energyModel]]></Code>
 				</Value>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_legendsScope]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_previousTotals_Region]]></Name>
