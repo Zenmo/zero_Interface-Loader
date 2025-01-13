@@ -919,6 +919,9 @@ J_ProfilePointer profilePointer;
 // 'ambient' conditions:
 energyModel.tf_ambientTemperature_degC.setArgumentsAndValues(a_arguments, a_tempValues);
 energyModel.tf_dayAheadElectricityPricing_eurpMWh.setArgumentsAndValues(a_arguments, a_epexValues);
+profilePointer = new J_ProfilePointer("Day ahead electricity pricing [eur/MWh]", energyModel.tf_dayAheadElectricityPricing_eurpMWh);
+energyModel.f_addProfile(profilePointer);
+energyModel.pp_dayAheadElectricityPricing_eurpMWh = profilePointer;
 
 energyModel.tf_p_wind_e_normalized.setArgumentsAndValues(a_arguments, a_windValues);
 profilePointer = new J_ProfilePointer("normalized onshore wind production", energyModel.tf_p_wind_e_normalized);
