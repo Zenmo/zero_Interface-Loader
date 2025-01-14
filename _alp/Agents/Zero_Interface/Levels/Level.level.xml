@@ -5618,7 +5618,7 @@ cb_filterOptions.setValueIndex(0);</ActionCode>
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor/>
 			<VisibleCode>cb_showFilterInterface.isEnabled()</VisibleCode>
-			<Enabled>false</Enabled>
+			<Enabled>true</Enabled>
 			<ActionCode>gr_filterInterface.setVisible(cb_showFilterInterface.isSelected());
 
 if(!cb_showFilterInterface.isSelected()){

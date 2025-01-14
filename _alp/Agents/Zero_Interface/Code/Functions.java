@@ -2148,10 +2148,11 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 double f_updateBelastingduurKromme(AreaCollection area,ArrayList<GridConnection> gcList)
 {/*ALCODESTART::1720820888674*/
 //ArrayList<GridConnection> gcList = c_gcList;
+int arraySize = roundToInt((energyModel.p_runEndTime_h-energyModel.p_runStartTime_h)/energyModel.p_timeStep_h);
 
 if( area.v_dataNetbelastingDuurkrommeYear_kW != null ){
 
-	area.v_dataNetLoadYear_kW = new double[35040];
+	area.v_dataNetLoadYear_kW = new double[arraySize];
 	area.v_dataNetbelastingDuurkrommeYear_kW.reset();
 	//area.v_dataNetbelastingDuurkrommeYearVorige_kW.reset();
 	area.v_dataNetbelastingDuurkrommeSummer_kW.reset();
@@ -2163,100 +2164,169 @@ if( area.v_dataNetbelastingDuurkrommeYear_kW != null ){
 
 }
 else {
-	area.v_dataNetLoadYear_kW = new double[roundToInt(365*24/energyModel.p_timeStep_h)];
-	area.v_dataNetbelastingDuurkrommeYear_kW = new DataSet(roundToInt(365*24/energyModel.p_timeStep_h));
+	area.v_dataNetLoadYear_kW = new double[arraySize];
+	area.v_dataNetbelastingDuurkrommeYear_kW = new DataSet(arraySize);
 	//area.v_dataNetbelastingDuurkrommeYearVorige_kW = new DataSet(roundToInt(365*24/energyModel.p_timeStep_h));
 	area.v_dataNetbelastingDuurkrommeSummer_kW = new DataSet(roundToInt(7*24/energyModel.p_timeStep_h));
 	area.v_dataNetbelastingDuurkrommeWinter_kW = new DataSet(roundToInt(7*24/energyModel.p_timeStep_h));
-	area.v_dataNetbelastingDuurkrommeDaytime_kW = new DataSet(roundToInt(365*24/2/energyModel.p_timeStep_h));
-	area.v_dataNetbelastingDuurkrommeNighttime_kW = new DataSet(roundToInt(365*24/2/energyModel.p_timeStep_h));
-	area.v_dataNetbelastingDuurkrommeWeekday_kW = new DataSet(roundToInt(365*24/7*5/energyModel.p_timeStep_h)+100);
-	area.v_dataNetbelastingDuurkrommeWeekend_kW = new DataSet(roundToInt(365*24/7*2/energyModel.p_timeStep_h)+100);
+	area.v_dataNetbelastingDuurkrommeDaytime_kW = new DataSet(roundToInt((energyModel.p_runEndTime_h-energyModel.p_runStartTime_h)/2/energyModel.p_timeStep_h));
+	area.v_dataNetbelastingDuurkrommeNighttime_kW = new DataSet(roundToInt((energyModel.p_runEndTime_h-energyModel.p_runStartTime_h)/2/energyModel.p_timeStep_h));
+	area.v_dataNetbelastingDuurkrommeWeekday_kW = new DataSet(roundToInt(arraySize/7.0*5)+100);
+	area.v_dataNetbelastingDuurkrommeWeekend_kW = new DataSet(roundToInt(arraySize/7.0*2)+100);
 }
 
 // loop over gcs and call f_getduurkromme? Also sum the connection capacities
 double totalDeliveryCapacity_kW = 0;
 double totalFeedInCapacity_kW = 0;
+//double[] collectiveElectricityBalance_kW = new double[]
 
 for (GridConnection gc : gcList) {
-	gc.f_getDuurkromme();
+	//gc.f_getDuurkromme();
+	double[] balanceTimeSeries_kW = gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries();
+	for (int i = 0; i<arraySize; i++) {
+		area.v_dataNetLoadYear_kW[i] += balanceTimeSeries_kW[i];
+	}
 	gc.f_nfatoSetConnectionCapacity(true);
 	totalDeliveryCapacity_kW += gc.p_contractedDeliveryCapacity_kW;
 	totalFeedInCapacity_kW += gc.p_contractedFeedinCapacity_kW;
 	gc.f_nfatoSetConnectionCapacity(false);
 }
 
-double[] NetbelastingDuurkrommeYear_kW = new double[roundToInt(365*24/energyModel.p_timeStep_h)];
+
 //double[] NetbelastingDuurkrommeYearVorige_kW = new double[roundToInt(365*24/energyModel.p_timeStep_h)];
+/*double[] NetbelastingDuurkrommeYear_kW = new double[arraySize];
 double[] NetbelastingDuurkrommeSummer_kW = new double[roundToInt(7*24/energyModel.p_timeStep_h)];
 double[] NetbelastingDuurkrommeWinter_kW = new double[roundToInt(7*24/energyModel.p_timeStep_h)];
-double[] NetbelastingDuurkrommeDaytime_kW = new double[roundToInt(365*24/2/energyModel.p_timeStep_h)];
-double[] NetbelastingDuurkrommeNighttime_kW = new double[roundToInt(365*24/2/energyModel.p_timeStep_h)];
-double[] NetbelastingDuurkrommeWeekday_kW = new double[roundToInt(365*24/7*5/energyModel.p_timeStep_h)+100];
-double[] NetbelastingDuurkrommeWeekend_kW = new double[roundToInt(365*24/7*2/energyModel.p_timeStep_h)+100];
+double[] NetbelastingDuurkrommeDaytime_kW = new double[roundToInt(0.5*arraySize)];
+double[] NetbelastingDuurkrommeNighttime_kW = new double[roundToInt(0.5*arraySize)];
+double[] NetbelastingDuurkrommeWeekday_kW = new double[roundToInt(arraySize/7.0*5)+100];
+double[] NetbelastingDuurkrommeWeekend_kW = new double[roundToInt(arraySize/7.0*2)+100];
+*/
 
-// Year
-for (int i = 0; i < roundToInt(365*24/energyModel.p_timeStep_h); i++ ) {
-	//double netLoadYear_kW = 0;
-	double netbelastingDuurkrommeYear_kW = 0;
-	//double netbelastingDuurkrommeYearVorige_kW = 0;
-	// loop over gcs and add the values
-	for (GridConnection gc : gcList) {	
-		netbelastingDuurkrommeYear_kW += gc.data_netbelastingDuurkromme_kW.getY(i);
-		//netbelastingDuurkrommeYearVorige_kW += gc.data_netbelastingDuurkrommeVorige_kW.getY(i);
+
+////// FROM GridConnection.f_getDuurkromme
+
+// We copy our annual array to preserve it as a time-series and make new arrays for the others
+double[] netLoadArrayAnnual_kW = Arrays.copyOf(area.v_dataNetLoadYear_kW,area.v_dataNetLoadYear_kW.length);
+double[] netLoadArraySummerweek_kW = new double[roundToInt(168 / energyModel.p_timeStep_h)];
+double[] netLoadArrayWinterweek_kW= new double[roundToInt(168 / energyModel.p_timeStep_h)];
+double[] netLoadArrayDaytime_kW = new double[arraySize/2];
+double[] netLoadArrayNighttime_kW = new double[arraySize/2];
+// For different years the amount of weekdays and weekend days may be different, so the size will be variable for now
+ArrayList<Double> listNetLoadArrayWeekday_kW = new ArrayList<>();
+ArrayList<Double> listNetLoadArrayWeekend_kW = new ArrayList<>();
+ 
+int i_winter=0;
+int i_summer=0;
+int i_day=0;
+int i_night=0;
+int i_weekday=0;
+int i_weekend=0;
+
+//double[] annualElectricityBalanceTimeSeries_kW = acc_annualElectricityBalance_kW.getTimeSeries();
+
+for(int i=0; i<arraySize ; i++) {
+	/*if (!firstRun) {
+		// First we make sure to store our previous Load Curve
+		data_netbelastingDuurkrommeVorige_kW.add(i*energyModel.p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));		
+	}*/
+	// summer/winter
+	if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
+		netLoadArraySummerweek_kW[i_summer]=-netLoadArrayAnnual_kW[i];
+		i_summer++;
 	}
-	NetbelastingDuurkrommeYear_kW[i] = -netbelastingDuurkrommeYear_kW;
-	//NetbelastingDuurkrommeYearVorige_kW[i] = -netbelastingDuurkrommeYearVorige_kW;
+	if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
+		netLoadArrayWinterweek_kW[i_winter]=-netLoadArrayAnnual_kW[i];
+		i_winter++;
+	}
+	// day/night
+	if (i*energyModel.p_timeStep_h % 24 > 6 && i*energyModel.p_timeStep_h % 24 <= 18) { //daytime
+		netLoadArrayDaytime_kW[i_day]=-netLoadArrayAnnual_kW[i];
+		i_day++;
+	} else {
+		netLoadArrayNighttime_kW[i_night]=-netLoadArrayAnnual_kW[i];
+		i_night++;
+	}
+	//Weekday/weekend
+	if (((energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h+ 24*(energyModel.v_dayOfWeek1jan-1)) % (24*7)) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+		listNetLoadArrayWeekday_kW.add(-netLoadArrayAnnual_kW[i]);
+		i_weekday++;
+	} else {
+		listNetLoadArrayWeekend_kW.add(-netLoadArrayAnnual_kW[i]);
+		i_weekend++;
+	}
 	
 }
-// Summer / Winter
-for (int i = 0; i < roundToInt(7*24/energyModel.p_timeStep_h); i++ ) {
-	double netbelastingDuurkrommeSummer_kW = 0;
-	double netbelastingDuurkrommeWinter_kW = 0;
-	// loop over gcs and add the values
-	for (GridConnection gc : gcList) {
-		netbelastingDuurkrommeSummer_kW += gc.data_summerWeekNetbelastingDuurkromme_kW.getY(i);
-		netbelastingDuurkrommeWinter_kW += gc.data_winterWeekNetbelastingDuurkromme_kW.getY(i);
-	}
-	NetbelastingDuurkrommeSummer_kW[i] = -netbelastingDuurkrommeSummer_kW;
-	NetbelastingDuurkrommeWinter_kW[i] = -netbelastingDuurkrommeWinter_kW;
+ 
+// Now we have the size of the weekday & weekend arrays.
+double[] netLoadArrayWeekday_kW = new double[listNetLoadArrayWeekday_kW.size()];
+double[] netLoadArrayWeekend_kW = new double[listNetLoadArrayWeekend_kW.size()];
+for (int i = 0; i < listNetLoadArrayWeekday_kW.size(); i++) {
+	netLoadArrayWeekday_kW[i] = listNetLoadArrayWeekday_kW.get(i);
+}
+for (int i = 0; i < listNetLoadArrayWeekend_kW.size(); i++) {
+	netLoadArrayWeekend_kW[i] = listNetLoadArrayWeekend_kW.get(i);
+}
+ 
+ 
+// Sort all arrays
+Arrays.parallelSort(netLoadArrayAnnual_kW);
+Arrays.parallelSort(netLoadArraySummerweek_kW);
+Arrays.parallelSort(netLoadArrayWinterweek_kW);
+Arrays.parallelSort(netLoadArrayDaytime_kW);
+Arrays.parallelSort(netLoadArrayNighttime_kW);
+Arrays.parallelSort(netLoadArrayWeekday_kW);
+Arrays.parallelSort(netLoadArrayWeekend_kW);
 
+/* 
+// Write results to datasets
+// Netbelastingduurkromme year
+//if (!firstRun) {
+	data_netbelastingDuurkromme_kW.reset();
+	data_summerWeekNetbelastingDuurkromme_kW.reset();	
+	data_winterWeekNetbelastingDuurkromme_kW.reset();
+	data_daytimeNetbelastingDuurkromme_kW.reset();
+	data_nighttimeNetbelastingDuurkromme_kW.reset();
+	data_weekdayNetbelastingDuurkromme_kW.reset();
+	data_weekendNetbelastingDuurkromme_kW.reset();
+//}
+for(int i=0; i< arraySize; i++) {
+	data_netbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, netLoadArrayAnnual_kW[arraySize-i-1]);
 }
-// Day / Night
-for (int i = 0; i < roundToInt(365*24/2/energyModel.p_timeStep_h); i++ ) {
-	double netbelastingDuurkrommeDaytime_kW = 0;
-	double netbelastingDuurkrommeNighttime_kW = 0;
-	// loop over gcs and add the values
-	for (GridConnection gc : gcList) {
-		netbelastingDuurkrommeDaytime_kW += gc.data_daytimeNetbelastingDuurkromme_kW.getY(i);
-		netbelastingDuurkrommeNighttime_kW += gc.data_nighttimeNetbelastingDuurkromme_kW.getY(i);
-	}
-	NetbelastingDuurkrommeDaytime_kW[i] = -netbelastingDuurkrommeDaytime_kW;
-	NetbelastingDuurkrommeNighttime_kW[i] = -netbelastingDuurkrommeNighttime_kW;
+// Netbelastingduurkromme summer / winter
+arraySize = netLoadArraySummerweek_kW.length;
+for(int i=0; i< arraySize; i++) {
+	data_summerWeekNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArraySummerweek_kW[i]);
+}
+arraySize = netLoadArrayWinterweek_kW.length;
+for(int i=0; i< arraySize; i++) {
+	data_winterWeekNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWinterweek_kW[i]);
+}
+// Netbelastingduurkromme day / night
+arraySize = netLoadArrayDaytime_kW.length;
+for(int i=0; i< arraySize; i++) {
+	data_daytimeNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayDaytime_kW[i]);
+}
+arraySize = netLoadArrayNighttime_kW.length;
+for(int i=0; i< arraySize; i++) {
+	data_nighttimeNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayNighttime_kW[i]);
+}
+// Netbelastingduurkromme weekday / weekend
+arraySize = netLoadArrayWeekday_kW.length;
+for(int i=0; i< arraySize; i++) {
+	data_weekdayNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWeekday_kW[i]);
+}
+arraySize = netLoadArrayWeekend_kW.length;
+for(int i=0; i< arraySize; i++) {
+	data_weekendNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWeekend_kW[i]);
+}
+*/
 
-}
-// Weekday
-for (int i = 0; i < gcList.get(0).data_weekdayNetbelastingDuurkromme_kW.size(); i++ ) {
-	double netbelastingDuurkrommeWeekday_kW = 0;
-	// loop over gcs and add the values
-	for (GridConnection gc : gcList) {
-		netbelastingDuurkrommeWeekday_kW += gc.data_weekdayNetbelastingDuurkromme_kW.getY(i);
-	}
-	NetbelastingDuurkrommeWeekday_kW[i] = -netbelastingDuurkrommeWeekday_kW;
 
-}
-// Weekend
-for (int i = 0; i < gcList.get(0).data_weekendNetbelastingDuurkromme_kW.size(); i++ ) {
-	double netbelastingDuurkrommeWeekend_kW = 0;
-	// loop over gcs and add the values
-	for (GridConnection gc : gcList) {
-		netbelastingDuurkrommeWeekend_kW += gc.data_weekendNetbelastingDuurkromme_kW.getY(i);
-	}
-	NetbelastingDuurkrommeWeekend_kW[i] = -netbelastingDuurkrommeWeekend_kW;
-}
+/////////
 
 // Resort all the arrays 
-
+/*
 Arrays.sort(NetbelastingDuurkrommeYear_kW);
 //Arrays.sort(NetbelastingDuurkrommeYearVorige_kW);
 Arrays.sort(NetbelastingDuurkrommeSummer_kW);
@@ -2265,43 +2335,48 @@ Arrays.sort(NetbelastingDuurkrommeDaytime_kW);
 Arrays.sort(NetbelastingDuurkrommeNighttime_kW);
 Arrays.sort(NetbelastingDuurkrommeWeekday_kW);
 Arrays.sort(NetbelastingDuurkrommeWeekend_kW);
-
+*/
 // Fill the AreaCollection DataSets
 
-int arraySize;
+//int arraySize;
 // Year
-arraySize = NetbelastingDuurkrommeYear_kW.length;
+arraySize = netLoadArrayAnnual_kW.length;
+
 for(int i=0; i< arraySize; i++) {
-	area.v_dataNetbelastingDuurkrommeYear_kW.add(i*energyModel.p_timeStep_h, -NetbelastingDuurkrommeYear_kW[i]);
+	area.v_dataNetbelastingDuurkrommeYear_kW.add(i*energyModel.p_timeStep_h, netLoadArrayAnnual_kW[arraySize-i-1]);
 }
+/*
+for(int i=0; i< arraySize; i++) {
+	area.v_dataNetbelastingDuurkrommeYear_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayAnnual_kW[i]);
+}*/
 //for(int i=0; i< arraySize; i++) {
 //	area.v_dataNetbelastingDuurkrommeYearVorige_kW.add(i*energyModel.p_timeStep_h, -NetbelastingDuurkrommeYearVorige_kW[i]);
 //}
 // Week
-arraySize = NetbelastingDuurkrommeSummer_kW.length;
+arraySize = netLoadArraySummerweek_kW.length;
 for(int i=0; i< arraySize; i++) {
-	area.v_dataNetbelastingDuurkrommeSummer_kW.add(i*energyModel.p_timeStep_h, -NetbelastingDuurkrommeSummer_kW[i]);
+	area.v_dataNetbelastingDuurkrommeSummer_kW.add(i*energyModel.p_timeStep_h, -netLoadArraySummerweek_kW[i]);
 }
 for(int i=0; i< arraySize; i++) {
-	area.v_dataNetbelastingDuurkrommeWinter_kW.add(i*energyModel.p_timeStep_h, -NetbelastingDuurkrommeWinter_kW[i]);
+	area.v_dataNetbelastingDuurkrommeWinter_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWinterweek_kW[i]);
 }
 // Day / Night
-arraySize = NetbelastingDuurkrommeDaytime_kW.length;
+arraySize = netLoadArrayDaytime_kW.length;
 for(int i=0; i< arraySize; i++) {
-	area.v_dataNetbelastingDuurkrommeDaytime_kW.add(i*energyModel.p_timeStep_h, -NetbelastingDuurkrommeDaytime_kW[i]);
+	area.v_dataNetbelastingDuurkrommeDaytime_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayDaytime_kW[i]);
 }
 for(int i=0; i< arraySize; i++) {
-	area.v_dataNetbelastingDuurkrommeNighttime_kW.add(i*energyModel.p_timeStep_h, -NetbelastingDuurkrommeNighttime_kW[i]);
+	area.v_dataNetbelastingDuurkrommeNighttime_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayNighttime_kW[i]);
 }
 // Weekday
-arraySize = NetbelastingDuurkrommeWeekday_kW.length;
+arraySize = netLoadArrayWeekday_kW.length;
 for(int i=0; i< arraySize; i++) {
-	area.v_dataNetbelastingDuurkrommeWeekday_kW.add(i*energyModel.p_timeStep_h, -NetbelastingDuurkrommeWeekday_kW[i]);
+	area.v_dataNetbelastingDuurkrommeWeekday_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWeekday_kW[i]);
 }
 // Weekend
-arraySize = NetbelastingDuurkrommeWeekend_kW.length;
+arraySize = netLoadArrayWeekend_kW.length;
 for(int i=0; i< arraySize; i++) {
-	area.v_dataNetbelastingDuurkrommeWeekend_kW.add(i*energyModel.p_timeStep_h, -NetbelastingDuurkrommeWeekend_kW[i]);
+	area.v_dataNetbelastingDuurkrommeWeekend_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWeekend_kW[i]);
 }
 
 // Connection Capacity
