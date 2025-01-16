@@ -2136,6 +2136,7 @@ if(gridConnection.getHeat().getHeatingTypes().size() == 0){
 	if (gridConnection.getNaturalGas().getAnnualDelivery_m3() != null && gridConnection.getNaturalGas().getAnnualDelivery_m3() > 0) {
 		//if (gridConnection.getNaturalGas().getAnnualDelivery_m3() > 0) {
 			companyGC.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;// None for now.
+			companyGC.c_heatingTypes.add(OL_GridConnectionHeatingType.GASBURNER);
 			traceln("Gas consumption detected for '" + companyGC.p_ownerID + "', setting heating type to GASBURNER");			
 		/*} else {
 			companyGC.p_heatingType = OL_GridConnectionHeatingType.NONE;// None for now.
@@ -2143,7 +2144,7 @@ if(gridConnection.getHeat().getHeatingTypes().size() == 0){
 		}*/
 	} else {
 		companyGC.p_heatingType = OL_GridConnectionHeatingType.NONE;// None for now.
-		traceln("no or incorrect heating type detected for '" + companyGC.p_ownerID + "'");
+		traceln("no heating type in surveydata, and no gas consumption detected for: '" + companyGC.p_ownerID + "'");
 	}
 }		
 
