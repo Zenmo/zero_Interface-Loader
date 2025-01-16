@@ -919,6 +919,9 @@ J_ProfilePointer profilePointer;
 // 'ambient' conditions:
 energyModel.tf_ambientTemperature_degC.setArgumentsAndValues(a_arguments, a_tempValues);
 energyModel.tf_dayAheadElectricityPricing_eurpMWh.setArgumentsAndValues(a_arguments, a_epexValues);
+profilePointer = new J_ProfilePointer("Day ahead electricity pricing [eur/MWh]", energyModel.tf_dayAheadElectricityPricing_eurpMWh);
+energyModel.f_addProfile(profilePointer);
+energyModel.pp_dayAheadElectricityPricing_eurpMWh = profilePointer;
 
 energyModel.tf_p_wind_e_normalized.setArgumentsAndValues(a_arguments, a_windValues);
 profilePointer = new J_ProfilePointer("normalized onshore wind production", energyModel.tf_p_wind_e_normalized);
@@ -2129,8 +2132,20 @@ double f_setHeatingTypeSurvey(GridConnection companyGC,com.zenmo.zummon.companys
 int i = 0;
 
 if(gridConnection.getHeat().getHeatingTypes().size() == 0){
-	companyGC.p_heatingType = OL_GridConnectionHeatingType.NONE;// None for now.
-	traceln("no or incorrect heating type detected for '" + companyGC.p_ownerID + "'");
+	
+	if (gridConnection.getNaturalGas().getAnnualDelivery_m3() != null && gridConnection.getNaturalGas().getAnnualDelivery_m3() > 0) {
+		//if (gridConnection.getNaturalGas().getAnnualDelivery_m3() > 0) {
+			companyGC.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;// None for now.
+			companyGC.c_heatingTypes.add(OL_GridConnectionHeatingType.GASBURNER);
+			traceln("Gas consumption detected for '" + companyGC.p_ownerID + "', setting heating type to GASBURNER");			
+		/*} else {
+			companyGC.p_heatingType = OL_GridConnectionHeatingType.NONE;// None for now.
+			traceln("no or incorrect heating type detected for '" + companyGC.p_ownerID + "'");
+		}*/
+	} else {
+		companyGC.p_heatingType = OL_GridConnectionHeatingType.NONE;// None for now.
+		traceln("no heating type in surveydata, and no gas consumption detected for: '" + companyGC.p_ownerID + "'");
+	}
 }		
 
 while (i < gridConnection.getHeat().getHeatingTypes().size()){
@@ -2196,7 +2211,8 @@ if (companyGC.c_heatingTypes.size()>1){
 	else if(companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.GASBURNER)){
 		companyGC.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
 		return;
-	}
+	} 
+	
 
 }
 

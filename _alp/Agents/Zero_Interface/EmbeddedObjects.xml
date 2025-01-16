@@ -172,6 +172,9 @@
 			<Parameter>
 				<Name><![CDATA[p_cutOff_MWh]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_legendsScope]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">
