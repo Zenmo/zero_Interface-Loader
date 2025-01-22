@@ -108,7 +108,7 @@
 		<Id>1705499586056</Id>
 		<Name><![CDATA[f_styleGridNodes]]></Name>
 		<X>-670</X>
-		<Y>370</Y>
+		<Y>360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -128,7 +128,7 @@
 		<Id>1705505495599</Id>
 		<Name><![CDATA[f_styleMVLV]]></Name>
 		<X>-650</X>
-		<Y>450</Y>
+		<Y>440</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -148,7 +148,7 @@
 		<Id>1705505509120</Id>
 		<Name><![CDATA[f_styleHVMV]]></Name>
 		<X>-650</X>
-		<Y>390</Y>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -261,7 +261,7 @@
 		<Id>1709716821854</Id>
 		<Name><![CDATA[f_connectResultsUI]]></Name>
 		<X>-670</X>
-		<Y>560</Y>
+		<Y>550</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -277,7 +277,7 @@
 		<Id>1709716821856</Id>
 		<Name><![CDATA[f_updateUIresultsMainArea]]></Name>
 		<X>-650</X>
-		<Y>620</Y>
+		<Y>610</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -293,7 +293,7 @@
 		<Id>1709716821860</Id>
 		<Name><![CDATA[f_updateUIresultsEnergyCoop]]></Name>
 		<X>-650</X>
-		<Y>659.467</Y>
+		<Y>669.467</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -333,7 +333,7 @@
 		<Id>1712584842532</Id>
 		<Name><![CDATA[f_updateUIresultsGridNode]]></Name>
 		<X>-650</X>
-		<Y>640</Y>
+		<Y>650</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -357,7 +357,7 @@
 		<Id>1714043663127</Id>
 		<Name><![CDATA[f_setGridNodeCongestionColor]]></Name>
 		<X>-650</X>
-		<Y>490</Y>
+		<Y>480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -719,7 +719,7 @@
 		<Id>1720799287420</Id>
 		<Name><![CDATA[f_updateUIresultsGridConnection]]></Name>
 		<X>-650</X>
-		<Y>680</Y>
+		<Y>690</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -743,7 +743,7 @@
 		<Id>1720820424632</Id>
 		<Name><![CDATA[f_updateYearlyGCData]]></Name>
 		<X>-620</X>
-		<Y>740</Y>
+		<Y>750</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -767,7 +767,7 @@
 		<Id>1720820539394</Id>
 		<Name><![CDATA[f_updateWeeklyGCData]]></Name>
 		<X>-620</X>
-		<Y>760</Y>
+		<Y>770</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -791,7 +791,7 @@
 		<Id>1720820888674</Id>
 		<Name><![CDATA[f_updateBelastingduurKromme]]></Name>
 		<X>-620</X>
-		<Y>780</Y>
+		<Y>790</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -839,7 +839,7 @@
 		<Id>1721991420806</Id>
 		<Name><![CDATA[f_setGridTopologyColors]]></Name>
 		<X>-650</X>
-		<Y>470</Y>
+		<Y>460</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -855,7 +855,7 @@
 		<Id>1721991963719</Id>
 		<Name><![CDATA[f_styleSUBMV]]></Name>
 		<X>-650</X>
-		<Y>430</Y>
+		<Y>420</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -875,7 +875,7 @@
 		<Id>1721992103665</Id>
 		<Name><![CDATA[f_styleMVMV]]></Name>
 		<X>-650</X>
-		<Y>410</Y>
+		<Y>400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1023,7 +1023,7 @@
 		<Id>1725439643960</Id>
 		<Name><![CDATA[f_updateTotalLiveDataSets]]></Name>
 		<X>-650</X>
-		<Y>820</Y>
+		<Y>830</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1039,7 +1039,7 @@
 		<Id>1725440073691</Id>
 		<Name><![CDATA[f_addTimeStepTotalLiveDataSets]]></Name>
 		<X>-625</X>
-		<Y>840</Y>
+		<Y>850</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1107,7 +1107,7 @@
 		<Id>1727085747538</Id>
 		<Name><![CDATA[f_updatePreviousTotalsGC]]></Name>
 		<X>-650</X>
-		<Y>600</Y>
+		<Y>590</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1139,7 +1139,7 @@
 		<Id>1733490994454</Id>
 		<Name><![CDATA[f_updateVariablesOfGCData]]></Name>
 		<X>-620</X>
-		<Y>700</Y>
+		<Y>710</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1163,7 +1163,7 @@
 		<Id>1733857321674</Id>
 		<Name><![CDATA[f_updateLiveDataSets]]></Name>
 		<X>-620</X>
-		<Y>720</Y>
+		<Y>730</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1185,9 +1185,9 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1733857328199</Id>
-		<Name><![CDATA[f_addTimeStepLiveDataSets]]></Name>
+		<Name><![CDATA[f_addTimeStepLiveDataSetsGC]]></Name>
 		<X>-620</X>
-		<Y>800</Y>
+		<Y>810</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1211,7 +1211,7 @@
 		<Id>1734361725171</Id>
 		<Name><![CDATA[f_updateActiveAssetBooleansGC]]></Name>
 		<X>-620</X>
-		<Y>880</Y>
+		<Y>890</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1235,7 +1235,7 @@
 		<Id>1734368189128</Id>
 		<Name><![CDATA[f_updateActiveAssetBooleans]]></Name>
 		<X>-650</X>
-		<Y>860</Y>
+		<Y>870</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1597,7 +1597,7 @@
 		<Id>1736425260898</Id>
 		<Name><![CDATA[f_EHubCapacityDataSets]]></Name>
 		<X>-650</X>
-		<Y>930</Y>
+		<Y>940</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1613,7 +1613,7 @@
 		<Id>1736425260900</Id>
 		<Name><![CDATA[f_updateLiveEHubCapacityDataSets]]></Name>
 		<X>-650</X>
-		<Y>950</Y>
+		<Y>960</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1629,7 +1629,7 @@
 		<Id>1736425260902</Id>
 		<Name><![CDATA[f_fillAreaCollectionsOfIndividualGCs]]></Name>
 		<X>-650</X>
-		<Y>910</Y>
+		<Y>920</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1669,7 +1669,7 @@
 		<Id>1736442051389</Id>
 		<Name><![CDATA[f_styleResultsUI]]></Name>
 		<X>-650</X>
-		<Y>580</Y>
+		<Y>570</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1677,6 +1677,26 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1737550052785</Id>
+		<Name><![CDATA[f_addTimeStepLiveDataSetsMain]]></Name>
+		<X>-630</X>
+		<Y>630</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[area]]></Name>
+			<Type><![CDATA[AreaCollection]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

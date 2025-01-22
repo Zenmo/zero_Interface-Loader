@@ -18,12 +18,12 @@ if ( b_updateCongestionColors ){
 
 // Update the live plot dataset of gcList
 if (c_selectedGridConnections.size() > 0) {
-	f_addTimeStepLiveDataSets(uI_Results.v_gridConnection, c_selectedGridConnections);
+	f_addTimeStepLiveDataSetsGC(uI_Results.v_gridConnection, c_selectedGridConnections);
 	
 	if (p_selectedProjectType == OL_ProjectType.BUSINESSPARK) {
 		if (( b_multiSelect || b_EHubSelect ) && c_selectedGridConnections.size() >= 1) {
 			for (int i = 0; i < c_selectedGridConnections.size(); i++) {
-				f_addTimeStepLiveDataSets(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
+				f_addTimeStepLiveDataSetsGC(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
 			}
 			//f_addTimeStepTotalLiveDataSets();
 			
@@ -32,6 +32,9 @@ if (c_selectedGridConnections.size() > 0) {
 			}
 		}
 	}
+}
+else{
+f_addTimeStepLiveDataSetsMain(uI_Results.v_area);
 }
 
 // Update the NFATO values in the selected companyUI

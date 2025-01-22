@@ -139,7 +139,7 @@
 		<Id>1716193013122</Id>
 		<Name><![CDATA[uI_Results]]></Name>
 		<X>-670</X>
-		<Y>540</Y>
+		<Y>530</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -171,9 +171,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_cutOff_MWh]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_legendsScope]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>

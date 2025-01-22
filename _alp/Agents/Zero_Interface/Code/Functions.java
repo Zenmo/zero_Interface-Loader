@@ -580,6 +580,9 @@ for (GridNode GN : energyModel.f_getGridNodesTopLevel()) {
 //Set booleans
 f_updateActiveAssetBooleansGC(mainArea, energyModel.f_getGridConnections());
 
+//Totals
+mainArea.v_batteryStorageCapacityInstalled_MWh = energyModel.v_totalInstalledBatteryStorageCapacity_MWh;
+
 //Datasets for live charts
 //Demand
 mainArea.dsm_liveConsumption_kW = energyModel.dsm_liveDemand_kW;
@@ -597,6 +600,22 @@ mainArea.v_dataPVElectricityProductionLiveWeek_kW = energyModel.data_PVGeneratio
 mainArea.v_dataStorageElectricityProductionLiveWeek_kW = energyModel.data_batteryDischarging_kW;
 mainArea.v_dataV2GElectricityProductionLiveWeek_kW = energyModel.data_V2GSupply_kW;
 mainArea.v_dataCHPElectricityProductionLiveWeek_kW = energyModel.data_CHPElectricityProductionLiveWeek_kW;
+
+//SOC (liveweek)
+mainArea.v_dataBatterySOCLiveWeek_ = new DataSet(672);
+if(mainArea.v_batteryStorageCapacityInstalled_MWh > 0){
+	for (int i = 0; i < energyModel.data_batteryStoredEnergy_MWh.size(); i++) {
+	    // Get the x and y values from the source dataset
+	    double x = energyModel.data_batteryStoredEnergy_MWh.getX(i);
+	    double y = energyModel.data_batteryStoredEnergy_MWh.getY(i);
+	    
+	    // Modify the y value (e.g., divide it by 2)
+	    double SOC = y / mainArea.v_batteryStorageCapacityInstalled_MWh;
+	    
+	    // Add the new x and y values to the target dataset
+	    mainArea.v_dataBatterySOCLiveWeek_.add(x, SOC);
+	}
+}
 
 //Datasets for live summerWeek chart
 //Demand
@@ -623,6 +642,21 @@ mainArea.v_dataElectricityDeliveryCapacitySummerWeek_kW.add(energyModel.p_startH
 mainArea.v_dataElectricityFeedInCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek, -energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 mainArea.v_dataElectricityFeedInCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek + 7*24, -energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 
+//SOC (summerweek)
+mainArea.v_dataBatterySOCSummerWeek_ = new DataSet(672);
+if(mainArea.v_batteryStorageCapacityInstalled_MWh > 0){
+	for (int i = 0; i < energyModel.data_summerWeekBatteryStoredEnergy_MWh.size(); i++) {
+	    // Get the x and y values from the source dataset
+	    double x = energyModel.data_summerWeekBatteryStoredEnergy_MWh.getX(i);
+	    double y = energyModel.data_summerWeekBatteryStoredEnergy_MWh.getY(i);
+	    
+	    // Modify the y value (e.g., divide it by 2)
+	    double SOC = y / mainArea.v_batteryStorageCapacityInstalled_MWh;
+	    
+	    // Add the new x and y values to the target dataset
+	    mainArea.v_dataBatterySOCSummerWeek_.add(x, SOC);
+	}
+}
 
 //Datasets for live winterWeek chart
 //Demand
@@ -648,7 +682,21 @@ mainArea.v_dataElectricityDeliveryCapacityWinterWeek_kW.add(energyModel.p_startH
 mainArea.v_dataElectricityFeedInCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek, -energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 mainArea.v_dataElectricityFeedInCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek+ 7*24, -energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 
-
+//SOC (Winterweek)
+mainArea.v_dataBatterySOCWinterWeek_ = new DataSet(672);
+if(mainArea.v_batteryStorageCapacityInstalled_MWh > 0){
+	for (int i = 0; i < energyModel.data_winterWeekBatteryStoredEnergy_MWh.size(); i++) {
+	    // Get the x and y values from the source dataset
+	    double x = energyModel.data_winterWeekBatteryStoredEnergy_MWh.getX(i);
+	    double y = energyModel.data_winterWeekBatteryStoredEnergy_MWh.getY(i);
+	    
+	    // Modify the y value (e.g., divide it by 2)
+	    double SOC = y / mainArea.v_batteryStorageCapacityInstalled_MWh;
+	    
+	    // Add the new x and y values to the target dataset
+	    mainArea.v_dataBatterySOCWinterWeek_.add(x, SOC);
+	}
+}
 //Datasets for yearly profiles chart
 //Demand
 mainArea.dsm_dailyAverageConsumptionDataSets_kW = energyModel.dsm_dailyAverageDemandDataSets_kW;
@@ -669,6 +717,22 @@ mainArea.v_dataElectricityPVProductionYear_kW = energyModel.data_annualPVGenerat
 mainArea.v_dataElectricityStorageProductionYear_kW = energyModel.data_annualBatteriesSupply_kW;
 mainArea.v_dataElectricityV2GProductionYear_kW = energyModel.data_annualV2GSupply_kW;
 mainArea.v_dataElectricityCHPProductionYear_kW = energyModel.data_annualCHPElectricityProduction_kW;
+
+//SOC (Year)
+mainArea.v_dataBatterySOCYear_ = new DataSet(365);
+if(mainArea.v_batteryStorageCapacityInstalled_MWh > 0){
+	for (int i = 0; i < energyModel.data_annualAvgBatteryStoredEnergy_MWh.size(); i++) {
+	    // Get the x and y values from the source dataset
+	    double x = energyModel.data_annualAvgBatteryStoredEnergy_MWh.getX(i);
+	    double y = energyModel.data_annualAvgBatteryStoredEnergy_MWh.getY(i);
+	    
+	    // Modify the y value (e.g., divide it by 2)
+	    double SOC = y / mainArea.v_batteryStorageCapacityInstalled_MWh;
+	    
+	    // Add the new x and y values to the target dataset
+	    mainArea.v_dataBatterySOCYear_.add(x, SOC);
+	}
+}
 
 //Datasets for netloaddurationcurves
 mainArea.v_dataNetbelastingDuurkrommeYear_kW = energyModel.data_netbelastingDuurkromme_kW;
@@ -736,8 +800,23 @@ area.v_dataV2GElectricityProductionLiveWeek_kW = energyModel.data_V2GSupply_kW;
 //area.v_dataHydrogenSupplyLiveWeek_kW = energyModel.data_hydrogenSupply_kW;
 area.v_dataCHPElectricityProductionLiveWeek_kW = energyModel.data_CHPElectricityProductionLiveWeek_kW;
 
+//SOC
+area.v_dataBatterySOCLiveWeek_.reset();
+for (int i = 0; i < energyModel.data_batteryStoredEnergy_MWh.size(); i++) {
+    // Get the x and y values from the source dataset
+    double x = energyModel.data_batteryStoredEnergy_MWh.getX(i);
+    double y = energyModel.data_batteryStoredEnergy_MWh.getY(i);
+    
+    // Modify the y value (e.g., divide it by 2)
+    double SOC = area.v_batteryStorageCapacityInstalled_MWh > 0 ? y / area.v_batteryStorageCapacityInstalled_MWh : 0;
+    
+    // Add the new x and y values to the target dataset
+    area.v_dataBatterySOCLiveWeek_.add(x, SOC);
+}
+
 //Total
 area.v_dataNetLoadLiveWeek_kW = energyModel.data_totalGridLoad_kW;
+area.v_batteryStorageCapacityInstalled_MWh = energyModel.v_totalInstalledBatteryStorageCapacity_MWh;
 
 //Capacity
 area.v_dataElectricityDeliveryCapacityLiveWeek_kW = energyModel.data_gridCapacityDemand_kW;
@@ -768,6 +847,19 @@ area.v_dataElectricityDeliveryCapacitySummerWeek_kW.add(energyModel.p_startHourS
 area.v_dataElectricityFeedInCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek, -energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 area.v_dataElectricityFeedInCapacitySummerWeek_kW.add(energyModel.p_startHourSummerWeek + 7*24, -energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 
+//SOC (summerweek)
+area.v_dataBatterySOCSummerWeek_.reset();
+for (int i = 0; i < energyModel.data_summerWeekBatteryStoredEnergy_MWh.size(); i++) {
+    // Get the x and y values from the source dataset
+    double x = energyModel.data_summerWeekBatteryStoredEnergy_MWh.getX(i);
+    double y = energyModel.data_summerWeekBatteryStoredEnergy_MWh.getY(i);
+    
+    // Modify the y value (e.g., divide it by 2)
+    double SOC = area.v_batteryStorageCapacityInstalled_MWh > 0 ? y / area.v_batteryStorageCapacityInstalled_MWh : 0;
+    
+    // Add the new x and y values to the target dataset
+    area.v_dataBatterySOCSummerWeek_.add(x, SOC);
+}
 
 //Datasets for live winterWeek chart
 //Demand
@@ -792,6 +884,19 @@ area.v_dataElectricityDeliveryCapacityWinterWeek_kW.add(energyModel.p_startHourW
 area.v_dataElectricityFeedInCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek, -energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 area.v_dataElectricityFeedInCapacityWinterWeek_kW.add(energyModel.p_startHourWinterWeek + 7*24, -energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW);
 
+//SOC (Winterweek)
+area.v_dataBatterySOCWinterWeek_.reset();
+for (int i = 0; i < energyModel.data_winterWeekBatteryStoredEnergy_MWh.size(); i++) {
+    // Get the x and y values from the source dataset
+    double x = energyModel.data_winterWeekBatteryStoredEnergy_MWh.getX(i);
+    double y = energyModel.data_winterWeekBatteryStoredEnergy_MWh.getY(i);
+    
+    // Modify the y value (e.g., divide it by 2)
+    double SOC = area.v_batteryStorageCapacityInstalled_MWh > 0 ? y / area.v_batteryStorageCapacityInstalled_MWh : 0;
+    
+    // Add the new x and y values to the target dataset
+    area.v_dataBatterySOCWinterWeek_.add(x, SOC);
+}
 
 //Datasets for yearly profiles chart
 //Demand
@@ -809,6 +914,20 @@ area.v_dataElectricityPVProductionYear_kW = energyModel.data_annualPVGeneration_
 area.v_dataElectricityStorageProductionYear_kW = energyModel.data_annualBatteriesSupply_kW;
 area.v_dataElectricityV2GProductionYear_kW = energyModel.data_annualV2GSupply_kW;
 area.v_dataElectricityCHPProductionYear_kW = energyModel.data_annualCHPElectricityProduction_kW;
+
+//SOC (Year)
+area.v_dataBatterySOCYear_.reset();
+for (int i = 0; i < energyModel.data_annualAvgBatteryStoredEnergy_MWh.size(); i++) {
+    // Get the x and y values from the source dataset
+    double x = energyModel.data_annualAvgBatteryStoredEnergy_MWh.getX(i);
+    double y = energyModel.data_annualAvgBatteryStoredEnergy_MWh.getY(i);
+    
+    // Modify the y value (e.g., divide it by 2)
+    double SOC = area.v_batteryStorageCapacityInstalled_MWh > 0 ? y / area.v_batteryStorageCapacityInstalled_MWh : 0;
+    
+    // Add the new x and y values to the target dataset
+    area.v_dataBatterySOCYear_.add(x, SOC);
+}
 
 // Data for gespreksleidraad1
 area.v_dataNetLoadYear_kW = energyModel.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries();
@@ -936,6 +1055,10 @@ area.v_weekendEnergySelfConsumed_MWh = energyModel.v_weekendEnergySelfConsumed_M
 area.v_weekendElectricityProduced_MWh = energyModel.v_weekendElectricityProduced_MWh;
 area.v_weekendElectricityConsumed_MWh = energyModel.v_weekendElectricityConsumed_MWh;
 area.v_weekendElectricitySelfConsumed_MWh = energyModel.v_weekendElectricitySelfConsumed_MWh;
+
+
+
+
 
 ////Gespreksleidraad Additions
 
@@ -1769,6 +1892,7 @@ if( area.v_dataElectricityBaseloadConsumptionYear_kW != null ){
 	area.v_dataElectricityV2GProductionYear_kW.reset();
 	//area.v_dataHydrogenSupplyYear_kW.reset();
 	area.v_dataElectricityCHPProductionYear_kW.reset();
+	area.v_dataBatterySOCYear_.reset();
 }
 else{
 	area.v_dataElectricityBaseloadConsumptionYear_kW = new DataSet(365);
@@ -1785,6 +1909,7 @@ else{
 	area.v_dataElectricityV2GProductionYear_kW = new DataSet(365);
 	//area.v_dataHydrogenSupplyYear_kW= new DataSet(365);
 	area.v_dataElectricityCHPProductionYear_kW = new DataSet(365);
+	area.v_dataBatterySOCYear_ = new DataSet(365);
 }
 
 area.dsm_dailyAverageConsumptionDataSets_kW.createEmptyDataSets(activeEnergyCarriers, 365);
@@ -1812,6 +1937,7 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 	double electricityV2GSupplyYear_kW = 0;
 	//double hydrogenSupplyYear_kW = 0;
 	double electricityCHPSupplyYear_kW = 0;
+	double batteryStoredEnergy_MWh = 0;
 	
 	//accumulate values over gridcongestion
 	for (GridConnection gc : gcList){
@@ -1848,6 +1974,7 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 		electricityStorageSupplyYear_kW += gc.data_annualBatteriesSupply_kW.getY(i);
 		electricityV2GSupplyYear_kW += gc.data_annualV2GSupply_kW.getY(i);
 		electricityCHPSupplyYear_kW += gc.data_annualCHPElectricitySupply_kW.getY(i);
+		batteryStoredEnergy_MWh += gc.data_annualBatteryStoredEnergy_MWh.getY(i);
 		/*
 		if ( gc.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
 			hydrogenSupplyYear_kW += gc.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
@@ -1876,6 +2003,10 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 		area.dsm_dailyAverageConsumptionDataSets_kW.get(EC).add(timeAxisValue, fm_dailyAverageDemand_kW.get(EC) );
 		area.dsm_dailyAverageProductionDataSets_kW.get(EC).add(timeAxisValue, fm_dailyAverageSupply_kW.get(EC) );
 	}
+	
+	//Other
+	double SOC = sum(gcList, GC -> GC.v_totalInstalledBatteryStorageCapacity_MWh) > 0 ? batteryStoredEnergy_MWh/sum(gcList, GC -> GC.v_totalInstalledBatteryStorageCapacity_MWh) : 0;
+	area.v_dataBatterySOCYear_.add(timeAxisValue, SOC);
 }
 /*ALCODEEND*/}
 
@@ -1924,6 +2055,8 @@ if( area.v_dataElectricityBaseloadConsumptionSummerWeek_kW != null ){
 	area.v_dataElectricityFeedInCapacitySummerWeek_kW.reset();
 	area.v_dataElectricityFeedInCapacityWinterWeek_kW.reset();
 	
+	area.v_dataBatterySOCSummerWeek_.reset();
+	area.v_dataBatterySOCWinterWeek_.reset();
 }
 else {
 	area.v_dataElectricityBaseloadConsumptionSummerWeek_kW = new DataSet(672);
@@ -1966,6 +2099,9 @@ else {
 	area.dsm_summerWeekProductionDataSets_kW.createEmptyDataSets(energyModel.v_activeEnergyCarriers, (int) (168 / energyModel.p_timeStep_h));
 	area.dsm_winterWeekConsumptionDataSets_kW.createEmptyDataSets(energyModel.v_activeEnergyCarriers, (int) (168 / energyModel.p_timeStep_h));
 	area.dsm_winterWeekProductionDataSets_kW.createEmptyDataSets(energyModel.v_activeEnergyCarriers, (int) (168 / energyModel.p_timeStep_h));
+	
+	area.v_dataBatterySOCSummerWeek_ = new DataSet(672);
+	area.v_dataBatterySOCWinterWeek_ = new DataSet(672);
 }
 
 
@@ -2016,6 +2152,9 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 	double electricityDemandCapacityWinterWeek_kW = 0;
 	double electricitySupplyCapacitySummerWeek_kW = 0;
 	double electricitySupplyCapacityWinterWeek_kW = 0;
+	
+	double batteryStoredEnergySummerWeek_MWh = 0;
+	double batteryStoredEnergyWinterWeek_MWh = 0;
 	
 	//accumulate values over gridcongestion
 	for (GridConnection gc : gcList){
@@ -2096,6 +2235,9 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 		electricityDemandCapacityWinterWeek_kW += gc.acc_winterWeekDeliveryCapacity_kW.getY(i);
 		electricitySupplyCapacitySummerWeek_kW -= gc.acc_summerWeekFeedinCapacity_kW.getY(i);
 		electricitySupplyCapacityWinterWeek_kW -= gc.acc_winterWeekFeedinCapacity_kW.getY(i);
+		
+		batteryStoredEnergySummerWeek_MWh += gc.data_summerWeekBatteryStoredEnergy_MWh.getY(i);
+		batteryStoredEnergyWinterWeek_MWh += gc.data_winterWeekBatteryStoredEnergy_MWh.getY(i);
 	}
 	
 	//add accumulated values to dataset
@@ -2142,6 +2284,15 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 		area.dsm_winterWeekConsumptionDataSets_kW.get(EC).add(timeAxisValueWinter, demandWinterWeek_kW.get(EC));
 		area.dsm_winterWeekProductionDataSets_kW.get(EC).add(timeAxisValueWinter, supplyWinterWeek_kW.get(EC));
 	}
+	
+	//Other
+	double SOC_summer = sum(gcList, GC -> GC.v_totalInstalledBatteryStorageCapacity_MWh) > 0 ? batteryStoredEnergySummerWeek_MWh/sum(gcList, GC -> GC.v_totalInstalledBatteryStorageCapacity_MWh) : 0;
+	double SOC_winter = sum(gcList, GC -> GC.v_totalInstalledBatteryStorageCapacity_MWh) > 0 ? batteryStoredEnergyWinterWeek_MWh/sum(gcList, GC -> GC.v_totalInstalledBatteryStorageCapacity_MWh) : 0;
+	
+	area.v_dataBatterySOCSummerWeek_.add(timeAxisValueSummer, SOC_summer);
+	area.v_dataBatterySOCWinterWeek_.add(timeAxisValueWinter, SOC_winter);
+	
+	
 }
 /*ALCODEEND*/}
 
@@ -2819,6 +2970,13 @@ for(GridConnection GC : gcList){
 area.b_isRealDeliveryCapacityAvailable = isRealDeliveryCapacityAvailable;
 area.b_isRealFeedinCapacityAvailable = isRealFeedinCapacityAvailable;
 
+//Installed Asset variables
+area.v_batteryStorageCapacityInstalled_MWh = 0;
+for(GridConnection GC : gcList){
+	area.v_batteryStorageCapacityInstalled_MWh += GC.v_totalInstalledBatteryStorageCapacity_MWh;
+}
+
+
 
 // KPIs for 'samenvatting' 
 area.v_modelSelfConsumption_fr = sum(gcList, x -> x.v_totalEnergyProduced_MWh) > 0 ? sum(gcList, x -> x.v_totalEnergySelfConsumed_MWh) / sum(gcList, x -> x.v_totalEnergyProduced_MWh) : 0.0;
@@ -3007,6 +3165,9 @@ if( area.v_dataElectricityDeliveryCapacityLiveWeek_kW != null ){
 	area.v_dataStorageElectricityProductionLiveWeek_kW.reset();
 	area.v_dataV2GElectricityProductionLiveWeek_kW.reset();
 	area.v_dataCHPElectricityProductionLiveWeek_kW.reset();
+	
+	//Other
+	area.v_dataBatterySOCLiveWeek_.reset();
 }
 else {
 	// Demand
@@ -3032,6 +3193,9 @@ else {
 	area.v_dataStorageElectricityProductionLiveWeek_kW = new DataSet(672);
 	area.v_dataV2GElectricityProductionLiveWeek_kW = new DataSet(672);
 	area.v_dataCHPElectricityProductionLiveWeek_kW = new DataSet(672);
+	
+	//Other
+	area.v_dataBatterySOCLiveWeek_ = new DataSet(672);
 }
 
 for (int i=0; i < liveWeekSize; i++){ //we go back to update the existing live week data
@@ -3065,6 +3229,9 @@ for (int i=0; i < liveWeekSize; i++){ //we go back to update the existing live w
 	double hydrogenSupplyLiveWeek_kW = 0;
 	double CHPElectricitySupplyLiveWeek_kW = 0;
 	
+	//Other
+	double batteryStoredEnergyLiveWeek_MWh = 0;
+	
 	for (GridConnection gc : gcList){
 		for (OL_EnergyCarriers EC_consumption : gc.v_activeConsumptionEnergyCarriers) {
 			fm_demand_kW.addFlow( EC_consumption, gc.dsm_liveDemand_kW.get(EC_consumption).getY(i));
@@ -3091,6 +3258,9 @@ for (int i=0; i < liveWeekSize; i++){ //we go back to update the existing live w
 		storageElectricitySupplyLiveWeek_kW  += gc.data_batteryDischarging_kW.getY(i);
 		V2GElectricitySupplyLiveWeek_kW  += gc.data_V2GSupply_kW.getY(i);
 		CHPElectricitySupplyLiveWeek_kW  += gc.data_CHPElectricityProductionLiveWeek_kW.getY(i);
+		
+		//Other 
+		batteryStoredEnergyLiveWeek_MWh += 	gc.data_batteryStoredEnergyLiveWeek_MWh.getY(i);
 	}
 	
 	for (OL_EnergyCarriers EC_consumption : activeConsumptionEnergyCarriers) {
@@ -3118,12 +3288,16 @@ for (int i=0; i < liveWeekSize; i++){ //we go back to update the existing live w
 	area.v_dataPVElectricityProductionLiveWeek_kW.add(timeAxisValue, PVElectricitySupplyLiveWeek_kW);
 	area.v_dataStorageElectricityProductionLiveWeek_kW.add(timeAxisValue, storageElectricitySupplyLiveWeek_kW);
 	area.v_dataV2GElectricityProductionLiveWeek_kW.add(timeAxisValue, V2GElectricitySupplyLiveWeek_kW);
-	area.v_dataCHPElectricityProductionLiveWeek_kW.add(timeAxisValue, CHPElectricitySupplyLiveWeek_kW);	
+	area.v_dataCHPElectricityProductionLiveWeek_kW.add(timeAxisValue, CHPElectricitySupplyLiveWeek_kW);
+	
+	//Other
+	double SOC = sum(gcList, GC -> GC.v_totalInstalledBatteryStorageCapacity_MWh) > 0 ? batteryStoredEnergyLiveWeek_MWh/sum(gcList, GC -> GC.v_totalInstalledBatteryStorageCapacity_MWh) : 0;
+	area.v_dataBatterySOCLiveWeek_.add(timeAxisValue, SOC); 	
 }
 
 /*ALCODEEND*/}
 
-double f_addTimeStepLiveDataSets(AreaCollection area,ArrayList<GridConnection> gcList)
+double f_addTimeStepLiveDataSetsGC(AreaCollection area,ArrayList<GridConnection> gcList)
 {/*ALCODESTART::1733857328199*/
 
 EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class);
@@ -3160,6 +3334,10 @@ double PVElectricitySupplyLiveWeek_kW = 0;
 double storageElectricitySupplyLiveWeek_kW = 0;
 double V2GElectricitySupplyLiveWeek_kW = 0;
 double CHPElectricitySupplyLiveWeek_kW = 0;
+
+//Other
+double batteryStoredEnergyLiveWeek_MWh = 0;
+
 for (GridConnection gc : gcList){
 	
 	for (OL_EnergyCarriers EC_consumption : gc.v_activeConsumptionEnergyCarriers) {
@@ -3188,7 +3366,10 @@ for (GridConnection gc : gcList){
 	PVElectricitySupplyLiveWeek_kW  += gc.data_PVGeneration_kW.getY(i);
 	storageElectricitySupplyLiveWeek_kW  += gc.data_batteryDischarging_kW.getY(i);
 	V2GElectricitySupplyLiveWeek_kW  += gc.data_V2GSupply_kW.getY(i);
-	CHPElectricitySupplyLiveWeek_kW  += gc.data_CHPElectricityProductionLiveWeek_kW.getY(i);		
+	CHPElectricitySupplyLiveWeek_kW  += gc.data_CHPElectricityProductionLiveWeek_kW.getY(i);
+	
+	//Other 
+	batteryStoredEnergyLiveWeek_MWh += 	gc.data_batteryStoredEnergyLiveWeek_MWh.getY(i);	
 }
 
 for (OL_EnergyCarriers EC_consumption : activeConsumptionEnergyCarriers) {	
@@ -3220,6 +3401,11 @@ area.v_dataV2GElectricityProductionLiveWeek_kW.add(timeAxisValue, V2GElectricity
 area.v_dataCHPElectricityProductionLiveWeek_kW.add(timeAxisValue, CHPElectricitySupplyLiveWeek_kW);
 		
 
+//Other
+double SOC = sum(gcList, GC -> GC.v_totalInstalledBatteryStorageCapacity_MWh) > 0 ? batteryStoredEnergyLiveWeek_MWh/sum(gcList, GC -> GC.v_totalInstalledBatteryStorageCapacity_MWh) : 0;
+area.v_dataBatterySOCLiveWeek_.add(timeAxisValue, SOC); 
+
+
 /*ALCODEEND*/}
 
 double f_updateActiveAssetBooleansGC(AreaCollection area,ArrayList<GridConnection> gcList)
@@ -3234,6 +3420,7 @@ area.b_hasElectrolyser = false;
 area.b_hasCHP = false;
 area.b_hasV2G = false;
 area.b_hasElectricCooking = false;
+area.v_batteryStorageCapacityInstalled_MWh = 0;
 
 //Electric heating
 for(GridConnection GC : gcList){
@@ -3269,7 +3456,7 @@ for(GridConnection GC : gcList){
 		for(J_EA battery : GC.c_batteryAssets){
 			if(((J_EAStorageElectric)battery).getStorageCapacity_kWh() > 0){
 				area.b_hasBattery = true;
-				break;
+				area.v_batteryStorageCapacityInstalled_MWh += ((J_EAStorageElectric)battery).getStorageCapacity_kWh()/1000;
 			}
 		}
 	}
@@ -3930,5 +4117,18 @@ uI_Results.f_showCorrectChart();
 double f_styleResultsUI()
 {/*ALCODESTART::1736442051389*/
 uI_Results.f_styleAllCharts(v_backgroundColor, lavender, 1.0, LINE_STYLE_SOLID);
+/*ALCODEEND*/}
+
+double f_addTimeStepLiveDataSetsMain(AreaCollection area)
+{/*ALCODESTART::1737550052785*/
+
+//Update SOC live plot
+double batteryStoredEnergyLiveWeek_MWh = 0;
+int i = max(0, energyModel.data_batteryStoredEnergy_MWh.size() - 1);
+batteryStoredEnergyLiveWeek_MWh = 	energyModel.data_batteryStoredEnergy_MWh.getY(i);	
+double timeAxisValue = energyModel.data_batteryStoredEnergy_MWh.getX(i);
+double SOC = area.v_batteryStorageCapacityInstalled_MWh > 0 ? batteryStoredEnergyLiveWeek_MWh / area.v_batteryStorageCapacityInstalled_MWh : 0;
+area.v_dataBatterySOCLiveWeek_.add(timeAxisValue, SOC); 
+
 /*ALCODEEND*/}
 
