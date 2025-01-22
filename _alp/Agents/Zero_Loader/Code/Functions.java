@@ -3533,6 +3533,11 @@ return annualElectricityConsumption_kWh;
 
 double f_createCustomPVAsset(GridConnection parentGC,double[] yearlyElectricityProduction_kWh,Double pvPower_kW)
 {/*ALCODESTART::1732112209863*/
+if (yearlyElectricityProduction_kWh.length != 35040) {
+	traceln("Skipping creation of PV asset: need 35040 data points, got %d", yearlyElectricityProduction_kWh.length);
+	return;
+}
+
 // Generate custom PV production asset using production data!
 double[] a_arguments = IntStream.range(0, 35040).mapToDouble(i -> v_simStartHour_h + i*0.25).toArray(); // time axis
 
@@ -3647,10 +3652,25 @@ if (gridConnection.getElectricity().getHasConnection()){
 	//Check if quarter hourly values are available 
 	companyGC.v_hasQuarterHourlyValues = false;
 	
-	if(gridConnection.getElectricity().getQuarterHourlyDelivery_kWh() != null && gridConnection.getElectricity().getQuarterHourlyDelivery_kWh().getValues().length != 0){
-		double[] yearlyElectricityDelivery_kWh_array = f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyDelivery_kWh().getValues());
-		double[] yearlyElectricityFeedin_kWh_array = (gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh() != null && gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh().getValues()): null;
-		double[] yearlyElectricityProduction_kWh_array = (gridConnection.getElectricity().getQuarterHourlyProduction_kWh() != null && gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues()): null;
+	final var deliveryTimeSeries = gridConnection.getElectricity().getQuarterHourlyDelivery_kWh();
+	var useTimeSeries = false;
+	final var targetYear = 2023;
+	if (deliveryTimeSeries != null) {
+		if (deliveryTimeSeries.hasFullYear(targetYear)) {
+		    useTimeSeries = true;
+		} else {
+			traceln(
+				"Skipping incomplete Zorm time-series. Num values %d, start %s",
+				deliveryTimeSeries.getValues().length, 
+				deliveryTimeSeries.getStart()
+			);
+		}
+	}
+	
+	if (useTimeSeries) {
+		double[] yearlyElectricityDelivery_kWh_array = f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyDelivery_kWh().getFullYearOrFudgeIt(targetYear));
+		double[] yearlyElectricityFeedin_kWh_array = (gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh() != null && gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh().getFullYearOrFudgeIt(targetYear)): null;
+		double[] yearlyElectricityProduction_kWh_array = (gridConnection.getElectricity().getQuarterHourlyProduction_kWh() != null && gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getFullYearOrFudgeIt(targetYear)): null;
 		
 		//Check if solar was already producing in simualtion year (Check for now: if year production = 0 , no solar yet, if year production = null, no data: so assume there was solar already)
 		if(gridConnection.getElectricity().getAnnualElectricityProduction_kWh() != null && gridConnection.getElectricity().getAnnualElectricityProduction_kWh  () == 0){
