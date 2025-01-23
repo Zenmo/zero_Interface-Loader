@@ -1097,6 +1097,7 @@ for (GridConnection GCcompany : generic_company_GCs ) {
 	
 	//create the energy assets for each GC
 	f_iEAGenericCompanies(GCcompany);
+
 }
 /*ALCODEEND*/}
 

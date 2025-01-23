@@ -478,6 +478,31 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 			</ParameterEditor>
 		</Properties>
 	</Variable>
+	<Variable Class="Parameter">
+		<Id>1737639949553</Id>
+		<Name><![CDATA[customProfiles_data]]></Name>
+		<X>-370</X>
+		<Y>300</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[CustomProfiles_data]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1737639949551</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
 	<Variable Class="CollectionVariable">
 		<Id>1726584205737</Id>
 		<Name><![CDATA[c_gridNodeIDsInScope]]></Name>
@@ -518,7 +543,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205741</Id>
 		<Name><![CDATA[c_GridNode_data]]></Name>
 		<X>-370</X>
-		<Y>310</Y>
+		<Y>320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
