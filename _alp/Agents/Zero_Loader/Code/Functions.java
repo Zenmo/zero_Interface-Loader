@@ -1541,6 +1541,9 @@ for (var survey : surveys) {
 						buildings.add(building);
 						c_GenericCompanyBuilding_data.remove(building);
 						c_SurveyCompanyBuilding_data.add(building);
+						
+						//Set trafo ID
+						companyGC.p_parentNodeElectricID = building.trafo_id();
 					}
 					else if(findFirst(energyModel.pop_GIS_Buildings, b -> b.p_id.equals(PID.getValue())) != null){
 						GIS_Building gisbuilding = findFirst(energyModel.pop_GIS_Buildings, b -> b.p_id.equals(PID.getValue()));
@@ -1552,9 +1555,6 @@ for (var survey : surveys) {
 							//Accumulate surface areas
 							totalFloorSurfaceAreaGC_m2 += gisbuilding.p_floorSurfaceArea_m2; // Gaat dan dubbel !?
 							totalRoofSurfaceAreaGC_m2 += gisbuilding.p_roofSurfaceArea_m2; // Gaat dan dubbel !?
-							
-							//Set trafo ID
-							companyGC.p_parentNodeElectricID = building.trafo_id();
 						}
 					}
 					else{
@@ -1563,8 +1563,8 @@ for (var survey : surveys) {
 						c_VallumBuilding_data.add(customBuilding);
 					}
 				}
-			} 
-			else {			
+			} else {
+				traceln("Survey %s no pand", survey.getId());
 				buildings = findAll(c_SurveyCompanyBuilding_data, b -> b.gc_id().equals(companyGC.p_gridConnectionID));
 			}
 			
@@ -3479,7 +3479,10 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		
 		//gridConnection.getTransport().getCars().getNumChargePoints(); // Wat doen we hier mee????????
 		
-		int nbEVCars = gridConnection.getTransport().getCars().getNumElectricCars();
+		Integer nbEVCars = gridConnection.getTransport().getCars().getNumElectricCars();
+		if (nbEVCars == null) {
+		    nbEVCars = 0;
+		}
 		int nbDieselCars = gridConnection.getTransport().getCars().getNumCars() - nbEVCars;
 
 		
@@ -3532,7 +3535,10 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		
 		//gridConnection.getTransport().getVans().getNumChargePoints(); // Wat doen we hier mee????????
 		
-		int nbEVVans = gridConnection.getTransport().getVans().getNumElectricVans();		
+		Integer nbEVVans = gridConnection.getTransport().getVans().getNumElectricVans();	
+		if (nbEVVans == null) {
+		    nbEVVans = 0;
+		}	
 		int nbDieselVans = gridConnection.getTransport().getVans().getNumVans() - nbEVVans;
 
 		boolean isDefaultVehicle		= true;
@@ -3585,7 +3591,10 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		//gridConnection.getTransport().getTrucks().getNumChargePoints(); // Wat doen we hier mee????????
 		
 		
-		int nbEVTrucks = gridConnection.getTransport().getTrucks().getNumElectricTrucks();		
+		Integer nbEVTrucks = gridConnection.getTransport().getTrucks().getNumElectricTrucks();		
+		if (nbEVTrucks == null) {
+		    nbEVTrucks = 0;
+		}
 		int nbDieselTrucks = gridConnection.getTransport().getTrucks().getNumTrucks() - nbEVTrucks;
 	
 		boolean isDefaultVehicle		= true;
