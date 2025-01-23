@@ -1507,7 +1507,6 @@ for (var survey : surveys) {
 				survey_owner.p_actorType = OL_ActorType.CONNECTIONOWNER;
 				survey_owner.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
 				survey_owner.p_detailedCompany = true;
-			 	traceln(survey.getCompanyName());
 		 	}
 			
 		 	//Create GC
@@ -3095,6 +3094,7 @@ double f_iEASurveyCompanies_Zorm(GridConnection companyGC,com.zenmo.zummon.compa
 {/*ALCODESTART::1732112244908*/
 //Initialize boolean that sets the creation of currently existing electric (demand) EA
 boolean createElectricEA = true;
+final var targetYear = 2023;
 
 
 //Create current scenario parameter list
@@ -3186,9 +3186,10 @@ if (gridConnection.getElectricity().getHasConnection()){
 	
 	final var deliveryTimeSeries = gridConnection.getElectricity().getQuarterHourlyDelivery_kWh();
 	var useTimeSeries = false;
-	final var targetYear = 2023;
+	
 	if (deliveryTimeSeries != null) {
-		if (deliveryTimeSeries.hasFullYear(targetYear)) {
+		// TODO: process month-based an day-based time series.
+		if (deliveryTimeSeries.hasFullYear(targetYear) && deliveryTimeSeries.getTimeStep().equals(DateTimeUnit.Companion.getMINUTE().times(15))) {
 		    useTimeSeries = true;
 		} else {
 			traceln(
@@ -3198,6 +3199,8 @@ if (gridConnection.getElectricity().getHasConnection()){
 			);
 		}
 	}
+	
+	var electricityData = gridConnection.getElectricity();
 	
 	if (useTimeSeries) {
 		double[] yearlyElectricityDelivery_kWh_array = f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyDelivery_kWh().getFullYearOrFudgeIt(targetYear));
@@ -3294,7 +3297,12 @@ if (gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperat
 if (gridConnection.getSupply().getHasSupply() != null && gridConnection.getSupply().getHasSupply()){
 	//gridConnection.getElectricity().getAnnualElectricityProductionKwh() // Staat niet meer in het formulier!
 	
-	double[] yearlyElectricityProduction_kWh_array = (gridConnection.getElectricity().getQuarterHourlyProduction_kWh() != null && gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues()): null;
+	double[] yearlyElectricityProduction_kWh_array = null;
+	
+	var quarterHourlyProduction_kWh = gridConnection.getElectricity().getQuarterHourlyProduction_kWh();
+	if (quarterHourlyProduction_kWh != null && quarterHourlyProduction_kWh.hasNumberOfValuesForOneYear()) {
+		yearlyElectricityProduction_kWh_array = f_convertFloatArrayToDoubleArray(quarterHourlyProduction_kWh.getFullYearOrFudgeIt(targetYear));
+	}
 	
 	if(yearlyElectricityProduction_kWh_array == null && gridConnection.getSupply().getPvInstalledKwp() != null && gridConnection.getSupply().getPvInstalledKwp() > 0){
 		try {
