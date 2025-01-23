@@ -202,7 +202,9 @@ switch( area.p_GISObjectType ) {
 		gisregion.setLineColor( v_antiLayerColor );
 		gisregion.setFillColor( v_antiLayerColor );
 		GISregion_antiLaag = gisregion;
-
+		
+		//Pas p_id aan naar een normale naam
+		area.p_id = "Buitengebied";
 	break;
 	
 	default:
@@ -3580,6 +3582,18 @@ switch(selectedFilter){
 			filterCanReturnZero = true;
 		}
 		break;
+		
+	case SELECTED_NEIGHBORHOOD:
+		if(v_selectedNeighborhood != null){
+			f_filterNeighborhood(toBeFilteredGC);
+		}
+		else if(c_selectedFilterOptions.size() > 1){
+			c_selectedGridConnections = new ArrayList<>(toBeFilteredGC);
+		}
+		else{
+			filterCanReturnZero = true;
+		}
+		break;
 }
 
 if(c_selectedGridConnections.size() == 0 && !filterCanReturnZero){ // Not allowed to return zero, while returning zero
@@ -3635,8 +3649,11 @@ switch(selectedFilterName){
 	case "Met voertuigen":
 		selectedFilter_OL = OL_FilterOptionsGC.HASTRANSPORT;
 		break;
-	case "In de aangewezen 'netbuurt'":
+	case "In de aangewezen 'lus'":
 		selectedFilter_OL = OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP;
+		break;
+	case "In de aangwezen 'buurt'":
+		selectedFilter_OL = OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD;
 		break;
 }
 
@@ -3706,11 +3723,11 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 				}	
 				
 				//This deselect the previous selected ring
-				f_setFilter("In de aangewezen 'netbuurt'");
+				f_setFilter("In de aangewezen 'lus'");
 				
 				//This selects the new selected ring
 				v_selectedGridLoop = clickedGridConnectionConnectedGridNode;
-				f_setFilter("In de aangewezen 'netbuurt'");
+				f_setFilter("In de aangewezen 'lus'");
 				
 				return;
 				
@@ -4130,5 +4147,42 @@ double timeAxisValue = energyModel.data_batteryStoredEnergy_MWh.getX(i);
 double SOC = area.v_batteryStorageCapacityInstalled_MWh > 0 ? batteryStoredEnergyLiveWeek_MWh / area.v_batteryStorageCapacityInstalled_MWh : 0;
 area.v_dataBatterySOCLiveWeek_.add(timeAxisValue, SOC); 
 
+/*ALCODEEND*/}
+
+double f_selectNeighborhood(double clickx,double clicky)
+{/*ALCODESTART::1737653178011*/
+
+//Check if click was on Building, if yes, select grid building
+for ( GIS_Object region : c_GISNeighborhoods ){
+	if( region.gisRegion != null && region.gisRegion.contains(clickx, clicky) ){
+		if (region.gisRegion.isVisible()) { //only allow us to click on visible objects	
+				
+			GIS_Object clickedNeighborhood = region;
+			
+			//This deselect the previous selected neighborhood
+			f_setFilter("In de aangwezen 'buurt'");
+			
+			//This selects the new selected neighborhood
+			v_selectedNeighborhood = clickedNeighborhood;
+			f_setFilter("In de aangwezen 'buurt'");
+			
+			return;	
+		}
+	}
+}
+
+/*ALCODEEND*/}
+
+double f_filterNeighborhood(ArrayList<GridConnection> toBeFilteredGC)
+{/*ALCODESTART::1737653178013*/
+ArrayList<GridConnection> gridConnectionsInNeighborhood = new ArrayList<GridConnection>();
+
+for(GridConnection GC : toBeFilteredGC){
+	if( v_selectedNeighborhood.gisRegion.contains(GC.p_latitude, GC.p_longitude) ){
+		gridConnectionsInNeighborhood.add(GC);
+	}
+}
+
+c_selectedGridConnections = new ArrayList<>(gridConnectionsInNeighborhood);
 /*ALCODEEND*/}
 

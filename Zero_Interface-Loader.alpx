@@ -45,6 +45,14 @@
 					<Id>1734442896763</Id>
 					<Name><![CDATA[ENERGYASSETS]]></Name>
 				</Option>
+				<Option>
+					<Id>1737653098541</Id>
+					<Name><![CDATA[SELECTED_NEIGHBORHOOD]]></Name>
+				</Option>
+				<Option>
+					<Id>1737656249784</Id>
+					<Name><![CDATA[SELECTED_MUNICIPALITY]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1660743989698</Id>

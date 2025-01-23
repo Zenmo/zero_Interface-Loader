@@ -4870,9 +4870,17 @@ else if (b_multiSelect) {
 else if (b_EHubSelect) {
 	f_EHubSelect(clickx, clicky);
 }
-else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP)){
-	f_selectGridLoop(clickx, clicky);
+else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP) || 
+		c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
+	
+	if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP)){
+		f_selectGridLoop(clickx, clicky);
+	}
+	if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
+		f_selectNeighborhood(clickx, clicky);
+	}
 }
+
 else {
 	if(c_selectedFilterOptions.size() &gt; 0){
 		f_removeAllFilters();
@@ -4892,9 +4900,17 @@ else if (b_multiSelect) {
 else if (b_EHubSelect) {
 	f_EHubSelect(clickx, clicky);
 }
-else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP)){
-	f_selectGridLoop(clickx, clicky);
+else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP) || 
+		c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
+	
+	if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP)){
+		f_selectGridLoop(clickx, clicky);
+	}
+	if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
+		f_selectNeighborhood(clickx, clicky);
+	}
 }
+
 else {
 	if(c_selectedFilterOptions.size() &gt; 0){
 		f_removeAllFilters();
@@ -5466,7 +5482,8 @@ cb_filterOptions.setValueIndex(0);</ActionCode>
 					<Button>Met geschatte data</Button>
 					<Button>Met zonnepanelen</Button>
 					<Button>Met voertuigen</Button>
-					<Button>In de aangewezen 'netbuurt'</Button>
+					<Button>In de aangewezen 'lus'</Button>
+					<Button>In de aangwezen 'buurt'</Button>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -5550,7 +5567,7 @@ cb_filterOptions.setValueIndex(0);</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1734446701124</Id>
 				<Name><![CDATA[button_clearFilters]]></Name>
-				<X>30</X>
+				<X>40</X>
 				<Y>130</Y>
 				<Label>
 					<X>0</X>
@@ -5568,14 +5585,14 @@ cb_filterOptions.setValueIndex(0);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
-					<LabelText>Verwijder filters</LabelText>
+					<LabelText>Verwijder alle filters</LabelText>
 				</ExtendedProperties>
 			</Control>
 			<Text>
 				<Id>1734524446136</Id>
 				<Name><![CDATA[t_selectedGridLoop]]></Name>
 				<X>-130</X>
-				<Y>110</Y>
+				<Y>140</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -5591,6 +5608,33 @@ cb_filterOptions.setValueIndex(0);</ActionCode>
 				<Color>-16777216</Color>
 				<Text/>
 				<TextCode>v_selectedGridLoop != null ? "Geselecteerde lus: " + v_selectedGridLoop.p_gridNodeID : "Geen lus geselecteerd."</TextCode>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1737640715642</Id>
+				<Name><![CDATA[t_selectedNBh]]></Name>
+				<X>-130</X>
+				<Y>110</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text/>
+				<TextCode>v_selectedNeighborhood != null ? "Geselecteerde buurt: " + v_selectedNeighborhood.p_id : "Geen buurt geselecteerd."</TextCode>
 				<Font>
 					<Name><![CDATA[SansSerif]]></Name>
 					<Size>12</Size>

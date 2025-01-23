@@ -1,7 +1,5 @@
 double f_createGISRegionOutline()
 {/*ALCODESTART::1726584205769*/
-GISRegion gisregion = null;
-
 // Create neighborhoods and draw them
 for (Neighbourhood_data NBH : c_Neighbourhood_data) {	
 	GIS_Object area = energyModel.add_pop_GIS_Objects();
@@ -14,7 +12,7 @@ for (Neighbourhood_data NBH : c_Neighbourhood_data) {
 	
 	//Style area 
 	zero_Interface.f_styleSimulationAreas(area);
-	zero_Interface.c_GISRegions.add(gisregion);
+	zero_Interface.c_GISNeighborhoods.add(area);
 }
 
 
