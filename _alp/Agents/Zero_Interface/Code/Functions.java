@@ -3688,6 +3688,7 @@ if( v_previousClickedObjectType != null){
 }
 
 v_selectedGridLoop = null;
+v_selectedNeighborhood = null;
 
 v_clickedObjectType = OL_GISObjectType.REGION;
 uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
