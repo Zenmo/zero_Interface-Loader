@@ -3533,6 +3533,11 @@ return annualElectricityConsumption_kWh;
 
 double f_createCustomPVAsset(GridConnection parentGC,double[] yearlyElectricityProduction_kWh,Double pvPower_kW)
 {/*ALCODESTART::1732112209863*/
+if (yearlyElectricityProduction_kWh.length != 35040) {
+	traceln("Skipping creation of PV asset: need 35040 data points, got %d", yearlyElectricityProduction_kWh.length);
+	return;
+}
+
 // Generate custom PV production asset using production data!
 double[] a_arguments = IntStream.range(0, 35040).mapToDouble(i -> v_simStartHour_h + i*0.25).toArray(); // time axis
 
@@ -3572,7 +3577,6 @@ zero_Interface.c_scenarioMap_Future.put(companyGC, future_scenario_list);
 
 //Get PV power (used for preprocessing and estimating grid capacity if unknown)
 Double pvPower_kW = (gridConnection.getSupply().getPvInstalledKwp() != null) ? new Double(gridConnection.getSupply().getPvInstalledKwp()) : null;
-
 
 ////Electricity (connection and consumption)
 //Initialize contract capacity with 0 for when companies fill in survey already but currently have no connection yet
@@ -3647,10 +3651,26 @@ if (gridConnection.getElectricity().getHasConnection()){
 	//Check if quarter hourly values are available 
 	companyGC.v_hasQuarterHourlyValues = false;
 	
-	if(gridConnection.getElectricity().getQuarterHourlyDelivery_kWh() != null && gridConnection.getElectricity().getQuarterHourlyDelivery_kWh().getValues().length != 0){
-		double[] yearlyElectricityDelivery_kWh_array = f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyDelivery_kWh().getValues());
-		double[] yearlyElectricityFeedin_kWh_array = (gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh() != null && gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh().getValues()): null;
-		double[] yearlyElectricityProduction_kWh_array = (gridConnection.getElectricity().getQuarterHourlyProduction_kWh() != null && gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues()): null;
+	final var quarterHourlyDelivery_kWh = gridConnection.getElectricity().getQuarterHourlyDelivery_kWh();
+	var useTimeSeries = false;
+	final var targetYear = f_getZormTargetYear();
+	if (quarterHourlyDelivery_kWh != null) {
+		if (quarterHourlyDelivery_kWh.hasFullYear(targetYear)) {
+		    useTimeSeries = true;
+		} else {
+			traceln(
+				"Skipping incomplete Zorm time-series for %s. Num values %d, start %s",
+				companyGC.p_name,
+				quarterHourlyDelivery_kWh.getValues().length, 
+				quarterHourlyDelivery_kWh.getStart()
+			);
+		}
+	}
+	
+	if (useTimeSeries) {
+		double[] yearlyElectricityDelivery_kWh_array = f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyDelivery_kWh().getFullYearOrFudgeIt(targetYear));
+		double[] yearlyElectricityFeedin_kWh_array = (gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh() != null && gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh().getFullYearOrFudgeIt(targetYear)): null;
+		double[] yearlyElectricityProduction_kWh_array = (gridConnection.getElectricity().getQuarterHourlyProduction_kWh() != null && gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getFullYearOrFudgeIt(targetYear)): null;
 		
 		//Check if solar was already producing in simualtion year (Check for now: if year production = 0 , no solar yet, if year production = null, no data: so assume there was solar already)
 		if(gridConnection.getElectricity().getAnnualElectricityProduction_kWh() != null && gridConnection.getElectricity().getAnnualElectricityProduction_kWh  () == 0){
@@ -4084,5 +4104,10 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 	}
 }
 
+/*ALCODEEND*/}
+
+int f_getZormTargetYear()
+{/*ALCODESTART::1737552974856*/
+return 2023;
 /*ALCODEEND*/}
 
