@@ -731,6 +731,7 @@ area.v_dataElectricityForTransportConsumptionLiveWeek_kW = energyModel.data_elec
 area.v_dataElectricityForStorageConsumptionLiveWeek_kW = energyModel.data_batteryCharging_kW;
 area.v_dataElectricityForHydrogenConsumptionLiveWeek_kW = energyModel.data_hydrogenElectricityDemand_kW;
 area.v_dataElectricityForCookingConsumptionLiveWeek_kW = energyModel.data_cookingElectricityDemand_kW;
+//area.v_dataDistrictHeatConsumptionLiveWeek_kW = energyModel.data_districtHeatingDemand_kW;
 
 //Supply
 area.dsm_liveProduction_kW = energyModel.dsm_liveSupply_kW;

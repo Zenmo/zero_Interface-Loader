@@ -68,12 +68,11 @@
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1722256239566</Id>
 		<Name><![CDATA[f_setPublicChargingStations]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>810</X>
 		<Y>430</Y>
 		<Label>
@@ -94,7 +93,6 @@
 		<ReturnType>double</ReturnType>
 		<Id>1722256239578</Id>
 		<Name><![CDATA[f_setDieselVehiclesAtPublicParkingHouses]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>830</X>
 		<Y>490</Y>
 		<Label>
@@ -126,12 +124,11 @@
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1722256291599</Id>
 		<Name><![CDATA[f_setResidentialBatteries]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>810</X>
 		<Y>570</Y>
 		<Label>
@@ -147,12 +144,11 @@
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1722261212790</Id>
 		<Name><![CDATA[f_setEVsAtPrivateParkingHouses]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>810</X>
 		<Y>540</Y>
 		<Label>
@@ -184,13 +180,12 @@
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1724164287280</Id>
 		<Name><![CDATA[f_setGridBatteries]]></Name>
 		<Description><![CDATA[Function that changes the electric capacity of the energy asset of the "Wind Farm". Takes an amount of MW as a parameter. The variables for amount of installed Wind are updated automatically in the zero_engine. The function also modifies the connection capacity of the energy production site to match the new installed Wind Power.]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>810</X>
 		<Y>674</Y>
 		<Label>
