@@ -1501,7 +1501,8 @@ for (var survey : surveys) {
 		 	//Find buildings, and connect 
 		 	double totalFloorSurfaceAreaGC_m2 = 0;
 		 	double totalRoofSurfaceAreaGC_m2 = 0;
-
+			
+			//Get attached building info
 		 	List<Building_data> buildings = new ArrayList<Building_data>();
 			if ( gridConnection.getPandIds() != null && !gridConnection.getPandIds().isEmpty()) {
 				for (var PID : gridConnection.getPandIds() ) {
@@ -1511,7 +1512,7 @@ for (var survey : surveys) {
 						c_GenericCompanyBuilding_data.remove(building);
 						c_SurveyCompanyBuilding_data.add(building);
 					}
-					else{
+					else if(findFirst(energyModel.pop_GIS_Buildings, b -> b.p_id.equals(PID.getValue())) != null){
 						GIS_Building gisbuilding = findFirst(energyModel.pop_GIS_Buildings, b -> b.p_id.equals(PID.getValue()));
 						if(gisbuilding != null){
 							
@@ -1525,15 +1526,21 @@ for (var survey : surveys) {
 							//Set trafo ID
 							companyGC.p_parentNodeElectricID = building.trafo_id();
 						}
-						else{
-							traceln("No building found with panduid %s!", PID.getValue());
-						}
+					}
+					else{
+						
+						Building_data customBuilding = f_createBuildingData_Zorm(PID.getValue(), gridConnection, companyGC);
+						buildings.add(customBuilding);
+						c_customBuildingTest.add(customBuilding);
+						
 					}
 				}
-			} else {			
+			} 
+			else {			
 				buildings = findAll(c_SurveyCompanyBuilding_data, b -> b.gc_id().equals(companyGC.p_gridConnectionID));
 			}
 			
+			//Create the GIS buildings
 			for (Building_data building : buildings) {
 				GIS_Building b = f_createGISBuilding( building, companyGC);				
 				
@@ -1620,509 +1627,6 @@ double f_createActors()
 {/*ALCODESTART::1726584205821*/
 //Create specific actors like Grid operator, energy supplier, energy coop
 f_createEnergyActors();
-/*ALCODEEND*/}
-
-double f_iEASurveyCompanies_Zorm_Bak(GridConnection companyGC,com.zenmo.zummon.companysurvey.GridConnection gridConnection)
-{/*ALCODESTART::1726584205823*/
-//Initialize boolean that sets the creation of currently existing electric (demand) EA
-boolean createElectricEA = true;
-
-
-//Create current scenario parameter list
-J_scenario_Current current_scenario_list = new J_scenario_Current();
-zero_Interface.c_scenarioMap_Current.put(companyGC, current_scenario_list);
-
-//Create future scenario parameter list
-J_scenario_Future future_scenario_list = new J_scenario_Future();
-zero_Interface.c_scenarioMap_Future.put(companyGC, future_scenario_list);
-
-//Set parent
-current_scenario_list.setParentAgent(companyGC);
-future_scenario_list.setParentAgent(companyGC);
-
-////Electricity (connection and consumption)
-//Initialize contract capacity with 0 for when companies fill in survey already but currently have no connection yet
-companyGC.p_contractedDeliveryCapacity_kW = 0;
-companyGC.p_contractedFeedinCapacity_kW = 0;
-companyGC.p_physicalConnectionCapacity_kW = 0;
-
-//Check for electricity connection and data
-if (gridConnection.getElectricity().getHasConnection()){
-	
-	if ((gridConnection.getElectricity().getContractedConnectionCapacityKw() == null || 
-		gridConnection.getElectricity().getContractedConnectionCapacityKw() <= 0) &&
-		(gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw() == null || 
-		gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw() <= 0)) {
-		
-		traceln("SURVEYOWNER HAS NOT FILLED IN CONNECTION CAPACITY!!! AVG values taken");
-		companyGC.p_contractedDeliveryCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
-		companyGC.p_contractedFeedinCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
-		companyGC.p_physicalConnectionCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
-	}
-	else{
-	
-		if(gridConnection.getElectricity().getContractedConnectionCapacityKw() != null && gridConnection.getElectricity().getContractedConnectionCapacityKw() > 0){
-			companyGC.p_contractedDeliveryCapacity_kW = gridConnection.getElectricity().getContractedConnectionCapacityKw(); //Contracted connection capacity
-		}
-		else{
-			companyGC.p_contractedDeliveryCapacity_kW = gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw(); //Contracted connection capacity
-		}
-		
-		
-		//Check if contract capacity feedin has been filled in: if not, make the same as contract delivery
-		if(gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw() != null && gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw() > 0){
-			companyGC.p_contractedFeedinCapacity_kW = gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw(); //Contracted connection capacity
-		}
-		else{
-			companyGC.p_contractedFeedinCapacity_kW = companyGC.p_contractedDeliveryCapacity_kW; //Contracted connection capacity
-		}
-		
-		//Check if physical capacity has been filled in: if not, make the same as contract delivery
-		if(gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw() != null && gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw() > 0){
-			companyGC.p_physicalConnectionCapacity_kW = gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw(); //Contracted connection capacity
-		}
-		else{
-			companyGC.p_physicalConnectionCapacity_kW = companyGC.p_contractedDeliveryCapacity_kW; //Contracted connection capacity
-		}
-	}
-	
-	//Add to current scenario list
-	current_scenario_list.setCurrentContractDeliveryCapacity_kW(companyGC.p_contractedDeliveryCapacity_kW);
-	current_scenario_list.setCurrentContractFeedinCapacity_kW(companyGC.p_contractedFeedinCapacity_kW);
-	current_scenario_list.setCurrentPhysicalConnectionCapacity_kW(companyGC.p_physicalConnectionCapacity_kW);
-	
-	
-	//Electricity consumption profile
-	String profileName = "Office_other_electricity";
-	
-
-	//Get PV power (used for preprocessing)
-	Double pvPower_kW = (gridConnection.getSupply().getPvInstalledKwp() != null) ? new Double(gridConnection.getSupply().getPvInstalledKwp()) : null;
-	
-	//Check if quarter hourly values are available 
-	companyGC.v_hasQuarterHourlyValues = false;
-	
-	if(gridConnection.getElectricity().getQuarterHourlyDelivery_kWh() != null && gridConnection.getElectricity().getQuarterHourlyDelivery_kWh().getValues().length != 0){
-		double[] yearlyElectricityDelivery_kWh_array = f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyDelivery_kWh().getValues());
-		double[] yearlyElectricityFeedin_kWh_array = (gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh() != null && gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh().getValues()): null;
-		double[] yearlyElectricityProduction_kWh_array = (gridConnection.getElectricity().getQuarterHourlyProduction_kWh() != null && gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues()): null;
-		
-		//Check if solar was already producing in simualtion year (Check for now: if year production = 0 , no solar yet, if year production = null, no data: so assume there was solar already)
-		if(gridConnection.getElectricity().getAnnualElectricityProduction_kWh() != null && gridConnection.getElectricity().getAnnualElectricityProduction_kWh  () == 0){
-			pvPower_kW = null;
-		}
-		
-		//Preprocess the arrays and create the consumption pattern
-		f_createPreprocessedElectricityProfile(companyGC, yearlyElectricityDelivery_kWh_array, yearlyElectricityFeedin_kWh_array, yearlyElectricityProduction_kWh_array, pvPower_kW);
-	
-		companyGC.v_hasQuarterHourlyValues = true;
-		profileName = "ccid" + companyGC.p_gridConnectionID; //Not needed I think
-				
-		if (!settings.createCurrentElectricityEA()){//input boolean: Dont create current electric energy assets if electricity profile is present.
-		createElectricEA = false;
-		}
-	}
-	else{
-		double yearlyElectricityConsumption_kWh  = 0;
-		try {
-			if(selectFirstValue(Double.class, "SELECT " + "ccid" + gridConnection.getSequence().toString() + "_demand FROM comp_elec_consumption LIMIT 1;") != null){
-		  		companyGC.v_hasQuarterHourlyValues = true;
-				profileName = "ccid" + companyGC.p_gridConnectionID;
-				
-				//Check if solar was already producing in simualtion year (Check for now: if year production = 0 , no solar yet, if year production = null, no data: so assume there was solar already)
-				if(gridConnection.getElectricity().getAnnualElectricityProduction_kWh() != null && gridConnection.getElectricity().getAnnualElectricityProduction_kWh  () == 0){
-					pvPower_kW = null;
-				}
-		
-				if (!settings.createCurrentElectricityEA()){//input boolean: Dont create current electric energy assets if electricity profile is present.
-				createElectricEA = false;
-				}
-			}
-		}
-		catch(Exception e) {
-		//Data not available, do nothing and leave v_hasQuarterHourlyValues on false.
-		}
-		
-		if(companyGC.v_hasQuarterHourlyValues == false){//Calculate yearly consumption based on yearly delivery (and yearly feedin, production or solarpanels if available)
-			//Get totals
-			double yearlyElectricityDelivery_kWh = (gridConnection.getElectricity().getAnnualElectricityDemandKwh() != null) ? gridConnection.getElectricity().getAnnualElectricityDemandKwh() : 0; // Yearly electricity consumption (0 if value is null)
-			Integer yearlyElectricityFeedin_kWh = gridConnection.getElectricity().getAnnualElectricityFeedIn_kWh();
-			Integer yearlyElectricityProduction_kWh = gridConnection.getElectricity().getAnnualElectricityProduction_kWh();
-			
-			//Calculate consumption
-			yearlyElectricityConsumption_kWh = f_getPreprocessedConsumptionTotal(companyGC, yearlyElectricityDelivery_kWh, yearlyElectricityFeedin_kWh, yearlyElectricityProduction_kWh, pvPower_kW);
-			
-			//If no electricity consumption, determine the consumption based on average values and floor surface and connection capacity
-			if(yearlyElectricityConsumption_kWh == 0){
-				yearlyElectricityConsumption_kWh = avgc_data.p_avgCompanyElectricityConsumption_kWhpm2*companyGC.p_floorSurfaceArea_m2;
-				
-				//Check if it is within the contracted limits (peak should at least be 20% lower than contracted capacity
-				if(yearlyElectricityConsumption_kWh*genericProfiles_data.buildingEdemandList_maximum() > 0.8*companyGC.p_contractedDeliveryCapacity_kW){
-					yearlyElectricityConsumption_kWh = 0.8*companyGC.p_contractedDeliveryCapacity_kW/genericProfiles_data.buildingEdemandList_maximum();
-				}
-				 
-			}
-			
-			//Update total Yearly electricity consumption (only when no timestep data available, cause when thats avaiable, it happens in the preprocessing function)
-			if (yearlyElectricityDelivery_kWh != 0){
-				v_remainingElectricityDelivery_kWh -= yearlyElectricityDelivery_kWh;
-			}
-			else{
-				v_remainingElectricityDelivery_kWh -= yearlyElectricityConsumption_kWh;
-			}
-		}
-		
-		//Add base electricity demand profile (with profile if available, with generic pattern if only yearly data is available)
-		f_addElectricityDemandProfile(companyGC, yearlyElectricityConsumption_kWh, pvPower_kW, companyGC.v_hasQuarterHourlyValues, profileName);
-	}
-		
-
-}
-
-//If everything is 0 set the GC as non active
-if(companyGC.p_contractedDeliveryCapacity_kW == 0 && companyGC.p_contractedFeedinCapacity_kW == 0 && companyGC.p_physicalConnectionCapacity_kW == 0){
-	companyGC.v_isActive = false;
-}
-		
-//Grid expansion request
-future_scenario_list.setRequestedContractDeliveryCapacity_kW(companyGC.p_contractedDeliveryCapacity_kW);
-if (gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() != null && gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator()){
-	future_scenario_list.setRequestedContractDeliveryCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.p_contractedDeliveryCapacity_kW);
-	future_scenario_list.setRequestedContractFeedinCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.p_contractedDeliveryCapacity_kW);
-	future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.p_contractedDeliveryCapacity_kW);
-}
-
-
-////Supply (pv, wind, etc.)
-if (gridConnection.getSupply().getHasSupply() != null && gridConnection.getSupply().getHasSupply()){
-	//gridConnection.getElectricity().getAnnualElectricityProductionKwh() // Staat niet meer in het formulier!
-	
-	//PV
-	if (gridConnection.getSupply().getPvInstalledKwp() != null && gridConnection.getSupply().getPvInstalledKwp() > 0){
-		
-		gridConnection.getSupply().getPvOrientation(); // Wat doen we hier mee?????
-		
-		f_addEnergyProduction(companyGC, OL_EnergyAssetType.PHOTOVOLTAIC, "Rooftop Solar", gridConnection.getSupply().getPvInstalledKwp());
-		
-		//add to scenario: current
-		current_scenario_list.setCurrentPV_kW(gridConnection.getSupply().getPvInstalledKwp());
-		//current_scenario_list.currentPV_orient = gridConnection.getSupply().getPvOrientation();
-	}
-	
-	//Wind
-	if (gridConnection.getSupply().getWindInstalledKw() != null && gridConnection.getSupply().getWindInstalledKw() > 0){
-		f_addEnergyProduction(companyGC, OL_EnergyAssetType.WINDMILL, "Wind mill", gridConnection.getSupply().getWindInstalledKw());
-
-		//add to scenario: current
-		current_scenario_list.setCurrentWind_kW(gridConnection.getSupply().getWindInstalledKw());
-	}
-}
-
-//Planned supply (PV)
-if (gridConnection.getSupply().getPvPlanned() != null && gridConnection.getSupply().getPvPlanned()){ 
-	future_scenario_list.setPlannedPV_kW(gridConnection.getSupply().getPvPlannedKwp()); 
-	future_scenario_list.setPlannedPV_year(gridConnection.getSupply().getPvPlannedYear());
-	//gridConnection.getSupply().getPvPlannedOrientation();
-}
-
-//Planned supply (Wind)
-if (gridConnection.getSupply().getWindPlannedKw() != null && gridConnection.getSupply().getWindPlannedKw() > 0){
-	future_scenario_list.setPlannedWind_kW(gridConnection.getSupply().getWindPlannedKw());
-	// plannedWind_year // ???
-}
-
-
-
-
-////Gas
-//Initialize variables (outside of gas loop needed for heating)
-boolean hasHourlyGasData = false;
-double yearlyGasConsumption_m3 = 0;
-double ratioGasUsedForHeating = 1;
-String heatProfileName = "Building_heat_demand";
-
-if (gridConnection.getNaturalGas().getHasConnection() != null && gridConnection.getNaturalGas().getHasConnection()){
-	
-	yearlyGasConsumption_m3 = (gridConnection.getNaturalGas().getAnnualDemandM3() != null) ? gridConnection.getNaturalGas().getAnnualDemandM3() : 0; // Yearly electricity consumption (0 if value is null)
-
-	//Check if hourly gas consumption values are available 
-	try{
-		if (selectFirstValue(Double.class, "SELECT " + "ccid" + gridConnection.getSequence().toString() + "_demand FROM comp_gas_consumption LIMIT 1;") != null){
-			hasHourlyGasData = true;
-			heatProfileName = "ccid" + companyGC.p_gridConnectionID;
-		}
-	}
-	catch(Exception e) {
-		//No hourly data available?
-		//Update total Yearly gas consumption (if it is available it happens in the function where data is imported)
-		v_remainingGasConsumption_m3 -= yearlyGasConsumption_m3;
-		
-	}
-	
-	//Determine how much gas goes towards heating
-	ratioGasUsedForHeating = ((gridConnection.getNaturalGas().getPercentageUsedForHeating() != null) ? gridConnection.getNaturalGas().getPercentageUsedForHeating() : 100)/100;
-}
-
-
-
-	
-////Heating
-//Determine the current heating type
-f_setHeatingTypeSurvey(companyGC, gridConnection, hasHourlyGasData);
-
-//Set the heating demand profile
-if(!createElectricEA && companyGC.p_heatingType == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP){
-	//Dont create additional Electric heating assets on top of Electricity profile
-}
-else{
-	f_addHeatDemandProfile(companyGC, yearlyGasConsumption_m3, hasHourlyGasData, ratioGasUsedForHeating, heatProfileName);
-}
-
-//add to scenario: current
-current_scenario_list.setCurrentHeatingType(companyGC.p_heatingType);
-
-
-
-
-////Storage
-Float battery_power_kW = 0f;
-Float battery_capacity_kWh = 0f;
-
-if (gridConnection.getStorage().getHasBattery() != null && gridConnection.getStorage().getHasBattery() && createElectricEA){ // Check if battery present and if electric demand EA should be created
-	if (gridConnection.getStorage().getBatteryPowerKw() != null){
-		battery_power_kW = gridConnection.getStorage().getBatteryPowerKw();
-	}
-	if (gridConnection.getStorage().getBatteryCapacityKwh() != null){
-		battery_capacity_kWh = gridConnection.getStorage().getBatteryCapacityKwh();	
-	}
-}
-// Elke survey company krijgt hoe dan ook een batterij EA (ook als op dit moment nog geen batterij aanwezig is, maar dan is capaciteit gewoon 0)
-f_addStorage(companyGC, battery_power_kW, battery_capacity_kWh, OL_EnergyAssetType.STORAGE_ELECTRIC);
-
-
-//Aansturing toevoegen ?
-
-//add to scenario: current
-current_scenario_list.setCurrentBatteryPower_kW(battery_power_kW);
-current_scenario_list.setCurrentBatteryCapacity_kWh(battery_capacity_kWh);
-	
-	
-if (gridConnection.getStorage().getHasThermalStorage() != null && gridConnection.getStorage().getHasThermalStorage()){ // Check for thermal storage
-	//gridConnection.getStorage().getThermalStorageKw()
-	//J_EAStorageHeat(Agent parentAgent, OL_EAStorageTypes heatStorageType, double capacityHeat_kW, double lossFactor_WpK, double timestep_h, double initialTemperature_degC, double minTemperature_degC, double maxTemperature_degC, double setTemperature_degC, double heatCapacity_JpK, String ambientTempType ) {
-	//J_EAStorageHeat(companyGC, OL_EAStorageTypes heatStorageType, double capacityHeat_kW, double lossFactor_WpK, double timestep_h, double initialTemperature_degC, double minTemperature_degC, double maxTemperature_degC, double setTemperature_degC, double heatCapacity_JpK, String ambientTempType ) {
-	//Denk ook aan aansturing?!!
-}
-
-if (gridConnection.getStorage().getHasPlannedBattery() != null && gridConnection.getStorage().getHasPlannedBattery()){ // Check for planned battery
-	future_scenario_list.setPlannedBatteryCapacity_kWh(gridConnection.getStorage().getPlannedBatteryCapacityKwh());
-	future_scenario_list.setPlannedBatteryPower_kW(gridConnection.getStorage().getPlannedBatteryPowerKw());
-}
-
-
-
-
-////Transport
-
-//Cars of comuters and visitors 
-int nbDailyCarVisitors_notNull = (gridConnection.getTransport().getNumDailyCarVisitors() != null) ? gridConnection.getTransport().getNumDailyCarVisitors() : 0;
-int nbDailyCarCommuters_notNull = (gridConnection.getTransport().getNumDailyCarAndVanCommuters() != null) ? gridConnection.getTransport().getNumDailyCarAndVanCommuters() : 0;
-
-if (nbDailyCarCommuters_notNull + nbDailyCarVisitors_notNull > 0){	
-	
-	int nbEVCarsComute = (gridConnection.getTransport().getNumCommuterAndVisitorChargePoints() != null) ? gridConnection.getTransport().getNumCommuterAndVisitorChargePoints() : 0; // Wat doen we hier mee????
-	int nbDieselCarsComute = gridConnection.getTransport().getNumDailyCarAndVanCommuters() + gridConnection.getTransport().getNumDailyCarVisitors() - nbEVCarsComute;
-
-	boolean isDefaultVehicle = true;
-	double maxChargingPower_kW 		= avgc_data.p_avgEVMaxChargePowerCar_kW;	
-	
-	for (int i = 0; i< nbDieselCarsComute; i++){
-		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VEHICLE, isDefaultVehicle, 0);
-	}
-	
-	
-	//check if charge power is filled in
-	if (gridConnection.getTransport().getCars().getPowerPerChargePointKw() != null){
-		maxChargingPower_kW 		= gridConnection.getTransport().getCars().getPowerPerChargePointKw();		
-		isDefaultVehicle			= false;
-	}
-	
-	if (createElectricEA){ // Check if electric demand EA should be created
-		for (int j = 0; j< nbEVCarsComute; j++){
-			f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VEHICLE, isDefaultVehicle, 0, maxChargingPower_kW);
-		}
-	}
-	
-	//add to scenario: current
-	current_scenario_list.setCurrentEVCars(nbEVCarsComute);
-	current_scenario_list.setCurrentDieselCars(nbDieselCarsComute);
-}
-
-
-//Business vehicles
-if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.getTransport().getHasVehicles()){
-
-	//Cars
-	if (gridConnection.getTransport().getCars().getNumCars() != null && gridConnection.getTransport().getCars().getNumCars() != 0){
-		
-		//gridConnection.getTransport().getCars().getNumChargePoints(); // Wat doen we hier mee????????
-		
-		int nbEVCars = gridConnection.getTransport().getCars().getNumElectricCars();
-		int nbDieselCars = gridConnection.getTransport().getCars().getNumCars() - nbEVCars;
-
-		
-		boolean isDefaultVehicle		= true;
-		double annualTravelDistance_km 	= 0;
-		double maxChargingPower_kW 		= avgc_data.p_avgEVMaxChargePowerCar_kW;		
-		
-		//check if annual travel distance is filled in
-		if (gridConnection.getTransport().getCars().getAnnualTravelDistancePerCarKm() != null){
-			annualTravelDistance_km 	= gridConnection.getTransport().getCars().getAnnualTravelDistancePerCarKm();
-			isDefaultVehicle			= false;
-		}
-		
-		//create diesel vehicle
-		for (int i = 0; i< nbDieselCars; i++){
-		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VEHICLE, isDefaultVehicle, annualTravelDistance_km);
-		}
-		
-		//check if charge power is filled in
-		if (gridConnection.getTransport().getCars().getPowerPerChargePointKw() != null){
-			maxChargingPower_kW 		= gridConnection.getTransport().getCars().getPowerPerChargePointKw();		
-			isDefaultVehicle			= false;		
-		}
-		
-		//create EV
-		if (createElectricEA){ // Check if electric demand EA should be created
-			for (int j = 0; j< nbEVCars; j++){
-			f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VEHICLE, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW);
-			}
-		}
-		
-		//add to scenario: current
-		current_scenario_list.setCurrentEVCars(((current_scenario_list.getCurrentEVCars() != null) ? current_scenario_list.getCurrentEVCars() : 0) + nbEVCars);
-		current_scenario_list.setCurrentDieselCars(((current_scenario_list.getCurrentDieselCars() != null) ? current_scenario_list.getCurrentDieselCars() : 0) + nbDieselCars);
-		current_scenario_list.setCurrentEVCarChargePower_kW(maxChargingPower_kW);
-		
-		//Planned
-		future_scenario_list.setPlannedEVCars((gridConnection.getTransport().getCars().getNumPlannedElectricCars() != null) ? gridConnection.getTransport().getCars().getNumPlannedElectricCars() : 0);
-		future_scenario_list.setPlannedHydrogenCars((gridConnection.getTransport().getCars().getNumPlannedHydrogenCars() != null) ? gridConnection.getTransport().getCars().getNumPlannedHydrogenCars() : 0);
-		
-	}
-	
-	
-	//Vans
-	if (gridConnection.getTransport().getVans().getNumVans() != null && gridConnection.getTransport().getVans().getNumVans() != 0){
-		
-		//Update v_remaningAmount of vans
-		v_remainingNumberOfVans -= gridConnection.getTransport().getVans().getNumVans();
-		
-		
-		//gridConnection.getTransport().getVans().getNumChargePoints(); // Wat doen we hier mee????????
-		
-		int nbEVVans = gridConnection.getTransport().getVans().getNumElectricVans();		
-		int nbDieselVans = gridConnection.getTransport().getVans().getNumVans() - nbEVVans;
-
-		boolean isDefaultVehicle		= true;
-		double annualTravelDistance_km 	= 0;
-		double maxChargingPower_kW 		= avgc_data.p_avgEVMaxChargePowerVan_kW;		
-		
-		//check if annual travel distance is filled in
-		if (gridConnection.getTransport().getVans().getAnnualTravelDistancePerVanKm() != null){
-			annualTravelDistance_km 	= gridConnection.getTransport().getVans().getAnnualTravelDistancePerVanKm();
-			isDefaultVehicle			= false;
-		}
-		
-		//create diesel vehicles
-		for (int i = 0; i< nbDieselVans; i++){
-			f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VAN, isDefaultVehicle, annualTravelDistance_km);
-		}
-		
-		//check if charge power is filled in
-		if (gridConnection.getTransport().getVans().getPowerPerChargePointKw() != null){
-			maxChargingPower_kW 		= gridConnection.getTransport().getVans().getPowerPerChargePointKw();	
-			isDefaultVehicle			= false;		
-		}
-		
-		//create electric vehicles
-		if (createElectricEA){ // Check if electric demand EA should be created
-			for (int j = 0; j< nbEVVans; j++){
-				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VAN, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW);
-			}
-		}
-		
-		//add to scenario: current
-		current_scenario_list.setCurrentEVVans(nbEVVans);
-		current_scenario_list.setCurrentDieselVans(nbDieselVans);
-		current_scenario_list.setCurrentEVVanChargePower_kW(maxChargingPower_kW);
-		
-		//Planned
-		future_scenario_list.setPlannedEVVans((gridConnection.getTransport().getVans().getNumPlannedElectricVans() != null) ? gridConnection.getTransport().getVans().getNumPlannedElectricVans() : 0);
-		future_scenario_list.setPlannedHydrogenVans((gridConnection.getTransport().getVans().getNumPlannedHydrogenVans() != null) ? gridConnection.getTransport().getVans().getNumPlannedHydrogenVans() : 0);
-	}
-	
-		
-	
-	//Trucks
-	if (gridConnection.getTransport().getTrucks().getNumTrucks() != null && gridConnection.getTransport().getTrucks().getNumTrucks() != 0){
-		
-		//Update v_remaningAmount of trucks
-		v_remainingNumberOfTrucks -= gridConnection.getTransport().getTrucks().getNumTrucks();
-
-
-		//gridConnection.getTransport().getTrucks().getNumChargePoints(); // Wat doen we hier mee????????
-		
-		
-		int nbEVTrucks = gridConnection.getTransport().getTrucks().getNumElectricTrucks();		
-		int nbDieselTrucks = gridConnection.getTransport().getTrucks().getNumTrucks() - nbEVTrucks;
-		
-		boolean isDefaultVehicle		= true;
-		double annualTravelDistance_km = 0;
-		double maxChargingPower_kW = avgc_data.p_avgEVMaxChargePowerTruck_kW;
-		
-		//check if annual travel distance is filled in
-		if (gridConnection.getTransport().getTrucks().getAnnualTravelDistancePerTruckKm() != null){
-			annualTravelDistance_km 	= gridConnection.getTransport().getTrucks().getAnnualTravelDistancePerTruckKm();
-			isDefaultVehicle			= false;
-		}
-		
-		//create diesel vehicles
-		for (int i = 0; i< nbDieselTrucks; i++){
-			f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_TRUCK, isDefaultVehicle, annualTravelDistance_km);
-		}
-		
-		//check if charge power is filled in
-		if (gridConnection.getTransport().getTrucks().getPowerPerChargePointKw() != null){
-			maxChargingPower_kW 		= gridConnection.getTransport().getTrucks().getPowerPerChargePointKw();
-			isDefaultVehicle			= false;		
-		}
-		
-		//create electric vehicles
-		if (createElectricEA){ // Check if electric demand EA should be created
-			for (int j = 0; j< nbEVTrucks; j++){
-				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_TRUCK, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW);
-			}
-		}
-		
-		//add to scenario: current
-		current_scenario_list.setCurrentEVTrucks(nbEVTrucks);
-		current_scenario_list.setCurrentDieselTrucks(nbDieselTrucks);
-		current_scenario_list.setCurrentEVTruckChargePower_kW(maxChargingPower_kW);
-		
-		//Planned
-		future_scenario_list.setPlannedEVTrucks((gridConnection.getTransport().getTrucks().getNumPlannedElectricTrucks() != null) ? gridConnection.getTransport().getTrucks().getNumPlannedElectricTrucks() : 0);
-		future_scenario_list.setPlannedHydrogenTrucks((gridConnection.getTransport().getTrucks().getNumPlannedHydrogenTrucks() != null) ? gridConnection.getTransport().getTrucks().getNumPlannedHydrogenTrucks() : 0);
-	}
-	
-	
-	//Other
-	if (Objects.nonNull(gridConnection.getTransport().getOtherVehicles().getHasOtherVehicles())){
-	
-	// Wat doen we hier mee???
-	
-	}
-}
-
 /*ALCODEEND*/}
 
 double f_setHeatingTypeSurvey(GridConnection companyGC,com.zenmo.zummon.companysurvey.GridConnection gridConnection,boolean hasHourlyGasData)
@@ -4082,5 +3586,35 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 	}
 }
 
+/*ALCODEEND*/}
+
+Building_data f_createBuildingData_Zorm(String PandID,com.zenmo.zummon.companysurvey.GridConnection surveyGridConnection,GridConnection companyGC)
+{/*ALCODESTART::1737741603780*/
+
+//Create a building_data record
+Building_data building_data_record = Building_data.builder().
+
+address_id("verblijfsobject." + PandID).
+building_id("pand." + PandID).
+streetname(companyGC.p_address.getStreetName()).
+house_number(companyGC.p_address.getHouseNumber()).
+house_letter(companyGC.p_address.getHouseLetter()).
+house_addition(companyGC.p_address.getHouseAddition()).
+postalcode(companyGC.p_address.getPostalcode()).
+city(companyGC.p_address.getPostalcode()).
+//build_year(row.get( buildings.build_year )).	
+//status(row.get( buildings.status )).
+//purpose(row.get( buildings.purpose )).
+//cumulative_floor_surface_m2(row.get( buildings.cumulative_floor_surface_m2 )).
+//polygon_area_m2(row.get( buildings.polygon_area_m2 )).
+annotation(companyGC.p_gridConnectionID).
+//extra_info(row.get( buildings.extra_info )).
+//trafo_id(row.get( buildings.trafo_id )).
+//latitude(row.get( buildings.latitude )).
+//longitude(row.get( buildings.longitude )).
+//polygon(row.get( buildings.polygon )).
+build();
+
+return building_data_record;
 /*ALCODEEND*/}
 
