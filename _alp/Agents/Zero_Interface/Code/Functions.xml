@@ -1022,8 +1022,9 @@
 		<ReturnType>double</ReturnType>
 		<Id>1725439643960</Id>
 		<Name><![CDATA[f_updateTotalLiveDataSets]]></Name>
-		<X>-650</X>
-		<Y>830</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-600</X>
+		<Y>1030</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1038,8 +1039,9 @@
 		<ReturnType>double</ReturnType>
 		<Id>1725440073691</Id>
 		<Name><![CDATA[f_addTimeStepTotalLiveDataSets]]></Name>
-		<X>-625</X>
-		<Y>850</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-590</X>
+		<Y>1050</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1187,7 +1189,7 @@
 		<Id>1733857328199</Id>
 		<Name><![CDATA[f_addTimeStepLiveDataSetsGC]]></Name>
 		<X>-620</X>
-		<Y>810</Y>
+		<Y>830</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1211,7 +1213,7 @@
 		<Id>1734361725171</Id>
 		<Name><![CDATA[f_updateActiveAssetBooleansGC]]></Name>
 		<X>-620</X>
-		<Y>890</Y>
+		<Y>870</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1235,7 +1237,7 @@
 		<Id>1734368189128</Id>
 		<Name><![CDATA[f_updateActiveAssetBooleans]]></Name>
 		<X>-650</X>
-		<Y>870</Y>
+		<Y>850</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1597,7 +1599,7 @@
 		<Id>1736425260898</Id>
 		<Name><![CDATA[f_EHubCapacityDataSets]]></Name>
 		<X>-650</X>
-		<Y>940</Y>
+		<Y>920</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1613,7 +1615,7 @@
 		<Id>1736425260900</Id>
 		<Name><![CDATA[f_updateLiveEHubCapacityDataSets]]></Name>
 		<X>-650</X>
-		<Y>960</Y>
+		<Y>940</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1629,7 +1631,7 @@
 		<Id>1736425260902</Id>
 		<Name><![CDATA[f_fillAreaCollectionsOfIndividualGCs]]></Name>
 		<X>-650</X>
-		<Y>920</Y>
+		<Y>900</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1739,6 +1741,30 @@
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
 			<Name><![CDATA[toBeFilteredGC]]></Name>
+			<Type><![CDATA[ArrayList<GridConnection>]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1737996505794</Id>
+		<Name><![CDATA[f_updateCollectiveSelfConsumption]]></Name>
+		<X>-620</X>
+		<Y>810</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[area]]></Name>
+			<Type><![CDATA[AreaCollection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[gcList]]></Name>
 			<Type><![CDATA[ArrayList<GridConnection>]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>

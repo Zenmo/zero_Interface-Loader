@@ -1075,7 +1075,7 @@
 		<Id>1726584205869</Id>
 		<Name><![CDATA[f_clearDataRecords]]></Name>
 		<X>-390</X>
-		<Y>620</Y>
+		<Y>670</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1277,7 +1277,7 @@
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>Building_data</ReturnType>
 		<Id>1737741603780</Id>
-		<Name><![CDATA[f_createBuildingData_Zorm]]></Name>
+		<Name><![CDATA[f_createBuildingData_Vallum]]></Name>
 		<X>459</X>
 		<Y>199</Y>
 		<Label>
@@ -1288,16 +1288,12 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[PandID]]></Name>
-			<Type><![CDATA[String]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[surveyGridConnection]]></Name>
-			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
-		</Parameter>
-		<Parameter>
 			<Name><![CDATA[companyGC]]></Name>
 			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[PandID]]></Name>
+			<Type><![CDATA[String]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

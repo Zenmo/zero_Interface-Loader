@@ -177,6 +177,11 @@ else if(RegionCoords.startsWith("Poly")){
 	RegionCoords = RegionCoords.replace(","," ");
 	RegionCoords = RegionCoords.replace("))","");
 }
+else if(RegionCoords.startsWith("POLYGON")){
+	RegionCoords = RegionCoords.replace("POLYGON ((","");
+	RegionCoords = RegionCoords.replace(","," ");
+	RegionCoords = RegionCoords.replace("))","");
+}
 else if(RegionCoords.startsWith("MultiLineString")){
 	RegionCoords = RegionCoords.replace("MultiLineString ((","");
 	RegionCoords = RegionCoords.replace(","," ");
@@ -1108,10 +1113,6 @@ b.p_useType = buildingData.purpose();
 // Adres data
 b.p_annotation = buildingData.annotation();
 
-//position and coordinates
-b.p_longitude = buildingData.longitude();
-b.p_latitude = buildingData.latitude();
-b.setLatLon(b.p_latitude, b.p_longitude);		
 
 //If building is the first building in a cluster (means it has a pancluster_nr), add it to the list of buidling clusters
 if(buildingData.pandcluster_nr() != null && buildingData.pandcluster_nr() > 0) { // && 
@@ -1121,6 +1122,32 @@ if(buildingData.pandcluster_nr() != null && buildingData.pandcluster_nr() > 0) {
 
 //Create gisregion
 b.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(buildingData.polygon(), b.p_GISObjectType));
+
+/*
+if (buildingData.latitude() == null|| buildingData.longitude() == null){
+	
+	//Use the first point of the polygon as lat lon
+	double[] gisregion_points = b.gisRegion.getPoints(); // get all points of the gisArea of the building in the format lat1,lon1,lat2,lon2, etc.
+	
+	//position and coordinates
+	b.p_latitude = gisregion_points[0];
+	b.p_longitude = gisregion_points[1];
+}
+else{
+	//position and coordinates
+	b.p_latitude = buildingData.latitude();
+	b.p_longitude = buildingData.longitude();
+}
+*/
+
+//Use the first point of the polygon as lat lon
+double[] gisregion_points = b.gisRegion.getPoints(); // get all points of the gisArea of the building in the format lat1,lon1,lat2,lon2, etc.
+
+//position and coordinates
+b.p_latitude = gisregion_points[0];
+b.p_longitude = gisregion_points[1];
+//Set latlon
+b.setLatLon(b.p_latitude, b.p_longitude);
 
 
 //Define surface area (with Null checks)
@@ -1449,6 +1476,9 @@ List<A_SubTenant> subTenants = new ArrayList<A_SubTenant>();
 //Get the survey data
 List<com.zenmo.zummon.companysurvey.Survey> surveys = f_getSurveys();
 
+//Get the building data
+map_buildingData_Vallum = com.zenmo.vallum.PandKt.fetchBagPanden(surveys);
+
 traceln("Size of survey List: %s", surveys.size());
 
 for (var survey : surveys) {
@@ -1528,11 +1558,9 @@ for (var survey : surveys) {
 						}
 					}
 					else{
-						
-						Building_data customBuilding = f_createBuildingData_Zorm(PID.getValue(), gridConnection, companyGC);
+						Building_data customBuilding = f_createBuildingData_Vallum(companyGC, PID.getValue());
 						buildings.add(customBuilding);
-						c_customBuildingTest.add(customBuilding);
-						
+						c_VallumBuilding_data.add(customBuilding);
 					}
 				}
 			} 
@@ -1612,6 +1640,7 @@ List<com.zenmo.zummon.companysurvey.Survey> f_getSurveys()
 {/*ALCODESTART::1726584205819*/
 //Connect with API to database
 Vallum vallum = new Vallum(user.PROJECT_CLIENT_ID(), user.PROJECT_CLIENT_SECRET());
+
 
 List<com.zenmo.zummon.companysurvey.Survey> surveys = new ArrayList();
 
@@ -3588,8 +3617,9 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 
 /*ALCODEEND*/}
 
-Building_data f_createBuildingData_Zorm(String PandID,com.zenmo.zummon.companysurvey.GridConnection surveyGridConnection,GridConnection companyGC)
+Building_data f_createBuildingData_Vallum(GridConnection companyGC,String PandID)
 {/*ALCODESTART::1737741603780*/
+com.zenmo.bag.Pand pand_data_vallum = map_buildingData_Vallum.get(PandID);
 
 //Create a building_data record
 Building_data building_data_record = Building_data.builder().
@@ -3602,8 +3632,8 @@ house_letter(companyGC.p_address.getHouseLetter()).
 house_addition(companyGC.p_address.getHouseAddition()).
 postalcode(companyGC.p_address.getPostalcode()).
 city(companyGC.p_address.getPostalcode()).
-//build_year(row.get( buildings.build_year )).	
-//status(row.get( buildings.status )).
+build_year(pand_data_vallum.getBouwjaar()).	
+status(pand_data_vallum.getStatus()).
 //purpose(row.get( buildings.purpose )).
 //cumulative_floor_surface_m2(row.get( buildings.cumulative_floor_surface_m2 )).
 //polygon_area_m2(row.get( buildings.polygon_area_m2 )).
@@ -3612,7 +3642,7 @@ annotation(companyGC.p_gridConnectionID).
 //trafo_id(row.get( buildings.trafo_id )).
 //latitude(row.get( buildings.latitude )).
 //longitude(row.get( buildings.longitude )).
-//polygon(row.get( buildings.polygon )).
+polygon(pand_data_vallum.getGeometry().toString()).
 build();
 
 return building_data_record;
