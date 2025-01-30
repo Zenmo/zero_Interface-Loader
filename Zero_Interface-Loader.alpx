@@ -253,6 +253,10 @@
 				<Id>1737638888950</Id>
 				<Name><![CDATA[CustomProfiles_data]]></Name>
 			</JavaClass>
+			<JavaClass>
+				<Id>1737714961123</Id>
+				<Name><![CDATA[ListUtil]]></Name>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>

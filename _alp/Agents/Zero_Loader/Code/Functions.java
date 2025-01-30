@@ -3117,6 +3117,8 @@ companyGC.p_contractedDeliveryCapacity_kW = 0;
 companyGC.p_contractedFeedinCapacity_kW = 0;
 companyGC.p_physicalConnectionCapacity_kW = 0;
 
+f_createDieselTractors(companyGC, gridConnection.getTransport().getAgriculture());
+
 //Check for electricity connection and data
 if (gridConnection.getElectricity().getHasConnection()){
 	
@@ -3686,3 +3688,17 @@ build();
 return building_data_record;
 /*ALCODEEND*/}
 
+double f_createDieselTractors(GridConnection companyGridConnection,com.zenmo.zummon.companysurvey.Agriculture agricultureSurveyData)
+{/*ALCODESTART::1737712184349*/
+final double annualDiesel_L = Optional.ofNullable(agricultureSurveyData.getAnnualDieselUsage_L()).orElse(0.0);
+final int numTractors = Optional.ofNullable(agricultureSurveyData.getNumTractors()).orElse(annualDiesel_L > 0.0 ? 1 : 0);
+
+if (numTractors > 0 && annualDiesel_L <= 0.0) {
+    // TODO: this should be in Tractor constructor
+    throw new RuntimeException("Tractor diesel usage missing for " + companyGridConnection.p_gridConnectionID);
+}
+
+for (int i = 0; i < numTractors; i++) {
+    new J_EADieselTractor(companyGridConnection, annualDiesel_L / numTractors, customProfiles_data.getValuesArray(), energyModel.p_timeStep_h);
+}
+/*ALCODEEND*/}

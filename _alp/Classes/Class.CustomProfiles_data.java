@@ -11,4 +11,7 @@ public class CustomProfiles_data {
 		// Various demand profiles
 		List<Double> customProfileList;
 
+		double[] getValuesArray() {
+			return ListUtil.doubleListToArray(customProfileList);
+		}
 }
