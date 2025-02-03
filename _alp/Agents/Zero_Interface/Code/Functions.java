@@ -4009,18 +4009,33 @@ c_selectedGridConnections = new ArrayList<>(gridConnectionsInNeighborhood);
 double f_updateCollectiveSelfConsumption(AreaCollection area,ArrayList<GridConnection> gcList)
 {/*ALCODESTART::1737996505794*/
 double totalElectricityExport_MWh = 0;
+double totalElectricityImport_MWh = 0;
 for(double netLoad_kW : area.v_dataNetLoadYear_kW){
 	if(netLoad_kW < 0){
 		totalElectricityExport_MWh += -1*netLoad_kW*energyModel.p_timeStep_h/1000; 
 	}
+	if(netLoad_kW > 0){
+		totalElectricityImport_MWh += netLoad_kW*energyModel.p_timeStep_h/1000; 
+	}
 } 
 
+area.fm_totalExports_MWh.put( OL_EnergyCarriers.ELECTRICITY, totalElectricityExport_MWh);
+area.fm_totalImports_MWh.put( OL_EnergyCarriers.ELECTRICITY, totalElectricityImport_MWh);
 area.v_totalElectricitySelfConsumed_MWh = (area.v_totalElectricityProduced_MWh-totalElectricityExport_MWh);
 
 
+//QUICK FIX (Cause cumulative energy import/export calculation is currently wrong!!).
+double totalEnergySelfConsumed_MWh = area.v_totalElectricitySelfConsumed_MWh;
+for (GridConnection GC : gcList) {
+	totalEnergySelfConsumed_MWh += GC.v_currentPrimaryEnergyProductionHeatpumps_kW;
+}
 
-/* //IN progress!!!
+area.v_totalEnergySelfConsumed_MWh = totalEnergySelfConsumed_MWh;
+area.v_totalEnergyExport_MWh = area.fm_totalExports_MWh.get( OL_EnergyCarriers.ELECTRICITY);
+
+//IN progress!!!
 //Energy
+/*
 double totalEnergySelfConsumed = area.v_totalElectricitySelfConsumed_MWh; // Initialize with selfconsumption of EC
 
 int arraySize = roundToInt((energyModel.p_runEndTime_h-energyModel.p_runStartTime_h)/energyModel.p_timeStep_h);
@@ -4028,9 +4043,11 @@ for(OL_EnergyCarriers EC : area.v_activeProductionEnergyCarriers){
 	if(EC != OL_EnergyCarriers.ELECTRICITY && area.v_activeConsumptionEnergyCarriers.contains(EC)){
 		double[] dataBalanceYearEC_kW = new double[arraySize];
 		for (GridConnection gc : gcList) {
-			double[] balanceTimeSeries_kW = gc.am_totalBalanceAccumulators_kW.get(EC).getTimeSeries();
-			for (int i = 0; i<arraySize; i++) {
-				 dataBalanceYearEC_kW[i] += balanceTimeSeries_kW[i];
+			if(gc.v_activeEnergyCarriers.contains(EC)){
+				double[] balanceTimeSeries_kW = gc.am_totalBalanceAccumulators_kW.get(EC).getTimeSeries();
+				for (int i = 0; i<arraySize; i++) {
+					 dataBalanceYearEC_kW[i] += balanceTimeSeries_kW[i];
+				}
 			}
 		}
 		double totalECExport_MWh = 0;
@@ -4046,7 +4063,6 @@ for(OL_EnergyCarriers EC : area.v_activeProductionEnergyCarriers){
 }
 
 area.v_totalEnergySelfConsumed_MWh = totalEnergySelfConsumed;
-
 */
 /*ALCODEEND*/}
 
