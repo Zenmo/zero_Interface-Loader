@@ -145,6 +145,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 	<Variable Class="PlainVariable">
 		<Id>1726584205897</Id>
 		<Name><![CDATA[v_remainingElectricityDelivery_kWh]]></Name>
+		<Description><![CDATA[This variable indicates an annual maximum consumption for all the created consumption profiles combined. Setting it produces warnings if this is exceeded.]]></Description>
 		<X>1481</X>
 		<Y>231</Y>
 		<Label>
@@ -159,6 +160,9 @@ Calculated by: initial value (total floor area of the area) - total floor area o
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[Double.POSITIVE_INFINITY]]></Code>
+			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">

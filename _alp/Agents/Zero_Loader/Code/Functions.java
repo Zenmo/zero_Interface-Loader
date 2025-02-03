@@ -2675,7 +2675,7 @@ if (extraConsumption_kWh > 1) {
 }
  
 if (v_remainingElectricityDelivery_kWh < 0){
-	traceln("v_remainingElectricityConsumption_kWh became negative at GC: %s", parentGC);
+	traceln("v_remainingElectricityDelivery_kWh became negative at GC: %s", parentGC);
 }
 /*ALCODEEND*/}
 
@@ -3184,47 +3184,9 @@ if (gridConnection.getElectricity().getHasConnection()){
 	String profileName = "Office_other_electricity";
 	
 	//Check if quarter hourly values are available 
-	companyGC.v_hasQuarterHourlyValues = false;
+	boolean createdTimeSeriesAssets = f_createElectricityTimeSeriesAssets(companyGC, gridConnection, "Insert company name here");
 	
-	final var deliveryTimeSeries = gridConnection.getElectricity().getQuarterHourlyDelivery_kWh();
-	var useTimeSeries = false;
-	
-	if (deliveryTimeSeries != null) {
-		// TODO: process month-based an day-based time series.
-		if (deliveryTimeSeries.hasFullYear(targetYear) && deliveryTimeSeries.getTimeStep().equals(DateTimeUnit.Companion.getMINUTE().times(15))) {
-		    useTimeSeries = true;
-		} else {
-			traceln(
-				"Skipping incomplete Zorm time-series. Num values %d, start %s",
-				deliveryTimeSeries.getValues().length, 
-				deliveryTimeSeries.getStart()
-			);
-		}
-	}
-	
-	var electricityData = gridConnection.getElectricity();
-	
-	if (useTimeSeries) {
-		double[] yearlyElectricityDelivery_kWh_array = f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyDelivery_kWh().getFullYearOrFudgeIt(targetYear));
-		double[] yearlyElectricityFeedin_kWh_array = (gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh() != null && gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh().getFullYearOrFudgeIt(targetYear)): null;
-		double[] yearlyElectricityProduction_kWh_array = (gridConnection.getElectricity().getQuarterHourlyProduction_kWh() != null && gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getFullYearOrFudgeIt(targetYear)): null;
-		
-		//Check if solar was already producing in simualtion year (Check for now: if year production = 0 , no solar yet, if year production = null, no data: so assume there was solar already)
-		if(gridConnection.getElectricity().getAnnualElectricityProduction_kWh() != null && gridConnection.getElectricity().getAnnualElectricityProduction_kWh  () == 0){
-			pvPower_kW = null;
-		}
-		
-		//Preprocess the arrays and create the consumption pattern
-		f_createPreprocessedElectricityProfile(companyGC, yearlyElectricityDelivery_kWh_array, yearlyElectricityFeedin_kWh_array, yearlyElectricityProduction_kWh_array, pvPower_kW);
-	
-		companyGC.v_hasQuarterHourlyValues = true;
-		profileName = "ccid" + companyGC.p_gridConnectionID; //Not needed I think
-				
-		if (!settings.createCurrentElectricityEA()){//input boolean: Dont create current electric energy assets if electricity profile is present.
-			createElectricEA = false;
-		}
-	}
-	else{
+	if (!createdTimeSeriesAssets) {
 		double yearlyElectricityConsumption_kWh  = 0;
 		try {
 			if(selectFirstValue(Double.class, "SELECT " + "ccid" + gridConnection.getSequence().toString() + "_demand FROM comp_elec_consumption LIMIT 1;") != null){
@@ -3277,8 +3239,6 @@ if (gridConnection.getElectricity().getHasConnection()){
 		//Add base electricity demand profile (with profile if available, with generic pattern if only yearly data is available)
 		f_addElectricityDemandProfile(companyGC, yearlyElectricityConsumption_kWh, pvPower_kW, companyGC.v_hasQuarterHourlyValues, profileName);
 	}
-		
-
 }
 
 //If everything is 0 set the GC as non active
@@ -3303,7 +3263,7 @@ if (gridConnection.getSupply().getHasSupply() != null && gridConnection.getSuppl
 	
 	var quarterHourlyProduction_kWh = gridConnection.getElectricity().getQuarterHourlyProduction_kWh();
 	if (quarterHourlyProduction_kWh != null && quarterHourlyProduction_kWh.hasNumberOfValuesForOneYear()) {
-		yearlyElectricityProduction_kWh_array = f_convertFloatArrayToDoubleArray(quarterHourlyProduction_kWh.getFullYearOrFudgeIt(targetYear));
+		yearlyElectricityProduction_kWh_array = f_convertFloatArrayToDoubleArray(quarterHourlyProduction_kWh.convertToQuarterHourly().getFullYearOrFudgeIt(targetYear));
 	}
 	
 	if(yearlyElectricityProduction_kWh_array == null && gridConnection.getSupply().getPvInstalledKwp() != null && gridConnection.getSupply().getPvInstalledKwp() > 0){
@@ -3450,7 +3410,7 @@ int nbDailyCarCommuters_notNull = (gridConnection.getTransport().getNumDailyCarA
 if (nbDailyCarCommuters_notNull + nbDailyCarVisitors_notNull > 0){	
 	
 	int nbEVCarsComute = (gridConnection.getTransport().getNumCommuterAndVisitorChargePoints() != null) ? gridConnection.getTransport().getNumCommuterAndVisitorChargePoints() : 0; // Wat doen we hier mee????
-	int nbDieselCarsComute = gridConnection.getTransport().getNumDailyCarAndVanCommuters() + gridConnection.getTransport().getNumDailyCarVisitors() - nbEVCarsComute;
+	int nbDieselCarsComute = gridConnection.getTransport().getNumDailyCarAndVanCommuters() + nbDailyCarVisitors_notNull - nbEVCarsComute;
 
 	boolean isDefaultVehicle = true;
 	double maxChargingPower_kW 		= avgc_data.p_avgEVMaxChargePowerCar_kW;	
@@ -3702,3 +3662,47 @@ for (int i = 0; i < numTractors; i++) {
     new J_EADieselTractor(companyGridConnection, annualDiesel_L / numTractors, customProfiles_data.getValuesArray(), energyModel.p_timeStep_h);
 }
 /*ALCODEEND*/}
+
+boolean f_createElectricityTimeSeriesAssets(GridConnection gridConnection,com.zenmo.zummon.companysurvey.GridConnection gridConnectionSurvey,String companyName)
+{/*ALCODESTART::1738248965949*/
+var targetYear = 2023;
+var electricitySurvey = gridConnectionSurvey.getElectricity();
+
+double[] deliveryTimeSeries_kWh = f_timeSeriesToDoubleArray(electricitySurvey.getQuarterHourlyDelivery_kWh());
+if (deliveryTimeSeries_kWh == null) {
+	// delivery is the minimum we require to do anything with timeseries data
+	return false;
+}
+
+double[] feedInTimeSeries_kWh = f_timeSeriesToDoubleArray(electricitySurvey.getQuarterHourlyFeedIn_kWh());
+double[] productionTimeSeries_kWh = f_timeSeriesToDoubleArray(electricitySurvey.getQuarterHourlyProduction_kWh());
+
+Double pvPower_kW = Optional.ofNullable(gridConnectionSurvey.getSupply().getPvInstalledKwp())
+	.map(it -> (double) it)
+	.orElse(null);
+
+//Preprocess the arrays and create the consumption pattern
+f_createPreprocessedElectricityProfile(gridConnection, deliveryTimeSeries_kWh, feedInTimeSeries_kWh, productionTimeSeries_kWh, pvPower_kW);
+
+gridConnection.v_hasQuarterHourlyValues = true;
+
+return true;
+/*ALCODEEND*/}
+
+double[] f_timeSeriesToDoubleArray(com.zenmo.zummon.companysurvey.TimeSeries timeSeries)
+{/*ALCODESTART::1738572338816*/
+var targetYear = 2023;
+if (timeSeries == null) {
+	return null;
+}
+
+if (!timeSeries.hasNumberOfValuesForOneYear()) {
+	traceln("Time series has too few values for one year");
+	return null;
+}
+
+return f_convertFloatArrayToDoubleArray(
+	timeSeries.convertToQuarterHourly().getFullYearOrFudgeIt(targetYear)
+);
+/*ALCODEEND*/}
+

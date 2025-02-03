@@ -986,6 +986,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1726584205861</Id>
 		<Name><![CDATA[f_createPreprocessedElectricityProfile]]></Name>
+		<Description><![CDATA[Principe:
+verbruik = levering + productie - teruglevering]]></Description>
 		<X>831</X>
 		<Y>131</Y>
 		<Label>
@@ -1318,6 +1320,54 @@
 		<Parameter>
 			<Name><![CDATA[agricultureSurveyData]]></Name>
 			<Type><![CDATA[com.zenmo.zummon.companysurvey.Agriculture]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>boolean</ReturnType>
+		<Id>1738248965949</Id>
+		<Name><![CDATA[f_createElectricityTimeSeriesAssets]]></Name>
+		<X>655</X>
+		<Y>241</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gridConnection]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[gridConnectionSurvey]]></Name>
+			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[companyName]]></Name>
+			<Type><![CDATA[String]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double[]</ReturnType>
+		<Id>1738572338816</Id>
+		<Name><![CDATA[f_timeSeriesToDoubleArray]]></Name>
+		<X>632</X>
+		<Y>191</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[timeSeries]]></Name>
+			<Type><![CDATA[com.zenmo.zummon.companysurvey.TimeSeries]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

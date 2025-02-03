@@ -8,6 +8,7 @@ public class Settings {
 		
 		//Simulation settings
 		boolean reloadDatabase;
+		/** TODO: please comment what this means */
 		boolean createCurrentElectricityEA;
 		boolean runHeadlessAtStartup;
 		Boolean showKPISummary;
