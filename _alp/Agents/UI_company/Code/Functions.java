@@ -461,7 +461,7 @@ sl_rooftopPVCompany.setRange(0, 2000000);
 
 //Set range specific for each company
 v_minPVSlider = roundToInt(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentPV_kW());
-v_maxPVSlider = roundToInt(zero_Interface.energyModel.avgc_data.p_avgRatioRoofPotentialPV* c_ownedGridConnections.get(v_currentSelectedGCnr).p_roofSurfaceArea_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2);
+v_maxPVSlider = roundToInt(zero_Interface.energyModel.avgc_data.p_avgRatioRoofPotentialPV* c_ownedGridConnections.get(v_currentSelectedGCnr).p_roofSurfaceArea_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2)+100;
 if(v_maxPVSlider <= v_minPVSlider){
 	v_maxPVSlider = v_minPVSlider + 1000;
 }
