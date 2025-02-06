@@ -38,7 +38,7 @@ import com.zenmo.zummon.companysurvey.TimeSeries;
 
 import zeroPackage.ZeroMath;
 import com.zenmo.zummon.companysurvey.PandIDKt;
-import com.zenmo.vallum.PandKt;]]></Import>
+import com.zenmo.vallum.PandKt;
 import kotlinx.datetime.DateTimeUnit;]]></Import>
 	<Generic>false</Generic>
 	<GenericParameter>
