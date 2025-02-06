@@ -3041,7 +3041,6 @@ return doubleArray;
 double f_getPreprocessedConsumptionTotal(GridConnection parentGC,double annualElectricityDelivery_kWh,Integer annualElectricityFeedin_kWh,Integer annualElectricityProduction_kWh,Double pvPower_kW)
 {/*ALCODESTART::1728039545686*/
 double annualElectricityConsumption_kWh = 0;
-
 if(annualElectricityFeedin_kWh != null){
 	if(annualElectricityProduction_kWh != null){
 		annualElectricityConsumption_kWh = annualElectricityDelivery_kWh - annualElectricityFeedin_kWh + annualElectricityProduction_kWh;
@@ -3049,15 +3048,18 @@ if(annualElectricityFeedin_kWh != null){
 	else if(pvPower_kW != null && pvPower_kW > 0){
 		annualElectricityConsumption_kWh = annualElectricityDelivery_kWh - annualElectricityFeedin_kWh + pvPower_kW*avgc_data.p_avgFullLoadHoursPV_hr;
 	}
+	else{//Geen opwek
+		annualElectricityConsumption_kWh = annualElectricityDelivery_kWh;
+	}
 }
 else if(pvPower_kW != null && pvPower_kW > 0){
-	//WAT HIER?? Voor nu: doe niks
+	//WAT HIER?? Voor nu consumption = delivery
+	//Maar: moet preprocessing van standaard profiel worden, waar gelijktijdigheid gecheckt wordt!
 	annualElectricityConsumption_kWh = annualElectricityDelivery_kWh;
 }
 else{
 	annualElectricityConsumption_kWh = annualElectricityDelivery_kWh;
 }
-
 return annualElectricityConsumption_kWh;
 
 /*ALCODEEND*/}

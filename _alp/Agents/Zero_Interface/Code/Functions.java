@@ -1897,13 +1897,10 @@ if( area.v_dataElectricityBaseloadConsumptionYear_kW != null ){
 	area.v_dataElectricityForStorageConsumptionYear_kW.reset();
 	area.v_dataElectricityForHydrogenConsumptionYear_kW.reset();
 	area.v_dataElectricityForCookingConsumptionYear_kW.reset();
-	//area.v_dataNaturalGasDemandYear_kW.reset();
-	//area.v_dataPetroleumProductsDemandYear_kW.reset();
 	area.v_dataElectricityPVProductionYear_kW.reset();
 	area.v_dataElectricityWindProductionYear_kW.reset(); 
 	area.v_dataElectricityStorageProductionYear_kW.reset();
 	area.v_dataElectricityV2GProductionYear_kW.reset();
-	//area.v_dataHydrogenSupplyYear_kW.reset();
 	area.v_dataElectricityCHPProductionYear_kW.reset();
 	area.v_dataBatterySOCYear_.reset();
 }
@@ -1914,14 +1911,10 @@ else{
 	area.v_dataElectricityForStorageConsumptionYear_kW = new DataSet(365);
 	area.v_dataElectricityForHydrogenConsumptionYear_kW = new DataSet(365);
 	area.v_dataElectricityForCookingConsumptionYear_kW = new DataSet(365);
-	//area.v_dataNaturalGasDemandYear_kW= new DataSet(365);
-	//area.v_dataPetroleumProductsDemandYear_kW= new DataSet(365);
-	//area.v_dataElectricityForHydrogenDemandYear_kW= new DataSet(365);
 	area.v_dataElectricityPVProductionYear_kW = new DataSet(365);
 	area.v_dataElectricityWindProductionYear_kW = new DataSet(365);
 	area.v_dataElectricityStorageProductionYear_kW = new DataSet(365);
 	area.v_dataElectricityV2GProductionYear_kW = new DataSet(365);
-	//area.v_dataHydrogenSupplyYear_kW= new DataSet(365);
 	area.v_dataElectricityCHPProductionYear_kW = new DataSet(365);
 	area.v_dataBatterySOCYear_ = new DataSet(365);
 }
@@ -1943,14 +1936,10 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 	double electricityForStorageDemandYear_kW = 0;
 	double electricityForElectrolyser_kW = 0;
 	double electricityForCookingConsumptionYear_kW = 0;
-	//double naturalGasDemandYear_kW = 0;
-	//double petroleumProductsDemandYear_kW = 0;
-	//double electricityForHydrogenDemandYear_kW = 0;
 	double electricityPVSupplyYear_kW = 0;
 	double electricityWindSupplyYear_kW = 0;
 	double electricityStorageSupplyYear_kW = 0;
 	double electricityV2GSupplyYear_kW = 0;
-	//double hydrogenSupplyYear_kW = 0;
 	double electricityCHPSupplyYear_kW = 0;
 	double batteryStoredEnergy_MWh = 0;
 	
@@ -1958,10 +1947,8 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 	for (GridConnection gc : gcList){
 		
 		for (OL_EnergyCarriers EC : gc.v_activeEnergyCarriers) {
-			if (gc.dsm_dailyAverageDemandDataSets_kW.get(EC).getXMin() < i) {
-				fm_dailyAverageDemand_kW.addFlow( EC, gc.dsm_dailyAverageDemandDataSets_kW.get(EC).getY(i) );
-				fm_dailyAverageSupply_kW.addFlow( EC, gc.dsm_dailyAverageSupplyDataSets_kW.get(EC).getY(i) );
-			}
+			fm_dailyAverageDemand_kW.addFlow( EC, gc.dsm_dailyAverageDemandDataSets_kW.get(EC).getY(i) );
+			fm_dailyAverageSupply_kW.addFlow( EC, gc.dsm_dailyAverageSupplyDataSets_kW.get(EC).getY(i) );
 		}
 	
 		electricityBaseloadDemandYear_kW += gc.data_annualBaseloadElectricityDemand_kW.getY(i);
@@ -1972,30 +1959,12 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 			electricityForElectrolyser_kW += ((GCEnergyConversion)gc).data_annualElectrolyserDemand_kW.getY(i);
 		}
 		electricityForCookingConsumptionYear_kW += gc.data_annualCookingElectricityDemand_kW.getY(i);
-		/*
-		// These if statements can be removed if the AreaCollection is updated and we can loop over keysets.
-		if ( gc.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.METHANE) != null ) {
-			naturalGasDemandYear_kW += gc.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.METHANE).getY(i);
-		}
-		if ( gc.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL) != null ) {
-			petroleumProductsDemandYear_kW += gc.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.DIESEL).getY(i);
-		}
-		if ( gc.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
-			electricityForHydrogenDemandYear_kW += gc.v_dailyAverageDemandDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
-		}
-		*/
-		
 		electricityPVSupplyYear_kW += gc.data_annualPVGeneration_kW.getY(i);
 		electricityWindSupplyYear_kW += gc.data_annualWindGeneration_kW.getY(i);
 		electricityStorageSupplyYear_kW += gc.data_annualBatteriesSupply_kW.getY(i);
 		electricityV2GSupplyYear_kW += gc.data_annualV2GSupply_kW.getY(i);
 		electricityCHPSupplyYear_kW += gc.data_annualCHPElectricitySupply_kW.getY(i);
 		batteryStoredEnergy_MWh += gc.data_annualBatteryStoredEnergy_MWh.getY(i);
-		/*
-		if ( gc.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN) != null ) {
-			hydrogenSupplyYear_kW += gc.v_dailyAverageSupplyDataSets_kW.get(OL_EnergyCarriers.HYDROGEN).getY(i);
-		}
-		*/
 	}
 	
 	//add accumulated values to dataset
@@ -2005,15 +1974,10 @@ for (int i=0; i < gcList.get(0).data_annualBaseloadElectricityDemand_kW.size(); 
 	area.v_dataElectricityForStorageConsumptionYear_kW.add(timeAxisValue, electricityForStorageDemandYear_kW);
 	area.v_dataElectricityForHydrogenConsumptionYear_kW.add(timeAxisValue, electricityForElectrolyser_kW);
 	area.v_dataElectricityForCookingConsumptionYear_kW.add(timeAxisValue, electricityForCookingConsumptionYear_kW);
-	//area.v_dataNaturalGasDemandYear_kW.add(timeAxisValue, naturalGasDemandYear_kW);
-	//area.v_dataPetroleumProductsDemandYear_kW.add(timeAxisValue, petroleumProductsDemandYear_kW);
-	//area.v_dataElectricityForHydrogenDemandYear_kW.add(timeAxisValue, electricityForHydrogenDemandYear_kW);
-	
 	area.v_dataElectricityPVProductionYear_kW.add(timeAxisValue, electricityPVSupplyYear_kW);
 	area.v_dataElectricityWindProductionYear_kW.add(timeAxisValue, electricityWindSupplyYear_kW);
 	area.v_dataElectricityStorageProductionYear_kW.add(timeAxisValue, electricityStorageSupplyYear_kW);
 	area.v_dataElectricityV2GProductionYear_kW.add(timeAxisValue, electricityV2GSupplyYear_kW);
-	//area.v_dataHydrogenSupplyYear_kW.add(timeAxisValue, hydrogenSupplyYear_kW);
 	area.v_dataElectricityCHPProductionYear_kW.add(timeAxisValue, electricityCHPSupplyYear_kW);
 	
 	for (OL_EnergyCarriers EC : activeEnergyCarriers) {
@@ -2164,12 +2128,10 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 	//accumulate values over gridcongestion
 	for (GridConnection gc : gcList){
 		for (OL_EnergyCarriers EC : gc.v_activeEnergyCarriers) {
-			//if (gc.dsm_summerWeekDemandDataSets_kW.get(EC).getXMin() < i) {
 				demandSummerWeek_kW.addFlow(EC, gc.dsm_summerWeekDemandDataSets_kW.get(EC).getY(i));
 				supplySummerWeek_kW.addFlow(EC, gc.dsm_summerWeekSupplyDataSets_kW.get(EC).getY(i));
 				demandWinterWeek_kW.addFlow(EC, gc.dsm_winterWeekDemandDataSets_kW.get(EC).getY(i));
 				supplyWinterWeek_kW.addFlow(EC, gc.dsm_winterWeekSupplyDataSets_kW.get(EC).getY(i));
-			//}
 		}
 	
 		electricityBaseloadDemandSummerWeek_kW += gc.data_summerWeekBaseloadElectricityDemand_kW.getY(i);
@@ -2185,9 +2147,7 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 		electricityCHPSupplySummerWeek_kW += gc.data_summerWeekCHPElectricityProduction_kW.getY(i);
 		
 		if (gc instanceof GCEnergyConversion) {
-			//if (((GCEnergyConversion)gc).data_summerWeekElectrolyserDemand_kW.getXMin() < i) {
-				electricityForHydrogenDemandSummerWeek_kW += ((GCEnergyConversion)gc).data_summerWeekElectrolyserDemand_kW.getY(i);
-			//}
+			electricityForHydrogenDemandSummerWeek_kW += ((GCEnergyConversion)gc).data_summerWeekElectrolyserDemand_kW.getY(i);
 		}
 		
 		electricityBaseloadDemandWinterWeek_kW += gc.data_winterWeekBaseloadElectricityDemand_kW.getY(i);
@@ -2195,9 +2155,7 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 		electricityForTransportDemandWinterWeek_kW += gc.data_winterWeekElectricVehicleDemand_kW.getY(i);
 		electricityForStorageDemandWinterWeek_kW += gc.data_winterWeekBatteriesDemand_kW.getY(i);
 		if (gc instanceof GCEnergyConversion) {
-			//if (((GCEnergyConversion)gc).data_winterWeekElectrolyserDemand_kW.getXMin() < i) {
-				electricityForHydrogenDemandWinterWeek_kW += ((GCEnergyConversion)gc).data_winterWeekElectrolyserDemand_kW.getY(i);
-			//}
+			electricityForHydrogenDemandWinterWeek_kW += ((GCEnergyConversion)gc).data_winterWeekElectrolyserDemand_kW.getY(i);
 		}
 		electricityForCookingConsumptionWinterWeek_kW += gc.data_winterWeekCookingElectricityDemand_kW.getY(i);
 		electricityPVSupplyWinterWeek_kW += gc.data_winterWeekPVGeneration_kW.getY(i);
@@ -2205,7 +2163,6 @@ for (int i=0; i < gcList.get(0).data_summerWeekBaseloadElectricityDemand_kW.size
 		electricityStorageSupplyWinterWeek_kW += gc.data_winterWeekBatteriesSupply_kW.getY(i);
 		electricityV2GSupplyWinterWeek_kW += gc.data_winterWeekV2GSupply_kW.getY(i);
 		electricityCHPSupplyWinterWeek_kW += gc.data_winterWeekCHPElectricityProduction_kW.getY(i);
-		//netLoadSummerWeek_kW += gc.acc_summerElectricityBalance_kW.getY(i);
 		netLoadWinterWeek_kW += gc.am_winterWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getY(i);
 		electricityDemandCapacitySummerWeek_kW += gc.acc_summerWeekDeliveryCapacity_kW.getY(i);
 		electricityDemandCapacityWinterWeek_kW += gc.acc_winterWeekDeliveryCapacity_kW.getY(i);
@@ -2634,80 +2591,6 @@ double f_createGISNetwork(GISRoute[] gisroutes,String networkType)
 	GISNetwork network = new GISNetwork(map, networkType, true, gisroutes);
 	c_GISNetworks.add(network);
 //}
-
-/*ALCODEEND*/}
-
-double f_updateTotalLiveDataSets()
-{/*ALCODESTART::1725439643960*/
-for (int j = 0; j < c_selectedGridConnections.size(); j++) {
-	AreaCollection AC = uI_Results.c_individualGridConnections.get(j);
-	
-	/*
-	
-	AC.v_dataTotalElectricityDemandLiveWeek_kW = new DataSet(672);
-	AC.v_dataTotalElectricitySupplyLiveWeek_kW = new DataSet(672);
-
-	int liveWeekSize = AC.v_dataElectricityDeliveryCapacityLiveWeek_kW.size();
-	for (int k = 0; k < liveWeekSize; k++) {
-		double timeAxisValue = AC.v_dataElectricityDeliveryCapacityLiveWeek_kW.getX(k);
-		
-		double totalElectricityDemandLiveWeek = 0;
-		double totalElectricitySupplyLiveWeek = 0;
-		
-		totalElectricityDemandLiveWeek += AC.v_dataElectricityBaseloadConsumptionLiveWeek_kW.getY(k);
-		totalElectricityDemandLiveWeek += AC.v_dataElectricityForHeatConsumptionLiveWeek_kW.getY(k);
-		totalElectricityDemandLiveWeek += AC.v_dataElectricityForTransportConsumptionLiveWeek_kW.getY(k);
-		totalElectricityDemandLiveWeek += AC.v_dataElectricityForStorageConsumptionLiveWeek_kW.getY(k);
-		totalElectricityDemandLiveWeek += AC.v_dataElectricityForHydrogenConsumptionLiveWeek_kW.getY(k);
-		
-		totalElectricitySupplyLiveWeek += AC.v_dataWindElectricityProductionLiveWeek_kW.getY(k);
-		totalElectricitySupplyLiveWeek += AC.v_dataPVElectricityProductionLiveWeek_kW.getY(k);
-		totalElectricitySupplyLiveWeek += AC.v_dataStorageElectricityProductionLiveWeek_kW.getY(k);
-		totalElectricitySupplyLiveWeek += AC.v_dataV2GElectricityProductionLiveWeek_kW.getY(k);
-
-		AC.v_dataTotalElectricityDemandLiveWeek_kW.add(timeAxisValue, totalElectricityDemandLiveWeek);
-		AC.v_dataTotalElectricitySupplyLiveWeek_kW.add(timeAxisValue, totalElectricitySupplyLiveWeek);
-	}
-	
-	*/
-	
-}
-
-/*ALCODEEND*/}
-
-double f_addTimeStepTotalLiveDataSets()
-{/*ALCODESTART::1725440073691*/
-int i = max(0, c_selectedGridConnections.get(0).data_gridCapacityDemand_kW.size() - 1);
-double timeAxisValue = c_selectedGridConnections.get(0).data_gridCapacityDemand_kW.getX(i); // we get the X value from a random dataset 
-
-for (int j = 0; j < c_selectedGridConnections.size(); j++) {
-
-	AreaCollection AC = uI_Results.c_individualGridConnections.get(j);
-	
-	double totalElectricityDemandLiveWeek = 0;
-	double totalElectricitySupplyLiveWeek = 0;
-	
-	/*
-	
-	totalElectricityDemandLiveWeek += AC.v_dataElectricityBaseloadConsumptionLiveWeek_kW.getY(i);
-	totalElectricityDemandLiveWeek += AC.v_dataElectricityForHeatConsumptionLiveWeek_kW.getY(i);
-	totalElectricityDemandLiveWeek += AC.v_dataElectricityForTransportConsumptionLiveWeek_kW.getY(i);
-	totalElectricityDemandLiveWeek += AC.v_dataElectricityForStorageConsumptionLiveWeek_kW.getY(i);
-	totalElectricityDemandLiveWeek += AC.v_dataElectricityForHydrogenConsumptionLiveWeek_kW.getY(i);
-	
-	totalElectricitySupplyLiveWeek += AC.v_dataWindElectricityProductionLiveWeek_kW.getY(i);
-	totalElectricitySupplyLiveWeek += AC.v_dataPVElectricityProductionLiveWeek_kW.getY(i);
-	totalElectricitySupplyLiveWeek += AC.v_dataStorageElectricityProductionLiveWeek_kW.getY(i);
-	totalElectricitySupplyLiveWeek += AC.v_dataV2GElectricityProductionLiveWeek_kW.getY(i);
-
-	AC.v_dataTotalElectricityDemandLiveWeek_kW.add(timeAxisValue, totalElectricityDemandLiveWeek);
-	AC.v_dataTotalElectricitySupplyLiveWeek_kW.add(timeAxisValue, totalElectricitySupplyLiveWeek);
-	
-	*/
-	
-}
-
-
 
 /*ALCODEEND*/}
 

@@ -622,7 +622,7 @@ zero_Interface.uI_Results.f_showCorrectChart();
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[t_base info]]></Text>
+				<Text/>
 				<Font>
 					<Name><![CDATA[SansSerif]]></Name>
 					<Size>10</Size>
@@ -647,7 +647,7 @@ zero_Interface.uI_Results.f_showCorrectChart();
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[text]]></Text>
+				<Text/>
 				<Font>
 					<Name><![CDATA[SansSerif]]></Name>
 					<Size>10</Size>
@@ -697,7 +697,7 @@ zero_Interface.uI_Results.f_showCorrectChart();
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[text]]></Text>
+				<Text/>
 				<Font>
 					<Name><![CDATA[SansSerif]]></Name>
 					<Size>10</Size>

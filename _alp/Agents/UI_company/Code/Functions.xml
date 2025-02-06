@@ -6,7 +6,7 @@
 		<Id>1713445281785</Id>
 		<Name><![CDATA[f_setScenarioFuture]]></Name>
 		<X>-410</X>
-		<Y>570</Y>
+		<Y>410</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -26,7 +26,7 @@
 		<Id>1713447383903</Id>
 		<Name><![CDATA[f_setScenario]]></Name>
 		<X>-430</X>
-		<Y>530</Y>
+		<Y>370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -46,7 +46,7 @@
 		<Id>1713447428490</Id>
 		<Name><![CDATA[f_setScenarioCurrent]]></Name>
 		<X>-410</X>
-		<Y>550</Y>
+		<Y>390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -66,7 +66,7 @@
 		<Id>1713537591106</Id>
 		<Name><![CDATA[f_setHeatingType]]></Name>
 		<X>-430</X>
-		<Y>650</Y>
+		<Y>490</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -90,7 +90,7 @@
 		<Id>1713537591117</Id>
 		<Name><![CDATA[f_setGCCapacity]]></Name>
 		<X>-430</X>
-		<Y>670</Y>
+		<Y>510</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -118,7 +118,7 @@
 		<Id>1713537591121</Id>
 		<Name><![CDATA[f_setBattery]]></Name>
 		<X>-430</X>
-		<Y>730</Y>
+		<Y>570</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -142,7 +142,7 @@
 		<Id>1713954180112</Id>
 		<Name><![CDATA[f_setPVSystem]]></Name>
 		<X>-430</X>
-		<Y>690</Y>
+		<Y>530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -295,7 +295,7 @@
 		<Id>1714410040303</Id>
 		<Name><![CDATA[f_createVehicle]]></Name>
 		<X>-410</X>
-		<Y>810</Y>
+		<Y>650</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -331,7 +331,7 @@
 		<Id>1714411599586</Id>
 		<Name><![CDATA[f_setElectricVehicleSliders]]></Name>
 		<X>-430</X>
-		<Y>750</Y>
+		<Y>590</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -359,7 +359,7 @@
 		<Id>1714471183392</Id>
 		<Name><![CDATA[f_setDieselVehicleSliders]]></Name>
 		<X>-430</X>
-		<Y>790</Y>
+		<Y>630</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -387,7 +387,7 @@
 		<Id>1714474430338</Id>
 		<Name><![CDATA[f_setHydrogenVehicleSliders]]></Name>
 		<X>-430</X>
-		<Y>770</Y>
+		<Y>610</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -446,8 +446,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1714656835269</Id>
 		<Name><![CDATA[f_copyResultsUI]]></Name>
-		<X>-430</X>
-		<Y>370</Y>
+		<X>-1050</X>
+		<Y>1350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -479,7 +479,7 @@
 		<Id>1715952034311</Id>
 		<Name><![CDATA[f_addPVAsset]]></Name>
 		<X>-410</X>
-		<Y>710</Y>
+		<Y>550</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -508,7 +508,7 @@
 		<Name><![CDATA[f_setSelectedGC]]></Name>
 		<Description><![CDATA[Function that sets the sliders to match the currently present settings of the energy assets owned by the selected GC. Used when a connection owner has multiple grid connections, and wants to set the sliders of a different GC. ]]></Description>
 		<X>-430</X>
-		<Y>440</Y>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -524,7 +524,7 @@
 		<Id>1725439625846</Id>
 		<Name><![CDATA[f_setSelectedGCSliders]]></Name>
 		<X>-400</X>
-		<Y>460</Y>
+		<Y>300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -540,7 +540,7 @@
 		<Id>1725439635605</Id>
 		<Name><![CDATA[f_setSelectedGCGraphs]]></Name>
 		<X>-400</X>
-		<Y>480</Y>
+		<Y>320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -556,7 +556,7 @@
 		<Id>1725607045331</Id>
 		<Name><![CDATA[f_setSimulateYearScreen]]></Name>
 		<X>-430</X>
-		<Y>840</Y>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -620,7 +620,7 @@
 		<Id>1727884380899</Id>
 		<Name><![CDATA[f_getNFATOValues]]></Name>
 		<X>-440</X>
-		<Y>925</Y>
+		<Y>765</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

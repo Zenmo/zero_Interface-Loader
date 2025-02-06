@@ -1020,40 +1020,6 @@
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1725439643960</Id>
-		<Name><![CDATA[f_updateTotalLiveDataSets]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-600</X>
-		<Y>1030</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1725440073691</Id>
-		<Name><![CDATA[f_addTimeStepTotalLiveDataSets]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-590</X>
-		<Y>1050</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1725968656820</Id>
 		<Name><![CDATA[f_setColorsBasedOnGridTopology_gridnodes]]></Name>
 		<X>1350</X>
