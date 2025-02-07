@@ -67,13 +67,6 @@ energyModel.p_runStartTime_h = v_simStartHour_h;
 energyModel.p_runEndTime_h = v_simStartHour_h + v_simDuration_h;
 energyModel.f_initializeEngine();
 
-
-/*
-if( p_createGridnodeTimeSeries ){
-	energyModel.p_gridNodeTimeSeriesExcel = e_gridnodeTimeSeries;
-	f_initializeGrideNodeTimeSeriesExcel();
-}
-*/
 /*ALCODEEND*/}
 
 double f_createGridNodes()
@@ -2548,15 +2541,6 @@ zero_Interface.p_selectedProjectType = project_data.project_type();
 zero_Interface.settings = settings;
 /*ALCODEEND*/}
 
-double f_initializeGrideNodeTimeSeriesExcel()
-{/*ALCODESTART::1726584205855*/
-int columnIndex = 2;
-for(GridNode gn : energyModel.pop_gridNodes){
-	e_gridnodeTimeSeries.setCellValue(gn.p_gridNodeID, "Sheet1", 1, columnIndex);
-	columnIndex++;
-}
-/*ALCODEEND*/}
-
 List<Building_data> f_getScopedBuildingList(List<Building_data> initialList)
 {/*ALCODESTART::1726584205857*/
 List<Building_data> scopedList = new ArrayList<>();
@@ -3183,12 +3167,17 @@ if (gridConnection.getElectricity().getHasConnection()){
 	//Electricity consumption profile
 	String profileName = "Office_other_electricity";
 	
-	//Check if quarter hourly values are available 
+	//Check if quarter hourly values are available in vallum
 	boolean createdTimeSeriesAssets = f_createElectricityTimeSeriesAssets(companyGC, gridConnection, "Insert company name here");
 	
-	if (!createdTimeSeriesAssets) {
+	if(createdTimeSeriesAssets){
+		if(!settings.createCurrentElectricityEA()){//input boolean: Dont create current electric energy assets if electricity profile or total is known.
+			createElectricEA = false;
+		}
+	}
+	else{ //(!createdTimeSeriesAssets) { // 
 		double yearlyElectricityConsumption_kWh  = 0;
-		try {
+		try { // Check if quarterly hour values are available in excel database
 			if(selectFirstValue(Double.class, "SELECT " + "ccid" + gridConnection.getSequence().toString() + "_demand FROM comp_elec_consumption LIMIT 1;") != null){
 		  		companyGC.v_hasQuarterHourlyValues = true;
 				profileName = "ccid" + companyGC.p_gridConnectionID;
@@ -3199,12 +3188,12 @@ if (gridConnection.getElectricity().getHasConnection()){
 				}
 		
 				if (!settings.createCurrentElectricityEA()){//input boolean: Dont create current electric energy assets if electricity profile is present.
-				createElectricEA = false;
+					createElectricEA = false;
 				}
 			}
 		}
 		catch(Exception e) {
-		//Data not available, do nothing and leave v_hasQuarterHourlyValues on false.
+			//Data not available, do nothing and leave v_hasQuarterHourlyValues on false.
 		}
 		
 		if(companyGC.v_hasQuarterHourlyValues == false){//Calculate yearly consumption based on yearly delivery (and yearly feedin, production or solarpanels if available)
