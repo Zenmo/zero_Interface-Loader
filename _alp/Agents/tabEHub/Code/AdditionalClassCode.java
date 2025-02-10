@@ -17,3 +17,7 @@ public ShapeCheckBox getCb_curtailment() {
 public ShapeButton getButton_remove_nfato() {
 	return this.button_remove_nfato;
 }
+
+public ShapeSlider getSl_collectiveBattery_MWh() {
+	return this.sl_collectiveBattery_MWh;
+}

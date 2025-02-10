@@ -533,7 +533,8 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<BasicProperties Width="230" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor/>
-					<Enabled>true</Enabled>
+					<VisibleCode>cb_EHubSelect.isEnabled()</VisibleCode>
+					<Enabled>false</Enabled>
 					<ActionCode>if (!cb_EHubSelect.isSelected()) {
 	zero_Interface.b_EHubSelect = false;
 	zero_Interface.uI_Results.b_EHubConfiguration = false;
@@ -668,6 +669,7 @@ zero_Interface.uI_Results.f_showCorrectChart();
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>cb_EHubSelect.isVisible()? true : false</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
