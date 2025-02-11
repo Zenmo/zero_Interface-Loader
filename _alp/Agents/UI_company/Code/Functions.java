@@ -1763,6 +1763,10 @@ sl_GCCapacityCompany.setValue(v_defaultGCCapacitySlider, false);
 
 double f_setNameTextSize()
 {/*ALCODESTART::1727712593952*/
+if (p_companyName == null) {
+    return;
+}
+
 int nameLength = p_companyName.length();
 
 int i = 0;

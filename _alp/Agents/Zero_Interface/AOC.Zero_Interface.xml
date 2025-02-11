@@ -38,7 +38,8 @@ import com.anylogic.engine.markup.GISPoint;
 import zero_engine.OL_EnergyCarriers;
 import zero_engine.OL_EnergyCarriers;
 import com.querydsl.core.types.dsl.TimeExpression;
-import zero_engine.J_EAStorageElectric;]]></Import>
+import zero_engine.J_EAStorageElectric;
+import zero_engine.J_EAConsumption;]]></Import>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1658477103138</Id>
