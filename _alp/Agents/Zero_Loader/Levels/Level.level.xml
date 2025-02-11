@@ -30,7 +30,7 @@
 	<Rectangle>
 		<Id>1726584205907</Id>
 		<Name><![CDATA[rect_projectDataTracking]]></Name>
-		<X>1450</X>
+		<X>1440</X>
 		<Y>20</Y>
 		<Label>
 			<X>10</X>
@@ -48,7 +48,7 @@
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>460</Width>
-		<Height>400</Height>
+		<Height>450</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -179,31 +179,6 @@
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>14</Size>
 			<Style>1</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1726584205919</Id>
-		<Name><![CDATA[t_output]]></Name>
-		<X>1480</X>
-		<Y>440</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Output settings:]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>12</Size>
-			<Style>0</Style>
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
@@ -543,7 +518,7 @@
 		<Id>1726584205947</Id>
 		<Name><![CDATA[rect_createEnergyGC]]></Name>
 		<X>400</X>
-		<Y>640</Y>
+		<Y>670</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -559,7 +534,7 @@
 		<LineColor>-16777216</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>340</Width>
+		<Width>360</Width>
 		<Height>200</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
@@ -569,7 +544,7 @@
 		<Id>1726584205949</Id>
 		<Name><![CDATA[txt_createEnergyGC]]></Name>
 		<X>410</X>
-		<Y>650</Y>
+		<Y>680</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -595,7 +570,7 @@
 		<Id>1726584205951</Id>
 		<Name><![CDATA[gr_consumerGC_residential]]></Name>
 		<X>570</X>
-		<Y>490</Y>
+		<Y>520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -628,7 +603,7 @@
 				<LineColor>-16777216</LineColor>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>340</Width>
+				<Width>360</Width>
 				<Height>240</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
@@ -699,8 +674,8 @@
 				<LineColor>-16777216</LineColor>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>340</Width>
-				<Height>298.017</Height>
+				<Width>360</Width>
+				<Height>328.017</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
 				<FillMaterial>null</FillMaterial>
@@ -771,7 +746,7 @@
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>380</Width>
-				<Height>310</Height>
+				<Height>360</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
 				<FillMaterial>null</FillMaterial>
@@ -780,7 +755,7 @@
 				<Id>1726584205967</Id>
 				<Name><![CDATA[txt_addEnergyAssetFunctions]]></Name>
 				<X>-160</X>
-				<Y>-120</Y>
+				<Y>-130</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -807,7 +782,7 @@
 		<Id>1726584205969</Id>
 		<Name><![CDATA[gr_createGISObjects]]></Name>
 		<X>960</X>
-		<Y>530</Y>
+		<Y>570</Y>
 		<Label>
 			<X>9.938</X>
 			<Y>0</Y>

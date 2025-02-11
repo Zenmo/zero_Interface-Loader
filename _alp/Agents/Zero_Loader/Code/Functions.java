@@ -67,13 +67,6 @@ energyModel.p_runStartTime_h = v_simStartHour_h;
 energyModel.p_runEndTime_h = v_simStartHour_h + v_simDuration_h;
 energyModel.f_initializeEngine();
 
-
-/*
-if( p_createGridnodeTimeSeries ){
-	energyModel.p_gridNodeTimeSeriesExcel = e_gridnodeTimeSeries;
-	f_initializeGrideNodeTimeSeriesExcel();
-}
-*/
 /*ALCODEEND*/}
 
 double f_createGridNodes()
@@ -1097,6 +1090,7 @@ for (GridConnection GCcompany : generic_company_GCs ) {
 	
 	//create the energy assets for each GC
 	f_iEAGenericCompanies(GCcompany);
+
 }
 /*ALCODEEND*/}
 
@@ -1506,7 +1500,6 @@ for (var survey : surveys) {
 				survey_owner.p_actorType = OL_ActorType.CONNECTIONOWNER;
 				survey_owner.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
 				survey_owner.p_detailedCompany = true;
-			 	traceln(survey.getCompanyName());
 		 	}
 			
 		 	//Create GC
@@ -1541,6 +1534,9 @@ for (var survey : surveys) {
 						buildings.add(building);
 						c_GenericCompanyBuilding_data.remove(building);
 						c_SurveyCompanyBuilding_data.add(building);
+						
+						//Set trafo ID
+						companyGC.p_parentNodeElectricID = building.trafo_id();
 					}
 					else if(findFirst(energyModel.pop_GIS_Buildings, b -> b.p_id.equals(PID.getValue())) != null){
 						GIS_Building gisbuilding = findFirst(energyModel.pop_GIS_Buildings, b -> b.p_id.equals(PID.getValue()));
@@ -1552,9 +1548,6 @@ for (var survey : surveys) {
 							//Accumulate surface areas
 							totalFloorSurfaceAreaGC_m2 += gisbuilding.p_floorSurfaceArea_m2; // Gaat dan dubbel !?
 							totalRoofSurfaceAreaGC_m2 += gisbuilding.p_roofSurfaceArea_m2; // Gaat dan dubbel !?
-							
-							//Set trafo ID
-							companyGC.p_parentNodeElectricID = building.trafo_id();
 						}
 					}
 					else{
@@ -1563,8 +1556,8 @@ for (var survey : surveys) {
 						c_VallumBuilding_data.add(customBuilding);
 					}
 				}
-			} 
-			else {			
+			} else {
+				traceln("Survey %s no pand", survey.getId());
 				buildings = findAll(c_SurveyCompanyBuilding_data, b -> b.gc_id().equals(companyGC.p_gridConnectionID));
 			}
 			
@@ -2548,15 +2541,6 @@ zero_Interface.p_selectedProjectType = project_data.project_type();
 zero_Interface.settings = settings;
 /*ALCODEEND*/}
 
-double f_initializeGrideNodeTimeSeriesExcel()
-{/*ALCODESTART::1726584205855*/
-int columnIndex = 2;
-for(GridNode gn : energyModel.pop_gridNodes){
-	e_gridnodeTimeSeries.setCellValue(gn.p_gridNodeID, "Sheet1", 1, columnIndex);
-	columnIndex++;
-}
-/*ALCODEEND*/}
-
 List<Building_data> f_getScopedBuildingList(List<Building_data> initialList)
 {/*ALCODESTART::1726584205857*/
 List<Building_data> scopedList = new ArrayList<>();
@@ -2675,7 +2659,7 @@ if (extraConsumption_kWh > 1) {
 }
  
 if (v_remainingElectricityDelivery_kWh < 0){
-	traceln("v_remainingElectricityConsumption_kWh became negative at GC: %s", parentGC);
+	traceln("v_remainingElectricityDelivery_kWh became negative at GC: %s", parentGC);
 }
 /*ALCODEEND*/}
 
@@ -3066,6 +3050,11 @@ return annualElectricityConsumption_kWh;
 
 double f_createCustomPVAsset(GridConnection parentGC,double[] yearlyElectricityProduction_kWh,Double pvPower_kW)
 {/*ALCODESTART::1732112209863*/
+if (yearlyElectricityProduction_kWh.length != 35040) {
+	traceln("Skipping creation of PV asset: need 35040 data points, got %d", yearlyElectricityProduction_kWh.length);
+	return;
+}
+
 // Generate custom PV production asset using production data!
 double[] a_arguments = IntStream.range(0, 35040).mapToDouble(i -> v_simStartHour_h + i*0.25).toArray(); // time axis
 
@@ -3091,6 +3080,7 @@ double f_iEASurveyCompanies_Zorm(GridConnection companyGC,com.zenmo.zummon.compa
 {/*ALCODESTART::1732112244908*/
 //Initialize boolean that sets the creation of currently existing electric (demand) EA
 boolean createElectricEA = true;
+final var targetYear = 2023;
 
 
 //Create current scenario parameter list
@@ -3112,6 +3102,8 @@ Double pvPower_kW = (gridConnection.getSupply().getPvInstalledKwp() != null) ? n
 companyGC.p_contractedDeliveryCapacity_kW = 0;
 companyGC.p_contractedFeedinCapacity_kW = 0;
 companyGC.p_physicalConnectionCapacity_kW = 0;
+
+f_createDieselTractors(companyGC, gridConnection.getTransport().getAgriculture());
 
 //Check for electricity connection and data
 if (gridConnection.getElectricity().getHasConnection()){
@@ -3177,32 +3169,17 @@ if (gridConnection.getElectricity().getHasConnection()){
 	//Electricity consumption profile
 	String profileName = "Office_other_electricity";
 	
-	//Check if quarter hourly values are available 
-	companyGC.v_hasQuarterHourlyValues = false;
+	//Check if quarter hourly values are available in vallum
+	boolean createdTimeSeriesAssets = f_createElectricityTimeSeriesAssets(companyGC, gridConnection, "Insert company name here");
 	
-	if(gridConnection.getElectricity().getQuarterHourlyDelivery_kWh() != null && gridConnection.getElectricity().getQuarterHourlyDelivery_kWh().getValues().length != 0){
-		double[] yearlyElectricityDelivery_kWh_array = f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyDelivery_kWh().getValues());
-		double[] yearlyElectricityFeedin_kWh_array = (gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh() != null && gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyFeedIn_kWh().getValues()): null;
-		double[] yearlyElectricityProduction_kWh_array = (gridConnection.getElectricity().getQuarterHourlyProduction_kWh() != null && gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues()): null;
-		
-		//Check if solar was already producing in simualtion year (Check for now: if year production = 0 , no solar yet, if year production = null, no data: so assume there was solar already)
-		if(gridConnection.getElectricity().getAnnualElectricityProduction_kWh() != null && gridConnection.getElectricity().getAnnualElectricityProduction_kWh  () == 0){
-			pvPower_kW = null;
-		}
-		
-		//Preprocess the arrays and create the consumption pattern
-		f_createPreprocessedElectricityProfile(companyGC, yearlyElectricityDelivery_kWh_array, yearlyElectricityFeedin_kWh_array, yearlyElectricityProduction_kWh_array, pvPower_kW);
-	
-		companyGC.v_hasQuarterHourlyValues = true;
-		profileName = "ccid" + companyGC.p_gridConnectionID; //Not needed I think
-				
-		if (!settings.createCurrentElectricityEA()){//input boolean: Dont create current electric energy assets if electricity profile is present.
+	if(createdTimeSeriesAssets){
+		if(!settings.createCurrentElectricityEA()){//input boolean: Dont create current electric energy assets if electricity profile or total is known.
 			createElectricEA = false;
 		}
 	}
-	else{
+	else{ //(!createdTimeSeriesAssets) { // 
 		double yearlyElectricityConsumption_kWh  = 0;
-		try {
+		try { // Check if quarterly hour values are available in excel database
 			if(selectFirstValue(Double.class, "SELECT " + "ccid" + gridConnection.getSequence().toString() + "_demand FROM comp_elec_consumption LIMIT 1;") != null){
 		  		companyGC.v_hasQuarterHourlyValues = true;
 				profileName = "ccid" + companyGC.p_gridConnectionID;
@@ -3213,12 +3190,12 @@ if (gridConnection.getElectricity().getHasConnection()){
 				}
 		
 				if (!settings.createCurrentElectricityEA()){//input boolean: Dont create current electric energy assets if electricity profile is present.
-				createElectricEA = false;
+					createElectricEA = false;
 				}
 			}
 		}
 		catch(Exception e) {
-		//Data not available, do nothing and leave v_hasQuarterHourlyValues on false.
+			//Data not available, do nothing and leave v_hasQuarterHourlyValues on false.
 		}
 		
 		if(companyGC.v_hasQuarterHourlyValues == false){//Calculate yearly consumption based on yearly delivery (and yearly feedin, production or solarpanels if available)
@@ -3253,8 +3230,6 @@ if (gridConnection.getElectricity().getHasConnection()){
 		//Add base electricity demand profile (with profile if available, with generic pattern if only yearly data is available)
 		f_addElectricityDemandProfile(companyGC, yearlyElectricityConsumption_kWh, pvPower_kW, companyGC.v_hasQuarterHourlyValues, profileName);
 	}
-		
-
 }
 
 //If everything is 0 set the GC as non active
@@ -3275,7 +3250,12 @@ if (gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperat
 if (gridConnection.getSupply().getHasSupply() != null && gridConnection.getSupply().getHasSupply()){
 	//gridConnection.getElectricity().getAnnualElectricityProductionKwh() // Staat niet meer in het formulier!
 	
-	double[] yearlyElectricityProduction_kWh_array = (gridConnection.getElectricity().getQuarterHourlyProduction_kWh() != null && gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues().length != 0) ? f_convertFloatArrayToDoubleArray(gridConnection.getElectricity().getQuarterHourlyProduction_kWh().getValues()): null;
+	double[] yearlyElectricityProduction_kWh_array = null;
+	
+	var quarterHourlyProduction_kWh = gridConnection.getElectricity().getQuarterHourlyProduction_kWh();
+	if (quarterHourlyProduction_kWh != null && quarterHourlyProduction_kWh.hasNumberOfValuesForOneYear()) {
+		yearlyElectricityProduction_kWh_array = f_convertFloatArrayToDoubleArray(quarterHourlyProduction_kWh.convertToQuarterHourly().getFullYearOrFudgeIt(targetYear));
+	}
 	
 	if(yearlyElectricityProduction_kWh_array == null && gridConnection.getSupply().getPvInstalledKwp() != null && gridConnection.getSupply().getPvInstalledKwp() > 0){
 		try {
@@ -3421,7 +3401,7 @@ int nbDailyCarCommuters_notNull = (gridConnection.getTransport().getNumDailyCarA
 if (nbDailyCarCommuters_notNull + nbDailyCarVisitors_notNull > 0){	
 	
 	int nbEVCarsComute = (gridConnection.getTransport().getNumCommuterAndVisitorChargePoints() != null) ? gridConnection.getTransport().getNumCommuterAndVisitorChargePoints() : 0; // Wat doen we hier mee????
-	int nbDieselCarsComute = gridConnection.getTransport().getNumDailyCarAndVanCommuters() + gridConnection.getTransport().getNumDailyCarVisitors() - nbEVCarsComute;
+	int nbDieselCarsComute = gridConnection.getTransport().getNumDailyCarAndVanCommuters() + nbDailyCarVisitors_notNull - nbEVCarsComute;
 
 	boolean isDefaultVehicle = true;
 	double maxChargingPower_kW 		= avgc_data.p_avgEVMaxChargePowerCar_kW;	
@@ -3461,7 +3441,10 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		
 		//gridConnection.getTransport().getCars().getNumChargePoints(); // Wat doen we hier mee????????
 		
-		int nbEVCars = gridConnection.getTransport().getCars().getNumElectricCars();
+		Integer nbEVCars = gridConnection.getTransport().getCars().getNumElectricCars();
+		if (nbEVCars == null) {
+		    nbEVCars = 0;
+		}
 		int nbDieselCars = gridConnection.getTransport().getCars().getNumCars() - nbEVCars;
 
 		
@@ -3514,7 +3497,10 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		
 		//gridConnection.getTransport().getVans().getNumChargePoints(); // Wat doen we hier mee????????
 		
-		int nbEVVans = gridConnection.getTransport().getVans().getNumElectricVans();		
+		Integer nbEVVans = gridConnection.getTransport().getVans().getNumElectricVans();	
+		if (nbEVVans == null) {
+		    nbEVVans = 0;
+		}	
 		int nbDieselVans = gridConnection.getTransport().getVans().getNumVans() - nbEVVans;
 
 		boolean isDefaultVehicle		= true;
@@ -3567,7 +3553,10 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		//gridConnection.getTransport().getTrucks().getNumChargePoints(); // Wat doen we hier mee????????
 		
 		
-		int nbEVTrucks = gridConnection.getTransport().getTrucks().getNumElectricTrucks();		
+		Integer nbEVTrucks = gridConnection.getTransport().getTrucks().getNumElectricTrucks();		
+		if (nbEVTrucks == null) {
+		    nbEVTrucks = 0;
+		}
 		int nbDieselTrucks = gridConnection.getTransport().getTrucks().getNumTrucks() - nbEVTrucks;
 	
 		boolean isDefaultVehicle		= true;
@@ -3648,5 +3637,63 @@ polygon(pand_data_vallum.getGeometry().toString()).
 build();
 
 return building_data_record;
+/*ALCODEEND*/}
+
+double f_createDieselTractors(GridConnection companyGridConnection,com.zenmo.zummon.companysurvey.Agriculture agricultureSurveyData)
+{/*ALCODESTART::1737712184349*/
+final double annualDiesel_L = Optional.ofNullable(agricultureSurveyData.getAnnualDieselUsage_L()).orElse(0.0);
+final int numTractors = Optional.ofNullable(agricultureSurveyData.getNumTractors()).orElse(annualDiesel_L > 0.0 ? 1 : 0);
+
+if (numTractors > 0 && annualDiesel_L <= 0.0) {
+    // TODO: this should be in Tractor constructor
+    throw new RuntimeException("Tractor diesel usage missing for " + companyGridConnection.p_gridConnectionID);
+}
+
+for (int i = 0; i < numTractors; i++) {
+    new J_EADieselTractor(companyGridConnection, annualDiesel_L / numTractors, customProfiles_data.getValuesArray(), energyModel.p_timeStep_h);
+}
+/*ALCODEEND*/}
+
+boolean f_createElectricityTimeSeriesAssets(GridConnection gridConnection,com.zenmo.zummon.companysurvey.GridConnection gridConnectionSurvey,String companyName)
+{/*ALCODESTART::1738248965949*/
+var targetYear = 2023;
+var electricitySurvey = gridConnectionSurvey.getElectricity();
+
+double[] deliveryTimeSeries_kWh = f_timeSeriesToDoubleArray(electricitySurvey.getQuarterHourlyDelivery_kWh());
+if (deliveryTimeSeries_kWh == null) {
+	// delivery is the minimum we require to do anything with timeseries data
+	return false;
+}
+
+double[] feedInTimeSeries_kWh = f_timeSeriesToDoubleArray(electricitySurvey.getQuarterHourlyFeedIn_kWh());
+double[] productionTimeSeries_kWh = f_timeSeriesToDoubleArray(electricitySurvey.getQuarterHourlyProduction_kWh());
+
+Double pvPower_kW = Optional.ofNullable(gridConnectionSurvey.getSupply().getPvInstalledKwp())
+	.map(it -> (double) it)
+	.orElse(null);
+
+//Preprocess the arrays and create the consumption pattern
+f_createPreprocessedElectricityProfile(gridConnection, deliveryTimeSeries_kWh, feedInTimeSeries_kWh, productionTimeSeries_kWh, pvPower_kW);
+
+gridConnection.v_hasQuarterHourlyValues = true;
+
+return true;
+/*ALCODEEND*/}
+
+double[] f_timeSeriesToDoubleArray(com.zenmo.zummon.companysurvey.TimeSeries timeSeries)
+{/*ALCODESTART::1738572338816*/
+var targetYear = 2023;
+if (timeSeries == null) {
+	return null;
+}
+
+if (!timeSeries.hasNumberOfValuesForOneYear()) {
+	traceln("Time series has too few values for one year");
+	return null;
+}
+
+return f_convertFloatArrayToDoubleArray(
+	timeSeries.convertToQuarterHourly().getFullYearOrFudgeIt(targetYear)
+);
 /*ALCODEEND*/}
 
