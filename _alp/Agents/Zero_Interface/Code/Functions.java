@@ -402,7 +402,10 @@ else {
 	String text = "";
 	if (p_selectedProjectType == OL_ProjectType.BUSINESSPARK) {
 		if (b instanceof GIS_Building) {
-			if(((GIS_Building)b).p_annotation != null){
+			if(b.c_containedGridConnections.get(0).p_owner.p_detailedCompany){
+				text = b.c_containedGridConnections.get(0).p_owner.p_actorID + ", ";
+			}
+			else if(((GIS_Building)b).p_annotation != null){
 				text = ((GIS_Building)b).p_annotation + ", ";
 			}
 		}
