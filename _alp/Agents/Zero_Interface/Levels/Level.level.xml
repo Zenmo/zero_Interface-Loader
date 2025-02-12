@@ -3138,7 +3138,7 @@ b_updateCongestionColors = false;
 		<Id>1702552223737</Id>
 		<Name><![CDATA[t_stylingFunctions]]></Name>
 		<X>-680</X>
-		<Y>290</Y>
+		<Y>300</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -3478,7 +3478,7 @@ traceln( v_themeColor.getRGB() );</ActionCode>
 		<Id>1708595212229</Id>
 		<Name><![CDATA[t_privateUI]]></Name>
 		<X>-290</X>
-		<Y>340</Y>
+		<Y>300</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -3730,7 +3730,7 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 		<Id>1710174312959</Id>
 		<Name><![CDATA[t_resultsUIFunctions]]></Name>
 		<X>-680</X>
-		<Y>500</Y>
+		<Y>520</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -3743,7 +3743,7 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
-		<Text><![CDATA[Results UI settings]]></Text>
+		<Text><![CDATA[Results UI initialization]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>14</Size>
@@ -4110,8 +4110,8 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1716988295617</Id>
 		<Name><![CDATA[button_gotoEngine]]></Name>
-		<X>-270</X>
-		<Y>280</Y>
+		<X>-240</X>
+		<Y>760</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -4449,7 +4449,7 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 	else {
 		c_selectedGridConnections = c_selectedObjects.get(0).c_containedGridConnections;
 	}
-	f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+	uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
 	
 	//Set dashboard UI button
 	f_setUIButton();
@@ -4489,7 +4489,7 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 	else {
 		c_selectedGridConnections = c_selectedObjects.get(0).c_containedGridConnections;
 	}
-	f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+	uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
 	
 	//Set dashboard UI button
 	f_setUIButton();
@@ -4564,7 +4564,7 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 	uI_Results.c_individualGridConnections = new ArrayList&lt;AreaCollection&gt;();
 	
 	// Reset the shown charts
-	f_updateUIresultsMainArea();
+	uI_Results.f_updateUIresultsMainArea();
 	uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
 	uI_Results.f_showCorrectChart();
 	
@@ -4943,8 +4943,8 @@ else {
 	<Text>
 		<Id>1725456122345</Id>
 		<Name><![CDATA[txt_sliderInitialization]]></Name>
-		<X>-310</X>
-		<Y>560</Y>
+		<X>-680</X>
+		<Y>640</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -5096,7 +5096,7 @@ gr_loadIconSmall.setVisible(true);
 
 new Thread( () -&gt; {
 	//Save previous totals
-	f_updatePreviousTotalsGC();
+	uI_Results.f_updatePreviousTotalsGC();
 	
 	//Run rapid run
 	energyModel.f_runRapidSimulation();
@@ -5105,11 +5105,11 @@ new Thread( () -&gt; {
 	gr_loadIconSmall.setVisible(false);
 	
 	//Update main area collection
-	f_updateUIresultsMainArea();
+	uI_Results.f_updateUIresultsMainArea();
 	
 	//Update selected GC area collection
 	if (c_selectedGridConnections.size() &gt; 0){
-		f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+		uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
 	}
 	uI_Results.f_showCorrectChart();
 	

@@ -552,7 +552,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 	}
 	
 	// Reset the shown charts
-	zero_Interface.f_updateUIresultsMainArea();
+	zero_Interface.uI_Results.f_updateUIresultsMainArea();
 	zero_Interface.uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
 	zero_Interface.uI_Results.f_showCorrectChart();
 	
@@ -570,7 +570,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 else{
 
 	// we create areacollection(s) for the currently selected GC(s) (could be multiple if the user was using multiselect before checking this box)
-	zero_Interface.f_fillAreaCollectionsOfIndividualGCs();
+	zero_Interface.uI_Results.f_fillAreaCollectionsOfIndividualGCs(zero_Interface.c_selectedGridConnections);
 	
 	zero_Interface.b_EHubSelect = true;
 	zero_Interface.uI_Results.b_EHubConfiguration = true;
@@ -594,7 +594,7 @@ else{
 
 // Energy-Hub Group connection capacity calculation
 zero_Interface.f_calculateGroupATOConnectionCapacity(zero_Interface.c_selectedGridConnections);
-zero_Interface.f_EHubCapacityDataSets();
+zero_Interface.uI_Results.f_EHubCapacityDataSets(zero_Interface.c_selectedGridConnections);
 
 zero_Interface.uI_Results.f_showCorrectChart();
 

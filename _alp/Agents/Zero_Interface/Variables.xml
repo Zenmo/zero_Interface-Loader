@@ -1851,8 +1851,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1731425176471</Id>
 		<Name><![CDATA[b_changeToCustomScenario]]></Name>
-		<X>-300</X>
-		<Y>690</Y>
+		<X>-670</X>
+		<Y>770</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1873,8 +1873,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1732027307811</Id>
 		<Name><![CDATA[b_runningMainInterfaceScenarios]]></Name>
-		<X>-300</X>
-		<Y>670</Y>
+		<X>-670</X>
+		<Y>750</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2241,7 +2241,7 @@
 		<Id>1709552799968</Id>
 		<Name><![CDATA[c_companyUIs]]></Name>
 		<X>-240</X>
-		<Y>430</Y>
+		<Y>390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

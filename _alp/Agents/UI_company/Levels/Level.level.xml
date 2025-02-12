@@ -3042,10 +3042,10 @@ gr_loadIcon.setVisible(true);
 //Run simulation
 new Thread( () -&gt; {	
 	//Save previous totals
-	zero_Interface.f_updatePreviousTotalsGC();
+	zero_Interface.uI_Results.f_updatePreviousTotalsGC();
 
 	zero_Interface.energyModel.f_runRapidSimulation();
-	zero_Interface.f_updateUIresultsMainArea();
+	zero_Interface.uI_Results.f_updateUIresultsMainArea();
 	f_setSelectedGCGraphs();
 	gr_loadIcon.setVisible(false);
 	

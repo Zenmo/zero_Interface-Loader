@@ -4,7 +4,7 @@
 		<Id>1708522361909</Id>
 		<Name><![CDATA[ui_companies]]></Name>
 		<X>-240</X>
-		<Y>410</Y>
+		<Y>370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -76,7 +76,7 @@
 		<Id>1709049456144</Id>
 		<Name><![CDATA[ui_Battery]]></Name>
 		<X>-240</X>
-		<Y>530</Y>
+		<Y>490</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -139,7 +139,7 @@
 		<Id>1716193013122</Id>
 		<Name><![CDATA[uI_Results]]></Name>
 		<X>-670</X>
-		<Y>530</Y>
+		<Y>550</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -208,7 +208,7 @@
 		<Id>1717506326727</Id>
 		<Name><![CDATA[ui_Hydrogen]]></Name>
 		<X>-240</X>
-		<Y>480</Y>
+		<Y>440</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -270,8 +270,8 @@
 	<EmbeddedObject>
 		<Id>1722252541830</Id>
 		<Name><![CDATA[uI_Tabs]]></Name>
-		<X>-300</X>
-		<Y>590</Y>
+		<X>-670</X>
+		<Y>670</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
