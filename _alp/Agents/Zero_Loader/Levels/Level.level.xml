@@ -264,7 +264,7 @@
 		<Id>1726584205927</Id>
 		<Name><![CDATA[rect_GridNodeFunctions]]></Name>
 		<X>20</X>
-		<Y>430</Y>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -315,7 +315,7 @@
 		<Id>1726584205931</Id>
 		<Name><![CDATA[txt_createGridNodes]]></Name>
 		<X>40</X>
-		<Y>440</Y>
+		<Y>390</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -484,7 +484,7 @@
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>340</Width>
-		<Height>100</Height>
+		<Height>60</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -711,7 +711,7 @@
 	<Group>
 		<Id>1726584205963</Id>
 		<Name><![CDATA[gr_addEAFunctions]]></Name>
-		<X>950</X>
+		<X>960</X>
 		<Y>200</Y>
 		<Label>
 			<X>10</X>

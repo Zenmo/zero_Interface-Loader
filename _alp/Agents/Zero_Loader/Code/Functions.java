@@ -1618,17 +1618,6 @@ for(A_SubTenant subtenant : subTenants){
 }
 /*ALCODEEND*/}
 
-double f_createConnectionOwners()
-{/*ALCODESTART::1726584205817*/
-for (Tuple row : rows) {
-	ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
-	COC.p_actorID = row.get(companies.actor_id);
-	COC.p_actorType = OL_ActorType.CONNECTIONOWNER;
-	COC.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
-	COC.p_detailedCompany = row.get(companies.is_detailed_company);
-}
-/*ALCODEEND*/}
-
 List<com.zenmo.zummon.companysurvey.Survey> f_getSurveys()
 {/*ALCODESTART::1726584205819*/
 //Connect with API to database
@@ -3368,7 +3357,7 @@ if (gridConnection.getStorage().getHasBattery() != null && gridConnection.getSto
 }
 // Elke survey company krijgt hoe dan ook een batterij EA (ook als op dit moment nog geen batterij aanwezig is, maar dan is capaciteit gewoon 0)
 f_addStorage(companyGC, battery_power_kW, battery_capacity_kWh, OL_EnergyAssetType.STORAGE_ELECTRIC);
-
+companyGC.p_batteryOperationMode = OL_BatteryOperationMode.BALANCE;
 
 //Aansturing toevoegen ?
 
