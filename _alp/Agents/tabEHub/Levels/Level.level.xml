@@ -586,9 +586,6 @@ else{
 	// Reset multi-select
 	zero_Interface.b_multiSelect = false;
 	zero_Interface.getMultiSelect().setSelected(false);
-	
-	// disable the WKK button
-	//cb_wkk.setEnabled(true);
 }
 
 
