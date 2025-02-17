@@ -33,7 +33,8 @@ if (c_selectedGridConnections.size() > 0) {
 		}
 	}
 }
-else{
+
+else if (uI_Results.v_collective!=uI_Results.v_area){ // Skip if v_area is v_collective (coop)
 	uI_Results.f_addTimeStepLiveDataSetsMain(uI_Results.v_area);
 }
 

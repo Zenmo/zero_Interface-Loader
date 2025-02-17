@@ -76,11 +76,6 @@
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Path>vallum-production-659-ce47d2e-all.jar</Path>
-		<ReferencedFromUserCode>false</ReferencedFromUserCode>
-		<Location>FILE_SYSTEM</Location>
-	</Resource>
-	<Resource>
 		<Path>vallum-main-661-e8cb2e6-all.jar</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
