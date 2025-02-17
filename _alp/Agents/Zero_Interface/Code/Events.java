@@ -33,8 +33,8 @@ if (c_selectedGridConnections.size() > 0) {
 		}
 	}
 }
-else{
-f_addTimeStepLiveDataSetsMain(uI_Results.v_area);
+else if (uI_Results.v_collective!=uI_Results.v_area){ // Skip if v_area is v_collective (coop)
+	f_addTimeStepLiveDataSetsMain(uI_Results.v_area);
 }
 
 // Update the NFATO values in the selected companyUI
