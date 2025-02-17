@@ -1471,7 +1471,13 @@ List<A_SubTenant> subTenants = new ArrayList<A_SubTenant>();
 List<com.zenmo.zummon.companysurvey.Survey> surveys = f_getSurveys();
 
 //Get the building data
-map_buildingData_Vallum = com.zenmo.vallum.PandKt.fetchBagPanden(surveys);
+try{
+	map_buildingData_Vallum = com.zenmo.vallum.PandKt.fetchBagPanden(surveys);
+}
+catch (Exception e){ //if api of bag is down, leave bag buildings empty and display error message
+	zero_Interface.f_setErrorScreen("BAG API is offline, het is mogelijk dat \n bepaalde panden niet zijn ingeladen!");
+}
+
 
 traceln("Size of survey List: %s", surveys.size());
 
@@ -1546,21 +1552,24 @@ for (var survey : surveys) {
 							companyGC.c_connectedGISObjects.add(gisbuilding);
 
 							//Accumulate surface areas
-							totalFloorSurfaceAreaGC_m2 += gisbuilding.p_floorSurfaceArea_m2; // Gaat dan dubbel !?
-							totalRoofSurfaceAreaGC_m2 += gisbuilding.p_roofSurfaceArea_m2; // Gaat dan dubbel !?
+							totalFloorSurfaceAreaGC_m2 += gisbuilding.p_floorSurfaceArea_m2; //Gaat dan dubbel met vorige GC die het pand maakte!
+							totalRoofSurfaceAreaGC_m2 += gisbuilding.p_roofSurfaceArea_m2; //Gaat dan dubbel met vorige GC die het pand maakte!
 						}
 					}
-					else{
+					else if (map_buildingData_Vallum != null && !map_buildingData_Vallum.isEmpty()){
 						Building_data customBuilding = f_createBuildingData_Vallum(companyGC, PID.getValue());
 						buildings.add(customBuilding);
 						c_VallumBuilding_data.add(customBuilding);
 					}
 				}
 			} else {
-				traceln("Survey %s no pand", survey.getId());
+				traceln("Survey %s has no building in zorm", survey.getId());
 				buildings = findAll(c_SurveyCompanyBuilding_data, b -> b.gc_id().equals(companyGC.p_gridConnectionID));
+				if(buildings == null){
+					traceln("Survey %s has also no manual connection with building in excel", survey.getId());
+				}
 			}
-			
+	
 			//Create the GIS buildings
 			for (Building_data building : buildings) {
 				GIS_Building b = f_createGISBuilding( building, companyGC);				
@@ -1587,13 +1596,23 @@ for (var survey : surveys) {
 			//Add (combined) building data to GC (latitude and longitude + area)
 			companyGC.p_floorSurfaceArea_m2 = totalFloorSurfaceAreaGC_m2;
 			companyGC.p_roofSurfaceArea_m2 = totalRoofSurfaceAreaGC_m2;
-			companyGC.p_longitude = companyGC.c_connectedGISObjects.get(0).p_longitude; // Get longitude of first building (only used to get nearest trafo)
-			companyGC.p_latitude = companyGC.c_connectedGISObjects.get(0).p_latitude; // Get latitude of first building (only used to get nearest trafo)
-			companyGC.setLatLon(companyGC.p_latitude, companyGC.p_longitude);  
+			
+
+			if(!companyGC.c_connectedGISObjects.isEmpty()){
+				companyGC.p_longitude = companyGC.c_connectedGISObjects.get(0).p_longitude; // Get longitude of first building (only used to get nearest trafo)
+				companyGC.p_latitude = companyGC.c_connectedGISObjects.get(0).p_latitude; // Get latitude of first building (only used to get nearest trafo)
+			}
+			else{
+				traceln("Gridconnection %s with owner %s has no buildings!!!", companyGC.p_gridConnectionID, companyGC.p_ownerID);
+				companyGC.p_longitude = 0;
+				companyGC.p_latitude = 0;
+			}
+			
+			//Set lat lon
+			companyGC.setLatLon(companyGC.p_latitude, companyGC.p_longitude); 
 			
 			//Energy asset initialization
 			f_iEASurveyCompanies_Zorm(companyGC, gridConnection); 
-			
         }
     }
 }
@@ -1626,7 +1645,16 @@ Vallum vallum = new Vallum(user.PROJECT_CLIENT_ID(), user.PROJECT_CLIENT_SECRET(
 
 List<com.zenmo.zummon.companysurvey.Survey> surveys = new ArrayList();
 
-surveys = vallum.getSurveysByProject(project_data.project_name());
+
+String[] zorm_project_names;
+if(project_data.zorm_project_names() != null){
+	zorm_project_names = project_data.zorm_project_names();
+}
+else{
+	zorm_project_names = new String[]{project_data.project_name()};
+}
+
+surveys = vallum.getEnabledSurveysByProjectNames(zorm_project_names);
 
 //Clear user data
 user = null;
@@ -2711,15 +2739,15 @@ traceln(" ");
 //Simulate full year simulation for initial KPIs
 if( settings.runHeadlessAtStartup() ){
 	energyModel.f_runRapidSimulation(); // Do a full year run to have KPIs right away!
-	zero_Interface.f_updateUIresultsMainArea();
+	zero_Interface.uI_Results.f_updateUIresultsMainArea();
 	zero_Interface.gr_simulateYearScreenSmall.setVisible(false);
 	zero_Interface.gr_loadIconSmall.setVisible(false);
 	if (energyModel.UtilityConnections.size() > 0) {
 		//zero_Interface.f_updateUIresultsGridConnection( zero_Interface.uI_Results.v_gridConnection, energyModel.UtilityConnections.get(0));
 	}
-	zero_Interface.f_updateUIresultsGridNode( zero_Interface.uI_Results.v_trafo, energyModel.pop_gridNodes.get(0));
+	zero_Interface.uI_Results.f_updateUIresultsGridNode( zero_Interface.uI_Results.v_trafo, energyModel.pop_gridNodes.get(0));
 	if (energyModel.pop_energyCoops.size()>0) {
-		zero_Interface.f_updateUIresultsEnergyCoop( zero_Interface.uI_Results.v_collective, energyModel.pop_energyCoops.get(0));
+		zero_Interface.uI_Results.f_updateUIresultsEnergyCoop( zero_Interface.uI_Results.v_collective, energyModel.pop_energyCoops.get(0));
 	}
 	zero_Interface.f_calculateGTOConnectionCapacities();
 	zero_Interface.b_resultsUpToDate = true;
@@ -2930,12 +2958,6 @@ switch(project_data.survey_type()){
 	case EXCEL:
 		f_createSurveyCompanies_Excel();
 		break;
-	
-	/*	
-	case ZUMMON:
-		f_createSurveyCompanies_Zummon();
-		break;
-	*/
 }
 
 //Create generic companies

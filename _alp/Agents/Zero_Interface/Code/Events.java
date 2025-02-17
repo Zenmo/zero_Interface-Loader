@@ -18,23 +18,24 @@ if ( b_updateCongestionColors ){
 
 // Update the live plot dataset of gcList
 if (c_selectedGridConnections.size() > 0) {
-	f_addTimeStepLiveDataSetsGC(uI_Results.v_gridConnection, c_selectedGridConnections);
+	uI_Results.f_addTimeStepLiveDataSetsGC(uI_Results.v_gridConnection, c_selectedGridConnections);
 	
 	if (p_selectedProjectType == OL_ProjectType.BUSINESSPARK) {
 		if (( b_multiSelect || b_EHubSelect ) && c_selectedGridConnections.size() >= 1 && uI_Results.c_individualGridConnections.size() > 0) {
 			for (int i = 0; i < c_selectedGridConnections.size(); i++) {
-				f_addTimeStepLiveDataSetsGC(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
+				uI_Results.f_addTimeStepLiveDataSetsGC(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
 			}
 			//f_addTimeStepTotalLiveDataSets();
 			
 			if (b_EHubSelect) {
-				f_updateLiveEHubCapacityDataSets();
+				uI_Results.f_updateLiveEHubCapacityDataSets(c_selectedGridConnections);
 			}
 		}
 	}
 }
-else{
-	f_addTimeStepLiveDataSetsMain(uI_Results.v_area);
+
+else if (uI_Results.v_collective!=uI_Results.v_area){ // Skip if v_area is v_collective (coop)
+	uI_Results.f_addTimeStepLiveDataSetsMain(uI_Results.v_area);
 }
 
 // Update the NFATO values in the selected companyUI
