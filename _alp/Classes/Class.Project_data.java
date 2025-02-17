@@ -11,6 +11,9 @@ public class Project_data {
 		OL_ProjectType project_type;
 		OL_SurveyType survey_type;
 		
+		//Zorm project names
+		String[] zorm_project_names;
+		
 		//Database names
 		List<String[]> databaseNames;
 		

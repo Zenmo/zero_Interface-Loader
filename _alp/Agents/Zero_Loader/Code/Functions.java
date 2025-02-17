@@ -1645,7 +1645,16 @@ Vallum vallum = new Vallum(user.PROJECT_CLIENT_ID(), user.PROJECT_CLIENT_SECRET(
 
 List<com.zenmo.zummon.companysurvey.Survey> surveys = new ArrayList();
 
-surveys = vallum.getSurveysByProject(project_data.project_name());
+
+String[] zorm_project_names;
+if(project_data.zorm_project_names() != null){
+	zorm_project_names = project_data.zorm_project_names();
+}
+else{
+	zorm_project_names = new String[]{project_data.project_name()};
+}
+
+surveys = vallum.getEnabledSurveysByProjectNames(zorm_project_names);
 
 //Clear user data
 user = null;

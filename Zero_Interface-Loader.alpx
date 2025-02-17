@@ -287,7 +287,7 @@
 		<ClassPathEntry>
 			<ResourceReference>
 				<PackageName>zerointerfaceloader</PackageName>
-				<ClassName>vallum-timeseries-to-quarter-h-654-27b2367-all.jar</ClassName>
+				<ClassName>vallum-main-661-e8cb2e6-all.jar</ClassName>
 			</ResourceReference>
 			<Imported>true</Imported>
 			<Folder>false</Folder>
