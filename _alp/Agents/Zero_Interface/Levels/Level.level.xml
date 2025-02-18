@@ -5070,7 +5070,7 @@ else {
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>DASHED</LineStyle>
 				<Width>460</Width>
-				<Height>224</Height>
+				<Height>180</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
 				<FillColorCode>v_themeColor</FillColorCode>
@@ -5080,7 +5080,7 @@ else {
 				<Id>1709717180371</Id>
 				<Name><![CDATA[gr_simulateYearToCalculateKPIsSmall]]></Name>
 				<X>10</X>
-				<Y>70</Y>
+				<Y>50</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -5120,7 +5120,7 @@ new Thread( () -&gt; {
 }).start();
 
 b_resultsUpToDate = true;
-</OnClickCode>
+uI_Results.f_setNonLivePlotRadioButtons(true);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -5219,7 +5219,7 @@ b_resultsUpToDate = true;
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>DASHED</LineStyle>
 				<Width>460</Width>
-				<Height>224</Height>
+				<Height>250</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-369756683</FillColor>
 				<FillMaterial>null</FillMaterial>

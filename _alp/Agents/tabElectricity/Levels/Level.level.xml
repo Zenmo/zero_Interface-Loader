@@ -29,7 +29,6 @@
 	<Group>
 		<Id>1722249610010</Id>
 		<Name><![CDATA[gr_electricityDemandSlidersResidentialArea]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>965</X>
 		<Y>175</Y>
 		<Label>
@@ -1241,7 +1240,6 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 	<Rectangle>
 		<Id>1722334712260</Id>
 		<Name><![CDATA[rect_residentialFunctions]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>780</X>
 		<Y>370</Y>
 		<Label>
@@ -1268,7 +1266,6 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 	<Text>
 		<Id>1722334744018</Id>
 		<Name><![CDATA[t_residentialFunctionsDescription]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>980</X>
 		<Y>380</Y>
 		<Label>

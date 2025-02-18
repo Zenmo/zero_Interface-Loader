@@ -216,7 +216,7 @@ else if ( v_currentNbChargers < desiredNbOfChargers ){
 		
 		if( charger != null ){
 			String profileName = charger.p_chargingProfileName;
-			J_EAProfile profile = new J_EAProfile(charger, OL_EnergyCarrierType.ELECTRICITY, null, OL_ProfileAssetType.CHARGING, zero_Interface.energyModel.p_timeStep_h);		
+			J_EAProfile profile = new J_EAProfile(charger, OL_EnergyCarriers.ELECTRICITY, null, OL_ProfileAssetType.CHARGING, zero_Interface.energyModel.p_timeStep_h);		
 			profile.energyAssetName = "charging profile";
 			List<Double> quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + profileName + " FROM charging_profiles;");			
 			profile.a_energyProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> max(0,d)).map( d -> d / 4).toArray();

@@ -575,6 +575,11 @@ double f_resetSettings()
 b_resultsUpToDate = false;
 gr_simulateYearScreenSmall.setVisible(true);
 
+// Switch to the live plots and do not allow the user to switch away from the live plot when the year is not yet simulated
+uI_Results.getRadioButtons().setValue(0, true);
+uI_Results.chartProfielen.getPeriodRadioButton().setValue(0, true);
+uI_Results.f_setNonLivePlotRadioButtons(false);
+
 uI_Results.f_updateActiveAssetBooleans(b_multiSelect, c_selectedGridConnections);
 runSimulation();
 
