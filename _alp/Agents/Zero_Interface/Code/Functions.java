@@ -1116,11 +1116,11 @@ for (GridNode MVsub : MVsubstations){
 }
 
 //Find all MVMV and HVMV distribution stations
-List<GridNode> MVMVstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.MVMV);
+//List<GridNode> MVMVstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.MVMV);
 List<GridNode> HVMVstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.HVMV);
 
 //Set their topology colors (for now black as they are basically top level).
-MVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
+//MVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
 HVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
 
 /*ALCODEEND*/}
