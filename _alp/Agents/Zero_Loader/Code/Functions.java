@@ -102,6 +102,10 @@ for (GridNode_data GN_data : c_GridNode_data) {
 			
 			//Define node type
 			switch (nodeTypeString) {
+			    case "LVLV":
+			        GN.p_nodeType = OL_GridNodeType.LVLV;
+			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
+			        break;
 			    case "MVLV":
 			        GN.p_nodeType = OL_GridNodeType.MVLV;
 			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
@@ -701,23 +705,39 @@ for (Windfarm_data dataWindfarm : c_Windfarm_data) {
 
 double[] f_createGISNodesTokens(GridNode GN)
 {/*ALCODESTART::1726584205793*/
-double scaling_factor_HVMV = zero_Interface.v_HVMVNodeSize;
-double scaling_factor_MVMV = zero_Interface.v_MVMVNodeSize;
 double scaling_factor_MVLV = zero_Interface.v_MVLVNodeSize;
+double scaling_factor_MVMV = zero_Interface.v_MVMVNodeSize;
+double scaling_factor_HVMV = zero_Interface.v_HVMVNodeSize;
+
 int nb_GISCoords;
+String node_shape = "TRIANGLE";
+double scaling_factor_gridnode = 0;
 
 switch( GN.p_nodeType ) {
+		case LVLV:
+		nb_GISCoords = 6;
+		node_shape = "TRIANGLE";
+		scaling_factor_gridnode = scaling_factor_MVLV;		
+		break;
 		case MVLV:
 		nb_GISCoords = 6;
+		node_shape = "TRIANGLE";
+		scaling_factor_gridnode = scaling_factor_MVLV;
 		break;
 		case SUBMV:
 		nb_GISCoords = 6;
+		node_shape = "TRIANGLE";
+		scaling_factor_gridnode = scaling_factor_MVLV;	
 		break;
 		case MVMV:
-		nb_GISCoords = 8;
+		nb_GISCoords = 6;
+		node_shape = "TRIANGLE";
+		scaling_factor_gridnode = scaling_factor_MVMV;	
 		break;
 		case HVMV:
-		nb_GISCoords = 8;
+		nb_GISCoords = 6;
+		node_shape = "TRIANGLE";
+		scaling_factor_gridnode = scaling_factor_HVMV;	
 		break;
 		case HT:
 		nb_GISCoords = 6;	
@@ -737,81 +757,44 @@ switch( GN.p_nodeType ) {
 
 double[] GISCoords = new double[nb_GISCoords];
 
-switch( GN.p_nodeType ) {
 
-		case MVLV:
-			//latitudes
-			GISCoords[0]=GN.p_latitude;
-			GISCoords[2]=GN.p_latitude - scaling_factor_MVLV*0.00001;
-			GISCoords[4]=GN.p_latitude - scaling_factor_MVLV*0.00001;
-			
-			//longitudes
-			GISCoords[1]=GN.p_longitude;
-			GISCoords[3]=GN.p_longitude + scaling_factor_MVLV*0.00001;
-			GISCoords[5]=GN.p_longitude - scaling_factor_MVLV*0.00001;
-		break;
+switch(node_shape){
+
+	case "TRIANGLE":
+		//latitudes
+		GISCoords[0]=GN.p_latitude;
+		GISCoords[2]=GN.p_latitude - scaling_factor_gridnode*0.00001;
+		GISCoords[4]=GN.p_latitude - scaling_factor_gridnode*0.00001;
 		
-		case SUBMV:
-			//latitudes
-			GISCoords[0]=GN.p_latitude;
-			GISCoords[2]=GN.p_latitude - scaling_factor_MVLV*0.00001;
-			GISCoords[4]=GN.p_latitude - scaling_factor_MVLV*0.00001;
-			
-			//longitudes
-			GISCoords[1]=GN.p_longitude;
-			GISCoords[3]=GN.p_longitude + scaling_factor_MVLV*0.00001;
-			GISCoords[5]=GN.p_longitude - scaling_factor_MVLV*0.00001;
+		//longitudes
+		GISCoords[1]=GN.p_longitude;
+		GISCoords[3]=GN.p_longitude + scaling_factor_gridnode*0.00001;
+		GISCoords[5]=GN.p_longitude - scaling_factor_gridnode*0.00001;
 		break;
+	case "DIAMOND":
+		//latitudes
+		GISCoords[0]=GN.p_latitude;
+		GISCoords[2]=GN.p_latitude - scaling_factor_gridnode*0.00001;
+		GISCoords[4]=GN.p_latitude;
+		GISCoords[6]=GN.p_latitude + scaling_factor_gridnode*0.00001;
 		
-		case MVMV:
-			//latitudes
-			GISCoords[0]=GN.p_latitude;
-			GISCoords[2]=GN.p_latitude - scaling_factor_MVMV*0.00001;
-			GISCoords[4]=GN.p_latitude;
-			GISCoords[6]=GN.p_latitude + scaling_factor_MVMV*0.00001;
-			
-			//longitudes
-			GISCoords[1]=GN.p_longitude;
-			GISCoords[3]=GN.p_longitude + scaling_factor_MVMV*0.00001;
-			GISCoords[5]=GN.p_longitude + scaling_factor_MVMV*0.00001*2;
-			GISCoords[7]=GN.p_longitude + scaling_factor_MVMV*0.00001;
+		//longitudes
+		GISCoords[1]=GN.p_longitude;
+		GISCoords[3]=GN.p_longitude + scaling_factor_gridnode*0.00001;
+		GISCoords[5]=GN.p_longitude + scaling_factor_gridnode*0.00001*2;
+		GISCoords[7]=GN.p_longitude + scaling_factor_gridnode*0.00001;
 		break;
-		
-		case HVMV:		
-			//latitudes
-			GISCoords[0]=GN.p_latitude;
-			GISCoords[2]=GN.p_latitude - scaling_factor_HVMV*0.00001;
-			GISCoords[4]=GN.p_latitude;
-			GISCoords[6]=GN.p_latitude + scaling_factor_HVMV*0.00001;
-			
-			//longitudes
-			GISCoords[1]=GN.p_longitude;
-			GISCoords[3]=GN.p_longitude + scaling_factor_HVMV*0.00001;
-			GISCoords[5]=GN.p_longitude + scaling_factor_HVMV*0.00001*2;
-			GISCoords[7]=GN.p_longitude + scaling_factor_HVMV*0.00001;
-			
+	/*
+	case "CIRCLE":
 			// if you want Circle coordinates -->
-			//x = r * cos(t) + a
-			//y = r * sin(t) + b
-			//t is an angle between 0 and 2π (more steps is more circle points, about 10-12 should suffice. --> adjust nb_GISCoords accordingly
-			// r is the radius: 0.000009 degrees in latitude is about 1 meter 
-			// a and b are latitude and longitude
+		//x = r * cos(t) + a
+		//y = r * sin(t) + b
+		//t is an angle between 0 and 2π (more steps is more circle points, about 10-12 should suffice. --> adjust nb_GISCoords accordingly
+		// r is the radius: 0.000009 degrees in latitude is about 1 meter 
+		// a and b are latitude and longitude
 		break;
-
-		case HT:
-			
-		break;
-		case MT:
-			
-		break;
-		case LT:
-			
-		break;
-		case LT5thgen:
-			
-		break;
+	*/
 }
-
 
 return GISCoords;
 

@@ -929,7 +929,6 @@ traceln("gr_compareResultsButton is not functional!");</OnClickCode>
 		<PublicFlag>true</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
-		<Lock>true</Lock>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
@@ -1143,7 +1142,7 @@ traceln("gr_compareResultsButton is not functional!");</OnClickCode>
 						<Id>1724074839746</Id>
 						<Name><![CDATA[gr_gridnodes]]></Name>
 						<X>-75</X>
-						<Y>5</Y>
+						<Y>-19</Y>
 						<Label>
 							<X>10</X>
 							<Y>0</Y>
@@ -1158,7 +1157,7 @@ traceln("gr_compareResultsButton is not functional!");</OnClickCode>
 						<Presentation>
 							<Polyline>
 								<Id>1724074853961</Id>
-								<Name><![CDATA[polyline_MVLVCongested]]></Name>
+								<Name><![CDATA[polyline_congestedGridnode]]></Name>
 								<X>-55</X>
 								<Y>40</Y>
 								<Label>
@@ -1210,7 +1209,7 @@ traceln("gr_compareResultsButton is not functional!");</OnClickCode>
 							</Polyline>
 							<Text>
 								<Id>1724074853963</Id>
-								<Name><![CDATA[t_MVLVCongested]]></Name>
+								<Name><![CDATA[txt_congestedGridnode]]></Name>
 								<X>-25</X>
 								<Y>25</Y>
 								<Label>
@@ -1225,7 +1224,7 @@ traceln("gr_compareResultsButton is not functional!");</OnClickCode>
 								<Z>0</Z>
 								<Rotation>0.0</Rotation>
 								<Color>-16777216</Color>
-								<Text><![CDATA[MSLS-trafo overbelast]]></Text>
+								<Text><![CDATA[Trafo overbelast]]></Text>
 								<Font>
 									<Name><![CDATA[SansSerif]]></Name>
 									<Size>12</Size>
@@ -1234,65 +1233,8 @@ traceln("gr_compareResultsButton is not functional!");</OnClickCode>
 								<Alignment>LEFT</Alignment>
 							</Text>
 							<Polyline>
-								<Id>1724074853965</Id>
-								<Name><![CDATA[polyline_HVMV]]></Name>
-								<X>-45</X>
-								<Y>-48</Y>
-								<Label>
-									<X>10</X>
-									<Y>0</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<ZHeight>10</ZHeight>
-								<LineWidth>1</LineWidth>
-								<LineColor>-16777088</LineColor>
-								<LineColorCode>v_HVMVLineColor</LineColorCode>
-								<LineMaterial>null</LineMaterial>
-								<LineStyle>SOLID</LineStyle>
-								<BeginArrowSize>1</BeginArrowSize>
-								<BeginArrowStyle>0</BeginArrowStyle>
-								<EndArrowSize>1</EndArrowSize>
-								<EndArrowStyle>0</EndArrowStyle>
-								<FillColor/>
-								<FillColorCode>v_HVMVNodeColor</FillColorCode>
-								<FillMaterial>null</FillMaterial>
-								<Points>
-									<Point>
-										<X>0</X>
-										<Y>0</Y>
-										<Z>0</Z>
-									</Point>
-									<Point>
-										<X>-5</X>
-										<Y>10</Y>
-										<Z>0</Z>
-									</Point>
-									<Point>
-										<X>0</X>
-										<Y>20</Y>
-										<Z>0</Z>
-									</Point>
-									<Point>
-										<X>5</X>
-										<Y>10</Y>
-										<Z>0</Z>
-									</Point>
-									<Point>
-										<X>0</X>
-										<Y>0</Y>
-										<Z>0</Z>
-									</Point>
-								</Points>
-								<Closed>false</Closed>
-							</Polyline>
-							<Polyline>
 								<Id>1724074853967</Id>
-								<Name><![CDATA[polyline_MVLV]]></Name>
+								<Name><![CDATA[polyline_gridnode]]></Name>
 								<X>-55</X>
 								<Y>-7</Y>
 								<Label>
@@ -1344,7 +1286,7 @@ traceln("gr_compareResultsButton is not functional!");</OnClickCode>
 							</Polyline>
 							<Text>
 								<Id>1724074853969</Id>
-								<Name><![CDATA[t_MVLV]]></Name>
+								<Name><![CDATA[txt_gridnode]]></Name>
 								<X>-25</X>
 								<Y>-21</Y>
 								<Label>
@@ -1359,7 +1301,7 @@ traceln("gr_compareResultsButton is not functional!");</OnClickCode>
 								<Z>0</Z>
 								<Rotation>0.0</Rotation>
 								<Color>-16777216</Color>
-								<Text><![CDATA[MSLS-trafo]]></Text>
+								<Text><![CDATA[Trafo]]></Text>
 								<Font>
 									<Name><![CDATA[SansSerif]]></Name>
 									<Size>12</Size>
@@ -1369,7 +1311,7 @@ traceln("gr_compareResultsButton is not functional!");</OnClickCode>
 							</Text>
 							<Polyline>
 								<Id>1724074853971</Id>
-								<Name><![CDATA[polyline_MVLVStrained]]></Name>
+								<Name><![CDATA[polyline_strainedGridnode]]></Name>
 								<X>-55</X>
 								<Y>15</Y>
 								<Label>
@@ -1421,7 +1363,7 @@ traceln("gr_compareResultsButton is not functional!");</OnClickCode>
 							</Polyline>
 							<Text>
 								<Id>1724074853973</Id>
-								<Name><![CDATA[t_MVLVStrained]]></Name>
+								<Name><![CDATA[txt_strainedGridnode]]></Name>
 								<X>-25</X>
 								<Y>2</Y>
 								<Label>
@@ -1436,32 +1378,7 @@ traceln("gr_compareResultsButton is not functional!");</OnClickCode>
 								<Z>0</Z>
 								<Rotation>0.0</Rotation>
 								<Color>-16777216</Color>
-								<Text><![CDATA[MSLS-trafo belast]]></Text>
-								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>12</Size>
-									<Style>0</Style>
-								</Font>
-								<Alignment>LEFT</Alignment>
-							</Text>
-							<Text>
-								<Id>1724074853975</Id>
-								<Name><![CDATA[t_HVMV]]></Name>
-								<X>-25</X>
-								<Y>-45</Y>
-								<Label>
-									<X>0</X>
-									<Y>-10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<Rotation>0.0</Rotation>
-								<Color>-16777216</Color>
-								<Text><![CDATA[HSMS-trafo]]></Text>
+								<Text><![CDATA[Trafo belast]]></Text>
 								<Font>
 									<Name><![CDATA[SansSerif]]></Name>
 									<Size>12</Size>
