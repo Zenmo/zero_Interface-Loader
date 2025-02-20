@@ -2965,8 +2965,9 @@ zero_Interface.va_Interface.navigateTo();</ActionCode>
 			<Rectangle>
 				<Id>1725608394737</Id>
 				<Name><![CDATA[rect_simulateYearScreen1]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<X>-995</X>
-				<Y>-275</Y>
+				<Y>-320</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -3057,11 +3058,14 @@ new Thread( () -&gt; {
 		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
 	}
 	
+	//Update results up to date boolean
+	uI_Results.f_setNonLivePlotRadioButtons(true);
+	zero_Interface.b_resultsUpToDate = true;
+	
 }).start();
 
 
-//Update results up to date boolean
-zero_Interface.b_resultsUpToDate = true;
+
 </OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
@@ -3143,8 +3147,9 @@ zero_Interface.b_resultsUpToDate = true;
 			<Rectangle>
 				<Id>1725606813428</Id>
 				<Name><![CDATA[rect_loadIcon2]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<X>-1980</X>
-				<Y>-15</Y>
+				<Y>-60</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>

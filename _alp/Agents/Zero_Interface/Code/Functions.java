@@ -562,7 +562,7 @@ f_styleResultsUI();
 
 //Set ResultsUI radiobutton setup
 if(settings.resultsUIRadioButtonSetup() != null){
-	uI_Results.v_selectedRadioButton = settings.resultsUIRadioButtonSetup();
+	uI_Results.v_selectedRadioButtonSetup = settings.resultsUIRadioButtonSetup();
 }
 
 //Connect resultsUI
@@ -576,11 +576,16 @@ b_resultsUpToDate = false;
 gr_simulateYearScreenSmall.setVisible(true);
 
 // Switch to the live plots and do not allow the user to switch away from the live plot when the year is not yet simulated
-uI_Results.getRadioButtons().setValue(0, true);
-uI_Results.chartProfielen.getPeriodRadioButton().setValue(0, true);
-uI_Results.f_setNonLivePlotRadioButtons(false);
-
+f_enableLivePlotsOnly(uI_Results);
 uI_Results.f_updateActiveAssetBooleans(b_multiSelect, c_selectedGridConnections);
+
+//Set simulation and live graph for companyUIs as well!
+for(UI_company companyUI : c_companyUIs){
+	if(companyUI.uI_Results.v_gridConnection != null){
+		f_enableLivePlotsOnly(companyUI.uI_Results);
+	}
+}
+
 runSimulation();
 
 /*ALCODEEND*/}
@@ -1986,5 +1991,12 @@ for(GridConnection GC : toBeFilteredGC){
 }
 
 c_selectedGridConnections = new ArrayList<>(gridConnectionsInNeighborhood);
+/*ALCODEEND*/}
+
+double f_enableLivePlotsOnly(UI_Results resultsUI)
+{/*ALCODESTART::1740043548084*/
+resultsUI.getRadioButtons().setValue(0, true);
+resultsUI.chartProfielen.getPeriodRadioButton().setValue(0, true);
+resultsUI.f_setNonLivePlotRadioButtons(false);
 /*ALCODEEND*/}
 

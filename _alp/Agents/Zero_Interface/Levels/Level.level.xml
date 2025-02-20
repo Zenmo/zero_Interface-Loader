@@ -3366,6 +3366,11 @@ traceln( v_themeColor.getRGB() );</ActionCode>
 			companyUI.f_getNFATOValues();
 		}
 		
+		//This check should be done AFTER the uiResults has been copied.
+		if(!b_resultsUpToDate){
+			companyUI.f_setSimulateYearScreen();
+		}
+		
 		//Go to the companyUI view
 		c_companyUIs.get(v_connectionOwnerIndexNr).va_companyUI.navigateTo();
 		break;
@@ -5028,16 +5033,23 @@ new Thread( () -&gt; {
 	if (c_selectedGridConnections.size() &gt; 0){
 		uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
 	}
-	uI_Results.f_showCorrectChart();
+	
+	//No longer needed, because during simulation view is always on live. If not: enable!
+	//uI_Results.f_showCorrectChart();
 	
 	//Update and show kpi summary chart after run
 	if(settings.showKPISummary() != null &amp;&amp; settings.showKPISummary() &amp;&amp; !b_multiSelect &amp;&amp; v_clickedObjectType != OL_GISObjectType.GRIDNODE){
 		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
 	}
+	
+	//Enable radio buttons again
+	uI_Results.f_setNonLivePlotRadioButtons(true);
+	
+	b_resultsUpToDate = true;
 }).start();
 
-b_resultsUpToDate = true;
-uI_Results.f_setNonLivePlotRadioButtons(true);</OnClickCode>
+
+</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
