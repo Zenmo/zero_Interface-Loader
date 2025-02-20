@@ -562,7 +562,7 @@ f_styleResultsUI();
 
 //Set ResultsUI radiobutton setup
 if(settings.resultsUIRadioButtonSetup() != null){
-	uI_Results.v_selectedRadioButton = settings.resultsUIRadioButtonSetup();
+	uI_Results.v_selectedRadioButtonSetup = settings.resultsUIRadioButtonSetup();
 }
 
 //Connect resultsUI
@@ -575,7 +575,17 @@ double f_resetSettings()
 b_resultsUpToDate = false;
 gr_simulateYearScreenSmall.setVisible(true);
 
+// Switch to the live plots and do not allow the user to switch away from the live plot when the year is not yet simulated
+f_enableLivePlotsOnly(uI_Results);
 uI_Results.f_updateActiveAssetBooleans(b_multiSelect, c_selectedGridConnections);
+
+//Set simulation and live graph for companyUIs as well!
+for(UI_company companyUI : c_companyUIs){
+	if(companyUI.uI_Results.v_gridConnection != null){
+		f_enableLivePlotsOnly(companyUI.uI_Results);
+	}
+}
+
 runSimulation();
 
 /*ALCODEEND*/}
@@ -1111,11 +1121,11 @@ for (GridNode MVsub : MVsubstations){
 }
 
 //Find all MVMV and HVMV distribution stations
-List<GridNode> MVMVstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.MVMV);
+//List<GridNode> MVMVstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.MVMV);
 List<GridNode> HVMVstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.HVMV);
 
 //Set their topology colors (for now black as they are basically top level).
-MVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
+//MVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
 HVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
 
 /*ALCODEEND*/}
@@ -1981,5 +1991,14 @@ for(GridConnection GC : toBeFilteredGC){
 }
 
 c_selectedGridConnections = new ArrayList<>(gridConnectionsInNeighborhood);
+/*ALCODEEND*/}
+
+double f_enableLivePlotsOnly(UI_Results resultsUI)
+{/*ALCODESTART::1740043548084*/
+if(resultsUI.getGr_resultsUIHeader().isVisible()){
+	resultsUI.getRadioButtons().setValue(0, true);
+}
+resultsUI.chartProfielen.getPeriodRadioButton().setValue(0, true);
+resultsUI.f_setNonLivePlotRadioButtons(false);
 /*ALCODEEND*/}
 

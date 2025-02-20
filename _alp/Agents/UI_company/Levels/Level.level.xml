@@ -2965,8 +2965,9 @@ zero_Interface.va_Interface.navigateTo();</ActionCode>
 			<Rectangle>
 				<Id>1725608394737</Id>
 				<Name><![CDATA[rect_simulateYearScreen1]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<X>-995</X>
-				<Y>-275</Y>
+				<Y>-320</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -3050,18 +3051,20 @@ new Thread( () -&gt; {
 	gr_loadIcon.setVisible(false);
 	
 	//Update and show kpi summary chart after run
-	//uI_Results.chartKPISummary.f_setKPISummaryChart();
-	
-	//Update and show kpi summary chart after run
 	if(zero_Interface.settings.showKPISummary() != null &amp;&amp; zero_Interface.settings.showKPISummary()){
 		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
 	}
 	
+	//Update results up to date boolean
+	uI_Results.f_setNonLivePlotRadioButtons(true);
+	zero_Interface.b_resultsUpToDate = true;
+	zero_Interface.gr_simulateYearScreenSmall.setVisible(false);
+	zero_Interface.uI_Results.f_setNonLivePlotRadioButtons(true);
+	
 }).start();
 
 
-//Update results up to date boolean
-zero_Interface.b_resultsUpToDate = true;
+
 </OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
@@ -3143,8 +3146,9 @@ zero_Interface.b_resultsUpToDate = true;
 			<Rectangle>
 				<Id>1725606813428</Id>
 				<Name><![CDATA[rect_loadIcon2]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<X>-1980</X>
-				<Y>-15</Y>
+				<Y>-60</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -4099,4 +4103,38 @@ simuleer jaar voor KPI's]]></Text>
 			</Text>
 		</Presentation>
 	</Group>
+	<Control Type="CheckBox">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1740047018374</Id>
+		<Name><![CDATA[cb_showGridloadPlot]]></Name>
+		<X>1450</X>
+		<Y>130</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<BasicProperties Width="180" Height="30">
+			<EmbeddedIcon>false</EmbeddedIcon>
+			<TextColor/>
+			<Enabled>true</Enabled>
+			<ActionCode>uI_Results.f_setChartGridLoad_Presentation(null, null, cb_showGridloadPlot.isSelected());
+uI_Results.f_setChartSankey_Presentation(null, null, !cb_showGridloadPlot.isSelected());
+
+if(cb_showGridloadPlot.isSelected()){
+	txt_chartNameRight.setText("Netbelasting");
+}
+else{
+	txt_chartNameRight.setText("Energiestromen");
+}</ActionCode>
+		</BasicProperties>
+		<ExtendedProperties>
+			<Font Name="Dialog" Size="11" Style="0"/>
+			<LabelText>Toon Netbelasting duurkromme</LabelText>
+			<LinkTo>false</LinkTo>
+		</ExtendedProperties>
+	</Control>
 </Presentation>

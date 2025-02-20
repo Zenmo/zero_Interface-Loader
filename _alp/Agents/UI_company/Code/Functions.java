@@ -1381,7 +1381,7 @@ presentation.insert(presentation.size()-1, gr_simulateYearScreen);
 //Set the locations and visibilities of the ResultsUI agents
 uI_Results.f_setChartProfiles_Presentation(0, 0, true);
 uI_Results.f_setChartBalance_Presentation(530, 0, true);
-uI_Results.f_setChartGridLoad_Presentation(null, null, false);
+uI_Results.f_setChartGridLoad_Presentation(1060, 0, false);
 uI_Results.f_setChartSankey_Presentation(1060, 0, true);
 uI_Results.f_setResultsUIHeader(null, null, false);
 
@@ -1717,8 +1717,6 @@ gr_simulateYearScreen.setVisible(true);
 zero_Interface.f_resetSettings();
 
 if(!b_runningMainInterfaceScenarioSettings && !b_runningMainInterfaceSlider){
-	//Set life profiles as visible graph
-	uI_Results.chartProfielen.getPeriodRadioButton().setValue(0, true);
 	uI_Results.v_gridConnection = zero_Interface.uI_Results.v_gridConnection;
 }
 /*ALCODEEND*/}
