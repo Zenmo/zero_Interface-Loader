@@ -1995,7 +1995,9 @@ c_selectedGridConnections = new ArrayList<>(gridConnectionsInNeighborhood);
 
 double f_enableLivePlotsOnly(UI_Results resultsUI)
 {/*ALCODESTART::1740043548084*/
-resultsUI.getRadioButtons().setValue(0, true);
+if(resultsUI.getGr_resultsUIHeader().isVisible()){
+	resultsUI.getRadioButtons().setValue(0, true);
+}
 resultsUI.chartProfielen.getPeriodRadioButton().setValue(0, true);
 resultsUI.f_setNonLivePlotRadioButtons(false);
 /*ALCODEEND*/}

@@ -3370,6 +3370,9 @@ traceln( v_themeColor.getRGB() );</ActionCode>
 		if(!b_resultsUpToDate){
 			companyUI.f_setSimulateYearScreen();
 		}
+		else{
+			companyUI.gr_simulateYearScreen.setVisible(false);	
+		}
 		
 		//Go to the companyUI view
 		c_companyUIs.get(v_connectionOwnerIndexNr).va_companyUI.navigateTo();
