@@ -2730,7 +2730,7 @@ if( settings.runHeadlessAtStartup() ){
 	}
 	zero_Interface.uI_Results.f_updateUIresultsGridNode( zero_Interface.uI_Results.v_trafo, energyModel.pop_gridNodes.get(0));
 	if (energyModel.pop_energyCoops.size()>0) {
-		zero_Interface.uI_Results.f_updateUIresultsEnergyCoop( zero_Interface.uI_Results.v_collective, energyModel.pop_energyCoops.get(0));
+		zero_Interface.uI_Results.f_updateUIresultsEnergyCoop( zero_Interface.uI_Results.v_energyCoop, energyModel.pop_energyCoops.get(0));
 	}
 	zero_Interface.f_calculateGTOConnectionCapacities();
 	zero_Interface.b_resultsUpToDate = true;
