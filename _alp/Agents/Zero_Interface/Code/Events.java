@@ -17,7 +17,7 @@ if ( b_updateCongestionColors ){
 }
 
 // Update the live plot dataset of gcList
-if (c_selectedGridConnections.size() > 0) {
+if (c_selectedGridConnections.size() == 1) {
 	uI_Results.f_addTimeStepLiveDataSetsGC(uI_Results.v_gridConnection, c_selectedGridConnections);
 	
 	if (p_selectedProjectType == OL_ProjectType.BUSINESSPARK) {
@@ -33,7 +33,9 @@ if (c_selectedGridConnections.size() > 0) {
 		}
 	}
 }
+else if (c_selectedGridConnections.size() > 1){
 
+}
 else if (uI_Results.v_energyCoop!=uI_Results.v_area){ // Skip if v_area is v_collective (coop)
 	uI_Results.f_addTimeStepLiveDataSetsMain(uI_Results.v_area);
 }

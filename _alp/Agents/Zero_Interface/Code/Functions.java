@@ -93,7 +93,6 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 			if (b.c_containedGridConnections.size() > 0 ) { // only allow buildings with gridconnections
 				buildingsConnectedToSelectedBuildingsList = b.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
 				f_selectBuilding(b, buildingsConnectedToSelectedBuildingsList);
-				uI_Results.v_selectedObjectType = OL_GISObjectType.BUILDING;
 				uI_Results.f_showCorrectChart();
 				return;
 			}
@@ -470,6 +469,11 @@ else if (v_previousClickedObjectType == OL_GISObjectType.BUILDING ||
 	for(GIS_Object previousClickedObject: c_previousSelectedObjects){
 		f_styleAreas(previousClickedObject);
 	}
+}
+
+if(v_customEnergyCoop != null){
+	energyModel.f_removeEnergyCoop(v_customEnergyCoop);
+	v_customEnergyCoop = null;
 }
 /*ALCODEEND*/}
 
@@ -1055,7 +1059,16 @@ for (GridConnection gc : c_selectedObjects.get(0).c_containedGridConnections) {
 	}
 }
 
-uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+if(c_selectedGridConnections.size()>1){
+	v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections);
+	uI_Results.v_selectedObjectType = OL_GISObjectType.COOP;
+	uI_Results.f_updateUIresultsEnergyCoop(uI_Results.v_energyCoop, v_customEnergyCoop);
+}
+else{
+	uI_Results.v_selectedObjectType = OL_GISObjectType.BUILDING;
+	uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+}
+
 /*ALCODEEND*/}
 
 double f_multiSelect(double clickx,double clicky)
@@ -1510,9 +1523,18 @@ else{//Filtered GC returns GC
 		}
 	}
 	
-	//Set graphs
-	uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
-	uI_Results.v_selectedObjectType = v_clickedObjectType;				
+	//Set graphs	
+	if(c_selectedGridConnections.size()>1){
+		v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections);
+		uI_Results.v_selectedObjectType = OL_GISObjectType.COOP;
+		uI_Results.f_updateUIresultsEnergyCoop(uI_Results.v_energyCoop, v_customEnergyCoop);
+		traceln("COOP created in filter");
+		traceln(v_customEnergyCoop);
+	}
+	else{
+		uI_Results.v_selectedObjectType = OL_GISObjectType.BUILDING;
+		uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+	}			
 	uI_Results.f_showCorrectChart();
 }
 /*ALCODEEND*/}
