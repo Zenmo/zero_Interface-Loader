@@ -33,10 +33,10 @@ if (c_selectedGridConnections.size() == 1) {
 		}
 	}
 }
-else if (c_selectedGridConnections.size() > 1){
-
+else if (v_customEnergyCoop != null){
+	uI_Results.f_addTimeStepLiveDataSetsEnergyCoop(uI_Results.v_energyCoop, v_customEnergyCoop);
 }
-else if (uI_Results.v_energyCoop!=uI_Results.v_area){ // Skip if v_area is v_collective (coop)
+else if (uI_Results.v_energyCoop!=uI_Results.v_area){ // update v_area, but skip if v_area is v_collective (coop)
 	uI_Results.f_addTimeStepLiveDataSetsMain(uI_Results.v_area);
 }
 
