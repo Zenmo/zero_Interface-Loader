@@ -982,78 +982,81 @@ List<GridConnection> generic_company_GCs = new ArrayList();
 
 for (Building_data genericCompany : c_GenericCompanyBuilding_data) {
 
-	//Create new companyGC
-	GCUtility companyGC = energyModel.add_UtilityConnections();
-	
-	//Update counter and collection	 
-	v_numberOfCompaniesNoSurvey++;
-	generic_company_GCs.add(companyGC);
-	
-	//Set parameters for the Grid Connection
-	companyGC.p_gridConnectionID = genericCompany.address_id();
-	
-	// Check that is needed until connectioncapacity is no longer in 'Panden' excel
-	if (genericCompany.contracted_capacity_kw() == null || genericCompany.contracted_capacity_kw() <= 0) {
-		companyGC.p_physicalConnectionCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
-		companyGC.p_contractedDeliveryCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
-		companyGC.p_contractedFeedinCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
-	}
-	else{
-		companyGC.p_contractedDeliveryCapacity_kW = genericCompany.contracted_capacity_kw();
-		companyGC.p_contractedFeedinCapacity_kW = companyGC.p_contractedDeliveryCapacity_kW;
-		companyGC.p_physicalConnectionCapacity_kW = companyGC.p_contractedDeliveryCapacity_kW;
-	}
-	
-	companyGC.b_isRealDeliveryCapacityAvailable = false;
-	companyGC.b_isRealFeedinCapacityAvailable = false;
+	if( genericCompany.purpose() != null){
 
-	companyGC.p_heatingType = avgc_data.p_avgCompanyHeatingMethod; // Assuming all avg companies have GASBURNER.
-	
-	
-	//set GC Adress
-	companyGC.p_address = new J_Address();
-	companyGC.p_address.setStreetName(genericCompany.streetname());
-	if (genericCompany.house_number() == null) {
-		companyGC.p_address.setHouseNumber(0);
-	}
-	else {
-		companyGC.p_address.setHouseNumber(genericCompany.house_number());
-	}
-	companyGC.p_address.setHouseLetter(genericCompany.house_letter());
-	companyGC.p_address.setHouseAddition(genericCompany.house_addition());
-	companyGC.p_address.setPostalcode(genericCompany.postalcode());
-	companyGC.p_address.setCity(genericCompany.city());
-	
-	
-	//Set location of GC
- 	companyGC.p_latitude = genericCompany.latitude(); 
- 	companyGC.p_longitude = genericCompany.longitude();
- 	companyGC.setLatLon(companyGC.p_latitude, companyGC.p_longitude);  
- 	
- 	
-	//Connect GC to grid node
-	companyGC.p_parentNodeElectricID = genericCompany.trafo_id ();
-	
-	// Create new actor and assign GC to that
-	ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
+		//Create new companyGC
+		GCUtility companyGC = energyModel.add_UtilityConnections();
 		
-	COC.p_actorID = genericCompany.address_id();
-	COC.p_actorType = OL_ActorType.CONNECTIONOWNER;
-	COC.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
-	COC.p_detailedCompany = false;
+		//Update counter and collection	 
+		v_numberOfCompaniesNoSurvey++;
+		generic_company_GCs.add(companyGC);
+		
+		//Set parameters for the Grid Connection
+		companyGC.p_gridConnectionID = genericCompany.address_id();
+		
+		// Check that is needed until connectioncapacity is no longer in 'Panden' excel
+		if (genericCompany.contracted_capacity_kw() == null || genericCompany.contracted_capacity_kw() <= 0) {
+			companyGC.p_physicalConnectionCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
+			companyGC.p_contractedDeliveryCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
+			companyGC.p_contractedFeedinCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
+		}
+		else{
+			companyGC.p_contractedDeliveryCapacity_kW = genericCompany.contracted_capacity_kw();
+			companyGC.p_contractedFeedinCapacity_kW = companyGC.p_contractedDeliveryCapacity_kW;
+			companyGC.p_physicalConnectionCapacity_kW = companyGC.p_contractedDeliveryCapacity_kW;
+		}
+		
+		companyGC.b_isRealDeliveryCapacityAvailable = false;
+		companyGC.b_isRealFeedinCapacityAvailable = false;
 	
-	companyGC.p_owner = COC;
-	companyGC.p_ownerID = COC.p_actorID;
-	
-	
-	//Create GIS object and connect
-	GIS_Building b = f_createGISBuilding( genericCompany, companyGC );
-	v_totalFloorAreaAnonymousCompanies_m2 += b.p_floorSurfaceArea_m2;
-	
-	//Style building
-	b.p_defaultFillColor = zero_Interface.v_companyBuildingColor;
-	b.p_defaultLineColor = zero_Interface.v_companyBuildingLineColor;
-	zero_Interface.f_styleAreas(b);
+		companyGC.p_heatingType = avgc_data.p_avgCompanyHeatingMethod; // Assuming all avg companies have GASBURNER.
+		
+		
+		//set GC Adress
+		companyGC.p_address = new J_Address();
+		companyGC.p_address.setStreetName(genericCompany.streetname());
+		if (genericCompany.house_number() == null) {
+			companyGC.p_address.setHouseNumber(0);
+		}
+		else {
+			companyGC.p_address.setHouseNumber(genericCompany.house_number());
+		}
+		companyGC.p_address.setHouseLetter(genericCompany.house_letter());
+		companyGC.p_address.setHouseAddition(genericCompany.house_addition());
+		companyGC.p_address.setPostalcode(genericCompany.postalcode());
+		companyGC.p_address.setCity(genericCompany.city());
+		
+		
+		//Set location of GC
+	 	companyGC.p_latitude = genericCompany.latitude(); 
+	 	companyGC.p_longitude = genericCompany.longitude();
+	 	companyGC.setLatLon(companyGC.p_latitude, companyGC.p_longitude);  
+	 	
+	 	
+		//Connect GC to grid node
+		companyGC.p_parentNodeElectricID = genericCompany.trafo_id ();
+		
+		// Create new actor and assign GC to that
+		ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
+			
+		COC.p_actorID = genericCompany.address_id();
+		COC.p_actorType = OL_ActorType.CONNECTIONOWNER;
+		COC.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
+		COC.p_detailedCompany = false;
+		
+		companyGC.p_owner = COC;
+		companyGC.p_ownerID = COC.p_actorID;
+		
+		
+		//Create GIS object and connect
+		GIS_Building b = f_createGISBuilding( genericCompany, companyGC );
+		v_totalFloorAreaAnonymousCompanies_m2 += b.p_floorSurfaceArea_m2;
+		
+		//Style building
+		b.p_defaultFillColor = zero_Interface.v_companyBuildingColor;
+		b.p_defaultLineColor = zero_Interface.v_companyBuildingLineColor;
+		zero_Interface.f_styleAreas(b);
+	}
 }
 
 //Amount of generic companies created
@@ -1624,10 +1627,7 @@ List<com.zenmo.zummon.companysurvey.Survey> f_getSurveys()
 {/*ALCODESTART::1726584205819*/
 //Connect with API to database
 Vallum vallum = new Vallum(user.PROJECT_CLIENT_ID(), user.PROJECT_CLIENT_SECRET());
-
-
 List<com.zenmo.zummon.companysurvey.Survey> surveys = new ArrayList();
-
 
 String[] zorm_project_names;
 if(project_data.zorm_project_names() != null){

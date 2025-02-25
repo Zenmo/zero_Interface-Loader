@@ -257,6 +257,10 @@
 				<Id>1737714961123</Id>
 				<Name><![CDATA[ListUtil]]></Name>
 			</JavaClass>
+			<JavaClass>
+				<Id>1740428317689</Id>
+				<Name><![CDATA[MSRegion_data]]></Name>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>
@@ -287,11 +291,11 @@
 		<ClassPathEntry>
 			<ResourceReference>
 				<PackageName>zerointerfaceloader</PackageName>
-				<ClassName>vallum-main-661-e8cb2e6-all.jar</ClassName>
+				<ClassName>vallum-production-673-2a2ee50-all.jar</ClassName>
 			</ResourceReference>
 			<Imported>true</Imported>
 			<Folder>false</Folder>
 		</ClassPathEntry>
-		<CloudModelUuid>ef56800d-21f5-4d5c-87b7-60ca98f451d3</CloudModelUuid>
+		<CloudModelUuid>15c29193-aefe-40c1-a2e0-46cb6bccc0e7</CloudModelUuid>
 	</Model>
 </AnyLogicWorkspace>
