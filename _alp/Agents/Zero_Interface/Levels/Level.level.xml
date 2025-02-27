@@ -4373,8 +4373,11 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 	}
 	else {
 		c_selectedGridConnections = c_selectedObjects.get(0).c_containedGridConnections;
+		
 	}
-	uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+	
+	//Update the resultsUI
+	f_updateUIResultsData();
 	
 	//Set dashboard UI button
 	f_setUIButton();
@@ -4414,7 +4417,9 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 	else {
 		c_selectedGridConnections = c_selectedObjects.get(0).c_containedGridConnections;
 	}
-	uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+	
+	//Update the resultsUI
+	f_updateUIResultsData();
 	
 	//Set dashboard UI button
 	f_setUIButton();
@@ -4971,13 +4976,16 @@ new Thread( () -&gt; {
 	
 	//After rapid run: remove loading screen
 	gr_loadIconSmall.setVisible(false);
+		
 	
-	//Update main area collection
-	uI_Results.f_updateUIresultsMainArea();
-	
-	//Update selected GC area collection
-	if (c_selectedGridConnections.size() &gt; 0){
-		uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+	if (c_selectedGridConnections.size() == 0){//Update main area collection
+		uI_Results.f_updateUIresultsMainArea();
+	}
+	else if (c_selectedGridConnections.size() == 1){//Update selected GC area collection
+		uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections.get(0));
+	}
+	else if(c_selectedGridConnections.size() &gt; 1){//Update COOP area collection
+		uI_Results.f_updateUIresultsEnergyCoop(uI_Results.v_energyCoop, v_customEnergyCoop);
 	}
 	
 	//No longer needed, because during simulation view is always on live. If not: enable!
@@ -5901,4 +5909,34 @@ if(!cb_showFilterInterface.isSelected()){
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
+	<Control Type="CheckBox">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1740670519131</Id>
+		<Name><![CDATA[cb_EhubConfig]]></Name>
+		<X>30</X>
+		<Y>420</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<BasicProperties Width="160" Height="30">
+			<EmbeddedIcon>false</EmbeddedIcon>
+			<TextColor/>
+			<Enabled>true</Enabled>
+			<ActionCode>if(cb_EhubConfig.isSelected()){
+uI_Results.getRadioButtons().setValue(2, true);
+}
+</ActionCode>
+		</BasicProperties>
+		<ExtendedProperties>
+			<Font Name="Dialog" Size="11" Style="0"/>
+			<LabelText>EHUB CONFIG TEST</LabelText>
+			<LinkTo>true</LinkTo>
+			<Link>uI_Results.b_EHubConfiguration</Link>
+		</ExtendedProperties>
+	</Control>
 </Presentation>

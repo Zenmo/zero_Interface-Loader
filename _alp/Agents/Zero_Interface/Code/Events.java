@@ -18,7 +18,7 @@ if ( b_updateCongestionColors ){
 
 // Update the live plot dataset of gcList
 if (c_selectedGridConnections.size() == 1) {
-	uI_Results.f_addTimeStepLiveDataSetsGC(uI_Results.v_gridConnection, c_selectedGridConnections);
+	uI_Results.f_addTimeStepLiveDataSetsGC(uI_Results.v_gridConnection, c_selectedGridConnections.get(0));
 }
 else if (v_customEnergyCoop != null){
 	uI_Results.f_addTimeStepLiveDataSetsEnergyCoop(uI_Results.v_energyCoop, v_customEnergyCoop);

@@ -1015,7 +1015,7 @@ v_clickedObjectDetails = "No detaild info of charger available";
 
 //v_clickedGridConnection = charger;
 c_selectedGridConnections = new ArrayList<GridConnection>(Arrays.asList(charger));
-uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections.get(0));
 
 //Set the UI button
 f_setUIButton();
@@ -1066,7 +1066,7 @@ if(c_selectedGridConnections.size()>1){
 }
 else{
 	uI_Results.v_selectedObjectType = OL_GISObjectType.BUILDING;
-	uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+	uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections.get(0));
 }
 
 /*ALCODEEND*/}
@@ -1492,7 +1492,7 @@ else{//Filtered GC returns GC
 	}
 	else{
 		uI_Results.v_selectedObjectType = OL_GISObjectType.BUILDING;
-		uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+		uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections.get(0));
 	}			
 	uI_Results.f_showCorrectChart();
 }
