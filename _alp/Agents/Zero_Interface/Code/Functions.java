@@ -581,7 +581,7 @@ gr_simulateYearScreenSmall.setVisible(true);
 
 // Switch to the live plots and do not allow the user to switch away from the live plot when the year is not yet simulated
 f_enableLivePlotsOnly(uI_Results);
-uI_Results.f_updateActiveAssetBooleans(b_multiSelect, c_selectedGridConnections);
+uI_Results.f_updateActiveAssetBooleans(c_selectedGridConnections);
 
 //Set simulation and live graph for companyUIs as well!
 for(UI_company companyUI : c_companyUIs){
@@ -1069,47 +1069,6 @@ else{
 	uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
 }
 
-/*ALCODEEND*/}
-
-double f_multiSelect(double clickx,double clicky)
-{/*ALCODESTART::1721290570561*/
-// TODO: if selected object was a trafo before enabling this deselect it?
-
-//Check if click was on Building
-for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
-	if( b.gisRegion != null && b.gisRegion.contains(clickx, clicky) ){
-		if (b.gisRegion.isVisible()) {
-			for (GridConnection GC : b.c_containedGridConnections) {
-				if (GC != null) {
-					if (c_selectedGridConnections.contains(GC)) {
-						c_selectedGridConnections.remove(GC);
-						for (GIS_Object a : GC.c_connectedGISObjects) {
-							f_styleAreas(a);
-						}
-					}
-					else {
-						c_selectedGridConnections.add(GC);
-						for (GIS_Object a : GC.c_connectedGISObjects) {
-							a.gisRegion.setFillColor(v_selectionColorAddBuildings);
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
-if (c_selectedGridConnections.size() > 0) {
-	uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
-	uI_Results.v_selectedObjectType = OL_GISObjectType.BUILDING;
-	if (p_selectedProjectType == OL_ProjectType.BUSINESSPARK) {
-		uI_Results.f_fillAreaCollectionsOfIndividualGCs(c_selectedGridConnections);
-	}
-}
-else {
-	uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
-}
-uI_Results.f_showCorrectChart();
 /*ALCODEEND*/}
 
 double f_setGridTopologyColors()
@@ -1875,7 +1834,6 @@ else {
 double f_resetEHubConfigurationButton()
 {/*ALCODESTART::1736425024533*/
 v_clickedObjectText = "None";
-b_EHubSelect = false;
 uI_Results.b_EHubConfiguration = false;
 uI_Tabs.pop_tabEHub.get(0).cb_EHubSelect.setSelected(false);
 uI_Tabs.pop_tabEHub.get(0).t_baseGroepInfo.setText("Selecteer minimaal twee panden");

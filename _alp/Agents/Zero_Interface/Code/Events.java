@@ -19,19 +19,6 @@ if ( b_updateCongestionColors ){
 // Update the live plot dataset of gcList
 if (c_selectedGridConnections.size() == 1) {
 	uI_Results.f_addTimeStepLiveDataSetsGC(uI_Results.v_gridConnection, c_selectedGridConnections);
-	
-	if (p_selectedProjectType == OL_ProjectType.BUSINESSPARK) {
-		if (( b_multiSelect || b_EHubSelect ) && c_selectedGridConnections.size() >= 1 && uI_Results.c_individualGridConnections.size() > 0) {
-			for (int i = 0; i < c_selectedGridConnections.size(); i++) {
-				uI_Results.f_addTimeStepLiveDataSetsGC(uI_Results.c_individualGridConnections.get(i), new ArrayList<GridConnection>(c_selectedGridConnections.subList(i, i+1)));
-			}
-			//f_addTimeStepTotalLiveDataSets();
-			
-			if (b_EHubSelect) {
-				uI_Results.f_updateLiveEHubCapacityDataSets(c_selectedGridConnections);
-			}
-		}
-	}
 }
 else if (v_customEnergyCoop != null){
 	uI_Results.f_addTimeStepLiveDataSetsEnergyCoop(uI_Results.v_energyCoop, v_customEnergyCoop);

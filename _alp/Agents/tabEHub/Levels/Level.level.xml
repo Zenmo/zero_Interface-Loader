@@ -535,7 +535,32 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<TextColor/>
 					<VisibleCode>cb_EHubSelect.isEnabled()</VisibleCode>
 					<Enabled>false</Enabled>
-					<ActionCode>if (!cb_EHubSelect.isSelected()) {
+					<ActionCode>////Reset view
+
+//After a click, reset previous clicked building/gridNode colors and text
+zero_Interface.v_previousClickedObjectType = zero_Interface.v_clickedObjectType;
+zero_Interface.c_previousSelectedObjects = new ArrayList&lt;GIS_Object&gt;(zero_Interface.c_selectedObjects);
+ArrayList&lt;GIS_Object&gt; buildingsConnectedToSelectedBuildingsList = new ArrayList&lt;&gt;();
+zero_Interface.c_selectedGridConnections.clear();
+zero_Interface.c_selectedObjects.clear();
+
+//Deselect previous selection
+if( zero_Interface.v_previousClickedObjectType != null){
+	zero_Interface.f_deselectPreviousSelect();
+}
+
+//Still no clicked object? :select basic region
+zero_Interface.v_clickedObjectType = OL_GISObjectType.REGION;
+zero_Interface.uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
+zero_Interface.uI_Results.f_showCorrectChart();
+
+
+if (cb_EHubSelect.isSelected()) {
+	zero_Interface.cb_showFilterInterface.setSelected(true);
+}
+
+/*
+if (!cb_EHubSelect.isSelected()) {
 	zero_Interface.b_EHubSelect = false;
 	zero_Interface.uI_Results.b_EHubConfiguration = false;
 	zero_Interface.v_clickedObjectText = "None";
@@ -582,10 +607,6 @@ else{
 	//Disable the KPI summary (button)
 	zero_Interface.uI_Results.getCheckbox_KPISummary().setSelected(false, true);
 	zero_Interface.uI_Results.getCheckbox_KPISummary().setEnabled(false);
-	
-	// Reset multi-select
-	zero_Interface.b_multiSelect = false;
-	zero_Interface.getMultiSelect().setSelected(false);
 }
 
 
@@ -595,7 +616,7 @@ zero_Interface.uI_Results.f_EHubCapacityDataSets(zero_Interface.c_selectedGridCo
 
 zero_Interface.uI_Results.f_showCorrectChart();
 
-</ActionCode>
+*/</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="14" Style="0"/>
