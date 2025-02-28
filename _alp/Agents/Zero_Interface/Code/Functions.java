@@ -1834,7 +1834,7 @@ else {
 double f_resetEHubConfigurationButton()
 {/*ALCODESTART::1736425024533*/
 v_clickedObjectText = "None";
-uI_Results.b_EHubConfiguration = false;
+uI_Results.b_showGroupContractValues = false;
 uI_Tabs.pop_tabEHub.get(0).cb_EHubSelect.setSelected(false);
 uI_Tabs.pop_tabEHub.get(0).t_baseGroepInfo.setText("Selecteer minimaal twee panden");
 uI_Tabs.pop_tabEHub.get(0).t_groepsGTV_kW.setText("");

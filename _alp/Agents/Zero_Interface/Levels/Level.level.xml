@@ -5923,20 +5923,29 @@ if(!cb_showFilterInterface.isSelected()){
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="160" Height="30">
+		<BasicProperties Width="210" Height="30">
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor/>
+			<VisibleCode>v_customEnergyCoop != null</VisibleCode>
 			<Enabled>true</Enabled>
 			<ActionCode>if(cb_EhubConfig.isSelected()){
-uI_Results.getRadioButtons().setValue(2, true);
+	uI_Results.v_selectedChartType = OL_ChartTypes.GESPREKSLEIDRAAD_SAMENVATTING;
+	uI_Results.f_showCorrectChart();
+	uI_Results.getRadioButtons().setValue(100, false);
+	uI_Results.chartGespreksleidraadBedrijven.getRb_gespreksleidraadBedrijvenChartType().setValue(2, true);
 }
-</ActionCode>
+else{
+	if(uI_Results.getRadioButtons().getValue() == 100){
+		uI_Results.getRadioButtons().setValue(0, true);
+	}
+	uI_Results.f_showCorrectChart();
+}</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
 			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText>EHUB CONFIG TEST</LabelText>
+			<LabelText>EHUB VISUALIZATION TEST</LabelText>
 			<LinkTo>true</LinkTo>
-			<Link>uI_Results.b_EHubConfiguration</Link>
+			<Link>uI_Results.b_showGroupContractValues</Link>
 		</ExtendedProperties>
 	</Control>
 </Presentation>
