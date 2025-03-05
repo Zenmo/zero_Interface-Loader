@@ -1547,7 +1547,7 @@ for (var survey : surveys) {
 				}
 			} else {
 				traceln("Survey %s has no building in zorm", survey.getId());
-				buildings = findAll(c_SurveyCompanyBuilding_data, b -> b.gc_id().equals(companyGC.p_gridConnectionID));
+				buildings = findAll(c_SurveyCompanyBuilding_data, b -> b.gc_id() != null && b.gc_id().equals(companyGC.p_gridConnectionID));
 				if(buildings == null){
 					traceln("Survey %s has also no manual connection with building in excel", survey.getId());
 				}
