@@ -148,7 +148,7 @@ for (GridNode_data GN_data : c_GridNode_data) {
 				GISRegion serviceArea = zero_Interface.f_createGISObject(f_createGISObjectsTokens(GN_data.service_area_polygon(), OL_GISObjectType.GN_SERVICE_AREA));
 				
 				//Add to hashmap
-				zero_Interface.c_GISNetplanes.put(GN.p_gridNodeID, serviceArea );
+				zero_Interface.c_GISNetplanes.add( serviceArea );
 			}
 		}
 	}
@@ -982,7 +982,7 @@ List<GridConnection> generic_company_GCs = new ArrayList();
 
 for (Building_data genericCompany : c_GenericCompanyBuilding_data) {
 
-	if( genericCompany.purpose() != null){
+	if( genericCompany.purpose() != null ){
 
 		//Create new companyGC
 		GCUtility companyGC = energyModel.add_UtilityConnections();
@@ -1416,14 +1416,11 @@ return area;
 double f_addEnergyAssetsToHouses(GCHouse house,double jaarlijksGasVerbruik,double jaarlijksElectriciteitsVerbruik)
 {/*ALCODESTART::1726584205813*/
 //Add generic electricity demand profile 
-f_addElectricityDemandProfile(house, jaarlijksElectriciteitsVerbruik, null, false, "House_other_electricity");
+f_addElectricityDemandProfile(house, jaarlijksElectriciteitsVerbruik, null, false, "house_other_electricity_demand");
 
 //Woonwijk specifiek
-
 if (project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 	f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2, C);
-	
-	//temporary hardcode household gasburner initialisatie (should be seperate function).
 	house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
 	J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(house, 20, 0.99, energyModel.p_timeStep_h, 90);
 	
@@ -1437,11 +1434,11 @@ if( randomTrue ( 0.1 )){
 	f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW );
 }
 
-if (randomTrue( 0.05)){
-	//f_addElectricVehicle(house, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, 0, 0);
+if (randomTrue( 0.8)){
+	f_addElectricVehicle(house, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, 0, 0);
 }
 else{
-	//f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
+	f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
 }
 
 /*ALCODEEND*/}
@@ -1661,14 +1658,14 @@ if(gridConnection.getHeat().getHeatingTypes().size() == 0){
 		//if (gridConnection.getNaturalGas().getAnnualDelivery_m3() > 0) {
 			companyGC.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;// None for now.
 			companyGC.c_heatingTypes.add(OL_GridConnectionHeatingType.GASBURNER);
-			traceln("Gas consumption detected for '" + companyGC.p_ownerID + "', setting heating type to GASBURNER");			
+			//traceln("Gas consumption detected for '" + companyGC.p_ownerID + "', setting heating type to GASBURNER");			
 		/*} else {
 			companyGC.p_heatingType = OL_GridConnectionHeatingType.NONE;// None for now.
 			traceln("no or incorrect heating type detected for '" + companyGC.p_ownerID + "'");
 		}*/
 	} else {
 		companyGC.p_heatingType = OL_GridConnectionHeatingType.NONE;// None for now.
-		traceln("no heating type in surveydata, and no gas consumption detected for: '" + companyGC.p_ownerID + "'");
+		//traceln("no heating type in surveydata, and no gas consumption detected for: '" + companyGC.p_ownerID + "'");
 	}
 }		
 
@@ -2973,6 +2970,7 @@ f_createRemainingBuildings();
 
 //Cables
 f_createGISCables();
+
 /*ALCODEEND*/}
 
 double f_overwriteSpecificDatabaseValues()

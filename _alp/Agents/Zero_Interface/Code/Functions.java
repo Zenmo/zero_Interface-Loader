@@ -801,6 +801,7 @@ map.setCenterLongitude(map_centre_longitude);
 if(map_scale != null){
 	map.setMapScale(map_scale);
 }
+map.zoomOut();
 
 va_Interface.navigateTo();
 /*ALCODEEND*/}

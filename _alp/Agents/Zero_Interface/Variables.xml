@@ -463,7 +463,7 @@
               StaticVariable="false">
 			<Type><![CDATA[Color]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new Color(154, 208, 194)]]></Code>
+				<Code><![CDATA[whiteSmoke]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -1583,7 +1583,7 @@
               StaticVariable="false">
 			<Type><![CDATA[Color]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[black]]></Code>
+				<Code><![CDATA[gray]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2466,8 +2466,8 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>String</ElementClass>
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>GISRegion</ElementClass>
 			<ValueElementClass>GISRegion</ValueElementClass>
 		</Properties>
 	</Variable>
