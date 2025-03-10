@@ -80,7 +80,7 @@ if( v_previousClickedObjectType != null){
 for ( GridNode GN : energyModel.pop_gridNodes ){
 	if( GN.gisRegion != null && GN.gisRegion.contains(clickx, clicky) && GN.gisRegion.isVisible() ){
 		f_selectGridNode(GN);
-		uI_Results.v_selectedObjectType = OL_GISObjectType.GRIDNODE;
+		uI_Results.v_selectedObjectScope = OL_GISObjectType.GRIDNODE;
 		uI_Results.f_showCorrectChart();
 		return;
 	}
@@ -130,7 +130,7 @@ for ( GIS_Object GISobject : energyModel.pop_GIS_Objects ){
 					break;
 				}
 				
-				uI_Results.v_selectedObjectType = v_clickedObjectType;				
+				uI_Results.v_selectedObjectScope = v_clickedObjectType;				
 				uI_Results.f_showCorrectChart();
 				return;
 			}
@@ -140,7 +140,7 @@ for ( GIS_Object GISobject : energyModel.pop_GIS_Objects ){
 
 //Still no clicked object? :select basic region
 v_clickedObjectType = OL_GISObjectType.REGION;
-uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
+uI_Results.v_selectedObjectScope = OL_GISObjectType.REGION;
 uI_Results.f_showCorrectChart();
 
 //Enable kpi summary button
@@ -1061,11 +1061,11 @@ for (GridConnection gc : c_selectedObjects.get(0).c_containedGridConnections) {
 
 if(c_selectedGridConnections.size()>1){
 	v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections);
-	uI_Results.v_selectedObjectType = OL_GISObjectType.COOP;
+	uI_Results.v_selectedObjectScope = OL_GISObjectType.COOP;
 	uI_Results.f_updateUIresultsEnergyCoop(uI_Results.v_energyCoop, v_customEnergyCoop);
 }
 else{
-	uI_Results.v_selectedObjectType = OL_GISObjectType.BUILDING;
+	uI_Results.v_selectedObjectScope = OL_GISObjectType.BUILDING;
 	uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections.get(0));
 }
 
@@ -1485,13 +1485,13 @@ else{//Filtered GC returns GC
 	//Set graphs	
 	if(c_selectedGridConnections.size()>1){
 		v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections);
-		uI_Results.v_selectedObjectType = OL_GISObjectType.COOP;
+		uI_Results.v_selectedObjectScope = OL_GISObjectType.COOP;
 		uI_Results.f_updateUIresultsEnergyCoop(uI_Results.v_energyCoop, v_customEnergyCoop);
 		traceln("COOP created in filter");
 		traceln(v_customEnergyCoop);
 	}
 	else{
-		uI_Results.v_selectedObjectType = OL_GISObjectType.BUILDING;
+		uI_Results.v_selectedObjectScope = OL_GISObjectType.BUILDING;
 		uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections.get(0));
 	}			
 	uI_Results.f_showCorrectChart();
@@ -1565,7 +1565,7 @@ v_selectedGridLoop = null;
 v_selectedNeighborhood = null;
 
 v_clickedObjectType = OL_GISObjectType.REGION;
-uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
+uI_Results.v_selectedObjectScope = OL_GISObjectType.REGION;
 uI_Results.f_showCorrectChart();
 
 traceln("Alle filters zijn verwijderd.");

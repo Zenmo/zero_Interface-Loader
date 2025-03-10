@@ -551,7 +551,7 @@ if( zero_Interface.v_previousClickedObjectType != null){
 
 //Still no clicked object? :select basic region
 zero_Interface.v_clickedObjectType = OL_GISObjectType.REGION;
-zero_Interface.uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
+zero_Interface.uI_Results.v_selectedObjectScope = OL_GISObjectType.REGION;
 zero_Interface.uI_Results.f_showCorrectChart();
 
 

@@ -3353,7 +3353,7 @@ traceln( v_themeColor.getRGB() );</ActionCode>
 		
 		//Connect resultsUI of the main with resultsUI of CompanyUI
 		companyUI.f_copyResultsUI();	
-		companyUI.uI_Results.v_selectedObjectType = OL_GISObjectType.BUILDING;
+		companyUI.uI_Results.v_selectedObjectScope = OL_GISObjectType.BUILDING;
 
 		
 		//Set sliders to the correct GC if there are more than 1 GC
