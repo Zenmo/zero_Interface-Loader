@@ -80,8 +80,6 @@ if( v_previousClickedObjectType != null){
 for ( GridNode GN : energyModel.pop_gridNodes ){
 	if( GN.gisRegion != null && GN.gisRegion.contains(clickx, clicky) && GN.gisRegion.isVisible() ){
 		f_selectGridNode(GN);
-		uI_Results.v_selectedObjectScope = OL_GISObjectType.GRIDNODE;
-		uI_Results.f_showCorrectChart();
 		return;
 	}
 }
@@ -93,7 +91,6 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 			if (b.c_containedGridConnections.size() > 0 ) { // only allow buildings with gridconnections
 				buildingsConnectedToSelectedBuildingsList = b.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
 				f_selectBuilding(b, buildingsConnectedToSelectedBuildingsList);
-				uI_Results.f_showCorrectChart();
 				return;
 			}
 		}
@@ -129,9 +126,6 @@ for ( GIS_Object GISobject : energyModel.pop_GIS_Objects ){
 					f_selectBuilding(GISobject, buildingsConnectedToSelectedBuildingsList);		
 					break;
 				}
-				
-				uI_Results.v_selectedObjectScope = v_clickedObjectType;				
-				uI_Results.f_showCorrectChart();
 				return;
 			}
 		}
@@ -140,8 +134,7 @@ for ( GIS_Object GISobject : energyModel.pop_GIS_Objects ){
 
 //Still no clicked object? :select basic region
 v_clickedObjectType = OL_GISObjectType.REGION;
-uI_Results.v_selectedObjectScope = OL_GISObjectType.REGION;
-uI_Results.f_showCorrectChart();
+uI_Results.f_updateResultsUI(energyModel);
 
 //Enable kpi summary button
 uI_Results.getCheckbox_KPISummary().setEnabled(true);
@@ -371,7 +364,7 @@ for ( GridConnection GC : GN.f_getAllLowerLVLConnectedGridConnections()){
 	}
 }
 
-uI_Results.f_updateUIresultsGridNode(uI_Results.v_trafo, GN);
+uI_Results.f_updateUIresultsGridNode(GN);
 /*ALCODEEND*/}
 
 double f_selectBuilding(GIS_Object b,ArrayList<GIS_Object> buildingsConnectedToSelectedGC_list)
@@ -581,11 +574,11 @@ gr_simulateYearScreenSmall.setVisible(true);
 
 // Switch to the live plots and do not allow the user to switch away from the live plot when the year is not yet simulated
 f_enableLivePlotsOnly(uI_Results);
-uI_Results.f_updateActiveAssetBooleans(c_selectedGridConnections);
+energyModel.f_updateActiveAssetData(c_selectedGridConnections);
 
 //Set simulation and live graph for companyUIs as well!
 for(UI_company companyUI : c_companyUIs){
-	if(companyUI.uI_Results.v_gridConnection != null){
+	if(companyUI.uI_Results.f_getSelectedObjectData() != null){
 		f_enableLivePlotsOnly(companyUI.uI_Results);
 	}
 }
@@ -707,7 +700,7 @@ double f_setColorsBasedOnConsumpion(GIS_Object gis_area)
 {/*ALCODESTART::1715116336665*/
 if(gis_area.c_containedGridConnections.size() > 0){
 
-	double yearlyEnergyConsumption = sum( gis_area.c_containedGridConnections, x -> x.v_totalElectricityConsumed_MWh);
+	double yearlyEnergyConsumption = sum( gis_area.c_containedGridConnections, x -> x.v_rapidRunData.getTotalElectricityConsumed_MWh());
 	
 	if ( yearlyEnergyConsumption < 10){ gis_area.f_style( rect_tinyCosumption.getFillColor(), null, null, null);}
 	else if ( yearlyEnergyConsumption < 50){ gis_area.f_style( rect_smallCosumption.getFillColor(), null, null, null);}
@@ -1015,7 +1008,7 @@ v_clickedObjectDetails = "No detaild info of charger available";
 
 //v_clickedGridConnection = charger;
 c_selectedGridConnections = new ArrayList<GridConnection>(Arrays.asList(charger));
-uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections.get(0));
+uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
 
 //Set the UI button
 f_setUIButton();
@@ -1061,12 +1054,10 @@ for (GridConnection gc : c_selectedObjects.get(0).c_containedGridConnections) {
 
 if(c_selectedGridConnections.size()>1){
 	v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections);
-	uI_Results.v_selectedObjectScope = OL_GISObjectType.COOP;
-	uI_Results.f_updateUIresultsEnergyCoop(uI_Results.v_energyCoop, v_customEnergyCoop);
+	uI_Results.f_updateResultsUI(v_customEnergyCoop);
 }
 else{
-	uI_Results.v_selectedObjectScope = OL_GISObjectType.BUILDING;
-	uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections.get(0));
+	uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
 }
 
 /*ALCODEEND*/}
@@ -1485,16 +1476,13 @@ else{//Filtered GC returns GC
 	//Set graphs	
 	if(c_selectedGridConnections.size()>1){
 		v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections);
-		uI_Results.v_selectedObjectScope = OL_GISObjectType.COOP;
-		uI_Results.f_updateUIresultsEnergyCoop(uI_Results.v_energyCoop, v_customEnergyCoop);
+		uI_Results.f_updateResultsUI(v_customEnergyCoop);
 		traceln("COOP created in filter");
 		traceln(v_customEnergyCoop);
 	}
 	else{
-		uI_Results.v_selectedObjectScope = OL_GISObjectType.BUILDING;
-		uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections.get(0));
+		uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
 	}			
-	uI_Results.f_showCorrectChart();
 }
 /*ALCODEEND*/}
 
@@ -1565,8 +1553,7 @@ v_selectedGridLoop = null;
 v_selectedNeighborhood = null;
 
 v_clickedObjectType = OL_GISObjectType.REGION;
-uI_Results.v_selectedObjectScope = OL_GISObjectType.REGION;
-uI_Results.f_showCorrectChart();
+uI_Results.f_updateResultsUI(energyModel);
 
 traceln("Alle filters zijn verwijderd.");
 /*ALCODEEND*/}
@@ -1979,6 +1966,6 @@ if(resultsUI.getGr_resultsUIHeader().isVisible()){
 	resultsUI.getRadioButtons().setValue(0, true);
 }
 resultsUI.chartProfielen.getPeriodRadioButton().setValue(0, true);
-resultsUI.f_setNonLivePlotRadioButtons(false);
+resultsUI.f_enableNonLivePlotRadioButtons(false);
 /*ALCODEEND*/}
 

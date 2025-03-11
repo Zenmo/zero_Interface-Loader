@@ -551,8 +551,7 @@ if( zero_Interface.v_previousClickedObjectType != null){
 
 //Still no clicked object? :select basic region
 zero_Interface.v_clickedObjectType = OL_GISObjectType.REGION;
-zero_Interface.uI_Results.v_selectedObjectScope = OL_GISObjectType.REGION;
-zero_Interface.uI_Results.f_showCorrectChart();
+zero_Interface.uI_Results.f_updateResultsUI(zero_Interface.energyModel);
 
 
 if (cb_EHubSelect.isSelected()) {

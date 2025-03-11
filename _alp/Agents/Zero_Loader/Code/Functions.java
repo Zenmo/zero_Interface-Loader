@@ -2722,17 +2722,8 @@ traceln(" ");
 //Simulate full year simulation for initial KPIs
 if( settings.runHeadlessAtStartup() ){
 	energyModel.f_runRapidSimulation(); // Do a full year run to have KPIs right away!
-	zero_Interface.uI_Results.f_updateUIresultsMainArea();
 	zero_Interface.gr_simulateYearScreenSmall.setVisible(false);
 	zero_Interface.gr_loadIconSmall.setVisible(false);
-	if (energyModel.UtilityConnections.size() > 0) {
-		//zero_Interface.f_updateUIresultsGridConnection( zero_Interface.uI_Results.v_gridConnection, energyModel.UtilityConnections.get(0));
-	}
-	zero_Interface.uI_Results.f_updateUIresultsGridNode( zero_Interface.uI_Results.v_trafo, energyModel.pop_gridNodes.get(0));
-	if (energyModel.pop_energyCoops.size()>0) {
-		zero_Interface.uI_Results.f_updateUIresultsEnergyCoop( zero_Interface.uI_Results.v_energyCoop, energyModel.pop_energyCoops.get(0));
-	}
-	zero_Interface.f_calculateGTOConnectionCapacities();
 	zero_Interface.b_resultsUpToDate = true;
 }
 else {

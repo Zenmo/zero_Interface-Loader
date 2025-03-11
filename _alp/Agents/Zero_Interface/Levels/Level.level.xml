@@ -3352,8 +3352,7 @@ traceln( v_themeColor.getRGB() );</ActionCode>
 		UI_company companyUI = c_companyUIs.get(v_connectionOwnerIndexNr);
 		
 		//Connect resultsUI of the main with resultsUI of CompanyUI
-		companyUI.f_copyResultsUI();	
-		companyUI.uI_Results.v_selectedObjectScope = OL_GISObjectType.BUILDING;
+		companyUI.f_updateUIResultsCompanyUI();	
 
 		
 		//Set sliders to the correct GC if there are more than 1 GC
@@ -4968,28 +4967,21 @@ gr_loadIconSmall.setVisible(true);
 		
 
 new Thread( () -&gt; {
-	//Save previous totals
-	uI_Results.f_updatePreviousTotalsGC();
-	
 	//Run rapid run
 	energyModel.f_runRapidSimulation();
 	
 	//After rapid run: remove loading screen
 	gr_loadIconSmall.setVisible(false);
 		
-	
 	if (c_selectedGridConnections.size() == 0){//Update main area collection
-		uI_Results.f_updateUIresultsMainArea();
+		uI_Results.f_updateResultsUI(energyModel);
 	}
 	else if (c_selectedGridConnections.size() == 1){//Update selected GC area collection
-		uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections.get(0));
+		uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
 	}
 	else if(c_selectedGridConnections.size() &gt; 1){//Update COOP area collection
-		uI_Results.f_updateUIresultsEnergyCoop(uI_Results.v_energyCoop, v_customEnergyCoop);
+		uI_Results.f_updateResultsUI(v_customEnergyCoop);
 	}
-	
-	//No longer needed, because during simulation view is always on live. If not: enable!
-	//uI_Results.f_showCorrectChart();
 	
 	//Update and show kpi summary chart after run
 	if(settings.showKPISummary() != null &amp;&amp; settings.showKPISummary() &amp;&amp; v_clickedObjectType != OL_GISObjectType.GRIDNODE){
@@ -4997,7 +4989,7 @@ new Thread( () -&gt; {
 	}
 	
 	//Enable radio buttons again
-	uI_Results.f_setNonLivePlotRadioButtons(true);
+	uI_Results.f_enableNonLivePlotRadioButtons(true);
 	
 	b_resultsUpToDate = true;
 }).start();

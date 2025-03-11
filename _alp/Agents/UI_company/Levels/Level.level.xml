@@ -3042,11 +3042,8 @@ gr_loadIcon.setVisible(true);
 
 //Run simulation
 new Thread( () -&gt; {	
-	//Save previous totals
-	zero_Interface.uI_Results.f_updatePreviousTotalsGC();
-
 	zero_Interface.energyModel.f_runRapidSimulation();
-	zero_Interface.uI_Results.f_updateUIresultsMainArea();
+	zero_Interface.uI_Results.f_updateResultsUI(zero_Interface.energyModel);
 	f_setSelectedGCGraphs();
 	gr_loadIcon.setVisible(false);
 	
@@ -3056,10 +3053,10 @@ new Thread( () -&gt; {
 	}
 	
 	//Update results up to date boolean
-	uI_Results.f_setNonLivePlotRadioButtons(true);
+	uI_Results.f_enableNonLivePlotRadioButtons(true);
 	zero_Interface.b_resultsUpToDate = true;
 	zero_Interface.gr_simulateYearScreenSmall.setVisible(false);
-	zero_Interface.uI_Results.f_setNonLivePlotRadioButtons(true);
+	zero_Interface.uI_Results.f_enableNonLivePlotRadioButtons(true);
 	
 }).start();
 

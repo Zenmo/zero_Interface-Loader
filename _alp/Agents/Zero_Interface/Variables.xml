@@ -1917,6 +1917,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1736425024539</Id>
 		<Name><![CDATA[v_groupATODeliveryCapacity_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1890</X>
 		<Y>1570</Y>
 		<Label>
@@ -1936,6 +1937,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1736425024541</Id>
 		<Name><![CDATA[v_groupATOFeedInCapacity_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1890</X>
 		<Y>1590</Y>
 		<Label>
@@ -1956,6 +1958,7 @@
 		<Id>1736425024543</Id>
 		<Name><![CDATA[v_GCGTOConnectionCapacities]]></Name>
 		<Description><![CDATA[Maps every gridconnection to the calculated contribution to a GTO (Groep Transport Overeenkomst). Delivery and FeedIn respectively.]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1900</X>
 		<Y>1490</Y>
 		<Label>

@@ -1175,6 +1175,7 @@
 		<Id>1736425024531</Id>
 		<Name><![CDATA[f_calculateGroupATOConnectionCapacity]]></Name>
 		<Description><![CDATA[This function returns the delivery and feed in capacity (in kW) that a group of gridconnections would get from the grid operator if they formed an energy hub.]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1870</X>
 		<Y>1550</Y>
 		<Label>
@@ -1236,6 +1237,7 @@
 		<Id>1736425024537</Id>
 		<Name><![CDATA[f_calculateGTOConnectionCapacities]]></Name>
 		<Description><![CDATA[Maps every gridconnection to the calculated contribution to a GTO (Groep Transport Overeenkomst). Delivery and FeedIn respectively.]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1880</X>
 		<Y>1470</Y>
 		<Label>

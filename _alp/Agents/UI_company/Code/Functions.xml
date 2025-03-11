@@ -445,7 +445,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1714656835269</Id>
-		<Name><![CDATA[f_copyResultsUI]]></Name>
+		<Name><![CDATA[f_updateUIResultsCompanyUI]]></Name>
 		<X>-1050</X>
 		<Y>1350</Y>
 		<Label>

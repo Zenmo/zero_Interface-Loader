@@ -1415,12 +1415,9 @@ if(!c_ownedGridConnections.get(v_currentSelectedGCnr).v_isActive){
 }
 /*ALCODEEND*/}
 
-double f_copyResultsUI()
+double f_updateUIResultsCompanyUI()
 {/*ALCODESTART::1714656835269*/
-//Copy results ui of main, to the results ui of company UI
-uI_Results.v_area = zero_Interface.uI_Results.v_area;
-uI_Results.v_gridConnection = zero_Interface.uI_Results.v_gridConnection;
-uI_Results.v_trafo = zero_Interface.uI_Results.v_trafo;
+uI_Results.f_updateResultsUI(c_ownedGridConnections.get(v_currentSelectedGCnr));
 /*ALCODEEND*/}
 
 double f_setHeatingRB()
@@ -1705,7 +1702,7 @@ zero_Interface.v_previousClickedObjectType = OL_GISObjectType.BUILDING;
 zero_Interface.c_selectedGridConnections.clear();
 zero_Interface.f_deselectPreviousSelect( );
 zero_Interface.f_selectBuilding(c_ownedGridConnections.get(v_currentSelectedGCnr).c_connectedGISObjects.get(0), c_ownedGridConnections.get(v_currentSelectedGCnr).c_connectedGISObjects);
-f_copyResultsUI();
+f_updateUIResultsCompanyUI();
 uI_Results.f_setAllCharts();
 /*ALCODEEND*/}
 
@@ -1717,7 +1714,6 @@ gr_simulateYearScreen.setVisible(true);
 zero_Interface.f_resetSettings();
 
 if(!b_runningMainInterfaceScenarioSettings && !b_runningMainInterfaceSlider){
-	uI_Results.v_gridConnection = zero_Interface.uI_Results.v_gridConnection;
 }
 /*ALCODEEND*/}
 
