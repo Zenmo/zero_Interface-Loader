@@ -5921,7 +5921,7 @@ if(!cb_showFilterInterface.isSelected()){
 			<VisibleCode>v_customEnergyCoop != null</VisibleCode>
 			<Enabled>true</Enabled>
 			<ActionCode>if(cb_EhubConfig.isSelected()){
-	uI_Results.v_selectedChartType = OL_ChartTypes.GESPREKSLEIDRAAD_SAMENVATTING;
+	uI_Results.v_selectedChartType = OL_ChartTypes.GESPREKSLEIDRAAD_BEDRIJVEN;
 	uI_Results.f_showCorrectChart();
 	uI_Results.getRadioButtons().setValue(100, false);
 	uI_Results.chartGespreksleidraadBedrijven.getRb_gespreksleidraadBedrijvenChartType().setValue(2, true);

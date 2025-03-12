@@ -2725,6 +2725,7 @@ if( settings.runHeadlessAtStartup() ){
 	zero_Interface.gr_simulateYearScreenSmall.setVisible(false);
 	zero_Interface.gr_loadIconSmall.setVisible(false);
 	zero_Interface.b_resultsUpToDate = true;
+	zero_Interface.uI_Results.f_enableNonLivePlotRadioButtons(true);
 }
 else {
 		zero_Interface.f_resetSettings();
