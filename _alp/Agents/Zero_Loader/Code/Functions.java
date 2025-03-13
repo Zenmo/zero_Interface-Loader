@@ -2460,9 +2460,9 @@ for (Building_data dataBuilding : scopedBuilding_data) {
 	company.p_heatingType = avgc_data.p_avgHouseHeatingMethod ;
 	company.p_floorSurfaceArea_m2 = dataBuilding.cumulative_floor_surface_m2();
 	//company.p_bouwjaar = dataBuilding.bouwjaar();
-	company.p_physicalConnectionCapacity_kW = 50; //// HARDCODED?????
-	company.p_contractedDeliveryCapacity_kW = 50; //// HARDCODED?????
-	company.p_contractedFeedinCapacity_kW = 50; //// HARDCODED?????
+	company.p_physicalConnectionCapacity_kW = 50.0; //// HARDCODED?????
+	company.p_contractedDeliveryCapacity_kW = 50.0; //// HARDCODED?????
+	company.p_contractedFeedinCapacity_kW = 50.0; //// HARDCODED?????
 	
 	//adres gegevens
 	company.p_address = new J_Address();
@@ -3085,9 +3085,9 @@ Double pvPower_kW = (gridConnection.getSupply().getPvInstalledKwp() != null) ? n
 
 ////Electricity (connection and consumption)
 //Initialize contract capacity with 0 for when companies fill in survey already but currently have no connection yet
-companyGC.p_contractedDeliveryCapacity_kW = 0;
-companyGC.p_contractedFeedinCapacity_kW = 0;
-companyGC.p_physicalConnectionCapacity_kW = 0;
+companyGC.p_contractedDeliveryCapacity_kW = 0.0;
+companyGC.p_contractedFeedinCapacity_kW = 0.0;
+companyGC.p_physicalConnectionCapacity_kW = 0.0;
 
 f_createDieselTractors(companyGC, gridConnection.getTransport().getAgriculture());
 
@@ -3115,14 +3115,14 @@ if (gridConnection.getElectricity().getHasConnection()){
 			companyGC.b_isRealDeliveryCapacityAvailable = true;
 		}
 		else{
-			companyGC.p_contractedDeliveryCapacity_kW = gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw(); //Contracted connection capacity
+			companyGC.p_contractedDeliveryCapacity_kW = ((double)gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw()); //Contracted connection capacity
 			companyGC.b_isRealDeliveryCapacityAvailable = false;
 		}
 		
 		
 		//Check if contract capacity feedin has been filled in: if not, make the same as contract delivery
 		if(gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw() != null && gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw() > 0){
-			companyGC.p_contractedFeedinCapacity_kW = gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw(); //Contracted connection capacity
+			companyGC.p_contractedFeedinCapacity_kW = ((double)gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw()); //Contracted connection capacity
 			companyGC.b_isRealFeedinCapacityAvailable = true;
 		}
 		else{
@@ -3130,14 +3130,14 @@ if (gridConnection.getElectricity().getHasConnection()){
 				companyGC.p_contractedFeedinCapacity_kW = pvPower_kW;
 			}
 			else{
-				companyGC.p_contractedFeedinCapacity_kW = 0;
+				companyGC.p_contractedFeedinCapacity_kW = 0.0;
 			}
 			companyGC.b_isRealFeedinCapacityAvailable = false;
 		}
 		
 		//Check if physical capacity has been filled in: if not, make the same as maximum of contract delivery and feedin
 		if(gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw() != null && gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw() > 0){
-			companyGC.p_physicalConnectionCapacity_kW = gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw(); //Contracted connection capacity
+			companyGC.p_physicalConnectionCapacity_kW = (double)gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw(); //Contracted connection capacity
 			companyGC.b_isRealPhysicalCapacityAvailable = true;
 		}
 		else{

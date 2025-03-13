@@ -177,7 +177,7 @@ else {
 			J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, installedPVCapacity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC, zero_Interface.energyModel.pp_solarPVproduction );
 			zero_Interface.c_orderedPVSystems.remove(house);
 			zero_Interface.c_orderedPVSystems.add(0, house);
-			zero_Interface.energyModel.v_totalInstalledPVPower_kW += installedPVCapacity_kW;
+			zero_Interface.energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW += installedPVCapacity_kW;
 			nbHousesWithPV ++;	
 		}
 	}
