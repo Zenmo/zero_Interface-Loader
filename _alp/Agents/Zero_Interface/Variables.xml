@@ -1887,7 +1887,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
               Constant="false"
-              AccessType="public"
+              AccessType="protected"
               StaticVariable="false">
 			<Type><![CDATA[GridNode]]></Type>
 		</Properties>
@@ -1993,7 +1993,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
               Constant="false"
-              AccessType="public"
+              AccessType="protected"
               StaticVariable="false">
 			<Type><![CDATA[boolean]]></Type>
 		</Properties>
@@ -2012,7 +2012,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
               Constant="false"
-              AccessType="public"
+              AccessType="protected"
               StaticVariable="false">
 			<Type><![CDATA[GIS_Object]]></Type>
 		</Properties>
@@ -2470,8 +2470,8 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>String</ElementClass>
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>GISRegion</ElementClass>
 			<ValueElementClass>GISRegion</ValueElementClass>
 		</Properties>
 	</Variable>
@@ -2559,7 +2559,7 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+		<Properties SaveInSnapshot="true" AccessType="protected" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>OL_FilterOptionsGC</ElementClass>
 			<ValueElementClass>String</ValueElementClass>

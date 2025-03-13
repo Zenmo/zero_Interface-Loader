@@ -148,7 +148,7 @@ for (GridNode_data GN_data : c_GridNode_data) {
 				GISRegion serviceArea = zero_Interface.f_createGISObject(f_createGISObjectsTokens(GN_data.service_area_polygon(), OL_GISObjectType.GN_SERVICE_AREA));
 				
 				//Add to hashmap
-				zero_Interface.c_GISNetplanes.put(GN.p_gridNodeID, serviceArea );
+				zero_Interface.c_GISNetplanes.add( serviceArea );
 			}
 		}
 	}

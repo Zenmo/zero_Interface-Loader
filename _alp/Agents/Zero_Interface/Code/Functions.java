@@ -1477,8 +1477,6 @@ else{//Filtered GC returns GC
 	if(c_selectedGridConnections.size()>1){
 		v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections);
 		uI_Results.f_updateResultsUI(v_customEnergyCoop);
-		traceln("COOP created in filter");
-		traceln(v_customEnergyCoop);
 	}
 	else{
 		uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));

@@ -53,6 +53,10 @@
 					<Id>1737656249784</Id>
 					<Name><![CDATA[SELECTED_MUNICIPALITY]]></Name>
 				</Option>
+				<Option>
+					<Id>1741874937291</Id>
+					<Name><![CDATA[FARMER]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1660743989698</Id>

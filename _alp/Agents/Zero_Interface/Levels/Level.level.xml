@@ -5905,8 +5905,8 @@ if(!cb_showFilterInterface.isSelected()){
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1740670519131</Id>
 		<Name><![CDATA[cb_EhubConfig]]></Name>
-		<X>30</X>
-		<Y>420</Y>
+		<X>-250</X>
+		<Y>700</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
