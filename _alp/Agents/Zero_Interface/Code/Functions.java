@@ -569,23 +569,24 @@ uI_Results.f_initializeResultsUI();
 
 double f_resetSettings()
 {/*ALCODESTART::1709718252272*/
-b_resultsUpToDate = false;
-gr_simulateYearScreenSmall.setVisible(true);
-
-// Switch to the live plots and do not allow the user to switch away from the live plot when the year is not yet simulated
-energyModel.f_updateActiveAssetsMetaData();
-f_enableLivePlotsOnly(uI_Results);
-
-
-//Set simulation and live graph for companyUIs as well!
-for(UI_company companyUI : c_companyUIs){
-	if(companyUI.uI_Results.f_getSelectedObjectData() != null){
-		f_enableLivePlotsOnly(companyUI.uI_Results);
+if(!b_runningMainInterfaceScenarios){
+	b_resultsUpToDate = false;
+	gr_simulateYearScreenSmall.setVisible(true);
+	
+	// Switch to the live plots and do not allow the user to switch away from the live plot when the year is not yet simulated
+	energyModel.f_updateActiveAssetsMetaData();
+	f_enableLivePlotsOnly(uI_Results);
+	
+	
+	//Set simulation and live graph for companyUIs as well!
+	for(UI_company companyUI : c_companyUIs){
+		if(companyUI.uI_Results.f_getSelectedObjectData() != null){
+			f_enableLivePlotsOnly(companyUI.uI_Results);
+		}
 	}
+	
+	runSimulation();
 }
-
-runSimulation();
-
 /*ALCODEEND*/}
 
 double f_setGridNodeCongestionColor(GridNode gn)
