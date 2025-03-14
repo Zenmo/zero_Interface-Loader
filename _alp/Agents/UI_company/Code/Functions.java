@@ -1418,6 +1418,14 @@ if(!c_ownedGridConnections.get(v_currentSelectedGCnr).v_isActive){
 double f_updateUIResultsCompanyUI()
 {/*ALCODESTART::1714656835269*/
 uI_Results.f_updateResultsUI(c_ownedGridConnections.get(v_currentSelectedGCnr));
+uI_Results.f_setChartProfiles_Presentation(null, null, true);
+uI_Results.f_setChartBalance_Presentation(null, null, true);
+
+if(cb_showGridloadPlot.isSelected())
+	uI_Results.f_setChartGridLoad_Presentation(null, null, true);
+else{
+	uI_Results.f_setChartSankey_Presentation(null, null, true);
+}
 /*ALCODEEND*/}
 
 double f_setHeatingRB()
