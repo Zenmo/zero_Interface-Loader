@@ -291,9 +291,9 @@ for (Building_data dataBuilding : scopedBuilding_data) {
 	}
 	
 	//aansluiting gegevens
-	GCH.p_physicalConnectionCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
-	GCH.p_contractedDeliveryCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
-	GCH.p_contractedFeedinCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
+	GCH.v_liveConnectionMetaData.physicalCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
+	GCH.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
+	GCH.v_liveConnectionMetaData.contractedFeedinCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
 	
 	//adres gegevens
 	GCH.p_address = new J_Address();
@@ -406,17 +406,17 @@ for (Solarfarm_data dataSolarfarm : c_Solarfarm_data) { // MOET NOG CHECK OF ZON
 		solarpark.set_p_name( dataSolarfarm.gc_name() );
 		
 		//Grid Capacity
-		solarpark.set_p_physicalConnectionCapacity_kW( dataSolarfarm.connection_capacity_kw() );
+		solarpark.v_liveConnectionMetaData.physicalCapacity_kW = dataSolarfarm.connection_capacity_kw();
 		if ( dataSolarfarm.connection_capacity_kw() > 0 ) {
-			solarpark.b_isRealPhysicalCapacityAvailable = true;
+			solarpark.v_liveConnectionMetaData.physicalCapacityKnown = true;
 		}
 		if ( dataSolarfarm.contracted_feed_in_capacity_kw() != null) {
-			solarpark.set_p_contractedFeedinCapacity_kW( dataSolarfarm.contracted_feed_in_capacity_kw() );
-			solarpark.b_isRealFeedinCapacityAvailable = true;
+			solarpark.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataSolarfarm.contracted_feed_in_capacity_kw();
+			solarpark.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
 		}
 		else {
-			solarpark.set_p_contractedFeedinCapacity_kW( dataSolarfarm.connection_capacity_kw() );
-			solarpark.b_isRealFeedinCapacityAvailable = false;
+			solarpark.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataSolarfarm.connection_capacity_kw();
+			solarpark.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
 		}
 		
 		
@@ -488,32 +488,32 @@ for (Battery_data dataBattery : c_Battery_data) { // MOET NOG CHECK OF battery A
 	gridbattery.set_p_name( dataBattery.gc_name() );
 	gridbattery.set_p_ownerID( dataBattery.owner_id() );
 	gridbattery.set_p_owner( owner );	
-	gridbattery.set_p_physicalConnectionCapacity_kW( dataBattery.connection_capacity_kw() );
+	gridbattery.v_liveConnectionMetaData.physicalCapacity_kW = dataBattery.connection_capacity_kw();
 	
 	if(gridbattery.p_gridConnectionID.equals("SLIDER_GB")){
 		gridbattery.p_isSliderGC = true;
 	}
 	
 	//Grid Capacity
-	gridbattery.set_p_physicalConnectionCapacity_kW( dataBattery.connection_capacity_kw() );
+	gridbattery.v_liveConnectionMetaData.physicalCapacity_kW = dataBattery.connection_capacity_kw();
 	if ( dataBattery.connection_capacity_kw() > 0 ) {
-		gridbattery.b_isRealPhysicalCapacityAvailable = true;
+		gridbattery.v_liveConnectionMetaData.physicalCapacityKnown = true;
 	}
 	if ( dataBattery.contracted_delivery_capacity_kw() != null ) {
-		gridbattery.set_p_contractedDeliveryCapacity_kW( dataBattery.contracted_delivery_capacity_kw() );
-		gridbattery.b_isRealDeliveryCapacityAvailable = true;
+		gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = dataBattery.contracted_delivery_capacity_kw();
+		gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
 	}
 	else {
-		gridbattery.set_p_contractedDeliveryCapacity_kW( dataBattery.connection_capacity_kw() );
-		gridbattery.b_isRealDeliveryCapacityAvailable = false;
+		gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = dataBattery.connection_capacity_kw();
+		gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
 	}
 	if ( dataBattery.contracted_feed_in_capacity_kw() != null ) {
-		gridbattery.set_p_contractedFeedinCapacity_kW( dataBattery.contracted_feed_in_capacity_kw() );
-		gridbattery.b_isRealFeedinCapacityAvailable = true;
+		gridbattery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataBattery.contracted_feed_in_capacity_kw();
+		gridbattery.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
 	}
 	else {
-		gridbattery.set_p_contractedFeedinCapacity_kW( dataBattery.connection_capacity_kw() );
-		gridbattery.b_isRealFeedinCapacityAvailable = false;	
+		gridbattery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataBattery.connection_capacity_kw();
+		gridbattery.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;	
 	}
 	
 	gridbattery.set_p_parentNodeElectricID( dataBattery.trafo_id() );	
@@ -559,25 +559,25 @@ for (Electrolyser_data dataElectrolyser : c_Electrolyser_data) {
 	H2Electrolyser.set_p_parentNodeElectricID( dataElectrolyser.trafo_id() );
 	
 	//Grid Capacity
-	H2Electrolyser.set_p_physicalConnectionCapacity_kW( dataElectrolyser.connection_capacity_kw() );
+	H2Electrolyser.v_liveConnectionMetaData.physicalCapacity_kW = dataElectrolyser.connection_capacity_kw();
 	if ( dataElectrolyser.connection_capacity_kw() > 0 ) {
-		H2Electrolyser.b_isRealPhysicalCapacityAvailable = true;
+		H2Electrolyser.v_liveConnectionMetaData.physicalCapacityKnown = true;
 	}
 	if ( dataElectrolyser.contracted_delivery_capacity_kw() != null ) {
-		H2Electrolyser.set_p_contractedDeliveryCapacity_kW( dataElectrolyser.contracted_delivery_capacity_kw() );
-		H2Electrolyser.b_isRealDeliveryCapacityAvailable = true;
+		H2Electrolyser.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = dataElectrolyser.contracted_delivery_capacity_kw();
+		H2Electrolyser.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
 	}
 	else {
-		H2Electrolyser.set_p_contractedDeliveryCapacity_kW( dataElectrolyser.connection_capacity_kw() );
-		H2Electrolyser.b_isRealDeliveryCapacityAvailable = false;
+		H2Electrolyser.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = dataElectrolyser.connection_capacity_kw();
+		H2Electrolyser.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
 	}
 	if ( dataElectrolyser.contracted_feed_in_capacity_kw() != null ) {
-		H2Electrolyser.set_p_contractedFeedinCapacity_kW( dataElectrolyser.contracted_feed_in_capacity_kw() );
-		H2Electrolyser.b_isRealFeedinCapacityAvailable = true;
+		H2Electrolyser.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataElectrolyser.contracted_feed_in_capacity_kw();
+		H2Electrolyser.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
 	}
 	else {
-		H2Electrolyser.set_p_contractedFeedinCapacity_kW( dataElectrolyser.connection_capacity_kw() );
-		H2Electrolyser.b_isRealFeedinCapacityAvailable = false;	
+		H2Electrolyser.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataElectrolyser.connection_capacity_kw();
+		H2Electrolyser.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;	
 	}
 
 
@@ -642,17 +642,17 @@ for (Windfarm_data dataWindfarm : c_Windfarm_data) {
 		}
 		
 		//Grid capacity
-		windfarm.set_p_physicalConnectionCapacity_kW( dataWindfarm.connection_capacity_kw() );
+		windfarm.v_liveConnectionMetaData.physicalCapacity_kW = dataWindfarm.connection_capacity_kw();
 		if ( dataWindfarm.connection_capacity_kw() > 0 ) {
-			windfarm.b_isRealPhysicalCapacityAvailable = true;
+			windfarm.v_liveConnectionMetaData.physicalCapacityKnown = true;
 		}
 		if ( dataWindfarm.contracted_feed_in_capacity_kw() != null) {
-			windfarm.set_p_contractedFeedinCapacity_kW( dataWindfarm.contracted_feed_in_capacity_kw() );
-			windfarm.b_isRealFeedinCapacityAvailable = true;
+			windfarm.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataWindfarm.contracted_feed_in_capacity_kw();
+			windfarm.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
 		}
 		else {
-			windfarm.set_p_contractedFeedinCapacity_kW( dataWindfarm.connection_capacity_kw() );
-			windfarm.b_isRealFeedinCapacityAvailable = false;
+			windfarm.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataWindfarm.connection_capacity_kw();
+			windfarm.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
 		}
 		
 		windfarm.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
@@ -994,18 +994,18 @@ for (Building_data genericCompany : c_GenericCompanyBuilding_data) {
 	
 	// Check that is needed until connectioncapacity is no longer in 'Panden' excel
 	if (genericCompany.contracted_capacity_kw() == null || genericCompany.contracted_capacity_kw() <= 0) {
-		companyGC.p_physicalConnectionCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
-		companyGC.p_contractedDeliveryCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
-		companyGC.p_contractedFeedinCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
+		companyGC.v_liveConnectionMetaData.physicalCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
+		companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
+		companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
 	}
 	else{
-		companyGC.p_contractedDeliveryCapacity_kW = genericCompany.contracted_capacity_kw();
-		companyGC.p_contractedFeedinCapacity_kW = companyGC.p_contractedDeliveryCapacity_kW;
-		companyGC.p_physicalConnectionCapacity_kW = companyGC.p_contractedDeliveryCapacity_kW;
+		companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = genericCompany.contracted_capacity_kw();
+		companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
+		companyGC.v_liveConnectionMetaData.physicalCapacity_kW = companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
 	}
 	
-	companyGC.b_isRealDeliveryCapacityAvailable = false;
-	companyGC.b_isRealFeedinCapacityAvailable = false;
+	companyGC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
+	companyGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
 
 	companyGC.p_heatingType = avgc_data.p_avgCompanyHeatingMethod; // Assuming all avg companies have GASBURNER.
 	
@@ -1445,13 +1445,12 @@ else{
 
 double f_createSurveyCompanies_Zorm()
 {/*ALCODESTART::1726584205815*/
-traceln("Companies that filled in the survey:");
-
 //Initialize parameters
 List<A_SubTenant> subTenants = new ArrayList<A_SubTenant>();
 
 //Get the survey data
 List<com.zenmo.zummon.companysurvey.Survey> surveys = f_getSurveys();
+traceln("Size of survey List: %s", surveys.size());
 
 //Get the building data
 try{
@@ -1462,10 +1461,10 @@ catch (Exception e){ //if api of bag is down, leave bag buildings empty and disp
 }
 
 
-traceln("Size of survey List: %s", surveys.size());
-
+traceln("Companies that filled in the survey:");
 for (var survey : surveys) {
-
+	
+	traceln(survey.getCompanyName());
 	
 	for (var address : survey.getAddresses()) {
 		
@@ -1884,12 +1883,12 @@ current_scenario_list.setParentAgent(companyGC);
 future_scenario_list.setParentAgent(companyGC);
 
 //Add current grid capacity to current (and future, feedin, physical, as no data on plans so assumption it is/stays the same) scenario list
-current_scenario_list.setCurrentContractDeliveryCapacity_kW(companyGC.p_contractedDeliveryCapacity_kW);
-future_scenario_list.setRequestedContractDeliveryCapacity_kW(companyGC.p_contractedDeliveryCapacity_kW);
-current_scenario_list.setCurrentContractFeedinCapacity_kW(companyGC.p_contractedDeliveryCapacity_kW);
-future_scenario_list.setRequestedContractFeedinCapacity_kW(companyGC.p_contractedDeliveryCapacity_kW);
-current_scenario_list.setCurrentPhysicalConnectionCapacity_kW(companyGC.p_contractedDeliveryCapacity_kW);
-future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(companyGC.p_contractedDeliveryCapacity_kW);
+current_scenario_list.setCurrentContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+future_scenario_list.setRequestedContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+current_scenario_list.setCurrentContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+future_scenario_list.setRequestedContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+current_scenario_list.setCurrentPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
 
 //Basic heating and electricity demand profiles
 if (companyGC.p_floorSurfaceArea_m2 > 0){
@@ -2326,10 +2325,10 @@ for (Chargingstation_data dataChargingStation : c_Chargingstation_data){
 	//Electric Capacity
 	if (dataChargingStation.connection_capacity_kw() != null) {
 		// Assume the connection capacity is both physical and contracted.
-		chargingStation.set_p_physicalConnectionCapacity_kW( dataChargingStation.connection_capacity_kw() );
-		chargingStation.set_p_contractedDeliveryCapacity_kW( dataChargingStation.connection_capacity_kw() );
-		chargingStation.b_isRealPhysicalCapacityAvailable = true;
-		chargingStation.b_isRealDeliveryCapacityAvailable = true;
+		chargingStation.v_liveConnectionMetaData.physicalCapacity_kW = dataChargingStation.connection_capacity_kw();
+		chargingStation.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = dataChargingStation.connection_capacity_kw();
+		chargingStation.v_liveConnectionMetaData.physicalCapacityKnown = true;
+		chargingStation.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
 	}
 	
 	chargingStation.set_p_heatingType( OL_GridConnectionHeatingType.NONE );
@@ -2365,8 +2364,8 @@ for (Chargingstation_data dataChargingStation : c_Chargingstation_data){
 		chargingStation.set_p_maxChargingPower_kW( dataChargingStation.power_per_charger_kw() );
 		
 		//If check on connection capacity to prevent more charging than possible
-		if(chargingStation.p_contractedDeliveryCapacity_kW > chargingStation.p_nbOfChargers*chargingStation.p_maxChargingPower_kW){
-			chargingStation.p_contractedDeliveryCapacity_kW = chargingStation.p_nbOfChargers*chargingStation.p_maxChargingPower_kW;
+		if(chargingStation.v_liveConnectionMetaData.contractedDeliveryCapacity_kW > chargingStation.p_nbOfChargers*chargingStation.p_maxChargingPower_kW){
+			chargingStation.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = chargingStation.p_nbOfChargers*chargingStation.p_maxChargingPower_kW;
 		}
 		
 		//Set vehicle type
@@ -2460,9 +2459,9 @@ for (Building_data dataBuilding : scopedBuilding_data) {
 	company.p_heatingType = avgc_data.p_avgHouseHeatingMethod ;
 	company.p_floorSurfaceArea_m2 = dataBuilding.cumulative_floor_surface_m2();
 	//company.p_bouwjaar = dataBuilding.bouwjaar();
-	company.p_physicalConnectionCapacity_kW = 50.0; //// HARDCODED?????
-	company.p_contractedDeliveryCapacity_kW = 50.0; //// HARDCODED?????
-	company.p_contractedFeedinCapacity_kW = 50.0; //// HARDCODED?????
+	company.v_liveConnectionMetaData.physicalCapacity_kW = 50.0; //// HARDCODED?????
+	company.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = 50.0; //// HARDCODED?????
+	company.v_liveConnectionMetaData.contractedFeedinCapacity_kW = 50.0; //// HARDCODED?????
 	
 	//adres gegevens
 	company.p_address = new J_Address();
@@ -3085,9 +3084,9 @@ Double pvPower_kW = (gridConnection.getSupply().getPvInstalledKwp() != null) ? n
 
 ////Electricity (connection and consumption)
 //Initialize contract capacity with 0 for when companies fill in survey already but currently have no connection yet
-companyGC.p_contractedDeliveryCapacity_kW = 0.0;
-companyGC.p_contractedFeedinCapacity_kW = 0.0;
-companyGC.p_physicalConnectionCapacity_kW = 0.0;
+companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = 0.0;
+companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = 0.0;
+companyGC.v_liveConnectionMetaData.physicalCapacity_kW = 0.0;
 
 f_createDieselTractors(companyGC, gridConnection.getTransport().getAgriculture());
 
@@ -3100,56 +3099,56 @@ if (gridConnection.getElectricity().getHasConnection()){
 		gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw() <= 0)) {
 		
 		traceln("SURVEYOWNER HAS NOT FILLED IN CONNECTION CAPACITY!!! AVG values taken");
-		companyGC.p_contractedDeliveryCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
-		companyGC.p_contractedFeedinCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
-		companyGC.p_physicalConnectionCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
+		companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
+		companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
+		companyGC.v_liveConnectionMetaData.physicalCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
 		
-		companyGC.b_isRealPhysicalCapacityAvailable = false;
-		companyGC.b_isRealDeliveryCapacityAvailable = false;
-		companyGC.b_isRealFeedinCapacityAvailable = false;
+		companyGC.v_liveConnectionMetaData.physicalCapacityKnown = false;
+		companyGC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
+		companyGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
 	}
 	else{
 	
 		if(gridConnection.getElectricity().getContractedConnectionCapacityKw() != null && gridConnection.getElectricity().getContractedConnectionCapacityKw() > 0){
-			companyGC.p_contractedDeliveryCapacity_kW = gridConnection.getElectricity().getContractedConnectionCapacityKw(); //Contracted connection capacity
-			companyGC.b_isRealDeliveryCapacityAvailable = true;
+			companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = gridConnection.getElectricity().getContractedConnectionCapacityKw(); //Contracted connection capacity
+			companyGC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
 		}
 		else{
-			companyGC.p_contractedDeliveryCapacity_kW = ((double)gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw()); //Contracted connection capacity
-			companyGC.b_isRealDeliveryCapacityAvailable = false;
+			companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = ((double)gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw()); //Contracted connection capacity
+			companyGC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
 		}
 		
 		
 		//Check if contract capacity feedin has been filled in: if not, make the same as contract delivery
 		if(gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw() != null && gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw() > 0){
-			companyGC.p_contractedFeedinCapacity_kW = ((double)gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw()); //Contracted connection capacity
-			companyGC.b_isRealFeedinCapacityAvailable = true;
+			companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = ((double)gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw()); //Contracted connection capacity
+			companyGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
 		}
 		else{
 			if(pvPower_kW != null){
-				companyGC.p_contractedFeedinCapacity_kW = pvPower_kW;
+				companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = pvPower_kW;
 			}
 			else{
-				companyGC.p_contractedFeedinCapacity_kW = 0.0;
+				companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = 0.0;
 			}
-			companyGC.b_isRealFeedinCapacityAvailable = false;
+			companyGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
 		}
 		
 		//Check if physical capacity has been filled in: if not, make the same as maximum of contract delivery and feedin
 		if(gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw() != null && gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw() > 0){
-			companyGC.p_physicalConnectionCapacity_kW = (double)gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw(); //Contracted connection capacity
-			companyGC.b_isRealPhysicalCapacityAvailable = true;
+			companyGC.v_liveConnectionMetaData.physicalCapacity_kW = (double)gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw(); //Contracted connection capacity
+			companyGC.v_liveConnectionMetaData.physicalCapacityKnown = true;
 		}
 		else{
-			companyGC.p_physicalConnectionCapacity_kW = max(companyGC.p_contractedDeliveryCapacity_kW, companyGC.p_contractedFeedinCapacity_kW); //Contracted connection capacity
-			companyGC.b_isRealPhysicalCapacityAvailable = false;
+			companyGC.v_liveConnectionMetaData.physicalCapacity_kW = max(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW, companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW); //Contracted connection capacity
+			companyGC.v_liveConnectionMetaData.physicalCapacityKnown = false;
 		}
 	}
 	
 	//Add to current scenario list
-	current_scenario_list.setCurrentContractDeliveryCapacity_kW(companyGC.p_contractedDeliveryCapacity_kW);
-	current_scenario_list.setCurrentContractFeedinCapacity_kW(companyGC.p_contractedFeedinCapacity_kW);
-	current_scenario_list.setCurrentPhysicalConnectionCapacity_kW(companyGC.p_physicalConnectionCapacity_kW);
+	current_scenario_list.setCurrentContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+	current_scenario_list.setCurrentContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+	current_scenario_list.setCurrentPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.physicalCapacity_kW);
 	
 	
 	//Electricity consumption profile
@@ -3198,8 +3197,8 @@ if (gridConnection.getElectricity().getHasConnection()){
 				yearlyElectricityConsumption_kWh = avgc_data.p_avgCompanyElectricityConsumption_kWhpm2*companyGC.p_floorSurfaceArea_m2;
 				
 				//Check if it is within the contracted limits (peak should at least be 20% lower than contracted capacity
-				if(genericProfiles_data.buildingEdemandList_maximum() != null && yearlyElectricityConsumption_kWh*genericProfiles_data.buildingEdemandList_maximum() > 0.8*companyGC.p_contractedDeliveryCapacity_kW){
-					yearlyElectricityConsumption_kWh = 0.8*companyGC.p_contractedDeliveryCapacity_kW/genericProfiles_data.buildingEdemandList_maximum();
+				if(genericProfiles_data.buildingEdemandList_maximum() != null && yearlyElectricityConsumption_kWh*genericProfiles_data.buildingEdemandList_maximum() > 0.8*companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW){
+					yearlyElectricityConsumption_kWh = 0.8*companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW/genericProfiles_data.buildingEdemandList_maximum();
 				}
 				 
 			}
@@ -3219,16 +3218,16 @@ if (gridConnection.getElectricity().getHasConnection()){
 }
 
 //If everything is 0 set the GC as non active
-if(companyGC.p_contractedDeliveryCapacity_kW == 0 && companyGC.p_contractedFeedinCapacity_kW == 0 && companyGC.p_physicalConnectionCapacity_kW == 0){
+if(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW == 0 && companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW == 0 && companyGC.v_liveConnectionMetaData.physicalCapacity_kW == 0){
 	companyGC.v_isActive = false;
 }
 		
 //Grid expansion request
-future_scenario_list.setRequestedContractDeliveryCapacity_kW(companyGC.p_contractedDeliveryCapacity_kW);
+future_scenario_list.setRequestedContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
 if (gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() != null && gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator()){
-	future_scenario_list.setRequestedContractDeliveryCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.p_contractedDeliveryCapacity_kW);
-	future_scenario_list.setRequestedContractFeedinCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.p_contractedDeliveryCapacity_kW);
-	future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.p_contractedDeliveryCapacity_kW);
+	future_scenario_list.setRequestedContractDeliveryCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+	future_scenario_list.setRequestedContractFeedinCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+	future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
 }
 
 

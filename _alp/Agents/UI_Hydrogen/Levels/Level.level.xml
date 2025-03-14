@@ -413,9 +413,9 @@ c_hydrogenElectrolysers.get(v_currentSelectedElectrolyser).setInputCapacity_kW(s
 
 //Adjust grid connection capacity as well (if needed)
 if(sl_electrolyserPower.getValue()*1000 &gt; 2000){
-	((GridConnection)c_hydrogenElectrolysers.get(v_currentSelectedElectrolyser).getParentAgent()).p_physicalConnectionCapacity_kW = sl_electrolyserPower.getValue()*1000;
-	((GridConnection)c_hydrogenElectrolysers.get(v_currentSelectedElectrolyser).getParentAgent()).p_contractedDeliveryCapacity_kW = sl_electrolyserPower.getValue()*1000;
-	((GridConnection)c_hydrogenElectrolysers.get(v_currentSelectedElectrolyser).getParentAgent()).p_contractedFeedinCapacity_kW = sl_electrolyserPower.getValue()*1000;
+	((GridConnection)c_hydrogenElectrolysers.get(v_currentSelectedElectrolyser).getParentAgent()).v_liveConnectionMetaData.physicalCapacity_kW = sl_electrolyserPower.getValue()*1000;
+	((GridConnection)c_hydrogenElectrolysers.get(v_currentSelectedElectrolyser).getParentAgent()).v_liveConnectionMetaData.contractedDeliveryCapacity_kW = sl_electrolyserPower.getValue()*1000;
+	((GridConnection)c_hydrogenElectrolysers.get(v_currentSelectedElectrolyser).getParentAgent()).v_liveConnectionMetaData.contractedFeedinCapacity_kW = sl_electrolyserPower.getValue()*1000;
 }
 
 //Set the text accordingly

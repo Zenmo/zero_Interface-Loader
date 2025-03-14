@@ -410,9 +410,9 @@ c_gridBatteries.get(v_currentSelectedBattery).setCapacityElectric_kW(sl_batteryP
 
 //Adjust grid connection capacity as well (if needed)
 if(sl_batteryPower.getValue()*1000 &gt; 2000){
-	((GCGridBattery)c_gridBatteries.get(v_currentSelectedBattery).getParentAgent()).p_physicalConnectionCapacity_kW = sl_batteryPower.getValue()*1000;
-	((GCGridBattery)c_gridBatteries.get(v_currentSelectedBattery).getParentAgent()).p_contractedDeliveryCapacity_kW = sl_batteryPower.getValue()*1000;
-	((GCGridBattery)c_gridBatteries.get(v_currentSelectedBattery).getParentAgent()).p_contractedFeedinCapacity_kW = sl_batteryPower.getValue()*1000;
+	((GCGridBattery)c_gridBatteries.get(v_currentSelectedBattery).getParentAgent()).v_liveConnectionMetaData.physicalCapacity_kW = sl_batteryPower.getValue()*1000;
+	((GCGridBattery)c_gridBatteries.get(v_currentSelectedBattery).getParentAgent()).v_liveConnectionMetaData.contractedDeliveryCapacity_kW = sl_batteryPower.getValue()*1000;
+	((GCGridBattery)c_gridBatteries.get(v_currentSelectedBattery).getParentAgent()).v_liveConnectionMetaData.contractedFeedinCapacity_kW = sl_batteryPower.getValue()*1000;
 }
 
 //Set the text accordingly
@@ -916,9 +916,9 @@ c_gridBatteries.get(v_currentSelectedBattery).setStorageCapacity_kWh(sl_batteryC
 
 //Adjust grid connection capacity as well (if needed)
 if(sl_batteryCapacity.getValue()*1000 &gt; 2000){
-	((GCGridBattery)c_gridBatteries.get(v_currentSelectedBattery).getParentAgent()).p_physicalConnectionCapacity_kW = sl_batteryCapacity.getValue()*1000;
-	((GCGridBattery)c_gridBatteries.get(v_currentSelectedBattery).getParentAgent()).p_contractedDeliveryCapacity_kW = sl_batteryCapacity.getValue()*1000;
-	((GCGridBattery)c_gridBatteries.get(v_currentSelectedBattery).getParentAgent()).p_contractedFeedinCapacity_kW = sl_batteryCapacity.getValue()*1000;
+	((GCGridBattery)c_gridBatteries.get(v_currentSelectedBattery).getParentAgent()).v_liveConnectionMetaData.physicalCapacity_kW = sl_batteryCapacity.getValue()*1000;
+	((GCGridBattery)c_gridBatteries.get(v_currentSelectedBattery).getParentAgent()).v_liveConnectionMetaData.contractedDeliveryCapacity_kW = sl_batteryCapacity.getValue()*1000;
+	((GCGridBattery)c_gridBatteries.get(v_currentSelectedBattery).getParentAgent()).v_liveConnectionMetaData.contractedFeedinCapacity_kW = sl_batteryCapacity.getValue()*1000;
 }
 
 //Set the text accordingly
