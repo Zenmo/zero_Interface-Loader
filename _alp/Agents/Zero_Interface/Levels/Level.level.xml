@@ -4990,6 +4990,7 @@ new Thread( () -&gt; {
 	
 	//Enable radio buttons again
 	uI_Results.f_enableNonLivePlotRadioButtons(true);
+	c_companyUIs.forEach(companyUI -&gt; companyUI.uI_Results.f_enableNonLivePlotRadioButtons(true));
 	
 	b_resultsUpToDate = true;
 }).start();
