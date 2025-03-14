@@ -39,7 +39,8 @@ import zero_engine.OL_EnergyCarriers;
 import zero_engine.OL_EnergyCarriers;
 import com.querydsl.core.types.dsl.TimeExpression;
 import zero_engine.J_EAStorageElectric;
-import zero_engine.J_EAConsumption;]]></Import>
+import zero_engine.J_EAConsumption;
+import digital_twin_results.OL_ChartTypes;]]></Import>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1658477103138</Id>

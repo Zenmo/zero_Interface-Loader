@@ -80,8 +80,6 @@ if( v_previousClickedObjectType != null){
 for ( GridNode GN : energyModel.pop_gridNodes ){
 	if( GN.gisRegion != null && GN.gisRegion.contains(clickx, clicky) && GN.gisRegion.isVisible() ){
 		f_selectGridNode(GN);
-		uI_Results.v_selectedObjectType = OL_GISObjectType.GRIDNODE;
-		uI_Results.f_showCorrectChart();
 		return;
 	}
 }
@@ -93,8 +91,6 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 			if (b.c_containedGridConnections.size() > 0 ) { // only allow buildings with gridconnections
 				buildingsConnectedToSelectedBuildingsList = b.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
 				f_selectBuilding(b, buildingsConnectedToSelectedBuildingsList);
-				uI_Results.v_selectedObjectType = OL_GISObjectType.BUILDING;
-				uI_Results.f_showCorrectChart();
 				return;
 			}
 		}
@@ -130,9 +126,6 @@ for ( GIS_Object GISobject : energyModel.pop_GIS_Objects ){
 					f_selectBuilding(GISobject, buildingsConnectedToSelectedBuildingsList);		
 					break;
 				}
-				
-				uI_Results.v_selectedObjectType = v_clickedObjectType;				
-				uI_Results.f_showCorrectChart();
 				return;
 			}
 		}
@@ -141,8 +134,7 @@ for ( GIS_Object GISobject : energyModel.pop_GIS_Objects ){
 
 //Still no clicked object? :select basic region
 v_clickedObjectType = OL_GISObjectType.REGION;
-uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
-uI_Results.f_showCorrectChart();
+uI_Results.f_updateResultsUI(energyModel);
 
 //Enable kpi summary button
 uI_Results.getCheckbox_KPISummary().setEnabled(true);
@@ -372,7 +364,7 @@ for ( GridConnection GC : GN.f_getAllLowerLVLConnectedGridConnections()){
 	}
 }
 
-uI_Results.f_updateUIresultsGridNode(uI_Results.v_trafo, GN);
+uI_Results.f_updateUIresultsGridNode(GN);
 /*ALCODEEND*/}
 
 double f_selectBuilding(GIS_Object b,ArrayList<GIS_Object> buildingsConnectedToSelectedGC_list)
@@ -470,6 +462,11 @@ else if (v_previousClickedObjectType == OL_GISObjectType.BUILDING ||
 	for(GIS_Object previousClickedObject: c_previousSelectedObjects){
 		f_styleAreas(previousClickedObject);
 	}
+}
+
+if(v_customEnergyCoop != null){
+	energyModel.f_removeEnergyCoop(v_customEnergyCoop);
+	v_customEnergyCoop = null;
 }
 /*ALCODEEND*/}
 
@@ -572,22 +569,24 @@ uI_Results.f_initializeResultsUI();
 
 double f_resetSettings()
 {/*ALCODESTART::1709718252272*/
-b_resultsUpToDate = false;
-gr_simulateYearScreenSmall.setVisible(true);
-
-// Switch to the live plots and do not allow the user to switch away from the live plot when the year is not yet simulated
-f_enableLivePlotsOnly(uI_Results);
-uI_Results.f_updateActiveAssetBooleans(b_multiSelect, c_selectedGridConnections);
-
-//Set simulation and live graph for companyUIs as well!
-for(UI_company companyUI : c_companyUIs){
-	if(companyUI.uI_Results.v_gridConnection != null){
-		f_enableLivePlotsOnly(companyUI.uI_Results);
+if(!b_runningMainInterfaceScenarios){
+	b_resultsUpToDate = false;
+	gr_simulateYearScreenSmall.setVisible(true);
+	
+	// Switch to the live plots and do not allow the user to switch away from the live plot when the year is not yet simulated
+	energyModel.f_updateActiveAssetsMetaData();
+	f_enableLivePlotsOnly(uI_Results);
+	
+	
+	//Set simulation and live graph for companyUIs as well!
+	for(UI_company companyUI : c_companyUIs){
+		if(companyUI.uI_Results.f_getSelectedObjectData() != null){
+			f_enableLivePlotsOnly(companyUI.uI_Results);
+		}
 	}
+	
+	runSimulation();
 }
-
-runSimulation();
-
 /*ALCODEEND*/}
 
 double f_setGridNodeCongestionColor(GridNode gn)
@@ -703,7 +702,7 @@ double f_setColorsBasedOnConsumpion(GIS_Object gis_area)
 {/*ALCODESTART::1715116336665*/
 if(gis_area.c_containedGridConnections.size() > 0){
 
-	double yearlyEnergyConsumption = sum( gis_area.c_containedGridConnections, x -> x.v_totalElectricityConsumed_MWh);
+	double yearlyEnergyConsumption = sum( gis_area.c_containedGridConnections, x -> x.v_rapidRunData.getTotalElectricityConsumed_MWh());
 	
 	if ( yearlyEnergyConsumption < 10){ gis_area.f_style( rect_tinyCosumption.getFillColor(), null, null, null);}
 	else if ( yearlyEnergyConsumption < 50){ gis_area.f_style( rect_smallCosumption.getFillColor(), null, null, null);}
@@ -1011,7 +1010,7 @@ v_clickedObjectDetails = "No detaild info of charger available";
 
 //v_clickedGridConnection = charger;
 c_selectedGridConnections = new ArrayList<GridConnection>(Arrays.asList(charger));
-uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
 
 //Set the UI button
 f_setUIButton();
@@ -1055,48 +1054,14 @@ for (GridConnection gc : c_selectedObjects.get(0).c_containedGridConnections) {
 	}
 }
 
-uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
-/*ALCODEEND*/}
-
-double f_multiSelect(double clickx,double clicky)
-{/*ALCODESTART::1721290570561*/
-// TODO: if selected object was a trafo before enabling this deselect it?
-
-//Check if click was on Building
-for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
-	if( b.gisRegion != null && b.gisRegion.contains(clickx, clicky) ){
-		if (b.gisRegion.isVisible()) {
-			for (GridConnection GC : b.c_containedGridConnections) {
-				if (GC != null) {
-					if (c_selectedGridConnections.contains(GC)) {
-						c_selectedGridConnections.remove(GC);
-						for (GIS_Object a : GC.c_connectedGISObjects) {
-							f_styleAreas(a);
-						}
-					}
-					else {
-						c_selectedGridConnections.add(GC);
-						for (GIS_Object a : GC.c_connectedGISObjects) {
-							a.gisRegion.setFillColor(v_selectionColorAddBuildings);
-						}
-					}
-				}
-			}
-		}
-	}
+if(c_selectedGridConnections.size()>1){
+	v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections);
+	uI_Results.f_updateResultsUI(v_customEnergyCoop);
+}
+else{
+	uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
 }
 
-if (c_selectedGridConnections.size() > 0) {
-	uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
-	uI_Results.v_selectedObjectType = OL_GISObjectType.BUILDING;
-	if (p_selectedProjectType == OL_ProjectType.BUSINESSPARK) {
-		uI_Results.f_fillAreaCollectionsOfIndividualGCs(c_selectedGridConnections);
-	}
-}
-else {
-	uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
-}
-uI_Results.f_showCorrectChart();
 /*ALCODEEND*/}
 
 double f_setGridTopologyColors()
@@ -1510,10 +1475,14 @@ else{//Filtered GC returns GC
 		}
 	}
 	
-	//Set graphs
-	uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
-	uI_Results.v_selectedObjectType = v_clickedObjectType;				
-	uI_Results.f_showCorrectChart();
+	//Set graphs	
+	if(c_selectedGridConnections.size()>1){
+		v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections);
+		uI_Results.f_updateResultsUI(v_customEnergyCoop);
+	}
+	else{
+		uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
+	}			
 }
 /*ALCODEEND*/}
 
@@ -1584,8 +1553,7 @@ v_selectedGridLoop = null;
 v_selectedNeighborhood = null;
 
 v_clickedObjectType = OL_GISObjectType.REGION;
-uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
-uI_Results.f_showCorrectChart();
+uI_Results.f_updateResultsUI(energyModel);
 
 traceln("Alle filters zijn verwijderd.");
 /*ALCODEEND*/}
@@ -1853,8 +1821,7 @@ else {
 double f_resetEHubConfigurationButton()
 {/*ALCODESTART::1736425024533*/
 v_clickedObjectText = "None";
-b_EHubSelect = false;
-uI_Results.b_EHubConfiguration = false;
+uI_Results.b_showGroupContractValues = false;
 uI_Tabs.pop_tabEHub.get(0).cb_EHubSelect.setSelected(false);
 uI_Tabs.pop_tabEHub.get(0).t_baseGroepInfo.setText("Selecteer minimaal twee panden");
 uI_Tabs.pop_tabEHub.get(0).t_groepsGTV_kW.setText("");
@@ -1889,8 +1856,8 @@ gcList.addAll(energyModel.f_getGridConnections());
 //gcList.addAll(energyModel.f_getPausedGridConnections());
 
 for (GridConnection gc : gcList) {
-	int amountOfDataPoints = gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries().length;
-	double[] quarterHourlyValues = Arrays.copyOf(gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries(), amountOfDataPoints);
+	int amountOfDataPoints = gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW().length;
+	double[] quarterHourlyValues = Arrays.copyOf(gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW(), amountOfDataPoints);
 	Arrays.sort(quarterHourlyValues);
 	double filteredMaximum_kW = min(gc.p_contractedDeliveryCapacity_kW , max(0, quarterHourlyValues[amountOfDataPoints - (int) (amountOfDataPoints*0.001) - 1]));
 	double filteredMinimum_kW = min(gc.p_contractedFeedinCapacity_kW, -min(0, quarterHourlyValues[(int)(amountOfDataPoints*0.001)]));
@@ -1999,6 +1966,6 @@ if(resultsUI.getGr_resultsUIHeader().isVisible()){
 	resultsUI.getRadioButtons().setValue(0, true);
 }
 resultsUI.chartProfielen.getPeriodRadioButton().setValue(0, true);
-resultsUI.f_setNonLivePlotRadioButtons(false);
+resultsUI.f_enableNonLivePlotRadioButtons(false);
 /*ALCODEEND*/}
 

@@ -3352,8 +3352,7 @@ traceln( v_themeColor.getRGB() );</ActionCode>
 		UI_company companyUI = c_companyUIs.get(v_connectionOwnerIndexNr);
 		
 		//Connect resultsUI of the main with resultsUI of CompanyUI
-		companyUI.f_copyResultsUI();	
-		companyUI.uI_Results.v_selectedObjectType = OL_GISObjectType.BUILDING;
+		companyUI.f_updateUIResultsCompanyUI();	
 
 		
 		//Set sliders to the correct GC if there are more than 1 GC
@@ -4373,8 +4372,11 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 	}
 	else {
 		c_selectedGridConnections = c_selectedObjects.get(0).c_containedGridConnections;
+		
 	}
-	uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+	
+	//Update the resultsUI
+	f_updateUIResultsData();
 	
 	//Set dashboard UI button
 	f_setUIButton();
@@ -4414,7 +4416,9 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 	else {
 		c_selectedGridConnections = c_selectedObjects.get(0).c_containedGridConnections;
 	}
-	uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+	
+	//Update the resultsUI
+	f_updateUIResultsData();
 	
 	//Set dashboard UI button
 	f_setUIButton();
@@ -4458,61 +4462,6 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 			</Text>
 		</Presentation>
 	</Group>
-	<Control Type="CheckBox">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1721290473524</Id>
-		<Name><![CDATA[checkbox_multiSelect]]></Name>
-		<X>20</X>
-		<Y>480</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="190" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor/>
-			<Enabled>true</Enabled>
-			<ActionCode>if (!b_multiSelect) {
-	// Reset the building colors
-	for (GridConnection GC: c_selectedGridConnections) {
-		for (GIS_Object GB : GC.c_connectedGISObjects) {
-			f_styleAreas(GB);
-		}
-	}
-	
-	// Reset the list of selected GCs and the individual AreaCollections in the ResultsUI
-	c_selectedGridConnections.clear();
-	uI_Results.c_individualGridConnections = new ArrayList&lt;AreaCollection&gt;();
-	
-	// Reset the shown charts
-	uI_Results.f_updateUIresultsMainArea();
-	uI_Results.v_selectedObjectType = OL_GISObjectType.REGION;
-	uI_Results.f_showCorrectChart();
-	
-	//Reset the KPI summary button
-	uI_Results.getCheckbox_KPISummary().setEnabled(true);
-	
-}
-else{
-	//Make the companyUI button invisible
-	button_goToUI.setVisible(false);
-	
-	//Disable the KPI summary (button)
-	uI_Results.getCheckbox_KPISummary().setSelected(false, true);
-	uI_Results.getCheckbox_KPISummary().setEnabled(false);
-}</ActionCode>
-		</BasicProperties>
-		<ExtendedProperties>
-			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText>Selecteer Meerdere Gebouwen</LabelText>
-			<LinkTo>true</LinkTo>
-			<Link>b_multiSelect</Link>
-		</ExtendedProperties>
-	</Control>
 	<Rectangle>
 		<Id>1721819768547</Id>
 		<Name><![CDATA[rect_CustomColors]]></Name>
@@ -4789,12 +4738,11 @@ for(GISRoute GISCable : c_MVCables){
 		<OnClickCode>if (uI_Tabs.pop_tabEHub.get(0).b_NFATOListener) {
 	uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
 }
-else if (b_multiSelect) {
-	f_multiSelect(clickx, clicky);
-}
+/*
 else if (b_EHubSelect) {
 	f_EHubSelect(clickx, clicky);
 }
+*/
 else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP) || 
 		c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
 	
@@ -4819,12 +4767,11 @@ else {
 		<OnClickCode>if (uI_Tabs.pop_tabEHub.get(0).b_NFATOListener) {
 	uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
 }
-else if (b_multiSelect) {
-	f_multiSelect(clickx, clicky);
-}
+/*
 else if (b_EHubSelect) {
 	f_EHubSelect(clickx, clicky);
 }
+*/
 else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP) || 
 		c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
 	
@@ -5020,33 +4967,30 @@ gr_loadIconSmall.setVisible(true);
 		
 
 new Thread( () -&gt; {
-	//Save previous totals
-	uI_Results.f_updatePreviousTotalsGC();
-	
 	//Run rapid run
 	energyModel.f_runRapidSimulation();
 	
 	//After rapid run: remove loading screen
 	gr_loadIconSmall.setVisible(false);
-	
-	//Update main area collection
-	uI_Results.f_updateUIresultsMainArea();
-	
-	//Update selected GC area collection
-	if (c_selectedGridConnections.size() &gt; 0){
-		uI_Results.f_updateUIresultsGridConnection(uI_Results.v_gridConnection, c_selectedGridConnections);
+		
+	if (c_selectedGridConnections.size() == 0){//Update main area collection
+		uI_Results.f_updateResultsUI(energyModel);
+	}
+	else if (c_selectedGridConnections.size() == 1){//Update selected GC area collection
+		uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
+	}
+	else if(c_selectedGridConnections.size() &gt; 1){//Update COOP area collection
+		uI_Results.f_updateResultsUI(v_customEnergyCoop);
 	}
 	
-	//No longer needed, because during simulation view is always on live. If not: enable!
-	//uI_Results.f_showCorrectChart();
-	
 	//Update and show kpi summary chart after run
-	if(settings.showKPISummary() != null &amp;&amp; settings.showKPISummary() &amp;&amp; !b_multiSelect &amp;&amp; v_clickedObjectType != OL_GISObjectType.GRIDNODE){
+	if(settings.showKPISummary() != null &amp;&amp; settings.showKPISummary() &amp;&amp; v_clickedObjectType != OL_GISObjectType.GRIDNODE){
 		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
 	}
 	
 	//Enable radio buttons again
-	uI_Results.f_setNonLivePlotRadioButtons(true);
+	uI_Results.f_enableNonLivePlotRadioButtons(true);
+	c_companyUIs.forEach(companyUI -&gt; companyUI.uI_Results.f_enableNonLivePlotRadioButtons(true));
 	
 	b_resultsUpToDate = true;
 }).start();
@@ -5581,7 +5525,7 @@ cb_filterOptions.setValueIndex(0);</ActionCode>
 		<Id>1734444497900</Id>
 		<Name><![CDATA[cb_showFilterInterface]]></Name>
 		<X>20</X>
-		<Y>500</Y>
+		<Y>480</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -5958,4 +5902,43 @@ if(!cb_showFilterInterface.isSelected()){
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
+	<Control Type="CheckBox">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1740670519131</Id>
+		<Name><![CDATA[cb_EhubConfig]]></Name>
+		<X>-250</X>
+		<Y>700</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<BasicProperties Width="210" Height="30">
+			<EmbeddedIcon>false</EmbeddedIcon>
+			<TextColor/>
+			<VisibleCode>v_customEnergyCoop != null</VisibleCode>
+			<Enabled>true</Enabled>
+			<ActionCode>if(cb_EhubConfig.isSelected()){
+	uI_Results.v_selectedChartType = OL_ChartTypes.GESPREKSLEIDRAAD_BEDRIJVEN;
+	uI_Results.f_showCorrectChart();
+	uI_Results.getRadioButtons().setValue(100, false);
+	uI_Results.chartGespreksleidraadBedrijven.getRb_gespreksleidraadBedrijvenChartType().setValue(2, true);
+}
+else{
+	if(uI_Results.getRadioButtons().getValue() == 100){
+		uI_Results.getRadioButtons().setValue(0, true);
+	}
+	uI_Results.f_showCorrectChart();
+}</ActionCode>
+		</BasicProperties>
+		<ExtendedProperties>
+			<Font Name="Dialog" Size="11" Style="0"/>
+			<LabelText>EHUB VISUALIZATION TEST</LabelText>
+			<LinkTo>true</LinkTo>
+			<Link>uI_Results.b_showGroupContractValues</Link>
+		</ExtendedProperties>
+	</Control>
 </Presentation>

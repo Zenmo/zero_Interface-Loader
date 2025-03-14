@@ -366,13 +366,13 @@ GC.f_nfatoSetConnectionCapacity(true);
 
 switch(type){
 	case "DELIVERY":
-		GC.p_contractedDeliveryCapacity_kW = setGridConnectionCapacity_kW;
+		GC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = setGridConnectionCapacity_kW;
 		break;
 	case "FEEDIN":
-		GC.p_contractedFeedinCapacity_kW = setGridConnectionCapacity_kW;
+		GC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = setGridConnectionCapacity_kW;
 		break;
 	case "PHYSICAL":
-		GC.p_physicalConnectionCapacity_kW = setGridConnectionCapacity_kW;
+		GC.v_liveConnectionMetaData.physicalCapacity_kW = setGridConnectionCapacity_kW;
 		break;
 }
 
@@ -1415,12 +1415,17 @@ if(!c_ownedGridConnections.get(v_currentSelectedGCnr).v_isActive){
 }
 /*ALCODEEND*/}
 
-double f_copyResultsUI()
+double f_updateUIResultsCompanyUI()
 {/*ALCODESTART::1714656835269*/
-//Copy results ui of main, to the results ui of company UI
-uI_Results.v_area = zero_Interface.uI_Results.v_area;
-uI_Results.v_gridConnection = zero_Interface.uI_Results.v_gridConnection;
-uI_Results.v_trafo = zero_Interface.uI_Results.v_trafo;
+uI_Results.f_updateResultsUI(c_ownedGridConnections.get(v_currentSelectedGCnr));
+uI_Results.f_setChartProfiles_Presentation(null, null, true);
+uI_Results.f_setChartBalance_Presentation(null, null, true);
+
+if(cb_showGridloadPlot.isSelected())
+	uI_Results.f_setChartGridLoad_Presentation(null, null, true);
+else{
+	uI_Results.f_setChartSankey_Presentation(null, null, true);
+}
 /*ALCODEEND*/}
 
 double f_setHeatingRB()
@@ -1575,10 +1580,10 @@ else{
 }
 
 //Find the current Connection capacity (delivery)
-int GCContractCapacityCurrent_Delivery = roundToInt(c_ownedGridConnections.get(v_currentSelectedGCnr).p_contractedDeliveryCapacity_kW);
+int GCContractCapacityCurrent_Delivery = roundToInt(c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
 
 //Find the current Connection capacity (feedin)
-int GCContractCapacityCurrent_Feedin = roundToInt(c_ownedGridConnections.get(v_currentSelectedGCnr).p_contractedFeedinCapacity_kW);
+int GCContractCapacityCurrent_Feedin = roundToInt(c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contractedFeedinCapacity_kW);
 
 //Set the nfato values
 f_getNFATOValues();
@@ -1705,7 +1710,7 @@ zero_Interface.v_previousClickedObjectType = OL_GISObjectType.BUILDING;
 zero_Interface.c_selectedGridConnections.clear();
 zero_Interface.f_deselectPreviousSelect( );
 zero_Interface.f_selectBuilding(c_ownedGridConnections.get(v_currentSelectedGCnr).c_connectedGISObjects.get(0), c_ownedGridConnections.get(v_currentSelectedGCnr).c_connectedGISObjects);
-f_copyResultsUI();
+f_updateUIResultsCompanyUI();
 uI_Results.f_setAllCharts();
 /*ALCODEEND*/}
 
@@ -1717,7 +1722,6 @@ gr_simulateYearScreen.setVisible(true);
 zero_Interface.f_resetSettings();
 
 if(!b_runningMainInterfaceScenarioSettings && !b_runningMainInterfaceSlider){
-	uI_Results.v_gridConnection = zero_Interface.uI_Results.v_gridConnection;
 }
 /*ALCODEEND*/}
 
@@ -1816,8 +1820,8 @@ sl_GCCapacityCompany_Feedin.setValue(v_defaultGCCapacitySlider_Feedin, false);
 double f_getNFATOValues()
 {/*ALCODESTART::1727884380899*/
 v_NFATO_active = c_ownedGridConnections.get(v_currentSelectedGCnr).v_enableNFato;
-v_NFATO_kW_delivery = c_ownedGridConnections.get(v_currentSelectedGCnr).p_contractedDeliveryCapacity_kW - v_defaultGCCapacitySlider;
-v_NFATO_kW_feedin = c_ownedGridConnections.get(v_currentSelectedGCnr).p_contractedFeedinCapacity_kW- v_defaultGCCapacitySlider_Feedin;
+v_NFATO_kW_delivery = c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contractedDeliveryCapacity_kW - v_defaultGCCapacitySlider;
+v_NFATO_kW_feedin = c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contractedFeedinCapacity_kW- v_defaultGCCapacitySlider_Feedin;
 
 if(v_NFATO_kW_delivery > 0){
 	t_GCCapacityCompany_delivery_nfato.setColor(green);

@@ -93,6 +93,9 @@
 			<Parameter>
 				<Name><![CDATA[b_isInitialized]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[b_storePreviousRapidRunData]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">

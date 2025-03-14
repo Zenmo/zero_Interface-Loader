@@ -119,8 +119,8 @@ for ( GCEnergyProduction GCEP : zero_Interface.energyModel.EnergyProductionSites
 				GCEP.f_setActive(true);
 			}
 			j_ea.setCapacityElectric_kW(1000*hectare); // 1 ha = 1 MW
-			GCEP.p_physicalConnectionCapacity_kW = 1000*hectare;
-			GCEP.p_contractedFeedinCapacity_kW = 1000*hectare;
+			GCEP.v_liveConnectionMetaData.physicalCapacity_kW = 1000*hectare;
+			GCEP.v_liveConnectionMetaData.contractedFeedinCapacity_kW = 1000*hectare;
 			break;
 		}
 	}
@@ -177,7 +177,7 @@ else {
 			J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, installedPVCapacity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC, zero_Interface.energyModel.pp_solarPVproduction );
 			zero_Interface.c_orderedPVSystems.remove(house);
 			zero_Interface.c_orderedPVSystems.add(0, house);
-			zero_Interface.energyModel.v_totalInstalledPVPower_kW += installedPVCapacity_kW;
+			zero_Interface.energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW += installedPVCapacity_kW;
 			nbHousesWithPV ++;	
 		}
 	}
@@ -256,8 +256,8 @@ for ( GCEnergyProduction GCEP : zero_Interface.energyModel.EnergyProductionSites
 				GCEP.f_setActive(true);
 			}
 			j_ea.setCapacityElectric_kW(1000*AllocatedWindPower_MW);
-			GCEP.p_physicalConnectionCapacity_kW = 1000*AllocatedWindPower_MW;
-			GCEP.p_contractedFeedinCapacity_kW = 1000*AllocatedWindPower_MW;
+			GCEP.v_liveConnectionMetaData.physicalCapacity_kW = 1000*AllocatedWindPower_MW;
+			GCEP.v_liveConnectionMetaData.contractedFeedinCapacity_kW = 1000*AllocatedWindPower_MW;
 			
 			if(AllocatedWindPower_MW == 0){
 				GCEP.f_setActive(false);
@@ -369,9 +369,9 @@ for ( GCGridBattery battery : zero_Interface.energyModel.GridBatteries) {
 			battery.f_setActive(true);
 		}
 		batteryAsset.setCapacityElectric_kW(AllocatedCapacity_kW);
-		battery.p_physicalConnectionCapacity_kW = AllocatedCapacity_kW;
-		battery.p_contractedDeliveryCapacity_kW = AllocatedCapacity_kW;
-		battery.p_contractedFeedinCapacity_kW = AllocatedCapacity_kW;
+		battery.v_liveConnectionMetaData.physicalCapacity_kW = AllocatedCapacity_kW;
+		battery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = AllocatedCapacity_kW;
+		battery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = AllocatedCapacity_kW;
 		//break;
 	}
 }

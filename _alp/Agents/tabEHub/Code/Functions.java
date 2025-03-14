@@ -15,9 +15,9 @@ if ( zero_Interface.energyModel.GridBatteries.size() > 0 ){
 	GC.p_batteryAsset.setStorageCapacity_kWh(1000*capacity_MWh);
 	double capacityElectric_kW = 1000*capacity_MWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power;
 	GC.p_batteryAsset.setCapacityElectric_kW(capacityElectric_kW);
-	GC.p_physicalConnectionCapacity_kW = capacityElectric_kW;
-	GC.p_contractedDeliveryCapacity_kW = capacityElectric_kW;
-	GC.p_contractedFeedinCapacity_kW = capacityElectric_kW;
+	GC.v_liveConnectionMetaData.physicalCapacity_kW = capacityElectric_kW;
+	GC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = capacityElectric_kW;
+	GC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = capacityElectric_kW;
 }
 else {
 	throw new IllegalStateException("Model does not contain any GCGridBattery agent");
@@ -141,7 +141,7 @@ switch (rb_deliveryOrFeedin.getValue()) {
 		// Reset the GC Capacity in case they already had a NF-ATO
 		gc2.f_nfatoSetConnectionCapacity(true);
 		// Check if gc2 has enough capacity with the original connection capacity
-		if ( maxDeliveryCapacity_kW > gc2.p_contractedDeliveryCapacity_kW ) {
+		if ( maxDeliveryCapacity_kW > gc2.v_liveConnectionMetaData.contractedDeliveryCapacity_kW ) {
 			// Restore previous NF-ATO
 			gc2.f_nfatoSetConnectionCapacity(false);
 			throw new IllegalStateException("Invalid Non-Firm ATO Settings, " + gc2.p_ownerID + " does not have a delivery capacity of " + maxDeliveryCapacity_kW + " kW available");
@@ -161,7 +161,7 @@ switch (rb_deliveryOrFeedin.getValue()) {
 		// Reset the GC Capacity in case they already had a NF-ATO
 		gc2.f_nfatoSetConnectionCapacity(true);
 		// Check if gc2 has enough capacity with the original connection capacity
-		if ( maxFeedinCapacity_kW > gc2.p_contractedFeedinCapacity_kW ) {
+		if ( maxFeedinCapacity_kW > gc2.v_liveConnectionMetaData.contractedFeedinCapacity_kW ) {
 			// Restore previous NF-ATO
 			gc2.f_nfatoSetConnectionCapacity(false);
 			throw new IllegalStateException("Invalid Non-Firm ATO Settings, " + gc2.p_ownerID + " does not have a feed in capacity of " + maxFeedinCapacity_kW + " kW available");
@@ -187,12 +187,12 @@ switch (rb_deliveryOrFeedin.getValue()) {
 		// Reset the GC Capacity in case they already had a NF-ATO
 		gc2.f_nfatoSetConnectionCapacity(true);
 		// Check if gc2 has enough capacity with the original connection capacity
-		if ( maxDeliveryCapacity_kW > gc2.p_contractedDeliveryCapacity_kW ) {
+		if ( maxDeliveryCapacity_kW > gc2.v_liveConnectionMetaData.contractedDeliveryCapacity_kW ) {
 			// Restore previous NF-ATO
 			gc2.f_nfatoSetConnectionCapacity(false);
 			throw new IllegalStateException("Invalid Non-Firm ATO Settings, " + gc2.p_ownerID + " does not have a delivery capacity of " + maxDeliveryCapacity_kW + " kW available");
 		}
-		else if ( maxFeedinCapacity_kW > gc2.p_contractedFeedinCapacity_kW ) {
+		else if ( maxFeedinCapacity_kW > gc2.v_liveConnectionMetaData.contractedFeedinCapacity_kW ) {
 			// Restore previous NF-ATO
 			gc2.f_nfatoSetConnectionCapacity(false);
 			throw new IllegalStateException("Invalid Non-Firm ATO Settings, " + gc2.p_ownerID + " does not have a feed in capacity of " + maxFeedinCapacity_kW + " kW available");
