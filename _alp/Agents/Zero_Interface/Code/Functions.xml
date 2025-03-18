@@ -951,7 +951,7 @@
 		<Id>1734445008646</Id>
 		<Name><![CDATA[f_removeAllFilters]]></Name>
 		<X>-1450</X>
-		<Y>430</Y>
+		<Y>520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1249,31 +1249,6 @@
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1736425463188</Id>
-		<Name><![CDATA[f_EHubSelect]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>50</X>
-		<Y>1220</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[clickx]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[clicky]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
@@ -1351,6 +1326,74 @@
 		<Parameter>
 			<Name><![CDATA[resultsUI]]></Name>
 			<Type><![CDATA[UI_Results]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1742226689515</Id>
+		<Name><![CDATA[f_filterManualSelection]]></Name>
+		<X>-1430</X>
+		<Y>410</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[toBeFilteredGC]]></Name>
+			<Type><![CDATA[ArrayList<GridConnection>]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1742226787560</Id>
+		<Name><![CDATA[f_selectManualFilteredGC]]></Name>
+		<X>-1410</X>
+		<Y>430</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[clickx]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[clicky]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1742300624199</Id>
+		<Name><![CDATA[f_setForcedClickScreen]]></Name>
+		<X>140</X>
+		<Y>-880</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[showForcedClickScreen]]></Name>
+			<Type><![CDATA[boolean]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[forcedClickScreenText]]></Name>
+			<Type><![CDATA[String]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

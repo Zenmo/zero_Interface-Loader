@@ -57,6 +57,10 @@
 					<Id>1741874937291</Id>
 					<Name><![CDATA[FARMER]]></Name>
 				</Option>
+				<Option>
+					<Id>1742233248626</Id>
+					<Name><![CDATA[MANUAL_SELECTION]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1660743989698</Id>
