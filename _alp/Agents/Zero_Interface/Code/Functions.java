@@ -1433,8 +1433,8 @@ switch(selectedFilter){
 		break;
 		
 	case GRIDTOPOLOGY_SELECTEDLOOP:
-		if(v_selectedGridLoop != null){
-			f_filterGridLoop(toBeFilteredGC);
+		if(!c_filterSelectedGridLoops.isEmpty()){
+			f_filterGridLoops(toBeFilteredGC);
 		}
 		else{
 			f_setForcedClickScreen(true, "Selecteer een lus");
@@ -1451,8 +1451,8 @@ switch(selectedFilter){
 		break;
 		
 	case SELECTED_NEIGHBORHOOD:
-		if(v_selectedNeighborhood != null){
-			f_filterNeighborhood(toBeFilteredGC);
+		if(!c_filterSelectedNeighborhoods.isEmpty()){
+			f_filterNeighborhoods(toBeFilteredGC);
 		}
 		else{
 			f_setForcedClickScreen(true, "Selecteer een buurt");
@@ -1603,10 +1603,7 @@ if( v_previousClickedObjectType != null){
 	f_deselectPreviousSelect();
 }
 
-v_selectedGridLoop = null;
-v_selectedNeighborhood = null;
-//c_manualFilterSelectedGC.clear();
-//c_manualFilterDeselectedGC.clear();
+
 
 v_clickedObjectType = OL_GISObjectType.REGION;
 uI_Results.f_updateResultsUI(energyModel);
@@ -1640,17 +1637,23 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 					}
 				}	
 				
-				//This deselect the previous selected ring
+				//This deselect the previous selection of gridloops
 				f_setFilter("In de aangewezen 'lus'");
 				
-				//This selects the new selected ring
-				v_selectedGridLoop = clickedGridConnectionConnectedGridNode;
-				f_setFilter("In de aangewezen 'lus'");
-				
+				if(c_filterSelectedGridLoops.contains(clickedGridConnectionConnectedGridNode)){
+					c_filterSelectedGridLoops.remove(clickedGridConnectionConnectedGridNode);
+				}
+				else{
+					c_filterSelectedGridLoops.add(clickedGridConnectionConnectedGridNode);
+				}
+			
 				if(gr_forceMapSelection.isVisible()){
 					f_setForcedClickScreen(false, "");
 				}
-			
+				
+				//This selects the new selection of gridloops
+				f_setFilter("In de aangewezen 'lus'");
+				
 				return;
 				
 			}
@@ -1722,61 +1725,56 @@ else{ // All filters removed
 }
 /*ALCODEEND*/}
 
-double f_filterGridLoop(ArrayList<GridConnection> toBeFilteredGC)
+double f_filterGridLoops(ArrayList<GridConnection> toBeFilteredGC)
 {/*ALCODESTART::1734517589341*/
-OL_GridNodeType loopTopNodeType= v_selectedGridLoop.p_nodeType;
+HashSet<GridConnection> gridConnectionsOnLoop = new HashSet<GridConnection>();
 
-
-ArrayList<GridConnection> gridConnectionsOnLoop = new ArrayList<GridConnection>();
-
-if(b_gridLoopsAreDefined){
-	switch(loopTopNodeType){
-		case MVLV:
-			for(GridConnection GC : v_selectedGridLoop.f_getConnectedGridConnections()){
-				if(toBeFilteredGC.contains(GC)){
-					gridConnectionsOnLoop.add(GC);
+for(GridNode GridLoop : c_filterSelectedGridLoops)
+	if(b_gridLoopsAreDefined){
+		OL_GridNodeType loopTopNodeType= GridLoop.p_nodeType;
+		switch(loopTopNodeType){
+			case MVLV:
+				for(GridConnection GC : GridLoop.f_getConnectedGridConnections()){
+					if(toBeFilteredGC.contains(GC)){
+						gridConnectionsOnLoop.add(GC);
+					}
 				}
-			}
-			c_selectedGridConnections = new ArrayList<>(gridConnectionsOnLoop);
-
-		case SUBMV:
-			for(GridConnection GC : v_selectedGridLoop.f_getAllLowerLVLConnectedGridConnections()){
-				if(toBeFilteredGC.contains(GC)){
-					gridConnectionsOnLoop.add(GC);
+				break;
+			case SUBMV:
+				for(GridConnection GC : GridLoop.f_getAllLowerLVLConnectedGridConnections()){
+					if(toBeFilteredGC.contains(GC)){
+						gridConnectionsOnLoop.add(GC);
+					}
 				}
-			}
-			c_selectedGridConnections = new ArrayList<>(gridConnectionsOnLoop);
-			break;
-		
-		case MVMV:
-			for(GridConnection GC : v_selectedGridLoop.f_getConnectedGridConnections()){
-				if(toBeFilteredGC.contains(GC)){
-					gridConnectionsOnLoop.add(GC);
-				}
-			}
-			c_selectedGridConnections = new ArrayList<>(gridConnectionsOnLoop);
-			break;
+				break;
 			
-		case HVMV:
-			for(GridConnection GC : v_selectedGridLoop.f_getConnectedGridConnections()){
-				if(toBeFilteredGC.contains(GC)){
-					gridConnectionsOnLoop.add(GC);
+			case MVMV:
+				for(GridConnection GC : GridLoop.f_getConnectedGridConnections()){
+					if(toBeFilteredGC.contains(GC)){
+						gridConnectionsOnLoop.add(GC);
+					}
 				}
-			}
-			c_selectedGridConnections = new ArrayList<>(gridConnectionsOnLoop);
-			break; 
-	}
-}
-else{
-	for(GridConnection GC : v_selectedGridLoop.f_getAllLowerLVLConnectedGridConnections()){
-		if(toBeFilteredGC.contains(GC)){
-			gridConnectionsOnLoop.add(GC);
+				
+				break;
+				
+			case HVMV:
+				for(GridConnection GC : GridLoop.f_getConnectedGridConnections()){
+					if(toBeFilteredGC.contains(GC)){
+						gridConnectionsOnLoop.add(GC);
+					}
+				}
+				break;
 		}
 	}
-	c_selectedGridConnections = new ArrayList<>(gridConnectionsOnLoop);
-}
+	else{
+		for(GridConnection GC : GridLoop.f_getAllLowerLVLConnectedGridConnections()){
+			if(toBeFilteredGC.contains(GC)){
+				gridConnectionsOnLoop.add(GC);
+			}
+		}
+	}
 
-traceln(c_selectedGridConnections);
+c_selectedGridConnections = new ArrayList<>(gridConnectionsOnLoop);
 /*ALCODEEND*/}
 
 double f_setErrorScreen(String errorMessage)
@@ -1948,16 +1946,23 @@ for ( GIS_Object region : c_GISNeighborhoods ){
 				
 			GIS_Object clickedNeighborhood = region;
 			
-			//This deselect the previous selected neighborhood
+
+			//This deselects the previous selected neighborhood filter
 			f_setFilter("In de aangwezen 'buurt'");
 			
-			//This selects the new selected neighborhood
-			v_selectedNeighborhood = clickedNeighborhood;
-			f_setFilter("In de aangwezen 'buurt'");
-			
+			if(c_filterSelectedNeighborhoods.contains(clickedNeighborhood)){
+				c_filterSelectedNeighborhoods.remove(clickedNeighborhood);
+			}
+			else{
+				c_filterSelectedNeighborhoods.add(clickedNeighborhood);
+			}
+
 			if(gr_forceMapSelection.isVisible()){
 				f_setForcedClickScreen(false, "");
 			}
+			//This sets the new selected neighborhoods filter
+			f_setFilter("In de aangwezen 'buurt'");
+			
 			return;	
 		}
 	}
@@ -1965,14 +1970,15 @@ for ( GIS_Object region : c_GISNeighborhoods ){
 
 /*ALCODEEND*/}
 
-double f_filterNeighborhood(ArrayList<GridConnection> toBeFilteredGC)
+double f_filterNeighborhoods(ArrayList<GridConnection> toBeFilteredGC)
 {/*ALCODESTART::1737653178013*/
 ArrayList<GridConnection> gridConnectionsInNeighborhood = new ArrayList<GridConnection>();
 
 for(GridConnection GC : toBeFilteredGC){
-	if( v_selectedNeighborhood.gisRegion.contains(GC.p_latitude, GC.p_longitude) ){
-		gridConnectionsInNeighborhood.add(GC);
-	}
+	for(GIS_Object nbh : c_filterSelectedNeighborhoods)
+		if( nbh.gisRegion.contains(GC.p_latitude, GC.p_longitude) ){
+			gridConnectionsInNeighborhood.add(GC);
+		}
 }
 
 c_selectedGridConnections = new ArrayList<>(gridConnectionsInNeighborhood);

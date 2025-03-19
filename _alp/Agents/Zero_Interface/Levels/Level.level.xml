@@ -4736,7 +4736,7 @@ for(GISRoute GISCable : c_MVCables){
 		<Lock>true</Lock>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<OnClickCode>
-if(b_inManualFilterSelectionMode){
+if(cb_manualFilterSelection.isSelected()){
 	f_selectManualFilteredGC(clickx, clicky);
 }
 else{
@@ -4765,7 +4765,7 @@ else{
 		<Width>1000</Width>
 		<Height>620</Height>
 		<OnClickCode>
-if(b_inManualFilterSelectionMode){
+if(cb_manualFilterSelection.isSelected()){
 	f_selectManualFilteredGC(clickx, clicky);
 }
 else{
@@ -5970,7 +5970,9 @@ cb_filterOptions.setValueIndex(0);</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor/>
 					<Enabled>true</Enabled>
-					<ActionCode>c_manualFilterSelectedGC.clear();
+					<ActionCode>c_filterSelectedGridLoops.clear();
+c_filterSelectedNeighborhoods.clear();
+c_manualFilterSelectedGC.clear();
 c_manualFilterDeselectedGC.clear();
 cb_manualFilterSelection.setSelected(false, true);
 f_setForcedClickScreen(false, "");
@@ -6001,7 +6003,7 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text/>
-				<TextCode>v_selectedGridLoop != null ? "Geselecteerde lus: " + v_selectedGridLoop.p_gridNodeID : "Geen lus geselecteerd."</TextCode>
+				<TextCode>c_filterSelectedGridLoops.size() == 1 ? "Geselecteerde lus: " + c_filterSelectedGridLoops.get(0).p_gridNodeID : c_filterSelectedGridLoops.size() &gt; 1 ? "Meerdere lussen geselecteerd." : "Geen lus geselecteerd."</TextCode>
 				<Font>
 					<Name><![CDATA[SansSerif]]></Name>
 					<Size>12</Size>
@@ -6028,7 +6030,7 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text/>
-				<TextCode>v_selectedNeighborhood != null ? "Geselecteerde buurt: " + v_selectedNeighborhood.p_id : "Geen buurt geselecteerd."</TextCode>
+				<TextCode>c_filterSelectedNeighborhoods.size() == 1 ? "Geselecteerde buurt: " + c_filterSelectedNeighborhoods.get(0).p_id : c_filterSelectedNeighborhoods.size() &gt; 1 ? "Meerdere buurten geselecteerd." : "Geen buurt geselecteerd."</TextCode>
 				<Font>
 					<Name><![CDATA[SansSerif]]></Name>
 					<Size>12</Size>
@@ -6064,7 +6066,7 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 }
 else{ 
 	f_setForcedClickScreen(false, "");
-	if (c_manualFilterSelectedGC.isEmpty() &amp;&amp; c_manualFilterDeselectedGC.isEmpty()){
+	if (c_manualFilterSelectedGC.isEmpty() &amp;&amp; c_manualFilterDeselectedGC.isEmpty() &amp;&amp; c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
 		f_setFilter("Handmatige selectie");
 	}
 }
@@ -6073,7 +6075,8 @@ else{
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
 					<LabelText>Handmatige selectie modus</LabelText>
-					<LinkTo>true</LinkTo>
+					<DefaultValueCode>false</DefaultValueCode>
+					<LinkTo>false</LinkTo>
 					<Link>b_inManualFilterSelectionMode</Link>
 				</ExtendedProperties>
 			</Control>
