@@ -1477,7 +1477,7 @@ else{//Filtered GC returns GC
 	
 	//Set graphs	
 	if(c_selectedGridConnections.size()>1){
-		v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections);
+		v_customEnergyCoop = energyModel.f_addEnergyCoop(new ArrayList<GridConnection>(c_selectedGridConnections));
 		uI_Results.f_updateResultsUI(v_customEnergyCoop);
 	}
 	else{
