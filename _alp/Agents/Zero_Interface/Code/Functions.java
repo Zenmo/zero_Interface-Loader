@@ -786,6 +786,8 @@ if(settings.showKPISummary() == null || !settings.showKPISummary()){
 }
 
 //Set order of certain layovers and submenus
+presentation.remove(gr_sliderClickBlocker);
+presentation.insert(presentation.size(), gr_sliderClickBlocker);
 presentation.remove(gr_forceMapSelection);
 presentation.insert(presentation.size(), gr_forceMapSelection);
 presentation.remove(gr_filterInterface);
