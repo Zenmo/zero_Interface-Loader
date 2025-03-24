@@ -84,7 +84,7 @@ for (GridNode_data GN_data : c_GridNode_data) {
 	if( settings.subscopesToSimulate() == null || settings.subscopesToSimulate().isEmpty() || GN_data.subscope() == null || settings.subscopesToSimulate().indexOf(GN_data.subscope()) > -1 ){ 
 		if (GN_data.status()) {
 			GridNode GN = energyModel.add_pop_gridNodes();
-			GN.p_gridNodeID = GN_data.trafo_id();
+			GN.p_gridNodeID = GN_data.gridnode_id();
 			c_gridNodeIDsInScope.add(GN.p_gridNodeID);
 			
 			// Check wether transformer capacity is known or estimated
@@ -311,7 +311,7 @@ for (Building_data dataBuilding : scopedBuilding_data) {
 	
 	//Connect GC to grid node
 	//GridNode myParentNodeElectric;
-	GCH.p_parentNodeElectricID = dataBuilding.trafo_id();
+	GCH.p_parentNodeElectricID = dataBuilding.gridnode_id();
 	
 
 	
@@ -422,7 +422,7 @@ for (Solarfarm_data dataSolarfarm : c_Solarfarm_data) { // MOET NOG CHECK OF ZON
 		
 		solarpark.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
 		solarpark.set_p_ownerID( dataSolarfarm.owner_id() );	
-		solarpark.set_p_parentNodeElectricID( dataSolarfarm.trafo_id() );
+		solarpark.set_p_parentNodeElectricID( dataSolarfarm.gridnode_id() );
 		
 		solarpark.v_isActive = dataSolarfarm.initially_active() ;
 		
@@ -516,7 +516,7 @@ for (Battery_data dataBattery : c_Battery_data) { // MOET NOG CHECK OF battery A
 		gridbattery.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;	
 	}
 	
-	gridbattery.set_p_parentNodeElectricID( dataBattery.trafo_id() );	
+	gridbattery.set_p_parentNodeElectricID( dataBattery.gridnode_id() );	
 	gridbattery.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
 	gridbattery.set_p_batteryOperationMode( OL_BatteryOperationMode.valueOf(dataBattery.default_operation_mode()) );
 	
@@ -556,7 +556,7 @@ for (Electrolyser_data dataElectrolyser : c_Electrolyser_data) {
 	H2Electrolyser.set_p_name( dataElectrolyser.gc_name() );
 	H2Electrolyser.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
 	H2Electrolyser.set_p_ownerID( dataElectrolyser.owner_id() );	
-	H2Electrolyser.set_p_parentNodeElectricID( dataElectrolyser.trafo_id() );
+	H2Electrolyser.set_p_parentNodeElectricID( dataElectrolyser.gridnode_id() );
 	
 	//Grid Capacity
 	H2Electrolyser.v_liveConnectionMetaData.physicalCapacity_kW = dataElectrolyser.connection_capacity_kw();
@@ -657,7 +657,7 @@ for (Windfarm_data dataWindfarm : c_Windfarm_data) {
 		
 		windfarm.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
 		windfarm.set_p_ownerID( dataWindfarm.owner_id() );	
-		windfarm.set_p_parentNodeElectricID( dataWindfarm.trafo_id() );
+		windfarm.set_p_parentNodeElectricID( dataWindfarm.gridnode_id() );
 		
 		//Get initial state
 		windfarm.v_isActive = dataWindfarm.initially_active();
@@ -1032,7 +1032,7 @@ for (Building_data genericCompany : c_GenericCompanyBuilding_data) {
  	
  	
 	//Connect GC to grid node
-	companyGC.p_parentNodeElectricID = genericCompany.trafo_id ();
+	companyGC.p_parentNodeElectricID = genericCompany.gridnode_id ();
 	
 	// Create new actor and assign GC to that
 	ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
@@ -1524,7 +1524,7 @@ for (var survey : surveys) {
 						c_SurveyCompanyBuilding_data.add(building);
 						
 						//Set trafo ID
-						companyGC.p_parentNodeElectricID = building.trafo_id();
+						companyGC.p_parentNodeElectricID = building.gridnode_id();
 					}
 					else if(findFirst(energyModel.pop_GIS_Buildings, b -> b.p_id.equals(PID.getValue())) != null){
 						GIS_Building gisbuilding = findFirst(energyModel.pop_GIS_Buildings, b -> b.p_id.equals(PID.getValue()));
@@ -1566,7 +1566,7 @@ for (var survey : surveys) {
 				totalRoofSurfaceAreaGC_m2 += b.p_roofSurfaceArea_m2;
 				
 				//Set trafo ID
-				companyGC.p_parentNodeElectricID = building.trafo_id();
+				companyGC.p_parentNodeElectricID = building.gridnode_id();
 				
 				//Style building
 				b.p_defaultFillColor = zero_Interface.v_detailedCompanyBuildingColor;
@@ -2204,7 +2204,7 @@ List<Tuple> scopedList = new ArrayList<>();
 
 for (Tuple tuple : initialList) {
 	for (int i = 0; i < c_gridNodeIDsInScope.size() - 1; i++){
-		if (tuple.get(chargepoints.trafo_id).equals( c_gridNodeIDsInScope.get(i)) ){
+		if (tuple.get(chargepoints.gridnode_id).equals( c_gridNodeIDsInScope.get(i)) ){
 			scopedList.add(tuple);
 		}
 	}	
@@ -2225,7 +2225,7 @@ for (Tuple row : scopedList){
 	charger.set_p_name( row.get( chargepoints.gc_name ) );
 	charger.set_p_ownerID(CPO.p_actorID );
 	charger.set_p_floorSurfaceArea_m2( 1 ); 
-	charger.set_p_parentNodeElectricID( row.get( chargepoints.trafo_id ) );
+	charger.set_p_parentNodeElectricID( row.get( chargepoints.gridnode_id ) );
 	charger.v_isActiveCharger = row.get(chargepoints.exists_already);
 	//	charger.v_isPaused = !row.get( chargepoints.initially_active );
 	charger.set_p_latitude( row.get( chargepoints.latitude ) );
@@ -2334,7 +2334,7 @@ for (Chargingstation_data dataChargingStation : c_Chargingstation_data){
 	chargingStation.set_p_heatingType( OL_GridConnectionHeatingType.NONE );
 	
 	//Set parent node
-	chargingStation.p_parentNodeElectricID = dataChargingStation.trafo_id();
+	chargingStation.p_parentNodeElectricID = dataChargingStation.gridnode_id();
 	
 	//Is active at start?
 	chargingStation.v_isActive = dataChargingStation.initially_active();
@@ -2478,7 +2478,7 @@ for (Building_data dataBuilding : scopedBuilding_data) {
 	company.setLatLon(company.p_latitude, company.p_longitude);
 	
 	//Connect GC to grid node
-	company.p_parentNodeElectricID = dataBuilding.trafo_id();
+	company.p_parentNodeElectricID = dataBuilding.gridnode_id();
 		
 	//Create and set owner
 	ConnectionOwner	companyOwner = energyModel.add_pop_connectionOwners();
@@ -2546,7 +2546,7 @@ List<Building_data> scopedList = new ArrayList<>();
 
 for (Building_data dataBuilding : initialList) {
 	for (int i = 0; i < c_gridNodeIDsInScope.size() - 1; i++){
-		if (dataBuilding.trafo_id().equals( c_gridNodeIDsInScope.get(i)) ){
+		if (dataBuilding.gridnode_id().equals( c_gridNodeIDsInScope.get(i)) ){
 			scopedList.add(dataBuilding);
 		}
 	}	
@@ -2817,7 +2817,7 @@ traceln("Companies that filled in the survey:");
 					zero_Interface.f_styleAreas(b);
 	
 					// Trafo data
-					companyGC.set_p_parentNodeElectricID( buildingRow.get ( buildings.trafo_id ) );				
+					companyGC.set_p_parentNodeElectricID( buildingRow.get ( buildings.gridnode_id ) );				
 					companyGC.p_longitude = companyGC.c_connectedGISObjects.get(0).p_longitude;
 					companyGC.p_latitude = companyGC.c_connectedGISObjects.get(0).p_latitude;
 					companyGC.setLatLon(companyGC.p_latitude, companyGC.p_longitude);  
@@ -2869,7 +2869,7 @@ traceln("Companies that filled in the survey:");
 
 					totalFloorSurfaceAreaGC_m2 += b.p_floorSurfaceArea_m2;
 					totalRoofSurfaceAreaGC_m2 += b.p_roofSurfaceArea_m2;
-					companyGC.p_parentNodeElectricID = buildingRow.get(buildings.trafo_id);
+					companyGC.p_parentNodeElectricID = buildingRow.get(buildings.gridnode_id);
 					
 					//Style building
 					if (COC.p_detailedCompany) {
@@ -2891,7 +2891,7 @@ traceln("Companies that filled in the survey:");
 				 	companyGC.p_city = buildingRow.get( buildings.city );
 				 	
 				 	// Set Trafo ID
-				 	companyGC.p_parentNodeElectricID = buildingRow.trafo_id();
+				 	companyGC.p_parentNodeElectricID = buildingRow.gridnode_id();
 				 }
 			}
 				
@@ -3615,7 +3615,7 @@ status(pand_data_vallum.getStatus()).
 //polygon_area_m2(row.get( buildings.polygon_area_m2 )).
 annotation(companyGC.p_gridConnectionID).
 //extra_info(row.get( buildings.extra_info )).
-//trafo_id(row.get( buildings.trafo_id )).
+//gridnode_id(row.get( buildings.gridnode_id )).
 //latitude(row.get( buildings.latitude )).
 //longitude(row.get( buildings.longitude )).
 polygon(pand_data_vallum.getGeometry().toString()).

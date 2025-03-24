@@ -28,7 +28,7 @@ public class Building_data {
 	Double electricity_consumption_kwhpa;
 	Double gas_consumption_kwhpa;
 	String energy_label;
-	String trafo_id;
+	String gridnode_id;
 	Double latitude;
 	Double longitude;
 	String polygon;
