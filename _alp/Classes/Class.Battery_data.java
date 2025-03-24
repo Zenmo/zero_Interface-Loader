@@ -15,7 +15,7 @@ public class Battery_data {
 	String house_addition;
 	String postalcode;
 	String city;
-	String trafo_id;
+	String gridnode_id;
 	boolean initially_active;
 	double storage_capacity_kwh;
 	double capacity_electric_kw;

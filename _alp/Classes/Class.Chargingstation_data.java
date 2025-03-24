@@ -15,7 +15,7 @@ public class Chargingstation_data {
 	String house_addition;
 	String postalcode;
 	String city;
-	String trafo_id;
+	String gridnode_id;
 	Double connection_capacity_kw;	
 	boolean is_charging_centre;
 	//profile_data ??

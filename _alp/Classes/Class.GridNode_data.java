@@ -5,7 +5,7 @@
 @lombok.Value
 @lombok.experimental.Accessors(fluent = true)
 public class GridNode_data {
-		String trafo_id;
+		String gridnode_id;
 		String fid;
 		boolean status;
 		String type;
