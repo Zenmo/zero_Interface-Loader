@@ -15,7 +15,7 @@ public class Solarfarm_data {
 		String house_addition;
 		String postalcode;
 		String city;
-		String trafo_id;
+		String gridnode_id;
 		boolean initially_active;
 		double capacity_electric_kw;
 		double connection_capacity_kw;
