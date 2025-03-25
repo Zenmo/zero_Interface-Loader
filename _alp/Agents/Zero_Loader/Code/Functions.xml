@@ -1342,8 +1342,8 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1742915722586</Id>
 		<Name><![CDATA[f_connectGCToExistingBuilding]]></Name>
-		<X>490</X>
-		<Y>-40</Y>
+		<X>810</X>
+		<Y>780</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
