@@ -4468,8 +4468,11 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[Je kijkt naar de som van alle 5  addressen samen in het geselecteerde pand]]></Text>
-				<TextCode>v_selectedGridConnectionIndex &gt; 0 ? 
-"Je kijkt naar het " + (v_selectedGridConnectionIndex ) + "e adres in het geselecteerde pand :" + c_selectedGridConnections.get(0).p_address.getAddress()
+				<TextCode>v_selectedGridConnectionIndex &gt; 0 &amp;&amp; c_selectedGridConnections.size() &gt; 0 &amp;&amp; c_selectedGridConnections.get(0).p_owner.p_detailedCompany ?
+"Je kijkt naar: " + c_selectedGridConnections.get(0).p_ownerID + ", " + c_selectedGridConnections.get(0).p_address.getAddress()
+:
+v_selectedGridConnectionIndex &gt; 0 ?
+"Je kijkt naar het " + (v_selectedGridConnectionIndex ) + "e adres in het geselecteerde pand"
 : 
 "Je kijkt naar de som van alle " + v_nbGridConnectionsInSelectedBuilding + " addressen in dit pand"</TextCode>
 				<Font>

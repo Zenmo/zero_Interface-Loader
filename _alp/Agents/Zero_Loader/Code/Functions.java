@@ -1584,6 +1584,16 @@ for (var survey : surveys) {
 			if(!companyGC.c_connectedGISObjects.isEmpty()){
 				companyGC.p_longitude = companyGC.c_connectedGISObjects.get(0).p_longitude; // Get longitude of first building (only used to get nearest trafo)
 				companyGC.p_latitude = companyGC.c_connectedGISObjects.get(0).p_latitude; // Get latitude of first building (only used to get nearest trafo)
+				
+				if(buildings.isEmpty()){ //GC will not have gotten a gridnode assigned,
+					for (var PID : gridConnection.getPandIds() ) {
+						Building_data surveyBuildingData = findFirst(c_SurveyCompanyBuilding_data, b -> b.building_id().equals(PID.getValue()));
+						if(surveyBuildingData != null){
+							companyGC.p_parentNodeElectricID = surveyBuildingData.gridnode_id();
+							break;
+						}
+					}
+				}
 			}
 			else{
 				traceln("Gridconnection %s with owner %s has no buildings!!!", companyGC.p_gridConnectionID, companyGC.p_ownerID);
