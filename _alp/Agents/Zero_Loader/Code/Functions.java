@@ -1532,7 +1532,8 @@ for (var survey : surveys) {
 							
 							//Building already exists: add existing building to GC c_gisObjects and don't make a new one.
 							companyGC.c_connectedGISObjects.add(gisbuilding);
-
+							gisbuilding.c_containedGridConnections.add(companyGC);
+							
 							//Accumulate surface areas
 							totalFloorSurfaceAreaGC_m2 += gisbuilding.p_floorSurfaceArea_m2; //Gaat dan dubbel met vorige GC die het pand maakte!
 							totalRoofSurfaceAreaGC_m2 += gisbuilding.p_roofSurfaceArea_m2; //Gaat dan dubbel met vorige GC die het pand maakte!
