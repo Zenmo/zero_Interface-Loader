@@ -6101,49 +6101,6 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
-			<Control Type="CheckBox">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1742227552095</Id>
-				<Name><![CDATA[cb_manualFilterSelection]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<X>245</X>
-				<Y>35</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="160" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
-					<Enabled>true</Enabled>
-					<EnableExpression>!gr_forceMapSelection.isVisible() || cb_manualFilterSelection.isSelected()</EnableExpression>
-					<ActionCode>if(cb_manualFilterSelection.isSelected()){
-	f_setForcedClickScreen(true, "(De)Selecteer gebouwen");
-	
-	if(!c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
-		f_setFilter("Handmatige selectie");
-	}
-}
-else{ 
-	f_setForcedClickScreen(false, "");
-	if (c_manualFilterSelectedGC.isEmpty() &amp;&amp; c_manualFilterDeselectedGC.isEmpty() &amp;&amp; c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
-		f_setFilter("Handmatige selectie");
-	}
-}
-</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<Font Name="Dialog" Size="11" Style="0"/>
-					<LabelText>Handmatige selectie modus</LabelText>
-					<DefaultValueCode>false</DefaultValueCode>
-					<LinkTo>false</LinkTo>
-					<Link>b_inManualFilterSelectionMode</Link>
-				</ExtendedProperties>
-			</Control>
 			<Control Type="Button">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1742227694564</Id>
