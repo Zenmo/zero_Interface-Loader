@@ -96,6 +96,9 @@
 			<Parameter>
 				<Name><![CDATA[b_storePreviousRapidRunData]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_regionName]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">

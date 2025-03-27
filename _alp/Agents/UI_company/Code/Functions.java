@@ -1394,7 +1394,7 @@ else{
 }
 
 //Set selected object display flase
-//uI_Results.b_showSelectedObjectDisplay = false;
+uI_Results.b_isCompanyUIResultsUI = true;
 
 //Set the color of the charts
 uI_Results.f_styleAllCharts(v_chartBackgroundColor, v_companyUILineColor, v_chartLineWidth, LINE_STYLE_SOLID);
