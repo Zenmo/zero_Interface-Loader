@@ -1389,6 +1389,12 @@ uI_Results.f_setResultsUIHeader(null, null, false);
 if(zero_Interface.settings.showKPISummary() == null || !zero_Interface.settings.showKPISummary()){
 	uI_Results.getCheckbox_KPISummary().setVisible(false);
 }
+else{
+	//uI_Results.f_setCB_KPISummary_Presentation(10, -30, true);
+}
+
+//Set selected object display flase
+uI_Results.b_isCompanyUIResultsUI = true;
 
 //Set the color of the charts
 uI_Results.f_styleAllCharts(v_chartBackgroundColor, v_companyUILineColor, v_chartLineWidth, LINE_STYLE_SOLID);

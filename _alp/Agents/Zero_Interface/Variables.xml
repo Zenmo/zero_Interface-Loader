@@ -750,7 +750,7 @@
               StaticVariable="false">
 			<Type><![CDATA[Color]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new Color(64, 64, 64, 65)]]></Code>
+				<Code><![CDATA[new Color(192, 192, 192, 100)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -1874,25 +1874,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1734442989935</Id>
-		<Name><![CDATA[v_selectedGridLoop]]></Name>
-		<X>-1410</X>
-		<Y>310</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="protected"
-              StaticVariable="false">
-			<Type><![CDATA[GridNode]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1734617425109</Id>
 		<Name><![CDATA[b_gridLoopsAreDefined]]></Name>
 		<X>-1410</X>
@@ -1979,49 +1960,10 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1736425463190</Id>
-		<Name><![CDATA[b_EHubSelect]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>70</X>
-		<Y>1240</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="protected"
-              StaticVariable="false">
-			<Type><![CDATA[boolean]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1737653178015</Id>
-		<Name><![CDATA[v_selectedNeighborhood]]></Name>
-		<X>-1410</X>
-		<Y>390</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="protected"
-              StaticVariable="false">
-			<Type><![CDATA[GIS_Object]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1739980192808</Id>
 		<Name><![CDATA[v_customEnergyCoop]]></Name>
 		<X>50</X>
-		<Y>1810</Y>
+		<Y>1270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2034,6 +1976,50 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[EnergyCoop]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1742298194173</Id>
+		<Name><![CDATA[v_forcedClickScreenColor]]></Name>
+		<X>140</X>
+		<Y>-860</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[Color]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new Color(105, 105, 105, 150)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1743092928263</Id>
+		<Name><![CDATA[b_inManualFilterSelectionMode]]></Name>
+		<X>-1410</X>
+		<Y>500</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[boolean]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[false]]></Code>
+			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
@@ -2479,7 +2465,7 @@
 		<Id>1721302080638</Id>
 		<Name><![CDATA[c_selectedGridConnections]]></Name>
 		<X>50</X>
-		<Y>1270</Y>
+		<Y>1240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2588,6 +2574,78 @@
 		<Name><![CDATA[c_selectedObjects]]></Name>
 		<X>50</X>
 		<Y>1630</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>GIS_Object</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1742226708562</Id>
+		<Name><![CDATA[c_manualFilterDeselectedGC]]></Name>
+		<X>-1410</X>
+		<Y>475</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>GridConnection</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1742226748068</Id>
+		<Name><![CDATA[c_manualFilterSelectedGC]]></Name>
+		<X>-1410</X>
+		<Y>455</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>GridConnection</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1742376749972</Id>
+		<Name><![CDATA[c_filterSelectedGridLoops]]></Name>
+		<X>-1410</X>
+		<Y>310</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>GridNode</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1742376765347</Id>
+		<Name><![CDATA[c_filterSelectedNeighborhoods]]></Name>
+		<X>-1410</X>
+		<Y>390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
