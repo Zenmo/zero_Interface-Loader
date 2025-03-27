@@ -750,7 +750,7 @@
               StaticVariable="false">
 			<Type><![CDATA[Color]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new Color(64, 64, 64, 65)]]></Code>
+				<Code><![CDATA[new Color(192, 192, 192, 100)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -1996,7 +1996,29 @@
               StaticVariable="false">
 			<Type><![CDATA[Color]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new Color(128, 128, 128, 150)]]></Code>
+				<Code><![CDATA[new Color(105, 105, 105, 150)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1743092928263</Id>
+		<Name><![CDATA[b_inManualFilterSelectionMode]]></Name>
+		<X>-1410</X>
+		<Y>500</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[boolean]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[false]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
