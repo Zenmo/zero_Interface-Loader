@@ -1724,10 +1724,11 @@ double f_setSimulateYearScreen()
 {/*ALCODESTART::1725607045331*/
 gr_simulateYearScreen.setVisible(true);
 
-//Set it for main interface as well
-zero_Interface.f_resetSettings();
+
 
 if(!b_runningMainInterfaceScenarioSettings && !b_runningMainInterfaceSlider){
+	//Set it for main interface as well
+	zero_Interface.f_resetSettings();
 }
 /*ALCODEEND*/}
 

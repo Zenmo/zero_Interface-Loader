@@ -185,25 +185,6 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1726584205901</Id>
-		<Name><![CDATA[v_remainingNumberOfCompaniesNoSurvey]]></Name>
-		<X>1480</X>
-		<Y>320</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[int]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1727683925084</Id>
 		<Name><![CDATA[v_nbCreatedVans]]></Name>
 		<X>1480</X>

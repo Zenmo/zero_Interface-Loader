@@ -387,6 +387,7 @@ v_nbGridConnectionsInSelectedBuilding = b.c_containedGridConnections.size();
 
 //Multiple GC in building: set additional adress in building info + buttons
 if ( v_nbGridConnectionsInSelectedBuilding > 1 ){
+	v_selectedGridConnectionIndex = 0;
 	v_clickedObjectText = "Pand met " + b.c_containedGridConnections.size() + " adressen: " + b.p_id;
 	gr_multipleBuildingInfo.setVisible(true);
 }
@@ -1054,8 +1055,6 @@ else {
 
 double f_updateUIResultsData()
 {/*ALCODESTART::1720793723819*/
-v_selectedGridConnectionIndex = 0;
-
 for (GridConnection gc : c_selectedObjects.get(0).c_containedGridConnections) {
 	if (!c_selectedGridConnections.contains(gc)) {
 		c_selectedGridConnections.add(gc);
