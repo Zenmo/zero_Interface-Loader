@@ -4363,20 +4363,32 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor/>
 					<Enabled>true</Enabled>
+					<EnableExpression>v_selectedGridConnectionIndex &lt; v_nbGridConnectionsInSelectedBuilding</EnableExpression>
 					<ActionCode>if (v_selectedGridConnectionIndex &lt; v_nbGridConnectionsInSelectedBuilding ){
 	v_selectedGridConnectionIndex += 1;
-	//List&lt;GridConnection&gt; list = new ArrayList&lt;&gt;();
+
 	c_selectedGridConnections = new ArrayList&lt;&gt;();
+	
+	if(v_customEnergyCoop != null){
+		energyModel.f_removeEnergyCoop(v_customEnergyCoop);
+		v_customEnergyCoop = null;
+	}
+
 	if( v_selectedGridConnectionIndex &gt; 0){
 		c_selectedGridConnections.add(c_selectedObjects.get(0).c_containedGridConnections.get(v_selectedGridConnectionIndex -1));
+		uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
 	}
+	/*
 	else {
-		c_selectedGridConnections = c_selectedObjects.get(0).c_containedGridConnections;
-		
+		c_selectedGridConnections.addAll(c_selectedObjects.get(0).c_containedGridConnections);
+		v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections);
+		uI_Results.f_updateResultsUI(v_customEnergyCoop);
 	}
-	
+	*/
+	/*
 	//Update the resultsUI
-	f_updateUIResultsData();
+	f_updateUIResultsData();	
+	*/
 	
 	//Set dashboard UI button
 	f_setUIButton();
@@ -4405,24 +4417,31 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor/>
 					<Enabled>true</Enabled>
+					<EnableExpression>v_selectedGridConnectionIndex &gt; 0</EnableExpression>
 					<ActionCode>if (v_selectedGridConnectionIndex &gt; 0){
-	v_selectedGridConnectionIndex -= 1;
-	//List&lt;GridConnection&gt; list = new ArrayList&lt;&gt;();
 	c_selectedGridConnections = new ArrayList&lt;&gt;();
+	v_selectedGridConnectionIndex -= 1;
 	
 	if( v_selectedGridConnectionIndex &gt; 0){
 		c_selectedGridConnections.add(c_selectedObjects.get(0).c_containedGridConnections.get(v_selectedGridConnectionIndex -1));
+		uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
 	}
 	else {
-		c_selectedGridConnections = c_selectedObjects.get(0).c_containedGridConnections;
+		c_selectedGridConnections.addAll(c_selectedObjects.get(0).c_containedGridConnections);
+		
+		v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections);
+		uI_Results.f_updateResultsUI(v_customEnergyCoop);
 	}
 	
+	/*
 	//Update the resultsUI
 	f_updateUIResultsData();
+	*/
 	
 	//Set dashboard UI button
 	f_setUIButton();
 }
+
 
 </ActionCode>
 				</BasicProperties>
@@ -4449,7 +4468,10 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[Je kijkt naar de som van alle 5  addressen samen in het geselecteerde pand]]></Text>
-				<TextCode>v_selectedGridConnectionIndex &gt; 0 ? 
+				<TextCode>v_selectedGridConnectionIndex &gt; 0 &amp;&amp; c_selectedGridConnections.size() &gt; 0 &amp;&amp; c_selectedGridConnections.get(0).p_owner.p_detailedCompany ?
+"Je kijkt naar: " + c_selectedGridConnections.get(0).p_ownerID + ", " + c_selectedGridConnections.get(0).p_address.getAddress()
+:
+v_selectedGridConnectionIndex &gt; 0 ?
 "Je kijkt naar het " + (v_selectedGridConnectionIndex ) + "e adres in het geselecteerde pand"
 : 
 "Je kijkt naar de som van alle " + v_nbGridConnectionsInSelectedBuilding + " addressen in dit pand"</TextCode>

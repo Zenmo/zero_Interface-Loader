@@ -977,103 +977,106 @@ energyModel.f_addProfile(profilePointer);
 double f_createGenericCompanies()
 {/*ALCODESTART::1726584205799*/
 //Initialize variables
-List<GridConnection> generic_company_GCs = new ArrayList();
+List<GCUtility> generic_company_GCs = new ArrayList();
 
 
 for (Building_data genericCompany : c_GenericCompanyBuilding_data) {
-
-	//Create new companyGC
-	GCUtility companyGC = energyModel.add_UtilityConnections();
 	
-	//Update counter and collection	 
-	v_numberOfCompaniesNoSurvey++;
-	generic_company_GCs.add(companyGC);
+	GCUtility companyGC = findFirst(generic_company_GCs, GC -> GC.p_gridConnectionID.equals(genericCompany.address_id()));
 	
-	//Set parameters for the Grid Connection
-	companyGC.p_gridConnectionID = genericCompany.address_id();
-	
-	// Check that is needed until connectioncapacity is no longer in 'Panden' excel
-	if (genericCompany.contracted_capacity_kw() == null || genericCompany.contracted_capacity_kw() <= 0) {
-		companyGC.v_liveConnectionMetaData.physicalCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
-		companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
-		companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
-	}
-	else{
-		companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = genericCompany.contracted_capacity_kw();
-		companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
-		companyGC.v_liveConnectionMetaData.physicalCapacity_kW = companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
-	}
-	
-	companyGC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
-	companyGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
-
-	companyGC.p_heatingType = avgc_data.p_avgCompanyHeatingMethod; // Assuming all avg companies have GASBURNER.
-	
-	
-	//set GC Adress
-	companyGC.p_address = new J_Address();
-	companyGC.p_address.setStreetName(genericCompany.streetname());
-	if (genericCompany.house_number() == null) {
-		companyGC.p_address.setHouseNumber(0);
-	}
-	else {
-		companyGC.p_address.setHouseNumber(genericCompany.house_number());
-	}
-	companyGC.p_address.setHouseLetter(genericCompany.house_letter());
-	companyGC.p_address.setHouseAddition(genericCompany.house_addition());
-	companyGC.p_address.setPostalcode(genericCompany.postalcode());
-	companyGC.p_address.setCity(genericCompany.city());
-	
-	
-	//Set location of GC
- 	companyGC.p_latitude = genericCompany.latitude(); 
- 	companyGC.p_longitude = genericCompany.longitude();
- 	companyGC.setLatLon(companyGC.p_latitude, companyGC.p_longitude);  
- 	
- 	
-	//Connect GC to grid node
-	companyGC.p_parentNodeElectricID = genericCompany.gridnode_id ();
-	
-	// Create new actor and assign GC to that
-	ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
+	if(companyGC == null){
+		//Create new companyGC
+		companyGC = energyModel.add_UtilityConnections();
 		
-	COC.p_actorID = genericCompany.address_id();
-	COC.p_actorType = OL_ActorType.CONNECTIONOWNER;
-	COC.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
-	COC.p_detailedCompany = false;
+		//Update counter and collection	 
+		v_numberOfCompaniesNoSurvey++;
+		generic_company_GCs.add(companyGC);
+		
+		//Set parameters for the Grid Connection
+		companyGC.p_gridConnectionID = genericCompany.address_id();
+		
+		// Check that is needed until connectioncapacity is no longer in 'Panden' excel
+		if (genericCompany.contracted_capacity_kw() == null || genericCompany.contracted_capacity_kw() <= 0) {
+			companyGC.v_liveConnectionMetaData.physicalCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
+			companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
+			companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
+		}
+		else{
+			companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = genericCompany.contracted_capacity_kw();
+			companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
+			companyGC.v_liveConnectionMetaData.physicalCapacity_kW = companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
+		}
+		
+		companyGC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
+		companyGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
 	
-	companyGC.p_owner = COC;
-	companyGC.p_ownerID = COC.p_actorID;
+		companyGC.p_heatingType = avgc_data.p_avgCompanyHeatingMethod; // Assuming all avg companies have GASBURNER.
+		
+		
+		//set GC Adress
+		companyGC.p_address = new J_Address();
+		companyGC.p_address.setStreetName(genericCompany.streetname());
+		if (genericCompany.house_number() == null) {
+			companyGC.p_address.setHouseNumber(0);
+		}
+		else {
+			companyGC.p_address.setHouseNumber(genericCompany.house_number());
+		}
+		companyGC.p_address.setHouseLetter(genericCompany.house_letter());
+		companyGC.p_address.setHouseAddition(genericCompany.house_addition());
+		companyGC.p_address.setPostalcode(genericCompany.postalcode());
+		companyGC.p_address.setCity(genericCompany.city());
+		
+		
+		//Set location of GC
+	 	companyGC.p_latitude = genericCompany.latitude(); 
+	 	companyGC.p_longitude = genericCompany.longitude();
+	 	companyGC.setLatLon(companyGC.p_latitude, companyGC.p_longitude);  
+	 	
+	 	
+		//Connect GC to grid node
+		companyGC.p_parentNodeElectricID = genericCompany.gridnode_id ();
+		
+		// Create new actor and assign GC to that
+		ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
+			
+		COC.p_actorID = genericCompany.address_id();
+		COC.p_actorType = OL_ActorType.CONNECTIONOWNER;
+		COC.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
+		COC.p_detailedCompany = false;
+		
+		companyGC.p_owner = COC;
+		companyGC.p_ownerID = COC.p_actorID;
+	}
 	
+	//Check wheter this building already exists
+	GIS_Building existingBuilding = findFirst(energyModel.pop_GIS_Buildings, gisBuilding -> gisBuilding.p_id.equals(genericCompany.building_id()));
 	
-	//Create GIS object and connect
-	GIS_Building b = f_createGISBuilding( genericCompany, companyGC );
-	v_totalFloorAreaAnonymousCompanies_m2 += b.p_floorSurfaceArea_m2;
-	
-	//Style building
-	b.p_defaultFillColor = zero_Interface.v_companyBuildingColor;
-	b.p_defaultLineColor = zero_Interface.v_companyBuildingLineColor;
-	zero_Interface.f_styleAreas(b);
+	if(existingBuilding == null){//Create new GIS object and connect
+		GIS_Building b = f_createGISBuilding( genericCompany, companyGC );
+		v_totalFloorAreaAnonymousCompanies_m2 += b.p_floorSurfaceArea_m2;
+		
+		companyGC.p_floorSurfaceArea_m2 += b.p_floorSurfaceArea_m2;
+		companyGC.p_roofSurfaceArea_m2 += b.p_roofSurfaceArea_m2;
+		
+		//Style building
+		b.p_defaultFillColor = zero_Interface.v_companyBuildingColor;
+		b.p_defaultLineColor = zero_Interface.v_companyBuildingLineColor;
+		zero_Interface.f_styleAreas(b);
+	}
+	else{// Connect with existing building
+		f_connectGCToExistingBuilding(companyGC, existingBuilding);
+	}
 }
 
 //Amount of generic companies created
 traceln("Number of companies created without survey: " + v_numberOfCompaniesNoSurvey);
-v_remainingNumberOfCompaniesNoSurvey = v_numberOfCompaniesNoSurvey;
 
-//Create EA after all grid connections have been made -> needed because total surfaces are unkown before that
+//Create EA after all buildings and connections have been made -> needed because total surfaces are unkown before that
 for (GridConnection GCcompany : generic_company_GCs ) {
-	
-
-	//Calculating total floor area of all buildings attached to the GC
-	for (int k = 0; k < GCcompany.c_connectedGISObjects.size(); k++ ){
-		GIS_Building b = (GIS_Building)GCcompany.c_connectedGISObjects.get(k);
-		GCcompany.p_floorSurfaceArea_m2 += b.p_floorSurfaceArea_m2;
-		GCcompany.p_roofSurfaceArea_m2 += b.p_roofSurfaceArea_m2;
-	}
 	
 	//create the energy assets for each GC
 	f_iEAGenericCompanies(GCcompany);
-
 }
 /*ALCODEEND*/}
 
@@ -1508,17 +1511,13 @@ for (var survey : surveys) {
 			
 		 	//Find actor and connect GC 
 			companyGC.p_owner = survey_owner;	 	
-		 	
-		 	//Find buildings, and connect 
-		 	double totalFloorSurfaceAreaGC_m2 = 0;
-		 	double totalRoofSurfaceAreaGC_m2 = 0;
-			
+
 			//Get attached building info
 		 	List<Building_data> buildings = new ArrayList<Building_data>();
 			if ( gridConnection.getPandIds() != null && !gridConnection.getPandIds().isEmpty()) {
 				for (var PID : gridConnection.getPandIds() ) {
 					Building_data building = findFirst(c_GenericCompanyBuilding_data, b -> b.building_id().equals(PID.getValue()));
-					if (building!=null) {
+					if (building!=null) { // Check if building package exists in building package collection
 						buildings.add(building);
 						c_GenericCompanyBuilding_data.remove(building);
 						c_SurveyCompanyBuilding_data.add(building);
@@ -1526,32 +1525,31 @@ for (var survey : surveys) {
 						//Set trafo ID
 						companyGC.p_parentNodeElectricID = building.gridnode_id();
 					}
-					else if(findFirst(energyModel.pop_GIS_Buildings, b -> b.p_id.equals(PID.getValue())) != null){
-						GIS_Building gisbuilding = findFirst(energyModel.pop_GIS_Buildings, b -> b.p_id.equals(PID.getValue()));
-						if(gisbuilding != null){
-							
-							//Building already exists: add existing building to GC c_gisObjects and don't make a new one.
-							companyGC.c_connectedGISObjects.add(gisbuilding);
-
-							//Accumulate surface areas
-							totalFloorSurfaceAreaGC_m2 += gisbuilding.p_floorSurfaceArea_m2; //Gaat dan dubbel met vorige GC die het pand maakte!
-							totalRoofSurfaceAreaGC_m2 += gisbuilding.p_roofSurfaceArea_m2; //Gaat dan dubbel met vorige GC die het pand maakte!
+					else if(findFirst(energyModel.pop_GIS_Buildings, b -> b.p_id.equals(PID.getValue())) != null){ // Check if building already exists in engine
+						GIS_Building existingBuilding = findFirst(energyModel.pop_GIS_Buildings, b -> b.p_id.equals(PID.getValue()));
+						if(existingBuilding != null){
+							f_connectGCToExistingBuilding(companyGC, existingBuilding);
 						}
 					}
-					else if (map_buildingData_Vallum != null && !map_buildingData_Vallum.isEmpty()){
+					else if (map_buildingData_Vallum != null && !map_buildingData_Vallum.isEmpty()){// Create new building package
 						Building_data customBuilding = f_createBuildingData_Vallum(companyGC, PID.getValue());
 						buildings.add(customBuilding);
 						c_VallumBuilding_data.add(customBuilding);
 					}
 				}
-			} else {
+			} else {// No building connected in zorm? -> check if it is manually connected in excel (using gc_id column)
 				traceln("Survey %s has no building in zorm", survey.getId());
 				buildings = findAll(c_SurveyCompanyBuilding_data, b -> b.gc_id() != null && b.gc_id().equals(companyGC.p_gridConnectionID));
 				if(buildings == null){
 					traceln("Survey %s has also no manual connection with building in excel", survey.getId());
 				}
 			}
-	
+			
+			//Total new additional floor/roof surface area
+		 	double totalNewFloorSurfaceAreaGC_m2 = 0;
+		 	double totalNewRoofSurfaceAreaGC_m2 = 0;
+			
+		
 			//Create the GIS buildings
 			for (Building_data building : buildings) {
 				GIS_Building b = f_createGISBuilding( building, companyGC);				
@@ -1562,8 +1560,8 @@ for (var survey : surveys) {
 				}
 				
 				//Accumulate surface areas
-				totalFloorSurfaceAreaGC_m2 += b.p_floorSurfaceArea_m2;
-				totalRoofSurfaceAreaGC_m2 += b.p_roofSurfaceArea_m2;
+				totalNewFloorSurfaceAreaGC_m2 += b.p_floorSurfaceArea_m2;
+				totalNewRoofSurfaceAreaGC_m2 += b.p_roofSurfaceArea_m2;
 				
 				//Set trafo ID
 				companyGC.p_parentNodeElectricID = building.gridnode_id();
@@ -1576,18 +1574,26 @@ for (var survey : surveys) {
 			}      
 			
 			//Add (combined) building data to GC (latitude and longitude + area)
-			companyGC.p_floorSurfaceArea_m2 = totalFloorSurfaceAreaGC_m2;
-			companyGC.p_roofSurfaceArea_m2 = totalRoofSurfaceAreaGC_m2;
+			companyGC.p_floorSurfaceArea_m2 += totalNewFloorSurfaceAreaGC_m2;
+			companyGC.p_roofSurfaceArea_m2 += totalNewRoofSurfaceAreaGC_m2;
 			
 
 			if(!companyGC.c_connectedGISObjects.isEmpty()){
 				companyGC.p_longitude = companyGC.c_connectedGISObjects.get(0).p_longitude; // Get longitude of first building (only used to get nearest trafo)
 				companyGC.p_latitude = companyGC.c_connectedGISObjects.get(0).p_latitude; // Get latitude of first building (only used to get nearest trafo)
+				
+				if(buildings.isEmpty()){ //GC will not have gotten a gridnode assigned,
+					for (var PID : gridConnection.getPandIds() ) {
+						Building_data surveyBuildingData = findFirst(c_SurveyCompanyBuilding_data, b -> b.building_id().equals(PID.getValue()));
+						if(surveyBuildingData != null){
+							companyGC.p_parentNodeElectricID = surveyBuildingData.gridnode_id();
+							break;
+						}
+					}
+				}
 			}
 			else{
 				traceln("Gridconnection %s with owner %s has no buildings!!!", companyGC.p_gridConnectionID, companyGC.p_ownerID);
-				companyGC.p_longitude = 0;
-				companyGC.p_latitude = 0;
 			}
 			
 			//Set lat lon
@@ -1934,33 +1940,33 @@ future_scenario_list.setPlannedBatteryCapacity_kWh(0f);
 //Vans
 if(v_remainingNumberOfCars > 0){
 	int nbCars = 0;
-	for (int k = 0; k< ceil((double)v_remainingNumberOfCars/(double)v_remainingNumberOfCompaniesNoSurvey); k++){
+	for (int k = 0; k< ceil((double)v_remainingNumberOfCars/(double)v_numberOfCompaniesNoSurvey); k++){
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
 		v_remainingNumberOfCars--;
 		nbCars++;
 	}
 	
-	//Set current scenario trucks
+	//Set current scenario cars
 	current_scenario_list.setCurrentDieselCars(nbCars);
 }
 
 //Vans
 if(v_remainingNumberOfVans > 0){
 	int nbVans = 0;
-	for (int k = 0; k< ceil((double)v_remainingNumberOfVans/(double)v_remainingNumberOfCompaniesNoSurvey); k++){
+	for (int k = 0; k< ceil((double)v_remainingNumberOfVans/(double)v_numberOfCompaniesNoSurvey); k++){
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VAN, true, 0);
 		v_remainingNumberOfVans--;
 		nbVans++;
 	}
 	
-	//Set current scenario trucks
+	//Set current scenario vans
 	current_scenario_list.setCurrentDieselVans(nbVans);
 }
 
 //Trucks
 if (v_remainingNumberOfTrucks > 0){
 	int nbTrucks=0;
-	for (int k = 0; k< ceil((double)v_remainingNumberOfTrucks/(double)v_remainingNumberOfCompaniesNoSurvey); k++){
+	for (int k = 0; k< ceil((double)v_remainingNumberOfTrucks/(double)v_numberOfCompaniesNoSurvey); k++){
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_TRUCK, true, 0);
 		v_remainingNumberOfTrucks--;
 		nbTrucks++;
@@ -3680,5 +3686,32 @@ if (!timeSeries.hasNumberOfValuesForOneYear()) {
 return f_convertFloatArrayToDoubleArray(
 	timeSeries.convertToQuarterHourly().getFullYearOrFudgeIt(targetYear)
 );
+/*ALCODEEND*/}
+
+double f_connectGCToExistingBuilding(GridConnection connectingGC,GIS_Building existingBuilding)
+{/*ALCODESTART::1742915722586*/
+//Get the total building and floor surface of the building
+double buildingFloorSurface = existingBuilding.p_floorSurfaceArea_m2;
+double buildingRoofSurface = existingBuilding.p_roofSurfaceArea_m2;
+
+//Building roof and floor surface removal from all earlier connected GC (so excluding the new one!)
+int currentAmountOfConnectedGCWithBuilding = existingBuilding.c_containedGridConnections.size();
+for(GridConnection earlierConnectedGC : existingBuilding.c_containedGridConnections){
+	earlierConnectedGC.p_floorSurfaceArea_m2 -= buildingFloorSurface/currentAmountOfConnectedGCWithBuilding;
+	earlierConnectedGC.p_roofSurfaceArea_m2 -= buildingRoofSurface/currentAmountOfConnectedGCWithBuilding;
+}
+
+//Connect new GC to the building now
+existingBuilding.c_containedGridConnections.add(connectingGC);
+connectingGC.c_connectedGISObjects.add(existingBuilding);
+
+
+//Adding the newly distributed roof and floor surfaces to the gc (now including the new one!)
+int newAmountOfConnectedGCWithBuilding = currentAmountOfConnectedGCWithBuilding + 1;
+for(GridConnection connectedGC : existingBuilding.c_containedGridConnections){
+	connectedGC.p_floorSurfaceArea_m2 += buildingFloorSurface/newAmountOfConnectedGCWithBuilding;
+	connectedGC.p_roofSurfaceArea_m2 += buildingRoofSurface/newAmountOfConnectedGCWithBuilding;
+}
+
 /*ALCODEEND*/}
 
