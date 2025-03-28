@@ -1519,8 +1519,8 @@ for (var survey : surveys) {
 					Building_data building = findFirst(c_GenericCompanyBuilding_data, b -> b.building_id().equals(PID.getValue()));
 					if (building!=null) { // Check if building package exists in building package collection
 						buildings.add(building);
-						c_GenericCompanyBuilding_data.remove(building);
 						c_SurveyCompanyBuilding_data.add(building);
+						c_GenericCompanyBuilding_data.removeAll(findAll(c_GenericCompanyBuilding_data, b -> b.building_id().equals(PID.getValue())));
 						
 						//Set trafo ID
 						companyGC.p_parentNodeElectricID = building.gridnode_id();
