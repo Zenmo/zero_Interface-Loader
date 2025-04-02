@@ -1833,7 +1833,7 @@
 		<Id>1731425176471</Id>
 		<Name><![CDATA[b_changeToCustomScenario]]></Name>
 		<X>-670</X>
-		<Y>770</Y>
+		<Y>781</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1855,7 +1855,7 @@
 		<Id>1732027307811</Id>
 		<Name><![CDATA[b_runningMainInterfaceScenarios]]></Name>
 		<X>-670</X>
-		<Y>750</Y>
+		<Y>761</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

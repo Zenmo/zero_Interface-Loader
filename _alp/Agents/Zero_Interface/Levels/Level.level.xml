@@ -3055,7 +3055,7 @@ b_updateCongestionColors = false;
 		<Id>1702552223737</Id>
 		<Name><![CDATA[t_stylingFunctions]]></Name>
 		<X>-680</X>
-		<Y>300</Y>
+		<Y>321</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -3654,7 +3654,7 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 		<Id>1710174312959</Id>
 		<Name><![CDATA[t_resultsUIFunctions]]></Name>
 		<X>-680</X>
-		<Y>520</Y>
+		<Y>541</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -4838,7 +4838,7 @@ else{
 		<Id>1725456122345</Id>
 		<Name><![CDATA[txt_sliderInitialization]]></Name>
 		<X>-680</X>
-		<Y>640</Y>
+		<Y>651</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -5468,13 +5468,13 @@ else{
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1740670519131</Id>
 		<Name><![CDATA[cb_EhubConfig]]></Name>
-		<X>-250</X>
-		<Y>700</Y>
+		<X>-680</X>
+		<Y>920</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
 		</Label>
-		<PublicFlag>true</PublicFlag>
+		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
@@ -5482,7 +5482,7 @@ else{
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor/>
 			<VisibleCode>v_customEnergyCoop != null</VisibleCode>
-			<Enabled>true</Enabled>
+			<Enabled>false</Enabled>
 			<ActionCode>if(cb_EhubConfig.isSelected()){
 	uI_Results.v_selectedChartType = OL_ChartTypes.GESPREKSLEIDRAAD_BEDRIJVEN;
 	uI_Results.f_showCorrectChart();
