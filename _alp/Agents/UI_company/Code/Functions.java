@@ -1729,6 +1729,9 @@ gr_simulateYearScreen.setVisible(true);
 if(!b_runningMainInterfaceScenarioSettings && !b_runningMainInterfaceSlider){
 	//Set it for main interface as well
 	zero_Interface.f_resetSettings();
+	
+	//Update variable to change to custom scenario
+	zero_Interface.b_changeToCustomScenario = true;
 }
 /*ALCODEEND*/}
 
