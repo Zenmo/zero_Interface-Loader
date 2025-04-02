@@ -801,18 +801,6 @@ GISRegion gisregion = new GISRegion(map, gisTokens);
 return gisregion;
 /*ALCODEEND*/}
 
-double f_setStartView()
-{/*ALCODESTART::1715869498509*/
-map.setCenterLatitude(map_centre_latitude);
-map.setCenterLongitude(map_centre_longitude);
-
-if(map_scale != null){
-	map.setMapScale(map_scale);
-}
-
-va_Interface.navigateTo();
-/*ALCODEEND*/}
-
 double f_enableTraceln(PrintStream originalPrintStream)
 {/*ALCODESTART::1716419446045*/
 System.setOut(originalPrintStream);
@@ -2083,5 +2071,62 @@ double f_setForcedClickScreen(boolean showForcedClickScreen,String forcedClickSc
 t_forcedClickMessage.setText(forcedClickScreenText);
 
 gr_forceMapSelection.setVisible(showForcedClickScreen);
+/*ALCODEEND*/}
+
+double f_setMapViewBounds(ArrayList<GIS_Object> GISObjects)
+{/*ALCODESTART::1743509491686*/
+// Initialize min and max values
+double minLat = Double.MAX_VALUE;
+double maxLat = Double.MIN_VALUE;
+double minLon = Double.MAX_VALUE;
+double maxLon = Double.MIN_VALUE;
+ 
+// Loop through all GISRegions and find the bounding box
+for(GIS_Object go : GISObjects){
+	
+	GISRegion region = go.gisRegion;
+    double[] points = region.getPoints(); // Get the boundary points of the region
+ 
+    for (int i = 0; i < points.length; i += 2) { // i+=2 because data is in lat, lon pairs
+        double lat = points[i];       // Latitude
+        double lon = points[i + 1];   // Longitude
+ 
+ 
+ 
+        // Update min/max latitude and longitude
+        minLat = Math.min(minLat, lat);
+        maxLat = Math.max(maxLat, lat);
+        minLon = Math.min(minLon, lon);
+        maxLon = Math.max(maxLon, lon);
+    }
+}
+
+//Make it slightly bigger, so it isnt exact on the line of the regions
+minLat = minLat - 0.0001;
+maxLat = maxLat + 0.0001;
+minLon = minLon - 0.0001;
+maxLon = maxLon + 0.0001;
+        
+// Set the map to fit the calculated bounds
+map.fitBounds(minLat, minLon, maxLat, maxLon);
+/*ALCODEEND*/}
+
+double f_setStartView()
+{/*ALCODESTART::1743518032245*/
+if(map_centre_latitude != 0 && map_centre_longitude != 0){
+	map.setCenterLatitude(map_centre_latitude);
+	map.setCenterLongitude(map_centre_longitude);
+}
+else{
+	ArrayList<GIS_Object> gisObjects_regions = new ArrayList<GIS_Object>(findAll(energyModel.pop_GIS_Objects, gisObject -> gisObject.p_GISObjectType == OL_GISObjectType.REGION));
+	
+	f_setMapViewBounds(gisObjects_regions);
+}
+
+if(map_scale != null){
+	map.setMapScale(map_scale);
+}
+
+va_Interface.navigateTo();
 /*ALCODEEND*/}
 

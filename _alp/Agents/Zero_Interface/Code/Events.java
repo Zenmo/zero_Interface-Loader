@@ -1,8 +1,5 @@
 void e_calculateEnergyBalance()
 {/*ALCODESTART::1658497469833*/
-if (v_timeStepsElapsed <= 1) {
-	f_setStartView();
-}
 // Trigger timestep in energymodel for continuous simulation ('interactive mode')
 energyModel.f_runTimestep();
 v_timeStepsElapsed ++;
@@ -25,5 +22,10 @@ if(c_selectedGridConnections.size() > 0 && c_selectedGridConnections.get(0).v_en
 
 // Get the weather info
 f_getWeatherInfo();
+/*ALCODEEND*/}
+
+void e_setStartView()
+{/*ALCODESTART::1743509682728*/
+f_setStartView();
 /*ALCODEEND*/}
 

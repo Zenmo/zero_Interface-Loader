@@ -68,7 +68,7 @@
 		<Id>1702045084338</Id>
 		<Name><![CDATA[f_styleAreas]]></Name>
 		<X>-670</X>
-		<Y>350</Y>
+		<Y>371</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -88,7 +88,7 @@
 		<Id>1702385530773</Id>
 		<Name><![CDATA[f_styleSimulationAreas]]></Name>
 		<X>-670</X>
-		<Y>330</Y>
+		<Y>351</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -108,7 +108,7 @@
 		<Id>1705499586056</Id>
 		<Name><![CDATA[f_styleGridNodes]]></Name>
 		<X>-670</X>
-		<Y>370</Y>
+		<Y>391</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -128,7 +128,7 @@
 		<Id>1705505495599</Id>
 		<Name><![CDATA[f_styleMVLV]]></Name>
 		<X>-650</X>
-		<Y>450</Y>
+		<Y>471</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -148,7 +148,7 @@
 		<Id>1705505509120</Id>
 		<Name><![CDATA[f_styleHVMV]]></Name>
 		<X>-650</X>
-		<Y>390</Y>
+		<Y>411</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -168,7 +168,7 @@
 		<Id>1705925024602</Id>
 		<Name><![CDATA[f_setUITabs]]></Name>
 		<X>-670</X>
-		<Y>690</Y>
+		<Y>701</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -261,7 +261,7 @@
 		<Id>1709716821854</Id>
 		<Name><![CDATA[f_connectResultsUI]]></Name>
 		<X>-670</X>
-		<Y>570</Y>
+		<Y>591</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -293,7 +293,7 @@
 		<Id>1714043663127</Id>
 		<Name><![CDATA[f_setGridNodeCongestionColor]]></Name>
 		<X>-650</X>
-		<Y>490</Y>
+		<Y>511</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -417,7 +417,7 @@
 		<Id>1715157302225</Id>
 		<Name><![CDATA[f_projectSpecificSettings]]></Name>
 		<X>-670</X>
-		<Y>250</Y>
+		<Y>230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -462,23 +462,6 @@
 			<Name><![CDATA[gisTokens]]></Name>
 			<Type><![CDATA[double[]]]></Type>
 		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1715869498509</Id>
-		<Name><![CDATA[f_setStartView]]></Name>
-		<Description><![CDATA[Function used to set the starting view of the simulation.]]></Description>
-		<X>-670</X>
-		<Y>230</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
@@ -563,7 +546,7 @@
 		<Id>1718288402102</Id>
 		<Name><![CDATA[f_updateMainInterfaceSliders]]></Name>
 		<X>-670</X>
-		<Y>730</Y>
+		<Y>741</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -655,7 +638,7 @@
 		<Id>1721991420806</Id>
 		<Name><![CDATA[f_setGridTopologyColors]]></Name>
 		<X>-650</X>
-		<Y>470</Y>
+		<Y>491</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -671,7 +654,7 @@
 		<Id>1721991963719</Id>
 		<Name><![CDATA[f_styleSUBMV]]></Name>
 		<X>-650</X>
-		<Y>430</Y>
+		<Y>451</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -691,7 +674,7 @@
 		<Id>1721992103665</Id>
 		<Name><![CDATA[f_styleMVMV]]></Name>
 		<X>-650</X>
-		<Y>410</Y>
+		<Y>431</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -859,7 +842,7 @@
 		<Id>1725977409304</Id>
 		<Name><![CDATA[f_setSliderPresets]]></Name>
 		<X>-670</X>
-		<Y>710</Y>
+		<Y>721</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -875,7 +858,7 @@
 		<Id>1726068314849</Id>
 		<Name><![CDATA[f_projectSpecificStyling]]></Name>
 		<X>-670</X>
-		<Y>270</Y>
+		<Y>250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1255,7 +1238,7 @@
 		<Id>1736442051389</Id>
 		<Name><![CDATA[f_styleResultsUI]]></Name>
 		<X>-650</X>
-		<Y>590</Y>
+		<Y>611</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1395,6 +1378,42 @@
 			<Name><![CDATA[forcedClickScreenText]]></Name>
 			<Type><![CDATA[String]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1743509491686</Id>
+		<Name><![CDATA[f_setMapViewBounds]]></Name>
+		<X>-480</X>
+		<Y>-60</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[GISObjects]]></Name>
+			<Type><![CDATA[ArrayList<GIS_Object>]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1743518032245</Id>
+		<Name><![CDATA[f_setStartView]]></Name>
+		<X>-640</X>
+		<Y>295</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>
