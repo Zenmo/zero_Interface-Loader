@@ -2130,3 +2130,44 @@ if(map_scale != null){
 va_Interface.navigateTo();
 /*ALCODEEND*/}
 
+double f_setInfoText(ShapeImage infoBubble)
+{/*ALCODESTART::1743665953113*/
+if ( v_currentActiveInfoBubble == infoBubble ) {
+	// If we click a second time on the same bubble it should close the window
+	v_currentActiveInfoBubble = null;
+	gr_infoText.setVisible(false);
+}
+else {
+	v_currentActiveInfoBubble = infoBubble;
+	
+	// Set Position
+	// The group position is on the top left, not the centre.
+	double margin_px = 25;
+	if (infoBubble.getX() < (va_Interface.getX() + va_Interface.getWidth()/2) ) {
+		// bubble is on the left half, so text should appear to the right
+		gr_infoText.setX( infoBubble.getX() + margin_px);
+	}
+	else {
+		// bubble is on the right half, so text should appear to the left
+		gr_infoText.setX( infoBubble.getX() - margin_px - rect_infoText.getWidth());
+	}
+	
+	// In AnyLogic the Y-Axis is inverted
+	if (infoBubble.getY() > (va_Interface.getY() + va_Interface.getHeight()/2) ) {
+		// bubble is on the bottom half, so text should appear above
+		gr_infoText.setY( infoBubble.getY() - margin_px - rect_infoText.getHeight());
+	}
+	else {
+		// bubble is on the top half, so text should appear below
+		gr_infoText.setY( infoBubble.getY() + margin_px);
+	}
+	
+	// Set Text
+	// TODO
+	// header
+	// description
+	
+	gr_infoText.setVisible(true);
+}
+/*ALCODEEND*/}
+
