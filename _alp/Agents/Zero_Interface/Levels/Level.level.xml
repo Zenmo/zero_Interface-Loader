@@ -6644,7 +6644,7 @@ gr_infoText.setVisible(false);</OnClickCode>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Beschrijving kaartlaag]]></Text>
+				<Text><![CDATA[Extra Informatie]]></Text>
 				<Font>
 					<Name><![CDATA[Calibri]]></Name>
 					<Size>18</Size>
@@ -6669,12 +6669,12 @@ gr_infoText.setVisible(false);</OnClickCode>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Warmtenet worden ook aangelegd op enkele bedrijventerreinen waar een deel van de 
-bedrijven wordt aangesloten. Wij nemen aan dat zo'n 20% van de bedrijven aangelsoten 
-worden op het warmtenet. Bedrijven moeten restwarmte zelf terugwinnen in hun eigen 
-bedrijfsprocessen dan valt het onder energiebesparen. In uitzonderlijke gevallen waar dit 
-niet mogelijk is kan een warmtenet toch uitkomst bieden.
-]]></Text>
+				<Text><![CDATA["Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+officia deserunt mollit anim id est laborum."]]></Text>
 				<Font>
 					<Name><![CDATA[SansSerif]]></Name>
 					<Size>14</Size>

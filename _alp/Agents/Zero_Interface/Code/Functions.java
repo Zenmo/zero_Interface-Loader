@@ -2140,6 +2140,18 @@ if ( v_currentActiveInfoBubble == infoBubble ) {
 else {
 	v_currentActiveInfoBubble = infoBubble;
 	
+	int width_ch = 50;
+	// Set Text
+	// TODO
+	// header
+	// description
+	Pair<String, Integer> p = v_infoText.getLorumIpsum(width_ch);
+	t_infoTextDescription.setText(p.getFirst());
+	
+	// Set Size
+	rect_infoText.setWidth(width_ch * 7.5); // about 7.5 px per char for sans serif 14 pt
+	rect_infoText.setHeight(50 + p.getSecond() * 20); // about 50 px for title and 20 px per line for sans serif 14 pt
+	
 	// Set Position
 	// The group position is on the top left, not the centre.
 	double margin_px = 25;
@@ -2162,10 +2174,8 @@ else {
 		gr_infoText.setY( infoBubble.getY() + margin_px);
 	}
 	
-	// Set Text
-	// TODO
-	// header
-	// description
+	// Position of close button
+	gr_closeInfoText.setX( width_ch * 7.5 - 20 ); // 20 px offset from the right hand side
 	
 	gr_infoText.setVisible(true);
 }
