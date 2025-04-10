@@ -49,10 +49,10 @@
 				<Name><![CDATA[b_anylogicCostsForAllContracts]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_startHourWinterWeek]]></Name>
+				<Name><![CDATA[p_winterWeekNumber]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_startHourSummerWeek]]></Name>
+				<Name><![CDATA[p_summerWeekNumber]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_plotInterval_h]]></Name>

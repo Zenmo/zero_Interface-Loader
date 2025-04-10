@@ -897,17 +897,21 @@ for(int i = 0; i < argumentsList.size(); i++) {
 J_ProfilePointer profilePointer;
 // 'ambient' conditions:
 energyModel.tf_ambientTemperature_degC.setArgumentsAndValues(a_arguments, a_tempValues);
+energyModel.tf_ambientTemperature_degC.setOutOfRangeAction(TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT);
 energyModel.tf_dayAheadElectricityPricing_eurpMWh.setArgumentsAndValues(a_arguments, a_epexValues);
+energyModel.tf_dayAheadElectricityPricing_eurpMWh.setOutOfRangeAction(TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT);
 profilePointer = new J_ProfilePointer("Day ahead electricity pricing [eur/MWh]", energyModel.tf_dayAheadElectricityPricing_eurpMWh);
 energyModel.f_addProfile(profilePointer);
 energyModel.pp_dayAheadElectricityPricing_eurpMWh = profilePointer;
 
 energyModel.tf_p_wind_e_normalized.setArgumentsAndValues(a_arguments, a_windValues);
+energyModel.tf_p_wind_e_normalized.setOutOfRangeAction(TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT);
 profilePointer = new J_ProfilePointer("normalized onshore wind production", energyModel.tf_p_wind_e_normalized);
 energyModel.f_addProfile(profilePointer);
 energyModel.pp_windOnshoreProduction = profilePointer;
 
 energyModel.tf_p_solar_e_normalized.setArgumentsAndValues(a_arguments, a_solarValues);
+energyModel.tf_p_solar_e_normalized.setOutOfRangeAction(TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT);
 profilePointer = new J_ProfilePointer("normalized_PV_production", energyModel.tf_p_solar_e_normalized);
 energyModel.f_addProfile(profilePointer);
 energyModel.pp_solarPVproduction = profilePointer;
@@ -3057,7 +3061,7 @@ double[] a_normalizedPower_fr = Arrays.stream(yearlyElectricityProduction_kWh).m
 //traceln("Full load hours of a_normalizedPower_fr %s: ", Arrays.stream(a_normalizedPower_fr).sum()/4);
 //traceln("Max of a_normalizedPower_fr %s: ", Arrays.stream(a_normalizedPower_fr).max());
 
-TableFunction tf_customPVproduction_fr = new TableFunction(a_arguments, a_normalizedPower_fr, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_ERROR, 0.0);
+TableFunction tf_customPVproduction_fr = new TableFunction(a_arguments, a_normalizedPower_fr, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
 J_ProfilePointer profilePointer = new J_ProfilePointer((parentGC.p_ownerID + "_PVproduction") , tf_customPVproduction_fr);
 energyModel.f_addProfile(profilePointer);
 J_EAProduction production_asset = new J_EAProduction(parentGC, OL_EnergyAssetType.PHOTOVOLTAIC, (parentGC.p_ownerID + "_rooftopPV"), (double)pvPower_kW, 0.0, 0.0, 0.0, energyModel.p_timeStep_h, 0.0, profilePointer);
