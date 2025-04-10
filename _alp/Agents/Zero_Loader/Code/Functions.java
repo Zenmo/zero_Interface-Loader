@@ -841,6 +841,42 @@ if (project_data.energy_supplier() != null && !project_data.energy_supplier().eq
 
 double f_setEngineProfiles()
 {/*ALCODESTART::1726584205797*/
+System.out.println(System.getProperty("user.dir")); // Gives path of 'main' package
+
+//URL url = getClass().getResource("README_loaderface.md");
+//System.out.println(url); // Doesn't work
+
+URL location = Zero_Loader.class.getResource("");  // empty string = package location
+System.out.println(location.getPath()); // Gives path of THIS package
+URL resource = Zero_Loader.class.getResource("/README_loaderface.md");
+System.out.println(resource);
+
+
+//try (InputStream input = this.getClass().getResourceAsStream("zerointerfaceloader/icon_arrow.png")) {
+try (InputStream input = getClass().getResourceAsStream("/README_loaderface.md")) {
+	Enumeration<URL> resources = Zero_Loader.class.getClassLoader().getSystemResources("");
+	while (resources.hasMoreElements()) {
+	    System.out.println(resources.nextElement());
+	}
+	//Enumeration<URL> resources = getClass().getClassLoader().getSystemResources("");
+	
+	/*while (resources.hasMoreElements()) {
+	    System.out.println(resources.nextElement());
+	}*/
+    if (input == null) {
+        System.out.println("File not found");
+        return;
+    }
+
+    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+    String line;
+    while ((line = reader.readLine()) != null) {
+        System.out.println(line);
+    }
+} catch (IOException e) {
+    e.printStackTrace();
+}
+
 List<Double> argumentsList = genericProfiles_data.argumentsList();
 
 // Various demand profiles
