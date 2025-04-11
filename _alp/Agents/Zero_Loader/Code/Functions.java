@@ -199,7 +199,6 @@ if(RegionCoords.contains(")(") || RegionCoords.contains(") (") || RegionCoords.c
 		RegionCoords = RegionCoords.split("\\)")[0];
 	}
 }
-traceln("RegionCoords: " + RegionCoords);
 
 RegionCoords = RegionCoords.replace("  "," ");
 String delims = " ";
