@@ -190,7 +190,7 @@ else {
 
 
 
-if(RegionCoords.contains(")(") || RegionCoords.contains(") (")){
+if(RegionCoords.contains(")(") || RegionCoords.contains(") (") || RegionCoords.contains(")  (")){
 	if (GISObjectType == OL_GISObjectType.ANTI_LAYER){
 		RegionCoords = RegionCoords.replace(")("," "); // Combine all polies into one!
 		RegionCoords = RegionCoords.replace(") ("," "); // Combine all polies into one!
@@ -199,6 +199,7 @@ if(RegionCoords.contains(")(") || RegionCoords.contains(") (")){
 		RegionCoords = RegionCoords.split("\\)")[0];
 	}
 }
+traceln("RegionCoords: " + RegionCoords);
 
 RegionCoords = RegionCoords.replace("  "," ");
 String delims = " ";
@@ -3623,7 +3624,7 @@ status(pand_data_vallum.getStatus()).
 //purpose(row.get( buildings.purpose )).
 //cumulative_floor_surface_m2(row.get( buildings.cumulative_floor_surface_m2 )).
 //polygon_area_m2(row.get( buildings.polygon_area_m2 )).
-annotation(companyGC.p_gridConnectionID).
+annotation(companyGC.p_owner.p_actorID).
 //extra_info(row.get( buildings.extra_info )).
 //gridnode_id(row.get( buildings.gridnode_id )).
 //latitude(row.get( buildings.latitude )).

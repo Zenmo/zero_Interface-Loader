@@ -49,12 +49,6 @@
 				<Name><![CDATA[b_anylogicCostsForAllContracts]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_winterWeekNumber]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_summerWeekNumber]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_plotInterval_h]]></Name>
 			</Parameter>
 			<Parameter>
@@ -98,6 +92,12 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_regionName]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_winterWeekNumber]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_summerWeekNumber]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
