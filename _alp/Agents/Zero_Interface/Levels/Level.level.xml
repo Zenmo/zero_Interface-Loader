@@ -6455,14 +6455,14 @@ else{
 			</Rectangle>
 		</Presentation>
 	</Group>
-	<Rectangle>
-		<Id>1743092391417</Id>
-		<Name><![CDATA[rectangle]]></Name>
-		<X>-200</X>
-		<Y>-1080</Y>
+	<Group>
+		<Id>1744624088806</Id>
+		<Name><![CDATA[gr_writeDataToExcel]]></Name>
+		<X>-410</X>
+		<Y>-730</Y>
 		<Label>
 			<X>10</X>
-			<Y>10</Y>
+			<Y>0</Y>
 		</Label>
 		<PublicFlag>true</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
@@ -6470,15 +6470,231 @@ else{
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>1</LineWidth>
-		<LineColor>-16777216</LineColor>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<Width>80</Width>
-		<Height>60</Height>
 		<Rotation>0.0</Rotation>
-		<FillColor>1690353856</FillColor>
-		<FillMaterial>null</FillMaterial>
-	</Rectangle>
+		<Presentation>
+			<Rectangle>
+				<Id>1744624088808</Id>
+				<Name><![CDATA[rect_exportToExcelFunctions]]></Name>
+				<X>-190</X>
+				<Y>-120</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<Lock>true</Lock>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor>-16777216</LineColor>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>400</Width>
+				<Height>490</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-1</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Rectangle>
+			<Control Type="FileChooser">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1744624088810</Id>
+				<Name><![CDATA[fileChooser_exportBalanceLoadEnergyModel]]></Name>
+				<X>-180</X>
+				<Y>-30</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="380" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<FillColor/>
+					<TextColor/>
+					<Enabled>false</Enabled>
+					<ActionCode>fileChooser_exportBalanceLoadEnergyModel.setEnabled(false);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<Title>Click to download kwartierwaarden excel</Title>
+					<Type><![CDATA[DOWNLOAD]]></Type>
+					<Filters>.xlsx, .xls</Filters>
+					<FileName>ExportKwartierwaardes_HeleGebied.xlsx</FileName>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1744624088812</Id>
+				<Name><![CDATA[button_exportBalanceLoadEnergyModel]]></Name>
+				<X>-180</X>
+				<Y>-70</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="380" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<ActionCode>f_harvestModelDeliveryData();
+
+fileChooser_exportBalanceLoadEnergyModel.setEnabled(true);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Schrijf kwartierwaarden naar excel (hele gebied)</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1744624088814</Id>
+				<Name><![CDATA[txt_writeToExcelFunctions]]></Name>
+				<X>-170</X>
+				<Y>-100</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<Lock>true</Lock>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Write data to excel]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1744624088816</Id>
+				<Name><![CDATA[button_exportBalanceLoadSelectedCompanies]]></Name>
+				<X>-180</X>
+				<Y>230</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="380" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<EnableExpression>c_selectedGridConnections.size() &gt; 0 &amp;&amp; c_selectedGridConnections.size()&lt;31</EnableExpression>
+					<ActionCode>f_harvestSelectedGCdeliveryData();
+
+fileChooser_exportBalanceLoadSelectedCompanies.setEnabled(true);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Schrijf kwartierwaarden naar excel (Geselecteerde bedrijven)</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="FileChooser">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1744624088818</Id>
+				<Name><![CDATA[fileChooser_exportBalanceLoadSelectedCompanies]]></Name>
+				<X>-180</X>
+				<Y>270</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="380" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<FillColor/>
+					<TextColor/>
+					<Enabled>false</Enabled>
+					<ActionCode>fileChooser_exportBalanceLoadSelectedCompanies.setEnabled(false);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<Title>Click to download kwartierwaarden excel</Title>
+					<Type><![CDATA[DOWNLOAD]]></Type>
+					<Filters>.xlsx, .xls</Filters>
+					<FileName>ExportKwartierwaardes_PerBedrijf.xlsx</FileName>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="FileChooser">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1744624088820</Id>
+				<Name><![CDATA[fileChooser_exportBalanceLoadSelectedEnergyCoop]]></Name>
+				<X>-180</X>
+				<Y>120</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="380" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<FillColor/>
+					<TextColor/>
+					<Enabled>false</Enabled>
+					<ActionCode>fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(false);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<Title>Click to download kwartierwaarden excel</Title>
+					<Type><![CDATA[DOWNLOAD]]></Type>
+					<Filters>.xlsx, .xls</Filters>
+					<FileName>ExportKwartierwaardes_TotaalVanGeselecteerdeEnergyCoop.xlsx</FileName>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1744624088822</Id>
+				<Name><![CDATA[button_exportBalanceLoadSelectedEnergyCoop]]></Name>
+				<X>-180</X>
+				<Y>80</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="380" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<EnableExpression>c_selectedGridConnections.size() &gt; 1 &amp;&amp; v_customEnergyCoop != null</EnableExpression>
+					<ActionCode>f_harvestTotalLoadOfSelectedEnergyCoop();
+
+fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(true);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Schrijf kwartierwaarden naar excel (Totaal van Geselecteerde Coop)</LabelText>
+				</ExtendedProperties>
+			</Control>
+		</Presentation>
+	</Group>
 </Presentation>
