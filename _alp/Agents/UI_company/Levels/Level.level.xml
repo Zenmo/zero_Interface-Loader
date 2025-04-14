@@ -2720,7 +2720,7 @@ zero_Interface.va_Interface.navigateTo();</ActionCode>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>2495</Width>
-		<Height>690</Height>
+		<Height>700</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -3016,7 +3016,7 @@ zero_Interface.va_Interface.navigateTo();</ActionCode>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>1060</Width>
-				<Height>740</Height>
+				<Height>750</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
 				<FillColorCode>v_companyUIBackgroundColor</FillColorCode>
@@ -3194,7 +3194,7 @@ new Thread( () -&gt; {
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>1060</Width>
-				<Height>740.969</Height>
+				<Height>750.969</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-369756683</FillColor>
 				<FillColorCode>v_loadScreenColor</FillColorCode>
@@ -3224,7 +3224,7 @@ new Thread( () -&gt; {
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>460</Width>
-				<Height>740</Height>
+				<Height>750</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
 				<FillColorCode>v_companyUIBackgroundColor</FillColorCode>
@@ -3954,8 +3954,9 @@ f_setSimulateYearScreen();</ActionCode>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Ja]]></Text>
-				<TextCode>c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contractedDeliveryCapacityKnown ? "Ja" : "Geschat"</TextCode>
+				<Text><![CDATA[Custom]]></Text>
+				<TextCode>c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractDeliveryCapacity_kW() != sl_GCCapacityCompany.getValue() ? "Custom" :
+c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contractedDeliveryCapacityKnown ? "Ja" : "Geschat"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
@@ -3981,7 +3982,8 @@ f_setSimulateYearScreen();</ActionCode>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[Geschat]]></Text>
-				<TextCode>c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contractedFeedinCapacityKnown ? "Ja" : "Geschat"</TextCode>
+				<TextCode>c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractFeedinCapacity_kW() != sl_GCCapacityCompany_Feedin.getValue() ? "Custom" :
+c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contractedFeedinCapacityKnown ? "Ja" : "Geschat"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
@@ -4007,7 +4009,8 @@ f_setSimulateYearScreen();</ActionCode>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[Ja]]></Text>
-				<TextCode>c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.physicalCapacityKnown ? "Ja" : "Geschat"</TextCode>
+				<TextCode>c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentPhysicalConnectionCapacity_kW() != v_physicalConnectionCapacity_kW ? "Custom" :
+c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.physicalCapacityKnown ? "Ja" : "Geschat"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
