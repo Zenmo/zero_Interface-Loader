@@ -1225,6 +1225,7 @@ if(hasHourlyGasData){
 	
 	List<Double> hourlyGasDemand_kWh = selectValues(double.class, "SELECT " + profileName + "_demand FROM comp_gas_consumption;");
 	List<Double> hourlyHeatDemand_kWh = new ArrayList<Double>();
+	
 	for (int i = 0; i < hourlyGasDemand_kWh.size(); i++) {
 		double gasHeatingValue_timestep_kWh = hourlyGasDemand_kWh.get(i) * avgc_data.p_gas_kWhpm3 * avgc_data.p_avgEfficiencyGasBurner * ratioGasUsedForHeating;
 		yearlyDemandHeat_kWh += gasHeatingValue_timestep_kWh;
@@ -1255,7 +1256,7 @@ else{
 		yearlyDemandHeat_kWh = avgc_data.p_avgCompanyGasConsumption_m3pm2*parentGC.p_floorSurfaceArea_m2 * avgc_data.p_gas_kWhpm3 * avgc_data.p_avgEfficiencyGasBurner;
 		//traceln("NO HEAT DEMAND DETECTED: ESTIMATION MADE BASED ON FLOOR SURFACE AREA!");
 	}
-	
+
 	//Determine heatdemand
 	heatDemand = new J_EAConsumption(parentGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, yearlyDemandHeat_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, null);
 	
@@ -3325,7 +3326,7 @@ if (gridConnection.getNaturalGas().getHasConnection() != null && gridConnection.
 	}
 	
 	//Determine how much gas goes towards heating
-	ratioGasUsedForHeating = ((gridConnection.getNaturalGas().getPercentageUsedForHeating() != null) ? gridConnection.getNaturalGas().getPercentageUsedForHeating() : 100)/100;
+	ratioGasUsedForHeating = ((gridConnection.getNaturalGas().getPercentageUsedForHeating() != null) ? gridConnection.getNaturalGas().getPercentageUsedForHeating() : 100)/100.0;
 }
 
 
