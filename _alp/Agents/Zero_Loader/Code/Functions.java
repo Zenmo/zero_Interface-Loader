@@ -841,6 +841,9 @@ if (project_data.energy_supplier() != null && !project_data.energy_supplier().eq
 
 double f_setEngineProfiles()
 {/*ALCODESTART::1726584205797*/
+String teststring = testfile.readLine();
+traceln("Testfile contents:" + teststring);
+
 List<Double> argumentsList = genericProfiles_data.argumentsList();
 
 // Various demand profiles
