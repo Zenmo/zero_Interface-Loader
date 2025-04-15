@@ -3463,7 +3463,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1727939194818</Id>
 				<Name><![CDATA[text1]]></Name>
 				<X>-175</X>
-				<Y>-20</Y>
+				<Y>-17</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -3488,7 +3488,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1727939194820</Id>
 				<Name><![CDATA[text2]]></Name>
 				<X>-175</X>
-				<Y>5</Y>
+				<Y>8</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -3513,7 +3513,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1727939194822</Id>
 				<Name><![CDATA[text3]]></Name>
 				<X>-175</X>
-				<Y>30</Y>
+				<Y>33</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -3538,7 +3538,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1727939194824</Id>
 				<Name><![CDATA[t_GCCapacityCompany_delivery2]]></Name>
 				<X>152</X>
-				<Y>6</Y>
+				<Y>8</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -3564,7 +3564,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1727939194826</Id>
 				<Name><![CDATA[t_GCCapacityCompany_Feedin_2]]></Name>
 				<X>152</X>
-				<Y>31</Y>
+				<Y>33</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -3750,7 +3750,7 @@ f_setSimulateYearScreen();</ActionCode>
 					<Text>
 						<Id>1727939206997</Id>
 						<Name><![CDATA[txt_table_ConnectionCapacityInfo_nfato]]></Name>
-						<X>2</X>
+						<X>3</X>
 						<Y>-51</Y>
 						<Label>
 							<X>0</X>
@@ -3776,7 +3776,7 @@ f_setSimulateYearScreen();</ActionCode>
 						<Id>1727939206999</Id>
 						<Name><![CDATA[t_GCCapacityCompany_delivery_nfato]]></Name>
 						<X>0.5</X>
-						<Y>6</Y>
+						<Y>8</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -3802,7 +3802,7 @@ f_setSimulateYearScreen();</ActionCode>
 						<Id>1727939207001</Id>
 						<Name><![CDATA[t_GCCapacityCompany_Feedin_nfato]]></Name>
 						<X>0.5</X>
-						<Y>31</Y>
+						<Y>33</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -3940,7 +3940,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1744645285983</Id>
 				<Name><![CDATA[t_GCCapacityCompany_delivery3]]></Name>
 				<X>73</X>
-				<Y>6</Y>
+				<Y>8</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -3967,7 +3967,7 @@ c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contr
 				<Id>1744645285985</Id>
 				<Name><![CDATA[t_GCCapacityCompany_Feedin_3]]></Name>
 				<X>73</X>
-				<Y>31</Y>
+				<Y>33</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
