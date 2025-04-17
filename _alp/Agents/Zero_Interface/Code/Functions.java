@@ -158,10 +158,10 @@ switch(rb_buildingColors.getValue()) {
 		break;
 	case 1:
 		if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
-			f_setColorsBasedOnConsumpionProfileHouseholds(gis_area);
+			f_setColorsBasedOnConsumptionProfileHouseholds(gis_area);
 		}
 		else {
-			f_setColorsBasedOnConsumpion(gis_area);
+			f_setColorsBasedOnConsumption(gis_area);
 		}
 		break;
 	case 2:
@@ -699,7 +699,7 @@ f_projectSpecificOrderedCollectionAdjustments();
 
 /*ALCODEEND*/}
 
-double f_setColorsBasedOnConsumpion(GIS_Object gis_area)
+double f_setColorsBasedOnConsumption(GIS_Object gis_area)
 {/*ALCODESTART::1715116336665*/
 if(gis_area.c_containedGridConnections.size() > 0){
 
@@ -817,7 +817,7 @@ System.setOut(new PrintStream(new OutputStream() {
 return originalPrintStream;
 /*ALCODEEND*/}
 
-double f_setColorsBasedOnConsumpionProfileHouseholds(GIS_Object gis_area)
+double f_setColorsBasedOnConsumptionProfileHouseholds(GIS_Object gis_area)
 {/*ALCODESTART::1718263685462*/
 double yearlyEnergyConsumption = 0;
 for( GridConnection gc : gis_area.c_containedGridConnections){
