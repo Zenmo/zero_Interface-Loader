@@ -295,7 +295,7 @@
 		<ClassPathEntry>
 			<ResourceReference>
 				<PackageName>zerointerfaceloader</PackageName>
-				<ClassName>vallum-main-661-e8cb2e6-all.jar</ClassName>
+				<ClassName>vallum-production-705-21ecec1-all.jar</ClassName>
 			</ResourceReference>
 			<Imported>true</Imported>
 			<Folder>false</Folder>
