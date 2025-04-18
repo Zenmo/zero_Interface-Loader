@@ -3615,7 +3615,7 @@ f_setSimulateYearScreen();</ActionCode>
 			<Line>
 				<Id>1727939194830</Id>
 				<Name><![CDATA[line_table_ConnectionCapacityInfo_1]]></Name>
-				<X>36</X>
+				<X>41</X>
 				<Y>-60</Y>
 				<Label>
 					<X>10</X>
@@ -3884,7 +3884,7 @@ f_setSimulateYearScreen();</ActionCode>
 			<Line>
 				<Id>1744645098225</Id>
 				<Name><![CDATA[line_table_ConnectionCapacityInfo_2]]></Name>
-				<X>110</X>
+				<X>109</X>
 				<Y>-60</Y>
 				<Label>
 					<X>10</X>
@@ -3914,7 +3914,7 @@ f_setSimulateYearScreen();</ActionCode>
 			<Text>
 				<Id>1744645140831</Id>
 				<Name><![CDATA[txt_table_ConnectionCapacityInfo_known]]></Name>
-				<X>73</X>
+				<X>75</X>
 				<Y>-51</Y>
 				<Label>
 					<X>0</X>
@@ -3939,7 +3939,7 @@ f_setSimulateYearScreen();</ActionCode>
 			<Text>
 				<Id>1744645285983</Id>
 				<Name><![CDATA[t_GCCapacityCompany_delivery3]]></Name>
-				<X>73</X>
+				<X>75</X>
 				<Y>8</Y>
 				<Label>
 					<X>0</X>
@@ -3966,7 +3966,7 @@ c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contr
 			<Text>
 				<Id>1744645285985</Id>
 				<Name><![CDATA[t_GCCapacityCompany_Feedin_3]]></Name>
-				<X>73</X>
+				<X>75</X>
 				<Y>33</Y>
 				<Label>
 					<X>0</X>
@@ -3993,7 +3993,7 @@ c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contr
 			<Text>
 				<Id>1744645285987</Id>
 				<Name><![CDATA[t_GCCapacityCompany_physical1]]></Name>
-				<X>73</X>
+				<X>75</X>
 				<Y>-17</Y>
 				<Label>
 					<X>0</X>

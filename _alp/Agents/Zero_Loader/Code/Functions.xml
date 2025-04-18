@@ -1043,7 +1043,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1726584205869</Id>
 		<Name><![CDATA[f_clearDataRecords]]></Name>
 		<X>-390</X>
-		<Y>670</Y>
+		<Y>650</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

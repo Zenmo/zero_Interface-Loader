@@ -375,7 +375,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1715116336665</Id>
-		<Name><![CDATA[f_setColorsBasedOnConsumpion]]></Name>
+		<Name><![CDATA[f_setColorsBasedOnConsumption]]></Name>
 		<X>1350</X>
 		<Y>1465</Y>
 		<Label>
@@ -504,7 +504,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1718263685462</Id>
-		<Name><![CDATA[f_setColorsBasedOnConsumpionProfileHouseholds]]></Name>
+		<Name><![CDATA[f_setColorsBasedOnConsumptionProfileHouseholds]]></Name>
 		<X>1350</X>
 		<Y>1485</Y>
 		<Label>

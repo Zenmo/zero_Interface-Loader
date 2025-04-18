@@ -158,10 +158,10 @@ switch(rb_buildingColors.getValue()) {
 		break;
 	case 1:
 		if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
-			f_setColorsBasedOnConsumpionProfileHouseholds(gis_area);
+			f_setColorsBasedOnConsumptionProfileHouseholds(gis_area);
 		}
 		else {
-			f_setColorsBasedOnConsumpion(gis_area);
+			f_setColorsBasedOnConsumption(gis_area);
 		}
 		break;
 	case 2:
@@ -699,7 +699,7 @@ f_projectSpecificOrderedCollectionAdjustments();
 
 /*ALCODEEND*/}
 
-double f_setColorsBasedOnConsumpion(GIS_Object gis_area)
+double f_setColorsBasedOnConsumption(GIS_Object gis_area)
 {/*ALCODESTART::1715116336665*/
 if(gis_area.c_containedGridConnections.size() > 0){
 
@@ -817,7 +817,7 @@ System.setOut(new PrintStream(new OutputStream() {
 return originalPrintStream;
 /*ALCODEEND*/}
 
-double f_setColorsBasedOnConsumpionProfileHouseholds(GIS_Object gis_area)
+double f_setColorsBasedOnConsumptionProfileHouseholds(GIS_Object gis_area)
 {/*ALCODESTART::1718263685462*/
 double yearlyEnergyConsumption = 0;
 for( GridConnection gc : gis_area.c_containedGridConnections){
@@ -1065,7 +1065,6 @@ double f_setGridTopologyColors()
 List<GridNode> MVsubstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.SUBMV);
 
 
-
 int i = 0;
 //Set all unique grid topology colors for each substation and its children
 for (GridNode MVsub : MVsubstations){
@@ -1080,14 +1079,15 @@ for (GridNode MVsub : MVsubstations){
 	i++;
 }
 
+/*
 //Find all MVMV and HVMV distribution stations
-//List<GridNode> MVMVstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.MVMV);
+List<GridNode> MVMVstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.MVMV);
 List<GridNode> HVMVstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.HVMV);
 
 //Set their topology colors (for now black as they are basically top level).
-//MVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
+MVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
 HVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
-
+*/
 /*ALCODEEND*/}
 
 double f_styleSUBMV(GISRegion gisregion)

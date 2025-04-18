@@ -1,7 +1,7 @@
 double f_createGISRegionOutline()
 {/*ALCODESTART::1726584205769*/
 // Create neighborhoods and draw them
-for (Neighbourhood_data NBH : c_Neighbourhood_data) {	
+for (Neighbourhood_data NBH : c_neighbourhood_data) {	
 	GIS_Object area = energyModel.add_pop_GIS_Objects();
 	
 	area.p_id = NBH.districtname();
@@ -79,7 +79,7 @@ GISRegion gisregion;
 // Grid operator (for now only one in the area)
 GridOperator Grid_Operator = findFirst(energyModel.pop_gridOperators, p->p.p_actorID.equals(project_data.grid_operator())) ;
 
-for (GridNode_data GN_data : c_GridNode_data) {
+for (GridNode_data GN_data : c_gridNode_data) {
 	//    if no scope selected, or if node has 'all scopes' in input file or if the node specific scope is selected (exists in the arrayList)       
 	if( settings.subscopesToSimulate() == null || settings.subscopesToSimulate().isEmpty() || GN_data.subscope() == null || settings.subscopesToSimulate().indexOf(GN_data.subscope()) > -1 ){ 
 		if (GN_data.status()) {
@@ -253,7 +253,7 @@ if(settings.reloadDatabase()){
 
 double f_createHousesFromDatabase()
 {/*ALCODESTART::1726584205781*/
-List<Building_data> scopedBuilding_data = f_getScopedBuildingList(c_HouseBuilding_data);
+List<Building_data> scopedBuilding_data = f_getScopedBuildingList(c_houseBuilding_data);
 	
 traceln("Aantal panden met woonfunctie in BAG data: " + scopedBuilding_data.size());
 
@@ -397,7 +397,7 @@ List<String> existing_actors = new ArrayList();
 List<String> existing_solarFields = new ArrayList();
 
 
-for (Solarfarm_data dataSolarfarm : c_Solarfarm_data) { // MOET NOG CHECK OF ZONNEVELD ACTOR AL BESTAAT OP, zo ja --> Zonneveld koppelen aan elkaar en niet 2 GC en 2 actoren maken.
+for (Solarfarm_data dataSolarfarm : c_solarfarm_data) { // MOET NOG CHECK OF ZONNEVELD ACTOR AL BESTAAT OP, zo ja --> Zonneveld koppelen aan elkaar en niet 2 GC en 2 actoren maken.
 	
 	if (!existing_solarFields.contains( dataSolarfarm.gc_id() )) {
 		solarpark = energyModel.add_EnergyProductionSites();
@@ -473,7 +473,7 @@ for (Solarfarm_data dataSolarfarm : c_Solarfarm_data) { // MOET NOG CHECK OF ZON
 
 double f_generateBatteries()
 {/*ALCODESTART::1726584205787*/
-for (Battery_data dataBattery : c_Battery_data) { // MOET NOG CHECK OF battery ACTOR AL BESTAAT OP, zo ja --> battery koppelen aan elkaar en niet 2 GC en 2 actoren maken.
+for (Battery_data dataBattery : c_battery_data) { // MOET NOG CHECK OF battery ACTOR AL BESTAAT OP, zo ja --> battery koppelen aan elkaar en niet 2 GC en 2 actoren maken.
 	
 	ConnectionOwner owner = energyModel.add_pop_connectionOwners();
 	GCGridBattery gridbattery = energyModel.add_GridBatteries();
@@ -549,7 +549,7 @@ ConnectionOwner owner;
 List<String> existing_actors = new ArrayList();
 
 
-for (Electrolyser_data dataElectrolyser : c_Electrolyser_data) {
+for (Electrolyser_data dataElectrolyser : c_electrolyser_data) {
 	GCEnergyConversion H2Electrolyser = energyModel.add_EnergyConversionSites();
 
 	H2Electrolyser.set_p_gridConnectionID( dataElectrolyser.gc_id() );
@@ -631,7 +631,7 @@ GCEnergyProduction windfarm;
 List<String> existing_actors = new ArrayList();
 List<String> existing_windFarms = new ArrayList();
 
-for (Windfarm_data dataWindfarm : c_Windfarm_data) {
+for (Windfarm_data dataWindfarm : c_windfarm_data) {
 	if (!existing_windFarms.contains(dataWindfarm.gc_id())) { // Check if windfarm exists already, if not, create new windfarm GC + turbine
 		windfarm = energyModel.add_EnergyProductionSites();
 
@@ -983,8 +983,8 @@ double f_createGenericCompanies()
 //Initialize variables
 List<GCUtility> generic_company_GCs = new ArrayList();
 
-
-for (Building_data genericCompany : c_GenericCompanyBuilding_data) {
+//Loop over the remaining buildings in c_CompanyBuilding_data (Survey buildings have been removed from this collection)
+for (Building_data genericCompany : c_companyBuilding_data) {
 	
 	GCUtility companyGC = findFirst(generic_company_GCs, GC -> GC.p_gridConnectionID.equals(genericCompany.address_id()));
 	
@@ -1335,7 +1335,7 @@ switch (parentGC.p_heatingType){ // HOE gaan we om met meerdere heating types in
 
 double f_createGISParcels()
 {/*ALCODESTART::1726584205807*/
-for (Parcel_data dataParcel : c_Parcel_data) {
+for (Parcel_data dataParcel : c_parcel_data) {
 		
 	GIS_Parcel parcel = energyModel.add_pop_GIS_Parcels();
 	
@@ -1486,11 +1486,14 @@ for (var survey : surveys) {
 	 		
 		 	//Check if it has (or will have) a direct connection with the grid (either gas or electric), if not: create subtenant	
 		 	boolean hasNaturalGasConnection = (gridConnection.getNaturalGas().getHasConnection() != null)? gridConnection.getNaturalGas().getHasConnection() : false;	 	
-		 	if (!gridConnection.getElectricity().getHasConnection() && !gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() && !hasNaturalGasConnection){
+		 	boolean hasExpansionRequest = (gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() != null ) ? gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() : false;
+		 	
+		 	if (!gridConnection.getElectricity().getHasConnection() && !hasExpansionRequest && !hasNaturalGasConnection){
 				subTenants.add(f_createSubtenant(survey, address));	
 			 	continue;
 		 	}
-		 	else if(survey_owner == null){// Connection owner does not exist yet: create and initialize new one
+		 	
+		 	if(survey_owner == null){// Connection owner does not exist yet: create and initialize new one
 				survey_owner = energyModel.add_pop_connectionOwners();
 				survey_owner.p_actorID = survey.getCompanyName();
 				survey_owner.p_actorType = OL_ActorType.CONNECTIONOWNER;
@@ -1521,11 +1524,11 @@ for (var survey : surveys) {
 		 	List<Building_data> buildings = new ArrayList<Building_data>();
 			if ( gridConnection.getPandIds() != null && !gridConnection.getPandIds().isEmpty()) {
 				for (var PID : gridConnection.getPandIds() ) {
-					Building_data building = findFirst(c_GenericCompanyBuilding_data, b -> b.building_id().equals(PID.getValue()));
+					Building_data building = findFirst(c_companyBuilding_data, b -> b.building_id().equals(PID.getValue()));
 					if (building!=null) { // Check if building package exists in building package collection
 						buildings.add(building);
-						c_SurveyCompanyBuilding_data.add(building);
-						c_GenericCompanyBuilding_data.removeAll(findAll(c_GenericCompanyBuilding_data, b -> b.building_id().equals(PID.getValue())));
+						c_surveyCompanyBuilding_data.add(building);
+						c_companyBuilding_data.removeAll(findAll(c_companyBuilding_data, b -> b.building_id().equals(PID.getValue())));
 						
 						//Set trafo ID
 						companyGC.p_parentNodeElectricID = building.gridnode_id();
@@ -1539,14 +1542,17 @@ for (var survey : surveys) {
 					else if (map_buildingData_Vallum != null && !map_buildingData_Vallum.isEmpty()){// Create new building package
 						Building_data customBuilding = f_createBuildingData_Vallum(companyGC, PID.getValue());
 						buildings.add(customBuilding);
-						c_VallumBuilding_data.add(customBuilding);
+						c_vallumBuilding_data.add(customBuilding);
 					}
 				}
 			} else {// No building connected in zorm? -> check if it is manually connected in excel (using gc_id column)
 				traceln("Survey %s has no building in zorm", survey.getId());
-				buildings = findAll(c_SurveyCompanyBuilding_data, b -> b.gc_id() != null && b.gc_id().equals(companyGC.p_gridConnectionID));
+				buildings = findAll(c_companyBuilding_data, b -> b.gc_id() != null && b.gc_id().equals(companyGC.p_gridConnectionID));
 				if(buildings == null){
 					traceln("Survey %s has also no manual connection with building in excel", survey.getId());
+				}
+				else{
+					c_companyBuilding_data.removeAll(buildings);
 				}
 			}
 			
@@ -1589,7 +1595,7 @@ for (var survey : surveys) {
 				
 				if(buildings.isEmpty()){ //GC will not have gotten a gridnode assigned,
 					for (var PID : gridConnection.getPandIds() ) {
-						Building_data surveyBuildingData = findFirst(c_SurveyCompanyBuilding_data, b -> b.building_id().equals(PID.getValue()));
+						Building_data surveyBuildingData = findFirst(c_surveyCompanyBuilding_data, b -> b.building_id().equals(PID.getValue()));
 						if(surveyBuildingData != null){
 							companyGC.p_parentNodeElectricID = surveyBuildingData.gridnode_id();
 							break;
@@ -1908,6 +1914,7 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 		//Buidling Base electricity load
 		double Remaining_electricity_demand_kWh_p_m2_yr = v_remainingElectricityDelivery_kWh / v_totalFloorAreaAnonymousCompanies_m2;
 		double yearlyElectricityDemand_kWh = Remaining_electricity_demand_kWh_p_m2_yr * companyGC.p_floorSurfaceArea_m2;
+		
 		//Add base load profile
 		f_addElectricityDemandProfile(companyGC, yearlyElectricityDemand_kWh, null, false, "Office_other_electricity");
 	}
@@ -1987,6 +1994,7 @@ double f_createRemainingBuildings()
 for (Building_data remainingBuilding_data : c_remainingBuilding_data) {
 	
 	GIS_Building building = energyModel.add_pop_GIS_Buildings();
+	building.p_id = remainingBuilding_data.building_id();
 	building.p_longitude = remainingBuilding_data.longitude();
 	building.p_latitude = remainingBuilding_data.latitude();
 	building.setLatLon(building.p_latitude, building.p_longitude);		
@@ -2326,7 +2334,7 @@ int laadpaal_nr = 1;
 int laadstation_nr = 1;
 
 //Loop over charging stations
-for (Chargingstation_data dataChargingStation : c_Chargingstation_data){
+for (Chargingstation_data dataChargingStation : c_chargingstation_data){
 
 	GCPublicCharger chargingStation = energyModel.add_PublicChargers();
 
@@ -2455,7 +2463,7 @@ for (Chargingstation_data dataChargingStation : c_Chargingstation_data){
 
 double f_createCompaniesFromDatabase()
 {/*ALCODESTART::1726584205851*/
-List<Building_data> scopedBuilding_data = f_getScopedBuildingList(c_GenericCompanyBuilding_data);
+List<Building_data> scopedBuilding_data = f_getScopedBuildingList(c_companyBuilding_data);
 
 traceln("Aantal bedrijven in BAG data (geen woonfunctie): " + scopedBuilding_data.size());
 
@@ -2571,11 +2579,11 @@ double f_createGISCables()
 
 //LV cables
 //Initialize the array with gisroutes 
-GISRoute[] gisroutesLV = new GISRoute[c_Cable_data_LV.size()];
+GISRoute[] gisroutesLV = new GISRoute[c_cable_data_LV.size()];
 int i = 0;
 
 
-for (Cable_data dataCableLV : c_Cable_data_LV) {
+for (Cable_data dataCableLV : c_cable_data_LV) {
 	gisroutesLV[i] = zero_Interface.f_createGISLine(f_createGISObjectsTokens(dataCableLV.line(), OL_GISObjectType.LV_CABLE), "LVGrid");
 	i++;
 }
@@ -2586,11 +2594,11 @@ for (Cable_data dataCableLV : c_Cable_data_LV) {
 
 //MV cables
 //Initialize the array with gisroutes 
-GISRoute[] gisroutesMV = new GISRoute[c_Cable_data_MV.size()];
+GISRoute[] gisroutesMV = new GISRoute[c_cable_data_MV.size()];
 int k = 0;
 
 
-for (Cable_data dataCableMV : c_Cable_data_MV) {
+for (Cable_data dataCableMV : c_cable_data_MV) {
 	gisroutesMV[k] = zero_Interface.f_createGISLine(f_createGISObjectsTokens(dataCableMV.line(), OL_GISObjectType.MV_CABLE), "MVGrid");
 	k++;
 }
@@ -3130,7 +3138,7 @@ if (gridConnection.getElectricity().getHasConnection()){
 		}
 		
 		
-		//Check if contract capacity feedin has been filled in: if not, make the same as contract delivery
+		//Check if contract capacity feedin has been filled in: if not, make the same as pv capacity
 		if(gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw() != null && gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw() > 0){
 			companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = ((double)gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw()); //Contracted connection capacity
 			companyGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
