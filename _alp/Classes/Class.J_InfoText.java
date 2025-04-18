@@ -4,19 +4,20 @@
 public class J_InfoText implements Serializable {
 
 	
-	String lorumIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui	officia deserunt mollit anim id est laborum.";
-    
-	/**
+	public String lorumIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui	officia deserunt mollit anim id est laborum.";
+    public String householdRooftopPV = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui	officia deserunt mollit anim id est laborum.";
+	
+    /**
      * Default constructor
      */
     public J_InfoText() {
     }
     
-    public Pair<String, Integer> getLorumIpsum(int width_ch) {
-    	return this.restrictWidth(this.lorumIpsum, width_ch);
-    }
+    //public Pair<String, Integer> getLorumIpsum(int width_ch, String descriptionText) {
+    	//return this.restrictWidth(descriptionText, width_ch);
+    //}
 
-    private Pair<String, Integer> restrictWidth( String txt, int width_ch ) {
+    public Pair<String, Integer> restrictWidth( String txt, int width_ch ) {
     	StringBuilder output = new StringBuilder();
     	int remainingTextSize = txt.length();
     	int currentIndex = 0;

@@ -4762,8 +4762,8 @@ if(b_inManualFilterSelectionMode){
 	f_selectManualFilteredGC(clickx, clicky);
 }
 else{
-	if (uI_Tabs.pop_tabEHub.get(0).b_NFATOListener) {
-		uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
+	if (uI_Tabs.pop_tabEHub.b_NFATOListener) {
+		uI_Tabs.pop_tabEHub.f_checkGISRegion(clickx, clicky);
 	}
 	else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP) || 
 			c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
@@ -4791,8 +4791,8 @@ if(b_inManualFilterSelectionMode){
 	f_selectManualFilteredGC(clickx, clicky);
 }
 else{
-	if (uI_Tabs.pop_tabEHub.get(0).b_NFATOListener) {
-		uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
+	if (uI_Tabs.pop_tabEHub.b_NFATOListener) {
+		uI_Tabs.pop_tabEHub.f_checkGISRegion(clickx, clicky);
 	}
 	else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP) || 
 			c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
@@ -6697,7 +6697,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<OnClickCode>f_setInfoText(i_scenarios);</OnClickCode>
+		<OnClickCode>f_setInfoText(i_scenarios, v_infoText.lorumIpsum);</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Width>20</Width>
@@ -6724,7 +6724,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<OnClickCode>f_setInfoText(i_filters);</OnClickCode>
+		<OnClickCode>f_setInfoText(i_filters, v_infoText.lorumIpsum);</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Width>20</Width>
@@ -6751,7 +6751,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<OnClickCode>f_setInfoText(i_legend);</OnClickCode>
+		<OnClickCode>f_setInfoText(i_legend, v_infoText.lorumIpsum);</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Width>20</Width>
@@ -6778,7 +6778,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<OnClickCode>f_setInfoText(i_test);</OnClickCode>
+		<OnClickCode>f_setInfoText(i_test, v_infoText.lorumIpsum);</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Width>20</Width>
@@ -6805,7 +6805,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<OnClickCode>f_setInfoText(i_companyUIs);</OnClickCode>
+		<OnClickCode>f_setInfoText(i_companyUIs, v_infoText.lorumIpsum);</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Width>20</Width>

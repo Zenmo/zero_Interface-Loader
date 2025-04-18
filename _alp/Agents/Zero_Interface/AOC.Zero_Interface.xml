@@ -41,6 +41,12 @@ import com.querydsl.core.types.dsl.TimeExpression;
 import zero_engine.J_EAStorageElectric;
 import zero_engine.J_EAConsumption;
 import digital_twin_results.OL_ChartTypes;]]></Import>
+	<StartupCode><![CDATA[c_presentations.add(uI_Tabs_presentation);
+c_presentations.add(uI_Results_presentation);
+c_presentations.add(uI_Tabs.pop_tabElectricity_presentation);
+c_presentations.add(uI_Tabs.pop_tabHeating_presentation);
+c_presentations.add(uI_Tabs.pop_tabMobility_presentation);
+c_presentations.add(uI_Tabs.pop_tabEHub_presentation);]]></StartupCode>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1658477103138</Id>

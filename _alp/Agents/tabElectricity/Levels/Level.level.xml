@@ -29,7 +29,7 @@
 	<Group>
 		<Id>1722249610010</Id>
 		<Name><![CDATA[gr_electricityDemandSlidersResidentialArea]]></Name>
-		<X>965</X>
+		<X>985</X>
 		<Y>175</Y>
 		<Label>
 			<X>10</X>
@@ -639,6 +639,33 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				</Font>
 				<Alignment>CENTER</Alignment>
 			</Text>
+			<Image>
+				<Id>1744878990804</Id>
+				<Name><![CDATA[i_householdPV]]></Name>
+				<X>-25</X>
+				<Y>-140</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdPV, zero_Interface.v_infoText.householdRooftopPV);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
 		</Presentation>
 	</Group>
 	<Group>
@@ -2000,8 +2027,8 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 	<Group>
 		<Id>1728384392418</Id>
 		<Name><![CDATA[gr_electricityDemandSliders_Businesspark]]></Name>
-		<X>580</X>
-		<Y>180</Y>
+		<X>585</X>
+		<Y>175</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2010,6 +2037,7 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>185</XCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>

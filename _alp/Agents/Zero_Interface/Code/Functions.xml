@@ -1416,7 +1416,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1743665953113</Id>
@@ -1433,6 +1433,70 @@
 		<Parameter>
 			<Name><![CDATA[infoBubble]]></Name>
 			<Type><![CDATA[ShapeImage]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[descriptionText]]></Name>
+			<Type><![CDATA[String]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="private" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>Pair&lt;ShapeGroup, Point&gt;</ReturnType>
+		<Id>1744894817569</Id>
+		<Name><![CDATA[f_getGroupPositionIteration]]></Name>
+		<X>-1020</X>
+		<Y>1025</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[pair]]></Name>
+			<Type><![CDATA[Pair<ShapeGroup, Point>]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>Point</ReturnType>
+		<Id>1744894817571</Id>
+		<Name><![CDATA[f_getAbsolutePosition]]></Name>
+		<X>-1040</X>
+		<Y>1000</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[shape]]></Name>
+			<Type><![CDATA[Shape]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>Pair&lt;ShapeEmbeddedObjectPresentation, Point&gt;</ReturnType>
+		<Id>1744894817573</Id>
+		<Name><![CDATA[f_getPresentationPositionIteration]]></Name>
+		<X>-1020</X>
+		<Y>1045</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[pair]]></Name>
+			<Type><![CDATA[Pair<ShapeEmbeddedObjectPresentation, Point>]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
