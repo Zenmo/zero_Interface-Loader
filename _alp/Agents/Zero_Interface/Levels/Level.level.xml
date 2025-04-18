@@ -1401,6 +1401,7 @@ traceln("gr_compareResultsButton is not functional!");</OnClickCode>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<VisibleCode>b_showCables</VisibleCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
@@ -1759,13 +1760,15 @@ else if ( rb_buildingColors.getValue() == 1){
 		gr_consumptionColorsLegendaHouseholds.setVisible(true);
 		
 		for (GIS_Building building : energyModel.pop_GIS_Buildings){
-			f_setColorsBasedOnConsumpionProfileHouseholds(building);
+			f_setColorsBasedOnConsumptionProfileHouseholds(building);
 		}
 	}
 	else {
 		gr_consumptionColorsLegenda.setVisible(true);
 		for (GIS_Building building : energyModel.pop_GIS_Buildings){
-			f_setColorsBasedOnConsumpion(building);
+			if(building.gisRegion.isVisible()){
+				f_setColorsBasedOnConsumption(building);
+			}
 		}
 		/*for (GIS_Object object : energyModel.pop_GIS_Objects){
 			f_setColorsBasedOnConsumpion(object);
