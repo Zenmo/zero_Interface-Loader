@@ -2130,3 +2130,133 @@ if(map_scale != null){
 va_Interface.navigateTo();
 /*ALCODEEND*/}
 
+double f_harvestEnergyModelLoadData()
+{/*ALCODESTART::1744624088848*/
+traceln("Start writing Electricity Load Balance data to excel!");
+
+//Clear the sheet first
+f_clearExportSheet();
+
+//Set column names
+excel_exportBalanceLoadData.setCellValue("Tijd [u]", "Electricity Load Balance", 1, 1);
+excel_exportBalanceLoadData.setCellValue("Totale load van het Hele gebied [kWh]", "Electricity Load Balance", 1, 2);
+
+//Get energyModel profile
+double[] loadArray_kW = energyModel.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW();
+
+for (int i = 0; i < loadArray_kW.length ; i++) {
+	
+	//Time series
+	excel_exportBalanceLoadData.setCellValue((i) * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, 1);
+
+	//Data
+	excel_exportBalanceLoadData.setCellValue( loadArray_kW[i] * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, 2);
+}
+
+//Write file
+excel_exportBalanceLoadData.writeFile();
+
+traceln("Finished writing Electricity Load Balance data to excel!");
+/*ALCODEEND*/}
+
+double f_harvestSelectedGCLoadData()
+{/*ALCODESTART::1744624088850*/
+traceln("Start writing Electricity Load Balance data to excel!");
+
+//Clear the sheet first
+f_clearExportSheet();
+
+//Initialize column index
+int columnIndex = 2;
+
+//Initialize total balance flow for all selected GC
+double[] cumulativeLoadArray_kW = new double[energyModel.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW().length];
+
+//Loop over gc and add the data
+for(GridConnection GC : c_selectedGridConnections){
+
+	//Add gc data
+	excel_exportBalanceLoadData.setCellValue(GC.p_ownerID, "Electricity Load Balance", 1, columnIndex);
+	
+	double[] loadArray_kW = GC.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW();
+
+	for (int i = 0; i < loadArray_kW.length; i++ ) {		
+		excel_exportBalanceLoadData.setCellValue( loadArray_kW[i] * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, columnIndex);
+		
+		//Add to cumulative load array
+		cumulativeLoadArray_kW[i] += loadArray_kW[i];
+	}
+	
+	//Add timestep column (only the first time)
+	if (columnIndex == 2) {
+		excel_exportBalanceLoadData.setCellValue("Tijd [u]", "Electricity Load Balance", 1, 1);
+		traceln("ArraySize: %s", loadArray_kW.length);
+		for (int i = 0; i < loadArray_kW.length ; i++) {
+			excel_exportBalanceLoadData.setCellValue((i) * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, 1);
+		}
+	}
+	
+	//Increase columnIndex
+	columnIndex++;
+}
+
+//Cumulative data column
+if(c_selectedGridConnections.size() > 1){
+	excel_exportBalanceLoadData.setCellValue("Totale load [kWh]", "Electricity Load Balance", 1, columnIndex);
+	for (int i = 0; i < cumulativeLoadArray_kW.length ; i++) {
+		excel_exportBalanceLoadData.setCellValue( cumulativeLoadArray_kW[i] * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, columnIndex);
+	}
+}
+
+//Write the file
+excel_exportBalanceLoadData.writeFile();
+
+traceln("Finished writing Electricity Load Balance data to excel!");
+/*ALCODEEND*/}
+
+double f_harvestTotalBalanceLoadOfSelectedEnergyCoop()
+{/*ALCODESTART::1744624088852*/
+traceln("Start writing Electricity Load Balance data to excel!");
+
+//Clear the sheet first
+f_clearExportSheet();
+
+//Set column names
+excel_exportBalanceLoadData.setCellValue("Tijd [u]", "Electricity Load Balance", 1, 1);
+excel_exportBalanceLoadData.setCellValue("Totale load van de geselecteerde EnergyCoop [kWh]", "Electricity Load Balance", 1, 2);
+
+//Get energyModel profile
+double[] loadArray_kW = v_customEnergyCoop.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW();
+
+for (int i = 0; i < loadArray_kW.length ; i++) {
+	
+	//Time series
+	excel_exportBalanceLoadData.setCellValue((i) * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, 1);
+
+	//Data
+	excel_exportBalanceLoadData.setCellValue( loadArray_kW[i] * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, 2);
+}
+
+//Write file
+excel_exportBalanceLoadData.writeFile();
+
+traceln("Finished writing Electricity Load Balance data to excel!");
+/*ALCODEEND*/}
+
+double f_setAllFileDownloadersDisabled()
+{/*ALCODESTART::1744985599017*/
+fileChooser_exportBalanceLoadEnergyModel.setEnabled(false);
+fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(false);
+fileChooser_exportBalanceLoadSelectedCompanies.setEnabled(false);
+/*ALCODEEND*/}
+
+double f_clearExportSheet()
+{/*ALCODESTART::1744986150240*/
+//Clear the sheet first
+for (int row = 1; row <= 35137; row++) {
+    for (int col = 1; col <= p_maxNrSelectedGCForExport + 2; col++) {
+        excel_exportBalanceLoadData.setCellValue("", "Electricity Load Balance", row, col);
+    }
+}
+/*ALCODEEND*/}
+
