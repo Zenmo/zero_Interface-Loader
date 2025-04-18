@@ -6496,8 +6496,8 @@ else{
 				<LineColor>-16777216</LineColor>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>400</Width>
-				<Height>490</Height>
+				<Width>450</Width>
+				<Height>530</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
 				<FillMaterial>null</FillMaterial>
@@ -6506,7 +6506,7 @@ else{
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1744624088810</Id>
 				<Name><![CDATA[fileChooser_exportBalanceLoadEnergyModel]]></Name>
-				<X>-180</X>
+				<X>-156</X>
 				<Y>-30</Y>
 				<Label>
 					<X>0</X>
@@ -6525,17 +6525,17 @@ else{
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
-					<Title>Click to download kwartierwaarden excel</Title>
+					<Title>Klik om kwartierwaarden excel te downloaden (Totaal gebied)</Title>
 					<Type><![CDATA[DOWNLOAD]]></Type>
 					<Filters>.xlsx, .xls</Filters>
-					<FileName>ExportKwartierwaardes_HeleGebied.xlsx</FileName>
+					<FileName>Export_ModelData.xlsx</FileName>
 				</ExtendedProperties>
 			</Control>
 			<Control Type="Button">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1744624088812</Id>
 				<Name><![CDATA[button_exportBalanceLoadEnergyModel]]></Name>
-				<X>-180</X>
+				<X>-156</X>
 				<Y>-70</Y>
 				<Label>
 					<X>0</X>
@@ -6549,7 +6549,9 @@ else{
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor/>
 					<Enabled>true</Enabled>
-					<ActionCode>f_harvestModelDeliveryData();
+					<ActionCode>f_setAllFileDownloadersDisabled();
+
+f_harvestEnergyModelLoadData();
 
 fileChooser_exportBalanceLoadEnergyModel.setEnabled(true);</ActionCode>
 				</BasicProperties>
@@ -6561,7 +6563,7 @@ fileChooser_exportBalanceLoadEnergyModel.setEnabled(true);</ActionCode>
 			<Text>
 				<Id>1744624088814</Id>
 				<Name><![CDATA[txt_writeToExcelFunctions]]></Name>
-				<X>-170</X>
+				<X>-150</X>
 				<Y>-100</Y>
 				<Label>
 					<X>0</X>
@@ -6588,8 +6590,8 @@ fileChooser_exportBalanceLoadEnergyModel.setEnabled(true);</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1744624088816</Id>
 				<Name><![CDATA[button_exportBalanceLoadSelectedCompanies]]></Name>
-				<X>-180</X>
-				<Y>230</Y>
+				<X>-156</X>
+				<Y>170</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -6602,8 +6604,10 @@ fileChooser_exportBalanceLoadEnergyModel.setEnabled(true);</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor/>
 					<Enabled>true</Enabled>
-					<EnableExpression>c_selectedGridConnections.size() &gt; 0 &amp;&amp; c_selectedGridConnections.size()&lt;31</EnableExpression>
-					<ActionCode>f_harvestSelectedGCdeliveryData();
+					<EnableExpression>c_selectedGridConnections.size() &gt; 0 &amp;&amp; c_selectedGridConnections.size()&lt; p_maxNrSelectedGCForExport + 1</EnableExpression>
+					<ActionCode>f_setAllFileDownloadersDisabled();
+
+f_harvestSelectedGCLoadData();
 
 fileChooser_exportBalanceLoadSelectedCompanies.setEnabled(true);</ActionCode>
 				</BasicProperties>
@@ -6616,8 +6620,8 @@ fileChooser_exportBalanceLoadSelectedCompanies.setEnabled(true);</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1744624088818</Id>
 				<Name><![CDATA[fileChooser_exportBalanceLoadSelectedCompanies]]></Name>
-				<X>-180</X>
-				<Y>270</Y>
+				<X>-156</X>
+				<Y>210</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -6635,18 +6639,18 @@ fileChooser_exportBalanceLoadSelectedCompanies.setEnabled(true);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
-					<Title>Click to download kwartierwaarden excel</Title>
+					<Title>Klik om kwartierwaarden excel te downloaden (Geselecteerde bedrijven)</Title>
 					<Type><![CDATA[DOWNLOAD]]></Type>
 					<Filters>.xlsx, .xls</Filters>
-					<FileName>ExportKwartierwaardes_PerBedrijf.xlsx</FileName>
+					<FileName>Export_ModelData.xlsx</FileName>
 				</ExtendedProperties>
 			</Control>
 			<Control Type="FileChooser">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1744624088820</Id>
 				<Name><![CDATA[fileChooser_exportBalanceLoadSelectedEnergyCoop]]></Name>
-				<X>-180</X>
-				<Y>120</Y>
+				<X>-156</X>
+				<Y>90</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -6664,18 +6668,18 @@ fileChooser_exportBalanceLoadSelectedCompanies.setEnabled(true);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
-					<Title>Click to download kwartierwaarden excel</Title>
+					<Title>Klik om kwartierwaarden excel te downloaden (Totaal geselecteerde COOP)</Title>
 					<Type><![CDATA[DOWNLOAD]]></Type>
 					<Filters>.xlsx, .xls</Filters>
-					<FileName>ExportKwartierwaardes_TotaalVanGeselecteerdeEnergyCoop.xlsx</FileName>
+					<FileName>Export_ModelData.xlsx</FileName>
 				</ExtendedProperties>
 			</Control>
 			<Control Type="Button">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1744624088822</Id>
 				<Name><![CDATA[button_exportBalanceLoadSelectedEnergyCoop]]></Name>
-				<X>-180</X>
-				<Y>80</Y>
+				<X>-156</X>
+				<Y>50</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -6689,7 +6693,9 @@ fileChooser_exportBalanceLoadSelectedCompanies.setEnabled(true);</ActionCode>
 					<TextColor/>
 					<Enabled>true</Enabled>
 					<EnableExpression>c_selectedGridConnections.size() &gt; 1 &amp;&amp; v_customEnergyCoop != null</EnableExpression>
-					<ActionCode>f_harvestTotalLoadOfSelectedEnergyCoop();
+					<ActionCode>f_setAllFileDownloadersDisabled();
+
+f_harvestTotalBalanceLoadOfSelectedEnergyCoop();
 
 fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(true);</ActionCode>
 				</BasicProperties>

@@ -2130,20 +2130,16 @@ if(map_scale != null){
 va_Interface.navigateTo();
 /*ALCODEEND*/}
 
-double f_harvestModelDeliveryData()
+double f_harvestEnergyModelLoadData()
 {/*ALCODESTART::1744624088848*/
-traceln("Start writing delivery data to excel!");
+traceln("Start writing Electricity Load Balance data to excel!");
 
 //Clear the sheet first
-for (int row = 1; row <= 35137; row++) {
-    for (int col = 1; col <= 2; col++) {
-        excel_energyModelDeliveryData.setCellValue("", "Leveringsdata", row, col);
-    }
-}
+f_clearExportSheet();
 
 //Set column names
-excel_energyModelDeliveryData.setCellValue("Tijd [u]", "Leveringsdata", 1, 1);
-excel_energyModelDeliveryData.setCellValue("Hele gebied [kWh]", "Leveringsdata", 1, 2);
+excel_exportBalanceLoadData.setCellValue("Tijd [u]", "Electricity Load Balance", 1, 1);
+excel_exportBalanceLoadData.setCellValue("Totale load van het Hele gebied [kWh]", "Electricity Load Balance", 1, 2);
 
 //Get energyModel profile
 double[] loadArray_kW = energyModel.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW();
@@ -2151,28 +2147,24 @@ double[] loadArray_kW = energyModel.v_rapidRunData.am_totalBalanceAccumulators_k
 for (int i = 0; i < loadArray_kW.length ; i++) {
 	
 	//Time series
-	excel_energyModelDeliveryData.setCellValue((i) * energyModel.p_timeStep_h, "Leveringsdata", i+2, 1);
+	excel_exportBalanceLoadData.setCellValue((i) * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, 1);
 
 	//Data
-	excel_energyModelDeliveryData.setCellValue( loadArray_kW[i] * energyModel.p_timeStep_h, "Leveringsdata", i+2, 2);
+	excel_exportBalanceLoadData.setCellValue( loadArray_kW[i] * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, 2);
 }
 
 //Write file
-excel_energyModelDeliveryData.writeFile();
+excel_exportBalanceLoadData.writeFile();
 
-traceln("Finished writing deliverydata to excel!");
+traceln("Finished writing Electricity Load Balance data to excel!");
 /*ALCODEEND*/}
 
-double f_harvestSelectedGCdeliveryData()
+double f_harvestSelectedGCLoadData()
 {/*ALCODESTART::1744624088850*/
-traceln("Start writing delivery data to excel!");
+traceln("Start writing Electricity Load Balance data to excel!");
 
 //Clear the sheet first
-for (int row = 1; row <= 35137; row++) {
-    for (int col = 1; col <= 32; col++) {
-        excel_gridConnectionDeliveryData.setCellValue("", "Leveringsdata", row, col);
-    }
-}
+f_clearExportSheet();
 
 //Initialize column index
 int columnIndex = 2;
@@ -2184,12 +2176,12 @@ double[] cumulativeLoadArray_kW = new double[energyModel.v_rapidRunData.am_total
 for(GridConnection GC : c_selectedGridConnections){
 
 	//Add gc data
-	excel_gridConnectionDeliveryData.setCellValue(GC.p_ownerID, "Leveringsdata", 1, columnIndex);
+	excel_exportBalanceLoadData.setCellValue(GC.p_ownerID, "Electricity Load Balance", 1, columnIndex);
 	
 	double[] loadArray_kW = GC.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW();
 
 	for (int i = 0; i < loadArray_kW.length; i++ ) {		
-		excel_gridConnectionDeliveryData.setCellValue( loadArray_kW[i] * energyModel.p_timeStep_h, "Leveringsdata", i+2, columnIndex);
+		excel_exportBalanceLoadData.setCellValue( loadArray_kW[i] * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, columnIndex);
 		
 		//Add to cumulative load array
 		cumulativeLoadArray_kW[i] += loadArray_kW[i];
@@ -2197,10 +2189,10 @@ for(GridConnection GC : c_selectedGridConnections){
 	
 	//Add timestep column (only the first time)
 	if (columnIndex == 2) {
-		excel_gridConnectionDeliveryData.setCellValue("Tijd [u]", "Leveringsdata", 1, 1);
+		excel_exportBalanceLoadData.setCellValue("Tijd [u]", "Electricity Load Balance", 1, 1);
 		traceln("ArraySize: %s", loadArray_kW.length);
 		for (int i = 0; i < loadArray_kW.length ; i++) {
-			excel_gridConnectionDeliveryData.setCellValue((i) * energyModel.p_timeStep_h, "Leveringsdata", i+2, 1);
+			excel_exportBalanceLoadData.setCellValue((i) * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, 1);
 		}
 	}
 	
@@ -2210,32 +2202,28 @@ for(GridConnection GC : c_selectedGridConnections){
 
 //Cumulative data column
 if(c_selectedGridConnections.size() > 1){
-	excel_gridConnectionDeliveryData.setCellValue("Totale load [kWh]", "Leveringsdata", 1, columnIndex);
+	excel_exportBalanceLoadData.setCellValue("Totale load [kWh]", "Electricity Load Balance", 1, columnIndex);
 	for (int i = 0; i < cumulativeLoadArray_kW.length ; i++) {
-		excel_gridConnectionDeliveryData.setCellValue( cumulativeLoadArray_kW[i] * energyModel.p_timeStep_h, "Leveringsdata", i+2, columnIndex);
+		excel_exportBalanceLoadData.setCellValue( cumulativeLoadArray_kW[i] * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, columnIndex);
 	}
 }
 
 //Write the file
-excel_gridConnectionDeliveryData.writeFile();
+excel_exportBalanceLoadData.writeFile();
 
-traceln("Finished writing deliverydata to excel!");
+traceln("Finished writing Electricity Load Balance data to excel!");
 /*ALCODEEND*/}
 
-double f_harvestTotalLoadOfSelectedEnergyCoop()
+double f_harvestTotalBalanceLoadOfSelectedEnergyCoop()
 {/*ALCODESTART::1744624088852*/
-traceln("Start writing delivery data to excel!");
+traceln("Start writing Electricity Load Balance data to excel!");
 
 //Clear the sheet first
-for (int row = 1; row <= 35137; row++) {
-    for (int col = 1; col <= 2; col++) {
-        excel_totalLoadOfSelectedEnergyCoop.setCellValue("", "Leveringsdata", row, col);
-    }
-}
+f_clearExportSheet();
 
 //Set column names
-excel_totalLoadOfSelectedEnergyCoop.setCellValue("Tijd [u]", "Leveringsdata", 1, 1);
-excel_totalLoadOfSelectedEnergyCoop.setCellValue("EnergyCoop [kWh]", "Leveringsdata", 1, 2);
+excel_exportBalanceLoadData.setCellValue("Tijd [u]", "Electricity Load Balance", 1, 1);
+excel_exportBalanceLoadData.setCellValue("Totale load van de geselecteerde EnergyCoop [kWh]", "Electricity Load Balance", 1, 2);
 
 //Get energyModel profile
 double[] loadArray_kW = v_customEnergyCoop.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW();
@@ -2243,15 +2231,32 @@ double[] loadArray_kW = v_customEnergyCoop.v_rapidRunData.am_totalBalanceAccumul
 for (int i = 0; i < loadArray_kW.length ; i++) {
 	
 	//Time series
-	excel_totalLoadOfSelectedEnergyCoop.setCellValue((i) * energyModel.p_timeStep_h, "Leveringsdata", i+2, 1);
+	excel_exportBalanceLoadData.setCellValue((i) * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, 1);
 
 	//Data
-	excel_totalLoadOfSelectedEnergyCoop.setCellValue( loadArray_kW[i] * energyModel.p_timeStep_h, "Leveringsdata", i+2, 2);
+	excel_exportBalanceLoadData.setCellValue( loadArray_kW[i] * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, 2);
 }
 
 //Write file
-excel_totalLoadOfSelectedEnergyCoop.writeFile();
+excel_exportBalanceLoadData.writeFile();
 
-traceln("Finished writing deliverydata to excel!");
+traceln("Finished writing Electricity Load Balance data to excel!");
+/*ALCODEEND*/}
+
+double f_setAllFileDownloadersDisabled()
+{/*ALCODESTART::1744985599017*/
+fileChooser_exportBalanceLoadEnergyModel.setEnabled(false);
+fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(false);
+fileChooser_exportBalanceLoadSelectedCompanies.setEnabled(false);
+/*ALCODEEND*/}
+
+double f_clearExportSheet()
+{/*ALCODESTART::1744986150240*/
+//Clear the sheet first
+for (int row = 1; row <= 35137; row++) {
+    for (int col = 1; col <= p_maxNrSelectedGCForExport + 2; col++) {
+        excel_exportBalanceLoadData.setCellValue("", "Electricity Load Balance", row, col);
+    }
+}
 /*ALCODEEND*/}
 
