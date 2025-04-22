@@ -1184,7 +1184,7 @@ https://nos.nl/artikel/2483604-elektrische-vrachtwagens-blijven-achter-door-comp
 https://www.zonneplan.nl/kenniscentrum/zonnepanelen/vermogen --> 212 W/m2
 https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Description>
 		<X>50</X>
-		<Y>760</Y>
+		<Y>860</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1214,7 +1214,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Description><![CDATA[Average ratio of battery capacity over battery power.
 --> If battery capacity (in kWh) is twice the battery power (in kW) --> ratio = 2.]]></Description>
 		<X>50</X>
-		<Y>880</Y>
+		<Y>980</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1337,7 +1337,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Name><![CDATA[p_avgRatioRoofPotentialPV]]></Name>
 		<Description><![CDATA[value for the ratio of the avg Usable Roof Area For PV fr]]></Description>
 		<X>50</X>
-		<Y>780</Y>
+		<Y>880</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1363,7 +1363,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1726584205711</Id>
-		<Name><![CDATA[p_avgEfficiencyHeatpump]]></Name>
+		<Name><![CDATA[p_avgEfficiencyHeatpump_fr]]></Name>
 		<Description><![CDATA[Efficiency (eta_r) used to calculate the COP in the energy asset based on temperature differences. 
 
 '0.5' comes from old code, no source found for it yet.]]></Description>
@@ -1423,7 +1423,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1726584205717</Id>
-		<Name><![CDATA[p_avgEfficiencyGasBurner]]></Name>
+		<Name><![CDATA[p_avgEfficiencyGasBurner_fr]]></Name>
 		<Description><![CDATA[Average heating efficiency of a gas burner.
 
 --> SOURCE?]]></Description>
@@ -1485,7 +1485,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1726584205723</Id>
-		<Name><![CDATA[p_avgEfficiencyHydrogenBurner]]></Name>
+		<Name><![CDATA[p_avgEfficiencyHydrogenBurner_fr]]></Name>
 		<Description><![CDATA[Average heating efficiency of a hydrogen burner.
 
 - https://h2sciencecoalition.com/blog/hydrogen-for-heating-a-comparison-with-heat-pumps-part-1/
@@ -1551,7 +1551,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Id>1726746753360</Id>
 		<Name><![CDATA[p_avgVehiclesPerChargePoint]]></Name>
 		<X>50</X>
-		<Y>930</Y>
+		<Y>1030</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1660,7 +1660,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Description><![CDATA[Parameter used to estimate the total solar production in a year in a function like:
 p_avgFullLoadHoursPV_hr * kWp_of_PV_panels = XXX kWh pv production in a year.]]></Description>
 		<X>50</X>
-		<Y>800</Y>
+		<Y>900</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1786,7 +1786,7 @@ to 18 m3 p m2 for label G
 		<Name><![CDATA[p_avgSolarFieldPowerPerArea_kWppha]]></Name>
 		<Description><![CDATA[https://www.acrres.nl/wp-content/uploads/2016/02/PPO-642-zonder-blanco-pag.pdf --> 0.5 MWp per ha = 500 kWp per ha]]></Description>
 		<X>50</X>
-		<Y>820</Y>
+		<Y>920</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1803,6 +1803,99 @@ to 18 m3 p m2 for label G
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1733155392377</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1745316053417</Id>
+		<Name><![CDATA[p_avgEfficiencyCHP_thermal_fr]]></Name>
+		<Description><![CDATA[50% ->
+
+https://www.kasalsenergiebron.nl/content/research/E22001_Rapport_WKK_Barometer_2023.pdf?utm_source=chatgpt.com]]></Description>
+		<X>70</X>
+		<Y>750</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.5]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1745316053415</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1745316110677</Id>
+		<Name><![CDATA[p_avgEfficiencyCHP_electric_fr]]></Name>
+		<Description><![CDATA[42% ->
+
+https://www.kasalsenergiebron.nl/content/research/E22001_Rapport_WKK_Barometer_2023.pdf?utm_source=chatgpt.com]]></Description>
+		<X>70</X>
+		<Y>770</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.42]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1745316110675</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1745326622582</Id>
+		<Name><![CDATA[p_avgOutputTemperatureCHP_degC]]></Name>
+		<Description><![CDATA[Average output temperature of a hydrogen burner unit in degC.
+
+--> Source?]]></Description>
+		<X>70</X>
+		<Y>790</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[90]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1745326622580</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
