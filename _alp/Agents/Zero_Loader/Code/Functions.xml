@@ -7,7 +7,7 @@
 		<Name><![CDATA[f_createGISRegionOutline]]></Name>
 		<Description><![CDATA[Creates the outline of the simulated area]]></Description>
 		<X>806.739</X>
-		<Y>559</Y>
+		<Y>569</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -77,7 +77,7 @@
 		<Id>1726584205777</Id>
 		<Name><![CDATA[f_createGISObjectsTokens]]></Name>
 		<X>825.241</X>
-		<Y>640</Y>
+		<Y>650</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -122,7 +122,7 @@
 		<Name><![CDATA[f_createHousesFromDatabase]]></Name>
 		<Description><![CDATA[Creates the houses using a single GC, and their building. After creation, they will be simulated using average values.]]></Description>
 		<X>440</X>
-		<Y>530</Y>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -138,7 +138,7 @@
 		<Id>1726584205783</Id>
 		<Name><![CDATA[f_createSubtenant]]></Name>
 		<Description><![CDATA[function used to connect the subtenant to the main tenant (connection owner), based on adres data of subtenant and Grid connection. ]]></Description>
-		<X>459.001</X>
+		<X>449.001</X>
 		<Y>219.001</Y>
 		<Label>
 			<X>10</X>
@@ -164,7 +164,7 @@
 		<Name><![CDATA[f_generateSolarParks]]></Name>
 		<Description><![CDATA[Function used to generate solar parks: grid connections and park owner (connection owner actor)]]></Description>
 		<X>430.001</X>
-		<Y>720.001</Y>
+		<Y>750.001</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -181,7 +181,7 @@
 		<Name><![CDATA[f_generateBatteries]]></Name>
 		<Description><![CDATA[Function used to create (neighborhood) battery grid connection and actor]]></Description>
 		<X>430.001</X>
-		<Y>780</Y>
+		<Y>810</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -198,7 +198,7 @@
 		<Name><![CDATA[f_generateElectrolysers]]></Name>
 		<Description><![CDATA[Function used to create electrolyser grid connections and actors]]></Description>
 		<X>430</X>
-		<Y>760</Y>
+		<Y>790</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -215,7 +215,7 @@
 		<Name><![CDATA[f_generateWindFarms]]></Name>
 		<Description><![CDATA[Function used to create all windfarm grid connections, actors, EAs and GISObjects]]></Description>
 		<X>430.001</X>
-		<Y>740</Y>
+		<Y>770</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -285,8 +285,8 @@
 		<Id>1726584205799</Id>
 		<Name><![CDATA[f_createGenericCompanies]]></Name>
 		<Description><![CDATA[Creating the companies (using a single GC) + owned buildings, that have not filled in the survey. If created, they will be simulated using average values, scaled with the totals (CBS data) of the area.]]></Description>
-		<X>440</X>
-		<Y>340</Y>
+		<X>430</X>
+		<Y>378</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -303,7 +303,7 @@
 		<Name><![CDATA[f_createGISBuilding]]></Name>
 		<Description><![CDATA[Creates the GIS object(s) building(s) for the companies and houses]]></Description>
 		<X>807.621</X>
-		<Y>520</Y>
+		<Y>530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -363,7 +363,7 @@
 		<Id>1726584205805</Id>
 		<Name><![CDATA[f_addHeatDemandProfile]]></Name>
 		<X>821</X>
-		<Y>191</Y>
+		<Y>221</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -400,7 +400,7 @@
 		<Name><![CDATA[f_createGISParcels]]></Name>
 		<Description><![CDATA[Creates "empty" parcels on the gismap, these parcels do not contain buildings or gridconnections. Currently no need for the function to return the GIS_Object.]]></Description>
 		<X>807.621</X>
-		<Y>540</Y>
+		<Y>550</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -416,7 +416,7 @@
 		<Id>1726584205809</Id>
 		<Name><![CDATA[f_addEnergyProduction]]></Name>
 		<X>821</X>
-		<Y>251</Y>
+		<Y>291</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -449,7 +449,7 @@
 		<Name><![CDATA[f_createGISObject]]></Name>
 		<Description><![CDATA[Creates the GIS object for the area EA (windfarms, solarparks, electrolysers, batteries, etc.)]]></Description>
 		<X>807.621</X>
-		<Y>500</Y>
+		<Y>510</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -486,7 +486,7 @@
 		<Name><![CDATA[f_addEnergyAssetsToHouses]]></Name>
 		<Description><![CDATA[Initialisation of the Energy assets using average values for houses]]></Description>
 		<X>459</X>
-		<Y>549</Y>
+		<Y>579</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -513,7 +513,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1726584205815</Id>
 		<Name><![CDATA[f_createSurveyCompanies_Zorm]]></Name>
-		<X>439.001</X>
+		<X>429.001</X>
 		<Y>159</Y>
 		<Label>
 			<X>10.999</X>
@@ -529,7 +529,7 @@
 		<ReturnType>List&lt;com.zenmo.zummon.companysurvey.Survey&gt;</ReturnType>
 		<Id>1726584205819</Id>
 		<Name><![CDATA[f_getSurveys]]></Name>
-		<X>459</X>
+		<X>449</X>
 		<Y>179</Y>
 		<Label>
 			<X>10</X>
@@ -561,8 +561,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1726584205825</Id>
 		<Name><![CDATA[f_setHeatingTypeSurvey]]></Name>
-		<X>841</X>
-		<Y>211</Y>
+		<X>460</X>
+		<Y>300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -590,7 +590,7 @@
 		<Id>1726584205827</Id>
 		<Name><![CDATA[f_addElectricVehicle]]></Name>
 		<X>821</X>
-		<Y>311</Y>
+		<Y>351</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -626,7 +626,7 @@
 		<Id>1726584205829</Id>
 		<Name><![CDATA[f_addDieselVehicle]]></Name>
 		<X>821</X>
-		<Y>331</Y>
+		<Y>371</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -658,7 +658,7 @@
 		<Id>1726584205831</Id>
 		<Name><![CDATA[f_addStorage]]></Name>
 		<X>821</X>
-		<Y>291</Y>
+		<Y>331</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -690,8 +690,8 @@
 		<Id>1726584205833</Id>
 		<Name><![CDATA[f_iEAGenericCompanies]]></Name>
 		<Description><![CDATA[Initialisation of the Energy assets using average values for companies that have not filled in the survey (yet) combined with totals (floor surface, electricity/yr, gas/yr and trucks)  of the simulated area.]]></Description>
-		<X>460</X>
-		<Y>360</Y>
+		<X>450</X>
+		<Y>398</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -711,7 +711,7 @@
 		<Id>1726584205835</Id>
 		<Name><![CDATA[f_createRemainingBuildings]]></Name>
 		<X>806.739</X>
-		<Y>599</Y>
+		<Y>609</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -727,7 +727,7 @@
 		<Id>1726584205837</Id>
 		<Name><![CDATA[f_addTransportHydrogen]]></Name>
 		<X>821</X>
-		<Y>351</Y>
+		<Y>391</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -758,8 +758,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1726584205839</Id>
 		<Name><![CDATA[f_iEASurveyCompanies_Excel]]></Name>
-		<X>460</X>
-		<Y>310</Y>
+		<X>450</X>
+		<Y>348</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -774,8 +774,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1726584205841</Id>
 		<Name><![CDATA[f_addBuildingHeatModel]]></Name>
-		<X>821</X>
-		<Y>231</Y>
+		<X>820</X>
+		<Y>240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -804,7 +804,7 @@
 		<Name><![CDATA[f_createChargingStationsScale]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>440</X>
-		<Y>570</Y>
+		<Y>600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -820,7 +820,7 @@
 		<Id>1726584205845</Id>
 		<Name><![CDATA[f_addChargingDemandProfile]]></Name>
 		<X>821</X>
-		<Y>171</Y>
+		<Y>191</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -844,7 +844,7 @@
 		<Id>1726584205847</Id>
 		<Name><![CDATA[f_createGISRegionChargingStation]]></Name>
 		<X>807.621</X>
-		<Y>580</Y>
+		<Y>590</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -868,7 +868,7 @@
 		<Id>1726584205849</Id>
 		<Name><![CDATA[f_createChargingStations]]></Name>
 		<X>431</X>
-		<Y>801</Y>
+		<Y>831</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -885,7 +885,7 @@
 		<Name><![CDATA[f_createCompaniesFromDatabase]]></Name>
 		<Description><![CDATA[Creates the houses using a single GC, and their building. After creation, they will be simulated using average values.]]></Description>
 		<X>440</X>
-		<Y>510</Y>
+		<Y>540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -917,7 +917,7 @@
 		<Id>1726584205857</Id>
 		<Name><![CDATA[f_getScopedBuildingList]]></Name>
 		<X>440</X>
-		<Y>610</Y>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -937,7 +937,7 @@
 		<Id>1726584205859</Id>
 		<Name><![CDATA[f_createGISCables]]></Name>
 		<X>807.621</X>
-		<Y>620</Y>
+		<Y>630</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -951,10 +951,10 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1726584205861</Id>
-		<Name><![CDATA[f_createPreprocessedElectricityProfile]]></Name>
+		<Name><![CDATA[f_createPreprocessedElectricityProfile_PV]]></Name>
 		<Description><![CDATA[Principe:
 verbruik = levering + productie - teruglevering]]></Description>
-		<X>841</X>
+		<X>840</X>
 		<Y>131</Y>
 		<Label>
 			<X>9</X>
@@ -991,7 +991,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1726584205863</Id>
 		<Name><![CDATA[f_setHouseHeatingPreferences]]></Name>
 		<X>440</X>
-		<Y>590</Y>
+		<Y>620</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1058,8 +1058,8 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1726584205871</Id>
 		<Name><![CDATA[f_createSurveyCompanies_Excel]]></Name>
-		<X>440</X>
-		<Y>290</Y>
+		<X>430</X>
+		<Y>328</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1091,7 +1091,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1726584205879</Id>
 		<Name><![CDATA[f_createConsumerGC_Residential]]></Name>
 		<X>420</X>
-		<Y>480</Y>
+		<Y>510</Y>
 		<Label>
 			<X>11</X>
 			<Y>1</Y>
@@ -1157,7 +1157,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1728039545686</Id>
-		<Name><![CDATA[f_getPreprocessedConsumptionTotal]]></Name>
+		<Name><![CDATA[f_getPreprocessedElectricityConsumptionTotal]]></Name>
 		<X>840</X>
 		<Y>150</Y>
 		<Label>
@@ -1195,7 +1195,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1732112209863</Id>
 		<Name><![CDATA[f_createCustomPVAsset]]></Name>
 		<X>820</X>
-		<Y>270</Y>
+		<Y>310</Y>
 		<Label>
 			<X>9</X>
 			<Y>-1</Y>
@@ -1222,7 +1222,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1732112244908</Id>
 		<Name><![CDATA[f_iEASurveyCompanies_Zorm]]></Name>
-		<X>458</X>
+		<X>448</X>
 		<Y>240</Y>
 		<Label>
 			<X>10</X>
@@ -1246,7 +1246,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>Building_data</ReturnType>
 		<Id>1737741603780</Id>
 		<Name><![CDATA[f_createBuildingData_Vallum]]></Name>
-		<X>459</X>
+		<X>449</X>
 		<Y>199</Y>
 		<Label>
 			<X>10</X>
@@ -1271,7 +1271,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1737712184349</Id>
 		<Name><![CDATA[f_createDieselTractors]]></Name>
 		<X>820</X>
-		<Y>370</Y>
+		<Y>410</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1294,7 +1294,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>boolean</ReturnType>
 		<Id>1738248965949</Id>
 		<Name><![CDATA[f_createElectricityTimeSeriesAssets]]></Name>
-		<X>470</X>
+		<X>460</X>
 		<Y>260</Y>
 		<Label>
 			<X>10</X>
@@ -1310,10 +1310,6 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[gridConnectionSurvey]]></Name>
 			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[companyName]]></Name>
-			<Type><![CDATA[String]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -1343,7 +1339,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1742915722586</Id>
 		<Name><![CDATA[f_connectGCToExistingBuilding]]></Name>
 		<X>810</X>
-		<Y>780</Y>
+		<Y>790</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1358,6 +1354,62 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[existingBuilding]]></Name>
 			<Type><![CDATA[GIS_Building]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>boolean</ReturnType>
+		<Id>1745336464944</Id>
+		<Name><![CDATA[f_createHeatProfileFromGasTS]]></Name>
+		<X>460</X>
+		<Y>280</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[parentGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[gridConnectionSurvey]]></Name>
+			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[ratioGasUsedForHeating]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1745336570663</Id>
+		<Name><![CDATA[f_addHeatAsset]]></Name>
+		<X>820</X>
+		<Y>270</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[parentGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[heatAssetType]]></Name>
+			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[maxHeatOutputPower_kW]]></Name>
+			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
