@@ -82,6 +82,12 @@
 			<Parameter>
 				<Name><![CDATA[p_minPVHouseholdSlider]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_currentPVOnLand_ha]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_currentWindTurbines_MW]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
