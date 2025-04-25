@@ -184,6 +184,11 @@ else if(RegionCoords.startsWith("MultiLineString")){
 	RegionCoords = RegionCoords.replace(","," ");
 	RegionCoords = RegionCoords.replace("))","");
 }
+else if(RegionCoords.startsWith("LineString")){
+	RegionCoords = RegionCoords.replace("LineString (","");
+	RegionCoords = RegionCoords.replace(","," ");
+	RegionCoords = RegionCoords.replace(")","");
+}
 else {
 	traceln("GIS coordinaten in de excel data die niet starten met Multi of Poly");
 }
@@ -2519,6 +2524,9 @@ int i = 0;
 
 
 for (Cable_data dataCableLV : c_cable_data_LV) {
+	if(dataCableLV.line().contains("Multi")){
+		continue;
+	}
 	gisroutesLV[i] = zero_Interface.f_createGISLine(f_createGISObjectsTokens(dataCableLV.line(), OL_GISObjectType.LV_CABLE), "LVGrid");
 	i++;
 }
@@ -2534,6 +2542,9 @@ int k = 0;
 
 
 for (Cable_data dataCableMV : c_cable_data_MV) {
+	if(dataCableMV.line().contains("Multi")){
+		continue;
+	}
 	gisroutesMV[k] = zero_Interface.f_createGISLine(f_createGISObjectsTokens(dataCableMV.line(), OL_GISObjectType.MV_CABLE), "MVGrid");
 	k++;
 }
