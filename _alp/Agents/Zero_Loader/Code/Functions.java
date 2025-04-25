@@ -3019,7 +3019,7 @@ double f_iEASurveyCompanies_Zorm(GridConnection companyGC,com.zenmo.zummon.compa
 {/*ALCODESTART::1732112244908*/
 //Initialize boolean that sets the creation of currently existing electric (demand) EA
 boolean createElectricEA = true;
-final var targetYear = 2023;
+final int targetYear = 2023;
 
 
 //Create current scenario parameter list
@@ -3256,6 +3256,7 @@ if (gridConnection.getNaturalGas().getHasConnection() != null && gridConnection.
 	
 	//Determine how much gas goes towards heating
 	ratioGasUsedForHeating = ((gridConnection.getNaturalGas().getPercentageUsedForHeating() != null) ? gridConnection.getNaturalGas().getPercentageUsedForHeating() : 100)/100.0;
+	
 	
 	//Create heat demand profile using gas demand profile from zorm and create heating assets.
 	hasGasTimeSeriesInZorm = f_createHeatProfileFromGasTS(companyGC, gridConnection, ratioGasUsedForHeating);
@@ -3603,14 +3604,14 @@ boolean f_createElectricityTimeSeriesAssets(GridConnection gridConnection,com.ze
 {/*ALCODESTART::1738248965949*/
 var electricitySurvey = gridConnectionSurvey.getElectricity();
 
-double[] deliveryTimeSeries_kWh = f_timeSeriesToDoubleArray(electricitySurvey.getQuarterHourlyDelivery_kWh());
+double[] deliveryTimeSeries_kWh = f_timeSeriesToQuarterHourlyDoubleArray(electricitySurvey.getQuarterHourlyDelivery_kWh());
 if (deliveryTimeSeries_kWh == null) {
 	// delivery is the minimum we require to do anything with timeseries data
 	return false;
 }
 
-double[] feedInTimeSeries_kWh = f_timeSeriesToDoubleArray(electricitySurvey.getQuarterHourlyFeedIn_kWh());
-double[] productionTimeSeries_kWh = f_timeSeriesToDoubleArray(electricitySurvey.getQuarterHourlyProduction_kWh());
+double[] feedInTimeSeries_kWh = f_timeSeriesToQuarterHourlyDoubleArray(electricitySurvey.getQuarterHourlyFeedIn_kWh());
+double[] productionTimeSeries_kWh = f_timeSeriesToQuarterHourlyDoubleArray(electricitySurvey.getQuarterHourlyProduction_kWh());
 
 Double pvPower_kW = Optional.ofNullable(gridConnectionSurvey.getSupply().getPvInstalledKwp())
 	.map(it -> (double) it)
@@ -3624,9 +3625,9 @@ gridConnection.v_hasQuarterHourlyValues = true;
 return true;
 /*ALCODEEND*/}
 
-double[] f_timeSeriesToDoubleArray(com.zenmo.zummon.companysurvey.TimeSeries timeSeries)
+double[] f_timeSeriesToQuarterHourlyDoubleArray(com.zenmo.zummon.companysurvey.TimeSeries timeSeries)
 {/*ALCODESTART::1738572338816*/
-var targetYear = 2023;
+int targetYear = 2023;
 if (timeSeries == null) {
 	return null;
 }
@@ -3636,9 +3637,7 @@ if (!timeSeries.hasNumberOfValuesForOneYear()) {
 	return null;
 }
 
-return f_convertFloatArrayToDoubleArray(
-	timeSeries.convertToQuarterHourly().getFullYearOrFudgeIt(targetYear)
-);
+return f_convertFloatArrayToDoubleArray(timeSeries.convertToQuarterHourly().getFullYearOrFudgeIt(targetYear));
 /*ALCODEEND*/}
 
 double f_connectGCToExistingBuilding(GridConnection connectingGC,GIS_Building existingBuilding)
@@ -3675,8 +3674,9 @@ double maxHeatOutputPower_kW = 0;
 double yearlyDemandHeat_kWh = 0;
 
 
-double[] gasDeliveryTimeSeries_kWh = f_timeSeriesToDoubleArray(gridConnectionSurvey.getNaturalGas().getHourlyDelivery_m3());
-if (gasDeliveryTimeSeries_kWh == null) {
+double[] gasDeliveryTimeSeries_m3 = f_timeSeriesToQuarterHourlyDoubleArray(gridConnectionSurvey.getNaturalGas().getHourlyDelivery_m3());
+
+if (gasDeliveryTimeSeries_m3 == null) {
 	return false;
 }
 
@@ -3694,20 +3694,22 @@ switch (parentGC.p_heatingType){
 		break;
 }
 
-double timeStep_hr = (double) ((DateTimeUnit.TimeBased) gridConnectionSurvey.getNaturalGas().getHourlyDelivery_m3().getTimeStep()).getNanoseconds() / DateTimeUnit.Companion.getHOUR().getNanoseconds();
-J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.HEAT, null, OL_ProfileAssetType.HEATDEMAND , timeStep_hr);		
+J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.HEAT, null, OL_ProfileAssetType.HEATDEMAND , energyModel.p_timeStep_h);		
 profile.energyAssetName = parentGC.p_ownerID + " custom heat profile";
+
+//Initialize heat demand quarterhourly profile
+double[] heatDemandProfile_kWh = new double[gasDeliveryTimeSeries_m3.length];
 	
-for (int i = 0; i < gasDeliveryTimeSeries_kWh.length; i++) {
-		double gasHeatingValue_timestep_kWh = gasDeliveryTimeSeries_kWh[i] * avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating;
-		yearlyDemandHeat_kWh += gasHeatingValue_timestep_kWh;
+for (int i = 0; i < gasDeliveryTimeSeries_m3.length; i++) {
+		heatDemandProfile_kWh[i] = gasDeliveryTimeSeries_m3[i] * avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating;
+		yearlyDemandHeat_kWh += heatDemandProfile_kWh[i];
 	
     	//Keep track of max value
-    	if((gasHeatingValue_timestep_kWh/energyModel.p_timeStep_h) > maxHeatOutputPower_kW){
-    		maxHeatOutputPower_kW = gasHeatingValue_timestep_kWh/energyModel.p_timeStep_h;
+    	if((heatDemandProfile_kWh[i]/energyModel.p_timeStep_h) > maxHeatOutputPower_kW){
+    		maxHeatOutputPower_kW = heatDemandProfile_kWh[i]/energyModel.p_timeStep_h;
     	}
 	}	
-profile.a_energyProfile_kWh = gasDeliveryTimeSeries_kWh;
+profile.a_energyProfile_kWh = heatDemandProfile_kWh;
 
 //Update v_remainingGasConsumption_m3
 v_remainingGasConsumption_m3 -= yearlyDemandHeat_kWh/(avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);

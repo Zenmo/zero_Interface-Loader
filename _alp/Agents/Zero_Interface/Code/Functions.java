@@ -2113,7 +2113,7 @@ map.fitBounds(minLat, minLon, maxLat, maxLon);
 
 double f_setStartView()
 {/*ALCODESTART::1743518032245*/
-if(map_centre_latitude != 0 && map_centre_longitude != 0){
+if(map_centre_latitude != null && map_centre_longitude != null && map_centre_latitude != 0 && map_centre_longitude != 0){
 	map.setCenterLatitude(map_centre_latitude);
 	map.setCenterLongitude(map_centre_longitude);
 }
