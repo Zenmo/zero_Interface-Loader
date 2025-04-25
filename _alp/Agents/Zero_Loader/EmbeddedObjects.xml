@@ -331,7 +331,7 @@
 				<Name><![CDATA[p_avgCompanyHeatConsumption_kWhpm2]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgSolarFieldPowerPerArea_kWppha]]></Name>
+				<Name><![CDATA[p_avgSolarFieldPower_kWppha]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgEfficiencyCHP_thermal_fr]]></Name>

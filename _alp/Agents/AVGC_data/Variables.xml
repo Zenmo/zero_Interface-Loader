@@ -1783,8 +1783,8 @@ to 18 m3 p m2 for label G
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1733155392379</Id>
-		<Name><![CDATA[p_avgSolarFieldPowerPerArea_kWppha]]></Name>
-		<Description><![CDATA[https://www.acrres.nl/wp-content/uploads/2016/02/PPO-642-zonder-blanco-pag.pdf --> 0.5 MWp per ha = 500 kWp per ha]]></Description>
+		<Name><![CDATA[p_avgSolarFieldPower_kWppha]]></Name>
+		<Description><![CDATA[1000]]></Description>
 		<X>50</X>
 		<Y>920</Y>
 		<Label>
@@ -1799,7 +1799,7 @@ to 18 m3 p m2 for label G
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[500]]></Code>
+				<Code><![CDATA[1000]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1733155392377</Id>

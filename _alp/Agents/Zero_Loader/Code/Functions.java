@@ -410,6 +410,10 @@ for (Solarfarm_data dataSolarfarm : c_solarfarm_data) { // MOET NOG CHECK OF ZON
 		solarpark.set_p_gridConnectionID( dataSolarfarm.gc_id() );
 		solarpark.set_p_name( dataSolarfarm.gc_name() );
 		
+		if(solarpark.p_gridConnectionID.equals("SLIDER_SF")){
+			solarpark.p_isSliderGC = true;
+		}
+		
 		//Grid Capacity
 		solarpark.v_liveConnectionMetaData.physicalCapacity_kW = dataSolarfarm.connection_capacity_kw();
 		if ( dataSolarfarm.connection_capacity_kw() > 0 ) {
