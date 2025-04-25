@@ -1504,10 +1504,9 @@ for (var survey : surveys) {
 					}
 				}
 			} else {// No building connected in zorm? -> check if it is manually connected in excel (using gc_id column)
-				traceln("Survey %s has no building in zorm", survey.getId());
 				buildings = findAll(c_companyBuilding_data, b -> b.gc_id() != null && b.gc_id().equals(companyGC.p_gridConnectionID));
 				if(buildings == null){
-					traceln("Survey %s has also no manual connection with building in excel", survey.getId());
+					traceln("Survey %s has no building in zorm and also no manual connection with building in excel", survey.getId());
 				}
 				else{
 					c_companyBuilding_data.removeAll(buildings);
