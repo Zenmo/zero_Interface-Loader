@@ -7,14 +7,6 @@
 		<PackageName>zerointerfaceloader</PackageName>
 		<ClassName>tabArea</ClassName>
 	</ExtendsReference>
-	<Parameters>
-		<Parameter>
-			<Name><![CDATA[p_currentPVOnLand_ha]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_currentWindTurbines_MW]]></Name>
-		</Parameter>
-	</Parameters>
 	<StartupCode><![CDATA[f_getCurrentPVOnLandAndWindturbineValues();]]></StartupCode>
 	<Generic>false</Generic>
 	<GenericParameter>

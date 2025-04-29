@@ -289,19 +289,19 @@
 				<Name><![CDATA[p_avgRatioRoofPotentialPV]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgEfficiencyHeatpump]]></Name>
+				<Name><![CDATA[p_avgEfficiencyHeatpump_fr]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgOutputTemperatureHeatpump_degC]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgEfficiencyGasBurner]]></Name>
+				<Name><![CDATA[p_avgEfficiencyGasBurner_fr]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgOutputTemperatureGasBurner_degC]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgEfficiencyHydrogenBurner]]></Name>
+				<Name><![CDATA[p_avgEfficiencyHydrogenBurner_fr]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgOutputTemperatureHydrogenBurner_degC]]></Name>
@@ -332,6 +332,15 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgSolarFieldPower_kWppha]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_avgEfficiencyCHP_thermal_fr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_avgEfficiencyCHP_electric_fr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_avgOutputTemperatureCHP_degC]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>

@@ -2060,7 +2060,7 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[double]]></Type>
+			<Type><![CDATA[Double]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<ParameterEditor>
@@ -2085,7 +2085,7 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[double]]></Type>
+			<Type><![CDATA[Double]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<ParameterEditor>
