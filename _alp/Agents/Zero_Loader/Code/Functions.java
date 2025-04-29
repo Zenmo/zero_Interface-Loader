@@ -3641,7 +3641,7 @@ return true;
 
 double[] f_timeSeriesToQuarterHourlyDoubleArray(com.zenmo.zummon.companysurvey.TimeSeries timeSeries)
 {/*ALCODESTART::1738572338816*/
-int targetYear = 2023;
+int targetYear = 2024;
 if (timeSeries == null) {
 	return null;
 }
@@ -3688,9 +3688,9 @@ double maxHeatOutputPower_kW = 0;
 double yearlyDemandHeat_kWh = 0;
 
 
-double[] gasDeliveryTimeSeries_m3 = f_timeSeriesToQuarterHourlyDoubleArray(gridConnectionSurvey.getNaturalGas().getHourlyDelivery_m3());
+double[] quarterHourlyGasDeliveryTimeSeries_m3 = f_timeSeriesToQuarterHourlyDoubleArray(gridConnectionSurvey.getNaturalGas().getHourlyDelivery_m3());
 
-if (gasDeliveryTimeSeries_m3 == null) {
+if (quarterHourlyGasDeliveryTimeSeries_m3 == null) {
 	return false;
 }
 
@@ -3712,18 +3712,19 @@ J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.HEAT, null, OL
 profile.energyAssetName = parentGC.p_ownerID + " custom heat profile";
 
 //Initialize heat demand quarterhourly profile
-double[] heatDemandProfile_kWh = new double[gasDeliveryTimeSeries_m3.length];
+double[] quarterHourlyHeatDemandProfile_kWh = new double[quarterHourlyGasDeliveryTimeSeries_m3.length];
+double totalgasconsumption_m3 = 0;
+for (int i = 0; i < quarterHourlyGasDeliveryTimeSeries_m3.length; i++) {
+	quarterHourlyHeatDemandProfile_kWh[i] = quarterHourlyGasDeliveryTimeSeries_m3[i] * avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating;
+	yearlyDemandHeat_kWh += quarterHourlyHeatDemandProfile_kWh[i];
 	
-for (int i = 0; i < gasDeliveryTimeSeries_m3.length; i++) {
-		heatDemandProfile_kWh[i] = gasDeliveryTimeSeries_m3[i] * avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating;
-		yearlyDemandHeat_kWh += heatDemandProfile_kWh[i];
-	
-    	//Keep track of max value
-    	if((heatDemandProfile_kWh[i]/energyModel.p_timeStep_h) > maxHeatOutputPower_kW){
-    		maxHeatOutputPower_kW = heatDemandProfile_kWh[i]/energyModel.p_timeStep_h;
-    	}
-	}	
-profile.a_energyProfile_kWh = heatDemandProfile_kWh;
+	//Keep track of max value
+	if((quarterHourlyHeatDemandProfile_kWh[i]/energyModel.p_timeStep_h) > maxHeatOutputPower_kW){
+		maxHeatOutputPower_kW = quarterHourlyHeatDemandProfile_kWh[i]/energyModel.p_timeStep_h;
+	}
+	totalgasconsumption_m3 += quarterHourlyGasDeliveryTimeSeries_m3[i];
+}	
+profile.a_energyProfile_kWh = quarterHourlyHeatDemandProfile_kWh;
 
 //Update v_remainingGasConsumption_m3
 v_remainingGasConsumption_m3 -= yearlyDemandHeat_kWh/(avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
