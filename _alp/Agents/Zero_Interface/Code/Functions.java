@@ -64,6 +64,11 @@ if (b.gisRegion != null){
 
 double f_selectGISRegion(double clickx,double clicky)
 {/*ALCODESTART::1696863329251*/
+if(settings.isPublicModel()){
+	f_selectGISRegion_publicModel(clickx, clicky);
+	return;
+}
+
 //After a click, reset previous clicked building/gridNode colors and text
 v_previousClickedObjectType = v_clickedObjectType;
 c_previousSelectedObjects = new ArrayList<GIS_Object>(c_selectedObjects);
@@ -1482,6 +1487,12 @@ if(c_selectedGridConnections.size() == 0 && !filterCanReturnZero){ // Not allowe
 else if(c_selectedGridConnections.size() == 0 && filterCanReturnZero){//Allowed to return zero filtered gc, while returning zero
 	//Do nothing
 }
+else if(settings.isPublicModel() && c_selectedGridConnections.size() < p_minSelectedGCForPublicAggregation){
+	f_removeFilter(selectedFilter, selectedFilterName);
+	
+	//Notify filter has not been applied, cause no results are given
+	f_setErrorScreen("De filter geeft te weinig resultaten \n" + "(minimaal " + p_minSelectedGCForPublicAggregation + ") voor het publieke model. \n" + "De filter is gedeactiveerd.");
+}
 else{//Filtered GC returns GC
 
 	//Set color of all gis objects of new filter selection
@@ -2279,5 +2290,112 @@ for (int row = 1; row <= 35137; row++) {
         excel_exportBalanceLoadData.setCellValue("", "Electricity Load Balance", row, col);
     }
 }
+/*ALCODEEND*/}
+
+double f_selectGISRegion_publicModel(double clickx,double clicky)
+{/*ALCODESTART::1745936595905*/
+//After a click, reset previous clicked building/gridNode colors and text
+v_previousClickedObjectType = v_clickedObjectType;
+c_previousSelectedObjects = new ArrayList<GIS_Object>(c_selectedObjects);
+ArrayList<GIS_Object> buildingsConnectedToSelectedBuildingsList = new ArrayList<>();
+c_selectedGridConnections.clear();
+c_selectedObjects.clear();
+
+//Deselect previous selection
+if( v_previousClickedObjectType != null){
+	f_deselectPreviousSelect();
+}
+
+//Check if click was on Gridnode, if yes, select grid node
+for ( GridNode GN : energyModel.pop_gridNodes ){
+	if( GN.gisRegion != null && GN.gisRegion.contains(clickx, clicky) && GN.gisRegion.isVisible() ){
+		if(GN.f_getAllLowerLVLConnectedGridConnections().size() >= p_minSelectedGCForPublicAggregation){
+			f_selectGridNode(GN);
+		}
+		else{
+			//Data sharing not agreed?
+			v_clickedObjectType = OL_GISObjectType.REGION;
+			uI_Results.f_updateResultsUI(energyModel);
+			
+			//Enable kpi summary button
+			uI_Results.getCheckbox_KPISummary().setEnabled(true);
+		}
+		return;
+	}
+}
+
+//Check if click was on Building, if yes, select grid building
+for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
+	if( b.gisRegion != null && b.gisRegion.contains(clickx, clicky) ){
+		if (b.gisRegion.isVisible()) { //only allow us to click on visible objects
+			if (b.c_containedGridConnections.size() > 0 ) { // only allow buildings with gridconnections
+				if(b.c_containedGridConnections.get(0).p_owner.b_dataSharingAgreed){
+					buildingsConnectedToSelectedBuildingsList = b.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
+					f_selectBuilding(b, buildingsConnectedToSelectedBuildingsList);
+				}
+				else{
+					//Data sharing not agreed?
+					v_clickedObjectType = OL_GISObjectType.REGION;
+					uI_Results.f_updateResultsUI(energyModel);
+					
+					//Enable kpi summary button
+					uI_Results.getCheckbox_KPISummary().setEnabled(true);
+				}
+				return;
+			}
+		}
+	}
+}
+
+//Check if click was on remaining objects such as chargers, solarfields, parcels: if yes, select object
+for ( GIS_Object GISobject : energyModel.pop_GIS_Objects ){
+	if( GISobject.gisRegion != null && GISobject.gisRegion.contains(clickx, clicky) ) {
+		if (GISobject.gisRegion.isVisible()) { //only allow us to click on visible objects
+			if (GISobject.c_containedGridConnections.size() > 0 ) { // only allow objects with gridconnections
+				if(GISobject.c_containedGridConnections.get(0).p_owner.b_dataSharingAgreed){
+					// Find buildings powered by the same GC as the clicked object
+					buildingsConnectedToSelectedBuildingsList = GISobject.c_containedGridConnections.get(0).c_connectedGISObjects; 
+					
+					//Find the (first) connected GC in the object
+					GridConnection selectedGC = GISobject.c_containedGridConnections.get(0);
+	
+					//Set the selected GIS object type
+					v_clickedObjectType = GISobject.p_GISObjectType;
+					c_selectedObjects.add(GISobject);
+					
+					//Set the correct interface view for each object type
+					switch(v_clickedObjectType){
+					
+					case CHARGER:
+						f_selectCharger((GCPublicCharger)selectedGC, GISobject );
+						break;
+					
+						
+					default:
+						buildingsConnectedToSelectedBuildingsList = GISobject.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
+						f_selectBuilding(GISobject, buildingsConnectedToSelectedBuildingsList);		
+						break;
+					}
+				}
+				else{
+					//Data sharing not agreed?
+					v_clickedObjectType = OL_GISObjectType.REGION;
+					uI_Results.f_updateResultsUI(energyModel);
+					
+					//Enable kpi summary button
+					uI_Results.getCheckbox_KPISummary().setEnabled(true);
+				}
+				return;
+			}
+		}
+	}
+}
+
+//Still no clicked object? :select basic region
+v_clickedObjectType = OL_GISObjectType.REGION;
+uI_Results.f_updateResultsUI(energyModel);
+
+//Enable kpi summary button
+uI_Results.getCheckbox_KPISummary().setEnabled(true);
 /*ALCODEEND*/}
 
