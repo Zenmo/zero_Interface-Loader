@@ -5191,6 +5191,9 @@ new Thread( () -&gt; {
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<OnClickCode>//Go to website on click
+getExperimentHost().openWebSite("https://holons.energy/");
+</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Width>190</Width>
