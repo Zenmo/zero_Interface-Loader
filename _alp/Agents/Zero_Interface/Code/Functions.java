@@ -445,6 +445,7 @@ v_clickedObjectAdress = "";
 v_clickedObjectDetails = "";
 v_clickedObjectType = null;
 button_goToUI.setVisible(false);
+gr_multipleBuildingInfo.setVisible(false);
 
 // We restore the colors of what we clicked on before
 if (v_previousClickedObjectType == OL_GISObjectType.GRIDNODE){
@@ -798,6 +799,10 @@ presentation.remove(gr_forceMapSelection);
 presentation.insert(presentation.size(), gr_forceMapSelection);
 presentation.remove(gr_filterInterface);
 presentation.insert(presentation.size(), gr_filterInterface);
+
+if(settings.isPublicModel()){
+	f_changeDefaultColorOfPrivateGC();
+}
 /*ALCODEEND*/}
 
 GISRegion f_createGISObject(double[] gisTokens)
@@ -1486,12 +1491,6 @@ if(c_selectedGridConnections.size() == 0 && !filterCanReturnZero){ // Not allowe
 }
 else if(c_selectedGridConnections.size() == 0 && filterCanReturnZero){//Allowed to return zero filtered gc, while returning zero
 	//Do nothing
-}
-else if(settings.isPublicModel() && c_selectedGridConnections.size() < p_minSelectedGCForPublicAggregation){
-	f_removeFilter(selectedFilter, selectedFilterName);
-	
-	//Notify filter has not been applied, cause no results are given
-	f_setErrorScreen("De filter geeft te weinig resultaten \n" + "(minimaal " + p_minSelectedGCForPublicAggregation + ") voor het publieke model. \n" + "De filter is gedeactiveerd.");
 }
 else{//Filtered GC returns GC
 
@@ -2397,5 +2396,30 @@ uI_Results.f_updateResultsUI(energyModel);
 
 //Enable kpi summary button
 uI_Results.getCheckbox_KPISummary().setEnabled(true);
+/*ALCODEEND*/}
+
+double f_changeDefaultColorOfPrivateGC()
+{/*ALCODESTART::1746085650084*/
+for(GIS_Object object : energyModel.pop_GIS_Objects){
+	for(GridConnection GC : object.c_containedGridConnections){
+		if(!GC.p_owner.b_dataSharingAgreed){
+			object.p_defaultFillColor = transparent(object.p_defaultFillColor, 0.6);//v_dataSharingDisagreedColor;
+			object.p_defaultLineStyle = LINE_STYLE_DASHED;
+			object.f_style(null, null, null, null);
+			break;
+		}
+	}
+}
+
+for(GIS_Building building : energyModel.pop_GIS_Buildings){
+	for(GridConnection GC : building.c_containedGridConnections){
+		if(!GC.p_owner.b_dataSharingAgreed){
+			building.p_defaultFillColor = transparent(building.p_defaultFillColor, 0.6);//v_dataSharingDisagreedColor;
+			building.p_defaultLineStyle = LINE_STYLE_DASHED;
+			building.f_style(null, null, null, null);
+			break;
+		}
+	}
+}
 /*ALCODEEND*/}
 

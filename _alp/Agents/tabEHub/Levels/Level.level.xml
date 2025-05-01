@@ -351,7 +351,9 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<BasicProperties Width="160" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor/>
+					<VisibleCode>//!zero_Interface.settings.isPublicModel()</VisibleCode>
 					<Enabled>true</Enabled>
+					<EnableExpression>!zero_Interface.settings.isPublicModel()</EnableExpression>
 					<ActionCode>/*
 if (v_NFATOListener) {
 	// This should not be reachable anymore
@@ -412,6 +414,7 @@ else {
 				<BasicProperties Width="160" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor/>
+					<VisibleCode>!zero_Interface.settings.isPublicModel()</VisibleCode>
 					<Enabled>true</Enabled>
 					<ActionCode>for (GridConnection GC : zero_Interface.energyModel.f_getGridConnections()) {
 	GC.f_nfatoSetConnectionCapacity(true);
