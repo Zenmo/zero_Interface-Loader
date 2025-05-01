@@ -2228,7 +2228,7 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-		<Type><![CDATA[List<ShapeImage>]]></Type>
+			<Type><![CDATA[List<ShapeImage>]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
@@ -2236,6 +2236,10 @@
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1746106585455</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
 			</ParameterEditor>
 		</Properties>
 	</Variable>

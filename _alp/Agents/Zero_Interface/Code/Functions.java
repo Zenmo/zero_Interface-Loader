@@ -2315,7 +2315,7 @@ return pair.getSecond();
 
 /*ALCODEEND*/}
 
-Pair<ShapeEmbeddedObjectPresentation, Point> f_getPresentationPositionIteration(Pair<ShapeEmbeddedObjectPresentation, Point> pair)
+Pair<ShapeEmbeddedObjectPresentation, Point> f_getPresentationPositionIteration()
 {/*ALCODESTART::1744894817573*/
 ShapeEmbeddedObjectPresentation presentation = findFirst(c_presentations, ap -> ap.getEmbeddedObject() == pair.getFirst().getPresentable());
 if (presentation == null) {
@@ -2453,7 +2453,7 @@ fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(false);
 fileChooser_exportBalanceLoadSelectedCompanies.setEnabled(false);
 /*ALCODEEND*/}
 
-double f_clearExportSheet()
+double f_clearExportSheet(Pair<ShapeEmbeddedObjectPresentation, Point> pair)
 {/*ALCODESTART::1744986150240*/
 //Clear the sheet first
 for (int row = 1; row <= 35137; row++) {
