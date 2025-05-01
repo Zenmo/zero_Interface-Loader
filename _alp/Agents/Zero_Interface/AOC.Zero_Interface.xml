@@ -134,6 +134,28 @@ import digital_twin_results.OL_ChartTypes;]]></Import>
 	<Variables xmlns:al="http://anylogic.com"/>
 	<Events xmlns:al="http://anylogic.com"/>
 	<Functions xmlns:al="http://anylogic.com"/>
+	<Connectivity>
+		<ExcelFile>
+			<Id>1744624088854</Id>
+			<Name><![CDATA[excel_exportBalanceLoadData]]></Name>
+			<X>-555</X>
+			<Y>-365</Y>
+			<Label>
+				<X>10</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<ResourceReference>
+				<PackageName>zerointerfaceloader</PackageName>
+				<ClassName>Export_ModelData.xlsx</ClassName>
+			</ResourceReference>
+			<SaveInSnapshot>false</SaveInSnapshot>
+			<LoadOnStartup>true</LoadOnStartup>
+			<SaveOnDispose>true</SaveOnDispose>
+		</ExcelFile>
+	</Connectivity>
 	<AgentLinks>
 		<AgentLink>
 			<Id>1658477103135</Id>

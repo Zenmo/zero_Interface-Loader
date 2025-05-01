@@ -135,8 +135,8 @@
 	<EmbeddedObject>
 		<Id>1726584829907</Id>
 		<Name><![CDATA[avgc_data]]></Name>
-		<X>-390</X>
-		<Y>880</Y>
+		<X>-370</X>
+		<Y>780</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -289,19 +289,19 @@
 				<Name><![CDATA[p_avgRatioRoofPotentialPV]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgEfficiencyHeatpump]]></Name>
+				<Name><![CDATA[p_avgEfficiencyHeatpump_fr]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgOutputTemperatureHeatpump_degC]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgEfficiencyGasBurner]]></Name>
+				<Name><![CDATA[p_avgEfficiencyGasBurner_fr]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgOutputTemperatureGasBurner_degC]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgEfficiencyHydrogenBurner]]></Name>
+				<Name><![CDATA[p_avgEfficiencyHydrogenBurner_fr]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgOutputTemperatureHydrogenBurner_degC]]></Name>
@@ -331,7 +331,16 @@
 				<Name><![CDATA[p_avgCompanyHeatConsumption_kWhpm2]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgSolarFieldPowerPerArea_kWppha]]></Name>
+				<Name><![CDATA[p_avgSolarFieldPower_kWppha]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_avgEfficiencyCHP_thermal_fr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_avgEfficiencyCHP_electric_fr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_avgOutputTemperatureCHP_degC]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>

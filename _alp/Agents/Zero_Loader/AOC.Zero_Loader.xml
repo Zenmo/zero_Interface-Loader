@@ -136,8 +136,8 @@ import kotlinx.datetime.DateTimeUnit;]]></Import>
 		<ExcelFile>
 			<Id>1726584205977</Id>
 			<Name><![CDATA[inputHouseholdTrips]]></Name>
-			<X>-389.5</X>
-			<Y>849</Y>
+			<X>-369.5</X>
+			<Y>749</Y>
 			<Label>
 				<X>10</X>
 				<Y>0</Y>
@@ -156,8 +156,8 @@ import kotlinx.datetime.DateTimeUnit;]]></Import>
 		<ExcelFile>
 			<Id>1726584205979</Id>
 			<Name><![CDATA[inputTruckTrips]]></Name>
-			<X>-389.5</X>
-			<Y>829</Y>
+			<X>-369.5</X>
+			<Y>729</Y>
 			<Label>
 				<X>10</X>
 				<Y>0</Y>
@@ -176,8 +176,8 @@ import kotlinx.datetime.DateTimeUnit;]]></Import>
 		<ExcelFile>
 			<Id>1726584205981</Id>
 			<Name><![CDATA[inputCookingActivities]]></Name>
-			<X>-390</X>
-			<Y>810</Y>
+			<X>-370</X>
+			<Y>710</Y>
 			<Label>
 				<X>10</X>
 				<Y>0</Y>

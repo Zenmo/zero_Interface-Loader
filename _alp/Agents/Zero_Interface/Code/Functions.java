@@ -158,10 +158,10 @@ switch(rb_buildingColors.getValue()) {
 		break;
 	case 1:
 		if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
-			f_setColorsBasedOnConsumpionProfileHouseholds(gis_area);
+			f_setColorsBasedOnConsumptionProfileHouseholds(gis_area);
 		}
 		else {
-			f_setColorsBasedOnConsumpion(gis_area);
+			f_setColorsBasedOnConsumption(gis_area);
 		}
 		break;
 	case 2:
@@ -695,7 +695,7 @@ f_projectSpecificOrderedCollectionAdjustments();
 
 /*ALCODEEND*/}
 
-double f_setColorsBasedOnConsumpion(GIS_Object gis_area)
+double f_setColorsBasedOnConsumption(GIS_Object gis_area)
 {/*ALCODESTART::1715116336665*/
 if(gis_area.c_containedGridConnections.size() > 0){
 
@@ -813,7 +813,7 @@ System.setOut(new PrintStream(new OutputStream() {
 return originalPrintStream;
 /*ALCODEEND*/}
 
-double f_setColorsBasedOnConsumpionProfileHouseholds(GIS_Object gis_area)
+double f_setColorsBasedOnConsumptionProfileHouseholds(GIS_Object gis_area)
 {/*ALCODESTART::1718263685462*/
 double yearlyEnergyConsumption = 0;
 for( GridConnection gc : gis_area.c_containedGridConnections){
@@ -1061,7 +1061,6 @@ double f_setGridTopologyColors()
 List<GridNode> MVsubstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.SUBMV);
 
 
-
 int i = 0;
 //Set all unique grid topology colors for each substation and its children
 for (GridNode MVsub : MVsubstations){
@@ -1076,14 +1075,15 @@ for (GridNode MVsub : MVsubstations){
 	i++;
 }
 
+/*
 //Find all MVMV and HVMV distribution stations
-//List<GridNode> MVMVstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.MVMV);
+List<GridNode> MVMVstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.MVMV);
 List<GridNode> HVMVstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.HVMV);
 
 //Set their topology colors (for now black as they are basically top level).
-//MVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
+MVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
 HVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
-
+*/
 /*ALCODEEND*/}
 
 double f_styleSUBMV(GISRegion gisregion)
@@ -2005,61 +2005,82 @@ c_selectedGridConnections = new ArrayList<>(resultingGridConnectionSelection);
 
 double f_selectManualFilteredGC(double clickx,double clicky)
 {/*ALCODESTART::1742226787560*/
+//Initialize clickedObject
+GIS_Object clickedObject = null;
 
-//Check if click was on Building, if yes, select grid building
-for ( GIS_Object object : energyModel.pop_GIS_Buildings ){
+//Check if click was on Building, if yes, select building
+for ( GIS_Object object : energyModel.pop_GIS_Buildings ){//pop_GIS_Buildings
 	if( object.gisRegion != null && object.gisRegion.contains(clickx, clicky) ){
 		if (object.gisRegion.isVisible()) { //only allow us to click on visible objects	
-			
-			boolean select = true; // Deselect == false;
-			boolean removedFromSelectedGC = false;
-			boolean removedFromDeselectedGC = false;
-
-			ArrayList<GridConnection> clickedGridConnections = new ArrayList<GridConnection>(object.c_containedGridConnections);
-			
-			for (GridConnection clickedGC : clickedGridConnections){
-				if(c_selectedGridConnections.contains(clickedGC)){
-					c_selectedGridConnections.remove(clickedGC);
-					select = false;
-				}
-				
-				if(c_manualFilterSelectedGC.contains(clickedGC)){
-					c_manualFilterSelectedGC.remove(clickedGC);
-				}
-				else if(c_manualFilterDeselectedGC.contains(clickedGC)){
-					c_manualFilterDeselectedGC.remove(clickedGC);
-				}
-				
+			if (object.c_containedGridConnections.size() > 0 ){
+				clickedObject = object;
+				break;
 			}
-			
-			if(select){
-				c_selectedGridConnections.addAll(clickedGridConnections);
-				c_manualFilterSelectedGC.addAll(clickedGridConnections);
-				traceln("Handmatig geselecteerd object toegevoegd aan selectie");
-			}
-			else{
-				c_manualFilterDeselectedGC.addAll(clickedGridConnections);
-				traceln("Handmatig geselecteerd object verwijderd van selectie");
-			}
-			
-			
-			//Disable traceln
-			PrintStream originalPrintStream = f_disableTraceln();
-			
-			//This deactivates the previous selection
-			f_setFilter("Handmatige selectie");
-			
-			//This activates the new selection
-			f_setFilter("Handmatige selectie");
-			
-			//Enable traceln
-			f_enableTraceln(originalPrintStream);
-			
-			return;	
 		}
 	}
 }
 
+//If click was not on a building, check if click was on an EA, if yes, select EA
+if(clickedObject == null){
+	for ( GIS_Object object : energyModel.pop_GIS_Objects ){//pop_GIS_Buildings
+		if( object.gisRegion != null && object.gisRegion.contains(clickx, clicky) ){
+			if (object.gisRegion.isVisible()) { //only allow us to click on visible objects	
+				if (object.c_containedGridConnections.size() > 0 ){
+					clickedObject = object;
+					break;
+				}
+			}
+		}
+	}
+}
+
+//If a building or EA has been selected perform click functionality
+if(clickedObject != null){
+	boolean select = true; // Deselect == false;
+	boolean removedFromSelectedGC = false;
+	boolean removedFromDeselectedGC = false;
+
+	ArrayList<GridConnection> clickedGridConnections = new ArrayList<GridConnection>(clickedObject.c_containedGridConnections);
+	
+	for (GridConnection clickedGC : clickedGridConnections){
+		if(c_selectedGridConnections.contains(clickedGC)){
+			c_selectedGridConnections.remove(clickedGC);
+			select = false;
+		}
+		
+		if(c_manualFilterSelectedGC.contains(clickedGC)){
+			c_manualFilterSelectedGC.remove(clickedGC);
+		}
+		else if(c_manualFilterDeselectedGC.contains(clickedGC)){
+			c_manualFilterDeselectedGC.remove(clickedGC);
+		}
+	}
+	
+	if(select){
+		c_selectedGridConnections.addAll(clickedGridConnections);
+		c_manualFilterSelectedGC.addAll(clickedGridConnections);
+		traceln("Handmatig geselecteerd object toegevoegd aan selectie");
+	}
+	else{
+		c_manualFilterDeselectedGC.addAll(clickedGridConnections);
+		traceln("Handmatig geselecteerd object verwijderd van selectie");
+	}
+	
+	
+	//Disable traceln
+	PrintStream originalPrintStream = f_disableTraceln();
+	
+	//This deactivates the previous selection
+	f_setFilter("Handmatige selectie");
+				
+	//This activates the new selection
+	f_setFilter("Handmatige selectie");
+	
+	//Enable traceln
+	f_enableTraceln(originalPrintStream);
+	
+	return;
+}
 /*ALCODEEND*/}
 
 double f_setForcedClickScreen(boolean showForcedClickScreen,String forcedClickScreenText)
@@ -2109,7 +2130,7 @@ map.fitBounds(minLat, minLon, maxLat, maxLon);
 
 double f_setStartView()
 {/*ALCODESTART::1743518032245*/
-if(map_centre_latitude != 0 && map_centre_longitude != 0){
+if(map_centre_latitude != null && map_centre_longitude != null && map_centre_latitude != 0 && map_centre_longitude != 0){
 	map.setCenterLatitude(map_centre_latitude);
 	map.setCenterLongitude(map_centre_longitude);
 }
@@ -2310,5 +2331,135 @@ point.add( new Point(presentation.getGroup().getX(), presentation.getGroup().get
 traceln("point in presentation iteration after: " + point);
 
 return new Pair(presentation, point);
+/*ALCODEEND*/}
+
+double f_harvestEnergyModelLoadData()
+{/*ALCODESTART::1744624088848*/
+traceln("Start writing Electricity Load Balance data to excel!");
+
+//Clear the sheet first
+f_clearExportSheet();
+
+//Set column names
+excel_exportBalanceLoadData.setCellValue("Tijd [u]", "Electricity Load Balance", 1, 1);
+excel_exportBalanceLoadData.setCellValue("Totale load van het Hele gebied [kWh]", "Electricity Load Balance", 1, 2);
+
+//Get energyModel profile
+double[] loadArray_kW = energyModel.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW();
+
+for (int i = 0; i < loadArray_kW.length ; i++) {
+	
+	//Time series
+	excel_exportBalanceLoadData.setCellValue((i) * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, 1);
+
+	//Data
+	excel_exportBalanceLoadData.setCellValue( loadArray_kW[i] * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, 2);
+}
+
+//Write file
+excel_exportBalanceLoadData.writeFile();
+
+traceln("Finished writing Electricity Load Balance data to excel!");
+/*ALCODEEND*/}
+
+double f_harvestSelectedGCLoadData()
+{/*ALCODESTART::1744624088850*/
+traceln("Start writing Electricity Load Balance data to excel!");
+
+//Clear the sheet first
+f_clearExportSheet();
+
+//Initialize column index
+int columnIndex = 2;
+
+//Initialize total balance flow for all selected GC
+double[] cumulativeLoadArray_kW = new double[energyModel.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW().length];
+
+//Loop over gc and add the data
+for(GridConnection GC : c_selectedGridConnections){
+
+	//Add gc data
+	excel_exportBalanceLoadData.setCellValue(GC.p_ownerID, "Electricity Load Balance", 1, columnIndex);
+	
+	double[] loadArray_kW = GC.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW();
+
+	for (int i = 0; i < loadArray_kW.length; i++ ) {		
+		excel_exportBalanceLoadData.setCellValue( loadArray_kW[i] * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, columnIndex);
+		
+		//Add to cumulative load array
+		cumulativeLoadArray_kW[i] += loadArray_kW[i];
+	}
+	
+	//Add timestep column (only the first time)
+	if (columnIndex == 2) {
+		excel_exportBalanceLoadData.setCellValue("Tijd [u]", "Electricity Load Balance", 1, 1);
+		traceln("ArraySize: %s", loadArray_kW.length);
+		for (int i = 0; i < loadArray_kW.length ; i++) {
+			excel_exportBalanceLoadData.setCellValue((i) * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, 1);
+		}
+	}
+	
+	//Increase columnIndex
+	columnIndex++;
+}
+
+//Cumulative data column
+if(c_selectedGridConnections.size() > 1){
+	excel_exportBalanceLoadData.setCellValue("Totale load [kWh]", "Electricity Load Balance", 1, columnIndex);
+	for (int i = 0; i < cumulativeLoadArray_kW.length ; i++) {
+		excel_exportBalanceLoadData.setCellValue( cumulativeLoadArray_kW[i] * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, columnIndex);
+	}
+}
+
+//Write the file
+excel_exportBalanceLoadData.writeFile();
+
+traceln("Finished writing Electricity Load Balance data to excel!");
+/*ALCODEEND*/}
+
+double f_harvestTotalBalanceLoadOfSelectedEnergyCoop()
+{/*ALCODESTART::1744624088852*/
+traceln("Start writing Electricity Load Balance data to excel!");
+
+//Clear the sheet first
+f_clearExportSheet();
+
+//Set column names
+excel_exportBalanceLoadData.setCellValue("Tijd [u]", "Electricity Load Balance", 1, 1);
+excel_exportBalanceLoadData.setCellValue("Totale load van de geselecteerde EnergyCoop [kWh]", "Electricity Load Balance", 1, 2);
+
+//Get energyModel profile
+double[] loadArray_kW = v_customEnergyCoop.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW();
+
+for (int i = 0; i < loadArray_kW.length ; i++) {
+	
+	//Time series
+	excel_exportBalanceLoadData.setCellValue((i) * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, 1);
+
+	//Data
+	excel_exportBalanceLoadData.setCellValue( loadArray_kW[i] * energyModel.p_timeStep_h, "Electricity Load Balance", i+2, 2);
+}
+
+//Write file
+excel_exportBalanceLoadData.writeFile();
+
+traceln("Finished writing Electricity Load Balance data to excel!");
+/*ALCODEEND*/}
+
+double f_setAllFileDownloadersDisabled()
+{/*ALCODESTART::1744985599017*/
+fileChooser_exportBalanceLoadEnergyModel.setEnabled(false);
+fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(false);
+fileChooser_exportBalanceLoadSelectedCompanies.setEnabled(false);
+/*ALCODEEND*/}
+
+double f_clearExportSheet()
+{/*ALCODESTART::1744986150240*/
+//Clear the sheet first
+for (int row = 1; row <= 35137; row++) {
+    for (int col = 1; col <= p_maxNrSelectedGCForExport + 2; col++) {
+        excel_exportBalanceLoadData.setCellValue("", "Electricity Load Balance", row, col);
+    }
+}
 /*ALCODEEND*/}
 

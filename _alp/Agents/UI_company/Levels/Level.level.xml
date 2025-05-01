@@ -2720,7 +2720,7 @@ zero_Interface.va_Interface.navigateTo();</ActionCode>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>2495</Width>
-		<Height>690</Height>
+		<Height>700</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -3016,7 +3016,7 @@ zero_Interface.va_Interface.navigateTo();</ActionCode>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>1060</Width>
-				<Height>740</Height>
+				<Height>750</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
 				<FillColorCode>v_companyUIBackgroundColor</FillColorCode>
@@ -3194,7 +3194,7 @@ new Thread( () -&gt; {
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>1060</Width>
-				<Height>740.969</Height>
+				<Height>750.969</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-369756683</FillColor>
 				<FillColorCode>v_loadScreenColor</FillColorCode>
@@ -3224,7 +3224,7 @@ new Thread( () -&gt; {
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>460</Width>
-				<Height>740</Height>
+				<Height>750</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
 				<FillColorCode>v_companyUIBackgroundColor</FillColorCode>
@@ -3409,7 +3409,7 @@ f_setSimulateYearScreen();</ActionCode>
 			<Rectangle>
 				<Id>1727939194814</Id>
 				<Name><![CDATA[rect_table_GridconnectionCapacaties]]></Name>
-				<X>-155</X>
+				<X>-185</X>
 				<Y>-60</Y>
 				<Label>
 					<X>10</X>
@@ -3428,7 +3428,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<LineColorCode>v_companyUILineColor</LineColorCode>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>305</Width>
+				<Width>380</Width>
 				<Height>120</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
@@ -3437,8 +3437,8 @@ f_setSimulateYearScreen();</ActionCode>
 			<Text>
 				<Id>1727939194816</Id>
 				<Name><![CDATA[txt_additionalGCCapacityInfo]]></Name>
-				<X>-40</X>
-				<Y>-54</Y>
+				<X>-178</X>
+				<Y>-51</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -3457,13 +3457,13 @@ f_setSimulateYearScreen();</ActionCode>
 					<Size>16</Size>
 					<Style>1</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>LEFT</Alignment>
 			</Text>
 			<Text>
 				<Id>1727939194818</Id>
 				<Name><![CDATA[text1]]></Name>
-				<X>-145</X>
-				<Y>-20</Y>
+				<X>-175</X>
+				<Y>-17</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -3476,7 +3476,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Fysieke capaciteit:]]></Text>
+				<Text><![CDATA[Fysieke capaciteit]]></Text>
 				<Font>
 					<Name><![CDATA[SansSerif]]></Name>
 					<Size>14</Size>
@@ -3487,8 +3487,8 @@ f_setSimulateYearScreen();</ActionCode>
 			<Text>
 				<Id>1727939194820</Id>
 				<Name><![CDATA[text2]]></Name>
-				<X>-145</X>
-				<Y>5</Y>
+				<X>-175</X>
+				<Y>8</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -3501,7 +3501,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Contract capaciteit (afname):]]></Text>
+				<Text><![CDATA[Contract capaciteit afname]]></Text>
 				<Font>
 					<Name><![CDATA[SansSerif]]></Name>
 					<Size>14</Size>
@@ -3512,8 +3512,8 @@ f_setSimulateYearScreen();</ActionCode>
 			<Text>
 				<Id>1727939194822</Id>
 				<Name><![CDATA[text3]]></Name>
-				<X>-145</X>
-				<Y>30</Y>
+				<X>-175</X>
+				<Y>33</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -3526,7 +3526,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Contract capaciteit (teruglevering):]]></Text>
+				<Text><![CDATA[Contract capaciteit teruglevering]]></Text>
 				<Font>
 					<Name><![CDATA[SansSerif]]></Name>
 					<Size>14</Size>
@@ -3537,8 +3537,8 @@ f_setSimulateYearScreen();</ActionCode>
 			<Text>
 				<Id>1727939194824</Id>
 				<Name><![CDATA[t_GCCapacityCompany_delivery2]]></Name>
-				<X>111</X>
-				<Y>6</Y>
+				<X>152</X>
+				<Y>8</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -3563,8 +3563,8 @@ f_setSimulateYearScreen();</ActionCode>
 			<Text>
 				<Id>1727939194826</Id>
 				<Name><![CDATA[t_GCCapacityCompany_Feedin_2]]></Name>
-				<X>111</X>
-				<Y>31</Y>
+				<X>152</X>
+				<Y>33</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -3589,7 +3589,7 @@ f_setSimulateYearScreen();</ActionCode>
 			<Text>
 				<Id>1727939194828</Id>
 				<Name><![CDATA[t_GCCapacityCompany_physical]]></Name>
-				<X>111</X>
+				<X>152</X>
 				<Y>-17</Y>
 				<Label>
 					<X>0</X>
@@ -3615,7 +3615,7 @@ f_setSimulateYearScreen();</ActionCode>
 			<Line>
 				<Id>1727939194830</Id>
 				<Name><![CDATA[line_table_ConnectionCapacityInfo_1]]></Name>
-				<X>75</X>
+				<X>41</X>
 				<Y>-60</Y>
 				<Label>
 					<X>10</X>
@@ -3645,8 +3645,8 @@ f_setSimulateYearScreen();</ActionCode>
 			<Text>
 				<Id>1727939194832</Id>
 				<Name><![CDATA[txt_table_ConnectionCapacityInfo_owned]]></Name>
-				<X>112</X>
-				<Y>-52</Y>
+				<X>152</X>
+				<Y>-51</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -3659,7 +3659,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Eigen]]></Text>
+				<Text><![CDATA[Capaciteit]]></Text>
 				<Font>
 					<Name><![CDATA[SansSerif]]></Name>
 					<Size>16</Size>
@@ -3670,7 +3670,7 @@ f_setSimulateYearScreen();</ActionCode>
 			<Line>
 				<Id>1727939194834</Id>
 				<Name><![CDATA[line_table_ConnectionCapacityInfo_3]]></Name>
-				<X>-155</X>
+				<X>-185</X>
 				<Y>-25</Y>
 				<Label>
 					<X>10</X>
@@ -3693,14 +3693,14 @@ f_setSimulateYearScreen();</ActionCode>
 				<BeginArrowStyle>0</BeginArrowStyle>
 				<EndArrowSize>1</EndArrowSize>
 				<EndArrowStyle>0</EndArrowStyle>
-				<Dx>305</Dx>
+				<Dx>380</Dx>
 				<Dy>0</Dy>
 				<Dz>0</Dz>
 			</Line>
 			<Group>
 				<Id>1727939206993</Id>
 				<Name><![CDATA[gr_table_nfato]]></Name>
-				<X>190</X>
+				<X>225</X>
 				<Y>0</Y>
 				<Label>
 					<X>10</X>
@@ -3709,7 +3709,6 @@ f_setSimulateYearScreen();</ActionCode>
 				<PublicFlag>true</PublicFlag>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
-				<Lock>true</Lock>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<VisibleCode>v_NFATO_active
 
@@ -3723,7 +3722,7 @@ f_setSimulateYearScreen();</ActionCode>
 					<Rectangle>
 						<Id>1727939206995</Id>
 						<Name><![CDATA[rect_Table_NFATO]]></Name>
-						<X>-40</X>
+						<X>-30</X>
 						<Y>-60</Y>
 						<Label>
 							<X>10</X>
@@ -3742,7 +3741,7 @@ f_setSimulateYearScreen();</ActionCode>
 						<LineColorCode>v_companyUILineColor</LineColorCode>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
-						<Width>75</Width>
+						<Width>65</Width>
 						<Height>120</Height>
 						<Rotation>0.0</Rotation>
 						<FillColor>-1</FillColor>
@@ -3751,7 +3750,7 @@ f_setSimulateYearScreen();</ActionCode>
 					<Text>
 						<Id>1727939206997</Id>
 						<Name><![CDATA[txt_table_ConnectionCapacityInfo_nfato]]></Name>
-						<X>-3</X>
+						<X>3</X>
 						<Y>-51</Y>
 						<Label>
 							<X>0</X>
@@ -3777,7 +3776,7 @@ f_setSimulateYearScreen();</ActionCode>
 						<Id>1727939206999</Id>
 						<Name><![CDATA[t_GCCapacityCompany_delivery_nfato]]></Name>
 						<X>0.5</X>
-						<Y>6.5</Y>
+						<Y>8</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -3803,7 +3802,7 @@ f_setSimulateYearScreen();</ActionCode>
 						<Id>1727939207001</Id>
 						<Name><![CDATA[t_GCCapacityCompany_Feedin_nfato]]></Name>
 						<X>0.5</X>
-						<Y>31.5</Y>
+						<Y>33</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -3829,7 +3828,7 @@ f_setSimulateYearScreen();</ActionCode>
 						<Id>1727939207003</Id>
 						<Name><![CDATA[t_GCCapacityCompany_physical_nfato]]></Name>
 						<X>0.5</X>
-						<Y>-16.5</Y>
+						<Y>-17</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -3853,7 +3852,7 @@ f_setSimulateYearScreen();</ActionCode>
 					<Line>
 						<Id>1727939207005</Id>
 						<Name><![CDATA[line_table_ConnectionCapacityInfo_NFATO]]></Name>
-						<X>-40</X>
+						<X>-30</X>
 						<Y>-25</Y>
 						<Label>
 							<X>10</X>
@@ -3876,12 +3875,148 @@ f_setSimulateYearScreen();</ActionCode>
 						<BeginArrowStyle>0</BeginArrowStyle>
 						<EndArrowSize>1</EndArrowSize>
 						<EndArrowStyle>0</EndArrowStyle>
-						<Dx>75</Dx>
+						<Dx>65</Dx>
 						<Dy>0</Dy>
 						<Dz>0</Dz>
 					</Line>
 				</Presentation>
 			</Group>
+			<Line>
+				<Id>1744645098225</Id>
+				<Name><![CDATA[line_table_ConnectionCapacityInfo_2]]></Name>
+				<X>109</X>
+				<Y>-60</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>2</LineWidth>
+				<LineWidthCode>v_companyUILineWidth</LineWidthCode>
+				<LineColor>-16777216</LineColor>
+				<LineColorCode>v_companyUILineColor</LineColorCode>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<BeginArrowSize>1</BeginArrowSize>
+				<BeginArrowStyle>0</BeginArrowStyle>
+				<EndArrowSize>1</EndArrowSize>
+				<EndArrowStyle>0</EndArrowStyle>
+				<Dx>0</Dx>
+				<Dy>120</Dy>
+				<Dz>0</Dz>
+			</Line>
+			<Text>
+				<Id>1744645140831</Id>
+				<Name><![CDATA[txt_table_ConnectionCapacityInfo_known]]></Name>
+				<X>75</X>
+				<Y>-51</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Status]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>16</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Text>
+				<Id>1744645285983</Id>
+				<Name><![CDATA[t_GCCapacityCompany_delivery3]]></Name>
+				<X>75</X>
+				<Y>8</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Custom]]></Text>
+				<TextCode>c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractDeliveryCapacity_kW() != sl_GCCapacityCompany.getValue() ? "Custom" :
+c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contractedDeliveryCapacityKnown ? "Bekend" : "Geschat"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Text>
+				<Id>1744645285985</Id>
+				<Name><![CDATA[t_GCCapacityCompany_Feedin_3]]></Name>
+				<X>75</X>
+				<Y>33</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Geschat]]></Text>
+				<TextCode>c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractFeedinCapacity_kW() != sl_GCCapacityCompany_Feedin.getValue() ? "Custom" :
+c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contractedFeedinCapacityKnown ? "Bekend" : "Geschat"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Text>
+				<Id>1744645285987</Id>
+				<Name><![CDATA[t_GCCapacityCompany_physical1]]></Name>
+				<X>75</X>
+				<Y>-17</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Bekend]]></Text>
+				<TextCode>c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentPhysicalConnectionCapacity_kW() != v_physicalConnectionCapacity_kW ? "Custom" :
+c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.physicalCapacityKnown ? "Bekend" : "Geschat"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
 		</Presentation>
 	</Group>
 	<Group>

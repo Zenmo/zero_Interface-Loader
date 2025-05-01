@@ -1,7 +1,7 @@
 double f_createGISRegionOutline()
 {/*ALCODESTART::1726584205769*/
 // Create neighborhoods and draw them
-for (Neighbourhood_data NBH : c_Neighbourhood_data) {	
+for (Neighbourhood_data NBH : c_neighbourhood_data) {	
 	GIS_Object area = energyModel.add_pop_GIS_Objects();
 	
 	area.p_id = NBH.districtname();
@@ -79,7 +79,7 @@ GISRegion gisregion;
 // Grid operator (for now only one in the area)
 GridOperator Grid_Operator = findFirst(energyModel.pop_gridOperators, p->p.p_actorID.equals(project_data.grid_operator())) ;
 
-for (GridNode_data GN_data : c_GridNode_data) {
+for (GridNode_data GN_data : c_gridNode_data) {
 	//    if no scope selected, or if node has 'all scopes' in input file or if the node specific scope is selected (exists in the arrayList)       
 	if( settings.subscopesToSimulate() == null || settings.subscopesToSimulate().isEmpty() || GN_data.subscope() == null || settings.subscopesToSimulate().indexOf(GN_data.subscope()) > -1 ){ 
 		if (GN_data.status()) {
@@ -184,13 +184,18 @@ else if(RegionCoords.startsWith("MultiLineString")){
 	RegionCoords = RegionCoords.replace(","," ");
 	RegionCoords = RegionCoords.replace("))","");
 }
+else if(RegionCoords.startsWith("LineString")){
+	RegionCoords = RegionCoords.replace("LineString (","");
+	RegionCoords = RegionCoords.replace(","," ");
+	RegionCoords = RegionCoords.replace(")","");
+}
 else {
 	traceln("GIS coordinaten in de excel data die niet starten met Multi of Poly");
 }
 
 
 
-if(RegionCoords.contains(")(") || RegionCoords.contains(") (")){
+if(RegionCoords.contains(")(") || RegionCoords.contains(") (") || RegionCoords.contains(")  (")){
 	if (GISObjectType == OL_GISObjectType.ANTI_LAYER){
 		RegionCoords = RegionCoords.replace(")("," "); // Combine all polies into one!
 		RegionCoords = RegionCoords.replace(") ("," "); // Combine all polies into one!
@@ -253,7 +258,7 @@ if(settings.reloadDatabase()){
 
 double f_createHousesFromDatabase()
 {/*ALCODESTART::1726584205781*/
-List<Building_data> scopedBuilding_data = f_getScopedBuildingList(c_HouseBuilding_data);
+List<Building_data> scopedBuilding_data = f_getScopedBuildingList(c_houseBuilding_data);
 	
 traceln("Aantal panden met woonfunctie in BAG data: " + scopedBuilding_data.size());
 
@@ -397,13 +402,17 @@ List<String> existing_actors = new ArrayList();
 List<String> existing_solarFields = new ArrayList();
 
 
-for (Solarfarm_data dataSolarfarm : c_Solarfarm_data) { // MOET NOG CHECK OF ZONNEVELD ACTOR AL BESTAAT OP, zo ja --> Zonneveld koppelen aan elkaar en niet 2 GC en 2 actoren maken.
+for (Solarfarm_data dataSolarfarm : c_solarfarm_data) { // MOET NOG CHECK OF ZONNEVELD ACTOR AL BESTAAT OP, zo ja --> Zonneveld koppelen aan elkaar en niet 2 GC en 2 actoren maken.
 	
 	if (!existing_solarFields.contains( dataSolarfarm.gc_id() )) {
 		solarpark = energyModel.add_EnergyProductionSites();
 		
 		solarpark.set_p_gridConnectionID( dataSolarfarm.gc_id() );
 		solarpark.set_p_name( dataSolarfarm.gc_name() );
+		
+		if(solarpark.p_gridConnectionID.equals("SLIDER_SF")){
+			solarpark.p_isSliderGC = true;
+		}
 		
 		//Grid Capacity
 		solarpark.v_liveConnectionMetaData.physicalCapacity_kW = dataSolarfarm.connection_capacity_kw();
@@ -473,7 +482,7 @@ for (Solarfarm_data dataSolarfarm : c_Solarfarm_data) { // MOET NOG CHECK OF ZON
 
 double f_generateBatteries()
 {/*ALCODESTART::1726584205787*/
-for (Battery_data dataBattery : c_Battery_data) { // MOET NOG CHECK OF battery ACTOR AL BESTAAT OP, zo ja --> battery koppelen aan elkaar en niet 2 GC en 2 actoren maken.
+for (Battery_data dataBattery : c_battery_data) { // MOET NOG CHECK OF battery ACTOR AL BESTAAT OP, zo ja --> battery koppelen aan elkaar en niet 2 GC en 2 actoren maken.
 	
 	ConnectionOwner owner = energyModel.add_pop_connectionOwners();
 	GCGridBattery gridbattery = energyModel.add_GridBatteries();
@@ -549,7 +558,7 @@ ConnectionOwner owner;
 List<String> existing_actors = new ArrayList();
 
 
-for (Electrolyser_data dataElectrolyser : c_Electrolyser_data) {
+for (Electrolyser_data dataElectrolyser : c_electrolyser_data) {
 	GCEnergyConversion H2Electrolyser = energyModel.add_EnergyConversionSites();
 
 	H2Electrolyser.set_p_gridConnectionID( dataElectrolyser.gc_id() );
@@ -631,7 +640,7 @@ GCEnergyProduction windfarm;
 List<String> existing_actors = new ArrayList();
 List<String> existing_windFarms = new ArrayList();
 
-for (Windfarm_data dataWindfarm : c_Windfarm_data) {
+for (Windfarm_data dataWindfarm : c_windfarm_data) {
 	if (!existing_windFarms.contains(dataWindfarm.gc_id())) { // Check if windfarm exists already, if not, create new windfarm GC + turbine
 		windfarm = energyModel.add_EnergyProductionSites();
 
@@ -897,17 +906,21 @@ for(int i = 0; i < argumentsList.size(); i++) {
 J_ProfilePointer profilePointer;
 // 'ambient' conditions:
 energyModel.tf_ambientTemperature_degC.setArgumentsAndValues(a_arguments, a_tempValues);
+energyModel.tf_ambientTemperature_degC.setOutOfRangeAction(TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT);
 energyModel.tf_dayAheadElectricityPricing_eurpMWh.setArgumentsAndValues(a_arguments, a_epexValues);
+energyModel.tf_dayAheadElectricityPricing_eurpMWh.setOutOfRangeAction(TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT);
 profilePointer = new J_ProfilePointer("Day ahead electricity pricing [eur/MWh]", energyModel.tf_dayAheadElectricityPricing_eurpMWh);
 energyModel.f_addProfile(profilePointer);
 energyModel.pp_dayAheadElectricityPricing_eurpMWh = profilePointer;
 
 energyModel.tf_p_wind_e_normalized.setArgumentsAndValues(a_arguments, a_windValues);
+energyModel.tf_p_wind_e_normalized.setOutOfRangeAction(TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT);
 profilePointer = new J_ProfilePointer("normalized onshore wind production", energyModel.tf_p_wind_e_normalized);
 energyModel.f_addProfile(profilePointer);
 energyModel.pp_windOnshoreProduction = profilePointer;
 
 energyModel.tf_p_solar_e_normalized.setArgumentsAndValues(a_arguments, a_solarValues);
+energyModel.tf_p_solar_e_normalized.setOutOfRangeAction(TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT);
 profilePointer = new J_ProfilePointer("normalized_PV_production", energyModel.tf_p_solar_e_normalized);
 energyModel.f_addProfile(profilePointer);
 energyModel.pp_solarPVproduction = profilePointer;
@@ -979,8 +992,8 @@ double f_createGenericCompanies()
 //Initialize variables
 List<GCUtility> generic_company_GCs = new ArrayList();
 
-
-for (Building_data genericCompany : c_GenericCompanyBuilding_data) {
+//Loop over the remaining buildings in c_CompanyBuilding_data (Survey buildings have been removed from this collection)
+for (Building_data genericCompany : c_companyBuilding_data) {
 	
 	GCUtility companyGC = findFirst(generic_company_GCs, GC -> GC.p_gridConnectionID.equals(genericCompany.address_id()));
 	
@@ -1199,7 +1212,7 @@ if ( hasQuarterlyData == true ) { // Add quarterly electricity data pattern if a
 	
 
 	//Preprocess and add the profiles
-	f_createPreprocessedElectricityProfile(parentGC, yearlyElectricityDelivery_kWh_array, yearlyElectricityFeedin_kWh_array, yearlyElectricityProduction_kWh_array, pvPower_kW);
+	f_createPreprocessedElectricityProfile_PV(parentGC, yearlyElectricityDelivery_kWh_array, yearlyElectricityFeedin_kWh_array, yearlyElectricityProduction_kWh_array, pvPower_kW);
 
 } 
 
@@ -1213,28 +1226,39 @@ double f_addHeatDemandProfile(GridConnection parentGC,double yearlyGasDemand_m3,
 J_EAConsumption heatDemand;
 double yearlyDemandHeat_kWh = 0;
 double profileTimeStep_hr = 1;
-double maxPowerGasburner = 0;
+double maxHeatOutputPower_kW = 0;
+double gasToHeatEfficiency = 0;
 
+switch (parentGC.p_heatingType){
+	case GASBURNER:
+	case HYBRID_HEATPUMP:
+		gasToHeatEfficiency = avgc_data.p_avgEfficiencyGasBurner_fr;
+		break;
+	case GASFIRED_CHPPEAK:
+		gasToHeatEfficiency = avgc_data.p_avgEfficiencyCHP_thermal_fr;
+		break;
+}
 if(hasHourlyGasData){
 	J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.HEAT, null, OL_ProfileAssetType.HEATDEMAND ,profileTimeStep_hr);		
 	profile.energyAssetName = parentGC.p_ownerID + " custom heat profile";
 	
 	List<Double> hourlyGasDemand_kWh = selectValues(double.class, "SELECT " + profileName + "_demand FROM comp_gas_consumption;");
 	List<Double> hourlyHeatDemand_kWh = new ArrayList<Double>();
+	
 	for (int i = 0; i < hourlyGasDemand_kWh.size(); i++) {
-		double gasHeatingValue_timestep_kWh = hourlyGasDemand_kWh.get(i) * avgc_data.p_gas_kWhpm3 * avgc_data.p_avgEfficiencyGasBurner * ratioGasUsedForHeating;
+		double gasHeatingValue_timestep_kWh = hourlyGasDemand_kWh.get(i) * avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating;
 		yearlyDemandHeat_kWh += gasHeatingValue_timestep_kWh;
     	hourlyHeatDemand_kWh.add(i, gasHeatingValue_timestep_kWh);
     	
     	//Keep track of max value
-    	if((gasHeatingValue_timestep_kWh/energyModel.p_timeStep_h) > maxPowerGasburner){
-    		maxPowerGasburner = gasHeatingValue_timestep_kWh/energyModel.p_timeStep_h;
+    	if((gasHeatingValue_timestep_kWh/energyModel.p_timeStep_h) > maxHeatOutputPower_kW){
+    		maxHeatOutputPower_kW = gasHeatingValue_timestep_kWh/energyModel.p_timeStep_h;
     	}
 	}	
 	profile.a_energyProfile_kWh = hourlyHeatDemand_kWh.stream().mapToDouble(d -> max(0,d)).toArray();
 	
 	//Update v_remainingGasConsumption_m3
-	v_remainingGasConsumption_m3 -= yearlyDemandHeat_kWh/(avgc_data.p_gas_kWhpm3 * avgc_data.p_avgEfficiencyGasBurner * ratioGasUsedForHeating);
+	v_remainingGasConsumption_m3 -= yearlyDemandHeat_kWh/(avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
 }
 else{
 	
@@ -1245,92 +1269,35 @@ else{
 	}
 	
 	//Determine heatdemand
-	yearlyDemandHeat_kWh = yearlyGasDemand_m3 * avgc_data.p_gas_kWhpm3 * avgc_data.p_avgEfficiencyGasBurner;
+	yearlyDemandHeat_kWh = yearlyGasDemand_m3 * avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency;
 	
-	if (yearlyDemandHeat_kWh <= 0 ){// If heat demand = 0, make estimation based on floor surface area
-		yearlyDemandHeat_kWh = avgc_data.p_avgCompanyGasConsumption_m3pm2*parentGC.p_floorSurfaceArea_m2 * avgc_data.p_gas_kWhpm3 * avgc_data.p_avgEfficiencyGasBurner;
+	if (yearlyDemandHeat_kWh <= 0 ){// If heat demand = 0, make estimation based on floor surface area, average m3 gas consumption per m2 floor and gas burner efficiency
+		yearlyDemandHeat_kWh = avgc_data.p_avgCompanyGasConsumption_m3pm2*parentGC.p_floorSurfaceArea_m2 * avgc_data.p_gas_kWhpm3 * avgc_data.p_avgEfficiencyGasBurner_fr;
 		//traceln("NO HEAT DEMAND DETECTED: ESTIMATION MADE BASED ON FLOOR SURFACE AREA!");
 	}
-	
+
 	//Determine heatdemand
 	heatDemand = new J_EAConsumption(parentGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, yearlyDemandHeat_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, null);
 	
 	//Calculate required thermal power
 	if(genericProfiles_data.buildingHeatDemandList_maximum() != null){
-		maxPowerGasburner = yearlyDemandHeat_kWh*genericProfiles_data.buildingHeatDemandList_maximum();
+		maxHeatOutputPower_kW = yearlyDemandHeat_kWh*genericProfiles_data.buildingHeatDemandList_maximum();
 	}
 	else{
-		maxPowerGasburner = yearlyDemandHeat_kWh / 8760 * 10;
+		maxHeatOutputPower_kW = yearlyDemandHeat_kWh / 8760 * 10;
 	}
 }
 
-//Initialize parameters
-double capacityElectric_kW;
-double efficiency;
-double baseTemperature_degC;
-double outputTemperature_degC;
-String ambientTempType;
-double sourceAssetHeatPower_kW;
-double belowZeroHeatpumpEtaReductionFactor;
 
-switch (parentGC.p_heatingType){ // HOE gaan we om met meerdere heating types in survey???
-
-	case GASBURNER:
-		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, maxPowerGasburner , avgc_data.p_avgEfficiencyGasBurner, energyModel.p_timeStep_h, 90);
-	break;
-	
-	case HYBRID_HEATPUMP:
-		
-		//Add primary heating asset (heatpump) (if its not part of the basic profile already
-		if(!parentGC.v_hasQuarterHourlyValues || settings.createCurrentElectricityEA()){
-			capacityElectric_kW = maxPowerGasburner / 3; //-- /3, want is hybride, dus kleiner
-			efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
-			baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
-			outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
-			ambientTempType = "AIR";
-			sourceAssetHeatPower_kW = 0;
-			belowZeroHeatpumpEtaReductionFactor = 1;
-			
-			J_EAConversionHeatPump heatPumpHybrid = new J_EAConversionHeatPump(parentGC, capacityElectric_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );
-
-			zero_Interface.energyModel.c_ambientAirDependentAssets.add(heatPumpHybrid);
-		}
-		
-		//Add secondary heating asset (gasburner)
-		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner;
-		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC;
-		
-		J_EAConversionGasBurner gasBurnerHybrid = new J_EAConversionGasBurner(parentGC, maxPowerGasburner, efficiency, energyModel.p_timeStep_h, outputTemperature_degC);
-		parentGC.p_secondaryHeatingAsset = gasBurnerHybrid;
-				
-	 
-	break;
-	
-	case ELECTRIC_HEATPUMP:
-
-		//Add primary heating asset (heatpump)
-		capacityElectric_kW = maxPowerGasburner;
-		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
-		baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
-		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
-		ambientTempType = "AIR";
-		sourceAssetHeatPower_kW = 0;
-		belowZeroHeatpumpEtaReductionFactor = 1;
-		
-		J_EAConversionHeatPump heatPumpElectric = new J_EAConversionHeatPump(parentGC, capacityElectric_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );		
-	break;
-	
-	default:
-		traceln("HEATING TYPE NOT FOUND FOR GC ");
-		traceln(parentGC);
-}
+//Add heat demand asset
+f_addHeatAsset(parentGC, parentGC.p_heatingType, maxHeatOutputPower_kW);
 
 
 /*ALCODEEND*/}
 
 double f_createGISParcels()
 {/*ALCODESTART::1726584205807*/
-for (Parcel_data dataParcel : c_Parcel_data) {
+for (Parcel_data dataParcel : c_parcel_data) {
 		
 	GIS_Parcel parcel = energyModel.add_pop_GIS_Parcels();
 	
@@ -1481,11 +1448,14 @@ for (var survey : surveys) {
 	 		
 		 	//Check if it has (or will have) a direct connection with the grid (either gas or electric), if not: create subtenant	
 		 	boolean hasNaturalGasConnection = (gridConnection.getNaturalGas().getHasConnection() != null)? gridConnection.getNaturalGas().getHasConnection() : false;	 	
-		 	if (!gridConnection.getElectricity().getHasConnection() && !gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() && !hasNaturalGasConnection){
+		 	boolean hasExpansionRequest = (gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() != null ) ? gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() : false;
+		 	
+		 	if (!gridConnection.getElectricity().getHasConnection() && !hasExpansionRequest && !hasNaturalGasConnection){
 				subTenants.add(f_createSubtenant(survey, address));	
 			 	continue;
 		 	}
-		 	else if(survey_owner == null){// Connection owner does not exist yet: create and initialize new one
+		 	
+		 	if(survey_owner == null){// Connection owner does not exist yet: create and initialize new one
 				survey_owner = energyModel.add_pop_connectionOwners();
 				survey_owner.p_actorID = survey.getCompanyName();
 				survey_owner.p_actorType = OL_ActorType.CONNECTIONOWNER;
@@ -1516,11 +1486,11 @@ for (var survey : surveys) {
 		 	List<Building_data> buildings = new ArrayList<Building_data>();
 			if ( gridConnection.getPandIds() != null && !gridConnection.getPandIds().isEmpty()) {
 				for (var PID : gridConnection.getPandIds() ) {
-					Building_data building = findFirst(c_GenericCompanyBuilding_data, b -> b.building_id().equals(PID.getValue()));
+					Building_data building = findFirst(c_companyBuilding_data, b -> b.building_id().equals(PID.getValue()));
 					if (building!=null) { // Check if building package exists in building package collection
 						buildings.add(building);
-						c_SurveyCompanyBuilding_data.add(building);
-						c_GenericCompanyBuilding_data.removeAll(findAll(c_GenericCompanyBuilding_data, b -> b.building_id().equals(PID.getValue())));
+						c_surveyCompanyBuilding_data.add(building);
+						c_companyBuilding_data.removeAll(findAll(c_companyBuilding_data, b -> b.building_id().equals(PID.getValue())));
 						
 						//Set trafo ID
 						companyGC.p_parentNodeElectricID = building.gridnode_id();
@@ -1534,14 +1504,16 @@ for (var survey : surveys) {
 					else if (map_buildingData_Vallum != null && !map_buildingData_Vallum.isEmpty()){// Create new building package
 						Building_data customBuilding = f_createBuildingData_Vallum(companyGC, PID.getValue());
 						buildings.add(customBuilding);
-						c_VallumBuilding_data.add(customBuilding);
+						c_vallumBuilding_data.add(customBuilding);
 					}
 				}
 			} else {// No building connected in zorm? -> check if it is manually connected in excel (using gc_id column)
-				traceln("Survey %s has no building in zorm", survey.getId());
-				buildings = findAll(c_SurveyCompanyBuilding_data, b -> b.gc_id() != null && b.gc_id().equals(companyGC.p_gridConnectionID));
+				buildings = findAll(c_companyBuilding_data, b -> b.gc_id() != null && b.gc_id().equals(companyGC.p_gridConnectionID));
 				if(buildings == null){
-					traceln("Survey %s has also no manual connection with building in excel", survey.getId());
+					traceln("Survey %s has no building in zorm and also no manual connection with building in excel", survey.getId());
+				}
+				else{
+					c_companyBuilding_data.removeAll(buildings);
 				}
 			}
 			
@@ -1584,7 +1556,7 @@ for (var survey : surveys) {
 				
 				if(buildings.isEmpty()){ //GC will not have gotten a gridnode assigned,
 					for (var PID : gridConnection.getPandIds() ) {
-						Building_data surveyBuildingData = findFirst(c_SurveyCompanyBuilding_data, b -> b.building_id().equals(PID.getValue()));
+						Building_data surveyBuildingData = findFirst(c_surveyCompanyBuilding_data, b -> b.building_id().equals(PID.getValue()));
 						if(surveyBuildingData != null){
 							companyGC.p_parentNodeElectricID = surveyBuildingData.gridnode_id();
 							break;
@@ -1660,28 +1632,10 @@ double f_setHeatingTypeSurvey(GridConnection companyGC,com.zenmo.zummon.companys
 {/*ALCODESTART::1726584205825*/
 int i = 0;
 
-if(gridConnection.getHeat().getHeatingTypes().size() == 0){
-	
-	if (gridConnection.getNaturalGas().getAnnualDelivery_m3() != null && gridConnection.getNaturalGas().getAnnualDelivery_m3() > 0) {
-		//if (gridConnection.getNaturalGas().getAnnualDelivery_m3() > 0) {
-			companyGC.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;// None for now.
-			companyGC.c_heatingTypes.add(OL_GridConnectionHeatingType.GASBURNER);
-			traceln("Gas consumption detected for '" + companyGC.p_ownerID + "', setting heating type to GASBURNER");			
-		/*} else {
-			companyGC.p_heatingType = OL_GridConnectionHeatingType.NONE;// None for now.
-			traceln("no or incorrect heating type detected for '" + companyGC.p_ownerID + "'");
-		}*/
-	} else {
-		companyGC.p_heatingType = OL_GridConnectionHeatingType.NONE;// None for now.
-		traceln("no heating type in surveydata, and no gas consumption detected for: '" + companyGC.p_ownerID + "'");
-	}
-}		
-
 while (i < gridConnection.getHeat().getHeatingTypes().size()){
 
 	var Heating_Type = gridConnection.getHeat().getHeatingTypes().get(i);
 
-	//Heating type Mixed toevoegen! Dus geen collection
 	switch (Heating_Type){
 		
 		case GAS_BOILER:
@@ -1703,7 +1657,11 @@ while (i < gridConnection.getHeat().getHeatingTypes().size()){
 			companyGC.p_heatingType = OL_GridConnectionHeatingType.DISTRICTHEAT;
 			companyGC.c_heatingTypes.add(OL_GridConnectionHeatingType.DISTRICTHEAT);
 			break;
-			
+		case COMBINED_HEAT_AND_POWER:
+			companyGC.p_heatingType = OL_GridConnectionHeatingType.GASFIRED_CHPPEAK;
+			companyGC.c_heatingTypes.add(OL_GridConnectionHeatingType.GASFIRED_CHPPEAK);
+			break;
+						
 		case OTHER:
 			companyGC.p_heatingType = OL_GridConnectionHeatingType.NONE;// Other is not supported by the model so: NONE.
 			companyGC.c_heatingTypes.add(OL_GridConnectionHeatingType.OTHER);
@@ -1712,24 +1670,32 @@ while (i < gridConnection.getHeat().getHeatingTypes().size()){
 		default:
 			companyGC.p_heatingType = OL_GridConnectionHeatingType.NONE;
 			traceln("no or incorrect heating type detected for '" + companyGC.p_ownerID + "'");
-			//companyGC.c_heatingTypes.add(OL_GridConnectionHeatingType.NONE);
 	}
 	i++;
+}
+
+//Null check for when list was empty
+if(companyGC.p_heatingType == null){
+	companyGC.p_heatingType = OL_GridConnectionHeatingType.NONE;
+}
+
+//Backup for when there is gas consumption, but no heating type that uses it
+if(	!companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.GASBURNER) && 
+	!companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.GASFIRED_CHPPEAK)){
+	if ((hasHourlyGasData || (gridConnection.getNaturalGas().getAnnualDelivery_m3() != null && gridConnection.getNaturalGas().getAnnualDelivery_m3() > 0))) {
+			companyGC.c_heatingTypes.add(OL_GridConnectionHeatingType.GASBURNER);
+			traceln("Gas consumption detected for '" + companyGC.p_ownerID + "', setting heating type to GASBURNER");			
+	}
 }
 
 //Set correct primary heating method (p_heatingType) (needed for now, till model can support multiple heating types)
 if (companyGC.c_heatingTypes.size()>1){
 	
-	if (hasHourlyGasData && !companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.GASBURNER)){
-		companyGC.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
-		return;
-	}
-	
 	if(companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.HYBRID_HEATPUMP)){
 		companyGC.p_heatingType = OL_GridConnectionHeatingType.HYBRID_HEATPUMP;
 		return;
 	}
-	else if(companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.GASBURNER) && (companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP))){
+	else if(companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.GASBURNER) && companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP)){
 		companyGC.p_heatingType = OL_GridConnectionHeatingType.HYBRID_HEATPUMP;
 		return;
 	}
@@ -1741,21 +1707,9 @@ if (companyGC.c_heatingTypes.size()>1){
 		companyGC.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
 		return;
 	} 
-	
-
 }
 
 
-
-/*
-//If multiple heating types: Set heating type mixed
-if (companyGC.c_heatingTypes.size()>1 && !companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.OTHER)|| companyGC.c_heatingTypes.size()>2){
-	traceln("Has multiple heating types (excluding OTHER)");
-	traceln(companyGC.c_heatingTypes);
-	//Set heating type mixed
-	companyGC.p_heatingType = OL_GridConnectionHeatingType.MIXED;
-}
-*/
 /*ALCODEEND*/}
 
 double f_addElectricVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_type,boolean isDefaultVehicle,double annualTravelDistance_km,double maxChargingPower_kW)
@@ -1903,6 +1857,7 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 		//Buidling Base electricity load
 		double Remaining_electricity_demand_kWh_p_m2_yr = v_remainingElectricityDelivery_kWh / v_totalFloorAreaAnonymousCompanies_m2;
 		double yearlyElectricityDemand_kWh = Remaining_electricity_demand_kWh_p_m2_yr * companyGC.p_floorSurfaceArea_m2;
+		
 		//Add base load profile
 		f_addElectricityDemandProfile(companyGC, yearlyElectricityDemand_kWh, null, false, "Office_other_electricity");
 	}
@@ -1982,6 +1937,7 @@ double f_createRemainingBuildings()
 for (Building_data remainingBuilding_data : c_remainingBuilding_data) {
 	
 	GIS_Building building = energyModel.add_pop_GIS_Buildings();
+	building.p_id = remainingBuilding_data.building_id();
 	building.p_longitude = remainingBuilding_data.longitude();
 	building.p_latitude = remainingBuilding_data.latitude();
 	building.setLatLon(building.p_latitude, building.p_longitude);		
@@ -2321,7 +2277,7 @@ int laadpaal_nr = 1;
 int laadstation_nr = 1;
 
 //Loop over charging stations
-for (Chargingstation_data dataChargingStation : c_Chargingstation_data){
+for (Chargingstation_data dataChargingStation : c_chargingstation_data){
 
 	GCPublicCharger chargingStation = energyModel.add_PublicChargers();
 
@@ -2450,7 +2406,7 @@ for (Chargingstation_data dataChargingStation : c_Chargingstation_data){
 
 double f_createCompaniesFromDatabase()
 {/*ALCODESTART::1726584205851*/
-List<Building_data> scopedBuilding_data = f_getScopedBuildingList(c_GenericCompanyBuilding_data);
+List<Building_data> scopedBuilding_data = f_getScopedBuildingList(c_companyBuilding_data);
 
 traceln("Aantal bedrijven in BAG data (geen woonfunctie): " + scopedBuilding_data.size());
 
@@ -2566,11 +2522,14 @@ double f_createGISCables()
 
 //LV cables
 //Initialize the array with gisroutes 
-GISRoute[] gisroutesLV = new GISRoute[c_Cable_data_LV.size()];
+GISRoute[] gisroutesLV = new GISRoute[c_cable_data_LV.size()];
 int i = 0;
 
 
-for (Cable_data dataCableLV : c_Cable_data_LV) {
+for (Cable_data dataCableLV : c_cable_data_LV) {
+	if(dataCableLV.line().contains("Multi")){
+		continue;
+	}
 	gisroutesLV[i] = zero_Interface.f_createGISLine(f_createGISObjectsTokens(dataCableLV.line(), OL_GISObjectType.LV_CABLE), "LVGrid");
 	i++;
 }
@@ -2581,11 +2540,14 @@ for (Cable_data dataCableLV : c_Cable_data_LV) {
 
 //MV cables
 //Initialize the array with gisroutes 
-GISRoute[] gisroutesMV = new GISRoute[c_Cable_data_MV.size()];
+GISRoute[] gisroutesMV = new GISRoute[c_cable_data_MV.size()];
 int k = 0;
 
 
-for (Cable_data dataCableMV : c_Cable_data_MV) {
+for (Cable_data dataCableMV : c_cable_data_MV) {
+	if(dataCableMV.line().contains("Multi")){
+		continue;
+	}
 	gisroutesMV[k] = zero_Interface.f_createGISLine(f_createGISObjectsTokens(dataCableMV.line(), OL_GISObjectType.MV_CABLE), "MVGrid");
 	k++;
 }
@@ -2595,7 +2557,7 @@ for (Cable_data dataCableMV : c_Cable_data_MV) {
 
 /*ALCODEEND*/}
 
-double f_createPreprocessedElectricityProfile(GridConnection parentGC,double[] yearlyElectricityDelivery_kWh,double[] yearlyElectricityFeedin_kWh,double[] yearlyElectricityProduction_kWh,Double pvPower_kW)
+double f_createPreprocessedElectricityProfile_PV(GridConnection parentGC,double[] yearlyElectricityDelivery_kWh,double[] yearlyElectricityFeedin_kWh,double[] yearlyElectricityProduction_kWh,Double pvPower_kW)
 {/*ALCODESTART::1726584205861*/
 //Create the profile 
 J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, null, OL_ProfileAssetType.ELECTRICITYBASELOAD, energyModel.p_timeStep_h);		
@@ -3013,7 +2975,7 @@ for (int i = 0; i < floatArray.length; i++) {
 return doubleArray;
 /*ALCODEEND*/}
 
-double f_getPreprocessedConsumptionTotal(GridConnection parentGC,double annualElectricityDelivery_kWh,Integer annualElectricityFeedin_kWh,Integer annualElectricityProduction_kWh,Double pvPower_kW)
+double f_getPreprocessedElectricityConsumptionTotal(GridConnection parentGC,double annualElectricityDelivery_kWh,Integer annualElectricityFeedin_kWh,Integer annualElectricityProduction_kWh,Double pvPower_kW)
 {/*ALCODESTART::1728039545686*/
 double annualElectricityConsumption_kWh = 0;
 if(annualElectricityFeedin_kWh != null){
@@ -3057,7 +3019,7 @@ double[] a_normalizedPower_fr = Arrays.stream(yearlyElectricityProduction_kWh).m
 //traceln("Full load hours of a_normalizedPower_fr %s: ", Arrays.stream(a_normalizedPower_fr).sum()/4);
 //traceln("Max of a_normalizedPower_fr %s: ", Arrays.stream(a_normalizedPower_fr).max());
 
-TableFunction tf_customPVproduction_fr = new TableFunction(a_arguments, a_normalizedPower_fr, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_ERROR, 0.0);
+TableFunction tf_customPVproduction_fr = new TableFunction(a_arguments, a_normalizedPower_fr, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
 J_ProfilePointer profilePointer = new J_ProfilePointer((parentGC.p_ownerID + "_PVproduction") , tf_customPVproduction_fr);
 energyModel.f_addProfile(profilePointer);
 J_EAProduction production_asset = new J_EAProduction(parentGC, OL_EnergyAssetType.PHOTOVOLTAIC, (parentGC.p_ownerID + "_rooftopPV"), (double)pvPower_kW, 0.0, 0.0, 0.0, energyModel.p_timeStep_h, 0.0, profilePointer);
@@ -3071,7 +3033,7 @@ double f_iEASurveyCompanies_Zorm(GridConnection companyGC,com.zenmo.zummon.compa
 {/*ALCODESTART::1732112244908*/
 //Initialize boolean that sets the creation of currently existing electric (demand) EA
 boolean createElectricEA = true;
-final var targetYear = 2023;
+final int targetYear = 2023;
 
 
 //Create current scenario parameter list
@@ -3125,7 +3087,7 @@ if (gridConnection.getElectricity().getHasConnection()){
 		}
 		
 		
-		//Check if contract capacity feedin has been filled in: if not, make the same as contract delivery
+		//Check if contract capacity feedin has been filled in: if not, make the same as pv capacity
 		if(gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw() != null && gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw() > 0){
 			companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = ((double)gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw()); //Contracted connection capacity
 			companyGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
@@ -3161,7 +3123,7 @@ if (gridConnection.getElectricity().getHasConnection()){
 	String profileName = "Office_other_electricity";
 	
 	//Check if quarter hourly values are available in vallum
-	boolean createdTimeSeriesAssets = f_createElectricityTimeSeriesAssets(companyGC, gridConnection, "Insert company name here");
+	boolean createdTimeSeriesAssets = f_createElectricityTimeSeriesAssets(companyGC, gridConnection);
 	
 	if(createdTimeSeriesAssets){
 		if(!settings.createCurrentElectricityEA()){//input boolean: Dont create current electric energy assets if electricity profile or total is known.
@@ -3196,7 +3158,7 @@ if (gridConnection.getElectricity().getHasConnection()){
 			Integer yearlyElectricityProduction_kWh = gridConnection.getElectricity().getAnnualElectricityProduction_kWh();
 			
 			//Calculate consumption
-			yearlyElectricityConsumption_kWh = f_getPreprocessedConsumptionTotal(companyGC, yearlyElectricityDelivery_kWh, yearlyElectricityFeedin_kWh, yearlyElectricityProduction_kWh, pvPower_kW);
+			yearlyElectricityConsumption_kWh = f_getPreprocessedElectricityConsumptionTotal(companyGC, yearlyElectricityDelivery_kWh, yearlyElectricityFeedin_kWh, yearlyElectricityProduction_kWh, pvPower_kW);
 			
 			//If no electricity consumption, determine the consumption based on average values and floor surface and connection capacity
 			if(yearlyElectricityConsumption_kWh == 0){
@@ -3295,51 +3257,58 @@ if (gridConnection.getSupply().getWindPlannedKw() != null && gridConnection.getS
 
 
 
-////Gas
+////Gas and Heating
+
 //Initialize variables (outside of gas loop needed for heating)
 boolean hasHourlyGasData = false;
+boolean hasGasTimeSeriesInZorm = false;
 double yearlyGasConsumption_m3 = 0;
 double ratioGasUsedForHeating = 1;
 String heatProfileName = "Building_heat_demand";
 
 if (gridConnection.getNaturalGas().getHasConnection() != null && gridConnection.getNaturalGas().getHasConnection()){
 	
-	yearlyGasConsumption_m3 = (gridConnection.getNaturalGas().getAnnualDemandM3() != null) ? gridConnection.getNaturalGas().getAnnualDemandM3() : 0; // Yearly electricity consumption (0 if value is null)
-
-	//Check if hourly gas consumption values are available 
-	try{
-		if (selectFirstValue(Double.class, "SELECT " + "ccid" + gridConnection.getSequence().toString() + "_demand FROM comp_gas_consumption LIMIT 1;") != null){
-			hasHourlyGasData = true;
-			heatProfileName = "ccid" + companyGC.p_gridConnectionID;
+	//Determine how much gas goes towards heating
+	ratioGasUsedForHeating = ((gridConnection.getNaturalGas().getPercentageUsedForHeating() != null) ? gridConnection.getNaturalGas().getPercentageUsedForHeating() : 100)/100.0;
+	
+	
+	//Create heat demand profile using gas demand profile from zorm and create heating assets.
+	hasGasTimeSeriesInZorm = f_createHeatProfileFromGasTS(companyGC, gridConnection, ratioGasUsedForHeating);
+	
+	//If gas demand profile does not exist in zorm
+	if(!hasGasTimeSeriesInZorm){
+		yearlyGasConsumption_m3 = (gridConnection.getNaturalGas().getAnnualDemandM3() != null) ? gridConnection.getNaturalGas().getAnnualDemandM3() : 0; // Yearly electricity consumption (0 if value is null)
+	
+		//Check if hourly gas consumption values are available 
+		try{
+			if (selectFirstValue(Double.class, "SELECT " + "ccid" + gridConnection.getSequence().toString() + "_demand FROM comp_gas_consumption LIMIT 1;") != null){
+				hasHourlyGasData = true;
+				heatProfileName = "ccid" + companyGC.p_gridConnectionID;
+			}
+		}
+		catch(Exception e) {
+			//No hourly data available?
+			//Update total Yearly gas consumption (if it is available it happens in the function where data is imported)
+			v_remainingGasConsumption_m3 -= yearlyGasConsumption_m3;
 		}
 	}
-	catch(Exception e) {
-		//No hourly data available?
-		//Update total Yearly gas consumption (if it is available it happens in the function where data is imported)
-		v_remainingGasConsumption_m3 -= yearlyGasConsumption_m3;
-		
+}
+	
+//Heating
+if(!hasGasTimeSeriesInZorm){ // If there is gas data, heating assets have already been made.
+	//Determine the current heating type
+	f_setHeatingTypeSurvey(companyGC, gridConnection, hasHourlyGasData);
+	
+	//Set the heating demand profile
+	if(!createElectricEA && companyGC.p_heatingType == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP){
+		//Dont create additional Electric heating assets on top of Electricity profile
 	}
-	
-	//Determine how much gas goes towards heating
-	ratioGasUsedForHeating = ((gridConnection.getNaturalGas().getPercentageUsedForHeating() != null) ? gridConnection.getNaturalGas().getPercentageUsedForHeating() : 100)/100;
+	else{
+		f_addHeatDemandProfile(companyGC, yearlyGasConsumption_m3, hasHourlyGasData, ratioGasUsedForHeating, heatProfileName);
+	}
 }
 
-
-
-	
-////Heating
-//Determine the current heating type
-f_setHeatingTypeSurvey(companyGC, gridConnection, hasHourlyGasData);
-
-//Set the heating demand profile
-if(!createElectricEA && (companyGC.p_heatingType == OL_GridConnectionHeatingType.HYBRID_HEATPUMP || companyGC.p_heatingType == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP)){
-	//Dont create additional Electric heating assets on top of Electricity profile
-}
-else{
-	f_addHeatDemandProfile(companyGC, yearlyGasConsumption_m3, hasHourlyGasData, ratioGasUsedForHeating, heatProfileName);
-}
-
-//add to scenario: current
+//add heating type to scenario: current
 current_scenario_list.setCurrentHeatingType(companyGC.p_heatingType);
 
 
@@ -3619,7 +3588,7 @@ status(pand_data_vallum.getStatus()).
 //purpose(row.get( buildings.purpose )).
 //cumulative_floor_surface_m2(row.get( buildings.cumulative_floor_surface_m2 )).
 //polygon_area_m2(row.get( buildings.polygon_area_m2 )).
-annotation(companyGC.p_gridConnectionID).
+annotation(companyGC.p_owner.p_actorID).
 //extra_info(row.get( buildings.extra_info )).
 //gridnode_id(row.get( buildings.gridnode_id )).
 //latitude(row.get( buildings.latitude )).
@@ -3645,35 +3614,34 @@ for (int i = 0; i < numTractors; i++) {
 }
 /*ALCODEEND*/}
 
-boolean f_createElectricityTimeSeriesAssets(GridConnection gridConnection,com.zenmo.zummon.companysurvey.GridConnection gridConnectionSurvey,String companyName)
+boolean f_createElectricityTimeSeriesAssets(GridConnection gridConnection,com.zenmo.zummon.companysurvey.GridConnection gridConnectionSurvey)
 {/*ALCODESTART::1738248965949*/
-var targetYear = 2023;
 var electricitySurvey = gridConnectionSurvey.getElectricity();
 
-double[] deliveryTimeSeries_kWh = f_timeSeriesToDoubleArray(electricitySurvey.getQuarterHourlyDelivery_kWh());
+double[] deliveryTimeSeries_kWh = f_timeSeriesToQuarterHourlyDoubleArray(electricitySurvey.getQuarterHourlyDelivery_kWh());
 if (deliveryTimeSeries_kWh == null) {
 	// delivery is the minimum we require to do anything with timeseries data
 	return false;
 }
 
-double[] feedInTimeSeries_kWh = f_timeSeriesToDoubleArray(electricitySurvey.getQuarterHourlyFeedIn_kWh());
-double[] productionTimeSeries_kWh = f_timeSeriesToDoubleArray(electricitySurvey.getQuarterHourlyProduction_kWh());
+double[] feedInTimeSeries_kWh = f_timeSeriesToQuarterHourlyDoubleArray(electricitySurvey.getQuarterHourlyFeedIn_kWh());
+double[] productionTimeSeries_kWh = f_timeSeriesToQuarterHourlyDoubleArray(electricitySurvey.getQuarterHourlyProduction_kWh());
 
 Double pvPower_kW = Optional.ofNullable(gridConnectionSurvey.getSupply().getPvInstalledKwp())
 	.map(it -> (double) it)
 	.orElse(null);
 
 //Preprocess the arrays and create the consumption pattern
-f_createPreprocessedElectricityProfile(gridConnection, deliveryTimeSeries_kWh, feedInTimeSeries_kWh, productionTimeSeries_kWh, pvPower_kW);
+f_createPreprocessedElectricityProfile_PV(gridConnection, deliveryTimeSeries_kWh, feedInTimeSeries_kWh, productionTimeSeries_kWh, pvPower_kW);
 
 gridConnection.v_hasQuarterHourlyValues = true;
 
 return true;
 /*ALCODEEND*/}
 
-double[] f_timeSeriesToDoubleArray(com.zenmo.zummon.companysurvey.TimeSeries timeSeries)
+double[] f_timeSeriesToQuarterHourlyDoubleArray(com.zenmo.zummon.companysurvey.TimeSeries timeSeries)
 {/*ALCODESTART::1738572338816*/
-var targetYear = 2023;
+int targetYear = 2024;
 if (timeSeries == null) {
 	return null;
 }
@@ -3683,9 +3651,7 @@ if (!timeSeries.hasNumberOfValuesForOneYear()) {
 	return null;
 }
 
-return f_convertFloatArrayToDoubleArray(
-	timeSeries.convertToQuarterHourly().getFullYearOrFudgeIt(targetYear)
-);
+return f_convertFloatArrayToDoubleArray(timeSeries.convertToQuarterHourly().getFullYearOrFudgeIt(targetYear));
 /*ALCODEEND*/}
 
 double f_connectGCToExistingBuilding(GridConnection connectingGC,GIS_Building existingBuilding)
@@ -3713,5 +3679,132 @@ for(GridConnection connectedGC : existingBuilding.c_containedGridConnections){
 	connectedGC.p_roofSurfaceArea_m2 += buildingRoofSurface/newAmountOfConnectedGCWithBuilding;
 }
 
+/*ALCODEEND*/}
+
+boolean f_createHeatProfileFromGasTS(GridConnection parentGC,com.zenmo.zummon.companysurvey.GridConnection gridConnectionSurvey,double ratioGasUsedForHeating)
+{/*ALCODESTART::1745336464944*/
+double gasToHeatEfficiency = 0;
+double maxHeatOutputPower_kW = 0;
+double yearlyDemandHeat_kWh = 0;
+
+
+double[] quarterHourlyGasDeliveryTimeSeries_m3 = f_timeSeriesToQuarterHourlyDoubleArray(gridConnectionSurvey.getNaturalGas().getHourlyDelivery_m3());
+
+if (quarterHourlyGasDeliveryTimeSeries_m3 == null) {
+	return false;
+}
+
+//Set the heating type 
+f_setHeatingTypeSurvey(parentGC, gridConnectionSurvey, true);
+
+//Check what the heat conversion efficiency is from gas
+switch (parentGC.p_heatingType){
+	case GASBURNER:
+	case HYBRID_HEATPUMP:
+		gasToHeatEfficiency = avgc_data.p_avgEfficiencyGasBurner_fr;
+		break;
+	case GASFIRED_CHPPEAK:
+		gasToHeatEfficiency = avgc_data.p_avgEfficiencyCHP_thermal_fr;
+		break;
+}
+
+J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.HEAT, null, OL_ProfileAssetType.HEATDEMAND , energyModel.p_timeStep_h);		
+profile.energyAssetName = parentGC.p_ownerID + " custom heat profile";
+
+//Initialize heat demand quarterhourly profile
+double[] quarterHourlyHeatDemandProfile_kWh = new double[quarterHourlyGasDeliveryTimeSeries_m3.length];
+double totalgasconsumption_m3 = 0;
+for (int i = 0; i < quarterHourlyGasDeliveryTimeSeries_m3.length; i++) {
+	quarterHourlyHeatDemandProfile_kWh[i] = quarterHourlyGasDeliveryTimeSeries_m3[i] * avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating;
+	yearlyDemandHeat_kWh += quarterHourlyHeatDemandProfile_kWh[i];
+	
+	//Keep track of max value
+	if((quarterHourlyHeatDemandProfile_kWh[i]/energyModel.p_timeStep_h) > maxHeatOutputPower_kW){
+		maxHeatOutputPower_kW = quarterHourlyHeatDemandProfile_kWh[i]/energyModel.p_timeStep_h;
+	}
+	totalgasconsumption_m3 += quarterHourlyGasDeliveryTimeSeries_m3[i];
+}	
+profile.a_energyProfile_kWh = quarterHourlyHeatDemandProfile_kWh;
+
+//Update v_remainingGasConsumption_m3
+v_remainingGasConsumption_m3 -= yearlyDemandHeat_kWh/(avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
+
+
+//Add heat asset
+f_addHeatAsset(parentGC, parentGC.p_heatingType, maxHeatOutputPower_kW);
+
+
+return true;
+/*ALCODEEND*/}
+
+double f_addHeatAsset(GridConnection parentGC,OL_GridConnectionHeatingType heatAssetType,double maxHeatOutputPower_kW)
+{/*ALCODESTART::1745336570663*/
+//Initialize parameters
+double inputCapacityElectric_kW;
+double efficiency;
+double baseTemperature_degC;
+double outputTemperature_degC;
+String ambientTempType;
+double sourceAssetHeatPower_kW;
+double belowZeroHeatpumpEtaReductionFactor;
+
+switch (heatAssetType){ // HOE gaan we om met meerdere heating types in survey???
+
+	case GASBURNER:
+		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, maxHeatOutputPower_kW , avgc_data.p_avgEfficiencyGasBurner_fr, energyModel.p_timeStep_h, 90);
+		break;
+	
+	case HYBRID_HEATPUMP:
+		
+		//Add primary heating asset (heatpump) (if its not part of the basic profile already
+		if(!parentGC.v_hasQuarterHourlyValues || settings.createCurrentElectricityEA()){
+			inputCapacityElectric_kW = maxHeatOutputPower_kW / 3; //-- /3, kan nog kleiner want is hybride zodat gasbrander ook bij springt, dus kleiner MOETEN aanname voor hoe klein onderzoeken
+			efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
+			baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
+			outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
+			ambientTempType = "AIR";
+			sourceAssetHeatPower_kW = 0;
+			belowZeroHeatpumpEtaReductionFactor = 1;
+			
+			J_EAConversionHeatPump heatPumpHybrid = new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );
+
+			zero_Interface.energyModel.c_ambientAirDependentAssets.add(heatPumpHybrid);
+		}
+		
+		//Add secondary heating asset (gasburner)
+		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner;
+		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC;
+		
+		J_EAConversionGasBurner gasBurnerHybrid = new J_EAConversionGasBurner(parentGC, maxHeatOutputPower_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC);
+		parentGC.p_secondaryHeatingAsset = gasBurnerHybrid;
+		break;
+	
+	case ELECTRIC_HEATPUMP:
+
+		//Add primary heating asset (heatpump)
+		inputCapacityElectric_kW = maxHeatOutputPower_kW; // Could be a lot smaller due to high cop
+		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
+		baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
+		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
+		ambientTempType = "AIR";
+		sourceAssetHeatPower_kW = 0;
+		belowZeroHeatpumpEtaReductionFactor = 1;
+		
+		J_EAConversionHeatPump heatPumpElectric = new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );		
+		break;
+	
+	case GASFIRED_CHPPEAK:
+		
+		double outputCapacityElectric_kW = (maxHeatOutputPower_kW/avgc_data.p_avgEfficiencyCHP_thermal_fr) * avgc_data.p_avgEfficiencyCHP_electric_fr;
+		outputTemperature_degC = avgc_data.p_avgOutputTemperatureCHP_degC;
+		efficiency = avgc_data.p_avgEfficiencyCHP_thermal_fr + avgc_data.p_avgEfficiencyCHP_electric_fr;
+		
+		J_EAConversionGasCHP methaneCHP = new J_EAConversionGasCHP(parentGC, outputCapacityElectric_kW, maxHeatOutputPower_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC );
+		break;
+	
+	default:
+		traceln("HEATING TYPE NOT FOUND FOR GC ");
+		traceln(parentGC);
+}
 /*ALCODEEND*/}
 

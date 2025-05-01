@@ -18,8 +18,8 @@ public class Project_data {
 		List<String[]> databaseNames;
 		
 		//Map centre coordinates
-		double map_centre_latitude;
-		double map_centre_longitude;
+		Double map_centre_latitude;
+		Double map_centre_longitude;
 		Double map_scale;
 		
 		//Project specific actors
