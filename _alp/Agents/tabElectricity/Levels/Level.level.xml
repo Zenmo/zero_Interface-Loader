@@ -352,7 +352,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722249610034</Id>
 				<Name><![CDATA[text326]]></Name>
-				<X>10</X>
+				<X>5</X>
 				<Y>70</Y>
 				<Label>
 					<X>0</X>
@@ -642,7 +642,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Image>
 				<Id>1744878990804</Id>
 				<Name><![CDATA[i_householdPV_ResidentialArea]]></Name>
-				<X>165</X>
+				<X>160</X>
 				<Y>35</Y>
 				<Label>
 					<X>0</X>
@@ -669,7 +669,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Image>
 				<Id>1746091830035</Id>
 				<Name><![CDATA[i_householdBatteries_ResidentialArea]]></Name>
-				<X>165</X>
+				<X>160</X>
 				<Y>70</Y>
 				<Label>
 					<X>0</X>
@@ -723,7 +723,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Image>
 				<Id>1746091830125</Id>
 				<Name><![CDATA[i_neighbourhoodBattery_ResidentialArea]]></Name>
-				<X>165</X>
+				<X>160</X>
 				<Y>310</Y>
 				<Label>
 					<X>0</X>
@@ -1244,7 +1244,7 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 			<Image>
 				<Id>1746091167061</Id>
 				<Name><![CDATA[i_householdPV]]></Name>
-				<X>165</X>
+				<X>160</X>
 				<Y>140</Y>
 				<Label>
 					<X>0</X>
@@ -1271,7 +1271,7 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 			<Image>
 				<Id>1746091167075</Id>
 				<Name><![CDATA[i_landPV]]></Name>
-				<X>165</X>
+				<X>160</X>
 				<Y>110</Y>
 				<Label>
 					<X>0</X>
@@ -1298,7 +1298,7 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 			<Image>
 				<Id>1746091167087</Id>
 				<Name><![CDATA[i_companyPV]]></Name>
-				<X>165</X>
+				<X>160</X>
 				<Y>80</Y>
 				<Label>
 					<X>0</X>
@@ -1325,7 +1325,7 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 			<Image>
 				<Id>1746091167099</Id>
 				<Name><![CDATA[i_electricityReduction]]></Name>
-				<X>165</X>
+				<X>160</X>
 				<Y>20</Y>
 				<Label>
 					<X>0</X>
@@ -1352,7 +1352,7 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 			<Image>
 				<Id>1746091167111</Id>
 				<Name><![CDATA[i_landWind]]></Name>
-				<X>165</X>
+				<X>160</X>
 				<Y>205</Y>
 				<Label>
 					<X>0</X>
@@ -2653,7 +2653,7 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 			<Image>
 				<Id>1746091438812</Id>
 				<Name><![CDATA[i_landPV_Businesspark]]></Name>
-				<X>165</X>
+				<X>160</X>
 				<Y>110</Y>
 				<Label>
 					<X>0</X>
@@ -2680,7 +2680,7 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 			<Image>
 				<Id>1746091438857</Id>
 				<Name><![CDATA[i_companyPV_Businesspark]]></Name>
-				<X>165</X>
+				<X>160</X>
 				<Y>80</Y>
 				<Label>
 					<X>0</X>
@@ -2707,7 +2707,7 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 			<Image>
 				<Id>1746091438909</Id>
 				<Name><![CDATA[i_electricityReduction_Businesspark]]></Name>
-				<X>165</X>
+				<X>160</X>
 				<Y>20</Y>
 				<Label>
 					<X>0</X>
@@ -2734,7 +2734,7 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 			<Image>
 				<Id>1746091438954</Id>
 				<Name><![CDATA[i_landWind_Businesspark]]></Name>
-				<X>165</X>
+				<X>160</X>
 				<Y>185</Y>
 				<Label>
 					<X>0</X>

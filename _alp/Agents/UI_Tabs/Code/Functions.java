@@ -8,7 +8,6 @@ pop_tabEHub_presentation.setVisible(false);
 switch (v_selectedTabType) {
 	case ELECTRICITY:
 		pop_tabElectricity_presentation.setVisible(true);
-		//p_customPopPresentation.setVisible(true);
 		break;
 	case HEAT:
 		pop_tabHeating_presentation.setVisible(true);

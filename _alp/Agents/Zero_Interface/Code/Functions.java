@@ -2184,11 +2184,11 @@ else {
 	// In AnyLogic the Y-Axis is inverted
 	if (yPosition > (va_Interface.getY() + va_Interface.getHeight()/2) ) {
 		// bubble is on the bottom half, so text should appear above
-		gr_infoText.setY( yPosition - margin_px - rect_infoText.getHeight());
+		gr_infoText.setY( yPosition - margin_px + infoBubble.getHeight()/2 - rect_infoText.getHeight());
 	}
 	else {
 		// bubble is on the top half, so text should appear below
-		gr_infoText.setY( yPosition + margin_px);
+		gr_infoText.setY( yPosition + margin_px + infoBubble.getHeight()/2);
 	}
 	
 	// Position of close button
@@ -2315,7 +2315,7 @@ return pair.getSecond();
 
 /*ALCODEEND*/}
 
-Pair<ShapeEmbeddedObjectPresentation, Point> f_getPresentationPositionIteration()
+Pair<ShapeEmbeddedObjectPresentation, Point> f_getPresentationPositionIteration(Pair<ShapeEmbeddedObjectPresentation. Point> pair)
 {/*ALCODESTART::1744894817573*/
 ShapeEmbeddedObjectPresentation presentation = findFirst(c_presentations, ap -> ap.getEmbeddedObject() == pair.getFirst().getPresentable());
 if (presentation == null) {
@@ -2453,7 +2453,7 @@ fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(false);
 fileChooser_exportBalanceLoadSelectedCompanies.setEnabled(false);
 /*ALCODEEND*/}
 
-double f_clearExportSheet(Pair<ShapeEmbeddedObjectPresentation, Point> pair)
+double f_clearExportSheet()
 {/*ALCODESTART::1744986150240*/
 //Clear the sheet first
 for (int row = 1; row <= 35137; row++) {

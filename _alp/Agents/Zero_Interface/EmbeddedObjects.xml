@@ -318,11 +318,7 @@
 				<ItemName>1722245292191</ItemName>
 			</GenericParameterSubstituteReference>
 		</GenericParameterSubstitute>
-		<Parameters>
-			<Parameter>
-				<Name><![CDATA[p_customPopPresentation]]></Name>
-			</Parameter>
-		</Parameters>
+		<Parameters/>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">
 			<Code><![CDATA[100]]></Code>

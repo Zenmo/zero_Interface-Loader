@@ -971,7 +971,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 			<Image>
 				<Id>1746091940464</Id>
 				<Name><![CDATA[i_companyReduction]]></Name>
-				<X>165</X>
+				<X>160</X>
 				<Y>40</Y>
 				<Label>
 					<X>0</X>
@@ -998,7 +998,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 			<Image>
 				<Id>1746092829752</Id>
 				<Name><![CDATA[i_companyGasBoiler]]></Name>
-				<X>165</X>
+				<X>160</X>
 				<Y>75</Y>
 				<Label>
 					<X>0</X>
@@ -1025,7 +1025,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 			<Image>
 				<Id>1746092829788</Id>
 				<Name><![CDATA[i_companyElectricHeatpump]]></Name>
-				<X>165</X>
+				<X>160</X>
 				<Y>100</Y>
 				<Label>
 					<X>0</X>
@@ -1053,7 +1053,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1746092829826</Id>
 				<Name><![CDATA[i_companyHybridHeatpump]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<X>165</X>
+				<X>160</X>
 				<Y>125</Y>
 				<Label>
 					<X>0</X>
@@ -1081,7 +1081,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1746092829863</Id>
 				<Name><![CDATA[i_companyHeatGrid]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<X>165</X>
+				<X>160</X>
 				<Y>150</Y>
 				<Label>
 					<X>0</X>
@@ -1108,7 +1108,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 			<Image>
 				<Id>1746092829905</Id>
 				<Name><![CDATA[i_householdElectricHeatpump]]></Name>
-				<X>165</X>
+				<X>160</X>
 				<Y>265</Y>
 				<Label>
 					<X>0</X>
@@ -1135,7 +1135,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 			<Image>
 				<Id>1746092829948</Id>
 				<Name><![CDATA[i_householdReduction]]></Name>
-				<X>165</X>
+				<X>160</X>
 				<Y>205</Y>
 				<Label>
 					<X>0</X>
@@ -1162,7 +1162,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 			<Image>
 				<Id>1746092829986</Id>
 				<Name><![CDATA[i_householdGasBoiler]]></Name>
-				<X>165</X>
+				<X>160</X>
 				<Y>240</Y>
 				<Label>
 					<X>0</X>
@@ -1190,7 +1190,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1746092830024</Id>
 				<Name><![CDATA[i_householdHeatGrid]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<X>165</X>
+				<X>160</X>
 				<Y>315</Y>
 				<Label>
 					<X>0</X>
@@ -1218,7 +1218,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1746092830063</Id>
 				<Name><![CDATA[i_householdHybridHeatpump]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<X>165</X>
+				<X>160</X>
 				<Y>290</Y>
 				<Label>
 					<X>0</X>
