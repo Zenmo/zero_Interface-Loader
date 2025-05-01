@@ -29,8 +29,8 @@
 	<Group>
 		<Id>1722249610010</Id>
 		<Name><![CDATA[gr_electricityDemandSlidersResidentialArea]]></Name>
-		<X>985</X>
-		<Y>175</Y>
+		<X>795</X>
+		<Y>0</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -39,7 +39,7 @@
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>185</XCode>
+		<XCode>0</XCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -47,8 +47,8 @@
 			<Rectangle>
 				<Id>1722249610012</Id>
 				<Name><![CDATA[rect_electricityDemandSlidersResidentialArea]]></Name>
-				<X>-185</X>
-				<Y>-175</Y>
+				<X>0</X>
+				<Y>0</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -74,8 +74,8 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722249610014</Id>
 				<Name><![CDATA[sl_electricityDemandReduction1]]></Name>
-				<X>75</X>
-				<Y>-75</Y>
+				<X>260</X>
+				<Y>100</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -106,8 +106,8 @@
 			<Text>
 				<Id>1722249610016</Id>
 				<Name><![CDATA[text288]]></Name>
-				<X>-180</X>
-				<Y>-70</Y>
+				<X>5</X>
+				<Y>105</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -131,8 +131,8 @@
 			<Text>
 				<Id>1722249610018</Id>
 				<Name><![CDATA[t_electricityDemandReduction1]]></Name>
-				<X>45</X>
-				<Y>-70</Y>
+				<X>230</X>
+				<Y>105</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -156,8 +156,8 @@
 			<Text>
 				<Id>1722249610020</Id>
 				<Name><![CDATA[t_rooftopSolarCompanies2]]></Name>
-				<X>45</X>
-				<Y>-140</Y>
+				<X>230</X>
+				<Y>35</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -183,8 +183,8 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722249610022</Id>
 				<Name><![CDATA[sl_rooftopPV]]></Name>
-				<X>75</X>
-				<Y>-145</Y>
+				<X>260</X>
+				<Y>30</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -216,8 +216,8 @@ f_setResidentialBatteries( sl_individualBatteries.getValue() );</ActionCode>
 			<Text>
 				<Id>1722249610024</Id>
 				<Name><![CDATA[text294]]></Name>
-				<X>-180</X>
-				<Y>-140</Y>
+				<X>5</X>
+				<Y>35</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -241,8 +241,8 @@ f_setResidentialBatteries( sl_individualBatteries.getValue() );</ActionCode>
 			<Text>
 				<Id>1722249610026</Id>
 				<Name><![CDATA[text277]]></Name>
-				<X>-180</X>
-				<Y>-160</Y>
+				<X>5</X>
+				<Y>15</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -267,8 +267,8 @@ f_setResidentialBatteries( sl_individualBatteries.getValue() );</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722249610028</Id>
 				<Name><![CDATA[sl_EVsWoonwijk]]></Name>
-				<X>75</X>
-				<Y>55</Y>
+				<X>260</X>
+				<Y>230</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -301,8 +301,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722249610030</Id>
 				<Name><![CDATA[t_publicParking]]></Name>
-				<X>-180</X>
-				<Y>60</Y>
+				<X>5</X>
+				<Y>235</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -326,8 +326,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722249610032</Id>
 				<Name><![CDATA[t_electricityDemandReduction2]]></Name>
-				<X>45</X>
-				<Y>60</Y>
+				<X>230</X>
+				<Y>235</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -352,8 +352,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722249610034</Id>
 				<Name><![CDATA[text326]]></Name>
-				<X>-160</X>
-				<Y>-105</Y>
+				<X>10</X>
+				<Y>70</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -378,8 +378,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722249610036</Id>
 				<Name><![CDATA[sl_individualBatteries]]></Name>
-				<X>75</X>
-				<Y>-110</Y>
+				<X>260</X>
+				<Y>65</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -405,8 +405,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722249610038</Id>
 				<Name><![CDATA[t_individualBatteries_pct1]]></Name>
-				<X>45</X>
-				<Y>-105</Y>
+				<X>230</X>
+				<Y>70</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -431,8 +431,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722249610040</Id>
 				<Name><![CDATA[t_electricCarDistribution]]></Name>
-				<X>-180</X>
-				<Y>-10</Y>
+				<X>5</X>
+				<Y>165</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -456,8 +456,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722249610042</Id>
 				<Name><![CDATA[t_privateParking]]></Name>
-				<X>-180</X>
-				<Y>25</Y>
+				<X>5</X>
+				<Y>200</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -482,8 +482,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722249610044</Id>
 				<Name><![CDATA[sl_EVsWoonwijkPrivate]]></Name>
-				<X>75</X>
-				<Y>20</Y>
+				<X>260</X>
+				<Y>195</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -511,8 +511,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722249610046</Id>
 				<Name><![CDATA[checkbox3]]></Name>
-				<X>-180</X>
-				<Y>90</Y>
+				<X>5</X>
+				<Y>265</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -536,8 +536,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722249837514</Id>
 				<Name><![CDATA[t_electricityDemandReduction3]]></Name>
-				<X>45</X>
-				<Y>25</Y>
+				<X>230</X>
+				<Y>200</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -563,8 +563,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1724164051652</Id>
 				<Name><![CDATA[sl_gridBatteriesCapacity_kW]]></Name>
-				<X>76</X>
-				<Y>131</Y>
+				<X>261</X>
+				<Y>306</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -591,8 +591,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1724164051654</Id>
 				<Name><![CDATA[t_gridBatteriesCapacity]]></Name>
-				<X>-169</X>
-				<Y>136</Y>
+				<X>16</X>
+				<Y>311</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -605,7 +605,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Capaciteit buurtbatterijen]]></Text>
+				<Text><![CDATA[Buurtbatterijen]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
@@ -616,8 +616,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1724164051656</Id>
 				<Name><![CDATA[t_gridBatteriesCapacity_kWh]]></Name>
-				<X>46</X>
-				<Y>136</Y>
+				<X>231</X>
+				<Y>311</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -641,9 +641,9 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			</Text>
 			<Image>
 				<Id>1744878990804</Id>
-				<Name><![CDATA[i_householdPV]]></Name>
-				<X>-25</X>
-				<Y>-140</Y>
+				<Name><![CDATA[i_householdPV_ResidentialArea]]></Name>
+				<X>165</X>
+				<Y>35</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -652,7 +652,88 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_householdPV, zero_Interface.v_infoText.householdRooftopPV);</OnClickCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdPV_ResidentialArea, zero_Interface.v_infoText.householdRooftopPV, i_householdPV_ResidentialArea.getX() + uI_Tabs.v_presentationXOffset, i_householdPV_ResidentialArea.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746091830035</Id>
+				<Name><![CDATA[i_householdBatteries_ResidentialArea]]></Name>
+				<X>165</X>
+				<Y>70</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdBatteries_ResidentialArea, zero_Interface.v_infoText.householdBatteries, i_householdBatteries_ResidentialArea.getX() + uI_Tabs.v_presentationXOffset, i_householdBatteries_ResidentialArea.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746091830081</Id>
+				<Name><![CDATA[i_householdGridAwareCharging_ResidentialArea]]></Name>
+				<X>288</X>
+				<Y>271</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdGridAwareCharging_ResidentialArea, zero_Interface.v_infoText.householdGridAwareCharging, i_householdGridAwareCharging_ResidentialArea.getX() + uI_Tabs.v_presentationXOffset, i_householdGridAwareCharging_ResidentialArea.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746091830125</Id>
+				<Name><![CDATA[i_neighbourhoodBattery_ResidentialArea]]></Name>
+				<X>165</X>
+				<Y>310</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_neighbourhoodBattery_ResidentialArea, zero_Interface.v_infoText.neighbourhoodBatteries, i_neighbourhoodBattery_ResidentialArea.getX() + uI_Tabs.v_presentationXOffset, i_neighbourhoodBattery_ResidentialArea.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
@@ -671,8 +752,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 	<Group>
 		<Id>1722328776701</Id>
 		<Name><![CDATA[gr_electricityDemandSliders]]></Name>
-		<X>185</X>
-		<Y>175</Y>
+		<X>0</X>
+		<Y>0</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -688,8 +769,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Rectangle>
 				<Id>1722328776703</Id>
 				<Name><![CDATA[rect_electricityDemandSliders]]></Name>
-				<X>-185</X>
-				<Y>-175</Y>
+				<X>0</X>
+				<Y>0</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -714,8 +795,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722328776711</Id>
 				<Name><![CDATA[t_electricityDemandReduction_pct]]></Name>
-				<X>45</X>
-				<Y>-155</Y>
+				<X>230</X>
+				<Y>20</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -741,8 +822,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722328776713</Id>
 				<Name><![CDATA[sl_electricityDemandReduction_pct]]></Name>
-				<X>75</X>
-				<Y>-160</Y>
+				<X>260</X>
+				<Y>15</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -768,8 +849,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722328776715</Id>
 				<Name><![CDATA[t_electricityDemandReductionDescription]]></Name>
-				<X>-175</X>
-				<Y>-155</Y>
+				<X>10</X>
+				<Y>20</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -782,7 +863,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Besparing elektriciteitsverbruik]]></Text>
+				<Text><![CDATA[Besparing verbruik]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
@@ -793,8 +874,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722328776717</Id>
 				<Name><![CDATA[t_solarDescription]]></Name>
-				<X>-170</X>
-				<Y>-120</Y>
+				<X>15</X>
+				<Y>55</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -818,8 +899,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722328776719</Id>
 				<Name><![CDATA[t_rooftopPVCompanies_pct]]></Name>
-				<X>45</X>
-				<Y>-95</Y>
+				<X>230</X>
+				<Y>80</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -845,8 +926,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722328776721</Id>
 				<Name><![CDATA[sl_rooftopPVCompanies_pct]]></Name>
-				<X>75</X>
-				<Y>-100</Y>
+				<X>260</X>
+				<Y>75</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -872,8 +953,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722328776723</Id>
 				<Name><![CDATA[t_rooftopPVCompaniesDescription]]></Name>
-				<X>-170</X>
-				<Y>-95</Y>
+				<X>15</X>
+				<Y>80</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -897,8 +978,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722328776725</Id>
 				<Name><![CDATA[t_largeScalePV_ha]]></Name>
-				<X>45</X>
-				<Y>-65</Y>
+				<X>230</X>
+				<Y>110</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -924,8 +1005,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722328776727</Id>
 				<Name><![CDATA[sl_largeScalePV_ha]]></Name>
-				<X>75</X>
-				<Y>-70</Y>
+				<X>260</X>
+				<Y>105</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -951,8 +1032,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722328776729</Id>
 				<Name><![CDATA[t_largeScalePVDescription]]></Name>
-				<X>-170</X>
-				<Y>-65</Y>
+				<X>15</X>
+				<Y>110</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -976,8 +1057,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722328776731</Id>
 				<Name><![CDATA[t_windDescription]]></Name>
-				<X>-170</X>
-				<Y>0</Y>
+				<X>15</X>
+				<Y>175</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1002,8 +1083,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722328776737</Id>
 				<Name><![CDATA[sl_largeScaleWind_MW]]></Name>
-				<X>75</X>
-				<Y>25</Y>
+				<X>260</X>
+				<Y>200</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1029,8 +1110,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722328776739</Id>
 				<Name><![CDATA[t_largeScaleWindDescription]]></Name>
-				<X>-170</X>
-				<Y>30</Y>
+				<X>15</X>
+				<Y>205</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1054,8 +1135,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722328776741</Id>
 				<Name><![CDATA[t_largeScaleWind_MW]]></Name>
-				<X>45</X>
-				<Y>30</Y>
+				<X>230</X>
+				<Y>205</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1080,8 +1161,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722329161559</Id>
 				<Name><![CDATA[t_rooftopPVHouses_pct]]></Name>
-				<X>45</X>
-				<Y>-35</Y>
+				<X>230</X>
+				<Y>140</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1107,8 +1188,8 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722329161561</Id>
 				<Name><![CDATA[sl_rooftopPVHouses_pct]]></Name>
-				<X>75</X>
-				<Y>-40</Y>
+				<X>260</X>
+				<Y>135</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1138,8 +1219,8 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 			<Text>
 				<Id>1722329161563</Id>
 				<Name><![CDATA[t_rooftopPVHousesDescription]]></Name>
-				<X>-170</X>
-				<Y>-35</Y>
+				<X>15</X>
+				<Y>140</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1160,6 +1241,141 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
+			<Image>
+				<Id>1746091167061</Id>
+				<Name><![CDATA[i_householdPV]]></Name>
+				<X>165</X>
+				<Y>140</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdPV, zero_Interface.v_infoText.householdRooftopPV, i_householdPV.getX() + uI_Tabs.v_presentationXOffset, i_householdPV.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746091167075</Id>
+				<Name><![CDATA[i_landPV]]></Name>
+				<X>165</X>
+				<Y>110</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_landPV, zero_Interface.v_infoText.landPV, i_landPV.getX() + uI_Tabs.v_presentationXOffset, i_landPV.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746091167087</Id>
+				<Name><![CDATA[i_companyPV]]></Name>
+				<X>165</X>
+				<Y>80</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_companyPV, zero_Interface.v_infoText.companyRooftopPV, i_companyPV.getX() + uI_Tabs.v_presentationXOffset, i_companyPV.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746091167099</Id>
+				<Name><![CDATA[i_electricityReduction]]></Name>
+				<X>165</X>
+				<Y>20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_electricityReduction, zero_Interface.v_infoText.electricityDemandReduction, i_electricityReduction.getX() + uI_Tabs.v_presentationXOffset, i_electricityReduction.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746091167111</Id>
+				<Name><![CDATA[i_landWind]]></Name>
+				<X>165</X>
+				<Y>205</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_landWind, zero_Interface.v_infoText.landWind, i_landWind.getX() + uI_Tabs.v_presentationXOffset, i_landWind.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
 		</Presentation>
 	</Group>
 	<Rectangle>
@@ -2027,8 +2243,8 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 	<Group>
 		<Id>1728384392418</Id>
 		<Name><![CDATA[gr_electricityDemandSliders_Businesspark]]></Name>
-		<X>585</X>
-		<Y>175</Y>
+		<X>400</X>
+		<Y>0</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2037,7 +2253,7 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>185</XCode>
+		<XCode>0</XCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -2045,8 +2261,8 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 			<Rectangle>
 				<Id>1728384392420</Id>
 				<Name><![CDATA[rect_electricityDemandSliders_Businesspark]]></Name>
-				<X>-185</X>
-				<Y>-175</Y>
+				<X>0</X>
+				<Y>0</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -2071,8 +2287,8 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 			<Text>
 				<Id>1728384392422</Id>
 				<Name><![CDATA[t_electricityDemandReduction_pct_Businesspark]]></Name>
-				<X>45</X>
-				<Y>-155</Y>
+				<X>230</X>
+				<Y>20</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2098,8 +2314,8 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1728384392424</Id>
 				<Name><![CDATA[sl_electricityDemandReduction_pct_Businesspark]]></Name>
-				<X>75</X>
-				<Y>-160</Y>
+				<X>260</X>
+				<Y>15</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2125,8 +2341,8 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 			<Text>
 				<Id>1728384392426</Id>
 				<Name><![CDATA[txt_electricityDemandReductionDescription_Businesspark]]></Name>
-				<X>-175</X>
-				<Y>-155</Y>
+				<X>10</X>
+				<Y>20</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2139,7 +2355,7 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Besparing elektriciteitsverbruik]]></Text>
+				<Text><![CDATA[Besparing verbruik]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
@@ -2150,8 +2366,8 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 			<Text>
 				<Id>1728384392428</Id>
 				<Name><![CDATA[txt_solarDescription_Businesspark]]></Name>
-				<X>-170</X>
-				<Y>-120</Y>
+				<X>15</X>
+				<Y>55</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2175,8 +2391,8 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 			<Text>
 				<Id>1728384392430</Id>
 				<Name><![CDATA[t_rooftopPVCompanies_pct_Businesspark]]></Name>
-				<X>45</X>
-				<Y>-95</Y>
+				<X>230</X>
+				<Y>80</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2202,8 +2418,8 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1728384392432</Id>
 				<Name><![CDATA[sl_rooftopPVCompanies_pct_Businesspark]]></Name>
-				<X>75</X>
-				<Y>-100</Y>
+				<X>260</X>
+				<Y>75</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2229,8 +2445,8 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 			<Text>
 				<Id>1728384392434</Id>
 				<Name><![CDATA[txt_rooftopPVCompaniesDescription_Businesspark]]></Name>
-				<X>-170</X>
-				<Y>-95</Y>
+				<X>15</X>
+				<Y>80</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2254,8 +2470,8 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 			<Text>
 				<Id>1728384392436</Id>
 				<Name><![CDATA[t_largeScalePV_ha_Businesspark]]></Name>
-				<X>45</X>
-				<Y>-65</Y>
+				<X>230</X>
+				<Y>110</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2281,8 +2497,8 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1728384392438</Id>
 				<Name><![CDATA[sl_largeScalePV_ha_Businesspark]]></Name>
-				<X>75</X>
-				<Y>-70</Y>
+				<X>260</X>
+				<Y>105</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2308,8 +2524,8 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 			<Text>
 				<Id>1728384392440</Id>
 				<Name><![CDATA[txt_largeScalePVDescription_Businesspark]]></Name>
-				<X>-170</X>
-				<Y>-65</Y>
+				<X>15</X>
+				<Y>110</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2333,8 +2549,8 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 			<Text>
 				<Id>1728384392442</Id>
 				<Name><![CDATA[txt_windDescription_Businesspark]]></Name>
-				<X>-170</X>
-				<Y>-20</Y>
+				<X>15</X>
+				<Y>155</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2359,8 +2575,8 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1728384392444</Id>
 				<Name><![CDATA[sl_largeScaleWind_MW_Businesspark]]></Name>
-				<X>75</X>
-				<Y>5</Y>
+				<X>260</X>
+				<Y>180</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2386,8 +2602,8 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 			<Text>
 				<Id>1728384392446</Id>
 				<Name><![CDATA[txt_largeScaleWindDescription_Businesspark]]></Name>
-				<X>-170</X>
-				<Y>10</Y>
+				<X>15</X>
+				<Y>185</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2411,8 +2627,8 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 			<Text>
 				<Id>1728384392448</Id>
 				<Name><![CDATA[t_largeScaleWind_MW_Businesspark]]></Name>
-				<X>45</X>
-				<Y>10</Y>
+				<X>230</X>
+				<Y>185</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2434,6 +2650,114 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 				</Font>
 				<Alignment>CENTER</Alignment>
 			</Text>
+			<Image>
+				<Id>1746091438812</Id>
+				<Name><![CDATA[i_landPV_Businesspark]]></Name>
+				<X>165</X>
+				<Y>110</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_landPV_Businesspark, zero_Interface.v_infoText.landPV, i_landPV_Businesspark.getX() + uI_Tabs.v_presentationXOffset, i_landPV_Businesspark.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746091438857</Id>
+				<Name><![CDATA[i_companyPV_Businesspark]]></Name>
+				<X>165</X>
+				<Y>80</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_companyPV_Businesspark, zero_Interface.v_infoText.companyRooftopPV, i_companyPV_Businesspark.getX() + uI_Tabs.v_presentationXOffset, i_companyPV_Businesspark.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746091438909</Id>
+				<Name><![CDATA[i_electricityReduction_Businesspark]]></Name>
+				<X>165</X>
+				<Y>20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_electricityReduction_Businesspark, zero_Interface.v_infoText.electricityDemandReduction, i_electricityReduction_Businesspark.getX() + uI_Tabs.v_presentationXOffset, i_electricityReduction_Businesspark.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746091438954</Id>
+				<Name><![CDATA[i_landWind_Businesspark]]></Name>
+				<X>165</X>
+				<Y>185</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_landWind_Businesspark, zero_Interface.v_infoText.landWind, i_landWind_Businesspark.getX() + uI_Tabs.v_presentationXOffset, i_landWind_Businesspark.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
 		</Presentation>
 	</Group>
 </Presentation>

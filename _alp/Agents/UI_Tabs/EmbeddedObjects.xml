@@ -25,7 +25,7 @@
 			</GenericParameterSubstituteReference>
 		</GenericParameterSubstitute>
 		<Parameters/>
-		<ReplicationFlag>false</ReplicationFlag>
+		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
 			<Code><![CDATA[0]]></Code>
 		</Replication>
@@ -83,7 +83,7 @@
 				<Name><![CDATA[p_minPVHouseholdSlider]]></Name>
 			</Parameter>
 		</Parameters>
-		<ReplicationFlag>false</ReplicationFlag>
+		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
 			<Code><![CDATA[0]]></Code>
 		</Replication>
@@ -131,7 +131,7 @@
 			</GenericParameterSubstituteReference>
 		</GenericParameterSubstitute>
 		<Parameters/>
-		<ReplicationFlag>false</ReplicationFlag>
+		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
 			<Code><![CDATA[0]]></Code>
 		</Replication>
@@ -179,7 +179,7 @@
 			</GenericParameterSubstituteReference>
 		</GenericParameterSubstitute>
 		<Parameters/>
-		<ReplicationFlag>false</ReplicationFlag>
+		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
 			<Code><![CDATA[0]]></Code>
 		</Replication>

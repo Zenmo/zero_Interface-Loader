@@ -306,20 +306,20 @@ double f_setUITabs()
 // Something like: tabElectricity.zero_Interface = loader_Project.zero_Interface;
 // No update to the pointer is needed for the generic tabs
 
-uI_Tabs.pop_tabElectricity = new tabElectricity();
+uI_Tabs.add_pop_tabElectricity();
 
-uI_Tabs.pop_tabHeating = new tabHeating();
+uI_Tabs.add_pop_tabHeating();
 
-uI_Tabs.pop_tabMobility = new tabMobility();
+uI_Tabs.add_pop_tabMobility();
 
-uI_Tabs.pop_tabEHub = new tabEHub();
+uI_Tabs.add_pop_tabEHub();
 
 // Group visibilities
 // When using an extension of a generic tab don't forget to typecast it!
-((tabElectricity)uI_Tabs.pop_tabElectricity).getGroupElectricityDemandSliders().setVisible(true);
-((tabHeating)uI_Tabs.pop_tabHeating).getGroupHeatDemandSlidersCompanies().setVisible(true);
-((tabMobility)uI_Tabs.pop_tabMobility).getGroupMobilityDemandSliders().setVisible(true);
-((tabEHub)uI_Tabs.pop_tabEHub).getGroupHubSliders().setVisible(true);
+((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders().setVisible(true);
+((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersCompanies().setVisible(true);
+((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
+((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
 
 uI_Tabs.f_showCorrectTab();
 /*ALCODEEND*/}
@@ -542,10 +542,10 @@ while (v_connectionOwnerIndexNr < c_COCompanies.size()){
 v_connectionOwnerIndexNr = 0;
 
 //Get the ghost vehicles for the transport slider tab
-uI_Tabs.pop_tabMobility.f_calculateNumberOfGhostVehicles();
+uI_Tabs.pop_tabMobility.get(0).f_calculateNumberOfGhostVehicles();
 
 //Get the ghost heating systems
-uI_Tabs.pop_tabHeating.f_calculateNumberOfGhostHeatingSystems();
+uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfGhostHeatingSystems();
 
 /*ALCODEEND*/}
 
@@ -857,8 +857,8 @@ double f_updateMainInterfaceSliders()
 // ATTENTION: If you have custom tabs it may be neccesary to override this function and add updates to your custom sliders!
 
 if(c_companyUIs.size()>0){//Update ghost vehicles and heating systems present if there are companyUIs
-	uI_Tabs.pop_tabHeating.f_calculateNumberOfGhostHeatingSystems();
-	uI_Tabs.pop_tabMobility.f_calculateNumberOfGhostVehicles();
+	uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfGhostHeatingSystems();
+	uI_Tabs.pop_tabMobility.get(0).f_calculateNumberOfGhostVehicles();
 }
 
 
@@ -866,17 +866,17 @@ if(c_companyUIs.size()>0){//Update ghost vehicles and heating systems present if
 // PV SYSTEMS:
 double PVsystems = count(energyModel.UtilityConnections, x->x.v_hasPV == true && x.v_isActive);		
 int PV_pct = roundToInt(100 * PVsystems / count(energyModel.UtilityConnections, x->x.v_isActive));
-uI_Tabs.pop_tabElectricity.getSliderRooftopPVCompanies_pct().setValue(PV_pct, false);
+uI_Tabs.pop_tabElectricity.get(0).getSliderRooftopPVCompanies_pct().setValue(PV_pct, false);
 
 // GAS_BURNER / HEATING SYSTEMS: // Still a slight error. GasBurners + HeatPumps != total, because some GC have primary heating asset null
 int GasBurners = count(energyModel.UtilityConnections, gc->gc.p_primaryHeatingAsset instanceof J_EAConversionGasBurner && gc.v_isActive);
-int GasBurners_pct = roundToInt(100.0 * GasBurners / (count(energyModel.UtilityConnections, x -> x.v_isActive && x.p_primaryHeatingAsset != null) + uI_Tabs.pop_tabHeating.v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps + uI_Tabs.pop_tabHeating.v_totalNumberOfGhostHeatingSystems_HybridHeatpumps));
+int GasBurners_pct = roundToInt(100.0 * GasBurners / (count(energyModel.UtilityConnections, x -> x.v_isActive && x.p_primaryHeatingAsset != null) + uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps + uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_HybridHeatpumps));
 
-uI_Tabs.pop_tabHeating.getSliderGasBurnerCompanies_pct().setValue(GasBurners_pct, false);
-uI_Tabs.pop_tabHeating.f_setHeatingSliders( 0, uI_Tabs.pop_tabHeating.getSliderGasBurnerCompanies_pct(), uI_Tabs.pop_tabHeating.getSliderElectricHeatPumpCompanies_pct(), null, null );
+uI_Tabs.pop_tabHeating.get(0).getSliderGasBurnerCompanies_pct().setValue(GasBurners_pct, false);
+uI_Tabs.pop_tabHeating.get(0).f_setHeatingSliders( 0, uI_Tabs.pop_tabHeating.get(0).getSliderGasBurnerCompanies_pct(), uI_Tabs.pop_tabHeating.get(0).getSliderElectricHeatPumpCompanies_pct(), null, null );
 
-uI_Tabs.pop_tabHeating.getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct().setValue(GasBurners_pct, false);
-uI_Tabs.pop_tabHeating.f_setHeatingSliders( 0, uI_Tabs.pop_tabHeating.getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct(), uI_Tabs.pop_tabHeating.getSliderHeatDemandSlidersCompaniesElectricHeatPumpCompanies_pct(), null, null );
+uI_Tabs.pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct().setValue(GasBurners_pct, false);
+uI_Tabs.pop_tabHeating.get(0).f_setHeatingSliders( 0, uI_Tabs.pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct(), uI_Tabs.pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesElectricHeatPumpCompanies_pct(), null, null );
 
 
 // HEAT_PUMP_AIR:
@@ -887,7 +887,7 @@ uI_Tabs.pop_tabHeating.f_setHeatingSliders( 0, uI_Tabs.pop_tabHeating.getSliderH
 	
 // TRUCKS:
 int DieselTrucks = 0;
-int ElectricTrucks = uI_Tabs.pop_tabMobility.v_totalNumberOfGhostVehicle_Trucks;
+int ElectricTrucks = uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Trucks;
 int HydrogenTrucks = 0;
 for (GCUtility gc : energyModel.UtilityConnections) {
 	if(gc.v_isActive){
@@ -914,13 +914,13 @@ if (totalTrucks != 0) {
 	ElectricTrucks_pct = roundToInt(100.0 * ElectricTrucks / totalTrucks);
 	HydrogenTrucks_pct = roundToInt(100.0 * HydrogenTrucks / totalTrucks);
 }
-uI_Tabs.pop_tabMobility.getSliderFossilFuelTrucks_pct().setValue(DieselTrucks_pct, false);
-uI_Tabs.pop_tabMobility.getSliderElectricTrucks_pct().setValue(ElectricTrucks_pct, false);
-uI_Tabs.pop_tabMobility.getSliderHydrogenTrucks_pct().setValue(HydrogenTrucks_pct, false);
+uI_Tabs.pop_tabMobility.get(0).getSliderFossilFuelTrucks_pct().setValue(DieselTrucks_pct, false);
+uI_Tabs.pop_tabMobility.get(0).getSliderElectricTrucks_pct().setValue(ElectricTrucks_pct, false);
+uI_Tabs.pop_tabMobility.get(0).getSliderHydrogenTrucks_pct().setValue(HydrogenTrucks_pct, false);
 
 // VANS:
 int DieselVans = 0;
-int ElectricVans = uI_Tabs.pop_tabMobility.v_totalNumberOfGhostVehicle_Vans;
+int ElectricVans = uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Vans;
 int HydrogenVans = 0;
 for (GCUtility gc : energyModel.UtilityConnections) {
 	if(gc.v_isActive){
@@ -947,13 +947,13 @@ if (totalVans != 0) {
 	ElectricVans_pct = roundToInt(100.0 * ElectricVans / totalVans);
 	HydrogenVans_pct = roundToInt(100.0 * HydrogenVans / totalVans);
 }
-uI_Tabs.pop_tabMobility.getSliderFossilFuelVans_pct().setValue(DieselVans_pct, false);
-uI_Tabs.pop_tabMobility.getSliderElectricVans_pct().setValue(ElectricVans_pct, false);
+uI_Tabs.pop_tabMobility.get(0).getSliderFossilFuelVans_pct().setValue(DieselVans_pct, false);
+uI_Tabs.pop_tabMobility.get(0).getSliderElectricVans_pct().setValue(ElectricVans_pct, false);
 //sl_hydrogenVans.setValue(HydrogenVans_pct, false);
 		
 // DIESEL_VEHICLE:  // Currently only for Company Cars not household Cars / EVs
 int DieselCars = 0;
-int ElectricCars = uI_Tabs.pop_tabMobility.v_totalNumberOfGhostVehicle_Cars;
+int ElectricCars = uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Cars;
 int HydrogenCars = 0;
 for (GCUtility gc : energyModel.UtilityConnections) {
 	if(gc.v_isActive){
@@ -980,8 +980,8 @@ if (totalCars != 0) {
 	ElectricCars_pct = roundToInt((100.0 * ElectricCars) / totalCars);
 	HydrogenCars_pct = roundToInt((100.0 * HydrogenCars) / totalCars);
 }
-uI_Tabs.pop_tabMobility.getSliderFossilFuelCars_pct().setValue(DieselCars_pct, false);
-uI_Tabs.pop_tabMobility.getSliderElectricCars_pct().setValue(ElectricCars_pct, false);
+uI_Tabs.pop_tabMobility.get(0).getSliderFossilFuelCars_pct().setValue(DieselCars_pct, false);
+uI_Tabs.pop_tabMobility.get(0).getSliderElectricCars_pct().setValue(ElectricCars_pct, false);
 //sl_hydrogenCars.setValue(HydrogenCars_pct, false);
 
 /*ALCODEEND*/}
@@ -1867,24 +1867,24 @@ double f_resetEHubConfigurationButton()
 {/*ALCODESTART::1736425024533*/
 v_clickedObjectText = "None";
 uI_Results.b_showGroupContractValues = false;
-uI_Tabs.pop_tabEHub.cb_EHubSelect.setSelected(false);
-uI_Tabs.pop_tabEHub.t_baseGroepInfo.setText("Selecteer minimaal twee panden");
-uI_Tabs.pop_tabEHub.t_groepsGTV_kW.setText("");
-uI_Tabs.pop_tabEHub.t_cumulatiefGTV_kW.setText("");
-uI_Tabs.pop_tabEHub.t_warnings.setText("");
+uI_Tabs.pop_tabEHub.get(0).cb_EHubSelect.setSelected(false);
+uI_Tabs.pop_tabEHub.get(0).t_baseGroepInfo.setText("Selecteer minimaal twee panden");
+uI_Tabs.pop_tabEHub.get(0).t_groepsGTV_kW.setText("");
+uI_Tabs.pop_tabEHub.get(0).t_cumulatiefGTV_kW.setText("");
+uI_Tabs.pop_tabEHub.get(0).t_warnings.setText("");
 /*ALCODEEND*/}
 
 double f_EHubTabCapacityInformation(boolean reset,String textToAdd)
 {/*ALCODESTART::1736425024535*/
 if (reset) {
-	uI_Tabs.pop_tabEHub.t_baseGroepInfo.setText("");
-	uI_Tabs.pop_tabEHub.t_groepsGTV_kW.setText("");
-	uI_Tabs.pop_tabEHub.t_cumulatiefGTV_kW.setText("");
-	uI_Tabs.pop_tabEHub.t_warnings.setText("");
+	uI_Tabs.pop_tabEHub.get(0).t_baseGroepInfo.setText("");
+	uI_Tabs.pop_tabEHub.get(0).t_groepsGTV_kW.setText("");
+	uI_Tabs.pop_tabEHub.get(0).t_cumulatiefGTV_kW.setText("");
+	uI_Tabs.pop_tabEHub.get(0).t_warnings.setText("");
 }
 else {
-	String currentWarningString = uI_Tabs.pop_tabEHub.t_warnings.getText();
-	uI_Tabs.pop_tabEHub.t_warnings.setText(currentWarningString + textToAdd);
+	String currentWarningString = uI_Tabs.pop_tabEHub.get(0).t_warnings.getText();
+	uI_Tabs.pop_tabEHub.get(0).t_warnings.setText(currentWarningString + textToAdd);
 }
 
 
@@ -2126,21 +2126,19 @@ if(map_scale != null){
 va_Interface.navigateTo();
 /*ALCODEEND*/}
 
-double f_setInfoText(ShapeImage infoBubble,String descriptionText)
+double f_setInfoText(ShapeImage infoBubble,String descriptionText,double xPosition,double yPosition)
 {/*ALCODESTART::1743665953113*/
-if ( v_currentActiveInfoBubble == infoBubble ) {
+if ( p_currentActiveInfoBubble.size() > 0 && p_currentActiveInfoBubble.get(0) == infoBubble ) {
 	// If we click a second time on the same bubble it should close the window
-	v_currentActiveInfoBubble = null;
+	p_currentActiveInfoBubble.clear();
 	gr_infoText.setVisible(false);
 }
 else {
-	v_currentActiveInfoBubble = infoBubble;
+	p_currentActiveInfoBubble.clear();
+	p_currentActiveInfoBubble.add(infoBubble);
 	
 	int width_ch = 50;
 	// Set Text
-	// TODO
-	// header
-	// description
 	Pair<String, Integer> p = v_infoText.restrictWidth(descriptionText, width_ch);
 	t_infoTextDescription.setText(p.getFirst());
 	
@@ -2150,26 +2148,26 @@ else {
 	
 	// Set Position
 	// The group position is on the top left, not the centre.
-	double margin_px = 25;
-	double posX = f_getAbsolutePosition(infoBubble).getX();
-	double posY = f_getAbsolutePosition(infoBubble).getY();
-	if (posX < (va_Interface.getX() + va_Interface.getWidth()/2) ) {
+	double margin_px = 15;
+	//double posX = f_getAbsolutePosition(infoBubble).getX();
+	//double posY = f_getAbsolutePosition(infoBubble).getY();
+	if (xPosition < (va_Interface.getX() + va_Interface.getWidth()/2) ) {
 		// bubble is on the left half, so text should appear to the right
-		gr_infoText.setX( posX + margin_px);
+		gr_infoText.setX( xPosition + margin_px + infoBubble.getWidth()/2);
 	}
 	else {
 		// bubble is on the right half, so text should appear to the left
-		gr_infoText.setX( posX - margin_px - rect_infoText.getWidth());
+		gr_infoText.setX( xPosition - margin_px + infoBubble.getWidth()/2 - rect_infoText.getWidth());
 	}
 	
 	// In AnyLogic the Y-Axis is inverted
-	if (posY > (va_Interface.getY() + va_Interface.getHeight()/2) ) {
+	if (yPosition > (va_Interface.getY() + va_Interface.getHeight()/2) ) {
 		// bubble is on the bottom half, so text should appear above
-		gr_infoText.setY( posY - margin_px - rect_infoText.getHeight());
+		gr_infoText.setY( yPosition - margin_px - rect_infoText.getHeight());
 	}
 	else {
 		// bubble is on the top half, so text should appear below
-		gr_infoText.setY( posY + margin_px);
+		gr_infoText.setY( yPosition + margin_px);
 	}
 	
 	// Position of close button
