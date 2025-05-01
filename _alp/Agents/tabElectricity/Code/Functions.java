@@ -111,16 +111,22 @@ double f_setPVOnLand(double hectare)
 // to do so it should probably first calculate the total installed pv in all solar fields
 
 // TODO: make this work nicer with the new pause function (when setting capacity to 0 pause again?)
-
 for ( GCEnergyProduction GCEP : zero_Interface.energyModel.EnergyProductionSites) {
 	for(J_EAProduction j_ea : GCEP.c_productionAssets) {
-		if (j_ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC) {
+		if (j_ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC && GCEP.p_isSliderGC) {
 			if (!GCEP.v_isActive) {
 				GCEP.f_setActive(true);
 			}
-			j_ea.setCapacityElectric_kW(1000*hectare); // 1 ha = 1 MW
-			GCEP.v_liveConnectionMetaData.physicalCapacity_kW = 1000*hectare;
-			GCEP.v_liveConnectionMetaData.contractedFeedinCapacity_kW = 1000*hectare;
+			
+			double solarFieldPower = (double)roundToInt(hectare * zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha);
+			j_ea.setCapacityElectric_kW(solarFieldPower);
+			GCEP.v_liveConnectionMetaData.physicalCapacity_kW = solarFieldPower;
+			GCEP.v_liveConnectionMetaData.contractedFeedinCapacity_kW = solarFieldPower;
+			
+			if(hectare == 0){
+				GCEP.f_setActive(false);
+			}
+			
 			break;
 		}
 	}
@@ -254,9 +260,9 @@ for ( GCEnergyProduction GCEP : zero_Interface.energyModel.EnergyProductionSites
 			if (!GCEP.v_isActive) {
 				GCEP.f_setActive(true);
 			}
-			j_ea.setCapacityElectric_kW(1000*AllocatedWindPower_MW);
-			GCEP.v_liveConnectionMetaData.physicalCapacity_kW = 1000*AllocatedWindPower_MW;
-			GCEP.v_liveConnectionMetaData.contractedFeedinCapacity_kW = 1000*AllocatedWindPower_MW;
+			j_ea.setCapacityElectric_kW(roundToInt(1000*AllocatedWindPower_MW));
+			GCEP.v_liveConnectionMetaData.physicalCapacity_kW = (double)roundToInt(1000*AllocatedWindPower_MW);
+			GCEP.v_liveConnectionMetaData.contractedFeedinCapacity_kW = (double)roundToInt(1000*AllocatedWindPower_MW);
 			
 			if(AllocatedWindPower_MW == 0){
 				GCEP.f_setActive(false);
@@ -482,5 +488,21 @@ charger.v_isActiveCharger = true;
 charger.c_connectedGISObjects.get(0).gisRegion.setVisible(true);
 zero_Interface.c_activePublicChargers.add(charger);
 v_currentNbChargers ++;
+/*ALCODEEND*/}
+
+double f_getCurrentPVOnLandAndWindturbineValues()
+{/*ALCODESTART::1745483988251*/
+for(GCEnergyProduction GCProd : zero_Interface.energyModel.EnergyProductionSites){
+	if(!GCProd.p_isSliderGC && GCProd.v_isActive){
+		for(J_EAProduction ea : GCProd.c_productionAssets){
+			if(ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC){
+				p_currentPVOnLand_ha += ea.getCapacityElectric_kW()/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
+			}
+			else if(ea.energyAssetType == OL_EnergyAssetType.WINDMILL){
+				p_currentWindTurbines_MW += ea.getCapacityElectric_kW()/1000;
+			}
+		}
+	}
+}
 /*ALCODEEND*/}
 

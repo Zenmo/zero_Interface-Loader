@@ -687,7 +687,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722328776711</Id>
 				<Name><![CDATA[t_electricityDemandReduction_pct]]></Name>
-				<X>45</X>
+				<X>62</X>
 				<Y>-155</Y>
 				<Label>
 					<X>0</X>
@@ -708,7 +708,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
@@ -791,7 +791,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722328776719</Id>
 				<Name><![CDATA[t_rooftopPVCompanies_pct]]></Name>
-				<X>45</X>
+				<X>62</X>
 				<Y>-95</Y>
 				<Label>
 					<X>0</X>
@@ -812,7 +812,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
@@ -870,7 +870,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722328776725</Id>
 				<Name><![CDATA[t_largeScalePV_ha]]></Name>
-				<X>45</X>
+				<X>62</X>
 				<Y>-65</Y>
 				<Label>
 					<X>0</X>
@@ -885,13 +885,13 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_largeScalePV_ha.getIntValue() + " ha"</TextCode>
+				<TextCode>sl_largeScalePV_ha.getValue() + " ha"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
@@ -910,14 +910,14 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVOnLand(sl_largeScalePV_ha.getValue());</ActionCode>
+					<ActionCode>f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_currentPVOnLand_ha);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>50</MaxValue>
-					<Step>1</Step>
+					<MinValue>p_currentPVOnLand_ha</MinValue>
+					<MaxValue>p_currentPVOnLand_ha + 50</MaxValue>
+					<Step>0.1</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -988,14 +988,14 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setWindTurbines( sl_largeScaleWind_MW.getValue() );</ActionCode>
+					<ActionCode>f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>10</MaxValue>
-					<Step>1</Step>
+					<MinValue>p_currentWindTurbines_MW</MinValue>
+					<MaxValue>p_currentWindTurbines_MW + 10</MaxValue>
+					<Step>0.1</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -1027,7 +1027,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Text>
 				<Id>1722328776741</Id>
 				<Name><![CDATA[t_largeScaleWind_MW]]></Name>
-				<X>45</X>
+				<X>62</X>
 				<Y>30</Y>
 				<Label>
 					<X>0</X>
@@ -1042,18 +1042,18 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_largeScaleWind_MW.getIntValue() + " MW"</TextCode>
+				<TextCode>sl_largeScaleWind_MW.getValue() + " MW"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Text>
 				<Id>1722329161559</Id>
 				<Name><![CDATA[t_rooftopPVHouses_pct]]></Name>
-				<X>45</X>
+				<X>62</X>
 				<Y>-35</Y>
 				<Label>
 					<X>0</X>
@@ -1074,7 +1074,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
@@ -2266,14 +2266,14 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVOnLand(sl_largeScalePV_ha_Businesspark.getValue());</ActionCode>
+					<ActionCode>f_setPVOnLand(sl_largeScalePV_ha_Businesspark.getValue()- p_currentPVOnLand_ha);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>50</MaxValue>
-					<Step>1</Step>
+					<MinValue>p_currentPVOnLand_ha</MinValue>
+					<MaxValue>p_currentPVOnLand_ha + 50</MaxValue>
+					<Step>0.1</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -2344,14 +2344,14 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setWindTurbines( sl_largeScaleWind_MW_Businesspark.getValue() );</ActionCode>
+					<ActionCode>f_setWindTurbines( sl_largeScaleWind_MW_Businesspark.getValue() - p_currentWindTurbines_MW);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>10</MaxValue>
-					<Step>1</Step>
+					<MinValue>p_currentWindTurbines_MW</MinValue>
+					<MaxValue>p_currentWindTurbines_MW + 10</MaxValue>
+					<Step>0.1</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
