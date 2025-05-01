@@ -220,6 +220,11 @@ return GISCoords;
 
 double f_importExcelTablesToDB()
 {/*ALCODESTART::1726584205779*/
+
+inputHouseholdTrips.setFileName("zero_Interface-Loader/data_Generic/AlbatrossProcessedVehicleTrips.xlsx");
+inputTruckTrips.setFileName("zero_Interface-Loader/data_Generic/inputTruckTripPatterns.xlsx");
+inputCookingActivities.setFileName("zero_Interface-Loader/data_Generic/inputECookerPatterns.xlsx");
+
 inputCookingActivities.readFile();
 inputTruckTrips.readFile();
 inputHouseholdTrips.readFile();
