@@ -265,6 +265,10 @@
 				<Id>1737714961123</Id>
 				<Name><![CDATA[ListUtil]]></Name>
 			</JavaClass>
+			<JavaClass>
+				<Id>1744204067723</Id>
+				<Name><![CDATA[J_InfoText]]></Name>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>

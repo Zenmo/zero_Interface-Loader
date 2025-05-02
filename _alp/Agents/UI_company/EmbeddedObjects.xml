@@ -34,6 +34,21 @@
 			<Parameter>
 				<Name><![CDATA[p_cutOff_MWh]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[gr_infoText]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[gr_closeInfoText]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[t_infoTextDescription]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[rect_infoText]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_currentActiveInfoBubble]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">
