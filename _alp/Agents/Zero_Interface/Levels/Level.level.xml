@@ -6735,34 +6735,6 @@ fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(true);</ActionCode>
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
-	<Text>
-		<Id>1746027175818</Id>
-		<Name><![CDATA[txt_publicVersion]]></Name>
-		<X>900</X>
-		<Y>160</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<XCode>900</XCode>
-		<YCode>160</YCode>
-		<VisibleCode>settings.isPublicModel()</VisibleCode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-65536</Color>
-		<Text><![CDATA[Dit is een afgeschermde publieke versie]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>36</Size>
-			<Style>1</Style>
-		</Font>
-		<Alignment>CENTER</Alignment>
-	</Text>
 	<Group>
 		<Id>1746110287596</Id>
 		<Name><![CDATA[gr_infoText]]></Name>
@@ -7018,4 +6990,78 @@ officia deserunt mollit anim id est laborum."]]></Text>
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
+	<Group>
+		<Id>1746187848442</Id>
+		<Name><![CDATA[gr_publicVersionWarningMessage]]></Name>
+		<X>460</X>
+		<Y>-2160</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>740</XCode>
+		<YCode>40</YCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Text>
+				<Id>1746027175818</Id>
+				<Name><![CDATA[txt_publicVersion]]></Name>
+				<X>-20</X>
+				<Y>-20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>settings.isPublicModel()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-65536</Color>
+				<Text><![CDATA[Dit is een publieke versie met beperkte functionaliteiten]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>24</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Image>
+				<Id>1746187821228</Id>
+				<Name><![CDATA[i_publicVersionWarningMessage]]></Name>
+				<X>304</X>
+				<Y>-14</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>f_setInfoText(i_publicVersionWarningMessage, v_infoText.publicVersionWarning, i_publicVersionWarningMessage.getX() + gr_publicVersionWarningMessage.getX(), i_publicVersionWarningMessage.getY() + gr_publicVersionWarningMessage.getY());</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+		</Presentation>
+	</Group>
 </Presentation>

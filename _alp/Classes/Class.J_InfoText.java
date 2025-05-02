@@ -9,6 +9,9 @@ public class J_InfoText implements Serializable {
 	//// Main Interface \\\\
 	// TODO
 	
+	//// Public version
+	public String publicVersionWarning = "In de publieke variant zijn bepaalde functionaliteiten beperkt, en is bepaalde data afgeschermd.";
+	
 	//// TABS \\\\
 	//// Electricity Tab
     public String electricityDemandReduction = "Met deze slider kun je het basisverbruik van stroom voor huizen en bedrijven aanpassen. Een positief percentage betekent dat ze minder verbruiken dan in het basis scenario. Een negatief percentage betekent dat het verbruik is toegenoemen. Dit past niet de hoeveelheid stroombehoefte aan voor specifieke apparaten die apart in het model zitten zoals warmtepompen en elektrische auto's. Zie hiervoor de besparingsslider in de tabjes warmte of transport.";
