@@ -2586,7 +2586,7 @@ for(GIS_Object object : energyModel.pop_GIS_Objects){
 	for(GridConnection GC : object.c_containedGridConnections){
 		if(!GC.p_owner.b_dataSharingAgreed){
 			object.p_defaultFillColor = transparent(object.p_defaultFillColor, 0.6);//v_dataSharingDisagreedColor;
-			object.p_defaultLineStyle = LINE_STYLE_DASHED;
+			object.p_defaultLineStyle = LINE_STYLE_DOTTED;
 			object.f_style(null, null, null, null);
 			break;
 		}
@@ -2597,7 +2597,7 @@ for(GIS_Building building : energyModel.pop_GIS_Buildings){
 	for(GridConnection GC : building.c_containedGridConnections){
 		if(!GC.p_owner.b_dataSharingAgreed){
 			building.p_defaultFillColor = transparent(building.p_defaultFillColor, 0.6);//v_dataSharingDisagreedColor;
-			building.p_defaultLineStyle = LINE_STYLE_DASHED;
+			building.p_defaultLineStyle = LINE_STYLE_DOTTED;
 			building.f_style(null, null, null, null);
 			break;
 		}
