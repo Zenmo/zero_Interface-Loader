@@ -445,7 +445,7 @@ for (Solarfarm_data dataSolarfarm : c_solarfarm_data) { // MOET NOG CHECK OF ZON
 			owner.set_p_actorID( dataSolarfarm.owner_id());
 			owner.set_p_actorType( OL_ActorType.CONNECTIONOWNER );
 			owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.SOLARFARM_OP );
-
+			owner.b_dataSharingAgreed = true;
 			existing_actors.add(owner.p_actorID);
 		}
 		else { // Owner exists already: add new GC to existing owner
@@ -491,6 +491,7 @@ for (Battery_data dataBattery : c_battery_data) { // MOET NOG CHECK OF battery A
 	owner.set_p_actorID( dataBattery.owner_id() );
 	owner.set_p_actorType( OL_ActorType.CONNECTIONOWNER );
 	owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.BATTERY_OP );
+	owner.b_dataSharingAgreed = true;
 	
 	//GC parameters
 	gridbattery.set_p_gridConnectionID( dataBattery.gc_id () );
@@ -498,6 +499,7 @@ for (Battery_data dataBattery : c_battery_data) { // MOET NOG CHECK OF battery A
 	gridbattery.set_p_ownerID( dataBattery.owner_id() );
 	gridbattery.set_p_owner( owner );	
 	gridbattery.v_liveConnectionMetaData.physicalCapacity_kW = dataBattery.connection_capacity_kw();
+
 	
 	if(gridbattery.p_gridConnectionID.equals("SLIDER_GB")){
 		gridbattery.p_isSliderGC = true;
@@ -606,7 +608,7 @@ for (Electrolyser_data dataElectrolyser : c_electrolyser_data) {
 		owner.set_p_actorID( H2Electrolyser.p_ownerID );
 		owner.set_p_actorType( OL_ActorType.CONNECTIONOWNER );
 		owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.ELECTROLYSER_OP );
-
+		owner.b_dataSharingAgreed = true;
 	}
 	else { // Owner exists already: add new GC to existing owner
 		owner = findFirst(energyModel.f_getConnectionOwners(), p -> p.p_actorID.equals(dataElectrolyser.owner_id()));
@@ -680,6 +682,7 @@ for (Windfarm_data dataWindfarm : c_windfarm_data) {
 			owner.set_p_actorID( windfarm.p_ownerID );
 			owner.set_p_actorType( OL_ActorType.CONNECTIONOWNER );
 			owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.WINDFARM_OP );
+			owner.b_dataSharingAgreed = true;
 		}
 		else { // Owner exists already: add new GC to existing owner
 			owner = findFirst(energyModel.f_getConnectionOwners(), p -> p.p_actorID.equals(dataWindfarm.owner_id()));
@@ -1057,6 +1060,7 @@ for (Building_data genericCompany : c_companyBuilding_data) {
 		COC.p_actorType = OL_ActorType.CONNECTIONOWNER;
 		COC.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
 		COC.p_detailedCompany = false;
+		COC.b_dataSharingAgreed = true;
 		
 		companyGC.p_owner = COC;
 		companyGC.p_ownerID = COC.p_actorID;
@@ -1461,6 +1465,7 @@ for (var survey : surveys) {
 				survey_owner.p_actorType = OL_ActorType.CONNECTIONOWNER;
 				survey_owner.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
 				survey_owner.p_detailedCompany = true;
+				survey_owner.b_dataSharingAgreed = survey.getDataSharingAgreed();
 		 	}
 			
 		 	//Create GC
@@ -2311,6 +2316,8 @@ for (Chargingstation_data dataChargingStation : c_chargingstation_data){
 	owner.set_p_actorID( chargingStation.p_ownerID );
 	owner.set_p_actorType( OL_ActorType.CONNECTIONOWNER );
 	owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.CHARGEPOINT_OP );
+	owner.b_dataSharingAgreed = true;
+	
 	chargingStation.set_p_owner( owner );
 	
 	

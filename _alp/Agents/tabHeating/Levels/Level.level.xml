@@ -1920,6 +1920,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct.isEnabled()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -1970,6 +1971,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct.isEnabled()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -2047,6 +2049,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct.isEnabled()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -2073,6 +2076,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct.isEnabled()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -2102,6 +2106,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
+					<VisibleCode>sl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct.isEnabled()</VisibleCode>
 					<Enabled>false</Enabled>
 					<ActionCode>traceln("Slider doet nog niets!!");//f_setHeatingSlidersCompanies(3);
 //f_resetNeighborhoodHeatingSystems(4);</ActionCode>
@@ -2162,6 +2167,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
+					<VisibleCode>sl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct.isEnabled()</VisibleCode>
 					<Enabled>false</Enabled>
 					<ActionCode>traceln("Slider doet nog niets!!");//f_setHeatingSlidersCompanies(2);
 //f_resetNeighborhoodHeatingSystems(3);
@@ -2245,6 +2251,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_heatDemandSlidersCompaniesEBoiler_pct.isEnabled()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -2274,6 +2281,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
+					<VisibleCode>sl_heatDemandSlidersCompaniesEBoiler_pct.isEnabled()</VisibleCode>
 					<Enabled>false</Enabled>
 					<ActionCode>traceln("Slider doet nog niets!!");//f_setHeatingSlidersCompanies(3);
 //f_resetNeighborhoodHeatingSystems(4);</ActionCode>
@@ -2300,6 +2308,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_heatDemandSlidersCompaniesEBoiler_pct.isEnabled()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>

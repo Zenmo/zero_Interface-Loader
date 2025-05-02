@@ -64,6 +64,11 @@ if (b.gisRegion != null){
 
 double f_selectGISRegion(double clickx,double clicky)
 {/*ALCODESTART::1696863329251*/
+if(settings.isPublicModel()){
+	f_selectGISRegion_publicModel(clickx, clicky);
+	return;
+}
+
 //After a click, reset previous clicked building/gridNode colors and text
 v_previousClickedObjectType = v_clickedObjectType;
 c_previousSelectedObjects = new ArrayList<GIS_Object>(c_selectedObjects);
@@ -436,6 +441,7 @@ v_clickedObjectAdress = "";
 v_clickedObjectDetails = "";
 v_clickedObjectType = null;
 button_goToUI.setVisible(false);
+gr_multipleBuildingInfo.setVisible(false);
 
 // We restore the colors of what we clicked on before
 if (v_previousClickedObjectType == OL_GISObjectType.GRIDNODE){
@@ -789,6 +795,10 @@ presentation.remove(gr_forceMapSelection);
 presentation.insert(presentation.size(), gr_forceMapSelection);
 presentation.remove(gr_filterInterface);
 presentation.insert(presentation.size(), gr_filterInterface);
+
+if(settings.isPublicModel()){
+	f_changeDefaultColorOfPrivateGC();
+}
 /*ALCODEEND*/}
 
 GISRegion f_createGISObject(double[] gisTokens)
@@ -2460,6 +2470,138 @@ for (int row = 1; row <= 35137; row++) {
     for (int col = 1; col <= p_maxNrSelectedGCForExport + 2; col++) {
         excel_exportBalanceLoadData.setCellValue("", "Electricity Load Balance", row, col);
     }
+}
+/*ALCODEEND*/}
+
+double f_selectGISRegion_publicModel(double clickx,double clicky)
+{/*ALCODESTART::1745936595905*/
+//After a click, reset previous clicked building/gridNode colors and text
+v_previousClickedObjectType = v_clickedObjectType;
+c_previousSelectedObjects = new ArrayList<GIS_Object>(c_selectedObjects);
+ArrayList<GIS_Object> buildingsConnectedToSelectedBuildingsList = new ArrayList<>();
+c_selectedGridConnections.clear();
+c_selectedObjects.clear();
+
+//Deselect previous selection
+if( v_previousClickedObjectType != null){
+	f_deselectPreviousSelect();
+}
+
+//Check if click was on Gridnode, if yes, select grid node
+for ( GridNode GN : energyModel.pop_gridNodes ){
+	if( GN.gisRegion != null && GN.gisRegion.contains(clickx, clicky) && GN.gisRegion.isVisible() ){
+		if(GN.f_getAllLowerLVLConnectedGridConnections().size() >= p_minSelectedGCForPublicAggregation){
+			f_selectGridNode(GN);
+		}
+		else{
+			//Data sharing not agreed?
+			v_clickedObjectType = OL_GISObjectType.REGION;
+			uI_Results.f_updateResultsUI(energyModel);
+			
+			//Enable kpi summary button
+			uI_Results.getCheckbox_KPISummary().setEnabled(true);
+		}
+		return;
+	}
+}
+
+//Check if click was on Building, if yes, select grid building
+for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
+	if( b.gisRegion != null && b.gisRegion.contains(clickx, clicky) ){
+		if (b.gisRegion.isVisible()) { //only allow us to click on visible objects
+			if (b.c_containedGridConnections.size() > 0 ) { // only allow buildings with gridconnections
+				if(b.c_containedGridConnections.get(0).p_owner.b_dataSharingAgreed){
+					buildingsConnectedToSelectedBuildingsList = b.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
+					f_selectBuilding(b, buildingsConnectedToSelectedBuildingsList);
+				}
+				else{
+					//Data sharing not agreed?
+					v_clickedObjectType = OL_GISObjectType.REGION;
+					uI_Results.f_updateResultsUI(energyModel);
+					
+					//Enable kpi summary button
+					uI_Results.getCheckbox_KPISummary().setEnabled(true);
+				}
+				return;
+			}
+		}
+	}
+}
+
+//Check if click was on remaining objects such as chargers, solarfields, parcels: if yes, select object
+for ( GIS_Object GISobject : energyModel.pop_GIS_Objects ){
+	if( GISobject.gisRegion != null && GISobject.gisRegion.contains(clickx, clicky) ) {
+		if (GISobject.gisRegion.isVisible()) { //only allow us to click on visible objects
+			if (GISobject.c_containedGridConnections.size() > 0 ) { // only allow objects with gridconnections
+				if(GISobject.c_containedGridConnections.get(0).p_owner.b_dataSharingAgreed){
+					// Find buildings powered by the same GC as the clicked object
+					buildingsConnectedToSelectedBuildingsList = GISobject.c_containedGridConnections.get(0).c_connectedGISObjects; 
+					
+					//Find the (first) connected GC in the object
+					GridConnection selectedGC = GISobject.c_containedGridConnections.get(0);
+	
+					//Set the selected GIS object type
+					v_clickedObjectType = GISobject.p_GISObjectType;
+					c_selectedObjects.add(GISobject);
+					
+					//Set the correct interface view for each object type
+					switch(v_clickedObjectType){
+					
+					case CHARGER:
+						f_selectCharger((GCPublicCharger)selectedGC, GISobject );
+						break;
+					
+						
+					default:
+						buildingsConnectedToSelectedBuildingsList = GISobject.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
+						f_selectBuilding(GISobject, buildingsConnectedToSelectedBuildingsList);		
+						break;
+					}
+				}
+				else{
+					//Data sharing not agreed?
+					v_clickedObjectType = OL_GISObjectType.REGION;
+					uI_Results.f_updateResultsUI(energyModel);
+					
+					//Enable kpi summary button
+					uI_Results.getCheckbox_KPISummary().setEnabled(true);
+				}
+				return;
+			}
+		}
+	}
+}
+
+//Still no clicked object? :select basic region
+v_clickedObjectType = OL_GISObjectType.REGION;
+uI_Results.f_updateResultsUI(energyModel);
+
+//Enable kpi summary button
+uI_Results.getCheckbox_KPISummary().setEnabled(true);
+/*ALCODEEND*/}
+
+double f_changeDefaultColorOfPrivateGC()
+{/*ALCODESTART::1746085650084*/
+for(GIS_Object object : energyModel.pop_GIS_Objects){
+	for(GridConnection GC : object.c_containedGridConnections){
+		if(!GC.p_owner.b_dataSharingAgreed){
+			object.p_defaultFillColor = transparent(object.p_defaultFillColor, 0.6);//v_dataSharingDisagreedColor;
+			object.p_defaultLineStyle = LINE_STYLE_DOTTED;
+			object.f_style(null, null, null, null);
+			break;
+		}
+	}
+}
+
+for(GIS_Building building : energyModel.pop_GIS_Buildings){
+	for(GridConnection GC : building.c_containedGridConnections){
+		if(!GC.p_owner.b_dataSharingAgreed){
+			building.p_defaultFillColor = transparent(building.p_defaultFillColor, 0.6);//v_dataSharingDisagreedColor;
+			building.p_defaultLineStyle = LINE_STYLE_DOTTED;
+			building.f_style(null, null, null, null);
+			break;
+		}
+	}
 }
 /*ALCODEEND*/}
 
