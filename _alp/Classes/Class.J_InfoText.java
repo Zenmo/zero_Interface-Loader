@@ -10,7 +10,7 @@ public class J_InfoText implements Serializable {
 	// TODO
 	
 	//// Public version
-	public String publicVersionWarning = "In de publieke variant zijn bepaalde functionaliteiten beperkt, en is bepaalde data afgeschermd.";
+	public String publicVersionWarning = "In de publieke variant zijn een aantal functionaliteiten uitgezet en zijn bepaalde bedrijven en hun data afgeschermd.";
 	
 	//// TABS \\\\
 	//// Electricity Tab
