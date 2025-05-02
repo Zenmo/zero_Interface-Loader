@@ -1717,7 +1717,9 @@ zero_Interface.c_selectedGridConnections.clear();
 zero_Interface.f_deselectPreviousSelect( );
 zero_Interface.f_selectBuilding(c_ownedGridConnections.get(v_currentSelectedGCnr).c_connectedGISObjects.get(0), c_ownedGridConnections.get(v_currentSelectedGCnr).c_connectedGISObjects);
 f_updateUIResultsCompanyUI();
-uI_Results.f_setAllCharts();
+if(c_ownedGridConnections.get(v_currentSelectedGCnr).v_rapidRunData != null){
+	uI_Results.f_setAllCharts();
+}
 /*ALCODEEND*/}
 
 double f_setSimulateYearScreen()
