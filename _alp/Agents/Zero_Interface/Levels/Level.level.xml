@@ -7005,6 +7005,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<XCode>740</XCode>
 		<YCode>40</YCode>
+		<VisibleCode>settings.isPublicModel()</VisibleCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -7022,7 +7023,6 @@ officia deserunt mollit anim id est laborum."]]></Text>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>settings.isPublicModel()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>

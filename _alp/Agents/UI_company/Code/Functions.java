@@ -471,10 +471,11 @@ v_defaultPVSlider = v_minPVSlider;
 double f_setBatSliderPresets()
 {/*ALCODESTART::1714139648227*/
 //Set back end range (to prevent anylogic errors)
-sl_batteryCompany.setRange(0, 1000);
+sl_batteryCompany.setRange(0, 10000);
 
+double upperLimit = 1000 + 1000 * Math.ceil(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentPV_kW()/1000.0);
 v_minBatSlider = roundToInt(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentBatteryCapacity_kWh());
-v_maxBatSlider = Math.max(v_minBatSlider*2, 1000);
+v_maxBatSlider = Math.max(v_minBatSlider*2, upperLimit);
 v_defaultBatSlider = v_minBatSlider;
 /*ALCODEEND*/}
 
