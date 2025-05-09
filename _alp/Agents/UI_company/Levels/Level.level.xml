@@ -517,7 +517,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1713446658919</Id>
 				<Name><![CDATA[t_GCCapacityCompany]]></Name>
 				<X>-85</X>
-				<Y>0</Y>
+				<Y>6</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -544,7 +544,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1713446658921</Id>
 				<Name><![CDATA[sl_GCCapacityCompany]]></Name>
 				<X>-58</X>
-				<Y>-5</Y>
+				<Y>1</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -577,7 +577,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1713446658933</Id>
 				<Name><![CDATA[txt_GCCapacity]]></Name>
 				<X>-290</X>
-				<Y>0</Y>
+				<Y>6</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -602,7 +602,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1713446065831</Id>
 				<Name><![CDATA[gr_heatDemandReductionSlider]]></Name>
 				<X>-120</X>
-				<Y>-100</Y>
+				<Y>-106</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -721,7 +721,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1713446065985</Id>
 				<Name><![CDATA[txt_elektriciteit]]></Name>
 				<X>-240</X>
-				<Y>-80</Y>
+				<Y>-68</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -746,7 +746,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1713446438059</Id>
 				<Name><![CDATA[txt_mobiliteit]]></Name>
 				<X>-240</X>
-				<Y>160</Y>
+				<Y>166</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -771,7 +771,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1713446065961</Id>
 				<Name><![CDATA[t_electricityDemandReductionCompany]]></Name>
 				<X>-85</X>
-				<Y>-30</Y>
+				<Y>-24</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -799,7 +799,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1713446065963</Id>
 				<Name><![CDATA[sl_electricityDemandCompanyReduction]]></Name>
 				<X>-58</X>
-				<Y>-35</Y>
+				<Y>-29</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -848,7 +848,7 @@ f_setSimulateYearScreen();
 				<Id>1713446065965</Id>
 				<Name><![CDATA[text279]]></Name>
 				<X>-290</X>
-				<Y>-30</Y>
+				<Y>-24</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1949,7 +1949,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1713963799790</Id>
 				<Name><![CDATA[sl_batteryCompany]]></Name>
 				<X>-58</X>
-				<Y>55</Y>
+				<Y>61</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1983,7 +1983,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1713963799825</Id>
 				<Name><![CDATA[t_batteryCompany]]></Name>
 				<X>-85</X>
-				<Y>60</Y>
+				<Y>66</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2009,7 +2009,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1713963799827</Id>
 				<Name><![CDATA[text283]]></Name>
 				<X>-290</X>
-				<Y>60</Y>
+				<Y>66</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2051,7 +2051,7 @@ f_setSimulateYearScreen();</ActionCode>
 						<Id>1715084970830</Id>
 						<Name><![CDATA[gr_electricityButton1]]></Name>
 						<X>-560</X>
-						<Y>30</Y>
+						<Y>42</Y>
 						<Label>
 							<X>10</X>
 							<Y>0</Y>
@@ -2193,7 +2193,7 @@ f_setSimulateYearScreen();</ActionCode>
 						<Id>1715084970842</Id>
 						<Name><![CDATA[gr_transportButton1]]></Name>
 						<X>-560</X>
-						<Y>270</Y>
+						<Y>276</Y>
 						<Label>
 							<X>10</X>
 							<Y>0</Y>
@@ -2267,7 +2267,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1715093089631</Id>
 				<Name><![CDATA[rb_heatingTypePrivateUI]]></Name>
 				<X>-290</X>
-				<Y>-200</Y>
+				<Y>-206</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2276,7 +2276,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="180" Height="100">
+				<BasicProperties Width="180" Height="121">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
@@ -2298,6 +2298,9 @@ switch (rb_heatingTypePrivateUI.getValue()){
 	break;
 	case 3:
 		selectedHeatingType = OL_GridConnectionHeatingType.HYDROGENBURNER;
+	break;
+	case 4:
+		selectedHeatingType = OL_GridConnectionHeatingType.GASFIRED_CHPPEAK;
 	break;
 	default:
 		selectedHeatingType = OL_GridConnectionHeatingType.NONE;
@@ -2321,6 +2324,7 @@ f_setSimulateYearScreen();</ActionCode>
 					<Button>Hybride warmtepomp</Button>
 					<Button>Elek. warmtepomp</Button>
 					<Button>Waterstof ketel</Button>
+					<Button>Gas WKK</Button>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -2328,7 +2332,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1725618990626</Id>
 				<Name><![CDATA[t_rooftopSolarCompany]]></Name>
 				<X>-85</X>
-				<Y>90</Y>
+				<Y>96</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2355,7 +2359,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1725618990628</Id>
 				<Name><![CDATA[sl_rooftopPVCompany]]></Name>
 				<X>-58</X>
-				<Y>85</Y>
+				<Y>91</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2388,7 +2392,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1725618990630</Id>
 				<Name><![CDATA[txt_PVPower]]></Name>
 				<X>-290</X>
-				<Y>90</Y>
+				<Y>96</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2413,7 +2417,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1727796446739</Id>
 				<Name><![CDATA[t_GCCapacityCompany_Feedin]]></Name>
 				<X>-85</X>
-				<Y>30</Y>
+				<Y>36</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2440,7 +2444,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1727796446741</Id>
 				<Name><![CDATA[sl_GCCapacityCompany_Feedin]]></Name>
 				<X>-58</X>
-				<Y>25</Y>
+				<Y>31</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2473,7 +2477,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Id>1727796446743</Id>
 				<Name><![CDATA[txt_GCCapacityCompany_Feedin]]></Name>
 				<X>-290</X>
-				<Y>30</Y>
+				<Y>36</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -3306,7 +3310,7 @@ new Thread( () -&gt; {
 		<Id>1727797637172</Id>
 		<Name><![CDATA[txt_curtailmentDescriptionCompany]]></Name>
 		<X>20</X>
-		<Y>565</Y>
+		<Y>571</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -3332,7 +3336,7 @@ new Thread( () -&gt; {
 		<Id>1727797637174</Id>
 		<Name><![CDATA[cb_curtailmentCompany]]></Name>
 		<X>291</X>
-		<Y>558</Y>
+		<Y>564</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
