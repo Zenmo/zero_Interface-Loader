@@ -4,7 +4,7 @@
 		<Id>1708522361909</Id>
 		<Name><![CDATA[ui_companies]]></Name>
 		<X>-240</X>
-		<Y>370</Y>
+		<Y>420</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -76,7 +76,7 @@
 		<Id>1709049456144</Id>
 		<Name><![CDATA[ui_Battery]]></Name>
 		<X>-240</X>
-		<Y>490</Y>
+		<Y>540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -169,6 +169,36 @@
 			<Parameter>
 				<Name><![CDATA[p_cutOff_MWh]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[gr_infoText]]></Name>
+				<Value Class="CodeValue">
+					<Code><![CDATA[gr_infoText]]></Code>
+				</Value>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[gr_closeInfoText]]></Name>
+				<Value Class="CodeValue">
+					<Code><![CDATA[gr_closeInfoText]]></Code>
+				</Value>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[t_infoTextDescription]]></Name>
+				<Value Class="CodeValue">
+					<Code><![CDATA[t_infoTextDescription]]></Code>
+				</Value>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[rect_infoText]]></Name>
+				<Value Class="CodeValue">
+					<Code><![CDATA[rect_infoText]]></Code>
+				</Value>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_currentActiveInfoBubble]]></Name>
+				<Value Class="CodeValue">
+					<Code><![CDATA[p_currentActiveInfoBubble]]></Code>
+				</Value>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -205,7 +235,7 @@
 		<Id>1717506326727</Id>
 		<Name><![CDATA[ui_Hydrogen]]></Name>
 		<X>-240</X>
-		<Y>440</Y>
+		<Y>490</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>

@@ -12,7 +12,7 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<PresentationId>1722246229996</PresentationId>
+		<PresentationId>1744964660761</PresentationId>
 		<ActiveObjectClass>
 			<PackageName>zerointerfaceloader</PackageName>
 			<ClassName>tabMobility</ClassName>
@@ -49,18 +49,18 @@
 		<QuantityColumn/>
 	</EmbeddedObject>
 	<EmbeddedObject>
-		<Id>1722249956639</Id>
+		<Id>1722245482641</Id>
 		<Name><![CDATA[pop_tabElectricity]]></Name>
 		<X>50</X>
-		<Y>35</Y>
+		<Y>40</Y>
 		<Label>
 			<X>10</X>
-			<Y>1</Y>
+			<Y>2</Y>
 		</Label>
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<PresentationId>1722249987797</PresentationId>
+		<PresentationId>1744964655611</PresentationId>
 		<ActiveObjectClass>
 			<PackageName>zerointerfaceloader</PackageName>
 			<ClassName>tabElectricity</ClassName>
@@ -124,7 +124,7 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<PresentationId>1722255804160</PresentationId>
+		<PresentationId>1744964658364</PresentationId>
 		<ActiveObjectClass>
 			<PackageName>zerointerfaceloader</PackageName>
 			<ClassName>tabHeating</ClassName>
@@ -164,7 +164,7 @@
 		<Id>1722253478328</Id>
 		<Name><![CDATA[pop_tabEHub]]></Name>
 		<X>50</X>
-		<Y>105</Y>
+		<Y>100</Y>
 		<Label>
 			<X>10</X>
 			<Y>1</Y>
@@ -172,7 +172,7 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<PresentationId>1722255810189</PresentationId>
+		<PresentationId>1744964663750</PresentationId>
 		<ActiveObjectClass>
 			<PackageName>zerointerfaceloader</PackageName>
 			<ClassName>tabEHub</ClassName>

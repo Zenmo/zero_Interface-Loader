@@ -2,6 +2,7 @@
 <ActiveObjectClass>
 	<Id>1722245292185</Id>
 	<Name><![CDATA[UI_Tabs]]></Name>
+	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1722245292191</Id>

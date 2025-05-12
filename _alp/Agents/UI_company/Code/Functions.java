@@ -471,10 +471,11 @@ v_defaultPVSlider = v_minPVSlider;
 double f_setBatSliderPresets()
 {/*ALCODESTART::1714139648227*/
 //Set back end range (to prevent anylogic errors)
-sl_batteryCompany.setRange(0, 1000);
+sl_batteryCompany.setRange(0, 10000);
 
+double upperLimit = 1000 + 1000 * Math.ceil(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentPV_kW()/1000.0);
 v_minBatSlider = roundToInt(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentBatteryCapacity_kWh());
-v_maxBatSlider = Math.max(v_minBatSlider*2, 1000);
+v_maxBatSlider = Math.max(v_minBatSlider*2, upperLimit);
 v_defaultBatSlider = v_minBatSlider;
 /*ALCODEEND*/}
 
@@ -1717,7 +1718,9 @@ zero_Interface.c_selectedGridConnections.clear();
 zero_Interface.f_deselectPreviousSelect( );
 zero_Interface.f_selectBuilding(c_ownedGridConnections.get(v_currentSelectedGCnr).c_connectedGISObjects.get(0), c_ownedGridConnections.get(v_currentSelectedGCnr).c_connectedGISObjects);
 f_updateUIResultsCompanyUI();
-uI_Results.f_setAllCharts();
+if(c_ownedGridConnections.get(v_currentSelectedGCnr).v_rapidRunData != null){
+	uI_Results.f_setAllCharts();
+}
 /*ALCODEEND*/}
 
 double f_setSimulateYearScreen()

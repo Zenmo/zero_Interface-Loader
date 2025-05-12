@@ -601,9 +601,9 @@ f_showCorrectTab();</OnClickCode>
 			</Text>
 		</Presentation>
 	</Group>
-	<EmbeddedObjectPresentation>
-		<Id>1722246229996</Id>
-		<Name><![CDATA[pop_tabMobility_presentation]]></Name>
+	<Group>
+		<Id>1744964727616</Id>
+		<Name><![CDATA[gr_tabElectricity_presentation]]></Name>
 		<X>15</X>
 		<Y>630</Y>
 		<Label>
@@ -617,15 +617,34 @@ f_showCorrectTab();</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
-		<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
-		<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
-		<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
-		<Latitude>0.0</Latitude>
-		<Longitude>0.0</Longitude>
-	</EmbeddedObjectPresentation>
-	<EmbeddedObjectPresentation>
-		<Id>1722249987797</Id>
-		<Name><![CDATA[pop_tabElectricity_presentation]]></Name>
+		<Presentation>
+			<EmbeddedObjectPresentation>
+				<Id>1744964655611</Id>
+				<Name><![CDATA[pop_tabElectricity_presentation]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
+				<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
+				<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
+				<Latitude>0.0</Latitude>
+				<Longitude>0.0</Longitude>
+			</EmbeddedObjectPresentation>
+		</Presentation>
+	</Group>
+	<Group>
+		<Id>1744964732289</Id>
+		<Name><![CDATA[gr_tabHeating_presentation]]></Name>
 		<X>15</X>
 		<Y>630</Y>
 		<Label>
@@ -639,15 +658,34 @@ f_showCorrectTab();</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
-		<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
-		<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
-		<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
-		<Latitude>0.0</Latitude>
-		<Longitude>0.0</Longitude>
-	</EmbeddedObjectPresentation>
-	<EmbeddedObjectPresentation>
-		<Id>1722255804160</Id>
-		<Name><![CDATA[pop_tabHeating_presentation]]></Name>
+		<Presentation>
+			<EmbeddedObjectPresentation>
+				<Id>1744964658364</Id>
+				<Name><![CDATA[pop_tabHeating_presentation]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
+				<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
+				<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
+				<Latitude>0.0</Latitude>
+				<Longitude>0.0</Longitude>
+			</EmbeddedObjectPresentation>
+		</Presentation>
+	</Group>
+	<Group>
+		<Id>1744964737688</Id>
+		<Name><![CDATA[gr_tabEHub_presentation]]></Name>
 		<X>15</X>
 		<Y>630</Y>
 		<Label>
@@ -661,15 +699,34 @@ f_showCorrectTab();</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
-		<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
-		<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
-		<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
-		<Latitude>0.0</Latitude>
-		<Longitude>0.0</Longitude>
-	</EmbeddedObjectPresentation>
-	<EmbeddedObjectPresentation>
-		<Id>1722255810189</Id>
-		<Name><![CDATA[pop_tabEHub_presentation]]></Name>
+		<Presentation>
+			<EmbeddedObjectPresentation>
+				<Id>1744964663750</Id>
+				<Name><![CDATA[pop_tabEHub_presentation]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
+				<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
+				<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
+				<Latitude>0.0</Latitude>
+				<Longitude>0.0</Longitude>
+			</EmbeddedObjectPresentation>
+		</Presentation>
+	</Group>
+	<Group>
+		<Id>1744964742286</Id>
+		<Name><![CDATA[gr_tabMobility_presentation]]></Name>
 		<X>15</X>
 		<Y>630</Y>
 		<Label>
@@ -683,10 +740,29 @@ f_showCorrectTab();</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
-		<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
-		<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
-		<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
-		<Latitude>0.0</Latitude>
-		<Longitude>0.0</Longitude>
-	</EmbeddedObjectPresentation>
+		<Presentation>
+			<EmbeddedObjectPresentation>
+				<Id>1744964660761</Id>
+				<Name><![CDATA[pop_tabMobility_presentation]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
+				<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
+				<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
+				<Latitude>0.0</Latitude>
+				<Longitude>0.0</Longitude>
+			</EmbeddedObjectPresentation>
+		</Presentation>
+	</Group>
 </Presentation>

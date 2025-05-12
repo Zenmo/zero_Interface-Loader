@@ -3405,7 +3405,7 @@ traceln( v_themeColor.getRGB() );</ActionCode>
 		<Id>1708595212229</Id>
 		<Name><![CDATA[t_privateUI]]></Name>
 		<X>-290</X>
-		<Y>300</Y>
+		<Y>350</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -3682,7 +3682,7 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 		<Id>1713429772427</Id>
 		<Name><![CDATA[t_scenarioDictionaries]]></Name>
 		<X>-290</X>
-		<Y>190</Y>
+		<Y>180</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -5191,6 +5191,9 @@ new Thread( () -&gt; {
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<OnClickCode>//Go to website on click
+getExperimentHost().openWebSite("https://holons.energy/");
+</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Width>190</Width>
@@ -5299,6 +5302,7 @@ new Thread( () -&gt; {
 			<TextColor/>
 			<VisibleCode>cb_showFilterInterface.isEnabled()</VisibleCode>
 			<Enabled>true</Enabled>
+			<EnableExpression>!settings.isPublicModel()</EnableExpression>
 			<ActionCode>gr_filterInterface.setVisible(cb_showFilterInterface.isSelected());
 
 if(!cb_showFilterInterface.isSelected()){
@@ -6081,7 +6085,7 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 				<Id>1737640715642</Id>
 				<Name><![CDATA[t_selectedNBh]]></Name>
 				<X>-130</X>
-				<Y>120</Y>
+				<Y>117</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -6704,6 +6708,360 @@ fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(true);</ActionCode>
 					<LabelText>Schrijf kwartierwaarden naar excel (Totaal van Geselecteerde Coop)</LabelText>
 				</ExtendedProperties>
 			</Control>
+		</Presentation>
+	</Group>
+	<Text>
+		<Id>1745935981029</Id>
+		<Name><![CDATA[txt_publicModelFunctionalities]]></Name>
+		<X>-680</X>
+		<Y>840</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Public model functionalities]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>12</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Group>
+		<Id>1746110287596</Id>
+		<Name><![CDATA[gr_infoText]]></Name>
+		<X>-2150</X>
+		<Y>360</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<RoundedRectangle>
+				<Id>1746110662246</Id>
+				<Name><![CDATA[rect_infoText]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor>-16777216</LineColor>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>620</Width>
+				<Height>170</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-1</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>10</ArcRadius>
+			</RoundedRectangle>
+			<Group>
+				<Id>1746110287600</Id>
+				<Name><![CDATA[gr_closeInfoText]]></Name>
+				<X>600</X>
+				<Y>20</Y>
+				<Label>
+					<X>5.17</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>p_currentActiveInfoBubble.clear();
+gr_infoText.setVisible(false);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Oval>
+						<Id>1746110287602</Id>
+						<Name><![CDATA[oval_closeInfoText]]></Name>
+						<X>0</X>
+						<Y>0</Y>
+						<Label>
+							<X>0</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor>-16777216</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<RadiusX>12</RadiusX>
+						<RadiusY>40</RadiusY>
+						<Rotation>0.0</Rotation>
+						<FillColor>-12566464</FillColor>
+						<FillMaterial>null</FillMaterial>
+					</Oval>
+					<Line>
+						<Id>1746110287604</Id>
+						<Name><![CDATA[line_closeInfoText1]]></Name>
+						<X>-6</X>
+						<Y>6</Y>
+						<Label>
+							<X>10</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>3</LineWidth>
+						<LineColor>-1</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<BeginArrowSize>1</BeginArrowSize>
+						<BeginArrowStyle>0</BeginArrowStyle>
+						<EndArrowSize>1</EndArrowSize>
+						<EndArrowStyle>0</EndArrowStyle>
+						<Dx>12</Dx>
+						<Dy>-12</Dy>
+						<Dz>0</Dz>
+					</Line>
+					<Line>
+						<Id>1746110287606</Id>
+						<Name><![CDATA[line_closeInfoText2]]></Name>
+						<X>6</X>
+						<Y>6</Y>
+						<Label>
+							<X>10</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>3</LineWidth>
+						<LineColor>-1</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<BeginArrowSize>1</BeginArrowSize>
+						<BeginArrowStyle>0</BeginArrowStyle>
+						<EndArrowSize>1</EndArrowSize>
+						<EndArrowStyle>0</EndArrowStyle>
+						<Dx>-12</Dx>
+						<Dy>-12</Dy>
+						<Dz>0</Dz>
+					</Line>
+				</Presentation>
+			</Group>
+			<Text>
+				<Id>1746110287608</Id>
+				<Name><![CDATA[t_infoTextHeader]]></Name>
+				<X>20</X>
+				<Y>20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Extra Informatie]]></Text>
+				<Font>
+					<Name><![CDATA[Calibri]]></Name>
+					<Size>18</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1746110287610</Id>
+				<Name><![CDATA[t_infoTextDescription]]></Name>
+				<X>20</X>
+				<Y>50</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA["Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+officia deserunt mollit anim id est laborum."]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+		</Presentation>
+	</Group>
+	<Rectangle>
+		<Id>1746110300955</Id>
+		<Name><![CDATA[rect_ìnfoBubbleFunctions]]></Name>
+		<X>-1960</X>
+		<Y>0</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>3</LineWidth>
+		<LineColor>-16777216</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>360</Width>
+		<Height>350</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Rectangle>
+	<Text>
+		<Id>1746110305368</Id>
+		<Name><![CDATA[txt_infoBubbleFunctions]]></Name>
+		<X>-1930</X>
+		<Y>30</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Info Bubble Functions]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>14</Size>
+			<Style>1</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Group>
+		<Id>1746187848442</Id>
+		<Name><![CDATA[gr_publicVersionWarningMessage]]></Name>
+		<X>460</X>
+		<Y>-2160</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>740</XCode>
+		<YCode>40</YCode>
+		<VisibleCode>settings.isPublicModel()</VisibleCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Text>
+				<Id>1746027175818</Id>
+				<Name><![CDATA[txt_publicVersion]]></Name>
+				<X>-20</X>
+				<Y>-20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-65536</Color>
+				<Text><![CDATA[Dit is een publieke versie met beperkte functionaliteiten]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>24</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Image>
+				<Id>1746187821228</Id>
+				<Name><![CDATA[i_publicVersionWarningMessage]]></Name>
+				<X>304</X>
+				<Y>-14</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>f_setInfoText(i_publicVersionWarningMessage, v_infoText.publicVersionWarning, i_publicVersionWarningMessage.getX() + gr_publicVersionWarningMessage.getX(), i_publicVersionWarningMessage.getY() + gr_publicVersionWarningMessage.getY());</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
 		</Presentation>
 	</Group>
 </Presentation>

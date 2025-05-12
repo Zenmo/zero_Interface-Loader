@@ -128,7 +128,7 @@
 		<ContainerLink>
 			<Id>1722253115477</Id>
 			<Name><![CDATA[uI_Tabs]]></Name>
-			<X>50</X>
+			<X>40</X>
 			<Y>-100</Y>
 			<Label>
 				<X>10</X>
@@ -145,7 +145,7 @@
 		<ContainerLink>
 			<Id>1722253115479</Id>
 			<Name><![CDATA[zero_Interface]]></Name>
-			<X>150</X>
+			<X>160</X>
 			<Y>-100</Y>
 			<Label>
 				<X>10</X>

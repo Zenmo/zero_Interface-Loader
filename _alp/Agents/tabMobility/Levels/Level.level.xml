@@ -20,7 +20,7 @@
 		<LineColor>-4144960</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>370</Width>
+		<Width>720</Width>
 		<Height>470</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
@@ -54,8 +54,8 @@
 	<Group>
 		<Id>1722247567090</Id>
 		<Name><![CDATA[gr_mobilityDemandSliders]]></Name>
-		<X>185</X>
-		<Y>175</Y>
+		<X>0</X>
+		<Y>0</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -71,8 +71,8 @@
 			<Rectangle>
 				<Id>1722247567092</Id>
 				<Name><![CDATA[rect_mobilityDemandSliders]]></Name>
-				<X>-185</X>
-				<Y>-175</Y>
+				<X>0</X>
+				<Y>0</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -98,8 +98,8 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567094</Id>
 				<Name><![CDATA[sl_fossilFuelCars_pct]]></Name>
-				<X>75</X>
-				<Y>120</Y>
+				<X>260</X>
+				<Y>295</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -127,8 +127,8 @@ f_setElectricCars( sl_electricCars_pct.getValue(), sl_electricCars_pct, sl_fossi
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567096</Id>
 				<Name><![CDATA[sl_electricTrucks_pct]]></Name>
-				<X>75</X>
-				<Y>-90</Y>
+				<X>260</X>
+				<Y>85</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -140,8 +140,8 @@ f_setElectricCars( sl_electricCars_pct.getValue(), sl_electricCars_pct, sl_fossi
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setVehicleSliders( 0, sl_electricTrucks_pct, null, sl_fossilFuelTrucks_pct );
-f_setElectricTrucks( sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl_fossilFuelTrucks_pct );</ActionCode>
+					<ActionCode>f_setVehicleSliders( 0, sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );
+f_setElectricTrucks( sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -155,8 +155,8 @@ f_setElectricTrucks( sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl
 			<Text>
 				<Id>1722247567098</Id>
 				<Name><![CDATA[t_fossilFuelCars_pct]]></Name>
-				<X>45</X>
-				<Y>125</Y>
+				<X>230</X>
+				<Y>300</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -181,8 +181,8 @@ f_setElectricTrucks( sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl
 			<Text>
 				<Id>1722247567100</Id>
 				<Name><![CDATA[t_fossilFuelCarsDescription]]></Name>
-				<X>-165</X>
-				<Y>125</Y>
+				<X>20</X>
+				<Y>300</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -206,8 +206,8 @@ f_setElectricTrucks( sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl
 			<Text>
 				<Id>1722247567102</Id>
 				<Name><![CDATA[t_electricTrucksDescription]]></Name>
-				<X>-170</X>
-				<Y>-85</Y>
+				<X>15</X>
+				<Y>90</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -231,8 +231,8 @@ f_setElectricTrucks( sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl
 			<Text>
 				<Id>1722247567104</Id>
 				<Name><![CDATA[t_electricTrucks_pct]]></Name>
-				<X>45</X>
-				<Y>-85</Y>
+				<X>230</X>
+				<Y>90</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -257,8 +257,8 @@ f_setElectricTrucks( sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl
 			<Text>
 				<Id>1722247567106</Id>
 				<Name><![CDATA[t_mobilityDemandReductionDescription]]></Name>
-				<X>-175</X>
-				<Y>-155</Y>
+				<X>10</X>
+				<Y>20</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -271,7 +271,7 @@ f_setElectricTrucks( sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Krimp transportbewegingen]]></Text>
+				<Text><![CDATA[Besparing transport]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
@@ -283,8 +283,8 @@ f_setElectricTrucks( sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567108</Id>
 				<Name><![CDATA[sl_mobilityDemandReduction_pct]]></Name>
-				<X>75</X>
-				<Y>-160</Y>
+				<X>260</X>
+				<Y>15</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -311,8 +311,8 @@ f_setElectricTrucks( sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl
 			<Text>
 				<Id>1722247567110</Id>
 				<Name><![CDATA[t_mobilityDemandReduction_pct]]></Name>
-				<X>45</X>
-				<Y>-155</Y>
+				<X>230</X>
+				<Y>20</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -338,8 +338,8 @@ f_setElectricTrucks( sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567112</Id>
 				<Name><![CDATA[sl_hydrogenTrucks_pct]]></Name>
-				<X>75</X>
-				<Y>-65</Y>
+				<X>260</X>
+				<Y>110</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -350,8 +350,9 @@ f_setElectricTrucks( sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>false</Enabled>
-					<ActionCode>traceln("Slider doet nog niets!!");</ActionCode>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setVehicleSliders( 1, sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );
+f_setHydrogenTrucks( sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -365,8 +366,8 @@ f_setElectricTrucks( sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl
 			<Text>
 				<Id>1722247567114</Id>
 				<Name><![CDATA[t_hydrogenTrucksDescription]]></Name>
-				<X>-170</X>
-				<Y>-60</Y>
+				<X>15</X>
+				<Y>115</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -390,8 +391,8 @@ f_setElectricTrucks( sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl
 			<Text>
 				<Id>1722247567116</Id>
 				<Name><![CDATA[t_hydrogenTrucks_pct]]></Name>
-				<X>45</X>
-				<Y>-60</Y>
+				<X>230</X>
+				<Y>115</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -417,8 +418,8 @@ f_setElectricTrucks( sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567118</Id>
 				<Name><![CDATA[sl_fossilFuelTrucks_pct]]></Name>
-				<X>75</X>
-				<Y>-40</Y>
+				<X>260</X>
+				<Y>135</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -430,8 +431,8 @@ f_setElectricTrucks( sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setVehicleSliders( 2, sl_electricTrucks_pct, null, sl_fossilFuelTrucks_pct );
-f_setElectricTrucks(sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl_fossilFuelTrucks_pct );</ActionCode>
+					<ActionCode>f_setVehicleSliders( 2, sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );
+f_setDieselTrucks(sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -445,8 +446,8 @@ f_setElectricTrucks(sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl_
 			<Text>
 				<Id>1722247567120</Id>
 				<Name><![CDATA[t_fossilFuelTrucksDescription]]></Name>
-				<X>-170</X>
-				<Y>-35</Y>
+				<X>15</X>
+				<Y>140</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -470,8 +471,8 @@ f_setElectricTrucks(sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl_
 			<Text>
 				<Id>1722247567122</Id>
 				<Name><![CDATA[t_fossilFuelTrucks_pct]]></Name>
-				<X>45</X>
-				<Y>-35</Y>
+				<X>230</X>
+				<Y>140</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -496,8 +497,8 @@ f_setElectricTrucks(sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl_
 			<Text>
 				<Id>1722247567124</Id>
 				<Name><![CDATA[t_trucksDescription]]></Name>
-				<X>-170</X>
-				<Y>-110</Y>
+				<X>15</X>
+				<Y>65</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -522,8 +523,8 @@ f_setElectricTrucks(sl_electricTrucks_pct.getValue(), sl_electricTrucks_pct, sl_
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567126</Id>
 				<Name><![CDATA[sl_electricCars_pct]]></Name>
-				<X>75</X>
-				<Y>95</Y>
+				<X>260</X>
+				<Y>270</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -550,8 +551,8 @@ f_setElectricCars( sl_electricCars_pct.getValue(), sl_electricCars_pct, sl_fossi
 			<Text>
 				<Id>1722247567128</Id>
 				<Name><![CDATA[t_electricCarsDescription]]></Name>
-				<X>-165</X>
-				<Y>100</Y>
+				<X>20</X>
+				<Y>275</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -575,8 +576,8 @@ f_setElectricCars( sl_electricCars_pct.getValue(), sl_electricCars_pct, sl_fossi
 			<Text>
 				<Id>1722247567130</Id>
 				<Name><![CDATA[t_electricCars_pct]]></Name>
-				<X>45</X>
-				<Y>100</Y>
+				<X>230</X>
+				<Y>275</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -601,8 +602,8 @@ f_setElectricCars( sl_electricCars_pct.getValue(), sl_electricCars_pct, sl_fossi
 			<Text>
 				<Id>1722247567132</Id>
 				<Name><![CDATA[t_carsDescription]]></Name>
-				<X>-170</X>
-				<Y>75</Y>
+				<X>15</X>
+				<Y>250</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -627,8 +628,8 @@ f_setElectricCars( sl_electricCars_pct.getValue(), sl_electricCars_pct, sl_fossi
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567134</Id>
 				<Name><![CDATA[sl_fossilFuelVans_pct]]></Name>
-				<X>75</X>
-				<Y>40</Y>
+				<X>260</X>
+				<Y>215</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -655,8 +656,8 @@ f_setElectricVans( sl_electricVans_pct.getValue(), sl_electricVans_pct, sl_fossi
 			<Text>
 				<Id>1722247567136</Id>
 				<Name><![CDATA[t_fossilFuelVans_pct]]></Name>
-				<X>45</X>
-				<Y>45</Y>
+				<X>230</X>
+				<Y>220</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -681,8 +682,8 @@ f_setElectricVans( sl_electricVans_pct.getValue(), sl_electricVans_pct, sl_fossi
 			<Text>
 				<Id>1722247567138</Id>
 				<Name><![CDATA[t_fossilFuelVansDescription]]></Name>
-				<X>-170</X>
-				<Y>45</Y>
+				<X>15</X>
+				<Y>220</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -707,8 +708,8 @@ f_setElectricVans( sl_electricVans_pct.getValue(), sl_electricVans_pct, sl_fossi
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567140</Id>
 				<Name><![CDATA[sl_electricVans_pct]]></Name>
-				<X>75</X>
-				<Y>15</Y>
+				<X>260</X>
+				<Y>190</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -735,8 +736,8 @@ f_setElectricVans( sl_electricVans_pct.getValue(), sl_electricVans_pct, sl_fossi
 			<Text>
 				<Id>1722247567142</Id>
 				<Name><![CDATA[t_electricVansDescription]]></Name>
-				<X>-170</X>
-				<Y>20</Y>
+				<X>15</X>
+				<Y>195</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -760,8 +761,8 @@ f_setElectricVans( sl_electricVans_pct.getValue(), sl_electricVans_pct, sl_fossi
 			<Text>
 				<Id>1722247567144</Id>
 				<Name><![CDATA[t_electricVans_pct]]></Name>
-				<X>45</X>
-				<Y>20</Y>
+				<X>230</X>
+				<Y>195</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -786,8 +787,8 @@ f_setElectricVans( sl_electricVans_pct.getValue(), sl_electricVans_pct, sl_fossi
 			<Text>
 				<Id>1722247567146</Id>
 				<Name><![CDATA[t_vansDescription]]></Name>
-				<X>-170</X>
-				<Y>-5</Y>
+				<X>15</X>
+				<Y>170</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -808,6 +809,222 @@ f_setElectricVans( sl_electricVans_pct.getValue(), sl_electricVans_pct, sl_fossi
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
+			<Image>
+				<Id>1746096199769</Id>
+				<Name><![CDATA[i_mobilityReduction]]></Name>
+				<X>160</X>
+				<Y>20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_mobilityReduction, zero_Interface.v_infoText.mobilityDemandReduction, i_mobilityReduction.getX() + uI_Tabs.v_presentationXOffset, i_mobilityReduction.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746096716217</Id>
+				<Name><![CDATA[i_electricTruck]]></Name>
+				<X>160</X>
+				<Y>90</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_electricTruck, zero_Interface.v_infoText.electricTrucks, i_electricTruck.getX() + uI_Tabs.v_presentationXOffset, i_electricTruck.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746096716230</Id>
+				<Name><![CDATA[i_hydrogenTruck]]></Name>
+				<X>160</X>
+				<Y>115</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_hydrogenTruck, zero_Interface.v_infoText.hydrogenTrucks, i_hydrogenTruck.getX() + uI_Tabs.v_presentationXOffset, i_hydrogenTruck.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746096716242</Id>
+				<Name><![CDATA[i_fossilFuelTruck]]></Name>
+				<X>160</X>
+				<Y>140</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_fossilFuelTruck, zero_Interface.v_infoText.fossilTrucks, i_fossilFuelTruck.getX() + uI_Tabs.v_presentationXOffset, i_fossilFuelTruck.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746096716255</Id>
+				<Name><![CDATA[i_electricVans]]></Name>
+				<X>160</X>
+				<Y>195</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_electricVans, zero_Interface.v_infoText.electricVans, i_electricVans.getX() + uI_Tabs.v_presentationXOffset, i_electricVans.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746096716267</Id>
+				<Name><![CDATA[i_fossilFuelVans]]></Name>
+				<X>160</X>
+				<Y>220</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_fossilFuelVans, zero_Interface.v_infoText.fossilVans, i_fossilFuelVans.getX() + uI_Tabs.v_presentationXOffset, i_fossilFuelVans.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746096716280</Id>
+				<Name><![CDATA[i_electricCars]]></Name>
+				<X>160</X>
+				<Y>275</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_electricCars, zero_Interface.v_infoText.electricCars, i_electricCars.getX() + uI_Tabs.v_presentationXOffset, i_electricCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746096716293</Id>
+				<Name><![CDATA[i_fossilFuelCars]]></Name>
+				<X>160</X>
+				<Y>300</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_fossilFuelCars, zero_Interface.v_infoText.fossilCars, i_fossilFuelCars.getX() + uI_Tabs.v_presentationXOffset, i_fossilFuelCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
 		</Presentation>
 	</Group>
 	<Rectangle>
@@ -881,8 +1098,8 @@ f_setElectricVans( sl_electricVans_pct.getValue(), sl_electricVans_pct, sl_fossi
 		<LineColor>-5952982</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>300</Width>
-		<Height>150</Height>
+		<Width>640</Width>
+		<Height>230</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -890,7 +1107,7 @@ f_setElectricVans( sl_electricVans_pct.getValue(), sl_electricVans_pct, sl_fossi
 	<Text>
 		<Id>1722342719682</Id>
 		<Name><![CDATA[t_mobilityFunctionsDescription]]></Name>
-		<X>200</X>
+		<X>140</X>
 		<Y>700</Y>
 		<Label>
 			<X>0</X>

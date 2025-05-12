@@ -64,6 +64,11 @@ if (b.gisRegion != null){
 
 double f_selectGISRegion(double clickx,double clicky)
 {/*ALCODESTART::1696863329251*/
+if(settings.isPublicModel()){
+	f_selectGISRegion_publicModel(clickx, clicky);
+	return;
+}
+
 //After a click, reset previous clicked building/gridNode colors and text
 v_previousClickedObjectType = v_clickedObjectType;
 c_previousSelectedObjects = new ArrayList<GIS_Object>(c_selectedObjects);
@@ -306,17 +311,13 @@ double f_setUITabs()
 // Something like: tabElectricity.zero_Interface = loader_Project.zero_Interface;
 // No update to the pointer is needed for the generic tabs
 
-tabElectricity electricityTab = new tabElectricity();
-electricityTab.goToPopulation(uI_Tabs.pop_tabElectricity);
+uI_Tabs.add_pop_tabElectricity();
 
-tabHeating heatingTab = new tabHeating();
-heatingTab.goToPopulation(uI_Tabs.pop_tabHeating);
+uI_Tabs.add_pop_tabHeating();
 
-tabMobility mobilityTab = new tabMobility();
-mobilityTab.goToPopulation(uI_Tabs.pop_tabMobility);
+uI_Tabs.add_pop_tabMobility();
 
-tabEHub EHubTab = new tabEHub();
-EHubTab.goToPopulation(uI_Tabs.pop_tabEHub);
+uI_Tabs.add_pop_tabEHub();
 
 // Group visibilities
 // When using an extension of a generic tab don't forget to typecast it!
@@ -440,6 +441,7 @@ v_clickedObjectAdress = "";
 v_clickedObjectDetails = "";
 v_clickedObjectType = null;
 button_goToUI.setVisible(false);
+gr_multipleBuildingInfo.setVisible(false);
 
 // We restore the colors of what we clicked on before
 if (v_previousClickedObjectType == OL_GISObjectType.GRIDNODE){
@@ -793,6 +795,10 @@ presentation.remove(gr_forceMapSelection);
 presentation.insert(presentation.size(), gr_forceMapSelection);
 presentation.remove(gr_filterInterface);
 presentation.insert(presentation.size(), gr_filterInterface);
+
+if(settings.isPublicModel()){
+	f_changeDefaultColorOfPrivateGC();
+}
 /*ALCODEEND*/}
 
 GISRegion f_createGISObject(double[] gisTokens)
@@ -2151,6 +2157,192 @@ if(map_scale != null){
 va_Interface.navigateTo();
 /*ALCODEEND*/}
 
+double f_setInfoText(ShapeImage infoBubble,String descriptionText,double xPosition,double yPosition)
+{/*ALCODESTART::1743665953113*/
+if ( p_currentActiveInfoBubble.size() > 0 && p_currentActiveInfoBubble.get(0) == infoBubble ) {
+	// If we click a second time on the same bubble it should close the window
+	p_currentActiveInfoBubble.clear();
+	gr_infoText.setVisible(false);
+}
+else {
+	p_currentActiveInfoBubble.clear();
+	p_currentActiveInfoBubble.add(infoBubble);
+	
+	int width_ch = 50;
+	// Set Text
+	Pair<String, Integer> p = v_infoText.restrictWidth(descriptionText, width_ch);
+	t_infoTextDescription.setText(p.getFirst());
+	
+	// Set Size
+	rect_infoText.setWidth(width_ch * 7.5); // about 7.5 px per char for sans serif 14 pt
+	rect_infoText.setHeight(50 + p.getSecond() * 20); // about 50 px for title and 20 px per line for sans serif 14 pt
+	
+	// Set Position
+	// The group position is on the top left, not the centre.
+	double margin_px = 15;
+	//double posX = f_getAbsolutePosition(infoBubble).getX();
+	//double posY = f_getAbsolutePosition(infoBubble).getY();
+	if (xPosition < (va_Interface.getX() + va_Interface.getWidth()/2) ) {
+		// bubble is on the left half, so text should appear to the right
+		gr_infoText.setX( xPosition + margin_px + infoBubble.getWidth()/2);
+	}
+	else {
+		// bubble is on the right half, so text should appear to the left
+		gr_infoText.setX( xPosition - margin_px + infoBubble.getWidth()/2 - rect_infoText.getWidth());
+	}
+	
+	// In AnyLogic the Y-Axis is inverted
+	if (yPosition > (va_Interface.getY() + va_Interface.getHeight()/2) ) {
+		// bubble is on the bottom half, so text should appear above
+		gr_infoText.setY( yPosition - margin_px + infoBubble.getHeight()/2 - rect_infoText.getHeight());
+	}
+	else {
+		// bubble is on the top half, so text should appear below
+		gr_infoText.setY( yPosition + margin_px + infoBubble.getHeight()/2);
+	}
+	
+	// Position of close button
+	gr_closeInfoText.setX( width_ch * 7.5 - 20 ); // 20 px offset from the right hand side
+	
+	gr_infoText.setVisible(true);
+}
+/*ALCODEEND*/}
+
+Pair<ShapeGroup, Point> f_getGroupPositionIteration(Pair<ShapeGroup, Point> pair)
+{/*ALCODESTART::1744894817569*/
+return new Pair(pair.getFirst().getGroup(), new Point(pair.getFirst().getX() + pair.getSecond().getX(), pair.getFirst().getY() + pair.getSecond().getY()));
+/*ALCODEEND*/}
+
+Point f_getAbsolutePosition(Shape shape)
+{/*ALCODESTART::1744894817571*/
+// Note: Only works if the Agent is not living in the space of the interface!
+
+// Start with the shape position
+Point point = new Point(shape.getX(), shape.getY());
+traceln("point0: " + point);
+
+// Find presentation the shape is in to get the offset.
+if (shape.getPresentable() == this) {
+	// The shape is on this canvas, no additional offset
+}
+else {
+	// The shape is in a (possibly nested) presentation
+	traceln("shape.getPresentable(): " + shape.getPresentable());
+	traceln("shapetoplevel: " + shape.getPresentable().getPresentationShape());
+	for (ShapeEmbeddedObjectPresentation ap : c_presentations) {
+		traceln("AP: " + ap);
+		traceln("AG: " + ap.getEmbeddedObject());
+	}
+	ShapeEmbeddedObjectPresentation presentation = findFirst(c_presentations, ap -> ap.getEmbeddedObject() == shape.getPresentable());
+	if (presentation == null) {
+		throw new RuntimeException("Shape not inside any presentation. Is the collection c_presentations filled with all agent presentations?");
+	}
+	traceln("point1: " + point);
+	
+	point.add( new Point(presentation.getX(), presentation.getY()) );
+	// It is possible that the agent presentation is also inside a group. See AnyLogic update 8.9.2. We assume these are not in nested groups.
+	traceln("point2: " + point);
+	
+	point.add( new Point(presentation.getGroup().getX(), presentation.getGroup().getY()) );
+	
+	traceln("point3: " + point);
+	Pair<ShapeEmbeddedObjectPresentation, Point> pair = new Pair(presentation, point);
+	while ( pair.getFirst().getPresentable() != this ) {
+		pair = f_getPresentationPositionIteration(pair);
+		traceln("pair: " + pair);
+		traceln("point_i: " + pair.getSecond());
+	}
+	point = pair.getSecond();
+}
+
+// Recursively add the group offsets.
+ShapeGroup group = shape.getGroup();
+traceln("group x: " + group.getX());
+traceln("group y: " + group.getY());
+Pair<ShapeGroup, Point> pair = new Pair(group, point);
+while ( !(pair.getFirst() instanceof ShapeTopLevelPresentationGroup) ) {
+	pair = f_getGroupPositionIteration(pair);
+	traceln("point_j: " + pair.getSecond());
+}
+return pair.getSecond();
+
+
+
+
+
+/*
+(main) tabs_presentation (tabs_presentation.getEmbeddedobject() = agent1)
+	(agent 1) tab_elec_presentation  (tab_elec_presentation.getEmbeddedobject() = agent2)
+		(agent 2) shape (shape.getpresentable() = agent2)
+
+
+findfirst(c_presentations, ap -> ap.getEmbeddedObject() == shape.getPresentable() ) => tab_elec_presentation
+
+tab_elec_presentation.getPresentable() => agent 1, so use this in the next iteration
+
+findfirst(c_presentations, ap -> ap.getEmbeddedObject() == tab_elec_presentation.getPresentable() ) => tabs_presentation
+
+*/
+
+
+/*
+
+double presentationOffsetX;
+double presentationOffsetY;
+if (shape.getPresentable() == this) {
+	// The shape is on this canvas, no additional offset
+	presentationOffsetX = 0.0;
+	presentationOffsetY = 0.0;
+}
+else {
+	traceln("getEmbeddedObject: " + c_presentations.get(0).getEmbeddedObject());
+	traceln("getEmbeddedObject: " + c_presentations.get(1).getEmbeddedObject());
+	traceln("shape.getPresentable()" + shape.getPresentable());
+	traceln("agent presentable: " + agent.presentation);
+	traceln("this presentable: " + this.presentation);
+	ShapeEmbeddedObjectPresentation presentation = findFirst(c_presentations, ap -> ap.getEmbeddedObject() == shape.getPresentable());
+	if (presentation == null) {
+		throw new RuntimeException("Shape not inside any presentation. Is the collection c_presentations filled with all agent presentations?");
+	}
+	presentationOffsetX = presentation.getX();
+	presentationOffsetY = presentation.getY();
+	// It is possible that the agent presentation is also inside a group. See AnyLogic update 8.9.2. We assume these are not in nested groups.
+	presentationOffsetX += presentation.getGroup().getX();
+	presentationOffsetY += presentation.getGroup().getY();
+	traceln("presentationOffsetX: " + presentationOffsetX);
+}
+
+// Add the presentation offset to the shape position and then recursively add the group offsets.
+Point point = new Point(shape.getX() + presentationOffsetX, shape.getY() + presentationOffsetY);
+ShapeGroup group = shape.getGroup();
+Pair<ShapeGroup, Point> pair = new Pair(group, point);
+while ( !(pair.getFirst() instanceof ShapeTopLevelPresentationGroup) ) {
+	pair = f_getGroupPositionIteration(pair);
+}
+return pair.getSecond();
+
+*/
+
+/*ALCODEEND*/}
+
+Pair<ShapeEmbeddedObjectPresentation, Point> f_getPresentationPositionIteration(Pair<ShapeEmbeddedObjectPresentation. Point> pair)
+{/*ALCODESTART::1744894817573*/
+ShapeEmbeddedObjectPresentation presentation = findFirst(c_presentations, ap -> ap.getEmbeddedObject() == pair.getFirst().getPresentable());
+if (presentation == null) {
+	throw new RuntimeException("Shape not inside any presentation. Is the collection c_presentations filled with all agent presentations?");
+}
+Point point = pair.getSecond();
+traceln("presentation agent: " + presentation.getEmbeddedObject());
+traceln("point in presentation iteration before: " + point);
+point.add( new Point(presentation.getX(), presentation.getY()) );
+// It is possible that the agent presentation is also inside a group. See AnyLogic update 8.9.2. We assume these are not in nested groups.
+traceln("point in presentation iteration middle: " + point);
+point.add( new Point(presentation.getGroup().getX(), presentation.getGroup().getY()) );
+traceln("point in presentation iteration after: " + point);
+
+return new Pair(presentation, point);
+/*ALCODEEND*/}
+
 double f_harvestEnergyModelLoadData()
 {/*ALCODESTART::1744624088848*/
 traceln("Start writing Electricity Load Balance data to excel!");
@@ -2278,6 +2470,138 @@ for (int row = 1; row <= 35137; row++) {
     for (int col = 1; col <= p_maxNrSelectedGCForExport + 2; col++) {
         excel_exportBalanceLoadData.setCellValue("", "Electricity Load Balance", row, col);
     }
+}
+/*ALCODEEND*/}
+
+double f_selectGISRegion_publicModel(double clickx,double clicky)
+{/*ALCODESTART::1745936595905*/
+//After a click, reset previous clicked building/gridNode colors and text
+v_previousClickedObjectType = v_clickedObjectType;
+c_previousSelectedObjects = new ArrayList<GIS_Object>(c_selectedObjects);
+ArrayList<GIS_Object> buildingsConnectedToSelectedBuildingsList = new ArrayList<>();
+c_selectedGridConnections.clear();
+c_selectedObjects.clear();
+
+//Deselect previous selection
+if( v_previousClickedObjectType != null){
+	f_deselectPreviousSelect();
+}
+
+//Check if click was on Gridnode, if yes, select grid node
+for ( GridNode GN : energyModel.pop_gridNodes ){
+	if( GN.gisRegion != null && GN.gisRegion.contains(clickx, clicky) && GN.gisRegion.isVisible() ){
+		if(GN.f_getAllLowerLVLConnectedGridConnections().size() >= p_minSelectedGCForPublicAggregation){
+			f_selectGridNode(GN);
+		}
+		else{
+			//Data sharing not agreed?
+			v_clickedObjectType = OL_GISObjectType.REGION;
+			uI_Results.f_updateResultsUI(energyModel);
+			
+			//Enable kpi summary button
+			uI_Results.getCheckbox_KPISummary().setEnabled(true);
+		}
+		return;
+	}
+}
+
+//Check if click was on Building, if yes, select grid building
+for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
+	if( b.gisRegion != null && b.gisRegion.contains(clickx, clicky) ){
+		if (b.gisRegion.isVisible()) { //only allow us to click on visible objects
+			if (b.c_containedGridConnections.size() > 0 ) { // only allow buildings with gridconnections
+				if(b.c_containedGridConnections.get(0).p_owner.b_dataSharingAgreed){
+					buildingsConnectedToSelectedBuildingsList = b.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
+					f_selectBuilding(b, buildingsConnectedToSelectedBuildingsList);
+				}
+				else{
+					//Data sharing not agreed?
+					v_clickedObjectType = OL_GISObjectType.REGION;
+					uI_Results.f_updateResultsUI(energyModel);
+					
+					//Enable kpi summary button
+					uI_Results.getCheckbox_KPISummary().setEnabled(true);
+				}
+				return;
+			}
+		}
+	}
+}
+
+//Check if click was on remaining objects such as chargers, solarfields, parcels: if yes, select object
+for ( GIS_Object GISobject : energyModel.pop_GIS_Objects ){
+	if( GISobject.gisRegion != null && GISobject.gisRegion.contains(clickx, clicky) ) {
+		if (GISobject.gisRegion.isVisible()) { //only allow us to click on visible objects
+			if (GISobject.c_containedGridConnections.size() > 0 ) { // only allow objects with gridconnections
+				if(GISobject.c_containedGridConnections.get(0).p_owner.b_dataSharingAgreed){
+					// Find buildings powered by the same GC as the clicked object
+					buildingsConnectedToSelectedBuildingsList = GISobject.c_containedGridConnections.get(0).c_connectedGISObjects; 
+					
+					//Find the (first) connected GC in the object
+					GridConnection selectedGC = GISobject.c_containedGridConnections.get(0);
+	
+					//Set the selected GIS object type
+					v_clickedObjectType = GISobject.p_GISObjectType;
+					c_selectedObjects.add(GISobject);
+					
+					//Set the correct interface view for each object type
+					switch(v_clickedObjectType){
+					
+					case CHARGER:
+						f_selectCharger((GCPublicCharger)selectedGC, GISobject );
+						break;
+					
+						
+					default:
+						buildingsConnectedToSelectedBuildingsList = GISobject.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
+						f_selectBuilding(GISobject, buildingsConnectedToSelectedBuildingsList);		
+						break;
+					}
+				}
+				else{
+					//Data sharing not agreed?
+					v_clickedObjectType = OL_GISObjectType.REGION;
+					uI_Results.f_updateResultsUI(energyModel);
+					
+					//Enable kpi summary button
+					uI_Results.getCheckbox_KPISummary().setEnabled(true);
+				}
+				return;
+			}
+		}
+	}
+}
+
+//Still no clicked object? :select basic region
+v_clickedObjectType = OL_GISObjectType.REGION;
+uI_Results.f_updateResultsUI(energyModel);
+
+//Enable kpi summary button
+uI_Results.getCheckbox_KPISummary().setEnabled(true);
+/*ALCODEEND*/}
+
+double f_changeDefaultColorOfPrivateGC()
+{/*ALCODESTART::1746085650084*/
+for(GIS_Object object : energyModel.pop_GIS_Objects){
+	for(GridConnection GC : object.c_containedGridConnections){
+		if(!GC.p_owner.b_dataSharingAgreed){
+			object.p_defaultFillColor = transparent(object.p_defaultFillColor, 0.6);//v_dataSharingDisagreedColor;
+			object.p_defaultLineStyle = LINE_STYLE_DOTTED;
+			object.f_style(null, null, null, null);
+			break;
+		}
+	}
+}
+
+for(GIS_Building building : energyModel.pop_GIS_Buildings){
+	for(GridConnection GC : building.c_containedGridConnections){
+		if(!GC.p_owner.b_dataSharingAgreed){
+			building.p_defaultFillColor = transparent(building.p_defaultFillColor, 0.6);//v_dataSharingDisagreedColor;
+			building.p_defaultLineStyle = LINE_STYLE_DOTTED;
+			building.f_style(null, null, null, null);
+			break;
+		}
+	}
 }
 /*ALCODEEND*/}
 
