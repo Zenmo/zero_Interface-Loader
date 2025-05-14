@@ -1478,6 +1478,7 @@ switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingT
 	
 	case GASFIRED_CHPPEAK:
 		nr_currentHeatingType = 4;
+		gr_heatingOptionBlockerCHP.setVisible(false);
 		break;
 		
 	case OTHER:
