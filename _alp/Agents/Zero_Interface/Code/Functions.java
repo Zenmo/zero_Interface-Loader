@@ -587,7 +587,6 @@ if(!b_runningMainInterfaceScenarios){
 			f_enableLivePlotsOnly(companyUI.uI_Results);
 		}
 	}
-	
 	runSimulation();
 }
 /*ALCODEEND*/}

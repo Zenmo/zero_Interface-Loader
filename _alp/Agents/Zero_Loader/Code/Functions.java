@@ -1341,21 +1341,20 @@ case PHOTOVOLTAIC:
 	profilePointer = energyModel.pp_solarPVproduction;
 	capacityElectric_kW = installedPower_kW;
 	//traceln("Installing PV for %s with power %s", parentGC.p_ownerID, capacityElectric_kW);
-	
-break;
+	break;
 
 case WINDMILL:
 	//asset_name = "Windmill onshore";'
 	profilePointer=energyModel.pp_windOnshoreProduction;
 	capacityElectric_kW = installedPower_kW;
-break;
+	break;
 
 case PHOTOTHERMAL: //NOT USED YET
 	//asset_name = "PVT";
 	capacityElectric_kW = installedPower_kW*0.5;//??????
 	capacityHeat_kW	= installedPower_kW*0.5; // ????????
 	outputTemperature_degC = 60; // ??????
-break;
+	break;
 }
 
 J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, capacityElectric_kW , capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, timestep_h, outputTemperature_degC, profilePointer);
@@ -3227,12 +3226,11 @@ if (gridConnection.getSupply().getHasSupply() != null && gridConnection.getSuppl
 		catch(Exception e) {
 		}
 	}
-	if (yearlyElectricityProduction_kWh_array != null && gridConnection.getSupply().getPvInstalledKwp() != null && gridConnection.getSupply().getPvInstalledKwp() > 0){
+	if (yearlyElectricityProduction_kWh_array != null && gridConnection.getSupply().getPvInstalledKwp() != null && gridConnection.getSupply().getPvInstalledKwp() > 0 && !gridConnection.getHeat().getHeatingTypes().contains(com.zenmo.zummon.companysurvey.HeatingType.COMBINED_HEAT_AND_POWER)){
 		f_createCustomPVAsset(companyGC, yearlyElectricityProduction_kWh_array, (double)gridConnection.getSupply().getPvInstalledKwp()); // Create custom PV asset when production data is available!
 		current_scenario_list.setCurrentPV_kW(gridConnection.getSupply().getPvInstalledKwp());
 	} else if (gridConnection.getSupply().getPvInstalledKwp() != null && gridConnection.getSupply().getPvInstalledKwp() > 0){			
 		//gridConnection.getSupply().getPvOrientation(); // Wat doen we hier mee????? Nog niets!
-		
 		f_addEnergyProduction(companyGC, OL_EnergyAssetType.PHOTOVOLTAIC, "Rooftop Solar", gridConnection.getSupply().getPvInstalledKwp());
 		
 		//add to scenario: current
