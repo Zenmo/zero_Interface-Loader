@@ -1021,7 +1021,7 @@ f_setUIButton();
 double f_setColorsBasedOnGridTopology_objects(GIS_Object gis_area)
 {/*ALCODESTART::1718566260603*/
 if (gis_area.c_containedGridConnections.size() > 0) {
-	Color c = gis_area.c_containedGridConnections.get(0).l_parentNodeElectric.getConnectedAgent().p_uniqueColor;
+	Color c = gis_area.c_containedGridConnections.get(0).p_parentNodeElectric.p_uniqueColor;
 	gis_area.f_style(c, black, 1.0, null);
 }
 /*ALCODEEND*/}
@@ -1614,7 +1614,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 		if (b.gisRegion.isVisible()) { //only allow us to click on visible objects
 			if (b.c_containedGridConnections.size() > 0 ) { // only allow buildings with gridconnections
 				GridConnection clickedGridConnection = b.c_containedGridConnections.get(0); // Find buildings powered by the same GC as the clicked building
-				GridNode clickedGridConnectionConnectedGridNode = clickedGridConnection.l_parentNodeElectric.getConnectedAgent();
+				GridNode clickedGridConnectionConnectedGridNode = clickedGridConnection.p_parentNodeElectric;
 				ArrayList<GridNode> allGridNodes = new ArrayList<GridNode>(energyModel.f_getGridNodesTopLevel());
 				allGridNodes.addAll(energyModel.f_getGridNodesNotTopLevel());
 				
@@ -1626,7 +1626,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 						clickedGridConnectionConnectedGridNode = findFirst(allGridNodes, GN -> GN.p_gridNodeID.equals(parentNodeName));
 					}
 					else{ // At top node --> select the directly attached grid node instead, and break out of while loop.
-						clickedGridConnectionConnectedGridNode = clickedGridConnection.l_parentNodeElectric.getConnectedAgent();
+						clickedGridConnectionConnectedGridNode = clickedGridConnection.p_parentNodeElectric;
 						break;
 					}
 				}	
