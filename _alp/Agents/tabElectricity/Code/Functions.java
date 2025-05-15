@@ -10,7 +10,7 @@ double totalActiveUtilityConnections = count(zero_Interface.energyModel.UtilityC
 
 if( PV_pct/100.0 < PVsystems/totalActiveUtilityConnections ){
 	while ( PV_pct/100.0*totalActiveUtilityConnections < PVsystems) { // remove excess PV systems
-		GridConnection gc = findFirst(zero_Interface.c_orderedPVSystems, x->x.v_hasPV==true);
+		GCUtility gc = findFirst(zero_Interface.c_orderedPVSystemsCompanies, x->x.v_hasPV==true);
 		
 		if(gc != null){
 			// update UI company
@@ -31,8 +31,8 @@ if( PV_pct/100.0 < PVsystems/totalActiveUtilityConnections ){
 			//traceln("Found PV system: " + pvAsset);
 			if (pvAsset!=null) {
 				pvAsset.removeEnergyAsset();
-				zero_Interface.c_orderedPVSystems.remove(gc);
-				zero_Interface.c_orderedPVSystems.add(0, gc);
+				zero_Interface.c_orderedPVSystemsCompanies.remove(gc);
+				zero_Interface.c_orderedPVSystemsCompanies.add(0, gc);
 				//traceln("Removing PV from GridConnection:" + h.p_gridConnectionID);
 			}
 			else{
@@ -58,7 +58,7 @@ if( PV_pct/100.0 < PVsystems/totalActiveUtilityConnections ){
 else {
 	while ( PV_pct/100.0 > PVsystems/totalActiveUtilityConnections) {
 
-		GridConnection gc = findFirst(zero_Interface.c_orderedPVSystems, x->x.v_hasPV==false);
+		GCUtility gc = findFirst(zero_Interface.c_orderedPVSystemsCompanies, x->x.v_hasPV==false);
 		if (gc == null){
 			traceln("No gridconnection without PV panels found! Current PVsystems count: %s", PVsystems);
 			break;
@@ -77,8 +77,8 @@ else {
 			J_EAProduction productionAsset = new J_EAProduction ( gc, assetType, assetName, capacityElectricity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC, zero_Interface.energyModel.pp_solarPVproduction );
 			
 			//Add GC to top of the orderd pv systems so it will be found first when removing.
-			zero_Interface.c_orderedPVSystems.remove(gc);
-			zero_Interface.c_orderedPVSystems.add(0, gc);
+			zero_Interface.c_orderedPVSystemsCompanies.remove(gc);
+			zero_Interface.c_orderedPVSystemsCompanies.add(0, gc);
 		
 			PVsystems++;
 			//traceln("Added PV to GridConnection: " + gc.p_gridConnectionID + "With capacity [kW]: " + capacityElectricity_kW);
@@ -151,12 +151,12 @@ double nbHousesWithPV = count(zero_Interface.energyModel.Houses, x -> x.v_hasPV 
 
 if( PV_pct /100.0 < nbHousesWithPV / zero_Interface.energyModel.Houses.size() ){
 	while ( PV_pct / 100.0 * zero_Interface.energyModel.Houses.size() < nbHousesWithPV ) { // remove excess PV systems
-		GridConnection house = findFirst(zero_Interface.c_orderedPVSystems, x -> x.v_hasPV == true);		
+		GCHouse house = findFirst(zero_Interface.c_orderedPVSystemsHouses, x -> x.v_hasPV == true);	
 		J_EA pvAsset = findFirst(house.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
 		if (pvAsset != null) {
 			pvAsset.removeEnergyAsset();
-			zero_Interface.c_orderedPVSystems.remove( house) ;
-			zero_Interface.c_orderedPVSystems.add(0, house) ;
+			zero_Interface.c_orderedPVSystemsHouses.remove( house) ;
+			zero_Interface.c_orderedPVSystemsHouses.add(0, house) ;
 			nbHousesWithPV --; 
 		}
 		else {
@@ -167,7 +167,7 @@ if( PV_pct /100.0 < nbHousesWithPV / zero_Interface.energyModel.Houses.size() ){
 }
 else {
 	while ( PV_pct / 100.0 > nbHousesWithPV / zero_Interface.energyModel.Houses.size()) {
-		GridConnection house = findFirst(zero_Interface.c_orderedPVSystems, x -> x.v_hasPV == false);
+		GCHouse house = findFirst(zero_Interface.c_orderedPVSystemsHouses, x -> x.v_hasPV == false);
 		if (house == null){
 			traceln("No gridconnection without PV panels found! Current PVsystems count: %s", nbHousesWithPV);
 			break;
@@ -181,8 +181,8 @@ else {
 			double installedPVCapacity_kW = uniform(3,6);
 
 			J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, installedPVCapacity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC, zero_Interface.energyModel.pp_solarPVproduction );
-			zero_Interface.c_orderedPVSystems.remove(house);
-			zero_Interface.c_orderedPVSystems.add(0, house);
+			zero_Interface.c_orderedPVSystemsHouses.remove(house);
+			zero_Interface.c_orderedPVSystemsHouses.add(0, house);
 			nbHousesWithPV ++;	
 		}
 	}
@@ -504,5 +504,37 @@ for(GCEnergyProduction GCProd : zero_Interface.energyModel.EnergyProductionSites
 		}
 	}
 }
+/*ALCODEEND*/}
+
+double f_getPVSystemPercentage(List<GridConnection> gcList)
+{/*ALCODESTART::1747294812333*/
+double installedPV_kWp = 0.0;
+double PVPotential_kWp = 0.0;
+double averageEffectivePV_kWppm2 = zero_Interface.energyModel.avgc_data.p_avgRatioRoofPotentialPV * zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2;
+
+for (GridConnection gc : gcList ) {
+	double gcInstalledPV_kWp = 0.0;
+	if ( gc.v_hasPV ) {
+		for ( J_EAProduction j_ea : gc.c_productionAssets ) {
+			if ( j_ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC ) {
+				gcInstalledPV_kWp += j_ea.getCapacityElectric_kW();
+			}
+		}
+	}
+	installedPV_kWp += gcInstalledPV_kWp;
+	PVPotential_kWp += max( gcInstalledPV_kWp, max(0.1, gc.p_roofSurfaceArea_m2 * averageEffectivePV_kWppm2) );
+}
+
+return installedPV_kWp / PVPotential_kWp * 100.0;
+/*ALCODEEND*/}
+
+double f_setPVSystem(List<GridConnection> gcList,double target_pct)
+{/*ALCODESTART::1747297871195*/
+//List<GridConnection> GCs = new ArrayList<GridConnection>(zero_Interface.c_orderedPVSystems);
+//GCs.retainAll(gcList);
+
+//traceln(GCs);
+
+//traceln(f_getPVSystemPercentage(gcList));
 /*ALCODEEND*/}
 

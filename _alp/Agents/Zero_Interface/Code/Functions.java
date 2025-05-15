@@ -615,6 +615,7 @@ if (gn!=null){
 
 double f_initialPVSystemsOrder()
 {/*ALCODESTART::1714130288661*/
+/*
 // First we make a copy of all the Uitility GridConnections
 List<GridConnection> GCs = new ArrayList<>(energyModel.f_getGridConnections());
 List<GridConnection> GCs_detailedCompanies = new ArrayList<>(energyModel.f_getGridConnections());
@@ -643,6 +644,29 @@ if(c_companyUIs.size() == 0){
 
 c_orderedPVSystems = otherGCs;
 c_orderedPVSystems.addAll(datailedCompanyGCsnoPV);
+*/
+
+List<GCHouse> houses = new ArrayList<GCHouse>(energyModel.Houses.findAll( x -> true));
+List<GCHouse> housesWithoutPV = houses.stream().filter( gc -> !gc.v_hasPV ).collect(Collectors.toList());
+List<GCHouse> housesWithPV = new ArrayList<>(houses);
+housesWithPV.removeAll(housesWithoutPV);
+
+c_orderedPVSystemsHouses = new ArrayList<>(housesWithoutPV);
+c_orderedPVSystemsHouses.addAll(housesWithPV);
+
+
+List<GCUtility> companies = new ArrayList<GCUtility>(energyModel.UtilityConnections.findAll( x -> true));
+List<GCUtility> companiesWithoutPV = companies.stream().filter( gc -> !gc.v_hasPV ).collect(Collectors.toList());
+List<GCUtility> companiesWithPV = companies.stream().filter( gc -> gc.v_hasPV ).collect(Collectors.toList());
+List<GCUtility> detailedCompaniesWithPV = companiesWithPV.stream().filter( gc -> gc.p_owner != null && gc.p_owner.p_detailedCompany ).collect(Collectors.toList());
+List<GCUtility> genericCompaniesWithPV = new ArrayList<>(companiesWithPV);
+genericCompaniesWithPV.removeAll(detailedCompaniesWithPV);
+
+c_orderedPVSystemsCompanies = new ArrayList<>(companiesWithoutPV);
+c_orderedPVSystemsCompanies.addAll(genericCompaniesWithPV);
+c_orderedPVSystemsCompanies.addAll(detailedCompaniesWithPV);
+
+
 /*ALCODEEND*/}
 
 double f_initialElectricVehiclesOrder()
@@ -1021,7 +1045,7 @@ f_setUIButton();
 double f_setColorsBasedOnGridTopology_objects(GIS_Object gis_area)
 {/*ALCODESTART::1718566260603*/
 if (gis_area.c_containedGridConnections.size() > 0) {
-	Color c = gis_area.c_containedGridConnections.get(0).l_parentNodeElectric.getConnectedAgent().p_uniqueColor;
+	Color c = gis_area.c_containedGridConnections.get(0).p_parentNodeElectric.p_uniqueColor;
 	gis_area.f_style(c, black, 1.0, null);
 }
 /*ALCODEEND*/}
@@ -1614,7 +1638,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 		if (b.gisRegion.isVisible()) { //only allow us to click on visible objects
 			if (b.c_containedGridConnections.size() > 0 ) { // only allow buildings with gridconnections
 				GridConnection clickedGridConnection = b.c_containedGridConnections.get(0); // Find buildings powered by the same GC as the clicked building
-				GridNode clickedGridConnectionConnectedGridNode = clickedGridConnection.l_parentNodeElectric.getConnectedAgent();
+				GridNode clickedGridConnectionConnectedGridNode = clickedGridConnection.p_parentNodeElectric;
 				ArrayList<GridNode> allGridNodes = new ArrayList<GridNode>(energyModel.f_getGridNodesTopLevel());
 				allGridNodes.addAll(energyModel.f_getGridNodesNotTopLevel());
 				
@@ -1626,7 +1650,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 						clickedGridConnectionConnectedGridNode = findFirst(allGridNodes, GN -> GN.p_gridNodeID.equals(parentNodeName));
 					}
 					else{ // At top node --> select the directly attached grid node instead, and break out of while loop.
-						clickedGridConnectionConnectedGridNode = clickedGridConnection.l_parentNodeElectric.getConnectedAgent();
+						clickedGridConnectionConnectedGridNode = clickedGridConnection.p_parentNodeElectric;
 						break;
 					}
 				}	
