@@ -57,5 +57,7 @@ dataAVGC.p_avgSolarFieldPower_kWppha = p_avgSolarFieldPower_kWppha;
 dataAVGC.p_avgEfficiencyCHP_thermal_fr = p_avgEfficiencyCHP_thermal_fr;
 dataAVGC.p_avgEfficiencyCHP_electric_fr = p_avgEfficiencyCHP_thermal_fr;
 dataAVGC.p_avgOutputTemperatureCHP_degC = p_avgEfficiencyCHP_thermal_fr;
+dataAVGC.p_avgEfficiencyDistrictHeatingDeliverySet_fr = p_avgEfficiencyDistrictHeatingDeliverySet_fr;
+dataAVGC.p_avgOutputTemperatureDistrictHeatingDeliverySet_degC = p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
 /*ALCODEEND*/}
 

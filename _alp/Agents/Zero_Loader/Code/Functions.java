@@ -1430,7 +1430,7 @@ try{
 	map_buildingData_Vallum = com.zenmo.vallum.PandKt.fetchBagPanden(surveys);
 }
 catch (Exception e){ //if api of bag is down, leave bag buildings empty and display error message
-	zero_Interface.f_setErrorScreen("BAG API is offline, het is mogelijk dat \n bepaalde panden niet zijn ingeladen!");
+	zero_Interface.f_setErrorScreen("BAG API is offline, het is mogelijk dat bepaalde panden niet zijn ingeladen!");
 }
 
 
@@ -3795,7 +3795,7 @@ switch (heatAssetType){ // HOE gaan we om met meerdere heating types in survey??
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
 		
-		J_EAConversionHeatPump heatPumpElectric = new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );		
+		new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );		
 		break;
 	
 	case GASFIRED_CHPPEAK:
@@ -3804,12 +3804,64 @@ switch (heatAssetType){ // HOE gaan we om met meerdere heating types in survey??
 		outputTemperature_degC = avgc_data.p_avgOutputTemperatureCHP_degC;
 		efficiency = avgc_data.p_avgEfficiencyCHP_thermal_fr + avgc_data.p_avgEfficiencyCHP_electric_fr;
 		
-		J_EAConversionGasCHP methaneCHP = new J_EAConversionGasCHP(parentGC, outputCapacityElectric_kW, maxHeatOutputPower_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC );
+		new J_EAConversionGasCHP(parentGC, outputCapacityElectric_kW, maxHeatOutputPower_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC );
 		break;
-	
+
+	case DISTRICTHEAT:
+		
+		outputTemperature_degC = avgc_data.p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
+		efficiency = avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr;
+		
+		new J_EAConversionHeatDeliverySet(parentGC, maxHeatOutputPower_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC);
+		
+		//Add GC to heat grid
+		GridNode heatgrid = findFirst(energyModel.f_getGridNodesTopLevel(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
+		if(heatgrid == null){
+			heatgrid = f_createHeatGridNode();
+		}
+		parentGC.p_parentNodeHeatID = heatgrid.p_gridNodeID;
+			
+		break;
+
 	default:
 		traceln("HEATING TYPE NOT FOUND FOR GC ");
 		traceln(parentGC);
 }
+/*ALCODEEND*/}
+
+GridNode f_createHeatGridNode()
+{/*ALCODESTART::1747300761144*/
+GridNode GN_heat = energyModel.add_pop_gridNodes();
+GN_heat.p_gridNodeID = "Heatgrid";
+
+// Check wether transformer capacity is known or estimated
+GN_heat.p_capacity_kW = 1000000;	
+GN_heat.p_realCapacityAvailable = false;
+
+// Basic GN information
+GN_heat.p_description = "Warmtenet";
+
+/*
+//Owner
+GN_heat.p_ownerGridOperator = Grid_Operator;
+*/
+
+//Define node type
+GN_heat.p_nodeType = OL_GridNodeType.HT;
+GN_heat.p_energyCarrier = OL_EnergyCarriers.HEAT;
+
+//Define GN location
+GN_heat.p_latitude = 0;
+GN_heat.p_longitude = 0;
+GN_heat.setLatLon(GN_heat.p_latitude, GN_heat.p_longitude);
+
+//Create gis region
+/*
+GN.gisRegion = zero_Interface.f_createGISObject(f_createGISNodesTokens(GN));
+zero_Interface.f_styleGridNodes(GN);
+zero_Interface.c_GISNodes.add(GN.gisRegion);
+*/
+
+return GN_heat;
 /*ALCODEEND*/}
 
