@@ -1,6 +1,7 @@
 double f_setAVGC_data()
 {/*ALCODESTART::1726584205530*/
 J_AVGC_data dataAVGC = new J_AVGC_data();
+zero_Loader.energyModel.avgc_data = dataAVGC;
 
 dataAVGC.p_avgHouseGasConsumption_m3_yr = p_avgHouseGasConsumption_m3_yr;
 dataAVGC.p_avgHouseElectricityConsumption_kWh_yr = p_avgHouseElectricityConsumption_kWh_yr;
@@ -53,6 +54,8 @@ dataAVGC.p_avgPVPower_kWpm2= p_avgPVPower_kWpm2;
 dataAVGC.p_avgRatioRoofPotentialPV = p_avgRatioRoofPotentialPV;
 dataAVGC.p_avgRatioBatteryCapacity_v_Power = p_avgRatioBatteryCapacity_v_Power;
 dataAVGC.p_avgSolarFieldPower_kWppha = p_avgSolarFieldPower_kWppha;
-zero_Loader.energyModel.avgc_data = dataAVGC;
+dataAVGC.p_avgEfficiencyCHP_thermal_fr = p_avgEfficiencyCHP_thermal_fr;
+dataAVGC.p_avgEfficiencyCHP_electric_fr = p_avgEfficiencyCHP_thermal_fr;
+dataAVGC.p_avgOutputTemperatureCHP_degC = p_avgEfficiencyCHP_thermal_fr;
 /*ALCODEEND*/}
 

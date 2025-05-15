@@ -14,23 +14,27 @@ int nr_currentHeatingType = 0;
 switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingType()){
 	case GASBURNER:
 		nr_currentHeatingType = 0;
-	break;
+		break;
 
 	case HYBRID_HEATPUMP:
 		nr_currentHeatingType = 1;
-	break;
+		break;
 
 	case ELECTRIC_HEATPUMP:
 		nr_currentHeatingType = 2;
-	break;
+		break;
 		
 	case HYDROGENBURNER:
 		nr_currentHeatingType = 3;
-	break;
+		break;
+
+	case GASFIRED_CHPPEAK:
+		nr_currentHeatingType = 4;
+		break;
 		
 	case OTHER:
 		//not supported
-	break;
+		break;
 		
 	default:
 }
@@ -157,23 +161,27 @@ int nr_currentHeatingType = 0;
 switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingType()){
 	case GASBURNER:
 		nr_currentHeatingType = 0;
-	break;
+		break;
 
 	case HYBRID_HEATPUMP:
 		nr_currentHeatingType = 1;
-	break;
+		break;
 
 	case ELECTRIC_HEATPUMP:
 		nr_currentHeatingType = 2;
-	break;
+		break;
 		
 	case HYDROGENBURNER:
 		nr_currentHeatingType = 3;
-	break;
+		break;
+	
+	case GASFIRED_CHPPEAK:
+		nr_currentHeatingType = 4;
+		break;
 		
 	case OTHER:
 		//not supported
-	break;
+		break;
 		
 	default:
 }
@@ -304,7 +312,7 @@ switch (selectedHeatingType){
 		
 		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
 		
-	break;
+		break;
 	
 	case HYBRID_HEATPUMP:
 		
@@ -325,9 +333,8 @@ switch (selectedHeatingType){
 		
 		J_EAConversionGasBurner gasBurnerHybrid = new J_EAConversionGasBurner(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
 		GC.p_secondaryHeatingAsset = gasBurnerHybrid;
-				
-	 
-	break;
+		
+		break;
 	
 	case ELECTRIC_HEATPUMP:
 
@@ -342,7 +349,7 @@ switch (selectedHeatingType){
 		J_EAConversionHeatPump heatPumpElectric = new J_EAConversionHeatPump(GC, capacityElectric_kW, efficiency, timestep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );	
 		
 		//Add secondary heating asset (if needed??)		//E-boiler!!??		
-	break;
+		break;
 	
 	case HYDROGENBURNER:
 		
@@ -352,7 +359,17 @@ switch (selectedHeatingType){
 		//Add primary heating asset (hydrogenburner)
 		J_EAConversionHydrogenBurner hydrogenBurner = new J_EAConversionHydrogenBurner(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
 		
-	break;
+		break;
+	
+	case GASFIRED_CHPPEAK:
+
+		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyCHP_thermal_fr + zero_Interface.energyModel.avgc_data.p_avgEfficiencyCHP_electric_fr;
+		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureCHP_degC;
+		double outputCapacityElectric_kW = (capacityThermal_kW/zero_Interface.energyModel.avgc_data.p_avgEfficiencyCHP_thermal_fr) * zero_Interface.energyModel.avgc_data.p_avgEfficiencyCHP_electric_fr;
+		
+		J_EAConversionGasCHP methaneCHP = new J_EAConversionGasCHP(GC, outputCapacityElectric_kW, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC );
+			
+		break;
 }
 
 if(!b_runningMainInterfaceSlider){
@@ -1443,26 +1460,31 @@ String rbHeating_acces = "enabled";
 switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingType()){
 	case GASBURNER:
 		nr_currentHeatingType = 0;
-	break;
+		break;
 
 	case HYBRID_HEATPUMP:
 		nr_currentHeatingType = 1;
 		rbHeating_acces = "disabled";
-	break;
+		break;
 
 	case ELECTRIC_HEATPUMP:
 		nr_currentHeatingType = 2;
 		rbHeating_acces = "disabled";
-	break;
+		break;
 		
 	case HYDROGENBURNER:
 		nr_currentHeatingType = 3;
-	break;
+		break;
+	
+	case GASFIRED_CHPPEAK:
+		nr_currentHeatingType = 4;
+		gr_heatingOptionBlockerCHP.setVisible(false);
+		break;
 		
 	case OTHER:
 		//not supported
 		rbHeating_acces = "invisible";
-	break;
+		break;
 		
 	default:
 		rbHeating_acces = "invisible";

@@ -1806,7 +1806,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1722326800142</Id>
 				<Name><![CDATA[sl_heatDemandSlidersCompaniesHeatDemandReductionCompanies_pct]]></Name>
 				<X>255</X>
-				<Y>100</Y>
+				<Y>50</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1835,7 +1835,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1722326800144</Id>
 				<Name><![CDATA[t_heatDemandReductionCompaniesDescription1]]></Name>
 				<X>15</X>
-				<Y>105</Y>
+				<Y>55</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1860,7 +1860,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1722326800146</Id>
 				<Name><![CDATA[t_heatDemandReductionCompanies_pct1]]></Name>
 				<X>225</X>
-				<Y>105</Y>
+				<Y>55</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1886,7 +1886,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1722326800148</Id>
 				<Name><![CDATA[t_gasBurnerCompaniesDescription1]]></Name>
 				<X>15</X>
-				<Y>140</Y>
+				<Y>90</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1911,7 +1911,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1722326800150</Id>
 				<Name><![CDATA[t_hybridHeatPumpCompaniesDescription1]]></Name>
 				<X>15</X>
-				<Y>190</Y>
+				<Y>140</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1937,7 +1937,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1722326800152</Id>
 				<Name><![CDATA[t_electricHeatPumpCompaniesDescription1]]></Name>
 				<X>15</X>
-				<Y>165</Y>
+				<Y>115</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1962,7 +1962,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1722326800154</Id>
 				<Name><![CDATA[t_districtHeatingCompaniesDescription1]]></Name>
 				<X>15</X>
-				<Y>215</Y>
+				<Y>165</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1988,7 +1988,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1722326800156</Id>
 				<Name><![CDATA[t_electricHeatPumpCompanies_pct1]]></Name>
 				<X>225</X>
-				<Y>165</Y>
+				<Y>115</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2014,7 +2014,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1722326800158</Id>
 				<Name><![CDATA[t_gasBurnerCompanies_pct1]]></Name>
 				<X>225</X>
-				<Y>140</Y>
+				<Y>90</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2040,7 +2040,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1722326800160</Id>
 				<Name><![CDATA[t_districtHeatingCompanies_pct1]]></Name>
 				<X>225</X>
-				<Y>215</Y>
+				<Y>165</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2067,7 +2067,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1722326800162</Id>
 				<Name><![CDATA[t_hybridHeatPumpCompanies_pct1]]></Name>
 				<X>225</X>
-				<Y>190</Y>
+				<Y>140</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2095,7 +2095,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1722326800164</Id>
 				<Name><![CDATA[sl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct]]></Name>
 				<X>255</X>
-				<Y>210</Y>
+				<Y>160</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2125,7 +2125,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1722326800166</Id>
 				<Name><![CDATA[sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct]]></Name>
 				<X>255</X>
-				<Y>135</Y>
+				<Y>85</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2156,7 +2156,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1722326800168</Id>
 				<Name><![CDATA[sl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct]]></Name>
 				<X>255</X>
-				<Y>185</Y>
+				<Y>135</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2187,7 +2187,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1722326800170</Id>
 				<Name><![CDATA[sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct]]></Name>
 				<X>255</X>
-				<Y>160</Y>
+				<Y>110</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2217,7 +2217,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1722326800172</Id>
 				<Name><![CDATA[t_companiesDescription1]]></Name>
 				<X>10</X>
-				<Y>80</Y>
+				<Y>30</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2242,7 +2242,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1734371025574</Id>
 				<Name><![CDATA[t_eBoilerCompanies_pct]]></Name>
 				<X>225</X>
-				<Y>240</Y>
+				<Y>190</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2270,7 +2270,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1734371025600</Id>
 				<Name><![CDATA[sl_heatDemandSlidersCompaniesEBoiler_pct]]></Name>
 				<X>255</X>
-				<Y>235</Y>
+				<Y>185</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2299,7 +2299,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1734371025534</Id>
 				<Name><![CDATA[t_eBoilerCompaniesDescription]]></Name>
 				<X>15</X>
-				<Y>240</Y>
+				<Y>190</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2325,7 +2325,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1746093187570</Id>
 				<Name><![CDATA[i_companyReduction_Company]]></Name>
 				<X>160</X>
-				<Y>105</Y>
+				<Y>55</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2352,7 +2352,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1746093187613</Id>
 				<Name><![CDATA[i_companyGasBoiler_Company]]></Name>
 				<X>160</X>
-				<Y>140</Y>
+				<Y>90</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2379,7 +2379,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1746093187656</Id>
 				<Name><![CDATA[i_companyElectricHeatpump_Company]]></Name>
 				<X>160</X>
-				<Y>165</Y>
+				<Y>115</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2406,7 +2406,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1746093187698</Id>
 				<Name><![CDATA[i_companyHybridHeatpump_Company]]></Name>
 				<X>160</X>
-				<Y>190</Y>
+				<Y>140</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2415,6 +2415,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct.isEnabled()</VisibleCode>
 				<OnClickCode>zero_Interface.f_setInfoText(i_companyHybridHeatpump_Company, zero_Interface.v_infoText.companyHybridHeatpump, i_companyHybridHeatpump_Company.getX() + uI_Tabs.v_presentationXOffset, i_companyHybridHeatpump_Company.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
@@ -2433,7 +2434,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1746093187741</Id>
 				<Name><![CDATA[i_companyHeatGrid_Company]]></Name>
 				<X>160</X>
-				<Y>215</Y>
+				<Y>165</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2442,6 +2443,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct.isEnabled()</VisibleCode>
 				<OnClickCode>zero_Interface.f_setInfoText(i_companyHeatGrid_Company, zero_Interface.v_infoText.companyHeatGrid, i_companyHeatGrid_Company.getX() + uI_Tabs.v_presentationXOffset, i_companyHeatGrid_Company.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
@@ -2460,7 +2462,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1746093187784</Id>
 				<Name><![CDATA[i_companyEBoiler_Company]]></Name>
 				<X>160</X>
-				<Y>240</Y>
+				<Y>190</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2469,6 +2471,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_heatDemandSlidersCompaniesEBoiler_pct.isEnabled()</VisibleCode>
 				<OnClickCode>zero_Interface.f_setInfoText(i_companyEBoiler_Company, zero_Interface.v_infoText.companyElectricBoiler, i_companyEBoiler_Company.getX() + uI_Tabs.v_presentationXOffset, i_companyEBoiler_Company.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>

@@ -895,7 +895,7 @@
               StaticVariable="false">
 			<Type><![CDATA[Color]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new Color(255, 255, 255, 232)]]></Code>
+				<Code><![CDATA[white]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
