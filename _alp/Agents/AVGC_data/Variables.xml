@@ -1922,7 +1922,7 @@ https://www.kasalsenergiebron.nl/content/research/E22001_Rapport_WKK_Barometer_2
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[0.90]]></Code>
+				<Code><![CDATA[0.95]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1747314895124</Id>
@@ -1938,7 +1938,7 @@ https://www.kasalsenergiebron.nl/content/research/E22001_Rapport_WKK_Barometer_2
 		<Name><![CDATA[p_avgOutputTemperatureDistrictHeatingDeliverySet_degC]]></Name>
 		<Description><![CDATA[Average output temperature of a districtheating delivery set in degC.
 
---> Source?]]></Description>
+70 -> https://www.nplw.nl/warmtenet/warmtetechnieken/middentemperatuur-warmtenet]]></Description>
 		<X>70</X>
 		<Y>860</Y>
 		<Label>
@@ -1953,7 +1953,7 @@ https://www.kasalsenergiebron.nl/content/research/E22001_Rapport_WKK_Barometer_2
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[90]]></Code>
+				<Code><![CDATA[70]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1747314895127</Id>
