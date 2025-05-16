@@ -3309,6 +3309,12 @@ if(!hasGasTimeSeriesInZorm){ // If there is gas data, heating assets have alread
 		//Dont create additional Electric heating assets on top of Electricity profile
 	}
 	else{
+		// Intermediate solution, if no gas demand check if district heating consumption, ifso: convert heat demand into gas, which will then be converted back to heat again while making the profile.
+		if(yearlyGasConsumption_m3 == 0 && companyGC.p_heatingType == OL_GridConnectionHeatingType.DISTRICTHEAT){ 			
+			yearlyGasConsumption_m3 = gridConnection.getHeat().getAnnualDistrictHeatingDelivery_GJ()*277.777778 / avgc_data.p_gas_kWhpm3;
+			traceln("Heatgrid consumption detected equal to: " + yearlyGasConsumption_m3 + " [m3] of gas");
+		}
+		
 		f_addHeatDemandProfile(companyGC, yearlyGasConsumption_m3, hasHourlyGasData, ratioGasUsedForHeating, heatProfileName);
 	}
 }
