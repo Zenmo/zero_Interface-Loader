@@ -2768,7 +2768,7 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 		<Id>1747298732893</Id>
 		<Name><![CDATA[button]]></Name>
 		<X>440</X>
-		<Y>790</Y>
+		<Y>830</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>

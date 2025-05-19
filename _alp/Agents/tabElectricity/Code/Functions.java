@@ -506,7 +506,7 @@ for(GCEnergyProduction GCProd : zero_Interface.energyModel.EnergyProductionSites
 }
 /*ALCODEEND*/}
 
-double f_getPVSystemPercentage(List<GridConnection> gcList)
+Pair<Double, Double> f_getPVSystemPercentage(List<GridConnection> gcList)
 {/*ALCODESTART::1747294812333*/
 double installedPV_kWp = 0.0;
 double PVPotential_kWp = 0.0;
@@ -525,16 +525,109 @@ for (GridConnection gc : gcList ) {
 	PVPotential_kWp += max( gcInstalledPV_kWp, max(0.1, gc.p_roofSurfaceArea_m2 * averageEffectivePV_kWppm2) );
 }
 
-return installedPV_kWp / PVPotential_kWp * 100.0;
+return new Pair(installedPV_kWp, PVPotential_kWp);
 /*ALCODEEND*/}
 
-double f_setPVSystem(List<GridConnection> gcList,double target_pct)
+double f_setPVSystemCompanies(List<GCUtility> gcList,double target_pct)
 {/*ALCODESTART::1747297871195*/
-//List<GridConnection> GCs = new ArrayList<GridConnection>(zero_Interface.c_orderedPVSystems);
-//GCs.retainAll(gcList);
+Pair<Double, Double> pair = f_getPVSystemPercentage();
+double remaining_kWp = target_pct * pair.getSecond() - pair.getFirst();
+double averageEffectivePV_kWppm2 = zero_Interface.energyModel.avgc_data.p_avgRatioRoofPotentialPV * zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2;
 
-//traceln(GCs);
+if ( remaining_kWp > 0 ) {
+	// add more PV
+	for ( GCUtility company : zero_Interface.c_orderedPVSystemsCompany ) {
+		double remainingPotential_kWp = company.p_roofSurfaceArea_m2 * averageEffectivePV_kWppm2 - company.v_liveAssetsMetaData.totalInstalledPVPower_kW;
+		if ( remainingPotential_kWp > 0 ) {
+			remaining_kWp -= remainingPotential_kWp
+			f_addPVSystem( company, remainingPotential_kWp );
+		}
+		
+		if ( remaining_kWp <= 0 ) {
+			return;
+		}
+	}
+}
+else {
+	// remove pv
+	for ( GCUtility company : zero_Interface.c_orderedPVSystemsCompany ) {
+		if ( company.v_liveAssetsMetaData.hasPV || gc.v_hasPV ) {
+			remaining_kWp += company.v_liveAssetsMetaData.totalInstalledPVPower_kW
+			f_removePVSystem( company );
+		}
+		if ( remaining_kWp >= 0 ) {
+			// removed slightly too much pv
+			f_addPVSystem( company, remaining_kWp );
+			return;
+		}
+	}
+}
+/*ALCODEEND*/}
 
-//traceln(f_getPVSystemPercentage(gcList));
+double f_addPVSystem(GridConnection gc,double capacity_kWp)
+{/*ALCODESTART::1747306690517*/
+if ( gc.v_liveAssetsMetaData.hasPV || gc.v_hasPV ) { // This boolean exists in 2 places...
+	// Add the capacity to the existing asset
+	J_EAProduction pvAsset = findFirst(gc.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
+	if ( pvAsset == null ) {
+		throw new RuntimeException("Could not find photovoltaic asset in GridConnection: " + gc.p_ownerID + ", even though hasPV is True.");
+	}
+	pvAsset.setCapacityElectric_kW( pvAsset.getCapacityElectric_kW() + capacity_kWp );
+}
+else {
+	// Create a new asset
+	OL_EnergyAssetType assetType = OL_EnergyAssetType.PHOTOVOLTAIC;
+	String assetName = "Rooftop PV";
+	double capacityHeat_kW = 0.0;
+	double yearlyProductionMethane_kWh = 0.0;
+	double yearlyProductionHydrogen_kWh = 0.0;
+	double outputTemperature_degC = 0.0;
+	
+	J_EAProduction productionAsset = new J_EAProduction ( gc, assetType, assetName, capacity_kWp, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC, zero_Interface.energyModel.pp_solarPVproduction );
+}
+
+// Update the ordered collection
+if ( gc instanceof GCHouse ) {
+	zero_Interface.c_orderedPVSystemsHouses.remove(gc);
+	zero_Interface.c_orderedPVSystemsHouses.add(0, gc);	
+}
+else if ( gc instanceof GCUtility ) {
+	zero_Interface.c_orderedPVSystemsCompanies.remove(gc);
+	zero_Interface.c_orderedPVSystemsCompanies.add(0, gc);
+	// update company UI
+	if ( zero_Interface.c_companyUIs.size() > 0 ) {
+		if ( gc.p_owner != null ) {
+			UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
+			if ( companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc ) {
+				companyUI.sl_rooftopPVCompany.setValue(roundToInt(capacityElectricity_kW), false);
+				companyUI.v_defaultPVSlider = roundToInt(capacityElectricity_kW);
+			}
+		}
+	}
+}
+else {
+	throw new RuntimeException("Unknown GridConnection type passed to f_addPVSystem.");
+}
+
+
+//Color the buildings when in solar color mode
+if ( zero_Interface.rb_buildingColors.getValue() == 2 ) {
+	for ( GIS_Object building : gc.c_connectedGISObjects ) {
+		zero_Interface.f_styleAreas(building);
+	}
+}
+/*ALCODEEND*/}
+
+double f_removePVSystem(GridConnection gc)
+{/*ALCODESTART::1747306699629*/
+J_EAProduction pvAsset = findFirst(gc.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
+if ( pvAsset != null ) {
+	pvAsset.removeEnergyAsset();
+}
+/*ALCODEEND*/}
+
+double f_updateCompanyUI()
+{/*ALCODESTART::1747307194121*/
+
 /*ALCODEEND*/}
 
