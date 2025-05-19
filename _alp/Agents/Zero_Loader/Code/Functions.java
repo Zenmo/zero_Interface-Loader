@@ -3821,7 +3821,7 @@ switch (heatAssetType){ // HOE gaan we om met meerdere heating types in survey??
 		new J_EAConversionHeatDeliverySet(parentGC, maxHeatOutputPower_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC);
 		
 		//Add GC to heat grid
-		GridNode heatgrid = findFirst(energyModel.f_getGridNodesTopLevel(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
+		GridNode heatgrid = findFirst(energyModel.pop_gridNodes, node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
 		if(heatgrid == null){
 			heatgrid = f_createHeatGridNode();
 		}

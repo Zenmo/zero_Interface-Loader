@@ -1349,8 +1349,10 @@ double f_createGISNetwork(GISRoute[] gisroutes,String networkType)
 
 double f_setColorsBasedOnGridTopology_gridnodes(GridNode GN)
 {/*ALCODESTART::1725968656820*/
-GN.gisRegion.setFillColor(GN.p_uniqueColor);
-GN.gisRegion.setLineColor(GN.p_uniqueColor.brighter());
+if(GN.gisRegion != null){
+	GN.gisRegion.setFillColor(GN.p_uniqueColor);
+	GN.gisRegion.setLineColor(GN.p_uniqueColor.brighter());
+}
 /*ALCODEEND*/}
 
 double f_setSliderPresets()
