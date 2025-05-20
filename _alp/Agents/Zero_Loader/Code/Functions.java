@@ -3197,11 +3197,15 @@ if(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW == 0 && comp
 }
 		
 //Grid expansion request
-future_scenario_list.setRequestedContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
 if (gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() != null && gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator()){
 	future_scenario_list.setRequestedContractDeliveryCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-	future_scenario_list.setRequestedContractFeedinCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-	future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+	future_scenario_list.setRequestedContractFeedinCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+	future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(max(companyGC.v_liveConnectionMetaData.physicalCapacity_kW, max(future_scenario_list.getRequestedContractDeliveryCapacity_kW(), future_scenario_list.getRequestedContractFeedinCapacity_kW())));
+}
+else{
+	future_scenario_list.setRequestedContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+	future_scenario_list.setRequestedContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+	future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.physicalCapacity_kW);
 }
 
 
@@ -3247,16 +3251,22 @@ if (gridConnection.getSupply().getHasSupply() != null && gridConnection.getSuppl
 }
 
 //Planned supply (PV)
-if (gridConnection.getSupply().getPvPlanned() != null && gridConnection.getSupply().getPvPlanned()){ 
-	future_scenario_list.setPlannedPV_kW(gridConnection.getSupply().getPvPlannedKwp()); 
+if (gridConnection.getSupply().getPvPlanned() != null && gridConnection.getSupply().getPvPlanned()){
+	future_scenario_list.setPlannedPV_kW(current_scenario_list.getCurrentPV_kW() + (gridConnection.getSupply().getPvPlannedKwp() != null ? gridConnection.getSupply().getPvPlannedKwp() : 0)); 
 	future_scenario_list.setPlannedPV_year(gridConnection.getSupply().getPvPlannedYear());
 	//gridConnection.getSupply().getPvPlannedOrientation();
+}
+else{
+	future_scenario_list.setPlannedPV_kW(current_scenario_list.getCurrentPV_kW());
 }
 
 //Planned supply (Wind)
 if (gridConnection.getSupply().getWindPlannedKw() != null && gridConnection.getSupply().getWindPlannedKw() > 0){
-	future_scenario_list.setPlannedWind_kW(gridConnection.getSupply().getWindPlannedKw());
+	future_scenario_list.setPlannedWind_kW(current_scenario_list.getCurrentWind_kW() + (gridConnection.getSupply().getWindPlannedKw() != null ? gridConnection.getSupply().getWindPlannedKw() : 0));
 	// plannedWind_year // ???
+}
+else{
+	future_scenario_list.setPlannedWind_kW(current_scenario_list.getCurrentWind_kW());
 }
 
 
@@ -3313,8 +3323,9 @@ if(!hasGasTimeSeriesInZorm){ // If there is gas data, heating assets have alread
 	}
 }
 
-//add heating type to scenario: current
+//add heating type to scenario: current and future
 current_scenario_list.setCurrentHeatingType(companyGC.p_heatingType);
+future_scenario_list.setPlannedHeatingType(companyGC.p_heatingType);
 
 
 
@@ -3338,8 +3349,9 @@ companyGC.p_batteryOperationMode = OL_BatteryOperationMode.BALANCE;
 //Aansturing toevoegen ?
 
 //add to scenario: current
-current_scenario_list.setCurrentBatteryPower_kW(battery_power_kW);
 current_scenario_list.setCurrentBatteryCapacity_kWh(battery_capacity_kWh);
+current_scenario_list.setCurrentBatteryPower_kW(battery_power_kW);
+
 	
 	
 if (gridConnection.getStorage().getHasThermalStorage() != null && gridConnection.getStorage().getHasThermalStorage()){ // Check for thermal storage
@@ -3350,10 +3362,13 @@ if (gridConnection.getStorage().getHasThermalStorage() != null && gridConnection
 }
 
 if (gridConnection.getStorage().getHasPlannedBattery() != null && gridConnection.getStorage().getHasPlannedBattery()){ // Check for planned battery
-	future_scenario_list.setPlannedBatteryCapacity_kWh(gridConnection.getStorage().getPlannedBatteryCapacityKwh());
-	future_scenario_list.setPlannedBatteryPower_kW(gridConnection.getStorage().getPlannedBatteryPowerKw());
+	future_scenario_list.setPlannedBatteryCapacity_kWh((gridConnection.getStorage().getPlannedBatteryCapacityKwh() != null ? gridConnection.getStorage().getPlannedBatteryCapacityKwh() : 0) + current_scenario_list.getCurrentBatteryCapacity_kWh());
+	future_scenario_list.setPlannedBatteryPower_kW((gridConnection.getStorage().getPlannedBatteryPowerKw() != null ? gridConnection.getStorage().getPlannedBatteryPowerKw() : 0) + current_scenario_list.getCurrentBatteryPower_kW());
 }
-
+else{
+future_scenario_list.setPlannedBatteryCapacity_kWh(current_scenario_list.getCurrentBatteryCapacity_kWh());
+future_scenario_list.setPlannedBatteryPower_kW(current_scenario_list.getCurrentBatteryPower_kW());
+}
 
 
 
@@ -3391,6 +3406,10 @@ if (nbDailyCarCommuters_notNull + nbDailyCarVisitors_notNull > 0){
 	//add to scenario: current
 	current_scenario_list.setCurrentEVCars(nbEVCarsComute);
 	current_scenario_list.setCurrentDieselCars(nbDieselCarsComute);
+	
+	//Initialize future cars
+	future_scenario_list.setPlannedEVCars(current_scenario_list.getCurrentEVCars());
+
 }
 
 
@@ -3446,8 +3465,8 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		current_scenario_list.setCurrentDieselCars(((current_scenario_list.getCurrentDieselCars() != null) ? current_scenario_list.getCurrentDieselCars() : 0) + nbDieselCars);
 		current_scenario_list.setCurrentEVCarChargePower_kW(maxChargingPower_kW);
 		
-		//Planned
-		future_scenario_list.setPlannedEVCars((gridConnection.getTransport().getCars().getNumPlannedElectricCars() != null) ? gridConnection.getTransport().getCars().getNumPlannedElectricCars() : 0);
+		//Update Planned cars
+		future_scenario_list.setPlannedEVCars((gridConnection.getTransport().getCars().getNumPlannedElectricCars() != null ? gridConnection.getTransport().getCars().getNumPlannedElectricCars() : 0) + current_scenario_list.getCurrentEVCars());
 		future_scenario_list.setPlannedHydrogenCars((gridConnection.getTransport().getCars().getNumPlannedHydrogenCars() != null) ? gridConnection.getTransport().getCars().getNumPlannedHydrogenCars() : 0);
 		
 	}
@@ -3502,7 +3521,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		current_scenario_list.setCurrentEVVanChargePower_kW(maxChargingPower_kW);
 		
 		//Planned
-		future_scenario_list.setPlannedEVVans((gridConnection.getTransport().getVans().getNumPlannedElectricVans() != null) ? gridConnection.getTransport().getVans().getNumPlannedElectricVans() : 0);
+		future_scenario_list.setPlannedEVVans((gridConnection.getTransport().getVans().getNumPlannedElectricVans() != null ? gridConnection.getTransport().getVans().getNumPlannedElectricVans() : 0) + current_scenario_list.getCurrentEVVans());
 		future_scenario_list.setPlannedHydrogenVans((gridConnection.getTransport().getVans().getNumPlannedHydrogenVans() != null) ? gridConnection.getTransport().getVans().getNumPlannedHydrogenVans() : 0);
 	}
 	
@@ -3558,7 +3577,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		current_scenario_list.setCurrentEVTruckChargePower_kW(maxChargingPower_kW);
 		
 		//Planned
-		future_scenario_list.setPlannedEVTrucks((gridConnection.getTransport().getTrucks().getNumPlannedElectricTrucks() != null) ? gridConnection.getTransport().getTrucks().getNumPlannedElectricTrucks() : 0);
+		future_scenario_list.setPlannedEVTrucks((gridConnection.getTransport().getTrucks().getNumPlannedElectricTrucks() != null ? gridConnection.getTransport().getTrucks().getNumPlannedElectricTrucks() : 0) + current_scenario_list.getCurrentEVTrucks());
 		future_scenario_list.setPlannedHydrogenTrucks((gridConnection.getTransport().getTrucks().getNumPlannedHydrogenTrucks() != null) ? gridConnection.getTransport().getTrucks().getNumPlannedHydrogenTrucks() : 0);
 	}
 	
