@@ -1813,9 +1813,8 @@ to 18 m3 p m2 for label G
 	<Variable Class="Parameter">
 		<Id>1745316053417</Id>
 		<Name><![CDATA[p_avgEfficiencyCHP_thermal_fr]]></Name>
-		<Description><![CDATA[50% ->
-
-https://www.kasalsenergiebron.nl/content/research/E22001_Rapport_WKK_Barometer_2023.pdf?utm_source=chatgpt.com]]></Description>
+		<Description><![CDATA[50% -> blijkt uit aangeleverde data door "kas als energiebron". (https://www.kasalsenergiebron.nl/)
+Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_Rapport_WKK_Barometer_2023.pdf]]></Description>
 		<X>70</X>
 		<Y>750</Y>
 		<Label>
@@ -1844,9 +1843,8 @@ https://www.kasalsenergiebron.nl/content/research/E22001_Rapport_WKK_Barometer_2
 	<Variable Class="Parameter">
 		<Id>1745316110677</Id>
 		<Name><![CDATA[p_avgEfficiencyCHP_electric_fr]]></Name>
-		<Description><![CDATA[42% ->
-
-https://www.kasalsenergiebron.nl/content/research/E22001_Rapport_WKK_Barometer_2023.pdf?utm_source=chatgpt.com]]></Description>
+		<Description><![CDATA[42% -> blijkt uit aangeleverde data door "kas als energiebron". (https://www.kasalsenergiebron.nl/)
+Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_Rapport_WKK_Barometer_2023.pdf]]></Description>
 		<X>70</X>
 		<Y>770</Y>
 		<Label>
@@ -1922,7 +1920,7 @@ https://www.kasalsenergiebron.nl/content/research/E22001_Rapport_WKK_Barometer_2
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[0.95]]></Code>
+				<Code><![CDATA[0.99]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1747314895124</Id>
