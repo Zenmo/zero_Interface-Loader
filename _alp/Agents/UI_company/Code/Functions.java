@@ -24,7 +24,8 @@ switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingT
 		nr_currentHeatingType = 2;
 		break;
 		
-	case HYDROGENBURNER:
+	//case HYDROGENBURNER:
+	case DISTRICTHEAT:
 		nr_currentHeatingType = 3;
 		break;
 
@@ -171,7 +172,8 @@ switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingT
 		nr_currentHeatingType = 2;
 		break;
 		
-	case HYDROGENBURNER:
+	//case HYDROGENBURNER:
+	case DISTRICTHEAT:
 		nr_currentHeatingType = 3;
 		break;
 	
@@ -246,6 +248,9 @@ if (GC.p_heatingType == selectedHeatingType){
 	return;
 }
 
+//Remove from heat grid if it was connected to one.
+GC.p_parentNodeHeat = null;
+GC.p_parentNodeHeatID = null;
 
 //Remove primary heating asset
 J_EA primaryHeatingAsset = GC.p_primaryHeatingAsset;
@@ -310,7 +315,7 @@ switch (selectedHeatingType){
 		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner;
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC;
 		
-		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
+		new J_EAConversionGasBurner(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
 		
 		break;
 	
@@ -346,7 +351,7 @@ switch (selectedHeatingType){
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
 		
-		J_EAConversionHeatPump heatPumpElectric = new J_EAConversionHeatPump(GC, capacityElectric_kW, efficiency, timestep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );	
+		new J_EAConversionHeatPump(GC, capacityElectric_kW, efficiency, timestep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );	
 		
 		//Add secondary heating asset (if needed??)		//E-boiler!!??		
 		break;
@@ -357,8 +362,46 @@ switch (selectedHeatingType){
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHydrogenBurner_degC;
 	    
 		//Add primary heating asset (hydrogenburner)
-		J_EAConversionHydrogenBurner hydrogenBurner = new J_EAConversionHydrogenBurner(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
+		new J_EAConversionHydrogenBurner(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
 		
+		break;
+	
+	case DISTRICTHEAT:
+
+		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr;
+		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
+				
+		new J_EAConversionHeatDeliverySet(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
+		
+		//Add GC to heat grid if it exists, else create new one
+		GC.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getGridNodesTopLevel(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
+		if(GC.p_parentNodeHeat == null){
+			GridNode GN_heat = zero_Interface.energyModel.add_pop_gridNodes();
+			GN_heat.p_gridNodeID = "Heatgrid";
+			
+			// Check wether transformer capacity is known or estimated
+			GN_heat.p_capacity_kW = 1000000;	
+			GN_heat.p_realCapacityAvailable = false;
+			
+			// Basic GN information
+			GN_heat.p_description = "Warmtenet";
+
+			//Define node type
+			GN_heat.p_nodeType = OL_GridNodeType.HT;
+			GN_heat.p_energyCarrier = OL_EnergyCarriers.HEAT;
+			
+			//Define GN location
+			GN_heat.p_latitude = 0;
+			GN_heat.p_longitude = 0;
+			GN_heat.setLatLon(GN_heat.p_latitude, GN_heat.p_longitude);
+			
+			//Connect
+			GC.p_parentNodeHeat = GN_heat;
+			
+			//Show warning that heat grid is not a simple solution
+			f_setErrorScreen("LET OP: Er is nu een 'warmtenet' gecreerd. Maar er is geen warmtebron aanwezig in het model. Daarom zal de benodigde warmte voor het warmtenet in de resultaten te zien zijn als warmte import.");
+		}
+		GC.p_parentNodeHeatID = GC.p_parentNodeHeat.p_gridNodeID;
 		break;
 	
 	case GASFIRED_CHPPEAK:
@@ -367,7 +410,7 @@ switch (selectedHeatingType){
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureCHP_degC;
 		double outputCapacityElectric_kW = (capacityThermal_kW/zero_Interface.energyModel.avgc_data.p_avgEfficiencyCHP_thermal_fr) * zero_Interface.energyModel.avgc_data.p_avgEfficiencyCHP_electric_fr;
 		
-		J_EAConversionGasCHP methaneCHP = new J_EAConversionGasCHP(GC, outputCapacityElectric_kW, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC );
+		new J_EAConversionGasCHP(GC, outputCapacityElectric_kW, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC );
 			
 		break;
 }
@@ -1472,7 +1515,8 @@ switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingT
 		rbHeating_acces = "disabled";
 		break;
 		
-	case HYDROGENBURNER:
+	//case HYDROGENBURNER:
+	case DISTRICTHEAT:
 		nr_currentHeatingType = 3;
 		break;
 	
@@ -1908,5 +1952,35 @@ sl_dieselTrucksCompany.setEnabled(enable);
 
 //Set heating rb to correct setting (no matter what input of this function is)
 f_setHeatingRB();
+/*ALCODEEND*/}
+
+double f_setErrorScreen(String errorMessage)
+{/*ALCODESTART::1747316158336*/
+//Reset location and height
+button_errorOK.setY(50);
+rect_errorMessage.setY(-120);
+rect_errorMessage.setHeight(200);
+t_errorMessage.setY(-70);
+
+//Set position above all other things
+presentation.remove(gr_errorScreen);
+presentation.insert(presentation.size(), gr_errorScreen);
+
+int width_numberOfCharacters = 44;
+
+// Set Text
+Pair<String, Integer> p = zero_Interface.v_infoText.restrictWidth(errorMessage, width_numberOfCharacters);
+errorMessage = p.getFirst();
+int numberOfLines = p.getSecond();
+int additionalLines = max(0, numberOfLines - 3);
+
+// Set Size
+rect_errorMessage.setHeight(rect_errorMessage.getHeight() + additionalLines * 40);
+rect_errorMessage.setY(rect_errorMessage.getY() - 40 * additionalLines);
+//button_errorOK.setY(button_errorOK.getY() - 10 * additionalLines);
+t_errorMessage.setY(t_errorMessage.getY() - 40 * additionalLines);
+
+t_errorMessage.setText(errorMessage);
+gr_errorScreen.setVisible(true);
 /*ALCODEEND*/}
 

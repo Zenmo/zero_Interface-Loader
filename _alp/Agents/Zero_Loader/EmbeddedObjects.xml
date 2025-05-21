@@ -342,6 +342,12 @@
 			<Parameter>
 				<Name><![CDATA[p_avgOutputTemperatureCHP_degC]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_avgEfficiencyDistrictHeatingDeliverySet_fr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_avgOutputTemperatureDistrictHeatingDeliverySet_degC]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">

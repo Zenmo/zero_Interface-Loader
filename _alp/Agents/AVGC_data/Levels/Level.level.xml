@@ -311,7 +311,7 @@
 		<Id>1726584205560</Id>
 		<Name><![CDATA[txt_avgPV]]></Name>
 		<X>40</X>
-		<Y>830</Y>
+		<Y>880</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -336,7 +336,7 @@
 		<Id>1726584205562</Id>
 		<Name><![CDATA[txt_avgBat]]></Name>
 		<X>40</X>
-		<Y>955</Y>
+		<Y>1005</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -539,7 +539,7 @@
 		<Id>1726743791200</Id>
 		<Name><![CDATA[text]]></Name>
 		<X>40</X>
-		<Y>1000</Y>
+		<Y>1050</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -603,6 +603,31 @@
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
 		<Text><![CDATA[CHP]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>12</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Text>
+		<Id>1747314897311</Id>
+		<Name><![CDATA[txt_districtHeatingDeliverySet]]></Name>
+		<X>60</X>
+		<Y>810</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[District Heating delivery set]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>12</Size>

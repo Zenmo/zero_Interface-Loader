@@ -1349,8 +1349,10 @@ double f_createGISNetwork(GISRoute[] gisroutes,String networkType)
 
 double f_setColorsBasedOnGridTopology_gridnodes(GridNode GN)
 {/*ALCODESTART::1725968656820*/
-GN.gisRegion.setFillColor(GN.p_uniqueColor);
-GN.gisRegion.setLineColor(GN.p_uniqueColor.brighter());
+if(GN.gisRegion != null){
+	GN.gisRegion.setFillColor(GN.p_uniqueColor);
+	GN.gisRegion.setLineColor(GN.p_uniqueColor.brighter());
+}
 /*ALCODEEND*/}
 
 double f_setSliderPresets()
@@ -1482,7 +1484,7 @@ if(c_selectedGridConnections.size() == 0 && !filterCanReturnZero){ // Not allowe
 	f_removeFilter(selectedFilter, selectedFilterName);
 	
 	//Notify filter has not been applied, cause no results are given
-	f_setErrorScreen("Geselecteerde filter geeft geen resultaten.\n" + "De filter is gedeactiveerd.");
+	f_setErrorScreen("Geselecteerde filter geeft geen resultaten. De filter is gedeactiveerd.");
 }
 else if(c_selectedGridConnections.size() == 0 && filterCanReturnZero){//Allowed to return zero filtered gc, while returning zero
 	//Do nothing
@@ -1773,9 +1775,29 @@ c_selectedGridConnections = new ArrayList<>(gridConnectionsOnLoop);
 
 double f_setErrorScreen(String errorMessage)
 {/*ALCODESTART::1736344958050*/
+//Reset location and height
+button_errorOK.setY(50);
+rect_errorMessage.setY(-120);
+rect_errorMessage.setHeight(200);
+t_errorMessage.setY(-70);
+
 //Set position above all other things
 presentation.remove(gr_errorScreen);
 presentation.insert(presentation.size(), gr_errorScreen);
+
+int width_numberOfCharacters = 44;
+
+// Set Text
+Pair<String, Integer> p = v_infoText.restrictWidth(errorMessage, width_numberOfCharacters);
+errorMessage = p.getFirst();
+int numberOfLines = p.getSecond();
+int additionalLines = max(0, numberOfLines - 3);
+
+// Set Size
+rect_errorMessage.setHeight(rect_errorMessage.getHeight() + additionalLines * 40);
+rect_errorMessage.setY(rect_errorMessage.getY() - 40 * additionalLines);
+//button_errorOK.setY(button_errorOK.getY() - 10 * additionalLines);
+t_errorMessage.setY(t_errorMessage.getY() - 40 * additionalLines);
 
 t_errorMessage.setText(errorMessage);
 gr_errorScreen.setVisible(true);
