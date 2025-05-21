@@ -7,11 +7,11 @@ rb_scenariosPrivateUI.setValue(2, false);
 ////Heating
 
 //Heating savings
-sl_heatDemandCompanyReduction.setValue(0, true);
+sl_heatDemandCompanyReduction.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHeatSavings(), true);
 
 //Heating type (aangenomen dat het hetzelfde blijft, want hebben geen vraag die dat stelt in het formulier)
 int nr_currentHeatingType = 0;
-switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingType()){
+switch (c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHeatingType()){
 	case GASBURNER:
 		nr_currentHeatingType = 0;
 		break;
@@ -45,47 +45,45 @@ rb_heatingTypePrivateUI.setValue(nr_currentHeatingType, true);
 ////Electricity
 
 //Electricity savings
-sl_electricityDemandCompanyReduction.setValue(0, true);
+sl_electricityDemandCompanyReduction.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedElectricitySavings(), true);
 
 //Connection capacity (Delivery)
 sl_GCCapacityCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getRequestedContractDeliveryCapacity_kW(), true);
 
 //Connection capacity (Feedin)
-//sl_GCCapacityCompany_Feedin.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getRequestedContractFeedinCapacity_kW(), true); DOES NOT EXIST FOR NOW, TAKE SAME AS CURRENT
-sl_GCCapacityCompany_Feedin.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractFeedinCapacity_kW(), true);
+sl_GCCapacityCompany_Feedin.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getRequestedContractFeedinCapacity_kW(), true);
+
+//Connection capacity (Physical)
+v_physicalConnectionCapacity_kW = c_scenarioSettings_Future.get(v_currentSelectedGCnr).getRequestedPhysicalConnectionCapacity_kW();
+c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.physicalCapacity_kW = v_physicalConnectionCapacity_kW;
 
 //Solar panel power
-sl_rooftopPVCompany.setValue(v_minPVSlider + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedPV_kW(), true);
+sl_rooftopPVCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedPV_kW(), true);
 
 //Battery capacity
 sl_batteryCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedBatteryCapacity_kWh(), true);
 
 //Curtailment setting
-cb_curtailmentCompany.setSelected(false, false);
+cb_curtailmentCompany.setSelected(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedCurtailment(), true);
 
 ////Mobility
 
 //Mobility savings
-sl_mobilityDemandCompanyReduction.setValue(0, true);
+sl_mobilityDemandCompanyReduction.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedTransportSavings(), true);
 
 //Cars (VOLGORDE BELANGRIJK)
-//sl_electricCarsCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVCars() + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVCars(), true);
-sl_hydrogenCarsCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenCars() + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHydrogenCars(), true);
-sl_electricCarsCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVCars() + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVCars(), true);
-
+sl_hydrogenCarsCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHydrogenCars(), true);
+sl_electricCarsCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVCars(), true);
 //sl_dieselCarsCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedDieselCars(), true);
 
 //Vans (VOLGORDE BELANGRIJK)
-sl_hydrogenVansCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenVans() + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHydrogenVans(), true);
-sl_electricVansCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVVans() + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVVans(), true);
-//sl_hydrogenVansCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenVans() + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHydrogenVans(), true);
+sl_hydrogenVansCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHydrogenVans(), true);
+sl_electricVansCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVVans(), true);
 //sl_dieselVansCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedDieselVans(), true);
 
 //Trucks (VOLGORDE BELANGRIJK)
-//sl_electricTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVTrucks() + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVTrucks(), true);
-sl_hydrogenTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenTrucks() + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHydrogenTrucks(), true);
-sl_electricTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVTrucks() + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVTrucks(), true);
-
+sl_hydrogenTrucksCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHydrogenTrucks(), true);
+sl_electricTrucksCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVTrucks(), true);
 //sl_dieselTrucksCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedDieselTrucks(), true);
 
 //set active if active in future
@@ -201,6 +199,10 @@ sl_GCCapacityCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGC
 //Connection capacity (Feedin)
 sl_GCCapacityCompany_Feedin.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractFeedinCapacity_kW(), true);
 
+//Connection capacity (Physical)
+v_physicalConnectionCapacity_kW = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentPhysicalConnectionCapacity_kW();
+c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.physicalCapacity_kW = v_physicalConnectionCapacity_kW;
+
 //Solar panel power
 sl_rooftopPVCompany.setValue(v_minPVSlider, true);
 
@@ -218,19 +220,16 @@ sl_mobilityDemandCompanyReduction.setValue(0, true);
 //Cars (VOLGORDE BELANGRIJK)
 sl_hydrogenCarsCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenCars(), true);
 sl_electricCarsCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVCars(), true);
-//sl_hydrogenCarsCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenCars(), true);
 //sl_dieselCarsCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentDieselCars(), true);
 
-//Vans
+//Vans (VOLGORDE BELANGRIJK)
 sl_hydrogenVansCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenVans(), true);
 sl_electricVansCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVVans(), true);
-//sl_hydrogenVansCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenVans(), true);
 //sl_dieselVansCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentDieselVans(), true);
 
-//Trucks
+//Trucks (VOLGORDE BELANGRIJK)
 sl_hydrogenTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenTrucks(), true);
 sl_electricTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVTrucks(), true);
-//sl_hydrogenTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenTrucks(), true);
 //sl_dieselTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentDieselTrucks(), true);
 
 //set active if active in present
