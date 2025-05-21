@@ -647,7 +647,7 @@ c_orderedPVSystems.addAll(datailedCompanyGCsnoPV);
 */
 
 List<GCHouse> houses = new ArrayList<GCHouse>(energyModel.Houses.findAll( x -> true));
-List<GCHouse> housesWithoutPV = houses.stream().filter( gc -> !gc.v_hasPV ).collect(Collectors.toList());
+List<GCHouse> housesWithoutPV = houses.stream().filter( gc -> !gc.v_liveAssetsMetaData.hasPV ).collect(Collectors.toList());
 List<GCHouse> housesWithPV = new ArrayList<>(houses);
 housesWithPV.removeAll(housesWithoutPV);
 
@@ -656,8 +656,8 @@ c_orderedPVSystemsHouses.addAll(housesWithPV);
 
 
 List<GCUtility> companies = new ArrayList<GCUtility>(energyModel.UtilityConnections.findAll( x -> true));
-List<GCUtility> companiesWithoutPV = companies.stream().filter( gc -> !gc.v_hasPV ).collect(Collectors.toList());
-List<GCUtility> companiesWithPV = companies.stream().filter( gc -> gc.v_hasPV ).collect(Collectors.toList());
+List<GCUtility> companiesWithoutPV = companies.stream().filter( gc -> !gc.v_liveAssetsMetaData.hasPV ).collect(Collectors.toList());
+List<GCUtility> companiesWithPV = companies.stream().filter( gc -> gc.v_liveAssetsMetaData.hasPV ).collect(Collectors.toList());
 List<GCUtility> detailedCompaniesWithPV = companiesWithPV.stream().filter( gc -> gc.p_owner != null && gc.p_owner.p_detailedCompany ).collect(Collectors.toList());
 List<GCUtility> genericCompaniesWithPV = new ArrayList<>(companiesWithPV);
 genericCompaniesWithPV.removeAll(detailedCompaniesWithPV);
@@ -750,7 +750,7 @@ for (GIS_Building building : energyModel.pop_GIS_Buildings){
 */
 
 if (gis_area.c_containedGridConnections.size() > 0) {
-	if (gis_area.c_containedGridConnections.get(0).v_hasPV) {
+	if (gis_area.c_containedGridConnections.get(0).v_liveAssetsMetaData.hasPV) {
 		if (gis_area.c_containedGridConnections.get(0).c_productionAssets.get(0).getCapacityElectric_kW() < 100){
 			gis_area.f_style(rect_smallProduction.getFillColor(), null, null, null);
 		}
@@ -870,7 +870,7 @@ else if ( yearlyEnergyConsumption > 6000){ gis_area.f_style( rect_householdHugeC
 double f_setColorsBasedOnProductionHouseholds(GIS_Object gis_area)
 {/*ALCODESTART::1718265697364*/
 if (gis_area.c_containedGridConnections.size() > 0) {
-	if (gis_area.c_containedGridConnections.get(0).v_hasPV) {
+	if (gis_area.c_containedGridConnections.get(0).v_liveAssetsMetaData.hasPV) {
 		if (gis_area.c_containedGridConnections.get(0).c_productionAssets.get(0).getCapacityElectric_kW() < 5){
 			gis_area.f_style( rect_householdSmallProduction.getFillColor(), null, null, null );
 		}
@@ -897,7 +897,7 @@ if(c_companyUIs.size()>0){//Update ghost vehicles and heating systems present if
 
 
 // PV SYSTEMS:
-double PVsystems = count(energyModel.UtilityConnections, x->x.v_hasPV == true && x.v_isActive);		
+double PVsystems = count(energyModel.UtilityConnections, x->x.v_liveAssetsMetaData.hasPV == true && x.v_isActive);		
 int PV_pct = roundToInt(100 * PVsystems / count(energyModel.UtilityConnections, x->x.v_isActive));
 uI_Tabs.pop_tabElectricity.get(0).getSliderRooftopPVCompanies_pct().setValue(PV_pct, false);
 
@@ -1709,7 +1709,7 @@ c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> !GC.p_
 
 double f_filterHasPV(ArrayList<GridConnection> toBeFilteredGC)
 {/*ALCODESTART::1734448690487*/
-c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC.v_hasPV));
+c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC.v_liveAssetsMetaData.hasPV));
 
 /*ALCODEEND*/}
 

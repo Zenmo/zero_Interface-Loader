@@ -422,7 +422,7 @@ if(((J_EAStorageElectric)batteryAsset).getCapacityElectric_kW() != 0){
 
 double f_setPVSystem(GridConnection GC,double v_rooftopPV_kWp)
 {/*ALCODESTART::1713954180112*/
-if (GC.v_hasPV){
+if (GC.v_liveAssetsMetaData.hasPV){
 	J_EAProduction pvAsset = findFirst(GC.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
 	if (v_rooftopPV_kWp == 0) {
 		pvAsset.removeEnergyAsset();;
@@ -1521,7 +1521,7 @@ double yearlyProductionMethane_kWh 	= 0;
 double yearlyProductionHydrogen_kWh = 0;
 double timestep_h 					= zero_Interface.energyModel.p_timeStep_h;
 double outputTemperature_degC 		= 0;
-parentGC.v_hasPV = true;
+parentGC.v_liveAssetsMetaData.hasPV = true;
 
 J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, capacityElectric_kW , capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, timestep_h, outputTemperature_degC, zero_Interface.energyModel.pp_solarPVproduction);
 
@@ -1626,7 +1626,7 @@ if (batteryAsset != null){
 
 //Find the current PV capacity
 int PVCapacityCurrent = 0;
-if (c_ownedGridConnections.get(v_currentSelectedGCnr).v_hasPV){
+if (c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveAssetsMetaData.hasPV){
 	J_EAProduction pvAsset = findFirst(c_ownedGridConnections.get(v_currentSelectedGCnr).c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
 	PVCapacityCurrent = roundToInt(pvAsset.getCapacityElectric_kW());
 }
