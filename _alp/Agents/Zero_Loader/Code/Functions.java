@@ -21,12 +21,12 @@ for (Neighbourhood_data NBH : c_neighbourhood_data) {
 double f_createGridConnections()
 {/*ALCODESTART::1726584205771*/
 //Energy production sites
-f_generateSolarParks();
-f_generateWindFarms();
+f_createSolarParks();
+f_createWindFarms();
 
 //Other infra assets
-f_generateElectrolysers();
-f_generateBatteries();
+f_createElectrolysers();
+f_createBatteries();
 f_createChargingStations();
 
 //Consumers
@@ -49,6 +49,8 @@ energyModel.p_truckTripsExcel = inputTruckTrips;
 energyModel.p_householdTripsExcel = inputHouseholdTrips;
 energyModel.p_cookingPatternExcel = inputCookingActivities;
 
+//Initialize specific slider GC
+f_initializeSpecificSliderGC();
 
 //Actors
 f_createActors();
@@ -393,7 +395,7 @@ return subtenant;
 
 /*ALCODEEND*/}
 
-double f_generateSolarParks()
+double f_createSolarParks()
 {/*ALCODESTART::1726584205785*/
 ConnectionOwner owner;
 GCEnergyProduction solarpark;
@@ -410,9 +412,8 @@ for (Solarfarm_data dataSolarfarm : c_solarfarm_data) { // MOET NOG CHECK OF ZON
 		solarpark.set_p_gridConnectionID( dataSolarfarm.gc_id() );
 		solarpark.set_p_name( dataSolarfarm.gc_name() );
 		
-		if(solarpark.p_gridConnectionID.equals("SLIDER_SF")){
-			solarpark.p_isSliderGC = true;
-		}
+		//Check wether it can be changed using sliders
+		solarpark.p_isSliderGC = dataSolarfarm.isSliderGC();
 		
 		//Grid Capacity
 		solarpark.v_liveConnectionMetaData.physicalCapacity_kW = dataSolarfarm.connection_capacity_kw();
@@ -480,7 +481,7 @@ for (Solarfarm_data dataSolarfarm : c_solarfarm_data) { // MOET NOG CHECK OF ZON
 
 /*ALCODEEND*/}
 
-double f_generateBatteries()
+double f_createBatteries()
 {/*ALCODESTART::1726584205787*/
 for (Battery_data dataBattery : c_battery_data) { // MOET NOG CHECK OF battery ACTOR AL BESTAAT OP, zo ja --> battery koppelen aan elkaar en niet 2 GC en 2 actoren maken.
 	
@@ -499,11 +500,9 @@ for (Battery_data dataBattery : c_battery_data) { // MOET NOG CHECK OF battery A
 	gridbattery.set_p_ownerID( dataBattery.owner_id() );
 	gridbattery.set_p_owner( owner );	
 	gridbattery.v_liveConnectionMetaData.physicalCapacity_kW = dataBattery.connection_capacity_kw();
-
 	
-	if(gridbattery.p_gridConnectionID.equals("SLIDER_GB")){
-		gridbattery.p_isSliderGC = true;
-	}
+	//Check wether it can be changed using sliders
+	gridbattery.p_isSliderGC = dataBattery.isSliderGC();
 	
 	//Grid Capacity
 	gridbattery.v_liveConnectionMetaData.physicalCapacity_kW = dataBattery.connection_capacity_kw();
@@ -533,7 +532,7 @@ for (Battery_data dataBattery : c_battery_data) { // MOET NOG CHECK OF battery A
 	
 	//Get initial state
 	gridbattery.v_isActive = dataBattery.initially_active();
-
+	
 	if (dataBattery.polygon() != null) {
 		//Create gis object for the battery
 		GIS_Object area =  f_createGISObject( dataBattery.gc_name(), dataBattery.latitude(), dataBattery.longitude(), dataBattery.polygon(), OL_GISObjectType.BATTERY);
@@ -554,7 +553,7 @@ for (Battery_data dataBattery : c_battery_data) { // MOET NOG CHECK OF battery A
 }
 /*ALCODEEND*/}
 
-double f_generateElectrolysers()
+double f_createElectrolysers()
 {/*ALCODESTART::1726584205789*/
 ConnectionOwner owner;
 List<String> existing_actors = new ArrayList();
@@ -634,7 +633,7 @@ for (Electrolyser_data dataElectrolyser : c_electrolyser_data) {
 }
 /*ALCODEEND*/}
 
-double f_generateWindFarms()
+double f_createWindFarms()
 {/*ALCODESTART::1726584205791*/
 ConnectionOwner owner;
 GCEnergyProduction windfarm;
@@ -648,10 +647,10 @@ for (Windfarm_data dataWindfarm : c_windfarm_data) {
 
 		windfarm.set_p_gridConnectionID( dataWindfarm.gc_id() );
 		windfarm.set_p_name( dataWindfarm.gc_name() );
-		if(windfarm.p_gridConnectionID.equals("SLIDER_WF")){
-			windfarm.p_isSliderGC = true;
-		}
-		
+
+		//Check wether it can be changed using sliders
+		windfarm.p_isSliderGC = dataWindfarm.isSliderGC();
+	
 		//Grid capacity
 		windfarm.v_liveConnectionMetaData.physicalCapacity_kW = dataWindfarm.connection_capacity_kw();
 		if ( dataWindfarm.connection_capacity_kw() > 0 ) {
@@ -3888,5 +3887,114 @@ zero_Interface.c_GISNodes.add(GN.gisRegion);
 */
 
 return GN_heat;
+/*ALCODEEND*/}
+
+double f_addSliderSolarfarm(String gridNodeID)
+{/*ALCODESTART::1747829476305*/
+c_solarfarm_data.add(0, Solarfarm_data.builder().
+isSliderGC(true).
+
+gc_id("Slider solarfarm").
+gc_name("Slider solarfarm").
+owner_id("Slider solarfarm owner").
+streetname(null).
+house_number(null).
+house_letter(null).
+house_addition(null).
+postalcode(null).
+city(null).
+gridnode_id(gridNodeID).
+initially_active(false).
+
+capacity_electric_kw(0.0).
+connection_capacity_kw(0.0).
+contracted_delivery_capacity_kw(0.0).
+contracted_feed_in_capacity_kw(0.0).
+
+latitude(0).
+longitude(0).
+polygon(null).
+build());
+/*ALCODEEND*/}
+
+double f_addSliderWindfarm(String gridNodeID)
+{/*ALCODESTART::1747829476307*/
+c_windfarm_data.add(0, Windfarm_data.builder().
+isSliderGC(true).
+
+gc_id("Slider windfarm").
+gc_name("Slider windfarm").
+owner_id("Slider windfarm owner").
+streetname(null).
+house_number(null).
+house_letter(null).
+house_addition(null).
+postalcode(null).
+city(null).
+gridnode_id(gridNodeID).
+initially_active(false).
+
+capacity_electric_kw(0.0).
+connection_capacity_kw(0.0).
+contracted_delivery_capacity_kw(0.0).
+contracted_feed_in_capacity_kw(0.0).
+
+latitude(0).
+longitude(0).
+polygon(null).
+build());
+
+/*ALCODEEND*/}
+
+double f_addSliderBattery(String gridNodeID)
+{/*ALCODESTART::1747829476311*/
+c_battery_data.add(0, Battery_data.builder().
+isSliderGC(true).
+
+gc_id("Slider battery").
+gc_name("Slider battery").
+owner_id("Slider battery owner").
+streetname(null).
+house_number(null).
+house_letter(null).
+house_addition(null).
+postalcode(null).
+city(null).
+gridnode_id(gridNodeID).
+initially_active(false).
+
+capacity_electric_kw(0.0).
+connection_capacity_kw(0.0).
+contracted_delivery_capacity_kw(0.0).
+contracted_feed_in_capacity_kw(0.0).
+
+storage_capacity_kwh(0.0).
+default_operation_mode("BALANCE").
+latitude(0).
+longitude(0).
+polygon(null).
+build());
+/*ALCODEEND*/}
+
+double f_initializeSpecificSliderGC()
+{/*ALCODESTART::1747830228830*/
+//Create slider GC data packages for assetGC that do not have a sliderGC data package yet 
+Solarfarm_data sliderSolarfarm_data = findFirst(c_solarfarm_data, sf_data -> sf_data.isSliderGC());
+Windfarm_data sliderWindfarm_data = findFirst(c_windfarm_data, wf_data -> wf_data.isSliderGC());
+Battery_data sliderBattery_data = findFirst(c_battery_data, bat_data -> bat_data.isSliderGC());
+
+//Get top gridnode id
+String topGridNodeID = findFirst(c_gridNode_data, node_data -> node_data.type().equals("HVMV")).gridnode_id();
+
+
+if(sliderSolarfarm_data == null){
+	f_addSliderSolarfarm(topGridNodeID);
+}
+if(sliderWindfarm_data == null){
+	f_addSliderWindfarm(topGridNodeID);
+}
+if(sliderBattery_data == null){
+	f_addSliderBattery(topGridNodeID);
+}
 /*ALCODEEND*/}
 
