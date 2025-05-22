@@ -9,7 +9,7 @@ public class J_scenario_Future implements Serializable {
 	private Double requestedContractFeedinCapacity_kW = 0.0;
 	private Double requestedPhysicalConnectionCapacity_kW = 0.0;
 	private double plannedHeatSavings = 0;
-	private OL_GridConnectionHeatingType plannedHeatingType;
+	private OL_GridConnectionHeatingType plannedHeatingType = OL_GridConnectionHeatingType.NONE;
 	private double plannedElectricitySavings = 0;
 	private boolean plannedCurtailment = false;
 	private Integer plannedPV_kW = 0;
