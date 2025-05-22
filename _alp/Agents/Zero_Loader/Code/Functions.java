@@ -3991,7 +3991,11 @@ Windfarm_data sliderWindfarm_data = findFirst(c_windfarm_data, wf_data -> wf_dat
 Battery_data sliderBattery_data = findFirst(c_battery_data, bat_data -> bat_data.isSliderGC());
 
 //Get top gridnode id
-String topGridNodeID = findFirst(c_gridNode_data, node_data -> node_data.type().equals("HVMV")).gridnode_id();
+GridNode_data topGridNode = findFirst(c_gridNode_data, node_data -> node_data.type().equals("HVMV"));
+if ( topGridNode == null ) {
+	throw new RuntimeException("Unable to find top GridNode of type HVMV to create slider assets.");
+}
+String topGridNodeID = topGridNode.gridnode_id();
 
 
 if(sliderSolarfarm_data == null){
