@@ -1848,10 +1848,10 @@ future_scenario_list.setParentAgent(companyGC);
 //Add current grid capacity to current (and future, feedin, physical, as no data on plans so assumption it is/stays the same) scenario list
 current_scenario_list.setCurrentContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
 future_scenario_list.setRequestedContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-current_scenario_list.setCurrentContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-future_scenario_list.setRequestedContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-current_scenario_list.setCurrentPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+current_scenario_list.setCurrentContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+future_scenario_list.setRequestedContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+current_scenario_list.setCurrentPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.physicalCapacity_kW);
+future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.physicalCapacity_kW);
 
 //Basic heating and electricity demand profiles
 if (companyGC.p_floorSurfaceArea_m2 > 0){
@@ -1875,6 +1875,7 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 	}
 	//Set current scenario heating type
 	current_scenario_list.setCurrentHeatingType(companyGC.p_heatingType);
+	future_scenario_list.setPlannedHeatingType(companyGC.p_heatingType);
 }
 
 
@@ -1906,6 +1907,8 @@ if(v_remainingNumberOfCars > 0){
 	
 	//Set current scenario cars
 	current_scenario_list.setCurrentDieselCars(nbCars);
+	//Set planned scenario cars
+	future_scenario_list.setPlannedEVCars(0);
 }
 
 //Vans
@@ -1919,6 +1922,8 @@ if(v_remainingNumberOfVans > 0){
 	
 	//Set current scenario vans
 	current_scenario_list.setCurrentDieselVans(nbVans);
+	//Set planned scenario vans
+	future_scenario_list.setPlannedEVVans(0);
 }
 
 //Trucks
@@ -1932,6 +1937,8 @@ if (v_remainingNumberOfTrucks > 0){
 	
 	//Set current scenario trucks
 	current_scenario_list.setCurrentDieselTrucks(nbTrucks);
+	//Set planned scenario trucks
+	future_scenario_list.setPlannedEVTrucks(0);
 }
 /*ALCODEEND*/}
 
