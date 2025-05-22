@@ -17,6 +17,7 @@ public class Solarfarm_data {
 		String city;
 		String gridnode_id;
 		boolean initially_active;
+		boolean isSliderGC;
 		double capacity_electric_kw;
 		double connection_capacity_kw;
 		Double contracted_delivery_capacity_kw;
