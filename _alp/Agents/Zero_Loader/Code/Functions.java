@@ -872,13 +872,15 @@ List<Double> logisticsFleetEdemandList = genericProfiles_data.logisticsFleetEdem
  
 // Weather data
 List<Double> windList = genericProfiles_data.windList();
-List<Double> solarList = genericProfiles_data.solarList();
+List<Double> solarList35DegSouth = genericProfiles_data.solarList35DegSouth();
+List<Double> solarList15DegEastWest = genericProfiles_data.solarList15DegEastWest();
 List<Double> tempList = genericProfiles_data.tempList();
 List<Double> epexList = genericProfiles_data.epexList(); 
 
 double[] a_arguments = new double[argumentsList.size()];
 double[] a_windValues = new double[argumentsList.size()];
-double[] a_solarValues = new double[argumentsList.size()];
+double[] a_solarValues35DegSouth = new double[argumentsList.size()];
+double[] a_solarValues15DegEastWest = new double[argumentsList.size()];
 double[] a_tempValues = new double[argumentsList.size()];
 double[] a_houseEdemand = new double[argumentsList.size()];
 double[] a_houseDHWdemand = new double[argumentsList.size()];
@@ -894,7 +896,8 @@ double[] a_epexValues = new double[argumentsList.size()];
 for(int i = 0; i < argumentsList.size(); i++) {
        a_arguments[i] = argumentsList.get(i);
        a_windValues[i] = windList.get(i);
-       a_solarValues[i] = solarList.get(i);
+       a_solarValues35DegSouth[i] = solarList35DegSouth.get(i);
+       a_solarValues15DegEastWest[i] = solarList15DegEastWest.get(i);
        a_tempValues[i] = tempList.get(i);
        a_houseEdemand[i] = houseEdemandList.get(i);
        a_houseDHWdemand[i] = houseHDHWdemandList.get(i);
@@ -925,11 +928,15 @@ profilePointer = new J_ProfilePointer("normalized onshore wind production", ener
 energyModel.f_addProfile(profilePointer);
 energyModel.pp_windOnshoreProduction = profilePointer;
 
-energyModel.tf_p_solar_e_normalized.setArgumentsAndValues(a_arguments, a_solarValues);
+energyModel.tf_p_solar_e_normalized.setArgumentsAndValues(a_arguments, a_solarValues35DegSouth);
 energyModel.tf_p_solar_e_normalized.setOutOfRangeAction(TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT);
 profilePointer = new J_ProfilePointer("normalized_PV_production", energyModel.tf_p_solar_e_normalized);
 energyModel.f_addProfile(profilePointer);
 energyModel.pp_solarPVproduction = profilePointer;
+
+TableFunction tf_p_solar_eastwest_e_normalized = new TableFunction(a_arguments, a_solarValues15DegEastWest, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+profilePointer = new J_ProfilePointer("normalized_PV_production_eastwest", tf_p_solar_eastwest_e_normalized);
+energyModel.f_addProfile(profilePointer);
 
 // Consumption profiles:
 

@@ -21,7 +21,8 @@ public class Profiles_data {
 		
 		// Weather data
 		List<Double> windList;
-		List<Double> solarList;
+		List<Double> solarList35DegSouth;
+		List<Double> solarList15DegEastWest;
 		List<Double> tempList;
 		List<Double> epexList;
 		
