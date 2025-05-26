@@ -227,6 +227,10 @@ return GISCoords;
 
 double f_importExcelTablesToDB()
 {/*ALCODESTART::1726584205779*/
+inputHouseholdTrips.readFile();
+inputCookingActivities.readFile();
+inputTruckTrips.readFile();
+
 if(settings.reloadDatabase()){
 	
 	//Get the database names that are selected for reloading

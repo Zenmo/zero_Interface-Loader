@@ -150,7 +150,7 @@ import kotlinx.datetime.DateTimeUnit;]]></Import>
 				<ClassName>data_Generic/AlbatrossProcessedVehicleTrips.xlsx</ClassName>
 			</ResourceReference>
 			<SaveInSnapshot>false</SaveInSnapshot>
-			<LoadOnStartup>true</LoadOnStartup>
+			<LoadOnStartup>false</LoadOnStartup>
 			<SaveOnDispose>false</SaveOnDispose>
 		</ExcelFile>
 		<ExcelFile>
@@ -170,7 +170,7 @@ import kotlinx.datetime.DateTimeUnit;]]></Import>
 				<ClassName>data_Generic/inputTruckTripPatterns.xlsx</ClassName>
 			</ResourceReference>
 			<SaveInSnapshot>false</SaveInSnapshot>
-			<LoadOnStartup>true</LoadOnStartup>
+			<LoadOnStartup>false</LoadOnStartup>
 			<SaveOnDispose>false</SaveOnDispose>
 		</ExcelFile>
 		<ExcelFile>
@@ -190,7 +190,7 @@ import kotlinx.datetime.DateTimeUnit;]]></Import>
 				<ClassName>data_Generic/inputECookerPatterns.xlsx</ClassName>
 			</ResourceReference>
 			<SaveInSnapshot>false</SaveInSnapshot>
-			<LoadOnStartup>true</LoadOnStartup>
+			<LoadOnStartup>false</LoadOnStartup>
 			<SaveOnDispose>false</SaveOnDispose>
 		</ExcelFile>
 	</Connectivity>
