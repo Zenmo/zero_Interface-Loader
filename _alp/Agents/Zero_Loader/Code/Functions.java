@@ -2672,6 +2672,9 @@ double startTime = System.currentTimeMillis();
 v_timeOfModelStart_ms = startTime;
 //v_hourOfYearStart= avgc_data.hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
 
+//Send avgc data to engine
+avgc_data.f_setAVGC_data();
+
 //Import excel data to the anylogic database
 f_importExcelTablesToDB();
 
