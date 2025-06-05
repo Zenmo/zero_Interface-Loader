@@ -112,7 +112,7 @@
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>sl_electricCars_pct.setValue(100 - sl_fossilFuelCars_pct.getIntValue(), false);
-f_setElectricCars( sl_electricCars_pct.getValue(), sl_electricCars_pct, sl_fossilFuelCars_pct );</ActionCode>
+f_setElectricCars( zero_Interface.energyModel.f_getGridConnections(), sl_electricCars_pct.getValue(), sl_electricCars_pct, sl_fossilFuelCars_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -141,7 +141,7 @@ f_setElectricCars( sl_electricCars_pct.getValue(), sl_electricCars_pct, sl_fossi
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setVehicleSliders( 0, sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );
-f_setElectricTrucks( sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct);</ActionCode>
+f_setElectricTrucks( zero_Interface.energyModel.f_getGridConnections(), sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -296,7 +296,7 @@ f_setElectricTrucks( sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuel
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReduction( sl_mobilityDemandReduction_pct.getValue() );
+					<ActionCode>f_setDemandReduction( zero_Interface.energyModel.f_getGridConnections(), sl_mobilityDemandReduction_pct.getValue() );
 </ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -352,7 +352,7 @@ f_setElectricTrucks( sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuel
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setVehicleSliders( 1, sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );
-f_setHydrogenTrucks( sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct);</ActionCode>
+f_setHydrogenTrucks( zero_Interface.energyModel.f_getGridConnections(), sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -432,7 +432,7 @@ f_setHydrogenTrucks( sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuel
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setVehicleSliders( 2, sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );
-f_setDieselTrucks(sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct);</ActionCode>
+f_setDieselTrucks( zero_Interface.energyModel.f_getGridConnections(), sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -537,7 +537,7 @@ f_setDieselTrucks(sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTru
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>sl_fossilFuelCars_pct.setValue(100 - sl_electricCars_pct.getIntValue(), false);
-f_setElectricCars( sl_electricCars_pct.getValue(), sl_electricCars_pct, sl_fossilFuelCars_pct );</ActionCode>
+f_setElectricCars( zero_Interface.energyModel.f_getGridConnections(), sl_electricCars_pct.getValue(), sl_electricCars_pct, sl_fossilFuelCars_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -642,7 +642,7 @@ f_setElectricCars( sl_electricCars_pct.getValue(), sl_electricCars_pct, sl_fossi
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>sl_electricVans_pct.setValue(100 - sl_fossilFuelVans_pct.getIntValue(), false);
-f_setElectricVans( sl_electricVans_pct.getValue(), sl_electricVans_pct, sl_fossilFuelVans_pct );</ActionCode>
+f_setElectricVans( zero_Interface.energyModel.f_getGridConnections(), sl_electricVans_pct.getValue(), sl_electricVans_pct, sl_fossilFuelVans_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -722,7 +722,7 @@ f_setElectricVans( sl_electricVans_pct.getValue(), sl_electricVans_pct, sl_fossi
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>sl_fossilFuelVans_pct.setValue(100 - sl_electricVans_pct.getIntValue(), false);
-f_setElectricVans( sl_electricVans_pct.getValue(), sl_electricVans_pct, sl_fossilFuelVans_pct );</ActionCode>
+f_setElectricVans( zero_Interface.energyModel.f_getGridConnections(), sl_electricVans_pct.getValue(), sl_electricVans_pct, sl_fossilFuelVans_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>

@@ -10,7 +10,7 @@ double targetHeatPump_pct = sliderHeatpump.getValue();
 
 //Set the sliders if companyUI is present using the companyUI functions, if not: do it the normal way
 if(zero_Interface.c_companyUIs.size()>0){
- 	f_setHeatingSystemsWithCompanyUI(targetHeatPump_pct, sliderGasburner, sliderHeatpump);
+ 	f_setHeatingSystemsWithCompanyUI(gcList, targetHeatPump_pct, sliderGasburner, sliderHeatpump);
 }
 else{
 	ArrayList<GCUtility> companies = new ArrayList<GCUtility>(zero_Interface.c_orderedHeatingSystemsCompanies.stream().filter(gcList::contains).toList());
@@ -188,117 +188,101 @@ zero_Interface.f_resetSettings();
 
 int f_setHeatingSystemsWithCompanyUI(List<GCUtility> gcList,double targetHeatPump_pct,ShapeSlider sliderGasburner,ShapeSlider sliderHeatpump)
 {/*ALCODESTART::1729259449060*/
-//ArrayList<GCUtility> companies = new ArrayList<GCUtility>(zero_Interface.c_orderedHeatingSystemsCompanies.stream().filter(gcList::contains).toList());
-//double nbHeatPumps = count(gcList, gc -> gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump);
-//int targetHeatPumpAmount = roundToInt( targetHeatPump_pct / 100.0 * gcList.size());
+ArrayList<GCUtility> companies = new ArrayList<GCUtility>(zero_Interface.c_orderedHeatingSystemsCompanies.stream().filter(gcList::contains).filter(x -> x.v_isActive).toList());
+int nbActiveCompanies = companies.size();
+Pair<Integer, Integer> pair = f_calculateNumberOfGhostHeatingSystems(companies);
+int nbOfGhostHeatingSystems = pair.getFirst() + pair.getSecond(); // Both Electric and Hybrid heatpumps
+int nbHeatPumps = count(companies, gc -> gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump) + nbOfGhostHeatingSystems;
+int targetHeatPumpAmount = roundToInt( targetHeatPump_pct / 100.0 * nbActiveCompanies) + nbOfGhostHeatingSystems;
 
-//Setting Heating systems
-int nbHeatPumps = count(zero_Interface.energyModel.UtilityConnections, gc -> gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump && gc.v_isActive) + v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps + v_totalNumberOfGhostHeatingSystems_HybridHeatpumps;// && gc.p_secondaryHeatingAsset == null );
-int nbConnectionsWithHeat = count(zero_Interface.energyModel.UtilityConnections, gc -> gc.p_primaryHeatingAsset != null && gc.v_isActive) + v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps + v_totalNumberOfGhostHeatingSystems_HybridHeatpumps;
-int targetHeatPumpAmount = roundToInt(targetHeatPump_pct/100.0* nbConnectionsWithHeat);
 
-if( targetHeatPumpAmount < nbHeatPumps){
-	while ( targetHeatPumpAmount < nbHeatPumps){ // remove excess heatpumps of companies that didnt start with a heatpump, replace with gasburners.
+while ( targetHeatPumpAmount < nbHeatPumps){ // remove excess heatpumps of companies that didnt start with a heatpump, replace with gasburners.
+	GCUtility company = findFirst(companies, gc -> gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump);
+	if (company != null) {
+		UI_company companyUI = zero_Interface.c_companyUIs.get(company.p_owner.p_connectionOwnerIndexNr);
 		
-		GridConnection GC = findFirst(zero_Interface.c_orderedHeatingSystemsCompanies, gc -> gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump);
-		
-		if (GC!=null) {
-			UI_company companyUI = zero_Interface.c_companyUIs.get(GC.p_owner.p_connectionOwnerIndexNr);
-			
-			companyUI.b_runningMainInterfaceSlider = true;
-			if(companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) != GC){
-				int selectedGC = 0;
-				if(companyUI.v_currentSelectedGCnr != 0){
-					companyUI.GCnr_selection.setValue(selectedGC, true); 
-				}
-				while (companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) != GC){ //Check if selected
-					companyUI.GCnr_selection.setValue(selectedGC++, true);
-				}
-			}
-			
-			// rbSetting Bugfix, does not change the heating system if the radiobutton was disabled!			
-			boolean rbSetting = companyUI.rb_heatingTypePrivateUI.isEnabled();
-			companyUI.rb_heatingTypePrivateUI.setEnabled(true);
-			companyUI.rb_heatingTypePrivateUI.setValue(0, true);
-			companyUI.rb_heatingTypePrivateUI.setEnabled(rbSetting);
-			companyUI.rb_scenariosPrivateUI.setValue(2, false);
-			companyUI.b_runningMainInterfaceSlider = false;
+		companyUI.b_runningMainInterfaceSlider = true;
+		if(companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) != company){
+			int i = indexOf(companyUI.c_ownedGridConnections.stream().toArray(), company);
+			companyUI.GCnr_selection.setValue(i, true);
+		}
+		// rbSetting Bugfix, does not change the heating system if the radiobutton was disabled!			
+		boolean rbSetting = companyUI.rb_heatingTypePrivateUI.isEnabled();
+		companyUI.rb_heatingTypePrivateUI.setEnabled(true);
+		companyUI.rb_heatingTypePrivateUI.setValue(0, true); // First option is gasburner
+		companyUI.rb_heatingTypePrivateUI.setEnabled(rbSetting);
+		companyUI.rb_scenariosPrivateUI.setValue(2, false);
+		companyUI.b_runningMainInterfaceSlider = false;
 
-			//Reorder c_orderedHeatingSystems
-			zero_Interface.c_orderedHeatingSystemsCompanies.remove(GC);
-			zero_Interface.c_orderedHeatingSystemsCompanies.add(0, GC);
-			
-			nbHeatPumps--;
-		}
-		else{//No more heating assets to adjust: this is the minimum: set slider to minimum and do nothing else
-			int min_nbOfHeatpumps = count(zero_Interface.energyModel.UtilityConnections, gc -> gc.v_isActive && gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump) + v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps + v_totalNumberOfGhostHeatingSystems_HybridHeatpumps;
-			int min_pct_ElectricHeatpumpSlider = (int) ((float) min_nbOfHeatpumps / nbConnectionsWithHeat * 100.0);
-			sliderHeatpump.setValue(min_pct_ElectricHeatpumpSlider, false);
-			sliderGasburner.setValue(100-min_pct_ElectricHeatpumpSlider, false);
-			return;
-		}
+		//Reorder c_orderedHeatingSystems
+		zero_Interface.c_orderedHeatingSystemsCompanies.remove(company);
+		zero_Interface.c_orderedHeatingSystemsCompanies.add(0, company);
+		companies.remove(company);
+		nbHeatPumps--;
 	}
-} else { 
-	while ( targetHeatPumpAmount > nbHeatPumps) { // remove gasburners, add heatpumps.
-			
-		GridConnection GC = findFirst(zero_Interface.c_orderedHeatingSystemsCompanies, gc -> gc.p_primaryHeatingAsset instanceof J_EAConversionGasBurner);
-		if (GC!=null) {
-			UI_company companyUI = zero_Interface.c_companyUIs.get(GC.p_owner.p_connectionOwnerIndexNr);
-			companyUI.b_runningMainInterfaceSlider = true;
-			if(companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) != GC){
-				int selectedGC = 0;
-				if(companyUI.v_currentSelectedGCnr != 0){
-					companyUI.GCnr_selection.setValue(selectedGC, true); 
-				}
-				while (companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) != GC){ //Check if selected
-					companyUI.GCnr_selection.setValue(selectedGC++, true);
-				}
-			}
-			
-			// rbSetting Bugfix, does not change the heating system if the radiobutton was disabled!
-			boolean rbSetting = companyUI.rb_heatingTypePrivateUI.isEnabled();
-			companyUI.rb_heatingTypePrivateUI.setEnabled(true);
-			companyUI.rb_heatingTypePrivateUI.setValue(2, true);
-			companyUI.rb_heatingTypePrivateUI.setEnabled(rbSetting);
-			companyUI.rb_scenariosPrivateUI.setValue(2, false);
-			companyUI.b_runningMainInterfaceSlider = false;
-			
-			//Reorder c_orderedHeatingSystems
-			zero_Interface.c_orderedHeatingSystemsCompanies.remove(GC);
-			zero_Interface.c_orderedHeatingSystemsCompanies.add(0, GC);
-			
-			nbHeatPumps++;
+	else { //No more heating assets to adjust: this is the minimum: set slider to minimum and do nothing else
+		int min_nbOfHeatpumps = count(gcList, gc -> gc.v_isActive && gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump) + nbOfGhostHeatingSystems;
+		int min_pct_ElectricHeatpumpSlider = roundToInt( min_nbOfHeatpumps * 100.0 / nbActiveCompanies );
+		sliderHeatpump.setValue(min_pct_ElectricHeatpumpSlider, false);
+		sliderGasburner.setValue(100-min_pct_ElectricHeatpumpSlider, false);
+		return;
+	}
+}
+
+while ( targetHeatPumpAmount > nbHeatPumps) { // remove gasburners, add heatpumps.
+		
+	GCUtility company = findFirst(companies, gc -> gc.p_primaryHeatingAsset instanceof J_EAConversionGasBurner);
+	if (company != null) {
+		UI_company companyUI = zero_Interface.c_companyUIs.get(company.p_owner.p_connectionOwnerIndexNr);
+		companyUI.b_runningMainInterfaceSlider = true;
+		if(companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) != company){
+			int i = indexOf(companyUI.c_ownedGridConnections.stream().toArray(), company);
+			companyUI.GCnr_selection.setValue(i, true);
 		}
-		else{//No more gas burner assets to adjust: this is the minimum: set slider to minimum and do nothing else
-			int min_nbOfHeatpumps = count(zero_Interface.energyModel.UtilityConnections, gc -> gc.v_isActive && gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump) + v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps + v_totalNumberOfGhostHeatingSystems_HybridHeatpumps;
-			int min_pct_ElectricHeatpumpSlider = (int) ((float) min_nbOfHeatpumps / nbConnectionsWithHeat * 100.0);
-			sliderHeatpump.setValue(min_pct_ElectricHeatpumpSlider, false);
-			sliderGasburner.setValue(100-min_pct_ElectricHeatpumpSlider, false);
-			return;
-		}
-	}	
+		
+		// rbSetting Bugfix, does not change the heating system if the radiobutton was disabled!
+		boolean rbSetting = companyUI.rb_heatingTypePrivateUI.isEnabled();
+		companyUI.rb_heatingTypePrivateUI.setEnabled(true);
+		companyUI.rb_heatingTypePrivateUI.setValue(2, true); // Third option (index 2) is electric heatpump
+		companyUI.rb_heatingTypePrivateUI.setEnabled(rbSetting);
+		companyUI.rb_scenariosPrivateUI.setValue(2, false);
+		companyUI.b_runningMainInterfaceSlider = false;
+		
+		//Reorder c_orderedHeatingSystems
+		zero_Interface.c_orderedHeatingSystemsCompanies.remove(company);
+		zero_Interface.c_orderedHeatingSystemsCompanies.add(0, company);
+		companies.remove(company);		
+		nbHeatPumps++;
+	}
+	else { //No more gas burner assets to adjust: this is the minimum: set slider to minimum and do nothing else
+		int min_nbOfHeatpumps = count(gcList, gc -> gc.v_isActive && gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump) + nbOfGhostHeatingSystems;
+		int min_pct_ElectricHeatpumpSlider = roundToInt( min_nbOfHeatpumps * 100.0 / nbActiveCompanies );
+		sliderHeatpump.setValue(min_pct_ElectricHeatpumpSlider, false);
+		sliderGasburner.setValue(100-min_pct_ElectricHeatpumpSlider, false);
+		return;
+	}
 }
 /*ALCODEEND*/}
 
-double f_calculateNumberOfGhostHeatingSystems()
+Pair<Integer, Integer> f_calculateNumberOfGhostHeatingSystems(List<GCUtility> gcList)
 {/*ALCODESTART::1729262524479*/
-v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps = 0;
-v_totalNumberOfGhostHeatingSystems_HybridHeatpumps = 0;
+Integer numberOfGhostHeatingSystems_ElectricHeatpumps = 0;
+Integer numberOfGhostHeatingSystems_HybridHeatpumps = 0;
 
-for (UI_company companyUI : zero_Interface.c_companyUIs ){
-	
-	for(int i = 0; i < companyUI.c_ownedGridConnections.size(); i++){
-		if(companyUI.c_ownedGridConnections.get(i).v_hasQuarterHourlyValues && companyUI.c_ownedGridConnections.get(i).v_isActive){
-			if (companyUI.c_scenarioSettings_Current.get(i).getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP){
-				v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps++;
-			}
-			if (companyUI.c_scenarioSettings_Current.get(i).getCurrentHeatingType() == OL_GridConnectionHeatingType.HYBRID_HEATPUMP){
-				v_totalNumberOfGhostHeatingSystems_HybridHeatpumps++;
-			}
+for (GCUtility gc : gcList) {
+	if ( gc.v_hasQuarterHourlyValues && gc.v_isActive ) {
+		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
+		int i = indexOf(companyUI.c_ownedGridConnections.stream().toArray(), gc);
+		if (companyUI.c_scenarioSettings_Current.get(i).getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP){
+			numberOfGhostHeatingSystems_ElectricHeatpumps++;
+		}
+		if (companyUI.c_scenarioSettings_Current.get(i).getCurrentHeatingType() == OL_GridConnectionHeatingType.HYBRID_HEATPUMP){
+			numberOfGhostHeatingSystems_HybridHeatpumps++;
 		}
 	}
 }
 
+return new Pair(numberOfGhostHeatingSystems_ElectricHeatpumps, numberOfGhostHeatingSystems_HybridHeatpumps);
 /*ALCODEEND*/}
 
 double f_calculatePeakHeatDemand_kW(GridConnection gc)

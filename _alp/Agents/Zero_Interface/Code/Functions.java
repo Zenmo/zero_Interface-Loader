@@ -548,10 +548,14 @@ while (v_connectionOwnerIndexNr < c_COCompanies.size()){
 v_connectionOwnerIndexNr = 0;
 
 //Get the ghost vehicles for the transport slider tab
-uI_Tabs.pop_tabMobility.get(0).f_calculateNumberOfGhostVehicles();
-
+Triple<Integer, Integer, Integer> triple = uI_Tabs.pop_tabMobility.get(0).f_calculateNumberOfGhostVehicles( new ArrayList<GridConnection>(energyModel.UtilityConnections.findAll( x -> true)) );
+uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Cars = triple.getFirst();
+uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Vans = triple.getSecond();
+uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Trucks = triple.getThird();
 //Get the ghost heating systems
-uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfGhostHeatingSystems();
+Pair<Integer, Integer> pair = uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfGhostHeatingSystems( energyModel.UtilityConnections.findAll( x -> true) );
+uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps = pair.getFirst();
+uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_HybridHeatpumps = pair.getSecond();
 
 /*ALCODEEND*/}
 
@@ -857,13 +861,6 @@ gis_area.f_style( rect_householdNoProduction.getFillColor(), null, null, null );
 double f_updateMainInterfaceSliders()
 {/*ALCODESTART::1718288402102*/
 // ATTENTION: If you have custom tabs it may be neccesary to override this function and add updates to your custom sliders!
-
-if(c_companyUIs.size()>0){//Update ghost vehicles and heating systems present if there are companyUIs
-	uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfGhostHeatingSystems();
-	uI_Tabs.pop_tabMobility.get(0).f_calculateNumberOfGhostVehicles();
-}
-
-
 
 // PV SYSTEMS:
 double PVsystems = count(energyModel.UtilityConnections, x->x.v_liveAssetsMetaData.hasPV == true && x.v_isActive);		

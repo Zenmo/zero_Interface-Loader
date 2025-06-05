@@ -221,24 +221,23 @@ if (hydrogenSlider != null) {
 */
 /*ALCODEEND*/}
 
-double f_setElectricVans(double pctElectricVansGoal,ShapeSlider sliderElectricVans,ShapeSlider sliderFFVans)
+double f_setElectricVans(List<GridConnection> gcList,double pctElectricVansGoal,ShapeSlider sliderElectricVans,ShapeSlider sliderFFVans)
 {/*ALCODESTART::1722256088451*/
-//Update variable to change to custom scenario
-if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+int numberOfGhostVehicle_Vans = f_calculateNumberOfGhostVehicles(gcList).getSecond();
+
+int nbEVansCurrent = numberOfGhostVehicle_Vans;
+int nbDieselVansCurrent = 0;
+for ( GridConnection gc : gcList ) {
+	nbEVansCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN && !(gc instanceof GCPublicCharger) && gc.v_isActive);
+	nbDieselVansCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.DIESEL_VAN && gc.v_isActive);
 }
-
-int nbEVansCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN && !(p.getParentAgent() instanceof GCPublicCharger) && ((GridConnection)p.getParentAgent()).v_isActive) + v_totalNumberOfGhostVehicle_Vans;
-int nbDieselVansCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.DIESEL_VAN && ((GridConnection)p.getParentAgent()).v_isActive);
-int nbElectricVansGoal = roundToInt((nbEVansCurrent + nbDieselVansCurrent)*pctElectricVansGoal/100.0);
-
-//Remember how much vehicles there are initially
 int total_vehicles = nbEVansCurrent + nbDieselVansCurrent;
 
+int nbElectricVansGoal = roundToInt((nbEVansCurrent + nbDieselVansCurrent)*pctElectricVansGoal/100.0);
 
 if( nbEVansCurrent > nbElectricVansGoal){
 	while ( nbEVansCurrent > nbElectricVansGoal && nbEVansCurrent > 0) { // remove excess EVs systems !!!! Should also add diesel vehicle again!
-		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN && ((GridConnection)p.getParentAgent()).v_isActive);
+		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()) );
 		if (ev!=null) {
 			//traceln("Found eTrucks: " + ev);
 			GridConnection gc = (GridConnection)ev.getParentAgent();
@@ -301,10 +300,14 @@ if( nbEVansCurrent > nbElectricVansGoal){
 			nbDieselVansCurrent++;
 		}
 		else{//No more vehicles to adjust: this is the minimum: set slider to minimum and do nothing else
-			int total_electricVans = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN && !(p.getParentAgent() instanceof GCPublicCharger)  && ((GridConnection)p.getParentAgent()).v_isActive) + v_totalNumberOfGhostVehicle_Vans;
+			int total_electricVans = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN && !(p.getParentAgent() instanceof GCPublicCharger)  && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains(((GridConnection)p.getParentAgent())) ) + numberOfGhostVehicle_Vans;
 			int min_pct_electricVanSlider = roundToInt(100.0*total_electricVans/total_vehicles);
 			sliderElectricVans.setValue(min_pct_electricVanSlider, false);
 			sliderFFVans.setValue(100-min_pct_electricVanSlider, false);
+			if(!zero_Interface.b_runningMainInterfaceScenarios){
+				zero_Interface.b_changeToCustomScenario = true;
+			}
+			zero_Interface.f_resetSettings();
 			return;
 		}
 	} 
@@ -312,7 +315,7 @@ if( nbEVansCurrent > nbElectricVansGoal){
 	while ( nbEVansCurrent < nbElectricVansGoal && nbDieselVansCurrent > 0) {
 
 		// Remove diesel vehicle
-		J_EADieselVehicle dieselVehicle = (J_EADieselVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_VAN && ((GridConnection)p.getParentAgent()).v_isActive);
+		J_EADieselVehicle dieselVehicle = (J_EADieselVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_VAN && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()) );
 		//traceln("Found diesel vehicle: " + dieselVehicle);
 		if (dieselVehicle!=null) {
 			GridConnection gc = (GridConnection)dieselVehicle.getParentAgent();
@@ -377,27 +380,30 @@ if( nbEVansCurrent > nbElectricVansGoal){
 	
 }	
 
-//traceln("%s diesel vans and %s EVans: ", nbDieselVansCurrent, nbEVansCurrent);
-zero_Interface.f_resetSettings();
-/*ALCODEEND*/}
-
-double f_setElectricCars(double pctEVsGoal,ShapeSlider sliderElectricCars,ShapeSlider sliderFFCars)
-{/*ALCODESTART::1722256088460*/
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
 	zero_Interface.b_changeToCustomScenario = true;
 }
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
 
-int nbEVsCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && !(p.getParentAgent() instanceof GCPublicCharger) && ((GridConnection)p.getParentAgent()).v_isActive) + v_totalNumberOfGhostVehicle_Cars;
-int nbDieselCarsCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.DIESEL_VEHICLE && ((GridConnection)p.getParentAgent()).v_isActive);
-int nbEVsGoal = roundToInt((nbEVsCurrent + nbDieselCarsCurrent)*pctEVsGoal/100.0);
+double f_setElectricCars(List<GridConnection> gcList,double pctEVsGoal,ShapeSlider sliderElectricCars,ShapeSlider sliderFFCars)
+{/*ALCODESTART::1722256088460*/
+int numberOfGhostVehicle_Cars = f_calculateNumberOfGhostVehicles(gcList).getFirst();
 
-//Remember how much vehicles there are initially
+int nbEVsCurrent = numberOfGhostVehicle_Cars;
+int nbDieselCarsCurrent = 0;
+for ( GridConnection gc : gcList ) {
+	nbEVsCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && !(gc instanceof GCPublicCharger) && gc.v_isActive);
+	nbDieselCarsCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.DIESEL_VEHICLE && gc.v_isActive);
+}
 int total_vehicles = nbEVsCurrent + nbDieselCarsCurrent;
+
+int nbEVsGoal = roundToInt((nbEVsCurrent + nbDieselCarsCurrent)*pctEVsGoal/100.0);
 
 if( nbEVsCurrent > nbEVsGoal){
 	while ( nbEVsCurrent > nbEVsGoal && nbEVsCurrent > 0) { // remove excess EVs systems !!!! Should also add diesel vehicle again!
-		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && ((GridConnection)p.getParentAgent()).v_isActive);
+		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains(((GridConnection)p.getParentAgent())) );
 		if (ev!=null) {
 			//traceln("Found eTrucks: " + ev);
 			GridConnection gc = (GridConnection)ev.getParentAgent();
@@ -460,18 +466,22 @@ if( nbEVsCurrent > nbEVsGoal){
 			nbEVsCurrent--;
 			nbDieselCarsCurrent++;
 		}
-		else{//No more vehicles to adjust: this is the minimum: set slider to minimum and do nothing else
-				int total_electricCars = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && !(p.getParentAgent() instanceof GCPublicCharger)  && ((GridConnection)p.getParentAgent()).v_isActive) + v_totalNumberOfGhostVehicle_Cars;
-				int min_pct_electricCarSlider = roundToInt(100.0*total_electricCars/total_vehicles);
-				sliderElectricCars.setValue(min_pct_electricCarSlider, false);
-				sliderFFCars.setValue(100-min_pct_electricCarSlider, false);
+		else { //No more vehicles to adjust: this is the minimum: set slider to minimum and do nothing else
+			int total_electricCars = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && !(p.getParentAgent() instanceof GCPublicCharger)  && ((GridConnection)p.getParentAgent()).v_isActive) + numberOfGhostVehicle_Cars;
+			int min_pct_electricCarSlider = roundToInt(100.0*total_electricCars/total_vehicles);
+			sliderElectricCars.setValue(min_pct_electricCarSlider, false);
+			sliderFFCars.setValue(100-min_pct_electricCarSlider, false);
+			if(!zero_Interface.b_runningMainInterfaceScenarios){
+				zero_Interface.b_changeToCustomScenario = true;
+			}
+			zero_Interface.f_resetSettings();
 			return;
 		}
 	} 
 } else { 
 	while ( nbEVsCurrent < nbEVsGoal && nbDieselCarsCurrent > 0) {
 		// Remove diesel vehicle
-		J_EADieselVehicle dieselVehicle = (J_EADieselVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_VEHICLE && ((GridConnection)p.getParentAgent()).v_isActive);
+		J_EADieselVehicle dieselVehicle = (J_EADieselVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_VEHICLE && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains(((GridConnection)p.getParentAgent())) );
 		//traceln("Found diesel vehicle: " + dieselVehicle);
 		if (dieselVehicle!=null) {
 			GridConnection gc = (GridConnection)dieselVehicle.getParentAgent();
@@ -534,28 +544,35 @@ if( nbEVsCurrent > nbEVsGoal){
 		}
 	}
 	
-}	
+}
 
-//traceln("%s diesel cars and %s EVs: ", nbDieselCarsCurrent, nbEVsCurrent);
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-double f_setDemandReduction(double demandReduction_pct)
+double f_setDemandReduction(List<GridConnection> gcList,double demandReduction_pct)
 {/*ALCODESTART::1722342449665*/
 // TODO: when new triptrackers are created, for example in the company ui sliders,
 // make sure they have this distance scaling fraction!
 
-double mobilityDemandReduction_pct = demandReduction_pct;
+double scalingFactor = 1 - demandReduction_pct/100;
 
-for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()) {
-	if (j_ea instanceof J_EAVehicle) {
-		((J_EAVehicle)j_ea).getTripTracker().distanceScaling_fr =  1 - mobilityDemandReduction_pct/100.0;
-		if (zero_Interface.c_companyUIs.size()>0){
-			UI_company companyUI = zero_Interface.c_companyUIs.get(((GridConnection)j_ea.getParentAgent()).p_owner.p_connectionOwnerIndexNr);
-			if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == j_ea.getParentAgent()) { // should also check the setting of selected GC
-				companyUI.sl_mobilityDemandCompanyReduction.setValue(mobilityDemandReduction_pct, false);
+for (GridConnection gc : gcList) {
+	for (J_EAVehicle j_ea : gc.c_vehicleAssets) {
+		j_ea.getTripTracker().distanceScaling_fr = scalingFactor;
+	}
+	if (zero_Interface.c_companyUIs.size() > 0) {
+		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
+		if (companyUI != null) {
+			if(companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) != gc){
+				int i = indexOf(companyUI.c_ownedGridConnections.stream().toArray(), gc);
+				companyUI.GCnr_selection.setValue(i, true);
 			}
-		}	
+			companyUI.sl_mobilityDemandCompanyReduction.setValue(demandReduction_pct, false);			
+		}
 	}
 }
 
@@ -567,53 +584,49 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-double f_calculateNumberOfGhostVehicles()
+Triple<Integer, Integer, Integer> f_calculateNumberOfGhostVehicles(List<GridConnection> gcList)
 {/*ALCODESTART::1729168033110*/
-v_totalNumberOfGhostVehicle_Cars = 0;
-v_totalNumberOfGhostVehicle_Vans = 0;
-v_totalNumberOfGhostVehicle_Trucks = 0;
-for (UI_company companyUI : zero_Interface.c_companyUIs ){
-	
-	for(int i = 0; i < companyUI.c_ownedGridConnections.size(); i++){
-		if(companyUI.c_ownedGridConnections.get(i).v_hasQuarterHourlyValues && companyUI.c_ownedGridConnections.get(i).v_isActive){
-			v_totalNumberOfGhostVehicle_Cars += companyUI.v_minEVCarSlider;
-			v_totalNumberOfGhostVehicle_Vans += companyUI.v_minEVVanSlider;
-			v_totalNumberOfGhostVehicle_Trucks += companyUI.v_minEVTruckSlider;
+Integer numberOfGhostVehicle_Cars = 0;
+Integer numberOfGhostVehicle_Vans = 0;
+Integer numberOfGhostVehicle_Trucks = 0;
+
+if (zero_Interface.c_companyUIs.size() > 0) {
+	for (GridConnection gc : gcList ) {
+		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
+		for(int i = 0; i < companyUI.c_ownedGridConnections.size(); i++){
+			if(companyUI.c_ownedGridConnections.get(i).v_hasQuarterHourlyValues && companyUI.c_ownedGridConnections.get(i).v_isActive){
+				numberOfGhostVehicle_Cars += companyUI.v_minEVCarSlider;
+				numberOfGhostVehicle_Vans += companyUI.v_minEVVanSlider;
+				numberOfGhostVehicle_Trucks += companyUI.v_minEVTruckSlider;
+			}
 		}
 	}
 }
+
+return new Triple(numberOfGhostVehicle_Cars, numberOfGhostVehicle_Vans, numberOfGhostVehicle_Trucks);
 /*ALCODEEND*/}
 
-double f_setDieselTrucks(ShapeSlider sliderElectricTrucks,ShapeSlider sliderHydrogenTrucks,ShapeSlider sliderFFTrucks)
+double f_setDieselTrucks(List<GridConnection> gcList,ShapeSlider sliderElectricTrucks,ShapeSlider sliderHydrogenTrucks,ShapeSlider sliderFFTrucks)
 {/*ALCODESTART::1746008458894*/
 double pctDieselTrucksGoal = sliderFFTrucks.getValue();
 
+int numberOfGhostVehicle_Trucks = f_calculateNumberOfGhostVehicles(gcList).getThird();
+Triple<Integer, Integer, Integer> triple = f_calculateCurrentNumberOfTrucks( gcList, numberOfGhostVehicle_Trucks );
 
-//Update variable to change to custom scenario
-if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
-}
-
-//Get totals
-int nbEtruckCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK && !(p.getParentAgent() instanceof GCPublicCharger) && ((GridConnection)p.getParentAgent()).v_isActive) + v_totalNumberOfGhostVehicle_Trucks;
-int nbDieseltrucksCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
-int nbHydrogentrucksCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
-
+int nbEtruckCurrent = triple.getFirst();
+int nbDieseltrucksCurrent = triple.getSecond();
+int nbHydrogentrucksCurrent = triple.getThird();
 int total_vehicles = nbEtruckCurrent + nbDieseltrucksCurrent + nbHydrogentrucksCurrent;
-
-traceln("nbEtruckCurrent: %s", nbEtruckCurrent);
-traceln("nbDieseltrucksCurrent: %s", nbDieseltrucksCurrent);
-traceln("nbHydrogentrucksCurrent: %s", nbHydrogentrucksCurrent);
-traceln("total_vehicles: %s", total_vehicles);
 
 int nbDieselTrucksGoal = roundToInt(total_vehicles*pctDieselTrucksGoal/100.0);
 boolean finishedLookingThroughElectricTrucks = false;
+
 if (nbDieseltrucksCurrent < nbDieselTrucksGoal) {
 	// Add Diesel Trucks
 	while ( nbDieseltrucksCurrent < nbDieselTrucksGoal ) {
-		if ( nbEtruckCurrent > v_totalNumberOfGhostVehicle_Trucks && !finishedLookingThroughElectricTrucks ) {
+		if ( nbEtruckCurrent > numberOfGhostVehicle_Trucks && !finishedLookingThroughElectricTrucks ) {
 			// replace electric truck with a diesel truck
-			if (!f_electricToDieselTruck()) {
+			if (!f_electricToDieselTruck(gcList)) {
 				finishedLookingThroughElectricTrucks = true;
 			}
 			else {
@@ -623,7 +636,7 @@ if (nbDieseltrucksCurrent < nbDieselTrucksGoal) {
 		}
 		else{// ( nbHydrogentrucksCurrent > 0 ) {
 			// replace hydrogen truck with diesel truck
-			if (!f_hydrogenToDieselTruck()) {
+			if (!f_hydrogenToDieselTruck(gcList)) {
 				f_setTruckSlidersToCurrentEngineState(sliderElectricTrucks, sliderHydrogenTrucks, sliderFFTrucks);
 				return;
 			}
@@ -641,7 +654,7 @@ else {
 	// Remove Diesel Trucks
 	while ( nbDieseltrucksCurrent > nbDieselTrucksGoal ) {
 		// replace a diesel truck with an electric truck
-		if (!f_dieselToElectricTruck()) {
+		if (!f_dieselToElectricTruck(gcList)) {
 			f_setTruckSlidersToCurrentEngineState(sliderElectricTrucks, sliderHydrogenTrucks, sliderFFTrucks);
 			return;
 		}
@@ -650,30 +663,25 @@ else {
 	}
 }
 
-zero_Interface.f_resetSettings();
-/*ALCODEEND*/}
-
-double f_setHydrogenTrucks(ShapeSlider sliderElectricTrucks,ShapeSlider sliderHydrogenTrucks,ShapeSlider sliderFFTrucks)
-{/*ALCODESTART::1746008458907*/
-double pctHydrogenTrucksGoal = sliderHydrogenTrucks.getValue();
-
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
 	zero_Interface.b_changeToCustomScenario = true;
 }
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
 
-//Get totals
-int nbEtruckCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK && !(p.getParentAgent() instanceof GCPublicCharger) && ((GridConnection)p.getParentAgent()).v_isActive) + v_totalNumberOfGhostVehicle_Trucks;
-int nbDieseltrucksCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
-int nbHydrogentrucksCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
+double f_setHydrogenTrucks(List<GridConnection> gcList,ShapeSlider sliderElectricTrucks,ShapeSlider sliderHydrogenTrucks,ShapeSlider sliderFFTrucks)
+{/*ALCODESTART::1746008458907*/
+double pctHydrogenTrucksGoal = sliderHydrogenTrucks.getValue();
 
+int numberOfGhostVehicle_Trucks = f_calculateNumberOfGhostVehicles(gcList).getThird();
+Triple<Integer, Integer, Integer> triple = f_calculateCurrentNumberOfTrucks( gcList, numberOfGhostVehicle_Trucks );
+
+int nbEtruckCurrent = triple.getFirst();
+int nbDieseltrucksCurrent = triple.getSecond();
+int nbHydrogentrucksCurrent = triple.getThird();
 int total_vehicles = nbEtruckCurrent + nbDieseltrucksCurrent + nbHydrogentrucksCurrent;
-
-traceln("nbEtruckCurrent: %s", nbEtruckCurrent);
-traceln("nbDieseltrucksCurrent: %s", nbDieseltrucksCurrent);
-traceln("nbHydrogentrucksCurrent: %s", nbHydrogentrucksCurrent);
-traceln("total_vehicles: %s", total_vehicles);
 
 int nbHydrogenTrucksGoal = roundToInt(total_vehicles*pctHydrogenTrucksGoal/100.0);
 boolean finishedLookingThroughDieselTrucks = false;
@@ -683,7 +691,7 @@ if (nbHydrogentrucksCurrent < nbHydrogenTrucksGoal) {
 	while ( nbHydrogentrucksCurrent < nbHydrogenTrucksGoal && !finishedLookingThroughDieselTrucks ) {
 		if ( nbDieseltrucksCurrent > 0 ) {
 			// replace a diesel truck with a hydrogen truck
-			if (!f_dieselToHydrogenTruck()) {
+			if (!f_dieselToHydrogenTruck(gcList)) {
 				finishedLookingThroughDieselTrucks = true;
 			}
 			else {
@@ -693,7 +701,7 @@ if (nbHydrogentrucksCurrent < nbHydrogenTrucksGoal) {
 		}
 		else{// ( nbEtruckCurrent > v_totalNumberOfGhostVehicle_Trucks ) {
 			// replace an electric truck with a hydrogen truck
-			if (!f_electricToHydrogenTruck()) {
+			if (!f_electricToHydrogenTruck(gcList)) {
 				f_setTruckSlidersToCurrentEngineState(sliderElectricTrucks, sliderHydrogenTrucks, sliderFFTrucks);
 				return;
 			}
@@ -709,7 +717,7 @@ else {
 	// Remove Hydrogen Trucks
 	while ( nbHydrogentrucksCurrent > nbHydrogenTrucksGoal ) {
 		// replace a hydrogen truck with a diesel truck
-		if (!f_hydrogenToDieselTruck()) {
+		if (!f_hydrogenToDieselTruck(gcList)) {
 			f_setTruckSlidersToCurrentEngineState(sliderElectricTrucks, sliderHydrogenTrucks, sliderFFTrucks);
 			return;
 		}
@@ -718,29 +726,25 @@ else {
 	}
 }
 
-zero_Interface.f_resetSettings();
-/*ALCODEEND*/}
-
-double f_setElectricTrucks(ShapeSlider sliderElectricTrucks,ShapeSlider sliderHydrogenTrucks,ShapeSlider sliderFFTrucks)
-{/*ALCODESTART::1746008458917*/
-double pctElectricTrucksGoal = sliderElectricTrucks.getValue();
-
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
 	zero_Interface.b_changeToCustomScenario = true;
 }
 
-//Get totals
-int nbEtruckCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK && !(p.getParentAgent() instanceof GCPublicCharger) && ((GridConnection)p.getParentAgent()).v_isActive) + v_totalNumberOfGhostVehicle_Trucks;
-int nbDieseltrucksCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
-int nbHydrogentrucksCurrent = count(zero_Interface.energyModel.f_getEnergyAssets(), p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
 
+double f_setElectricTrucks(List<GridConnection> gcList,ShapeSlider sliderElectricTrucks,ShapeSlider sliderHydrogenTrucks,ShapeSlider sliderFFTrucks)
+{/*ALCODESTART::1746008458917*/
+double pctElectricTrucksGoal = sliderElectricTrucks.getValue();
+
+int numberOfGhostVehicle_Trucks = f_calculateNumberOfGhostVehicles(gcList).getThird();
+Triple<Integer, Integer, Integer> triple = f_calculateCurrentNumberOfTrucks( gcList, numberOfGhostVehicle_Trucks );
+
+int nbEtruckCurrent = triple.getFirst();
+int nbDieseltrucksCurrent = triple.getSecond();
+int nbHydrogentrucksCurrent = triple.getThird();
 int total_vehicles = nbEtruckCurrent + nbDieseltrucksCurrent + nbHydrogentrucksCurrent;
-
-traceln("nbEtruckCurrent: %s", nbEtruckCurrent);
-traceln("nbDieseltrucksCurrent: %s", nbDieseltrucksCurrent);
-traceln("nbHydrogentrucksCurrent: %s", nbHydrogentrucksCurrent);
-traceln("total_vehicles: %s", total_vehicles);
 
 int nbElectricTrucksGoal = roundToInt(total_vehicles*pctElectricTrucksGoal/100.0);
 boolean finishedLookingThroughDieselTrucks = false;
@@ -750,7 +754,7 @@ if (nbEtruckCurrent < nbElectricTrucksGoal) {
 	while ( nbEtruckCurrent < nbElectricTrucksGoal && !finishedLookingThroughDieselTrucks ) {
 		if ( nbDieseltrucksCurrent > 0 ) {
 			// replace a diesel truck with an electric truck
-			if (!f_dieselToElectricTruck()) {
+			if (!f_dieselToElectricTruck(gcList)) {
 				finishedLookingThroughDieselTrucks = true;
 			}
 			else {
@@ -760,7 +764,7 @@ if (nbEtruckCurrent < nbElectricTrucksGoal) {
 		}
 		else{// if ( nbHydrogentrucksCurrent > 0 ) {
 			// replace a hydrogen truck with an electric truck
-			if (!f_hydrogenToElectricTruck()) {
+			if (!f_hydrogenToElectricTruck(gcList)) {
 				f_setTruckSlidersToCurrentEngineState(sliderElectricTrucks, sliderHydrogenTrucks, sliderFFTrucks);
 				return;
 			}
@@ -777,7 +781,7 @@ else {
 	// Remove Electric Trucks
 	while ( nbEtruckCurrent > nbElectricTrucksGoal ) {
 		// replace an electric truck with a diesel truck
-		if (!f_electricToDieselTruck()) {
+		if (!f_electricToDieselTruck(gcList)) {
 			f_setTruckSlidersToCurrentEngineState(sliderElectricTrucks, sliderHydrogenTrucks, sliderFFTrucks);
 			return;
 		}
@@ -786,26 +790,32 @@ else {
 	}
 }
 
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-boolean f_dieselToElectricTruck()
+boolean f_dieselToElectricTruck(List<GridConnection> gcList)
 {/*ALCODESTART::1746008458938*/
 J_EADieselVehicle dieselTruck = null;
 boolean foundAdditionalVehicle = false;
-for (UI_company companyUI : zero_Interface.c_companyUIs) {
+
+for (GridConnection gc : gcList ) {
+	UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
 	List<J_EAVehicle> totalList = new ArrayList<J_EAVehicle>();
 	for (List<J_EAVehicle> list : companyUI.c_additionalVehicles.values() ) {
 		totalList.addAll(list);
 	}
-	dieselTruck = (J_EADieselVehicle)findFirst(totalList, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
+	dieselTruck = (J_EADieselVehicle)findFirst(totalList, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK && gc.v_isActive);
 	if ( dieselTruck != null ) {
 		foundAdditionalVehicle = true;
 		break;
 	}
 }
-if (!foundAdditionalVehicle) {
-	dieselTruck = (J_EADieselVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
+if (!foundAdditionalVehicle) {	
+	dieselTruck = (J_EADieselVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
 }
 if (dieselTruck!=null) {
 	GridConnection gc = (GridConnection)dieselTruck.getParentAgent();
@@ -873,11 +883,13 @@ else {
 return true;
 /*ALCODEEND*/}
 
-boolean f_hydrogenToElectricTruck()
+boolean f_hydrogenToElectricTruck(List<GridConnection> gcList)
 {/*ALCODESTART::1746008458950*/
 J_EAHydrogenVehicle hydrogenTruck = null;
 boolean foundAdditionalVehicle = false;
-for (UI_company companyUI : zero_Interface.c_companyUIs) {
+
+for (GridConnection gc : gcList ) {
+	UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
 	List<J_EAVehicle> totalList = new ArrayList<J_EAVehicle>();
 	for (List<J_EAVehicle> list : companyUI.c_additionalVehicles.values() ) {
 		totalList.addAll(list);
@@ -889,7 +901,7 @@ for (UI_company companyUI : zero_Interface.c_companyUIs) {
 	}
 }
 if (!foundAdditionalVehicle) {
-	hydrogenTruck = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
+	hydrogenTruck = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
 }
 if (hydrogenTruck!=null) {
 	GridConnection gc = (GridConnection)hydrogenTruck.getParentAgent();
@@ -956,11 +968,13 @@ else {
 return true;
 /*ALCODEEND*/}
 
-boolean f_electricToHydrogenTruck()
+boolean f_electricToHydrogenTruck(List<GridConnection> gcList)
 {/*ALCODESTART::1746008458960*/
 J_EAEV electricTruck = null;
 boolean foundAdditionalVehicle = false;
-for (UI_company companyUI : zero_Interface.c_companyUIs) {
+
+for (GridConnection gc : gcList ) {
+	UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
 	List<J_EAVehicle> totalList = new ArrayList<J_EAVehicle>();
 	for (List<J_EAVehicle> list : companyUI.c_additionalVehicles.values() ) {
 		totalList.addAll(list);
@@ -972,7 +986,7 @@ for (UI_company companyUI : zero_Interface.c_companyUIs) {
 	}
 }
 if (!foundAdditionalVehicle) {
-	electricTruck = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
+	electricTruck = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
 }
 if (electricTruck!=null) {
 	GridConnection gc = (GridConnection)electricTruck.getParentAgent();
@@ -1036,11 +1050,13 @@ else {
 return true;
 /*ALCODEEND*/}
 
-boolean f_dieselToHydrogenTruck()
+boolean f_dieselToHydrogenTruck(List<GridConnection> gcList)
 {/*ALCODESTART::1746008458968*/
 J_EADieselVehicle dieselTruck = null;
 boolean foundAdditionalVehicle = false;
-for (UI_company companyUI : zero_Interface.c_companyUIs) {
+
+for (GridConnection gc : gcList ) {
+	UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
 	List<J_EAVehicle> totalList = new ArrayList<J_EAVehicle>();
 	for (List<J_EAVehicle> list : companyUI.c_additionalVehicles.values() ) {
 		totalList.addAll(list);
@@ -1052,7 +1068,7 @@ for (UI_company companyUI : zero_Interface.c_companyUIs) {
 	}
 }
 if (!foundAdditionalVehicle) {
-	dieselTruck = (J_EADieselVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
+	dieselTruck = (J_EADieselVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
 }
 if (dieselTruck!=null) {
 	GridConnection gc = (GridConnection)dieselTruck.getParentAgent();
@@ -1112,11 +1128,13 @@ else {
 return true;
 /*ALCODEEND*/}
 
-boolean f_electricToDieselTruck()
+boolean f_electricToDieselTruck(List<GridConnection> gcList)
 {/*ALCODESTART::1746008458977*/
 J_EAEV electricTruck = null;
 boolean foundAdditionalVehicle = false;
-for (UI_company companyUI : zero_Interface.c_companyUIs) {
+
+for (GridConnection gc : gcList ) {
+	UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
 	List<J_EAVehicle> totalList = new ArrayList<J_EAVehicle>();
 	for (List<J_EAVehicle> list : companyUI.c_additionalVehicles.values() ) {
 		totalList.addAll(list);
@@ -1128,7 +1146,7 @@ for (UI_company companyUI : zero_Interface.c_companyUIs) {
 	}
 }
 if (!foundAdditionalVehicle) {
-	electricTruck = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
+	electricTruck = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
 }
 if ( electricTruck != null ) {
 	GridConnection gc = (GridConnection)electricTruck.getParentAgent();
@@ -1195,11 +1213,13 @@ else {
 return true;
 /*ALCODEEND*/}
 
-boolean f_hydrogenToDieselTruck()
+boolean f_hydrogenToDieselTruck(List<GridConnection> gcList)
 {/*ALCODESTART::1746008458987*/
 J_EAHydrogenVehicle hydrogenTruck = null;
 boolean foundAdditionalVehicle = false;
-for (UI_company companyUI : zero_Interface.c_companyUIs) {
+
+for (GridConnection gc : gcList ) {
+	UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
 	List<J_EAVehicle> totalList = new ArrayList<J_EAVehicle>();
 	for (List<J_EAVehicle> list : companyUI.c_additionalVehicles.values() ) {
 		totalList.addAll(list);
@@ -1211,7 +1231,7 @@ for (UI_company companyUI : zero_Interface.c_companyUIs) {
 	}
 }
 if (!foundAdditionalVehicle) {
-	hydrogenTruck = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
+	hydrogenTruck = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
 }
 if ( hydrogenTruck != null ) {
 	GridConnection gc = (GridConnection)hydrogenTruck.getParentAgent();
@@ -1289,6 +1309,29 @@ sliderElectricTrucks.setValue(pct_electricTruckSlider, false);
 sliderHydrogenTrucks.setValue(pct_hydrogenTruckSlider, false);
 sliderFFTrucks.setValue(pct_dieselTruckSlider, false);
 
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
 zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+Triple<Integer, Integer, Integer> f_calculateCurrentNumberOfTrucks(List<GridConnection> gcList,Integer numberOfGhostVehicle_Trucks)
+{/*ALCODESTART::1749134655530*/
+if (numberOfGhostVehicle_Trucks == null) {
+	numberOfGhostVehicle_Trucks = f_calculateNumberOfGhostVehicles(gcList).getThird();
+}
+
+int nbEtruckCurrent = numberOfGhostVehicle_Trucks;
+int nbDieseltrucksCurrent = 0;
+int nbHydrogentrucksCurrent = 0;
+for ( GridConnection gc : gcList ) {
+	nbEtruckCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK && !(gc instanceof GCPublicCharger) && gc.v_isActive);
+	nbDieseltrucksCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK && gc.v_isActive);
+	nbHydrogentrucksCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK && gc.v_isActive);
+}
+
+return new Triple(nbDieseltrucksCurrent, nbHydrogentrucksCurrent, nbEtruckCurrent);
 /*ALCODEEND*/}
 
