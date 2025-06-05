@@ -837,7 +837,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReduction( sl_electricityDemandReduction_pct.getValue() );</ActionCode>
+					<ActionCode>f_setDemandReduction( zero_Interface.energyModel.f_getGridConnections(), sl_electricityDemandReduction_pct.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -2332,7 +2332,7 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReduction( sl_electricityDemandReduction_pct_Businesspark.getValue() );</ActionCode>
+					<ActionCode>f_setDemandReduction( zero_Interface.energyModel.f_getGridConnections(), sl_electricityDemandReduction_pct_Businesspark.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>

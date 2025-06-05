@@ -154,6 +154,10 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
+			<Name><![CDATA[gcList]]></Name>
+			<Type><![CDATA[List<GridConnection>]]></Type>
+		</Parameter>
+		<Parameter>
 			<Name><![CDATA[demandReduction_pct]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>

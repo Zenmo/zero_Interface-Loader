@@ -215,48 +215,40 @@ double f_setEVsAtPrivateParkingHouses()
 
 /*ALCODEEND*/}
 
-double f_setDemandReduction(double demandReduction_pct)
+double f_setDemandReduction(List<GridConnection> gcList,double demandReduction_pct)
 {/*ALCODESTART::1722335253834*/
-double newElectricityDemandReduction_pct = demandReduction_pct;
-double consumptionScaling_fr = 1  - newElectricityDemandReduction_pct/100;
+double scalingFactor = 1 - demandReduction_pct/100;
 
-for (J_EA j_ea : zero_Interface.energyModel.f_getEnergyAssets()) {
-	if (j_ea instanceof J_EAConsumption) {
-		if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND) {
-			((J_EAConsumption)j_ea).setConsumptionScaling_fr(consumptionScaling_fr);
-			
-			if (zero_Interface.c_companyUIs.size()>0){
-				UI_company companyUI = zero_Interface.c_companyUIs.get(((GridConnection)j_ea.getParentAgent()).p_owner.p_connectionOwnerIndexNr);
-				if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == j_ea.getParentAgent()) { // should also check the setting of selected GC
-					companyUI.sl_electricityDemandCompanyReduction.setValue(newElectricityDemandReduction_pct, false);
-				}
-			}
+for (GridConnection gc : gcList) {
+	// Set Consumption Assets
+	for (J_EAConsumption j_ea : gc.c_consumptionAssets) {
+		if (j_ea.getEAType() == OL_EnergyAssetType.ELECTRICITY_DEMAND) {
+			j_ea.setConsumptionScaling_fr( scalingFactor );
 		}
 	}
-	if (j_ea instanceof J_EAProfile) {
-		if (((J_EAProfile) j_ea).energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
-			((J_EAProfile) j_ea).resetEnergyProfile();
-			((J_EAProfile) j_ea).scaleEnergyProfile(consumptionScaling_fr);
-			
-			if (zero_Interface.c_companyUIs.size()>0){
-				UI_company companyUI = zero_Interface.c_companyUIs.get(((GridConnection)j_ea.getParentAgent()).p_owner.p_connectionOwnerIndexNr);
-				if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == j_ea.getParentAgent()) { // should also check the setting of selected GC
-					companyUI.sl_electricityDemandCompanyReduction.setValue(newElectricityDemandReduction_pct, false);
-				}
-			}
+	// Set Profile Assets
+	for (J_EAProfile j_ea : gc.c_profileAssets) {
+		if (j_ea.energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
+			j_ea.resetEnergyProfile();
+			j_ea.scaleEnergyProfile( scalingFactor );
+		}
+	}
+	
+	// Update Company UI
+	if (zero_Interface.c_companyUIs.size()>0){
+		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
+		if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc) { // should also check the setting of selected GC
+			companyUI.sl_electricityDemandCompanyReduction.setValue(demandReduction_pct, false);
 		}
 	}
 }
 
-v_electricityDemandReduction_pct = newElectricityDemandReduction_pct;
-
-//Update variable to change to custom scenario
+// Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
 	zero_Interface.b_changeToCustomScenario = true;
 }
 
 zero_Interface.f_resetSettings();
-
 /*ALCODEEND*/}
 
 double f_setGridBatteries(double AllocatedCapacity_kW)

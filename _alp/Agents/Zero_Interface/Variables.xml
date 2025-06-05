@@ -2439,7 +2439,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>GridConnection</ElementClass>
+			<ElementClass>GCUtility</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>
@@ -2475,7 +2475,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>GridConnection</ElementClass>
+			<ElementClass>GCHouse</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>

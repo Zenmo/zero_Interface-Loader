@@ -444,13 +444,13 @@ f_setHeatingSystemsHouseholds( sl_electricHeatPumpHouseholds_pct.getValue() );
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReductionHeatingHouses( sl_heatDemandReductionHouseholds_pct.getValue() );</ActionCode>
+					<ActionCode>f_setDemandReductionHeating( new ArrayList&lt;GridConnection&gt;(zero_Interface.energyModel.Houses.findAll( x -&gt; true)), sl_heatDemandReductionHouseholds_pct.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
-					<MaxValue>100</MaxValue>
+					<MaxValue>50</MaxValue>
 					<Step>1</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
@@ -548,7 +548,7 @@ f_setHeatingSystemsHouseholds( sl_electricHeatPumpHouseholds_pct.getValue() );
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReductionHeatingCompanies( sl_heatDemandReductionCompanies_pct.getValue() );</ActionCode>
+					<ActionCode>f_setDemandReductionHeating( new ArrayList&lt;GridConnection&gt;(zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true)), sl_heatDemandReductionCompanies_pct.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1818,9 +1818,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReductionHeatingCompanies( sl_heatDemandSlidersCompaniesHeatDemandReductionCompanies_pct.getValue());
-
-</ActionCode>
+					<ActionCode>f_setDemandReductionHeating( new ArrayList&lt;GridConnection&gt;(zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true)), sl_heatDemandSlidersCompaniesHeatDemandReductionCompanies_pct.getValue());</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
