@@ -1566,7 +1566,7 @@ double timestep_h 					= zero_Interface.energyModel.p_timeStep_h;
 double outputTemperature_degC 		= 0;
 parentGC.v_hasPV = true;
 
-J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, capacityElectric_kW , capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, timestep_h, outputTemperature_degC, zero_Interface.energyModel.pp_solarPVproduction);
+J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, capacityElectric_kW , capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, timestep_h, outputTemperature_degC, zero_Interface.energyModel.pp_solarPVproduction_35DegSouth);
 
 
 /*ALCODEEND*/}
