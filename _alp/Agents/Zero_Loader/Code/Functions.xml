@@ -23,7 +23,7 @@
 		<Id>1726584205771</Id>
 		<Name><![CDATA[f_createGridConnections]]></Name>
 		<X>90</X>
-		<Y>198</Y>
+		<Y>220</Y>
 		<Label>
 			<X>11</X>
 			<Y>1</Y>
@@ -45,7 +45,7 @@
 @since: Sprint 6
 @author: Jorrit]]></Description>
 		<X>79</X>
-		<Y>139</Y>
+		<Y>161</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -61,7 +61,7 @@
 		<Id>1726584205775</Id>
 		<Name><![CDATA[f_createGridNodes]]></Name>
 		<X>50</X>
-		<Y>510</Y>
+		<Y>530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -231,7 +231,7 @@
 		<Id>1726584205793</Id>
 		<Name><![CDATA[f_createGISNodesTokens]]></Name>
 		<X>70</X>
-		<Y>530</Y>
+		<Y>550</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -252,24 +252,7 @@
 		<Name><![CDATA[f_createEnergyActors]]></Name>
 		<Description><![CDATA[Function used to generate specific actors like grid operator, energy supplier and energy coop. Actors used to create variable pricing.]]></Description>
 		<X>60</X>
-		<Y>430</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1726584205797</Id>
-		<Name><![CDATA[f_setEngineProfiles]]></Name>
-		<Description><![CDATA[Functie van gillis voor inladen weer data!]]></Description>
-		<X>79</X>
-		<Y>119</Y>
+		<Y>450</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -546,7 +529,7 @@
 		<Id>1726584205821</Id>
 		<Name><![CDATA[f_createActors]]></Name>
 		<X>90</X>
-		<Y>179</Y>
+		<Y>201</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -702,6 +685,10 @@
 		<Parameter>
 			<Name><![CDATA[companyGC]]></Name>
 			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[pv_installed_kwp]]></Name>
+			<Type><![CDATA[Double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -901,7 +888,7 @@
 		<Id>1726584205853</Id>
 		<Name><![CDATA[f_createInterface]]></Name>
 		<X>30</X>
-		<Y>720</Y>
+		<Y>740</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1107,7 +1094,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1726584205881</Id>
 		<Name><![CDATA[f_createAdditionalGISObjects]]></Name>
 		<X>90</X>
-		<Y>218</Y>
+		<Y>240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1419,7 +1406,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1747300761144</Id>
 		<Name><![CDATA[f_createHeatGridNode]]></Name>
 		<X>50</X>
-		<Y>560</Y>
+		<Y>580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1435,7 +1422,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1747829476305</Id>
 		<Name><![CDATA[f_addSliderSolarfarm]]></Name>
 		<X>50</X>
-		<Y>310</Y>
+		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1455,7 +1442,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1747829476307</Id>
 		<Name><![CDATA[f_addSliderWindfarm]]></Name>
 		<X>50</X>
-		<Y>330</Y>
+		<Y>350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1475,7 +1462,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1747829476311</Id>
 		<Name><![CDATA[f_addSliderBattery]]></Name>
 		<X>50</X>
-		<Y>348</Y>
+		<Y>368</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1495,7 +1482,53 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1747830228830</Id>
 		<Name><![CDATA[f_initializeSpecificSliderGC]]></Name>
 		<X>90</X>
-		<Y>160</Y>
+		<Y>182</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>J_ProfilePointer</ReturnType>
+		<Id>1749125189323</Id>
+		<Name><![CDATA[f_createEngineProfile]]></Name>
+		<Description><![CDATA[Functie van gillis voor inladen weer data!]]></Description>
+		<X>99</X>
+		<Y>140</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[profileID]]></Name>
+			<Type><![CDATA[String]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[arguments]]></Name>
+			<Type><![CDATA[double[]]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[values]]></Name>
+			<Type><![CDATA[double[]]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1749138089965</Id>
+		<Name><![CDATA[f_setEngineProfiles]]></Name>
+		<Description><![CDATA[Functie van gillis voor inladen weer data!]]></Description>
+		<X>80</X>
+		<Y>120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

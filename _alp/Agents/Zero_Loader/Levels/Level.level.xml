@@ -135,7 +135,7 @@
 		<Id>1726584205915</Id>
 		<Name><![CDATA[rect_connectedModels]]></Name>
 		<X>0</X>
-		<Y>600</Y>
+		<Y>620</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -161,7 +161,7 @@
 		<Id>1726584205917</Id>
 		<Name><![CDATA[t_connectedModels]]></Name>
 		<X>20</X>
-		<Y>620</Y>
+		<Y>640</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -228,7 +228,7 @@
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>340</Width>
-		<Height>180</Height>
+		<Height>210</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -264,7 +264,7 @@
 		<Id>1726584205927</Id>
 		<Name><![CDATA[rect_GridNodeFunctions]]></Name>
 		<X>20</X>
-		<Y>470</Y>
+		<Y>490</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -315,7 +315,7 @@
 		<Id>1726584205931</Id>
 		<Name><![CDATA[txt_createGridNodes]]></Name>
 		<X>40</X>
-		<Y>480</Y>
+		<Y>500</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -467,7 +467,7 @@
 		<Id>1726584205943</Id>
 		<Name><![CDATA[rect_ActorFunctions]]></Name>
 		<X>20</X>
-		<Y>390</Y>
+		<Y>410</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -493,7 +493,7 @@
 		<Id>1726584205945</Id>
 		<Name><![CDATA[txt_createActorFunctions]]></Name>
 		<X>40</X>
-		<Y>400</Y>
+		<Y>420</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1004,7 +1004,7 @@
 		<Id>1747830521606</Id>
 		<Name><![CDATA[rect_addSpecificSliderGC]]></Name>
 		<X>20</X>
-		<Y>270</Y>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -1030,7 +1030,7 @@
 		<Id>1747830569531</Id>
 		<Name><![CDATA[txt_addSpecificSliderGC]]></Name>
 		<X>30</X>
-		<Y>280</Y>
+		<Y>300</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>

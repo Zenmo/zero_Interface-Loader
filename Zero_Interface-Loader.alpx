@@ -258,16 +258,16 @@
 				<Name><![CDATA[Windfarm_data]]></Name>
 			</JavaClass>
 			<JavaClass>
-				<Id>1737638888950</Id>
-				<Name><![CDATA[CustomProfiles_data]]></Name>
-			</JavaClass>
-			<JavaClass>
 				<Id>1737714961123</Id>
 				<Name><![CDATA[ListUtil]]></Name>
 			</JavaClass>
 			<JavaClass>
 				<Id>1744204067723</Id>
 				<Name><![CDATA[J_InfoText]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1749138380458</Id>
+				<Name><![CDATA[CustomProfile_data]]></Name>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
