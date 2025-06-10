@@ -1163,7 +1163,7 @@ else{
 	heatDemand = new J_EAConsumption(parentGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, yearlyDemandHeat_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, null);
 	
 	//Calculate required thermal power
-	maxHeatOutputPower_kW = yearlyDemandHeat_kWh*genericProfiles_data.getBuildingHeatDemandList_maximum();
+	maxHeatOutputPower_kW = yearlyDemandHeat_kWh*defaultProfiles_data.getDefaultBuildingHeatDemandProfileMaximum_fr();
 }
 
 
@@ -1212,14 +1212,14 @@ switch (asset_type){
 
 case PHOTOVOLTAIC: 
 	//asset_name = "Solar Panels";
-	profilePointer = energyModel.pp_solarPVproduction_35DegSouth;
+	profilePointer = energyModel.pp_PVProduction35DegSouth_fr;
 	capacityElectric_kW = installedPower_kW;
 	//traceln("Installing PV for %s with power %s", parentGC.p_ownerID, capacityElectric_kW);
 	break;
 
 case WINDMILL:
 	//asset_name = "Windmill onshore";'
-	profilePointer=energyModel.pp_windOnshoreProduction;
+	profilePointer=energyModel.pp_windProduction_fr;
 	capacityElectric_kW = installedPower_kW;
 	break;
 
@@ -1273,7 +1273,7 @@ if (project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 	
 }
 else{
-	f_addHeatDemandProfile(house, jaarlijksGasVerbruik, false, 1, "Building_heat_demand");
+	f_addHeatDemandProfile(house, jaarlijksGasVerbruik, false, 1, "default_building_heat_demand_fr");
 }
 
 if( randomTrue ( 0.1 )){
@@ -1737,7 +1737,7 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 		double yearlyElectricityDemand_kWh = Remaining_electricity_demand_kWh_p_m2_yr * companyGC.p_floorSurfaceArea_m2;
 		
 		//Add base load profile
-		f_addElectricityDemandProfile(companyGC, yearlyElectricityDemand_kWh, null, false, "Office_other_electricity");
+		f_addElectricityDemandProfile(companyGC, yearlyElectricityDemand_kWh, null, false, "default_office_electricity_demand_fr");
 	}
 	
 	if(v_remainingGasConsumption_m3 > 0){
@@ -1746,7 +1746,7 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 		double yearlyGasDemand_m3 = Remaining_gas_demand_m3_p_m2_yr*companyGC.p_floorSurfaceArea_m2;
 		double ratioGasUsedForHeating = 1;
 		//Add heat demand profile
-		f_addHeatDemandProfile(companyGC, yearlyGasDemand_m3, false, ratioGasUsedForHeating, "Building_heat_demand");
+		f_addHeatDemandProfile(companyGC, yearlyGasDemand_m3, false, ratioGasUsedForHeating, "default_building_heat_demand_fr");
 	}
 	//Set current scenario heating type
 	current_scenario_list.setCurrentHeatingType(companyGC.p_heatingType);
@@ -2371,7 +2371,7 @@ for (Building_data dataBuilding : scopedBuilding_data) {
 		jaarlijksElectriciteitsVerbruik = Double.valueOf(uniform_discr(5000, 10000)); // HARDCODED???
 		jaarlijksGasVerbruik =  Double.valueOf(uniform_discr(600, 2000)); //// HARDCODED?????
 	}
-	f_addElectricityDemandProfile(company, jaarlijksElectriciteitsVerbruik, null, false, "Office_other_electricity");
+	f_addElectricityDemandProfile(company, jaarlijksElectriciteitsVerbruik, null, false, "default_office_electricity_demand_fr");
 
 	i++;
 }	
@@ -2473,7 +2473,7 @@ if (yearlyElectricityProduction_kWh != null && yearlyElectricityFeedin_kWh != nu
 		//traceln("Estimating electricity consumption based on delivery and feedin profiles with pv power estimate for company %s with %s kWp PV", parentGC.p_gridConnectionID, pvPower_kW);
 		double addedConsumption_kWh = 0;
 		for (int i = 0; i < yearlyElectricityDelivery_kWh.length; i++) {
-			double pvPowerEstimate_kW = pvPower_kW * energyModel.pp_solarPVproduction_35DegSouth.getValue(v_simStartHour_h+i*0.25);
+			double pvPowerEstimate_kW = pvPower_kW * energyModel.pp_PVProduction35DegSouth_fr.getValue(v_simStartHour_h+i*0.25);
 			double estimatedConsumption_kWh = yearlyElectricityDelivery_kWh[i] + max(0, pvPowerEstimate_kW*0.25 - yearlyElectricityFeedin_kWh[i]);
 			addedConsumption_kWh += max(0, pvPowerEstimate_kW*0.25 - yearlyElectricityFeedin_kWh[i]);
 			yearlyElectricityConsumption_kWh[i] = max(0,estimatedConsumption_kWh);
@@ -2485,7 +2485,7 @@ if (yearlyElectricityProduction_kWh != null && yearlyElectricityFeedin_kWh != nu
 		double estimatedConsumption_kWh = 0;
 		double addedConsumption_kWh = 0;
 		for (int i = 0; i < yearlyElectricityDelivery_kWh.length; i++) {
-			pvPowerEstimate_kW = pvPower_kW * energyModel.pp_solarPVproduction_35DegSouth.getValue(v_simStartHour_h+i*0.25);
+			pvPowerEstimate_kW = pvPower_kW * energyModel.pp_PVProduction35DegSouth_fr.getValue(v_simStartHour_h+i*0.25);
 			
 			if (yearlyElectricityDelivery_kWh[i] != 0) { // Only update consumption if delivery is non-zero, otherwise hold previously estimated consumption constant
 				estimatedConsumption_kWh = yearlyElectricityDelivery_kWh[i] + pvPowerEstimate_kW*0.25;
@@ -3011,7 +3011,7 @@ if (gridConnection.getElectricity().getHasConnection()){
 	
 	
 	//Electricity consumption profile
-	String profileName = "Office_other_electricity";
+	String profileName = "default_office_electricity_demand_fr";
 	
 	//Check if quarter hourly values are available in vallum
 	boolean createdTimeSeriesAssets = f_createElectricityTimeSeriesAssets(companyGC, gridConnection);
@@ -3056,8 +3056,8 @@ if (gridConnection.getElectricity().getHasConnection()){
 				yearlyElectricityConsumption_kWh = avgc_data.p_avgCompanyElectricityConsumption_kWhpm2*companyGC.p_floorSurfaceArea_m2;
 				
 				//Check if it is within the contracted limits (peak should at least be 20% lower than contracted capacity
-				if(yearlyElectricityConsumption_kWh*genericProfiles_data.getBuildingEdemandList_maximum() > 0.8*companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW){
-					yearlyElectricityConsumption_kWh = 0.8*companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW/genericProfiles_data.getBuildingEdemandList_maximum();
+				if(yearlyElectricityConsumption_kWh*defaultProfiles_data.getDefaultOfficeElectricityDemandProfileMaximum_fr() > 0.8*companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW){
+					yearlyElectricityConsumption_kWh = 0.8*companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW/defaultProfiles_data.getDefaultOfficeElectricityDemandProfileMaximum_fr();
 				}
 				 
 			}
@@ -3164,7 +3164,7 @@ boolean hasHourlyGasData = false;
 boolean hasGasTimeSeriesInZorm = false;
 double yearlyGasConsumption_m3 = 0;
 double ratioGasUsedForHeating = 1;
-String heatProfileName = "Building_heat_demand";
+String heatProfileName = "default_building_heat_demand_fr";
 
 if (gridConnection.getNaturalGas().getHasConnection() != null && gridConnection.getNaturalGas().getHasConnection()){
 	
@@ -3904,37 +3904,37 @@ return profilePointer;
 double f_setEngineProfiles()
 {/*ALCODESTART::1749138089965*/
 //Profile Arguments
-double[] a_arguments = ListUtil.doubleListToArray(genericProfiles_data.argumentsList());
+double[] a_arguments_hr = ListUtil.doubleListToArray(defaultProfiles_data.arguments_hr());
 
 //Weather data
-double[] a_tempValues = ListUtil.doubleListToArray(genericProfiles_data.tempList());
-double[] a_solarValues35DegSouth = ListUtil.doubleListToArray(genericProfiles_data.solarList35DegSouth());
-double[] a_solarValues15DegEastWest = ListUtil.doubleListToArray(genericProfiles_data.solarList15DegEastWest());
-double[] a_windValues = ListUtil.doubleListToArray(genericProfiles_data.windList());
+double[] a_ambientTemperatureProfile_degC = ListUtil.doubleListToArray(defaultProfiles_data.ambientTemperatureProfile_degC());
+double[] a_PVProductionProfile35DegSouth_fr = ListUtil.doubleListToArray(defaultProfiles_data.PVProductionProfile35DegSouth_fr());
+double[] a_PVProductionProfile15DegEastWest_fr = ListUtil.doubleListToArray(defaultProfiles_data.PVProductionProfile15DegEastWest_fr());
+double[] a_windProductionProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.windProductionProfile_fr());
 
 //EPEX data
-double[] a_epexValues = ListUtil.doubleListToArray(genericProfiles_data.epexList()); 
+double[] a_epexProfile_eurpMWh = ListUtil.doubleListToArray(defaultProfiles_data.epexProfile_eurpMWh()); 
 
 //Various demand data
-double[] a_houseEdemand = ListUtil.doubleListToArray(genericProfiles_data.houseEdemandList());
-double[] a_houseDHWdemand = ListUtil.doubleListToArray(genericProfiles_data.houseHDHWdemandList());
-double[] a_buildingEdemand = ListUtil.doubleListToArray(genericProfiles_data.buildingEdemandList());
-double[] a_buildingHeatDemand = ListUtil.doubleListToArray(genericProfiles_data.buildingHeatDemandList());
+double[] a_defaultHouseElectricityDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultHouseElectricityDemandProfile_fr());
+double[] a_defaultHouseHotWaterDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultHouseHotWaterDemandProfile_fr());
+double[] a_defaultOfficeElectricityDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultOfficeElectricityDemandProfile_fr());
+double[] a_defaultBuildingHeatDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultBuildingHeatDemandProfile_fr());
 
 //Create Weather engine profiles
-energyModel.pp_ambientTemperature_degC = f_createEngineProfile("Ambient temperature [degC]", a_arguments, a_tempValues);
-energyModel.pp_solarPVproduction_35DegSouth = f_createEngineProfile("normalized_PV_production", a_arguments, a_solarValues35DegSouth);
-energyModel.pp_solarPVproduction_15DegEastWest = f_createEngineProfile("normalized_PV_production_eastwest", a_arguments, a_solarValues15DegEastWest);
-energyModel.pp_windOnshoreProduction = f_createEngineProfile("normalized onshore wind production", a_arguments, a_windValues);
+energyModel.pp_ambientTemperature_degC = f_createEngineProfile("ambient_temperature_degC", a_arguments_hr, a_ambientTemperatureProfile_degC);
+energyModel.pp_PVProduction35DegSouth_fr = f_createEngineProfile("pv_production_south_fr", a_arguments_hr, a_PVProductionProfile35DegSouth_fr);
+energyModel.pp_PVProduction15DegEastWest_fr = f_createEngineProfile("pv_production_eastwest_fr", a_arguments_hr, a_PVProductionProfile15DegEastWest_fr);
+energyModel.pp_windProduction_fr = f_createEngineProfile("wind_production_fr", a_arguments_hr, a_windProductionProfile_fr);
 
 //Create Epex engine profile
-energyModel.pp_dayAheadElectricityPricing_eurpMWh = f_createEngineProfile("Day ahead electricity pricing [eur/MWh]", a_arguments, a_epexValues);
+energyModel.pp_dayAheadElectricityPricing_eurpMWh = f_createEngineProfile("epex_price_eurpMWh", a_arguments_hr, a_epexProfile_eurpMWh);
 
 //Create Consumption engine profiles:
-f_createEngineProfile("house_other_electricity_demand", a_arguments, a_houseEdemand);
-f_createEngineProfile("house_hot_water_demand", a_arguments, a_houseDHWdemand);
-f_createEngineProfile("Office_other_electricity", a_arguments, a_buildingEdemand);
-f_createEngineProfile("Building_heat_demand", a_arguments, a_buildingHeatDemand);
+f_createEngineProfile("default_house_electricity_demand_fr", a_arguments_hr, a_defaultHouseElectricityDemandProfile_fr);
+f_createEngineProfile("default_house_hot_water_demand_fr", a_arguments_hr, a_defaultHouseHotWaterDemandProfile_fr);
+f_createEngineProfile("default_office_electricity_demand_fr", a_arguments_hr, a_defaultOfficeElectricityDemandProfile_fr);
+f_createEngineProfile("default_building_heat_demand_fr", a_arguments_hr, a_defaultBuildingHeatDemandProfile_fr);
 
 //Create custom engine profiles
 for(CustomProfile_data customProfile : c_customProfiles_data){

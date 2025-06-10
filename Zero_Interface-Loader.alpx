@@ -234,10 +234,6 @@
 				<Name><![CDATA[Parcel_data]]></Name>
 			</JavaClass>
 			<JavaClass>
-				<Id>1726584206092</Id>
-				<Name><![CDATA[Profiles_data]]></Name>
-			</JavaClass>
-			<JavaClass>
 				<Id>1726584206093</Id>
 				<Name><![CDATA[Project_data]]></Name>
 			</JavaClass>
@@ -268,6 +264,10 @@
 			<JavaClass>
 				<Id>1749138380458</Id>
 				<Name><![CDATA[CustomProfile_data]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1749549699201</Id>
+				<Name><![CDATA[DefaultProfiles_data]]></Name>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

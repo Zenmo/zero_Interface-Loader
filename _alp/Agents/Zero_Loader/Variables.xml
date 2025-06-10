@@ -335,7 +335,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1726584206070</Id>
-		<Name><![CDATA[genericProfiles_data]]></Name>
+		<Name><![CDATA[defaultProfiles_data]]></Name>
 		<X>-370</X>
 		<Y>280</Y>
 		<Label>
@@ -346,7 +346,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[Profiles_data]]></Type>
+			<Type><![CDATA[DefaultProfiles_data]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<ParameterEditor>
