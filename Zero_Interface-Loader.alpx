@@ -234,10 +234,6 @@
 				<Name><![CDATA[Parcel_data]]></Name>
 			</JavaClass>
 			<JavaClass>
-				<Id>1726584206092</Id>
-				<Name><![CDATA[Profiles_data]]></Name>
-			</JavaClass>
-			<JavaClass>
 				<Id>1726584206093</Id>
 				<Name><![CDATA[Project_data]]></Name>
 			</JavaClass>
@@ -258,16 +254,20 @@
 				<Name><![CDATA[Windfarm_data]]></Name>
 			</JavaClass>
 			<JavaClass>
-				<Id>1737638888950</Id>
-				<Name><![CDATA[CustomProfiles_data]]></Name>
-			</JavaClass>
-			<JavaClass>
 				<Id>1737714961123</Id>
 				<Name><![CDATA[ListUtil]]></Name>
 			</JavaClass>
 			<JavaClass>
 				<Id>1744204067723</Id>
 				<Name><![CDATA[J_InfoText]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1749138380458</Id>
+				<Name><![CDATA[CustomProfile_data]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1749549699201</Id>
+				<Name><![CDATA[DefaultProfiles_data]]></Name>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
