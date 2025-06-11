@@ -261,7 +261,7 @@
 		<Id>1726584205556</Id>
 		<Name><![CDATA[txt_avgFossil]]></Name>
 		<X>560</X>
-		<Y>330</Y>
+		<Y>360</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -361,7 +361,7 @@
 		<Id>1726584205564</Id>
 		<Name><![CDATA[txt_avgFCV]]></Name>
 		<X>560</X>
-		<Y>570</Y>
+		<Y>610</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -564,7 +564,7 @@
 		<Id>1728032240347</Id>
 		<Name><![CDATA[txt_avgTravelDistances]]></Name>
 		<X>560</X>
-		<Y>680</Y>
+		<Y>700</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>

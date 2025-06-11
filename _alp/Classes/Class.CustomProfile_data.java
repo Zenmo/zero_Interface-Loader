@@ -1,5 +1,5 @@
 /**
- * CustomProfiles_data
+ * CustomProfile_data
  */	
 @lombok.Builder
 @lombok.Value

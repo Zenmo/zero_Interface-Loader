@@ -312,7 +312,7 @@ https://solarmagazine.nl/nieuws-zonne-energie/i34591/de-harde-cijfers-drenthe-ve
 
 Minimaal: 116 kWh minimum nodig, anders soms negatieve SOC.]]></Description>
 		<X>570</X>
-		<Y>190</Y>
+		<Y>220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -341,7 +341,7 @@ Minimaal: 116 kWh minimum nodig, anders soms negatieve SOC.]]></Description>
 		<Name><![CDATA[p_avgEVMaxChargePowerCar_kW]]></Name>
 		<Description><![CDATA[Bron???]]></Description>
 		<X>570</X>
-		<Y>120</Y>
+		<Y>150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -370,7 +370,7 @@ Minimaal: 116 kWh minimum nodig, anders soms negatieve SOC.]]></Description>
 		<Name><![CDATA[p_avgEVStorageVan_kWh]]></Name>
 		<Description><![CDATA[????]]></Description>
 		<X>570</X>
-		<Y>210</Y>
+		<Y>240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -399,7 +399,7 @@ Minimaal: 116 kWh minimum nodig, anders soms negatieve SOC.]]></Description>
 		<Name><![CDATA[p_avgEVStorageTruck_kWh]]></Name>
 		<Description><![CDATA[??]]></Description>
 		<X>570</X>
-		<Y>230</Y>
+		<Y>260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -428,7 +428,7 @@ Minimaal: 116 kWh minimum nodig, anders soms negatieve SOC.]]></Description>
 		<Name><![CDATA[p_avgEVMaxChargePowerVan_kW]]></Name>
 		<Description><![CDATA[Bron???]]></Description>
 		<X>570</X>
-		<Y>140</Y>
+		<Y>170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -457,7 +457,7 @@ Minimaal: 116 kWh minimum nodig, anders soms negatieve SOC.]]></Description>
 		<Name><![CDATA[p_avgEVMaxChargePowerTruck_kW]]></Name>
 		<Description><![CDATA[Bron???]]></Description>
 		<X>570</X>
-		<Y>160</Y>
+		<Y>190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -492,7 +492,7 @@ https://www.vattenfall.nl/elektrische-auto/verbruik/
 --> Kia niro: 17.1 kWh per 100 km --> 0.171 kWh/km
 --> taking 0.16 kWh/km as the average]]></Description>
 		<X>570</X>
-		<Y>260</Y>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -522,7 +522,7 @@ https://www.vattenfall.nl/elektrische-auto/verbruik/
 		<Description><![CDATA[praktijkverbruik van 26,9 kWh per 100 kilometer:
 https://www.debedrijfswagenadviseurs.nl/praktijkverbruik-elektrische-bedrijfswagen/ ]]></Description>
 		<X>570</X>
-		<Y>280</Y>
+		<Y>310</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -553,7 +553,7 @@ https://www.debedrijfswagenadviseurs.nl/praktijkverbruik-elektrische-bedrijfswag
 0.9 - 1.7 kWh/km
 --> pak gemiddelde: 1.3]]></Description>
 		<X>570</X>
-		<Y>300</Y>
+		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -798,7 +798,7 @@ MM O = 16 g/mol
 		<Name><![CDATA[p_avgDieselConsumptionCar_kmpl]]></Name>
 		<Description><![CDATA[https://www.unitedconsumers.com/blog/auto/zuinig-rijden.jsp]]></Description>
 		<X>570</X>
-		<Y>360</Y>
+		<Y>400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -827,7 +827,7 @@ MM O = 16 g/mol
 		<Name><![CDATA[p_avgGasolineConsumptionCar_kmpl]]></Name>
 		<Description><![CDATA[https://www.unitedconsumers.com/blog/auto/zuinig-rijden.jsp]]></Description>
 		<X>570</X>
-		<Y>380</Y>
+		<Y>420</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -884,7 +884,7 @@ MM O = 16 g/mol
 		<Id>1726584205663</Id>
 		<Name><![CDATA[p_avgDieselConsumptionCar_kWhpkm]]></Name>
 		<X>570</X>
-		<Y>410</Y>
+		<Y>450</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -912,7 +912,7 @@ MM O = 16 g/mol
 		<Id>1726584205666</Id>
 		<Name><![CDATA[p_avgGasolineConsumptionCar_kWhpkm]]></Name>
 		<X>570</X>
-		<Y>430</Y>
+		<Y>470</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -944,7 +944,7 @@ MM O = 16 g/mol
 11 liter per 100 km = 9.1 km per liter.
 ]]></Description>
 		<X>570</X>
-		<Y>470</Y>
+		<Y>510</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -972,7 +972,7 @@ MM O = 16 g/mol
 		<Id>1726584205672</Id>
 		<Name><![CDATA[p_avgDieselConsumptionVan_kWhpkm]]></Name>
 		<X>570</X>
-		<Y>490</Y>
+		<Y>530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1005,7 +1005,7 @@ MM O = 16 g/mol
 Heavely dependend on load, city/highway, etc.
 For now: Picking 3.33 km per l]]></Description>
 		<X>570</X>
-		<Y>520</Y>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1033,7 +1033,7 @@ For now: Picking 3.33 km per l]]></Description>
 		<Id>1726584205678</Id>
 		<Name><![CDATA[p_avgDieselConsumptionTruck_kWhpkm]]></Name>
 		<X>570</X>
-		<Y>540</Y>
+		<Y>580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1246,7 +1246,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 --> avg: 29 kWh per 100 km --> 0.29 kWh/km
 ]]></Description>
 		<X>570</X>
-		<Y>600</Y>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1277,7 +1277,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 --> 1.4 kg Waterstof per 100 km = 0.014 kg/km
 -->  0.014 * 33.6 (p_hydrogenSpecificEnergy_kWh_kg = 0.47 kWh/kg]]></Description>
 		<X>570</X>
-		<Y>620</Y>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1308,7 +1308,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 --> 6.6 kg Waterstof per 100 km = 0.066 kg/km
 --> 0.066 * 33.6 (p_hydrogenSpecificEnergy_kWh_kg = 2.22 kWh/kg]]></Description>
 		<X>570</X>
-		<Y>640</Y>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1580,7 +1580,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Name><![CDATA[p_avgAnnualTravelDistanceVan_km]]></Name>
 		<Description><![CDATA[??]]></Description>
 		<X>570</X>
-		<Y>730</Y>
+		<Y>770</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1608,7 +1608,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Id>1728032304301</Id>
 		<Name><![CDATA[p_avgAnnualTravelDistanceCar_km]]></Name>
 		<X>570</X>
-		<Y>710</Y>
+		<Y>750</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1633,7 +1633,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Id>1728032305440</Id>
 		<Name><![CDATA[p_avgAnnualTravelDistanceTruck_km]]></Name>
 		<X>570</X>
-		<Y>750</Y>
+		<Y>790</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1955,6 +1955,35 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1747314895127</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1749653366667</Id>
+		<Name><![CDATA[p_v2gProbability]]></Name>
+		<Description><![CDATA[SOURCE!?!?!?!]]></Description>
+		<X>570</X>
+		<Y>120</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.2]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1749653366665</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>

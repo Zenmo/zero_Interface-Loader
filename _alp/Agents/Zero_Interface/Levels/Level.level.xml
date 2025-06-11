@@ -2857,14 +2857,14 @@ b_updateCongestionColors = false;
 								<ZHeight>10</ZHeight>
 								<LineWidth>3</LineWidth>
 								<LineColor>-16777216</LineColor>
-								<LineColorCode>v_chargingStationLineColor_centre</LineColorCode>
+								<LineColorCode>v_chargingCentreLineColor</LineColorCode>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
 								<Width>15</Width>
 								<Height>15</Height>
 								<Rotation>0.0</Rotation>
 								<FillColor>-1</FillColor>
-								<FillColorCode>v_chargingStationColor_centre</FillColorCode>
+								<FillColorCode>v_chargingCentreColor</FillColorCode>
 								<FillMaterial>null</FillMaterial>
 							</Rectangle>
 							<Text>

@@ -1765,7 +1765,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1726752465730</Id>
-		<Name><![CDATA[v_chargingStationColor_centre]]></Name>
+		<Name><![CDATA[v_chargingCentreColor]]></Name>
 		<X>690</X>
 		<Y>1530</Y>
 		<Label>
@@ -1787,7 +1787,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1726752465732</Id>
-		<Name><![CDATA[v_chargingStationLineColor_centre]]></Name>
+		<Name><![CDATA[v_chargingCentreLineColor]]></Name>
 		<X>690</X>
 		<Y>1550</Y>
 		<Label>

@@ -152,6 +152,11 @@ for (GridNode_data GN_data : c_gridNode_data) {
 				//Add to hashmap
 				zero_Interface.c_GISNetplanes.add( serviceArea );
 			}
+			
+			//Gridnode profile
+			if(GN_data.profile_data_kWh() != null){
+				f_addGridNodeProfile(GN, GN_data.profile_data_kWh());
+			}
 		}
 	}
 }
@@ -2222,8 +2227,14 @@ for (Chargingstation_data dataChargingStation : c_chargingstation_data){
 		chargingStation.p_chargingVehicleType = dataChargingStation.vehicle_type();		
 		
 		//Create vehicles that charge at the charging centre
-		for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerChargePoint; k++ ){
-			f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
+		if(chargingStation.p_chargingVehicleType == OL_EnergyAssetType.CHARGER){
+			List<J_ChargingSession> chargerProfile = f_getChargerProfile();
+			new J_EACharger(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile);
+		}
+		else{
+			for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerChargePoint; k++ ){
+				f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
+			}
 		}
 		
 		
@@ -2239,8 +2250,8 @@ for (Chargingstation_data dataChargingStation : c_chargingstation_data){
 			chargingStation.c_connectedGISObjects.add(area);
 			
 			//Style building
-			area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor_centre );
-			area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor_centre );
+			area.set_p_defaultFillColor( zero_Interface.v_chargingCentreColor );
+			area.set_p_defaultLineColor( zero_Interface.v_chargingCentreLineColor );
 			area.set_p_defaultLineWidth( zero_Interface.v_energyAssetLineWidth);
 			zero_Interface.f_styleAreas(area);
 		}
@@ -2261,11 +2272,18 @@ for (Chargingstation_data dataChargingStation : c_chargingstation_data){
 			//Set vehicle type
 			chargingStation.p_chargingVehicleType = dataChargingStation.vehicle_type();		
 			
-			//Create vehicles that charge at the charging centre
-			for(int k = 0; k < avgc_data.p_avgVehiclesPerChargePoint; k++ ){
-				f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
+			//Create vehicles that charge at the charging station
+			if(chargingStation.p_chargingVehicleType == OL_EnergyAssetType.CHARGER){
+				List<J_ChargingSession> chargerProfile = f_getChargerProfile();
+				new J_EACharger(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile);
 			}
-		
+			else{
+				for(int k = 0; k < avgc_data.p_avgVehiclesPerChargePoint; k++ ){
+					f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
+				}
+			}
+			
+			
 			//Create GIS object for the chargingStation			
 			GIS_Object area = energyModel.add_pop_GIS_Objects();
 	
@@ -2282,9 +2300,14 @@ for (Chargingstation_data dataChargingStation : c_chargingstation_data){
 		
 			chargingStation.c_connectedGISObjects.add(area);
 			area.c_containedGridConnections.add(chargingStation);
-			
-			area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
-			area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
+			if(chargingStation.v_isActive){
+				area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
+				area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
+			}
+			else{
+				area.set_p_defaultFillColor( zero_Interface.v_newChargingStationColor );
+				area.set_p_defaultLineColor( zero_Interface.v_newChargingStationLineColor );
+			}
 			zero_Interface.f_styleAreas(area);
 	}
 	
@@ -3940,5 +3963,88 @@ f_createEngineProfile("default_building_heat_demand_fr", a_arguments_hr, a_defau
 for(CustomProfile_data customProfile : c_customProfiles_data){
 	f_createEngineProfile(customProfile.customProfileID(), customProfile.getArgumentsArray(), customProfile.getValuesArray());
 }
+/*ALCODEEND*/}
+
+double f_addGridNodeProfile(GridNode gridnode,double[] profile_data_kWh)
+{/*ALCODESTART::1749628581470*/
+//Create gridconnection where the profile is attached to
+GridConnection GC_GridNode_profile = energyModel.add_pop_gridConnections();
+
+//Set GC id
+GC_GridNode_profile.p_gridConnectionID = "GridNode " + gridnode.p_gridNodeID + " profile GC";
+
+//Set gridnode as parent
+GC_GridNode_profile.p_parentNodeElectricID = gridnode.p_gridNodeID;
+
+//Set capacity same as gridnode
+GC_GridNode_profile.v_liveConnectionMetaData.physicalCapacity_kW = gridnode.p_capacity_kW;
+GC_GridNode_profile.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = gridnode.p_capacity_kW;
+GC_GridNode_profile.v_liveConnectionMetaData.contractedFeedinCapacity_kW = gridnode.p_capacity_kW;
+
+GC_GridNode_profile.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
+GC_GridNode_profile.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
+GC_GridNode_profile.v_liveConnectionMetaData.physicalCapacityKnown = false;
+
+//Set lat lon same as gridnode
+GC_GridNode_profile.p_longitude = gridnode.p_longitude; // Get longitude of first building (only used to get nearest trafo)
+GC_GridNode_profile.p_latitude = gridnode.p_latitude; // Get latitude of first building (only used to get nearest trafo)
+
+
+//Add profile to the GC
+J_EAProfile profile = new J_EAProfile(GC_GridNode_profile, OL_EnergyCarriers.ELECTRICITY, profile_data_kWh, OL_ProfileAssetType.ELECTRICITYBASELOAD, energyModel.p_timeStep_h);	
+profile.setStartTime_h(v_simStartHour_h);
+profile.energyAssetName = "GridNode " + gridnode.p_gridNodeID + " profile";
+
+//Set boolean has profile data true
+gridnode.p_hasProfileData = true;
+c_gridNodeIDsWithProfiles.add(gridnode.p_gridNodeID);
+/*ALCODEEND*/}
+
+J_ChargingSession f_createChargingSession(String chargingSessionData)
+{/*ALCODESTART::1749648772203*/
+String[] chargingSessionInfo = chargingSessionData.split("/"); 
+
+int startIndex = Integer.parseInt(chargingSessionInfo[0]);
+int endIndex = Integer.parseInt(chargingSessionInfo[1]);
+double chargingDemand_kWh = Double.parseDouble(chargingSessionInfo[2]);
+double batteryCap_kWh = Double.parseDouble(chargingSessionInfo[3]);
+double chargingPower_kW = Double.parseDouble(chargingSessionInfo[5]);
+int socket = Integer.parseInt(chargingSessionInfo[6]);
+
+boolean v2gProbability = randomTrue(avgc_data.p_v2gProbability);
+return new J_ChargingSession(startIndex, endIndex, chargingDemand_kWh, batteryCap_kWh, chargingPower_kW, socket, v2gProbability, 0.25);
+	
+/*ALCODEEND*/}
+
+List<J_ChargingSession>  f_createNewChargerProfile(ChargerProfile_data chargerProfileData)
+{/*ALCODESTART::1749649169603*/
+// example: 2/54/50.3/72.1/21.8/10.8/2
+List<String> chargerProfileDataValues = chargerProfileData.valuesList();
+List<J_ChargingSession> chargerProfile = new ArrayList<J_ChargingSession>();		
+
+for(int i = 0; i < chargerProfileDataValues.size(); i++){
+	chargerProfile.add(f_createChargingSession(chargerProfileDataValues.get(i)));
+}
+
+return chargerProfile;
+/*ALCODEEND*/}
+
+List<J_ChargingSession>  f_getChargerProfile()
+{/*ALCODESTART::1749649390125*/
+List<J_ChargingSession> chargerProfile;
+int randomIndex;
+
+if(c_chargerProfiles_data.size()>0){
+	randomIndex = uniform_discr(0, c_chargerProfiles_data.size() - 1);
+	chargerProfile = f_createNewChargerProfile(c_chargerProfiles_data.get(randomIndex));
+	c_chargerProfiles_data.remove(randomIndex);
+	energyModel.c_chargerProfiles.add(chargerProfile);
+}
+else{
+	randomIndex = uniform_discr(0, energyModel.c_chargerProfiles.size() - 1);
+	chargerProfile = energyModel.c_chargerProfiles.get(randomIndex);
+}
+
+return chargerProfile;
 /*ALCODEEND*/}
 

@@ -48,7 +48,7 @@
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>460</Width>
-		<Height>450</Height>
+		<Height>490</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -135,7 +135,7 @@
 		<Id>1726584205915</Id>
 		<Name><![CDATA[rect_connectedModels]]></Name>
 		<X>0</X>
-		<Y>620</Y>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -152,7 +152,7 @@
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>290</Width>
-		<Height>170</Height>
+		<Height>140</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -161,7 +161,7 @@
 		<Id>1726584205917</Id>
 		<Name><![CDATA[t_connectedModels]]></Name>
 		<X>20</X>
-		<Y>640</Y>
+		<Y>690</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -281,7 +281,7 @@
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>340</Width>
-		<Height>110</Height>
+		<Height>120</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -392,7 +392,7 @@
 		<Id>1726584205937</Id>
 		<Name><![CDATA[t_inputFiles]]></Name>
 		<X>-380</X>
-		<Y>670</Y>
+		<Y>700</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -535,7 +535,7 @@
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>360</Width>
-		<Height>160</Height>
+		<Height>210</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -945,7 +945,7 @@
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>380</Width>
-		<Height>150</Height>
+		<Height>130</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -979,7 +979,7 @@
 		<Id>1744808981703</Id>
 		<Name><![CDATA[txt_DebuggingDataCollections]]></Name>
 		<X>-400</X>
-		<Y>840</Y>
+		<Y>870</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
