@@ -713,34 +713,6 @@
 	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1726584205841</Id>
-		<Name><![CDATA[f_addBuildingHeatModel]]></Name>
-		<X>820</X>
-		<Y>240</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[parentGC]]></Name>
-			<Type><![CDATA[GridConnection]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[floorArea_m2]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[isolationLevel]]></Name>
-			<Type><![CDATA[OL_IsolationLevelHouse]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1726584205845</Id>
 		<Name><![CDATA[f_addChargingDemandProfile]]></Name>
 		<X>821</X>
@@ -1538,9 +1510,9 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1749727623536</Id>
-		<Name><![CDATA[f_addBuildingHeatModel_Woonwijkmodellen]]></Name>
-		<X>1020</X>
-		<Y>260</Y>
+		<Name><![CDATA[f_addBuildingHeatModel]]></Name>
+		<X>820</X>
+		<Y>240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

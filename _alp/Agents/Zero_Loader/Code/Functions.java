@@ -1859,39 +1859,6 @@ future_scenario_list.setPlannedEVCars( row.get( comp_connections.nb_planned_evs 
 */
 /*ALCODEEND*/}
 
-double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,OL_IsolationLevelHouse isolationLevel)
-{/*ALCODESTART::1726584205841*/
-double maxPowerHeat_kW = 100; 				//Dit is hoeveel vermogen het huis kan afgeven/opnemen, mag willekeurige waarden hebben. Wordt alleen gebruikt in rekenstap van ratio of capacity
-double lossfactor_WpK; 						//Dit is wat bepaalt hoeveel warmte het huis verliest/opneemt per tijdstap per delta_T 
-double initialTemp = uniform_discr(15,22); 	//starttemperatuur
-double heatCapacity_JpK; 					//hoeveel lucht zit er in je huis dat je moet verwarmen?
-double solarAbsorptionFactor_m2; 			//hoeveel m2 effectieve ramen zijn er die opwarmen met zonneinstraling
-
-switch (isolationLevel){
-	case A:
-		lossfactor_WpK = 0.20 * floorArea_m2;
-	break;
-	case B:
-		lossfactor_WpK = 0.35 * floorArea_m2;
-	break;
-	case C:
-		lossfactor_WpK = 0.55 * floorArea_m2;
-	break;
-	case D:
-		lossfactor_WpK = 0.75 * floorArea_m2;
-	break;
-	default:
-		lossfactor_WpK = uniform (0.4, 0.8) * floorArea_m2;
-	break;
-}
-
-solarAbsorptionFactor_m2 = floorArea_m2 * 0.01; //solar irradiance [W/m2] 
-
-heatCapacity_JpK = floorArea_m2 * 500000;
-
-parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossfactor_WpK, energyModel.p_timeStep_h, initialTemp, heatCapacity_JpK, solarAbsorptionFactor_m2 );
-/*ALCODEEND*/}
-
 double f_addChargingDemandProfile(GCPublicCharger GC,String profileName)
 {/*ALCODESTART::1726584205845*/
 J_EAProfile profile = new J_EAProfile(GC, OL_EnergyCarriers.ELECTRICITY, null, OL_ProfileAssetType.CHARGING, energyModel.p_timeStep_h);		
@@ -3398,8 +3365,7 @@ switch (heatAssetType){ // HOE gaan we om met meerdere heating types in survey??
 		break;
 
 	default:
-		traceln("HEATING TYPE NOT FOUND FOR GC ");
-		traceln(parentGC);
+		traceln("HEATING TYPE NOT FOUND FOR GC: " + parentGC);
 }
 /*ALCODEEND*/}
 
@@ -3692,13 +3658,13 @@ double f_addCookingAsset(GCHouse gc,OL_EnergyAssetType CookingType,double yearly
 switch(CookingType){
 
 	case ELECTRIC_HOB:
-		new J_EAConsumption(gc, OL_EnergyAssetType.ELECTRIC_HOB, "Electric cooking set", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeStep_h, null);
+		new J_EAConsumption(gc, OL_EnergyAssetType.ELECTRIC_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeStep_h, null);
 		gc.p_cookingMethod = OL_HouseholdCookingMethod.ELECTRIC;
 		traceln("Initial conditions of cooking has Electric cooking. TODO make sure the v_nbHousesWIthECooking is set correctly in electricity tab");
 		break;
 		
 	case GAS_PIT:
-		new J_EAConsumption(gc, OL_EnergyAssetType.GAS_PIT, "Gas cooking set", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeStep_h, null);
+		new J_EAConsumption(gc, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeStep_h, null);
 		gc.p_cookingMethod = OL_HouseholdCookingMethod.GAS;
 		break;
 }
@@ -3730,7 +3696,7 @@ if (surface_m2 < 25){
 }
 /*ALCODEEND*/}
 
-double f_addBuildingHeatModel_Woonwijkmodellen(GridConnection parentGC,double floorArea_m2,OL_IsolationLevelHouse isolationLevel)
+double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,OL_IsolationLevelHouse isolationLevel)
 {/*ALCODESTART::1749727623536*/
 double maxPowerHeat_kW = 100; 				//Dit is hoeveel vermogen het huis kan afgeven/opnemen, mag willekeurige waarden hebben. Wordt alleen gebruikt in rekenstap van ratio of capacity
 double lossfactor_WpK; 						//Dit is wat bepaalt hoeveel warmte het huis verliest/opneemt per tijdstap per delta_T
@@ -3755,9 +3721,7 @@ switch (isolationLevel){
 		lossfactor_WpK = uniform (0.4, 1.2) * floorArea_m2;
 	break;
 }
- 
-//traceln("Floor area: " + floorArea_m2);
- 
+
 lossfactor_WpK = roundToDecimal(lossfactor_WpK,2);
 effectiveSolarAbsorptionSurface_m2 = floorArea_m2 * 0.1; //solar irradiance [W/m2]
  
@@ -3931,11 +3895,9 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	}
 	
 	//GCH.p_initialPVpanels = houseBuildingData.pv_default();
-	GCH.v_liveAssetsMetaData.initialPV_kW = houseBuildingData.pv_installed_kwp();
-	GCH.v_liveAssetsMetaData.PVPotential_kW = houseBuildingData.pv_potential_kwp();
-	Double pv_installed_kwp;
-	Double pv_potential_kwp;
-	//GCH.p_maxPVpanels = houseBuildingData.pv_max();
+	GCH.v_liveAssetsMetaData.initialPV_kW = houseBuildingData.pv_installed_kwp() != null ? houseBuildingData.pv_installed_kwp() : 0;
+	GCH.v_liveAssetsMetaData.PVPotential_kW = houseBuildingData.pv_potential_kwp() != null ? houseBuildingData.pv_potential_kwp() : 0;
+
 	f_setHouseHeatingPreferences(GCH);
 	f_addEnergyAssetsToHouses(GCH, jaarlijksElectriciteitsVerbruik, jaarlijksGasVerbruik );	
 	
@@ -3945,7 +3907,6 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	}
 }	
 
-//f_setSolarSlider();
 /*ALCODEEND*/}
 
 double f_addEnergyAssetsToHouses(GCHouse house,double jaarlijksElectriciteitsVerbruik,double jaarlijksGasVerbruik)
@@ -3959,11 +3920,11 @@ if ( ! gn.p_hasProfileData ){
 if (project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 	f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2, v_houseIsolation_level);
 	house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
-	double gasBurnerCapacity_kW = 40;//uniform_discr(3,5); 
+	double gasBurnerCapacity_kW = 50000;//40;//uniform_discr(3,5); 
 	f_addHeatAsset (house, house.p_heatingType, gasBurnerCapacity_kW);	
 }
 else{
-	f_addHeatDemandProfile(house, jaarlijksGasVerbruik, false, 1, "");
+	f_addHeatDemandProfile(house, jaarlijksGasVerbruik, false, 1, "default_building_heat_demand_fr");
 }
 f_addHotWaterDemand(house, house.p_floorSurfaceArea_m2);
 double yearlyCookingDemand_kWh = uniform_discr(200,600);
@@ -3971,9 +3932,9 @@ double yearlyCookingDemand_kWh = uniform_discr(200,600);
 
 f_addCookingAsset(house, OL_EnergyAssetType.GAS_PIT, yearlyCookingDemand_kWh);
 
-Double installedRooftopSolar_kW = house.v_liveAssetsMetaData.initialPV_kW;
+double installedRooftopSolar_kW = house.v_liveAssetsMetaData.initialPV_kW != null ? house.v_liveAssetsMetaData.initialPV_kW : 0;
 if (gn.p_hasProfileData){ //dont count production if there is measured data on Node
-	installedRooftopSolar_kW = 0.0;
+	installedRooftopSolar_kW = 0;
 }
 
 f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW );
