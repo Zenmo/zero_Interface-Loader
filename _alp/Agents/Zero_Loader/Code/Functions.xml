@@ -7,7 +7,7 @@
 		<Name><![CDATA[f_createGISRegionOutline]]></Name>
 		<Description><![CDATA[Creates the outline of the simulated area]]></Description>
 		<X>806.739</X>
-		<Y>569</Y>
+		<Y>619</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -77,7 +77,7 @@
 		<Id>1726584205777</Id>
 		<Name><![CDATA[f_createGISObjectsTokens]]></Name>
 		<X>825.241</X>
-		<Y>650</Y>
+		<Y>700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -106,23 +106,6 @@
 @since: 14-12-23]]></Description>
 		<X>-390</X>
 		<Y>90</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1726584205781</Id>
-		<Name><![CDATA[f_createHousesFromDatabase]]></Name>
-		<Description><![CDATA[Creates the houses using a single GC, and their building. After creation, they will be simulated using average values.]]></Description>
-		<X>440</X>
-		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -286,7 +269,7 @@
 		<Name><![CDATA[f_createGISBuilding]]></Name>
 		<Description><![CDATA[Creates the GIS object(s) building(s) for the companies and houses]]></Description>
 		<X>807.621</X>
-		<Y>530</Y>
+		<Y>580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -383,7 +366,7 @@
 		<Name><![CDATA[f_createGISParcels]]></Name>
 		<Description><![CDATA[Creates "empty" parcels on the gismap, these parcels do not contain buildings or gridconnections. Currently no need for the function to return the GIS_Object.]]></Description>
 		<X>807.621</X>
-		<Y>550</Y>
+		<Y>600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -432,7 +415,7 @@
 		<Name><![CDATA[f_createGISObject]]></Name>
 		<Description><![CDATA[Creates the GIS object for the area EA (windfarms, solarparks, electrolysers, batteries, etc.)]]></Description>
 		<X>807.621</X>
-		<Y>510</Y>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -459,35 +442,6 @@
 		<Parameter>
 			<Name><![CDATA[GISObjectType]]></Name>
 			<Type><![CDATA[OL_GISObjectType]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1726584205813</Id>
-		<Name><![CDATA[f_addEnergyAssetsToHouses]]></Name>
-		<Description><![CDATA[Initialisation of the Energy assets using average values for houses]]></Description>
-		<X>459</X>
-		<Y>579</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[house]]></Name>
-			<Type><![CDATA[GCHouse]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[jaarlijksGasVerbruik]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[jaarlijksElectriciteitsVerbruik]]></Name>
-			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -698,7 +652,7 @@
 		<Id>1726584205835</Id>
 		<Name><![CDATA[f_createRemainingBuildings]]></Name>
 		<X>806.739</X>
-		<Y>609</Y>
+		<Y>659</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -787,23 +741,6 @@
 	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1726584205843</Id>
-		<Name><![CDATA[f_createChargingStationsScale]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>440</X>
-		<Y>600</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1726584205845</Id>
 		<Name><![CDATA[f_addChargingDemandProfile]]></Name>
 		<X>821</X>
@@ -831,7 +768,7 @@
 		<Id>1726584205847</Id>
 		<Name><![CDATA[f_createGISRegionChargingStation]]></Name>
 		<X>807.621</X>
-		<Y>590</Y>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -868,23 +805,6 @@
 	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1726584205851</Id>
-		<Name><![CDATA[f_createCompaniesFromDatabase]]></Name>
-		<Description><![CDATA[Creates the houses using a single GC, and their building. After creation, they will be simulated using average values.]]></Description>
-		<X>440</X>
-		<Y>540</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1726584205853</Id>
 		<Name><![CDATA[f_createInterface]]></Name>
 		<X>30</X>
@@ -899,32 +819,12 @@
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>List&lt;Building_data&gt;</ReturnType>
-		<Id>1726584205857</Id>
-		<Name><![CDATA[f_getScopedBuildingList]]></Name>
-		<X>440</X>
-		<Y>640</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[initialList]]></Name>
-			<Type><![CDATA[List<Building_data>]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1726584205859</Id>
 		<Name><![CDATA[f_createGISCables]]></Name>
 		<X>807.621</X>
-		<Y>630</Y>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -969,26 +869,6 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[pvPower_kW]]></Name>
 			<Type><![CDATA[Double]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1726584205863</Id>
-		<Name><![CDATA[f_setHouseHeatingPreferences]]></Name>
-		<X>440</X>
-		<Y>620</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[house]]></Name>
-			<Type><![CDATA[GCHouse]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -1063,22 +943,6 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Name><![CDATA[f_createConsumerGC_businesspark]]></Name>
 		<X>420</X>
 		<Y>130</Y>
-		<Label>
-			<X>11</X>
-			<Y>1</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1726584205879</Id>
-		<Name><![CDATA[f_createConsumerGC_Residential]]></Name>
-		<X>420</X>
-		<Y>510</Y>
 		<Label>
 			<X>11</X>
 			<Y>1</Y>
@@ -1326,7 +1190,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1742915722586</Id>
 		<Name><![CDATA[f_connectGCToExistingBuilding]]></Name>
 		<X>810</X>
-		<Y>790</Y>
+		<Y>840</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1372,7 +1236,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1745336570663</Id>
@@ -1609,6 +1473,189 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Name><![CDATA[f_getChargerProfile]]></Name>
 		<X>450</X>
 		<Y>850</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1749726189312</Id>
+		<Name><![CDATA[f_addCookingAsset]]></Name>
+		<X>820</X>
+		<Y>440</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gc]]></Name>
+			<Type><![CDATA[GCHouse]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[CookingType]]></Name>
+			<Type><![CDATA[OL_EnergyAssetType]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[yearlyCookingDemand_kWh]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1749726279652</Id>
+		<Name><![CDATA[f_addHotWaterDemand]]></Name>
+		<X>820</X>
+		<Y>460</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[houseGC]]></Name>
+			<Type><![CDATA[GCHouse]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[surface_m2]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1749727623536</Id>
+		<Name><![CDATA[f_addBuildingHeatModel_Woonwijkmodellen]]></Name>
+		<X>1020</X>
+		<Y>260</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[parentGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[floorArea_m2]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[isolationLevel]]></Name>
+			<Type><![CDATA[OL_IsolationLevelHouse]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>List&lt;Building_data&gt;</ReturnType>
+		<Id>1749728889982</Id>
+		<Name><![CDATA[f_getBuildingsInSubScope]]></Name>
+		<X>440</X>
+		<Y>600</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[initialBuildingList]]></Name>
+			<Type><![CDATA[List<Building_data>]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1749728889984</Id>
+		<Name><![CDATA[f_createHouses]]></Name>
+		<Description><![CDATA[Creates the houses using a single GC, and their building. After creation, they will be simulated using average values.]]></Description>
+		<X>420</X>
+		<Y>500</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1749728889986</Id>
+		<Name><![CDATA[f_addEnergyAssetsToHouses]]></Name>
+		<Description><![CDATA[Initialisation of the Energy assets using average values for houses]]></Description>
+		<X>440</X>
+		<Y>520</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[house]]></Name>
+			<Type><![CDATA[GCHouse]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[jaarlijksElectriciteitsVerbruik]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[jaarlijksGasVerbruik]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1749728889988</Id>
+		<Name><![CDATA[f_setHouseHeatingPreferences]]></Name>
+		<X>440</X>
+		<Y>550</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[house]]></Name>
+			<Type><![CDATA[GCHouse]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1749729268458</Id>
+		<Name><![CDATA[f_createParkingSpots]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>440</X>
+		<Y>650</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

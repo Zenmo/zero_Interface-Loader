@@ -21,6 +21,7 @@ public class DefaultProfiles_data {
 	// Various demand profiles
 	List<Double> defaultHouseElectricityDemandProfile_fr;
 	List<Double> defaultHouseHotWaterDemandProfile_fr;
+	List<Double> defaultHouseCookingDemandProfile_fr;
 	List<Double> defaultOfficeElectricityDemandProfile_fr;
 	List<Double> defaultBuildingHeatDemandProfile_fr;
 
