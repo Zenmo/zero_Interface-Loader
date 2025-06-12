@@ -302,7 +302,8 @@ for (J_EAProfile j_ea : gc.c_profileAssets) {
 	}
 }
 if (gc.p_BuildingThermalAsset != null) {
-	peakHeatDemand_kW += gc.p_BuildingThermalAsset.getCapacityHeat_kW();
+	double maximalTemperatureDifference_K = 30.0; // Approximation
+	peakHeatDemand_kW += gc.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000;
 }
 return peakHeatDemand_kW;
 /*ALCODEEND*/}

@@ -43,44 +43,42 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 ArrayList<GCHouse> houses = new ArrayList<GCHouse>(zero_Interface.c_orderedPVSystemsHouses.stream().filter(gcList::contains).toList());
 int nbHouses = houses.size();
 int nbHousesWithPV = count(houses, x -> x.v_liveAssetsMetaData.hasPV == true);
+int nbHousesWithPVGoal = roundToInt(PV_pct / 100.0 * nbHouses);
 
-if ( PV_pct / 100.0 * nbHouses < nbHousesWithPV ) {
-	while ( PV_pct / 100.0 * nbHouses < nbHousesWithPV ) { // remove excess PV systems
-		GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.hasPV == true);	
-		J_EA pvAsset = findFirst(house.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
-		if (pvAsset != null) {
-			pvAsset.removeEnergyAsset();
-			houses.remove(house);
-			zero_Interface.c_orderedPVSystemsHouses.remove(house);
-			zero_Interface.c_orderedPVSystemsHouses.add(0, house);
-			nbHousesWithPV --; 
-		}
-		else {
-			traceln(" cant find PV asset in house that should have PV asset in f_setPVHouses (Interface)");
-		}
+while ( nbHousesWithPVGoal < nbHousesWithPV ) { // remove excess PV systems
+	GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.hasPV == true);	
+	J_EA pvAsset = findFirst(house.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
+	if (pvAsset != null) {
+		pvAsset.removeEnergyAsset();
+		houses.remove(house);
+		zero_Interface.c_orderedPVSystemsHouses.remove(house);
+		zero_Interface.c_orderedPVSystemsHouses.add(0, house);
+		nbHousesWithPV --; 
+	}
+	else {
+		traceln(" cant find PV asset in house that should have PV asset in f_setPVHouses (Interface)");
 	}
 }
-else {
-	while ( PV_pct / 100.0 * nbHouses > nbHousesWithPV ) {
-		GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.hasPV == false);
-		if (house == null){
-			traceln("No gridconnection without PV panels found! Current PVsystems count: %s", nbHousesWithPV);
-			break;
-		}
-		else {
-			String assetName = "Rooftop PV";
-			double capacityHeat_kW = 0.0;
-			double yearlyProductionHydrogen_kWh = 0.0;
-			double yearlyProductionMethane_kWh = 0.0;
-			double outputTemperature_degC = 0.0;
-			double installedPVCapacity_kW = uniform(3,6);
 
-			J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, installedPVCapacity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC, zero_Interface.energyModel.pp_solarPVproduction );
-			houses.remove(house);
-			zero_Interface.c_orderedPVSystemsHouses.remove(house);
-			zero_Interface.c_orderedPVSystemsHouses.add(0, house);
-			nbHousesWithPV ++;	
-		}
+while ( nbHousesWithPVGoal > nbHousesWithPV ) {
+	GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.hasPV == false);
+	if (house == null){
+		traceln("No gridconnection without PV panels found! Current PVsystems count: %s", nbHousesWithPV);
+		break;
+	}
+	else {
+		String assetName = "Rooftop PV";
+		double capacityHeat_kW = 0.0;
+		double yearlyProductionHydrogen_kWh = 0.0;
+		double yearlyProductionMethane_kWh = 0.0;
+		double outputTemperature_degC = 0.0;
+		double installedPVCapacity_kW = uniform(3,6);
+
+		J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, installedPVCapacity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC, zero_Interface.energyModel.pp_solarPVproduction );
+		houses.remove(house);
+		zero_Interface.c_orderedPVSystemsHouses.remove(house);
+		zero_Interface.c_orderedPVSystemsHouses.add(0, house);
+		nbHousesWithPV ++;	
 	}
 }
 

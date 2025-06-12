@@ -20,7 +20,7 @@
 		<LineColor>-4144960</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>720</Width>
+		<Width>800</Width>
 		<Height>470</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
@@ -112,7 +112,7 @@
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>sl_electricCars_pct.setValue(100 - sl_fossilFuelCars_pct.getIntValue(), false);
-f_setElectricCars( zero_Interface.energyModel.f_getGridConnections(), sl_electricCars_pct.getValue(), sl_electricCars_pct, sl_fossilFuelCars_pct );</ActionCode>
+f_setDieselCars( zero_Interface.energyModel.f_getGridConnections(), sl_electricCars_pct, sl_fossilFuelCars_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -537,7 +537,7 @@ f_setDieselTrucks( zero_Interface.energyModel.f_getGridConnections(), sl_electri
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>sl_fossilFuelCars_pct.setValue(100 - sl_electricCars_pct.getIntValue(), false);
-f_setElectricCars( zero_Interface.energyModel.f_getGridConnections(), sl_electricCars_pct.getValue(), sl_electricCars_pct, sl_fossilFuelCars_pct );</ActionCode>
+f_setElectricCars( zero_Interface.energyModel.f_getGridConnections(), sl_electricCars_pct, sl_fossilFuelCars_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -642,7 +642,7 @@ f_setElectricCars( zero_Interface.energyModel.f_getGridConnections(), sl_electri
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>sl_electricVans_pct.setValue(100 - sl_fossilFuelVans_pct.getIntValue(), false);
-f_setElectricVans( zero_Interface.energyModel.f_getGridConnections(), sl_electricVans_pct.getValue(), sl_electricVans_pct, sl_fossilFuelVans_pct );</ActionCode>
+f_setDieselVans( zero_Interface.energyModel.f_getGridConnections(), sl_electricVans_pct, sl_fossilFuelVans_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -722,7 +722,7 @@ f_setElectricVans( zero_Interface.energyModel.f_getGridConnections(), sl_electri
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>sl_fossilFuelVans_pct.setValue(100 - sl_electricVans_pct.getIntValue(), false);
-f_setElectricVans( zero_Interface.energyModel.f_getGridConnections(), sl_electricVans_pct.getValue(), sl_electricVans_pct, sl_fossilFuelVans_pct );</ActionCode>
+f_setElectricVans( zero_Interface.energyModel.f_getGridConnections(), sl_electricVans_pct, sl_fossilFuelVans_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1098,7 +1098,7 @@ f_setElectricVans( zero_Interface.energyModel.f_getGridConnections(), sl_electri
 		<LineColor>-5952982</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>640</Width>
+		<Width>720</Width>
 		<Height>230</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
