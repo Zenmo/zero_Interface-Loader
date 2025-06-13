@@ -3751,7 +3751,7 @@ List<Building_data> f_getBuildingsInSubScope(List<Building_data> initialBuilding
 {/*ALCODESTART::1749728889982*/
 List<Building_data> scopedBuildingList = new ArrayList<>();
 
-if(settings.subscopesToSimulate().size() == 0){
+if(settings.subscopesToSimulate() == null || settings.subscopesToSimulate().size() == 0){
 	scopedBuildingList.addAll(initialBuildingList);
 }
 else{
@@ -3978,55 +3978,76 @@ else { // 25% kans op smiddags/savonds aan
 
 double f_createParkingSpots()
 {/*ALCODESTART::1749729268458*/
-List<Tuple> parkingTupleList = selectFrom(buildings)
-	.where(
-		buildings.purpose.like("%parkeerfunctie%")
-	)
-	.list();
- 
-for ( Tuple row : parkingTupleList){
-	if ( true){//row.get(buildings.extra_info) != null && row.get(buildings.extra_info).contains("E8") ){	
-		GIS_Object parking = f_createGISObject(row.get(buildings.adress_id), row.get(buildings.latitude), row.get(buildings.longitude), row.get(buildings.polygon));
-		energyModel.c_parkingSpots.add(parking);
- 
-		parking.p_GISObjectType = OL_GISObjectType.PARKING;
-		
-		parking.p_defaultFillColor = lightBlue;
-		parking.p_defaultLineColor = blue;
-		
-		
-		//GridNode node = findFirst(energyModel.pop_gridNodes, p -> p.p_gridNodeID.equals(row.get(buildings.trafo_id)));
-		GCEnergyProduction carport = null;
-		for (GCEnergyProduction gc : energyModel.EnergyProductionSites){
-			if ( gc.p_parentNodeElectricID.equals(row.get(buildings.trafo_id))){
-				carport = (GCEnergyProduction)gc;
-			}
-		}
-		
-		if( row.get(buildings.extra_info) != null){
-			parking.p_annotation = row.get(buildings.extra_info).replaceAll(",(\\S)", ", $1");
-			carport.p_nbParkingSpots ++;
-			carport.p_maxSolarPV += 1.2;
-		}
-		else{
-			parking.p_annotation = row.get(buildings.annotation);
-			carport.p_nbParkingSpots = roundToInt(row.get(buildings.contracted_capacity_kw));
-			carport.p_maxSolarPV = row.get(buildings.pv_max);
-		}
-		
-		if (parking.p_annotation.contains("E8")){
-			parking.p_defaultFillColor = lightGreen;
-			parking.p_defaultLineColor = green;
-			v_nbEVparkingsInData ++;
-		}
-		if (parking.p_annotation.contains("kiss")){
+List<ParkingSpace_data> parkingSpacesData = f_getParkingSpacesInSubScope(c_parkingSpace_data);
+
+traceln("Nb EV parking places in dataset: " + parkingSpacesData.size() );
+
+List<GCEnergyProduction> carportGCList = new ArrayList<GCEnergyProduction>();
+
+for (ParkingSpace_data dataParkingSpace : parkingSpacesData){
+
+	//Create parking gis object	
+	GIS_Object parking = f_createGISObject(dataParkingSpace.parking_id(), dataParkingSpace.latitude(), dataParkingSpace.longitude(), dataParkingSpace.polygon(), OL_GISObjectType.PARKING);
+	parking.p_annotation = "Parking space: " + dataParkingSpace.additional_info();
+	
+	//Add to ordered collection on interface
+	zero_Interface.c_orderedParkingSpaces.add(parking);
+	
+	//Set correct color based on parking type
+	switch(dataParkingSpace.type()){
+		case PUBLIC:
+			parking.p_defaultFillColor = lightBlue;
+			parking.p_defaultLineColor = blue;
+			break;
+		case PRIVATE:
+			parking.p_defaultFillColor = salmon;
+			parking.p_defaultLineColor = red;		
+			break;
+		case DISABLED:
 			parking.p_defaultFillColor = salmon;
 			parking.p_defaultLineColor = red;
-		}
-		
-		parking.f_style(null, null, null, null);
+			break;
+		case ELECTRIC:
+			parking.p_defaultFillColor = lightGreen;
+			parking.p_defaultLineColor = green;		
+			break;
+		case KISS_AND_RIDE:
+			parking.p_defaultFillColor = salmon;
+			parking.p_defaultLineColor = red;
+			break;
+	}
+	//Style gis object
+	parking.f_style(null, null, null, null);	
+	
+	//Get energyProduction GC	
+	GCEnergyProduction carportGC = findFirst(carportGCList, gc -> gc.p_parentNodeElectricID.equals(dataParkingSpace.gridnode_id()));
+	
+	if(carportGC == null){ // If non existend -> Create one.
+		carportGC = energyModel.add_EnergyProductionSites();
+		carportGCList.add(carportGC);
+	}
+	
+	//Update pv potential of carport energy production site
+	carportGC.v_liveAssetsMetaData.PVPotential_kW += dataParkingSpace.pv_potential_kwp() != null ? dataParkingSpace.pv_potential_kwp() : 0;
+}
+/*ALCODEEND*/}
+
+List<ParkingSpace_data> f_getParkingSpacesInSubScope(List<ParkingSpace_data> initialParkingSpaceList)
+{/*ALCODESTART::1749739602491*/
+List<ParkingSpace_data> scopedParkingSpacesList = new ArrayList<>();
+
+if(settings.subscopesToSimulate() == null || settings.subscopesToSimulate().size() == 0){
+	scopedParkingSpacesList.addAll(initialParkingSpaceList);
+}
+else{
+	for (ParkingSpace_data dataParkingSpace : initialParkingSpaceList) {
+		for (int i = 0; i < settings.subscopesToSimulate().size() ; i++){
+			if (dataParkingSpace.gridnode_id().equals( settings.subscopesToSimulate().get(i))){
+				scopedParkingSpacesList.add(dataParkingSpace);
+			}
+		}	
 	}
 }
-traceln("Nb EV parking places in dataset: " + v_nbEVparkingsInData );
+return scopedParkingSpacesList;
 /*ALCODEEND*/}
 

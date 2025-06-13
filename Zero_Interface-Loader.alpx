@@ -273,6 +273,10 @@
 				<Id>1749649742298</Id>
 				<Name><![CDATA[ChargerProfile_data]]></Name>
 			</JavaClass>
+			<JavaClass>
+				<Id>1749738288352</Id>
+				<Name><![CDATA[ParkingSpace_data]]></Name>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>

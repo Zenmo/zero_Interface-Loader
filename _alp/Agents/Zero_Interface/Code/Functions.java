@@ -695,6 +695,7 @@ double f_initalAssetOrdering()
 f_initialElectricVehiclesOrder();
 f_initialPVSystemsOrder();
 f_initialHeatingSystemsOrder();
+f_initialParkingSpacesOrder();
 f_projectSpecificOrderedCollectionAdjustments();
 
 
@@ -2624,5 +2625,10 @@ for(GIS_Building building : energyModel.pop_GIS_Buildings){
 		}
 	}
 }
+/*ALCODEEND*/}
+
+double f_initialParkingSpacesOrder()
+{/*ALCODESTART::1749741185117*/
+Collections.shuffle(c_orderedParkingSpaces);
 /*ALCODEEND*/}
 

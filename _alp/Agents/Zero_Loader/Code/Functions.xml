@@ -882,7 +882,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1726584205869</Id>
 		<Name><![CDATA[f_clearDataRecords]]></Name>
 		<X>-390</X>
-		<Y>680</Y>
+		<Y>700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1625,7 +1625,6 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1749729268458</Id>
 		<Name><![CDATA[f_createParkingSpots]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>440</X>
 		<Y>650</Y>
 		<Label>
@@ -1635,6 +1634,26 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>List&lt;ParkingSpace_data&gt;</ReturnType>
+		<Id>1749739602491</Id>
+		<Name><![CDATA[f_getParkingSpacesInSubScope]]></Name>
+		<X>440</X>
+		<Y>620</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[initialParkingSpaceList]]></Name>
+			<Type><![CDATA[List<ParkingSpace_data>]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>
