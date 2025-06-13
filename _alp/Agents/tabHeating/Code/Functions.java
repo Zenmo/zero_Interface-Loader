@@ -1,12 +1,6 @@
 int f_setHeatingSystemsCompanies(ShapeSlider sliderGasburner,ShapeSlider sliderHeatpump)
 {/*ALCODESTART::1722256102007*/
-//Update variable to change to custom scenario
-if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
-}
-
 double targetHeatPump_pct = sliderHeatpump.getValue();
-
 
 //Set the sliders if companyUI is present using the companyUI functions, if not: do it the normal way
 if(zero_Interface.c_companyUIs.size()>0){
@@ -77,15 +71,16 @@ else{
 	}
 }
 
-/*ALCODEEND*/}
-
-double f_setHeatingSystemsHouseholds(double targetHeatPump_pct)
-{/*ALCODESTART::1722256221655*/
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
 	zero_Interface.b_changeToCustomScenario = true;
 }
 
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+double f_setHeatingSystemsHouseholds(double targetHeatPump_pct)
+{/*ALCODESTART::1722256221655*/
 double nbHeatPumps = count(zero_Interface.energyModel.Houses, house -> house.p_primaryHeatingAsset instanceof J_EAConversionHeatPump);
 int targetHeatPumpAmount = roundToInt( targetHeatPump_pct / 100.0 *(zero_Interface.energyModel.Houses.size()));
 
@@ -147,6 +142,12 @@ else {
 		}	
 	}	
 }
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
 double f_setHeatingSliders(int sliderIndex,ShapeSlider gasBurnerSlider,ShapeSlider heatPumpSlider,ShapeSlider hybridHeatPumpSlider,ShapeSlider districtHeatingSlider)
@@ -379,5 +380,149 @@ for (UI_company companyUI : zero_Interface.c_companyUIs ){
 	}
 }
 
+/*ALCODEEND*/}
+
+double f_addDistrictHeatingToAllHouses()
+{/*ALCODESTART::1749739532180*/
+for (GCHouse house: zero_Interface.energyModel.Houses ) {
+	house.p_primaryHeatingAsset.removeEnergyAsset();
+	if (house.p_secondaryHeatingAsset != null) {
+		house.p_secondaryHeatingAsset.removeEnergyAsset(); 
+	}
+	if (house.p_tertiaryHeatingAsset != null) {
+		house.p_tertiaryHeatingAsset.removeEnergyAsset(); 
+	}
+	if ( house.p_heatBuffer != null){
+		house.p_heatBuffer.removeEnergyAsset();
+	}
+	house.p_heatingType = OL_GridConnectionHeatingType.DISTRICTHEAT;
+	new J_EAConversionHeatDeliverySet(house, 5.0, 1.0, 50, zero_Interface.energyModel.p_timeStep_h);
+}
+/*ALCODEEND*/}
+
+double f_removeDistrictHeatingFromAllHouses()
+{/*ALCODESTART::1749739532202*/
+for (GCHouse house: zero_Interface.energyModel.Houses ) {
+	house.p_primaryHeatingAsset.removeEnergyAsset();
+	house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
+	house.v_districtHeatDelivery_kW = 0;
+	
+	//add gasburner
+	house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;	
+
+	J_EAConsumption heatDemandAsset = findFirst(house.c_consumptionAssets, j_ea -> j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
+	J_EAConversionGasBurner gasBurner;
+	//if house has follows the general heat deamnd profile
+	if (heatDemandAsset != null) {
+		gasBurner = new J_EAConversionGasBurner(house, OL_EnergyAssetType.GAS_BURNER, heatDemandAsset.yearlyDemandHeat_kWh/8760*10, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
+	}
+	//if house has a thermalBuildingAsset
+	else if (house.p_BuildingThermalAsset != null){
+		double gasBurnerCapacity_kW = 10;
+		gasBurner = new J_EAConversionGasBurner(house, OL_EnergyAssetType.GAS_BURNER, gasBurnerCapacity_kW, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
+	}
+	// Else house has a customprofiel
+	else {
+		J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(house.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrierConsumed == OL_EnergyCarrierType.HEAT);
+		double peakHeatDemand_kW = Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
+		gasBurner = new J_EAConversionGasBurner(house, OL_EnergyAssetType.GAS_BURNER, peakHeatDemand_kW, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
+	}	
+	
+	
+}
+/*ALCODEEND*/}
+
+double f_setAircos(double desiredShare)
+{/*ALCODESTART::1749739532217*/
+double nbHousesWithAirco = count(zero_Interface.energyModel.Houses, x -> x.p_airco != null);
+double nbHouses = zero_Interface.energyModel.Houses.size();
+traceln("Previous nb households with airco: " + nbHousesWithAirco);
+while ( roundToInt(nbHouses * desiredShare) > nbHousesWithAirco ) {
+	GCHouse house = randomWhere(zero_Interface.energyModel.Houses, x -> x.p_airco == null);
+	double aircoPower_kW = roundToDecimal(uniform(3,6),1);
+	house.p_airco = new J_EAAirco(house, aircoPower_kW, zero_Interface.energyModel.p_timeStep_h);
+	house.c_electricHeatpumpAssets.add(house.p_airco);
+	nbHousesWithAirco ++;
+}
+while ( roundToInt(nbHouses * desiredShare) < nbHousesWithAirco ) {
+	GCHouse house = randomWhere(zero_Interface.energyModel.Houses, x -> x.p_airco != null);
+	house.c_electricHeatpumpAssets.remove(house.p_airco);
+	house.p_airco = null;
+	nbHousesWithAirco --;
+}
+
+traceln("New nb households with airco: " + nbHousesWithAirco);
+/*ALCODEEND*/}
+
+double f_addLTDH()
+{/*ALCODESTART::1749739532231*/
+for (GCHouse house: zero_Interface.energyModel.Houses ) {
+	house.p_primaryHeatingAsset.removeEnergyAsset();
+	if (house.p_secondaryHeatingAsset != null) {
+		house.p_secondaryHeatingAsset.removeEnergyAsset(); 
+	}
+	if (house.p_tertiaryHeatingAsset != null) {
+		house.p_tertiaryHeatingAsset.removeEnergyAsset(); 
+	}
+	if ( house.p_heatBuffer != null){
+		house.p_heatBuffer.removeEnergyAsset();
+	}
+	house.p_heatingType = OL_GridConnectionHeatingType.HEATPUMP_AIR;
+	traceln( "adding heatpump");
+	J_EAConversionHeatPump heatPump;
+	J_EAConsumption heatDemandAsset = findFirst(house.c_consumptionAssets, j_ea -> j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
+	double heatpumpElectricCapacity_kW = 1.0;
+	house.p_heatBuffer = new J_EAStorageHeat(house, OL_EAStorageTypes.HEATBUFFER, 10, 0, zero_Interface.energyModel.p_timeStep_h, 60, 20, 80, 30, 50_000, "AIR" );
+	if (heatDemandAsset != null) { // als house een standaard warmtebehoefte profiel heeft
+		heatPump = new J_EAConversionHeatPump(house, zero_Interface.energyModel.p_timeStep_h, heatDemandAsset.yearlyDemandHeat_kWh/8760*10 / 3, 0.5, zero_Interface.energyModel.v_currentAmbientTemperature_degC, 60, "AIR", 0, 1);
+	} 
+	else if (house.p_BuildingThermalAsset != null){ //als huis een building heatmodel heeft
+		heatPump = new J_EAConversionHeatPump(house, zero_Interface.energyModel.p_timeStep_h, heatpumpElectricCapacity_kW, 1, zero_Interface.energyModel.v_currentAmbientTemperature_degC, 60, "AIR", 0, 1);
+		heatPump.setEnergyAssetName("Heatpump " + heatpumpElectricCapacity_kW );
+		heatPump.setEnergyAssetType( OL_EnergyAssetType.HEAT_PUMP_AIR);
+	}
+	else { //anders moet het huis een heatProfiel krijgen
+		J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(house.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrierConsumed == OL_EnergyCarrierType.HEAT);
+		double peakHeatDemand_kW = Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
+		heatPump = new J_EAConversionHeatPump(house, zero_Interface.energyModel.p_timeStep_h, peakHeatDemand_kW / 3, 0.5, zero_Interface.energyModel.v_currentAmbientTemperature_degC, 60, "AIR", 0, 1);
+	}
+	
+}
+
+
+
+
+/*ALCODEEND*/}
+
+double f_removeLTDH()
+{/*ALCODESTART::1749739532244*/
+for (GCHouse house: zero_Interface.energyModel.Houses ) {
+	house.p_primaryHeatingAsset.removeEnergyAsset();
+	house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
+	house.v_districtHeatDelivery_kW = 0;
+	
+	//add gasburner
+	house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;	
+
+	J_EAConsumption heatDemandAsset = findFirst(house.c_consumptionAssets, j_ea -> j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
+	J_EAConversionGasBurner gasBurner;
+	//if house has follows the general heat deamnd profile
+	if (heatDemandAsset != null) {
+		gasBurner = new J_EAConversionGasBurner(house, OL_EnergyAssetType.GAS_BURNER, heatDemandAsset.yearlyDemandHeat_kWh/8760*10, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
+	}
+	//if house has a thermalBuildingAsset
+	else if (house.p_BuildingThermalAsset != null){
+		double gasBurnerCapacity_kW = 10;
+		gasBurner = new J_EAConversionGasBurner(house, OL_EnergyAssetType.GAS_BURNER, gasBurnerCapacity_kW, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
+	}
+	// Else house has a customprofiel
+	else {
+		J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(house.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrierConsumed == OL_EnergyCarrierType.HEAT);
+		double peakHeatDemand_kW = Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
+		gasBurner = new J_EAConversionGasBurner(house, OL_EnergyAssetType.GAS_BURNER, peakHeatDemand_kW, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
+	}	
+	
+	
+}
 /*ALCODEEND*/}
 
