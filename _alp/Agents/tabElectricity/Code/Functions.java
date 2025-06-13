@@ -162,7 +162,6 @@ for ( GCEnergyProduction GCEP : zero_Interface.energyModel.EnergyProductionSites
 				GCEP.f_setActive(false);
 			}
 			break;
-		}
 	}
 }
 
@@ -182,13 +181,6 @@ double nbHousesWithPV = count(zero_Interface.energyModel.Houses, x -> x.v_liveAs
 double batteryShare_pct = homeBatteries_pct;
 
 if( nbHousesWithPV > 0 ){
-	if( batteryShare_pct / 100.0 < nbHouseBatteries / nbHousesWithPV ){
-		while ( batteryShare_pct / 100.0 < nbHouseBatteries / nbHousesWithPV) {
-			GCHouse house = findFirst(zero_Interface.energyModel.Houses, p -> p.p_batteryAsset != null );
-			house.p_batteryAsset.removeEnergyAsset();
-			house.p_batteryOperationMode = OL_BatteryOperationMode.BALANCE; // reset to default
-			nbHouseBatteries--;
-		}
 	}
 	else {
 		while ( batteryShare_pct / 100.0 > nbHouseBatteries / nbHousesWithPV) {

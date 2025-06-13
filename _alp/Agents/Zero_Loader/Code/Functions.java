@@ -21,12 +21,12 @@ for (Neighbourhood_data NBH : c_neighbourhood_data) {
 double f_createGridConnections()
 {/*ALCODESTART::1726584205771*/
 //Energy production sites
-f_generateSolarParks();
-f_generateWindFarms();
+f_createSolarParks();
+f_createWindFarms();
 
 //Other infra assets
-f_generateElectrolysers();
-f_generateBatteries();
+f_createElectrolysers();
+f_createBatteries();
 f_createChargingStations();
 
 //Consumers
@@ -49,6 +49,8 @@ energyModel.p_truckTripsExcel = inputTruckTrips;
 energyModel.p_householdTripsExcel = inputHouseholdTrips;
 energyModel.p_cookingPatternExcel = inputCookingActivities;
 
+//Initialize specific slider GC
+f_initializeSpecificSliderGC();
 
 //Actors
 f_createActors();
@@ -225,6 +227,10 @@ return GISCoords;
 
 double f_importExcelTablesToDB()
 {/*ALCODESTART::1726584205779*/
+inputHouseholdTrips.readFile();
+inputCookingActivities.readFile();
+inputTruckTrips.readFile();
+
 if(settings.reloadDatabase()){
 	
 	//Get the database names that are selected for reloading
@@ -393,7 +399,7 @@ return subtenant;
 
 /*ALCODEEND*/}
 
-double f_generateSolarParks()
+double f_createSolarParks()
 {/*ALCODESTART::1726584205785*/
 ConnectionOwner owner;
 GCEnergyProduction solarpark;
@@ -410,9 +416,8 @@ for (Solarfarm_data dataSolarfarm : c_solarfarm_data) { // MOET NOG CHECK OF ZON
 		solarpark.set_p_gridConnectionID( dataSolarfarm.gc_id() );
 		solarpark.set_p_name( dataSolarfarm.gc_name() );
 		
-		if(solarpark.p_gridConnectionID.equals("SLIDER_SF")){
-			solarpark.p_isSliderGC = true;
-		}
+		//Check wether it can be changed using sliders
+		solarpark.p_isSliderGC = dataSolarfarm.isSliderGC();
 		
 		//Grid Capacity
 		solarpark.v_liveConnectionMetaData.physicalCapacity_kW = dataSolarfarm.connection_capacity_kw();
@@ -480,7 +485,7 @@ for (Solarfarm_data dataSolarfarm : c_solarfarm_data) { // MOET NOG CHECK OF ZON
 
 /*ALCODEEND*/}
 
-double f_generateBatteries()
+double f_createBatteries()
 {/*ALCODESTART::1726584205787*/
 for (Battery_data dataBattery : c_battery_data) { // MOET NOG CHECK OF battery ACTOR AL BESTAAT OP, zo ja --> battery koppelen aan elkaar en niet 2 GC en 2 actoren maken.
 	
@@ -499,11 +504,9 @@ for (Battery_data dataBattery : c_battery_data) { // MOET NOG CHECK OF battery A
 	gridbattery.set_p_ownerID( dataBattery.owner_id() );
 	gridbattery.set_p_owner( owner );	
 	gridbattery.v_liveConnectionMetaData.physicalCapacity_kW = dataBattery.connection_capacity_kw();
-
 	
-	if(gridbattery.p_gridConnectionID.equals("SLIDER_GB")){
-		gridbattery.p_isSliderGC = true;
-	}
+	//Check wether it can be changed using sliders
+	gridbattery.p_isSliderGC = dataBattery.isSliderGC();
 	
 	//Grid Capacity
 	gridbattery.v_liveConnectionMetaData.physicalCapacity_kW = dataBattery.connection_capacity_kw();
@@ -533,7 +536,7 @@ for (Battery_data dataBattery : c_battery_data) { // MOET NOG CHECK OF battery A
 	
 	//Get initial state
 	gridbattery.v_isActive = dataBattery.initially_active();
-
+	
 	if (dataBattery.polygon() != null) {
 		//Create gis object for the battery
 		GIS_Object area =  f_createGISObject( dataBattery.gc_name(), dataBattery.latitude(), dataBattery.longitude(), dataBattery.polygon(), OL_GISObjectType.BATTERY);
@@ -554,7 +557,7 @@ for (Battery_data dataBattery : c_battery_data) { // MOET NOG CHECK OF battery A
 }
 /*ALCODEEND*/}
 
-double f_generateElectrolysers()
+double f_createElectrolysers()
 {/*ALCODESTART::1726584205789*/
 ConnectionOwner owner;
 List<String> existing_actors = new ArrayList();
@@ -634,7 +637,7 @@ for (Electrolyser_data dataElectrolyser : c_electrolyser_data) {
 }
 /*ALCODEEND*/}
 
-double f_generateWindFarms()
+double f_createWindFarms()
 {/*ALCODESTART::1726584205791*/
 ConnectionOwner owner;
 GCEnergyProduction windfarm;
@@ -648,10 +651,10 @@ for (Windfarm_data dataWindfarm : c_windfarm_data) {
 
 		windfarm.set_p_gridConnectionID( dataWindfarm.gc_id() );
 		windfarm.set_p_name( dataWindfarm.gc_name() );
-		if(windfarm.p_gridConnectionID.equals("SLIDER_WF")){
-			windfarm.p_isSliderGC = true;
-		}
-		
+
+		//Check wether it can be changed using sliders
+		windfarm.p_isSliderGC = dataWindfarm.isSliderGC();
+	
 		//Grid capacity
 		windfarm.v_liveConnectionMetaData.physicalCapacity_kW = dataWindfarm.connection_capacity_kw();
 		if ( dataWindfarm.connection_capacity_kw() > 0 ) {
@@ -851,149 +854,11 @@ if (project_data.energy_supplier() != null && !project_data.energy_supplier().eq
 
 /*ALCODEEND*/}
 
-double f_setEngineProfiles()
-{/*ALCODESTART::1726584205797*/
-List<Double> argumentsList = genericProfiles_data.argumentsList();
-
-// Various demand profiles
-
-List<Double> houseEdemandList = genericProfiles_data.houseEdemandList();
-List<Double> houseHDHWdemandList = genericProfiles_data.houseHDHWdemandList();
-List<Double> buildingEdemandList = genericProfiles_data.buildingEdemandList();
-List<Double> buildingHeatDemandList = genericProfiles_data.buildingHeatDemandList();
-List<Double> industrySteelEdemandList = genericProfiles_data.industrySteelEdemandList();
-List<Double> industrySteelHdemandList = genericProfiles_data.industrySteelHdemandList();
-List<Double> industryOtherEdemandList = genericProfiles_data.industryOtherEdemandList();
-List<Double> industryOtherHdemandList = genericProfiles_data.industryOtherHdemandList();
-List<Double> logisticsFleetEdemandList = genericProfiles_data.logisticsFleetEdemandList();     
- 
-// Weather data
-List<Double> windList = genericProfiles_data.windList();
-List<Double> solarList = genericProfiles_data.solarList();
-List<Double> tempList = genericProfiles_data.tempList();
-List<Double> epexList = genericProfiles_data.epexList(); 
-
-double[] a_arguments = new double[argumentsList.size()];
-double[] a_windValues = new double[argumentsList.size()];
-double[] a_solarValues = new double[argumentsList.size()];
-double[] a_tempValues = new double[argumentsList.size()];
-double[] a_houseEdemand = new double[argumentsList.size()];
-double[] a_houseDHWdemand = new double[argumentsList.size()];
-double[] a_buildingEdemand = new double[argumentsList.size()];
-double[] a_buildingHeatDemand = new double[argumentsList.size()];
-double[] a_industrySteelEdemand = new double[argumentsList.size()];
-double[] a_industrySteelHdemand = new double[argumentsList.size()];
-double[] a_industryOtherEdemand = new double[argumentsList.size()];
-double[] a_industryOtherHdemand = new double[argumentsList.size()];
-double[] a_logisticsFleetEdemand = new double[argumentsList.size()];  
-double[] a_epexValues = new double[argumentsList.size()];
-            
-for(int i = 0; i < argumentsList.size(); i++) {
-       a_arguments[i] = argumentsList.get(i);
-       a_windValues[i] = windList.get(i);
-       a_solarValues[i] = solarList.get(i);
-       a_tempValues[i] = tempList.get(i);
-       a_houseEdemand[i] = houseEdemandList.get(i);
-       a_houseDHWdemand[i] = houseHDHWdemandList.get(i);
-       a_buildingEdemand[i] = buildingEdemandList.get(i);
-       a_buildingHeatDemand[i] = buildingHeatDemandList.get(i);
-       a_industrySteelEdemand[i] = industrySteelEdemandList.get(i);
-       a_industrySteelHdemand[i] = industrySteelHdemandList.get(i);
-       a_industryOtherEdemand[i] = industryOtherEdemandList.get(i);
-       a_industryOtherHdemand[i] = industryOtherHdemandList.get(i);
-       a_logisticsFleetEdemand[i] = logisticsFleetEdemandList.get(i);        
-       a_epexValues[i] = epexList.get(i);
-}
-
-
-J_ProfilePointer profilePointer;
-// 'ambient' conditions:
-energyModel.tf_ambientTemperature_degC.setArgumentsAndValues(a_arguments, a_tempValues);
-energyModel.tf_ambientTemperature_degC.setOutOfRangeAction(TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT);
-energyModel.tf_dayAheadElectricityPricing_eurpMWh.setArgumentsAndValues(a_arguments, a_epexValues);
-energyModel.tf_dayAheadElectricityPricing_eurpMWh.setOutOfRangeAction(TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT);
-profilePointer = new J_ProfilePointer("Day ahead electricity pricing [eur/MWh]", energyModel.tf_dayAheadElectricityPricing_eurpMWh);
-energyModel.f_addProfile(profilePointer);
-energyModel.pp_dayAheadElectricityPricing_eurpMWh = profilePointer;
-
-energyModel.tf_p_wind_e_normalized.setArgumentsAndValues(a_arguments, a_windValues);
-energyModel.tf_p_wind_e_normalized.setOutOfRangeAction(TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT);
-profilePointer = new J_ProfilePointer("normalized onshore wind production", energyModel.tf_p_wind_e_normalized);
-energyModel.f_addProfile(profilePointer);
-energyModel.pp_windOnshoreProduction = profilePointer;
-
-energyModel.tf_p_solar_e_normalized.setArgumentsAndValues(a_arguments, a_solarValues);
-energyModel.tf_p_solar_e_normalized.setOutOfRangeAction(TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT);
-profilePointer = new J_ProfilePointer("normalized_PV_production", energyModel.tf_p_solar_e_normalized);
-energyModel.f_addProfile(profilePointer);
-energyModel.pp_solarPVproduction = profilePointer;
-
-// Consumption profiles:
-
-//energyModel.tf_p_house_e_demand_other.setArgumentsAndValues(a_arguments, a_houseEdemand);
-TableFunction tf_p_house_e_demand_other = new TableFunction(a_arguments, a_houseEdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_ProfilePointer("house_other_electricity_demand", tf_p_house_e_demand_other);
-energyModel.f_addProfile(profilePointer);
-
-//energyModel.tf_p_house_h_demand_hot_water.setArgumentsAndValues(a_arguments, a_houseDHWdemand);
-TableFunction tf_p_house_h_demand_hot_water = new TableFunction(a_arguments, a_houseDHWdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_ProfilePointer("house_hot_water_demand", tf_p_house_h_demand_hot_water);
-energyModel.f_addProfile(profilePointer);
-
-//energyModel.tf_p_building_e_demand_other.setArgumentsAndValues(a_arguments, a_buildingEdemand);
-TableFunction tf_p_building_e_demand_other = new TableFunction(a_arguments, a_buildingEdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_ProfilePointer("Office_other_electricity", tf_p_building_e_demand_other);
-energyModel.f_addProfile(profilePointer);
-
-//energyModel.tf_p_building_h_demand.setArgumentsAndValues(a_arguments, a_buildingHeatDemand);
-TableFunction tf_p_building_h_demand = new TableFunction(a_arguments, a_buildingHeatDemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_ProfilePointer("Building_heat_demand", tf_p_building_h_demand);
-energyModel.f_addProfile(profilePointer);
-
-//energyModel.tf_p_industry_other_e_demand.setArgumentsAndValues(a_arguments, a_industryOtherEdemand);
-TableFunction tf_p_industry_other_e_demand = new TableFunction(a_arguments, a_industryOtherEdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_ProfilePointer("Industry_other_electricity", tf_p_industry_other_e_demand);
-energyModel.f_addProfile(profilePointer);
-
-//energyModel.tf_p_industry_other_h_demand.setArgumentsAndValues(a_arguments, a_industryOtherHdemand);
-TableFunction tf_p_industry_other_h_demand = new TableFunction(a_arguments, a_industryOtherHdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_ProfilePointer("Industry_other_heat", tf_p_industry_other_h_demand);
-energyModel.f_addProfile(profilePointer);
-
-//energyModel.tf_p_industry_steel_e_demand.setArgumentsAndValues(a_arguments, a_industrySteelEdemand);
-TableFunction tf_p_industry_steel_e_demand = new TableFunction(a_arguments, a_industrySteelEdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_ProfilePointer("Industry_steel_electricity", tf_p_industry_steel_e_demand);
-energyModel.f_addProfile(profilePointer);
-
-//energyModel.tf_p_industry_steel_h_demand.setArgumentsAndValues(a_arguments, a_industrySteelHdemand);
-TableFunction tf_p_industry_steel_h_demand = new TableFunction(a_arguments, a_industrySteelHdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_ProfilePointer("Industry_steel_heat", tf_p_industry_steel_h_demand);
-energyModel.f_addProfile(profilePointer);
-
-//energyModel.tf_p_logistics_fleet_e_hgv.setArgumentsAndValues(a_arguments, a_logisticsFleetEdemand);
-TableFunction tf_p_logistics_fleet_e_hgv = new TableFunction(a_arguments, a_logisticsFleetEdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_ProfilePointer("LOGISTICS_FLEET_HGV_E", tf_p_logistics_fleet_e_hgv);
-energyModel.f_addProfile(profilePointer);
-
-//
-double[] a_flatProfile = new double[a_arguments.length];
-for (int i = 0; i<a_arguments.length; i++){
-	a_flatProfile[i] = 1;
-}
-TableFunction tf_p_flat_profile = new TableFunction(a_arguments, a_flatProfile, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-profilePointer = new J_ProfilePointer("FLAT_PROFILE", tf_p_flat_profile);
-energyModel.f_addProfile(profilePointer);
-
-
-
-
-
-/*ALCODEEND*/}
-
 double f_createGenericCompanies()
 {/*ALCODESTART::1726584205799*/
 //Initialize variables
 List<GCUtility> generic_company_GCs = new ArrayList();
+HashMap<GridConnection, Double> map_GC_to_installedBuildingPV = new HashMap();
 
 //Loop over the remaining buildings in c_CompanyBuilding_data (Survey buildings have been removed from this collection)
 for (Building_data genericCompany : c_companyBuilding_data) {
@@ -1004,9 +869,10 @@ for (Building_data genericCompany : c_companyBuilding_data) {
 		//Create new companyGC
 		companyGC = energyModel.add_UtilityConnections();
 		
-		//Update counter and collection	 
+		//Update counter and collections
 		v_numberOfCompaniesNoSurvey++;
 		generic_company_GCs.add(companyGC);
+		map_GC_to_installedBuildingPV.put(companyGC, 0.0);
 		
 		//Set parameters for the Grid Connection
 		companyGC.p_gridConnectionID = genericCompany.address_id();
@@ -1075,6 +941,7 @@ for (Building_data genericCompany : c_companyBuilding_data) {
 		
 		companyGC.p_floorSurfaceArea_m2 += b.p_floorSurfaceArea_m2;
 		companyGC.p_roofSurfaceArea_m2 += b.p_roofSurfaceArea_m2;
+		map_GC_to_installedBuildingPV.put(companyGC, map_GC_to_installedBuildingPV.get(companyGC) + (genericCompany.pv_installed_kwp() != null ? genericCompany.pv_installed_kwp() : 0));
 		
 		//Style building
 		b.p_defaultFillColor = zero_Interface.v_companyBuildingColor;
@@ -1082,6 +949,18 @@ for (Building_data genericCompany : c_companyBuilding_data) {
 		zero_Interface.f_styleAreas(b);
 	}
 	else{// Connect with existing building
+		//Redistribute the PV installed
+		List<GridConnection> currentConnectedGCWithBuilding_notDetailed = findAll(existingBuilding.c_containedGridConnections, gc -> !gc.p_owner.p_detailedCompany);
+		int currentAmountOfConnectedGCWithBuilding_notDetailed = currentConnectedGCWithBuilding_notDetailed.size();
+
+		double buildingPV = genericCompany.pv_installed_kwp() != null ? genericCompany.pv_installed_kwp() : 0;
+		int i = 0;
+		for(GridConnection earlierConnectedGC : currentConnectedGCWithBuilding_notDetailed){
+			map_GC_to_installedBuildingPV.put(earlierConnectedGC, (map_GC_to_installedBuildingPV.get(earlierConnectedGC) - (buildingPV/currentAmountOfConnectedGCWithBuilding_notDetailed) + (buildingPV/(currentAmountOfConnectedGCWithBuilding_notDetailed+1))));	
+			i++;
+		}
+		map_GC_to_installedBuildingPV.put(companyGC, map_GC_to_installedBuildingPV.get(companyGC) + buildingPV/(currentAmountOfConnectedGCWithBuilding_notDetailed+1));
+		//Connect to the existing building
 		f_connectGCToExistingBuilding(companyGC, existingBuilding);
 	}
 }
@@ -1093,7 +972,7 @@ traceln("Number of companies created without survey: " + v_numberOfCompaniesNoSu
 for (GridConnection GCcompany : generic_company_GCs ) {
 	
 	//create the energy assets for each GC
-	f_iEAGenericCompanies(GCcompany);
+	f_iEAGenericCompanies(GCcompany, map_GC_to_installedBuildingPV.get(GCcompany));
 }
 /*ALCODEEND*/}
 
@@ -1284,12 +1163,7 @@ else{
 	heatDemand = new J_EAConsumption(parentGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, yearlyDemandHeat_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, null);
 	
 	//Calculate required thermal power
-	if(genericProfiles_data.buildingHeatDemandList_maximum() != null){
-		maxHeatOutputPower_kW = yearlyDemandHeat_kWh*genericProfiles_data.buildingHeatDemandList_maximum();
-	}
-	else{
-		maxHeatOutputPower_kW = yearlyDemandHeat_kWh / 8760 * 10;
-	}
+	maxHeatOutputPower_kW = yearlyDemandHeat_kWh*defaultProfiles_data.getDefaultBuildingHeatDemandProfileMaximum_fr();
 }
 
 
@@ -1338,14 +1212,14 @@ switch (asset_type){
 
 case PHOTOVOLTAIC: 
 	//asset_name = "Solar Panels";
-	profilePointer = energyModel.pp_solarPVproduction;
+	profilePointer = energyModel.pp_PVProduction35DegSouth_fr;
 	capacityElectric_kW = installedPower_kW;
 	//traceln("Installing PV for %s with power %s", parentGC.p_ownerID, capacityElectric_kW);
 	break;
 
 case WINDMILL:
 	//asset_name = "Windmill onshore";'
-	profilePointer=energyModel.pp_windOnshoreProduction;
+	profilePointer=energyModel.pp_windProduction_fr;
 	capacityElectric_kW = installedPower_kW;
 	break;
 
@@ -1399,7 +1273,7 @@ if (project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 	
 }
 else{
-	f_addHeatDemandProfile(house, jaarlijksGasVerbruik, false, 1, "Building_heat_demand");
+	f_addHeatDemandProfile(house, jaarlijksGasVerbruik, false, 1, "default_building_heat_demand_fr");
 }
 
 if( randomTrue ( 0.1 )){
@@ -1430,7 +1304,7 @@ try{
 	map_buildingData_Vallum = com.zenmo.vallum.PandKt.fetchBagPanden(surveys);
 }
 catch (Exception e){ //if api of bag is down, leave bag buildings empty and display error message
-	zero_Interface.f_setErrorScreen("BAG API is offline, het is mogelijk dat \n bepaalde panden niet zijn ingeladen!");
+	zero_Interface.f_setErrorScreen("BAG API is offline, het is mogelijk dat bepaalde panden niet zijn ingeladen!");
 }
 
 
@@ -1833,7 +1707,7 @@ switch (storageType){
 
 /*ALCODEEND*/}
 
-double f_iEAGenericCompanies(GridConnection companyGC)
+double f_iEAGenericCompanies(GridConnection companyGC,Double pv_installed_kwp)
 {/*ALCODESTART::1726584205833*/
 //Create current & future scenario parameter list
 J_scenario_Current current_scenario_list = new J_scenario_Current();
@@ -1849,10 +1723,10 @@ future_scenario_list.setParentAgent(companyGC);
 //Add current grid capacity to current (and future, feedin, physical, as no data on plans so assumption it is/stays the same) scenario list
 current_scenario_list.setCurrentContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
 future_scenario_list.setRequestedContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-current_scenario_list.setCurrentContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-future_scenario_list.setRequestedContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-current_scenario_list.setCurrentPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+current_scenario_list.setCurrentContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+future_scenario_list.setRequestedContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+current_scenario_list.setCurrentPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.physicalCapacity_kW);
+future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.physicalCapacity_kW);
 
 //Basic heating and electricity demand profiles
 if (companyGC.p_floorSurfaceArea_m2 > 0){
@@ -1863,7 +1737,7 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 		double yearlyElectricityDemand_kWh = Remaining_electricity_demand_kWh_p_m2_yr * companyGC.p_floorSurfaceArea_m2;
 		
 		//Add base load profile
-		f_addElectricityDemandProfile(companyGC, yearlyElectricityDemand_kWh, null, false, "Office_other_electricity");
+		f_addElectricityDemandProfile(companyGC, yearlyElectricityDemand_kWh, null, false, "default_office_electricity_demand_fr");
 	}
 	
 	if(v_remainingGasConsumption_m3 > 0){
@@ -1872,16 +1746,18 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 		double yearlyGasDemand_m3 = Remaining_gas_demand_m3_p_m2_yr*companyGC.p_floorSurfaceArea_m2;
 		double ratioGasUsedForHeating = 1;
 		//Add heat demand profile
-		f_addHeatDemandProfile(companyGC, yearlyGasDemand_m3, false, ratioGasUsedForHeating, "Building_heat_demand");
+		f_addHeatDemandProfile(companyGC, yearlyGasDemand_m3, false, ratioGasUsedForHeating, "default_building_heat_demand_fr");
 	}
 	//Set current scenario heating type
 	current_scenario_list.setCurrentHeatingType(companyGC.p_heatingType);
+	future_scenario_list.setPlannedHeatingType(companyGC.p_heatingType);
 }
 
 
 //Production asset (PV) ??????????????????????????????????????????? willen we die toevoegen aan generieke bedrijven?
-//f_addEnergyProduction(companyGC, OL_EnergyAssetType.PHOTOVOLTAIC, avgc_data.p_avgUtilityPVPower_kWp);
-
+if(pv_installed_kwp != null && pv_installed_kwp > 0){
+	f_addEnergyProduction(companyGC, OL_EnergyAssetType.PHOTOVOLTAIC, "Rooftop Solar", pv_installed_kwp);
+}
 
 
 //Battery with capacity 0 (initialize the slider)
@@ -1907,6 +1783,8 @@ if(v_remainingNumberOfCars > 0){
 	
 	//Set current scenario cars
 	current_scenario_list.setCurrentDieselCars(nbCars);
+	//Set planned scenario cars
+	future_scenario_list.setPlannedEVCars(0);
 }
 
 //Vans
@@ -1920,6 +1798,8 @@ if(v_remainingNumberOfVans > 0){
 	
 	//Set current scenario vans
 	current_scenario_list.setCurrentDieselVans(nbVans);
+	//Set planned scenario vans
+	future_scenario_list.setPlannedEVVans(0);
 }
 
 //Trucks
@@ -1933,6 +1813,8 @@ if (v_remainingNumberOfTrucks > 0){
 	
 	//Set current scenario trucks
 	current_scenario_list.setCurrentDieselTrucks(nbTrucks);
+	//Set planned scenario trucks
+	future_scenario_list.setPlannedEVTrucks(0);
 }
 /*ALCODEEND*/}
 
@@ -2489,7 +2371,7 @@ for (Building_data dataBuilding : scopedBuilding_data) {
 		jaarlijksElectriciteitsVerbruik = Double.valueOf(uniform_discr(5000, 10000)); // HARDCODED???
 		jaarlijksGasVerbruik =  Double.valueOf(uniform_discr(600, 2000)); //// HARDCODED?????
 	}
-	f_addElectricityDemandProfile(company, jaarlijksElectriciteitsVerbruik, null, false, "Office_other_electricity");
+	f_addElectricityDemandProfile(company, jaarlijksElectriciteitsVerbruik, null, false, "default_office_electricity_demand_fr");
 
 	i++;
 }	
@@ -2591,7 +2473,7 @@ if (yearlyElectricityProduction_kWh != null && yearlyElectricityFeedin_kWh != nu
 		//traceln("Estimating electricity consumption based on delivery and feedin profiles with pv power estimate for company %s with %s kWp PV", parentGC.p_gridConnectionID, pvPower_kW);
 		double addedConsumption_kWh = 0;
 		for (int i = 0; i < yearlyElectricityDelivery_kWh.length; i++) {
-			double pvPowerEstimate_kW = pvPower_kW * energyModel.tf_p_solar_e_normalized(v_simStartHour_h+i*0.25);
+			double pvPowerEstimate_kW = pvPower_kW * energyModel.pp_PVProduction35DegSouth_fr.getValue(v_simStartHour_h+i*0.25);
 			double estimatedConsumption_kWh = yearlyElectricityDelivery_kWh[i] + max(0, pvPowerEstimate_kW*0.25 - yearlyElectricityFeedin_kWh[i]);
 			addedConsumption_kWh += max(0, pvPowerEstimate_kW*0.25 - yearlyElectricityFeedin_kWh[i]);
 			yearlyElectricityConsumption_kWh[i] = max(0,estimatedConsumption_kWh);
@@ -2603,7 +2485,7 @@ if (yearlyElectricityProduction_kWh != null && yearlyElectricityFeedin_kWh != nu
 		double estimatedConsumption_kWh = 0;
 		double addedConsumption_kWh = 0;
 		for (int i = 0; i < yearlyElectricityDelivery_kWh.length; i++) {
-			pvPowerEstimate_kW = pvPower_kW * energyModel.tf_p_solar_e_normalized(v_simStartHour_h+i*0.25);
+			pvPowerEstimate_kW = pvPower_kW * energyModel.pp_PVProduction35DegSouth_fr.getValue(v_simStartHour_h+i*0.25);
 			
 			if (yearlyElectricityDelivery_kWh[i] != 0) { // Only update consumption if delivery is non-zero, otherwise hold previously estimated consumption constant
 				estimatedConsumption_kWh = yearlyElectricityDelivery_kWh[i] + pvPowerEstimate_kW*0.25;
@@ -2654,6 +2536,9 @@ traceln("");
 double startTime = System.currentTimeMillis();
 v_timeOfModelStart_ms = startTime;
 //v_hourOfYearStart= avgc_data.hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
+
+//Send avgc data to engine
+avgc_data.f_setAVGC_data();
 
 //Import excel data to the anylogic database
 f_importExcelTablesToDB();
@@ -3126,7 +3011,7 @@ if (gridConnection.getElectricity().getHasConnection()){
 	
 	
 	//Electricity consumption profile
-	String profileName = "Office_other_electricity";
+	String profileName = "default_office_electricity_demand_fr";
 	
 	//Check if quarter hourly values are available in vallum
 	boolean createdTimeSeriesAssets = f_createElectricityTimeSeriesAssets(companyGC, gridConnection);
@@ -3171,8 +3056,8 @@ if (gridConnection.getElectricity().getHasConnection()){
 				yearlyElectricityConsumption_kWh = avgc_data.p_avgCompanyElectricityConsumption_kWhpm2*companyGC.p_floorSurfaceArea_m2;
 				
 				//Check if it is within the contracted limits (peak should at least be 20% lower than contracted capacity
-				if(genericProfiles_data.buildingEdemandList_maximum() != null && yearlyElectricityConsumption_kWh*genericProfiles_data.buildingEdemandList_maximum() > 0.8*companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW){
-					yearlyElectricityConsumption_kWh = 0.8*companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW/genericProfiles_data.buildingEdemandList_maximum();
+				if(yearlyElectricityConsumption_kWh*defaultProfiles_data.getDefaultOfficeElectricityDemandProfileMaximum_fr() > 0.8*companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW){
+					yearlyElectricityConsumption_kWh = 0.8*companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW/defaultProfiles_data.getDefaultOfficeElectricityDemandProfileMaximum_fr();
 				}
 				 
 			}
@@ -3197,11 +3082,15 @@ if(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW == 0 && comp
 }
 		
 //Grid expansion request
-future_scenario_list.setRequestedContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
 if (gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() != null && gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator()){
 	future_scenario_list.setRequestedContractDeliveryCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-	future_scenario_list.setRequestedContractFeedinCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-	future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+	future_scenario_list.setRequestedContractFeedinCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+	future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(max(companyGC.v_liveConnectionMetaData.physicalCapacity_kW, max(future_scenario_list.getRequestedContractDeliveryCapacity_kW(), future_scenario_list.getRequestedContractFeedinCapacity_kW())));
+}
+else{
+	future_scenario_list.setRequestedContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+	future_scenario_list.setRequestedContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+	future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.physicalCapacity_kW);
 }
 
 
@@ -3247,16 +3136,22 @@ if (gridConnection.getSupply().getHasSupply() != null && gridConnection.getSuppl
 }
 
 //Planned supply (PV)
-if (gridConnection.getSupply().getPvPlanned() != null && gridConnection.getSupply().getPvPlanned()){ 
-	future_scenario_list.setPlannedPV_kW(gridConnection.getSupply().getPvPlannedKwp()); 
+if (gridConnection.getSupply().getPvPlanned() != null && gridConnection.getSupply().getPvPlanned()){
+	future_scenario_list.setPlannedPV_kW(current_scenario_list.getCurrentPV_kW() + (gridConnection.getSupply().getPvPlannedKwp() != null ? gridConnection.getSupply().getPvPlannedKwp() : 0)); 
 	future_scenario_list.setPlannedPV_year(gridConnection.getSupply().getPvPlannedYear());
 	//gridConnection.getSupply().getPvPlannedOrientation();
+}
+else{
+	future_scenario_list.setPlannedPV_kW(current_scenario_list.getCurrentPV_kW());
 }
 
 //Planned supply (Wind)
 if (gridConnection.getSupply().getWindPlannedKw() != null && gridConnection.getSupply().getWindPlannedKw() > 0){
-	future_scenario_list.setPlannedWind_kW(gridConnection.getSupply().getWindPlannedKw());
+	future_scenario_list.setPlannedWind_kW(current_scenario_list.getCurrentWind_kW() + (gridConnection.getSupply().getWindPlannedKw() != null ? gridConnection.getSupply().getWindPlannedKw() : 0));
 	// plannedWind_year // ???
+}
+else{
+	future_scenario_list.setPlannedWind_kW(current_scenario_list.getCurrentWind_kW());
 }
 
 
@@ -3269,7 +3164,7 @@ boolean hasHourlyGasData = false;
 boolean hasGasTimeSeriesInZorm = false;
 double yearlyGasConsumption_m3 = 0;
 double ratioGasUsedForHeating = 1;
-String heatProfileName = "Building_heat_demand";
+String heatProfileName = "default_building_heat_demand_fr";
 
 if (gridConnection.getNaturalGas().getHasConnection() != null && gridConnection.getNaturalGas().getHasConnection()){
 	
@@ -3309,12 +3204,19 @@ if(!hasGasTimeSeriesInZorm){ // If there is gas data, heating assets have alread
 		//Dont create additional Electric heating assets on top of Electricity profile
 	}
 	else{
+		// Intermediate solution, if no gas demand check if district heating consumption, ifso: convert heat demand into gas, which will then be converted back to heat again while making the profile.
+		if(yearlyGasConsumption_m3 == 0 && companyGC.p_heatingType == OL_GridConnectionHeatingType.DISTRICTHEAT){ 			
+			yearlyGasConsumption_m3 = gridConnection.getHeat().getAnnualDistrictHeatingDelivery_GJ()*277.777778 / avgc_data.p_gas_kWhpm3;
+			traceln("Heatgrid consumption detected equal to: " + yearlyGasConsumption_m3 + " [m3] of gas");
+		}
+		
 		f_addHeatDemandProfile(companyGC, yearlyGasConsumption_m3, hasHourlyGasData, ratioGasUsedForHeating, heatProfileName);
 	}
 }
 
-//add heating type to scenario: current
+//add heating type to scenario: current and future
 current_scenario_list.setCurrentHeatingType(companyGC.p_heatingType);
+future_scenario_list.setPlannedHeatingType(companyGC.p_heatingType);
 
 
 
@@ -3338,8 +3240,9 @@ companyGC.p_batteryOperationMode = OL_BatteryOperationMode.BALANCE;
 //Aansturing toevoegen ?
 
 //add to scenario: current
-current_scenario_list.setCurrentBatteryPower_kW(battery_power_kW);
 current_scenario_list.setCurrentBatteryCapacity_kWh(battery_capacity_kWh);
+current_scenario_list.setCurrentBatteryPower_kW(battery_power_kW);
+
 	
 	
 if (gridConnection.getStorage().getHasThermalStorage() != null && gridConnection.getStorage().getHasThermalStorage()){ // Check for thermal storage
@@ -3350,10 +3253,13 @@ if (gridConnection.getStorage().getHasThermalStorage() != null && gridConnection
 }
 
 if (gridConnection.getStorage().getHasPlannedBattery() != null && gridConnection.getStorage().getHasPlannedBattery()){ // Check for planned battery
-	future_scenario_list.setPlannedBatteryCapacity_kWh(gridConnection.getStorage().getPlannedBatteryCapacityKwh());
-	future_scenario_list.setPlannedBatteryPower_kW(gridConnection.getStorage().getPlannedBatteryPowerKw());
+	future_scenario_list.setPlannedBatteryCapacity_kWh((gridConnection.getStorage().getPlannedBatteryCapacityKwh() != null ? gridConnection.getStorage().getPlannedBatteryCapacityKwh() : 0) + current_scenario_list.getCurrentBatteryCapacity_kWh());
+	future_scenario_list.setPlannedBatteryPower_kW((gridConnection.getStorage().getPlannedBatteryPowerKw() != null ? gridConnection.getStorage().getPlannedBatteryPowerKw() : 0) + current_scenario_list.getCurrentBatteryPower_kW());
 }
-
+else{
+future_scenario_list.setPlannedBatteryCapacity_kWh(current_scenario_list.getCurrentBatteryCapacity_kWh());
+future_scenario_list.setPlannedBatteryPower_kW(current_scenario_list.getCurrentBatteryPower_kW());
+}
 
 
 
@@ -3391,6 +3297,10 @@ if (nbDailyCarCommuters_notNull + nbDailyCarVisitors_notNull > 0){
 	//add to scenario: current
 	current_scenario_list.setCurrentEVCars(nbEVCarsComute);
 	current_scenario_list.setCurrentDieselCars(nbDieselCarsComute);
+	
+	//Initialize future cars
+	future_scenario_list.setPlannedEVCars(current_scenario_list.getCurrentEVCars());
+
 }
 
 
@@ -3446,8 +3356,8 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		current_scenario_list.setCurrentDieselCars(((current_scenario_list.getCurrentDieselCars() != null) ? current_scenario_list.getCurrentDieselCars() : 0) + nbDieselCars);
 		current_scenario_list.setCurrentEVCarChargePower_kW(maxChargingPower_kW);
 		
-		//Planned
-		future_scenario_list.setPlannedEVCars((gridConnection.getTransport().getCars().getNumPlannedElectricCars() != null) ? gridConnection.getTransport().getCars().getNumPlannedElectricCars() : 0);
+		//Update Planned cars
+		future_scenario_list.setPlannedEVCars((gridConnection.getTransport().getCars().getNumPlannedElectricCars() != null ? gridConnection.getTransport().getCars().getNumPlannedElectricCars() : 0) + current_scenario_list.getCurrentEVCars());
 		future_scenario_list.setPlannedHydrogenCars((gridConnection.getTransport().getCars().getNumPlannedHydrogenCars() != null) ? gridConnection.getTransport().getCars().getNumPlannedHydrogenCars() : 0);
 		
 	}
@@ -3502,7 +3412,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		current_scenario_list.setCurrentEVVanChargePower_kW(maxChargingPower_kW);
 		
 		//Planned
-		future_scenario_list.setPlannedEVVans((gridConnection.getTransport().getVans().getNumPlannedElectricVans() != null) ? gridConnection.getTransport().getVans().getNumPlannedElectricVans() : 0);
+		future_scenario_list.setPlannedEVVans((gridConnection.getTransport().getVans().getNumPlannedElectricVans() != null ? gridConnection.getTransport().getVans().getNumPlannedElectricVans() : 0) + current_scenario_list.getCurrentEVVans());
 		future_scenario_list.setPlannedHydrogenVans((gridConnection.getTransport().getVans().getNumPlannedHydrogenVans() != null) ? gridConnection.getTransport().getVans().getNumPlannedHydrogenVans() : 0);
 	}
 	
@@ -3558,7 +3468,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		current_scenario_list.setCurrentEVTruckChargePower_kW(maxChargingPower_kW);
 		
 		//Planned
-		future_scenario_list.setPlannedEVTrucks((gridConnection.getTransport().getTrucks().getNumPlannedElectricTrucks() != null) ? gridConnection.getTransport().getTrucks().getNumPlannedElectricTrucks() : 0);
+		future_scenario_list.setPlannedEVTrucks((gridConnection.getTransport().getTrucks().getNumPlannedElectricTrucks() != null ? gridConnection.getTransport().getTrucks().getNumPlannedElectricTrucks() : 0) + current_scenario_list.getCurrentEVTrucks());
 		future_scenario_list.setPlannedHydrogenTrucks((gridConnection.getTransport().getTrucks().getNumPlannedHydrogenTrucks() != null) ? gridConnection.getTransport().getTrucks().getNumPlannedHydrogenTrucks() : 0);
 	}
 	
@@ -3614,8 +3524,13 @@ if (numTractors > 0 && annualDiesel_L <= 0.0) {
     throw new RuntimeException("Tractor diesel usage missing for " + companyGridConnection.p_gridConnectionID);
 }
 
+CustomProfile_data tractorProfile = findFirst(c_customProfiles_data, profile -> profile.customProfileID().equals("TractorProfile")); ///????
+
 for (int i = 0; i < numTractors; i++) {
-    new J_EADieselTractor(companyGridConnection, annualDiesel_L / numTractors, customProfiles_data.getValuesArray(), energyModel.p_timeStep_h);
+	if(tractorProfile == null){
+		throw new RuntimeException("Trying to make a tractor, without having loaded in a tractor profile for GC: " + companyGridConnection.p_gridConnectionID);
+	}
+    new J_EADieselTractor(companyGridConnection, annualDiesel_L / numTractors, tractorProfile.getValuesArray(), energyModel.p_timeStep_h);
 }
 /*ALCODEEND*/}
 
@@ -3795,7 +3710,7 @@ switch (heatAssetType){ // HOE gaan we om met meerdere heating types in survey??
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
 		
-		J_EAConversionHeatPump heatPumpElectric = new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );		
+		new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );		
 		break;
 	
 	case GASFIRED_CHPPEAK:
@@ -3804,12 +3719,226 @@ switch (heatAssetType){ // HOE gaan we om met meerdere heating types in survey??
 		outputTemperature_degC = avgc_data.p_avgOutputTemperatureCHP_degC;
 		efficiency = avgc_data.p_avgEfficiencyCHP_thermal_fr + avgc_data.p_avgEfficiencyCHP_electric_fr;
 		
-		J_EAConversionGasCHP methaneCHP = new J_EAConversionGasCHP(parentGC, outputCapacityElectric_kW, maxHeatOutputPower_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC );
+		new J_EAConversionGasCHP(parentGC, outputCapacityElectric_kW, maxHeatOutputPower_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC );
 		break;
-	
+
+	case DISTRICTHEAT:
+		
+		outputTemperature_degC = avgc_data.p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
+		efficiency = avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr;
+		
+		new J_EAConversionHeatDeliverySet(parentGC, maxHeatOutputPower_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC);
+		
+		//Add GC to heat grid
+		GridNode heatgrid = findFirst(energyModel.pop_gridNodes, node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
+		if(heatgrid == null){
+			heatgrid = f_createHeatGridNode();
+		}
+		parentGC.p_parentNodeHeatID = heatgrid.p_gridNodeID;
+			
+		break;
+
 	default:
 		traceln("HEATING TYPE NOT FOUND FOR GC ");
 		traceln(parentGC);
+}
+/*ALCODEEND*/}
+
+GridNode f_createHeatGridNode()
+{/*ALCODESTART::1747300761144*/
+GridNode GN_heat = energyModel.add_pop_gridNodes();
+GN_heat.p_gridNodeID = "Heatgrid";
+
+// Check wether transformer capacity is known or estimated
+GN_heat.p_capacity_kW = 1000000;	
+GN_heat.p_realCapacityAvailable = false;
+
+// Basic GN information
+GN_heat.p_description = "Warmtenet";
+
+/*
+//Owner
+GN_heat.p_ownerGridOperator = Grid_Operator;
+*/
+
+//Define node type
+GN_heat.p_nodeType = OL_GridNodeType.HT;
+GN_heat.p_energyCarrier = OL_EnergyCarriers.HEAT;
+
+//Define GN location
+GN_heat.p_latitude = 0;
+GN_heat.p_longitude = 0;
+GN_heat.setLatLon(GN_heat.p_latitude, GN_heat.p_longitude);
+
+//Create gis region
+/*
+GN.gisRegion = zero_Interface.f_createGISObject(f_createGISNodesTokens(GN));
+zero_Interface.f_styleGridNodes(GN);
+zero_Interface.c_GISNodes.add(GN.gisRegion);
+*/
+
+return GN_heat;
+/*ALCODEEND*/}
+
+double f_addSliderSolarfarm(String gridNodeID)
+{/*ALCODESTART::1747829476305*/
+c_solarfarm_data.add(0, Solarfarm_data.builder().
+isSliderGC(true).
+
+gc_id("Slider solarfarm").
+gc_name("Slider solarfarm").
+owner_id("Slider solarfarm owner").
+streetname(null).
+house_number(null).
+house_letter(null).
+house_addition(null).
+postalcode(null).
+city(null).
+gridnode_id(gridNodeID).
+initially_active(false).
+
+capacity_electric_kw(0.0).
+connection_capacity_kw(0.0).
+contracted_delivery_capacity_kw(0.0).
+contracted_feed_in_capacity_kw(0.0).
+
+latitude(0).
+longitude(0).
+polygon(null).
+build());
+/*ALCODEEND*/}
+
+double f_addSliderWindfarm(String gridNodeID)
+{/*ALCODESTART::1747829476307*/
+c_windfarm_data.add(0, Windfarm_data.builder().
+isSliderGC(true).
+
+gc_id("Slider windfarm").
+gc_name("Slider windfarm").
+owner_id("Slider windfarm owner").
+streetname(null).
+house_number(null).
+house_letter(null).
+house_addition(null).
+postalcode(null).
+city(null).
+gridnode_id(gridNodeID).
+initially_active(false).
+
+capacity_electric_kw(0.0).
+connection_capacity_kw(0.0).
+contracted_delivery_capacity_kw(0.0).
+contracted_feed_in_capacity_kw(0.0).
+
+latitude(0).
+longitude(0).
+polygon(null).
+build());
+
+/*ALCODEEND*/}
+
+double f_addSliderBattery(String gridNodeID)
+{/*ALCODESTART::1747829476311*/
+c_battery_data.add(0, Battery_data.builder().
+isSliderGC(true).
+
+gc_id("Slider battery").
+gc_name("Slider battery").
+owner_id("Slider battery owner").
+streetname(null).
+house_number(null).
+house_letter(null).
+house_addition(null).
+postalcode(null).
+city(null).
+gridnode_id(gridNodeID).
+initially_active(false).
+
+capacity_electric_kw(0.0).
+connection_capacity_kw(0.0).
+contracted_delivery_capacity_kw(0.0).
+contracted_feed_in_capacity_kw(0.0).
+
+storage_capacity_kwh(0.0).
+default_operation_mode("BALANCE").
+latitude(0).
+longitude(0).
+polygon(null).
+build());
+/*ALCODEEND*/}
+
+double f_initializeSpecificSliderGC()
+{/*ALCODESTART::1747830228830*/
+//Create slider GC data packages for assetGC that do not have a sliderGC data package yet 
+Solarfarm_data sliderSolarfarm_data = findFirst(c_solarfarm_data, sf_data -> sf_data.isSliderGC());
+Windfarm_data sliderWindfarm_data = findFirst(c_windfarm_data, wf_data -> wf_data.isSliderGC());
+Battery_data sliderBattery_data = findFirst(c_battery_data, bat_data -> bat_data.isSliderGC());
+
+//Get top gridnode id
+GridNode_data topGridNode = findFirst(c_gridNode_data, node_data -> node_data.type().equals("HVMV"));
+if ( topGridNode == null ) {
+	throw new RuntimeException("Unable to find top GridNode of type HVMV to create slider assets.");
+}
+String topGridNodeID = topGridNode.gridnode_id();
+
+
+if(sliderSolarfarm_data == null){
+	f_addSliderSolarfarm(topGridNodeID);
+}
+if(sliderWindfarm_data == null){
+	f_addSliderWindfarm(topGridNodeID);
+}
+if(sliderBattery_data == null){
+	f_addSliderBattery(topGridNodeID);
+}
+/*ALCODEEND*/}
+
+J_ProfilePointer f_createEngineProfile(String profileID,double[] arguments,double[] values)
+{/*ALCODESTART::1749125189323*/
+TableFunction tf_profile = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+J_ProfilePointer profilePointer = new J_ProfilePointer(profileID, tf_profile);
+energyModel.f_addProfile(profilePointer);
+return profilePointer;
+/*ALCODEEND*/}
+
+double f_setEngineProfiles()
+{/*ALCODESTART::1749138089965*/
+//Profile Arguments
+double[] a_arguments_hr = ListUtil.doubleListToArray(defaultProfiles_data.arguments_hr());
+
+//Weather data
+double[] a_ambientTemperatureProfile_degC = ListUtil.doubleListToArray(defaultProfiles_data.ambientTemperatureProfile_degC());
+double[] a_PVProductionProfile35DegSouth_fr = ListUtil.doubleListToArray(defaultProfiles_data.PVProductionProfile35DegSouth_fr());
+double[] a_PVProductionProfile15DegEastWest_fr = ListUtil.doubleListToArray(defaultProfiles_data.PVProductionProfile15DegEastWest_fr());
+double[] a_windProductionProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.windProductionProfile_fr());
+
+//EPEX data
+double[] a_epexProfile_eurpMWh = ListUtil.doubleListToArray(defaultProfiles_data.epexProfile_eurpMWh()); 
+
+//Various demand data
+double[] a_defaultHouseElectricityDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultHouseElectricityDemandProfile_fr());
+double[] a_defaultHouseHotWaterDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultHouseHotWaterDemandProfile_fr());
+double[] a_defaultOfficeElectricityDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultOfficeElectricityDemandProfile_fr());
+double[] a_defaultBuildingHeatDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultBuildingHeatDemandProfile_fr());
+
+//Create Weather engine profiles
+energyModel.pp_ambientTemperature_degC = f_createEngineProfile("ambient_temperature_degC", a_arguments_hr, a_ambientTemperatureProfile_degC);
+energyModel.pp_PVProduction35DegSouth_fr = f_createEngineProfile("pv_production_south_fr", a_arguments_hr, a_PVProductionProfile35DegSouth_fr);
+energyModel.pp_PVProduction15DegEastWest_fr = f_createEngineProfile("pv_production_eastwest_fr", a_arguments_hr, a_PVProductionProfile15DegEastWest_fr);
+energyModel.pp_windProduction_fr = f_createEngineProfile("wind_production_fr", a_arguments_hr, a_windProductionProfile_fr);
+
+//Create Epex engine profile
+energyModel.pp_dayAheadElectricityPricing_eurpMWh = f_createEngineProfile("epex_price_eurpMWh", a_arguments_hr, a_epexProfile_eurpMWh);
+
+//Create Consumption engine profiles:
+f_createEngineProfile("default_house_electricity_demand_fr", a_arguments_hr, a_defaultHouseElectricityDemandProfile_fr);
+f_createEngineProfile("default_house_hot_water_demand_fr", a_arguments_hr, a_defaultHouseHotWaterDemandProfile_fr);
+f_createEngineProfile("default_office_electricity_demand_fr", a_arguments_hr, a_defaultOfficeElectricityDemandProfile_fr);
+f_createEngineProfile("default_building_heat_demand_fr", a_arguments_hr, a_defaultBuildingHeatDemandProfile_fr);
+
+//Create custom engine profiles
+for(CustomProfile_data customProfile : c_customProfiles_data){
+	f_createEngineProfile(customProfile.customProfileID(), customProfile.getArgumentsArray(), customProfile.getValuesArray());
 }
 /*ALCODEEND*/}
 

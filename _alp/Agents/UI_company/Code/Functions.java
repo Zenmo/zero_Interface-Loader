@@ -7,11 +7,11 @@ rb_scenariosPrivateUI.setValue(2, false);
 ////Heating
 
 //Heating savings
-sl_heatDemandCompanyReduction.setValue(0, true);
+sl_heatDemandCompanyReduction.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHeatSavings(), true);
 
 //Heating type (aangenomen dat het hetzelfde blijft, want hebben geen vraag die dat stelt in het formulier)
 int nr_currentHeatingType = 0;
-switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingType()){
+switch (c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHeatingType()){
 	case GASBURNER:
 		nr_currentHeatingType = 0;
 		break;
@@ -24,7 +24,8 @@ switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingT
 		nr_currentHeatingType = 2;
 		break;
 		
-	case HYDROGENBURNER:
+	//case HYDROGENBURNER:
+	case DISTRICTHEAT:
 		nr_currentHeatingType = 3;
 		break;
 
@@ -44,47 +45,45 @@ rb_heatingTypePrivateUI.setValue(nr_currentHeatingType, true);
 ////Electricity
 
 //Electricity savings
-sl_electricityDemandCompanyReduction.setValue(0, true);
+sl_electricityDemandCompanyReduction.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedElectricitySavings(), true);
 
 //Connection capacity (Delivery)
 sl_GCCapacityCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getRequestedContractDeliveryCapacity_kW(), true);
 
 //Connection capacity (Feedin)
-//sl_GCCapacityCompany_Feedin.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getRequestedContractFeedinCapacity_kW(), true); DOES NOT EXIST FOR NOW, TAKE SAME AS CURRENT
-sl_GCCapacityCompany_Feedin.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractFeedinCapacity_kW(), true);
+sl_GCCapacityCompany_Feedin.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getRequestedContractFeedinCapacity_kW(), true);
+
+//Connection capacity (Physical)
+v_physicalConnectionCapacity_kW = c_scenarioSettings_Future.get(v_currentSelectedGCnr).getRequestedPhysicalConnectionCapacity_kW();
+c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.physicalCapacity_kW = v_physicalConnectionCapacity_kW;
 
 //Solar panel power
-sl_rooftopPVCompany.setValue(v_minPVSlider + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedPV_kW(), true);
+sl_rooftopPVCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedPV_kW(), true);
 
 //Battery capacity
 sl_batteryCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedBatteryCapacity_kWh(), true);
 
 //Curtailment setting
-cb_curtailmentCompany.setSelected(false, false);
+cb_curtailmentCompany.setSelected(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedCurtailment(), true);
 
 ////Mobility
 
 //Mobility savings
-sl_mobilityDemandCompanyReduction.setValue(0, true);
+sl_mobilityDemandCompanyReduction.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedTransportSavings(), true);
 
 //Cars (VOLGORDE BELANGRIJK)
-//sl_electricCarsCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVCars() + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVCars(), true);
-sl_hydrogenCarsCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenCars() + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHydrogenCars(), true);
-sl_electricCarsCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVCars() + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVCars(), true);
-
+sl_hydrogenCarsCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHydrogenCars(), true);
+sl_electricCarsCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVCars(), true);
 //sl_dieselCarsCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedDieselCars(), true);
 
 //Vans (VOLGORDE BELANGRIJK)
-sl_hydrogenVansCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenVans() + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHydrogenVans(), true);
-sl_electricVansCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVVans() + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVVans(), true);
-//sl_hydrogenVansCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenVans() + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHydrogenVans(), true);
+sl_hydrogenVansCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHydrogenVans(), true);
+sl_electricVansCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVVans(), true);
 //sl_dieselVansCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedDieselVans(), true);
 
 //Trucks (VOLGORDE BELANGRIJK)
-//sl_electricTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVTrucks() + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVTrucks(), true);
-sl_hydrogenTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenTrucks() + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHydrogenTrucks(), true);
-sl_electricTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVTrucks() + c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVTrucks(), true);
-
+sl_hydrogenTrucksCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHydrogenTrucks(), true);
+sl_electricTrucksCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVTrucks(), true);
 //sl_dieselTrucksCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedDieselTrucks(), true);
 
 //set active if active in future
@@ -171,7 +170,8 @@ switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingT
 		nr_currentHeatingType = 2;
 		break;
 		
-	case HYDROGENBURNER:
+	//case HYDROGENBURNER:
+	case DISTRICTHEAT:
 		nr_currentHeatingType = 3;
 		break;
 	
@@ -199,6 +199,10 @@ sl_GCCapacityCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGC
 //Connection capacity (Feedin)
 sl_GCCapacityCompany_Feedin.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractFeedinCapacity_kW(), true);
 
+//Connection capacity (Physical)
+v_physicalConnectionCapacity_kW = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentPhysicalConnectionCapacity_kW();
+c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.physicalCapacity_kW = v_physicalConnectionCapacity_kW;
+
 //Solar panel power
 sl_rooftopPVCompany.setValue(v_minPVSlider, true);
 
@@ -216,19 +220,16 @@ sl_mobilityDemandCompanyReduction.setValue(0, true);
 //Cars (VOLGORDE BELANGRIJK)
 sl_hydrogenCarsCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenCars(), true);
 sl_electricCarsCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVCars(), true);
-//sl_hydrogenCarsCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenCars(), true);
 //sl_dieselCarsCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentDieselCars(), true);
 
-//Vans
+//Vans (VOLGORDE BELANGRIJK)
 sl_hydrogenVansCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenVans(), true);
 sl_electricVansCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVVans(), true);
-//sl_hydrogenVansCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenVans(), true);
 //sl_dieselVansCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentDieselVans(), true);
 
-//Trucks
+//Trucks (VOLGORDE BELANGRIJK)
 sl_hydrogenTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenTrucks(), true);
 sl_electricTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVTrucks(), true);
-//sl_hydrogenTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenTrucks(), true);
 //sl_dieselTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentDieselTrucks(), true);
 
 //set active if active in present
@@ -246,6 +247,9 @@ if (GC.p_heatingType == selectedHeatingType){
 	return;
 }
 
+//Remove from heat grid if it was connected to one.
+GC.p_parentNodeHeat = null;
+GC.p_parentNodeHeatID = null;
 
 //Remove primary heating asset
 J_EA primaryHeatingAsset = GC.p_primaryHeatingAsset;
@@ -310,7 +314,7 @@ switch (selectedHeatingType){
 		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner;
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC;
 		
-		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
+		new J_EAConversionGasBurner(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
 		
 		break;
 	
@@ -346,7 +350,7 @@ switch (selectedHeatingType){
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
 		
-		J_EAConversionHeatPump heatPumpElectric = new J_EAConversionHeatPump(GC, capacityElectric_kW, efficiency, timestep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );	
+		new J_EAConversionHeatPump(GC, capacityElectric_kW, efficiency, timestep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );	
 		
 		//Add secondary heating asset (if needed??)		//E-boiler!!??		
 		break;
@@ -357,8 +361,46 @@ switch (selectedHeatingType){
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHydrogenBurner_degC;
 	    
 		//Add primary heating asset (hydrogenburner)
-		J_EAConversionHydrogenBurner hydrogenBurner = new J_EAConversionHydrogenBurner(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
+		new J_EAConversionHydrogenBurner(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
 		
+		break;
+	
+	case DISTRICTHEAT:
+
+		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr;
+		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
+				
+		new J_EAConversionHeatDeliverySet(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
+		
+		//Add GC to heat grid if it exists, else create new one
+		GC.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getGridNodesTopLevel(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
+		if(GC.p_parentNodeHeat == null){
+			GridNode GN_heat = zero_Interface.energyModel.add_pop_gridNodes();
+			GN_heat.p_gridNodeID = "Heatgrid";
+			
+			// Check wether transformer capacity is known or estimated
+			GN_heat.p_capacity_kW = 1000000;	
+			GN_heat.p_realCapacityAvailable = false;
+			
+			// Basic GN information
+			GN_heat.p_description = "Warmtenet";
+
+			//Define node type
+			GN_heat.p_nodeType = OL_GridNodeType.HT;
+			GN_heat.p_energyCarrier = OL_EnergyCarriers.HEAT;
+			
+			//Define GN location
+			GN_heat.p_latitude = 0;
+			GN_heat.p_longitude = 0;
+			GN_heat.setLatLon(GN_heat.p_latitude, GN_heat.p_longitude);
+			
+			//Connect
+			GC.p_parentNodeHeat = GN_heat;
+			
+			//Show warning that heat grid is not a simple solution
+			f_setErrorScreen("LET OP: Er is nu een 'warmtenet' gecreerd. Maar er is geen warmtebron aanwezig in het model. Daarom zal de benodigde warmte voor het warmtenet in de resultaten te zien zijn als warmte import.");
+		}
+		GC.p_parentNodeHeatID = GC.p_parentNodeHeat.p_gridNodeID;
 		break;
 	
 	case GASFIRED_CHPPEAK:
@@ -367,7 +409,7 @@ switch (selectedHeatingType){
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureCHP_degC;
 		double outputCapacityElectric_kW = (capacityThermal_kW/zero_Interface.energyModel.avgc_data.p_avgEfficiencyCHP_thermal_fr) * zero_Interface.energyModel.avgc_data.p_avgEfficiencyCHP_electric_fr;
 		
-		J_EAConversionGasCHP methaneCHP = new J_EAConversionGasCHP(GC, outputCapacityElectric_kW, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC );
+		new J_EAConversionGasCHP(GC, outputCapacityElectric_kW, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC );
 			
 		break;
 }
@@ -1472,7 +1514,8 @@ switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingT
 		rbHeating_acces = "disabled";
 		break;
 		
-	case HYDROGENBURNER:
+	//case HYDROGENBURNER:
+	case DISTRICTHEAT:
 		nr_currentHeatingType = 3;
 		break;
 	
@@ -1523,7 +1566,7 @@ double timestep_h 					= zero_Interface.energyModel.p_timeStep_h;
 double outputTemperature_degC 		= 0;
 parentGC.v_liveAssetsMetaData.hasPV = true;
 
-J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, capacityElectric_kW , capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, timestep_h, outputTemperature_degC, zero_Interface.energyModel.pp_solarPVproduction);
+J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, capacityElectric_kW , capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, timestep_h, outputTemperature_degC, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr);
 
 
 /*ALCODEEND*/}
@@ -1908,5 +1951,35 @@ sl_dieselTrucksCompany.setEnabled(enable);
 
 //Set heating rb to correct setting (no matter what input of this function is)
 f_setHeatingRB();
+/*ALCODEEND*/}
+
+double f_setErrorScreen(String errorMessage)
+{/*ALCODESTART::1747316158336*/
+//Reset location and height
+button_errorOK.setY(50);
+rect_errorMessage.setY(-120);
+rect_errorMessage.setHeight(200);
+t_errorMessage.setY(-70);
+
+//Set position above all other things
+presentation.remove(gr_errorScreen);
+presentation.insert(presentation.size(), gr_errorScreen);
+
+int width_numberOfCharacters = 44;
+
+// Set Text
+Pair<String, Integer> p = zero_Interface.v_infoText.restrictWidth(errorMessage, width_numberOfCharacters);
+errorMessage = p.getFirst();
+int numberOfLines = p.getSecond();
+int additionalLines = max(0, numberOfLines - 3);
+
+// Set Size
+rect_errorMessage.setHeight(rect_errorMessage.getHeight() + additionalLines * 40);
+rect_errorMessage.setY(rect_errorMessage.getY() - 40 * additionalLines);
+//button_errorOK.setY(button_errorOK.getY() - 10 * additionalLines);
+t_errorMessage.setY(t_errorMessage.getY() - 40 * additionalLines);
+
+t_errorMessage.setText(errorMessage);
+gr_errorScreen.setVisible(true);
 /*ALCODEEND*/}
 

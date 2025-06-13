@@ -7,7 +7,7 @@ v_timeStepsElapsed ++;
 // This function colors the trafos according to the amount of congestion. (maybe move this function call somewhere else?)
 if ( b_updateCongestionColors ){
 	for (GridNode gn : energyModel.pop_gridNodes) {
-		if (v_clickedObjectType != OL_GISObjectType.GRIDNODE || v_clickedGridNode != gn) {
+		if ((v_clickedObjectType != OL_GISObjectType.GRIDNODE || v_clickedGridNode != gn) && gn.p_energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 			f_setGridNodeCongestionColor( gn );
 		}
 	}

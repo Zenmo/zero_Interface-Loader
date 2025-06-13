@@ -8,12 +8,17 @@ public class J_scenario_Future implements Serializable {
 	private Double requestedContractDeliveryCapacity_kW = 0.0;
 	private Double requestedContractFeedinCapacity_kW = 0.0;
 	private Double requestedPhysicalConnectionCapacity_kW = 0.0;
+	private double plannedHeatSavings = 0;
+	private OL_GridConnectionHeatingType plannedHeatingType = OL_GridConnectionHeatingType.NONE;
+	private double plannedElectricitySavings = 0;
+	private boolean plannedCurtailment = false;
 	private Integer plannedPV_kW = 0;
 	private Integer plannedPV_year;
 	private Float plannedWind_kW = 0f;
 	private Float plannedBatteryPower_kW = 0f;
 	private Float plannedBatteryCapacity_kWh = 0f;
 	//Integer plannedWind_year;
+	private double plannedTransportSavings = 0;
 	private Integer plannedEVCars = 0;
 	private Integer plannedEVVans = 0;
 	private Integer plannedEVTrucks = 0;
@@ -60,6 +65,22 @@ public class J_scenario_Future implements Serializable {
         this.requestedPhysicalConnectionCapacity_kW = requestedPhysicalConnectionCapacity_kW;
     }
     
+    public void setPlannedHeatSavings(double plannedHeatSavings) {
+    	this.plannedHeatSavings = plannedHeatSavings;
+    }
+    
+    public void setPlannedHeatingType(OL_GridConnectionHeatingType plannedHeatingType) {
+    	this.plannedHeatingType = plannedHeatingType;
+    }
+    
+    public void setPlannedElectricitySavings(double plannedElectricitySavings) {
+    	this.plannedElectricitySavings = plannedElectricitySavings;
+    }
+    
+    public void setPlannedCurtailment(boolean plannedCurtailment) {
+    	this.plannedCurtailment = plannedCurtailment;
+    }
+    
     public void setPlannedPV_kW(Integer plannedPV_kW) {
         this.plannedPV_kW = plannedPV_kW;
     }
@@ -79,7 +100,11 @@ public class J_scenario_Future implements Serializable {
     public void setPlannedBatteryCapacity_kWh(Float plannedBatteryCapacity_kWh) {
         this.plannedBatteryCapacity_kWh = plannedBatteryCapacity_kWh;
     }
-
+    
+    public void setPlannedTransportSavings(double plannedTransportSavings) {
+    	this.plannedTransportSavings = plannedTransportSavings;
+    }
+    
     public void setPlannedEVCars(Integer plannedEVCars) {
         this.plannedEVCars = plannedEVCars;
     }
@@ -126,6 +151,22 @@ public class J_scenario_Future implements Serializable {
     	return requestedPhysicalConnectionCapacity_kW;
     }
     
+    public double getPlannedHeatSavings() {
+    	return plannedHeatSavings;
+    }
+    
+    public OL_GridConnectionHeatingType getPlannedHeatingType() {
+    	return plannedHeatingType;
+    }
+    
+    public double getPlannedElectricitySavings() {
+    	return plannedElectricitySavings;
+    } 
+    
+    public boolean getPlannedCurtailment() {
+    	return plannedCurtailment;
+    }
+    
     public Integer getPlannedPV_kW() {
     	if (plannedPV_kW == null) {
     		return 0;
@@ -153,6 +194,10 @@ public class J_scenario_Future implements Serializable {
     		return 0f;
     	}
         return plannedBatteryCapacity_kWh;
+    }
+    
+    public double getPlannedTransportSavings() {
+    	return plannedTransportSavings;
     }
     
     public Integer getPlannedEVCars() {

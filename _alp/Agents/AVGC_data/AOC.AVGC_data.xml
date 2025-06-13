@@ -2,7 +2,6 @@
 <ActiveObjectClass>
 	<Id>1726584205528</Id>
 	<Name><![CDATA[AVGC_data]]></Name>
-	<StartupCode><![CDATA[f_setAVGC_data();]]></StartupCode>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1726584205523</Id>

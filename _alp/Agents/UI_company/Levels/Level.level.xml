@@ -2297,7 +2297,8 @@ switch (rb_heatingTypePrivateUI.getValue()){
 		selectedHeatingType = OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP;
 	break;
 	case 3:
-		selectedHeatingType = OL_GridConnectionHeatingType.HYDROGENBURNER;
+		selectedHeatingType = OL_GridConnectionHeatingType.DISTRICTHEAT;
+		//selectedHeatingType = OL_GridConnectionHeatingType.HYDROGENBURNER;
 	break;
 	case 4:
 		selectedHeatingType = OL_GridConnectionHeatingType.GASFIRED_CHPPEAK;
@@ -2323,7 +2324,7 @@ f_setSimulateYearScreen();</ActionCode>
 					<Button>HR ketel aardgas</Button>
 					<Button>Hybride warmtepomp</Button>
 					<Button>Elek. warmtepomp</Button>
-					<Button>Waterstof ketel</Button>
+					<Button>Warmtenet</Button>
 					<Button>Gas WKK</Button>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
@@ -4346,6 +4347,206 @@ else{
 				<FillColorCode>v_companyUIBackgroundColorSliders</FillColorCode>
 				<FillMaterial>null</FillMaterial>
 			</Rectangle>
+		</Presentation>
+	</Group>
+	<Group>
+		<Id>1747316158314</Id>
+		<Name><![CDATA[gr_errorScreen]]></Name>
+		<X>6480</X>
+		<Y>600</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>960</XCode>
+		<YCode>500</YCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Rectangle>
+				<Id>1747316158316</Id>
+				<Name><![CDATA[rect_errorScreenGrayOut]]></Name>
+				<X>-960</X>
+				<Y>-500</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>//traceln();</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor>-2049715245</LineColor>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>1920</Width>
+				<Height>980</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-2049715245</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Rectangle>
+			<Rectangle>
+				<Id>1747316158318</Id>
+				<Name><![CDATA[rect_errorScreenClickBlocking]]></Name>
+				<X>-960</X>
+				<Y>-500</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>double click_block = 0;</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor>-2049715245</LineColor>
+				<LineColorCode>null</LineColorCode>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>1920</Width>
+				<Height>980</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-2049715245</FillColor>
+				<FillColorCode>null</FillColorCode>
+				<FillMaterial>null</FillMaterial>
+			</Rectangle>
+			<RoundedRectangle>
+				<Id>1747326072959</Id>
+				<Name><![CDATA[rect_errorMessage]]></Name>
+				<X>-270</X>
+				<Y>-120</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>4</LineWidth>
+				<LineColor>-65536</LineColor>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>540</Width>
+				<Height>200</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-1</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>10</ArcRadius>
+			</RoundedRectangle>
+			<Text>
+				<Id>1747316158322</Id>
+				<Name><![CDATA[t_errorMessage]]></Name>
+				<X>0</X>
+				<Y>-70</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[TYPE YOUR ERROR MESSAGE HERE]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>24</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Group>
+				<Id>1747316158324</Id>
+				<Name><![CDATA[button_errorOK]]></Name>
+				<X>0</X>
+				<Y>50</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>gr_errorScreen.setVisible(false);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Rectangle>
+						<Id>1747316158326</Id>
+						<Name><![CDATA[rect_errorOK]]></Name>
+						<X>-60</X>
+						<Y>-20</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor>-16777216</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>120</Width>
+						<Height>40</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-1</FillColor>
+						<FillMaterial>null</FillMaterial>
+					</Rectangle>
+					<Text>
+						<Id>1747316158328</Id>
+						<Name><![CDATA[txt_errorOK]]></Name>
+						<X>0</X>
+						<Y>-10</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Ok]]></Text>
+						<Font>
+							<Name><![CDATA[SansSerif]]></Name>
+							<Size>18</Size>
+							<Style>1</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
+					</Text>
+				</Presentation>
+			</Group>
 		</Presentation>
 	</Group>
 </Presentation>

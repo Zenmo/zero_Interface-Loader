@@ -17,6 +17,7 @@ public class Battery_data {
 	String city;
 	String gridnode_id;
 	boolean initially_active;
+	boolean isSliderGC;
 	double storage_capacity_kwh;
 	double capacity_electric_kw;
 	double connection_capacity_kw;
