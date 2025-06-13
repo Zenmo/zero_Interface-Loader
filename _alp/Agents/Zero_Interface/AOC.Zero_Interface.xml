@@ -19,6 +19,7 @@ import java.util.Dictionary.*;
 import java.util.Hashtable.*;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.lang.Object;
 
 import java.io.*;
 import java.io.File;
@@ -40,7 +41,8 @@ import zero_engine.OL_EnergyCarriers;
 import com.querydsl.core.types.dsl.TimeExpression;
 import zero_engine.J_EAStorageElectric;
 import zero_engine.J_EAConsumption;
-import digital_twin_results.OL_ChartTypes;]]></Import>
+import digital_twin_results.OL_ChartTypes;
+import kotlin.Triple;]]></Import>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1658477103138</Id>

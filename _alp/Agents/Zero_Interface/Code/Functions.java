@@ -548,10 +548,14 @@ while (v_connectionOwnerIndexNr < c_COCompanies.size()){
 v_connectionOwnerIndexNr = 0;
 
 //Get the ghost vehicles for the transport slider tab
-uI_Tabs.pop_tabMobility.get(0).f_calculateNumberOfGhostVehicles();
-
+Triple<Integer, Integer, Integer> triple = uI_Tabs.pop_tabMobility.get(0).f_calculateNumberOfGhostVehicles( new ArrayList<GridConnection>(energyModel.UtilityConnections.findAll( x -> true)) );
+uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Cars = triple.getFirst();
+uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Vans = triple.getSecond();
+uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Trucks = triple.getThird();
 //Get the ghost heating systems
-uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfGhostHeatingSystems();
+Pair<Integer, Integer> pair = uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfGhostHeatingSystems( energyModel.UtilityConnections.findAll( x -> true) );
+uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps = pair.getFirst();
+uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_HybridHeatpumps = pair.getSecond();
 
 /*ALCODEEND*/}
 
@@ -615,34 +619,27 @@ if (gn!=null){
 
 double f_initialPVSystemsOrder()
 {/*ALCODESTART::1714130288661*/
-// First we make a copy of all the Uitility GridConnections
-List<GridConnection> GCs = new ArrayList<>(energyModel.f_getGridConnections());
-List<GridConnection> GCs_detailedCompanies = new ArrayList<>(energyModel.f_getGridConnections());
-if( p_selectedProjectType == OL_ProjectType.RESIDENTIAL){
-	GCs = GCs.stream().filter(gc -> gc instanceof GCHouse).collect(Collectors.toList());
-}
-else {
-	GCs_detailedCompanies = GCs.stream().filter(gc -> gc instanceof GCUtility && gc.p_owner.p_detailedCompany).collect(Collectors.toList());
-	GCs = GCs.stream().filter(gc -> gc instanceof GCUtility && !gc.p_owner.p_detailedCompany).collect(Collectors.toList());
-}
-// Find all the GCs with PV at the start of the simulation
-ArrayList<GridConnection> GCsWithPV = GCs.stream().filter(gc -> gc.v_hasPV).collect(Collectors.toCollection(ArrayList::new));
-ArrayList<GridConnection> otherGCs = GCs.stream().filter(gc -> !gc.v_hasPV).collect(Collectors.toCollection(ArrayList::new));
-//Collections.shuffle(otherGCs);
-ArrayList<GridConnection> detailedCompanyGCsWithPV = GCs_detailedCompanies.stream().filter(gc -> gc.v_hasPV).collect(Collectors.toCollection(ArrayList::new));
-ArrayList<GridConnection> datailedCompanyGCsnoPV = GCs_detailedCompanies.stream().filter(gc -> !gc.v_hasPV).collect(Collectors.toCollection(ArrayList::new));
+List<GCHouse> houses = new ArrayList<GCHouse>(energyModel.Houses.findAll( x -> true));
+List<GCHouse> housesWithoutPV = houses.stream().filter( gc -> !gc.v_liveAssetsMetaData.hasPV ).collect(Collectors.toList());
+List<GCHouse> housesWithPV = new ArrayList<>(houses);
+housesWithPV.removeAll(housesWithoutPV);
 
-// We make sure that the GCs with PV at the start of the simulation are the last in the list
+c_orderedPVSystemsHouses = new ArrayList<>(housesWithoutPV);
+c_orderedPVSystemsHouses.addAll(housesWithPV);
 
-//traceln("amount of GCs with PV at start: " + GCsWithPV.size());
-//traceln("amount of other GCs at start: " + otherGCs.size());
 
-if(c_companyUIs.size() == 0){
-	otherGCs.addAll(GCsWithPV);
-}
+List<GCUtility> companies = new ArrayList<GCUtility>(energyModel.UtilityConnections.findAll( x -> true));
+List<GCUtility> companiesWithoutPV = companies.stream().filter( gc -> !gc.v_liveAssetsMetaData.hasPV ).collect(Collectors.toList());
+List<GCUtility> companiesWithPV = companies.stream().filter( gc -> gc.v_liveAssetsMetaData.hasPV ).collect(Collectors.toList());
+List<GCUtility> detailedCompaniesWithPV = companiesWithPV.stream().filter( gc -> gc.p_owner != null && gc.p_owner.p_detailedCompany ).collect(Collectors.toList());
+List<GCUtility> genericCompaniesWithPV = new ArrayList<>(companiesWithPV);
+genericCompaniesWithPV.removeAll(detailedCompaniesWithPV);
 
-c_orderedPVSystems = otherGCs;
-c_orderedPVSystems.addAll(datailedCompanyGCsnoPV);
+c_orderedPVSystemsCompanies = new ArrayList<>(companiesWithoutPV);
+c_orderedPVSystemsCompanies.addAll(genericCompaniesWithPV);
+c_orderedPVSystemsCompanies.addAll(detailedCompaniesWithPV);
+
+
 /*ALCODEEND*/}
 
 double f_initialElectricVehiclesOrder()
@@ -667,27 +664,27 @@ c_orderedVehicles = otherEAs;
 
 double f_initialHeatingSystemsOrder()
 {/*ALCODESTART::1714131269202*/
-// First we make a copy of all the GridConnections
-List<GridConnection> companyList = new ArrayList<>(energyModel.f_getGridConnections());
-companyList = companyList.stream().filter(gc -> gc instanceof GCUtility && gc.p_primaryHeatingAsset != null).collect(Collectors.toList());
+List<GCHouse> houses = new ArrayList<GCHouse>(energyModel.Houses.findAll( x -> true));
+List<GCHouse> housesWithoutHP = houses.stream().filter( gc -> gc.p_heatingType != OL_GridConnectionHeatingType.HEATPUMP_AIR ).collect(Collectors.toList());
+List<GCHouse> housesWithHP = new ArrayList<>(houses);
+housesWithHP.removeAll(housesWithoutHP);
 
-// Find all the GCs with Heatpumps at the start of the simulation
-ArrayList<GridConnection> GCsWithHP = companyList.stream().filter(gc -> gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump).collect(Collectors.toCollection(ArrayList::new));
-ArrayList<GridConnection> otherGCs = companyList.stream().filter(gc -> !(gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump)).collect(Collectors.toCollection(ArrayList::new));
-// We make sure that the GCs with Heatpumps at the start of the simulation are the last in the list (if there is no companyUI)
-if(c_companyUIs.size() == 0){
-	otherGCs.addAll(GCsWithHP);
-}
-c_orderedHeatingSystemsCompanies = otherGCs;
+c_orderedHeatingSystemsHouses = new ArrayList<>(housesWithoutHP);
+c_orderedHeatingSystemsHouses.addAll(housesWithHP);
 
 
-// Doe same for houses
-List<GridConnection> houseList = new ArrayList<>(energyModel.f_getGridConnections());
-houseList = houseList.stream().filter(gc -> gc instanceof GCHouse).collect(Collectors.toList());
-ArrayList<GridConnection> housesWithHP = houseList.stream().filter(gc -> gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump).collect(Collectors.toCollection(ArrayList::new));
-ArrayList<GridConnection> otherHouses = houseList.stream().filter(gc -> !(gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump)).collect(Collectors.toCollection(ArrayList::new));
-otherHouses.addAll(housesWithHP);
-c_orderedHeatingSystemsHouses = otherHouses;
+List<GCUtility> companies = new ArrayList<GCUtility>(energyModel.UtilityConnections.findAll( x -> true));
+List<GCUtility> companiesWithoutHP = companies.stream().filter( gc -> gc.p_heatingType != OL_GridConnectionHeatingType.HEATPUMP_AIR ).collect(Collectors.toList());
+List<GCUtility> companiesWithHP = companies.stream().filter( gc -> gc.p_heatingType == OL_GridConnectionHeatingType.HEATPUMP_AIR ).collect(Collectors.toList());
+List<GCUtility> detailedCompaniesWithHP = companiesWithHP.stream().filter( gc -> gc.p_owner != null && gc.p_owner.p_detailedCompany ).collect(Collectors.toList());
+List<GCUtility> genericCompaniesWithHP = new ArrayList<>(companiesWithHP);
+genericCompaniesWithHP.removeAll(detailedCompaniesWithHP);
+
+c_orderedHeatingSystemsCompanies = new ArrayList<>(companiesWithoutHP);
+c_orderedHeatingSystemsCompanies.addAll(genericCompaniesWithHP);
+c_orderedHeatingSystemsCompanies.addAll(detailedCompaniesWithHP);
+
+
 /*ALCODEEND*/}
 
 double f_initalAssetOrdering()
@@ -726,7 +723,7 @@ for (GIS_Building building : energyModel.pop_GIS_Buildings){
 */
 
 if (gis_area.c_containedGridConnections.size() > 0) {
-	if (gis_area.c_containedGridConnections.get(0).v_hasPV) {
+	if (gis_area.c_containedGridConnections.get(0).v_liveAssetsMetaData.hasPV) {
 		if (gis_area.c_containedGridConnections.get(0).c_productionAssets.get(0).getCapacityElectric_kW() < 100){
 			gis_area.f_style(rect_smallProduction.getFillColor(), null, null, null);
 		}
@@ -846,7 +843,7 @@ else if ( yearlyEnergyConsumption > 6000){ gis_area.f_style( rect_householdHugeC
 double f_setColorsBasedOnProductionHouseholds(GIS_Object gis_area)
 {/*ALCODESTART::1718265697364*/
 if (gis_area.c_containedGridConnections.size() > 0) {
-	if (gis_area.c_containedGridConnections.get(0).v_hasPV) {
+	if (gis_area.c_containedGridConnections.get(0).v_liveAssetsMetaData.hasPV) {
 		if (gis_area.c_containedGridConnections.get(0).c_productionAssets.get(0).getCapacityElectric_kW() < 5){
 			gis_area.f_style( rect_householdSmallProduction.getFillColor(), null, null, null );
 		}
@@ -865,15 +862,8 @@ double f_updateMainInterfaceSliders()
 {/*ALCODESTART::1718288402102*/
 // ATTENTION: If you have custom tabs it may be neccesary to override this function and add updates to your custom sliders!
 
-if(c_companyUIs.size()>0){//Update ghost vehicles and heating systems present if there are companyUIs
-	uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfGhostHeatingSystems();
-	uI_Tabs.pop_tabMobility.get(0).f_calculateNumberOfGhostVehicles();
-}
-
-
-
 // PV SYSTEMS:
-double PVsystems = count(energyModel.UtilityConnections, x->x.v_hasPV == true && x.v_isActive);		
+double PVsystems = count(energyModel.UtilityConnections, x->x.v_liveAssetsMetaData.hasPV == true && x.v_isActive);		
 int PV_pct = roundToInt(100 * PVsystems / count(energyModel.UtilityConnections, x->x.v_isActive));
 uI_Tabs.pop_tabElectricity.get(0).getSliderRooftopPVCompanies_pct().setValue(PV_pct, false);
 
@@ -1687,7 +1677,7 @@ c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> !GC.p_
 
 double f_filterHasPV(ArrayList<GridConnection> toBeFilteredGC)
 {/*ALCODESTART::1734448690487*/
-c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC.v_hasPV));
+c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC.v_liveAssetsMetaData.hasPV));
 
 /*ALCODEEND*/}
 

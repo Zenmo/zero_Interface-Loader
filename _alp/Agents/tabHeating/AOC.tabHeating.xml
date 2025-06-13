@@ -3,6 +3,7 @@
 	<Id>1722253108625</Id>
 	<Name><![CDATA[tabHeating]]></Name>
 	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
+	<Import><![CDATA[import zeroPackage.ZeroMath;]]></Import>
 	<ExtendsReference>
 		<PackageName>zerointerfaceloader</PackageName>
 		<ClassName>tabArea</ClassName>

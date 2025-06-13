@@ -156,6 +156,7 @@
 			<Text>
 				<Id>1722249610020</Id>
 				<Name><![CDATA[t_rooftopSolarCompanies2]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<X>230</X>
 				<Y>35</Y>
 				<Label>
@@ -183,6 +184,7 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722249610022</Id>
 				<Name><![CDATA[sl_rooftopPV]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<X>260</X>
 				<Y>30</Y>
 				<Label>
@@ -835,7 +837,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReduction( sl_electricityDemandReduction_pct.getValue() );</ActionCode>
+					<ActionCode>f_setDemandReduction( zero_Interface.energyModel.f_getGridConnections(), sl_electricityDemandReduction_pct.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -939,7 +941,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemCompanies(sl_rooftopPVCompanies_pct.getValue(), sl_rooftopPVCompanies_pct);</ActionCode>
+					<ActionCode>f_setPVSystemCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_rooftopPVCompanies_pct.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1202,7 +1204,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemHouses( sl_rooftopPVHouses_pct.getValue() );
+					<ActionCode>f_setPVSystemHouses( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_rooftopPVHouses_pct.getValue() );
 
 if( zero_Interface.rb_buildingColors.getValue() == 2){
 	zero_Interface.rb_buildingColors.setValue(2, true);
@@ -2330,7 +2332,7 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReduction( sl_electricityDemandReduction_pct_Businesspark.getValue() );</ActionCode>
+					<ActionCode>f_setDemandReduction( zero_Interface.energyModel.f_getGridConnections(), sl_electricityDemandReduction_pct_Businesspark.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -2434,7 +2436,7 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemCompanies(sl_rooftopPVCompanies_pct_Businesspark.getValue(), sl_rooftopPVCompanies_pct_Businesspark);</ActionCode>
+					<ActionCode>f_setPVSystemCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_rooftopPVCompanies_pct_Businesspark.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>

@@ -23,7 +23,8 @@ public class DefaultProfiles_data {
 	List<Double> defaultHouseHotWaterDemandProfile_fr;
 	List<Double> defaultOfficeElectricityDemandProfile_fr;
 	List<Double> defaultBuildingHeatDemandProfile_fr;
-
+	List<Double> defaultHouseCookingDemandProfile_fr;
+	
 	//Maximum getters
 	public double getDefaultOfficeElectricityDemandProfileMaximum_fr() {
 		return Collections.max(defaultOfficeElectricityDemandProfile_fr);
