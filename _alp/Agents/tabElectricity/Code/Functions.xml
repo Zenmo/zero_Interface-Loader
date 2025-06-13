@@ -396,7 +396,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1747825874398</Id>
-		<Name><![CDATA[f_setPVSystemHouses]]></Name>
+		<Name><![CDATA[f_setPVSystemHouses1]]></Name>
 		<Description><![CDATA[Adds or removes photovoltaic production assets to GridConnections. Takes as arguments a list of Gridconnections and a target percentage. It runs untill that list of GCs has that percentage of PV installed, compared to the total potential PV. If a new asset is created it determines its electric capacity by the total roof area of all the buildings connected to the GC. The function also updates the PV slider in the company UI if the GC is a company. The variables in the engine that keep track of the amount of installed PV are updated automatically.]]></Description>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>70</X>

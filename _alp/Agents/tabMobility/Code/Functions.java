@@ -73,10 +73,10 @@ for (GridConnection gc : gcList) {
 	if (zero_Interface.c_companyUIs.size() > 0) {
 		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
 		if (companyUI != null) {
-			if(companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) != gc){
-				int i = indexOf(companyUI.c_ownedGridConnections.stream().toArray(), gc);
-				companyUI.GCnr_selection.setValue(i, true);
-			}
+			//if(companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) != gc){
+				//int i = indexOf(companyUI.c_ownedGridConnections.stream().toArray(), gc);
+				//companyUI.GCnr_selection.setValue(i, true);
+			//}
 			companyUI.sl_mobilityDemandCompanyReduction.setValue(demandReduction_pct, false);			
 		}
 	}

@@ -74,7 +74,7 @@ while ( nbHousesWithPVGoal > nbHousesWithPV ) {
 		double outputTemperature_degC = 0.0;
 		double installedPVCapacity_kW = uniform(3,6);
 
-		J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, installedPVCapacity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC, zero_Interface.energyModel.pp_solarPVproduction );
+		J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, installedPVCapacity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
 		houses.remove(house);
 		zero_Interface.c_orderedPVSystemsHouses.remove(house);
 		zero_Interface.c_orderedPVSystemsHouses.add(0, house);
@@ -162,6 +162,7 @@ for ( GCEnergyProduction GCEP : zero_Interface.energyModel.EnergyProductionSites
 				GCEP.f_setActive(false);
 			}
 			break;
+		}
 	}
 }
 
@@ -181,19 +182,16 @@ double nbHousesWithPV = count(zero_Interface.energyModel.Houses, x -> x.v_liveAs
 double batteryShare_pct = homeBatteries_pct;
 
 if( nbHousesWithPV > 0 ){
-	}
-	else {
-		while ( batteryShare_pct / 100.0 > nbHouseBatteries / nbHousesWithPV) {
-			GCHouse house = findFirst(zero_Interface.energyModel.Houses, p -> p.p_batteryAsset == null && p.v_liveAssetsMetaData.hasPV == true);
-			
-			double batteryStorageCapacity_kWh = 15;
-			double batteryCapacity_kW = batteryStorageCapacity_kWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power;
-			double batteryStateOfCharge = 0.5;
-					
-			new J_EAStorageElectric(house, batteryCapacity_kW, batteryStorageCapacity_kWh, batteryStateOfCharge, zero_Interface.energyModel.p_timeStep_h );
-			house.p_batteryOperationMode = OL_BatteryOperationMode.HOUSEHOLD_LOAD;
-			nbHouseBatteries++;
-		}
+	while ( batteryShare_pct / 100.0 > nbHouseBatteries / nbHousesWithPV) {
+		GCHouse house = findFirst(zero_Interface.energyModel.Houses, p -> p.p_batteryAsset == null && p.v_liveAssetsMetaData.hasPV == true);
+		
+		double batteryStorageCapacity_kWh = 15;
+		double batteryCapacity_kW = batteryStorageCapacity_kWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power;
+		double batteryStateOfCharge = 0.5;
+				
+		new J_EAStorageElectric(house, batteryCapacity_kW, batteryStorageCapacity_kWh, batteryStateOfCharge, zero_Interface.energyModel.p_timeStep_h );
+		house.p_batteryOperationMode = OL_BatteryOperationMode.HOUSEHOLD_LOAD;
+		nbHouseBatteries++;
 	}
 }
 
@@ -465,7 +463,7 @@ else {
 	double yearlyProductionHydrogen_kWh = 0.0;
 	double outputTemperature_degC = 0.0;
 	
-	J_EAProduction productionAsset = new J_EAProduction ( gc, assetType, assetName, capacity_kWp, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC, zero_Interface.energyModel.pp_solarPVproduction );
+	J_EAProduction productionAsset = new J_EAProduction ( gc, assetType, assetName, capacity_kWp, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
 }
 
 // Update the ordered collection
@@ -517,7 +515,7 @@ if ( pvAsset != null ) {
 }
 /*ALCODEEND*/}
 
-double f_setPVSystemHouses(List<GCHouse> gcList,double target_pct)
+double f_setPVSystemHouses1(List<GCHouse> gcList,double target_pct)
 {/*ALCODESTART::1747825874398*/
 Pair<Double, Double> pair = f_getPVSystemPercentage( new ArrayList<GridConnection>(gcList));
 
