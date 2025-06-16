@@ -13,8 +13,12 @@
 			<Y>0</Y>
 		</Label>
 		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
+		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gcList]]></Name>
+			<Type><![CDATA[List<GCUtility>]]></Type>
+		</Parameter>
 		<Parameter>
 			<Name><![CDATA[sliderGasburner]]></Name>
 			<Type><![CDATA[ShapeSlider]]></Type>
@@ -40,6 +44,10 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gcList]]></Name>
+			<Type><![CDATA[List<GCHouse>]]></Type>
+		</Parameter>
 		<Parameter>
 			<Name><![CDATA[targetHeatPump_pct]]></Name>
 			<Type><![CDATA[double]]></Type>
@@ -87,8 +95,8 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1722335783993</Id>
-		<Name><![CDATA[f_setDemandReductionHeatingCompanies]]></Name>
-		<Description><![CDATA[Function that reduces the heat demand of all consumption assets. Takes as an argument a percentage to reduce by compared to the default value of the consumption assets.]]></Description>
+		<Name><![CDATA[f_setDemandReductionHeating]]></Name>
+		<Description><![CDATA[Function that reduces the heat demand of all profile and consumption assets.  Takes as arguments a list of GridConnections to effect and a percentage to reduce by compared to the default value of the assets. Does not effect heating demand from gridconnection that have a thermal building model. ]]></Description>
 		<X>70</X>
 		<Y>590</Y>
 		<Label>
@@ -99,26 +107,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[demandReduction_pct]]></Name>
-			<Type><![CDATA[double]]></Type>
+			<Name><![CDATA[gcList]]></Name>
+			<Type><![CDATA[List<GridConnection>]]></Type>
 		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1727269173559</Id>
-		<Name><![CDATA[f_setDemandReductionHeatingHouses]]></Name>
-		<Description><![CDATA[Function that reduces the heat demand of all consumption assets. Takes as an argument a percentage to reduce by compared to the default value of the consumption assets.]]></Description>
-		<X>70</X>
-		<Y>630</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
 		<Parameter>
 			<Name><![CDATA[demandReduction_pct]]></Name>
 			<Type><![CDATA[double]]></Type>
@@ -140,6 +131,10 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
+			<Name><![CDATA[gcList]]></Name>
+			<Type><![CDATA[List<GCUtility>]]></Type>
+		</Parameter>
+		<Parameter>
 			<Name><![CDATA[targetHeatPump_pct]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
@@ -154,8 +149,8 @@
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>Pair&lt;Integer, Integer&gt;</ReturnType>
 		<Id>1729262524479</Id>
 		<Name><![CDATA[f_calculateNumberOfGhostHeatingSystems]]></Name>
 		<X>40</X>
@@ -167,6 +162,30 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gcList]]></Name>
+			<Type><![CDATA[List<GCUtility>]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1749116448649</Id>
+		<Name><![CDATA[f_calculatePeakHeatDemand_kW]]></Name>
+		<X>60</X>
+		<Y>890</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gc]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
