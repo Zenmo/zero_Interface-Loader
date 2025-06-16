@@ -85,62 +85,6 @@ while ( nbHousesWithPVGoal > nbHousesWithPV ) {
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-double f_setPublicChargingStations(int sliderValue)
-{/*ALCODESTART::1722256239566*/
-double desiredNbOfChargers = roundToInt(sliderValue * p_nbChargersInDatabase / 100.0) ;
-
-if ( v_currentNbChargers > desiredNbOfChargers){
-	while ( v_currentNbChargers > desiredNbOfChargers){
-		GCPublicCharger charger = zero_Interface.c_activePublicChargers.get(0);
-		zero_Interface.c_activePublicChargers.remove(0); 
-		
-		if( charger != null ){
-			charger.c_profileAssets.get(0).removeEnergyAsset(); //get rid of the charging profile
-			charger.v_isActiveCharger = false;
-			zero_Interface.c_inactivePublicChargers.add(charger); //add the charger to the other list
-			charger.c_connectedGISObjects.get(0).gisRegion.setVisible(false);
-			v_currentNbChargers --;
-		}
-		else{
-			traceln("Charger slider error: there are not sufficient chargers to remove");
-			return;
-		}
-	}
-}
-else if ( v_currentNbChargers < desiredNbOfChargers ){
-	while ( v_currentNbChargers < desiredNbOfChargers){
-		int index = uniform_discr(1, zero_Interface.c_inactivePublicChargers.size())-1;
-		GCPublicCharger charger = zero_Interface.c_inactivePublicChargers.get(index);
-		zero_Interface.c_inactivePublicChargers.remove(index);
-		
-		if( charger != null ){
-			String profileName = charger.p_chargingProfileName;
-			J_EAProfile profile = new J_EAProfile(charger, OL_EnergyCarriers.ELECTRICITY, null, OL_ProfileAssetType.CHARGING, zero_Interface.energyModel.p_timeStep_h);		
-			profile.energyAssetName = "charging profile";
-			List<Double> quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + profileName + " FROM charging_profiles;");			
-			profile.a_energyProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> max(0,d)).map( d -> d / 4).toArray();
-			charger.v_isActiveCharger = true;
-			charger.c_connectedGISObjects.get(0).gisRegion.setVisible(true);
-			zero_Interface.c_activePublicChargers.add(charger);
-			v_currentNbChargers ++;
-		}
-		else{
-			traceln("Charger slider error: there are no more chargers to add");
-			return;
-		}
-	}	
-}
-
-
-zero_Interface.f_resetSettings();
-//f_setDieselVehiclesAtPublicParkingHouses();
-/*ALCODEEND*/}
-
-double f_setDieselVehiclesAtPublicParkingHouses()
-{/*ALCODESTART::1722256239578*/
-
-/*ALCODEEND*/}
-
 double f_setWindTurbines(double AllocatedWindPower_MW)
 {/*ALCODESTART::1722256248965*/
 // TODO: Change to work for multiple wind farms in one model.
@@ -172,35 +116,6 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 }
 
 zero_Interface.f_resetSettings();
-/*ALCODEEND*/}
-
-double f_setResidentialBatteries(double homeBatteries_pct)
-{/*ALCODESTART::1722256291599*/
-// Setting houseBatteries
-double nbHouseBatteries = count(zero_Interface.energyModel.Houses, h -> h.p_batteryAsset != null); //f_getEnergyAssets(), p -> p.energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC && p.getParentAgent() instanceof GCHouse);
-double nbHousesWithPV = count(zero_Interface.energyModel.Houses, x -> x.v_liveAssetsMetaData.hasPV == true); //count(energyModel.f_getGridConnections(), p->p instanceof GCHouse);
-double batteryShare_pct = homeBatteries_pct;
-
-if( nbHousesWithPV > 0 ){
-	while ( batteryShare_pct / 100.0 > nbHouseBatteries / nbHousesWithPV) {
-		GCHouse house = findFirst(zero_Interface.energyModel.Houses, p -> p.p_batteryAsset == null && p.v_liveAssetsMetaData.hasPV == true);
-		
-		double batteryStorageCapacity_kWh = 15;
-		double batteryCapacity_kW = batteryStorageCapacity_kWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power;
-		double batteryStateOfCharge = 0.5;
-				
-		new J_EAStorageElectric(house, batteryCapacity_kW, batteryStorageCapacity_kWh, batteryStateOfCharge, zero_Interface.energyModel.p_timeStep_h );
-		house.p_batteryOperationMode = OL_BatteryOperationMode.HOUSEHOLD_LOAD;
-		nbHouseBatteries++;
-	}
-}
-
-zero_Interface.f_resetSettings();
-/*ALCODEEND*/}
-
-double f_setEVsAtPrivateParkingHouses()
-{/*ALCODESTART::1722261212790*/
-
 /*ALCODEEND*/}
 
 double f_setDemandReduction(List<GridConnection> gcList,double demandReduction_pct)
@@ -237,133 +152,6 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 }
 
 zero_Interface.f_resetSettings();
-/*ALCODEEND*/}
-
-double f_setGridBatteries(double AllocatedCapacity_kW)
-{/*ALCODESTART::1724164287280*/
-// TODO: make this work (copied from f_setWindTurbines)
-
-for ( GCGridBattery battery : zero_Interface.energyModel.GridBatteries) {
-	for(J_EAStorage j_ea : battery.c_storageAssets) {
-		J_EAStorageElectric batteryAsset = ((J_EAStorageElectric)j_ea);
-		if (!battery.v_isActive) {
-			battery.f_setActive(true);
-		}
-		batteryAsset.setCapacityElectric_kW(AllocatedCapacity_kW);
-		battery.v_liveConnectionMetaData.physicalCapacity_kW = AllocatedCapacity_kW;
-		battery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = AllocatedCapacity_kW;
-		battery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = AllocatedCapacity_kW;
-		//break;
-	}
-}
-
-zero_Interface.f_resetSettings();
-/*ALCODEEND*/}
-
-double f_setPublicChargingStationsScale(double sliderValue)
-{/*ALCODESTART::1725550668581*/
-ArrayList<GCPublicCharger> activeChargers = new ArrayList<>();
-for ( GCPublicCharger charger : zero_Interface.c_activePublicChargers){
-	activeChargers.add(charger);
-}
-for ( GCPublicCharger charger : activeChargers){
-	if ( charger.p_nbOfChargers > sliderValue){
-		f_setChargerInactive( charger );
-	}
-}
-ArrayList<GCPublicCharger> inactiveChargers = new ArrayList<>();
-for ( GCPublicCharger charger : zero_Interface.c_inactivePublicChargers){
-	inactiveChargers.add(charger);
-}
-for ( GCPublicCharger charger : inactiveChargers){
-	if( charger.p_nbOfChargers <= sliderValue ){
-		f_setChargerActive( charger );
-	}
-}
-
-traceln( "New number of active chargers: " + v_currentNbChargers);
-traceln( "New number of inactive chargers: " + zero_Interface.c_inactivePublicChargers.size());
-
-zero_Interface.f_resetSettings();
-//f_setDieselVehiclesAtPublicParkingHouses();
-/*ALCODEEND*/}
-
-List<Double> f_getChargingProfile(GCPublicCharger charger)
-{/*ALCODESTART::1725553029166*/
-String profileName = charger.p_parentNodeElectricID;
-List<Double> quarterlyEnergyDemand_kWh;
-
-if (chargingMethodScale.getValue() == 0){
-	quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + profileName + " FROM charging_profiles_unc;");
-}
-else if (chargingMethodScale.getValue() == 1){
-	profileName = profileName + f_getProfileNameAdditions();
-	quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + profileName + " FROM charging_profiles_v1g;");
-}
-else {
-	profileName = profileName + f_getProfileNameAdditions();
-	quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + profileName + " FROM charging_profiles_v2g;");
-}
-
-return quarterlyEnergyDemand_kWh;
-/*ALCODEEND*/}
-
-String f_getProfileNameAdditions()
-{/*ALCODESTART::1725564597264*/
-String string = "_";
-
-double EVShare = sl_EVsWoonwijkScale.getValue();
-if(  EVShare < 0.49 ){
-	string += "25EV_";
-}
-else if  (EVShare < 0.74 ){
-	string += "50EV_";
-}
-else if ( EVShare < 0.99 ){
-	string += "75EV_";
-}
-else {
-	string += "100EV_";
-}
-
-int WPshare = uI_Tabs.tabHeating.sl_householdsElectricHeatPump_pct.getIntValue();
-
-if(  EVShare < 33 ){
-	string += "0WP";
-}
-else if  (EVShare < 66 ){
-	string += "50WP";
-}
-else {
-	string += "100WP";
-}
-
-
-return string;
-/*ALCODEEND*/}
-
-double f_setChargerInactive(GCPublicCharger charger)
-{/*ALCODESTART::1725568178701*/
-zero_Interface.c_activePublicChargers.remove(charger); 
-charger.c_profileAssets.get(0).removeEnergyAsset(); //get rid of the charging profile
-charger.v_isActiveCharger = false;
-zero_Interface.c_inactivePublicChargers.add(charger); //add the charger to the other list
-charger.c_connectedGISObjects.get(0).gisRegion.setVisible(false);
-v_currentNbChargers --;
-
-/*ALCODEEND*/}
-
-double f_setChargerActive(GCPublicCharger charger)
-{/*ALCODESTART::1725568192004*/
-zero_Interface.c_inactivePublicChargers.remove( charger );
-J_EAProfile profile = new J_EAProfile(charger, OL_EnergyCarrierType.ELECTRICITY, null, OL_ProfileAssetType.CHARGING, zero_Interface.energyModel.p_timeStep_h);		
-profile.energyAssetName = "charging profile";		
-List<Double> quarterlyEnergyDemand_kWh = f_getChargingProfile(charger);
-profile.a_energyProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> max(0,d)).map( d -> d / 4).toArray();
-charger.v_isActiveCharger = true;
-charger.c_connectedGISObjects.get(0).gisRegion.setVisible(true);
-zero_Interface.c_activePublicChargers.add(charger);
-v_currentNbChargers ++;
 /*ALCODEEND*/}
 
 double f_getCurrentPVOnLandAndWindturbineValues()
@@ -407,13 +195,13 @@ return new Pair(installedPV_kWp, PVPotential_kWp);
 double f_setPVSystemCompanies(List<GCUtility> gcList,double target_pct)
 {/*ALCODESTART::1747297871195*/
 Pair<Double, Double> pair = f_getPVSystemPercentage( new ArrayList<GridConnection>(gcList));
-double remaining_kWp = target_pct * pair.getSecond() - pair.getFirst();
+double remaining_kWp = target_pct / 100 * pair.getSecond() - pair.getFirst();
 double averageEffectivePV_kWppm2 = zero_Interface.energyModel.avgc_data.p_avgRatioRoofPotentialPV * zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2;
-
 if ( remaining_kWp > 0 ) {
 	// add more PV
 	for ( GCUtility company : new ArrayList<GCUtility>(zero_Interface.c_orderedPVSystemsCompanies) ) {
 		double remainingPotential_kWp = min( remaining_kWp, company.p_roofSurfaceArea_m2 * averageEffectivePV_kWppm2 - company.v_liveAssetsMetaData.totalInstalledPVPower_kW );
+		
 		if ( remainingPotential_kWp > 0 ) {
 			remaining_kWp -= remainingPotential_kWp;
 			f_addPVSystem( company, remainingPotential_kWp );
@@ -511,6 +299,15 @@ if ( pvAsset != null ) {
 	else if ( gc instanceof GCUtility ) {
 		zero_Interface.c_orderedPVSystemsCompanies.remove(gc);
 		zero_Interface.c_orderedPVSystemsCompanies.add(0, (GCUtility)gc);
+		if ( zero_Interface.c_companyUIs.size() > 0 ) {
+			if ( gc.p_owner != null ) {
+				UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
+				if ( companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc ) {
+					companyUI.sl_rooftopPVCompany.setValue(0, false);
+					companyUI.v_defaultPVSlider = roundToInt(0);
+				}
+			}
+		}
 	}
 }
 /*ALCODEEND*/}
@@ -553,5 +350,302 @@ else {
 	}
 }
 zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+double f_setResidentialBatteries(double homeBatteries_pct)
+{/*ALCODESTART::1750063382310*/
+// Setting houseBatteries
+double nbHouseBatteries = count(zero_Interface.energyModel.Houses, h -> h.p_batteryAsset != null); //f_getEnergyAssets(), p -> p.energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC && p.getParentAgent() instanceof GCHouse);
+double nbHousesWithPV = count(zero_Interface.energyModel.Houses, x -> x.v_liveAssetsMetaData.hasPV == true); //count(energyModel.f_getGridConnections(), p->p instanceof GCHouse);
+double nbHousesWithBatteryGoal = roundToInt(nbHousesWithPV * homeBatteries_pct / 100);
+
+if( nbHousesWithPV > 0 ){
+	while ( nbHouseBatteries > nbHousesWithBatteryGoal ) {
+		GCHouse house = findFirst(zero_Interface.energyModel.Houses, p -> p.p_batteryAsset != null );
+		house.p_batteryAsset.removeEnergyAsset();
+		house.p_batteryOperationMode = OL_BatteryOperationMode.BALANCE; // reset to default
+		nbHouseBatteries--;
+	}
+	while ( nbHousesWithBatteryGoal < nbHouseBatteries ) {
+		GCHouse house = findFirst(zero_Interface.energyModel.Houses, p -> p.p_batteryAsset == null && p.v_liveAssetsMetaData.hasPV == true);
+		
+		double batteryStorageCapacity_kWh = 15;
+		double batteryCapacity_kW = batteryStorageCapacity_kWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power;
+		double batteryStateOfCharge = 0.5;
+
+		new J_EAStorageElectric(house, batteryCapacity_kW, batteryStorageCapacity_kWh, batteryStateOfCharge, zero_Interface.energyModel.p_timeStep_h );
+		house.p_batteryOperationMode = OL_BatteryOperationMode.HOUSEHOLD_LOAD;
+		nbHouseBatteries++;
+	}
+}
+
+traceln("Nb houses with batteries: " + nbHouseBatteries);
+
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+double f_setGridBatteries(double storageCapacity_kWh)
+{/*ALCODESTART::1750063382312*/
+for ( GCGridBattery battery : zero_Interface.energyModel.GridBatteries) {
+	for(J_EAStorage j_ea : battery.c_storageAssets) {
+		J_EAStorageElectric batteryAsset = ((J_EAStorageElectric)j_ea);
+		if (!battery.v_isActive) {
+			battery.f_setActive(true);
+		}
+		double capacity_kW = storageCapacity_kWh / 2;
+		batteryAsset.setCapacityElectric_kW( capacity_kW );
+		batteryAsset.setStorageCapacity_kWh( storageCapacity_kWh );
+		battery.v_liveConnectionMetaData.physicalCapacity_kW = capacity_kW;
+		battery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = capacity_kW;
+		battery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = capacity_kW;
+	}
+}
+
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+double f_setPublicChargingStationsScale(double sliderValue)
+{/*ALCODESTART::1750063382314*/
+ArrayList<GCPublicCharger> activeChargers = new ArrayList<>();
+for ( GCPublicCharger charger : zero_Interface.c_activePublicChargers){
+	activeChargers.add(charger);
+}
+for ( GCPublicCharger charger : activeChargers){
+	if ( charger.p_nbOfChargers > sliderValue){
+		f_setChargerInactive( charger );
+	}
+}
+ArrayList<GCPublicCharger> inactiveChargers = new ArrayList<>();
+for ( GCPublicCharger charger : zero_Interface.c_inactivePublicChargers){
+	inactiveChargers.add(charger);
+}
+for ( GCPublicCharger charger : inactiveChargers){
+	if( charger.p_nbOfChargers <= sliderValue ){
+		f_setChargerActive( charger );
+	}
+}
+
+/*
+for ( GridNode node : zero_Interface.energyModel.f_getGridNodesNotTopLevel()){
+	traceln( "Node  " + node.p_gridNodeID);
+	int i = 0;
+	for( GridConnection gc : node.f_getConnectedGridConnections() ){
+		if ( gc instanceof GCPublicCharger){
+			GCPublicCharger charger =((GCPublicCharger)gc);
+			if( charger.v_isActiveCharger){
+				i ++;
+			}
+		}
+	}
+	traceln( "Number of chargers:  " + i);
+}
+*/
+
+traceln( "New number of active chargers: " + v_currentNbChargers);
+traceln( "New number of inactive chargers: " + zero_Interface.c_inactivePublicChargers.size());
+
+zero_Interface.f_resetSettings();
+//f_setDieselVehiclesAtPublicParkingHouses();
+/*ALCODEEND*/}
+
+List<Double> f_getChargingProfile(GCPublicCharger charger)
+{/*ALCODESTART::1750063382316*/
+String profileName = charger.p_parentNodeElectricID.toLowerCase();
+List<Double> quarterlyEnergyDemand_kWh;
+
+if (chargingMethodResidentialArea.getValue() == 0){
+	profileName = profileName + f_getProfileNameEVAddition();
+	quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + profileName + " FROM charging_profiles_unc;");
+}
+else if (chargingMethodResidentialArea.getValue() == 1){
+	profileName = profileName + f_getProfileNameEVAddition() + f_getProfileNameWPAddition();
+	//traceln( profileName);
+	quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + profileName + " FROM charging_profiles_v1g;");
+}
+else {
+	profileName = profileName + f_getProfileNameEVAddition() + f_getProfileNameWPAddition();
+	//traceln ( profileName);
+	quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + profileName + " FROM charging_profiles_v2g;");
+}
+
+return quarterlyEnergyDemand_kWh;
+/*ALCODEEND*/}
+
+String f_getProfileNameEVAddition()
+{/*ALCODESTART::1750063382318*/
+String string = "_";
+
+double EVShare = sl_publicEVsResidentialArea_pct.getValue();
+if(  EVShare < 0.49 ){
+	string += "ev25";
+}
+else if  (EVShare < 0.74 ){
+	string += "ev50";
+}
+else if ( EVShare < 0.99 ){
+	string += "ev75";
+}
+else {
+	string += "ev100";
+}
+
+return string;
+/*ALCODEEND*/}
+
+double f_setChargerInactive(GCPublicCharger charger)
+{/*ALCODESTART::1750063382320*/
+zero_Interface.c_activePublicChargers.remove(charger); 
+charger.c_EvAssets.remove(charger.c_profileAssets.get(0));
+charger.c_profileAssets.get(0).removeEnergyAsset(); //get rid of the charging profile
+charger.v_isActiveCharger = false;
+zero_Interface.c_inactivePublicChargers.add(charger); //add the charger to the other list
+charger.c_connectedGISObjects.get(0).gisRegion.setVisible(false);
+v_currentNbChargers --;
+
+/*ALCODEEND*/}
+
+double f_setChargerActive(GCPublicCharger charger)
+{/*ALCODESTART::1750063382322*/
+zero_Interface.c_inactivePublicChargers.remove( charger );
+J_EAProfile profile = new J_EAProfile(charger, OL_EnergyCarriers.ELECTRICITY, null, OL_ProfileAssetType.CHARGING, zero_Interface.energyModel.p_timeStep_h);		
+profile.energyAssetName = "charging profile";		
+List<Double> quarterlyEnergyDemand_kWh = f_getChargingProfile(charger);
+profile.a_energyProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> max(0,d)).map( d -> d / 4).toArray();
+charger.v_isActiveCharger = true;
+charger.c_connectedGISObjects.get(0).gisRegion.setVisible(true);
+zero_Interface.c_activePublicChargers.add(charger);
+v_currentNbChargers ++;
+/*ALCODEEND*/}
+
+double f_setElectricCooking(double electricCookingGoal_pct)
+{/*ALCODESTART::1750063382324*/
+int nbHousesWithElectricCooking = findAll(zero_Interface.energyModel.Houses, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.ELECTRIC).size();
+int nbHousesWithElectricCookingGoal = roundToInt(electricCookingGoal_pct / 100 * zero_Interface.energyModel.Houses.size());
+
+
+while ( nbHousesWithElectricCooking > nbHousesWithElectricCookingGoal ) { // remove excess cooking systems
+	GCHouse house = randomWhere(zero_Interface.energyModel.Houses, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.ELECTRIC);		
+	J_EAConsumption cookingAsset = findFirst(house.c_consumptionAssets, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB );
+	if (cookingAsset != null) {
+		double yearlyCookingDemand_kWh = cookingAsset.yearlyDemand_kWh;
+		cookingAsset.removeEnergyAsset();
+   		
+		new J_EAConsumption(house, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, zero_Interface.energyModel.p_timeStep_h, null);
+		house.p_cookingMethod = OL_HouseholdCookingMethod.GAS;
+		nbHousesWithElectricCooking --; 
+	}
+	else {
+		throw new RuntimeException("Cant find cooking asset in house that should have cooking asset in f_ElectricCooking (tabElectricity)");
+	}
+}
+ 
+while ( nbHousesWithElectricCooking < nbHousesWithElectricCookingGoal) {
+	GCHouse house = randomWhere(zero_Interface.energyModel.Houses, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.GAS);
+	if (house == null){
+		throw new RuntimeException("No gridconnection without GAS cooking asset found! Current electric cooking count: " + nbHousesWithElectricCooking);
+	}
+	else {
+		J_EAConsumption cookingAsset = findFirst(house.c_consumptionAssets, p -> p.energyAssetType == OL_EnergyAssetType.GAS_PIT );
+		if (cookingAsset != null) {
+			double yearlyCookingDemand_kWh = cookingAsset.yearlyDemand_kWh;
+			cookingAsset.removeEnergyAsset();
+	
+			new J_EAConsumption(house, OL_EnergyAssetType.ELECTRIC_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, zero_Interface.energyModel.p_timeStep_h, null);
+			house.p_cookingMethod = OL_HouseholdCookingMethod.ELECTRIC;
+			nbHousesWithElectricCooking ++; 
+		}
+		else {
+			throw new RuntimeException("Cant find cooking asset in house that should have cooking asset in f_ElectricCooking (tabElectricity)");
+		}
+	}
+}
+
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+String f_getProfileNameWPAddition()
+{/*ALCODESTART::1750063382328*/
+String string = "_";
+
+int WPshare = uI_Tabs.pop_tabHeating.get(0).sl_householdElectricHeatPumpResidentialArea_pct.getIntValue();
+
+if(  WPshare < 33 ){
+	string += "hp0";
+}
+else if  (WPshare < 66 ){
+	string += "hp50";
+}
+else {
+	string += "hp100";
+}
+
+
+return string;
+/*ALCODEEND*/}
+
+double f_setPublicChargingStations(int sliderValue)
+{/*ALCODESTART::1750063382330*/
+double desiredNbOfChargers = roundToInt(sliderValue * p_nbChargersInDatabase / 100.0) ;
+
+if ( v_currentNbChargers > desiredNbOfChargers){
+	while ( v_currentNbChargers > desiredNbOfChargers){
+		GCPublicCharger charger = zero_Interface.c_activePublicChargers.get(0);
+		zero_Interface.c_activePublicChargers.remove(0); 
+		
+		if( charger != null ){
+			charger.v_isActiveCharger = false;
+			charger.p_parentNodeElectric.c_activeChargers.remove(charger);
+			zero_Interface.c_inactivePublicChargers.add(charger); //add the charger to the other list
+			charger.c_connectedGISObjects.get(0).gisRegion.setVisible(false);
+			v_currentNbChargers --;
+		}
+		else{
+			traceln("Charger slider error: there are not sufficient chargers to remove");
+			return;
+		}
+	}
+}
+else if ( v_currentNbChargers < desiredNbOfChargers ){
+	while ( v_currentNbChargers < desiredNbOfChargers){
+		int index = uniform_discr(1, zero_Interface.c_inactivePublicChargers.size())-1;
+		GCPublicCharger charger = zero_Interface.c_inactivePublicChargers.get(index);
+		zero_Interface.c_inactivePublicChargers.remove(index);
+		
+		if( charger != null ){
+			charger.v_isActiveCharger = true;
+			charger.p_parentNodeElectric.c_activeChargers.add(charger);
+			charger.c_connectedGISObjects.get(0).gisRegion.setVisible(true);
+			zero_Interface.c_activePublicChargers.add(charger);
+			v_currentNbChargers ++;
+		}
+		else{
+			traceln("Charger slider error: there are no more chargers to add");
+			return;
+		}
+	}	
+}
+
+double desiredNbOfHousesWithEV = roundToInt(sliderValue * zero_Interface.c_orderedHousesPublicParking.size() / 100.0) ;
+v_currentNbHousesWithEVPublic = count(zero_Interface.c_orderedHousesPublicParking, h -> h.c_vehicleAssets.size() == 0);
+
+if ( v_currentNbHousesWithEVPublic > desiredNbOfHousesWithEV){
+	while ( v_currentNbHousesWithEVPublic > desiredNbOfHousesWithEV){
+		GCHouse house = findFirst( zero_Interface.c_orderedHousesPublicParking, h -> h.c_vehicleAssets.size() == 0);
+		double energyConsumption_kWhpkm = uniform_discr(120,220) * 3 / 1000.0;
+		J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(house, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, 1, OL_EnergyAssetType.DIESEL_VEHICLE, null);
+		v_currentNbHousesWithEVPublic --;
+	}
+}
+else if ( v_currentNbHousesWithEVPublic < desiredNbOfHousesWithEV ){
+	while ( v_currentNbHousesWithEVPublic < desiredNbOfHousesWithEV){
+		GCHouse house = findFirst( zero_Interface.c_orderedHousesPublicParking, h -> h.c_vehicleAssets.size() == 1);
+		house.c_dieselVehicles.get(0).removeEnergyAsset();
+		v_currentNbHousesWithEVPublic++;
+	}	
+}
+
+zero_Interface.f_resetSettings();
+
+//f_setDieselVehiclesAtPublicParkingHouses();
 /*ALCODEEND*/}
 

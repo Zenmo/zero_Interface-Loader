@@ -281,13 +281,13 @@
 			<VersionBuild>0</VersionBuild>
 		</RequiredLibraryReference>
 		<RequiredLibraryReference>
-			<LibraryName>digital_twin_results</LibraryName>
+			<LibraryName>zero_engine</LibraryName>
 			<VersionMajor>0</VersionMajor>
 			<VersionMinor>0</VersionMinor>
 			<VersionBuild>0</VersionBuild>
 		</RequiredLibraryReference>
 		<RequiredLibraryReference>
-			<LibraryName>zero_engine</LibraryName>
+			<LibraryName>digital_twin_results</LibraryName>
 			<VersionMajor>0</VersionMajor>
 			<VersionMinor>0</VersionMinor>
 			<VersionBuild>0</VersionBuild>

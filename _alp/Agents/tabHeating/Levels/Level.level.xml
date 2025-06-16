@@ -2752,7 +2752,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( 0, sl_householdGasBurnerResidentialArea_pct, sl_householdElectricHeatPumpResidentialArea_pct, null, null );
-f_setHeatingSystemsHouseholds( sl_householdsElectricHeatPump_pct.getValue() );
+f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_householdElectricHeatPumpResidentialArea_pct.getValue() );
 </ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -2782,7 +2782,7 @@ f_setHeatingSystemsHouseholds( sl_householdsElectricHeatPump_pct.getValue() );
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( 1, sl_householdGasBurnerResidentialArea_pct, sl_householdElectricHeatPumpResidentialArea_pct, null, null );
-f_setHeatingSystemsHouseholds( sl_householdsElectricHeatPump_pct.getValue() );
+f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_householdElectricHeatPumpResidentialArea_pct.getValue() );
 </ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -2919,7 +2919,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setAircos(sl_aircoHouses.getValue() / 100.0);</ActionCode>
+					<ActionCode>f_setAircos(sl_householdAircoResidentialArea_pct.getValue() / 100.0);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -3006,7 +3006,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 	f_addDistrictHeatingToAllHouses();
 }
 else{
-	sl_householdsGasBurner_pct.setValue(100, false);
+	sl_householdGasBurnerResidentialArea_pct.setValue(100, false);
 	f_removeDistrictHeatingFromAllHouses();
 }</ActionCode>
 				</BasicProperties>
@@ -3034,14 +3034,14 @@ else{
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor/>
 					<Enabled>true</Enabled>
-					<ActionCode>if ( checkbox_distrHeating1.isSelected() ){
-	sl_householdsElectricHeatPump_pct.setValue(0);
-	sl_householdsGasBurner_pct.setValue(0);
-	checkbox_distrHeating.setSelected(false, false);
+					<ActionCode>if ( cb_householdLTDistrictHeatingResidentialArea.isSelected() ){
+	sl_householdElectricHeatPumpResidentialArea_pct.setValue(0);
+	sl_householdGasBurnerResidentialArea_pct.setValue(0);
+	cb_householdHTDistrictHeatingResidentialArea.setSelected(false, false);
 	f_addLTDH();
 }
 else{
-	sl_householdsGasBurner_pct.setValue(100, false);
+	sl_householdGasBurnerResidentialArea_pct.setValue(100, false);
 	f_removeLTDH();
 }</ActionCode>
 				</BasicProperties>

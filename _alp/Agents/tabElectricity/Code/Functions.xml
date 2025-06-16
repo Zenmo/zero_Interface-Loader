@@ -47,41 +47,6 @@
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1722256239566</Id>
-		<Name><![CDATA[f_setPublicChargingStations]]></Name>
-		<X>810</X>
-		<Y>430</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[sliderValue]]></Name>
-			<Type><![CDATA[int]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1722256239578</Id>
-		<Name><![CDATA[f_setDieselVehiclesAtPublicParkingHouses]]></Name>
-		<X>830</X>
-		<Y>490</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-	</Function>
 	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
@@ -102,41 +67,6 @@
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1722256291599</Id>
-		<Name><![CDATA[f_setResidentialBatteries]]></Name>
-		<X>810</X>
-		<Y>570</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[homeBatteries_pct]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1722261212790</Id>
-		<Name><![CDATA[f_setEVsAtPrivateParkingHouses]]></Name>
-		<X>810</X>
-		<Y>540</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
@@ -160,128 +90,6 @@
 		<Parameter>
 			<Name><![CDATA[demandReduction_pct]]></Name>
 			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1724164287280</Id>
-		<Name><![CDATA[f_setGridBatteries]]></Name>
-		<Description><![CDATA[Function that changes the electric capacity of the energy asset of the "Wind Farm". Takes an amount of MW as a parameter. The variables for amount of installed Wind are updated automatically in the zero_engine. The function also modifies the connection capacity of the energy production site to match the new installed Wind Power.]]></Description>
-		<X>810</X>
-		<Y>674</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[AllocatedCapacity_kW]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1725550668581</Id>
-		<Name><![CDATA[f_setPublicChargingStationsScale]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1230</X>
-		<Y>430</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[sliderValue]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>List&lt;Double&gt;</ReturnType>
-		<Id>1725553029166</Id>
-		<Name><![CDATA[f_getChargingProfile]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1260</X>
-		<Y>490</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[charger]]></Name>
-			<Type><![CDATA[GCPublicCharger]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>String</ReturnType>
-		<Id>1725564597264</Id>
-		<Name><![CDATA[f_getProfileNameAdditions]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1260</X>
-		<Y>510</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1725568178701</Id>
-		<Name><![CDATA[f_setChargerInactive]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1240</X>
-		<Y>450</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[charger]]></Name>
-			<Type><![CDATA[GCPublicCharger]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1725568192004</Id>
-		<Name><![CDATA[f_setChargerActive]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1240</X>
-		<Y>470</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[charger]]></Name>
-			<Type><![CDATA[GCPublicCharger]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -415,6 +223,198 @@
 		<Parameter>
 			<Name><![CDATA[target_pct]]></Name>
 			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750063382310</Id>
+		<Name><![CDATA[f_setResidentialBatteries]]></Name>
+		<X>892</X>
+		<Y>560</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[homeBatteries_pct]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750063382312</Id>
+		<Name><![CDATA[f_setGridBatteries]]></Name>
+		<X>892</X>
+		<Y>664</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[storageCapacity_kWh]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750063382314</Id>
+		<Name><![CDATA[f_setPublicChargingStationsScale]]></Name>
+		<X>1362</X>
+		<Y>423</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[sliderValue]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>List&lt;Double&gt;</ReturnType>
+		<Id>1750063382316</Id>
+		<Name><![CDATA[f_getChargingProfile]]></Name>
+		<X>1392</X>
+		<Y>483</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[charger]]></Name>
+			<Type><![CDATA[GCPublicCharger]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>String</ReturnType>
+		<Id>1750063382318</Id>
+		<Name><![CDATA[f_getProfileNameEVAddition]]></Name>
+		<X>1392</X>
+		<Y>503</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750063382320</Id>
+		<Name><![CDATA[f_setChargerInactive]]></Name>
+		<X>1372</X>
+		<Y>443</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[charger]]></Name>
+			<Type><![CDATA[GCPublicCharger]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750063382322</Id>
+		<Name><![CDATA[f_setChargerActive]]></Name>
+		<X>1372</X>
+		<Y>463</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[charger]]></Name>
+			<Type><![CDATA[GCPublicCharger]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750063382324</Id>
+		<Name><![CDATA[f_setElectricCooking]]></Name>
+		<X>892</X>
+		<Y>690</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[electricCookingGoal_pct]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>String</ReturnType>
+		<Id>1750063382328</Id>
+		<Name><![CDATA[f_getProfileNameWPAddition]]></Name>
+		<X>1392</X>
+		<Y>523</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750063382330</Id>
+		<Name><![CDATA[f_setPublicChargingStations]]></Name>
+		<X>902</X>
+		<Y>405</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[sliderValue]]></Name>
+			<Type><![CDATA[int]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

@@ -7,6 +7,17 @@
 		<PackageName>zerointerfaceloader</PackageName>
 		<ClassName>tabArea</ClassName>
 	</ExtendsReference>
+	<Parameters>
+		<Parameter>
+			<Name><![CDATA[p_minPublicChargerSlider]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_minPVHouseholdSlider]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_nbChargersInDatabase]]></Name>
+		</Parameter>
+	</Parameters>
 	<StartupCode><![CDATA[f_getCurrentPVOnLandAndWindturbineValues();]]></StartupCode>
 	<Generic>false</Generic>
 	<GenericParameter>
