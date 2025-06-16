@@ -125,7 +125,6 @@ for ( GIS_Object GISobject : energyModel.pop_GIS_Objects ){
 					f_selectCharger((GCPublicCharger)selectedGC, GISobject );
 					break;
 				
-					
 				default:
 					buildingsConnectedToSelectedBuildingsList = GISobject.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
 					f_selectBuilding(GISobject, buildingsConnectedToSelectedBuildingsList);		
@@ -461,7 +460,8 @@ else if (v_previousClickedObjectType == OL_GISObjectType.BUILDING ||
 		 v_previousClickedObjectType == OL_GISObjectType.WINDFARM ||
 		 v_previousClickedObjectType == OL_GISObjectType.ELECTROLYSER ||
 		 v_previousClickedObjectType == OL_GISObjectType.BATTERY ||
-		 v_previousClickedObjectType == OL_GISObjectType.CHARGER){
+		 v_previousClickedObjectType == OL_GISObjectType.CHARGER ||
+		 v_previousClickedObjectType == OL_GISObjectType.PARKING){
 	for(GIS_Object previousClickedObject: c_previousSelectedObjects){
 		f_styleAreas(previousClickedObject);
 	}
@@ -777,6 +777,9 @@ f_setGridTopologyColors();
 
 //Initialize the sliders of the main UI
 f_setSliderPresets();
+
+//Initialize the legend
+f_initializeLegend();
 
 //Disable cable button if no cables have been loaded in
 if(c_LVCables.size() == 0 && c_MVCables.size() == 0){
@@ -2630,5 +2633,190 @@ for(GIS_Building building : energyModel.pop_GIS_Buildings){
 double f_initialParkingSpacesOrder()
 {/*ALCODESTART::1749741185117*/
 Collections.shuffle(c_orderedParkingSpaces);
+/*ALCODEEND*/}
+
+double f_initializeSpecialGISObjectsLegend()
+{/*ALCODESTART::1750078798174*/
+//Get all special GISObject types in model
+for(GIS_Object object : energyModel.pop_GIS_Objects){
+	switch(object.p_GISObjectType){
+		case SOLARFARM:
+			c_modelActiveGISObjects.add(OL_GISObjectType.SOLARFARM);
+			break;
+		case WINDFARM:
+			c_modelActiveGISObjects.add(OL_GISObjectType.WINDFARM);
+			break;
+		case CHARGER:
+			c_modelActiveGISObjects.add(OL_GISObjectType.CHARGER);
+			break;
+		case BATTERY:	
+			c_modelActiveGISObjects.add(OL_GISObjectType.BATTERY);
+			break;
+		case PARCEL:
+			c_modelActiveGISObjects.add(OL_GISObjectType.PARCEL);
+			break;
+		case ELECTROLYSER:
+			c_modelActiveGISObjects.add(OL_GISObjectType.ELECTROLYSER);
+			break;
+		case PARKING: // Skip this one, other legend
+			c_modelActiveGISObjects.add(OL_GISObjectType.PARKING);
+			break;
+	}
+	traceln("object.p_GISObjectType: " + object.p_GISObjectType);
+	traceln("c_modelActiveGISObjects: " + c_modelActiveGISObjects);
+}
+
+int numberOfSpecialActiveGISObjectTypes = 0;
+
+for(OL_GISObjectType activeSpecialGISObjectType : c_modelActiveGISObjects){
+	if(activeSpecialGISObjectType == OL_GISObjectType.PARKING){
+		for(OL_ParkingSpaceType activeParkingSpaceType : c_modelActiveParkingSpaceTypes){
+			numberOfSpecialActiveGISObjectTypes ++;
+			Pair<ShapeText, ShapeRectangle> legendShapes = f_getNextSpecialLegendShapes(numberOfSpecialActiveGISObjectTypes);
+			f_setParkingSpaceLegendItem(activeParkingSpaceType, legendShapes.getFirst(), legendShapes.getSecond());
+		}
+	}
+	else{
+		numberOfSpecialActiveGISObjectTypes ++;
+		Pair<ShapeText, ShapeRectangle> legendShapes = f_getNextSpecialLegendShapes(numberOfSpecialActiveGISObjectTypes);
+		f_setSpecialGISObjectLegendItem(activeSpecialGISObjectType, legendShapes.getFirst(), legendShapes.getSecond());
+	}
+}
+/*ALCODEEND*/}
+
+double f_setSpecialGISObjectLegendItem(OL_GISObjectType activeSpecialGISObjectType,ShapeText legendText,ShapeRectangle legendRect)
+{/*ALCODESTART::1750079113839*/
+legendText.setVisible(true);
+legendRect.setVisible(true);
+
+switch(activeSpecialGISObjectType){
+	case SOLARFARM:
+		legendText.setText("Zonneveld");
+		legendRect.setFillColor(v_solarParkColor);
+		legendRect.setLineColor(v_solarParkLineColor);
+		break;
+	case WINDFARM:
+		legendText.setText("Windmolen");
+		legendRect.setFillColor(v_windFarmColor);
+		legendRect.setLineColor(v_windFarmLineColor);
+		break;
+	case CHARGER:
+		legendText.setText("Laadpaal/plein");
+		legendRect.setFillColor(v_chargingStationColor);
+		legendRect.setLineColor(v_chargingStationLineColor);
+		break;
+	case BATTERY:	
+		legendText.setText("Batterij");
+		legendRect.setFillColor(v_batteryColor);
+		legendRect.setLineColor(v_batteryLineColor);
+		break;
+	case PARCEL:
+		legendText.setText("Nieuw Perceel");
+		legendRect.setFillColor(v_parcelColor);
+		legendRect.setLineColor(v_parcelLineColor);
+		break;
+	case ELECTROLYSER:
+		legendText.setText("Electrolyser");
+		legendRect.setFillColor(v_electrolyserColor);
+		legendRect.setLineColor(v_electrolyserLineColor);
+		break;
+}
+/*ALCODEEND*/}
+
+double f_initializeLegend()
+{/*ALCODESTART::1750080865693*/
+
+
+
+//Special gis objects
+f_initializeSpecialGISObjectsLegend();
+/*ALCODEEND*/}
+
+double f_setParkingSpaceLegendItem(OL_ParkingSpaceType activeParkingSpaceType,ShapeText legendText,ShapeRectangle legendRect)
+{/*ALCODESTART::1750089851073*/
+legendText.setVisible(true);
+legendRect.setVisible(true);
+
+switch(activeParkingSpaceType){
+	case PUBLIC:
+		legendText.setText("Parkeerplek: publiek");
+		legendRect.setFillColor(v_parkingSpaceColor_public);
+		legendRect.setLineColor(v_parkingSpaceLineColor_public);
+		break;
+	case PRIVATE:
+		legendText.setText("Parkeerplek: privé");
+		legendRect.setFillColor(v_parkingSpaceColor_private);
+		legendRect.setLineColor(v_parkingSpaceLineColor_private);
+		break;
+	case ELECTRIC:
+		legendText.setText("Parkeerplek: electrisch");
+		legendRect.setFillColor(v_parkingSpaceColor_electric);
+		legendRect.setLineColor(v_parkingSpaceLineColor_electric);
+		break;
+}
+/*ALCODEEND*/}
+
+Pair<ShapeText, ShapeRectangle> f_getNextSpecialLegendShapes(int legendShapesNumber)
+{/*ALCODESTART::1750092444018*/
+ShapeText legendText;
+ShapeRectangle legendRect;
+
+switch(legendShapesNumber){
+	case 1:
+		legendText = t_specialGISObjectLegend1;
+		legendRect = rect_specialGISObjectLegend1;
+		break;
+	case 2:
+		legendText = t_specialGISObjectLegend2;
+		legendRect = rect_specialGISObjectLegend2;
+		break;
+	case 3:
+		legendText = t_specialGISObjectLegend3;
+		legendRect = rect_specialGISObjectLegend3;
+		break;
+	case 4:
+		legendText = t_specialGISObjectLegend4;
+		legendRect = rect_specialGISObjectLegend4;
+		break;
+	case 5:
+		legendText = t_specialGISObjectLegend5;
+		legendRect = rect_specialGISObjectLegend5;
+		break;
+	case 6:
+		legendText = t_specialGISObjectLegend6;
+		legendRect = rect_specialGISObjectLegend6;
+		break;
+	case 7:
+		legendText = t_specialGISObjectLegend7;
+		legendRect = rect_specialGISObjectLegend7;
+		break;
+	case 8:
+		legendText = t_specialGISObjectLegend8;
+		legendRect = rect_specialGISObjectLegend8;
+		break;
+	case 9:
+		legendText = t_specialGISObjectLegend9;
+		legendRect = rect_specialGISObjectLegend9;
+		break;
+	case 10:
+		legendText = t_specialGISObjectLegend10;
+		legendRect = rect_specialGISObjectLegend10;
+		break;
+	case 11:
+		legendText = t_specialGISObjectLegend11;
+		legendRect = rect_specialGISObjectLegend11;
+		break;
+	case 12:
+		legendText = t_specialGISObjectLegend12;
+		legendRect = rect_specialGISObjectLegend12;
+		break;
+	default:
+		legendText = t_specialGISObjectLegend1;
+		legendRect = rect_specialGISObjectLegend1;
+		break;
+}
+
+return new Pair(legendText, legendRect);
+
 /*ALCODEEND*/}
 

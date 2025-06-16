@@ -2441,6 +2441,9 @@ double f_createAdditionalGISObjects()
 //Area outlines
 f_createGISRegionOutline();
 
+//Parking spaces
+f_createParkingSpots();
+
 //Parcels
 f_createGISParcels();
 
@@ -3591,8 +3594,8 @@ GC_GridNode_profile.v_liveConnectionMetaData.contractedFeedinCapacityKnown = fal
 GC_GridNode_profile.v_liveConnectionMetaData.physicalCapacityKnown = false;
 
 //Set lat lon same as gridnode
-GC_GridNode_profile.p_longitude = gridnode.p_longitude; // Get longitude of first building (only used to get nearest trafo)
 GC_GridNode_profile.p_latitude = gridnode.p_latitude; // Get latitude of first building (only used to get nearest trafo)
+GC_GridNode_profile.p_longitude = gridnode.p_longitude; // Get longitude of first building (only used to get nearest trafo)
 
 
 //Add profile to the GC
@@ -3790,33 +3793,32 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.p_eigenOprit = houseBuildingData.has_private_parking() != null ? houseBuildingData.has_private_parking() : false;
 	
 	//Nageisoleerd
-	if (project_data.project_type() == OL_ProjectType.RESIDENTIAL){
-		if (houseBuildingData.energy_label() != null) {
-			GCH.p_nageisoleerd = houseBuildingData.energy_label();
+	if (houseBuildingData.energy_label() != null) {
+		GCH.p_nageisoleerd = houseBuildingData.energy_label();
+	}
+	else {
+		if (GCH.p_bouwjaar < 1980) {
+			GCH.p_nageisoleerd = "D";
+			//v_houses_older_1980 ++;
+			v_houseIsolation_level = v_houseIsolation_level.D;
+		}
+		else if (GCH.p_bouwjaar < 2000) {
+			GCH.p_nageisoleerd = "C";
+			//v_houses_older_2000 ++;
+			v_houseIsolation_level = v_houseIsolation_level.C;
+		}
+		else if (GCH.p_bouwjaar < 2015) {
+			GCH.p_nageisoleerd = "B";
+			//v_houses_older_2015 ++;
+			v_houseIsolation_level = v_houseIsolation_level.B;
 		}
 		else {
-			if (GCH.p_bouwjaar < 1980) {
-				GCH.p_nageisoleerd = "D";
-				//v_houses_older_1980 ++;
-				v_houseIsolation_level = v_houseIsolation_level.D;
-			}
-			else if (GCH.p_bouwjaar < 2000) {
-				GCH.p_nageisoleerd = "C";
-				//v_houses_older_2000 ++;
-				v_houseIsolation_level = v_houseIsolation_level.C;
-			}
-			else if (GCH.p_bouwjaar < 2015) {
-				GCH.p_nageisoleerd = "B";
-				//v_houses_older_2015 ++;
-				v_houseIsolation_level = v_houseIsolation_level.B;
-			}
-			else {
-				GCH.p_nageisoleerd = "A";
-				//v_houses_newer_2015 ++;
-				v_houseIsolation_level = v_houseIsolation_level.A;
-			}
-		}		
+			GCH.p_nageisoleerd = "A";
+			//v_houses_newer_2015 ++;
+			v_houseIsolation_level = v_houseIsolation_level.A;
+		}
 	}
+		
 	//aansluiting gegevens
 	GCH.v_liveConnectionMetaData.physicalCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
 	GCH.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
@@ -3917,30 +3919,27 @@ if ( ! gn.p_hasProfileData ){
 	f_addElectricityDemandProfile(house, jaarlijksElectriciteitsVerbruik, null, false, "default_house_electricity_demand_fr");
 }
 
-if (project_data.project_type() == OL_ProjectType.RESIDENTIAL){
-	f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2, v_houseIsolation_level);
-	house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
-	double gasBurnerCapacity_kW = 50000;//40;//uniform_discr(3,5); 
-	f_addHeatAsset (house, house.p_heatingType, gasBurnerCapacity_kW);	
-}
-else{
-	f_addHeatDemandProfile(house, jaarlijksGasVerbruik, false, 1, "default_building_heat_demand_fr");
-}
+//Add building heat model and asset
+f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2, v_houseIsolation_level);
+house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
+double gasBurnerCapacity_kW = 50000;//40;//uniform_discr(3,5); 
+f_addHeatAsset (house, house.p_heatingType, gasBurnerCapacity_kW);	
+
+//Add hot water and cooking demand
 f_addHotWaterDemand(house, house.p_floorSurfaceArea_m2);
 double yearlyCookingDemand_kWh = uniform_discr(200,600);
-
-
 f_addCookingAsset(house, OL_EnergyAssetType.GAS_PIT, yearlyCookingDemand_kWh);
 
+
+//Add pv
 double installedRooftopSolar_kW = house.v_liveAssetsMetaData.initialPV_kW != null ? house.v_liveAssetsMetaData.initialPV_kW : 0;
 if (gn.p_hasProfileData){ //dont count production if there is measured data on Node
 	installedRooftopSolar_kW = 0;
 }
-
 f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW );
 
-//f_addPVPanels(house, gn);
 
+//Oprit?
 if( house.p_eigenOprit){
 	if (randomTrue( 0.08)){
 		f_addElectricVehicle(house, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, 0, 0);
@@ -3987,44 +3986,83 @@ List<GCEnergyProduction> carportGCList = new ArrayList<GCEnergyProduction>();
 for (ParkingSpace_data dataParkingSpace : parkingSpacesData){
 
 	//Create parking gis object	
-	GIS_Object parking = f_createGISObject(dataParkingSpace.parking_id(), dataParkingSpace.latitude(), dataParkingSpace.longitude(), dataParkingSpace.polygon(), OL_GISObjectType.PARKING);
-	parking.p_annotation = "Parking space: " + dataParkingSpace.additional_info();
+	GIS_Object parkingSpace = f_createGISObject(dataParkingSpace.parking_id(), dataParkingSpace.latitude(), dataParkingSpace.longitude(), dataParkingSpace.polygon(), OL_GISObjectType.PARKING);
+	parkingSpace.p_annotation = "Parking space: " + dataParkingSpace.additional_info();
 	
-	//Add to ordered collection on interface
-	zero_Interface.c_orderedParkingSpaces.add(parking);
-	
-	//Set correct color based on parking type
+	//Set correct color and legend collection based on parking type
 	switch(dataParkingSpace.type()){
-		case PUBLIC:
-			parking.p_defaultFillColor = lightBlue;
-			parking.p_defaultLineColor = blue;
-			break;
 		case PRIVATE:
-			parking.p_defaultFillColor = salmon;
-			parking.p_defaultLineColor = red;		
-			break;
 		case DISABLED:
-			parking.p_defaultFillColor = salmon;
-			parking.p_defaultLineColor = red;
+		case KISS_AND_RIDE:
+			parkingSpace.p_defaultFillColor = zero_Interface.v_parkingSpaceColor_private;
+			parkingSpace.p_defaultLineColor = zero_Interface.v_parkingSpaceLineColor_private;
+			zero_Interface.c_modelActiveParkingSpaceTypes.add(OL_ParkingSpaceType.PRIVATE);
+			break;
+		case PUBLIC:
+			parkingSpace.p_defaultFillColor = zero_Interface.v_parkingSpaceColor_public;
+			parkingSpace.p_defaultLineColor = zero_Interface.v_parkingSpaceLineColor_public;
+			zero_Interface.c_modelActiveParkingSpaceTypes.add(OL_ParkingSpaceType.PUBLIC);
 			break;
 		case ELECTRIC:
-			parking.p_defaultFillColor = lightGreen;
-			parking.p_defaultLineColor = green;		
-			break;
-		case KISS_AND_RIDE:
-			parking.p_defaultFillColor = salmon;
-			parking.p_defaultLineColor = red;
+			parkingSpace.p_defaultFillColor = zero_Interface.v_parkingSpaceColor_electric;
+			parkingSpace.p_defaultLineColor = zero_Interface.v_parkingSpaceLineColor_electric;
+			zero_Interface.c_modelActiveParkingSpaceTypes.add(OL_ParkingSpaceType.ELECTRIC);		
 			break;
 	}
+	
+	//Add to ordered collection on the interface
+	zero_Interface.c_orderedParkingSpaces.add(parkingSpace);
+
 	//Style gis object
-	parking.f_style(null, null, null, null);	
+	parkingSpace.f_style(null, null, null, null);	
 	
 	//Get energyProduction GC	
 	GCEnergyProduction carportGC = findFirst(carportGCList, gc -> gc.p_parentNodeElectricID.equals(dataParkingSpace.gridnode_id()));
 	
 	if(carportGC == null){ // If non existend -> Create one.
 		carportGC = energyModel.add_EnergyProductionSites();
+		carportGC.p_gridConnectionID = "Parking space gridconnection: " + dataParkingSpace.parking_id();
+		carportGC.v_liveConnectionMetaData.physicalCapacity_kW = dataParkingSpace.pv_potential_kwp();
+		carportGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = 0.0;
+		carportGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataParkingSpace.pv_potential_kwp();
+		
+		carportGC.v_liveConnectionMetaData.physicalCapacityKnown = false;
+		carportGC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
+		carportGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
+		
+		carportGC.p_parentNodeElectricID = dataParkingSpace.gridnode_id();
+
+		carportGC.p_latitude = dataParkingSpace.latitude();		
+		carportGC.p_longitude = dataParkingSpace.longitude();
+		
+		//Address
+		carportGC.p_address = new J_Address();
+		carportGC.p_address.setStreetName(dataParkingSpace.street());
+		
+		//CO
+		ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
+			
+		COC.p_actorID = "Parking space connection owner: " + dataParkingSpace.parking_id();
+		COC.p_actorType = OL_ActorType.CONNECTIONOWNER;
+		COC.p_connectionOwnerType = OL_ConnectionOwnerType.PARKINGSPACE_OP;
+		COC.p_detailedCompany = false;
+		COC.b_dataSharingAgreed = true;
+		
+		carportGC.p_owner = COC;
+		carportGC.p_ownerID = COC.p_actorID;
+		
+		//Add to collections
+		parkingSpace.c_containedGridConnections.add(carportGC);
+		carportGC.c_connectedGISObjects.add(parkingSpace);
 		carportGCList.add(carportGC);
+	}
+	else{
+		carportGC.v_liveConnectionMetaData.physicalCapacity_kW += dataParkingSpace.pv_potential_kwp();
+		carportGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW += dataParkingSpace.pv_potential_kwp();
+		
+		//Add to collections
+		parkingSpace.c_containedGridConnections.add(carportGC);
+		carportGC.c_connectedGISObjects.add(parkingSpace);
 	}
 	
 	//Update pv potential of carport energy production site
