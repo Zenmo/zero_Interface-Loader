@@ -25,12 +25,12 @@ f_createSolarParks();
 f_createWindFarms();
 
 //Other infra assets
+f_createChargingStations();
 f_createElectrolysers();
 f_createBatteries();
-f_createChargingStations();
 
 //Consumers
-f_createConsumerGC_businesspark();
+f_createCompanies();
 f_createHouses();
 /*ALCODEEND*/}
 
@@ -286,7 +286,6 @@ GCEnergyProduction solarpark;
 
 List<String> existing_actors = new ArrayList();
 List<String> existing_solarFields = new ArrayList();
-
 
 for (Solarfarm_data dataSolarfarm : c_solarfarm_data) { // MOET NOG CHECK OF ZONNEVELD ACTOR AL BESTAAT OP, zo ja --> Zonneveld koppelen aan elkaar en niet 2 GC en 2 actoren maken.
 	
@@ -740,8 +739,16 @@ double f_createGenericCompanies()
 List<GCUtility> generic_company_GCs = new ArrayList();
 HashMap<GridConnection, Double> map_GC_to_installedBuildingPV = new HashMap();
 
+//Get buildings in scope
+List<Building_data> buildingDataGenericCompanies = f_getBuildingsInSubScope(c_companyBuilding_data);
+
+//Add generic companies to the legend if in model
+if(buildingDataGenericCompanies.size()>0){
+	zero_Interface.c_modelActiveDefaultGISBuildings.add(OL_GISBuildingTypes.DEFAULT_COMPANY);
+}
+
 //Loop over the remaining buildings in c_CompanyBuilding_data (Survey buildings have been removed from this collection)
-for (Building_data genericCompany : c_companyBuilding_data) {
+for (Building_data genericCompany : buildingDataGenericCompanies) {
 	
 	GCUtility companyGC = findFirst(generic_company_GCs, GC -> GC.p_gridConnectionID.equals(genericCompany.address_id()));
 	
@@ -878,23 +885,6 @@ if(buildingData.pandcluster_nr() != null && buildingData.pandcluster_nr() > 0) {
 
 //Create gisregion
 b.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(buildingData.polygon(), b.p_GISObjectType));
-
-/*
-if (buildingData.latitude() == null|| buildingData.longitude() == null){
-	
-	//Use the first point of the polygon as lat lon
-	double[] gisregion_points = b.gisRegion.getPoints(); // get all points of the gisArea of the building in the format lat1,lon1,lat2,lon2, etc.
-	
-	//position and coordinates
-	b.p_latitude = gisregion_points[0];
-	b.p_longitude = gisregion_points[1];
-}
-else{
-	//position and coordinates
-	b.p_latitude = buildingData.latitude();
-	b.p_longitude = buildingData.longitude();
-}
-*/
 
 //Use the first point of the polygon as lat lon
 double[] gisregion_points = b.gisRegion.getPoints(); // get all points of the gisArea of the building in the format lat1,lon1,lat2,lon2, etc.
@@ -1055,6 +1045,11 @@ f_addHeatAsset(parentGC, parentGC.p_heatingType, maxHeatOutputPower_kW);
 
 double f_createGISParcels()
 {/*ALCODESTART::1726584205807*/
+//Add GISObject type to the legenda
+if(c_parcel_data.size()>0){
+	zero_Interface.c_modelActiveSpecialGISObjects.add(OL_GISObjectType.PARCEL);
+}
+
 for (Parcel_data dataParcel : c_parcel_data) {
 		
 	GIS_Parcel parcel = energyModel.add_pop_GIS_Parcels();
@@ -1073,7 +1068,6 @@ for (Parcel_data dataParcel : c_parcel_data) {
 	parcel.set_p_defaultLineColor( zero_Interface.v_parcelLineColor );
 	parcel.set_p_defaultLineStyle( LineStyle.LINE_STYLE_DASHED );
 	zero_Interface.f_styleAreas(parcel);
-	
 }
 /*ALCODEEND*/}
 
@@ -1131,7 +1125,8 @@ area.setLatLon(area.p_latitude, area.p_longitude);
 //Create gisregion
 area.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(polygon, area.p_GISObjectType));
 
-//zero_Interface.c_GISBuildingShapes.add(b.gisRegion);		
+//Add GISObject type to the legenda
+zero_Interface.c_modelActiveSpecialGISObjects.add(area.p_GISObjectType);
 
 return area;
 
@@ -1301,6 +1296,16 @@ for (var survey : surveys) {
         }
     }
 }
+
+//If survey companies are present, add to the ui legend
+if(v_numberOfSurveyCompanies>0){
+	//Add to the legend
+	zero_Interface.c_modelActiveDefaultGISBuildings.add(OL_GISBuildingTypes.DETAILED_COMPANY);
+
+	//Pass the number of survey companies to interface for the dynamic legend
+	zero_Interface.v_numberOfSurveyCompanies = v_numberOfSurveyCompanies;
+}
+
 
 //Add created subtenants to main tenant(should happen after the other companies have been created)
 for(A_SubTenant subtenant : subTenants){
@@ -1667,6 +1672,11 @@ if (v_remainingNumberOfTrucks > 0){
 
 double f_createRemainingBuildings()
 {/*ALCODESTART::1726584205835*/
+//If remaining buildings in model, add to legend
+if(c_remainingBuilding_data.size()>0){
+	zero_Interface.c_modelActiveDefaultGISBuildings.add(OL_GISBuildingTypes.REMAINING);
+}
+
 for (Building_data remainingBuilding_data : c_remainingBuilding_data) {
 	
 	GIS_Building building = energyModel.add_pop_GIS_Buildings();
@@ -2418,7 +2428,7 @@ traceln("Companies that filled in the survey:");
 */
 /*ALCODEEND*/}
 
-double f_createConsumerGC_businesspark()
+double f_createCompanies()
 {/*ALCODESTART::1726584205873*/
 //Create survey companies based on survey inload structure
 switch(project_data.survey_type()){
@@ -3776,6 +3786,12 @@ List<Building_data> buildingDataHouses = f_getBuildingsInSubScope(c_houseBuildin
 traceln("Aantal panden met woonfunctie in BAG data: " + buildingDataHouses.size());
 
 int i = 0;
+
+//Add houses to the legend if in model
+if(buildingDataHouses.size()>0){
+	zero_Interface.c_modelActiveDefaultGISBuildings.add(OL_GISBuildingTypes.HOUSE);
+}
+
 for (Building_data houseBuildingData : buildingDataHouses) {
 	GCHouse GCH = energyModel.add_Houses();
 	ConnectionOwner	COH = energyModel.add_pop_connectionOwners();

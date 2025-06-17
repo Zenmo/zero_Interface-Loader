@@ -2637,38 +2637,9 @@ Collections.shuffle(c_orderedParkingSpaces);
 
 double f_initializeSpecialGISObjectsLegend()
 {/*ALCODESTART::1750078798174*/
-//Get all special GISObject types in model
-for(GIS_Object object : energyModel.pop_GIS_Objects){
-	switch(object.p_GISObjectType){
-		case SOLARFARM:
-			c_modelActiveGISObjects.add(OL_GISObjectType.SOLARFARM);
-			break;
-		case WINDFARM:
-			c_modelActiveGISObjects.add(OL_GISObjectType.WINDFARM);
-			break;
-		case CHARGER:
-			c_modelActiveGISObjects.add(OL_GISObjectType.CHARGER);
-			break;
-		case BATTERY:	
-			c_modelActiveGISObjects.add(OL_GISObjectType.BATTERY);
-			break;
-		case PARCEL:
-			c_modelActiveGISObjects.add(OL_GISObjectType.PARCEL);
-			break;
-		case ELECTROLYSER:
-			c_modelActiveGISObjects.add(OL_GISObjectType.ELECTROLYSER);
-			break;
-		case PARKING: // Skip this one, other legend
-			c_modelActiveGISObjects.add(OL_GISObjectType.PARKING);
-			break;
-	}
-	traceln("object.p_GISObjectType: " + object.p_GISObjectType);
-	traceln("c_modelActiveGISObjects: " + c_modelActiveGISObjects);
-}
-
 int numberOfSpecialActiveGISObjectTypes = 0;
 
-for(OL_GISObjectType activeSpecialGISObjectType : c_modelActiveGISObjects){
+for(OL_GISObjectType activeSpecialGISObjectType : c_modelActiveSpecialGISObjects){
 	if(activeSpecialGISObjectType == OL_GISObjectType.PARKING){
 		for(OL_ParkingSpaceType activeParkingSpaceType : c_modelActiveParkingSpaceTypes){
 			numberOfSpecialActiveGISObjectTypes ++;
@@ -2725,8 +2696,8 @@ switch(activeSpecialGISObjectType){
 
 double f_initializeLegend()
 {/*ALCODESTART::1750080865693*/
-
-
+//Default GIS buildings
+f_initializeDefaultGISBuildingsLegend();
 
 //Special gis objects
 f_initializeSpecialGISObjectsLegend();
@@ -2818,5 +2789,80 @@ switch(legendShapesNumber){
 
 return new Pair(legendText, legendRect);
 
+/*ALCODEEND*/}
+
+double f_initializeDefaultGISBuildingsLegend()
+{/*ALCODESTART::1750162397332*/
+int numberOfDefaultActiveGISObjectTypes = 1;//Always start at 2 (1 ++) for the building types, cause 'selection' is always present (for now).
+
+for(OL_GISBuildingTypes activeDefaultGISBuildingType : c_modelActiveDefaultGISBuildings){
+	numberOfDefaultActiveGISObjectTypes ++;
+	Pair<ShapeText, ShapeOval> legendShapes = f_getNextDefaultLegendShapes(numberOfDefaultActiveGISObjectTypes);
+	f_setDefaultGISBuildingLegendItem(activeDefaultGISBuildingType, legendShapes.getFirst(), legendShapes.getSecond());
+}
+/*ALCODEEND*/}
+
+Pair<ShapeText, ShapeOval> f_getNextDefaultLegendShapes(int legendShapesNumber)
+{/*ALCODESTART::1750162514744*/
+ShapeText legendText;
+ShapeOval legendOval;
+
+switch(legendShapesNumber){
+	case 1:
+		legendText = t_defaultLegend1;
+		legendOval = oval_defaultLegend1;
+		break;
+	case 2:
+		legendText = t_defaultLegend2;
+		legendOval = oval_defaultLegend2;
+		break;
+	case 3:
+		legendText = t_defaultLegend3;
+		legendOval = oval_defaultLegend3;
+		break;
+	case 4:
+		legendText = t_defaultLegend4;
+		legendOval = oval_defaultLegend4;
+		break;
+	case 5:
+		legendText = t_defaultLegend5;
+		legendOval = oval_defaultLegend5;
+		break;
+	default:
+		legendText = t_defaultLegend1;
+		legendOval = oval_defaultLegend1;
+}
+
+return new Pair(legendText, legendOval);
+
+/*ALCODEEND*/}
+
+double f_setDefaultGISBuildingLegendItem(OL_GISBuildingTypes activeDefaultGISBuildingType,ShapeText legendText,ShapeOval legendOval)
+{/*ALCODESTART::1750165143690*/
+legendText.setVisible(true);
+legendOval.setVisible(true);
+
+switch(activeDefaultGISBuildingType){
+	case DETAILED_COMPANY:
+		legendText.setText("Gedetaileerd bedrijf: " + v_numberOfSurveyCompanies);
+		legendOval.setFillColor(v_detailedCompanyBuildingColor);
+		legendOval.setLineColor(v_detailedCompanyBuildingLineColor);
+		break;
+	case DEFAULT_COMPANY:
+		legendText.setText("Standaard bedrijf");
+		legendOval.setFillColor(v_companyBuildingColor);
+		legendOval.setLineColor(v_companyBuildingLineColor);
+		break;
+	case HOUSE:
+		legendText.setText("Huizen");
+		legendOval.setFillColor(v_houseBuildingColor);
+		legendOval.setLineColor(v_houseBuildingLineColor);
+		break;
+	case REMAINING:
+		legendText.setText("Overige gebouwen");
+		legendOval.setFillColor(v_restBuildingColor);
+		legendOval.setLineColor(v_restBuildingLineColor);
+		break;
+}
 /*ALCODEEND*/}
 
