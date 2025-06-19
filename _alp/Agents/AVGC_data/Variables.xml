@@ -1967,7 +1967,7 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 		<Name><![CDATA[p_v2gProbability]]></Name>
 		<Description><![CDATA[SOURCE!?!?!?!]]></Description>
 		<X>570</X>
-		<Y>120</Y>
+		<Y>125</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1984,6 +1984,35 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1749653366665</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1750246849611</Id>
+		<Name><![CDATA[p_v1gProbability]]></Name>
+		<Description><![CDATA[SOURCE!?!?!?!]]></Description>
+		<X>570</X>
+		<Y>105</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.8]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1750246849609</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>

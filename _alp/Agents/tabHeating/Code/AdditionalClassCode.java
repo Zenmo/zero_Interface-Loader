@@ -33,11 +33,11 @@ public ShapeGroup getGroupHeatDemandSlidersResidentialArea() {
 }
 
 public ShapeSlider getSliderHeatDemandSlidersResidentialAreaHouseholdsGasBurner_pct() { 
-	return this.sl_heatDemandSlidersResidentialAreaHouseholdsGasBurner_pct;
+	return this.sl_householdGasBurnerResidentialArea_pct;
 }
 
 public ShapeSlider getSliderHeatDemandSlidersResidentialAreaHouseholdsElectricHeatPump_pct() { 
-	return this.sl_heatDemandSlidersResidentialAreaHouseholdsElectricHeatPump_pct;
+	return this.sl_householdElectricHeatPumpResidentialArea_pct;
 }
 
 // Company Tab Sliders

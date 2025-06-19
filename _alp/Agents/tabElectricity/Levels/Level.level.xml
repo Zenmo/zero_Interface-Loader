@@ -27,729 +27,6 @@
 		<FillMaterial>null</FillMaterial>
 	</Rectangle>
 	<Group>
-		<Id>1722249610010</Id>
-		<Name><![CDATA[gr_electricityDemandSlidersResidentialArea]]></Name>
-		<X>795</X>
-		<Y>0</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>false</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>0</XCode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Presentation>
-			<Rectangle>
-				<Id>1722249610012</Id>
-				<Name><![CDATA[rect_electricityDemandSlidersResidentialArea]]></Name>
-				<X>0</X>
-				<Y>0</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>3</LineWidth>
-				<LineColor/>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>370</Width>
-				<Height>350</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-32</FillColor>
-				<FillMaterial>null</FillMaterial>
-			</Rectangle>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1722249610014</Id>
-				<Name><![CDATA[sl_electricityDemandReduction1]]></Name>
-				<X>260</X>
-				<Y>100</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>false</Enabled>
-					<ActionCode>traceln("Slider doet nog niets!!");
-//p_electricityDemandReduction = (100 - sl_electricityDemandReduction.getValue()) / 100;
-//t_electricityDemandReduction.setText(sl_electricityDemandReduction.getValue() + "%");
-
-//zero_Interface.f_resetSettings();
-</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>-50</MinValue>
-					<MaxValue>50</MaxValue>
-					<Step>1</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1722249610016</Id>
-				<Name><![CDATA[text288]]></Name>
-				<X>5</X>
-				<Y>105</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Groei elektriciteitsverbruik]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1722249610018</Id>
-				<Name><![CDATA[t_electricityDemandReduction1]]></Name>
-				<X>230</X>
-				<Y>105</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[0%]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<Text>
-				<Id>1722249610020</Id>
-				<Name><![CDATA[t_rooftopSolarCompanies2]]></Name>
-				<X>230</X>
-				<Y>35</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[10%]]></Text>
-				<TextCode>sl_rooftopPV.getIntValue() + "%"</TextCode>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1722249610022</Id>
-				<Name><![CDATA[sl_rooftopPV]]></Name>
-				<X>260</X>
-				<Y>30</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemHouses( sl_rooftopPV.getValue() );
-if( zero_Interface.rb_buildingColors.getValue() == 2){
-	zero_Interface.rb_buildingColors.setValue(2, true);
-}
-
-// Also updates the home batteries
-f_setResidentialBatteries( sl_individualBatteries.getValue() );</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>10</MinValue>
-					<MaxValue>100</MaxValue>
-					<Step>1</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1722249610024</Id>
-				<Name><![CDATA[text294]]></Name>
-				<X>5</X>
-				<Y>35</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Huizen met zon op dak]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1722249610026</Id>
-				<Name><![CDATA[text277]]></Name>
-				<X>5</X>
-				<Y>15</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Huishoudens]]></Text>
-				<Font>
-					<Name><![CDATA[Calibri]]></Name>
-					<Size>18</Size>
-					<Style>1</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1722249610028</Id>
-				<Name><![CDATA[sl_EVsWoonwijk]]></Name>
-				<X>260</X>
-				<Y>230</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>int sliderValue = sl_EVsWoonwijk.getIntValue();
-if ( sliderValue &lt; p_minPublicChargerSlider ){
-	sliderValue = p_minPublicChargerSlider;
-	sl_EVsWoonwijk.setValue( p_minPublicChargerSlider, false);
-	traceln("SLIDER MESSAGE: Can't set slider lower than the initial value of simulated area");
-}
-
-f_setPublicChargingStations(sliderValue);</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>100</MaxValue>
-					<Step>1</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1722249610030</Id>
-				<Name><![CDATA[t_publicParking]]></Name>
-				<X>5</X>
-				<Y>235</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Huishoudens publiek parkeren]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1722249610032</Id>
-				<Name><![CDATA[t_electricityDemandReduction2]]></Name>
-				<X>230</X>
-				<Y>235</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[0%]]></Text>
-				<TextCode>sl_EVsWoonwijk.getIntValue() + "%"</TextCode>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<Text>
-				<Id>1722249610034</Id>
-				<Name><![CDATA[text326]]></Name>
-				<X>5</X>
-				<Y>70</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Waarvan met batterijen]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1722249610036</Id>
-				<Name><![CDATA[sl_individualBatteries]]></Name>
-				<X>260</X>
-				<Y>65</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>f_setResidentialBatteries( sl_individualBatteries.getValue() );</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>100</MaxValue>
-					<Step>1</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1722249610038</Id>
-				<Name><![CDATA[t_individualBatteries_pct1]]></Name>
-				<X>230</X>
-				<Y>70</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[0%]]></Text>
-				<TextCode>sl_individualBatteries.getIntValue() + "%"</TextCode>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<Text>
-				<Id>1722249610040</Id>
-				<Name><![CDATA[t_electricCarDistribution]]></Name>
-				<X>5</X>
-				<Y>165</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Aandeel elektrische personenauto's bij:]]></Text>
-				<Font>
-					<Name><![CDATA[Calibri]]></Name>
-					<Size>18</Size>
-					<Style>1</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1722249610042</Id>
-				<Name><![CDATA[t_privateParking]]></Name>
-				<X>5</X>
-				<Y>200</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Huishoudens privaat parkeren]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1722249610044</Id>
-				<Name><![CDATA[sl_EVsWoonwijkPrivate]]></Name>
-				<X>260</X>
-				<Y>195</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>traceln("Slider doet nog niets!!");
-//f_setEVsAtPrivateParkingHouses();</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>100</MaxValue>
-					<Step>1</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Control Type="CheckBox">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1722249610046</Id>
-				<Name><![CDATA[checkbox3]]></Name>
-				<X>5</X>
-				<Y>265</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="300" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
-					<Enabled>true</Enabled>
-					<ActionCode>traceln("Button doet nog niets!!");</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<Font Name="Dialog" Size="11" Style="0"/>
-					<LabelText>Netbewust laden (publieke laadpalen knijpen in piek)</LabelText>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1722249837514</Id>
-				<Name><![CDATA[t_electricityDemandReduction3]]></Name>
-				<X>230</X>
-				<Y>200</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[0%]]></Text>
-				<TextCode>sl_EVsWoonwijkPrivate.getIntValue() + "%"</TextCode>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1724164051652</Id>
-				<Name><![CDATA[sl_gridBatteriesCapacity_kW]]></Name>
-				<X>261</X>
-				<Y>306</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>f_setGridBatteries( sl_gridBatteriesCapacity_kW.getValue() );
-</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>1000</MaxValue>
-					<Step>10</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1724164051654</Id>
-				<Name><![CDATA[t_gridBatteriesCapacity]]></Name>
-				<X>16</X>
-				<Y>311</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Buurtbatterijen]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1724164051656</Id>
-				<Name><![CDATA[t_gridBatteriesCapacity_kWh]]></Name>
-				<X>231</X>
-				<Y>311</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_gridBatteriesCapacity_kW.getIntValue() + " kW"</TextCode>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<Image>
-				<Id>1744878990804</Id>
-				<Name><![CDATA[i_householdPV_ResidentialArea]]></Name>
-				<X>160</X>
-				<Y>35</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_householdPV_ResidentialArea, zero_Interface.v_infoText.householdRooftopPV, i_householdPV_ResidentialArea.getX() + uI_Tabs.v_presentationXOffset, i_householdPV_ResidentialArea.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>20</Width>
-				<Height>20</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>icon_i.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-			<Image>
-				<Id>1746091830035</Id>
-				<Name><![CDATA[i_householdBatteries_ResidentialArea]]></Name>
-				<X>160</X>
-				<Y>70</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_householdBatteries_ResidentialArea, zero_Interface.v_infoText.householdBatteries, i_householdBatteries_ResidentialArea.getX() + uI_Tabs.v_presentationXOffset, i_householdBatteries_ResidentialArea.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>20</Width>
-				<Height>20</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>icon_i.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-			<Image>
-				<Id>1746091830081</Id>
-				<Name><![CDATA[i_householdGridAwareCharging_ResidentialArea]]></Name>
-				<X>288</X>
-				<Y>271</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_householdGridAwareCharging_ResidentialArea, zero_Interface.v_infoText.householdGridAwareCharging, i_householdGridAwareCharging_ResidentialArea.getX() + uI_Tabs.v_presentationXOffset, i_householdGridAwareCharging_ResidentialArea.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>20</Width>
-				<Height>20</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>icon_i.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-			<Image>
-				<Id>1746091830125</Id>
-				<Name><![CDATA[i_neighbourhoodBattery_ResidentialArea]]></Name>
-				<X>160</X>
-				<Y>310</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_neighbourhoodBattery_ResidentialArea, zero_Interface.v_infoText.neighbourhoodBatteries, i_neighbourhoodBattery_ResidentialArea.getX() + uI_Tabs.v_presentationXOffset, i_neighbourhoodBattery_ResidentialArea.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>20</Width>
-				<Height>20</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>icon_i.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-		</Presentation>
-	</Group>
-	<Group>
 		<Id>1722328776701</Id>
 		<Name><![CDATA[gr_electricityDemandSliders]]></Name>
 		<X>0</X>
@@ -835,12 +112,12 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReduction( sl_electricityDemandReduction_pct.getValue() );</ActionCode>
+					<ActionCode>f_setDemandReduction( zero_Interface.energyModel.f_getGridConnections(), sl_electricityDemandReduction_pct.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
+					<MinValue>-50</MinValue>
 					<MaxValue>50</MaxValue>
 					<Step>5</Step>
 					<LinkTo>false</LinkTo>
@@ -939,7 +216,11 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemCompanies(sl_rooftopPVCompanies_pct.getValue(), sl_rooftopPVCompanies_pct);</ActionCode>
+					<ActionCode>f_setPVSystemCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_rooftopPVCompanies_pct.getValue() );
+
+if( zero_Interface.rb_buildingColors.getValue() == 2){
+	zero_Interface.rb_buildingColors.setValue(2, true);
+}</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1202,7 +483,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemHouses( sl_rooftopPVHouses_pct.getValue() );
+					<ActionCode>f_setPVSystemHouses( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_rooftopPVHouses_pct.getValue() );
 
 if( zero_Interface.rb_buildingColors.getValue() == 2){
 	zero_Interface.rb_buildingColors.setValue(2, true);
@@ -1484,57 +765,6 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 		<Alignment>CENTER</Alignment>
 	</Text>
 	<Rectangle>
-		<Id>1722334712260</Id>
-		<Name><![CDATA[rect_residentialFunctions]]></Name>
-		<X>780</X>
-		<Y>370</Y>
-		<Label>
-			<X>10</X>
-			<Y>10</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>3</LineWidth>
-		<LineColor>-16777216</LineColor>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<Width>370</Width>
-		<Height>350</Height>
-		<Rotation>0.0</Rotation>
-		<FillColor>-1</FillColor>
-		<FillMaterial>null</FillMaterial>
-	</Rectangle>
-	<Text>
-		<Id>1722334744018</Id>
-		<Name><![CDATA[t_residentialFunctionsDescription]]></Name>
-		<X>980</X>
-		<Y>380</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Residential Area Functions]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>18</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>CENTER</Alignment>
-	</Text>
-	<Rectangle>
 		<Id>1722335253828</Id>
 		<Name><![CDATA[rect_demandFunctions]]></Name>
 		<X>40</X>
@@ -1609,639 +839,6 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 			<Style>0</Style>
 		</Font>
 		<Alignment>LEFT</Alignment>
-	</Text>
-	<Group>
-		<Id>1725550141741</Id>
-		<Name><![CDATA[gr_electricityDemandSlidersResidentialAreaScale]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1380</X>
-		<Y>170</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>false</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>185</XCode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Presentation>
-			<Rectangle>
-				<Id>1725571404716</Id>
-				<Name><![CDATA[rect_electricityDemandSliders2]]></Name>
-				<X>-190</X>
-				<Y>-170</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>3</LineWidth>
-				<LineColor/>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>370</Width>
-				<Height>350</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-32</FillColor>
-				<FillMaterial>null</FillMaterial>
-			</Rectangle>
-			<Text>
-				<Id>1725550141749</Id>
-				<Name><![CDATA[t_electricityDemandReduction6]]></Name>
-				<X>45</X>
-				<Y>-70</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[0%]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<Text>
-				<Id>1725550141751</Id>
-				<Name><![CDATA[t_rooftopSolarCompanies3]]></Name>
-				<X>45</X>
-				<Y>-140</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[10%]]></Text>
-				<TextCode>sl_rooftopPVScale.getIntValue() + "%"</TextCode>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1725550141753</Id>
-				<Name><![CDATA[sl_rooftopPVScale]]></Name>
-				<X>75</X>
-				<Y>-145</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemHouses( sl_rooftopPVScale.getValue() );
-if( zero_Interface.rb_buildingColors.getValue() == 2){
-	zero_Interface.rb_buildingColors.setValue(2, true);
-}
-
-// Also updates the home batteries
-f_setResidentialBatteries( sl_individualBatteriesScale.getValue() );</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>10</MinValue>
-					<MaxValue>100</MaxValue>
-					<Step>1</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1725550141755</Id>
-				<Name><![CDATA[text2942]]></Name>
-				<X>-180</X>
-				<Y>-140</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Huizen met zon op dak]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1725550141757</Id>
-				<Name><![CDATA[text2772]]></Name>
-				<X>-180</X>
-				<Y>-160</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Huishoudens]]></Text>
-				<Font>
-					<Name><![CDATA[Calibri]]></Name>
-					<Size>18</Size>
-					<Style>1</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1725550141759</Id>
-				<Name><![CDATA[sl_EVsWoonwijkScale]]></Name>
-				<X>75</X>
-				<Y>55</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>double sliderValue = sl_EVsWoonwijkScale.getValue();
-f_setPublicChargingStationsScale(sliderValue);</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>1</MaxValue>
-					<Step>0.25</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1725550141761</Id>
-				<Name><![CDATA[t_publicParking2]]></Name>
-				<X>-180</X>
-				<Y>60</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Huishoudens publiek parkeren]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1725550141763</Id>
-				<Name><![CDATA[t_electricityDemandReduction5]]></Name>
-				<X>45</X>
-				<Y>60</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[0%]]></Text>
-				<TextCode>sl_EVsWoonwijkScale.getValue()</TextCode>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<Text>
-				<Id>1725550141765</Id>
-				<Name><![CDATA[text3262]]></Name>
-				<X>-160</X>
-				<Y>-105</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Waarvan met batterijen]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1725550141767</Id>
-				<Name><![CDATA[sl_individualBatteriesScale]]></Name>
-				<X>75</X>
-				<Y>-110</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>f_setResidentialBatteries( sl_individualBatteriesScale.getValue() );</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>100</MaxValue>
-					<Step>1</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1725550141769</Id>
-				<Name><![CDATA[t_individualBatteries_pct3]]></Name>
-				<X>45</X>
-				<Y>-105</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[0%]]></Text>
-				<TextCode>sl_individualBatteriesScale.getIntValue() + "%"</TextCode>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<Text>
-				<Id>1725550141771</Id>
-				<Name><![CDATA[t_electricCarDistribution2]]></Name>
-				<X>-180</X>
-				<Y>-10</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Aandeel elektrische personenauto's bij:]]></Text>
-				<Font>
-					<Name><![CDATA[Calibri]]></Name>
-					<Size>18</Size>
-					<Style>1</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1725550141773</Id>
-				<Name><![CDATA[t_privateParking2]]></Name>
-				<X>-180</X>
-				<Y>25</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Huishoudens privaat parkeren]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1725550141775</Id>
-				<Name><![CDATA[sl_EVsWoonwijkPrivateScale]]></Name>
-				<X>75</X>
-				<Y>20</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>traceln("Slider doet nog niets!!");
-//f_setEVsAtPrivateParkingHouses();</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>100</MaxValue>
-					<Step>1</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1725550141779</Id>
-				<Name><![CDATA[t_electricityDemandReduction4]]></Name>
-				<X>45</X>
-				<Y>25</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[0%]]></Text>
-				<TextCode>sl_EVsWoonwijkPrivateScale.getIntValue() + "%"</TextCode>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1725550141781</Id>
-				<Name><![CDATA[sl_gridBatteriesCapacityScale_kW]]></Name>
-				<X>76</X>
-				<Y>131</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>f_setGridBatteries( sl_gridBatteriesCapacityScale_kW.getValue() );
-</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>1000</MaxValue>
-					<Step>10</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1725550141783</Id>
-				<Name><![CDATA[t_gridBatteriesCapacity2]]></Name>
-				<X>-169</X>
-				<Y>136</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Capaciteit buurtbatterijen]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1725550141785</Id>
-				<Name><![CDATA[t_gridBatteriesCapacity_kWh2]]></Name>
-				<X>46</X>
-				<Y>136</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_gridBatteriesCapacityScale_kW.getIntValue() + " kW"</TextCode>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<Control Type="RadioButtons">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1725571436399</Id>
-				<Name><![CDATA[chargingMethodScale]]></Name>
-				<X>-180</X>
-				<Y>90</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="350" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
-					<Enabled>true</Enabled>
-				</BasicProperties>
-				<ExtendedProperties>
-					<Font Name="Dialog" Size="11" Style="0"/>
-					<Orientation>HORIZONTAL</Orientation>
-					<Button>Uncontrolled charging</Button>
-					<Button>V1G smart</Button>
-					<Button>V2G smart</Button>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-		</Presentation>
-	</Group>
-	<Text>
-		<Id>1725550152432</Id>
-		<Name><![CDATA[text]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1350</X>
-		<Y>-30</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Scale]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>18</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Rectangle>
-		<Id>1725550668575</Id>
-		<Name><![CDATA[rect_residentialFunctions1]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1190</X>
-		<Y>370</Y>
-		<Label>
-			<X>10</X>
-			<Y>10</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>3</LineWidth>
-		<LineColor>-16777216</LineColor>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<Width>370</Width>
-		<Height>350</Height>
-		<Rotation>0.0</Rotation>
-		<FillColor>-1</FillColor>
-		<FillMaterial>null</FillMaterial>
-	</Rectangle>
-	<Text>
-		<Id>1725550668579</Id>
-		<Name><![CDATA[t_scale]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1400</X>
-		<Y>380</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Scale Functions]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>18</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>CENTER</Alignment>
 	</Text>
 	<Group>
 		<Id>1728384392418</Id>
@@ -2330,7 +927,7 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReduction( sl_electricityDemandReduction_pct_Businesspark.getValue() );</ActionCode>
+					<ActionCode>f_setDemandReduction( zero_Interface.energyModel.f_getGridConnections(), sl_electricityDemandReduction_pct_Businesspark.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -2434,7 +1031,7 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemCompanies(sl_rooftopPVCompanies_pct_Businesspark.getValue(), sl_rooftopPVCompanies_pct_Businesspark);</ActionCode>
+					<ActionCode>f_setPVSystemCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_rooftopPVCompanies_pct_Businesspark.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -2761,6 +1358,1300 @@ f_setPublicChargingStationsScale(sliderValue);</ActionCode>
 				</ImageFiles>
 				<OriginalSize>false</OriginalSize>
 			</Image>
+		</Presentation>
+	</Group>
+	<Group>
+		<Id>1750063382217</Id>
+		<Name><![CDATA[gr_electricityDemandSlidersResidentialArea]]></Name>
+		<X>800</X>
+		<Y>0</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>0</XCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Rectangle>
+				<Id>1750063382219</Id>
+				<Name><![CDATA[rect_electricityDemandSlidersResidentialArea]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>5</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>370</Width>
+				<Height>350</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-32</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Rectangle>
+			<Text>
+				<Id>1750063382221</Id>
+				<Name><![CDATA[t_electricityDemandReductionResidentialArea_pct]]></Name>
+				<X>235</X>
+				<Y>145</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0%]]></Text>
+				<TextCode>sl_electricityDemandReductionResidentialArea_pct.getIntValue() + "%"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Text>
+				<Id>1750063382223</Id>
+				<Name><![CDATA[t_householdPVResidentialArea_pct]]></Name>
+				<X>235</X>
+				<Y>55</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[10%]]></Text>
+				<TextCode>sl_householdPVResidentialArea_pct.getIntValue() + "%"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1750063382225</Id>
+				<Name><![CDATA[sl_householdPVResidentialArea_pct]]></Name>
+				<X>265</X>
+				<Y>50</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setPVSystemHouses( findAll(zero_Interface.energyModel.Houses, x -&gt; true), sl_householdPVResidentialArea_pct.getValue() );
+if( zero_Interface.rb_buildingColors.getValue() == 2){
+	zero_Interface.rb_buildingColors.setValue(2, true); //renew the PV view of houses
+}
+
+// Also updates the home batteries
+f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() );</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>35</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>100</MaxValue>
+					<Step>5</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1750063382227</Id>
+				<Name><![CDATA[t_householdPVResidentialAreaDescription]]></Name>
+				<X>20</X>
+				<Y>55</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Share of houses with rooftop PV]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1750063382229</Id>
+				<Name><![CDATA[t_electricitDemandSlidersResidentialAreaDescription]]></Name>
+				<X>20</X>
+				<Y>20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Households]]></Text>
+				<Font>
+					<Name><![CDATA[Calibri]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1750063382231</Id>
+				<Name><![CDATA[sl_publicEVsResidentialArea_pct]]></Name>
+				<X>265</X>
+				<Y>207</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>int sliderValue = sl_publicEVsResidentialArea_pct.getIntValue();
+if ( sliderValue &lt; p_minPublicChargerSlider ){
+	sliderValue = p_minPublicChargerSlider;
+	sl_publicEVsResidentialArea_pct.setValue( p_minPublicChargerSlider, false);
+	traceln("SLIDER MESSAGE: Can't set slider lower than the initial value of simulated area");
+}
+f_setPublicChargingStations(sliderValue);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>5</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>100</MaxValue>
+					<Step>1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1750063382233</Id>
+				<Name><![CDATA[t_publicEVsResidentialAreaDescription]]></Name>
+				<X>20</X>
+				<Y>212</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Public chargers in area]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1750063382235</Id>
+				<Name><![CDATA[t_publicEVsResidentialArea_pct]]></Name>
+				<X>245</X>
+				<Y>212</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0%]]></Text>
+				<TextCode>sl_publicEVsResidentialArea_pct.getIntValue() + " %"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1750063382237</Id>
+				<Name><![CDATA[t_householdBatteriesResidentialAreaDescription]]></Name>
+				<X>30</X>
+				<Y>85</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Of which with batteries]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1750063382239</Id>
+				<Name><![CDATA[sl_householdBatteriesResidentialArea_pct]]></Name>
+				<X>265</X>
+				<Y>80</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() );</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>100</MaxValue>
+					<Step>5</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1750063382241</Id>
+				<Name><![CDATA[t_householdBatteriesResidentialArea_pct]]></Name>
+				<X>235</X>
+				<Y>85</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0%]]></Text>
+				<TextCode>sl_householdBatteriesResidentialArea_pct.getIntValue() + "%"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1750063382243</Id>
+				<Name><![CDATA[sl_gridBatteriesResidentialArea_kWh]]></Name>
+				<X>266</X>
+				<Y>310</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setGridBatteries( sl_gridBatteriesResidentialArea_kWh.getValue() );
+</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>1000</MaxValue>
+					<Step>10</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1750063382245</Id>
+				<Name><![CDATA[t_gridBatteriesResidentialAreaDescription]]></Name>
+				<X>20</X>
+				<Y>316</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Installed capacity shared battery]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1750063382247</Id>
+				<Name><![CDATA[t_gridBatteriesResidentialArea_kW]]></Name>
+				<X>236</X>
+				<Y>315</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[#]]></Text>
+				<TextCode>sl_gridBatteriesResidentialArea_kWh.getIntValue() + " kWh"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Control Type="RadioButtons">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1750063382249</Id>
+				<Name><![CDATA[chargingMethodResidentialArea]]></Name>
+				<X>31</X>
+				<Y>239</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="310" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<ActionCode>switch (chargingMethodResidentialArea.getValue()){
+	case 0:
+		gr_settingsV1G.setVisible(false);
+		gr_settingsV2G.setVisible(false);
+		
+		//zero_Interface.energyModel.v_smartChargingActive = false;
+		//zero_Interface.energyModel.v_V2GProbability = 0;
+		for( GCHouse house : zero_Interface.energyModel.Houses ){
+			house.p_chargingAttitudeVehicles = OL_ChargingAttitude.SIMPLE;
+		}
+		break;
+	case 1:
+		gr_settingsV1G.setVisible(true);
+		gr_settingsV2G.setVisible(false);
+		//zero_Interface.energyModel.v_smartChargingActive = true;
+		for( GCHouse house : zero_Interface.energyModel.Houses ){
+			house.p_chargingAttitudeVehicles = OL_ChargingAttitude.V1G;
+		}
+		//zero_Interface.energyModel.v_V2GProbability = 0;
+		break;
+	case 2:
+		gr_settingsV1G.setVisible(false);
+		gr_settingsV2G.setVisible(true);
+		for( GCHouse house : zero_Interface.energyModel.Houses ){
+			house.p_chargingAttitudeVehicles = OL_ChargingAttitude.V2G; 
+		}
+		//zero_Interface.energyModel.v_smartChargingActive = true;
+		//zero_Interface.energyModel.v_V2GProbability = 1;
+		break;
+}
+	
+</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<Orientation>HORIZONTAL</Orientation>
+					<Button>Uncontrolled charging</Button>
+					<Button>V1G smart</Button>
+					<Button>V2G smart</Button>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1750063382251</Id>
+				<Name><![CDATA[t_electricityDemandReductionResidentialAreaDescription]]></Name>
+				<X>20</X>
+				<Y>145</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Electricity consumption growth]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1750063382253</Id>
+				<Name><![CDATA[sl_electricityDemandReductionResidentialArea_pct]]></Name>
+				<X>265</X>
+				<Y>140</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setDemandReduction( new ArrayList&lt;GridConnection&gt;(findAll(zero_Interface.energyModel.Houses, x -&gt; true)), sl_electricityDemandReductionResidentialArea_pct.getValue() );
+</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>-50</MinValue>
+					<MaxValue>50</MaxValue>
+					<Step>2</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1750063382255</Id>
+				<Name><![CDATA[t_householdElectricCookingResidentialAreaDescription]]></Name>
+				<X>20</X>
+				<Y>115</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Perc. electric cooking]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1750063382257</Id>
+				<Name><![CDATA[sl_householdElectricCookingResidentialArea_pct]]></Name>
+				<X>265</X>
+				<Y>110</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setElectricCooking( sl_householdElectricCookingResidentialArea_pct.getValue() );</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>100</MaxValue>
+					<Step>2</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1750063382259</Id>
+				<Name><![CDATA[t_householdElectricCookingResidentialArea_pct]]></Name>
+				<X>235</X>
+				<Y>115</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0%]]></Text>
+				<TextCode>sl_householdElectricCookingResidentialArea_pct.getIntValue() + "%"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1750063382261</Id>
+				<Name><![CDATA[button_trafoReinforcement]]></Name>
+				<X>238</X>
+				<Y>0</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="130" Height="25">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<ActionCode>//gr_electricityDemandSlidersResidentialAreaScale.setVisible(false);
+gr_trafoReinforcement.setVisible(true);
+</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Trafo reinforcement</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1750063382263</Id>
+				<Name><![CDATA[t_privateEVsResidentialAreaDescription]]></Name>
+				<X>20</X>
+				<Y>186</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Private EV share]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1750063382265</Id>
+				<Name><![CDATA[sl_privateEVsResidentialArea_pct]]></Name>
+				<X>265</X>
+				<Y>180</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>int sliderValue = sl_privateEVsResidentialArea_pct.getIntValue();
+if ( sliderValue &lt; p_minPVHouseholdSlider ){
+	sliderValue = p_minPVHouseholdSlider;
+	sl_publicEVsResidentialArea_pct.setValue( p_minPVHouseholdSlider, false);
+	traceln("SLIDER MESSAGE: Can't set slider lower than the initial value of simulated area");
+}
+//f_setVehiclesPrivateParking(sliderValue);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>100</MaxValue>
+					<Step>1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1750063382267</Id>
+				<Name><![CDATA[t_privateEVsResidentialArea_pct]]></Name>
+				<X>244</X>
+				<Y>186</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0%]]></Text>
+				<TextCode>sl_privateEVsResidentialArea_pct.getIntValue() + " %"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Group>
+				<Id>1750246031130</Id>
+				<Name><![CDATA[gr_settingsV1G]]></Name>
+				<X>10</X>
+				<Y>270</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Control Type="Slider">
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Id>1750246031132</Id>
+						<Name><![CDATA[sl_chargersThatSupportV1G_pct]]></Name>
+						<X>256</X>
+						<Y>4</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<BasicProperties Width="100" Height="30">
+							<EmbeddedIcon>false</EmbeddedIcon>
+							<Enabled>true</Enabled>
+							<ActionCode>f_setV1GChargerCapabilities( sl_chargersThatSupportV1G_pct.getValue() );</ActionCode>
+						</BasicProperties>
+						<ExtendedProperties>
+							<DefaultValueCode>0</DefaultValueCode>
+							<Orientation>HORIZONTAL</Orientation>
+							<MinValue>0</MinValue>
+							<MaxValue>100</MaxValue>
+							<Step>1</Step>
+							<LinkTo>false</LinkTo>
+						</ExtendedProperties>
+					</Control>
+					<Text>
+						<Id>1750246031134</Id>
+						<Name><![CDATA[t_chargersThatSupportV1GDescription]]></Name>
+						<X>10</X>
+						<Y>10</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Chargers that support this]]></Text>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>12</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1750246031136</Id>
+						<Name><![CDATA[t_chargersThatSupportV1G_pct]]></Name>
+						<X>226</X>
+						<Y>9</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[#]]></Text>
+						<TextCode>sl_chargersThatSupportV1G_pct.getIntValue() + " %"</TextCode>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>12</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
+					</Text>
+				</Presentation>
+			</Group>
+			<Group>
+				<Id>1750246032749</Id>
+				<Name><![CDATA[gr_settingsV2G]]></Name>
+				<X>10</X>
+				<Y>270</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Control Type="Slider">
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Id>1750246032751</Id>
+						<Name><![CDATA[sl_chargersThatSupportV2G_pct]]></Name>
+						<X>256</X>
+						<Y>4</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<BasicProperties Width="100" Height="30">
+							<EmbeddedIcon>false</EmbeddedIcon>
+							<Enabled>true</Enabled>
+							<ActionCode>f_setV2GChargerCapabilities( sl_chargersThatSupportV2G_pct.getValue() );</ActionCode>
+						</BasicProperties>
+						<ExtendedProperties>
+							<DefaultValueCode>0</DefaultValueCode>
+							<Orientation>HORIZONTAL</Orientation>
+							<MinValue>0</MinValue>
+							<MaxValue>100</MaxValue>
+							<Step>1</Step>
+							<LinkTo>false</LinkTo>
+						</ExtendedProperties>
+					</Control>
+					<Text>
+						<Id>1750246032753</Id>
+						<Name><![CDATA[t_chargersThatSupportV2GDescription]]></Name>
+						<X>10</X>
+						<Y>10</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Chargers that support this]]></Text>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>12</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1750246032755</Id>
+						<Name><![CDATA[t_chargersThatSupportV2G_pct]]></Name>
+						<X>226</X>
+						<Y>9</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[#]]></Text>
+						<TextCode>sl_chargersThatSupportV2G_pct.getIntValue() + " %"</TextCode>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>12</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
+					</Text>
+				</Presentation>
+			</Group>
+		</Presentation>
+	</Group>
+	<Group>
+		<Id>1750063382277</Id>
+		<Name><![CDATA[gr_trafoReinforcement]]></Name>
+		<X>1200</X>
+		<Y>0</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>0</XCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Rectangle>
+				<Id>1750063382279</Id>
+				<Name><![CDATA[rect_trafoReinforcement]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>370</Width>
+				<Height>350</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-32</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Rectangle>
+			<Text>
+				<Id>1750063382281</Id>
+				<Name><![CDATA[t_addTrafoDescription]]></Name>
+				<X>10</X>
+				<Y>70</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Trafostation uitbreiden/bijplaatsen]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>11</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1750063382283</Id>
+				<Name><![CDATA[sl_trafoReinforcement]]></Name>
+				<X>20</X>
+				<Y>90</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="150" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>1000</MaxValue>
+					<Step>50</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1750063382285</Id>
+				<Name><![CDATA[t_minTrafoReinforcement]]></Name>
+				<X>20</X>
+				<Y>120</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>sl_trafoReinforcement.getMin()</TextCode>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1750063382287</Id>
+				<Name><![CDATA[t_maxTrafoReinforcement]]></Name>
+				<X>170</X>
+				<Y>120</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>sl_trafoReinforcement.getMax()</TextCode>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1750063382289</Id>
+				<Name><![CDATA[t_trafoReinforcementValue]]></Name>
+				<X>95</X>
+				<Y>120</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[value]]></Text>
+				<TextCode>sl_trafoReinforcement.getIntValue() + " kVA"</TextCode>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1750063382291</Id>
+				<Name><![CDATA[t_confirmTrafoReinforcement]]></Name>
+				<X>210</X>
+				<Y>94</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="142" Height="32">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<ActionCode>zero_Interface.v_clickedGridNode.p_capacity_kW += sl_trafoReinforcement.getValue();
+
+zero_Interface.f_setTrafoText();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Voer netuitbreiding uit</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1750063382293</Id>
+				<Name><![CDATA[t_currentTrafoReinforcement]]></Name>
+				<X>200</X>
+				<Y>70</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Huidige LS-capaciteit: 300 kVA]]></Text>
+				<TextCode>"Huidige LS-capaciteit: " + roundToInt(zero_Interface.v_clickedGridNode.p_capacity_kW)  + " kVA"</TextCode>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>11</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1750063382295</Id>
+				<Name><![CDATA[t_resetTrafoReinforcement]]></Name>
+				<X>215</X>
+				<Y>300</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="140" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<ActionCode>for (GridNode GN : zero_Interface.energyModel.f_getGridNodesNotTopLevel() ){
+	GN.p_capacity_kW = GN.p_originalCapacity_kW;
+}
+for (GridNode GN : zero_Interface.energyModel.f_getGridNodesTopLevel() ){
+	GN.p_capacity_kW = GN.p_originalCapacity_kW;
+} 
+zero_Interface.f_setTrafoText();
+</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Reset trafostations</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1750063382297</Id>
+				<Name><![CDATA[t_closeTrafoReinforcement]]></Name>
+				<X>350</X>
+				<Y>2</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="18" Height="18">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<ActionCode>gr_trafoReinforcement.setVisible(false);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="8" Style="0"/>
+					<LabelText/>
+				</ExtendedProperties>
+			</Control>
+			<Line>
+				<Id>1750063382299</Id>
+				<Name><![CDATA[line_closeTrafoReinforcement1]]></Name>
+				<X>353</X>
+				<Y>17</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor>-2894893</LineColor>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<BeginArrowSize>1</BeginArrowSize>
+				<BeginArrowStyle>0</BeginArrowStyle>
+				<EndArrowSize>1</EndArrowSize>
+				<EndArrowStyle>0</EndArrowStyle>
+				<Dx>12</Dx>
+				<Dy>-12</Dy>
+				<Dz>0</Dz>
+			</Line>
+			<Line>
+				<Id>1750063382301</Id>
+				<Name><![CDATA[line_closeTrafoReinforcement2]]></Name>
+				<X>365</X>
+				<Y>17</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor>-2894893</LineColor>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<BeginArrowSize>1</BeginArrowSize>
+				<BeginArrowStyle>0</BeginArrowStyle>
+				<EndArrowSize>1</EndArrowSize>
+				<EndArrowStyle>0</EndArrowStyle>
+				<Dx>-12</Dx>
+				<Dy>-12</Dy>
+				<Dz>0</Dz>
+			</Line>
+			<Text>
+				<Id>1750063382303</Id>
+				<Name><![CDATA[t_titleTrafoReinforcement]]></Name>
+				<X>20</X>
+				<Y>21</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Trafostation reinforcement]]></Text>
+				<Font>
+					<Name><![CDATA[Calibri]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
 		</Presentation>
 	</Group>
 </Presentation>

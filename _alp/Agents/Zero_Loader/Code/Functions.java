@@ -1964,7 +1964,9 @@ for (Chargingstation_data dataChargingStation : c_chargingstation_data){
 		//Create vehicles that charge at the charging centre
 		if(chargingStation.p_chargingVehicleType == OL_EnergyAssetType.CHARGER){
 			List<J_ChargingSession> chargerProfile = f_getChargerProfile();
-			new J_EACharger(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile);
+			boolean V1GCapable = randomTrue(avgc_data.p_v1gProbability);
+			boolean V2GCapable = randomTrue(avgc_data.p_v2gProbability);
+			new J_EACharger(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile, V1GCapable, V2GCapable);
 		}
 		else{
 			for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerChargePoint; k++ ){
@@ -2010,7 +2012,9 @@ for (Chargingstation_data dataChargingStation : c_chargingstation_data){
 			//Create vehicles that charge at the charging station
 			if(chargingStation.p_chargingVehicleType == OL_EnergyAssetType.CHARGER){
 				List<J_ChargingSession> chargerProfile = f_getChargerProfile();
-				new J_EACharger(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile);
+				boolean V1GCapable = randomTrue(avgc_data.p_v1gProbability);
+				boolean V2GCapable = randomTrue(avgc_data.p_v2gProbability);
+				new J_EACharger(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile, V1GCapable, V2GCapable);
 			}
 			else{
 				for(int k = 0; k < avgc_data.p_avgVehiclesPerChargePoint; k++ ){
@@ -3629,9 +3633,7 @@ double batteryCap_kWh = Double.parseDouble(chargingSessionInfo[3]);
 double chargingPower_kW = Double.parseDouble(chargingSessionInfo[5]);
 int socket = Integer.parseInt(chargingSessionInfo[6]);
 
-boolean v2gProbability = randomTrue(avgc_data.p_v2gProbability);
-return new J_ChargingSession(startIndex, endIndex, chargingDemand_kWh, batteryCap_kWh, chargingPower_kW, socket, v2gProbability, 0.25);
-	
+return new J_ChargingSession(startIndex, endIndex, chargingDemand_kWh, batteryCap_kWh, chargingPower_kW, socket, 0.25);
 /*ALCODEEND*/}
 
 List<J_ChargingSession>  f_createNewChargerProfile(ChargerProfile_data chargerProfileData)
