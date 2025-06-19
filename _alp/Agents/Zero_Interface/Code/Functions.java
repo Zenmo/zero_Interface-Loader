@@ -2616,3 +2616,58 @@ for(GIS_Building building : energyModel.pop_GIS_Buildings){
 }
 /*ALCODEEND*/}
 
+double f_initialChargerOrder()
+{/*ALCODESTART::1750247111856*/
+List<J_EACharger> c_inactiveV1GChargers = new ArrayList<J_EACharger>();
+List<J_EACharger> c_inactiveV2GChargers = new ArrayList<J_EACharger>();
+
+for (GridConnection gc : energyModel.f_getGridConnections()) {
+	if (gc.v_isActive) {
+		for (J_EACharger charger : gc.c_chargers) {
+			if (charger.V1GCapable) {
+				c_orderedV1GChargers.add(0, charger);
+			}
+			else {
+				c_orderedV1GChargers.add(charger);
+			}
+			if (charger.V2GCapable) {
+				c_orderedV2GChargers.add(0, charger);
+			}
+			else {
+				c_orderedV2GChargers.add(charger);
+			}
+		}
+	}
+	else {
+		for (J_EACharger charger : gc.c_chargers) {
+			if (charger.V1GCapable) {
+				c_inactiveV1GChargers.add(0, charger);
+			}
+			else {
+				c_inactiveV1GChargers.add(charger);
+			}
+			if (charger.V2GCapable) {
+				c_inactiveV2GChargers.add(0, charger);
+			}
+			else {
+				c_inactiveV2GChargers.add(charger);
+			}
+		}
+	}
+}
+
+c_orderedV1GChargers.addAll( c_inactiveV1GChargers );
+c_orderedV2GChargers.addAll( c_inactiveV2GChargers );
+
+/*ALCODEEND*/}
+
+double f_setTrafoText()
+{/*ALCODESTART::1750261221085*/
+if ( v_clickedGridNode.p_realCapacityAvailable ) {
+	v_clickedObjectText = v_clickedGridNode.p_nodeType + "-station, " + Integer.toString( ((int)v_clickedGridNode.p_capacity_kW) ) + " kW, ID: " + v_clickedGridNode.p_gridNodeID + ", aansluitingen: " + v_clickedGridNode.f_getConnectedGridConnections().size() + ", Type station: " + v_clickedGridNode.p_description;
+}
+else {
+	v_clickedObjectText =  v_clickedGridNode.p_nodeType + "-station, " + Integer.toString( ((int)v_clickedGridNode.p_capacity_kW) ) + " kW (ingeschat), ID: " + v_clickedGridNode.p_gridNodeID + ", aansluitingen: " + v_clickedGridNode.f_getConnectedGridConnections().size() + ", Type station: " + v_clickedGridNode.p_description;
+}
+/*ALCODEEND*/}
+

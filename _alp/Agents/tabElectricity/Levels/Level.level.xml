@@ -1709,7 +1709,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<Id>1750063382243</Id>
 				<Name><![CDATA[sl_gridBatteriesResidentialArea_kWh]]></Name>
 				<X>266</X>
-				<Y>270</Y>
+				<Y>310</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1737,7 +1737,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<Id>1750063382245</Id>
 				<Name><![CDATA[t_gridBatteriesResidentialAreaDescription]]></Name>
 				<X>20</X>
-				<Y>276</Y>
+				<Y>316</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1762,7 +1762,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<Id>1750063382247</Id>
 				<Name><![CDATA[t_gridBatteriesResidentialArea_kW]]></Name>
 				<X>236</X>
-				<Y>275</Y>
+				<Y>315</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1804,24 +1804,31 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 					<Enabled>true</Enabled>
 					<ActionCode>switch (chargingMethodResidentialArea.getValue()){
 	case 0:
-		zero_Interface.energyModel.v_smartChargingActive = false;
+		gr_settingsV1G.setVisible(false);
+		gr_settingsV2G.setVisible(false);
+		
+		//zero_Interface.energyModel.v_smartChargingActive = false;
 		//zero_Interface.energyModel.v_V2GProbability = 0;
 		for( GCHouse house : zero_Interface.energyModel.Houses ){
 			house.p_chargingAttitudeVehicles = OL_ChargingAttitude.SIMPLE;
 		}
 		break;
 	case 1:
-		zero_Interface.energyModel.v_smartChargingActive = true;
+		gr_settingsV1G.setVisible(true);
+		gr_settingsV2G.setVisible(false);
+		//zero_Interface.energyModel.v_smartChargingActive = true;
 		for( GCHouse house : zero_Interface.energyModel.Houses ){
-			house.p_chargingAttitudeVehicles = OL_ChargingAttitude.CHEAP;
+			house.p_chargingAttitudeVehicles = OL_ChargingAttitude.V1G;
 		}
 		//zero_Interface.energyModel.v_V2GProbability = 0;
 		break;
 	case 2:
+		gr_settingsV1G.setVisible(false);
+		gr_settingsV2G.setVisible(true);
 		for( GCHouse house : zero_Interface.energyModel.Houses ){
-			house.p_chargingAttitudeVehicles = OL_ChargingAttitude.CHEAP; //ToDo add V2G 
+			house.p_chargingAttitudeVehicles = OL_ChargingAttitude.V2G; 
 		}
-		zero_Interface.energyModel.v_smartChargingActive = true;
+		//zero_Interface.energyModel.v_smartChargingActive = true;
 		//zero_Interface.energyModel.v_V2GProbability = 1;
 		break;
 }
@@ -2082,6 +2089,202 @@ if ( sliderValue &lt; p_minPVHouseholdSlider ){
 				</Font>
 				<Alignment>RIGHT</Alignment>
 			</Text>
+			<Group>
+				<Id>1750246031130</Id>
+				<Name><![CDATA[gr_settingsV1G]]></Name>
+				<X>10</X>
+				<Y>270</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Control Type="Slider">
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Id>1750246031132</Id>
+						<Name><![CDATA[sl_chargersThatSupportV1G_pct]]></Name>
+						<X>256</X>
+						<Y>4</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<BasicProperties Width="100" Height="30">
+							<EmbeddedIcon>false</EmbeddedIcon>
+							<Enabled>true</Enabled>
+							<ActionCode>f_setV1GChargerCapabilities( sl_chargersThatSupportV1G_pct.getValue() );</ActionCode>
+						</BasicProperties>
+						<ExtendedProperties>
+							<DefaultValueCode>0</DefaultValueCode>
+							<Orientation>HORIZONTAL</Orientation>
+							<MinValue>0</MinValue>
+							<MaxValue>100</MaxValue>
+							<Step>1</Step>
+							<LinkTo>false</LinkTo>
+						</ExtendedProperties>
+					</Control>
+					<Text>
+						<Id>1750246031134</Id>
+						<Name><![CDATA[t_chargersThatSupportV1GDescription]]></Name>
+						<X>10</X>
+						<Y>10</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Chargers that support this]]></Text>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>12</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1750246031136</Id>
+						<Name><![CDATA[t_chargersThatSupportV1G_pct]]></Name>
+						<X>226</X>
+						<Y>9</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[#]]></Text>
+						<TextCode>sl_chargersThatSupportV1G_pct.getIntValue() + " %"</TextCode>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>12</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
+					</Text>
+				</Presentation>
+			</Group>
+			<Group>
+				<Id>1750246032749</Id>
+				<Name><![CDATA[gr_settingsV2G]]></Name>
+				<X>10</X>
+				<Y>270</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Control Type="Slider">
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Id>1750246032751</Id>
+						<Name><![CDATA[sl_chargersThatSupportV2G_pct]]></Name>
+						<X>256</X>
+						<Y>4</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<BasicProperties Width="100" Height="30">
+							<EmbeddedIcon>false</EmbeddedIcon>
+							<Enabled>true</Enabled>
+							<ActionCode>f_setV2GChargerCapabilities( sl_chargersThatSupportV2G_pct.getValue() );</ActionCode>
+						</BasicProperties>
+						<ExtendedProperties>
+							<DefaultValueCode>0</DefaultValueCode>
+							<Orientation>HORIZONTAL</Orientation>
+							<MinValue>0</MinValue>
+							<MaxValue>100</MaxValue>
+							<Step>1</Step>
+							<LinkTo>false</LinkTo>
+						</ExtendedProperties>
+					</Control>
+					<Text>
+						<Id>1750246032753</Id>
+						<Name><![CDATA[t_chargersThatSupportV2GDescription]]></Name>
+						<X>10</X>
+						<Y>10</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Chargers that support this]]></Text>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>12</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1750246032755</Id>
+						<Name><![CDATA[t_chargersThatSupportV2G_pct]]></Name>
+						<X>226</X>
+						<Y>9</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[#]]></Text>
+						<TextCode>sl_chargersThatSupportV2G_pct.getIntValue() + " %"</TextCode>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>12</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
+					</Text>
+				</Presentation>
+			</Group>
 		</Presentation>
 	</Group>
 	<Group>

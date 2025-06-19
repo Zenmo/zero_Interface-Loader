@@ -59,5 +59,7 @@ dataAVGC.p_avgEfficiencyCHP_electric_fr = p_avgEfficiencyCHP_thermal_fr;
 dataAVGC.p_avgOutputTemperatureCHP_degC = p_avgEfficiencyCHP_thermal_fr;
 dataAVGC.p_avgEfficiencyDistrictHeatingDeliverySet_fr = p_avgEfficiencyDistrictHeatingDeliverySet_fr;
 dataAVGC.p_avgOutputTemperatureDistrictHeatingDeliverySet_degC = p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
+dataAVGC.p_v1gProbability = p_v1gProbability;
+dataAVGC.p_v2gProbability = p_v2gProbability;
 /*ALCODEEND*/}
 
