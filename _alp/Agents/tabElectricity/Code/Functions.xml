@@ -271,6 +271,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1750063382314</Id>
 		<Name><![CDATA[f_setPublicChargingStationsScale]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1362</X>
 		<Y>423</Y>
 		<Label>
@@ -291,6 +292,7 @@
 		<ReturnType>List&lt;Double&gt;</ReturnType>
 		<Id>1750063382316</Id>
 		<Name><![CDATA[f_getChargingProfile]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1392</X>
 		<Y>483</Y>
 		<Label>
@@ -311,6 +313,7 @@
 		<ReturnType>String</ReturnType>
 		<Id>1750063382318</Id>
 		<Name><![CDATA[f_getProfileNameEVAddition]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1392</X>
 		<Y>503</Y>
 		<Label>
@@ -327,6 +330,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1750063382320</Id>
 		<Name><![CDATA[f_setChargerInactive]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1372</X>
 		<Y>443</Y>
 		<Label>
@@ -347,6 +351,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1750063382322</Id>
 		<Name><![CDATA[f_setChargerActive]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1372</X>
 		<Y>463</Y>
 		<Label>
@@ -387,6 +392,7 @@
 		<ReturnType>String</ReturnType>
 		<Id>1750063382328</Id>
 		<Name><![CDATA[f_getProfileNameWPAddition]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1392</X>
 		<Y>523</Y>
 		<Label>
@@ -413,8 +419,8 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[sliderValue]]></Name>
-			<Type><![CDATA[int]]></Type>
+			<Name><![CDATA[publicChargers_pct]]></Name>
+			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -454,6 +460,50 @@
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
 			<Name><![CDATA[goal_pct]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750326729005</Id>
+		<Name><![CDATA[f_setDemandIncrease]]></Name>
+		<X>60</X>
+		<Y>620</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gcList]]></Name>
+			<Type><![CDATA[List<GridConnection>]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[demandReduction_pct]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750328750011</Id>
+		<Name><![CDATA[f_setVehiclesPrivateParking]]></Name>
+		<X>900</X>
+		<Y>520</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[privateParking_pct]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>

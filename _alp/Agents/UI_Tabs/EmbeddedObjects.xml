@@ -85,9 +85,6 @@
 			<Parameter>
 				<Name><![CDATA[p_minPVHouseholdSlider]]></Name>
 			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_nbChargersInDatabase]]></Name>
-			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">

@@ -320,11 +320,18 @@ uI_Tabs.add_pop_tabEHub();
 
 // Group visibilities
 // When using an extension of a generic tab don't forget to typecast it!
-((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders().setVisible(true);
-((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersCompanies().setVisible(true);
-((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
-((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
-
+if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
+	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_ResidentialArea().setVisible(true);
+	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDeandSliders_ResidentialArea().setVisible(true);
+	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
+	((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
+}
+else {
+	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders().setVisible(true);
+	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersCompanies().setVisible(true);
+	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
+	((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
+}
 uI_Tabs.f_showCorrectTab();
 /*ALCODEEND*/}
 
@@ -693,6 +700,8 @@ f_initialElectricVehiclesOrder();
 f_initialPVSystemsOrder();
 f_initialHeatingSystemsOrder();
 f_initialParkingSpacesOrder();
+f_initialHouseholdOrder();
+f_initialChargerOrder();
 f_projectSpecificOrderedCollectionAdjustments();
 
 
@@ -1353,6 +1362,7 @@ double f_setSliderPresets()
 {/*ALCODESTART::1725977409304*/
 //Should be overridden in child interface!!!
 f_updateMainInterfaceSliders();
+f_initialisationOfResidentialSliders();
 traceln("Forgot to override project specific slider settings!!");
 /*ALCODEEND*/}
 
@@ -1379,7 +1389,7 @@ if(c_selectedFilterOptions.size()>1 && c_selectedGridConnections.size()> 0){ // 
 	toBeFilteredGC = new ArrayList<GridConnection>(c_selectedGridConnections);
 }
 else{ // First filter
-	toBeFilteredGC = new ArrayList<GridConnection>(energyModel.f_getGridConnections());
+	toBeFilteredGC = new ArrayList<GridConnection>(energyModel.f_getActiveGridConnections());
 }
 
 //After a filter selecttion, reset previous clicked building/gridNode colors and text
@@ -2625,6 +2635,61 @@ double f_initialParkingSpacesOrder()
 Collections.shuffle(c_orderedParkingSpaces);
 /*ALCODEEND*/}
 
+double f_initialChargerOrder()
+{/*ALCODESTART::1750247111856*/
+c_orderedV1GChargers = new ArrayList<J_EACharger>();
+c_orderedV2GChargers = new ArrayList<J_EACharger>();
+c_orderedPublicChargers = new ArrayList<GCPublicCharger>();
+
+List<J_EACharger> c_inactiveV1GChargers = new ArrayList<J_EACharger>();
+List<J_EACharger> c_inactiveV2GChargers = new ArrayList<J_EACharger>();
+
+for (GridConnection gc : energyModel.f_getActiveGridConnections()) {
+	for (J_EACharger charger : gc.c_chargers) {
+		if (charger.V1GCapable) {
+			c_orderedV1GChargers.add(0, charger);
+		}
+		else {
+			c_orderedV1GChargers.add(charger);
+		}
+		if (charger.V2GCapable) {
+			c_orderedV2GChargers.add(0, charger);
+		}
+		else {
+			c_orderedV2GChargers.add(charger);
+		}
+	}
+}
+
+for (GridConnection gc : energyModel.f_getPausedGridConnections()) {
+	for (J_EACharger charger : gc.c_chargers) {
+		if (charger.V1GCapable) {
+			c_inactiveV1GChargers.add(0, charger);
+		}
+		else {
+			c_inactiveV1GChargers.add(charger);
+		}
+		if (charger.V2GCapable) {
+			c_inactiveV2GChargers.add(0, charger);
+		}
+		else {
+			c_inactiveV2GChargers.add(charger);
+		}
+	}
+}
+
+c_orderedV1GChargers.addAll( c_inactiveV1GChargers );
+c_orderedV2GChargers.addAll( c_inactiveV2GChargers );
+
+for (GCPublicCharger gc : energyModel.PublicChargers) {
+	if ( !gc.p_isChargingCentre ) {
+		c_orderedPublicChargers.add(gc);
+	}
+}
+
+Collections.shuffle(c_orderedPublicChargers);
+/*ALCODEEND*/}
+
 double f_initializeSpecialGISObjectsLegend()
 {/*ALCODESTART::1750078798174*/
 int numberOfSpecialActiveGISObjectTypes = 0;
@@ -2642,6 +2707,16 @@ for(OL_GISObjectType activeSpecialGISObjectType : c_modelActiveSpecialGISObjects
 		Pair<ShapeText, ShapeRectangle> legendShapes = f_getNextSpecialLegendShapes(numberOfSpecialActiveGISObjectTypes);
 		f_setSpecialGISObjectLegendItem(activeSpecialGISObjectType, legendShapes.getFirst(), legendShapes.getSecond());
 	}
+}
+/*ALCODEEND*/}
+
+double f_setTrafoText()
+{/*ALCODESTART::1750261221085*/
+if ( v_clickedGridNode.p_realCapacityAvailable ) {
+	v_clickedObjectText = v_clickedGridNode.p_nodeType + "-station, " + Integer.toString( ((int)v_clickedGridNode.p_capacity_kW) ) + " kW, ID: " + v_clickedGridNode.p_gridNodeID + ", aansluitingen: " + v_clickedGridNode.f_getConnectedGridConnections().size() + ", Type station: " + v_clickedGridNode.p_description;
+}
+else {
+	v_clickedObjectText =  v_clickedGridNode.p_nodeType + "-station, " + Integer.toString( ((int)v_clickedGridNode.p_capacity_kW) ) + " kW (ingeschat), ID: " + v_clickedGridNode.p_gridNodeID + ", aansluitingen: " + v_clickedGridNode.f_getConnectedGridConnections().size() + ", Type station: " + v_clickedGridNode.p_description;
 }
 /*ALCODEEND*/}
 
@@ -2857,58 +2932,74 @@ switch(activeDefaultGISBuildingType){
 
 /*ALCODEEND*/}
 
-double f_initialChargerOrder()
-{/*ALCODESTART::1750247111856*/
-List<J_EACharger> c_inactiveV1GChargers = new ArrayList<J_EACharger>();
-List<J_EACharger> c_inactiveV2GChargers = new ArrayList<J_EACharger>();
+double f_initialHouseholdOrder()
+{/*ALCODESTART::1750333147816*/
+c_orderedActiveVehiclesPublicParking = new ArrayList<J_EADieselVehicle>();
+c_orderedVehiclesPrivateParking = new ArrayList<J_EAVehicle>();
 
-for (GridConnection gc : energyModel.f_getGridConnections()) {
-	if (gc.v_isActive) {
-		for (J_EACharger charger : gc.c_chargers) {
-			if (charger.V1GCapable) {
-				c_orderedV1GChargers.add(0, charger);
-			}
-			else {
-				c_orderedV1GChargers.add(charger);
-			}
-			if (charger.V2GCapable) {
-				c_orderedV2GChargers.add(0, charger);
-			}
-			else {
-				c_orderedV2GChargers.add(charger);
-			}
-		}
+for (GCHouse house : energyModel.Houses) {
+	if (!house.p_eigenOprit) {
+		c_orderedActiveVehiclesPublicParking.addAll(house.c_dieselVehicles);
 	}
 	else {
-		for (J_EACharger charger : gc.c_chargers) {
-			if (charger.V1GCapable) {
-				c_inactiveV1GChargers.add(0, charger);
-			}
-			else {
-				c_inactiveV1GChargers.add(charger);
-			}
-			if (charger.V2GCapable) {
-				c_inactiveV2GChargers.add(0, charger);
-			}
-			else {
-				c_inactiveV2GChargers.add(charger);
-			}
-		}
+		c_orderedVehiclesPrivateParking.addAll(house.c_vehicleAssets);
 	}
 }
 
-c_orderedV1GChargers.addAll( c_inactiveV1GChargers );
-c_orderedV2GChargers.addAll( c_inactiveV2GChargers );
+Collections.shuffle(c_orderedActiveVehiclesPublicParking);
+Collections.shuffle(c_orderedVehiclesPrivateParking);
 
 /*ALCODEEND*/}
 
-double f_setTrafoText()
-{/*ALCODESTART::1750261221085*/
-if ( v_clickedGridNode.p_realCapacityAvailable ) {
-	v_clickedObjectText = v_clickedGridNode.p_nodeType + "-station, " + Integer.toString( ((int)v_clickedGridNode.p_capacity_kW) ) + " kW, ID: " + v_clickedGridNode.p_gridNodeID + ", aansluitingen: " + v_clickedGridNode.f_getConnectedGridConnections().size() + ", Type station: " + v_clickedGridNode.p_description;
+double f_initialisationOfResidentialSliders()
+{/*ALCODESTART::1750340574107*/
+int nbHouses = energyModel.Houses.size();
+int nbHousesWithPV = count(energyModel.Houses, x -> x.v_liveAssetsMetaData.hasPV);
+double pv_pct = 100.0 * nbHousesWithPV / nbHouses;
+uI_Tabs.pop_tabElectricity.get(0).sl_householdPVResidentialArea_pct.setValue(pv_pct, false);
+
+if ( nbHousesWithPV != 0 ) {
+	int nbHousesWithHomeBattery = count(energyModel.Houses, x -> x.v_liveAssetsMetaData.hasPV && x.p_batteryAsset != null);
+	double battery_pct = 100.0 * nbHousesWithHomeBattery / nbHousesWithPV;
+	uI_Tabs.pop_tabElectricity.get(0).sl_householdBatteriesResidentialArea_pct.setValue(battery_pct, false);
 }
-else {
-	v_clickedObjectText =  v_clickedGridNode.p_nodeType + "-station, " + Integer.toString( ((int)v_clickedGridNode.p_capacity_kW) ) + " kW (ingeschat), ID: " + v_clickedGridNode.p_gridNodeID + ", aansluitingen: " + v_clickedGridNode.f_getConnectedGridConnections().size() + ", Type station: " + v_clickedGridNode.p_description;
+
+int nbHousesWithElectricCooking = count(energyModel.Houses, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.ELECTRIC);
+double cooking_pct = 100.0 * nbHousesWithElectricCooking / nbHouses;
+uI_Tabs.pop_tabElectricity.get(0).sl_householdElectricCookingResidentialArea_pct.setValue(cooking_pct, false);
+
+int nbPrivateEVs = count(c_orderedVehiclesPrivateParking, x -> x instanceof J_EAEV);
+double privateEVs_pct = 100.0 * nbPrivateEVs / c_orderedVehiclesPrivateParking.size();
+uI_Tabs.pop_tabElectricity.get(0).sl_privateEVsResidentialArea_pct.setValue(privateEVs_pct, false);
+
+int nbActivePublicChargers = count(c_orderedPublicChargers, x -> x.v_isActive);
+double activePublicChargers_pct = 100.0 * nbActivePublicChargers / c_orderedPublicChargers.size();
+uI_Tabs.pop_tabElectricity.get(0).sl_publicChargersResidentialArea_pct.setValue(activePublicChargers_pct, false);
+
+// Put some of the diesel cars into the non active vehicles
+int nbCarsPerCharger = energyModel.avgc_data.p_avgEVsPerPublicCharger;
+List<J_EADieselVehicle> cars = new ArrayList<>(c_orderedActiveVehiclesPublicParking.subList(0, nbActivePublicChargers * nbCarsPerCharger));
+for (J_EADieselVehicle car : cars) {
+	c_orderedActiveVehiclesPublicParking.remove(car);
+	c_orderedNonActiveVehiclesPublicParking.add(0, car);
+	car.removeEnergyAsset();
 }
+
+int nbPublicChargers = c_orderedV1GChargers.size();
+int nbV1GChargers = count(c_orderedV1GChargers, x -> x.V1GCapable);
+int nbV2GChargers =count(c_orderedV2GChargers, x -> x.V2GCapable);
+double V1G_pct = 100.0 * nbV1GChargers / nbPublicChargers;
+double V2G_pct = 100.0 * nbV2GChargers / nbPublicChargers;
+uI_Tabs.pop_tabElectricity.get(0).sl_chargersThatSupportV1G_pct.setValue(V1G_pct, false);
+uI_Tabs.pop_tabElectricity.get(0).sl_chargersThatSupportV2G_pct.setValue(V2G_pct, false);
+
+
+double averageNeighbourhoodBatterySize_kWh = 0;
+for (GCGridBattery gc : energyModel.GridBatteries) {
+	averageNeighbourhoodBatterySize_kWh += gc.p_batteryAsset.getStorageCapacity_kWh();
+}
+averageNeighbourhoodBatterySize_kWh /= energyModel.GridBatteries.size();
+uI_Tabs.pop_tabElectricity.get(0).sl_gridBatteriesResidentialArea_kWh.setValue(averageNeighbourhoodBatterySize_kWh, false);
+
 /*ALCODEEND*/}
 

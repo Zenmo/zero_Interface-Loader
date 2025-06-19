@@ -112,7 +112,7 @@
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReduction( zero_Interface.energyModel.f_getGridConnections(), sl_electricityDemandReduction_pct.getValue() );</ActionCode>
+					<ActionCode>f_setDemandReduction( zero_Interface.energyModel.f_getActiveGridConnections(), sl_electricityDemandReduction_pct.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -927,7 +927,7 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReduction( zero_Interface.energyModel.f_getGridConnections(), sl_electricityDemandReduction_pct_Businesspark.getValue() );</ActionCode>
+					<ActionCode>f_setDemandReduction( zero_Interface.energyModel.f_getActiveGridConnections(), sl_electricityDemandReduction_pct_Businesspark.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1406,7 +1406,7 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 			</Rectangle>
 			<Text>
 				<Id>1750063382221</Id>
-				<Name><![CDATA[t_electricityDemandReductionResidentialArea_pct]]></Name>
+				<Name><![CDATA[t_electricityDemandIncreaseResidentialArea_pct]]></Name>
 				<X>235</X>
 				<Y>145</Y>
 				<Label>
@@ -1422,7 +1422,7 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[0%]]></Text>
-				<TextCode>sl_electricityDemandReductionResidentialArea_pct.getIntValue() + "%"</TextCode>
+				<TextCode>sl_electricityDemandIncreaseResidentialArea_pct.getIntValue() + "%"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -1482,7 +1482,7 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
-					<DefaultValueCode>35</DefaultValueCode>
+					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
 					<MaxValue>100</MaxValue>
@@ -1543,7 +1543,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() )
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1750063382231</Id>
-				<Name><![CDATA[sl_publicEVsResidentialArea_pct]]></Name>
+				<Name><![CDATA[sl_publicChargersResidentialArea_pct]]></Name>
 				<X>265</X>
 				<Y>207</Y>
 				<Label>
@@ -1557,16 +1557,16 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() )
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>int sliderValue = sl_publicEVsResidentialArea_pct.getIntValue();
+					<ActionCode>int sliderValue = sl_publicChargersResidentialArea_pct.getIntValue();
 if ( sliderValue &lt; p_minPublicChargerSlider ){
 	sliderValue = p_minPublicChargerSlider;
-	sl_publicEVsResidentialArea_pct.setValue( p_minPublicChargerSlider, false);
+	sl_publicChargersResidentialArea_pct.setValue( p_minPublicChargerSlider, false);
 	traceln("SLIDER MESSAGE: Can't set slider lower than the initial value of simulated area");
 }
 f_setPublicChargingStations(sliderValue);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
-					<DefaultValueCode>5</DefaultValueCode>
+					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
 					<MaxValue>100</MaxValue>
@@ -1617,7 +1617,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[0%]]></Text>
-				<TextCode>sl_publicEVsResidentialArea_pct.getIntValue() + " %"</TextCode>
+				<TextCode>sl_publicChargersResidentialArea_pct.getIntValue() + " %"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -1832,8 +1832,13 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 		//zero_Interface.energyModel.v_V2GProbability = 1;
 		break;
 }
-	
-</ActionCode>
+
+// Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -1846,7 +1851,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			</Control>
 			<Text>
 				<Id>1750063382251</Id>
-				<Name><![CDATA[t_electricityDemandReductionResidentialAreaDescription]]></Name>
+				<Name><![CDATA[t_electricityDemandIncreaseResidentialAreaDescription]]></Name>
 				<X>20</X>
 				<Y>145</Y>
 				<Label>
@@ -1872,7 +1877,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1750063382253</Id>
-				<Name><![CDATA[sl_electricityDemandReductionResidentialArea_pct]]></Name>
+				<Name><![CDATA[sl_electricityDemandIncreaseResidentialArea_pct]]></Name>
 				<X>265</X>
 				<Y>140</Y>
 				<Label>
@@ -1886,7 +1891,7 @@ f_setPublicChargingStations(sliderValue);</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReduction( new ArrayList&lt;GridConnection&gt;(findAll(zero_Interface.energyModel.Houses, x -&gt; true)), sl_electricityDemandReductionResidentialArea_pct.getValue() );
+					<ActionCode>f_setDemandIncrease( new ArrayList&lt;GridConnection&gt;(findAll(zero_Interface.energyModel.Houses, x -&gt; true)), sl_electricityDemandIncreaseResidentialArea_pct.getValue() );
 </ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -2046,13 +2051,15 @@ gr_trafoReinforcement.setVisible(true);
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>int sliderValue = sl_privateEVsResidentialArea_pct.getIntValue();
+					<ActionCode>/*
+int sliderValue = sl_privateEVsResidentialArea_pct.getIntValue();
 if ( sliderValue &lt; p_minPVHouseholdSlider ){
 	sliderValue = p_minPVHouseholdSlider;
 	sl_publicEVsResidentialArea_pct.setValue( p_minPVHouseholdSlider, false);
 	traceln("SLIDER MESSAGE: Can't set slider lower than the initial value of simulated area");
 }
-//f_setVehiclesPrivateParking(sliderValue);</ActionCode>
+*/
+f_setVehiclesPrivateParking(sl_privateEVsResidentialArea_pct.getValue());</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -2099,7 +2106,7 @@ if ( sliderValue &lt; p_minPVHouseholdSlider ){
 					<Y>0</Y>
 				</Label>
 				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
+				<PresentationFlag>false</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<EmbeddedIcon>false</EmbeddedIcon>
@@ -2197,7 +2204,7 @@ if ( sliderValue &lt; p_minPVHouseholdSlider ){
 					<Y>0</Y>
 				</Label>
 				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
+				<PresentationFlag>false</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<EmbeddedIcon>false</EmbeddedIcon>

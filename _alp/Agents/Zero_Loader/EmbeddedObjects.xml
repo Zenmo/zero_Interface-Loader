@@ -339,6 +339,9 @@
 			<Parameter>
 				<Name><![CDATA[p_v1gProbability]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_avgEVsPerPublicCharger]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">

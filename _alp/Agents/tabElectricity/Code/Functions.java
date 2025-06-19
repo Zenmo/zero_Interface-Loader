@@ -35,11 +35,6 @@ zero_Interface.f_resetSettings();
 
 double f_setPVSystemHouses(List<GCHouse> gcList,double PV_pct)
 {/*ALCODESTART::1722256142375*/
-//Update variable to change to custom scenario
-if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
-}
-
 ArrayList<GCHouse> houses = new ArrayList<GCHouse>(zero_Interface.c_orderedPVSystemsHouses.stream().filter(gcList::contains).toList());
 int nbHouses = houses.size();
 int nbHousesWithPV = count(houses, x -> x.v_liveAssetsMetaData.hasPV == true);
@@ -80,6 +75,11 @@ while ( nbHousesWithPVGoal > nbHousesWithPV ) {
 		zero_Interface.c_orderedPVSystemsHouses.add(0, house);
 		nbHousesWithPV ++;	
 	}
+}
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
 }
 
 zero_Interface.f_resetSettings();
@@ -366,7 +366,7 @@ if( nbHousesWithPV > 0 ){
 		house.p_batteryOperationMode = OL_BatteryOperationMode.BALANCE; // reset to default
 		nbHouseBatteries--;
 	}
-	while ( nbHousesWithBatteryGoal < nbHouseBatteries ) {
+	while ( nbHouseBatteries < nbHousesWithBatteryGoal) {
 		GCHouse house = findFirst(zero_Interface.energyModel.Houses, p -> p.p_batteryAsset == null && p.v_liveAssetsMetaData.hasPV == true);
 		
 		double batteryStorageCapacity_kWh = 15;
@@ -379,14 +379,17 @@ if( nbHousesWithPV > 0 ){
 	}
 }
 
-traceln("Nb houses with batteries: " + nbHouseBatteries);
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
 
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
 double f_setGridBatteries(double storageCapacity_kWh)
 {/*ALCODESTART::1750063382312*/
-for ( GCGridBattery battery : zero_Interface.energyModel.GridBatteries) {
+for ( GCGridBattery battery : zero_Interface.energyModel.GridBatteries) { // Should this be a gridbattery under each gridnode? loader issue?
 	for(J_EAStorage j_ea : battery.c_storageAssets) {
 		J_EAStorageElectric batteryAsset = ((J_EAStorageElectric)j_ea);
 		if (!battery.v_isActive) {
@@ -560,6 +563,11 @@ while ( nbHousesWithElectricCooking < nbHousesWithElectricCookingGoal) {
 	}
 }
 
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
@@ -583,77 +591,69 @@ else {
 return string;
 /*ALCODEEND*/}
 
-double f_setPublicChargingStations(int sliderValue)
+double f_setPublicChargingStations(double publicChargers_pct)
 {/*ALCODESTART::1750063382330*/
-double desiredNbOfChargers = roundToInt(sliderValue * p_nbChargersInDatabase / 100.0) ;
+int totalNbChargers = zero_Interface.c_orderedPublicChargers.size();
+int currentNbChargers = count(zero_Interface.c_orderedPublicChargers, x -> x.v_isActive);
+int nbChargersGoal = roundToInt(publicChargers_pct / 100 * totalNbChargers) ;
 
-if ( v_currentNbChargers > desiredNbOfChargers){
-	while ( v_currentNbChargers > desiredNbOfChargers){
-		GCPublicCharger charger = zero_Interface.c_activePublicChargers.get(0);
-		zero_Interface.c_activePublicChargers.remove(0); 
+// TODO: for now we assume that a public charger supports two EVs. Just to implement the code that removes diesel vehicles.
+// We will need to decide if we want to make this a fixed number, or have it depend on the number of chargers / diesel vehicles.
+int amountOfVehiclesPerCharger = zero_Interface.energyModel.avgc_data.p_avgEVsPerPublicCharger;
+
+while ( currentNbChargers > nbChargersGoal ) {
+	GCPublicCharger gc = findFirst(zero_Interface.c_orderedPublicChargers, x -> x.v_isActive);
+	if (gc != null) {
+		gc.f_setActive(false);
+		zero_Interface.c_orderedPublicChargers.remove(gc);
+		zero_Interface.c_orderedPublicChargers.add(0, gc);
+		currentNbChargers--;
 		
-		if( charger != null ){
-			charger.v_isActiveCharger = false;
-			//charger.p_parentNodeElectric.c_activeChargers.remove(charger);
-			zero_Interface.c_inactivePublicChargers.add(charger); //add the charger to the other list
-			charger.c_connectedGISObjects.get(0).gisRegion.setVisible(false);
-			v_currentNbChargers --;
-		}
-		else{
-			traceln("Charger slider error: there are not sufficient chargers to remove");
-			return;
+		List<J_EADieselVehicle> cars = new ArrayList<>(zero_Interface.c_orderedActiveVehiclesPublicParking.subList(0, amountOfVehiclesPerCharger));
+		for (J_EADieselVehicle car : cars) {
+			zero_Interface.c_orderedActiveVehiclesPublicParking.remove(car);
+			zero_Interface.c_orderedNonActiveVehiclesPublicParking.add(0, car);
+			car.removeEnergyAsset();
 		}
 	}
-}
-else if ( v_currentNbChargers < desiredNbOfChargers ){
-	while ( v_currentNbChargers < desiredNbOfChargers){
-		int index = uniform_discr(1, zero_Interface.c_inactivePublicChargers.size())-1;
-		GCPublicCharger charger = zero_Interface.c_inactivePublicChargers.get(index);
-		zero_Interface.c_inactivePublicChargers.remove(index);
-		
-		if( charger != null ){
-			charger.v_isActiveCharger = true;
-			//charger.p_parentNodeElectric.c_activeChargers.add(charger);
-			charger.c_connectedGISObjects.get(0).gisRegion.setVisible(true);
-			zero_Interface.c_activePublicChargers.add(charger);
-			v_currentNbChargers ++;
-		}
-		else{
-			traceln("Charger slider error: there are no more chargers to add");
-			return;
-		}
-	}	
-}
-
-double desiredNbOfHousesWithEV = roundToInt(sliderValue * zero_Interface.c_orderedHousesPublicParking.size() / 100.0) ;
-v_currentNbHousesWithEVPublic = count(zero_Interface.c_orderedHousesPublicParking, h -> h.c_vehicleAssets.size() == 0);
-
-if ( v_currentNbHousesWithEVPublic > desiredNbOfHousesWithEV){
-	while ( v_currentNbHousesWithEVPublic > desiredNbOfHousesWithEV){
-		GCHouse house = findFirst( zero_Interface.c_orderedHousesPublicParking, h -> h.c_vehicleAssets.size() == 0);
-		double energyConsumption_kWhpkm = uniform_discr(120,220) * 3 / 1000.0;
-		J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(house, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, 1, OL_EnergyAssetType.DIESEL_VEHICLE, null);
-		v_currentNbHousesWithEVPublic --;
+	else {
+		throw new RuntimeException("Charger slider error: there are not sufficient chargers to remove");
 	}
 }
-else if ( v_currentNbHousesWithEVPublic < desiredNbOfHousesWithEV ){
-	while ( v_currentNbHousesWithEVPublic < desiredNbOfHousesWithEV){
-		GCHouse house = findFirst( zero_Interface.c_orderedHousesPublicParking, h -> h.c_vehicleAssets.size() == 1);
-		house.c_dieselVehicles.get(0).removeEnergyAsset();
-		v_currentNbHousesWithEVPublic++;
-	}	
+while ( currentNbChargers < nbChargersGoal){
+	GCPublicCharger gc = findFirst(zero_Interface.c_orderedPublicChargers, x -> !x.v_isActive);
+	if (gc != null) {
+		gc.f_setActive(true);
+		zero_Interface.c_orderedPublicChargers.remove(gc);
+		zero_Interface.c_orderedPublicChargers.add(0, gc);
+		currentNbChargers++;
+		
+		List<J_EADieselVehicle> cars = new ArrayList<>(zero_Interface.c_orderedNonActiveVehiclesPublicParking.subList(0, amountOfVehiclesPerCharger));
+		for (J_EADieselVehicle car : cars) {
+			zero_Interface.c_orderedNonActiveVehiclesPublicParking.remove(car);
+			zero_Interface.c_orderedActiveVehiclesPublicParking.add(0, car);
+			car.reRegisterEnergyAsset();
+		}
+	}
+	else {
+		throw new RuntimeException("Charger slider error: there are no more chargers to add");
+	}
+}
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
 }
 
 zero_Interface.f_resetSettings();
 
-//f_setDieselVehiclesAtPublicParkingHouses();
 /*ALCODEEND*/}
 
 double f_setV1GChargerCapabilities(double goal_pct)
 {/*ALCODESTART::1750259219309*/
 int totalNbChargers = zero_Interface.c_orderedV1GChargers.size();
 int currentNbChargers = count(zero_Interface.c_orderedV1GChargers, x -> x.V1GCapable);
-int nbChargersGoal = roundToInt(goal_pct * totalNbChargers);
+int nbChargersGoal = roundToInt(goal_pct / 100.0 * totalNbChargers);
 
 while (currentNbChargers < nbChargersGoal) {
 	J_EACharger j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> !x.V1GCapable);
@@ -683,7 +683,7 @@ double f_setV2GChargerCapabilities(double goal_pct)
 {/*ALCODESTART::1750259468109*/
 int totalNbChargers = zero_Interface.c_orderedV2GChargers.size();
 int currentNbChargers = count(zero_Interface.c_orderedV2GChargers, x -> x.V2GCapable);
-int nbChargersGoal = roundToInt(goal_pct * totalNbChargers);
+int nbChargersGoal = roundToInt(goal_pct / 100.0 * totalNbChargers);
 
 while (currentNbChargers < nbChargersGoal) {
 	J_EACharger j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> !x.V2GCapable);
@@ -702,6 +702,56 @@ while (currentNbChargers > nbChargersGoal) {
 }
 
 // Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+double f_setDemandIncrease(List<GridConnection> gcList,double demandReduction_pct)
+{/*ALCODESTART::1750326729005*/
+f_setDemandReduction(gcList, -demandReduction_pct);
+/*ALCODEEND*/}
+
+double f_setVehiclesPrivateParking(double privateParking_pct)
+{/*ALCODESTART::1750328750011*/
+int nbHousesWithEV = count(zero_Interface.energyModel.Houses, x -> x.p_eigenOprit && x.p_householdEV != null);
+int desiredNbOfHousesWithEV = roundToInt(privateParking_pct / 100 * zero_Interface.c_orderedVehiclesPrivateParking.size());
+
+// we scale the consumption instead of getting the diesel/EV parameter from avgc data to represent the 'size' of the car
+double ratioEVToDieselConsumption = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionCar_kWhpkm / zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionCar_kWhpkm;
+
+while ( nbHousesWithEV > desiredNbOfHousesWithEV){
+	J_EAVehicle j_ea = findFirst( zero_Interface.c_orderedVehiclesPrivateParking, h -> h instanceof J_EAEV);
+	if (j_ea.vehicleScaling != 1) {
+		throw new RuntimeException("f_setVehiclesPrivateParking does not work with vehicles that have a vehicleScaling other than 1");
+	}
+	J_ActivityTrackerTrips triptracker = j_ea.tripTracker;
+	double energyConsumption_kWhpkm = j_ea.getEnergyConsumption_kWhpkm() / ratioEVToDieselConsumption; 
+	j_ea.removeEnergyAsset();
+	zero_Interface.c_orderedVehiclesPrivateParking.remove(j_ea);
+	J_EADieselVehicle dieselCar = new J_EADieselVehicle(j_ea.getParentAgent(), energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, 1, OL_EnergyAssetType.DIESEL_VEHICLE, triptracker);
+	zero_Interface.c_orderedVehiclesPrivateParking.add(dieselCar);
+	nbHousesWithEV --;
+}
+while ( nbHousesWithEV < desiredNbOfHousesWithEV){
+	J_EAVehicle j_ea = findFirst( zero_Interface.c_orderedVehiclesPrivateParking, h -> h instanceof J_EADieselVehicle);
+	if (j_ea.vehicleScaling != 1) {
+		throw new RuntimeException("f_setVehiclesPrivateParking does not work with vehicles that have a vehicleScaling other than 1");
+	}
+	J_ActivityTrackerTrips triptracker = j_ea.tripTracker;
+	double energyConsumption_kWhpkm = j_ea.getEnergyConsumption_kWhpkm() * ratioEVToDieselConsumption;
+	j_ea.removeEnergyAsset();	
+	zero_Interface.c_orderedVehiclesPrivateParking.remove(j_ea);
+	double capacityElectricity_kW = randomTrue(0.6) ? randomTrue(0.4) ? 3.2 : 5.6 : 11.0;
+	double storageCapacity_kWh = uniform_discr(65,90);
+	J_EAEV ev = new J_EAEV(j_ea.getParentAgent(), capacityElectricity_kW, storageCapacity_kWh, 1, zero_Interface.energyModel.p_timeStep_h, energyConsumption_kWhpkm, 1, OL_EnergyAssetType.ELECTRIC_VEHICLE, triptracker);	
+	zero_Interface.c_orderedVehiclesPrivateParking.add(ev);
+	nbHousesWithEV++;
+}
+
+//Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
 	zero_Interface.b_changeToCustomScenario = true;
 }

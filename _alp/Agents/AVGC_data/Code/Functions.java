@@ -61,5 +61,6 @@ dataAVGC.p_avgEfficiencyDistrictHeatingDeliverySet_fr = p_avgEfficiencyDistrictH
 dataAVGC.p_avgOutputTemperatureDistrictHeatingDeliverySet_degC = p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
 dataAVGC.p_v1gProbability = p_v1gProbability;
 dataAVGC.p_v2gProbability = p_v2gProbability;
+dataAVGC.p_avgEVsPerPublicCharger = p_avgEVsPerPublicCharger;
 /*ALCODEEND*/}
 

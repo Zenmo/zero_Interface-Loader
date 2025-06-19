@@ -82,7 +82,8 @@ for (GridNode_data GN_data : c_gridNode_data) {
 			c_gridNodeIDsInScope.add(GN.p_gridNodeID);
 			
 			// Check wether transformer capacity is known or estimated
-			GN.p_capacity_kW = GN_data.capacity_kw();	
+			GN.p_capacity_kW = GN_data.capacity_kw();
+			GN.p_originalCapacity_kW = GN.p_capacity_kW;	
 			GN.p_realCapacityAvailable = GN_data.is_capacity_available();
 			
 			// Basic GN information
@@ -1311,7 +1312,7 @@ if(v_numberOfSurveyCompanies>0){
 for(A_SubTenant subtenant : subTenants){
 
 	//Find grid connection that feeds the subtenant (achter de meter)
-	GridConnection GC = findFirst(energyModel.f_getGridConnections(), 
+	GridConnection GC = findFirst(energyModel.f_getActiveGridConnections(), 
 	GCU -> GCU.p_address != null && GCU.p_address.getAddress().equals(subtenant.p_address.getAddress()));
 	
 	if (GC != null){
@@ -1507,7 +1508,7 @@ double vehicleScaling = 1.0;
 switch (vehicle_type){
 	
 	case DIESEL_VEHICLE:
-		energyConsumption_kWhpkm = avgc_data.p_avgDieselConsumptionCar_kWhpkm;
+		energyConsumption_kWhpkm = uniform(0.7, 1.3) * avgc_data.p_avgDieselConsumptionCar_kWhpkm;
 	break;
 	
 	case DIESEL_VAN:
@@ -1943,8 +1944,9 @@ for (Chargingstation_data dataChargingStation : c_chargingstation_data){
 	
 	
 	//Check if centre or single
-	if (dataChargingStation.is_charging_centre()) {
-	
+	chargingStation.p_isChargingCentre = dataChargingStation.is_charging_centre();
+	if (chargingStation.p_isChargingCentre) {
+		
 		if (chargingStation.p_ownerID == null){
 			chargingStation.p_ownerID = "Publiek laadstation " + laadstation_nr;
 			laadstation_nr++;
@@ -1997,60 +1999,62 @@ for (Chargingstation_data dataChargingStation : c_chargingstation_data){
 		}
 	}
 	else {
-	
-			if (chargingStation.p_ownerID == null){
-				chargingStation.p_ownerID = "Publieke laadpaal " + laadpaal_nr;
-				laadpaal_nr++;
-			}
-			
-			//Set charging power
-			chargingStation.set_p_maxChargingPower_kW( dataChargingStation.power_per_charger_kw() );
-			
-			//Set vehicle type
-			chargingStation.p_chargingVehicleType = dataChargingStation.vehicle_type();		
-			
-			//Create vehicles that charge at the charging station
-			if(chargingStation.p_chargingVehicleType == OL_EnergyAssetType.CHARGER){
-				List<J_ChargingSession> chargerProfile = f_getChargerProfile();
-				boolean V1GCapable = randomTrue(avgc_data.p_v1gProbability);
-				boolean V2GCapable = randomTrue(avgc_data.p_v2gProbability);
-				new J_EACharger(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile, V1GCapable, V2GCapable);
-			}
-			else{
-				for(int k = 0; k < avgc_data.p_avgVehiclesPerChargePoint; k++ ){
-					f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
-				}
-			}
-			
-			
-			//Create GIS object for the chargingStation			
-			GIS_Object area = energyModel.add_pop_GIS_Objects();
-	
-			//position and coordinates
-			area.p_latitude = dataChargingStation.latitude();
-			area.p_longitude = dataChargingStation.longitude();
-			area.setLatLon(area.p_latitude, area.p_longitude);		
-			
-			//Create gisregion
-			area.gisRegion = f_createGISRegionChargingStation( area.p_latitude, area.p_longitude );	
-			
-			//Set area type
-			area.p_GISObjectType = OL_GISObjectType.CHARGER;
+
+		if (chargingStation.p_ownerID == null){
+			chargingStation.p_ownerID = "Publieke laadpaal " + laadpaal_nr;
+			laadpaal_nr++;
+		}
 		
-			chargingStation.c_connectedGISObjects.add(area);
-			area.c_containedGridConnections.add(chargingStation);
-			if(chargingStation.v_isActive){
-				area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
-				area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
+		//Set charging power
+		chargingStation.set_p_maxChargingPower_kW( dataChargingStation.power_per_charger_kw() );
+		
+		//Set vehicle type
+		chargingStation.p_chargingVehicleType = dataChargingStation.vehicle_type();		
+		
+		//Create vehicles that charge at the charging station
+		if(chargingStation.p_chargingVehicleType == OL_EnergyAssetType.CHARGER){
+			List<J_ChargingSession> chargerProfile = f_getChargerProfile();
+			boolean V1GCapable = randomTrue(avgc_data.p_v1gProbability);
+			boolean V2GCapable = randomTrue(avgc_data.p_v2gProbability);
+			new J_EACharger(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile, V1GCapable, V2GCapable);
+		}
+		else{
+			for(int k = 0; k < avgc_data.p_avgVehiclesPerChargePoint; k++ ){
+				f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
 			}
-			else{
-				area.set_p_defaultFillColor( zero_Interface.v_newChargingStationColor );
-				area.set_p_defaultLineColor( zero_Interface.v_newChargingStationLineColor );
-			}
-			zero_Interface.f_styleAreas(area);
-	}
+		}
+		
+		
+		//Create GIS object for the chargingStation			
+		GIS_Object area = energyModel.add_pop_GIS_Objects();
+
+		//position and coordinates
+		area.p_latitude = dataChargingStation.latitude();
+		area.p_longitude = dataChargingStation.longitude();
+		area.setLatLon(area.p_latitude, area.p_longitude);		
+		
+		//Create gisregion
+		area.gisRegion = f_createGISRegionChargingStation( area.p_latitude, area.p_longitude );	
+		
+		//Set area type
+		area.p_GISObjectType = OL_GISObjectType.CHARGER;
 	
+		chargingStation.c_connectedGISObjects.add(area);
+		area.c_containedGridConnections.add(chargingStation);
+		if(chargingStation.v_isActive){
+			area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
+			area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
+		}
+		else{
+			area.set_p_defaultFillColor( zero_Interface.v_newChargingStationColor );
+			area.set_p_defaultLineColor( zero_Interface.v_newChargingStationLineColor );
+		}
+		zero_Interface.f_styleAreas(area);
+	
+		zero_Interface.c_modelActiveSpecialGISObjects.add(area.p_GISObjectType);
+	}	
 }
+
 
 /*ALCODEEND*/}
 
@@ -3954,8 +3958,10 @@ double installedRooftopSolar_kW = house.v_liveAssetsMetaData.initialPV_kW != nul
 if (gn.p_hasProfileData){ //dont count production if there is measured data on Node
 	installedRooftopSolar_kW = 0;
 }
-f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW );
 
+if (installedRooftopSolar_kW > 0) {
+	f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW );
+}
 
 //Oprit?
 if( house.p_eigenOprit){
@@ -3965,6 +3971,9 @@ if( house.p_eigenOprit){
 	else{
 		f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
 	}
+}
+else {
+	f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
 }
 /*ALCODEEND*/}
 

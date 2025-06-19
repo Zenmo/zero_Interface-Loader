@@ -873,8 +873,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1729685968993</Id>
 		<Name><![CDATA[f_projectSpecificOrderedCollectionAdjustments]]></Name>
-		<X>85</X>
-		<Y>-600</Y>
+		<X>420</X>
+		<Y>-650</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1637,8 +1637,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1749741185117</Id>
 		<Name><![CDATA[f_initialParkingSpacesOrder]]></Name>
-		<X>85</X>
-		<Y>-630</Y>
+		<X>420</X>
+		<Y>-690</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1653,8 +1653,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1750247111856</Id>
 		<Name><![CDATA[f_initialChargerOrder]]></Name>
-		<X>85</X>
-		<Y>-620</Y>
+		<X>420</X>
+		<Y>-670</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1850,6 +1850,38 @@
 			<Name><![CDATA[legendOval]]></Name>
 			<Type><![CDATA[ShapeOval]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750333147816</Id>
+		<Name><![CDATA[f_initialHouseholdOrder]]></Name>
+		<X>85</X>
+		<Y>-620</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750340574107</Id>
+		<Name><![CDATA[f_initialisationOfResidentialSliders]]></Name>
+		<X>400</X>
+		<Y>-340</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

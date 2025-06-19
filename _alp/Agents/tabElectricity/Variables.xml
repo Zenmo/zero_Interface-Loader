@@ -1,43 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Variables>
-	<Variable Class="PlainVariable">
-		<Id>1750063382332</Id>
-		<Name><![CDATA[v_currentNbChargers]]></Name>
-		<X>902</X>
-		<Y>452</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[int]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1750063382334</Id>
-		<Name><![CDATA[v_currentNbHousesWithEVPublic]]></Name>
-		<X>902</X>
-		<Y>472</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
 	<Variable Class="Parameter">
 		<Id>1745483322704</Id>
 		<Name><![CDATA[p_currentPVOnLand_ha]]></Name>
@@ -137,31 +99,6 @@
 			<SdArray>false</SdArray>
 			<ParameterEditor>
 				<Id>1750063382341</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1750063382350</Id>
-		<Name><![CDATA[p_nbChargersInDatabase]]></Name>
-		<X>902</X>
-		<Y>430</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[int]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1750063382348</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
