@@ -2751,7 +2751,11 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setHeatingSliders( 0, sl_householdGasBurnerResidentialArea_pct, sl_householdElectricHeatPumpResidentialArea_pct, null, null );
+					<ActionCode>if (cb_householdHTDistrictHeatingResidentialArea.isSelected()) {
+	cb_householdHTDistrictHeatingResidentialArea.setSelected(false, false);
+	f_removeDistrictHeatingFromAllHouses();
+}
+f_setHeatingSliders( 0, sl_householdGasBurnerResidentialArea_pct, sl_householdElectricHeatPumpResidentialArea_pct, null, null );
 f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_householdElectricHeatPumpResidentialArea_pct.getValue() );
 </ActionCode>
 				</BasicProperties>
@@ -2781,7 +2785,11 @@ f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setHeatingSliders( 1, sl_householdGasBurnerResidentialArea_pct, sl_householdElectricHeatPumpResidentialArea_pct, null, null );
+					<ActionCode>if (cb_householdHTDistrictHeatingResidentialArea.isSelected()) {
+	cb_householdHTDistrictHeatingResidentialArea.setSelected(false, false);
+	f_removeDistrictHeatingFromAllHouses();
+}
+f_setHeatingSliders( 1, sl_householdGasBurnerResidentialArea_pct, sl_householdElectricHeatPumpResidentialArea_pct, null, null );
 f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_householdElectricHeatPumpResidentialArea_pct.getValue() );
 </ActionCode>
 				</BasicProperties>
@@ -2798,6 +2806,7 @@ f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1749738869835</Id>
 				<Name><![CDATA[sl_householdHeatDemandReductionResidentialArea_pct]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<X>260</X>
 				<Y>235</Y>
 				<Label>
@@ -2812,6 +2821,8 @@ f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>traceln("Slider doet nog niets!!");
+//TODO: Update demand reduction slider to reduce building thermal model heat demand
+
 //p_heatDemandReduction = (100 - sl_heatDemandReduction.getValue()) / 100;
 //t_heatDemandReduction.setText(sl_heatDemandReduction.getValue() + "%");
 
@@ -2829,6 +2840,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 			<Text>
 				<Id>1749738869837</Id>
 				<Name><![CDATA[t_householdHeatDemandReductionResidentialArea_pct]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<X>227</X>
 				<Y>240</Y>
 				<Label>
@@ -2855,6 +2867,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 			<Text>
 				<Id>1749738869839</Id>
 				<Name><![CDATA[t_householdHeatDemandReductionDescriptionResidentialArea]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<X>20</X>
 				<Y>240</Y>
 				<Label>

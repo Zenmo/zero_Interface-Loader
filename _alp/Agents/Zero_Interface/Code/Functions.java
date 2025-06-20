@@ -2968,9 +2968,11 @@ int nbHousesWithElectricCooking = count(energyModel.Houses, x -> x.p_cookingMeth
 double cooking_pct = 100.0 * nbHousesWithElectricCooking / nbHouses;
 uI_Tabs.pop_tabElectricity.get(0).sl_householdElectricCookingResidentialArea_pct.setValue(cooking_pct, false);
 
-int nbPrivateEVs = count(c_orderedVehiclesPrivateParking, x -> x instanceof J_EAEV);
-double privateEVs_pct = 100.0 * nbPrivateEVs / c_orderedVehiclesPrivateParking.size();
-uI_Tabs.pop_tabElectricity.get(0).sl_privateEVsResidentialArea_pct.setValue(privateEVs_pct, false);
+if (c_orderedVehiclesPrivateParking.size() > 0) {
+	int nbPrivateEVs = count(c_orderedVehiclesPrivateParking, x -> x instanceof J_EAEV);
+	double privateEVs_pct = 100.0 * nbPrivateEVs / c_orderedVehiclesPrivateParking.size();
+	uI_Tabs.pop_tabElectricity.get(0).sl_privateEVsResidentialArea_pct.setValue(privateEVs_pct, false);
+}
 
 int nbActivePublicChargers = count(c_orderedPublicChargers, x -> x.v_isActive);
 double activePublicChargers_pct = 100.0 * nbActivePublicChargers / c_orderedPublicChargers.size();

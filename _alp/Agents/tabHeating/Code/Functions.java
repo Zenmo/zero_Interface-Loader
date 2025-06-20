@@ -56,8 +56,50 @@ zero_Interface.f_resetSettings();
 
 double f_setHeatingSystemsHouseholds(List<GCHouse> gcList,double targetHeatPump_pct)
 {/*ALCODESTART::1722256221655*/
-double nbHeatPumps = count(zero_Interface.energyModel.Houses, house -> house.p_primaryHeatingAsset instanceof J_EAConversionHeatPump);
-int targetHeatPumpAmount = roundToInt( targetHeatPump_pct / 100.0 *(zero_Interface.energyModel.Houses.size()));
+ArrayList<GCHouse> houses = new ArrayList<GCHouse>(zero_Interface.c_orderedHeatingSystemsHouses.stream().filter(gcList::contains).toList());
+double nbHeatPumps = count(gcList, gc -> gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump);
+int targetHeatPumpAmount = roundToInt( targetHeatPump_pct / 100.0 * gcList.size());
+
+while ( nbHeatPumps > targetHeatPumpAmount) { // remove excess heatpumps, replace with gasburners.
+	GCHouse house = findFirst(houses, x->x.p_primaryHeatingAsset instanceof J_EAConversionHeatPump);
+	if (house != null) {
+		house.p_primaryHeatingAsset.removeEnergyAsset();
+		nbHeatPumps--;
+		houses.remove(house);
+		zero_Interface.c_orderedHeatingSystemsHouses.remove(house);
+		zero_Interface.c_orderedHeatingSystemsHouses.add(0, house);
+		double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
+		new J_EAConversionGasBurner(house, peakHeatDemand_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC);
+		house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
+	}
+	else {
+		throw new RuntimeException("Can't find Heatpump in house that should have heatpump in f_setHeatingSystemsHouseholds.");
+	}
+}
+
+while ( nbHeatPumps < targetHeatPumpAmount) { // remove gasburners, add heatpumps.
+	GCHouse house = findFirst(houses, x -> x.p_primaryHeatingAsset instanceof J_EAConversionGasBurner);
+	if (house != null) {			
+		house.p_primaryHeatingAsset.removeEnergyAsset();
+		nbHeatPumps++;		
+		houses.remove(house);
+		zero_Interface.c_orderedHeatingSystemsHouses.remove(house);
+		zero_Interface.c_orderedHeatingSystemsHouses.add(0, house);		
+		double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
+		new J_EAConversionHeatPump(house, peakHeatDemand_kW, 0.5, zero_Interface.energyModel.p_timeStep_h, 60,  zero_Interface.energyModel.v_currentAmbientTemperature_degC, 0, 1);				
+		house.p_heatingType = OL_GridConnectionHeatingType.HEATPUMP_AIR;
+	} 
+	else {
+		throw new RuntimeException("Can't find Gasburner in house that should have gasburner in f_setHeatingSystemsHouseholds.");
+	}	
+}	
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
 double f_setHeatingSliders(int sliderIndex,ShapeSlider gasBurnerSlider,ShapeSlider heatPumpSlider,ShapeSlider hybridHeatPumpSlider,ShapeSlider districtHeatingSlider)
@@ -265,6 +307,7 @@ return peakHeatDemand_kW;
 double f_addDistrictHeatingToAllHouses()
 {/*ALCODESTART::1749739532180*/
 for (GCHouse house: zero_Interface.energyModel.Houses ) {
+	// Remove the existing heating assets
 	house.p_primaryHeatingAsset.removeEnergyAsset();
 	if (house.p_secondaryHeatingAsset != null) {
 		house.p_secondaryHeatingAsset.removeEnergyAsset(); 
@@ -275,15 +318,61 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 	if ( house.p_heatBuffer != null){
 		house.p_heatBuffer.removeEnergyAsset();
 	}
+	
 	house.p_heatingType = OL_GridConnectionHeatingType.DISTRICTHEAT;
-	new J_EAConversionHeatDeliverySet(house, 5.0, 1.0, 50, zero_Interface.energyModel.p_timeStep_h);
+	// Add a heat node
+	house.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getGridNodesTopLevel(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
+	// Create a heat node if it does not exist yet
+	if(house.p_parentNodeHeat == null){
+		GridNode GN_heat = zero_Interface.energyModel.add_pop_gridNodes();
+		GN_heat.p_gridNodeID = "Heatgrid";
+		
+		// Check wether transformer capacity is known or estimated
+		GN_heat.p_capacity_kW = 1000000;	
+		GN_heat.p_realCapacityAvailable = false;
+		
+		// Basic GN information
+		GN_heat.p_description = "Warmtenet";
+	
+		//Define node type
+		GN_heat.p_nodeType = OL_GridNodeType.HT;
+		GN_heat.p_energyCarrier = OL_EnergyCarriers.HEAT;
+	
+		//Define GN location
+		GN_heat.p_latitude = 0;
+		GN_heat.p_longitude = 0;
+		GN_heat.setLatLon(GN_heat.p_latitude, GN_heat.p_longitude);
+		
+		//Connect
+		house.p_parentNodeHeat = GN_heat;
+		
+		//Show warning that heat grid is not a simple solution
+		zero_Interface.f_setErrorScreen("LET OP: Er is nu een 'warmtenet' gecreerd. Maar er is geen warmtebron aanwezig in het model. Daarom zal de benodigde warmte voor het warmtenet in de resultaten te zien zijn als warmte import.");
+	}
+	house.p_parentNodeHeatID = house.p_parentNodeHeat.p_gridNodeID;
+	
+	double outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
+	double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
+	double efficiency = 1.0;
+	
+	new J_EAConversionHeatDeliverySet(house, peakHeatDemand_kW, efficiency, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC);
 }
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
 double f_removeDistrictHeatingFromAllHouses()
 {/*ALCODESTART::1749739532202*/
 for (GCHouse house: zero_Interface.energyModel.Houses ) {
 	house.p_primaryHeatingAsset.removeEnergyAsset();
+	house.p_parentNodeHeat = null;
+	house.p_parentNodeHeatID = null;
+	
 	house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
 	house.v_districtHeatDelivery_kW = 0;
 	
@@ -307,9 +396,14 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 		double peakHeatDemand_kW = Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
 		gasBurner = new J_EAConversionGasBurner(house, peakHeatDemand_kW, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
 	}	
-	
-	
 }
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
 double f_setAircos(double desiredShare)
@@ -320,18 +414,24 @@ traceln("Previous nb households with airco: " + nbHousesWithAirco);
 while ( roundToInt(nbHouses * desiredShare) > nbHousesWithAirco ) {
 	GCHouse house = randomWhere(zero_Interface.energyModel.Houses, x -> x.p_airco == null);
 	double aircoPower_kW = roundToDecimal(uniform(3,6),1);
-	house.p_airco = new J_EAAirco(house, aircoPower_kW, zero_Interface.energyModel.p_timeStep_h);
-	house.c_electricHeatpumpAssets.add(house.p_airco);
+	new J_EAAirco(house, aircoPower_kW, zero_Interface.energyModel.p_timeStep_h);
 	nbHousesWithAirco ++;
 }
 while ( roundToInt(nbHouses * desiredShare) < nbHousesWithAirco ) {
 	GCHouse house = randomWhere(zero_Interface.energyModel.Houses, x -> x.p_airco != null);
-	house.c_electricHeatpumpAssets.remove(house.p_airco);
-	house.p_airco = null;
+	house.p_airco.removeEnergyAsset();
 	nbHousesWithAirco --;
 }
 
 traceln("New nb households with airco: " + nbHousesWithAirco);
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
+
 /*ALCODEEND*/}
 
 double f_addLTDH()
@@ -371,9 +471,6 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 	*/
 	
 }
-
-
-
 
 /*ALCODEEND*/}
 
