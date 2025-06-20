@@ -1989,8 +1989,8 @@ for (Chargingstation_data dataChargingStation : c_chargingstation_data){
 			chargingStation.c_connectedGISObjects.add(area);
 			
 			//Style building
-			area.set_p_defaultFillColor( zero_Interface.v_chargingCentreColor );
-			area.set_p_defaultLineColor( zero_Interface.v_chargingCentreLineColor );
+			area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
+			area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
 			area.set_p_defaultLineWidth( zero_Interface.v_energyAssetLineWidth);
 			zero_Interface.f_styleAreas(area);
 		}
