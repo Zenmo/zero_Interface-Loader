@@ -293,7 +293,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1737972861302</Id>
 		<Name><![CDATA[map_buildingData_Vallum]]></Name>
 		<X>-370</X>
-		<Y>365</Y>
+		<Y>395</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -308,11 +308,31 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 			<Type><![CDATA[Map<String, com.zenmo.bag.Pand>]]></Type>
 		</Properties>
 	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1749728889990</Id>
+		<Name><![CDATA[v_houseIsolation_level]]></Name>
+		<Description><![CDATA[Used during startup to set the isolation level of the house and avoid if statements]]></Description>
+		<X>440</X>
+		<Y>570</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[OL_IsolationLevelHouse]]></Type>
+		</Properties>
+	</Variable>
 	<Variable Class="Parameter">
 		<Id>1726584206064</Id>
 		<Name><![CDATA[zero_Interface]]></Name>
 		<X>30</X>
-		<Y>710</Y>
+		<Y>760</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -457,7 +477,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205739</Id>
 		<Name><![CDATA[c_companyBuilding_data]]></Name>
 		<X>-370</X>
-		<Y>385</Y>
+		<Y>415</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -475,7 +495,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205741</Id>
 		<Name><![CDATA[c_gridNode_data]]></Name>
 		<X>-370</X>
-		<Y>330</Y>
+		<Y>360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -493,7 +513,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205743</Id>
 		<Name><![CDATA[c_surveyCompanyBuilding_data]]></Name>
 		<X>-380</X>
-		<Y>880</Y>
+		<Y>910</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -511,7 +531,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205745</Id>
 		<Name><![CDATA[c_houseBuilding_data]]></Name>
 		<X>-370</X>
-		<Y>405</Y>
+		<Y>435</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -529,7 +549,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205747</Id>
 		<Name><![CDATA[c_solarfarm_data]]></Name>
 		<X>-370</X>
-		<Y>452</Y>
+		<Y>482</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -547,7 +567,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205749</Id>
 		<Name><![CDATA[c_windfarm_data]]></Name>
 		<X>-370</X>
-		<Y>472</Y>
+		<Y>502</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -565,7 +585,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205751</Id>
 		<Name><![CDATA[c_electrolyser_data]]></Name>
 		<X>-370</X>
-		<Y>491</Y>
+		<Y>521</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -583,7 +603,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205753</Id>
 		<Name><![CDATA[c_battery_data]]></Name>
 		<X>-370</X>
-		<Y>510</Y>
+		<Y>540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -601,7 +621,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205755</Id>
 		<Name><![CDATA[c_cable_data_LV]]></Name>
 		<X>-370</X>
-		<Y>600</Y>
+		<Y>650</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -619,7 +639,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205757</Id>
 		<Name><![CDATA[c_neighbourhood_data]]></Name>
 		<X>-370</X>
-		<Y>560</Y>
+		<Y>590</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -637,7 +657,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205759</Id>
 		<Name><![CDATA[c_remainingBuilding_data]]></Name>
 		<X>-370</X>
-		<Y>425</Y>
+		<Y>455</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -655,7 +675,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205763</Id>
 		<Name><![CDATA[c_chargingstation_data]]></Name>
 		<X>-370</X>
-		<Y>530</Y>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -673,7 +693,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205765</Id>
 		<Name><![CDATA[c_parcel_data]]></Name>
 		<X>-370</X>
-		<Y>580</Y>
+		<Y>630</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -691,7 +711,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205767</Id>
 		<Name><![CDATA[c_cable_data_MV]]></Name>
 		<X>-370</X>
-		<Y>620</Y>
+		<Y>670</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -709,7 +729,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1737744140895</Id>
 		<Name><![CDATA[c_vallumBuilding_data]]></Name>
 		<X>-380</X>
-		<Y>910</Y>
+		<Y>930</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -738,6 +758,60 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>CustomProfile_data</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1749631164240</Id>
+		<Name><![CDATA[c_gridNodeIDsWithProfiles]]></Name>
+		<X>1480</X>
+		<Y>490</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>String</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1749649688266</Id>
+		<Name><![CDATA[c_chargerProfiles_data]]></Name>
+		<X>-370</X>
+		<Y>320</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>ChargerProfile_data</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1749738339329</Id>
+		<Name><![CDATA[c_parkingSpace_data]]></Name>
+		<X>-370</X>
+		<Y>610</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>ParkingSpace_data</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>

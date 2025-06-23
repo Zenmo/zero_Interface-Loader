@@ -352,7 +352,7 @@
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( 0, sl_gasBurnerHouseholds_pct, sl_electricHeatPumpHouseholds_pct, null, null );
-f_setHeatingSystemsHouseholds( sl_electricHeatPumpHouseholds_pct.getValue() );
+f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_electricHeatPumpHouseholds_pct.getValue() );
 </ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -415,7 +415,7 @@ f_setHeatingSystemsHouseholds( sl_electricHeatPumpHouseholds_pct.getValue() );
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( 1, sl_gasBurnerHouseholds_pct, sl_electricHeatPumpHouseholds_pct, null, null );
-f_setHeatingSystemsHouseholds( sl_electricHeatPumpHouseholds_pct.getValue() );
+f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_electricHeatPumpHouseholds_pct.getValue() );
 </ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -444,13 +444,13 @@ f_setHeatingSystemsHouseholds( sl_electricHeatPumpHouseholds_pct.getValue() );
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReductionHeatingHouses( sl_heatDemandReductionHouseholds_pct.getValue() );</ActionCode>
+					<ActionCode>f_setDemandReductionHeating( new ArrayList&lt;GridConnection&gt;(zero_Interface.energyModel.Houses.findAll( x -&gt; true)), sl_heatDemandReductionHouseholds_pct.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
-					<MaxValue>100</MaxValue>
+					<MaxValue>50</MaxValue>
 					<Step>1</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
@@ -548,7 +548,7 @@ f_setHeatingSystemsHouseholds( sl_electricHeatPumpHouseholds_pct.getValue() );
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReductionHeatingCompanies( sl_heatDemandReductionCompanies_pct.getValue() );</ActionCode>
+					<ActionCode>f_setDemandReductionHeating( new ArrayList&lt;GridConnection&gt;(zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true)), sl_heatDemandReductionCompanies_pct.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -867,7 +867,7 @@ f_setHeatingSystemsHouseholds( sl_electricHeatPumpHouseholds_pct.getValue() );
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( 0, sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct, null, null );
-f_setHeatingSystemsCompanies( sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct );
+f_setHeatingSystemsCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct );
 
 zero_Interface.f_resetSettings();</ActionCode>
 				</BasicProperties>
@@ -930,7 +930,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( 1, sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct, null, null );
-f_setHeatingSystemsCompanies( sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct);
+f_setHeatingSystemsCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct);
 
 zero_Interface.f_resetSettings();</ActionCode>
 				</BasicProperties>
@@ -1545,7 +1545,7 @@ f_setHeatingSystemsHouseholds();
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( 0, sl_heatDemandSlidersResidentialAreaHouseholdsGasBurner_pct, sl_heatDemandSlidersResidentialAreaHouseholdsElectricHeatPump_pct, null, null );
-f_setHeatingSystemsHouseholds( sl_heatDemandSlidersResidentialAreaHouseholdsElectricHeatPump_pct.getValue() );
+f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_heatDemandSlidersResidentialAreaHouseholdsElectricHeatPump_pct.getValue() );
 </ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -1606,7 +1606,7 @@ f_setHeatingSystemsHouseholds();
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( 1, sl_heatDemandSlidersResidentialAreaHouseholdsGasBurner_pct, sl_heatDemandSlidersResidentialAreaHouseholdsElectricHeatPump_pct, null, null );
-f_setHeatingSystemsHouseholds( sl_heatDemandSlidersResidentialAreaHouseholdsElectricHeatPump_pct.getValue() );
+f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_heatDemandSlidersResidentialAreaHouseholdsElectricHeatPump_pct.getValue() );
 </ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -1818,9 +1818,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReductionHeatingCompanies( sl_heatDemandSlidersCompaniesHeatDemandReductionCompanies_pct.getValue());
-
-</ActionCode>
+					<ActionCode>f_setDemandReductionHeating( new ArrayList&lt;GridConnection&gt;(zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true)), sl_heatDemandSlidersCompaniesHeatDemandReductionCompanies_pct.getValue());</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -2138,7 +2136,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( 0, sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct, sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct, null, null );
-f_setHeatingSystemsCompanies( sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct, sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct);
+f_setHeatingSystemsCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct, sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct);
 
 zero_Interface.f_resetSettings();</ActionCode>
 				</BasicProperties>
@@ -2200,7 +2198,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( 1, sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct, sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct, null, null );
-f_setHeatingSystemsCompanies( sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct, sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct);
+f_setHeatingSystemsCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct, sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct);
 
 zero_Interface.f_resetSettings();</ActionCode>
 				</BasicProperties>
@@ -2590,4 +2588,483 @@ zero_Interface.f_resetSettings();</ActionCode>
 		</Font>
 		<Alignment>CENTER</Alignment>
 	</Text>
+	<Group>
+		<Id>1749738869813</Id>
+		<Name><![CDATA[gr_heatDeandSlidersResidentialArea]]></Name>
+		<X>400</X>
+		<Y>0</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>0</XCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Rectangle>
+				<Id>1749738869815</Id>
+				<Name><![CDATA[rect_heatDeandSlidersResidentialArea]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>3</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>370</Width>
+				<Height>350</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-6943</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Rectangle>
+			<Text>
+				<Id>1749738869817</Id>
+				<Name><![CDATA[t_householdGasBurnerDescriptionResidentialArea]]></Name>
+				<X>20</X>
+				<Y>65</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Gasburner]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1749738869821</Id>
+				<Name><![CDATA[t_householdElectricHeatPumpDescriptionResidentialArea]]></Name>
+				<X>20</X>
+				<Y>90</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Elec. heatpump]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1749738869823</Id>
+				<Name><![CDATA[t_householdElectricHeatPumpResidentialArea_pct]]></Name>
+				<X>230</X>
+				<Y>90</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[#]]></Text>
+				<TextCode>sl_householdElectricHeatPumpResidentialArea_pct.getIntValue() + "%"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Text>
+				<Id>1749738869825</Id>
+				<Name><![CDATA[t_householdGasBurnerResidentialArea_pct]]></Name>
+				<X>230</X>
+				<Y>65</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[#]]></Text>
+				<TextCode>sl_householdGasBurnerResidentialArea_pct.getIntValue() + "%"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1749738869829</Id>
+				<Name><![CDATA[sl_householdGasBurnerResidentialArea_pct]]></Name>
+				<X>260</X>
+				<Y>60</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>if (cb_householdHTDistrictHeatingResidentialArea.isSelected()) {
+	cb_householdHTDistrictHeatingResidentialArea.setSelected(false, false);
+	f_removeDistrictHeatingFromAllHouses();
+}
+f_setHeatingSliders( 0, sl_householdGasBurnerResidentialArea_pct, sl_householdElectricHeatPumpResidentialArea_pct, null, null );
+f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_householdElectricHeatPumpResidentialArea_pct.getValue() );
+</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>100</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>100</MaxValue>
+					<Step>1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1749738869833</Id>
+				<Name><![CDATA[sl_householdElectricHeatPumpResidentialArea_pct]]></Name>
+				<X>260</X>
+				<Y>85</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>if (cb_householdHTDistrictHeatingResidentialArea.isSelected()) {
+	cb_householdHTDistrictHeatingResidentialArea.setSelected(false, false);
+	f_removeDistrictHeatingFromAllHouses();
+}
+f_setHeatingSliders( 1, sl_householdGasBurnerResidentialArea_pct, sl_householdElectricHeatPumpResidentialArea_pct, null, null );
+f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_householdElectricHeatPumpResidentialArea_pct.getValue() );
+</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>100</MaxValue>
+					<Step>5</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1749738869835</Id>
+				<Name><![CDATA[sl_householdHeatDemandReductionResidentialArea_pct]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<X>260</X>
+				<Y>235</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>traceln("Slider doet nog niets!!");
+//TODO: Update demand reduction slider to reduce building thermal model heat demand
+
+//p_heatDemandReduction = (100 - sl_heatDemandReduction.getValue()) / 100;
+//t_heatDemandReduction.setText(sl_heatDemandReduction.getValue() + "%");
+
+zero_Interface.f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>100</MaxValue>
+					<Step>1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1749738869837</Id>
+				<Name><![CDATA[t_householdHeatDemandReductionResidentialArea_pct]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<X>227</X>
+				<Y>240</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[#]]></Text>
+				<TextCode>sl_householdHeatDemandReductionResidentialArea_pct.getIntValue() + "%"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Text>
+				<Id>1749738869839</Id>
+				<Name><![CDATA[t_householdHeatDemandReductionDescriptionResidentialArea]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<X>20</X>
+				<Y>240</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Household insulation improvement]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1749738869841</Id>
+				<Name><![CDATA[t_householdHeatingTypeDescriptionResidentialArea]]></Name>
+				<X>20</X>
+				<Y>30</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Heating & Cooling]]></Text>
+				<Font>
+					<Name><![CDATA[Calibri]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1749738869843</Id>
+				<Name><![CDATA[sl_householdAircoResidentialArea_pct]]></Name>
+				<X>260</X>
+				<Y>206</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setAircos(sl_householdAircoResidentialArea_pct.getValue() / 100.0);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>100</MaxValue>
+					<Step>5</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1749738869845</Id>
+				<Name><![CDATA[t_householdAircoDescriptionResidentialArea]]></Name>
+				<X>20</X>
+				<Y>210</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Houses with airconditioning]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1749738869847</Id>
+				<Name><![CDATA[t_householdAircoResidentialArea_pct]]></Name>
+				<X>223</X>
+				<Y>210</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[#]]></Text>
+				<TextCode>sl_householdAircoResidentialArea_pct.getIntValue() + "%"</TextCode>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1749738869849</Id>
+				<Name><![CDATA[cb_householdHTDistrictHeatingResidentialArea]]></Name>
+				<X>20</X>
+				<Y>120</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="135" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<ActionCode>if ( cb_householdHTDistrictHeatingResidentialArea.isSelected() ){
+	sl_householdGasBurnerResidentialArea_pct.setValue(0, false);
+	sl_householdElectricHeatPumpResidentialArea_pct.setValue(0, false);
+	//cb_householdLTDistrictHeatingResidentialArea.setSelected(false, false);
+	f_addDistrictHeatingToAllHouses();
+}
+else{
+	sl_householdGasBurnerResidentialArea_pct.setValue(100, false);
+	f_removeDistrictHeatingFromAllHouses();
+}</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="12" Style="0"/>
+					<LabelText>HT-district heating</LabelText>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1749738869851</Id>
+				<Name><![CDATA[cb_householdLTDistrictHeatingResidentialArea]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<X>20</X>
+				<Y>155</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="185" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor/>
+					<Enabled>true</Enabled>
+					<ActionCode>if ( cb_householdLTDistrictHeatingResidentialArea.isSelected() ){
+	sl_householdElectricHeatPumpResidentialArea_pct.setValue(0);
+	sl_householdGasBurnerResidentialArea_pct.setValue(0);
+	cb_householdHTDistrictHeatingResidentialArea.setSelected(false, false);
+	f_addLTDH();
+}
+else{
+	sl_householdGasBurnerResidentialArea_pct.setValue(100, false);
+	f_removeLTDH();
+}</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="12" Style="0"/>
+					<LabelText>LT-district heating + booster</LabelText>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+		</Presentation>
+	</Group>
 </Presentation>

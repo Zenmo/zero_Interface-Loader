@@ -137,7 +137,7 @@ import kotlinx.datetime.DateTimeUnit;]]></Import>
 			<Id>1726584205977</Id>
 			<Name><![CDATA[inputHouseholdTrips]]></Name>
 			<X>-369.5</X>
-			<Y>749</Y>
+			<Y>799</Y>
 			<Label>
 				<X>10</X>
 				<Y>0</Y>
@@ -157,7 +157,7 @@ import kotlinx.datetime.DateTimeUnit;]]></Import>
 			<Id>1726584205979</Id>
 			<Name><![CDATA[inputTruckTrips]]></Name>
 			<X>-369.5</X>
-			<Y>729</Y>
+			<Y>779</Y>
 			<Label>
 				<X>10</X>
 				<Y>0</Y>
@@ -177,7 +177,7 @@ import kotlinx.datetime.DateTimeUnit;]]></Import>
 			<Id>1726584205981</Id>
 			<Name><![CDATA[inputCookingActivities]]></Name>
 			<X>-370</X>
-			<Y>710</Y>
+			<Y>760</Y>
 			<Label>
 				<X>10</X>
 				<Y>0</Y>

@@ -125,7 +125,6 @@ for ( GIS_Object GISobject : energyModel.pop_GIS_Objects ){
 					f_selectCharger((GCPublicCharger)selectedGC, GISobject );
 					break;
 				
-					
 				default:
 					buildingsConnectedToSelectedBuildingsList = GISobject.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
 					f_selectBuilding(GISobject, buildingsConnectedToSelectedBuildingsList);		
@@ -321,11 +320,18 @@ uI_Tabs.add_pop_tabEHub();
 
 // Group visibilities
 // When using an extension of a generic tab don't forget to typecast it!
-((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders().setVisible(true);
-((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersCompanies().setVisible(true);
-((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
-((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
-
+if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
+	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_ResidentialArea().setVisible(true);
+	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDeandSliders_ResidentialArea().setVisible(true);
+	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
+	((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
+}
+else {
+	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders().setVisible(true);
+	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersCompanies().setVisible(true);
+	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
+	((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
+}
 uI_Tabs.f_showCorrectTab();
 /*ALCODEEND*/}
 
@@ -461,7 +467,8 @@ else if (v_previousClickedObjectType == OL_GISObjectType.BUILDING ||
 		 v_previousClickedObjectType == OL_GISObjectType.WINDFARM ||
 		 v_previousClickedObjectType == OL_GISObjectType.ELECTROLYSER ||
 		 v_previousClickedObjectType == OL_GISObjectType.BATTERY ||
-		 v_previousClickedObjectType == OL_GISObjectType.CHARGER){
+		 v_previousClickedObjectType == OL_GISObjectType.CHARGER ||
+		 v_previousClickedObjectType == OL_GISObjectType.PARKING){
 	for(GIS_Object previousClickedObject: c_previousSelectedObjects){
 		f_styleAreas(previousClickedObject);
 	}
@@ -548,10 +555,14 @@ while (v_connectionOwnerIndexNr < c_COCompanies.size()){
 v_connectionOwnerIndexNr = 0;
 
 //Get the ghost vehicles for the transport slider tab
-uI_Tabs.pop_tabMobility.get(0).f_calculateNumberOfGhostVehicles();
-
+Triple<Integer, Integer, Integer> triple = uI_Tabs.pop_tabMobility.get(0).f_calculateNumberOfGhostVehicles( new ArrayList<GridConnection>(energyModel.UtilityConnections.findAll( x -> true)) );
+uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Cars = triple.getFirst();
+uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Vans = triple.getSecond();
+uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Trucks = triple.getThird();
 //Get the ghost heating systems
-uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfGhostHeatingSystems();
+Pair<Integer, Integer> pair = uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfGhostHeatingSystems( energyModel.UtilityConnections.findAll( x -> true) );
+uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps = pair.getFirst();
+uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_HybridHeatpumps = pair.getSecond();
 
 /*ALCODEEND*/}
 
@@ -615,34 +626,27 @@ if (gn!=null){
 
 double f_initialPVSystemsOrder()
 {/*ALCODESTART::1714130288661*/
-// First we make a copy of all the Uitility GridConnections
-List<GridConnection> GCs = new ArrayList<>(energyModel.f_getGridConnections());
-List<GridConnection> GCs_detailedCompanies = new ArrayList<>(energyModel.f_getGridConnections());
-if( p_selectedProjectType == OL_ProjectType.RESIDENTIAL){
-	GCs = GCs.stream().filter(gc -> gc instanceof GCHouse).collect(Collectors.toList());
-}
-else {
-	GCs_detailedCompanies = GCs.stream().filter(gc -> gc instanceof GCUtility && gc.p_owner.p_detailedCompany).collect(Collectors.toList());
-	GCs = GCs.stream().filter(gc -> gc instanceof GCUtility && !gc.p_owner.p_detailedCompany).collect(Collectors.toList());
-}
-// Find all the GCs with PV at the start of the simulation
-ArrayList<GridConnection> GCsWithPV = GCs.stream().filter(gc -> gc.v_hasPV).collect(Collectors.toCollection(ArrayList::new));
-ArrayList<GridConnection> otherGCs = GCs.stream().filter(gc -> !gc.v_hasPV).collect(Collectors.toCollection(ArrayList::new));
-//Collections.shuffle(otherGCs);
-ArrayList<GridConnection> detailedCompanyGCsWithPV = GCs_detailedCompanies.stream().filter(gc -> gc.v_hasPV).collect(Collectors.toCollection(ArrayList::new));
-ArrayList<GridConnection> datailedCompanyGCsnoPV = GCs_detailedCompanies.stream().filter(gc -> !gc.v_hasPV).collect(Collectors.toCollection(ArrayList::new));
+List<GCHouse> houses = new ArrayList<GCHouse>(energyModel.Houses.findAll( x -> true));
+List<GCHouse> housesWithoutPV = houses.stream().filter( gc -> !gc.v_liveAssetsMetaData.hasPV ).collect(Collectors.toList());
+List<GCHouse> housesWithPV = new ArrayList<>(houses);
+housesWithPV.removeAll(housesWithoutPV);
 
-// We make sure that the GCs with PV at the start of the simulation are the last in the list
+c_orderedPVSystemsHouses = new ArrayList<>(housesWithoutPV);
+c_orderedPVSystemsHouses.addAll(housesWithPV);
 
-//traceln("amount of GCs with PV at start: " + GCsWithPV.size());
-//traceln("amount of other GCs at start: " + otherGCs.size());
 
-if(c_companyUIs.size() == 0){
-	otherGCs.addAll(GCsWithPV);
-}
+List<GCUtility> companies = new ArrayList<GCUtility>(energyModel.UtilityConnections.findAll( x -> true));
+List<GCUtility> companiesWithoutPV = companies.stream().filter( gc -> !gc.v_liveAssetsMetaData.hasPV ).collect(Collectors.toList());
+List<GCUtility> companiesWithPV = companies.stream().filter( gc -> gc.v_liveAssetsMetaData.hasPV ).collect(Collectors.toList());
+List<GCUtility> detailedCompaniesWithPV = companiesWithPV.stream().filter( gc -> gc.p_owner != null && gc.p_owner.p_detailedCompany ).collect(Collectors.toList());
+List<GCUtility> genericCompaniesWithPV = new ArrayList<>(companiesWithPV);
+genericCompaniesWithPV.removeAll(detailedCompaniesWithPV);
 
-c_orderedPVSystems = otherGCs;
-c_orderedPVSystems.addAll(datailedCompanyGCsnoPV);
+c_orderedPVSystemsCompanies = new ArrayList<>(companiesWithoutPV);
+c_orderedPVSystemsCompanies.addAll(genericCompaniesWithPV);
+c_orderedPVSystemsCompanies.addAll(detailedCompaniesWithPV);
+
+
 /*ALCODEEND*/}
 
 double f_initialElectricVehiclesOrder()
@@ -667,27 +671,27 @@ c_orderedVehicles = otherEAs;
 
 double f_initialHeatingSystemsOrder()
 {/*ALCODESTART::1714131269202*/
-// First we make a copy of all the GridConnections
-List<GridConnection> companyList = new ArrayList<>(energyModel.f_getGridConnections());
-companyList = companyList.stream().filter(gc -> gc instanceof GCUtility && gc.p_primaryHeatingAsset != null).collect(Collectors.toList());
+List<GCHouse> houses = new ArrayList<GCHouse>(energyModel.Houses.findAll( x -> true));
+List<GCHouse> housesWithoutHP = houses.stream().filter( gc -> gc.p_heatingType != OL_GridConnectionHeatingType.HEATPUMP_AIR ).collect(Collectors.toList());
+List<GCHouse> housesWithHP = new ArrayList<>(houses);
+housesWithHP.removeAll(housesWithoutHP);
 
-// Find all the GCs with Heatpumps at the start of the simulation
-ArrayList<GridConnection> GCsWithHP = companyList.stream().filter(gc -> gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump).collect(Collectors.toCollection(ArrayList::new));
-ArrayList<GridConnection> otherGCs = companyList.stream().filter(gc -> !(gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump)).collect(Collectors.toCollection(ArrayList::new));
-// We make sure that the GCs with Heatpumps at the start of the simulation are the last in the list (if there is no companyUI)
-if(c_companyUIs.size() == 0){
-	otherGCs.addAll(GCsWithHP);
-}
-c_orderedHeatingSystemsCompanies = otherGCs;
+c_orderedHeatingSystemsHouses = new ArrayList<>(housesWithoutHP);
+c_orderedHeatingSystemsHouses.addAll(housesWithHP);
 
 
-// Doe same for houses
-List<GridConnection> houseList = new ArrayList<>(energyModel.f_getGridConnections());
-houseList = houseList.stream().filter(gc -> gc instanceof GCHouse).collect(Collectors.toList());
-ArrayList<GridConnection> housesWithHP = houseList.stream().filter(gc -> gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump).collect(Collectors.toCollection(ArrayList::new));
-ArrayList<GridConnection> otherHouses = houseList.stream().filter(gc -> !(gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump)).collect(Collectors.toCollection(ArrayList::new));
-otherHouses.addAll(housesWithHP);
-c_orderedHeatingSystemsHouses = otherHouses;
+List<GCUtility> companies = new ArrayList<GCUtility>(energyModel.UtilityConnections.findAll( gc -> gc.p_heatingType != OL_GridConnectionHeatingType.NONE));
+List<GCUtility> companiesWithoutHP = companies.stream().filter( gc -> gc.p_heatingType != OL_GridConnectionHeatingType.HEATPUMP_AIR).collect(Collectors.toList());
+List<GCUtility> companiesWithHP = companies.stream().filter( gc -> gc.p_heatingType == OL_GridConnectionHeatingType.HEATPUMP_AIR ).collect(Collectors.toList());
+List<GCUtility> detailedCompaniesWithHP = companiesWithHP.stream().filter( gc -> gc.p_owner != null && gc.p_owner.p_detailedCompany ).collect(Collectors.toList());
+List<GCUtility> genericCompaniesWithHP = new ArrayList<>(companiesWithHP);
+genericCompaniesWithHP.removeAll(detailedCompaniesWithHP);
+
+c_orderedHeatingSystemsCompanies = new ArrayList<>(companiesWithoutHP);
+c_orderedHeatingSystemsCompanies.addAll(genericCompaniesWithHP);
+c_orderedHeatingSystemsCompanies.addAll(detailedCompaniesWithHP);
+
+
 /*ALCODEEND*/}
 
 double f_initalAssetOrdering()
@@ -695,6 +699,9 @@ double f_initalAssetOrdering()
 f_initialElectricVehiclesOrder();
 f_initialPVSystemsOrder();
 f_initialHeatingSystemsOrder();
+f_initialParkingSpacesOrder();
+f_initialHouseholdOrder();
+f_initialChargerOrder();
 f_projectSpecificOrderedCollectionAdjustments();
 
 
@@ -726,7 +733,7 @@ for (GIS_Building building : energyModel.pop_GIS_Buildings){
 */
 
 if (gis_area.c_containedGridConnections.size() > 0) {
-	if (gis_area.c_containedGridConnections.get(0).v_hasPV) {
+	if (gis_area.c_containedGridConnections.get(0).v_liveAssetsMetaData.hasPV) {
 		if (gis_area.c_containedGridConnections.get(0).c_productionAssets.get(0).getCapacityElectric_kW() < 100){
 			gis_area.f_style(rect_smallProduction.getFillColor(), null, null, null);
 		}
@@ -776,6 +783,9 @@ f_setGridTopologyColors();
 
 //Initialize the sliders of the main UI
 f_setSliderPresets();
+
+//Initialize the legend
+f_initializeLegend();
 
 //Disable cable button if no cables have been loaded in
 if(c_LVCables.size() == 0 && c_MVCables.size() == 0){
@@ -846,7 +856,7 @@ else if ( yearlyEnergyConsumption > 6000){ gis_area.f_style( rect_householdHugeC
 double f_setColorsBasedOnProductionHouseholds(GIS_Object gis_area)
 {/*ALCODESTART::1718265697364*/
 if (gis_area.c_containedGridConnections.size() > 0) {
-	if (gis_area.c_containedGridConnections.get(0).v_hasPV) {
+	if (gis_area.c_containedGridConnections.get(0).v_liveAssetsMetaData.hasPV) {
 		if (gis_area.c_containedGridConnections.get(0).c_productionAssets.get(0).getCapacityElectric_kW() < 5){
 			gis_area.f_style( rect_householdSmallProduction.getFillColor(), null, null, null );
 		}
@@ -865,16 +875,11 @@ double f_updateMainInterfaceSliders()
 {/*ALCODESTART::1718288402102*/
 // ATTENTION: If you have custom tabs it may be neccesary to override this function and add updates to your custom sliders!
 
-if(c_companyUIs.size()>0){//Update ghost vehicles and heating systems present if there are companyUIs
-	uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfGhostHeatingSystems();
-	uI_Tabs.pop_tabMobility.get(0).f_calculateNumberOfGhostVehicles();
-}
-
-
-
 // PV SYSTEMS:
-double PVsystems = count(energyModel.UtilityConnections, x->x.v_hasPV == true && x.v_isActive);		
-int PV_pct = roundToInt(100 * PVsystems / count(energyModel.UtilityConnections, x->x.v_isActive));
+//double PVsystems = count(energyModel.UtilityConnections, x->x.v_liveAssetsMetaData.hasPV == true && x.v_isActive);		
+//int PV_pct = roundToInt(100 * PVsystems / count(energyModel.UtilityConnections, x->x.v_isActive));
+Pair<Double, Double> pair = uI_Tabs.pop_tabElectricity.get(0).f_getPVSystemPercentage( new ArrayList<GridConnection>(findAll(energyModel.UtilityConnections, x -> x.v_isActive) ) );
+int PV_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());
 uI_Tabs.pop_tabElectricity.get(0).getSliderRooftopPVCompanies_pct().setValue(PV_pct, false);
 
 // GAS_BURNER / HEATING SYSTEMS: // Still a slight error. GasBurners + HeatPumps != total, because some GC have primary heating asset null
@@ -1359,6 +1364,7 @@ double f_setSliderPresets()
 {/*ALCODESTART::1725977409304*/
 //Should be overridden in child interface!!!
 f_updateMainInterfaceSliders();
+f_initialisationOfResidentialSliders();
 traceln("Forgot to override project specific slider settings!!");
 /*ALCODEEND*/}
 
@@ -1385,7 +1391,7 @@ if(c_selectedFilterOptions.size()>1 && c_selectedGridConnections.size()> 0){ // 
 	toBeFilteredGC = new ArrayList<GridConnection>(c_selectedGridConnections);
 }
 else{ // First filter
-	toBeFilteredGC = new ArrayList<GridConnection>(energyModel.f_getGridConnections());
+	toBeFilteredGC = new ArrayList<GridConnection>(energyModel.f_getActiveGridConnections());
 }
 
 //After a filter selecttion, reset previous clicked building/gridNode colors and text
@@ -1687,7 +1693,7 @@ c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> !GC.p_
 
 double f_filterHasPV(ArrayList<GridConnection> toBeFilteredGC)
 {/*ALCODESTART::1734448690487*/
-c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC.v_hasPV));
+c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC.v_liveAssetsMetaData.hasPV));
 
 /*ALCODEEND*/}
 
@@ -2624,5 +2630,380 @@ for(GIS_Building building : energyModel.pop_GIS_Buildings){
 		}
 	}
 }
+/*ALCODEEND*/}
+
+double f_initialParkingSpacesOrder()
+{/*ALCODESTART::1749741185117*/
+Collections.shuffle(c_orderedParkingSpaces);
+/*ALCODEEND*/}
+
+double f_initialChargerOrder()
+{/*ALCODESTART::1750247111856*/
+c_orderedV1GChargers = new ArrayList<J_EACharger>();
+c_orderedV2GChargers = new ArrayList<J_EACharger>();
+c_orderedPublicChargers = new ArrayList<GCPublicCharger>();
+
+List<J_EACharger> c_inactiveV1GChargers = new ArrayList<J_EACharger>();
+List<J_EACharger> c_inactiveV2GChargers = new ArrayList<J_EACharger>();
+
+for (GridConnection gc : energyModel.f_getActiveGridConnections()) {
+	for (J_EACharger charger : gc.c_chargers) {
+		if (charger.V1GCapable) {
+			c_orderedV1GChargers.add(0, charger);
+		}
+		else {
+			c_orderedV1GChargers.add(charger);
+		}
+		if (charger.V2GCapable) {
+			c_orderedV2GChargers.add(0, charger);
+		}
+		else {
+			c_orderedV2GChargers.add(charger);
+		}
+	}
+}
+
+for (GridConnection gc : energyModel.f_getPausedGridConnections()) {
+	for (J_EACharger charger : gc.c_chargers) {
+		if (charger.V1GCapable) {
+			c_inactiveV1GChargers.add(0, charger);
+		}
+		else {
+			c_inactiveV1GChargers.add(charger);
+		}
+		if (charger.V2GCapable) {
+			c_inactiveV2GChargers.add(0, charger);
+		}
+		else {
+			c_inactiveV2GChargers.add(charger);
+		}
+	}
+}
+
+c_orderedV1GChargers.addAll( c_inactiveV1GChargers );
+c_orderedV2GChargers.addAll( c_inactiveV2GChargers );
+
+for (GCPublicCharger gc : energyModel.PublicChargers) {
+	if ( !gc.p_isChargingCentre ) {
+		c_orderedPublicChargers.add(gc);
+	}
+}
+
+Collections.shuffle(c_orderedPublicChargers);
+/*ALCODEEND*/}
+
+double f_initializeSpecialGISObjectsLegend()
+{/*ALCODESTART::1750078798174*/
+int numberOfSpecialActiveGISObjectTypes = 0;
+
+for(OL_GISObjectType activeSpecialGISObjectType : c_modelActiveSpecialGISObjects){
+	if(activeSpecialGISObjectType == OL_GISObjectType.PARKING){
+		for(OL_ParkingSpaceType activeParkingSpaceType : c_modelActiveParkingSpaceTypes){
+			numberOfSpecialActiveGISObjectTypes ++;
+			Pair<ShapeText, ShapeRectangle> legendShapes = f_getNextSpecialLegendShapes(numberOfSpecialActiveGISObjectTypes);
+			f_setParkingSpaceLegendItem(activeParkingSpaceType, legendShapes.getFirst(), legendShapes.getSecond());
+		}
+	}
+	else{
+		numberOfSpecialActiveGISObjectTypes ++;
+		Pair<ShapeText, ShapeRectangle> legendShapes = f_getNextSpecialLegendShapes(numberOfSpecialActiveGISObjectTypes);
+		f_setSpecialGISObjectLegendItem(activeSpecialGISObjectType, legendShapes.getFirst(), legendShapes.getSecond());
+	}
+}
+/*ALCODEEND*/}
+
+double f_setTrafoText()
+{/*ALCODESTART::1750261221085*/
+if ( v_clickedGridNode.p_realCapacityAvailable ) {
+	v_clickedObjectText = v_clickedGridNode.p_nodeType + "-station, " + Integer.toString( ((int)v_clickedGridNode.p_capacity_kW) ) + " kW, ID: " + v_clickedGridNode.p_gridNodeID + ", aansluitingen: " + v_clickedGridNode.f_getConnectedGridConnections().size() + ", Type station: " + v_clickedGridNode.p_description;
+}
+else {
+	v_clickedObjectText =  v_clickedGridNode.p_nodeType + "-station, " + Integer.toString( ((int)v_clickedGridNode.p_capacity_kW) ) + " kW (ingeschat), ID: " + v_clickedGridNode.p_gridNodeID + ", aansluitingen: " + v_clickedGridNode.f_getConnectedGridConnections().size() + ", Type station: " + v_clickedGridNode.p_description;
+}
+/*ALCODEEND*/}
+
+double f_setSpecialGISObjectLegendItem(OL_GISObjectType activeSpecialGISObjectType,ShapeText legendText,ShapeRectangle legendRect)
+{/*ALCODESTART::1750079113839*/
+legendText.setVisible(true);
+legendRect.setVisible(true);
+
+switch(activeSpecialGISObjectType){
+	case SOLARFARM:
+		legendText.setText("Zonneveld");
+		legendRect.setFillColor(v_solarParkColor);
+		legendRect.setLineColor(v_solarParkLineColor);
+		break;
+	case WINDFARM:
+		legendText.setText("Windmolen");
+		legendRect.setFillColor(v_windFarmColor);
+		legendRect.setLineColor(v_windFarmLineColor);
+		break;
+	case CHARGER:
+		legendText.setText("Laadpaal/plein");
+		legendRect.setFillColor(v_chargingStationColor);
+		legendRect.setLineColor(v_chargingStationLineColor);
+		break;
+	case BATTERY:	
+		legendText.setText("Batterij");
+		legendRect.setFillColor(v_batteryColor);
+		legendRect.setLineColor(v_batteryLineColor);
+		break;
+	case PARCEL:
+		legendText.setText("Nieuw Perceel");
+		legendRect.setFillColor(v_parcelColor);
+		legendRect.setLineColor(v_parcelLineColor);
+		break;
+	case ELECTROLYSER:
+		legendText.setText("Electrolyser");
+		legendRect.setFillColor(v_electrolyserColor);
+		legendRect.setLineColor(v_electrolyserLineColor);
+		break;
+}
+/*ALCODEEND*/}
+
+double f_initializeLegend()
+{/*ALCODESTART::1750080865693*/
+//Default GIS buildings
+f_initializeDefaultGISBuildingsLegend();
+
+//Special gis objects
+f_initializeSpecialGISObjectsLegend();
+/*ALCODEEND*/}
+
+double f_setParkingSpaceLegendItem(OL_ParkingSpaceType activeParkingSpaceType,ShapeText legendText,ShapeRectangle legendRect)
+{/*ALCODESTART::1750089851073*/
+legendText.setVisible(true);
+legendRect.setVisible(true);
+
+switch(activeParkingSpaceType){
+	case PUBLIC:
+		legendText.setText("Parkeerplek: publiek");
+		legendRect.setFillColor(v_parkingSpaceColor_public);
+		legendRect.setLineColor(v_parkingSpaceLineColor_public);
+		break;
+	case PRIVATE:
+		legendText.setText("Parkeerplek: privé");
+		legendRect.setFillColor(v_parkingSpaceColor_private);
+		legendRect.setLineColor(v_parkingSpaceLineColor_private);
+		break;
+	case ELECTRIC:
+		legendText.setText("Parkeerplek: electrisch");
+		legendRect.setFillColor(v_parkingSpaceColor_electric);
+		legendRect.setLineColor(v_parkingSpaceLineColor_electric);
+		break;
+}
+/*ALCODEEND*/}
+
+Pair<ShapeText, ShapeRectangle> f_getNextSpecialLegendShapes(int legendShapesNumber)
+{/*ALCODESTART::1750092444018*/
+ShapeText legendText;
+ShapeRectangle legendRect;
+
+switch(legendShapesNumber){
+	case 1:
+		legendText = t_specialGISObjectLegend1;
+		legendRect = rect_specialGISObjectLegend1;
+		break;
+	case 2:
+		legendText = t_specialGISObjectLegend2;
+		legendRect = rect_specialGISObjectLegend2;
+		break;
+	case 3:
+		legendText = t_specialGISObjectLegend3;
+		legendRect = rect_specialGISObjectLegend3;
+		break;
+	case 4:
+		legendText = t_specialGISObjectLegend4;
+		legendRect = rect_specialGISObjectLegend4;
+		break;
+	case 5:
+		legendText = t_specialGISObjectLegend5;
+		legendRect = rect_specialGISObjectLegend5;
+		break;
+	case 6:
+		legendText = t_specialGISObjectLegend6;
+		legendRect = rect_specialGISObjectLegend6;
+		break;
+	case 7:
+		legendText = t_specialGISObjectLegend7;
+		legendRect = rect_specialGISObjectLegend7;
+		break;
+	case 8:
+		legendText = t_specialGISObjectLegend8;
+		legendRect = rect_specialGISObjectLegend8;
+		break;
+	case 9:
+		legendText = t_specialGISObjectLegend9;
+		legendRect = rect_specialGISObjectLegend9;
+		break;
+	case 10:
+		legendText = t_specialGISObjectLegend10;
+		legendRect = rect_specialGISObjectLegend10;
+		break;
+	case 11:
+		legendText = t_specialGISObjectLegend11;
+		legendRect = rect_specialGISObjectLegend11;
+		break;
+	case 12:
+		legendText = t_specialGISObjectLegend12;
+		legendRect = rect_specialGISObjectLegend12;
+		break;
+	default:
+		legendText = t_specialGISObjectLegend1;
+		legendRect = rect_specialGISObjectLegend1;
+		break;
+}
+
+return new Pair(legendText, legendRect);
+
+/*ALCODEEND*/}
+
+double f_initializeDefaultGISBuildingsLegend()
+{/*ALCODESTART::1750162397332*/
+int numberOfDefaultActiveGISObjectTypes = 1;//Always start at 2 (1 ++) for the building types, cause 'selection' is always present (for now).
+
+for(OL_GISBuildingTypes activeDefaultGISBuildingType : c_modelActiveDefaultGISBuildings){
+	numberOfDefaultActiveGISObjectTypes ++;
+	Pair<ShapeText, ShapeOval> legendShapes = f_getNextDefaultLegendShapes(numberOfDefaultActiveGISObjectTypes);
+	f_setDefaultGISBuildingLegendItem(activeDefaultGISBuildingType, legendShapes.getFirst(), legendShapes.getSecond());
+}
+/*ALCODEEND*/}
+
+Pair<ShapeText, ShapeOval> f_getNextDefaultLegendShapes(int legendShapesNumber)
+{/*ALCODESTART::1750162514744*/
+ShapeText legendText;
+ShapeOval legendOval;
+
+switch(legendShapesNumber){
+	case 1:
+		legendText = t_defaultLegend1;
+		legendOval = oval_defaultLegend1;
+		break;
+	case 2:
+		legendText = t_defaultLegend2;
+		legendOval = oval_defaultLegend2;
+		break;
+	case 3:
+		legendText = t_defaultLegend3;
+		legendOval = oval_defaultLegend3;
+		break;
+	case 4:
+		legendText = t_defaultLegend4;
+		legendOval = oval_defaultLegend4;
+		break;
+	case 5:
+		legendText = t_defaultLegend5;
+		legendOval = oval_defaultLegend5;
+		break;
+	default:
+		legendText = t_defaultLegend1;
+		legendOval = oval_defaultLegend1;
+}
+
+return new Pair(legendText, legendOval);
+
+/*ALCODEEND*/}
+
+double f_setDefaultGISBuildingLegendItem(OL_GISBuildingTypes activeDefaultGISBuildingType,ShapeText legendText,ShapeOval legendOval)
+{/*ALCODESTART::1750165143690*/
+legendText.setVisible(true);
+legendOval.setVisible(true);
+
+switch(activeDefaultGISBuildingType){
+	case DETAILED_COMPANY:
+		legendText.setText("Gedetaileerd bedrijf: " + v_numberOfSurveyCompanies);
+		legendOval.setFillColor(v_detailedCompanyBuildingColor);
+		legendOval.setLineColor(v_detailedCompanyBuildingLineColor);
+		break;
+	case DEFAULT_COMPANY:
+		legendText.setText("Standaard bedrijf");
+		legendOval.setFillColor(v_companyBuildingColor);
+		legendOval.setLineColor(v_companyBuildingLineColor);
+		break;
+	case HOUSE:
+		legendText.setText("Huizen");
+		legendOval.setFillColor(v_houseBuildingColor);
+		legendOval.setLineColor(v_houseBuildingLineColor);
+		break;
+	case REMAINING:
+		legendText.setText("Overige gebouwen");
+		legendOval.setFillColor(v_restBuildingColor);
+		legendOval.setLineColor(v_restBuildingLineColor);
+		break;
+}
+
+/*ALCODEEND*/}
+
+double f_initialHouseholdOrder()
+{/*ALCODESTART::1750333147816*/
+c_orderedActiveVehiclesPublicParking = new ArrayList<J_EADieselVehicle>();
+c_orderedVehiclesPrivateParking = new ArrayList<J_EAVehicle>();
+
+for (GCHouse house : energyModel.Houses) {
+	if (!house.p_eigenOprit) {
+		c_orderedActiveVehiclesPublicParking.addAll(house.c_dieselVehicles);
+	}
+	else {
+		c_orderedVehiclesPrivateParking.addAll(house.c_vehicleAssets);
+	}
+}
+
+Collections.shuffle(c_orderedActiveVehiclesPublicParking);
+Collections.shuffle(c_orderedVehiclesPrivateParking);
+
+/*ALCODEEND*/}
+
+double f_initialisationOfResidentialSliders()
+{/*ALCODESTART::1750340574107*/
+int nbHouses = energyModel.Houses.size();
+int nbHousesWithPV = count(energyModel.Houses, x -> x.v_liveAssetsMetaData.hasPV);
+double pv_pct = 100.0 * nbHousesWithPV / nbHouses;
+uI_Tabs.pop_tabElectricity.get(0).sl_householdPVResidentialArea_pct.setValue(pv_pct, false);
+
+if ( nbHousesWithPV != 0 ) {
+	int nbHousesWithHomeBattery = count(energyModel.Houses, x -> x.v_liveAssetsMetaData.hasPV && x.p_batteryAsset != null);
+	double battery_pct = 100.0 * nbHousesWithHomeBattery / nbHousesWithPV;
+	uI_Tabs.pop_tabElectricity.get(0).sl_householdBatteriesResidentialArea_pct.setValue(battery_pct, false);
+}
+
+int nbHousesWithElectricCooking = count(energyModel.Houses, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.ELECTRIC);
+double cooking_pct = 100.0 * nbHousesWithElectricCooking / nbHouses;
+uI_Tabs.pop_tabElectricity.get(0).sl_householdElectricCookingResidentialArea_pct.setValue(cooking_pct, false);
+
+if (c_orderedVehiclesPrivateParking.size() > 0) {
+	int nbPrivateEVs = count(c_orderedVehiclesPrivateParking, x -> x instanceof J_EAEV);
+	double privateEVs_pct = 100.0 * nbPrivateEVs / c_orderedVehiclesPrivateParking.size();
+	uI_Tabs.pop_tabElectricity.get(0).sl_privateEVsResidentialArea_pct.setValue(privateEVs_pct, false);
+}
+
+int nbActivePublicChargers = count(c_orderedPublicChargers, x -> x.v_isActive);
+double activePublicChargers_pct = 100.0 * nbActivePublicChargers / c_orderedPublicChargers.size();
+uI_Tabs.pop_tabElectricity.get(0).sl_publicChargersResidentialArea_pct.setValue(activePublicChargers_pct, false);
+
+// Put some of the diesel cars into the non active vehicles
+int nbCarsPerCharger = energyModel.avgc_data.p_avgEVsPerPublicCharger;
+List<J_EADieselVehicle> cars = new ArrayList<>(c_orderedActiveVehiclesPublicParking.subList(0, nbActivePublicChargers * nbCarsPerCharger));
+for (J_EADieselVehicle car : cars) {
+	c_orderedActiveVehiclesPublicParking.remove(car);
+	c_orderedNonActiveVehiclesPublicParking.add(0, car);
+	car.removeEnergyAsset();
+}
+
+int nbPublicChargers = c_orderedV1GChargers.size();
+int nbV1GChargers = count(c_orderedV1GChargers, x -> x.V1GCapable);
+int nbV2GChargers =count(c_orderedV2GChargers, x -> x.V2GCapable);
+double V1G_pct = 100.0 * nbV1GChargers / nbPublicChargers;
+double V2G_pct = 100.0 * nbV2GChargers / nbPublicChargers;
+uI_Tabs.pop_tabElectricity.get(0).sl_chargersThatSupportV1G_pct.setValue(V1G_pct, false);
+uI_Tabs.pop_tabElectricity.get(0).sl_chargersThatSupportV2G_pct.setValue(V2G_pct, false);
+
+
+double averageNeighbourhoodBatterySize_kWh = 0;
+for (GCGridBattery gc : energyModel.GridBatteries) {
+	averageNeighbourhoodBatterySize_kWh += gc.p_batteryAsset.getStorageCapacity_kWh();
+}
+averageNeighbourhoodBatterySize_kWh /= energyModel.GridBatteries.size();
+uI_Tabs.pop_tabElectricity.get(0).sl_gridBatteriesResidentialArea_kWh.setValue(averageNeighbourhoodBatterySize_kWh, false);
+
 /*ALCODEEND*/}
 

@@ -25,21 +25,13 @@ f_createSolarParks();
 f_createWindFarms();
 
 //Other infra assets
+f_createChargingStations();
 f_createElectrolysers();
 f_createBatteries();
-f_createChargingStations();
 
 //Consumers
-switch(project_data.project_type()){
-
-case BUSINESSPARK:
-	f_createConsumerGC_businesspark();
-	break;
-	
-case RESIDENTIAL:
-	f_createConsumerGC_Residential();
-	break;
-}
+f_createCompanies();
+f_createHouses();
 /*ALCODEEND*/}
 
 double f_configureEngine_default()
@@ -90,7 +82,8 @@ for (GridNode_data GN_data : c_gridNode_data) {
 			c_gridNodeIDsInScope.add(GN.p_gridNodeID);
 			
 			// Check wether transformer capacity is known or estimated
-			GN.p_capacity_kW = GN_data.capacity_kw();	
+			GN.p_capacity_kW = GN_data.capacity_kw();
+			GN.p_originalCapacity_kW = GN.p_capacity_kW;	
 			GN.p_realCapacityAvailable = GN_data.is_capacity_available();
 			
 			// Basic GN information
@@ -151,6 +144,11 @@ for (GridNode_data GN_data : c_gridNode_data) {
 				
 				//Add to hashmap
 				zero_Interface.c_GISNetplanes.add( serviceArea );
+			}
+			
+			//Gridnode profile
+			if(GN_data.profile_data_kWh() != null){
+				f_addGridNodeProfile(GN, GN_data.profile_data_kWh());
 			}
 		}
 	}
@@ -262,123 +260,6 @@ if(settings.reloadDatabase()){
 }
 /*ALCODEEND*/}
 
-double f_createHousesFromDatabase()
-{/*ALCODESTART::1726584205781*/
-List<Building_data> scopedBuilding_data = f_getScopedBuildingList(c_houseBuilding_data);
-	
-traceln("Aantal panden met woonfunctie in BAG data: " + scopedBuilding_data.size());
-
-int i = 0;
-for (Building_data dataBuilding : scopedBuilding_data) {
-	
-	GCHouse GCH = energyModel.add_Houses();
-	ConnectionOwner	COH = energyModel.add_pop_connectionOwners();
-	
-	//Set parameters for the Grid Connection
- 	GCH.p_gridConnectionID = dataBuilding.address_id();
-	GCH.p_ownerID = "Woonhuis" + Integer.toString(i);	//aanname : huiseigenaar is eigenbaas
-
-	GCH.p_purposeBAG = dataBuilding.purpose();
-	
-	//pand gegevens
-	GCH.p_heatingType = avgc_data.p_avgHouseHeatingMethod ;
-	GCH.p_floorSurfaceArea_m2 = dataBuilding.cumulative_floor_surface_m2();
-	GCH.p_bouwjaar = dataBuilding.build_year();
-	
-	//Nageisoleerd
-	if (dataBuilding.energy_label() != null) {
-		GCH.p_nageisoleerd = dataBuilding.energy_label();
-	}
-	else {
-		if (GCH.p_bouwjaar < 1980) {
-			GCH.p_nageisoleerd = "D";
-		}
-		else if (GCH.p_bouwjaar < 2000) {
-			GCH.p_nageisoleerd = "C";
-		}
-		else {
-			GCH.p_nageisoleerd = "B";
-		}
-	}
-	
-	//aansluiting gegevens
-	GCH.v_liveConnectionMetaData.physicalCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
-	GCH.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
-	GCH.v_liveConnectionMetaData.contractedFeedinCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
-	
-	//adres gegevens
-	GCH.p_address = new J_Address();
-	GCH.p_address.setStreetName(dataBuilding.streetname());
-	GCH.p_address.setHouseNumber(dataBuilding.house_number());
-	GCH.p_address.setHouseLetter(dataBuilding.house_letter());
-	GCH.p_address.setHouseAddition(dataBuilding.house_addition());
-	GCH.p_address.setPostalcode(dataBuilding.postalcode());
-	GCH.p_address.setCity(dataBuilding.city());
-	
-	//locatie
-	GCH.p_longitude = dataBuilding.longitude();
-	GCH.p_latitude = dataBuilding.latitude();
-	GCH.setLatLon(GCH.p_latitude, GCH.p_longitude);
-	
-	//Connect GC to grid node
-	//GridNode myParentNodeElectric;
-	GCH.p_parentNodeElectricID = dataBuilding.gridnode_id();
-	
-
-	
-	//Set parameters for the Actor: ConnectionOwner
-	COH.p_actorID = GCH.p_ownerID;
-	COH.p_actorType = OL_ActorType.CONNECTIONOWNER;
-	COH.p_connectionOwnerType = OL_ConnectionOwnerType.HOUSEHOLD;
-	COH.p_detailedCompany = false;
-	
-	GCH.p_owner = COH;
-	
-	//Create GIS building
-	GIS_Building b;
-	int pandClusterNr = dataBuilding.pandcluster_nr();
-	if( pandClusterNr == 0 ){	
-		b = f_createGISBuilding( dataBuilding, GCH );
-	}
-	else {
-		b = randomWhere(energyModel.c_GISBuildingClusters, x -> x.p_pandcluster_nr == pandClusterNr);
-		if (b == null){
-			b = f_createGISBuilding( dataBuilding, GCH );
-		}
-		else {
-			b.c_containedGridConnections.add(GCH);
-			GCH.c_connectedGISObjects.add(b);
-		}
-	}
-	
-	//Style building
-	b.p_defaultFillColor = zero_Interface.v_houseBuildingColor;
-	b.p_defaultLineColor = zero_Interface.v_houseBuildingLineColor;
-	zero_Interface.f_styleAreas(b);
-	
-	//Instantiate energy assets
-	double jaarlijksElectriciteitsVerbruik;
-	double jaarlijksGasVerbruik;
-	try {
-		jaarlijksElectriciteitsVerbruik = dataBuilding.electricity_consumption_kwhpa();
-	}
-	catch (NullPointerException e){
-		jaarlijksElectriciteitsVerbruik = Double.valueOf(uniform_discr(1200, 4500)); // Hardcoded??
-	}
-	try {
-		jaarlijksGasVerbruik = dataBuilding.gas_consumption_kwhpa();
-	}
-	catch (NullPointerException e){
-		jaarlijksGasVerbruik =  Double.valueOf(uniform_discr(600, 2000)); // Hardcoded??
-	}
-	
-	f_addEnergyAssetsToHouses(GCH, jaarlijksElectriciteitsVerbruik, jaarlijksGasVerbruik );	
-	f_setHouseHeatingPreferences(GCH);
-	i ++;
-}	
-
-/*ALCODEEND*/}
-
 A_SubTenant f_createSubtenant(com.zenmo.zummon.companysurvey.Survey survey,com.zenmo.zummon.companysurvey.Address address)
 {/*ALCODESTART::1726584205783*/
 A_SubTenant subtenant = energyModel.add_pop_subTenants();
@@ -406,7 +287,6 @@ GCEnergyProduction solarpark;
 
 List<String> existing_actors = new ArrayList();
 List<String> existing_solarFields = new ArrayList();
-
 
 for (Solarfarm_data dataSolarfarm : c_solarfarm_data) { // MOET NOG CHECK OF ZONNEVELD ACTOR AL BESTAAT OP, zo ja --> Zonneveld koppelen aan elkaar en niet 2 GC en 2 actoren maken.
 	
@@ -860,8 +740,16 @@ double f_createGenericCompanies()
 List<GCUtility> generic_company_GCs = new ArrayList();
 HashMap<GridConnection, Double> map_GC_to_installedBuildingPV = new HashMap();
 
+//Get buildings in scope
+List<Building_data> buildingDataGenericCompanies = f_getBuildingsInSubScope(c_companyBuilding_data);
+
+//Add generic companies to the legend if in model
+if(buildingDataGenericCompanies.size()>0){
+	zero_Interface.c_modelActiveDefaultGISBuildings.add(OL_GISBuildingTypes.DEFAULT_COMPANY);
+}
+
 //Loop over the remaining buildings in c_CompanyBuilding_data (Survey buildings have been removed from this collection)
-for (Building_data genericCompany : c_companyBuilding_data) {
+for (Building_data genericCompany : buildingDataGenericCompanies) {
 	
 	GCUtility companyGC = findFirst(generic_company_GCs, GC -> GC.p_gridConnectionID.equals(genericCompany.address_id()));
 	
@@ -998,23 +886,6 @@ if(buildingData.pandcluster_nr() != null && buildingData.pandcluster_nr() > 0) {
 
 //Create gisregion
 b.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(buildingData.polygon(), b.p_GISObjectType));
-
-/*
-if (buildingData.latitude() == null|| buildingData.longitude() == null){
-	
-	//Use the first point of the polygon as lat lon
-	double[] gisregion_points = b.gisRegion.getPoints(); // get all points of the gisArea of the building in the format lat1,lon1,lat2,lon2, etc.
-	
-	//position and coordinates
-	b.p_latitude = gisregion_points[0];
-	b.p_longitude = gisregion_points[1];
-}
-else{
-	//position and coordinates
-	b.p_latitude = buildingData.latitude();
-	b.p_longitude = buildingData.longitude();
-}
-*/
 
 //Use the first point of the polygon as lat lon
 double[] gisregion_points = b.gisRegion.getPoints(); // get all points of the gisArea of the building in the format lat1,lon1,lat2,lon2, etc.
@@ -1175,6 +1046,11 @@ f_addHeatAsset(parentGC, parentGC.p_heatingType, maxHeatOutputPower_kW);
 
 double f_createGISParcels()
 {/*ALCODESTART::1726584205807*/
+//Add GISObject type to the legenda
+if(c_parcel_data.size()>0){
+	zero_Interface.c_modelActiveSpecialGISObjects.add(OL_GISObjectType.PARCEL);
+}
+
 for (Parcel_data dataParcel : c_parcel_data) {
 		
 	GIS_Parcel parcel = energyModel.add_pop_GIS_Parcels();
@@ -1193,7 +1069,6 @@ for (Parcel_data dataParcel : c_parcel_data) {
 	parcel.set_p_defaultLineColor( zero_Interface.v_parcelLineColor );
 	parcel.set_p_defaultLineStyle( LineStyle.LINE_STYLE_DASHED );
 	zero_Interface.f_styleAreas(parcel);
-	
 }
 /*ALCODEEND*/}
 
@@ -1251,42 +1126,10 @@ area.setLatLon(area.p_latitude, area.p_longitude);
 //Create gisregion
 area.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(polygon, area.p_GISObjectType));
 
-//zero_Interface.c_GISBuildingShapes.add(b.gisRegion);		
+//Add GISObject type to the legenda
+zero_Interface.c_modelActiveSpecialGISObjects.add(area.p_GISObjectType);
 
 return area;
-
-/*ALCODEEND*/}
-
-double f_addEnergyAssetsToHouses(GCHouse house,double jaarlijksGasVerbruik,double jaarlijksElectriciteitsVerbruik)
-{/*ALCODESTART::1726584205813*/
-//Add generic electricity demand profile 
-f_addElectricityDemandProfile(house, jaarlijksElectriciteitsVerbruik, null, false, "House_other_electricity");
-
-//Woonwijk specifiek
-
-if (project_data.project_type() == OL_ProjectType.RESIDENTIAL){
-	f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2, C);
-	
-	//temporary hardcode household gasburner initialisatie (should be seperate function).
-	house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
-	J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(house, 20, 0.99, energyModel.p_timeStep_h, 90);
-	
-}
-else{
-	f_addHeatDemandProfile(house, jaarlijksGasVerbruik, false, 1, "default_building_heat_demand_fr");
-}
-
-if( randomTrue ( 0.1 )){
-	double installedRooftopSolar_kW = Double.valueOf( uniform_discr(3,6));
-	f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW );
-}
-
-if (randomTrue( 0.05)){
-	//f_addElectricVehicle(house, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, 0, 0);
-}
-else{
-	//f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
-}
 
 /*ALCODEEND*/}
 
@@ -1455,11 +1298,21 @@ for (var survey : surveys) {
     }
 }
 
+//If survey companies are present, add to the ui legend
+if(v_numberOfSurveyCompanies>0){
+	//Add to the legend
+	zero_Interface.c_modelActiveDefaultGISBuildings.add(OL_GISBuildingTypes.DETAILED_COMPANY);
+
+	//Pass the number of survey companies to interface for the dynamic legend
+	zero_Interface.v_numberOfSurveyCompanies = v_numberOfSurveyCompanies;
+}
+
+
 //Add created subtenants to main tenant(should happen after the other companies have been created)
 for(A_SubTenant subtenant : subTenants){
 
 	//Find grid connection that feeds the subtenant (achter de meter)
-	GridConnection GC = findFirst(energyModel.f_getGridConnections(), 
+	GridConnection GC = findFirst(energyModel.f_getActiveGridConnections(), 
 	GCU -> GCU.p_address != null && GCU.p_address.getAddress().equals(subtenant.p_address.getAddress()));
 	
 	if (GC != null){
@@ -1655,7 +1508,7 @@ double vehicleScaling = 1.0;
 switch (vehicle_type){
 	
 	case DIESEL_VEHICLE:
-		energyConsumption_kWhpkm = avgc_data.p_avgDieselConsumptionCar_kWhpkm;
+		energyConsumption_kWhpkm = uniform(0.7, 1.3) * avgc_data.p_avgDieselConsumptionCar_kWhpkm;
 	break;
 	
 	case DIESEL_VAN:
@@ -1820,6 +1673,11 @@ if (v_remainingNumberOfTrucks > 0){
 
 double f_createRemainingBuildings()
 {/*ALCODESTART::1726584205835*/
+//If remaining buildings in model, add to legend
+if(c_remainingBuilding_data.size()>0){
+	zero_Interface.c_modelActiveDefaultGISBuildings.add(OL_GISBuildingTypes.REMAINING);
+}
+
 for (Building_data remainingBuilding_data : c_remainingBuilding_data) {
 	
 	GIS_Building building = energyModel.add_pop_GIS_Buildings();
@@ -2012,123 +1870,6 @@ future_scenario_list.setPlannedEVCars( row.get( comp_connections.nb_planned_evs 
 */
 /*ALCODEEND*/}
 
-double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,OL_IsolationLevelHouse isolationLevel)
-{/*ALCODESTART::1726584205841*/
-double maxPowerHeat_kW = 100; 				//Dit is hoeveel vermogen het huis kan afgeven/opnemen, mag willekeurige waarden hebben. Wordt alleen gebruikt in rekenstap van ratio of capacity
-double lossfactor_WpK; 						//Dit is wat bepaalt hoeveel warmte het huis verliest/opneemt per tijdstap per delta_T 
-double initialTemp = uniform_discr(15,22); 	//starttemperatuur
-double heatCapacity_JpK; 					//hoeveel lucht zit er in je huis dat je moet verwarmen?
-double solarAbsorptionFactor_m2; 			//hoeveel m2 effectieve ramen zijn er die opwarmen met zonneinstraling
-
-switch (isolationLevel){
-	case A:
-		lossfactor_WpK = 0.20 * floorArea_m2;
-	break;
-	case B:
-		lossfactor_WpK = 0.35 * floorArea_m2;
-	break;
-	case C:
-		lossfactor_WpK = 0.55 * floorArea_m2;
-	break;
-	case D:
-		lossfactor_WpK = 0.75 * floorArea_m2;
-	break;
-	default:
-		lossfactor_WpK = uniform (0.4, 0.8) * floorArea_m2;
-	break;
-}
-
-solarAbsorptionFactor_m2 = floorArea_m2 * 0.01; //solar irradiance [W/m2] 
-
-heatCapacity_JpK = floorArea_m2 * 500000;
-
-parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossfactor_WpK, energyModel.p_timeStep_h, initialTemp, heatCapacity_JpK, solarAbsorptionFactor_m2 );
-/*ALCODEEND*/}
-
-double f_createChargingStationsScale()
-{/*ALCODESTART::1726584205843*/
-List<Tuple> initialList = selectFrom(chargepoints).list();
-List<Tuple> scopedList = new ArrayList<>();
-
-for (Tuple tuple : initialList) {
-	for (int i = 0; i < c_gridNodeIDsInScope.size() - 1; i++){
-		if (tuple.get(chargepoints.gridnode_id).equals( c_gridNodeIDsInScope.get(i)) ){
-			scopedList.add(tuple);
-		}
-	}	
-}
-
-traceln("Aantal laadstations in input data (huidig + toekomstig): " + scopedList.size());
-
-//Create CPO agent
-ConnectionOwner	CPO;
-CPO = energyModel.add_pop_connectionOwners();
-CPO.p_actorID = "CPO";
-CPO.p_actorType = OL_ActorType.CONNECTIONOWNER;
-CPO.p_connectionOwnerType = OL_ConnectionOwnerType.CHARGEPOINT_OP;
-
-for (Tuple row : scopedList){
- 	GCPublicCharger charger = energyModel.add_PublicChargers();
-	charger.set_p_gridConnectionID( row.get( chargepoints.gc_id ) );
-	charger.set_p_name( row.get( chargepoints.gc_name ) );
-	charger.set_p_ownerID(CPO.p_actorID );
-	charger.set_p_floorSurfaceArea_m2( 1 ); 
-	charger.set_p_parentNodeElectricID( row.get( chargepoints.gridnode_id ) );
-	charger.v_isActiveCharger = row.get(chargepoints.exists_already);
-	//	charger.v_isPaused = !row.get( chargepoints.initially_active );
-	charger.set_p_latitude( row.get( chargepoints.latitude ) );
-	charger.set_p_longitude( row.get( chargepoints.longitude ) );
-	charger.setLatLon(charger.p_latitude, charger.p_longitude);
-	
-	//TODO: set Connection capacity (Can't be 0 anymore in engine) 1 assumed now, wrong so: FIX THIS.
-	charger.set_p_physicalConnectionCapacity_kW(1);
-	
-	//THIS IS A QUICK FIX FOR SCALE. THAT USES THE nbOfChargers TO DETERMINE WHEN TO TURN IT ON OR OFF (TO AVOID ADDING PARAMETERS FOR A QUICK FIX)
-	charger.p_nbOfChargers = uniform_discr(1,4) / 4.0;
-	 
-	GIS_Object area = energyModel.add_pop_GIS_Objects();
-		
-	//position and coordinates
-	area.set_p_latitude( row.get( chargepoints.latitude ) );
-	area.set_p_longitude( row.get( chargepoints.longitude ) );
-	area.setLatLon( area.p_latitude, area.p_longitude );		
-	
-	//Create gisregion
-	area.gisRegion = f_createGISRegionChargingStation( area.p_latitude, area.p_longitude );	
-	
-	//Set gis object type
-	area.p_GISObjectType = OL_GISObjectType.CHARGER;
-	
-	//Add to collections			
-	charger.c_connectedGISObjects.add(area);
-	area.c_containedGridConnections.add(charger);
-	
-	//zero_Interface.uI_Tabs.tabElectricity.p_nbChargersInDatabase ++;
-	//TODO: load the profile from excel column pofile_data
-	charger.p_chargingProfileName = "cs_" + uniform_discr(1, 50);
-	if (charger.v_isActiveCharger){
-		f_addChargingDemandProfile( charger, charger.p_chargingProfileName );
-		charger.p_isInitialCharger = true;
-		//zero_Interface.uI_Tabs.tabElectricity.v_currentNbChargers ++;
-		zero_Interface.c_fixedPublicChargers.add(charger);
-				
-		//Style building
-		area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
-		area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
-		traceln("adding active charger");
-	}
-	else {
-		area.gisRegion.setVisible(false);
-		zero_Interface.c_inactivePublicChargers.add(charger);
-		
-		//Style building
-		area.set_p_defaultFillColor( zero_Interface.v_newChargingStationColor );
-		area.set_p_defaultLineColor( zero_Interface.v_newChargingStationLineColor );
-	}
-	zero_Interface.f_styleAreas(area);
-}
-/*ALCODEEND*/}
-
 double f_addChargingDemandProfile(GCPublicCharger GC,String profileName)
 {/*ALCODESTART::1726584205845*/
 J_EAProfile profile = new J_EAProfile(GC, OL_EnergyCarriers.ELECTRICITY, null, OL_ProfileAssetType.CHARGING, energyModel.p_timeStep_h);		
@@ -2203,8 +1944,9 @@ for (Chargingstation_data dataChargingStation : c_chargingstation_data){
 	
 	
 	//Check if centre or single
-	if (dataChargingStation.is_charging_centre()) {
-	
+	chargingStation.p_isChargingCentre = dataChargingStation.is_charging_centre();
+	if (chargingStation.p_isChargingCentre) {
+		
 		if (chargingStation.p_ownerID == null){
 			chargingStation.p_ownerID = "Publiek laadstation " + laadstation_nr;
 			laadstation_nr++;
@@ -2222,8 +1964,16 @@ for (Chargingstation_data dataChargingStation : c_chargingstation_data){
 		chargingStation.p_chargingVehicleType = dataChargingStation.vehicle_type();		
 		
 		//Create vehicles that charge at the charging centre
-		for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerChargePoint; k++ ){
-			f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
+		if(chargingStation.p_chargingVehicleType == OL_EnergyAssetType.CHARGER){
+			List<J_ChargingSession> chargerProfile = f_getChargerProfile();
+			boolean V1GCapable = randomTrue(avgc_data.p_v1gProbability);
+			boolean V2GCapable = randomTrue(avgc_data.p_v2gProbability);
+			new J_EACharger(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile, V1GCapable, V2GCapable);
+		}
+		else{
+			for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerChargePoint; k++ ){
+				f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
+			}
 		}
 		
 		
@@ -2239,8 +1989,8 @@ for (Chargingstation_data dataChargingStation : c_chargingstation_data){
 			chargingStation.c_connectedGISObjects.add(area);
 			
 			//Style building
-			area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor_centre );
-			area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor_centre );
+			area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
+			area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
 			area.set_p_defaultLineWidth( zero_Interface.v_energyAssetLineWidth);
 			zero_Interface.f_styleAreas(area);
 		}
@@ -2249,132 +1999,62 @@ for (Chargingstation_data dataChargingStation : c_chargingstation_data){
 		}
 	}
 	else {
-	
-			if (chargingStation.p_ownerID == null){
-				chargingStation.p_ownerID = "Publieke laadpaal " + laadpaal_nr;
-				laadpaal_nr++;
-			}
-			
-			//Set charging power
-			chargingStation.set_p_maxChargingPower_kW( dataChargingStation.power_per_charger_kw() );
-			
-			//Set vehicle type
-			chargingStation.p_chargingVehicleType = dataChargingStation.vehicle_type();		
-			
-			//Create vehicles that charge at the charging centre
+
+		if (chargingStation.p_ownerID == null){
+			chargingStation.p_ownerID = "Publieke laadpaal " + laadpaal_nr;
+			laadpaal_nr++;
+		}
+		
+		//Set charging power
+		chargingStation.set_p_maxChargingPower_kW( dataChargingStation.power_per_charger_kw() );
+		
+		//Set vehicle type
+		chargingStation.p_chargingVehicleType = dataChargingStation.vehicle_type();		
+		
+		//Create vehicles that charge at the charging station
+		if(chargingStation.p_chargingVehicleType == OL_EnergyAssetType.CHARGER){
+			List<J_ChargingSession> chargerProfile = f_getChargerProfile();
+			boolean V1GCapable = randomTrue(avgc_data.p_v1gProbability);
+			boolean V2GCapable = randomTrue(avgc_data.p_v2gProbability);
+			new J_EACharger(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile, V1GCapable, V2GCapable);
+		}
+		else{
 			for(int k = 0; k < avgc_data.p_avgVehiclesPerChargePoint; k++ ){
 				f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
 			}
+		}
 		
-			//Create GIS object for the chargingStation			
-			GIS_Object area = energyModel.add_pop_GIS_Objects();
+		
+		//Create GIS object for the chargingStation			
+		GIS_Object area = energyModel.add_pop_GIS_Objects();
+
+		//position and coordinates
+		area.p_latitude = dataChargingStation.latitude();
+		area.p_longitude = dataChargingStation.longitude();
+		area.setLatLon(area.p_latitude, area.p_longitude);		
+		
+		//Create gisregion
+		area.gisRegion = f_createGISRegionChargingStation( area.p_latitude, area.p_longitude );	
+		
+		//Set area type
+		area.p_GISObjectType = OL_GISObjectType.CHARGER;
 	
-			//position and coordinates
-			area.p_latitude = dataChargingStation.latitude();
-			area.p_longitude = dataChargingStation.longitude();
-			area.setLatLon(area.p_latitude, area.p_longitude);		
-			
-			//Create gisregion
-			area.gisRegion = f_createGISRegionChargingStation( area.p_latitude, area.p_longitude );	
-			
-			//Set area type
-			area.p_GISObjectType = OL_GISObjectType.CHARGER;
-		
-			chargingStation.c_connectedGISObjects.add(area);
-			area.c_containedGridConnections.add(chargingStation);
-			
+		chargingStation.c_connectedGISObjects.add(area);
+		area.c_containedGridConnections.add(chargingStation);
+		if(chargingStation.v_isActive){
 			area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
 			area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
-			zero_Interface.f_styleAreas(area);
-	}
+		}
+		else{
+			area.set_p_defaultFillColor( zero_Interface.v_newChargingStationColor );
+			area.set_p_defaultLineColor( zero_Interface.v_newChargingStationLineColor );
+		}
+		zero_Interface.f_styleAreas(area);
 	
+		zero_Interface.c_modelActiveSpecialGISObjects.add(area.p_GISObjectType);
+	}	
 }
 
-/*ALCODEEND*/}
-
-double f_createCompaniesFromDatabase()
-{/*ALCODESTART::1726584205851*/
-List<Building_data> scopedBuilding_data = f_getScopedBuildingList(c_companyBuilding_data);
-
-traceln("Aantal bedrijven in BAG data (geen woonfunctie): " + scopedBuilding_data.size());
-
-int i = 0;
-for (Building_data dataBuilding : scopedBuilding_data) {
-	GCUtility company = energyModel.add_UtilityConnections();
-	
-	//Set parameters for the Grid Connection
- 	company.p_gridConnectionID = dataBuilding.address_id();
-	company.p_ownerID = "Bedrijf " + Integer.toString(i);	//aanname : huiseigenaar is eigenbaas
-	company.p_purposeBAG = dataBuilding.purpose();
-	company.p_heatingType = avgc_data.p_avgHouseHeatingMethod ;
-	company.p_floorSurfaceArea_m2 = dataBuilding.cumulative_floor_surface_m2();
-	//company.p_bouwjaar = dataBuilding.bouwjaar();
-	company.v_liveConnectionMetaData.physicalCapacity_kW = 50.0; //// HARDCODED?????
-	company.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = 50.0; //// HARDCODED?????
-	company.v_liveConnectionMetaData.contractedFeedinCapacity_kW = 50.0; //// HARDCODED?????
-	
-	//adres gegevens
-	company.p_address = new J_Address();
-	company.p_address.setStreetName(dataBuilding.streetname());
-	company.p_address.setHouseNumber(dataBuilding.house_number());
-	company.p_address.setHouseLetter(dataBuilding.house_letter());
-	company.p_address.setHouseAddition(dataBuilding.house_addition());
-	company.p_address.setPostalcode(dataBuilding.postalcode());
-	company.p_address.setCity(dataBuilding.city());
-
-	//locatie
-	company.p_longitude = dataBuilding.longitude();
-	company.p_latitude = dataBuilding.latitude();
-	company.setLatLon(company.p_latitude, company.p_longitude);
-	
-	//Connect GC to grid node
-	company.p_parentNodeElectricID = dataBuilding.gridnode_id();
-		
-	//Create and set owner
-	ConnectionOwner	companyOwner = energyModel.add_pop_connectionOwners();
-	companyOwner.p_actorID = company.p_ownerID;
-	companyOwner.p_actorType = OL_ActorType.CONNECTIONOWNER;
-	companyOwner.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
-	companyOwner.p_detailedCompany = false;
-	company.p_owner = companyOwner;
-	
-	//Create GIS building
-	GIS_Building b;
-	int pandClusterNr = dataBuilding.pandcluster_nr();
-	if( pandClusterNr == 0 ){	
-		b = f_createGISBuilding( dataBuilding, company );
-	}
-	else {
-		b = randomWhere(energyModel.c_GISBuildingClusters, x -> x.p_pandcluster_nr == pandClusterNr);
-		if (b == null){
-			b = f_createGISBuilding( dataBuilding, company );
-		}
-		else {
-			b.c_containedGridConnections.add(company);
-			company.c_connectedGISObjects.add(b);
-		}
-	}
-	
-	//Style building
-	b.p_defaultFillColor = zero_Interface.v_companyBuildingColor;
-	b.p_defaultLineColor = zero_Interface.v_companyBuildingLineColor;
-	zero_Interface.f_styleAreas(b);
-	
-	//Instantiate energy assets
-	double jaarlijksElectriciteitsVerbruik;
-	double jaarlijksGasVerbruik;
-	try {
-		jaarlijksElectriciteitsVerbruik = dataBuilding.electricity_consumption_kwhpa();
-		jaarlijksGasVerbruik = dataBuilding.gas_consumption_kwhpa();
-	}
-	catch (NullPointerException e){
-		jaarlijksElectriciteitsVerbruik = Double.valueOf(uniform_discr(5000, 10000)); // HARDCODED???
-		jaarlijksGasVerbruik =  Double.valueOf(uniform_discr(600, 2000)); //// HARDCODED?????
-	}
-	f_addElectricityDemandProfile(company, jaarlijksElectriciteitsVerbruik, null, false, "default_office_electricity_demand_fr");
-
-	i++;
-}	
 
 /*ALCODEEND*/}
 
@@ -2388,21 +2068,6 @@ zero_Interface.energyModel = energyModel;
 zero_Interface.uI_Results.energyModel = energyModel;
 zero_Interface.p_selectedProjectType = project_data.project_type();
 zero_Interface.settings = settings;
-/*ALCODEEND*/}
-
-List<Building_data> f_getScopedBuildingList(List<Building_data> initialList)
-{/*ALCODESTART::1726584205857*/
-List<Building_data> scopedList = new ArrayList<>();
-
-for (Building_data dataBuilding : initialList) {
-	for (int i = 0; i < c_gridNodeIDsInScope.size() - 1; i++){
-		if (dataBuilding.gridnode_id().equals( c_gridNodeIDsInScope.get(i)) ){
-			scopedList.add(dataBuilding);
-		}
-	}	
-}
-
-return scopedList;
 /*ALCODEEND*/}
 
 double f_createGISCables()
@@ -2516,14 +2181,6 @@ if (extraConsumption_kWh > 1) {
 if (v_remainingElectricityDelivery_kWh < 0){
 	traceln("v_remainingElectricityDelivery_kWh became negative at GC: %s", parentGC);
 }
-/*ALCODEEND*/}
-
-double f_setHouseHeatingPreferences(GCHouse house)
-{/*ALCODESTART::1726584205863*/
-house.v_nightTempSetpoint_degC = uniform_discr(12,18); // HARDCODED??
-house.v_dayTempSetpoint_degC = uniform_discr(18, 24); // HARDCODED??
-house.v_heatingOn_time = uniform_discr(5,10) + uniform_discr(0,4) / 4.0; // HARDCODED??
-house.v_heatingOff_time = uniform_discr(21,23); // HARDCODED??
 /*ALCODEEND*/}
 
 double f_startUpLoader_default()
@@ -2779,7 +2436,7 @@ traceln("Companies that filled in the survey:");
 */
 /*ALCODEEND*/}
 
-double f_createConsumerGC_businesspark()
+double f_createCompanies()
 {/*ALCODESTART::1726584205873*/
 //Create survey companies based on survey inload structure
 switch(project_data.survey_type()){
@@ -2797,23 +2454,13 @@ switch(project_data.survey_type()){
 f_createGenericCompanies();
 /*ALCODEEND*/}
 
-double f_createConsumerGC_Residential()
-{/*ALCODESTART::1726584205879*/
-//Create houses
-f_createHousesFromDatabase();
-
-//Create companies
-f_createCompaniesFromDatabase();
-
-//Charge stations?
-//f_createChargingStationsScale();
-
-/*ALCODEEND*/}
-
 double f_createAdditionalGISObjects()
 {/*ALCODESTART::1726584205881*/
 //Area outlines
 f_createGISRegionOutline();
+
+//Parking spaces
+f_createParkingSpots();
 
 //Parcels
 f_createGISParcels();
@@ -3739,8 +3386,7 @@ switch (heatAssetType){ // HOE gaan we om met meerdere heating types in survey??
 		break;
 
 	default:
-		traceln("HEATING TYPE NOT FOUND FOR GC ");
-		traceln(parentGC);
+		traceln("HEATING TYPE NOT FOUND FOR GC: " + parentGC);
 }
 /*ALCODEEND*/}
 
@@ -3918,6 +3564,7 @@ double[] a_epexProfile_eurpMWh = ListUtil.doubleListToArray(defaultProfiles_data
 //Various demand data
 double[] a_defaultHouseElectricityDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultHouseElectricityDemandProfile_fr());
 double[] a_defaultHouseHotWaterDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultHouseHotWaterDemandProfile_fr());
+double[] a_defaultHouseCookingDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultHouseCookingDemandProfile_fr());
 double[] a_defaultOfficeElectricityDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultOfficeElectricityDemandProfile_fr());
 double[] a_defaultBuildingHeatDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultBuildingHeatDemandProfile_fr());
 
@@ -3933,12 +3580,539 @@ energyModel.pp_dayAheadElectricityPricing_eurpMWh = f_createEngineProfile("epex_
 //Create Consumption engine profiles:
 f_createEngineProfile("default_house_electricity_demand_fr", a_arguments_hr, a_defaultHouseElectricityDemandProfile_fr);
 f_createEngineProfile("default_house_hot_water_demand_fr", a_arguments_hr, a_defaultHouseHotWaterDemandProfile_fr);
+f_createEngineProfile("default_house_cooking_demand_fr", a_arguments_hr, a_defaultHouseCookingDemandProfile_fr);
 f_createEngineProfile("default_office_electricity_demand_fr", a_arguments_hr, a_defaultOfficeElectricityDemandProfile_fr);
 f_createEngineProfile("default_building_heat_demand_fr", a_arguments_hr, a_defaultBuildingHeatDemandProfile_fr);
+
 
 //Create custom engine profiles
 for(CustomProfile_data customProfile : c_customProfiles_data){
 	f_createEngineProfile(customProfile.customProfileID(), customProfile.getArgumentsArray(), customProfile.getValuesArray());
 }
+/*ALCODEEND*/}
+
+double f_addGridNodeProfile(GridNode gridnode,double[] profile_data_kWh)
+{/*ALCODESTART::1749628581470*/
+//Create gridconnection where the profile is attached to
+GridConnection GC_GridNode_profile = energyModel.add_pop_gridConnections();
+
+//Set GC id
+GC_GridNode_profile.p_gridConnectionID = "GridNode " + gridnode.p_gridNodeID + " profile GC";
+
+//Set gridnode as parent
+GC_GridNode_profile.p_parentNodeElectricID = gridnode.p_gridNodeID;
+
+//Set capacity same as gridnode
+GC_GridNode_profile.v_liveConnectionMetaData.physicalCapacity_kW = gridnode.p_capacity_kW;
+GC_GridNode_profile.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = gridnode.p_capacity_kW;
+GC_GridNode_profile.v_liveConnectionMetaData.contractedFeedinCapacity_kW = gridnode.p_capacity_kW;
+
+GC_GridNode_profile.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
+GC_GridNode_profile.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
+GC_GridNode_profile.v_liveConnectionMetaData.physicalCapacityKnown = false;
+
+//Set lat lon same as gridnode
+GC_GridNode_profile.p_latitude = gridnode.p_latitude; // Get latitude of first building (only used to get nearest trafo)
+GC_GridNode_profile.p_longitude = gridnode.p_longitude; // Get longitude of first building (only used to get nearest trafo)
+
+
+//Add profile to the GC
+J_EAProfile profile = new J_EAProfile(GC_GridNode_profile, OL_EnergyCarriers.ELECTRICITY, profile_data_kWh, OL_ProfileAssetType.ELECTRICITYBASELOAD, energyModel.p_timeStep_h);	
+profile.setStartTime_h(v_simStartHour_h);
+profile.energyAssetName = "GridNode " + gridnode.p_gridNodeID + " profile";
+
+//Set boolean has profile data true
+gridnode.p_hasProfileData = true;
+c_gridNodeIDsWithProfiles.add(gridnode.p_gridNodeID);
+/*ALCODEEND*/}
+
+J_ChargingSession f_createChargingSession(String chargingSessionData)
+{/*ALCODESTART::1749648772203*/
+String[] chargingSessionInfo = chargingSessionData.split("/"); 
+
+int startIndex = Integer.parseInt(chargingSessionInfo[0]);
+int endIndex = Integer.parseInt(chargingSessionInfo[1]);
+double chargingDemand_kWh = Double.parseDouble(chargingSessionInfo[2]);
+double batteryCap_kWh = Double.parseDouble(chargingSessionInfo[3]);
+double chargingPower_kW = Double.parseDouble(chargingSessionInfo[5]);
+int socket = Integer.parseInt(chargingSessionInfo[6]);
+
+return new J_ChargingSession(startIndex, endIndex, chargingDemand_kWh, batteryCap_kWh, chargingPower_kW, socket, 0.25);
+/*ALCODEEND*/}
+
+List<J_ChargingSession>  f_createNewChargerProfile(ChargerProfile_data chargerProfileData)
+{/*ALCODESTART::1749649169603*/
+// example: 2/54/50.3/72.1/21.8/10.8/2
+List<String> chargerProfileDataValues = chargerProfileData.valuesList();
+List<J_ChargingSession> chargerProfile = new ArrayList<J_ChargingSession>();		
+
+for(int i = 0; i < chargerProfileDataValues.size(); i++){
+	chargerProfile.add(f_createChargingSession(chargerProfileDataValues.get(i)));
+}
+
+return chargerProfile;
+/*ALCODEEND*/}
+
+List<J_ChargingSession>  f_getChargerProfile()
+{/*ALCODESTART::1749649390125*/
+List<J_ChargingSession> chargerProfile;
+int randomIndex;
+
+if(c_chargerProfiles_data.size()>0){
+	randomIndex = uniform_discr(0, c_chargerProfiles_data.size() - 1);
+	chargerProfile = f_createNewChargerProfile(c_chargerProfiles_data.get(randomIndex));
+	c_chargerProfiles_data.remove(randomIndex);
+	energyModel.c_chargerProfiles.add(chargerProfile);
+}
+else{
+	randomIndex = uniform_discr(0, energyModel.c_chargerProfiles.size() - 1);
+	chargerProfile = energyModel.c_chargerProfiles.get(randomIndex);
+}
+
+return chargerProfile;
+/*ALCODEEND*/}
+
+double f_addCookingAsset(GCHouse gc,OL_EnergyAssetType CookingType,double yearlyCookingDemand_kWh)
+{/*ALCODESTART::1749726189312*/
+switch(CookingType){
+
+	case ELECTRIC_HOB:
+		new J_EAConsumption(gc, OL_EnergyAssetType.ELECTRIC_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeStep_h, null);
+		gc.p_cookingMethod = OL_HouseholdCookingMethod.ELECTRIC;
+		traceln("Initial conditions of cooking has Electric cooking. TODO make sure the v_nbHousesWIthECooking is set correctly in electricity tab");
+		break;
+		
+	case GAS_PIT:
+		new J_EAConsumption(gc, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeStep_h, null);
+		gc.p_cookingMethod = OL_HouseholdCookingMethod.GAS;
+		break;
+}
+/*ALCODEEND*/}
+
+double f_addHotWaterDemand(GCHouse houseGC,double surface_m2)
+{/*ALCODESTART::1749726279652*/
+int aantalBewoners;
+if( surface_m2 > 150){
+	aantalBewoners = uniform_discr(2,6);
+}
+else if (surface_m2 > 50){
+	aantalBewoners = uniform_discr(1,4);
+}
+else {
+	aantalBewoners = uniform_discr(1,2);
+}
+ 
+double yearlyHWD_kWh = aantalBewoners * 600;  //12 * surface_m2 * 3 ; Tamelijk willekeurige formule om HWD te schalen tussen 600 - 2400 kWh bij 50m2 tot 200m2, voor een quickfix
+
+J_EAConsumption hotwaterDemand = new J_EAConsumption( houseGC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, null);
+
+//traceln("yearlyHWD_kWh "+ yearlyHWD_kWh);
+if( surface_m2 > 200){
+	//traceln("House created with " + surface_m2 + "m2 surace area, will have large hot water demand");
+}
+if (surface_m2 < 25){
+	//traceln("House created with " + surface_m2 + "m2 surace area, will have low hot water demand");
+}
+/*ALCODEEND*/}
+
+double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,OL_IsolationLevelHouse isolationLevel)
+{/*ALCODESTART::1749727623536*/
+double maxPowerHeat_kW = 100; 				//Dit is hoeveel vermogen het huis kan afgeven/opnemen, mag willekeurige waarden hebben. Wordt alleen gebruikt in rekenstap van ratio of capacity
+double lossfactor_WpK; 						//Dit is wat bepaalt hoeveel warmte het huis verliest/opneemt per tijdstap per delta_T
+double initialTemp = uniform_discr(15,22); 	//starttemperatuur
+double heatCapacity_JpK; 					//hoeveel lucht zit er in je huis dat je moet verwarmen?
+double effectiveSolarAbsorptionSurface_m2; 	//hoeveel m2 effectieve dak en muur oppervlakte er is dat opwarmt door zonneinstraling
+ 
+switch (isolationLevel){
+	case A:
+		lossfactor_WpK = 0.35 * floorArea_m2;
+	break;
+	case B:
+		lossfactor_WpK = 0.45 * floorArea_m2;
+	break;
+	case C:
+		lossfactor_WpK = 0.65 * floorArea_m2;
+	break;
+	case D:
+		lossfactor_WpK = 0.85 * floorArea_m2;
+	break;
+	default:
+		lossfactor_WpK = uniform (0.4, 1.2) * floorArea_m2;
+	break;
+}
+
+lossfactor_WpK = roundToDecimal(lossfactor_WpK,2);
+effectiveSolarAbsorptionSurface_m2 = floorArea_m2 * 0.1; //solar irradiance [W/m2]
+ 
+heatCapacity_JpK = floorArea_m2 * 50000;
+ 
+ 
+parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossfactor_WpK, energyModel.p_timeStep_h, initialTemp, heatCapacity_JpK, effectiveSolarAbsorptionSurface_m2 );
+energyModel.c_ambientAirDependentAssets.add( parentGC.p_BuildingThermalAsset );
+ 
+double delayHeatReleaseInteriorHeatsink_hr = 0;
+double lossToExteriorFromInteriorHeatSink_fr;
+if(randomTrue(0.2)){
+	delayHeatReleaseInteriorHeatsink_hr = 3;
+}
+else {
+	delayHeatReleaseInteriorHeatsink_hr = 0.5;
+}
+
+parentGC.p_BuildingThermalAsset.addInteriorHeatBuffer(delayHeatReleaseInteriorHeatsink_hr);
+
+double delayHeatReleaseRoofAndWall_hr = 8.0;
+parentGC.p_BuildingThermalAsset.addExteriorHeatBuffer(delayHeatReleaseRoofAndWall_hr);
+
+/*ALCODEEND*/}
+
+List<Building_data> f_getBuildingsInSubScope(List<Building_data> initialBuildingList)
+{/*ALCODESTART::1749728889982*/
+List<Building_data> scopedBuildingList = new ArrayList<>();
+
+if(settings.subscopesToSimulate() == null || settings.subscopesToSimulate().size() == 0){
+	scopedBuildingList.addAll(initialBuildingList);
+}
+else{
+	for (Building_data dataBuilding : initialBuildingList) {
+		for (int i = 0; i < settings.subscopesToSimulate().size() ; i++){
+			if (dataBuilding.gridnode_id().equals( settings.subscopesToSimulate().get(i))){
+				scopedBuildingList.add(dataBuilding);
+			}
+		}	
+	}
+}
+return scopedBuildingList;
+/*ALCODEEND*/}
+
+double f_createHouses()
+{/*ALCODESTART::1749728889984*/
+List<Building_data> buildingDataHouses = f_getBuildingsInSubScope(c_houseBuilding_data);
+
+traceln("Aantal panden met woonfunctie in BAG data: " + buildingDataHouses.size());
+
+int i = 0;
+
+//Add houses to the legend if in model
+if(buildingDataHouses.size()>0){
+	zero_Interface.c_modelActiveDefaultGISBuildings.add(OL_GISBuildingTypes.HOUSE);
+}
+
+for (Building_data houseBuildingData : buildingDataHouses) {
+	GCHouse GCH = energyModel.add_Houses();
+	ConnectionOwner	COH = energyModel.add_pop_connectionOwners();
+	
+	//Set parameters for the Grid Connection
+ 	GCH.p_gridConnectionID = houseBuildingData.address_id();
+	GCH.p_ownerID = "Woonhuis" + Integer.toString(i);	//aanname : huiseigenaar is eigenbaas
+
+	GCH.p_purposeBAG = houseBuildingData.purpose();
+	
+	//pand gegevens
+	GCH.p_heatingType = avgc_data.p_avgHouseHeatingMethod ;
+	GCH.p_floorSurfaceArea_m2 = houseBuildingData.cumulative_floor_surface_m2();
+	GCH.p_bouwjaar = houseBuildingData.build_year();
+	GCH.p_eigenOprit = houseBuildingData.has_private_parking() != null ? houseBuildingData.has_private_parking() : false;
+	
+	//Nageisoleerd
+	if (houseBuildingData.energy_label() != null) {
+		GCH.p_nageisoleerd = houseBuildingData.energy_label();
+	}
+	else {
+		if (GCH.p_bouwjaar < 1980) {
+			GCH.p_nageisoleerd = "D";
+			//v_houses_older_1980 ++;
+			v_houseIsolation_level = v_houseIsolation_level.D;
+		}
+		else if (GCH.p_bouwjaar < 2000) {
+			GCH.p_nageisoleerd = "C";
+			//v_houses_older_2000 ++;
+			v_houseIsolation_level = v_houseIsolation_level.C;
+		}
+		else if (GCH.p_bouwjaar < 2015) {
+			GCH.p_nageisoleerd = "B";
+			//v_houses_older_2015 ++;
+			v_houseIsolation_level = v_houseIsolation_level.B;
+		}
+		else {
+			GCH.p_nageisoleerd = "A";
+			//v_houses_newer_2015 ++;
+			v_houseIsolation_level = v_houseIsolation_level.A;
+		}
+	}
+		
+	//aansluiting gegevens
+	GCH.v_liveConnectionMetaData.physicalCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
+	GCH.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
+	GCH.v_liveConnectionMetaData.contractedFeedinCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
+	
+	GCH.v_liveConnectionMetaData.physicalCapacityKnown = false;
+	GCH.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
+	GCH.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
+	
+	// Address data
+	GCH.p_address = new J_Address();
+ 	GCH.p_address.setStreetName( houseBuildingData.streetname());						 	
+ 	if (houseBuildingData.house_number() == null) {
+ 		GCH.p_address.setHouseNumber( 0 );
+ 	} else {
+ 		GCH.p_address.setHouseNumber( houseBuildingData.house_number()); 
+ 	}
+ 	GCH.p_address.setHouseLetter( houseBuildingData.house_letter());
+ 	GCH.p_address.setHouseAddition( houseBuildingData.house_addition());
+ 	GCH.p_address.setPostalcode( houseBuildingData.postalcode());					 	
+ 	GCH.p_address.setCity( houseBuildingData.city());
+
+	//locatie
+	GCH.p_longitude = houseBuildingData.longitude();
+	GCH.p_latitude = houseBuildingData.latitude();
+	GCH.setLatLon(GCH.p_latitude, GCH.p_longitude);
+	
+	//Connect GC to grid node
+	//GridNode myParentNodeElectric;
+	GCH.p_parentNodeElectricID = houseBuildingData.gridnode_id();
+		
+	//Set parameters for the Actor: ConnectionOwner
+	COH.p_actorID = GCH.p_ownerID;
+	COH.p_actorType = OL_ActorType.CONNECTIONOWNER;
+	COH.p_connectionOwnerType = OL_ConnectionOwnerType.HOUSEHOLD;
+	COH.p_detailedCompany = false;
+	GCH.p_owner = COH;
+	
+	//Create GIS building
+	GIS_Building b;
+	int pandClusterNr = houseBuildingData.pandcluster_nr();
+	if( pandClusterNr == 0 ){	
+		b = f_createGISBuilding( houseBuildingData, GCH );
+	}
+	else {
+		b = randomWhere(energyModel.c_GISBuildingClusters, x -> x.p_pandcluster_nr == pandClusterNr);
+		if (b == null){
+			b = f_createGISBuilding( houseBuildingData, GCH );
+		}
+		else {
+			b.c_containedGridConnections.add(GCH);
+			GCH.c_connectedGISObjects.add(b);
+
+		}
+	}
+	
+	//Style building
+	b.p_defaultFillColor = zero_Interface.v_houseBuildingColor;
+	b.p_defaultLineColor = zero_Interface.v_houseBuildingLineColor;
+	zero_Interface.f_styleAreas(b);
+	
+	//Instantiate energy assets
+	double jaarlijksElectriciteitsVerbruik;
+	double jaarlijksGasVerbruik;
+	try {
+		jaarlijksElectriciteitsVerbruik = houseBuildingData.electricity_consumption_kwhpa();
+	}
+	catch (NullPointerException e){
+		jaarlijksElectriciteitsVerbruik = Double.valueOf(uniform_discr(1200, 3800));
+	}
+	try {
+		jaarlijksGasVerbruik = houseBuildingData.gas_consumption_kwhpa();
+	}
+	catch (NullPointerException e){
+		jaarlijksGasVerbruik =  Double.valueOf(uniform_discr(600, 2000));
+	}
+	
+	//GCH.p_initialPVpanels = houseBuildingData.pv_default();
+	GCH.v_liveAssetsMetaData.initialPV_kW = houseBuildingData.pv_installed_kwp() != null ? houseBuildingData.pv_installed_kwp() : 0;
+	GCH.v_liveAssetsMetaData.PVPotential_kW = houseBuildingData.pv_potential_kwp() != null ? houseBuildingData.pv_potential_kwp() : 0;
+
+	f_setHouseHeatingPreferences(GCH);
+	f_addEnergyAssetsToHouses(GCH, jaarlijksElectriciteitsVerbruik, jaarlijksGasVerbruik );	
+	
+	i ++;
+	if (i == 1000){
+		break;
+	}
+}	
+
+/*ALCODEEND*/}
+
+double f_addEnergyAssetsToHouses(GCHouse house,double jaarlijksElectriciteitsVerbruik,double jaarlijksGasVerbruik)
+{/*ALCODESTART::1749728889986*/
+//Add generic electricity demand profile 
+GridNode gn = randomWhere(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals( house.p_parentNodeElectricID));
+if ( ! gn.p_hasProfileData ){
+	f_addElectricityDemandProfile(house, jaarlijksElectriciteitsVerbruik, null, false, "default_house_electricity_demand_fr");
+}
+
+//Add building heat model and asset
+f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2, v_houseIsolation_level);
+house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
+double gasBurnerCapacity_kW = 50000;//40;//uniform_discr(3,5); 
+f_addHeatAsset (house, house.p_heatingType, gasBurnerCapacity_kW);	
+
+//Add hot water and cooking demand
+f_addHotWaterDemand(house, house.p_floorSurfaceArea_m2);
+double yearlyCookingDemand_kWh = uniform_discr(200,600);
+f_addCookingAsset(house, OL_EnergyAssetType.GAS_PIT, yearlyCookingDemand_kWh);
+
+
+//Add pv
+double installedRooftopSolar_kW = house.v_liveAssetsMetaData.initialPV_kW != null ? house.v_liveAssetsMetaData.initialPV_kW : 0;
+if (gn.p_hasProfileData){ //dont count production if there is measured data on Node
+	installedRooftopSolar_kW = 0;
+}
+
+if (installedRooftopSolar_kW > 0) {
+	f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW );
+}
+
+//Oprit?
+if( house.p_eigenOprit){
+	if (randomTrue( 0.08)){
+		f_addElectricVehicle(house, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, 0, 0);
+	}
+	else{
+		f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
+	}
+}
+else {
+	f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
+}
+/*ALCODEEND*/}
+
+double f_setHouseHeatingPreferences(GCHouse house)
+{/*ALCODESTART::1749728889988*/
+if( randomTrue(0.5) ){ //50% kans op ochtend ritme
+	house.v_nightTempSetpoint_degC = uniform_discr(12,18);
+	house.v_dayTempSetpoint_degC = uniform_discr(18, 24);
+	house.v_heatingOn_time = uniform_discr(5,10) + uniform_discr(0,4) / 4.0;
+	house.v_heatingOff_time = uniform_discr(21,23);
+	house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0,1),1);
+}
+else if (randomTrue(0.5) ){ // 25% kans op hele dag aan
+	house.v_nightTempSetpoint_degC = uniform_discr(18,21);
+	house.v_dayTempSetpoint_degC = house.v_nightTempSetpoint_degC;
+	house.v_heatingOn_time = -1;
+	house.v_heatingOff_time = 25;
+	house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0, 1),1);
+}
+else { // 25% kans op smiddags/savonds aan
+	house.v_nightTempSetpoint_degC = uniform_discr(12,18);
+	house.v_dayTempSetpoint_degC = uniform_discr(18, 24);
+	house.v_heatingOn_time = uniform_discr(14, 16) + uniform_discr(0,4) / 4.0;
+	house.v_heatingOff_time = uniform_discr(21,23);
+	house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0, 1),1);
+}
+/*ALCODEEND*/}
+
+double f_createParkingSpots()
+{/*ALCODESTART::1749729268458*/
+List<ParkingSpace_data> parkingSpacesData = f_getParkingSpacesInSubScope(c_parkingSpace_data);
+
+traceln("Nb EV parking places in dataset: " + parkingSpacesData.size() );
+
+List<GCEnergyProduction> carportGCList = new ArrayList<GCEnergyProduction>();
+
+for (ParkingSpace_data dataParkingSpace : parkingSpacesData){
+
+	//Create parking gis object	
+	GIS_Object parkingSpace = f_createGISObject(dataParkingSpace.parking_id(), dataParkingSpace.latitude(), dataParkingSpace.longitude(), dataParkingSpace.polygon(), OL_GISObjectType.PARKING);
+	parkingSpace.p_annotation = "Parking space: " + dataParkingSpace.additional_info();
+	
+	//Set correct color and legend collection based on parking type
+	switch(dataParkingSpace.type()){
+		case PRIVATE:
+		case DISABLED:
+		case KISS_AND_RIDE:
+			parkingSpace.p_defaultFillColor = zero_Interface.v_parkingSpaceColor_private;
+			parkingSpace.p_defaultLineColor = zero_Interface.v_parkingSpaceLineColor_private;
+			zero_Interface.c_modelActiveParkingSpaceTypes.add(OL_ParkingSpaceType.PRIVATE);
+			break;
+		case PUBLIC:
+			parkingSpace.p_defaultFillColor = zero_Interface.v_parkingSpaceColor_public;
+			parkingSpace.p_defaultLineColor = zero_Interface.v_parkingSpaceLineColor_public;
+			zero_Interface.c_modelActiveParkingSpaceTypes.add(OL_ParkingSpaceType.PUBLIC);
+			break;
+		case ELECTRIC:
+			parkingSpace.p_defaultFillColor = zero_Interface.v_parkingSpaceColor_electric;
+			parkingSpace.p_defaultLineColor = zero_Interface.v_parkingSpaceLineColor_electric;
+			zero_Interface.c_modelActiveParkingSpaceTypes.add(OL_ParkingSpaceType.ELECTRIC);		
+			break;
+	}
+	
+	//Add to ordered collection on the interface
+	zero_Interface.c_orderedParkingSpaces.add(parkingSpace);
+
+	//Style gis object
+	parkingSpace.f_style(null, null, null, null);	
+	
+	//Get energyProduction GC	
+	GCEnergyProduction carportGC = findFirst(carportGCList, gc -> gc.p_parentNodeElectricID.equals(dataParkingSpace.gridnode_id()));
+	
+	if(carportGC == null){ // If non existend -> Create one.
+		carportGC = energyModel.add_EnergyProductionSites();
+		carportGC.p_gridConnectionID = "Parking space gridconnection: " + dataParkingSpace.parking_id();
+		carportGC.v_liveConnectionMetaData.physicalCapacity_kW = dataParkingSpace.pv_potential_kwp();
+		carportGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = 0.0;
+		carportGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataParkingSpace.pv_potential_kwp();
+		
+		carportGC.v_liveConnectionMetaData.physicalCapacityKnown = false;
+		carportGC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
+		carportGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
+		
+		carportGC.p_parentNodeElectricID = dataParkingSpace.gridnode_id();
+
+		carportGC.p_latitude = dataParkingSpace.latitude();		
+		carportGC.p_longitude = dataParkingSpace.longitude();
+		
+		//Address
+		carportGC.p_address = new J_Address();
+		carportGC.p_address.setStreetName(dataParkingSpace.street());
+		
+		//CO
+		ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
+			
+		COC.p_actorID = "Parking space connection owner: " + dataParkingSpace.parking_id();
+		COC.p_actorType = OL_ActorType.CONNECTIONOWNER;
+		COC.p_connectionOwnerType = OL_ConnectionOwnerType.PARKINGSPACE_OP;
+		COC.p_detailedCompany = false;
+		COC.b_dataSharingAgreed = true;
+		
+		carportGC.p_owner = COC;
+		carportGC.p_ownerID = COC.p_actorID;
+		
+		//Add to collections
+		parkingSpace.c_containedGridConnections.add(carportGC);
+		carportGC.c_connectedGISObjects.add(parkingSpace);
+		carportGCList.add(carportGC);
+	}
+	else{
+		carportGC.v_liveConnectionMetaData.physicalCapacity_kW += dataParkingSpace.pv_potential_kwp();
+		carportGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW += dataParkingSpace.pv_potential_kwp();
+		
+		//Add to collections
+		parkingSpace.c_containedGridConnections.add(carportGC);
+		carportGC.c_connectedGISObjects.add(parkingSpace);
+	}
+	
+	//Update pv potential of carport energy production site
+	carportGC.v_liveAssetsMetaData.PVPotential_kW += dataParkingSpace.pv_potential_kwp() != null ? dataParkingSpace.pv_potential_kwp() : 0;
+}
+/*ALCODEEND*/}
+
+List<ParkingSpace_data> f_getParkingSpacesInSubScope(List<ParkingSpace_data> initialParkingSpaceList)
+{/*ALCODESTART::1749739602491*/
+List<ParkingSpace_data> scopedParkingSpacesList = new ArrayList<>();
+
+if(settings.subscopesToSimulate() == null || settings.subscopesToSimulate().size() == 0){
+	scopedParkingSpacesList.addAll(initialParkingSpaceList);
+}
+else{
+	for (ParkingSpace_data dataParkingSpace : initialParkingSpaceList) {
+		for (int i = 0; i < settings.subscopesToSimulate().size() ; i++){
+			if (dataParkingSpace.gridnode_id().equals( settings.subscopesToSimulate().get(i))){
+				scopedParkingSpacesList.add(dataParkingSpace);
+			}
+		}	
+	}
+}
+return scopedParkingSpacesList;
 /*ALCODEEND*/}
 

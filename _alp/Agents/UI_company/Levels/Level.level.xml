@@ -658,7 +658,7 @@ f_setSimulateYearScreen();</ActionCode>
 						<ExtendedProperties>
 							<DefaultValueCode>0</DefaultValueCode>
 							<Orientation>HORIZONTAL</Orientation>
-							<MinValue>0</MinValue>
+							<MinValue>-50</MinValue>
 							<MaxValue>50</MaxValue>
 							<Step>5</Step>
 							<LinkTo>false</LinkTo>
@@ -838,7 +838,7 @@ f_setSimulateYearScreen();
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
+					<MinValue>-50</MinValue>
 					<MaxValue>50</MaxValue>
 					<Step>5</Step>
 					<LinkTo>false</LinkTo>
@@ -1626,7 +1626,7 @@ f_setSimulateYearScreen();</ActionCode>
 						<ExtendedProperties>
 							<DefaultValueCode>0</DefaultValueCode>
 							<Orientation>HORIZONTAL</Orientation>
-							<MinValue>0</MinValue>
+							<MinValue>-50</MinValue>
 							<MaxValue>50</MaxValue>
 							<Step>5</Step>
 							<LinkTo>false</LinkTo>

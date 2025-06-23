@@ -115,9 +115,9 @@
 					<Enabled>true</Enabled>
 					<ActionCode>if (cb_spreadChargingEVs.isSelected()) {
 	cb_powerChargingEVs.setSelected(false);
-	zero_Interface.energyModel.f_getGridConnections().forEach(x -&gt; x.p_chargingAttitudeVehicles = OL_ChargingAttitude.MAX_SPREAD);
+	zero_Interface.energyModel.f_getActiveGridConnections().forEach(x -&gt; x.p_chargingAttitudeVehicles = OL_ChargingAttitude.MAX_SPREAD);
 } else {
-	for(GridConnection GC : zero_Interface.energyModel.f_getGridConnections()){
+	for(GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()){
 		if(GC instanceof GCPublicCharger){
 			//Leave it on basic setting (MAX_SPREAD)
 		}
@@ -297,7 +297,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<TextColor/>
 					<Enabled>true</Enabled>
 					<ActionCode>if (cb_curtailment.isSelected()) {
-	for (GridConnection GC : zero_Interface.energyModel.f_getGridConnections()) {
+	for (GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()) {
 		GC.v_enableCurtailment = true;
 		
 		if (zero_Interface.c_companyUIs.size()&gt;0){
@@ -309,7 +309,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 	}
 }
 else {
-	for (GridConnection GC : zero_Interface.energyModel.f_getGridConnections()) {
+	for (GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()) {
 		GC.v_enableCurtailment = false;
 		
 		if (zero_Interface.c_companyUIs.size()&gt;0){
@@ -416,7 +416,7 @@ else {
 					<TextColor/>
 					<VisibleCode>!zero_Interface.settings.isPublicModel()</VisibleCode>
 					<Enabled>true</Enabled>
-					<ActionCode>for (GridConnection GC : zero_Interface.energyModel.f_getGridConnections()) {
+					<ActionCode>for (GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()) {
 	GC.f_nfatoSetConnectionCapacity(true);
 	GC.v_enableNFato = false;
 	GC.v_nfatoWeekDeliveryCapacity_kW = new double[24];
@@ -459,7 +459,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<Enabled>true</Enabled>
 					<ActionCode>if (cb_powerChargingEVs.isSelected()) {
 	cb_spreadChargingEVs.setSelected(false);
-	for(GridConnection GC : zero_Interface.energyModel.f_getGridConnections()){
+	for(GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()){
 		if(GC instanceof GCPublicCharger){
 			//Leave it on basic setting (MAX_SPREAD)
 		}
@@ -469,7 +469,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 	}
 	//zero_Interface.energyModel.f_getGridConnections().forEach(x -&gt; x.p_chargingAttitudeVehicles = OL_ChargingAttitude.MAX_POWER);
 } else {
-	for(GridConnection GC : zero_Interface.energyModel.f_getGridConnections()){
+	for(GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()){
 		if(GC instanceof GCPublicCharger){
 			//Leave it on basic setting (MAX_SPREAD)
 		}

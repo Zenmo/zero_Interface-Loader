@@ -30,6 +30,7 @@ public class Building_data {
 	Double pv_installed_kwp;
 	Double pv_potential_kwp;
 	String energy_label;
+	Boolean has_private_parking;
 	String gridnode_id;
 	Double latitude;
 	Double longitude;

@@ -18,7 +18,6 @@ public class Chargingstation_data {
 	String gridnode_id;
 	Double connection_capacity_kw;	
 	boolean is_charging_centre;
-	//profile_data ??
 	OL_EnergyAssetType vehicle_type;
 	int number_of_chargers;
 	double power_per_charger_kw;

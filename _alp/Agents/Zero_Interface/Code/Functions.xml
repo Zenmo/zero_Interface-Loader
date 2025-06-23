@@ -873,8 +873,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1729685968993</Id>
 		<Name><![CDATA[f_projectSpecificOrderedCollectionAdjustments]]></Name>
-		<X>85</X>
-		<Y>-620</Y>
+		<X>420</X>
+		<Y>-650</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1623,6 +1623,258 @@
 		<Name><![CDATA[f_changeDefaultColorOfPrivateGC]]></Name>
 		<X>-670</X>
 		<Y>910</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1749741185117</Id>
+		<Name><![CDATA[f_initialParkingSpacesOrder]]></Name>
+		<X>420</X>
+		<Y>-690</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750247111856</Id>
+		<Name><![CDATA[f_initialChargerOrder]]></Name>
+		<X>420</X>
+		<Y>-670</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750078798174</Id>
+		<Name><![CDATA[f_initializeSpecialGISObjectsLegend]]></Name>
+		<X>1360</X>
+		<Y>1970</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750261221085</Id>
+		<Name><![CDATA[f_setTrafoText]]></Name>
+		<X>50</X>
+		<Y>1820</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750079113839</Id>
+		<Name><![CDATA[f_setSpecialGISObjectLegendItem]]></Name>
+		<X>1380</X>
+		<Y>2010</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[activeSpecialGISObjectType]]></Name>
+			<Type><![CDATA[OL_GISObjectType]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[legendText]]></Name>
+			<Type><![CDATA[ShapeText]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[legendRect]]></Name>
+			<Type><![CDATA[ShapeRectangle]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750080865693</Id>
+		<Name><![CDATA[f_initializeLegend]]></Name>
+		<X>1340</X>
+		<Y>1890</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750089851073</Id>
+		<Name><![CDATA[f_setParkingSpaceLegendItem]]></Name>
+		<X>1380</X>
+		<Y>2030</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[activeParkingSpaceType]]></Name>
+			<Type><![CDATA[OL_ParkingSpaceType]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[legendText]]></Name>
+			<Type><![CDATA[ShapeText]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[legendRect]]></Name>
+			<Type><![CDATA[ShapeRectangle]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>Pair&lt;ShapeText, ShapeRectangle&gt;</ReturnType>
+		<Id>1750092444018</Id>
+		<Name><![CDATA[f_getNextSpecialLegendShapes]]></Name>
+		<X>1380</X>
+		<Y>1990</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[legendShapesNumber]]></Name>
+			<Type><![CDATA[int]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750162397332</Id>
+		<Name><![CDATA[f_initializeDefaultGISBuildingsLegend]]></Name>
+		<X>1360</X>
+		<Y>1910</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>Pair&lt;ShapeText, ShapeOval&gt;</ReturnType>
+		<Id>1750162514744</Id>
+		<Name><![CDATA[f_getNextDefaultLegendShapes]]></Name>
+		<X>1380</X>
+		<Y>1950</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[legendShapesNumber]]></Name>
+			<Type><![CDATA[int]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750165143690</Id>
+		<Name><![CDATA[f_setDefaultGISBuildingLegendItem]]></Name>
+		<X>1380</X>
+		<Y>1930</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[activeDefaultGISBuildingType]]></Name>
+			<Type><![CDATA[OL_GISBuildingTypes]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[legendText]]></Name>
+			<Type><![CDATA[ShapeText]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[legendOval]]></Name>
+			<Type><![CDATA[ShapeOval]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750333147816</Id>
+		<Name><![CDATA[f_initialHouseholdOrder]]></Name>
+		<X>85</X>
+		<Y>-620</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750340574107</Id>
+		<Name><![CDATA[f_initialisationOfResidentialSliders]]></Name>
+		<X>400</X>
+		<Y>-340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

@@ -64,8 +64,23 @@
 			</OptionList>
 			<OptionList>
 				<Id>1660743989698</Id>
-				<Name><![CDATA[OL_UNUSED2]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Name><![CDATA[OL_GISBuildingTypes]]></Name>
+				<Option>
+					<Id>1750173978462</Id>
+					<Name><![CDATA[DETAILED_COMPANY]]></Name>
+				</Option>
+				<Option>
+					<Id>1750173986048</Id>
+					<Name><![CDATA[DEFAULT_COMPANY]]></Name>
+				</Option>
+				<Option>
+					<Id>1750173990031</Id>
+					<Name><![CDATA[HOUSE]]></Name>
+				</Option>
+				<Option>
+					<Id>1750173992447</Id>
+					<Name><![CDATA[REMAINING]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1660743989798</Id>
@@ -268,6 +283,14 @@
 			<JavaClass>
 				<Id>1749549699201</Id>
 				<Name><![CDATA[DefaultProfiles_data]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1749649742298</Id>
+				<Name><![CDATA[ChargerProfile_data]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1749738288352</Id>
+				<Name><![CDATA[ParkingSpace_data]]></Name>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

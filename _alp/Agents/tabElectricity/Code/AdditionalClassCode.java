@@ -7,6 +7,9 @@ public ShapeGroup getGroupElectricityDemandSliders_Businesspark() {
 	return this.gr_electricityDemandSliders_Businesspark;
 }
 
+public ShapeGroup getGroupElectricityDemandSliders_ResidentialArea() {
+	return this.gr_electricityDemandSlidersResidentialArea;
+}
 public ShapeSlider getSliderElectricityDemandReduction_pct() {
 	return this.sl_electricityDemandReduction_pct;
 }

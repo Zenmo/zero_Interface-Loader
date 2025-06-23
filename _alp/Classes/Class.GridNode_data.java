@@ -17,4 +17,5 @@ public class GridNode_data {
 		double capacity_kw;
 		String subscope;
 		String service_area_polygon;
+		double[] profile_data_kWh;
 }
