@@ -680,8 +680,8 @@ c_orderedHeatingSystemsHouses = new ArrayList<>(housesWithoutHP);
 c_orderedHeatingSystemsHouses.addAll(housesWithHP);
 
 
-List<GCUtility> companies = new ArrayList<GCUtility>(energyModel.UtilityConnections.findAll( x -> true));
-List<GCUtility> companiesWithoutHP = companies.stream().filter( gc -> gc.p_heatingType != OL_GridConnectionHeatingType.HEATPUMP_AIR ).collect(Collectors.toList());
+List<GCUtility> companies = new ArrayList<GCUtility>(energyModel.UtilityConnections.findAll( gc -> gc.p_heatingType != OL_GridConnectionHeatingType.NONE));
+List<GCUtility> companiesWithoutHP = companies.stream().filter( gc -> gc.p_heatingType != OL_GridConnectionHeatingType.HEATPUMP_AIR).collect(Collectors.toList());
 List<GCUtility> companiesWithHP = companies.stream().filter( gc -> gc.p_heatingType == OL_GridConnectionHeatingType.HEATPUMP_AIR ).collect(Collectors.toList());
 List<GCUtility> detailedCompaniesWithHP = companiesWithHP.stream().filter( gc -> gc.p_owner != null && gc.p_owner.p_detailedCompany ).collect(Collectors.toList());
 List<GCUtility> genericCompaniesWithHP = new ArrayList<>(companiesWithHP);

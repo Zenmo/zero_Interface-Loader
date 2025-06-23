@@ -185,9 +185,10 @@ int f_setHeatingSystemsWithCompanyUI(List<GCUtility> gcList,double targetHeatPum
 ArrayList<GCUtility> companies = new ArrayList<GCUtility>(zero_Interface.c_orderedHeatingSystemsCompanies.stream().filter(gcList::contains).filter(x -> x.v_isActive).toList());
 int nbActiveCompanies = companies.size();
 Pair<Integer, Integer> pair = f_calculateNumberOfGhostHeatingSystems(companies);
+traceln("ghost pair: " + pair);
 int nbOfGhostHeatingSystems = pair.getFirst() + pair.getSecond(); // Both Electric and Hybrid heatpumps
 int nbHeatPumps = count(companies, gc -> gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump) + nbOfGhostHeatingSystems;
-int targetHeatPumpAmount = roundToInt( targetHeatPump_pct / 100.0 * nbActiveCompanies) + nbOfGhostHeatingSystems;
+int targetHeatPumpAmount = roundToInt( targetHeatPump_pct / 100.0 * nbActiveCompanies);
 
 
 while ( targetHeatPumpAmount < nbHeatPumps){ // remove excess heatpumps of companies that didnt start with a heatpump, replace with gasburners.
@@ -215,7 +216,6 @@ while ( targetHeatPumpAmount < nbHeatPumps){ // remove excess heatpumps of compa
 		nbHeatPumps--;
 	}
 	else { //No more heating assets to adjust: this is the minimum: set slider to minimum and do nothing else
-		traceln("test 1");
 		int min_nbOfHeatpumps = count(gcList, gc -> gc.v_isActive && gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump) + nbOfGhostHeatingSystems;
 		int min_pct_ElectricHeatpumpSlider = roundToInt( min_nbOfHeatpumps * 100.0 / nbActiveCompanies );
 		sliderHeatpump.setValue(min_pct_ElectricHeatpumpSlider, false);
@@ -250,7 +250,6 @@ while ( targetHeatPumpAmount > nbHeatPumps) { // remove gasburners, add heatpump
 		nbHeatPumps++;
 	}
 	else { //No more gas burner assets to adjust: this is the minimum: set slider to minimum and do nothing else
-		traceln("test 2");
 		int min_nbOfHeatpumps = count(gcList, gc -> gc.v_isActive && gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump) + nbOfGhostHeatingSystems;
 		int min_pct_ElectricHeatpumpSlider = roundToInt( min_nbOfHeatpumps * 100.0 / nbActiveCompanies );
 		sliderHeatpump.setValue(min_pct_ElectricHeatpumpSlider, false);
