@@ -109,7 +109,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>Pair&lt;Double, Double&gt;</ReturnType>
 		<Id>1747294812333</Id>
@@ -152,6 +152,10 @@
 		<Parameter>
 			<Name><![CDATA[target_pct]]></Name>
 			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[slider]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

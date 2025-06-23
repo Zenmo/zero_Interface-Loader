@@ -192,14 +192,15 @@ for (GridConnection gc : gcList ) {
 return new Pair(installedPV_kWp, PVPotential_kWp);
 /*ALCODEEND*/}
 
-double f_setPVSystemCompanies(List<GCUtility> gcList,double target_pct)
+double f_setPVSystemCompanies(List<GCUtility> gcList,double target_pct,ShapeSlider slider)
 {/*ALCODESTART::1747297871195*/
-Pair<Double, Double> pair = f_getPVSystemPercentage( new ArrayList<GridConnection>(gcList));
+List<GCUtility> activeGCs = new ArrayList<GCUtility>(zero_Interface.c_orderedPVSystemsCompanies.stream().filter(x -> x.v_isActive).filter(gcList::contains).toList());
+Pair<Double, Double> pair = f_getPVSystemPercentage( new ArrayList<GridConnection>(activeGCs) );
 double remaining_kWp = target_pct / 100 * pair.getSecond() - pair.getFirst();
 double averageEffectivePV_kWppm2 = zero_Interface.energyModel.avgc_data.p_avgRatioRoofPotentialPV * zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2;
 if ( remaining_kWp > 0 ) {
 	// add more PV
-	for ( GCUtility company : new ArrayList<GCUtility>(zero_Interface.c_orderedPVSystemsCompanies) ) {
+	for ( GCUtility company : new ArrayList<GCUtility>(activeGCs) ) {
 		double remainingPotential_kWp = min( remaining_kWp, company.p_roofSurfaceArea_m2 * averageEffectivePV_kWppm2 - company.v_liveAssetsMetaData.totalInstalledPVPower_kW );
 		
 		if ( remainingPotential_kWp > 0 ) {
@@ -215,10 +216,19 @@ if ( remaining_kWp > 0 ) {
 }
 else {
 	// remove pv
-	for ( GCUtility company : new ArrayList<GCUtility>(zero_Interface.c_orderedPVSystemsCompanies) ) {
+	for ( GCUtility company : new ArrayList<GCUtility>(activeGCs) ) {
 		if ( company.v_liveAssetsMetaData.hasPV ) {
+			// find companyUI to check if the company already has PV on model startup			
 			remaining_kWp += company.v_liveAssetsMetaData.totalInstalledPVPower_kW;
-			f_removePVSystem( company );
+			f_removePVSystem( company );		
+			double PVAtStartup_kWp = 0;
+			if (zero_Interface.c_companyUIs.size() > 0) {
+				PVAtStartup_kWp = zero_Interface.c_scenarioMap_Current.get(company).getCurrentPV_kW();
+			}
+			if (PVAtStartup_kWp != 0) {
+				f_addPVSystem( company, PVAtStartup_kWp );
+				remaining_kWp -= PVAtStartup_kWp;
+			}
 		}
 		if ( remaining_kWp >= 0 ) {
 			// removed slightly too much pv
@@ -227,7 +237,17 @@ else {
 			return;
 		}
 	}
+	// All companies are at the starting PV amount. Set slider to corresponding value.
+	pair = f_getPVSystemPercentage( new ArrayList<GridConnection>( activeGCs ) );
+	int installed_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());	
+	slider.setValue(installed_pct, false);
 }
+
+// Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
@@ -266,10 +286,15 @@ else if ( gc instanceof GCUtility ) {
 	if ( zero_Interface.c_companyUIs.size() > 0 ) {
 		if ( gc.p_owner != null ) {
 			UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-			if ( companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc ) {
-				companyUI.sl_rooftopPVCompany.setValue(roundToInt(capacity_kWp), false);
-				companyUI.v_defaultPVSlider = roundToInt(capacity_kWp);
+			companyUI.b_runningMainInterfaceSlider = true;
+			if(companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) != gc){
+				int i = indexOf(companyUI.c_ownedGridConnections.stream().toArray(), gc);
+				companyUI.GCnr_selection.setValue(i, true);
 			}
+			companyUI.b_runningMainInterfaceSlider = false;	
+			
+			companyUI.sl_rooftopPVCompany.setValue(roundToInt(capacity_kWp), false);
+			companyUI.v_defaultPVSlider = roundToInt(capacity_kWp);
 		}
 	}
 }
@@ -302,10 +327,15 @@ if ( pvAsset != null ) {
 		if ( zero_Interface.c_companyUIs.size() > 0 ) {
 			if ( gc.p_owner != null ) {
 				UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-				if ( companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc ) {
-					companyUI.sl_rooftopPVCompany.setValue(0, false);
-					companyUI.v_defaultPVSlider = roundToInt(0);
+				companyUI.b_runningMainInterfaceSlider = true;
+				if(companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) != gc){
+					int i = indexOf(companyUI.c_ownedGridConnections.stream().toArray(), gc);
+					companyUI.GCnr_selection.setValue(i, true);
 				}
+				companyUI.b_runningMainInterfaceSlider = false;	
+				
+				companyUI.sl_rooftopPVCompany.setValue(0, false);
+				companyUI.v_defaultPVSlider = roundToInt(0);
 			}
 		}
 	}

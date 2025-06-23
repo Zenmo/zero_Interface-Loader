@@ -876,8 +876,10 @@ double f_updateMainInterfaceSliders()
 // ATTENTION: If you have custom tabs it may be neccesary to override this function and add updates to your custom sliders!
 
 // PV SYSTEMS:
-double PVsystems = count(energyModel.UtilityConnections, x->x.v_liveAssetsMetaData.hasPV == true && x.v_isActive);		
-int PV_pct = roundToInt(100 * PVsystems / count(energyModel.UtilityConnections, x->x.v_isActive));
+//double PVsystems = count(energyModel.UtilityConnections, x->x.v_liveAssetsMetaData.hasPV == true && x.v_isActive);		
+//int PV_pct = roundToInt(100 * PVsystems / count(energyModel.UtilityConnections, x->x.v_isActive));
+Pair<Double, Double> pair = uI_Tabs.pop_tabElectricity.get(0).f_getPVSystemPercentage( new ArrayList<GridConnection>(findAll(energyModel.UtilityConnections, x -> x.v_isActive) ) );
+int PV_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());
 uI_Tabs.pop_tabElectricity.get(0).getSliderRooftopPVCompanies_pct().setValue(PV_pct, false);
 
 // GAS_BURNER / HEATING SYSTEMS: // Still a slight error. GasBurners + HeatPumps != total, because some GC have primary heating asset null

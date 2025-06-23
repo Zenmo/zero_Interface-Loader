@@ -216,7 +216,7 @@
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_rooftopPVCompanies_pct.getValue() );
+					<ActionCode>f_setPVSystemCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_rooftopPVCompanies_pct.getValue(), sl_rooftopPVCompanies_pct );
 
 if( zero_Interface.rb_buildingColors.getValue() == 2){
 	zero_Interface.rb_buildingColors.setValue(2, true);
@@ -1031,7 +1031,7 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_rooftopPVCompanies_pct_Businesspark.getValue() );</ActionCode>
+					<ActionCode>f_setPVSystemCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_rooftopPVCompanies_pct_Businesspark.getValue(), sl_rooftopPVCompanies_pct_Businesspark );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
