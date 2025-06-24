@@ -12,3 +12,6 @@ public ShapeSlider getSl_batteryCompany(){
 	return this.sl_batteryCompany;
 }
 
+public ShapeSlider getSl_electricityDemandCompanyReduction(){
+	return this.sl_electricityDemandCompanyReduction;
+}
