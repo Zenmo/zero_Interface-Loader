@@ -626,7 +626,7 @@
 		<Name><![CDATA[v_gridNodeColor_klant]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1030</X>
-		<Y>1390</Y>
+		<Y>1410</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -648,7 +648,7 @@
 		<Id>1705663820244</Id>
 		<Name><![CDATA[v_gridNodeColor_net]]></Name>
 		<X>1030</X>
-		<Y>1370</Y>
+		<Y>1390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1185,7 +1185,7 @@
 		<Id>1714137967101</Id>
 		<Name><![CDATA[v_MVLVNodeColor]]></Name>
 		<X>1030</X>
-		<Y>1200</Y>
+		<Y>1220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1207,7 +1207,7 @@
 		<Id>1714137970406</Id>
 		<Name><![CDATA[v_MVLVLineColor]]></Name>
 		<X>1030</X>
-		<Y>1220</Y>
+		<Y>1240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1229,7 +1229,7 @@
 		<Id>1714137978358</Id>
 		<Name><![CDATA[v_gridNodeColorStrained]]></Name>
 		<X>1030</X>
-		<Y>1275</Y>
+		<Y>1295</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1251,7 +1251,7 @@
 		<Id>1714137980262</Id>
 		<Name><![CDATA[v_gridNodeLineColorStrained]]></Name>
 		<X>1030</X>
-		<Y>1295</Y>
+		<Y>1315</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1273,7 +1273,7 @@
 		<Id>1714137982277</Id>
 		<Name><![CDATA[v_gridNodeColorCongested]]></Name>
 		<X>1030</X>
-		<Y>1320</Y>
+		<Y>1340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1295,7 +1295,7 @@
 		<Id>1714137984157</Id>
 		<Name><![CDATA[v_gridLineColorCongested]]></Name>
 		<X>1030</X>
-		<Y>1340</Y>
+		<Y>1360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1339,7 +1339,7 @@
 		<Id>1718567214780</Id>
 		<Name><![CDATA[b_updateCongestionColors]]></Name>
 		<X>1030</X>
-		<Y>1420</Y>
+		<Y>1440</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1635,7 +1635,7 @@
 		<Id>1721996776514</Id>
 		<Name><![CDATA[v_MVMVNodeColor]]></Name>
 		<X>1030</X>
-		<Y>1130</Y>
+		<Y>1150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1657,7 +1657,7 @@
 		<Id>1721996776516</Id>
 		<Name><![CDATA[v_MVMVLineColor]]></Name>
 		<X>1030</X>
-		<Y>1150</Y>
+		<Y>1170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1701,7 +1701,7 @@
 		<Id>1721998236233</Id>
 		<Name><![CDATA[v_MVMVNodeSize]]></Name>
 		<X>1030</X>
-		<Y>1170</Y>
+		<Y>1190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1723,7 +1723,7 @@
 		<Id>1721998240384</Id>
 		<Name><![CDATA[v_MVLVNodeSize]]></Name>
 		<X>1030</X>
-		<Y>1240</Y>
+		<Y>1260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2215,6 +2215,28 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[int]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1750777761770</Id>
+		<Name><![CDATA[v_HVMVNodeIsVisible]]></Name>
+		<X>1030</X>
+		<Y>1120</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[boolean]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[false]]></Code>
+			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
