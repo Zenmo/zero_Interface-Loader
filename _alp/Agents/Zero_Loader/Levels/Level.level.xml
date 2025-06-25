@@ -135,7 +135,7 @@
 		<Id>1726584205915</Id>
 		<Name><![CDATA[rect_connectedModels]]></Name>
 		<X>0</X>
-		<Y>680</Y>
+		<Y>840</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -161,7 +161,7 @@
 		<Id>1726584205917</Id>
 		<Name><![CDATA[t_connectedModels]]></Name>
 		<X>20</X>
-		<Y>690</Y>
+		<Y>850</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -518,7 +518,7 @@
 		<Id>1726584205947</Id>
 		<Name><![CDATA[rect_createEnergyGC]]></Name>
 		<X>400</X>
-		<Y>700</Y>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -535,7 +535,7 @@
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>360</Width>
-		<Height>210</Height>
+		<Height>240</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -544,7 +544,7 @@
 		<Id>1726584205949</Id>
 		<Name><![CDATA[txt_createEnergyGC]]></Name>
 		<X>410</X>
-		<Y>710</Y>
+		<Y>670</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -604,7 +604,7 @@
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>360</Width>
-				<Height>240</Height>
+				<Height>200</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
 				<FillMaterial>null</FillMaterial>
@@ -1044,6 +1044,57 @@
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
 		<Text><![CDATA[Add specific slider GC]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>14</Size>
+			<Style>1</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Rectangle>
+		<Id>1750856789809</Id>
+		<Name><![CDATA[rect_subScopeFunctions]]></Name>
+		<X>20</X>
+		<Y>630</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>2</LineWidth>
+		<LineColor>-16777216</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>340</Width>
+		<Height>180</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Rectangle>
+	<Text>
+		<Id>1750857047506</Id>
+		<Name><![CDATA[txt_filterSubScopeFunctions]]></Name>
+		<X>40</X>
+		<Y>640</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[SubScope filter functions]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>14</Size>

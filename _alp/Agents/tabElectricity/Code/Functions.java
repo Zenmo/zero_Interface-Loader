@@ -419,135 +419,29 @@ zero_Interface.f_resetSettings();
 
 double f_setGridBatteries(double storageCapacity_kWh)
 {/*ALCODESTART::1750063382312*/
-for ( GCGridBattery battery : zero_Interface.energyModel.GridBatteries) { // Should this be a gridbattery under each gridnode? loader issue?
-	for(J_EAStorage j_ea : battery.c_storageAssets) {
-		J_EAStorageElectric batteryAsset = ((J_EAStorageElectric)j_ea);
-		if (!battery.v_isActive) {
-			battery.f_setActive(true);
-		}
-		double capacity_kW = storageCapacity_kWh / 2;
-		batteryAsset.setCapacityElectric_kW( capacity_kW );
-		batteryAsset.setStorageCapacity_kWh( storageCapacity_kWh );
-		battery.v_liveConnectionMetaData.physicalCapacity_kW = capacity_kW;
-		battery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = capacity_kW;
-		battery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = capacity_kW;
-	}
-}
-
-zero_Interface.f_resetSettings();
-/*ALCODEEND*/}
-
-double f_setPublicChargingStationsScale(double sliderValue)
-{/*ALCODESTART::1750063382314*/
-ArrayList<GCPublicCharger> activeChargers = new ArrayList<>();
-for ( GCPublicCharger charger : zero_Interface.c_activePublicChargers){
-	activeChargers.add(charger);
-}
-for ( GCPublicCharger charger : activeChargers){
-	if ( charger.p_nbOfChargers > sliderValue){
-		f_setChargerInactive( charger );
-	}
-}
-ArrayList<GCPublicCharger> inactiveChargers = new ArrayList<>();
-for ( GCPublicCharger charger : zero_Interface.c_inactivePublicChargers){
-	inactiveChargers.add(charger);
-}
-for ( GCPublicCharger charger : inactiveChargers){
-	if( charger.p_nbOfChargers <= sliderValue ){
-		f_setChargerActive( charger );
-	}
-}
-
-/*
-for ( GridNode node : zero_Interface.energyModel.f_getGridNodesNotTopLevel()){
-	traceln( "Node  " + node.p_gridNodeID);
-	int i = 0;
-	for( GridConnection gc : node.f_getConnectedGridConnections() ){
-		if ( gc instanceof GCPublicCharger){
-			GCPublicCharger charger =((GCPublicCharger)gc);
-			if( charger.v_isActiveCharger){
-				i ++;
+for ( GCGridBattery battery : zero_Interface.energyModel.GridBatteries) {
+	if(battery.p_isSliderGC){
+		for(J_EAStorage j_ea : battery.c_storageAssets) {
+			J_EAStorageElectric batteryAsset = ((J_EAStorageElectric)j_ea);
+			if (!battery.v_isActive) {
+				battery.f_setActive(true);
 			}
+			double capacity_kW = storageCapacity_kWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power;
+			batteryAsset.setCapacityElectric_kW( capacity_kW );
+			batteryAsset.setStorageCapacity_kWh( storageCapacity_kWh );
+			battery.v_liveConnectionMetaData.physicalCapacity_kW = capacity_kW;
+			battery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = capacity_kW;
+			battery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = capacity_kW;
 		}
 	}
-	traceln( "Number of chargers:  " + i);
 }
-*/
 
-traceln( "New number of active chargers: " + v_currentNbChargers);
-traceln( "New number of inactive chargers: " + zero_Interface.c_inactivePublicChargers.size());
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
 
 zero_Interface.f_resetSettings();
-//f_setDieselVehiclesAtPublicParkingHouses();
-/*ALCODEEND*/}
-
-List<Double> f_getChargingProfile(GCPublicCharger charger)
-{/*ALCODESTART::1750063382316*/
-String profileName = charger.p_parentNodeElectricID.toLowerCase();
-List<Double> quarterlyEnergyDemand_kWh;
-
-if (chargingMethodResidentialArea.getValue() == 0){
-	profileName = profileName + f_getProfileNameEVAddition();
-	quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + profileName + " FROM charging_profiles_unc;");
-}
-else if (chargingMethodResidentialArea.getValue() == 1){
-	profileName = profileName + f_getProfileNameEVAddition() + f_getProfileNameWPAddition();
-	//traceln( profileName);
-	quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + profileName + " FROM charging_profiles_v1g;");
-}
-else {
-	profileName = profileName + f_getProfileNameEVAddition() + f_getProfileNameWPAddition();
-	//traceln ( profileName);
-	quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + profileName + " FROM charging_profiles_v2g;");
-}
-
-return quarterlyEnergyDemand_kWh;
-/*ALCODEEND*/}
-
-String f_getProfileNameEVAddition()
-{/*ALCODESTART::1750063382318*/
-String string = "_";
-
-double EVShare = sl_publicEVsResidentialArea_pct.getValue();
-if(  EVShare < 0.49 ){
-	string += "ev25";
-}
-else if  (EVShare < 0.74 ){
-	string += "ev50";
-}
-else if ( EVShare < 0.99 ){
-	string += "ev75";
-}
-else {
-	string += "ev100";
-}
-
-return string;
-/*ALCODEEND*/}
-
-double f_setChargerInactive(GCPublicCharger charger)
-{/*ALCODESTART::1750063382320*/
-zero_Interface.c_activePublicChargers.remove(charger); 
-charger.c_EvAssets.remove(charger.c_profileAssets.get(0));
-charger.c_profileAssets.get(0).removeEnergyAsset(); //get rid of the charging profile
-charger.v_isActiveCharger = false;
-zero_Interface.c_inactivePublicChargers.add(charger); //add the charger to the other list
-charger.c_connectedGISObjects.get(0).gisRegion.setVisible(false);
-v_currentNbChargers --;
-
-/*ALCODEEND*/}
-
-double f_setChargerActive(GCPublicCharger charger)
-{/*ALCODESTART::1750063382322*/
-zero_Interface.c_inactivePublicChargers.remove( charger );
-J_EAProfile profile = new J_EAProfile(charger, OL_EnergyCarriers.ELECTRICITY, null, OL_ProfileAssetType.CHARGING, zero_Interface.energyModel.p_timeStep_h);		
-profile.energyAssetName = "charging profile";		
-List<Double> quarterlyEnergyDemand_kWh = f_getChargingProfile(charger);
-profile.a_energyProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> max(0,d)).map( d -> d / 4).toArray();
-charger.v_isActiveCharger = true;
-charger.c_connectedGISObjects.get(0).gisRegion.setVisible(true);
-zero_Interface.c_activePublicChargers.add(charger);
-v_currentNbChargers ++;
 /*ALCODEEND*/}
 
 double f_setElectricCooking(double electricCookingGoal_pct)
@@ -601,26 +495,6 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-String f_getProfileNameWPAddition()
-{/*ALCODESTART::1750063382328*/
-String string = "_";
-
-int WPshare = uI_Tabs.pop_tabHeating.get(0).sl_householdElectricHeatPumpResidentialArea_pct.getIntValue();
-
-if(  WPshare < 33 ){
-	string += "hp0";
-}
-else if  (WPshare < 66 ){
-	string += "hp50";
-}
-else {
-	string += "hp100";
-}
-
-
-return string;
-/*ALCODEEND*/}
-
 double f_setPublicChargingStations(double publicChargers_pct)
 {/*ALCODESTART::1750063382330*/
 int totalNbChargers = zero_Interface.c_orderedPublicChargers.size();
@@ -639,11 +513,11 @@ while ( currentNbChargers > nbChargersGoal ) {
 		zero_Interface.c_orderedPublicChargers.add(0, gc);
 		currentNbChargers--;
 		
-		List<J_EADieselVehicle> cars = new ArrayList<>(zero_Interface.c_orderedActiveVehiclesPublicParking.subList(0, amountOfVehiclesPerCharger));
+		List<J_EADieselVehicle> cars = new ArrayList<>(zero_Interface.c_orderedNonActiveVehiclesPublicParking.subList(0, amountOfVehiclesPerCharger));
 		for (J_EADieselVehicle car : cars) {
-			zero_Interface.c_orderedActiveVehiclesPublicParking.remove(car);
-			zero_Interface.c_orderedNonActiveVehiclesPublicParking.add(0, car);
-			car.removeEnergyAsset();
+			zero_Interface.c_orderedNonActiveVehiclesPublicParking.remove(car);
+			zero_Interface.c_orderedActiveVehiclesPublicParking.add(0, car);
+			car.reRegisterEnergyAsset();
 		}
 	}
 	else {
@@ -658,11 +532,11 @@ while ( currentNbChargers < nbChargersGoal){
 		zero_Interface.c_orderedPublicChargers.add(0, gc);
 		currentNbChargers++;
 		
-		List<J_EADieselVehicle> cars = new ArrayList<>(zero_Interface.c_orderedNonActiveVehiclesPublicParking.subList(0, amountOfVehiclesPerCharger));
+		List<J_EADieselVehicle> cars = new ArrayList<>(zero_Interface.c_orderedActiveVehiclesPublicParking.subList(0, amountOfVehiclesPerCharger));
 		for (J_EADieselVehicle car : cars) {
-			zero_Interface.c_orderedNonActiveVehiclesPublicParking.remove(car);
-			zero_Interface.c_orderedActiveVehiclesPublicParking.add(0, car);
-			car.reRegisterEnergyAsset();
+			zero_Interface.c_orderedActiveVehiclesPublicParking.remove(car);
+			zero_Interface.c_orderedNonActiveVehiclesPublicParking.add(0, car);
+			car.removeEnergyAsset();
 		}
 	}
 	else {
