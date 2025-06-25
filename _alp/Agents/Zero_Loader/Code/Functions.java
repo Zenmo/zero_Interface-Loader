@@ -3775,8 +3775,8 @@ if(settings.subscopesToSimulate() == null || settings.subscopesToSimulate().size
 }
 else{
 	for (Building_data dataBuilding : initialBuildingList) {
-		for (int i = 0; i < settings.subscopesToSimulate().size() ; i++){
-			if (dataBuilding.gridnode_id().equals( settings.subscopesToSimulate().get(i))){
+		for (int i = 0; i < c_gridNodeIDsInScope.size() ; i++){
+			if (dataBuilding.gridnode_id().equals( c_gridNodeIDsInScope.get(i))){
 				scopedBuildingList.add(dataBuilding);
 			}
 		}	
@@ -3926,9 +3926,6 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	f_addEnergyAssetsToHouses(GCH, jaarlijksElectriciteitsVerbruik, jaarlijksGasVerbruik );	
 	
 	i ++;
-	if (i == 1000){
-		break;
-	}
 }	
 
 /*ALCODEEND*/}
@@ -4106,8 +4103,8 @@ if(settings.subscopesToSimulate() == null || settings.subscopesToSimulate().size
 }
 else{
 	for (ParkingSpace_data dataParkingSpace : initialParkingSpaceList) {
-		for (int i = 0; i < settings.subscopesToSimulate().size() ; i++){
-			if (dataParkingSpace.gridnode_id().equals( settings.subscopesToSimulate().get(i))){
+		for (int i = 0; i < c_gridNodeIDsInScope.size() ; i++){
+			if (dataParkingSpace.gridnode_id().equals( c_gridNodeIDsInScope.get(i))){
 				scopedParkingSpacesList.add(dataParkingSpace);
 			}
 		}	
