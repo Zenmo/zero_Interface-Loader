@@ -782,8 +782,7 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		
 		companyGC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
 		companyGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
-	
-		companyGC.p_heatingType = avgc_data.p_avgCompanyHeatingMethod; // Assuming all avg companies have GASBURNER.
+
 		
 		
 		//set GC Adress
@@ -1601,6 +1600,8 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 		double Remaining_gas_demand_m3_p_m2_yr = v_remainingGasConsumption_m3/v_totalFloorAreaAnonymousCompanies_m2;
 		double yearlyGasDemand_m3 = Remaining_gas_demand_m3_p_m2_yr*companyGC.p_floorSurfaceArea_m2;
 		double ratioGasUsedForHeating = 1;
+		
+		companyGC.p_heatingType = avgc_data.p_avgCompanyHeatingMethod; // Assuming all avg companies have GASBURNER.
 		//Add heat demand profile
 		f_addHeatDemandProfile(companyGC, yearlyGasDemand_m3, false, ratioGasUsedForHeating, "default_building_heat_demand_fr");
 	}
@@ -3625,9 +3626,14 @@ GC_GridNode_profile.v_liveConnectionMetaData.physicalCapacityKnown = false;
 GC_GridNode_profile.p_latitude = gridnode.p_latitude; // Get latitude of first building (only used to get nearest trafo)
 GC_GridNode_profile.p_longitude = gridnode.p_longitude; // Get longitude of first building (only used to get nearest trafo)
 
+if(project_data.gridnode_profile_timestep_hr() == null){
+	new RuntimeException("Trying to load in gridnode profiles, without specifying the timestep of the data in the project_data");
+}
+
+double profileTimestep_hr = project_data.gridnode_profile_timestep_hr();
 
 //Add profile to the GC
-J_EAProfile profile = new J_EAProfile(GC_GridNode_profile, OL_EnergyCarriers.ELECTRICITY, profile_data_kWh, OL_ProfileAssetType.ELECTRICITYBASELOAD, energyModel.p_timeStep_h);	
+J_EAProfile profile = new J_EAProfile(GC_GridNode_profile, OL_EnergyCarriers.ELECTRICITY, profile_data_kWh, OL_ProfileAssetType.ELECTRICITYBASELOAD, profileTimestep_hr);	
 profile.setStartTime_h(v_simStartHour_h);
 profile.energyAssetName = "GridNode " + gridnode.p_gridNodeID + " profile";
 
