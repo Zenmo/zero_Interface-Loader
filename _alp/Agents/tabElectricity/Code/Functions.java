@@ -66,10 +66,9 @@ while ( nbHousesWithPVGoal > nbHousesWithPV ) {
 		double capacityHeat_kW = 0.0;
 		double yearlyProductionHydrogen_kWh = 0.0;
 		double yearlyProductionMethane_kWh = 0.0;
-		double outputTemperature_degC = 0.0;
 		double installedPVCapacity_kW = uniform(3,6);
 
-		J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, installedPVCapacity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
+		J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, OL_EnergyCarriers.ELECTRICITY, installedPVCapacity_kW, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
 		houses.remove(house);
 		zero_Interface.c_orderedPVSystemsHouses.remove(house);
 		zero_Interface.c_orderedPVSystemsHouses.add(0, house);
@@ -271,7 +270,7 @@ else {
 	double yearlyProductionHydrogen_kWh = 0.0;
 	double outputTemperature_degC = 0.0;
 	
-	J_EAProduction productionAsset = new J_EAProduction ( gc, assetType, assetName, capacity_kWp, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
+	J_EAProduction productionAsset = new J_EAProduction ( gc, assetType, assetName, OL_EnergyCarriers.ELECTRICITY, capacity_kWp, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
 }
 
 // Update the ordered collection
