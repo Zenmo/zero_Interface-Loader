@@ -288,7 +288,7 @@ GCEnergyProduction solarpark;
 List<String> existing_actors = new ArrayList();
 List<String> existing_solarFields = new ArrayList();
 
-for (Solarfarm_data dataSolarfarm : c_solarfarm_data) { // MOET NOG CHECK OF ZONNEVELD ACTOR AL BESTAAT OP, zo ja --> Zonneveld koppelen aan elkaar en niet 2 GC en 2 actoren maken.
+for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data)) { // MOET NOG CHECK OF ZONNEVELD ACTOR AL BESTAAT OP, zo ja --> Zonneveld koppelen aan elkaar en niet 2 GC en 2 actoren maken.
 	
 	if (!existing_solarFields.contains( dataSolarfarm.gc_id() )) {
 		solarpark = energyModel.add_EnergyProductionSites();
@@ -367,7 +367,7 @@ for (Solarfarm_data dataSolarfarm : c_solarfarm_data) { // MOET NOG CHECK OF ZON
 
 double f_createBatteries()
 {/*ALCODESTART::1726584205787*/
-for (Battery_data dataBattery : c_battery_data) { // MOET NOG CHECK OF battery ACTOR AL BESTAAT OP, zo ja --> battery koppelen aan elkaar en niet 2 GC en 2 actoren maken.
+for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) { // MOET NOG CHECK OF battery ACTOR AL BESTAAT OP, zo ja --> battery koppelen aan elkaar en niet 2 GC en 2 actoren maken.
 	
 	ConnectionOwner owner = energyModel.add_pop_connectionOwners();
 	GCGridBattery gridbattery = energyModel.add_GridBatteries();
@@ -443,7 +443,7 @@ ConnectionOwner owner;
 List<String> existing_actors = new ArrayList();
 
 
-for (Electrolyser_data dataElectrolyser : c_electrolyser_data) {
+for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electrolyser_data)) {
 	GCEnergyConversion H2Electrolyser = energyModel.add_EnergyConversionSites();
 
 	H2Electrolyser.set_p_gridConnectionID( dataElectrolyser.gc_id() );
@@ -525,7 +525,7 @@ GCEnergyProduction windfarm;
 List<String> existing_actors = new ArrayList();
 List<String> existing_windFarms = new ArrayList();
 
-for (Windfarm_data dataWindfarm : c_windfarm_data) {
+for (Windfarm_data dataWindfarm : f_getWindfarmsInSubScope(c_windfarm_data)) {
 	if (!existing_windFarms.contains(dataWindfarm.gc_id())) { // Check if windfarm exists already, if not, create new windfarm GC + turbine
 		windfarm = energyModel.add_EnergyProductionSites();
 
@@ -1904,7 +1904,7 @@ int laadpaal_nr = 1;
 int laadstation_nr = 1;
 
 //Loop over charging stations
-for (Chargingstation_data dataChargingStation : c_chargingstation_data){
+for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(c_chargingstation_data)){
 
 	GCPublicCharger chargingStation = energyModel.add_PublicChargers();
 
@@ -3534,8 +3534,15 @@ if(sliderSolarfarm_data == null){
 if(sliderWindfarm_data == null){
 	f_addSliderWindfarm(topGridNodeID);
 }
-if(sliderBattery_data == null){
-	f_addSliderBattery(topGridNodeID);
+if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
+	for(GridNode_data nodeData : c_gridNode_data){
+		f_addSliderBattery(nodeData.gridnode_id());
+	}
+}
+else{
+	if(sliderBattery_data == null){
+		f_addSliderBattery(topGridNodeID);
+	}
 }
 /*ALCODEEND*/}
 
@@ -3717,7 +3724,7 @@ if (surface_m2 < 25){
 
 double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,OL_IsolationLevelHouse isolationLevel)
 {/*ALCODESTART::1749727623536*/
-double maxPowerHeat_kW = 100; 				//Dit is hoeveel vermogen het huis kan afgeven/opnemen, mag willekeurige waarden hebben. Wordt alleen gebruikt in rekenstap van ratio of capacity
+double maxPowerHeat_kW = 1000; 				//Dit is hoeveel vermogen het huis kan afgeven/opnemen, mag willekeurige waarden hebben. Wordt alleen gebruikt in rekenstap van ratio of capacity
 double lossfactor_WpK; 						//Dit is wat bepaalt hoeveel warmte het huis verliest/opneemt per tijdstap per delta_T
 double initialTemp = uniform_discr(15,22); 	//starttemperatuur
 double heatCapacity_JpK; 					//hoeveel lucht zit er in je huis dat je moet verwarmen?
@@ -3775,8 +3782,8 @@ if(settings.subscopesToSimulate() == null || settings.subscopesToSimulate().size
 }
 else{
 	for (Building_data dataBuilding : initialBuildingList) {
-		for (int i = 0; i < settings.subscopesToSimulate().size() ; i++){
-			if (dataBuilding.gridnode_id().equals( settings.subscopesToSimulate().get(i))){
+		for (int i = 0; i < c_gridNodeIDsInScope.size() ; i++){
+			if (dataBuilding.gridnode_id().equals( c_gridNodeIDsInScope.get(i))){
 				scopedBuildingList.add(dataBuilding);
 			}
 		}	
@@ -3926,9 +3933,6 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	f_addEnergyAssetsToHouses(GCH, jaarlijksElectriciteitsVerbruik, jaarlijksGasVerbruik );	
 	
 	i ++;
-	if (i == 1000){
-		break;
-	}
 }	
 
 /*ALCODEEND*/}
@@ -4004,13 +4008,9 @@ else { // 25% kans op smiddags/savonds aan
 
 double f_createParkingSpots()
 {/*ALCODESTART::1749729268458*/
-List<ParkingSpace_data> parkingSpacesData = f_getParkingSpacesInSubScope(c_parkingSpace_data);
-
-traceln("Nb EV parking places in dataset: " + parkingSpacesData.size() );
-
 List<GCEnergyProduction> carportGCList = new ArrayList<GCEnergyProduction>();
 
-for (ParkingSpace_data dataParkingSpace : parkingSpacesData){
+for (ParkingSpace_data dataParkingSpace : f_getParkingSpacesInSubScope(c_parkingSpace_data)){
 
 	//Create parking gis object	
 	GIS_Object parkingSpace = f_createGISObject(dataParkingSpace.parking_id(), dataParkingSpace.latitude(), dataParkingSpace.longitude(), dataParkingSpace.polygon(), OL_GISObjectType.PARKING);
@@ -4097,8 +4097,84 @@ for (ParkingSpace_data dataParkingSpace : parkingSpacesData){
 }
 /*ALCODEEND*/}
 
-List<ParkingSpace_data> f_getParkingSpacesInSubScope(List<ParkingSpace_data> initialParkingSpaceList)
+List<Solarfarm_data> f_getSolarfarmsInSubScope(List<Solarfarm_data> initialSolarfarmsList)
 {/*ALCODESTART::1749739602491*/
+List<Solarfarm_data> scopedSolarfarmsList = new ArrayList<>();
+
+if(settings.subscopesToSimulate() == null || settings.subscopesToSimulate().size() == 0){
+	scopedSolarfarmsList.addAll(initialSolarfarmsList);
+}
+else{
+	for (Solarfarm_data dataSolarfarm : initialSolarfarmsList) {
+		for (int i = 0; i < c_gridNodeIDsInScope.size() ; i++){
+			if (dataSolarfarm.gridnode_id().equals( c_gridNodeIDsInScope.get(i))){
+				scopedSolarfarmsList.add(dataSolarfarm);
+			}
+		}	
+	}
+}
+return scopedSolarfarmsList;
+/*ALCODEEND*/}
+
+List<Windfarm_data> f_getWindfarmsInSubScope(List<Windfarm_data> initialWindfarmsList)
+{/*ALCODESTART::1750857080998*/
+List<Windfarm_data> scopedWindfarmsList = new ArrayList<>();
+
+if(settings.subscopesToSimulate() == null || settings.subscopesToSimulate().size() == 0){
+	scopedWindfarmsList.addAll(initialWindfarmsList);
+}
+else{
+	for (Windfarm_data dataWindfarm : initialWindfarmsList) {
+		for (int i = 0; i < c_gridNodeIDsInScope.size() ; i++){
+			if (dataWindfarm.gridnode_id().equals( c_gridNodeIDsInScope.get(i))){
+				scopedWindfarmsList.add(dataWindfarm);
+			}
+		}	
+	}
+}
+return scopedWindfarmsList;
+/*ALCODEEND*/}
+
+List<Chargingstation_data> f_getChargingstationsInSubScope(List<Chargingstation_data> initialChargingstationsList)
+{/*ALCODESTART::1750857082460*/
+List<Chargingstation_data> scopedChargingstationsList = new ArrayList<>();
+
+if(settings.subscopesToSimulate() == null || settings.subscopesToSimulate().size() == 0){
+	scopedChargingstationsList.addAll(initialChargingstationsList);
+}
+else{
+	for (Chargingstation_data dataChargingstation : initialChargingstationsList) {
+		for (int i = 0; i < c_gridNodeIDsInScope.size() ; i++){
+			if (dataChargingstation.gridnode_id().equals( c_gridNodeIDsInScope.get(i))){
+				scopedChargingstationsList.add(dataChargingstation);
+			}
+		}	
+	}
+}
+return scopedChargingstationsList;
+/*ALCODEEND*/}
+
+List<Electrolyser_data> f_getElectrolysersInSubScope(List<Electrolyser_data> initialElectrolysersList)
+{/*ALCODESTART::1750857083468*/
+List<Electrolyser_data> scopedElectrolysersList = new ArrayList<>();
+
+if(settings.subscopesToSimulate() == null || settings.subscopesToSimulate().size() == 0){
+	scopedElectrolysersList.addAll(initialElectrolysersList);
+}
+else{
+	for (Electrolyser_data dataElectrolyser : initialElectrolysersList) {
+		for (int i = 0; i < c_gridNodeIDsInScope.size() ; i++){
+			if (dataElectrolyser.gridnode_id().equals( c_gridNodeIDsInScope.get(i))){
+				scopedElectrolysersList.add(dataElectrolyser);
+			}
+		}	
+	}
+}
+return scopedElectrolysersList;
+/*ALCODEEND*/}
+
+List<ParkingSpace_data> f_getParkingSpacesInSubScope(List<ParkingSpace_data> initialParkingSpaceList)
+{/*ALCODESTART::1750857084547*/
 List<ParkingSpace_data> scopedParkingSpacesList = new ArrayList<>();
 
 if(settings.subscopesToSimulate() == null || settings.subscopesToSimulate().size() == 0){
@@ -4106,13 +4182,32 @@ if(settings.subscopesToSimulate() == null || settings.subscopesToSimulate().size
 }
 else{
 	for (ParkingSpace_data dataParkingSpace : initialParkingSpaceList) {
-		for (int i = 0; i < settings.subscopesToSimulate().size() ; i++){
-			if (dataParkingSpace.gridnode_id().equals( settings.subscopesToSimulate().get(i))){
+		for (int i = 0; i < c_gridNodeIDsInScope.size() ; i++){
+			if (dataParkingSpace.gridnode_id().equals( c_gridNodeIDsInScope.get(i))){
 				scopedParkingSpacesList.add(dataParkingSpace);
 			}
 		}	
 	}
 }
 return scopedParkingSpacesList;
+/*ALCODEEND*/}
+
+List<Battery_data> f_getBatteriesInSubScope(List<Battery_data> initialBatteriesList)
+{/*ALCODESTART::1750861476829*/
+List<Battery_data> scopedBatteriesList = new ArrayList<>();
+
+if(settings.subscopesToSimulate() == null || settings.subscopesToSimulate().size() == 0){
+	scopedBatteriesList.addAll(initialBatteriesList);
+}
+else{
+	for (Battery_data dataBattery : initialBatteriesList) {
+		for (int i = 0; i < c_gridNodeIDsInScope.size() ; i++){
+			if (dataBattery.gridnode_id().equals( c_gridNodeIDsInScope.get(i))){
+				scopedBatteriesList.add(dataBattery);
+			}
+		}	
+	}
+}
+return scopedBatteriesList;
 /*ALCODEEND*/}
 

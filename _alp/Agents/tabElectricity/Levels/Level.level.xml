@@ -1557,13 +1557,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() )
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>int sliderValue = sl_publicChargersResidentialArea_pct.getIntValue();
-if ( sliderValue &lt; p_minPublicChargerSlider ){
-	sliderValue = p_minPublicChargerSlider;
-	sl_publicChargersResidentialArea_pct.setValue( p_minPublicChargerSlider, false);
-	traceln("SLIDER MESSAGE: Can't set slider lower than the initial value of simulated area");
-}
-f_setPublicChargingStations(sliderValue);</ActionCode>
+					<ActionCode>f_setPublicChargingStations(sl_publicChargersResidentialArea_pct.getIntValue());</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>

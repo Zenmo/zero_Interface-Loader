@@ -297,6 +297,7 @@ gisregion.setFillColor(new Color(253, 223, 134, 206));
 gisregion.setLineStyle( LINE_STYLE_SOLID );
 gisregion.setLineColor( navy );
 gisregion.setLineWidth(2);
+gisregion.setVisible(v_HVMVNodeIsVisible);
 /*ALCODEEND*/}
 
 double f_setUITabs()

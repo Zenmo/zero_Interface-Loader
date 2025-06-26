@@ -284,7 +284,7 @@ double f_calculatePeakHeatDemand_kW(GridConnection gc)
 {/*ALCODESTART::1749116448649*/
 double peakHeatDemand_kW = 0.0;
 for (J_EAConsumption j_ea : gc.c_consumptionAssets) {
-	if (j_ea.getEAType() == OL_EnergyAssetType.HEAT_DEMAND) {
+	if (j_ea.getEAType() == OL_EnergyAssetType.HEAT_DEMAND || j_ea.getEAType() == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
 		double[] profile = j_ea.getProfilePointer().getAllValues();
 		double maxFactor = Arrays.stream(profile).max().getAsDouble();
 		peakHeatDemand_kW += maxFactor * j_ea.yearlyDemand_kWh * j_ea.getConsumptionScaling_fr();
