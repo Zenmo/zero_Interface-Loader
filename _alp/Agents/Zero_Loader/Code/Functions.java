@@ -37,9 +37,9 @@ f_createHouses();
 double f_configureEngine_default()
 {/*ALCODESTART::1726584205773*/
 //Set basic input files
-energyModel.p_truckTripsExcel = inputTruckTrips;
-energyModel.p_householdTripsExcel = inputHouseholdTrips;
-energyModel.p_cookingPatternExcel = inputCookingActivities;
+energyModel.p_truckTripsCsv = inputCSVtruckTrips;
+energyModel.p_householdTripsCsv = inputCSVhouseholdTrips;
+energyModel.p_cookingPatternCsv = inputCSVcookingActivities;
 
 //Initialize specific slider GC
 f_initializeSpecificSliderGC();
@@ -225,9 +225,12 @@ return GISCoords;
 
 double f_importExcelTablesToDB()
 {/*ALCODESTART::1726584205779*/
-inputHouseholdTrips.readFile();
-inputCookingActivities.readFile();
-inputTruckTrips.readFile();
+//inputHouseholdTrips.readFile();
+//inputCookingActivities.readFile();
+//inputTruckTrips.readFile();
+
+//inputCSVcookingActivities.readFile();
+//inputCSVcookingActivities.
 
 if(settings.reloadDatabase()){
 	

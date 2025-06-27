@@ -51,17 +51,17 @@
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Path>data_Generic/AlbatrossProcessedVehicleTrips.xlsx</Path>
+		<Path>data_Generic/AlbatrossProcessedVehicleTrips.csv</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Path>data_Generic/inputTruckTripPatterns.xlsx</Path>
+		<Path>data_Generic/inputTruckTripPatterns.csv</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Path>data_Generic/inputECookerPatterns.xlsx</Path>
+		<Path>data_Generic/inputECookerPatterns.csv</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
