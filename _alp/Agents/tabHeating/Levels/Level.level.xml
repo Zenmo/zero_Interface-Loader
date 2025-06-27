@@ -3010,7 +3010,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="135" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>if ( cb_householdHTDistrictHeatingResidentialArea.isSelected() ){
 	sl_householdGasBurnerResidentialArea_pct.setValue(0, false);
@@ -3046,7 +3046,7 @@ else{
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="185" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>if ( cb_householdLTDistrictHeatingResidentialArea.isSelected() ){
 	sl_householdElectricHeatPumpResidentialArea_pct.setValue(0);

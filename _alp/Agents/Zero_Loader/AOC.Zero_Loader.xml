@@ -55,7 +55,7 @@ import kotlinx.datetime.DateTimeUnit;]]></Import>
 	<ElementsLimitValue>100</ElementsLimitValue>
 	<MakeDefaultViewArea>true</MakeDefaultViewArea>
 	<SceneGridColor/>
-	<SceneBackgroundColor/>
+	<SceneBackgroundColor>-4144960</SceneBackgroundColor>
 	<SceneSkybox>null</SceneSkybox>
 	<AgentProperties>
 		<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
@@ -100,6 +100,7 @@ import kotlinx.datetime.DateTimeUnit;]]></Import>
 	</EnvironmentProperties>
 	<DatasetsCreationProperties>
 		<AutoCreate>false</AutoCreate>
+		<Id>1658477089958</Id>
 		<OccurrenceAtTime>true</OccurrenceAtTime>
 		<OccurrenceDate>1658563200000</OccurrenceDate>
 		<OccurrenceTime Class="CodeUnitValue">

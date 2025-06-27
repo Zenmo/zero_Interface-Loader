@@ -111,7 +111,7 @@
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="40" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>if (cb_spreadChargingEVs.isSelected()) {
 	cb_powerChargingEVs.setSelected(false);
@@ -294,7 +294,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="40" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>if (cb_curtailment.isSelected()) {
 	for (GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()) {
@@ -350,7 +350,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="160" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<VisibleCode>//!zero_Interface.settings.isPublicModel()</VisibleCode>
 					<Enabled>true</Enabled>
 					<EnableExpression>!zero_Interface.settings.isPublicModel()</EnableExpression>
@@ -413,7 +413,7 @@ else {
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="160" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<VisibleCode>!zero_Interface.settings.isPublicModel()</VisibleCode>
 					<Enabled>true</Enabled>
 					<ActionCode>for (GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()) {
@@ -455,7 +455,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="40" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>if (cb_powerChargingEVs.isSelected()) {
 	cb_spreadChargingEVs.setSelected(false);
@@ -535,7 +535,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="230" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<VisibleCode>cb_EHubSelect.isEnabled()</VisibleCode>
 					<Enabled>false</Enabled>
 					<ActionCode>////Reset view
@@ -867,7 +867,7 @@ zero_Interface.uI_Results.f_showCorrectChart();
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="190" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>if (b_nfatoWeekendDistinction) {
 	t_nfatoWeek.setVisible(true);
@@ -961,7 +961,7 @@ else {
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="155" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>if (sl_nfatoWeekStartTime.getValue() == sl_nfatoWeekEndTime.getValue()) {
 	traceln("Week start time is the same as end time");
@@ -1016,7 +1016,7 @@ else {
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="75" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setTab(HUB);
 f_resetNFATOSettings();</ActionCode>
@@ -1250,7 +1250,7 @@ f_resetNFATOSettings();</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="70" Height="70">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -1505,7 +1505,7 @@ f_resetNFATOSettings();</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="208" Height="26">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>GCEnergyConversion GCECS = findFirst(zero_Interface.energyModel.EnergyConversionSites, gc -&gt; gc.p_gridConnectionID.equals("GCECS2"));
 if (GCECS == null) {

@@ -208,7 +208,7 @@
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<BasicProperties Width="160" Height="40">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor/>
+			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>c_ownedGridConnections.get(v_currentSelectedGCnr).va_gridConnection.navigateTo();</ActionCode>
 		</BasicProperties>
@@ -250,7 +250,7 @@
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="180" Height="120">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>if (c_scenarioSettings_Current.size() &gt; 0 &amp;&amp; c_scenarioSettings_Future.size() &gt; 0){
 	f_setScenario(rb_scenariosPrivateUI.getValue());
@@ -387,7 +387,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<BasicProperties Width="160" Height="40">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor/>
+			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>((GIS_Building)c_ownedBuildings.get(0)).va_building.navigateTo();</ActionCode>
 		</BasicProperties>
@@ -412,7 +412,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<BasicProperties Width="160" Height="40">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor/>
+			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>p_company.va_ConnectionOwner.navigateTo();</ActionCode>
 		</BasicProperties>
@@ -1901,8 +1901,8 @@ f_setSimulateYearScreen();</ActionCode>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 						<BasicProperties Width="50" Height="20">
 							<EmbeddedIcon>false</EmbeddedIcon>
-							<FillColor/>
-							<TextColor/>
+							<FillColor>-1</FillColor>
+							<TextColor>-16777216</TextColor>
 							<Enabled>true</Enabled>
 							<ActionCode>if(c_ownedGridConnections.size()&gt;1){
 	f_setSelectedGC();
@@ -2517,7 +2517,7 @@ f_setSimulateYearScreen();</ActionCode>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<BasicProperties Width="230" Height="50">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor/>
+			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>zero_Interface.uI_Results.getCheckbox_KPISummary().setSelected(false, true);
 
@@ -3348,7 +3348,7 @@ new Thread( () -&gt; {
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<BasicProperties Width="20" Height="30">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor/>
+			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>if (cb_curtailmentCompany.isSelected()) {
 	c_ownedGridConnections.get(v_currentSelectedGCnr).v_enableCurtailment = true;
@@ -4256,7 +4256,7 @@ simuleer jaar voor KPI's]]></Text>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<BasicProperties Width="180" Height="30">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor/>
+			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>uI_Results.f_setChartGridLoad_Presentation(null, null, cb_showGridloadPlot.isSelected());
 uI_Results.f_setChartSankey_Presentation(null, null, !cb_showGridloadPlot.isSelected());

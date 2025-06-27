@@ -1794,7 +1794,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() )
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="310" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>switch (chargingMethodResidentialArea.getValue()){
 	case 0:
@@ -1992,7 +1992,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="130" Height="25">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>//gr_electricityDemandSlidersResidentialAreaScale.setVisible(false);
 gr_trafoReinforcement.setVisible(true);
@@ -2478,7 +2478,7 @@ f_setVehiclesPrivateParking(sl_privateEVsResidentialArea_pct.getValue());</Actio
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="142" Height="32">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>zero_Interface.v_clickedGridNode.p_capacity_kW += sl_trafoReinforcement.getValue();
 
@@ -2531,7 +2531,7 @@ zero_Interface.f_setTrafoText();</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="140" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>for (GridNode GN : zero_Interface.energyModel.f_getGridNodesNotTopLevel() ){
 	GN.p_capacity_kW = GN.p_originalCapacity_kW;
@@ -2563,7 +2563,7 @@ zero_Interface.f_setTrafoText();
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="18" Height="18">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>gr_trafoReinforcement.setVisible(false);</ActionCode>
 				</BasicProperties>

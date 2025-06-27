@@ -1731,7 +1731,7 @@ traceln("gr_compareResultsButton is not functional!");</OnClickCode>
 								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 								<BasicProperties Width="130" Height="130">
 									<EmbeddedIcon>false</EmbeddedIcon>
-									<TextColor/>
+									<TextColor>-16777216</TextColor>
 									<Enabled>true</Enabled>
 									<ActionCode>//reset legend
 gr_standaardLegenda.setVisible(false);
@@ -3009,7 +3009,7 @@ v_clickedObjectText</TextCode>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<BasicProperties Width="140" Height="30">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor/>
+			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>GISregion_antiLaag.setFillColor( new Color( uniform_discr(255),  uniform_discr(255),  uniform_discr(255), 135));</ActionCode>
 		</BasicProperties>
@@ -3034,7 +3034,7 @@ v_clickedObjectText</TextCode>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<BasicProperties Width="140" Height="30">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor/>
+			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>v_themeColor = new Color( uniform_discr(255),  uniform_discr(255),  uniform_discr(255) );
 uI_Results.f_styleAllCharts(white, v_themeColor, 1.0, LINE_STYLE_SOLID);
@@ -3062,7 +3062,7 @@ traceln( v_themeColor.getRGB() );</ActionCode>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<BasicProperties Width="270" Height="43">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor/>
+			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>switch(v_clickedObjectType){
 
@@ -3185,7 +3185,7 @@ traceln( v_themeColor.getRGB() );</ActionCode>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<BasicProperties Width="380" Height="135">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor/>
+			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>//Set selected scenario string
 String selected_scenario = "";
@@ -3814,7 +3814,7 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<BasicProperties Width="170" Height="40">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor/>
+			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>energyModel.va_engine.navigateTo();</ActionCode>
 		</BasicProperties>
@@ -3968,16 +3968,19 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<AutoUpdate>true</AutoUpdate>
-		<OccurrenceAtTime>true</OccurrenceAtTime>
-		<OccurrenceDate>1719907200000</OccurrenceDate>
-		<OccurrenceTime Class="CodeUnitValue">
-			<Code><![CDATA[0]]></Code>
-			<Unit Class="TimeUnits">HOUR</Unit>
-		</OccurrenceTime>
-		<RecurrenceCode Class="CodeUnitValue">
-			<Code><![CDATA[1]]></Code>
-			<Unit Class="TimeUnits">HOUR</Unit>
-		</RecurrenceCode>
+		<RecurrenceProperties>
+			<Id>1751013532916</Id>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1719907200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+		</RecurrenceProperties>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Width>84</Width>
 		<Height>23</Height>
@@ -4039,16 +4042,19 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<AutoUpdate>true</AutoUpdate>
-		<OccurrenceAtTime>true</OccurrenceAtTime>
-		<OccurrenceDate>1719907200000</OccurrenceDate>
-		<OccurrenceTime Class="CodeUnitValue">
-			<Code><![CDATA[0]]></Code>
-			<Unit Class="TimeUnits">HOUR</Unit>
-		</OccurrenceTime>
-		<RecurrenceCode Class="CodeUnitValue">
-			<Code><![CDATA[1]]></Code>
-			<Unit Class="TimeUnits">HOUR</Unit>
-		</RecurrenceCode>
+		<RecurrenceProperties>
+			<Id>1751013532918</Id>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1719907200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+		</RecurrenceProperties>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Width>84</Width>
 		<Height>23</Height>
@@ -4129,7 +4135,7 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="155" Height="20">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<EnableExpression>v_selectedGridConnectionIndex &lt; v_nbGridConnectionsInSelectedBuilding</EnableExpression>
 					<ActionCode>if (v_selectedGridConnectionIndex &lt; v_nbGridConnectionsInSelectedBuilding ){
@@ -4183,7 +4189,7 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="155" Height="20">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<EnableExpression>v_selectedGridConnectionIndex &gt; 0</EnableExpression>
 					<ActionCode>if (v_selectedGridConnectionIndex &gt; 0){
@@ -4492,7 +4498,7 @@ v_selectedGridConnectionIndex &gt; 0 ?
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<BasicProperties Width="190" Height="30">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor/>
+			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>for(GISRoute GISCable : c_LVCables){
 	GISCable.setVisible(b_showCables);
@@ -5064,7 +5070,7 @@ getExperimentHost().openWebSite("https://holons.energy/");
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<BasicProperties Width="120" Height="30">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor/>
+			<TextColor>-16777216</TextColor>
 			<VisibleCode>cb_showFilterInterface.isEnabled()</VisibleCode>
 			<Enabled>true</Enabled>
 			<EnableExpression>!settings.isPublicModel()</EnableExpression>
@@ -5252,7 +5258,7 @@ else{
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<BasicProperties Width="210" Height="30">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor/>
+			<TextColor>-16777216</TextColor>
 			<VisibleCode>v_customEnergyCoop != null</VisibleCode>
 			<Enabled>false</Enabled>
 			<ActionCode>if(cb_EhubConfig.isSelected()){
@@ -5580,7 +5586,7 @@ else{
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="210" Height="70">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<VisibleCode>gr_forceMapSelection.isVisible() &amp;&amp; b_inManualFilterSelectionMode</VisibleCode>
 					<Enabled>true</Enabled>
 					<EnableExpression>gr_forceMapSelection.isVisible() &amp;&amp; b_inManualFilterSelectionMode</EnableExpression>
@@ -5685,8 +5691,8 @@ if (c_manualFilterSelectedGC.isEmpty() &amp;&amp; c_manualFilterDeselectedGC.isE
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="200" Height="20">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<FillColor/>
-					<TextColor/>
+					<FillColor>-1</FillColor>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<EnableExpression>!gr_forceMapSelection.isVisible()</EnableExpression>
 					<ActionCode>f_setFilter(cb_filterOptions.getValue());
@@ -5800,7 +5806,7 @@ cb_filterOptions.setValueIndex(0);</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="150" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>c_filterSelectedGridLoops.clear();
 c_filterSelectedNeighborhoods.clear();
@@ -5889,7 +5895,7 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="150" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<EnableExpression>!(c_manualFilterSelectedGC.isEmpty() &amp;&amp; c_manualFilterDeselectedGC.isEmpty())</EnableExpression>
 					<ActionCode>if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
@@ -5923,7 +5929,7 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="150" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<EnableExpression>!gr_forceMapSelection.isVisible() || b_inManualFilterSelectionMode</EnableExpression>
 					<ActionCode>if(!b_inManualFilterSelectionMode){
@@ -6288,8 +6294,8 @@ else{
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="380" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<FillColor/>
-					<TextColor/>
+					<FillColor>-1</FillColor>
+					<TextColor>-16777216</TextColor>
 					<Enabled>false</Enabled>
 					<ActionCode>fileChooser_exportBalanceLoadEnergyModel.setEnabled(false);</ActionCode>
 				</BasicProperties>
@@ -6317,7 +6323,7 @@ else{
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="380" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setAllFileDownloadersDisabled();
 
@@ -6372,7 +6378,7 @@ fileChooser_exportBalanceLoadEnergyModel.setEnabled(true);</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="380" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<EnableExpression>c_selectedGridConnections.size() &gt; 0 &amp;&amp; c_selectedGridConnections.size()&lt; p_maxNrSelectedGCForExport + 1</EnableExpression>
 					<ActionCode>f_setAllFileDownloadersDisabled();
@@ -6402,8 +6408,8 @@ fileChooser_exportBalanceLoadSelectedCompanies.setEnabled(true);</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="380" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<FillColor/>
-					<TextColor/>
+					<FillColor>-1</FillColor>
+					<TextColor>-16777216</TextColor>
 					<Enabled>false</Enabled>
 					<ActionCode>fileChooser_exportBalanceLoadSelectedCompanies.setEnabled(false);</ActionCode>
 				</BasicProperties>
@@ -6431,8 +6437,8 @@ fileChooser_exportBalanceLoadSelectedCompanies.setEnabled(true);</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="380" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<FillColor/>
-					<TextColor/>
+					<FillColor>-1</FillColor>
+					<TextColor>-16777216</TextColor>
 					<Enabled>false</Enabled>
 					<ActionCode>fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(false);</ActionCode>
 				</BasicProperties>
@@ -6460,7 +6466,7 @@ fileChooser_exportBalanceLoadSelectedCompanies.setEnabled(true);</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="380" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor/>
+					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<EnableExpression>c_selectedGridConnections.size() &gt; 1 &amp;&amp; v_customEnergyCoop != null</EnableExpression>
 					<ActionCode>f_setAllFileDownloadersDisabled();
