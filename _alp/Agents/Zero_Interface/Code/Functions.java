@@ -2977,26 +2977,28 @@ if (c_orderedVehiclesPrivateParking.size() > 0) {
 	uI_Tabs.pop_tabElectricity.get(0).sl_privateEVsResidentialArea_pct.setValue(privateEVs_pct, false);
 }
 
-int nbActivePublicChargers = count(c_orderedPublicChargers, x -> x.v_isActive);
-double activePublicChargers_pct = 100.0 * nbActivePublicChargers / c_orderedPublicChargers.size();
-uI_Tabs.pop_tabElectricity.get(0).sl_publicChargersResidentialArea_pct.setValue(activePublicChargers_pct, false);
-
-// Put some of the diesel cars into the non active vehicles
-int nbCarsPerCharger = energyModel.avgc_data.p_avgEVsPerPublicCharger;
-List<J_EADieselVehicle> cars = new ArrayList<>(c_orderedActiveVehiclesPublicParking.subList(0, nbActivePublicChargers * nbCarsPerCharger));
-for (J_EADieselVehicle car : cars) {
-	c_orderedActiveVehiclesPublicParking.remove(car);
-	c_orderedNonActiveVehiclesPublicParking.add(0, car);
-	car.removeEnergyAsset();
+if (c_orderedPublicChargers.size() > 0) {
+	int nbPublicChargers = c_orderedPublicChargers.size();
+	int nbActivePublicChargers = count(c_orderedPublicChargers, x -> x.v_isActive);
+	double activePublicChargers_pct = 100.0 * nbActivePublicChargers / c_orderedPublicChargers.size();
+	uI_Tabs.pop_tabElectricity.get(0).sl_publicChargersResidentialArea_pct.setValue(activePublicChargers_pct, false);
+	if (c_orderedActiveVehiclesPublicParking.size() > 0) {
+		// Put some of the diesel cars into the non active vehicles
+		int nbCarsPerCharger = energyModel.avgc_data.p_avgEVsPerPublicCharger;
+		List<J_EADieselVehicle> cars = new ArrayList<>(c_orderedActiveVehiclesPublicParking.subList(0, nbActivePublicChargers * nbCarsPerCharger));
+		for (J_EADieselVehicle car : cars) {
+			c_orderedActiveVehiclesPublicParking.remove(car);
+			c_orderedNonActiveVehiclesPublicParking.add(0, car);
+			car.removeEnergyAsset();
+		}
+	}
+	int nbV1GChargers = count(c_orderedV1GChargers, x -> x.V1GCapable);
+	int nbV2GChargers =count(c_orderedV2GChargers, x -> x.V2GCapable);
+	double V1G_pct = 100.0 * nbV1GChargers / nbPublicChargers;
+	double V2G_pct = 100.0 * nbV2GChargers / nbPublicChargers;
+	uI_Tabs.pop_tabElectricity.get(0).sl_chargersThatSupportV1G_pct.setValue(V1G_pct, false);
+	uI_Tabs.pop_tabElectricity.get(0).sl_chargersThatSupportV2G_pct.setValue(V2G_pct, false);
 }
-
-int nbPublicChargers = c_orderedV1GChargers.size();
-int nbV1GChargers = count(c_orderedV1GChargers, x -> x.V1GCapable);
-int nbV2GChargers =count(c_orderedV2GChargers, x -> x.V2GCapable);
-double V1G_pct = 100.0 * nbV1GChargers / nbPublicChargers;
-double V2G_pct = 100.0 * nbV2GChargers / nbPublicChargers;
-uI_Tabs.pop_tabElectricity.get(0).sl_chargersThatSupportV1G_pct.setValue(V1G_pct, false);
-uI_Tabs.pop_tabElectricity.get(0).sl_chargersThatSupportV2G_pct.setValue(V2G_pct, false);
 
 
 double averageNeighbourhoodBatterySize_kWh = 0;
