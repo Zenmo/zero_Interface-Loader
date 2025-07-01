@@ -1510,7 +1510,7 @@ double vehicleScaling = 1.0;
 switch (vehicle_type){
 	
 	case DIESEL_VEHICLE:
-		energyConsumption_kWhpkm = uniform(0.7, 1.3) * avgc_data.p_avgDieselConsumptionCar_kWhpkm;
+		energyConsumption_kWhpkm = roundToDecimal(uniform(0.7, 1.3),2) * avgc_data.p_avgDieselConsumptionCar_kWhpkm;
 	break;
 	
 	case DIESEL_VAN:

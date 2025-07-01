@@ -66,7 +66,7 @@ while ( nbHousesWithPVGoal > nbHousesWithPV ) {
 		double capacityHeat_kW = 0.0;
 		double yearlyProductionHydrogen_kWh = 0.0;
 		double yearlyProductionMethane_kWh = 0.0;
-		double installedPVCapacity_kW = uniform(3,6);
+		double installedPVCapacity_kW = roundToDecimal(uniform(3,6),2);
 
 		J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, OL_EnergyCarriers.ELECTRICITY, installedPVCapacity_kW, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
 		houses.remove(house);
