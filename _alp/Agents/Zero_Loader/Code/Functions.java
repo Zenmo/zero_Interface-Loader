@@ -1076,39 +1076,32 @@ for (Parcel_data dataParcel : c_parcel_data) {
 
 double f_addEnergyProduction(GridConnection parentGC,OL_EnergyAssetType asset_type,String asset_name,double installedPower_kW)
 {/*ALCODESTART::1726584205809*/
-//String asset_name					= "Production Asset";
-double capacityElectric_kW			= 0;
-double capacityHeat_kW				= 0;
-double yearlyProductionMethane_kWh 	= 0;
-double yearlyProductionHydrogen_kWh = 0;
+double assetCapacity_kW				= 0;
 double timestep_h 					= energyModel.p_timeStep_h;
-double outputTemperature_degC 		= 0;
 J_ProfilePointer profilePointer = null;
-
+OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 switch (asset_type){
 
 case PHOTOVOLTAIC: 
-	//asset_name = "Solar Panels";
+	energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 	profilePointer = energyModel.pp_PVProduction35DegSouth_fr;
-	capacityElectric_kW = installedPower_kW;
-	//traceln("Installing PV for %s with power %s", parentGC.p_ownerID, capacityElectric_kW);
+	assetCapacity_kW = installedPower_kW;
 	break;
 
 case WINDMILL:
-	//asset_name = "Windmill onshore";'
+	energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 	profilePointer=energyModel.pp_windProduction_fr;
-	capacityElectric_kW = installedPower_kW;
+	assetCapacity_kW = installedPower_kW;
 	break;
 
 case PHOTOTHERMAL: //NOT USED YET
-	//asset_name = "PVT";
-	capacityElectric_kW = installedPower_kW*0.5;//??????
-	capacityHeat_kW	= installedPower_kW*0.5; // ????????
-	outputTemperature_degC = 60; // ??????
+	energyCarrier = OL_EnergyCarriers.HEAT;
+	profilePointer = energyModel.pp_PVProduction35DegSouth_fr; // Voor nu om te testen! Misschien valt dit wel te gebruiken met bepaalde efficientie factor!
+	assetCapacity_kW = installedPower_kW;
 	break;
 }
 
-J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, OL_EnergyCarriers.ELECTRICITY, capacityElectric_kW, timestep_h, profilePointer);
+J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, energyCarrier, assetCapacity_kW, timestep_h, profilePointer);
 
 
 /*ALCODEEND*/}
@@ -1548,7 +1541,8 @@ switch (storageType){
 	break;
 	
 	case STORAGE_HEAT:
-	
+		//J_EAStorageHeat(parentGC, storageType, storagePower_kw, double lossFactor_WpK, energyModel.p_timeStep_h, double initialTemperature_degC, double minTemperature_degC, double maxTemperature_degC, double setTemperature_degC, double heatCapacity_JpK, String ambientTempType ) {
+		
 	break;
 	
 	case STORAGE_GAS:
@@ -3975,6 +3969,12 @@ if (gn.p_hasProfileData){ //dont count production if there is measured data on N
 if (installedRooftopSolar_kW > 0) {
 	f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW );
 }
+
+//add TEST PT panel
+f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOTHERMAL, "PT Paneel", 100);
+
+
+
 
 //Oprit?
 if( house.p_eigenOprit){

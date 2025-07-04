@@ -137,7 +137,7 @@ import kotlinx.datetime.DateTimeUnit;]]></Import>
 		<TextFile>
 			<Id>1750947055322</Id>
 			<Name><![CDATA[inputCSVcookingActivities]]></Name>
-			<X>-160</X>
+			<X>-370</X>
 			<Y>760</Y>
 			<Label>
 				<X>10</X>
@@ -159,7 +159,7 @@ import kotlinx.datetime.DateTimeUnit;]]></Import>
 		<TextFile>
 			<Id>1750949192704</Id>
 			<Name><![CDATA[inputCSVhouseholdTrips]]></Name>
-			<X>-160</X>
+			<X>-370</X>
 			<Y>800</Y>
 			<Label>
 				<X>10</X>
@@ -181,7 +181,7 @@ import kotlinx.datetime.DateTimeUnit;]]></Import>
 		<TextFile>
 			<Id>1750949507008</Id>
 			<Name><![CDATA[inputCSVtruckTrips]]></Name>
-			<X>-160</X>
+			<X>-370</X>
 			<Y>780</Y>
 			<Label>
 				<X>10</X>
@@ -200,69 +200,6 @@ import kotlinx.datetime.DateTimeUnit;]]></Import>
 			<CharsetName>null</CharsetName>
 			<Separators>,</Separators>
 		</TextFile>
-		<ExcelFile>
-			<Id>1726584205977</Id>
-			<Name><![CDATA[inputHouseholdTrips]]></Name>
-			<ExcludeFromBuild>true</ExcludeFromBuild>
-			<X>-369.5</X>
-			<Y>799</Y>
-			<Label>
-				<X>10</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<ResourceReference>
-				<PackageName>zerointerfaceloader</PackageName>
-				<ClassName>data_Generic/AlbatrossProcessedVehicleTrips.xlsx</ClassName>
-			</ResourceReference>
-			<SaveInSnapshot>false</SaveInSnapshot>
-			<LoadOnStartup>false</LoadOnStartup>
-			<SaveOnDispose>false</SaveOnDispose>
-		</ExcelFile>
-		<ExcelFile>
-			<Id>1726584205979</Id>
-			<Name><![CDATA[inputTruckTrips]]></Name>
-			<ExcludeFromBuild>true</ExcludeFromBuild>
-			<X>-369.5</X>
-			<Y>779</Y>
-			<Label>
-				<X>10</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<ResourceReference>
-				<PackageName>zerointerfaceloader</PackageName>
-				<ClassName>data_Generic/inputTruckTripPatterns.xlsx</ClassName>
-			</ResourceReference>
-			<SaveInSnapshot>false</SaveInSnapshot>
-			<LoadOnStartup>false</LoadOnStartup>
-			<SaveOnDispose>false</SaveOnDispose>
-		</ExcelFile>
-		<ExcelFile>
-			<Id>1726584205981</Id>
-			<Name><![CDATA[inputCookingActivities]]></Name>
-			<ExcludeFromBuild>true</ExcludeFromBuild>
-			<X>-370</X>
-			<Y>760</Y>
-			<Label>
-				<X>10</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<ResourceReference>
-				<PackageName>zerointerfaceloader</PackageName>
-				<ClassName>data_Generic/inputECookerPatterns.xlsx</ClassName>
-			</ResourceReference>
-			<SaveInSnapshot>false</SaveInSnapshot>
-			<LoadOnStartup>false</LoadOnStartup>
-			<SaveOnDispose>false</SaveOnDispose>
-		</ExcelFile>
 	</Connectivity>
 	<AgentLinks>
 		<AgentLink>
