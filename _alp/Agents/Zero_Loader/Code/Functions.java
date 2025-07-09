@@ -1076,39 +1076,32 @@ for (Parcel_data dataParcel : c_parcel_data) {
 
 double f_addEnergyProduction(GridConnection parentGC,OL_EnergyAssetType asset_type,String asset_name,double installedPower_kW)
 {/*ALCODESTART::1726584205809*/
-//String asset_name					= "Production Asset";
-double capacityElectric_kW			= 0;
-double capacityHeat_kW				= 0;
-double yearlyProductionMethane_kWh 	= 0;
-double yearlyProductionHydrogen_kWh = 0;
+double assetCapacity_kW				= 0;
 double timestep_h 					= energyModel.p_timeStep_h;
-double outputTemperature_degC 		= 0;
 J_ProfilePointer profilePointer = null;
-
+OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 switch (asset_type){
 
 case PHOTOVOLTAIC: 
-	//asset_name = "Solar Panels";
+	energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 	profilePointer = energyModel.pp_PVProduction35DegSouth_fr;
-	capacityElectric_kW = installedPower_kW;
-	//traceln("Installing PV for %s with power %s", parentGC.p_ownerID, capacityElectric_kW);
+	assetCapacity_kW = installedPower_kW;
 	break;
 
 case WINDMILL:
-	//asset_name = "Windmill onshore";'
+	energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 	profilePointer=energyModel.pp_windProduction_fr;
-	capacityElectric_kW = installedPower_kW;
+	assetCapacity_kW = installedPower_kW;
 	break;
 
 case PHOTOTHERMAL: //NOT USED YET
-	//asset_name = "PVT";
-	capacityElectric_kW = installedPower_kW*0.5;//??????
-	capacityHeat_kW	= installedPower_kW*0.5; // ????????
-	outputTemperature_degC = 60; // ??????
+	energyCarrier = OL_EnergyCarriers.HEAT;
+	profilePointer = energyModel.pp_PVProduction35DegSouth_fr; // Voor nu om te testen! Misschien valt dit wel te gebruiken met bepaalde efficientie factor!
+	assetCapacity_kW = installedPower_kW;
 	break;
 }
 
-J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, OL_EnergyCarriers.ELECTRICITY, capacityElectric_kW, timestep_h, profilePointer);
+J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, energyCarrier, assetCapacity_kW, timestep_h, profilePointer);
 
 
 /*ALCODEEND*/}
@@ -1548,7 +1541,17 @@ switch (storageType){
 	break;
 	
 	case STORAGE_HEAT:
-	
+		double lossFactor_WpK = 0; // For now no losses, waiting for new setup heating assets before this can be implemented correctly (its JEA_Building depedent)
+		double minTemperature_degC = avgc_data.p_avgMinHeatBufferTemperature_degC;
+		double maxTemperature_degC = avgc_data.p_avgMaxHeatBufferTemperature_degC;
+		double initialTemperature_degC = (minTemperature_degC + maxTemperature_degC) / 2;
+		double setTemperature_degC = initialTemperature_degC;
+		//double storageCapacity_kg = (storageCapacity_kWh*3.6e6)/(avgc_data.p_waterHeatCapacity_JpkgK * (maxTemperature_degC - minTemperature_degC));
+		//double heatCapacity_JpK = avgc_data.p_waterHeatCapacity_JpkgK * storageCapacity_kg;
+		//in short ->
+		double heatCapacity_JpK = storageCapacity_kWh*3.6e6 / (maxTemperature_degC - minTemperature_degC); 
+		new J_EAStorageHeat(parentGC, storageType, storagePower_kw, lossFactor_WpK, energyModel.p_timeStep_h, initialTemperature_degC, minTemperature_degC, maxTemperature_degC, setTemperature_degC, heatCapacity_JpK, OL_AmbientTempType.AMBIENT_AIR );
+			
 	break;
 	
 	case STORAGE_GAS:
@@ -3315,7 +3318,7 @@ double inputCapacityElectric_kW;
 double efficiency;
 double baseTemperature_degC;
 double outputTemperature_degC;
-String ambientTempType;
+OL_AmbientTempType ambientTempType;
 double sourceAssetHeatPower_kW;
 double belowZeroHeatpumpEtaReductionFactor;
 
@@ -3333,13 +3336,13 @@ switch (heatAssetType){ // HOE gaan we om met meerdere heating types in survey??
 			efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
 			baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
 			outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
-			ambientTempType = "AIR";
+			ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 			sourceAssetHeatPower_kW = 0;
 			belowZeroHeatpumpEtaReductionFactor = 1;
 			
-			J_EAConversionHeatPump heatPumpHybrid = new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );
+			J_EAConversionHeatPump heatPumpHybrid = new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType);
 
-			zero_Interface.energyModel.c_ambientAirDependentAssets.add(heatPumpHybrid);
+			zero_Interface.energyModel.c_ambientDependentAssets.add(heatPumpHybrid);
 		}
 		
 		//Add secondary heating asset (gasburner)
@@ -3357,11 +3360,11 @@ switch (heatAssetType){ // HOE gaan we om met meerdere heating types in survey??
 		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
 		baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
-		ambientTempType = "AIR";
+		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
 		
-		new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );		
+		new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType );		
 		break;
 	
 	case GASFIRED_CHPPEAK:
@@ -3764,7 +3767,7 @@ heatCapacity_JpK = floorArea_m2 * 50000;
  
  
 parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossfactor_WpK, energyModel.p_timeStep_h, initialTemp, heatCapacity_JpK, effectiveSolarAbsorptionSurface_m2 );
-energyModel.c_ambientAirDependentAssets.add( parentGC.p_BuildingThermalAsset );
+energyModel.c_ambientDependentAssets.add( parentGC.p_BuildingThermalAsset );
  
 double delayHeatReleaseInteriorHeatsink_hr = 0;
 double lossToExteriorFromInteriorHeatSink_fr;
@@ -3827,6 +3830,7 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	//pand gegevens
 	GCH.p_heatingType = avgc_data.p_avgHouseHeatingMethod ;
 	GCH.p_floorSurfaceArea_m2 = houseBuildingData.cumulative_floor_surface_m2();
+	GCH.p_roofSurfaceArea_m2 = houseBuildingData.polygon_area_m2();
 	GCH.p_bouwjaar = houseBuildingData.build_year();
 	GCH.p_eigenOprit = houseBuildingData.has_private_parking() != null ? houseBuildingData.has_private_parking() : false;
 	
@@ -3975,6 +3979,19 @@ if (gn.p_hasProfileData){ //dont count production if there is measured data on N
 if (installedRooftopSolar_kW > 0) {
 	f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW );
 }
+
+//add TEST PT panel
+/*
+double PTCapacity_kW = house.p_roofSurfaceArea_m2*avgc_data.p_avgPTPower_kWpm2;
+f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOTHERMAL, "PT Paneel", PTCapacity_kW);
+//Needed storage capacity buffer in kWh
+double heatBufferStorageCapacity_m3 = avgc_data.p_avgHeatBufferWaterVolumePerPTSurface_m3pm2 * PTCapacity_kW/avgc_data.p_avgPTPower_kWpm2;
+double deltaTempHeatBufferMinMax_k = avgc_data.p_avgMaxHeatBufferTemperature_degC - avgc_data.p_avgMinHeatBufferTemperature_degC; 
+double heatBufferStorageCapacity_J = avgc_data.p_waterHeatCapacity_JpkgK/ deltaTempHeatBufferMinMax_k / (heatBufferStorageCapacity_m3*avgc_data.p_waterDensity_kgpm3);
+double heatBufferStorageCapacity_kWh = heatBufferStorageCapacity_J*3.6e6;
+f_addStorage(house, 100, heatBufferStorageCapacity_kWh, OL_EnergyAssetType.STORAGE_HEAT);
+*/
+
 
 //Oprit?
 if( house.p_eigenOprit){

@@ -19,6 +19,8 @@ dataAVGC.p_ratioHouseInstalledPV = p_ratioHouseInstalledPV;
 dataAVGC.p_gas_kWhpm3 = p_gas_kWhpm3;
 dataAVGC.p_diesel_kWhpl = p_diesel_kWhpl;
 dataAVGC.p_gasoline_kWhpl = p_gasoline_kWhpl;
+dataAVGC.p_waterHeatCapacity_JpkgK = p_waterHeatCapacity_JpkgK;
+dataAVGC.p_waterDensity_kgpm3 = p_waterDensity_kgpm3;
 dataAVGC.p_avgUtilityHeatingMethod = p_avgUtilityHeatingMethod;
 dataAVGC.p_avgUtilityConnectionCapacity_kW = p_avgUtilityConnectionCapacity_kW;
 dataAVGC.p_avgUtilityPVPower_kWp = p_avgUtilityPVPower_kWp;
@@ -62,5 +64,10 @@ dataAVGC.p_avgOutputTemperatureDistrictHeatingDeliverySet_degC = p_avgOutputTemp
 dataAVGC.p_v1gProbability = p_v1gProbability;
 dataAVGC.p_v2gProbability = p_v2gProbability;
 dataAVGC.p_avgEVsPerPublicCharger = p_avgEVsPerPublicCharger;
+dataAVGC.p_avgPTPower_kWpm2 = p_avgPTPower_kWpm2;
+dataAVGC.p_avgMaxHeatBufferTemperature_degC = p_avgMaxHeatBufferTemperature_degC;
+dataAVGC.p_avgMinHeatBufferTemperature_degC = p_avgMinHeatBufferTemperature_degC;
+dataAVGC.p_avgHeatBufferWaterVolumePerPTSurface_m3pm2 = p_avgHeatBufferWaterVolumePerPTSurface_m3pm2;
+dataAVGC.p_avgHeatBufferWaterVolumePerHPPower_m3pkW = p_avgHeatBufferWaterVolumePerHPPower_m3pkW;
 /*ALCODEEND*/}
 

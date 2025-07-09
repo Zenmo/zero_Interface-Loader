@@ -173,33 +173,18 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[gr_infoText]]></Name>
-				<Value Class="CodeValue">
-					<Code><![CDATA[gr_infoText]]></Code>
-				</Value>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[gr_closeInfoText]]></Name>
-				<Value Class="CodeValue">
-					<Code><![CDATA[gr_closeInfoText]]></Code>
-				</Value>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[t_infoTextDescription]]></Name>
-				<Value Class="CodeValue">
-					<Code><![CDATA[t_infoTextDescription]]></Code>
-				</Value>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[rect_infoText]]></Name>
-				<Value Class="CodeValue">
-					<Code><![CDATA[rect_infoText]]></Code>
-				</Value>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_currentActiveInfoBubble]]></Name>
-				<Value Class="CodeValue">
-					<Code><![CDATA[p_currentActiveInfoBubble]]></Code>
-				</Value>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
