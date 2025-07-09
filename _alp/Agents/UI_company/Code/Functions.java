@@ -300,7 +300,7 @@ double outputTemperature_degC;
 //Heatpump specifieke parameters
 double baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
 double capacityElectric_kW;		
-String ambientTempType;
+OL_AmbientTempType ambientTempType;
 double sourceAssetHeatPower_kW;
 double belowZeroHeatpumpEtaReductionFactor;
 
@@ -324,12 +324,12 @@ switch (selectedHeatingType){
 		capacityElectric_kW = capacityThermal_kW / 3; //-- /3, want is hybride, dus kleiner
 		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
-		ambientTempType = "AIR";
+		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
 		
-		J_EAConversionHeatPump heatPumpHybrid = new J_EAConversionHeatPump(GC, capacityElectric_kW, efficiency, timestep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );
-		zero_Interface.energyModel.c_ambientAirDependentAssets.add(heatPumpHybrid);
+		J_EAConversionHeatPump heatPumpHybrid = new J_EAConversionHeatPump(GC, capacityElectric_kW, efficiency, timestep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType );
+		zero_Interface.energyModel.c_ambientDependentAssets.add(heatPumpHybrid);
 		
 		//Add secondary heating asset (gasburner)
 		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner;
@@ -346,11 +346,11 @@ switch (selectedHeatingType){
 		capacityElectric_kW = capacityThermal_kW;
 		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
-		ambientTempType = "AIR";
+		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
 		
-		new J_EAConversionHeatPump(GC, capacityElectric_kW, efficiency, timestep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor );	
+		new J_EAConversionHeatPump(GC, capacityElectric_kW, efficiency, timestep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType );	
 		
 		//Add secondary heating asset (if needed??)		//E-boiler!!??		
 		break;

@@ -37,7 +37,7 @@ else{
 			zero_Interface.c_orderedHeatingSystemsCompanies.remove(company);
 			zero_Interface.c_orderedHeatingSystemsCompanies.add(0, company);	
 			double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(company);
-			new J_EAConversionHeatPump(company, peakHeatDemand_kW, 0.5, zero_Interface.energyModel.p_timeStep_h, 60,  zero_Interface.energyModel.v_currentAmbientTemperature_degC, 0, 1);				
+			new J_EAConversionHeatPump(company, peakHeatDemand_kW, 0.5, zero_Interface.energyModel.p_timeStep_h, 60,  zero_Interface.energyModel.v_currentAmbientTemperature_degC, 0, 1, OL_AmbientTempType.AMBIENT_AIR);				
 			company.p_heatingType = OL_GridConnectionHeatingType.HEATPUMP_AIR;
 		} 
 		else {
@@ -86,7 +86,7 @@ while ( nbHeatPumps < targetHeatPumpAmount) { // remove gasburners, add heatpump
 		zero_Interface.c_orderedHeatingSystemsHouses.remove(house);
 		zero_Interface.c_orderedHeatingSystemsHouses.add(0, house);		
 		double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
-		new J_EAConversionHeatPump(house, peakHeatDemand_kW, 0.5, zero_Interface.energyModel.p_timeStep_h, 60,  zero_Interface.energyModel.v_currentAmbientTemperature_degC, 0, 1);				
+		new J_EAConversionHeatPump(house, peakHeatDemand_kW, 0.5, zero_Interface.energyModel.p_timeStep_h, 60,  zero_Interface.energyModel.v_currentAmbientTemperature_degC, 0, 1, OL_AmbientTempType.AMBIENT_AIR);				
 		house.p_heatingType = OL_GridConnectionHeatingType.HEATPUMP_AIR;
 	} 
 	else {
@@ -451,8 +451,8 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 	//J_EAConsumption heatDemandAsset = findFirst(house.c_consumptionAssets, j_ea -> j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
 	double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
 	double heatpumpElectricCapacity_kW = min(peakHeatDemand_kW / 3, 1.0);
-	house.p_heatBuffer = new J_EAStorageHeat(house, OL_EAStorageTypes.HEATBUFFER, 10, 0, zero_Interface.energyModel.p_timeStep_h, 60, 20, 80, 30, 50_000, "AIR" );
-	new J_EAConversionHeatPump(house, heatpumpElectricCapacity_kW, 0.5, zero_Interface.energyModel.p_timeStep_h, 60, zero_Interface.energyModel.v_currentAmbientTemperature_degC, 0, 1);
+	//house.p_heatBuffer = new J_EAStorageHeat(house, OL_EAStorageTypes.HEATBUFFER, 10, 0, zero_Interface.energyModel.p_timeStep_h, 60, 20, 80, 30, 50_000, "AIR" );
+	new J_EAConversionHeatPump(house, heatpumpElectricCapacity_kW, 0.5, zero_Interface.energyModel.p_timeStep_h, 60, zero_Interface.energyModel.v_currentAmbientTemperature_degC, 0, 1, OL_AmbientTempType.HEAT_GRID);
 	/*
 	if (heatDemandAsset != null) { // als house een standaard warmtebehoefte profiel heeft
 		heatPump = new J_EAConversionHeatPump(house, heatDemandAsset.yearlyDemand_kWh/8760*10 / 3, 0.5, zero_Interface.energyModel.p_timeStep_h, 60, zero_Interface.energyModel.v_currentAmbientTemperature_degC, 0, 1);
