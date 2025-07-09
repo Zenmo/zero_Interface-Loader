@@ -2173,9 +2173,18 @@ if(map_centre_latitude != null && map_centre_longitude != null && map_centre_lat
 	map.setCenterLongitude(map_centre_longitude);
 }
 else{
-	ArrayList<GIS_Object> gisObjects_regions = new ArrayList<GIS_Object>(findAll(energyModel.pop_GIS_Objects, gisObject -> gisObject.p_GISObjectType == OL_GISObjectType.REGION));
-	
-	f_setMapViewBounds(gisObjects_regions);
+	ArrayList<GIS_Object> gisObjects_for_mapViewBounds = new ArrayList<GIS_Object>();
+	if(settings.subscopesToSimulate() == null || settings.subscopesToSimulate().size() == 0){
+		gisObjects_for_mapViewBounds.addAll(findAll(energyModel.pop_GIS_Objects, gisObject -> gisObject.p_GISObjectType == OL_GISObjectType.REGION));
+	}
+	else{
+		for (GIS_Object building : energyModel.pop_GIS_Buildings) {
+			if(building.gisRegion.isVisible()){
+				gisObjects_for_mapViewBounds.add(building);
+			}
+		}
+	}
+	f_setMapViewBounds(gisObjects_for_mapViewBounds);
 }
 
 if(map_scale != null){
