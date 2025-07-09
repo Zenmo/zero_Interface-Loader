@@ -3981,6 +3981,7 @@ if (installedRooftopSolar_kW > 0) {
 }
 
 //add TEST PT panel
+/*
 double PTCapacity_kW = house.p_roofSurfaceArea_m2*avgc_data.p_avgPTPower_kWpm2;
 f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOTHERMAL, "PT Paneel", PTCapacity_kW);
 //Needed storage capacity buffer in kWh
@@ -3989,7 +3990,7 @@ double deltaTempHeatBufferMinMax_k = avgc_data.p_avgMaxHeatBufferTemperature_deg
 double heatBufferStorageCapacity_J = avgc_data.p_waterHeatCapacity_JpkgK/ deltaTempHeatBufferMinMax_k / (heatBufferStorageCapacity_m3*avgc_data.p_waterDensity_kgpm3);
 double heatBufferStorageCapacity_kWh = heatBufferStorageCapacity_J*3.6e6;
 f_addStorage(house, 100, heatBufferStorageCapacity_kWh, OL_EnergyAssetType.STORAGE_HEAT);
-
+*/
 
 
 //Oprit?
