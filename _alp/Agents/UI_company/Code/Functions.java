@@ -376,6 +376,7 @@ switch (selectedHeatingType){
 		GC.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getGridNodesTopLevel(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
 		if(GC.p_parentNodeHeat == null){
 			GridNode GN_heat = zero_Interface.energyModel.add_pop_gridNodes();
+			zero_Interface.energyModel.f_getGridNodesTopLevel().add(GN_heat);
 			GN_heat.p_gridNodeID = "Heatgrid";
 			
 			// Check wether transformer capacity is known or estimated
@@ -398,7 +399,7 @@ switch (selectedHeatingType){
 			GC.p_parentNodeHeat = GN_heat;
 			
 			//Show warning that heat grid is not a simple solution
-			f_setErrorScreen("LET OP: Er is nu een 'warmtenet' gecreerd. Maar er is geen warmtebron aanwezig in het model. Daarom zal de benodigde warmte voor het warmtenet in de resultaten te zien zijn als warmte import.");
+			f_setErrorScreen("LET OP: Er is nu een 'warmtenet' gecreëerd. Maar er is geen warmtebron aanwezig in het model. Daarom zal de benodigde warmte voor het warmtenet in de resultaten te zien zijn als warmte import.");
 		}
 		GC.p_parentNodeHeatID = GC.p_parentNodeHeat.p_gridNodeID;
 		break;

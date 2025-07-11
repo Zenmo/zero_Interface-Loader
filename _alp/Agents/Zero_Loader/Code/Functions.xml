@@ -1528,10 +1528,6 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Name><![CDATA[floorArea_m2]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
-		<Parameter>
-			<Name><![CDATA[isolationLevel]]></Name>
-			<Type><![CDATA[OL_IsolationLevelHouse]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">

@@ -1417,6 +1417,7 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_electricityDemandIncreaseResidentialArea_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -1443,6 +1444,7 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_householdPVResidentialArea_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -1503,11 +1505,12 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() )
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_householdPVResidentialArea_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Share of houses with rooftop PV]]></Text>
+				<Text><![CDATA[Share of houses with PV]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -1581,6 +1584,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() )
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_publicChargersResidentialArea_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -1606,6 +1610,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() )
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_publicChargersResidentialArea_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -1632,6 +1637,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() )
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_householdBatteriesResidentialArea_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -1685,6 +1691,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() )
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_householdBatteriesResidentialArea_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -1740,11 +1747,12 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() )
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_gridBatteriesResidentialArea_kWh.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Installed capacity shared battery]]></Text>
+				<Text><![CDATA[Shared battery capacity]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -1765,6 +1773,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() )
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_gridBatteriesResidentialArea_kWh.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -1856,6 +1865,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_electricityDemandIncreaseResidentialArea_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -1910,6 +1920,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_householdElectricCookingResidentialArea_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -1963,6 +1974,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_householdElectricCookingResidentialArea_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -2016,6 +2028,7 @@ gr_trafoReinforcement.setVisible(true);
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_privateEVsResidentialArea_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -2077,6 +2090,7 @@ f_setVehiclesPrivateParking(sl_privateEVsResidentialArea_pct.getValue());</Actio
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_privateEVsResidentialArea_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -2148,6 +2162,7 @@ f_setVehiclesPrivateParking(sl_privateEVsResidentialArea_pct.getValue());</Actio
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<VisibleCode>sl_chargersThatSupportV1G_pct.isVisible()</VisibleCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
@@ -2173,6 +2188,7 @@ f_setVehiclesPrivateParking(sl_privateEVsResidentialArea_pct.getValue());</Actio
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<VisibleCode>sl_chargersThatSupportV1G_pct.isVisible()</VisibleCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
@@ -2186,6 +2202,34 @@ f_setVehiclesPrivateParking(sl_privateEVsResidentialArea_pct.getValue());</Actio
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
+					<Image>
+						<Id>1752232837047</Id>
+						<Name><![CDATA[i_householdPublicChargersV1G]]></Name>
+						<X>180</X>
+						<Y>10</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<VisibleCode>sl_chargersThatSupportV1G_pct.isVisible()</VisibleCode>
+						<OnClickCode>zero_Interface.f_setInfoText(i_householdPublicChargersV1G, zero_Interface.v_infoText.householdPublicParkingV1G, i_householdPublicChargersV1G.getX() + gr_settingsV1G.getX() + uI_Tabs.v_presentationXOffset, i_householdPublicChargersV1G.getY() + gr_settingsV1G.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>20</Width>
+						<Height>20</Height>
+						<Rotation>0.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>icon_i.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
 				</Presentation>
 			</Group>
 			<Group>
@@ -2246,6 +2290,7 @@ f_setVehiclesPrivateParking(sl_privateEVsResidentialArea_pct.getValue());</Actio
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<VisibleCode>sl_chargersThatSupportV2G_pct.isVisible()</VisibleCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
@@ -2271,6 +2316,7 @@ f_setVehiclesPrivateParking(sl_privateEVsResidentialArea_pct.getValue());</Actio
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<VisibleCode>sl_chargersThatSupportV2G_pct.isVisible()</VisibleCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
@@ -2284,8 +2330,260 @@ f_setVehiclesPrivateParking(sl_privateEVsResidentialArea_pct.getValue());</Actio
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
+					<Image>
+						<Id>1752232831588</Id>
+						<Name><![CDATA[i_householdPublicChargersV2G]]></Name>
+						<X>180</X>
+						<Y>10</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<VisibleCode>sl_chargersThatSupportV2G_pct.isVisible()</VisibleCode>
+						<OnClickCode>zero_Interface.f_setInfoText(i_householdPublicChargersV2G, zero_Interface.v_infoText.householdPublicParkingV2G, i_householdPublicChargersV2G.getX() + gr_settingsV2G.getX() + uI_Tabs.v_presentationXOffset, i_householdPublicChargersV2G.getY() + gr_settingsV2G.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>20</Width>
+						<Height>20</Height>
+						<Rotation>0.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>icon_i.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
 				</Presentation>
 			</Group>
+			<Image>
+				<Id>1752232850349</Id>
+				<Name><![CDATA[i_householdRooftopPV]]></Name>
+				<X>190</X>
+				<Y>55</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_householdPVResidentialArea_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdRooftopPV, zero_Interface.v_infoText.householdRooftopPV, i_householdRooftopPV.getX() + uI_Tabs.v_presentationXOffset, i_householdRooftopPV.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1752232850368</Id>
+				<Name><![CDATA[i_householdBatteries]]></Name>
+				<X>190</X>
+				<Y>85</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_householdBatteriesResidentialArea_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdBatteries, zero_Interface.v_infoText.householdBatteries, i_householdBatteries.getX() + uI_Tabs.v_presentationXOffset, i_householdBatteries.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1752232850385</Id>
+				<Name><![CDATA[i_householdElectricCooking]]></Name>
+				<X>190</X>
+				<Y>115</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_householdElectricCookingResidentialArea_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdElectricCooking, zero_Interface.v_infoText.householdElectricCooking, i_householdElectricCooking.getX() + uI_Tabs.v_presentationXOffset, i_householdElectricCooking.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1752232850402</Id>
+				<Name><![CDATA[i_householdElectricityGrowth]]></Name>
+				<X>190</X>
+				<Y>145</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_electricityDemandIncreaseResidentialArea_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdElectricityGrowth, zero_Interface.v_infoText.householdElectricityConsumptionGrowth, i_householdElectricityGrowth.getX() + uI_Tabs.v_presentationXOffset, i_householdElectricityGrowth.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1752232850420</Id>
+				<Name><![CDATA[i_householdPrivateEV]]></Name>
+				<X>190</X>
+				<Y>185</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_privateEVsResidentialArea_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdPrivateEV, zero_Interface.v_infoText.householdPrivateParking, i_householdPrivateEV.getX() + uI_Tabs.v_presentationXOffset, i_householdPrivateEV.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1752232850437</Id>
+				<Name><![CDATA[i_householdPublicChargers]]></Name>
+				<X>190</X>
+				<Y>210</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_publicChargersResidentialArea_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdPublicChargers, zero_Interface.v_infoText.householdPublicParking, i_householdPublicChargers.getX() + uI_Tabs.v_presentationXOffset, i_householdPublicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1752232850455</Id>
+				<Name><![CDATA[i_householdPublicChargersBehaviour]]></Name>
+				<X>345</X>
+				<Y>245</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>chargingMethodResidentialArea.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdPublicChargersBehaviour, zero_Interface.v_infoText.householdPublicChargersBehaviour, i_householdPublicChargersBehaviour.getX() + uI_Tabs.v_presentationXOffset, i_householdPublicChargersBehaviour.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1752232850473</Id>
+				<Name><![CDATA[i_householdNeighbourhoodBatteries]]></Name>
+				<X>190</X>
+				<Y>315</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_gridBatteriesResidentialArea_kWh.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdNeighbourhoodBatteries, zero_Interface.v_infoText.neighbourhoodBatteries, i_householdNeighbourhoodBatteries.getX() + uI_Tabs.v_presentationXOffset, i_householdNeighbourhoodBatteries.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
 		</Presentation>
 	</Group>
 	<Group>
