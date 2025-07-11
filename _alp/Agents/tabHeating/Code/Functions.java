@@ -494,9 +494,9 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 		zero_Interface.energyModel.v_currentAmbientTemperature_degC,
 		sourceAssetHeatPower_kW,
 		belowZeroHeatpumpEtaReductionFactor,
-		OL_AmbientTempType.FIXED
+		OL_AmbientTempType.HEAT_GRID
 	);
-	heatpump.updateParameters(inputTemperature_degC, outputTemperature_degC);
+	heatpump.updateParameters(inputTemperature_degC, outputTemperature_degC);		
 }
 
 //Update variable to change to custom scenario
@@ -520,6 +520,46 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 	double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
 	new J_EAConversionGasBurner(house, peakHeatDemand_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC);	
 }
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+double f_householdInsulation(double houses_pct)
+{/*ALCODESTART::1752227724432*/
+int nbHouses = zero_Interface.energyModel.Houses.size();
+int nbHousesWithImprovedInsulation = count(zero_Interface.energyModel.Houses, x -> x.p_hasAdditionalInsulation);
+int targetNbHousesWithImprovedInsulation = roundToInt(houses_pct / 100.0 * nbHouses);
+
+while (nbHousesWithImprovedInsulation < targetNbHousesWithImprovedInsulation) {
+	GCHouse house = findFirst(zero_Interface.energyModel.Houses, x -> !x.p_hasAdditionalInsulation);
+	if (house != null) {
+		house.p_hasAdditionalInsulation = true;
+		double lossFactor_WpK = house.p_BuildingThermalAsset.getLossFactor_WpK();
+		house.p_BuildingThermalAsset.setLossFactor_WpK( 0.7 * lossFactor_WpK );
+		nbHousesWithImprovedInsulation++;
+	}
+	else {
+		throw new RuntimeException("Unable to find house that does not yet have additional insulation");
+	}
+}
+while (nbHousesWithImprovedInsulation > targetNbHousesWithImprovedInsulation) {
+	GCHouse house = findFirst(zero_Interface.energyModel.Houses, x -> x.p_hasAdditionalInsulation);
+	if (house != null) {
+		house.p_hasAdditionalInsulation = false;
+		double lossFactor_WpK = house.p_BuildingThermalAsset.getLossFactor_WpK();
+		house.p_BuildingThermalAsset.setLossFactor_WpK( lossFactor_WpK / 0.7 );
+		nbHousesWithImprovedInsulation--;
+	}
+	else {
+		throw new RuntimeException("Unable to find house that has additional insulation");
+	}
+}
+
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
