@@ -1300,7 +1300,7 @@ default:
 
 /*ALCODEEND*/}
 
-GISRoute f_createGISLine(double[] GISCoords,String networkType)
+GISRoute f_createGISLine(double[] GISCoords,OL_GISObjectType objectType)
 {/*ALCODESTART::1725266804325*/
 
 Curve curve = new Curve();
@@ -1309,47 +1309,32 @@ for(int i = 0; i+3 < GISCoords.length; i += 2){
 	curve.addSegment(segment);
 }
 
-//Initialize curve and create route
-//curve.initialize();
+//Create route (line)
 GISRoute gisroute = new GISRoute(map, curve, true);
 
+//Object styling
+switch(objectType){
 
-
-//FOR NOW STYLING ETC. HERE, I WANT TO MOVE IT TO NETWORKS (BUT NOT DONE YET).
-switch(networkType){
-
-case "LVGrid":
-	c_LVCables.add(gisroute);
-	//Styling
-	gisroute.setLineStyle(LINE_STYLE_SOLID);
-	gisroute.setLineWidth(0.8);
-	gisroute.setLineColor(v_LVGridColor);
-	gisroute.setVisible(false);
-	break;
-
-case "MVGrid":
-	c_MVCables.add(gisroute);
-	//Styling
-	gisroute.setLineStyle(LINE_STYLE_SOLID);
-	gisroute.setLineWidth(1);
-	gisroute.setLineColor(v_MVGridColor);
-	gisroute.setVisible(false);
-	break;
+	case LV_CABLE:
+		c_LVCables.add(gisroute);
+		//Styling
+		gisroute.setLineStyle(LINE_STYLE_SOLID);
+		gisroute.setLineWidth(0.8);
+		gisroute.setLineColor(v_LVGridColor);
+		gisroute.setVisible(false);
+		break;
+		
+	case MV_CABLE:
+		c_MVCables.add(gisroute);
+		//Styling
+		gisroute.setLineStyle(LINE_STYLE_SOLID);
+		gisroute.setLineWidth(1);
+		gisroute.setLineColor(v_MVGridColor);
+		gisroute.setVisible(false);
+		break;
 }
 
 return gisroute;
-
-/*ALCODEEND*/}
-
-double f_createGISNetwork(GISRoute[] gisroutes,String networkType)
-{/*ALCODESTART::1725274862894*/
-//Add route/line to correct network
-//GISNetwork network = findFirst(c_GISNetworks, nw -> nw.getName().equals(networkType));
-
-//if(network == null){
-	GISNetwork network = new GISNetwork(map, networkType, true, gisroutes);
-	c_GISNetworks.add(network);
-//}
 
 /*ALCODEEND*/}
 

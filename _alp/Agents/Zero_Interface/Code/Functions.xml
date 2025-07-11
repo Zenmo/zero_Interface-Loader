@@ -787,32 +787,8 @@
 			<Type><![CDATA[double[]]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[networkType]]></Name>
-			<Type><![CDATA[String]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1725274862894</Id>
-		<Name><![CDATA[f_createGISNetwork]]></Name>
-		<X>-280</X>
-		<Y>130</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[gisroutes]]></Name>
-			<Type><![CDATA[GISRoute[]]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[networkType]]></Name>
-			<Type><![CDATA[String]]></Type>
+			<Name><![CDATA[objectType]]></Name>
+			<Type><![CDATA[OL_GISObjectType]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

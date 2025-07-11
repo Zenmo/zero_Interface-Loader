@@ -2079,42 +2079,13 @@ zero_Interface.settings = settings;
 
 double f_createGISCables()
 {/*ALCODESTART::1726584205859*/
-
-//LV cables
-//Initialize the array with gisroutes 
-GISRoute[] gisroutesLV = new GISRoute[c_cable_data_LV.size()];
-int i = 0;
-
-
-for (Cable_data dataCableLV : c_cable_data_LV) {
-	if(dataCableLV.line().contains("Multi")){
+//Create cables
+for (Cable_data dataCable : c_cable_data) {
+	if(dataCable.line().contains("Multi")){
 		continue;
 	}
-	gisroutesLV[i] = zero_Interface.f_createGISLine(f_createGISObjectsTokens(dataCableLV.line(), OL_GISObjectType.LV_CABLE), "LVGrid");
-	i++;
+	zero_Interface.f_createGISLine(f_createGISObjectsTokens(dataCable.line(), dataCable.type()), dataCable.type());
 }
-
-//Create LV network
-//zero_Interface.f_createGISNetwork(gisroutesLV, "LVGrid");
-
-
-//MV cables
-//Initialize the array with gisroutes 
-GISRoute[] gisroutesMV = new GISRoute[c_cable_data_MV.size()];
-int k = 0;
-
-
-for (Cable_data dataCableMV : c_cable_data_MV) {
-	if(dataCableMV.line().contains("Multi")){
-		continue;
-	}
-	gisroutesMV[k] = zero_Interface.f_createGISLine(f_createGISObjectsTokens(dataCableMV.line(), OL_GISObjectType.MV_CABLE), "MVGrid");
-	k++;
-}
-
-//Create MV network
-//zero_Interface.f_createGISNetwork(gisroutesMV, "MVGrid");
-
 /*ALCODEEND*/}
 
 double f_createPreprocessedElectricityProfile_PV(GridConnection parentGC,double[] yearlyElectricityDelivery_kWh,double[] yearlyElectricityFeedin_kWh,double[] yearlyElectricityProduction_kWh,Double pvPower_kW)
