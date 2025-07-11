@@ -132,7 +132,7 @@ for (GridNode_data GN_data : c_gridNode_data) {
 			GN.gisRegion = zero_Interface.f_createGISObject(f_createGISNodesTokens(GN));
 			zero_Interface.f_styleGridNodes(GN);
 			
-			zero_Interface.c_GISNodes.add(GN.gisRegion);
+			//Grid operator nodes
 			Grid_Operator.c_electricityGridNodes.add(GN);
 			
 			
@@ -261,26 +261,6 @@ if(settings.reloadDatabase()){
 	//Overwrite specific database values
 	f_overwriteSpecificDatabaseValues();
 }
-/*ALCODEEND*/}
-
-A_SubTenant f_createSubtenant(com.zenmo.zummon.companysurvey.Survey survey,com.zenmo.zummon.companysurvey.Address address)
-{/*ALCODESTART::1726584205783*/
-A_SubTenant subtenant = energyModel.add_pop_subTenants();
-
-subtenant.p_actorID = survey.getCompanyName();
-			
-//Adress data
-subtenant.p_address = new J_Address();
-subtenant.p_address.setStreetName(address.getStreet().substring(0,1).toUpperCase() + address.getStreet().substring(1).toLowerCase());
-subtenant.p_address.setHouseNumber(address.getHouseNumber());
-subtenant.p_address.setHouseLetter(address.getHouseLetter().equals("") ? null : address.getHouseLetter());
-subtenant.p_address.setHouseAddition(address.getHouseNumberSuffix().equals("") ? null : address.getHouseNumberSuffix());
-subtenant.p_address.setPostalcode(address.getPostalCode().equals("") ? null : address.getPostalCode().toUpperCase().replaceAll("\\s",""));
-subtenant.p_address.setCity(address.getCity().substring(0,1).toUpperCase() + address.getCity().substring(1).toLowerCase());
-				
-return subtenant;
-
-
 /*ALCODEEND*/}
 
 double f_createSolarParks()
@@ -851,7 +831,7 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		}
 		map_GC_to_installedBuildingPV.put(companyGC, map_GC_to_installedBuildingPV.get(companyGC) + buildingPV/(currentAmountOfConnectedGCWithBuilding_notDetailed+1));
 		//Connect to the existing building
-		f_connectGCToExistingBuilding(companyGC, existingBuilding);
+		f_connectGCToExistingBuilding(companyGC, existingBuilding, genericCompany);
 	}
 }
 
@@ -899,26 +879,13 @@ b.p_longitude = gisregion_points[1];
 b.setLatLon(b.p_latitude, b.p_longitude);
 
 
-//Define surface area (with Null checks)
-if (buildingData.cumulative_floor_surface_m2() == null && buildingData.polygon_area_m2() == null){
-	b.p_floorSurfaceArea_m2 = b.gisRegion.area();
-	b.p_roofSurfaceArea_m2 = b.gisRegion.area();
-}
-else if (buildingData.cumulative_floor_surface_m2() == null){
-	b.p_roofSurfaceArea_m2 = buildingData.polygon_area_m2();
-	b.p_floorSurfaceArea_m2 = b.p_roofSurfaceArea_m2;
-}
-else if(buildingData.polygon_area_m2() == null){
-	b.p_floorSurfaceArea_m2 = buildingData.cumulative_floor_surface_m2();
-	b.p_roofSurfaceArea_m2 = b.gisRegion.area();
-}
-else{
-	b.p_floorSurfaceArea_m2 = buildingData.cumulative_floor_surface_m2();
-	b.p_roofSurfaceArea_m2 = buildingData.polygon_area_m2();
-}
+//Define roof surface area (with Null checks and gisregion area as back up)
+b.p_roofSurfaceArea_m2 = buildingData.polygon_area_m2() != null ? buildingData.polygon_area_m2() : b.gisRegion.area();
+
+//Define floor surface area (with Null check, and make it 0 if unkown, else counting errors due to order of loadin of building data)
+b.p_floorSurfaceArea_m2 = buildingData.address_floor_surface_m2() != null ? buildingData.address_floor_surface_m2() : 0;
 
 //Add to collections
-zero_Interface.c_GISBuildingShapes.add(b.gisRegion);
 b.c_containedGridConnections.add(parentGC);
 parentGC.c_connectedGISObjects.add(b);
 
@@ -1130,9 +1097,6 @@ return area;
 
 double f_createSurveyCompanies_Zorm()
 {/*ALCODESTART::1726584205815*/
-//Initialize parameters
-List<A_SubTenant> subTenants = new ArrayList<A_SubTenant>();
-
 //Get the survey data
 List<com.zenmo.zummon.companysurvey.Survey> surveys = f_getSurveys();
 traceln("Size of survey List: %s", surveys.size());
@@ -1151,6 +1115,14 @@ for (var survey : surveys) {
 	
 	traceln(survey.getCompanyName());
 	
+	//Create connection owner
+	ConnectionOwner survey_owner = energyModel.add_pop_connectionOwners();
+	survey_owner.p_actorID = survey.getCompanyName();
+	survey_owner.p_actorType = OL_ActorType.CONNECTIONOWNER;
+	survey_owner.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
+	survey_owner.p_detailedCompany = true;
+	survey_owner.b_dataSharingAgreed = survey.getDataSharingAgreed();
+		
 	for (var address : survey.getAddresses()) {
 		
 		//Update number of survey companies (locations)
@@ -1158,27 +1130,15 @@ for (var survey : surveys) {
 		
         for (var gridConnection: address.getGridConnections()) {
 
-	 		//Find the survey_owner (if it already exists)
-	 		ConnectionOwner survey_owner = findFirst(energyModel.pop_connectionOwners, CO -> CO.p_actorID.equals(survey.getCompanyName()));
-	 		
-		 	//Check if it has (or will have) a direct connection with the grid (either gas or electric), if not: create subtenant	
+		 	//Check if it has (or will have) a direct connection with the grid (either gas or electric), if not: skip this gc.
 		 	boolean hasNaturalGasConnection = (gridConnection.getNaturalGas().getHasConnection() != null)? gridConnection.getNaturalGas().getHasConnection() : false;	 	
 		 	boolean hasExpansionRequest = (gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() != null ) ? gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() : false;
 		 	
 		 	if (!gridConnection.getElectricity().getHasConnection() && !hasExpansionRequest && !hasNaturalGasConnection){
-				subTenants.add(f_createSubtenant(survey, address));	
+				traceln("surveyGC with sequence: " + gridConnection.getSequence() + " is not created, as it has no connection to the grid, future grid connection or current gas connection.");	
 			 	continue;
 		 	}
 		 	
-		 	if(survey_owner == null){// Connection owner does not exist yet: create and initialize new one
-				survey_owner = energyModel.add_pop_connectionOwners();
-				survey_owner.p_actorID = survey.getCompanyName();
-				survey_owner.p_actorType = OL_ActorType.CONNECTIONOWNER;
-				survey_owner.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
-				survey_owner.p_detailedCompany = true;
-				survey_owner.b_dataSharingAgreed = survey.getDataSharingAgreed();
-		 	}
-			
 		 	//Create GC
 		 	GCUtility companyGC = energyModel.add_UtilityConnections();		  
 		 	
@@ -1186,6 +1146,9 @@ for (var survey : surveys) {
 			companyGC.p_ownerID = survey.getCompanyName();
 		 	companyGC.p_gridConnectionID = gridConnection.getSequence().toString() ;
 
+		 	//Find actor and connect GC 
+			companyGC.p_owner = survey_owner;	
+			
 			//Adress data
 			companyGC.p_address = new J_Address();
 			companyGC.p_address.setStreetName(address.getStreet().substring(0,1).toUpperCase() + address.getStreet().substring(1).toLowerCase());
@@ -1194,70 +1157,41 @@ for (var survey : surveys) {
 		 	companyGC.p_address.setHouseAddition(address.getHouseNumberSuffix().equals("") ? null : address.getHouseNumberSuffix());
 		 	companyGC.p_address.setPostalcode(address.getPostalCode().equals("") ? null : address.getPostalCode().toUpperCase().replaceAll("\\s",""));
 		 	companyGC.p_address.setCity(address.getCity().substring(0,1).toUpperCase() + address.getCity().substring(1).toLowerCase());
-			
-		 	//Find actor and connect GC 
-			companyGC.p_owner = survey_owner;	 	
 
 			//Get attached building info
-		 	List<Building_data> buildings = new ArrayList<Building_data>();
-			if ( gridConnection.getPandIds() != null && !gridConnection.getPandIds().isEmpty()) {
-				for (var PID : gridConnection.getPandIds() ) {
-					Building_data building = findFirst(c_companyBuilding_data, b -> b.building_id().equals(PID.getValue()));
-					if (building!=null) { // Check if building package exists in building package collection
-						buildings.add(building);
-						c_surveyCompanyBuilding_data.add(building);
-						c_companyBuilding_data.removeAll(findAll(c_companyBuilding_data, b -> b.building_id().equals(PID.getValue())));
-						
-						//Set trafo ID
-						companyGC.p_parentNodeElectricID = building.gridnode_id();
-					}
-					else if(findFirst(energyModel.pop_GIS_Buildings, b -> b.p_id.equals(PID.getValue())) != null){ // Check if building already exists in engine
-						GIS_Building existingBuilding = findFirst(energyModel.pop_GIS_Buildings, b -> b.p_id.equals(PID.getValue()));
-						if(existingBuilding != null){
-							f_connectGCToExistingBuilding(companyGC, existingBuilding);
-						}
-					}
-					else if (map_buildingData_Vallum != null && !map_buildingData_Vallum.isEmpty()){// Create new building package
-						Building_data customBuilding = f_createBuildingData_Vallum(companyGC, PID.getValue());
-						buildings.add(customBuilding);
-						c_vallumBuilding_data.add(customBuilding);
-					}
-				}
-			} else {// No building connected in zorm? -> check if it is manually connected in excel (using gc_id column)
-				buildings = findAll(c_companyBuilding_data, b -> b.gc_id() != null && b.gc_id().equals(companyGC.p_gridConnectionID));
-				if(buildings == null){
-					traceln("Survey %s has no building in zorm and also no manual connection with building in excel", survey.getId());
-				}
-				else{
-					c_companyBuilding_data.removeAll(buildings);
-				}
-			}
+			List<Building_data> buildings = f_getSurveyGCBuildingData(companyGC, gridConnection);
 			
 			//Total new additional floor/roof surface area
 		 	double totalNewFloorSurfaceAreaGC_m2 = 0;
 		 	double totalNewRoofSurfaceAreaGC_m2 = 0;
 			
-		
 			//Create the GIS buildings
-			for (Building_data building : buildings) {
-				GIS_Building b = f_createGISBuilding( building, companyGC);				
+			for (Building_data buildingData : buildings) {
+				GIS_Building gisBuilding = findFirst(energyModel.pop_GIS_Buildings, b -> b.p_id.equals(buildingData.building_id())); // Check if building already exists in engine
+				if (gisBuilding != null) {
+				    // Connect GC to existing building in engine
+				    f_connectGCToExistingBuilding(companyGC, gisBuilding, buildingData);
+				}
+				else{ 
+					gisBuilding = f_createGISBuilding( buildingData, companyGC);				
+				}
 				
 				//Set name of building
-				if(b.p_annotation == null){
-					b.p_annotation = companyGC.p_ownerID;
+				if(gisBuilding.p_annotation == null){
+					gisBuilding.p_annotation = companyGC.p_ownerID;
 				}
 				
 				//Accumulate surface areas
-				totalNewFloorSurfaceAreaGC_m2 += b.p_floorSurfaceArea_m2;
-				totalNewRoofSurfaceAreaGC_m2 += b.p_roofSurfaceArea_m2;
+				totalNewFloorSurfaceAreaGC_m2 += buildingData.address_floor_surface_m2();
+				totalNewRoofSurfaceAreaGC_m2 += gisBuilding.p_roofSurfaceArea_m2;
 				
 				//Set trafo ID
-				companyGC.p_parentNodeElectricID = building.gridnode_id();
+				companyGC.p_parentNodeElectricID = buildingData.gridnode_id();
 				
 				//Style building
-				b.p_defaultFillColor = zero_Interface.v_detailedCompanyBuildingColor;
-				b.p_defaultLineColor = zero_Interface.v_detailedCompanyBuildingLineColor;
-				zero_Interface.f_styleAreas(b);
+				gisBuilding.p_defaultFillColor = zero_Interface.v_detailedCompanyBuildingColor;
+				gisBuilding.p_defaultLineColor = zero_Interface.v_detailedCompanyBuildingLineColor;
+				zero_Interface.f_styleAreas(gisBuilding);
 				
 			}      
 			
@@ -1300,26 +1234,6 @@ if(v_numberOfSurveyCompanies>0){
 
 	//Pass the number of survey companies to interface for the dynamic legend
 	zero_Interface.v_numberOfSurveyCompanies = v_numberOfSurveyCompanies;
-}
-
-
-//Add created subtenants to main tenant(should happen after the other companies have been created)
-for(A_SubTenant subtenant : subTenants){
-
-	//Find grid connection that feeds the subtenant (achter de meter)
-	GridConnection GC = findFirst(energyModel.f_getActiveGridConnections(), 
-	GCU -> GCU.p_address != null && GCU.p_address.getAddress().equals(subtenant.p_address.getAddress()));
-	
-	if (GC != null){
-		subtenant.p_mainTenantID = GC.p_ownerID;
-		subtenant.p_connectedGridConnection = GC;
-		
-		ConnectionOwner owner = findFirst(energyModel.pop_connectionOwners, p -> p.p_actorID.equals(GC.p_ownerID));
-		owner.c_subTenants.add(subtenant);
-	}
-	else {
-		traceln("Subtenant '" + subtenant.p_actorID + "' at " + subtenant.p_address.getAddress()+ ", does not have a main tenant");
-	}
 }
 /*ALCODEEND*/}
 
@@ -3199,16 +3113,14 @@ if (!timeSeries.hasNumberOfValuesForOneYear()) {
 return f_convertFloatArrayToDoubleArray(timeSeries.convertToQuarterHourly().getFullYearOrFudgeIt(targetYear));
 /*ALCODEEND*/}
 
-double f_connectGCToExistingBuilding(GridConnection connectingGC,GIS_Building existingBuilding)
+double f_connectGCToExistingBuilding(GridConnection connectingGC,GIS_Building existingBuilding,Building_data connectingBuildingData)
 {/*ALCODESTART::1742915722586*/
-//Get the total building and floor surface of the building
-double buildingFloorSurface = existingBuilding.p_floorSurfaceArea_m2;
+//Get the total roof surface of the building
 double buildingRoofSurface = existingBuilding.p_roofSurfaceArea_m2;
 
-//Building roof and floor surface removal from all earlier connected GC (so excluding the new one!)
+//Building roof surface removal from all earlier connected GC (so excluding the new one!)
 int currentAmountOfConnectedGCWithBuilding = existingBuilding.c_containedGridConnections.size();
 for(GridConnection earlierConnectedGC : existingBuilding.c_containedGridConnections){
-	earlierConnectedGC.p_floorSurfaceArea_m2 -= buildingFloorSurface/currentAmountOfConnectedGCWithBuilding;
 	earlierConnectedGC.p_roofSurfaceArea_m2 -= buildingRoofSurface/currentAmountOfConnectedGCWithBuilding;
 }
 
@@ -3217,13 +3129,14 @@ existingBuilding.c_containedGridConnections.add(connectingGC);
 connectingGC.c_connectedGISObjects.add(existingBuilding);
 
 
-//Adding the newly distributed roof and floor surfaces to the gc (now including the new one!)
+//Adding the newly distributed roof surfaces to the gc (now including the new one!)
 int newAmountOfConnectedGCWithBuilding = currentAmountOfConnectedGCWithBuilding + 1;
 for(GridConnection connectedGC : existingBuilding.c_containedGridConnections){
-	connectedGC.p_floorSurfaceArea_m2 += buildingFloorSurface/newAmountOfConnectedGCWithBuilding;
 	connectedGC.p_roofSurfaceArea_m2 += buildingRoofSurface/newAmountOfConnectedGCWithBuilding;
 }
 
+//Also add the new connecting building data address floor surface
+existingBuilding.p_floorSurfaceArea_m2 += connectingBuildingData.address_floor_surface_m2();
 /*ALCODEEND*/}
 
 boolean f_createHeatProfileFromGasTS(GridConnection parentGC,com.zenmo.zummon.companysurvey.GridConnection gridConnectionSurvey,double ratioGasUsedForHeating)
@@ -3800,7 +3713,7 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	
 	//pand gegevens
 	GCH.p_heatingType = avgc_data.p_avgHouseHeatingMethod ;
-	GCH.p_floorSurfaceArea_m2 = houseBuildingData.cumulative_floor_surface_m2();
+	GCH.p_floorSurfaceArea_m2 = houseBuildingData.address_floor_surface_m2();
 	GCH.p_roofSurfaceArea_m2 = houseBuildingData.polygon_area_m2();
 	GCH.p_bouwjaar = houseBuildingData.build_year();
 	GCH.p_eigenOprit = houseBuildingData.has_private_parking() != null ? houseBuildingData.has_private_parking() : false;
@@ -4206,5 +4119,54 @@ else{
 	}
 }
 return scopedBatteriesList;
+/*ALCODEEND*/}
+
+List<Building_data> f_getSurveyGCBuildingData(GridConnection companyGC,com.zenmo.zummon.companysurvey.GridConnection vallumGC)
+{/*ALCODESTART::1752239414416*/
+List<Building_data> connectedBuildingsData = new ArrayList<Building_data>();
+
+if ( vallumGC.getPandIds() != null && !vallumGC.getPandIds().isEmpty()) {
+	for (var PID : vallumGC.getPandIds() ) {
+		List<Building_data> buildingsDataSameID = findAll(c_companyBuilding_data, b -> b.building_id().equals(PID.getValue()));
+		Building_data connectedBuildingData = null;
+		if(buildingsDataSameID.size() == 1){ // Only one building package with same id, so this building package belongs to this GC
+			connectedBuildingData = buildingsDataSameID.get(0);
+		}
+		else{//Multiple building packages with this building id -> Find the right one based on address, if none are found: pick a package without address
+			connectedBuildingData = findFirst(buildingsDataSameID, buildingData -> buildingData.house_number() != null && buildingData.house_number() == companyGC.p_address.getHouseNumber());
+			if(connectedBuildingData == null){ //If no matching house numbers, find first object that has no house number. 
+				connectedBuildingData = findFirst(buildingsDataSameID, buildingData -> buildingData.house_number() == null);
+			}
+		}
+		
+		if (connectedBuildingData != null) {
+		    // Remove from company building data and add to survey
+		    c_companyBuilding_data.remove(connectedBuildingData);
+		    c_surveyCompanyBuilding_data.add(connectedBuildingData);
+		    // Set trafo ID
+		    companyGC.p_parentNodeElectricID = connectedBuildingData.gridnode_id();
+		}
+		else if (map_buildingData_Vallum != null && !map_buildingData_Vallum.isEmpty()) {
+		        // Create new building package
+		        connectedBuildingData = f_createBuildingData_Vallum(companyGC, PID.getValue());
+		        c_vallumBuilding_data.add(connectedBuildingData);
+		}
+		
+		if (connectedBuildingData != null) {
+			connectedBuildingsData.add(connectedBuildingData);
+		}
+	}
+} 
+else {// No building connected in zorm? -> check if it is manually connected in excel (using gc_id column)
+	connectedBuildingsData = findAll(c_companyBuilding_data, b -> b.gc_id() != null && b.gc_id().equals(companyGC.p_gridConnectionID));
+	if(connectedBuildingsData == null){
+		traceln("GC %s has no building in zorm and also no manual connection with building in excel", companyGC.p_gridConnectionID);
+	}
+	else{
+		c_companyBuilding_data.removeAll(connectedBuildingsData);
+	}
+}
+
+return connectedBuildingsData;
 /*ALCODEEND*/}
 
