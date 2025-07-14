@@ -308,26 +308,6 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 			<Type><![CDATA[Map<String, com.zenmo.bag.Pand>]]></Type>
 		</Properties>
 	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1749728889990</Id>
-		<Name><![CDATA[v_houseIsolation_level]]></Name>
-		<Description><![CDATA[Used during startup to set the isolation level of the house and avoid if statements]]></Description>
-		<X>440</X>
-		<Y>570</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[OL_IsolationLevelHouse]]></Type>
-		</Properties>
-	</Variable>
 	<Variable Class="Parameter">
 		<Id>1726584206064</Id>
 		<Name><![CDATA[zero_Interface]]></Name>
