@@ -531,12 +531,12 @@ zero_Interface.f_resetSettings();
 
 double f_householdInsulation(double houses_pct)
 {/*ALCODESTART::1752227724432*/
-int nbHouses = zero_Interface.energyModel.Houses.size();
-int nbHousesWithImprovedInsulation = count(zero_Interface.energyModel.Houses, x -> x.p_hasAdditionalInsulation);
+int nbHouses = count(zero_Interface.energyModel.Houses, x -> x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
+int nbHousesWithImprovedInsulation = count(zero_Interface.energyModel.Houses, x -> x.p_hasAdditionalInsulation && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
 int targetNbHousesWithImprovedInsulation = roundToInt(houses_pct / 100.0 * nbHouses);
 
 while (nbHousesWithImprovedInsulation < targetNbHousesWithImprovedInsulation) {
-	GCHouse house = findFirst(zero_Interface.energyModel.Houses, x -> !x.p_hasAdditionalInsulation);
+	GCHouse house = findFirst(zero_Interface.energyModel.Houses, x -> !x.p_hasAdditionalInsulation && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
 	if (house != null) {
 		house.p_hasAdditionalInsulation = true;
 		double lossFactor_WpK = house.p_BuildingThermalAsset.getLossFactor_WpK();
@@ -548,7 +548,7 @@ while (nbHousesWithImprovedInsulation < targetNbHousesWithImprovedInsulation) {
 	}
 }
 while (nbHousesWithImprovedInsulation > targetNbHousesWithImprovedInsulation) {
-	GCHouse house = findFirst(zero_Interface.energyModel.Houses, x -> x.p_hasAdditionalInsulation);
+	GCHouse house = findFirst(zero_Interface.energyModel.Houses, x -> x.p_hasAdditionalInsulation && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
 	if (house != null) {
 		house.p_hasAdditionalInsulation = false;
 		double lossFactor_WpK = house.p_BuildingThermalAsset.getLossFactor_WpK();

@@ -29,7 +29,7 @@ public class Building_data {
 	Double gas_consumption_kwhpa;
 	Double pv_installed_kwp;
 	Double pv_potential_kwp;
-	String energy_label;
+	OL_GridConnectionIsolationLabel energy_label;
 	Boolean has_private_parking;
 	String gridnode_id;
 	Double latitude;

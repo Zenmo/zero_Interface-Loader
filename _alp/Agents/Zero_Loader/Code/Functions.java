@@ -3836,29 +3836,7 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	
 	//Nageisoleerd
 	if (houseBuildingData.energy_label() != null) {
-		switch (houseBuildingData.energy_label()) {
-			case "A":
-				GCH.p_energyLabel = OL_GridConnectionIsolationLabel.A;
-				break;
-			case "B":
-				GCH.p_energyLabel = OL_GridConnectionIsolationLabel.B;
-				break;
-			case "C":
-				GCH.p_energyLabel = OL_GridConnectionIsolationLabel.C;
-				break;
-			case "D":
-				GCH.p_energyLabel = OL_GridConnectionIsolationLabel.D;
-				break;
-			case "E":
-				GCH.p_energyLabel = OL_GridConnectionIsolationLabel.E;
-				break;
-			case "F":
-				GCH.p_energyLabel = OL_GridConnectionIsolationLabel.F;
-				break;																
-			case "G":
-				GCH.p_energyLabel = OL_GridConnectionIsolationLabel.G;
-				break;
-		}		
+		GCH.p_energyLabel = houseBuildingData.energy_label();
 	}
 	else {
 		if (GCH.p_bouwjaar < 1980) {
