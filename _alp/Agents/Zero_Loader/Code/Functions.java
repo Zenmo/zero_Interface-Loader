@@ -3705,7 +3705,7 @@ if (surface_m2 < 25){
 }
 /*ALCODEEND*/}
 
-double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,OL_IsolationLevelHouse isolationLevel)
+double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2)
 {/*ALCODESTART::1749727623536*/
 double maxPowerHeat_kW = 1000; 				//Dit is hoeveel vermogen het huis kan afgeven/opnemen, mag willekeurige waarden hebben. Wordt alleen gebruikt in rekenstap van ratio of capacity
 double lossfactor_WpK; 						//Dit is wat bepaalt hoeveel warmte het huis verliest/opneemt per tijdstap per delta_T
@@ -3713,7 +3713,7 @@ double initialTemp = uniform_discr(15,22); 	//starttemperatuur
 double heatCapacity_JpK; 					//hoeveel lucht zit er in je huis dat je moet verwarmen?
 double effectiveSolarAbsorptionSurface_m2; 	//hoeveel m2 effectieve dak en muur oppervlakte er is dat opwarmt door zonneinstraling
  
-switch (isolationLevel){
+switch (parentGC.p_energyLabel){
 	case A:
 		lossfactor_WpK = 0.35 * floorArea_m2;
 	break;
@@ -3807,31 +3807,22 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	
 	//Nageisoleerd
 	if (houseBuildingData.energy_label() != null) {
-		GCH.p_nageisoleerd = houseBuildingData.energy_label();
+		GCH.p_energyLabel = houseBuildingData.energy_label();
 	}
 	else {
 		if (GCH.p_bouwjaar < 1980) {
-			GCH.p_nageisoleerd = "D";
-			//v_houses_older_1980 ++;
-			v_houseIsolation_level = v_houseIsolation_level.D;
+			GCH.p_energyLabel = OL_GridConnectionIsolationLabel.D;
 		}
 		else if (GCH.p_bouwjaar < 2000) {
-			GCH.p_nageisoleerd = "C";
-			//v_houses_older_2000 ++;
-			v_houseIsolation_level = v_houseIsolation_level.C;
+			GCH.p_energyLabel = OL_GridConnectionIsolationLabel.C;
 		}
 		else if (GCH.p_bouwjaar < 2015) {
-			GCH.p_nageisoleerd = "B";
-			//v_houses_older_2015 ++;
-			v_houseIsolation_level = v_houseIsolation_level.B;
+			GCH.p_energyLabel = OL_GridConnectionIsolationLabel.B;
 		}
 		else {
-			GCH.p_nageisoleerd = "A";
-			//v_houses_newer_2015 ++;
-			v_houseIsolation_level = v_houseIsolation_level.A;
+			GCH.p_energyLabel = OL_GridConnectionIsolationLabel.A;
 		}
 	}
-		
 	//aansluiting gegevens
 	GCH.v_liveConnectionMetaData.physicalCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
 	GCH.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
@@ -3930,7 +3921,7 @@ if ( ! gn.p_hasProfileData ){
 }
 
 //Add building heat model and asset
-f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2, v_houseIsolation_level);
+f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2);
 house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
 double gasBurnerCapacity_kW = 50000;//40;//uniform_discr(3,5); 
 f_addHeatAsset (house, house.p_heatingType, gasBurnerCapacity_kW);	

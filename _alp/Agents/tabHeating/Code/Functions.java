@@ -324,6 +324,7 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 	// Create a heat node if it does not exist yet
 	if(house.p_parentNodeHeat == null){
 		GridNode GN_heat = zero_Interface.energyModel.add_pop_gridNodes();
+		zero_Interface.energyModel.f_getGridNodesTopLevel().add(GN_heat);
 		GN_heat.p_gridNodeID = "Heatgrid";
 		
 		// Check wether transformer capacity is known or estimated
@@ -346,7 +347,7 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 		house.p_parentNodeHeat = GN_heat;
 		
 		//Show warning that heat grid is not a simple solution
-		zero_Interface.f_setErrorScreen("LET OP: Er is nu een 'warmtenet' gecreerd. Maar er is geen warmtebron aanwezig in het model. Daarom zal de benodigde warmte voor het warmtenet in de resultaten te zien zijn als warmte import.");
+		zero_Interface.f_setErrorScreen("LET OP: Er is nu een 'warmtenet' gecreëerd. Maar er is geen warmtebron aanwezig in het model. Daarom zal de benodigde warmte voor het warmtenet in de resultaten te zien zijn als warmte import.");
 	}
 	house.p_parentNodeHeatID = house.p_parentNodeHeat.p_gridNodeID;
 	
@@ -446,62 +447,125 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 	if ( house.p_heatBuffer != null){
 		house.p_heatBuffer.removeEnergyAsset();
 	}
-	house.p_heatingType = OL_GridConnectionHeatingType.HEATPUMP_AIR;
-	//J_EAConversionHeatPump heatPump;
-	//J_EAConsumption heatDemandAsset = findFirst(house.c_consumptionAssets, j_ea -> j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
+	// Add a heat node
+	house.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getGridNodesTopLevel(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
+	// Create a heat node if it does not exist yet
+	if(house.p_parentNodeHeat == null){
+		GridNode GN_heat = zero_Interface.energyModel.add_pop_gridNodes();
+		zero_Interface.energyModel.f_getGridNodesTopLevel().add(GN_heat);
+		GN_heat.p_gridNodeID = "Heatgrid";
+		
+		// Check wether transformer capacity is known or estimated
+		GN_heat.p_capacity_kW = 1000000;	
+		GN_heat.p_realCapacityAvailable = false;
+		
+		// Basic GN information
+		GN_heat.p_description = "Warmtenet";
+	
+		//Define node type
+		GN_heat.p_nodeType = OL_GridNodeType.HT;
+		GN_heat.p_energyCarrier = OL_EnergyCarriers.HEAT;
+	
+		//Define GN location
+		GN_heat.p_latitude = 0;
+		GN_heat.p_longitude = 0;
+		GN_heat.setLatLon(GN_heat.p_latitude, GN_heat.p_longitude);
+		
+		//Connect
+		house.p_parentNodeHeat = GN_heat;
+		
+		//Show warning that heat grid is not a simple solution
+		zero_Interface.f_setErrorScreen("LET OP: Er is nu een 'warmtenet' gecreëerd. Maar er is geen warmtebron aanwezig in het model. Daarom zal de benodigde warmte voor het warmtenet in de resultaten te zien zijn als warmte import.");
+	}
+	house.p_parentNodeHeatID = house.p_parentNodeHeat.p_gridNodeID;
+	house.p_heatingType = OL_GridConnectionHeatingType.LT_DISTRICTHEAT;
 	double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
 	double heatpumpElectricCapacity_kW = min(peakHeatDemand_kW / 3, 1.0);
-	//house.p_heatBuffer = new J_EAStorageHeat(house, OL_EAStorageTypes.HEATBUFFER, 10, 0, zero_Interface.energyModel.p_timeStep_h, 60, 20, 80, 30, 50_000, "AIR" );
-	new J_EAConversionHeatPump(house, heatpumpElectricCapacity_kW, 0.5, zero_Interface.energyModel.p_timeStep_h, 60, zero_Interface.energyModel.v_currentAmbientTemperature_degC, 0, 1, OL_AmbientTempType.HEAT_GRID);
-	/*
-	if (heatDemandAsset != null) { // als house een standaard warmtebehoefte profiel heeft
-		heatPump = new J_EAConversionHeatPump(house, heatDemandAsset.yearlyDemand_kWh/8760*10 / 3, 0.5, zero_Interface.energyModel.p_timeStep_h, 60, zero_Interface.energyModel.v_currentAmbientTemperature_degC, 0, 1);
-	} 
-	else if (house.p_BuildingThermalAsset != null){ //als huis een building heatmodel heeft
-		heatPump = new J_EAConversionHeatPump(house, zero_Interface.energyModel.p_timeStep_h, heatpumpElectricCapacity_kW, 1, zero_Interface.energyModel.v_currentAmbientTemperature_degC, 60, "AIR", 0, 1);
-		heatPump.setEnergyAssetName("Heatpump " + heatpumpElectricCapacity_kW );
-		heatPump.setEnergyAssetType( OL_EnergyAssetType.HEAT_PUMP_AIR);
-	}
-	else { //anders moet het huis een heatProfiel krijgen
-		J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(house.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrier == OL_EnergyCarriers.HEAT);
-		double peakHeatDemand_kW = Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
-		heatPump = new J_EAConversionHeatPump(house, zero_Interface.energyModel.p_timeStep_h, peakHeatDemand_kW / 3, 0.5, zero_Interface.energyModel.v_currentAmbientTemperature_degC, 60, "AIR", 0, 1);
-	}
-	*/
-	
+	double efficiency_fr = 0.5;
+	double inputTemperature_degC = 15.0;  // TODO: Look at these temperatures!
+	double outputTemperature_degC = 50.0;
+	double sourceAssetHeatPower_kW = 0.0;
+	double belowZeroHeatpumpEtaReductionFactor = 1.0;
+	J_EAConversionHeatPump heatpump = new J_EAConversionHeatPump(house,
+		heatpumpElectricCapacity_kW,
+		efficiency_fr,
+		zero_Interface.energyModel.p_timeStep_h,
+		outputTemperature_degC,
+		zero_Interface.energyModel.v_currentAmbientTemperature_degC,
+		sourceAssetHeatPower_kW,
+		belowZeroHeatpumpEtaReductionFactor,
+		OL_AmbientTempType.HEAT_GRID
+	);
+	heatpump.updateParameters(inputTemperature_degC, outputTemperature_degC);		
 }
 
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
 double f_removeLTDH()
 {/*ALCODESTART::1749739532244*/
 for (GCHouse house: zero_Interface.energyModel.Houses ) {
-	house.p_primaryHeatingAsset.removeEnergyAsset();
-	house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
+	// Disconnect from GridNode Heat
+	house.p_parentNodeHeat = null;
 	house.v_districtHeatDelivery_kW = 0;
 	
-	//add gasburner
+	// Remove Heatpump and replace with gasburner
+	house.p_primaryHeatingAsset.removeEnergyAsset();
 	house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;	
-
-	J_EAConsumption heatDemandAsset = findFirst(house.c_consumptionAssets, j_ea -> j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
-	J_EAConversionGasBurner gasBurner;
-	//if house has follows the general heat deamnd profile
-	if (heatDemandAsset != null) {
-		gasBurner = new J_EAConversionGasBurner(house, heatDemandAsset.yearlyDemand_kWh/8760*10, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
-	}
-	//if house has a thermalBuildingAsset
-	else if (house.p_BuildingThermalAsset != null){
-		double gasBurnerCapacity_kW = 10;
-		gasBurner = new J_EAConversionGasBurner(house, gasBurnerCapacity_kW, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
-	}
-	// Else house has a customprofiel
-	else {
-		J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(house.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrier == OL_EnergyCarriers.HEAT);
-		double peakHeatDemand_kW = Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
-		gasBurner = new J_EAConversionGasBurner(house, peakHeatDemand_kW, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
-	}	
-	
-	
+	double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
+	new J_EAConversionGasBurner(house, peakHeatDemand_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC);	
 }
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+double f_householdInsulation(double houses_pct)
+{/*ALCODESTART::1752227724432*/
+int nbHouses = count(zero_Interface.energyModel.Houses, x -> x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
+int nbHousesWithImprovedInsulation = count(zero_Interface.energyModel.Houses, x -> x.p_hasAdditionalInsulation && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
+int targetNbHousesWithImprovedInsulation = roundToInt(houses_pct / 100.0 * nbHouses);
+
+while (nbHousesWithImprovedInsulation < targetNbHousesWithImprovedInsulation) {
+	GCHouse house = findFirst(zero_Interface.energyModel.Houses, x -> !x.p_hasAdditionalInsulation && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
+	if (house != null) {
+		house.p_hasAdditionalInsulation = true;
+		double lossFactor_WpK = house.p_BuildingThermalAsset.getLossFactor_WpK();
+		house.p_BuildingThermalAsset.setLossFactor_WpK( 0.7 * lossFactor_WpK );
+		nbHousesWithImprovedInsulation++;
+	}
+	else {
+		throw new RuntimeException("Unable to find house that does not yet have additional insulation");
+	}
+}
+while (nbHousesWithImprovedInsulation > targetNbHousesWithImprovedInsulation) {
+	GCHouse house = findFirst(zero_Interface.energyModel.Houses, x -> x.p_hasAdditionalInsulation && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
+	if (house != null) {
+		house.p_hasAdditionalInsulation = false;
+		double lossFactor_WpK = house.p_BuildingThermalAsset.getLossFactor_WpK();
+		house.p_BuildingThermalAsset.setLossFactor_WpK( lossFactor_WpK / 0.7 );
+		nbHousesWithImprovedInsulation--;
+	}
+	else {
+		throw new RuntimeException("Unable to find house that has additional insulation");
+	}
+}
+
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
