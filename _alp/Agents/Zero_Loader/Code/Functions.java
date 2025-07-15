@@ -807,9 +807,7 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 	
 	if(existingBuilding == null){//Create new GIS object and connect
 		GIS_Building b = f_createGISBuilding( genericCompany, companyGC );
-		v_totalFloorAreaAnonymousCompanies_m2 += b.p_floorSurfaceArea_m2;
-		
-		companyGC.p_floorSurfaceArea_m2 += b.p_floorSurfaceArea_m2;
+
 		companyGC.p_roofSurfaceArea_m2 += b.p_roofSurfaceArea_m2;
 		map_GC_to_installedBuildingPV.put(companyGC, map_GC_to_installedBuildingPV.get(companyGC) + (genericCompany.pv_installed_kwp() != null ? genericCompany.pv_installed_kwp() : 0));
 		
@@ -833,6 +831,10 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		//Connect to the existing building
 		f_connectGCToExistingBuilding(companyGC, existingBuilding, genericCompany);
 	}
+	
+	companyGC.p_floorSurfaceArea_m2 += genericCompany.address_floor_surface_m2();
+	v_totalFloorAreaAnonymousCompanies_m2 += genericCompany.address_floor_surface_m2();
+	
 }
 
 //Amount of generic companies created
