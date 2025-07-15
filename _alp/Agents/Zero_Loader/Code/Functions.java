@@ -1159,7 +1159,7 @@ for (var survey : surveys) {
         for (var gridConnection: address.getGridConnections()) {
 
 	 		//Find the survey_owner (if it already exists)
-	 		ConnectionOwner survey_owner = findFirst(energyModel.pop_connectionOwners, CO -> CO.p_actorID.equals(survey.getCompanyName()));
+	 		ConnectionOwner survey_owner = findFirst(energyModel.pop_connectionOwners, CO -> CO.p_actorID != null && CO.p_actorID.equals(survey.getCompanyName()));
 	 		
 		 	//Check if it has (or will have) a direct connection with the grid (either gas or electric), if not: create subtenant	
 		 	boolean hasNaturalGasConnection = (gridConnection.getNaturalGas().getHasConnection() != null)? gridConnection.getNaturalGas().getHasConnection() : false;	 	
