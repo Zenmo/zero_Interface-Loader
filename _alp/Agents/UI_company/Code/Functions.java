@@ -672,7 +672,7 @@ double timestep_h				= zero_Interface.energyModel.p_timeStep_h;
 if (vehicleType == OL_EnergyAssetType.ELECTRIC_VEHICLE || vehicleType == OL_EnergyAssetType.ELECTRIC_VAN || vehicleType == OL_EnergyAssetType.ELECTRIC_TRUCK ){ // Create EVS
 	double storageCapacity_kWh 		= 0;
 	double capacityElectricity_kW 	= 0;
-	double stateOfCharge_r  		= 1; // Initial state of charge
+	double stateOfCharge_fr  		= 1; // Initial state of charge
 
 	switch(vehicleType){
 		case ELECTRIC_VEHICLE:
@@ -694,7 +694,7 @@ if (vehicleType == OL_EnergyAssetType.ELECTRIC_VEHICLE || vehicleType == OL_Ener
 	}
 	
 	//Create EV and connect to GC and selected trip tracker
-	J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_r, timestep_h, energyConsumption_kWhpkm, vehicleScaling, vehicleType, tripTracker);	
+	J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timestep_h, energyConsumption_kWhpkm, vehicleScaling, vehicleType, tripTracker);	
 	electricVehicle.available = available;
 
 	

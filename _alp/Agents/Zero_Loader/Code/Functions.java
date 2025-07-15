@@ -1443,7 +1443,7 @@ double f_addElectricVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_t
 double storageCapacity_kWh 		= 0;
 double energyConsumption_kWhpkm = 0;
 double capacityElectricity_kW 	= 0;
-double stateOfCharge_r  		= 1; // Initial state of charge
+double stateOfCharge_fr  		= 1; // Initial state of charge
 double timestep_h				= energyModel.p_timeStep_h;
 double vehicleScaling 			= 1.0;
 
@@ -1483,7 +1483,7 @@ if (!isDefaultVehicle && maxChargingPower_kW != 0){
 
 
 //Create the EV vehicle energy asset with the set parameters + links
-J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_r, timestep_h, energyConsumption_kWhpkm, vehicleScaling, vehicle_type, null);	
+J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timestep_h, energyConsumption_kWhpkm, vehicleScaling, vehicle_type, null);	
 
 if (!isDefaultVehicle && annualTravelDistance_km > 1000){
 		electricVehicle.tripTracker.setAnnualDistance_km(annualTravelDistance_km);
