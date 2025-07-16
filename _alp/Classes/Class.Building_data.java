@@ -19,7 +19,6 @@ public class Building_data {
 	Integer build_year;	
 	String status;
 	String purpose;
-	//Double cumulative_floor_surface_m2;
 	Double address_floor_surface_m2;	
 	Double polygon_area_m2;
 	String gc_id;
