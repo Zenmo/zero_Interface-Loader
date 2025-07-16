@@ -805,7 +805,7 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 	//Check wheter this building already exists
 	GIS_Building existingBuilding = findFirst(energyModel.pop_GIS_Buildings, gisBuilding -> gisBuilding.p_id.equals(genericCompany.building_id()));
 	
-	if(existingBuilding == null){//Create new GIS object and connect
+	if(existingBuilding == null){//Create new GIS building and connect
 		GIS_Building b = f_createGISBuilding( genericCompany, companyGC );
 
 		companyGC.p_roofSurfaceArea_m2 += b.p_roofSurfaceArea_m2;
@@ -1652,147 +1652,6 @@ else if (vehicle_type == OL_EnergyAssetType.HYDROGEN_VAN){
 }
 /*ALCODEEND*/}
 
-double f_iEASurveyCompanies_Excel()
-{/*ALCODESTART::1726584205839*/
-/*
-double ratioGasUsedForHeating = 1;
-
-String idString = companyGC.p_gridConnectionID;
-int id = 0;
-try {
-	id = roundToInt(Double.valueOf(idString));
-}
-catch (NumberFormatException e) {
-	// Probably one of the template GCs?
-}
-
-J_scenario_Current current_scenario_list = new J_scenario_Current();
-zero_Interface.c_scenarioMap_Current.put(companyGC, current_scenario_list);
-
-J_scenario_Future future_scenario_list = new J_scenario_Future();
-zero_Interface.c_scenarioMap_Future.put(companyGC, future_scenario_list);
-
-//Add current grid capacity to current scenario list
-current_scenario_list.setCurrentContractDeliveryCapacity_kW(companyGC.p_contractedDeliveryCapacity_kW);
-
-//Add future grid capacity to future scenario list (FOR NOW IT STAYS THE SAME, NO DATA)
-future_scenario_list.setRequestedContractDeliveryCapacity_kW(companyGC.p_contractedDeliveryCapacity_kW);
-
-//Electricity consumption
-//traceln("Company connection id: %s", selectFrom(comp_connections).where(comp_connections.detail_id.eq(idString)).firstResult(comp_connections.name));
-//traceln("id uit pandentabel id: %s", id);
-
-
-//if( selectFrom(comp_connections).where(comp_connections.gc_id.eq(idString)).list().get(0).get(comp_connections.has_quarterhourly_values)) { // Check wetehr there is 15-min data available.
-//if( selectFrom(comp_connections).where(comp_connections.detail_id.eq(id)).kwartierwaardes.equals("ja")){ // Check wetehr there is 15-min data available.
-if (row.get( comp_connections.has_quarterhourly_values )) {	
-	f_addElectricityDemandProfile(companyGC, 0, null, true, "ccid" + id);
-} else { // If not: Use yearly consumption and generic profiles
-	f_addElectricityDemandProfile(companyGC, row.get( comp_connections.electricity_consumption_k_wh_year ), null, false, "Office_other_electricity");
-}
-
-v_remainingElectricityDelivery_kWh -= row.get( comp_connections.electricity_consumption_k_wh_year );
-
-
-
-//Gas consumption
-double gasConsumption_m3 = row.get( comp_connections.gas_consumption_m3_year );
-
-//selectFrom(comp_connections).where(comp_connections.gc_id.eq(idString)).firstResult(comp_connections.gas_consumption_m3_year);
-//traceln("gasConsumption_m3: %s",gasConsumption_m3);
-//traceln("companyGC.p_floorSurfaceArea_m2: %s", companyGC.p_floorSurfaceArea_m2);
-if (gasConsumption_m3 > 0) {
-	if (companyGC.p_ownerID.equals("Applied Medical (2/2)")) {
-		gasConsumption_m3 *= 0.25; // Most of the gas consumption is not for heating
-	}
-	f_addHeatDemandProfile(companyGC, gasConsumption_m3, false, ratioGasUsedForHeating);
-}
-
-v_remainingGasConsumption_m3 -= gasConsumption_m3;
-
-//PV panels
-int installedPV_kW = row.get( comp_connections.pv_installed_kw );
-//(int) selectFrom(comp_connections).where(comp_connections.gc_id.eq(idString)).firstResult(comp_connections.pv_installed_kw);
-if( installedPV_kW > 0){
-	f_addEnergyProduction(companyGC, OL_EnergyAssetType.PHOTOVOLTAIC, "solar panels", installedPV_kW);
-}
-
-current_scenario_list.setCurrentPV_kW(installedPV_kW);
-future_scenario_list.setPlannedPV_year( row.get( comp_connections.pv_investment_year ) );
-//selectFrom(comp_connections).where(comp_connections.gc_id.eq(idString)).firstResult(comp_connections.pv_investment_year));
-future_scenario_list.setPlannedPV_kW( row.get( comp_connections.pv_investment_kw ) );
-//selectFrom(comp_connections).where(comp_connections.gc_id.eq(idString)).firstResult(comp_connections.pv_investment_kw));
-
-//Vehicles
-//Trucks
-int nbTrucks = row.get( comp_connections.nb_trucks );
-//selectFrom(comp_connections).where(comp_connections.gc_id.eq(idString)).firstResult(comp_connections.nb_trucks);
-int nbEVTrucks = row.get( comp_connections.nb_etrucks );
-//selectFrom(comp_connections).where(comp_connections.gc_id.eq(idString)).firstResult(comp_connections.nb_etrucks);
-	
-if (nbTrucks > 0) {
-	for (int i = 0; i<nbEVTrucks; i++) {
-		f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_TRUCK, true, 0, 0);
-		v_remainingAmountOfTrucks--;		
-		
-	}
-	for (int i = 0; i<(nbTrucks-nbEVTrucks); i++) {
-		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_TRUCK, true, 0);	
-		v_remainingAmountOfTrucks--;	
-	}
-}
-current_scenario_list.setCurrentDieselTrucks(nbTrucks);
-current_scenario_list.setCurrentEVTrucks(nbEVTrucks);
-future_scenario_list.setPlannedEVTrucks( row.get( comp_connections.nb_planned_etrucks ) );
-//selectFrom(comp_connections).where(comp_connections.gc_id.eq(idString)).firstResult(comp_connections.nb_planned_etrucks));
-
-//Vans
-int nbVans =  row.get( comp_connections.nb_vans );
-//selectFrom(comp_connections).where(comp_connections.gc_id.eq(idString)).firstResult(comp_connections.nb_vans);
-int nbEVans =  row.get( comp_connections.nb_evans );
-//selectFrom(comp_connections).where(comp_connections.gc_id.eq(idString)).firstResult(comp_connections.nb_evans);
-	
-if (nbVans>0) {
-	for (int i = 0; i<nbEVans; i++) {
-		f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VAN, true, 0, 0);
-		v_remainingNumberOfVans--;
-		
-	}
-	for (int i = 0; i<(nbVans-nbEVans); i++) {
-		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VAN, true, 0);	
-		v_remainingNumberOfVans--;
-	}
-}
-
-current_scenario_list.setCurrentDieselVans(nbVans);
-current_scenario_list.setCurrentEVVans(nbEVans);
-future_scenario_list.setPlannedEVVans( row.get( comp_connections.nb_planned_evans ) );
-//selectFrom(comp_connections).where(comp_connections.gc_id.eq(idString)).firstResult(comp_connections.nb_planned_evans));
-
-//Cars	
-int nbCars = row.get( comp_connections.nb_cars );
-//selectFrom(comp_connections).where(comp_connections.gc_id.eq(idString)).firstResult(comp_connections.nb_cars);
-int nbEVs = row.get( comp_connections.nb_evs );
-//selectFrom(comp_connections).where(comp_connections.gc_id.eq(idString)).firstResult(comp_connections.nb_evs);
-
-if (nbCars>0) {
-	for (int i = 0; i<nbEVs; i++) {
-		f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, 0, 0);
-	}
-	for (int i = 0; i<(nbCars-nbEVs); i++) {
-		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);	
-	}
-}
-
-current_scenario_list.setCurrentDieselCars(nbCars);
-current_scenario_list.setCurrentEVCars(nbEVs);
-future_scenario_list.setPlannedEVCars( row.get( comp_connections.nb_planned_evs ) );
-//selectFrom(comp_connections).where(comp_connections.gc_id.eq(idString)).firstResult(comp_connections.nb_planned_evs));
-
-
-*/
-/*ALCODEEND*/}
-
 double f_addChargingDemandProfile(GCPublicCharger GC,String profileName)
 {/*ALCODESTART::1726584205845*/
 J_EAProfile profile = new J_EAProfile(GC, OL_EnergyCarriers.ELECTRICITY, null, OL_ProfileAssetType.CHARGING, energyModel.p_timeStep_h);		
@@ -2177,157 +2036,7 @@ c_Cable_data_MV.clear();
 
 double f_createSurveyCompanies_Excel()
 {/*ALCODESTART::1726584205871*/
-traceln("Companies that filled in the survey:");
-
-/*
-	// Find all the buildings that have specified a gridconnection id.
-	List<Tuple> buildingRows = selectFrom(buildings)
-		.where(buildings.gc_id.isNotNull())
-		.list();
-	
-	// Loop through the comp_connections
-	List<Tuple> connectionRows = selectFrom(comp_connections).list();
-	
-	for (Tuple connectionRow : connectionRows) {	
-		
-		if (connectionRow.get(comp_connections.is_template)) {
-			// Templates are descriptions of generic companies, each row in the buildings excel represents one such company.
-			for (Tuple buildingRow : buildingRows) {
-				if (buildingRow.get( buildings.gc_id ).equals(connectionRow.get(comp_connections.gc_id))) {
-					GCUtility companyGC = energyModel.add_UtilityConnections();					
-					
-					companyGC.p_gridConnectionID = buildingRow.get( buildings.adress_id );
-					// For excel-inputs we use annotation for the company name. These were added by hand, in the future we will probably change this.
-					companyGC.p_ownerID = buildingRow.get( buildings.annotation);
-					companyGC.p_physicalConnectionCapacity_kW = connectionRow.get(comp_connections.connection_capacity_demand);
-					companyGC.p_contractedDeliveryCapacity_kW = connectionRow.get(comp_connections.connection_capacity_demand);
-					companyGC.p_contractedFeedinCapacity_kW = connectionRow.get(comp_connections.connection_capacity_supply);
-
-					// Finding the ConnectionOwner
-					ConnectionOwner COC = findFirst(energyModel.pop_connectionOwners, p -> p.p_actorID.equals(companyGC.p_ownerID) );
-					if (COC == null) {
-						traceln("GC with id %s has no COC", companyGC.p_gridConnectionID );
-						COC = energyModel.add_pop_connectionOwners();
-						COC.p_actorID = companyGC.p_ownerID;
-						COC.p_actorType = OL_ActorType.CONNECTIONOWNER;
-						COC.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
-						COC.p_detailedCompany = false;
-					}
-					companyGC.p_owner = COC;
-					
-					// Create a building
-					GIS_Building b = f_createGISBuilding(buildingRow, companyGC);
-					
-					companyGC.p_floorSurfaceArea_m2 = b.p_floorSurfaceArea_m2;
-					companyGC.p_roofSurfaceArea_m2 = b.p_roofSurfaceArea_m2;
-
-					// Style the building
-					b.p_defaultFillColor = zero_Interface.v_companyBuildingColor;
-					b.p_defaultLineColor = zero_Interface.v_companyBuildingLineColor;
-					zero_Interface.f_styleAreas(b);
-	
-					// Trafo data
-					companyGC.set_p_parentNodeElectricID( buildingRow.get ( buildings.gridnode_id ) );				
-					companyGC.p_longitude = companyGC.c_connectedGISObjects.get(0).p_longitude;
-					companyGC.p_latitude = companyGC.c_connectedGISObjects.get(0).p_latitude;
-					companyGC.setLatLon(companyGC.p_latitude, companyGC.p_longitude);  
-				
-					// Adress data
-					companyGC.p_streetName = buildingRow.get( buildings.streetname);
-				 	companyGC.p_houseNumber = buildingRow.get( buildings.house_number);
-				 	companyGC.p_houseLetter = buildingRow.get( buildings.house_letter);
-				 	companyGC.p_houseAddition = buildingRow.get( buildings.house_addition);
-				 	companyGC.p_postalcode = buildingRow.get( buildings.postalcode);
-				 	companyGC.p_city = buildingRow.get( buildings.city);
-			 									 	
-					// Heating type
-					companyGC.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
-					
-					//Calculate remaining floor surface area for the unknown company calculations
-					v_remainingFloorArea_m2 -= companyGC.p_floorSurfaceArea_m2;
-					
-					// Instantiate the energy assets based on the comp_connection excel
-					f_iEASurveyCompanies_Excel(connectionRow, companyGC);
-					
-				}
-			}
-		}
-		else {
-			// The row in the comp_connections represents one single company
-			GCUtility companyGC = energyModel.add_UtilityConnections();
-			
-			companyGC.p_gridConnectionID = connectionRow.get(comp_connections.gc_id);
-			companyGC.p_ownerID = connectionRow.get( comp_connections.name );
-			companyGC.p_physicalConnectionCapacity_kW = connectionRow.get(comp_connections.connection_capacity_demand);
-			companyGC.p_contractedDeliveryCapacity_kW = connectionRow.get(comp_connections.connection_capacity_demand);
-			companyGC.p_contractedFeedinCapacity_kW = connectionRow.get(comp_connections.connection_capacity_supply);
-			
-			// Finding the connection owner
-			ConnectionOwner COC = findFirst(energyModel.pop_connectionOwners, p -> p.p_actorID.equals(companyGC.p_ownerID) );
-			if (COC == null) {
-				throw new IllegalStateException("Detailed company " + companyGC.p_ownerID + " has no connection owner.");
-			}
-			companyGC.p_owner = COC;
-			
-			// The non template companies can have multiple buildings
-			double totalFloorSurfaceAreaGC_m2 = 0;
-			double totalRoofSurfaceAreaGC_m2 = 0;
-			
-			for (Tuple buildingRow : buildingRows) {
-				if (buildingRow.get( buildings.gc_id ).equals(companyGC.p_gridConnectionID)) {
-					GIS_Building b = f_createGISBuilding( buildingRow, companyGC);				
-
-					totalFloorSurfaceAreaGC_m2 += b.p_floorSurfaceArea_m2;
-					totalRoofSurfaceAreaGC_m2 += b.p_roofSurfaceArea_m2;
-					companyGC.p_parentNodeElectricID = buildingRow.get(buildings.gridnode_id);
-					
-					//Style building
-					if (COC.p_detailedCompany) {
-						b.p_defaultFillColor = zero_Interface.v_detailedCompanyBuildingColor;
-						b.p_defaultLineColor = zero_Interface.v_detailedCompanyBuildingLineColor;
-					}
-					else {
-						b.p_defaultFillColor = zero_Interface.v_companyBuildingColor;
-						b.p_defaultLineColor = zero_Interface.v_companyBuildingLineColor;
-					}
-					zero_Interface.f_styleAreas(b);
-					
-					//Adress data (Keeps overwriting this info each time a new building is found, ends with data from last building)
-					companyGC.p_streetName = buildingRow.get( buildings.streetname );
-				 	companyGC.p_houseNumber = buildingRow.get( buildings.house_number );
-				 	companyGC.p_houseLetter = buildingRow.get( buildings.house_letter );
-				 	companyGC.p_houseAddition = buildingRow.get( buildings.house_addition );
-				 	companyGC.p_postalcode = buildingRow.get( buildings.postalcode );
-				 	companyGC.p_city = buildingRow.get( buildings.city );
-				 	
-				 	// Set Trafo ID
-				 	companyGC.p_parentNodeElectricID = buildingRow.gridnode_id();
-				 }
-			}
-				
-			//Add (combined) building data to GC (latitude and longitude + area)
-			companyGC.p_floorSurfaceArea_m2 = totalFloorSurfaceAreaGC_m2;
-			companyGC.p_roofSurfaceArea_m2 = totalRoofSurfaceAreaGC_m2;
-			
-			if (companyGC.c_connectedGISObjects.size() == 0) {
-				throw new IllegalStateException("Detailed company " + companyGC.p_ownerID + " has no building.");
-			}
-			companyGC.p_longitude = companyGC.c_connectedGISObjects.get(0).p_longitude; // Get longitude of first building (only used to get nearest trafo)
-			companyGC.p_latitude = companyGC.c_connectedGISObjects.get(0).p_latitude; // Get latitude of first building (only used to get nearest trafo)
-			companyGC.setLatLon(companyGC.p_latitude, companyGC.p_longitude);  
-			
-			// Heating type
-			companyGC.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
-					
-			//Calculate remaining floor surface area for the unknown company calculations
-			v_remainingFloorArea_m2 -= totalFloorSurfaceAreaGC_m2;
-			
-			// Instantiate the energy assets based on the comp_connection excel
-			f_iEASurveyCompanies_Excel(connectionRow, companyGC);
-		}
-	}
-}
-*/
+traceln("Survey companies excel should be overridden with your own code");
 /*ALCODEEND*/}
 
 double f_createCompanies()
@@ -3715,8 +3424,6 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	
 	//pand gegevens
 	GCH.p_heatingType = avgc_data.p_avgHouseHeatingMethod ;
-	GCH.p_floorSurfaceArea_m2 = houseBuildingData.address_floor_surface_m2();
-	GCH.p_roofSurfaceArea_m2 = houseBuildingData.polygon_area_m2();
 	GCH.p_bouwjaar = houseBuildingData.build_year();
 	GCH.p_eigenOprit = houseBuildingData.has_private_parking() != null ? houseBuildingData.has_private_parking() : false;
 	
@@ -3766,7 +3473,6 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.setLatLon(GCH.p_latitude, GCH.p_longitude);
 	
 	//Connect GC to grid node
-	//GridNode myParentNodeElectric;
 	GCH.p_parentNodeElectricID = houseBuildingData.gridnode_id();
 		
 	//Set parameters for the Actor: ConnectionOwner
@@ -3776,28 +3482,63 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	COH.p_detailedCompany = false;
 	GCH.p_owner = COH;
 	
+	/*
 	//Create GIS building
 	GIS_Building b;
 	int pandClusterNr = houseBuildingData.pandcluster_nr();
 	if( pandClusterNr == 0 ){	
 		b = f_createGISBuilding( houseBuildingData, GCH );
+		GCH.p_roofSurfaceArea_m2 = houseBuildingData.polygon_area_m2();
 	}
 	else {
 		b = randomWhere(energyModel.c_GISBuildingClusters, x -> x.p_pandcluster_nr == pandClusterNr);
 		if (b == null){
 			b = f_createGISBuilding( houseBuildingData, GCH );
+			GCH.p_roofSurfaceArea_m2 = houseBuildingData.polygon_area_m2();
 		}
 		else {
-			b.c_containedGridConnections.add(GCH);
-			GCH.c_connectedGISObjects.add(b);
-
+			f_connectGCToExistingBuilding(GCH, existingBuilding, connectingBuildingData);
 		}
 	}
+	*/
+	
+	//Check wheter this building already exists
+	GIS_Building existingBuilding = findFirst(energyModel.pop_GIS_Buildings, gisBuilding -> gisBuilding.p_id.equals(houseBuildingData.building_id()));
+	
+	if(existingBuilding == null){//Create new GIS building and connect
+		b = f_createGISBuilding( houseBuildingData, GCH );
+		GCH.p_roofSurfaceArea_m2 = houseBuildingData.polygon_area_m2();
+
+		//map_GC_to_installedBuildingPV.put(companyGC, map_GC_to_installedBuildingPV.get(companyGC) + (genericCompany.pv_installed_kwp() != null ? genericCompany.pv_installed_kwp() : 0));
+		
+		//Style building
+		b.p_defaultFillColor = zero_Interface.v_houseBuildingColor;
+		b.p_defaultLineColor = zero_Interface.v_houseBuildingLineColor;
+		zero_Interface.f_styleAreas(b);
+	}
+	else{// Connect with existing building
+		//Redistribute the PV installed
+		List<GridConnection> currentConnectedGCWithBuilding_notDetailed = findAll(existingBuilding.c_containedGridConnections, gc -> !gc.p_owner.p_detailedCompany);
+		int currentAmountOfConnectedGCWithBuilding_notDetailed = currentConnectedGCWithBuilding_notDetailed.size();
+
+		double buildingPV = genericCompany.pv_installed_kwp() != null ? genericCompany.pv_installed_kwp() : 0;
+		int i = 0;
+		for(GridConnection earlierConnectedGC : currentConnectedGCWithBuilding_notDetailed){
+			map_GC_to_installedBuildingPV.put(earlierConnectedGC, (map_GC_to_installedBuildingPV.get(earlierConnectedGC) - (buildingPV/currentAmountOfConnectedGCWithBuilding_notDetailed) + (buildingPV/(currentAmountOfConnectedGCWithBuilding_notDetailed+1))));	
+			i++;
+		}
+		//map_GC_to_installedBuildingPV.put(companyGC, map_GC_to_installedBuildingPV.get(companyGC) + buildingPV/(currentAmountOfConnectedGCWithBuilding_notDetailed+1));
+		//Connect to the existing building
+		f_connectGCToExistingBuilding(GCH, existingBuilding, connectingBuildingData);
+	}
+	
+	//Floor surface of GC
+	GCH.p_floorSurfaceArea_m2 = houseBuildingData.address_floor_surface_m2();
 	
 	//Style building
-	b.p_defaultFillColor = zero_Interface.v_houseBuildingColor;
-	b.p_defaultLineColor = zero_Interface.v_houseBuildingLineColor;
-	zero_Interface.f_styleAreas(b);
+	//b.p_defaultFillColor = zero_Interface.v_houseBuildingColor;
+	//b.p_defaultLineColor = zero_Interface.v_houseBuildingLineColor;
+	//zero_Interface.f_styleAreas(b);
 	
 	//Instantiate energy assets
 	double jaarlijksElectriciteitsVerbruik;
