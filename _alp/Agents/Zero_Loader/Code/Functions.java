@@ -877,6 +877,7 @@ double[] gisregion_points = b.gisRegion.getPoints(); // get all points of the gi
 //position and coordinates
 b.p_latitude = gisregion_points[0];
 b.p_longitude = gisregion_points[1];
+
 //Set latlon
 b.setLatLon(b.p_latitude, b.p_longitude);
 
@@ -3482,63 +3483,25 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	COH.p_detailedCompany = false;
 	GCH.p_owner = COH;
 	
-	/*
-	//Create GIS building
-	GIS_Building b;
-	int pandClusterNr = houseBuildingData.pandcluster_nr();
-	if( pandClusterNr == 0 ){	
-		b = f_createGISBuilding( houseBuildingData, GCH );
-		GCH.p_roofSurfaceArea_m2 = houseBuildingData.polygon_area_m2();
-	}
-	else {
-		b = randomWhere(energyModel.c_GISBuildingClusters, x -> x.p_pandcluster_nr == pandClusterNr);
-		if (b == null){
-			b = f_createGISBuilding( houseBuildingData, GCH );
-			GCH.p_roofSurfaceArea_m2 = houseBuildingData.polygon_area_m2();
-		}
-		else {
-			f_connectGCToExistingBuilding(GCH, existingBuilding, connectingBuildingData);
-		}
-	}
-	*/
 	
 	//Check wheter this building already exists
 	GIS_Building existingBuilding = findFirst(energyModel.pop_GIS_Buildings, gisBuilding -> gisBuilding.p_id.equals(houseBuildingData.building_id()));
 	
 	if(existingBuilding == null){//Create new GIS building and connect
-		b = f_createGISBuilding( houseBuildingData, GCH );
+		GIS_Building b = f_createGISBuilding( houseBuildingData, GCH );
 		GCH.p_roofSurfaceArea_m2 = houseBuildingData.polygon_area_m2();
 
-		//map_GC_to_installedBuildingPV.put(companyGC, map_GC_to_installedBuildingPV.get(companyGC) + (genericCompany.pv_installed_kwp() != null ? genericCompany.pv_installed_kwp() : 0));
-		
 		//Style building
 		b.p_defaultFillColor = zero_Interface.v_houseBuildingColor;
 		b.p_defaultLineColor = zero_Interface.v_houseBuildingLineColor;
 		zero_Interface.f_styleAreas(b);
 	}
 	else{// Connect with existing building
-		//Redistribute the PV installed
-		List<GridConnection> currentConnectedGCWithBuilding_notDetailed = findAll(existingBuilding.c_containedGridConnections, gc -> !gc.p_owner.p_detailedCompany);
-		int currentAmountOfConnectedGCWithBuilding_notDetailed = currentConnectedGCWithBuilding_notDetailed.size();
-
-		double buildingPV = genericCompany.pv_installed_kwp() != null ? genericCompany.pv_installed_kwp() : 0;
-		int i = 0;
-		for(GridConnection earlierConnectedGC : currentConnectedGCWithBuilding_notDetailed){
-			map_GC_to_installedBuildingPV.put(earlierConnectedGC, (map_GC_to_installedBuildingPV.get(earlierConnectedGC) - (buildingPV/currentAmountOfConnectedGCWithBuilding_notDetailed) + (buildingPV/(currentAmountOfConnectedGCWithBuilding_notDetailed+1))));	
-			i++;
-		}
-		//map_GC_to_installedBuildingPV.put(companyGC, map_GC_to_installedBuildingPV.get(companyGC) + buildingPV/(currentAmountOfConnectedGCWithBuilding_notDetailed+1));
-		//Connect to the existing building
-		f_connectGCToExistingBuilding(GCH, existingBuilding, connectingBuildingData);
+		f_connectGCToExistingBuilding(GCH, existingBuilding, houseBuildingData);
 	}
 	
 	//Floor surface of GC
 	GCH.p_floorSurfaceArea_m2 = houseBuildingData.address_floor_surface_m2();
-	
-	//Style building
-	//b.p_defaultFillColor = zero_Interface.v_houseBuildingColor;
-	//b.p_defaultLineColor = zero_Interface.v_houseBuildingLineColor;
-	//zero_Interface.f_styleAreas(b);
 	
 	//Instantiate energy assets
 	double jaarlijksElectriciteitsVerbruik;
