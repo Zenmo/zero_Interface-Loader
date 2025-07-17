@@ -1326,8 +1326,11 @@ if(companyGC.p_heatingType == null){
 if(	!companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.GASBURNER) && 
 	!companyGC.c_heatingTypes.contains(OL_GridConnectionHeatingType.GASFIRED_CHPPEAK)){
 	if ((hasHourlyGasData || (gridConnection.getNaturalGas().getAnnualDelivery_m3() != null && gridConnection.getNaturalGas().getAnnualDelivery_m3() > 0))) {
-			companyGC.c_heatingTypes.add(OL_GridConnectionHeatingType.GASBURNER);
-			traceln("Gas consumption detected for '" + companyGC.p_ownerID + "', setting heating type to GASBURNER");			
+		companyGC.c_heatingTypes.add(OL_GridConnectionHeatingType.GASBURNER);
+		if(companyGC.c_heatingTypes.size() == 1){
+			companyGC.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
+		}
+		traceln("Gas consumption detected for '" + companyGC.p_ownerID + "', setting heating type to GASBURNER");			
 	}
 }
 
