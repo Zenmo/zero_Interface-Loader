@@ -256,46 +256,16 @@ switch(rb_buildingColors.getValue()) {
 double f_styleMVLV(GISRegion gisregion)
 {/*ALCODESTART::1705505495599*/
 gisregion.setLineStyle( LINE_STYLE_SOLID );
-gisregion.setLineColor( v_gridNodeColor_net.brighter() );
+gisregion.setLineColor( v_MVLVLineColor );
 gisregion.setLineWidth(2);		
-
-/*
-switch( klant_net_station ) {
-		case "Klantstation":
-			gisregion.setFillColor(v_gridNodeColor_klant);
-		break;
-		case "Klantstation met medegebr":
-			gisregion.setFillColor(v_gridNodeColor_klant);
-		break;
-		case "Netstation":
-			gisregion.setFillColor(v_gridNodeColor_net);
-		break;
-		case "Transportverdeelstation":
-			gisregion.setFillColor(v_gridNodeColor_net);;	
-		break;
-		case "Hoofdstation":
-			gisregion.setFillColor(v_gridNodeColor_net);
-		break;
-		default:
-			gisregion.setFillColor(v_gridNodeColor_net);
-}
-*/
-
-gisregion.setFillColor(v_gridNodeColor_net);
-
-/*
-if ( nodeStatus != null && nodeStatus.equals("x")){
-	gisregion.setFillColor(new Color(239,204,211,90));
-	gisregion.setLineColor(new Color(0,0,0,0));
-}
-*/
+gisregion.setFillColor(v_MVLVNodeColor);
 /*ALCODEEND*/}
 
 double f_styleHVMV(GISRegion gisregion)
 {/*ALCODESTART::1705505509120*/
-gisregion.setFillColor(new Color(253, 223, 134, 206));
+gisregion.setFillColor(v_HVMVNodeColor);
 gisregion.setLineStyle( LINE_STYLE_SOLID );
-gisregion.setLineColor( navy );
+gisregion.setLineColor( v_HVMVLineColor );
 gisregion.setLineWidth(2);
 gisregion.setVisible(v_HVMVNodeIsVisible);
 /*ALCODEEND*/}
@@ -453,7 +423,7 @@ gr_multipleBuildingInfo.setVisible(false);
 // We restore the colors of what we clicked on before
 if (v_previousClickedObjectType == OL_GISObjectType.GRIDNODE){
 	v_previousClickedGridNode = v_clickedGridNode;
-	f_styleGridNodes(v_clickedGridNode);
+	f_setGridNodeCongestionColor(v_clickedGridNode);
 	for ( Agent agent : v_previousClickedGridNode.f_getAllLowerLVLConnectedGridConnections()){	
 		if (agent instanceof GridConnection) {
 			GridConnection GC = (GridConnection)agent;
@@ -1089,31 +1059,19 @@ for (GridNode MVsub : MVsubstations){
 	//Update spectrum color index
 	i++;
 }
-
-/*
-//Find all MVMV and HVMV distribution stations
-List<GridNode> MVMVstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.MVMV);
-List<GridNode> HVMVstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.HVMV);
-
-//Set their topology colors (for now black as they are basically top level).
-MVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
-HVMVstations.forEach(GN -> GN.p_uniqueColor = semiTransparent(black));
-*/
 /*ALCODEEND*/}
 
 double f_styleSUBMV(GISRegion gisregion)
 {/*ALCODESTART::1721991963719*/
 gisregion.setVisible(false);
-
 /*ALCODEEND*/}
 
 double f_styleMVMV(GISRegion gisregion)
 {/*ALCODESTART::1721992103665*/
-gisregion.setFillColor(new Color(253, 223, 134, 206));
+gisregion.setFillColor(v_MVMVNodeColor);
 gisregion.setLineStyle( LINE_STYLE_SOLID );
-gisregion.setLineColor( navy );
+gisregion.setLineColor( v_MVMVLineColor );
 gisregion.setLineWidth(2);
-
 /*ALCODEEND*/}
 
 double f_listFunctions()
