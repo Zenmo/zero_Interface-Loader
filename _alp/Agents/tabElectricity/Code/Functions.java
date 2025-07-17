@@ -392,7 +392,7 @@ if( nbHousesWithPV > 0 ){
 	while ( nbHouseBatteries > nbHousesWithBatteryGoal ) {
 		GCHouse house = findFirst(zero_Interface.energyModel.Houses, p -> p.p_batteryAsset != null );
 		house.p_batteryAsset.removeEnergyAsset();
-		house.p_batteryOperationMode = OL_BatteryOperationMode.BALANCE; // reset to default
+		house.p_batteryAlgorithm = null;
 		nbHouseBatteries--;
 	}
 	while ( nbHouseBatteries < nbHousesWithBatteryGoal) {
@@ -403,7 +403,7 @@ if( nbHousesWithPV > 0 ){
 		double batteryStateOfCharge = 0.5;
 
 		new J_EAStorageElectric(house, batteryCapacity_kW, batteryStorageCapacity_kWh, batteryStateOfCharge, zero_Interface.energyModel.p_timeStep_h );
-		house.p_batteryOperationMode = OL_BatteryOperationMode.SELF_CONSUMPTION;
+		house.p_batteryAlgorithm = new J_BatterySelfConsumption( house );
 		nbHouseBatteries++;
 	}
 }

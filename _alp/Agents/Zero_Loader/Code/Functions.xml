@@ -121,6 +121,7 @@
 		<Id>1726584205783</Id>
 		<Name><![CDATA[f_createSubtenant]]></Name>
 		<Description><![CDATA[function used to connect the subtenant to the main tenant (connection owner), based on adres data of subtenant and Grid connection. ]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>449.001</X>
 		<Y>219.001</Y>
 		<Label>

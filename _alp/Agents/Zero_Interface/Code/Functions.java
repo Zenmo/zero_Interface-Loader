@@ -529,7 +529,6 @@ while (v_connectionOwnerIndexNr < c_COCompanies.size()){
 	}
 	
 	companyUI.p_amountOfBuildings = companyUI.c_ownedBuildings.size();
-	companyUI.c_subTenants = COC.c_subTenants;
 	
 	//Initialize adress variable (changes with selected GC)
 	companyUI.v_adressGC = companyUI.c_ownedGridConnections.get(0).p_address.getAddress();

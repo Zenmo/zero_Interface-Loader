@@ -413,9 +413,31 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) { // M
 		gridbattery.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;	
 	}
 	
-	gridbattery.set_p_parentNodeElectricID( dataBattery.gridnode_id() );	
+	gridbattery.set_p_parentNodeElectricID( dataBattery.gridnode_id() );
 	gridbattery.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
-	gridbattery.set_p_batteryOperationMode( OL_BatteryOperationMode.valueOf(dataBattery.default_operation_mode()) );
+	
+	switch (dataBattery.operation_mode()) {
+		case PRICE:
+			gridbattery.p_batteryAlgorithm = new J_BatteryPrice(gridbattery);
+			break;
+		case PEAK_SHAVING_PARENT_NODE:
+			J_BatteryPeakShaving batteryAlgorithm = new J_BatteryPeakShaving(gridbattery);
+			GridNode gn = findFirst(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals(gridbattery.p_parentNodeElectricID));
+			if (gn == null) {
+				throw new RuntimeException("Could not find GridNode with ID: " + gridbattery.p_parentNodeElectricID + " for GCGridBattery");
+			}
+			batteryAlgorithm.setTarget(gn);
+			gridbattery.p_batteryAlgorithm = batteryAlgorithm;
+			break;
+		case PEAK_SHAVING_COOP:
+			// target agent is still null, should be set at the moment of coop creation
+			batteryAlgorithm = new J_BatteryPeakShaving(gridbattery);
+			batteryAlgorithm.setTargetType( OL_ResultScope.ENERGYCOOP );
+			gridbattery.p_batteryAlgorithm = batteryAlgorithm;
+			break;
+		default:
+			throw new RuntimeException("Battery Operation Mode: " + dataBattery.operation_mode() + " is not supported for GCGridBattery.");
+	}
 	
 	//Get initial state
 	gridbattery.v_isActive = dataBattery.initially_active();
@@ -1130,9 +1152,6 @@ return area;
 
 double f_createSurveyCompanies_Zorm()
 {/*ALCODESTART::1726584205815*/
-//Initialize parameters
-List<A_SubTenant> subTenants = new ArrayList<A_SubTenant>();
-
 //Get the survey data
 List<com.zenmo.zummon.companysurvey.Survey> surveys = f_getSurveys();
 traceln("Size of survey List: %s", surveys.size());
@@ -1164,11 +1183,6 @@ for (var survey : surveys) {
 		 	//Check if it has (or will have) a direct connection with the grid (either gas or electric), if not: create subtenant	
 		 	boolean hasNaturalGasConnection = (gridConnection.getNaturalGas().getHasConnection() != null)? gridConnection.getNaturalGas().getHasConnection() : false;	 	
 		 	boolean hasExpansionRequest = (gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() != null ) ? gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() : false;
-		 	
-		 	if (!gridConnection.getElectricity().getHasConnection() && !hasExpansionRequest && !hasNaturalGasConnection){
-				subTenants.add(f_createSubtenant(survey, address));	
-			 	continue;
-		 	}
 		 	
 		 	if(survey_owner == null){// Connection owner does not exist yet: create and initialize new one
 				survey_owner = energyModel.add_pop_connectionOwners();
@@ -1300,26 +1314,6 @@ if(v_numberOfSurveyCompanies>0){
 
 	//Pass the number of survey companies to interface for the dynamic legend
 	zero_Interface.v_numberOfSurveyCompanies = v_numberOfSurveyCompanies;
-}
-
-
-//Add created subtenants to main tenant(should happen after the other companies have been created)
-for(A_SubTenant subtenant : subTenants){
-
-	//Find grid connection that feeds the subtenant (achter de meter)
-	GridConnection GC = findFirst(energyModel.f_getActiveGridConnections(), 
-	GCU -> GCU.p_address != null && GCU.p_address.getAddress().equals(subtenant.p_address.getAddress()));
-	
-	if (GC != null){
-		subtenant.p_mainTenantID = GC.p_ownerID;
-		subtenant.p_connectedGridConnection = GC;
-		
-		ConnectionOwner owner = findFirst(energyModel.pop_connectionOwners, p -> p.p_actorID.equals(GC.p_ownerID));
-		owner.c_subTenants.add(subtenant);
-	}
-	else {
-		traceln("Subtenant '" + subtenant.p_actorID + "' at " + subtenant.p_address.getAddress()+ ", does not have a main tenant");
-	}
 }
 /*ALCODEEND*/}
 
@@ -2860,9 +2854,7 @@ if (gridConnection.getStorage().getHasBattery() != null && gridConnection.getSto
 }
 // Elke survey company krijgt hoe dan ook een batterij EA (ook als op dit moment nog geen batterij aanwezig is, maar dan is capaciteit gewoon 0)
 f_addStorage(companyGC, battery_power_kW, battery_capacity_kWh, OL_EnergyAssetType.STORAGE_ELECTRIC);
-companyGC.p_batteryOperationMode = OL_BatteryOperationMode.BALANCE;
-
-//Aansturing toevoegen ?
+companyGC.p_batteryAlgorithm = new J_BatterySelfConsumption(companyGC);
 
 //add to scenario: current
 current_scenario_list.setCurrentBatteryCapacity_kWh(battery_capacity_kWh);
@@ -3484,7 +3476,7 @@ contracted_delivery_capacity_kw(0.0).
 contracted_feed_in_capacity_kw(0.0).
 
 storage_capacity_kwh(0.0).
-default_operation_mode("BALANCE").
+operation_mode(OL_BatteryOperationMode.PEAK_SHAVING_PARENT_NODE).
 latitude(0).
 longitude(0).
 polygon(null).
