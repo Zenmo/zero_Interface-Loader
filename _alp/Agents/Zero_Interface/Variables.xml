@@ -298,7 +298,7 @@
 		<Id>1696863329269</Id>
 		<Name><![CDATA[v_gridConnectionInBuildingIndex]]></Name>
 		<X>50</X>
-		<Y>1680</Y>
+		<Y>1520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -339,7 +339,7 @@
 		<Id>1701879001472</Id>
 		<Name><![CDATA[v_clickedObjectText]]></Name>
 		<X>50</X>
-		<Y>1700</Y>
+		<Y>1540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -361,7 +361,7 @@
 		<Id>1701879014361</Id>
 		<Name><![CDATA[v_clickedObjectAdress]]></Name>
 		<X>50</X>
-		<Y>1720</Y>
+		<Y>1560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -493,7 +493,7 @@
 		<Id>1702046920293</Id>
 		<Name><![CDATA[v_clickedObjectDetails]]></Name>
 		<X>50</X>
-		<Y>1740</Y>
+		<Y>1580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -757,7 +757,7 @@
 		<Id>1705673181898</Id>
 		<Name><![CDATA[v_clickedGridNode]]></Name>
 		<X>50</X>
-		<Y>1580</Y>
+		<Y>1420</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -776,7 +776,7 @@
 		<Id>1705673647104</Id>
 		<Name><![CDATA[v_previousClickedObjectType]]></Name>
 		<X>50</X>
-		<Y>1550</Y>
+		<Y>1390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -795,7 +795,7 @@
 		<Id>1705673714784</Id>
 		<Name><![CDATA[v_previousClickedGridNode]]></Name>
 		<X>50</X>
-		<Y>1600</Y>
+		<Y>1440</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -925,8 +925,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1706892713276</Id>
 		<Name><![CDATA[GISregion_antiLaag]]></Name>
-		<X>50</X>
-		<Y>1460</Y>
+		<X>-280</X>
+		<Y>250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -989,7 +989,7 @@
 		<Id>1707918668189</Id>
 		<Name><![CDATA[v_clickedObjectType]]></Name>
 		<X>50</X>
-		<Y>1530</Y>
+		<Y>1370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1008,7 +1008,7 @@
 		<Id>1708597346305</Id>
 		<Name><![CDATA[v_connectionOwnerIndexNr]]></Name>
 		<X>50</X>
-		<Y>1500</Y>
+		<Y>1340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1700,7 +1700,7 @@
 		<Id>1725018118872</Id>
 		<Name><![CDATA[b_showCables]]></Name>
 		<X>50</X>
-		<Y>1780</Y>
+		<Y>1620</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2430,28 +2430,10 @@
 		</Properties>
 	</Variable>
 	<Variable Class="CollectionVariable">
-		<Id>1705660898756</Id>
-		<Name><![CDATA[c_GISNodes]]></Name>
-		<X>50</X>
-		<Y>1340</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>GISRegion</ElementClass>
-			<ValueElementClass>String</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
 		<Id>1707918668148</Id>
 		<Name><![CDATA[c_GISNeighborhoods]]></Name>
-		<X>50</X>
-		<Y>1440</Y>
+		<X>-280</X>
+		<Y>230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2466,28 +2448,10 @@
 		</Properties>
 	</Variable>
 	<Variable Class="CollectionVariable">
-		<Id>1707918668154</Id>
-		<Name><![CDATA[c_GISBuildingShapes]]></Name>
-		<X>50</X>
-		<Y>1320</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>GISRegion</ElementClass>
-			<ValueElementClass>String</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
 		<Id>1709552799968</Id>
 		<Name><![CDATA[c_companyUIs]]></Name>
 		<X>-240</X>
-		<Y>440</Y>
+		<Y>480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2505,7 +2469,7 @@
 		<Id>1713429665418</Id>
 		<Name><![CDATA[c_scenarioMap_Future]]></Name>
 		<X>-280</X>
-		<Y>230</Y>
+		<Y>340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2523,7 +2487,7 @@
 		<Id>1713874283959</Id>
 		<Name><![CDATA[c_scenarioMap_Current]]></Name>
 		<X>-280</X>
-		<Y>210</Y>
+		<Y>320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2669,8 +2633,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722344496313</Id>
 		<Name><![CDATA[c_GISNetplanes]]></Name>
-		<X>50</X>
-		<Y>1420</Y>
+		<X>-280</X>
+		<Y>210</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2703,28 +2667,10 @@
 		</Properties>
 	</Variable>
 	<Variable Class="CollectionVariable">
-		<Id>1725270790750</Id>
-		<Name><![CDATA[c_GISNetworks]]></Name>
-		<X>50</X>
-		<Y>1360</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>GISNetwork</ElementClass>
-			<ValueElementClass>String</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
 		<Id>1725276677836</Id>
 		<Name><![CDATA[c_LVCables]]></Name>
-		<X>50</X>
-		<Y>1380</Y>
+		<X>-280</X>
+		<Y>170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2741,8 +2687,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1725276688077</Id>
 		<Name><![CDATA[c_MVCables]]></Name>
-		<X>50</X>
-		<Y>1400</Y>
+		<X>-280</X>
+		<Y>190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2778,7 +2724,7 @@
 		<Id>1734512815255</Id>
 		<Name><![CDATA[c_previousSelectedObjects]]></Name>
 		<X>50</X>
-		<Y>1650</Y>
+		<Y>1490</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2796,7 +2742,7 @@
 		<Id>1734513139372</Id>
 		<Name><![CDATA[c_selectedObjects]]></Name>
 		<X>50</X>
-		<Y>1630</Y>
+		<Y>1470</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
