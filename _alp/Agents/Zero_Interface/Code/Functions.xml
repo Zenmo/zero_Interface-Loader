@@ -618,7 +618,7 @@
 		<Id>1721991420806</Id>
 		<Name><![CDATA[f_setGridTopologyColors]]></Name>
 		<X>-650</X>
-		<Y>491</Y>
+		<Y>511</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1642,7 +1642,7 @@
 		<Id>1750261221085</Id>
 		<Name><![CDATA[f_setTrafoText]]></Name>
 		<X>50</X>
-		<Y>1820</Y>
+		<Y>1850</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1881,6 +1881,42 @@
 		<Parameter>
 			<Name><![CDATA[isLiveSim]]></Name>
 			<Type><![CDATA[boolean]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1752836715726</Id>
+		<Name><![CDATA[f_clearSelectionAndSelectEnergyModel]]></Name>
+		<X>50</X>
+		<Y>1240</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1752837115143</Id>
+		<Name><![CDATA[f_styleLVLV]]></Name>
+		<X>-650</X>
+		<Y>490</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gisregion]]></Name>
+			<Type><![CDATA[GISRegion]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

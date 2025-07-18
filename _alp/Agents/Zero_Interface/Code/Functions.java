@@ -218,29 +218,37 @@ switch(rb_buildingColors.getValue()) {
 	case 0:
 	case 1:
 	case 2:
-		switch( GN.p_nodeType ) {
-			case MVLV:
-				f_styleMVLV(GN.gisRegion);
-				break;
-			case SUBMV:
-				f_styleSUBMV(GN.gisRegion);
-				break;
-			case MVMV:
-				f_styleMVMV(GN.gisRegion);
-				break;
-			case HVMV:
-				f_styleHVMV(GN.gisRegion);
-				break;
-			case HT:
-				
-				break;
-			case MT:
-				
-				break;
-			case LT:
-				
-				break;
-			default:
+		if(!b_updateLiveCongestionColors){
+			switch( GN.p_nodeType ) {
+				case LVLV:
+					f_styleLVLV(GN.gisRegion);
+					break;
+				case MVLV:
+					f_styleMVLV(GN.gisRegion);
+					break;
+				case SUBMV:
+					f_styleSUBMV(GN.gisRegion);
+					break;
+				case MVMV:
+					f_styleMVMV(GN.gisRegion);
+					break;
+				case HVMV:
+					f_styleHVMV(GN.gisRegion);
+					break;
+				case HT:
+					
+					break;
+				case MT:
+					
+					break;
+				case LT:
+					
+					break;
+				default:
+			}
+		}
+		else{
+			f_setColorsBasedOnCongestion_gridnodes(GN, false);
 		}
 		break;
 	case 3:
@@ -758,6 +766,9 @@ presentation.insert(presentation.size(), gr_filterInterface);
 if(settings.isPublicModel()){
 	f_changeDefaultColorOfPrivateGC();
 }
+
+//Turn on update of live congestion colloring
+b_updateLiveCongestionColors = true;
 /*ALCODEEND*/}
 
 GISRegion f_createGISObject(double[] gisTokens)
@@ -1517,23 +1528,7 @@ c_selectedFilterOptions.clear();
 t_activeFilters.setText("");
 
 //Deselect everything and set region as main
-//After a filter selecttion, reset previous clicked building/gridNode colors and text
-v_previousClickedObjectType = v_clickedObjectType;
-c_previousSelectedObjects = new ArrayList<GIS_Object>(c_selectedObjects);
-c_selectedGridConnections.clear();
-c_selectedObjects.clear();
-
-//Deselect previous selection
-if( v_previousClickedObjectType != null){
-	f_deselectPreviousSelect();
-}
-
-
-
-v_clickedObjectType = OL_GISObjectType.REGION;
-uI_Results.f_updateResultsUI(energyModel);
-
-//traceln("Alle filters zijn verwijderd.");
+f_clearSelectionAndSelectEnergyModel();
 /*ALCODEEND*/}
 
 double f_selectGridLoop(double clickx,double clicky)
@@ -2974,8 +2969,8 @@ if (gis_area.c_containedGridConnections.size() > 0) {
 		gis_area.gisRegion.setFillColor(v_gridNodeColorStrained);
 		gis_area.gisRegion.setLineColor(v_gridNodeLineColorStrained);
 	} else {
-		gis_area.gisRegion.setFillColor(v_MVLVNodeColor);
-		gis_area.gisRegion.setLineColor(v_MVLVLineColor);
+		gis_area.gisRegion.setFillColor(v_gridNodeColorUncongested);
+		gis_area.gisRegion.setLineColor(v_gridNodeLineColorUncongested);
 	}
 }
 /*ALCODEEND*/}
@@ -3011,8 +3006,8 @@ if (gn!=null){
 		gn.gisRegion.setFillColor(v_gridNodeColorStrained);
 		gn.gisRegion.setLineColor(v_gridNodeLineColorStrained);
 	} else {
-		gn.gisRegion.setFillColor(v_MVLVNodeColor);
-		gn.gisRegion.setLineColor(v_MVLVLineColor);
+		gn.gisRegion.setFillColor(v_gridNodeColorUncongested);
+		gn.gisRegion.setLineColor(v_gridNodeLineColorUncongested);
 	}
 	
 	if( gn == v_clickedGridNode && gn != v_previousClickedGridNode){ // dit zorgt ervoor dat de kleuringfunctie correct werkt in zowel live stand als pauze stand
@@ -3020,5 +3015,30 @@ if (gn!=null){
 		gn.gisRegion.setLineColor( orange );
 	}
 }
+/*ALCODEEND*/}
+
+double f_clearSelectionAndSelectEnergyModel()
+{/*ALCODESTART::1752836715726*/
+v_previousClickedObjectType = v_clickedObjectType;
+c_previousSelectedObjects = new ArrayList<GIS_Object>(c_selectedObjects);
+c_selectedGridConnections.clear();
+c_selectedObjects.clear();
+
+//Deselect previous selection
+if( v_previousClickedObjectType != null){
+	f_deselectPreviousSelect();
+}
+
+v_clickedObjectType = OL_GISObjectType.REGION;
+uI_Results.f_updateResultsUI(energyModel);
+
+/*ALCODEEND*/}
+
+double f_styleLVLV(GISRegion gisregion)
+{/*ALCODESTART::1752837115143*/
+gisregion.setLineStyle( LINE_STYLE_SOLID );
+gisregion.setLineColor( v_LVLVLineColor );
+gisregion.setLineWidth(2);		
+gisregion.setFillColor(v_LVLVNodeColor);
 /*ALCODEEND*/}
 
