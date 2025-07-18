@@ -822,12 +822,18 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		int currentAmountOfConnectedGCWithBuilding_notDetailed = currentConnectedGCWithBuilding_notDetailed.size();
 
 		double buildingPV = genericCompany.pv_installed_kwp() != null ? genericCompany.pv_installed_kwp() : 0;
-		int i = 0;
+		double newPVDistributionForAllAttachedGC_kW = buildingPV/(currentAmountOfConnectedGCWithBuilding_notDetailed+1);
+		double deltaPV_earlierConnectedGC_kW = newPVDistributionForAllAttachedGC_kW - (buildingPV/currentAmountOfConnectedGCWithBuilding_notDetailed);
+		
 		for(GridConnection earlierConnectedGC : currentConnectedGCWithBuilding_notDetailed){
-			map_GC_to_installedBuildingPV.put(earlierConnectedGC, (map_GC_to_installedBuildingPV.get(earlierConnectedGC) - (buildingPV/currentAmountOfConnectedGCWithBuilding_notDetailed) + (buildingPV/(currentAmountOfConnectedGCWithBuilding_notDetailed+1))));	
-			i++;
+			map_GC_to_installedBuildingPV.put(earlierConnectedGC, map_GC_to_installedBuildingPV.get(earlierConnectedGC) + deltaPV_earlierConnectedGC_kW);	
+			if(map_GC_to_installedBuildingPV.get(earlierConnectedGC) < 0){
+				new RuntimeException("Negative installed PV for GC: " + earlierConnectedGC.p_gridConnectionID + " after redistribution of PV on the building. This should never be possible!");
+			}
 		}
-		map_GC_to_installedBuildingPV.put(companyGC, map_GC_to_installedBuildingPV.get(companyGC) + buildingPV/(currentAmountOfConnectedGCWithBuilding_notDetailed+1));
+		
+		map_GC_to_installedBuildingPV.put(companyGC, map_GC_to_installedBuildingPV.get(companyGC) + newPVDistributionForAllAttachedGC_kW);
+		
 		//Connect to the existing building
 		f_connectGCToExistingBuilding(companyGC, existingBuilding, genericCompany);
 	}
@@ -2837,6 +2843,10 @@ double buildingRoofSurface = existingBuilding.p_roofSurfaceArea_m2;
 int currentAmountOfConnectedGCWithBuilding = existingBuilding.c_containedGridConnections.size();
 for(GridConnection earlierConnectedGC : existingBuilding.c_containedGridConnections){
 	earlierConnectedGC.p_roofSurfaceArea_m2 -= buildingRoofSurface/currentAmountOfConnectedGCWithBuilding;
+	
+	if(earlierConnectedGC.p_roofSurfaceArea_m2 < 0){
+		new RuntimeException("Negative roofsurface for GC: " + earlierConnectedGC.p_gridConnectionID + " after removal of earlier distributed building roofsurface. This should never be possible!");
+	}
 }
 
 //Connect new GC to the building now
