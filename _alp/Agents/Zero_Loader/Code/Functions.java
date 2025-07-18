@@ -603,6 +603,7 @@ for (Windfarm_data dataWindfarm : f_getWindfarmsInSubScope(c_windfarm_data)) {
 
 double[] f_createGISNodesTokens(GridNode GN)
 {/*ALCODESTART::1726584205793*/
+double scaling_factor_LVLV = zero_Interface.v_LVLVNodeSize;
 double scaling_factor_MVLV = zero_Interface.v_MVLVNodeSize;
 double scaling_factor_MVMV = zero_Interface.v_MVMVNodeSize;
 double scaling_factor_HVMV = zero_Interface.v_HVMVNodeSize;
@@ -615,7 +616,7 @@ switch( GN.p_nodeType ) {
 		case LVLV:
 		nb_GISCoords = 6;
 		node_shape = "TRIANGLE";
-		scaling_factor_gridnode = scaling_factor_MVLV;		
+		scaling_factor_gridnode = scaling_factor_LVLV;		
 		break;
 		case MVLV:
 		nb_GISCoords = 6;

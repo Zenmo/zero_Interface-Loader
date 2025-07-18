@@ -895,7 +895,7 @@ traceln("gr_compareResultsButton is not functional!");</OnClickCode>
 	<Text>
 		<Id>1696837759915</Id>
 		<Name><![CDATA[t_legendaColors]]></Name>
-		<X>330</X>
+		<X>380</X>
 		<Y>1020</Y>
 		<Label>
 			<X>0</X>
@@ -1225,6 +1225,7 @@ traceln("gr_compareResultsButton is not functional!");</OnClickCode>
 								<Rotation>0.0</Rotation>
 								<Color>-16777216</Color>
 								<Text><![CDATA[Trafo overbelast]]></Text>
+								<TextCode>rb_buildingColors.getValue() != 4 ? "Trafo overbelast" : "Overbelast"</TextCode>
 								<Font>
 									<Name><![CDATA[SansSerif]]></Name>
 									<Size>12</Size>
@@ -1301,7 +1302,8 @@ traceln("gr_compareResultsButton is not functional!");</OnClickCode>
 								<Z>0</Z>
 								<Rotation>0.0</Rotation>
 								<Color>-16777216</Color>
-								<Text><![CDATA[Trafo]]></Text>
+								<Text><![CDATA[Trafo stabiel]]></Text>
+								<TextCode>rb_buildingColors.getValue() != 4 ? "Trafo stabiel" : "Stabiel"</TextCode>
 								<Font>
 									<Name><![CDATA[SansSerif]]></Name>
 									<Size>12</Size>
@@ -1379,6 +1381,7 @@ traceln("gr_compareResultsButton is not functional!");</OnClickCode>
 								<Rotation>0.0</Rotation>
 								<Color>-16777216</Color>
 								<Text><![CDATA[Trafo belast]]></Text>
+								<TextCode>rb_buildingColors.getValue() != 4 ? "Trafo belast" : "Belast"</TextCode>
 								<Font>
 									<Name><![CDATA[SansSerif]]></Name>
 									<Size>12</Size>
@@ -1739,12 +1742,8 @@ gr_consumptionColorsLegenda.setVisible(false);
 gr_consumptionColorsLegendaHouseholds.setVisible(false);
 gr_productionColorsLegenda.setVisible(false);
 gr_productionColorsLegendaHouseholds.setVisible(false);
-b_updateCongestionColors = true;
-
-//reset charger color
-//for( GCPublicCharger charger : energyModel.PublicChargers){
-	//f_stylePublicCharger( charger);
-//}
+b_updateLiveCongestionColors = true;
+f_clearSelectionAndSelectEnergyModel();
 
 if ( rb_buildingColors.getValue() == 0){
 	gr_standaardLegenda.setVisible(true);	
@@ -1793,7 +1792,7 @@ else if ( rb_buildingColors.getValue() == 2){
 	}
 }
 else if ( rb_buildingColors.getValue() == 3){
-	b_updateCongestionColors = false;
+	b_updateLiveCongestionColors = false;
 	for (GIS_Building building : energyModel.pop_GIS_Buildings){
 		f_setColorsBasedOnGridTopology_objects(building);
 	}
@@ -1805,8 +1804,16 @@ else if ( rb_buildingColors.getValue() == 3){
 	}
 }
 else if ( rb_buildingColors.getValue() == 4){
-b_updateCongestionColors = false;
-//f_setColorBasedOnManualTopologyTEMPORARYCHECK();
+	b_updateLiveCongestionColors = false;
+	for (GIS_Building building : energyModel.pop_GIS_Buildings){
+		f_setColorsBasedOnCongestion_objects(building);
+	}
+	for (GIS_Object object : energyModel.pop_GIS_Objects){
+		f_setColorsBasedOnCongestion_objects(object);
+	}
+	for (GridNode GN : energyModel.pop_gridNodes){
+		f_setColorsBasedOnCongestion_gridnodes(GN, false);
+	}
 }</ActionCode>
 								</BasicProperties>
 								<ExtendedProperties>
@@ -1816,12 +1823,13 @@ b_updateCongestionColors = false;
 									<Button>Elektriciteitsverbruik</Button>
 									<Button>PV opwek</Button>
 									<Button>Energie Buren</Button>
+									<Button>Netbelasting</Button>
 									<LinkTo>false</LinkTo>
 								</ExtendedProperties>
 							</Control>
 							<Text>
 								<Id>1724074508886</Id>
-								<Name><![CDATA[t_colorings]]></Name>
+								<Name><![CDATA[txt_colorings]]></Name>
 								<X>4</X>
 								<Y>-71</Y>
 								<Label>
@@ -1836,7 +1844,7 @@ b_updateCongestionColors = false;
 								<Z>0</Z>
 								<Rotation>0.0</Rotation>
 								<Color>-16777216</Color>
-								<Text><![CDATA[Kleur gebouwen obv:]]></Text>
+								<Text><![CDATA[Kleur gebouwen o.b.v.:]]></Text>
 								<Font>
 									<Name><![CDATA[SansSerif]]></Name>
 									<Size>11</Size>
@@ -5007,7 +5015,7 @@ getExperimentHost().openWebSite("https://holons.energy/");
 	<Text>
 		<Id>1734443343976</Id>
 		<Name><![CDATA[t_selectionColors]]></Name>
-		<X>340</X>
+		<X>390</X>
 		<Y>1330</Y>
 		<Label>
 			<X>0</X>
@@ -7652,6 +7660,82 @@ else{
 					</Line>
 				</Presentation>
 			</Group>
+		</Presentation>
+	</Group>
+	<Group>
+		<Id>1752833007769</Id>
+		<Name><![CDATA[gr_congestionColouringType]]></Name>
+		<X>1680</X>
+		<Y>2190</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>1010</XCode>
+		<YCode>890</YCode>
+		<VisibleCode>rb_buildingColors.getValue() == 4</VisibleCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Control Type="RadioButtons">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1752831754623</Id>
+				<Name><![CDATA[rb_congestionOverlayType]]></Name>
+				<X>-80</X>
+				<Y>-30</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="150" Height="70">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>rb_buildingColors.setValue(rb_buildingColors.getValue(), true);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<Orientation>VERTICAL</Orientation>
+					<Button>Afname</Button>
+					<Button>Teruglevering</Button>
+					<Button>Beide</Button>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1752832963782</Id>
+				<Name><![CDATA[txt_congestionColouringType]]></Name>
+				<X>-80</X>
+				<Y>-50</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Type belasting:]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>11</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
 		</Presentation>
 	</Group>
 </Presentation>
