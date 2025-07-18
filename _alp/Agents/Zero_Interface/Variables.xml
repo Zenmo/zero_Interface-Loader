@@ -26,7 +26,7 @@
 		<Id>1696837759932</Id>
 		<Name><![CDATA[v_LVGridColor]]></Name>
 		<X>345</X>
-		<Y>1060</Y>
+		<Y>1100</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -48,7 +48,7 @@
 		<Id>1696837759935</Id>
 		<Name><![CDATA[v_HVGridColor]]></Name>
 		<X>345</X>
-		<Y>1100</Y>
+		<Y>1060</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

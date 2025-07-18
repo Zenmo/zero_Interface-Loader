@@ -2947,7 +2947,21 @@ if (gis_area.c_containedGridConnections.size() > 0) {
 	double maxLoad_fr_gis_object = 0;
 	for(GridConnection gc : gis_area.c_containedGridConnections){
 		if(gc.v_rapidRunData != null){
-			double maxLoad_fr_gc = max(gc.v_rapidRunData.getPeakDelivery_kW()/gc.v_rapidRunData.connectionMetaData.contractedDeliveryCapacity_kW, gc.v_rapidRunData.getPeakDelivery_kW()/gc.v_rapidRunData.connectionMetaData.contractedFeedinCapacity_kW);
+			double maxLoad_fr_gc = 0;
+			double maxLoad_fr_gc_delivery = gc.v_rapidRunData.connectionMetaData.contractedDeliveryCapacity_kW > 0 ? gc.v_rapidRunData.getPeakDelivery_kW()/gc.v_rapidRunData.connectionMetaData.contractedDeliveryCapacity_kW : 0;
+			double maxLoad_fr_gc_feedin = gc.v_rapidRunData.connectionMetaData.contractedFeedinCapacity_kW > 0 ? gc.v_rapidRunData.getPeakFeedin_kW()/gc.v_rapidRunData.connectionMetaData.contractedFeedinCapacity_kW : 0;
+
+			switch(rb_congestionOverlayType.getValue()){
+				case 0:
+					maxLoad_fr_gc = maxLoad_fr_gc_delivery;
+					break;
+				case 1:
+					maxLoad_fr_gc = maxLoad_fr_gc_feedin;
+					break;
+				case 2:
+					maxLoad_fr_gc = max(maxLoad_fr_gc_delivery, maxLoad_fr_gc_feedin);
+					break;
+			}
 			if(maxLoad_fr_gc > maxLoad_fr_gis_object){
 				maxLoad_fr_gis_object = maxLoad_fr_gc;
 			}
@@ -2969,12 +2983,25 @@ if (gis_area.c_containedGridConnections.size() > 0) {
 double f_setColorsBasedOnCongestion_gridnodes(GridNode gn,boolean isLiveSim)
 {/*ALCODESTART::1752756016324*/
 if (gn!=null){
-	double maxLoad_fr;
+	double maxLoad_fr = 0;
 	if(isLiveSim){
 		maxLoad_fr = abs(gn.v_currentLoad_kW)/gn.p_capacity_kW;	
 	}
 	else{
-		maxLoad_fr = max(abs(gn.data_netbelastingDuurkromme_kW.getY(0)),abs(gn.data_netbelastingDuurkromme_kW.getY(gn.data_netbelastingDuurkromme_kW.size()-1))) / gn.p_capacity_kW;
+		double maxLoad_fr_delivery = gn.p_capacity_kW > 0 ? abs(gn.data_netbelastingDuurkromme_kW.getY(0))/gn.p_capacity_kW : 0;
+		double maxLoad_fr_feedin = gn.p_capacity_kW > 0 ? abs(gn.data_netbelastingDuurkromme_kW.getY(gn.data_netbelastingDuurkromme_kW.size()-1))/gn.p_capacity_kW : 0;
+
+		switch(rb_congestionOverlayType.getValue()){
+			case 0:
+				maxLoad_fr = maxLoad_fr_delivery;
+				break;
+			case 1:
+				maxLoad_fr = maxLoad_fr_feedin;
+				break;
+			case 2:
+				maxLoad_fr = max(maxLoad_fr_delivery, maxLoad_fr_feedin);
+				break;
+		}
 	}
 	
 	if (maxLoad_fr > 1) {

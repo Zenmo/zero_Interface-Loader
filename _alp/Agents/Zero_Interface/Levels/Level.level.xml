@@ -1809,9 +1809,9 @@ else if ( rb_buildingColors.getValue() == 4){
 	for (GIS_Building building : energyModel.pop_GIS_Buildings){
 		f_setColorsBasedOnCongestion_objects(building);
 	}
-	/*for (GIS_Object object : energyModel.pop_GIS_Objects){
-		f_setColorsBasedOnGridTopology_objects(object);
-	}*/
+	for (GIS_Object object : energyModel.pop_GIS_Objects){
+		f_setColorsBasedOnCongestion_objects(object);
+	}
 	for (GridNode GN : energyModel.pop_gridNodes){
 		f_setColorsBasedOnCongestion_gridnodes(GN, false);
 	}
@@ -7661,6 +7661,82 @@ else{
 					</Line>
 				</Presentation>
 			</Group>
+		</Presentation>
+	</Group>
+	<Group>
+		<Id>1752833007769</Id>
+		<Name><![CDATA[gr_congestionColouringType]]></Name>
+		<X>1680</X>
+		<Y>2190</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>1010</XCode>
+		<YCode>890</YCode>
+		<VisibleCode>rb_buildingColors.getValue() == 4</VisibleCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Control Type="RadioButtons">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1752831754623</Id>
+				<Name><![CDATA[rb_congestionOverlayType]]></Name>
+				<X>-80</X>
+				<Y>-30</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="150" Height="70">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>rb_buildingColors.setValue(rb_buildingColors.getValue(), true);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<Orientation>VERTICAL</Orientation>
+					<Button>Afname</Button>
+					<Button>Teruglevering</Button>
+					<Button>Beide</Button>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1752832963782</Id>
+				<Name><![CDATA[txt_congestionColouringType]]></Name>
+				<X>-80</X>
+				<Y>-50</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Type congestie:]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>11</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
 		</Presentation>
 	</Group>
 </Presentation>
