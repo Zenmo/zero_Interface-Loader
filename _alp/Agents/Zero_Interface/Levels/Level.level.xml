@@ -1739,7 +1739,7 @@ gr_consumptionColorsLegenda.setVisible(false);
 gr_consumptionColorsLegendaHouseholds.setVisible(false);
 gr_productionColorsLegenda.setVisible(false);
 gr_productionColorsLegendaHouseholds.setVisible(false);
-b_updateCongestionColors = true;
+b_updateLiveCongestionColors = true;
 
 //reset charger color
 //for( GCPublicCharger charger : energyModel.PublicChargers){
@@ -1793,7 +1793,7 @@ else if ( rb_buildingColors.getValue() == 2){
 	}
 }
 else if ( rb_buildingColors.getValue() == 3){
-	b_updateCongestionColors = false;
+	b_updateLiveCongestionColors = false;
 	for (GIS_Building building : energyModel.pop_GIS_Buildings){
 		f_setColorsBasedOnGridTopology_objects(building);
 	}
@@ -1805,8 +1805,16 @@ else if ( rb_buildingColors.getValue() == 3){
 	}
 }
 else if ( rb_buildingColors.getValue() == 4){
-b_updateCongestionColors = false;
-//f_setColorBasedOnManualTopologyTEMPORARYCHECK();
+	b_updateLiveCongestionColors = false;
+	for (GIS_Building building : energyModel.pop_GIS_Buildings){
+		f_setColorsBasedOnCongestion_objects(building);
+	}
+	/*for (GIS_Object object : energyModel.pop_GIS_Objects){
+		f_setColorsBasedOnGridTopology_objects(object);
+	}*/
+	for (GridNode GN : energyModel.pop_gridNodes){
+		f_setColorsBasedOnCongestion_gridnodes(GN, false);
+	}
 }</ActionCode>
 								</BasicProperties>
 								<ExtendedProperties>
@@ -1816,6 +1824,7 @@ b_updateCongestionColors = false;
 									<Button>Elektriciteitsverbruik</Button>
 									<Button>PV opwek</Button>
 									<Button>Energie Buren</Button>
+									<Button>Congestie</Button>
 									<LinkTo>false</LinkTo>
 								</ExtendedProperties>
 							</Control>

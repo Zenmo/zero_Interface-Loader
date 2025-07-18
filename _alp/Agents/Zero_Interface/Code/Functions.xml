@@ -6,7 +6,7 @@
 		<Id>1696837759921</Id>
 		<Name><![CDATA[f_setLegendaColors]]></Name>
 		<X>1350</X>
-		<Y>1650</Y>
+		<Y>1660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -23,7 +23,7 @@
 		<Name><![CDATA[f_setColorToEnergyLabels]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1350</X>
-		<Y>1620</Y>
+		<Y>1680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -285,26 +285,6 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1714043663127</Id>
-		<Name><![CDATA[f_setGridNodeCongestionColor]]></Name>
-		<X>-650</X>
-		<Y>511</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[gn]]></Name>
-			<Type><![CDATA[GridNode]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -1858,6 +1838,50 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1752756002220</Id>
+		<Name><![CDATA[f_setColorsBasedOnCongestion_objects]]></Name>
+		<X>1350</X>
+		<Y>1610</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gis_area]]></Name>
+			<Type><![CDATA[GIS_Object]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1752756016324</Id>
+		<Name><![CDATA[f_setColorsBasedOnCongestion_gridnodes]]></Name>
+		<X>1350</X>
+		<Y>1630</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gn]]></Name>
+			<Type><![CDATA[GridNode]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[isLiveSim]]></Name>
+			<Type><![CDATA[boolean]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

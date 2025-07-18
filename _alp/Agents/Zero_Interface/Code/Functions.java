@@ -218,7 +218,6 @@ switch(rb_buildingColors.getValue()) {
 	case 0:
 	case 1:
 	case 2:
-	case 4:
 		switch( GN.p_nodeType ) {
 			case MVLV:
 				f_styleMVLV(GN.gisRegion);
@@ -247,7 +246,9 @@ switch(rb_buildingColors.getValue()) {
 	case 3:
 		f_setColorsBasedOnGridTopology_gridnodes(GN);
 		break;
-
+	case 4:
+		f_setColorsBasedOnCongestion_gridnodes(GN, false);
+		break;
 	default:
 		break;
 }
@@ -423,7 +424,7 @@ gr_multipleBuildingInfo.setVisible(false);
 // We restore the colors of what we clicked on before
 if (v_previousClickedObjectType == OL_GISObjectType.GRIDNODE){
 	v_previousClickedGridNode = v_clickedGridNode;
-	f_setGridNodeCongestionColor(v_clickedGridNode);
+	f_styleGridNodes(v_clickedGridNode);
 	for ( Agent agent : v_previousClickedGridNode.f_getAllLowerLVLConnectedGridConnections()){	
 		if (agent instanceof GridConnection) {
 			GridConnection GC = (GridConnection)agent;
@@ -570,28 +571,6 @@ if(!b_runningMainInterfaceScenarios){
 		}
 	}
 	runSimulation();
-}
-/*ALCODEEND*/}
-
-double f_setGridNodeCongestionColor(GridNode gn)
-{/*ALCODESTART::1714043663127*/
-if (gn!=null){
-	double maxLoad_fr = abs(gn.v_currentLoad_kW)/gn.p_capacity_kW;
-	if (maxLoad_fr > 1) {
-		gn.gisRegion.setFillColor(v_gridNodeColorCongested);
-		gn.gisRegion.setLineColor(v_gridLineColorCongested);
-	} else if (maxLoad_fr > 0.7) {
-		gn.gisRegion.setFillColor(v_gridNodeColorStrained);
-		gn.gisRegion.setLineColor(v_gridNodeLineColorStrained);
-	} else {
-		gn.gisRegion.setFillColor(v_MVLVNodeColor);
-		gn.gisRegion.setLineColor(v_MVLVLineColor);
-	}
-	
-	if( gn == v_clickedGridNode && gn != v_previousClickedGridNode){ // dit zorgt ervoor dat de kleuringfunctie correct werkt in zowel live stand als pauze stand
-		gn.gisRegion.setFillColor( v_selectionColor );
-		gn.gisRegion.setLineColor( orange );
-	}
 }
 /*ALCODEEND*/}
 
@@ -2960,5 +2939,59 @@ for (GCGridBattery gc : energyModel.GridBatteries) {
 averageNeighbourhoodBatterySize_kWh /= energyModel.GridBatteries.size();
 uI_Tabs.pop_tabElectricity.get(0).sl_gridBatteriesResidentialArea_kWh.setValue(averageNeighbourhoodBatterySize_kWh, false);
 
+/*ALCODEEND*/}
+
+double f_setColorsBasedOnCongestion_objects(GIS_Object gis_area)
+{/*ALCODESTART::1752756002220*/
+if (gis_area.c_containedGridConnections.size() > 0) {
+	double maxLoad_fr_gis_object = 0;
+	for(GridConnection gc : gis_area.c_containedGridConnections){
+		if(gc.v_rapidRunData != null){
+			double maxLoad_fr_gc = max(gc.v_rapidRunData.getPeakDelivery_kW()/gc.v_rapidRunData.connectionMetaData.contractedDeliveryCapacity_kW, gc.v_rapidRunData.getPeakDelivery_kW()/gc.v_rapidRunData.connectionMetaData.contractedFeedinCapacity_kW);
+			if(maxLoad_fr_gc > maxLoad_fr_gis_object){
+				maxLoad_fr_gis_object = maxLoad_fr_gc;
+			}
+		}
+	}
+	if (maxLoad_fr_gis_object > 1) {
+		gis_area.gisRegion.setFillColor(v_gridNodeColorCongested);
+		gis_area.gisRegion.setLineColor(v_gridLineColorCongested);
+	} else if (maxLoad_fr_gis_object > 0.7) {
+		gis_area.gisRegion.setFillColor(v_gridNodeColorStrained);
+		gis_area.gisRegion.setLineColor(v_gridNodeLineColorStrained);
+	} else {
+		gis_area.gisRegion.setFillColor(v_MVLVNodeColor);
+		gis_area.gisRegion.setLineColor(v_MVLVLineColor);
+	}
+}
+/*ALCODEEND*/}
+
+double f_setColorsBasedOnCongestion_gridnodes(GridNode gn,boolean isLiveSim)
+{/*ALCODESTART::1752756016324*/
+if (gn!=null){
+	double maxLoad_fr;
+	if(isLiveSim){
+		maxLoad_fr = abs(gn.v_currentLoad_kW)/gn.p_capacity_kW;	
+	}
+	else{
+		maxLoad_fr = max(abs(gn.data_netbelastingDuurkromme_kW.getY(0)),abs(gn.data_netbelastingDuurkromme_kW.getY(gn.data_netbelastingDuurkromme_kW.size()-1))) / gn.p_capacity_kW;
+	}
+	
+	if (maxLoad_fr > 1) {
+		gn.gisRegion.setFillColor(v_gridNodeColorCongested);
+		gn.gisRegion.setLineColor(v_gridLineColorCongested);
+	} else if (maxLoad_fr > 0.7) {
+		gn.gisRegion.setFillColor(v_gridNodeColorStrained);
+		gn.gisRegion.setLineColor(v_gridNodeLineColorStrained);
+	} else {
+		gn.gisRegion.setFillColor(v_MVLVNodeColor);
+		gn.gisRegion.setLineColor(v_MVLVLineColor);
+	}
+	
+	if( gn == v_clickedGridNode && gn != v_previousClickedGridNode){ // dit zorgt ervoor dat de kleuringfunctie correct werkt in zowel live stand als pauze stand
+		gn.gisRegion.setFillColor( v_selectionColor );
+		gn.gisRegion.setLineColor( orange );
+	}
+}
 /*ALCODEEND*/}
 

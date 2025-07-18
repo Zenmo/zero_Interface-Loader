@@ -1292,7 +1292,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1718567214780</Id>
-		<Name><![CDATA[b_updateCongestionColors]]></Name>
+		<Name><![CDATA[b_updateLiveCongestionColors]]></Name>
 		<X>1030</X>
 		<Y>1400</Y>
 		<Label>
