@@ -418,10 +418,10 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) { // M
 	
 	switch (dataBattery.operation_mode()) {
 		case PRICE:
-			gridbattery.p_batteryAlgorithm = new J_BatteryPrice(gridbattery);
+			gridbattery.p_batteryAlgorithm = new J_BatteryManagementPrice(gridbattery);
 			break;
 		case PEAK_SHAVING_PARENT_NODE:
-			J_BatteryPeakShaving batteryAlgorithm = new J_BatteryPeakShaving(gridbattery);
+			J_BatteryManagementPeakShaving batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery);
 			GridNode gn = findFirst(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals(gridbattery.p_parentNodeElectricID));
 			if (gn == null) {
 				throw new RuntimeException("Could not find GridNode with ID: " + gridbattery.p_parentNodeElectricID + " for GCGridBattery");
@@ -431,7 +431,7 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) { // M
 			break;
 		case PEAK_SHAVING_COOP:
 			// target agent is still null, should be set at the moment of coop creation
-			batteryAlgorithm = new J_BatteryPeakShaving(gridbattery);
+			batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery);
 			batteryAlgorithm.setTargetType( OL_ResultScope.ENERGYCOOP );
 			gridbattery.p_batteryAlgorithm = batteryAlgorithm;
 			break;
@@ -2854,7 +2854,7 @@ if (gridConnection.getStorage().getHasBattery() != null && gridConnection.getSto
 }
 // Elke survey company krijgt hoe dan ook een batterij EA (ook als op dit moment nog geen batterij aanwezig is, maar dan is capaciteit gewoon 0)
 f_addStorage(companyGC, battery_power_kW, battery_capacity_kWh, OL_EnergyAssetType.STORAGE_ELECTRIC);
-companyGC.p_batteryAlgorithm = new J_BatterySelfConsumption(companyGC);
+companyGC.p_batteryAlgorithm = new J_BatteryManagementSelfConsumption(companyGC);
 
 //add to scenario: current
 current_scenario_list.setCurrentBatteryCapacity_kWh(battery_capacity_kWh);
