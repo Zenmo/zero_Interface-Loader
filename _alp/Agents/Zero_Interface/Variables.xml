@@ -1294,7 +1294,7 @@
 		<Id>1718567214780</Id>
 		<Name><![CDATA[b_updateLiveCongestionColors]]></Name>
 		<X>1030</X>
-		<Y>1520</Y>
+		<Y>1600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1790,7 +1790,7 @@
 		<Id>1731425176471</Id>
 		<Name><![CDATA[b_changeToCustomScenario]]></Name>
 		<X>-670</X>
-		<Y>781</Y>
+		<Y>811</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1812,7 +1812,7 @@
 		<Id>1732027307811</Id>
 		<Name><![CDATA[b_runningMainInterfaceScenarios]]></Name>
 		<X>-670</X>
-		<Y>761</Y>
+		<Y>791</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1833,8 +1833,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1734617425109</Id>
 		<Name><![CDATA[b_gridLoopsAreDefined]]></Name>
-		<X>-1410</X>
-		<Y>330</Y>
+		<X>-630</X>
+		<Y>530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1856,8 +1856,8 @@
 		<Id>1736425024539</Id>
 		<Name><![CDATA[v_groupATODeliveryCapacity_kW]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1890</X>
-		<Y>1570</Y>
+		<X>70</X>
+		<Y>2180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1876,8 +1876,8 @@
 		<Id>1736425024541</Id>
 		<Name><![CDATA[v_groupATOFeedInCapacity_kW]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1890</X>
-		<Y>1590</Y>
+		<X>70</X>
+		<Y>2200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1897,8 +1897,8 @@
 		<Name><![CDATA[v_GCGTOConnectionCapacities]]></Name>
 		<Description><![CDATA[Maps every gridconnection to the calculated contribution to a GTO (Groep Transport Overeenkomst). Delivery and FeedIn respectively.]]></Description>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1900</X>
-		<Y>1490</Y>
+		<X>80</X>
+		<Y>2100</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1961,7 +1961,7 @@
 		<Id>1743092928263</Id>
 		<Name><![CDATA[b_inManualFilterSelectionMode]]></Name>
 		<X>-1410</X>
-		<Y>500</Y>
+		<Y>480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2156,8 +2156,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1750165528617</Id>
 		<Name><![CDATA[v_numberOfSurveyCompanies]]></Name>
-		<X>1340</X>
-		<Y>1860</Y>
+		<X>1390</X>
+		<Y>1520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2301,6 +2301,91 @@
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[10]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1753105667219</Id>
+		<Name><![CDATA[rb_mapOverlay]]></Name>
+		<X>1920</X>
+		<Y>1495</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ShapeRadioButtonGroup]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1753110308594</Id>
+		<Name><![CDATA[v_amountOfDefinedGridLoops]]></Name>
+		<X>-630</X>
+		<Y>550</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[int]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1753115730758</Id>
+		<Name><![CDATA[v_gridNodeColorCapacityUnknown]]></Name>
+		<X>1030</X>
+		<Y>1510</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[Color]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[gray]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1753115736678</Id>
+		<Name><![CDATA[v_gridNodeLineColorCapacityUnknown]]></Name>
+		<X>1030</X>
+		<Y>1530</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[Color]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[gray.brighter()]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2924,7 +3009,7 @@
 		<Id>1742226708562</Id>
 		<Name><![CDATA[c_manualFilterDeselectedGC]]></Name>
 		<X>-1410</X>
-		<Y>475</Y>
+		<Y>455</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2942,7 +3027,7 @@
 		<Id>1742226748068</Id>
 		<Name><![CDATA[c_manualFilterSelectedGC]]></Name>
 		<X>-1410</X>
-		<Y>455</Y>
+		<Y>435</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2978,7 +3063,7 @@
 		<Id>1742376765347</Id>
 		<Name><![CDATA[c_filterSelectedNeighborhoods]]></Name>
 		<X>-1410</X>
-		<Y>390</Y>
+		<Y>370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3051,8 +3136,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1750078746618</Id>
 		<Name><![CDATA[c_modelActiveSpecialGISObjects]]></Name>
-		<X>1340</X>
-		<Y>1820</Y>
+		<X>1390</X>
+		<Y>1480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3087,8 +3172,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1750089494475</Id>
 		<Name><![CDATA[c_modelActiveParkingSpaceTypes]]></Name>
-		<X>1340</X>
-		<Y>1840</Y>
+		<X>1390</X>
+		<Y>1500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3123,8 +3208,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1750156136377</Id>
 		<Name><![CDATA[c_modelActiveDefaultGISBuildings]]></Name>
-		<X>1340</X>
-		<Y>1800</Y>
+		<X>1390</X>
+		<Y>1460</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3208,6 +3293,24 @@
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>GCPublicCharger</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1753087052979</Id>
+		<Name><![CDATA[c_loadedMapOverlayTypes]]></Name>
+		<X>1920</X>
+		<Y>1470</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>OL_MapOverlayTypes</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>

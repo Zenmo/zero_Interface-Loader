@@ -300,14 +300,6 @@ else if ( gc instanceof GCUtility ) {
 else {
 	throw new RuntimeException("Unknown GridConnection type passed to f_addPVSystem.");
 }
-
-
-//Color the buildings when in solar color mode
-if ( zero_Interface.rb_buildingColors.getValue() == 2 ) {
-	for ( GIS_Object building : gc.c_connectedGISObjects ) {
-		zero_Interface.f_styleAreas(building);
-	}
-}
 /*ALCODEEND*/}
 
 double f_removePVSystem(GridConnection gc)

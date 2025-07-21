@@ -218,8 +218,8 @@
 					<Enabled>true</Enabled>
 					<ActionCode>f_setPVSystemCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_rooftopPVCompanies_pct.getValue(), sl_rooftopPVCompanies_pct );
 
-if( zero_Interface.rb_buildingColors.getValue() == 2){
-	zero_Interface.rb_buildingColors.setValue(2, true);
+if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
+	zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
 }</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -485,8 +485,8 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 					<Enabled>true</Enabled>
 					<ActionCode>f_setPVSystemHouses( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_rooftopPVHouses_pct.getValue() );
 
-if( zero_Interface.rb_buildingColors.getValue() == 2){
-	zero_Interface.rb_buildingColors.setValue(2, true);
+if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
+	zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
 }</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -1031,7 +1031,12 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_rooftopPVCompanies_pct_Businesspark.getValue(), sl_rooftopPVCompanies_pct_Businesspark );</ActionCode>
+					<ActionCode>f_setPVSystemCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_rooftopPVCompanies_pct_Businesspark.getValue(), sl_rooftopPVCompanies_pct_Businesspark );
+
+//If on pv map overlay, adjust colouring
+if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
+	zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
+}</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1476,8 +1481,10 @@ if( zero_Interface.rb_buildingColors.getValue() == 2){
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setPVSystemHouses( findAll(zero_Interface.energyModel.Houses, x -&gt; true), sl_householdPVResidentialArea_pct.getValue() );
-if( zero_Interface.rb_buildingColors.getValue() == 2){
-	zero_Interface.rb_buildingColors.setValue(2, true); //renew the PV view of houses
+
+//If on pv map overlay, adjust colouring
+if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
+	zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
 }
 
 // Also updates the home batteries
