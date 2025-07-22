@@ -3170,6 +3170,7 @@ switch(selectedMapOverlayType){
 double f_setMapOverlay_ElectricityConsumption()
 {/*ALCODESTART::1753097345978*/
 //Set legend
+b_updateLiveCongestionColors = true;
 gr_mapOverlayLegend_ElectricityConsumption.setVisible(true);
 
 //Colour gis objects
@@ -3194,6 +3195,7 @@ else {
 double f_setMapOverlay_PVProduction()
 {/*ALCODESTART::1753097409446*/
 //Set legend
+b_updateLiveCongestionColors = true;
 gr_mapOverlayLegend_PVProduction.setVisible(true);
 
 //Colour gis objects

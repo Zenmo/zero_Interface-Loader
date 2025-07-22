@@ -2768,6 +2768,12 @@ Building_data f_createBuildingData_Vallum(GridConnection companyGC,String PandID
 {/*ALCODESTART::1737741603780*/
 com.zenmo.bag.Pand pand_data_vallum = map_buildingData_Vallum.get(PandID);
 
+//Calculate surface area
+GISRegion gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(pand_data_vallum.getGeometry().toString(), OL_GISObjectType.BUILDING));
+double surfaceArea_m2 = gisRegion.area();
+gisRegion.remove();
+
+
 //Create a building_data record
 Building_data building_data_record = Building_data.builder().
 
@@ -2782,8 +2788,8 @@ city(companyGC.p_address.getPostalcode()).
 build_year(pand_data_vallum.getBouwjaar()).	
 status(pand_data_vallum.getStatus()).
 //purpose(row.get( buildings.purpose )).
-//cumulative_floor_surface_m2(row.get( buildings.cumulative_floor_surface_m2 )).
-//polygon_area_m2(row.get( buildings.polygon_area_m2 )).
+address_floor_surface_m2(surfaceArea_m2).
+polygon_area_m2(surfaceArea_m2).
 annotation(companyGC.p_owner.p_actorID).
 //extra_info(row.get( buildings.extra_info )).
 //gridnode_id(row.get( buildings.gridnode_id )).
