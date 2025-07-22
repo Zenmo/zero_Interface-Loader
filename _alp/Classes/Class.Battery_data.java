@@ -23,7 +23,7 @@ public class Battery_data {
 	double connection_capacity_kw;
 	Double contracted_delivery_capacity_kw;
 	Double contracted_feed_in_capacity_kw;
-	String default_operation_mode;
+	OL_BatteryOperationMode operation_mode;
 	double latitude;
 	double longitude;
 	String polygon;
