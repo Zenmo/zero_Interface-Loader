@@ -729,14 +729,6 @@ if(settings.showKPISummary() == null || !settings.showKPISummary()){
 	uI_Results.getCheckbox_KPISummary().setVisible(false);
 }
 
-//Set order of certain layovers and submenus
-presentation.remove(gr_sliderClickBlocker);
-presentation.insert(presentation.size(), gr_sliderClickBlocker);
-presentation.remove(gr_forceMapSelection);
-presentation.insert(presentation.size(), gr_forceMapSelection);
-presentation.remove(gr_filterInterface);
-presentation.insert(presentation.size(), gr_filterInterface);
-
 if(settings.isPublicModel()){
 	f_changeDefaultColorOfPrivateGC();
 }
@@ -746,6 +738,18 @@ b_updateLiveCongestionColors = true;
 
 //Initialize map overlay buttons
 f_initializeMapOverlayRadioButton();
+
+
+//Set order of certain layovers and submenus
+presentation.remove(gr_sliderClickBlocker);
+presentation.insert(presentation.size(), gr_sliderClickBlocker);
+presentation.remove(gr_forceMapSelection);
+presentation.insert(presentation.size(), gr_forceMapSelection);
+presentation.remove(gr_filterInterface);
+presentation.insert(presentation.size(), gr_filterInterface);
+presentation.remove(gr_infoText);
+presentation.insert(presentation.size(), gr_infoText);
+	
 /*ALCODEEND*/}
 
 GISRegion f_createGISObject(double[] gisTokens)
@@ -2132,7 +2136,7 @@ else {
 	// Set Size
 	rect_infoText.setWidth(width_ch * 7.5); // about 7.5 px per char for sans serif 14 pt
 	rect_infoText.setHeight(50 + p.getSecond() * 20); // about 50 px for title and 20 px per line for sans serif 14 pt
-	
+
 	// Set Position
 	// The group position is on the top left, not the centre.
 	double margin_px = 15;
@@ -3180,6 +3184,11 @@ if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL){
 	}
 }
 else {
+	if(energyModel.v_rapidRunData == null){
+		f_setErrorScreen("Dit overzicht wordt pas beschikbaar na het uitvoeren van een jaarsimulatie. In plaats daarvan is de standaard kaart geselecteerd.");
+		rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT),true);
+		return;			
+	}
 	gr_mapOverlayLegend_ElectricityConsumption.setVisible(true);
 	for (GIS_Building building : energyModel.pop_GIS_Buildings){
 		if(building.gisRegion.isVisible()){
