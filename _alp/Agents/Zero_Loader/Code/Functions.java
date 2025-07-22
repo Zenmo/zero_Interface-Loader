@@ -393,9 +393,31 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) { // M
 		gridbattery.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;	
 	}
 	
-	gridbattery.set_p_parentNodeElectricID( dataBattery.gridnode_id() );	
+	gridbattery.set_p_parentNodeElectricID( dataBattery.gridnode_id() );
 	gridbattery.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
-	gridbattery.set_p_batteryOperationMode( OL_BatteryOperationMode.valueOf(dataBattery.default_operation_mode()) );
+	
+	switch (dataBattery.operation_mode()) {
+		case PRICE:
+			gridbattery.p_batteryAlgorithm = new J_BatteryManagementPrice(gridbattery);
+			break;
+		case PEAK_SHAVING_PARENT_NODE:
+			J_BatteryManagementPeakShaving batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery);
+			GridNode gn = findFirst(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals(gridbattery.p_parentNodeElectricID));
+			if (gn == null) {
+				throw new RuntimeException("Could not find GridNode with ID: " + gridbattery.p_parentNodeElectricID + " for GCGridBattery");
+			}
+			batteryAlgorithm.setTarget(gn);
+			gridbattery.p_batteryAlgorithm = batteryAlgorithm;
+			break;
+		case PEAK_SHAVING_COOP:
+			// target agent is still null, should be set at the moment of coop creation
+			batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery);
+			batteryAlgorithm.setTargetType( OL_ResultScope.ENERGYCOOP );
+			gridbattery.p_batteryAlgorithm = batteryAlgorithm;
+			break;
+		default:
+			throw new RuntimeException("Battery Operation Mode: " + dataBattery.operation_mode() + " is not supported for GCGridBattery.");
+	}
 	
 	//Get initial state
 	gridbattery.v_isActive = dataBattery.initially_active();
@@ -1370,7 +1392,7 @@ double f_addElectricVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_t
 double storageCapacity_kWh 		= 0;
 double energyConsumption_kWhpkm = 0;
 double capacityElectricity_kW 	= 0;
-double stateOfCharge_r  		= 1; // Initial state of charge
+double stateOfCharge_fr  		= 1; // Initial state of charge
 double timestep_h				= energyModel.p_timeStep_h;
 double vehicleScaling 			= 1.0;
 
@@ -1410,7 +1432,7 @@ if (!isDefaultVehicle && maxChargingPower_kW != 0){
 
 
 //Create the EV vehicle energy asset with the set parameters + links
-J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_r, timestep_h, energyConsumption_kWhpkm, vehicleScaling, vehicle_type, null);	
+J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timestep_h, energyConsumption_kWhpkm, vehicleScaling, vehicle_type, null);	
 
 if (!isDefaultVehicle && annualTravelDistance_km > 1000){
 		electricVehicle.tripTracker.setAnnualDistance_km(annualTravelDistance_km);
@@ -2496,9 +2518,7 @@ if (gridConnection.getStorage().getHasBattery() != null && gridConnection.getSto
 }
 // Elke survey company krijgt hoe dan ook een batterij EA (ook als op dit moment nog geen batterij aanwezig is, maar dan is capaciteit gewoon 0)
 f_addStorage(companyGC, battery_power_kW, battery_capacity_kWh, OL_EnergyAssetType.STORAGE_ELECTRIC);
-companyGC.p_batteryOperationMode = OL_BatteryOperationMode.BALANCE;
-
-//Aansturing toevoegen ?
+companyGC.p_batteryAlgorithm = new J_BatteryManagementSelfConsumption(companyGC);
 
 //add to scenario: current
 current_scenario_list.setCurrentBatteryCapacity_kWh(battery_capacity_kWh);
@@ -3123,7 +3143,7 @@ contracted_delivery_capacity_kw(0.0).
 contracted_feed_in_capacity_kw(0.0).
 
 storage_capacity_kwh(0.0).
-default_operation_mode("BALANCE").
+operation_mode(OL_BatteryOperationMode.PEAK_SHAVING_PARENT_NODE).
 latitude(0).
 longitude(0).
 polygon(null).
