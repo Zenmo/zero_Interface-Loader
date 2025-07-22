@@ -460,6 +460,10 @@ if(((J_EAStorageElectric)batteryAsset).getCapacityElectric_kW() != 0){
 ((J_EAStorageElectric)batteryAsset).setCapacityElectric_kW(setBatteryCapacity_kWh*existing_batterypower_capacity_ratio); //Set Power
 ((J_EAStorageElectric)batteryAsset).setStorageCapacity_kWh(setBatteryCapacity_kWh);										 //Set storage capacity
 
+//Add battery algorithm if it is not present
+if(GC.p_batteryAlgorithm == null){
+	GC.p_batteryAlgorithm = new J_BatteryManagementSelfConsumption(GC);
+}
 
 /*ALCODEEND*/}
 
