@@ -876,7 +876,7 @@
 	<Rectangle>
 		<Id>1730217549237</Id>
 		<Name><![CDATA[rect_supportFunctions]]></Name>
-		<X>1580</X>
+		<X>1520</X>
 		<Y>750</Y>
 		<Label>
 			<X>10</X>
@@ -893,7 +893,7 @@
 		<LineColor>-16777216</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>330</Width>
+		<Width>390</Width>
 		<Height>220</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
@@ -902,7 +902,7 @@
 	<Text>
 		<Id>1730217578770</Id>
 		<Name><![CDATA[txt_supportFunctions]]></Name>
-		<X>1590</X>
+		<X>1550</X>
 		<Y>770</Y>
 		<Label>
 			<X>0</X>
