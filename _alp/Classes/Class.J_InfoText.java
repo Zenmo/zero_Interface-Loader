@@ -77,6 +77,11 @@ public class J_InfoText implements Serializable {
 	//// E-Hub Tab
 	//TODO
 	
+	////Map overlays
+	
+	//Congestion
+	public String i_mapOverlayLegend_congestion_Degrees = "Als een GIS-object (zoals een pand of transformator) groen wordt weergegeven, is er nog voldoende beschikbare capaciteit. Een oranje object duidt erop dat tijdens de jaarsimulatie de grens van 70% van de capaciteit (voor panden: de contractcapaciteit) is overschreden. Een rood object betekent dat de volledige capaciteit (100%) is overschreden.";
+	public String i_mapOverlayLegend_congestion_Types = "Met deze knoppen kun je selecteren welk type belasting je wilt visualiseren: Afname, teruglevering, of de maximum belasting van beide.";
 	
 	/**
      * Default constructor

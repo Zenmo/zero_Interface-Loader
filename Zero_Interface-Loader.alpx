@@ -164,6 +164,34 @@
 					<Name><![CDATA[NONE]]></Name>
 				</Option>
 			</OptionList>
+			<OptionList>
+				<Id>1753086929090</Id>
+				<Name><![CDATA[OL_MapOverlayTypes]]></Name>
+				<Option>
+					<Id>1753086938862</Id>
+					<Name><![CDATA[DEFAULT]]></Name>
+				</Option>
+				<Option>
+					<Id>1753086944014</Id>
+					<Name><![CDATA[ELECTRICITY_CONSUMPTION]]></Name>
+				</Option>
+				<Option>
+					<Id>1753086951601</Id>
+					<Name><![CDATA[PV_PRODUCTION]]></Name>
+				</Option>
+				<Option>
+					<Id>1753086958969</Id>
+					<Name><![CDATA[GRID_NEIGHBOURS]]></Name>
+				</Option>
+				<Option>
+					<Id>1753086978373</Id>
+					<Name><![CDATA[CONGESTION]]></Name>
+				</Option>
+				<Option>
+					<Id>1753108825070</Id>
+					<Name><![CDATA[ENERGY_LABEL]]></Name>
+				</Option>
+			</OptionList>
 		</OptionLists>
 		<Folders/>
 		<ActiveObjectClasses/>
