@@ -3257,9 +3257,11 @@ b_updateLiveCongestionColors = false;
 for (GIS_Building building : energyModel.pop_GIS_Buildings){
 	f_setColorsBasedOnCongestion_objects(building);
 }
+/*
 for (GIS_Object object : energyModel.pop_GIS_Objects){
 	f_setColorsBasedOnCongestion_objects(object);
 }
+*/
 for (GridNode GN : energyModel.pop_gridNodes){
 	f_setColorsBasedOnCongestion_gridnodes(GN, false);
 }
