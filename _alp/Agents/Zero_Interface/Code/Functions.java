@@ -3003,7 +3003,7 @@ if (gis_area.c_containedGridConnections.size() > 0) {
 
 double f_setColorsBasedOnCongestion_gridnodes(GridNode gn,boolean isLiveSim)
 {/*ALCODESTART::1752756016324*/
-if (gn!=null){
+if (gn!=null && gn.gisRegion != null){
 	double maxLoad_fr = 0;
 	if(isLiveSim){
 		maxLoad_fr = abs(gn.v_currentLoad_kW)/gn.p_capacity_kW;	
