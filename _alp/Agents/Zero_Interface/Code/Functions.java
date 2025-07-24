@@ -3009,8 +3009,9 @@ if (gn!=null && gn.gisRegion != null){
 		maxLoad_fr = abs(gn.v_currentLoad_kW)/gn.p_capacity_kW;	
 	}
 	else{
-		double maxLoad_fr_delivery = gn.p_capacity_kW > 0 ? abs(gn.data_netbelastingDuurkromme_kW.getY(0))/gn.p_capacity_kW : 0;
-		double maxLoad_fr_feedin = gn.p_capacity_kW > 0 ? abs(gn.data_netbelastingDuurkromme_kW.getY(gn.data_netbelastingDuurkromme_kW.size()-1))/gn.p_capacity_kW : 0;
+		J_LoadDurationCurves loadCurves = gn.f_getDuurkrommes();
+		double maxLoad_fr_delivery = gn.p_capacity_kW > 0 ? abs(loadCurves.ds_loadDurationCurveTotal_kW.getY(0))/gn.p_capacity_kW : 0;
+		double maxLoad_fr_feedin = gn.p_capacity_kW > 0 ? abs(loadCurves.ds_loadDurationCurveTotal_kW.getY(loadCurves.ds_loadDurationCurveTotal_kW.size()-1))/gn.p_capacity_kW : 0;
 
 		switch(rb_mapOverlayLegend_congestion.getValue()){
 			case 0:

@@ -27456,7 +27456,7 @@ public ShapeCheckBox getCb_showFilterInterface(){
 public ShapeComboBox getCb_filterOptions(){
 	return this.cb_filterOptions;
 }]]></AdditionalClassCode>
-			<Import><![CDATA[import com.fasterxml.jackson.databind.ObjectMapper;
+			<Import><![CDATA[/*
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -27466,18 +27466,25 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.fasterxml.jackson.databind.node.NumericNode;
 import com.fasterxml.jackson.core.type.TypeReference;
+
+// For deserialisation
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+*/
 import java.io.FileOutputStream;
 import java.util.stream.Stream;
 import java.util.Dictionary.*;
 import java.util.Hashtable.*;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.lang.Object;
 
 import java.io.*;
 import java.io.File;
 import java.io.IOException;
-//import java.util.Date;  
+import java.util.Date;  
+import java.time.LocalDate;
+import java.time.DayOfWeek;
 import java.text.SimpleDateFormat;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
@@ -27489,12 +27496,11 @@ import java.io.PrintStream;
 import com.anylogic.engine.markup.AbstractCurve;
 import com.anylogic.engine.markup.GISMarkupSegment;
 import com.anylogic.engine.markup.GISPoint;
-import zero_engine.OL_EnergyCarriers;
-import zero_engine.OL_EnergyCarriers;
+//import zero_engine.OL_EnergyCarriers;
+//import zero_engine.OL_EnergyCarriers;
 import com.querydsl.core.types.dsl.TimeExpression;
-import zero_engine.J_EAStorageElectric;
-import zero_engine.J_EAConsumption;
-import digital_twin_results.OL_ChartTypes;
+//import zero_engine.J_EAStorageElectric;
+//import zero_engine.J_EAConsumption;
 import kotlin.Triple;]]></Import>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -34036,8 +34042,9 @@ uI_Tabs.pop_tabElectricity.get(0).sl_gridBatteriesResidentialArea_kWh.setValue(a
 		maxLoad_fr = abs(gn.v_currentLoad_kW)/gn.p_capacity_kW;	
 	}
 	else{
-		double maxLoad_fr_delivery = gn.p_capacity_kW > 0 ? abs(gn.data_netbelastingDuurkromme_kW.getY(0))/gn.p_capacity_kW : 0;
-		double maxLoad_fr_feedin = gn.p_capacity_kW > 0 ? abs(gn.data_netbelastingDuurkromme_kW.getY(gn.data_netbelastingDuurkromme_kW.size()-1))/gn.p_capacity_kW : 0;
+		J_LoadDurationCurves loadCurves = gn.f_getDuurkrommes();
+		double maxLoad_fr_delivery = gn.p_capacity_kW > 0 ? abs(loadCurves.ds_loadDurationCurveTotal_kW.getY(0))/gn.p_capacity_kW : 0;
+		double maxLoad_fr_feedin = gn.p_capacity_kW > 0 ? abs(loadCurves.ds_loadDurationCurveTotal_kW.getY(loadCurves.ds_loadDurationCurveTotal_kW.size()-1))/gn.p_capacity_kW : 0;
 
 		switch(rb_mapOverlayLegend_congestion.getValue()){
 			case 0:
@@ -42879,9 +42886,6 @@ for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data))
 			batteryAlgorithm.setTargetType( OL_ResultScope.ENERGYCOOP );
 			gridbattery.p_batteryAlgorithm = batteryAlgorithm;
 			break;
-		case SELF_CONSUMPTION_PARENT_NODE:
-			gridbattery.p_batteryAlgorithm = new J_BatteryManagementSelfConsumptionGridNode(gridbattery);
-			break;
 		default:
 			throw new RuntimeException("Battery Operation Mode: " + dataBattery.operation_mode() + " is not supported for GCGridBattery.");
 	}
@@ -50390,12 +50394,6 @@ public class ParkingSpace_data {
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 	</ModelResources>
-    <RequiredLibraryReference>
-		<LibraryName><![CDATA[com.anylogic.libraries.modules.markup_descriptors]]></LibraryName>
-		<VersionMajor>1</VersionMajor>
-		<VersionMinor>0</VersionMinor>
-		<VersionBuild>0</VersionBuild>
-    </RequiredLibraryReference>
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[zero_engine]]></LibraryName>
 		<VersionMajor>0</VersionMajor>
