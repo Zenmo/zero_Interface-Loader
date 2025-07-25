@@ -28,13 +28,7 @@
 				<Name><![CDATA[p_timeStep_h]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_undergroundTemperature_degC]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_forecastTime_h]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_plotInterval_h]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_truckTripsCsv]]></Name>
@@ -59,9 +53,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[b_enableDLR]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_gridNodeTimeSeriesExcel]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_winterWeekNumber]]></Name>

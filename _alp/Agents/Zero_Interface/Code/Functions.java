@@ -741,6 +741,8 @@ f_initializeMapOverlayRadioButton();
 
 
 //Set order of certain layovers and submenus
+f_initializePresentationOrder();
+/*
 presentation.remove(gr_sliderClickBlocker);
 presentation.insert(presentation.size(), gr_sliderClickBlocker);
 presentation.remove(gr_forceMapSelection);
@@ -749,7 +751,7 @@ presentation.remove(gr_filterInterface);
 presentation.insert(presentation.size(), gr_filterInterface);
 presentation.remove(gr_infoText);
 presentation.insert(presentation.size(), gr_infoText);
-	
+*/
 /*ALCODEEND*/}
 
 GISRegion f_createGISObject(double[] gisTokens)
@@ -1377,7 +1379,12 @@ switch(selectedFilter){
 			f_filterGridLoops(toBeFilteredGC);
 		}
 		else{
-			f_setForcedClickScreen(true, "Selecteer een lus");
+		
+			f_setForcedClickScreenText("Selecteer een lus");
+			if(!b_inEnergyHubSelectionMode){
+				f_setForcedClickScreenVisibility(true);
+			}
+
 			if(c_loadedMapOverlayTypes.contains(OL_MapOverlayTypes.GRID_NEIGHBOURS)){
 				rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.GRID_NEIGHBOURS),true);			
 			}
@@ -1395,8 +1402,10 @@ switch(selectedFilter){
 			f_filterNeighborhoods(toBeFilteredGC);
 		}
 		else{
-			f_setForcedClickScreen(true, "Selecteer een buurt");
-			
+			f_setForcedClickScreenText("Selecteer een buurt");
+			if(!b_inEnergyHubSelectionMode){
+				f_setForcedClickScreenVisibility(true);
+			}
 			if(c_selectedFilterOptions.size() > 1){
 				c_selectedGridConnections = new ArrayList<>(toBeFilteredGC);
 			}
@@ -1574,7 +1583,10 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 				}
 			
 				if(gr_forceMapSelection.isVisible()){
-					f_setForcedClickScreen(false, "");
+					f_setForcedClickScreenText("");
+					if(!b_inEnergyHubSelectionMode){
+						f_setForcedClickScreenVisibility(false);
+					}
 				}
 				
 				//This selects the new selection of gridloops
@@ -1904,7 +1916,10 @@ for ( GIS_Object region : c_GISNeighborhoods ){
 			}
 
 			if(gr_forceMapSelection.isVisible()){
-				f_setForcedClickScreen(false, "");
+				f_setForcedClickScreenText("");
+				if(!b_inEnergyHubSelectionMode){
+					f_setForcedClickScreenVisibility(false);
+				}
 			}
 			//This sets the new selected neighborhoods filter
 			f_setFilter("In de aangwezen 'buurt'");
@@ -2044,11 +2059,9 @@ if(clickedObject != null){
 }
 /*ALCODEEND*/}
 
-double f_setForcedClickScreen(boolean showForcedClickScreen,String forcedClickScreenText)
+double f_setForcedClickScreenText(String forcedClickScreenText)
 {/*ALCODESTART::1742300624199*/
 t_forcedClickMessage.setText(forcedClickScreenText);
-
-gr_forceMapSelection.setVisible(showForcedClickScreen);
 /*ALCODEEND*/}
 
 double f_setMapViewBounds(ArrayList<GIS_Object> GISObjects)
@@ -3285,6 +3298,46 @@ double f_setMapOverlay_EnergyLabel()
 b_updateLiveCongestionColors = true;
 for (GIS_Building building : energyModel.pop_GIS_Buildings){
 	f_setColorsBasedOnEnergyLabels(building);
+}
+/*ALCODEEND*/}
+
+double f_setShapePresentationOnTop(Shape shape)
+{/*ALCODESTART::1753440028514*/
+presentation.remove(shape);
+presentation.insert(presentation.size(), shape);
+/*ALCODEEND*/}
+
+double f_initializePresentationOrder()
+{/*ALCODESTART::1753440184174*/
+//Set order of certain layovers and submenus
+f_setShapePresentationOnTop(map);
+f_setShapePresentationOnTop(gr_zoomButton);
+f_setShapePresentationOnTop(gr_sliderClickBlocker);
+f_setShapePresentationOnTop(gr_forceMapSelection);
+f_setShapePresentationOnTop(gr_filterInterface);
+f_setShapePresentationOnTop(gr_infoText);
+
+/*ALCODEEND*/}
+
+double f_setForcedClickScreenVisibility(boolean showForcedClickScreen)
+{/*ALCODESTART::1753445407428*/
+gr_forceMapSelection.setVisible(showForcedClickScreen);
+/*ALCODEEND*/}
+
+double f_selectEnergyHubGC(double clickx,double clicky)
+{/*ALCODESTART::1753446312775*/
+if(b_inManualFilterSelectionMode){
+	f_selectManualFilteredGC(clickx, clicky);
+}
+else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP) || 
+		c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
+	
+	if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP)){
+		f_selectGridLoop(clickx, clicky);
+	}
+	if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
+		f_selectNeighborhood(clickx, clicky);
+	}
 }
 /*ALCODEEND*/}
 

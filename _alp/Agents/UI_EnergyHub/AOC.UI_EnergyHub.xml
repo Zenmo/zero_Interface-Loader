@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ActiveObjectClass>
 	<Id>1709049506453</Id>
-	<Name><![CDATA[UI_E_Hub]]></Name>
+	<Name><![CDATA[UI_EnergyHub]]></Name>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1709049506460</Id>
@@ -93,6 +93,8 @@
 	</ScaleRuler>
 	<CurrentLevel>1709049506460</CurrentLevel>
 	<ConnectionsId>1709049506454</ConnectionsId>
+	<Variables xmlns:al="http://anylogic.com"/>
+	<Functions xmlns:al="http://anylogic.com"/>
 	<AgentLinks>
 		<AgentLink>
 			<Id>1709049506454</Id>

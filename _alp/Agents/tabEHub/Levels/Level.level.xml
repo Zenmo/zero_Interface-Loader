@@ -727,6 +727,39 @@ zero_Interface.uI_Results.f_showCorrectChart();
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1753434467432</Id>
+				<Name><![CDATA[button_createEnergyHub]]></Name>
+				<X>30</X>
+				<Y>300</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="290" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>pauseSimulation();
+
+zero_Interface.b_inEnergyHubMode = true;
+zero_Interface.b_inEnergyHubSelectionMode = true;
+
+zero_Interface.f_setForcedClickScreenText("");
+zero_Interface.f_setForcedClickScreenVisibility(true);
+
+zero_Interface.cb_showFilterInterface.setSelected(true, true);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Creeër energy hub</LabelText>
+				</ExtendedProperties>
+			</Control>
 		</Presentation>
 	</Group>
 	<Group>
