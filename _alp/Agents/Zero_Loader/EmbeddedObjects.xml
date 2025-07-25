@@ -110,6 +110,115 @@
 		<QuantityColumn/>
 	</EmbeddedObject>
 	<EmbeddedObject>
+		<Id>1708522361909</Id>
+		<Name><![CDATA[pop_energyModels]]></Name>
+		<X>1255</X>
+		<Y>770</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<ActiveObjectClass>
+			<PackageName>zero_engine</PackageName>
+			<ClassName>EnergyModel</ClassName>
+		</ActiveObjectClass>
+		<GenericParameterSubstitute>
+			<GenericParameterSubstituteReference>
+				<PackageName>zero_engine</PackageName>
+				<ClassName>EnergyModel</ClassName>
+				<ItemName>1658477103138</ItemName>
+			</GenericParameterSubstituteReference>
+		</GenericParameterSubstitute>
+		<Parameters>
+			<Parameter>
+				<Name><![CDATA[p_timeStep_h]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_forecastTime_h]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_truckTripsCsv]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_householdTripsCsv]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_cookingPatternCsv]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_year]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[avgc_data]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[b_parallelizeConnectionOwners]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[b_parallelizeGridConnections]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[b_enableDLR]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_winterWeekNumber]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_summerWeekNumber]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_runStartTime_h]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_runEndTime_h]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[b_isInitialized]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[b_storePreviousRapidRunData]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_regionName]]></Name>
+			</Parameter>
+		</Parameters>
+		<ReplicationFlag>true</ReplicationFlag>
+		<Replication Class="CodeValue">
+			<Code><![CDATA[0]]></Code>
+		</Replication>
+		<CollectionType>ARRAY_LIST_BASED</CollectionType>
+		<InEnvironment>true</InEnvironment>
+		<InitialLocationType>XYZ</InitialLocationType>
+		<XCode Class="CodeValue">
+			<Code><![CDATA[0]]></Code>
+		</XCode>
+		<YCode Class="CodeValue">
+			<Code><![CDATA[0]]></Code>
+		</YCode>
+		<ZCode Class="CodeValue">
+			<Code><![CDATA[0]]></Code>
+		</ZCode>
+		<ColumnCode Class="CodeValue">
+			<Code><![CDATA[0]]></Code>
+		</ColumnCode>
+		<RowCode Class="CodeValue">
+			<Code><![CDATA[0]]></Code>
+		</RowCode>
+		<LocationNameCode Class="CodeValue">
+			<Code><![CDATA[""]]></Code>
+		</LocationNameCode>
+		<InitializationType>SPECIFIED_NUMBER</InitializationType>
+		<InitializationDatabaseTableQuery>
+			<Id>1658477089963</Id>
+			<TableReference/>
+		</InitializationDatabaseTableQuery>
+		<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
+		<QuantityColumn/>
+	</EmbeddedObject>
+	<EmbeddedObject>
 		<Id>1726584829907</Id>
 		<Name><![CDATA[avgc_data]]></Name>
 		<X>-370</X>

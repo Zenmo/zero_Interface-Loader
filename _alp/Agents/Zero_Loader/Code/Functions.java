@@ -3969,3 +3969,115 @@ for(CustomProfile_data customProfile : c_customProfiles_data){
 }
 /*ALCODEEND*/}
 
+double f_reconstructGridConnections(EnergyModel deserializedEnergyModel)
+{/*ALCODESTART::1753449467888*/
+ArrayList<GridConnection> allConnections = new ArrayList<>();
+allConnections.addAll(deserializedEnergyModel.c_gridConnections);
+allConnections.addAll(deserializedEnergyModel.c_pausedGridConnections);
+
+for(GridConnection GC : allConnections){
+	GC.energyModel = deserializedEnergyModel;
+	if (GC instanceof GCHouse){
+		//toMove.add(GC);
+		f_reconstructAgent(GC, deserializedEnergyModel.Houses, deserializedEnergyModel);
+	} else if (GC instanceof GCEnergyProduction) {
+		f_reconstructAgent(GC, deserializedEnergyModel.EnergyProductionSites, deserializedEnergyModel);
+	} else if (GC instanceof GCEnergyConversion) {
+		f_reconstructAgent(GC, deserializedEnergyModel.EnergyConversionSites, deserializedEnergyModel);
+	} else if (GC instanceof GCGridBattery) {
+		f_reconstructAgent(GC, deserializedEnergyModel.GridBatteries, deserializedEnergyModel);
+	} else if (GC instanceof GCNeighborhood) {
+		f_reconstructAgent(GC, deserializedEnergyModel.Neighborhoods, deserializedEnergyModel);
+	} else if (GC instanceof GCPublicCharger) {
+		f_reconstructAgent(GC, deserializedEnergyModel.PublicChargers, deserializedEnergyModel);
+	} else if (GC instanceof GCUtility) {
+		f_reconstructAgent(GC, deserializedEnergyModel.UtilityConnections, deserializedEnergyModel);
+	}
+	GC.f_startAfterDeserialisation();
+}
+
+
+/*ALCODEEND*/}
+
+double f_reconstructEnergyModel(EnergyModel energyModel)
+{/*ALCODESTART::1753449467890*/
+// Code Instead of Agent.goToPopulation() (which resets all parameters to default!)	
+
+try{ // Reflection trick to get to Agent.owner private field
+	energyModel.forceSetOwner(energyModel, pop_energyModels);
+} catch (Exception e) {
+	e.printStackTrace();
+}
+
+energyModel.setEngine(getEngine());	
+energyModel.instantiateBaseStructure_xjal();
+energyModel.setEnvironment(this.getEnvironment());
+traceln("EnergyModel owner: %s", energyModel.getOwner());
+
+pop_energyModels._add(energyModel ); // Add to the population
+int popSize = pop_energyModels.size(); 
+pop_energyModels.callCreate(energyModel , popSize); // Update population object
+energyModel.start();
+/*ALCODEEND*/}
+
+double f_reconstructAgent(Agent agent,AgentArrayList pop,EnergyModel energyModel)
+{/*ALCODESTART::1753449467892*/
+// Code Instead of Agent.goToPopulation() (which resets many variables to default!)	
+try{ // Reflection trick to get to Agent.owner private field
+	if (agent instanceof GridNode) {
+	
+		((GridNode)agent).forceSetOwner(agent,pop);
+	} else if (agent instanceof GridConnection) {
+		((GridConnection)agent).forceSetOwner(agent,pop);
+	} else if (agent instanceof Actor) {
+		((Actor)agent).forceSetOwner(agent,pop);
+	}
+} catch (Exception e) {
+	e.printStackTrace();
+}
+	
+
+agent.setEngine(getEngine());	
+agent.instantiateBaseStructure_xjal();
+agent.setEnvironment(pop.getEnvironment());
+
+pop._add(agent); // Add to the population
+int popSize = pop.size(); 
+pop.callCreate(agent, popSize); // Update population object
+
+/*ALCODEEND*/}
+
+double f_reconstructGridConnections1(EnergyModel energyModel)
+{/*ALCODESTART::1753449467894*/
+// Code Instead of Agent.goToPopulation() (which resets many variables to default!)	
+GC.energyModel = energyModel;
+try{ // Reflection trick to get to Agent.owner private field
+	GC.forceSetOwner(GC,pop);
+} catch (Exception e) {
+	e.printStackTrace();
+}
+	
+traceln("GC owner: %s", GC.getOwner());
+GC.setEngine(getEngine());	
+GC.instantiateBaseStructure_xjal();
+GC.setEnvironment(pop.getEnvironment());
+
+pop._add(GC); // Add to the population
+int popSize = pop.size(); 
+pop.callCreate(GC, popSize); // Update population object
+
+/*ALCODEEND*/}
+
+double f_addMixins()
+{/*ALCODESTART::1753451091785*/
+v_objectMapper.addMixIn(Agent.class, AgentMixin.class);
+v_objectMapper.addMixIn(EnergyModel.class, EnergyModelMixin.class);
+v_objectMapper.addMixIn(Actor.class, ActorMixin.class);
+v_objectMapper.addMixIn(DataSet.class, DataSetMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, IgnoreClassMixin.class);
+//objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, TableFunctionMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.GISRegion.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.presentation.ViewArea.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.AgentSpacePosition.class, IgnoreClassMixin.class);
+/*ALCODEEND*/}
+
