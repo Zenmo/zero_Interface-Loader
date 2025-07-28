@@ -3091,7 +3091,7 @@ else{//Take the default
 
 
 //Adjust the visualisation of the radiobuttons
-Presentable presentable = getExperimentHost().getPresentable();
+Presentable presentable = gr_mapOverlayLegenda.getPresentable();
 boolean ispublic = true;
 double x = 756;
 double y = 837;
