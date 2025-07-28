@@ -58,8 +58,8 @@
 	<Group>
 		<Id>1747229984708</Id>
 		<Name><![CDATA[gr_energyHubPresentation]]></Name>
-		<X>0</X>
-		<Y>-4000</Y>
+		<X>2600</X>
+		<Y>-2200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -91,8 +91,8 @@
 				<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
 				<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
 				<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
-				<Latitude>52.72408481919532</Latitude>
-				<Longitude>6.111145585790878</Longitude>
+				<Latitude>52.565832561661324</Latitude>
+				<Longitude>6.28960063917648</Longitude>
 			</EmbeddedObjectPresentation>
 		</Presentation>
 	</Group>
@@ -7933,24 +7933,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>gr_forceMapSelection.isVisible() &amp;&amp; b_inEnergyHubSelectionMode</VisibleCode>
-				<OnClickCode>if(b_inEnergyHubSelectionMode){
-	//Set map in correct pos and navigate to e-hub view
-	map.setPos( gr_energyHubPresentation.getX() + 450.0, gr_energyHubPresentation.getY() + 200.0 );
-	map.setScale( 0.85, 0.85 );
-	va_EHubDashboard.navigateTo();
-	presentation.remove(map);
-	presentation.insert(presentation.size(), map);
-	
-	//Copy selected GC and coop to e-hub dashboard
-	uI_EnergyHub.c_selectedEnergyHubGC = new ArrayList&lt;GridConnection&gt;(c_selectedGridConnections);
-	uI_EnergyHub.v_energyHubCoop = v_customEnergyCoop;
-	
-	//Set E-hub selection mode false
-	b_inEnergyHubSelectionMode = false;
-	
-	uI_EnergyHub.f_initializeEnergyHubDashboard();
-}</OnClickCode>
+				<VisibleCode>gr_forceMapSelection.isVisible() &amp;&amp; b_inEnergyHubSelectionMode &amp;&amp; c_selectedGridConnections.size()&gt;1</VisibleCode>
+				<OnClickCode>f_finalizeEnergyHubSelection();</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -7968,20 +7952,19 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<OnClickCode/>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<ZHeight>10</ZHeight>
 						<LineWidth>1</LineWidth>
 						<LineColor>-16777216</LineColor>
-						<LineColorCode>uI_EnergyHub.p_EnergyHubLineColor</LineColorCode>
+						<LineColorCode>uI_EnergyHub.p_energyHubLineColor</LineColorCode>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
 						<Width>400</Width>
 						<Height>75</Height>
 						<Rotation>0.0</Rotation>
 						<FillColor>-1</FillColor>
-						<FillColorCode>uI_EnergyHub.p_EnergyHubBackGroundColor</FillColorCode>
+						<FillColorCode>uI_EnergyHub.p_energyHubBackGroundColor</FillColorCode>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>10</ArcRadius>
 					</RoundedRectangle>
@@ -8048,14 +8031,14 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						<ZHeight>10</ZHeight>
 						<LineWidth>2</LineWidth>
 						<LineColor>-16777216</LineColor>
-						<LineColorCode>uI_EnergyHub.p_EnergyHubLineColor</LineColorCode>
+						<LineColorCode>uI_EnergyHub.p_energyHubLineColor</LineColorCode>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
 						<Width>1000</Width>
 						<Height>90</Height>
 						<Rotation>0.0</Rotation>
 						<FillColor>-1</FillColor>
-						<FillColorCode>uI_EnergyHub.p_EnergyHubBackGroundColor</FillColorCode>
+						<FillColorCode>uI_EnergyHub.p_energyHubBackGroundColor</FillColorCode>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>10</ArcRadius>
 					</RoundedRectangle>
@@ -8096,7 +8079,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 					<Y>0</Y>
 				</Label>
 				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
+				<PresentationFlag>false</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<VisibleCode>!t_forcedClickMessage.getText().equals("")</VisibleCode>
@@ -8187,7 +8170,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
 						<Color>-16777216</Color>
-						<Text><![CDATA[Selecteer een buurt]]></Text>
+						<Text/>
 						<Font>
 							<Name><![CDATA[SansSerif]]></Name>
 							<Size>36</Size>

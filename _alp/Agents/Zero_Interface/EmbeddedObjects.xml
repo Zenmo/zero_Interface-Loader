@@ -331,10 +331,10 @@
 	<EmbeddedObject>
 		<Id>1722252541830</Id>
 		<Name><![CDATA[uI_EnergyHub]]></Name>
-		<X>-280</X>
-		<Y>-3960</Y>
+		<X>2240</X>
+		<Y>-2160</Y>
 		<Label>
-			<X>10</X>
+			<X>20</X>
 			<Y>0</Y>
 		</Label>
 		<PublicFlag>false</PublicFlag>
@@ -354,10 +354,16 @@
 		</GenericParameterSubstitute>
 		<Parameters>
 			<Parameter>
-				<Name><![CDATA[p_EnergyHubBackGroundColor]]></Name>
+				<Name><![CDATA[p_energyHubBackGroundColor]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_EnergyHubLineColor]]></Name>
+				<Name><![CDATA[p_energyHubLineColor]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_energyHubLineWidth]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_energyHubLineStyle]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>

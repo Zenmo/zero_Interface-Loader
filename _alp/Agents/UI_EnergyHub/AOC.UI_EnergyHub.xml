@@ -139,6 +139,7 @@
 			</ActiveObjectClass>
 		</ContainerLink>
 	</ContainerLinks>
+	<EmbeddedObjects xmlns:al="http://anylogic.com"/>
 	<Presentation>
 		<Level>
 			<Id>1709049506460</Id>

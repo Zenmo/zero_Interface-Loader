@@ -745,15 +745,7 @@ zero_Interface.uI_Results.f_showCorrectChart();
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<ActionCode>pauseSimulation();
-
-zero_Interface.b_inEnergyHubMode = true;
-zero_Interface.b_inEnergyHubSelectionMode = true;
-
-zero_Interface.f_setForcedClickScreenText("");
-zero_Interface.f_setForcedClickScreenVisibility(true);
-
-zero_Interface.cb_showFilterInterface.setSelected(true, true);</ActionCode>
+					<ActionCode>zero_Interface.f_createEnergyHub();</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>

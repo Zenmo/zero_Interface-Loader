@@ -3104,7 +3104,7 @@ else{//Take the default
 
 
 //Adjust the visualisation of the radiobuttons
-Presentable presentable = getExperimentHost().getPresentable();
+Presentable presentable = gr_mapOverlayLegenda.getPresentable();
 boolean ispublic = true;
 double x = 756;
 double y = 837;
@@ -3338,6 +3338,40 @@ else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECT
 	if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
 		f_selectNeighborhood(clickx, clicky);
 	}
+}
+/*ALCODEEND*/}
+
+double f_createEnergyHub()
+{/*ALCODESTART::1753698716095*/
+pauseSimulation();
+
+b_inEnergyHubMode = true;
+b_inEnergyHubSelectionMode = true;
+
+f_setForcedClickScreenText("");
+f_setForcedClickScreenVisibility(true);
+
+cb_showFilterInterface.setSelected(true, true);
+/*ALCODEEND*/}
+
+double f_finalizeEnergyHubSelection()
+{/*ALCODESTART::1753698810590*/
+if(b_inEnergyHubSelectionMode){
+	//Set map in correct pos and navigate to e-hub view
+	map.setPos( gr_energyHubPresentation.getX() + uI_EnergyHub.rect_map.getX() + 10.0, gr_energyHubPresentation.getY() + uI_EnergyHub.rect_map.getY() + 10.0 );
+	map.setScale( 0.85, 0.85 );
+	va_EHubDashboard.navigateTo();
+	presentation.remove(map);
+	presentation.insert(presentation.size(), map);
+	
+	//Copy selected GC and coop to e-hub dashboard
+	uI_EnergyHub.c_selectedEnergyHubGC = new ArrayList<GridConnection>(c_selectedGridConnections);
+	uI_EnergyHub.v_energyHubCoop = v_customEnergyCoop;
+	
+	//Set E-hub selection mode false
+	b_inEnergyHubSelectionMode = false;
+	
+	uI_EnergyHub.f_initializeEnergyHubDashboard();
 }
 /*ALCODEEND*/}
 

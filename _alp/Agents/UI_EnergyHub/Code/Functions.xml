@@ -6,7 +6,55 @@
 		<Id>1753446461346</Id>
 		<Name><![CDATA[f_initializeEnergyHubDashboard]]></Name>
 		<X>-390</X>
-		<Y>120</Y>
+		<Y>50</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753694353046</Id>
+		<Name><![CDATA[f_initializeEnergyHubResultsUI]]></Name>
+		<X>-370</X>
+		<Y>70</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753694406870</Id>
+		<Name><![CDATA[f_initializeEnergyHubTabs]]></Name>
+		<X>-370</X>
+		<Y>140</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753694556229</Id>
+		<Name><![CDATA[f_styleEnergyHubResultsUI]]></Name>
+		<X>-350</X>
+		<Y>90</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

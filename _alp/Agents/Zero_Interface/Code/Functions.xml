@@ -2090,8 +2090,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1753446312775</Id>
 		<Name><![CDATA[f_selectEnergyHubGC]]></Name>
-		<X>-280</X>
-		<Y>-3900</Y>
+		<X>2240</X>
+		<Y>-2050</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2107,6 +2107,38 @@
 			<Name><![CDATA[clicky]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753698716095</Id>
+		<Name><![CDATA[f_createEnergyHub]]></Name>
+		<X>2240</X>
+		<Y>-2120</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753698810590</Id>
+		<Name><![CDATA[f_finalizeEnergyHubSelection]]></Name>
+		<X>2240</X>
+		<Y>-2020</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>
