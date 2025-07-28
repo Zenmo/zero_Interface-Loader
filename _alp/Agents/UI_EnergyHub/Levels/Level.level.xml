@@ -664,6 +664,9 @@ zero_Interface.map.setPos(410, 130);
 
 zero_Interface.va_Interface.navigateTo();
 
+//zero_Interface.c_selectedGridConnections = new ArrayList&lt;GridConnection&gt;(c_selectedEnergyHubGC);
+//zero_Interface.v_customEnergyCoop = v_energyHubCoop;
+	
 c_selectedEnergyHubGC.clear();
 v_energyHubCoop = null;
 
@@ -758,4 +761,42 @@ runSimulation();</ActionCode>
 			</Control>
 		</Presentation>
 	</Group>
+	<Control Type="CheckBox">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1753719240339</Id>
+		<Name><![CDATA[cb_EhubConfig]]></Name>
+		<X>70</X>
+		<Y>300</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<BasicProperties Width="210" Height="30">
+			<EmbeddedIcon>false</EmbeddedIcon>
+			<TextColor>-16777216</TextColor>
+			<Enabled>false</Enabled>
+			<ActionCode>if(cb_EhubConfig.isSelected()){
+	uI_Results.v_selectedChartType = OL_ChartTypes.GESPREKSLEIDRAAD_BEDRIJVEN;
+	uI_Results.f_showCorrectChart();
+	uI_Results.getRadioButtons().setValue(100, false);
+	uI_Results.chartGespreksleidraadBedrijven.getRb_gespreksleidraadBedrijvenChartType().setValue(2, true);
+}
+else{
+	if(uI_Results.getRadioButtons().getValue() == 100){
+		uI_Results.getRadioButtons().setValue(0, true);
+	}
+	uI_Results.f_showCorrectChart();
+}</ActionCode>
+		</BasicProperties>
+		<ExtendedProperties>
+			<Font Name="Dialog" Size="11" Style="0"/>
+			<LabelText>EHUB VISUALIZATION TEST</LabelText>
+			<LinkTo>true</LinkTo>
+			<Link>uI_Results.b_showGroupContractValues</Link>
+		</ExtendedProperties>
+	</Control>
 </Presentation>

@@ -64,5 +64,6 @@ uI_Tabs.f_showCorrectTab();
 double f_styleEnergyHubResultsUI()
 {/*ALCODESTART::1753694556229*/
 uI_Results.f_styleAllCharts(white, p_energyHubLineColor, p_energyHubLineWidth, p_energyHubLineStyle);
+uI_Results.f_styleResultsUIHeader(p_energyHubLineColor, p_energyHubLineColor, p_energyHubLineWidth, p_energyHubLineStyle);
 /*ALCODEEND*/}
 

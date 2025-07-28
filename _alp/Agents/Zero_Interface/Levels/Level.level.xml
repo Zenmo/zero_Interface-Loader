@@ -3964,45 +3964,6 @@ else{
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
-	<Control Type="CheckBox">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1740670519131</Id>
-		<Name><![CDATA[cb_EhubConfig]]></Name>
-		<X>-680</X>
-		<Y>920</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="210" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor>-16777216</TextColor>
-			<VisibleCode>v_customEnergyCoop != null</VisibleCode>
-			<Enabled>false</Enabled>
-			<ActionCode>if(cb_EhubConfig.isSelected()){
-	uI_Results.v_selectedChartType = OL_ChartTypes.GESPREKSLEIDRAAD_BEDRIJVEN;
-	uI_Results.f_showCorrectChart();
-	uI_Results.getRadioButtons().setValue(100, false);
-	uI_Results.chartGespreksleidraadBedrijven.getRb_gespreksleidraadBedrijvenChartType().setValue(2, true);
-}
-else{
-	if(uI_Results.getRadioButtons().getValue() == 100){
-		uI_Results.getRadioButtons().setValue(0, true);
-	}
-	uI_Results.f_showCorrectChart();
-}</ActionCode>
-		</BasicProperties>
-		<ExtendedProperties>
-			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText>EHUB VISUALIZATION TEST</LabelText>
-			<LinkTo>true</LinkTo>
-			<Link>uI_Results.b_showGroupContractValues</Link>
-		</ExtendedProperties>
-	</Control>
 	<Group>
 		<Id>1734444441402</Id>
 		<Name><![CDATA[gr_filterInterface]]></Name>
@@ -8082,7 +8043,6 @@ officia deserunt mollit anim id est laborum."]]></Text>
 				<PresentationFlag>false</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>!t_forcedClickMessage.getText().equals("")</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -8131,21 +8091,11 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						<BasicProperties Width="170" Height="50">
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<TextColor>-16777216</TextColor>
-							<VisibleCode>gr_forceMapSelection.isVisible() &amp;&amp; b_inManualFilterSelectionMode </VisibleCode>
+							<VisibleCode>gr_ForceMapSelectionText.isVisible() &amp;&amp; b_inManualFilterSelectionMode </VisibleCode>
 							<Enabled>true</Enabled>
 							<EnableExpression>button_completeManualSelectionMode.isVisible()</EnableExpression>
 							<ActionCode>if(b_inManualFilterSelectionMode){
-	b_inManualFilterSelectionMode = false;
-	
-	f_setForcedClickScreenText("");
-	if(!b_inEnergyHubSelectionMode){
-		f_setForcedClickScreenVisibility(false);
-	}
-	
-	//Deselecteer manual filter, als geselecteerde gc collecties leeg zijn.
-	if (c_manualFilterSelectedGC.isEmpty() &amp;&amp; c_manualFilterDeselectedGC.isEmpty() &amp;&amp; c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
-		f_setFilter("Handmatige selectie");
-	}
+	button_manualFilterSelection.action();
 }</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>

@@ -1724,8 +1724,7 @@ rect_errorMessage.setHeight(200);
 t_errorMessage.setY(-70);
 
 //Set position above all other things
-presentation.remove(gr_errorScreen);
-presentation.insert(presentation.size(), gr_errorScreen);
+f_setShapePresentationOnTop(gr_errorScreen);
 
 int width_numberOfCharacters = 44;
 
@@ -2062,6 +2061,13 @@ if(clickedObject != null){
 double f_setForcedClickScreenText(String forcedClickScreenText)
 {/*ALCODESTART::1742300624199*/
 t_forcedClickMessage.setText(forcedClickScreenText);
+
+if(t_forcedClickMessage.getText().equals("")){
+	gr_ForceMapSelectionText.setVisible(false);
+}
+else{
+	gr_ForceMapSelectionText.setVisible(true);
+}
 /*ALCODEEND*/}
 
 double f_setMapViewBounds(ArrayList<GIS_Object> GISObjects)
@@ -3160,7 +3166,10 @@ gr_mapOverlayLegend_PVProduction.setVisible(false);
 gr_mapOverlayLegend_gridNeighbours.setVisible(false);
 gr_mapOverlayLegend_congestion.setVisible(false);
 b_updateLiveCongestionColors = false;
-f_clearSelectionAndSelectEnergyModel();
+
+if(!b_inEnergyHubMode){
+	f_clearSelectionAndSelectEnergyModel();
+}
 
 //Get selected map overlay type, based on loaded order of the radio buttons
 OL_MapOverlayTypes selectedMapOverlayType = c_loadedMapOverlayTypes.get(rb_mapOverlay.getValue());
@@ -3357,12 +3366,15 @@ cb_showFilterInterface.setSelected(true, true);
 double f_finalizeEnergyHubConfiguration()
 {/*ALCODESTART::1753698810590*/
 if(b_inEnergyHubSelectionMode){
+	if(button_completeManualSelectionMode.isVisible()){
+		button_completeManualSelectionMode.action();
+	}
+
+
 	//Set map in correct pos and navigate to e-hub view
 	map.setPos( gr_energyHubPresentation.getX() + uI_EnergyHub.rect_map.getX() + 10.0, gr_energyHubPresentation.getY() + uI_EnergyHub.rect_map.getY() + 10.0 );
 	map.setScale( 0.85, 0.85 );
 	va_EHubDashboard.navigateTo();
-	presentation.remove(map);
-	presentation.insert(presentation.size(), map);
 	
 	//Copy selected GC and coop to e-hub dashboard
 	uI_EnergyHub.c_selectedEnergyHubGC = new ArrayList<GridConnection>(c_selectedGridConnections);
