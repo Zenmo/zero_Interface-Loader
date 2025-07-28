@@ -2778,7 +2778,7 @@ gisRegion.remove();
 Building_data building_data_record = Building_data.builder().
 
 address_id("verblijfsobject." + PandID).
-building_id("pand." + PandID).
+building_id(PandID).
 streetname(companyGC.p_address.getStreetName()).
 house_number(companyGC.p_address.getHouseNumber()).
 house_letter(companyGC.p_address.getHouseLetter()).
