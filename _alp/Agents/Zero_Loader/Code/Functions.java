@@ -4079,5 +4079,69 @@ v_objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, IgnoreClassMixi
 v_objectMapper.addMixIn(com.anylogic.engine.markup.GISRegion.class, IgnoreClassMixin.class);
 v_objectMapper.addMixIn(com.anylogic.engine.presentation.ViewArea.class, IgnoreClassMixin.class);
 v_objectMapper.addMixIn(com.anylogic.engine.AgentSpacePosition.class, IgnoreClassMixin.class);
+
+// Weirdness regarding material handling toolbox	
+v_objectMapper.addMixIn(com.anylogic.engine.AgentSpacePosition.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.AbstractWall.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.RailwayTrack.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.PalletRack.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.RoadNetwork.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.AreaNode.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.AbstractFluidMarkup.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.Lift.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.ConveyorNode.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.Node.class, IgnoreClassMixin.class);
+
+/*ALCODEEND*/}
+
+double f_reconstructActors(EnergyModel deserializedEnergyModel)
+{/*ALCODESTART::1753712630322*/
+for(Actor AC : deserializedEnergyModel.c_actors){
+		
+		if (AC instanceof ConnectionOwner) {
+			((ConnectionOwner)AC).energyModel = deserializedEnergyModel;
+			f_reconstructAgent(AC, deserializedEnergyModel.pop_connectionOwners, deserializedEnergyModel);
+		} else if (AC instanceof EnergySupplier) {
+			((EnergySupplier)AC).energyModel = deserializedEnergyModel;
+			f_reconstructAgent(AC, deserializedEnergyModel.pop_energySuppliers, deserializedEnergyModel);
+		} else if (AC instanceof EnergyCoop) {
+			((EnergyCoop)AC).energyModel = deserializedEnergyModel;
+			f_reconstructAgent(AC, deserializedEnergyModel.pop_energyCoops, deserializedEnergyModel);
+			((EnergyCoop)AC).f_startAfterDeserialisation();
+		} else if (AC instanceof GridOperator) {
+			((GridOperator)AC).energyModel = deserializedEnergyModel;
+			f_reconstructAgent(AC, deserializedEnergyModel.pop_gridOperators, deserializedEnergyModel);
+		}
+	}
+
+/*ALCODEEND*/}
+
+double f_reconstructGIS_Objects(EnergyModel deserializedEnergyModel)
+{/*ALCODESTART::1753712697685*/
+for(GIS_Object GO : deserializedEnergyModel.c_GISObjects){
+	GO.gisRegion = c_GISregions.get(GO.p_id);
+	
+	if (GO instanceof GIS_Building) {
+		((GIS_Building)GO).energyModel = deserializedEnergyModel;
+		f_reconstructAgent(GO, deserializedEnergyModel.pop_GIS_Buildings, deserializedEnergyModel);
+	} else if (GO instanceof GIS_Parcel) {
+		((GIS_Parcel)GO).energyModel = deserializedEnergyModel;
+		f_reconstructAgent(GO, deserializedEnergyModel.pop_GIS_Parcels, deserializedEnergyModel);
+	} else {
+		GO.energyModel = deserializedEnergyModel;
+		f_reconstructAgent(GO, deserializedEnergyModel.pop_GIS_Objects, deserializedEnergyModel);
+		//GO.f_startAfterDeserialisation();
+	}
+	GO.f_resetStyle();
+}
+/*ALCODEEND*/}
+
+double f_reconstructGridNodes(EnergyModel deserializedEnergyModel)
+{/*ALCODESTART::1753712761420*/
+for(GridNode GN : deserializedEnergyModel.c_gridNodes){
+	GN.energyModel = deserializedEnergyModel;
+	f_reconstructAgent(GN, deserializedEnergyModel.pop_gridNodes, deserializedEnergyModel);
+}
+
 /*ALCODEEND*/}
 

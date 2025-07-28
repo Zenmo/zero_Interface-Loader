@@ -1106,7 +1106,7 @@
 		<Id>1753349205420</Id>
 		<Name><![CDATA[rect_defaultStartup1]]></Name>
 		<X>1180</X>
-		<Y>510</Y>
+		<Y>511</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -1171,7 +1171,8 @@
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
-			<ActionCode>energyModel.pop_GIS_Buildings.forEach(x-&gt;{c_GISregions.put(x.p_id, x.gisRegion);});
+			<ActionCode>// Collect GIS_Objects into hashmap, to link to new EnergyModel.
+energyModel.pop_GIS_Buildings.forEach(x-&gt;{c_GISregions.put(x.p_id, x.gisRegion);});
 energyModel.pop_GIS_Objects.forEach(x-&gt;{c_GISregions.put(x.p_id, x.gisRegion);});
 energyModel.pop_GIS_Parcels.forEach(x-&gt;{c_GISregions.put(x.p_id, x.gisRegion);});
 
@@ -1179,78 +1180,17 @@ try {
 	v_objectMapper = new ObjectMapper();
 	f_addMixins();
 	
-	/*objectMapper.addMixIn(Agent.class, AgentMixin.class);	
-	objectMapper.addMixIn(EnergyModel.class, EnergyModelMixin.class);
-	objectMapper.addMixIn(Actor.class, ActorMixin.class);
-	objectMapper.addMixIn(AgentArrayList.class, PopulationMixin.class);
-	objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, IgnoreClassMixin.class);
-	//objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, TableFunctionMixin.class);
-	objectMapper.addMixIn(com.anylogic.engine.markup.GISRegion.class, IgnoreClassMixin.class);
-	*/
-	// Weirdness regarding material handling toolbox
-	
-	v_objectMapper.addMixIn(com.anylogic.engine.AgentSpacePosition.class, IgnoreClassMixin.class);
-	v_objectMapper.addMixIn(com.anylogic.engine.markup.AbstractWall.class, IgnoreClassMixin.class);
-	v_objectMapper.addMixIn(com.anylogic.engine.markup.RailwayTrack.class, IgnoreClassMixin.class);
-	v_objectMapper.addMixIn(com.anylogic.engine.markup.PalletRack.class, IgnoreClassMixin.class);
-	v_objectMapper.addMixIn(com.anylogic.engine.markup.RoadNetwork.class, IgnoreClassMixin.class);
-	v_objectMapper.addMixIn(com.anylogic.engine.markup.AreaNode.class, IgnoreClassMixin.class);
-	v_objectMapper.addMixIn(com.anylogic.engine.markup.AbstractFluidMarkup.class, IgnoreClassMixin.class);
-	v_objectMapper.addMixIn(com.anylogic.engine.markup.Lift.class, IgnoreClassMixin.class);
-	v_objectMapper.addMixIn(com.anylogic.engine.markup.ConveyorNode.class, IgnoreClassMixin.class);
-	v_objectMapper.addMixIn(com.anylogic.engine.markup.Node.class, IgnoreClassMixin.class);
-	
+	// Deserialize the JSON into a new EnergyModel instance:
 	EnergyModel deserializedEnergyModel = v_objectMapper.readValue(new File("energyModel.json"), EnergyModel.class);
-	//loader_L4L.energyModel = deserializedEnergyModel;
-	f_reconstructEnergyModel(deserializedEnergyModel);
 	
+	// Reconstruct all Agents
+	f_reconstructEnergyModel(deserializedEnergyModel);	
 	f_reconstructGridConnections(deserializedEnergyModel);
-
+	f_reconstructActors(deserializedEnergyModel);
+	f_reconstructGridNodes(deserializedEnergyModel);
+	f_reconstructGIS_Objects(deserializedEnergyModel);
 	
-	for(Actor AC : deserializedEnergyModel.c_actors){
-		
-		if (AC instanceof ConnectionOwner) {
-			((ConnectionOwner)AC).energyModel = deserializedEnergyModel;
-			f_reconstructAgent(AC, deserializedEnergyModel.pop_connectionOwners, deserializedEnergyModel);
-		} else if (AC instanceof EnergySupplier) {
-			((EnergySupplier)AC).energyModel = deserializedEnergyModel;
-			f_reconstructAgent(AC, deserializedEnergyModel.pop_energySuppliers, deserializedEnergyModel);
-		} else if (AC instanceof EnergyCoop) {
-			((EnergyCoop)AC).energyModel = deserializedEnergyModel;
-			f_reconstructAgent(AC, deserializedEnergyModel.pop_energyCoops, deserializedEnergyModel);
-			((EnergyCoop)AC).f_startAfterDeserialisation();
-		} else if (AC instanceof GridOperator) {
-			((GridOperator)AC).energyModel = deserializedEnergyModel;
-			f_reconstructAgent(AC, deserializedEnergyModel.pop_gridOperators, deserializedEnergyModel);
-		}
-	}
-	
-	//toMove.forEach(house -&gt; f_reconstructGridConnection(house, deserializedEnergyModel.Houses, deserializedEnergyModel));
-	
-	for(GridNode GN : deserializedEnergyModel.c_gridNodes){
-		GN.energyModel = deserializedEnergyModel;
-		f_reconstructAgent(GN, deserializedEnergyModel.pop_gridNodes, deserializedEnergyModel);
-	}
-	
-	for(GIS_Object GO : deserializedEnergyModel.c_GISObjects){
-		GO.gisRegion = c_GISregions.get(GO.p_id);
-		
-		if (GO instanceof GIS_Building) {
-			((GIS_Building)GO).energyModel = deserializedEnergyModel;
-			f_reconstructAgent(GO, deserializedEnergyModel.pop_GIS_Buildings, deserializedEnergyModel);
-		} else if (GO instanceof GIS_Parcel) {
-			((GIS_Parcel)GO).energyModel = deserializedEnergyModel;
-			f_reconstructAgent(GO, deserializedEnergyModel.pop_GIS_Parcels, deserializedEnergyModel);
-		} else {
-			GO.energyModel = deserializedEnergyModel;
-			f_reconstructAgent(GO, deserializedEnergyModel.pop_GIS_Objects, deserializedEnergyModel);
-			//GO.f_startAfterDeserialisation();
-		}
-		GO.f_resetStyle();
-	}
-	
-	//loader_GENIUS.f_setEngineProfilesAfterDeserialisation(deserializedEnergyModel);
-	// Get profilePointer tableFunctions from 'original' model
+	// Get profilePointer tableFunctions from 'original' energyModel
 	deserializedEnergyModel.c_profiles.forEach(x-&gt;{
 		J_ProfilePointer origProfile = energyModel.f_findProfile(x.name);
 		x.setTableFunction(origProfile.getTableFunction());
@@ -1262,9 +1202,14 @@ try {
 	energyModel = deserializedEnergyModel;
 	zero_Interface.energyModel = deserializedEnergyModel;
 	zero_Interface.uI_Results.energyModel = deserializedEnergyModel;
+	//zero_Interface.f_initalAssetOrdering();
 	zero_Interface.f_clearSelectionAndSelectEnergyModel();
-	//agent.goToPopulation(myAgents1);
-	//objectMapper.writeValue(new File("objects.json"), myAgents.get(0));
+	zero_Interface.f_updateMainInterfaceSliders();
+	if (zero_Interface.p_selectedProjectType==OL_ProjectType.RESIDENTIAL) {
+		zero_Interface.f_initialisationOfResidentialSliders();
+	}
+	zero_Interface.f_updateOrderedListsAfterDeserialising(deserializedEnergyModel);
+	
 } catch (IOException e) {
 	e.printStackTrace();
 }
