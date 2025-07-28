@@ -2113,7 +2113,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1753698716095</Id>
-		<Name><![CDATA[f_createEnergyHub]]></Name>
+		<Name><![CDATA[f_startEnergyHubConfiguration]]></Name>
 		<X>2240</X>
 		<Y>-2120</Y>
 		<Label>
@@ -2129,7 +2129,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1753698810590</Id>
-		<Name><![CDATA[f_finalizeEnergyHubSelection]]></Name>
+		<Name><![CDATA[f_finalizeEnergyHubConfiguration]]></Name>
 		<X>2240</X>
 		<Y>-2020</Y>
 		<Label>

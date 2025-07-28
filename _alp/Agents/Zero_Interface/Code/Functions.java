@@ -3341,7 +3341,7 @@ else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECT
 }
 /*ALCODEEND*/}
 
-double f_createEnergyHub()
+double f_startEnergyHubConfiguration()
 {/*ALCODESTART::1753698716095*/
 pauseSimulation();
 
@@ -3354,7 +3354,7 @@ f_setForcedClickScreenVisibility(true);
 cb_showFilterInterface.setSelected(true, true);
 /*ALCODEEND*/}
 
-double f_finalizeEnergyHubSelection()
+double f_finalizeEnergyHubConfiguration()
 {/*ALCODESTART::1753698810590*/
 if(b_inEnergyHubSelectionMode){
 	//Set map in correct pos and navigate to e-hub view

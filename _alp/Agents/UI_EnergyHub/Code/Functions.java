@@ -15,6 +15,8 @@ f_initializeEnergyHubResultsUI();
 
 //Initialize the ui_tabs
 f_initializeEnergyHubTabs();
+
+runSimulation();
 /*ALCODEEND*/}
 
 double f_initializeEnergyHubResultsUI()
@@ -32,6 +34,7 @@ if(zero_Interface.settings.resultsUIRadioButtonSetup() != null){
 
 //Connect resultsUI
 uI_Results.f_initializeResultsUI();
+uI_Results.f_updateResultsUI(v_energyHubCoop);
 /*ALCODEEND*/}
 
 double f_initializeEnergyHubTabs()

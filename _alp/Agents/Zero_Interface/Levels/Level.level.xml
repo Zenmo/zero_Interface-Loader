@@ -7934,7 +7934,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
 				<VisibleCode>gr_forceMapSelection.isVisible() &amp;&amp; b_inEnergyHubSelectionMode &amp;&amp; c_selectedGridConnections.size()&gt;1</VisibleCode>
-				<OnClickCode>f_finalizeEnergyHubSelection();</OnClickCode>
+				<OnClickCode>f_finalizeEnergyHubConfiguration();</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
