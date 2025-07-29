@@ -1969,9 +1969,12 @@ if (v_remainingElectricityDelivery_kWh < 0){
 }
 
 if(yearlyHeatPumpElectricityConsumption_kWh != null){
+	for(int i = 0; i < yearlyHeatPumpElectricityConsumption_kWh.length; i++){
+		yearlyHeatPumpElectricityConsumption_kWh[i] = max(0,yearlyHeatPumpElectricityConsumption_kWh[i]);
+	}
 	double[] preProcessedDefaultConsumptionProfile = new double[profile.a_energyProfile_kWh.length];
 	for(int i = 0; i < preProcessedDefaultConsumptionProfile.length; i++){
-		preProcessedDefaultConsumptionProfile[i] = profile.a_energyProfile_kWh[i] - yearlyHeatPumpElectricityConsumption_kWh[i];
+		preProcessedDefaultConsumptionProfile[i] = max(0,profile.a_energyProfile_kWh[i] - yearlyHeatPumpElectricityConsumption_kWh[i]);
 	}
 	profile.a_energyProfile_kWh = preProcessedDefaultConsumptionProfile;
 	
