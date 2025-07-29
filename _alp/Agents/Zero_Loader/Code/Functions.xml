@@ -801,6 +801,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Name><![CDATA[pvPower_kW]]></Name>
 			<Type><![CDATA[Double]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[yearlyHeatPumpElectricityConsumption_kWh]]></Name>
+			<Type><![CDATA[double[]]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
