@@ -1202,13 +1202,14 @@ try {
 	energyModel = deserializedEnergyModel;
 	zero_Interface.energyModel = deserializedEnergyModel;
 	zero_Interface.uI_Results.energyModel = deserializedEnergyModel;
-	//zero_Interface.f_initalAssetOrdering();
 	zero_Interface.f_clearSelectionAndSelectEnergyModel();
-	zero_Interface.f_updateMainInterfaceSliders();
-	if (zero_Interface.p_selectedProjectType==OL_ProjectType.RESIDENTIAL) {
-		zero_Interface.f_initialisationOfResidentialSliders();
-	}
-	zero_Interface.f_updateOrderedListsAfterDeserialising(deserializedEnergyModel);
+	
+	zero_Interface.f_updateOrderedListsAfterDeserialising(deserializedEnergyModel);	
+	
+	//Get all the gridconnections of the main interface and set sliders to correct values
+	List&lt;GridConnection&gt; allModelGridConnections = new ArrayList&lt;GridConnection&gt;(energyModel.f_getActiveGridConnections());
+	allModelGridConnections.addAll(energyModel.f_getPausedGridConnections());
+	zero_Interface.uI_Tabs.f_initializeUI_Tabs(allModelGridConnections);
 	
 } catch (IOException e) {
 	e.printStackTrace();

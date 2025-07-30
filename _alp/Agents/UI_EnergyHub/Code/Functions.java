@@ -59,6 +59,12 @@ else {
 	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
 }
 uI_Tabs.f_showCorrectTab();
+
+//Initialize slider gcs and set sliders
+uI_Tabs.f_initializeSliderGridConnections(c_selectedEnergyHubGC);
+uI_Tabs.f_updateBusinessparkSliders();
+uI_Tabs.f_updateResidentialSliders();
+
 /*ALCODEEND*/}
 
 double f_styleEnergyHubResultsUI()

@@ -268,38 +268,15 @@ gisregion.setVisible(v_HVMVNodeIsVisible);
 
 double f_setUITabs()
 {/*ALCODESTART::1705925024602*/
-// CHOOSE WHICH TABS YOU WANT TO BE ABLE TO SHOW FOR YOUR PROJECT 
-// (OVERRIDE FUNCTION IN CHILD IF YOU WANT OTHER THAN DEFAULT)
+//Create the tabs for the project
+f_createUITabs_default();
 
-// Adding the (child) tabs to the tabArea population
+//Get all the gridconnections of the main interface
+List<GridConnection> allModelGridConnections = new ArrayList<GridConnection>(energyModel.f_getActiveGridConnections());
+allModelGridConnections.addAll(energyModel.f_getPausedGridConnections());
 
-// If you use an extension of a tab, you must update the pointer to the instance of the interface
-// Something like: tabElectricity.zero_Interface = loader_Project.zero_Interface;
-// No update to the pointer is needed for the generic tabs
-
-uI_Tabs.add_pop_tabElectricity();
-
-uI_Tabs.add_pop_tabHeating();
-
-uI_Tabs.add_pop_tabMobility();
-
-uI_Tabs.add_pop_tabEHub();
-
-// Group visibilities
-// When using an extension of a generic tab don't forget to typecast it!
-if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
-	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_ResidentialArea().setVisible(true);
-	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDeandSliders_ResidentialArea().setVisible(true);
-	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
-	((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
-}
-else {
-	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders().setVisible(true);
-	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersCompanies().setVisible(true);
-	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
-	((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
-}
-uI_Tabs.f_showCorrectTab();
+//Initialize the uI_Tabs with the gridconnections
+uI_Tabs.f_initializeUI_Tabs(allModelGridConnections);
 /*ALCODEEND*/}
 
 double f_selectGridNode(GridNode GN)
@@ -551,7 +528,7 @@ double f_resetSettings()
 {/*ALCODESTART::1709718252272*/
 if(!b_runningMainInterfaceScenarios){
 	b_resultsUpToDate = false;
-	gr_simulateYearScreenSmall.setVisible(true);
+	gr_simulateYear.setVisible(true);
 	
 	// Switch to the live plots and do not allow the user to switch away from the live plot when the year is not yet simulated
 	energyModel.f_updateActiveAssetsMetaData();
@@ -647,7 +624,7 @@ f_initialParkingSpacesOrder();
 f_initialHouseholdOrder();
 f_initialChargerOrder();
 f_projectSpecificOrderedCollectionAdjustments();
-
+f_initializeNonActiveVehiclesPublicParking();
 
 /*ALCODEEND*/}
 
@@ -824,129 +801,16 @@ double f_updateMainInterfaceSliders()
 {/*ALCODESTART::1718288402102*/
 // ATTENTION: If you have custom tabs it may be neccesary to override this function and add updates to your custom sliders!
 
-// PV SYSTEMS:
-//double PVsystems = count(energyModel.UtilityConnections, x->x.v_liveAssetsMetaData.hasPV == true && x.v_isActive);		
-//int PV_pct = roundToInt(100 * PVsystems / count(energyModel.UtilityConnections, x->x.v_isActive));
-Pair<Double, Double> pair = uI_Tabs.pop_tabElectricity.get(0).f_getPVSystemPercentage( new ArrayList<GridConnection>(findAll(energyModel.UtilityConnections, x -> x.v_isActive) ) );
-int PV_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());
-uI_Tabs.pop_tabElectricity.get(0).getSliderRooftopPVCompanies_pct().setValue(PV_pct, false);
-
-// GAS_BURNER / HEATING SYSTEMS: // Still a slight error. GasBurners + HeatPumps != total, because some GC have primary heating asset null
-int GasBurners = count(energyModel.UtilityConnections, gc->gc.p_primaryHeatingAsset instanceof J_EAConversionGasBurner && gc.v_isActive);
-int GasBurners_pct = roundToInt(100.0 * GasBurners / (count(energyModel.UtilityConnections, x -> x.v_isActive && x.p_primaryHeatingAsset != null) + uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps + uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_HybridHeatpumps));
-
-uI_Tabs.pop_tabHeating.get(0).getSliderGasBurnerCompanies_pct().setValue(GasBurners_pct, false);
-uI_Tabs.pop_tabHeating.get(0).f_setHeatingSliders( 0, uI_Tabs.pop_tabHeating.get(0).getSliderGasBurnerCompanies_pct(), uI_Tabs.pop_tabHeating.get(0).getSliderElectricHeatPumpCompanies_pct(), null, null );
-
-uI_Tabs.pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct().setValue(GasBurners_pct, false);
-uI_Tabs.pop_tabHeating.get(0).f_setHeatingSliders( 0, uI_Tabs.pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct(), uI_Tabs.pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesElectricHeatPumpCompanies_pct(), null, null );
-
-
-// HEAT_PUMP_AIR:
-//		int HeatPumps = count(energyModel.UtilityConnections, gc->gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump);
-//		int HeatPumps_pct = roundToInt(100 * HeatPumps / energyModel.UtilityConnections.size());
-//		sl_electricHeatPumpCompanies.setValue(HeatPumps_pct, false);
-//		f_setHeatingSlidersCompanies(1);
-	
-// TRUCKS:
-int DieselTrucks = 0;
-int ElectricTrucks = uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Trucks;
-int HydrogenTrucks = 0;
-for (GCUtility gc : energyModel.UtilityConnections) {
-	if(gc.v_isActive){
-		for (J_EAVehicle vehicle : gc.c_vehicleAssets) {
-			if (vehicle instanceof J_EADieselVehicle && vehicle.getEAType() == OL_EnergyAssetType.DIESEL_TRUCK) {
-				DieselTrucks += 1;
-			}
-			else if (vehicle instanceof J_EAEV && vehicle.getEAType() == OL_EnergyAssetType.ELECTRIC_TRUCK) {
-				ElectricTrucks += 1;
-			}
-			else if (vehicle instanceof J_EAHydrogenVehicle && vehicle.getEAType() == OL_EnergyAssetType.HYDROGEN_TRUCK) {
-				HydrogenTrucks += 1;
-			}
-		}
-	}
+if(p_selectedProjectType == OL_ProjectType.BUSINESSPARK){
+	uI_Tabs.f_updateBusinessparkSliders();
 }
-
-int totalTrucks = DieselTrucks + ElectricTrucks + HydrogenTrucks;
-int DieselTrucks_pct = 100;
-int ElectricTrucks_pct = 0;
-int HydrogenTrucks_pct = 0;
-if (totalTrucks != 0) {
-	DieselTrucks_pct = roundToInt(100.0 * DieselTrucks / totalTrucks);
-	ElectricTrucks_pct = roundToInt(100.0 * ElectricTrucks / totalTrucks);
-	HydrogenTrucks_pct = roundToInt(100.0 * HydrogenTrucks / totalTrucks);
+else if(p_selectedProjectType == OL_ProjectType.RESIDENTIAL){
+	uI_Tabs.f_updateResidentialSliders();
 }
-uI_Tabs.pop_tabMobility.get(0).getSliderFossilFuelTrucks_pct().setValue(DieselTrucks_pct, false);
-uI_Tabs.pop_tabMobility.get(0).getSliderElectricTrucks_pct().setValue(ElectricTrucks_pct, false);
-uI_Tabs.pop_tabMobility.get(0).getSliderHydrogenTrucks_pct().setValue(HydrogenTrucks_pct, false);
-
-// VANS:
-int DieselVans = 0;
-int ElectricVans = uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Vans;
-int HydrogenVans = 0;
-for (GCUtility gc : energyModel.UtilityConnections) {
-	if(gc.v_isActive){
-		for (J_EAVehicle vehicle : gc.c_vehicleAssets) {
-			if (vehicle instanceof J_EADieselVehicle && vehicle.getEAType() == OL_EnergyAssetType.DIESEL_VAN) {
-				DieselVans += 1;
-			}
-			else if (vehicle instanceof J_EAEV && vehicle.getEAType() == OL_EnergyAssetType.ELECTRIC_VAN) {
-				ElectricVans += 1;
-			}
-			else if (vehicle instanceof J_EAHydrogenVehicle && vehicle.getEAType() == OL_EnergyAssetType.HYDROGEN_VAN) {
-				HydrogenVans += 1;
-			}
-		}
-	}
+else{
+	uI_Tabs.f_updateBusinessparkSliders();
+	uI_Tabs.f_updateResidentialSliders();
 }
-
-int totalVans = DieselVans + ElectricVans + HydrogenVans;
-int DieselVans_pct = 100;
-int ElectricVans_pct = 0;
-int HydrogenVans_pct = 0;
-if (totalVans != 0) {
-	DieselVans_pct = roundToInt(100.0 * DieselVans / totalVans);
-	ElectricVans_pct = roundToInt(100.0 * ElectricVans / totalVans);
-	HydrogenVans_pct = roundToInt(100.0 * HydrogenVans / totalVans);
-}
-uI_Tabs.pop_tabMobility.get(0).getSliderFossilFuelVans_pct().setValue(DieselVans_pct, false);
-uI_Tabs.pop_tabMobility.get(0).getSliderElectricVans_pct().setValue(ElectricVans_pct, false);
-//sl_hydrogenVans.setValue(HydrogenVans_pct, false);
-		
-// DIESEL_VEHICLE:  // Currently only for Company Cars not household Cars / EVs
-int DieselCars = 0;
-int ElectricCars = uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Cars;
-int HydrogenCars = 0;
-for (GCUtility gc : energyModel.UtilityConnections) {
-	if(gc.v_isActive){
-		for (J_EAVehicle vehicle : gc.c_vehicleAssets) {
-			if (vehicle instanceof J_EADieselVehicle && vehicle.getEAType() == OL_EnergyAssetType.DIESEL_VEHICLE) {
-				DieselCars += 1;
-			}
-			else if (vehicle instanceof J_EAEV && vehicle.getEAType() == OL_EnergyAssetType.ELECTRIC_VEHICLE) {
-				ElectricCars += 1;
-			}
-			else if (vehicle instanceof J_EAHydrogenVehicle && vehicle.getEAType() == OL_EnergyAssetType.HYDROGEN_VEHICLE) {
-				HydrogenCars += 1;
-			}
-		}
-	}
-}
-
-int totalCars = DieselCars + ElectricCars + HydrogenCars;
-int DieselCars_pct = 100;
-int ElectricCars_pct = 0;
-int HydrogenCars_pct = 0;
-if (totalCars != 0) {
-	DieselCars_pct = roundToInt((100.0 * DieselCars) / totalCars);
-	ElectricCars_pct = roundToInt((100.0 * ElectricCars) / totalCars);
-	HydrogenCars_pct = roundToInt((100.0 * HydrogenCars) / totalCars);
-}
-uI_Tabs.pop_tabMobility.get(0).getSliderFossilFuelCars_pct().setValue(DieselCars_pct, false);
-uI_Tabs.pop_tabMobility.get(0).getSliderElectricCars_pct().setValue(ElectricCars_pct, false);
-//sl_hydrogenCars.setValue(HydrogenCars_pct, false);
-
 /*ALCODEEND*/}
 
 double f_selectCharger(GCPublicCharger charger,GIS_Object objectGIS)
@@ -1303,8 +1167,6 @@ if(GN.gisRegion != null){
 double f_setSliderPresets()
 {/*ALCODESTART::1725977409304*/
 //Should be overridden in child interface!!!
-f_updateMainInterfaceSliders();
-f_initialisationOfResidentialSliders();
 traceln("Forgot to override project specific slider settings!!");
 /*ALCODEEND*/}
 
@@ -2907,62 +2769,6 @@ Collections.shuffle(c_orderedVehiclesPrivateParking);
 
 /*ALCODEEND*/}
 
-double f_initialisationOfResidentialSliders()
-{/*ALCODESTART::1750340574107*/
-int nbHouses = energyModel.Houses.size();
-int nbHousesWithPV = count(energyModel.Houses, x -> x.v_liveAssetsMetaData.hasPV);
-double pv_pct = 100.0 * nbHousesWithPV / nbHouses;
-uI_Tabs.pop_tabElectricity.get(0).sl_householdPVResidentialArea_pct.setValue(pv_pct, false);
-
-if ( nbHousesWithPV != 0 ) {
-	int nbHousesWithHomeBattery = count(energyModel.Houses, x -> x.v_liveAssetsMetaData.hasPV && x.p_batteryAsset != null);
-	double battery_pct = 100.0 * nbHousesWithHomeBattery / nbHousesWithPV;
-	uI_Tabs.pop_tabElectricity.get(0).sl_householdBatteriesResidentialArea_pct.setValue(battery_pct, false);
-}
-
-int nbHousesWithElectricCooking = count(energyModel.Houses, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.ELECTRIC);
-double cooking_pct = 100.0 * nbHousesWithElectricCooking / nbHouses;
-uI_Tabs.pop_tabElectricity.get(0).sl_householdElectricCookingResidentialArea_pct.setValue(cooking_pct, false);
-
-if (c_orderedVehiclesPrivateParking.size() > 0) {
-	int nbPrivateEVs = count(c_orderedVehiclesPrivateParking, x -> x instanceof J_EAEV);
-	double privateEVs_pct = 100.0 * nbPrivateEVs / c_orderedVehiclesPrivateParking.size();
-	uI_Tabs.pop_tabElectricity.get(0).sl_privateEVsResidentialArea_pct.setValue(privateEVs_pct, false);
-}
-
-if (c_orderedPublicChargers.size() > 0) {
-	int nbPublicChargers = c_orderedPublicChargers.size();
-	int nbActivePublicChargers = count(c_orderedPublicChargers, x -> x.v_isActive);
-	double activePublicChargers_pct = 100.0 * nbActivePublicChargers / c_orderedPublicChargers.size();
-	uI_Tabs.pop_tabElectricity.get(0).sl_publicChargersResidentialArea_pct.setValue(activePublicChargers_pct, false);
-	if (c_orderedActiveVehiclesPublicParking.size() > 0) {
-		// Put some of the diesel cars into the non active vehicles
-		int nbCarsPerCharger = energyModel.avgc_data.p_avgEVsPerPublicCharger;
-		List<J_EADieselVehicle> cars = new ArrayList<>(c_orderedActiveVehiclesPublicParking.subList(0, nbActivePublicChargers * nbCarsPerCharger));
-		for (J_EADieselVehicle car : cars) {
-			c_orderedActiveVehiclesPublicParking.remove(car);
-			c_orderedNonActiveVehiclesPublicParking.add(0, car);
-			car.removeEnergyAsset();
-		}
-	}
-	int nbV1GChargers = count(c_orderedV1GChargers, x -> x.V1GCapable);
-	int nbV2GChargers =count(c_orderedV2GChargers, x -> x.V2GCapable);
-	double V1G_pct = 100.0 * nbV1GChargers / nbPublicChargers;
-	double V2G_pct = 100.0 * nbV2GChargers / nbPublicChargers;
-	uI_Tabs.pop_tabElectricity.get(0).sl_chargersThatSupportV1G_pct.setValue(V1G_pct, false);
-	uI_Tabs.pop_tabElectricity.get(0).sl_chargersThatSupportV2G_pct.setValue(V2G_pct, false);
-}
-
-
-double averageNeighbourhoodBatterySize_kWh = 0;
-for (GCGridBattery gc : energyModel.GridBatteries) {
-	averageNeighbourhoodBatterySize_kWh += gc.p_batteryAsset.getStorageCapacity_kWh();
-}
-averageNeighbourhoodBatterySize_kWh /= energyModel.GridBatteries.size();
-uI_Tabs.pop_tabElectricity.get(0).sl_gridBatteriesResidentialArea_kWh.setValue(averageNeighbourhoodBatterySize_kWh, false);
-
-/*ALCODEEND*/}
-
 double f_setColorsBasedOnCongestion_objects(GIS_Object gis_area)
 {/*ALCODESTART::1752756002220*/
 if (gis_area.c_containedGridConnections.size() > 0) {
@@ -3440,5 +3246,94 @@ for (int i=0; i< EAlist.size(); i++) {
 }
 
 
+/*ALCODEEND*/}
+
+double f_createUITabs_default()
+{/*ALCODESTART::1753881971788*/
+// CHOOSE WHICH TABS YOU WANT TO BE ABLE TO SHOW FOR YOUR PROJECT 
+// (OVERRIDE FUNCTION IN CHILD IF YOU WANT OTHER THAN DEFAULT)
+
+// Adding the (child) tabs to the tabArea population
+
+// If you use an extension of a tab, you must update the pointer to the instance of the interface
+// Something like: tabElectricity.zero_Interface = loader_Project.zero_Interface;
+// No update to the pointer is needed for the generic tabs
+
+
+uI_Tabs.add_pop_tabElectricity();
+
+uI_Tabs.add_pop_tabHeating();
+
+uI_Tabs.add_pop_tabMobility();
+
+uI_Tabs.add_pop_tabEHub();
+
+// Group visibilities
+// When using an extension of a generic tab don't forget to typecast it!
+if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
+	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_ResidentialArea().setVisible(true);
+	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDeandSliders_ResidentialArea().setVisible(true);
+	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
+	((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
+}
+else {
+	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders().setVisible(true);
+	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersCompanies().setVisible(true);
+	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
+	((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
+}
+/*ALCODEEND*/}
+
+double f_initializeNonActiveVehiclesPublicParking()
+{/*ALCODESTART::1753882411689*/
+int nbActivePublicChargers = count(c_orderedPublicChargers, x -> x.v_isActive);
+double activePublicChargers_pct = 100.0 * nbActivePublicChargers / c_orderedPublicChargers.size();
+if (c_orderedActiveVehiclesPublicParking.size() > 0) {
+	// Put some of the diesel cars into the non active vehicles
+	int nbCarsPerCharger = energyModel.avgc_data.p_avgEVsPerPublicCharger;
+	List<J_EADieselVehicle> cars = new ArrayList<>(c_orderedActiveVehiclesPublicParking.subList(0, nbActivePublicChargers * nbCarsPerCharger));
+	for (J_EADieselVehicle car : cars) {
+		c_orderedActiveVehiclesPublicParking.remove(car);
+		c_orderedNonActiveVehiclesPublicParking.add(0, car);
+		car.removeEnergyAsset();
+	}
+}
+/*ALCODEEND*/}
+
+double f_simulateYearFromMainInterface()
+{/*ALCODESTART::1753884000493*/
+
+gr_simulateYear.setVisible(false);		
+gr_loadIconYearSimulation.setVisible(true);
+		
+
+new Thread( () -> {
+	//Run rapid run
+	energyModel.f_runRapidSimulation();
+	
+	//After rapid run: remove loading screen
+	gr_loadIconYearSimulation.setVisible(false);
+		
+	if (c_selectedGridConnections.size() == 0){//Update main area collection
+		uI_Results.f_updateResultsUI(energyModel);
+	}
+	else if (c_selectedGridConnections.size() == 1){//Update selected GC area collection
+		uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
+	}
+	else if(c_selectedGridConnections.size() > 1){//Update COOP area collection
+		uI_Results.f_updateResultsUI(v_customEnergyCoop);
+	}
+	
+	//Update and show kpi summary chart after run
+	if(settings.showKPISummary() != null && settings.showKPISummary() && v_clickedObjectType != OL_GISObjectType.GRIDNODE){
+		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
+	}
+	
+	//Enable radio buttons again
+	uI_Results.f_enableNonLivePlotRadioButtons(true);
+	c_companyUIs.forEach(companyUI -> companyUI.uI_Results.f_enableNonLivePlotRadioButtons(true));
+	
+	b_resultsUpToDate = true;
+}).start();
 /*ALCODEEND*/}
 

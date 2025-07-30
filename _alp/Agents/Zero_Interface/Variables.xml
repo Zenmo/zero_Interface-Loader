@@ -1790,7 +1790,7 @@
 		<Id>1731425176471</Id>
 		<Name><![CDATA[b_changeToCustomScenario]]></Name>
 		<X>-670</X>
-		<Y>811</Y>
+		<Y>816</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1812,7 +1812,7 @@
 		<Id>1732027307811</Id>
 		<Name><![CDATA[b_runningMainInterfaceScenarios]]></Name>
 		<X>-670</X>
-		<Y>791</Y>
+		<Y>796</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2600,7 +2600,7 @@
 		<Id>1745937830300</Id>
 		<Name><![CDATA[p_minSelectedGCForPublicAggregation]]></Name>
 		<X>-670</X>
-		<Y>890</Y>
+		<Y>915</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2756,7 +2756,7 @@
 		<Id>1715178022675</Id>
 		<Name><![CDATA[c_orderedVehicles]]></Name>
 		<X>68</X>
-		<Y>-520</Y>
+		<Y>-500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2774,7 +2774,7 @@
 		<Id>1715183417595</Id>
 		<Name><![CDATA[c_orderedHeatingSystemsCompanies]]></Name>
 		<X>68</X>
-		<Y>-495</Y>
+		<Y>-475</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2792,7 +2792,7 @@
 		<Id>1715183423011</Id>
 		<Name><![CDATA[c_orderedPVSystemsCompanies]]></Name>
 		<X>68</X>
-		<Y>-570</Y>
+		<Y>-550</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2810,7 +2810,7 @@
 		<Id>1719176257019</Id>
 		<Name><![CDATA[c_orderedHeatingSystemsHouses]]></Name>
 		<X>68</X>
-		<Y>-475</Y>
+		<Y>-455</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3103,7 +3103,7 @@
 		<Id>1749741070275</Id>
 		<Name><![CDATA[c_orderedParkingSpaces]]></Name>
 		<X>70</X>
-		<Y>-370</Y>
+		<Y>-360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3121,7 +3121,7 @@
 		<Id>1747300275742</Id>
 		<Name><![CDATA[c_orderedPVSystemsHouses]]></Name>
 		<X>68</X>
-		<Y>-545</Y>
+		<Y>-525</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3229,7 +3229,7 @@
 		<Id>1750333596459</Id>
 		<Name><![CDATA[c_orderedActiveVehiclesPublicParking]]></Name>
 		<X>70</X>
-		<Y>-430</Y>
+		<Y>-420</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3247,7 +3247,7 @@
 		<Id>1750333624380</Id>
 		<Name><![CDATA[c_orderedNonActiveVehiclesPublicParking]]></Name>
 		<X>70</X>
-		<Y>-410</Y>
+		<Y>-400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3265,7 +3265,7 @@
 		<Id>1750333680450</Id>
 		<Name><![CDATA[c_orderedVehiclesPrivateParking]]></Name>
 		<X>70</X>
-		<Y>-390</Y>
+		<Y>-380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

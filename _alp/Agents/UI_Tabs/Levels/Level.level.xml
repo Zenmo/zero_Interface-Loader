@@ -773,4 +773,29 @@ f_showCorrectTab();</OnClickCode>
 			</EmbeddedObjectPresentation>
 		</Presentation>
 	</Group>
+	<Text>
+		<Id>1753877322668</Id>
+		<Name><![CDATA[txt_allGridConnectionsForTheseSliders]]></Name>
+		<X>600</X>
+		<Y>20</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[GridConnections displayed in slider]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>12</Size>
+			<Style>1</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
 </Presentation>

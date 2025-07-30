@@ -3060,7 +3060,7 @@ new Thread( () -&gt; {
 	//Update results up to date boolean
 	uI_Results.f_enableNonLivePlotRadioButtons(true);
 	zero_Interface.b_resultsUpToDate = true;
-	zero_Interface.gr_simulateYearScreenSmall.setVisible(false);
+	zero_Interface.gr_simulateYear.setVisible(false);
 	zero_Interface.uI_Results.f_enableNonLivePlotRadioButtons(true);
 	
 }).start();

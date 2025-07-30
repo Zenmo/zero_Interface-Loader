@@ -2038,8 +2038,8 @@ traceln(" ");
 //Simulate full year simulation for initial KPIs
 if( settings.runHeadlessAtStartup() ){
 	energyModel.f_runRapidSimulation(); // Do a full year run to have KPIs right away!
-	zero_Interface.gr_simulateYearScreenSmall.setVisible(false);
-	zero_Interface.gr_loadIconSmall.setVisible(false);
+	zero_Interface.gr_simulateYear.setVisible(false);
+	zero_Interface.gr_loadIconYearSimulation.setVisible(false);
 	zero_Interface.b_resultsUpToDate = true;
 	zero_Interface.uI_Results.f_enableNonLivePlotRadioButtons(true);
 }
