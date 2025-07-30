@@ -1105,8 +1105,8 @@
 	<Rectangle>
 		<Id>1753349205420</Id>
 		<Name><![CDATA[rect_defaultStartup1]]></Name>
-		<X>1180</X>
-		<Y>511</Y>
+		<X>2050</X>
+		<Y>0</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -1131,8 +1131,8 @@
 	<Text>
 		<Id>1753349205422</Id>
 		<Name><![CDATA[txt_loaderStartupDeserialisation]]></Name>
-		<X>1200</X>
-		<Y>520</Y>
+		<X>2070</X>
+		<Y>9</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1145,7 +1145,7 @@
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
-		<Text><![CDATA[Loader after deserialisation]]></Text>
+		<Text><![CDATA[Loader after deserialisation (in Progress!)]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>14</Size>
@@ -1157,8 +1157,8 @@
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1753449467882</Id>
 		<Name><![CDATA[deserialize2]]></Name>
-		<X>1233.333</X>
-		<Y>713</Y>
+		<X>2103.333</X>
+		<Y>202</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1225,8 +1225,8 @@ try {
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1753449467884</Id>
 		<Name><![CDATA[serialize1]]></Name>
-		<X>1236.333</X>
-		<Y>610</Y>
+		<X>2106.333</X>
+		<Y>99</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>

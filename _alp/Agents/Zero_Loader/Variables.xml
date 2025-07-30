@@ -311,8 +311,8 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 	<Variable Class="PlainVariable">
 		<Id>1753450969530</Id>
 		<Name><![CDATA[v_objectMapper]]></Name>
-		<X>1270</X>
-		<Y>560</Y>
+		<X>2140</X>
+		<Y>49</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -799,8 +799,8 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 	<Variable Class="CollectionVariable">
 		<Id>1753449467886</Id>
 		<Name><![CDATA[c_GISregions]]></Name>
-		<X>1265.333</X>
-		<Y>674</Y>
+		<X>2135.333</X>
+		<Y>163</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
