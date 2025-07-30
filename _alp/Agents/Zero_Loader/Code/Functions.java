@@ -967,7 +967,7 @@ if ( hasQuarterlyData == true ) { // Add quarterly electricity data pattern if a
 	
 
 	//Preprocess and add the profiles
-	f_createPreprocessedElectricityProfile_PV(parentGC, yearlyElectricityDelivery_kWh_array, yearlyElectricityFeedin_kWh_array, yearlyElectricityProduction_kWh_array, pvPower_kW);
+	f_createPreprocessedElectricityProfile_PV(parentGC, yearlyElectricityDelivery_kWh_array, yearlyElectricityFeedin_kWh_array, yearlyElectricityProduction_kWh_array, pvPower_kW, null);
 
 } 
 
@@ -1896,7 +1896,7 @@ for (Cable_data dataCable : c_cable_data) {
 }
 /*ALCODEEND*/}
 
-double f_createPreprocessedElectricityProfile_PV(GridConnection parentGC,double[] yearlyElectricityDelivery_kWh,double[] yearlyElectricityFeedin_kWh,double[] yearlyElectricityProduction_kWh,Double pvPower_kW)
+double f_createPreprocessedElectricityProfile_PV(GridConnection parentGC,double[] yearlyElectricityDelivery_kWh,double[] yearlyElectricityFeedin_kWh,double[] yearlyElectricityProduction_kWh,Double pvPower_kW,double[] yearlyHeatPumpElectricityConsumption_kWh)
 {/*ALCODESTART::1726584205861*/
 //Create the profile 
 J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, null, OL_ProfileAssetType.ELECTRICITYBASELOAD, energyModel.p_timeStep_h);		
@@ -1966,6 +1966,21 @@ if (extraConsumption_kWh > 1) {
  
 if (v_remainingElectricityDelivery_kWh < 0){
 	traceln("v_remainingElectricityDelivery_kWh became negative at GC: %s", parentGC);
+}
+
+if(yearlyHeatPumpElectricityConsumption_kWh != null){
+	for(int i = 0; i < yearlyHeatPumpElectricityConsumption_kWh.length; i++){
+		yearlyHeatPumpElectricityConsumption_kWh[i] = max(0,yearlyHeatPumpElectricityConsumption_kWh[i]);
+	}
+	double[] preProcessedDefaultConsumptionProfile = new double[profile.a_energyProfile_kWh.length];
+	for(int i = 0; i < preProcessedDefaultConsumptionProfile.length; i++){
+		preProcessedDefaultConsumptionProfile[i] = max(0,profile.a_energyProfile_kWh[i] - yearlyHeatPumpElectricityConsumption_kWh[i]);
+	}
+	profile.a_energyProfile_kWh = preProcessedDefaultConsumptionProfile;
+	
+	J_EAProfile profileHeatPumpElectricityConsumption = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, yearlyHeatPumpElectricityConsumption_kWh, OL_ProfileAssetType.HEATPUMP_ELECTRICITY_CONSUMPTION, energyModel.p_timeStep_h);		
+	profileHeatPumpElectricityConsumption.setStartTime_h(v_simStartHour_h);
+	profileHeatPumpElectricityConsumption.energyAssetName = parentGC.p_ownerID + " custom heat pump electricity consumption profile";
 }
 /*ALCODEEND*/}
 
@@ -2838,8 +2853,10 @@ Double pvPower_kW = Optional.ofNullable(gridConnectionSurvey.getSupply().getPvIn
 	.map(it -> (double) it)
 	.orElse(null);
 
+double[] heatPumpElectricityTimeSeries_kWh = f_timeSeriesToQuarterHourlyDoubleArray(gridConnectionSurvey.getHeat().getHeatPumpElectricityConsumptionTimeSeries_kWh());
+
 //Preprocess the arrays and create the consumption pattern
-f_createPreprocessedElectricityProfile_PV(gridConnection, deliveryTimeSeries_kWh, feedInTimeSeries_kWh, productionTimeSeries_kWh, pvPower_kW);
+f_createPreprocessedElectricityProfile_PV(gridConnection, deliveryTimeSeries_kWh, feedInTimeSeries_kWh, productionTimeSeries_kWh, pvPower_kW, heatPumpElectricityTimeSeries_kWh);
 
 gridConnection.v_hasQuarterHourlyValues = true;
 
