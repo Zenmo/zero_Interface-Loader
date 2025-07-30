@@ -3149,7 +3149,7 @@ for(OL_MapOverlayTypes mapOverlayType : c_loadedMapOverlayTypes){
 String[] RadioButtonOptions = RadioButtonOptions_list.toArray(String[]::new);
 
 //Create the radiobutton and set the correct action.
-rb_mapOverlay = new ShapeRadioButtonGroup(group_legenda.getPresentable(), ispublic, x ,y, width, height, textColor, enabled, font, vertical, RadioButtonOptions){
+rb_mapOverlay = new ShapeRadioButtonGroup(presentable, ispublic, x ,y, width, height, textColor, enabled, font, vertical, RadioButtonOptions){
 	@Override
 	public void action() {
 		f_setMapOverlay();
@@ -3318,6 +3318,38 @@ presentation.remove(shape);
 presentation.insert(presentation.size(), shape);
 /*ALCODEEND*/}
 
+double f_updateOrderedListsAfterDeserialising(EnergyModel newEnergyModel)
+{/*ALCODESTART::1753713001191*/
+// Update references of GClists
+for (int i=0; i< c_orderedPVSystemsHouses.size(); i++) {
+	String GCid = c_orderedPVSystemsHouses.get(i).p_gridConnectionID;
+	c_orderedPVSystemsHouses.set(i,findFirst(newEnergyModel.Houses, x->x.p_gridConnectionID == GCid));
+}
+
+for (int i=0; i< c_orderedPVSystemsCompanies.size(); i++) {
+	String GCid = c_orderedPVSystemsCompanies.get(i).p_gridConnectionID;
+	c_orderedPVSystemsCompanies.set(i,findFirst(newEnergyModel.UtilityConnections, x->x.p_gridConnectionID == GCid));
+}
+
+for (int i=0; i< c_orderedHeatingSystemsCompanies.size(); i++) {
+	String GCid = c_orderedHeatingSystemsCompanies.get(i).p_gridConnectionID;
+	c_orderedHeatingSystemsCompanies.set(i,findFirst(newEnergyModel.UtilityConnections, x->x.p_gridConnectionID == GCid));
+}
+
+for (int i=0; i< c_orderedHeatingSystemsHouses.size(); i++) {
+	String GCid = c_orderedHeatingSystemsHouses.get(i).p_gridConnectionID;
+	c_orderedHeatingSystemsHouses.set(i,findFirst(newEnergyModel.Houses, x->x.p_gridConnectionID == GCid));
+}
+
+for (int i=0; i< c_orderedPublicChargers.size(); i++) {
+	String GCid = c_orderedPublicChargers.get(i).p_gridConnectionID;
+	c_orderedPublicChargers.set(i,findFirst(newEnergyModel.PublicChargers, x->x.p_gridConnectionID == GCid));
+}
+
+// TODO: Update references of J_EAlists 
+
+/*ALCODEEND*/}
+
 double f_initializePresentationOrder()
 {/*ALCODESTART::1753440184174*/
 //Set order of certain layovers and submenus
@@ -3387,38 +3419,6 @@ if(b_inEnergyHubSelectionMode){
 	
 	uI_EnergyHub.f_initializeEnergyHubDashboard();
 }
-
-/*ALCODEEND*/}
-
-double f_updateOrderedListsAfterDeserialising(EnergyModel newEnergyModel)
-{/*ALCODESTART::1753713001191*/
-// Update references of GClists
-for (int i=0; i< c_orderedPVSystemsHouses.size(); i++) {
-	String GCid = c_orderedPVSystemsHouses.get(i).p_gridConnectionID;
-	c_orderedPVSystemsHouses.set(i,findFirst(newEnergyModel.Houses, x->x.p_gridConnectionID == GCid));
-}
-
-for (int i=0; i< c_orderedPVSystemsCompanies.size(); i++) {
-	String GCid = c_orderedPVSystemsCompanies.get(i).p_gridConnectionID;
-	c_orderedPVSystemsCompanies.set(i,findFirst(newEnergyModel.UtilityConnections, x->x.p_gridConnectionID == GCid));
-}
-
-for (int i=0; i< c_orderedHeatingSystemsCompanies.size(); i++) {
-	String GCid = c_orderedHeatingSystemsCompanies.get(i).p_gridConnectionID;
-	c_orderedHeatingSystemsCompanies.set(i,findFirst(newEnergyModel.UtilityConnections, x->x.p_gridConnectionID == GCid));
-}
-
-for (int i=0; i< c_orderedHeatingSystemsHouses.size(); i++) {
-	String GCid = c_orderedHeatingSystemsHouses.get(i).p_gridConnectionID;
-	c_orderedHeatingSystemsHouses.set(i,findFirst(newEnergyModel.Houses, x->x.p_gridConnectionID == GCid));
-}
-
-for (int i=0; i< c_orderedPublicChargers.size(); i++) {
-	String GCid = c_orderedPublicChargers.get(i).p_gridConnectionID;
-	c_orderedPublicChargers.set(i,findFirst(newEnergyModel.PublicChargers, x->x.p_gridConnectionID == GCid));
-}
-
-// TODO: Update references of J_EAlists 
 
 /*ALCODEEND*/}
 
