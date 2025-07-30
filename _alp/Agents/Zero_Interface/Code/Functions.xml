@@ -277,7 +277,7 @@
 		<Id>1714130288661</Id>
 		<Name><![CDATA[f_initialPVSystemsOrder]]></Name>
 		<X>85</X>
-		<Y>-680</Y>
+		<Y>-710</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -293,7 +293,7 @@
 		<Id>1714130342440</Id>
 		<Name><![CDATA[f_initialElectricVehiclesOrder]]></Name>
 		<X>85</X>
-		<Y>-660</Y>
+		<Y>-690</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -309,7 +309,7 @@
 		<Id>1714131269202</Id>
 		<Name><![CDATA[f_initialHeatingSystemsOrder]]></Name>
 		<X>85</X>
-		<Y>-640</Y>
+		<Y>-670</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -325,7 +325,7 @@
 		<Id>1714135623471</Id>
 		<Name><![CDATA[f_initalAssetOrdering]]></Name>
 		<X>70</X>
-		<Y>-700</Y>
+		<Y>-730</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -814,7 +814,7 @@
 		<Id>1729685968993</Id>
 		<Name><![CDATA[f_projectSpecificOrderedCollectionAdjustments]]></Name>
 		<X>420</X>
-		<Y>-650</Y>
+		<Y>-680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1574,7 +1574,7 @@
 		<Id>1749741185117</Id>
 		<Name><![CDATA[f_initialParkingSpacesOrder]]></Name>
 		<X>420</X>
-		<Y>-690</Y>
+		<Y>-720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1590,7 +1590,7 @@
 		<Id>1750247111856</Id>
 		<Name><![CDATA[f_initialChargerOrder]]></Name>
 		<X>420</X>
-		<Y>-670</Y>
+		<Y>-700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1794,7 +1794,7 @@
 		<Id>1750333147816</Id>
 		<Name><![CDATA[f_initialHouseholdOrder]]></Name>
 		<X>85</X>
-		<Y>-620</Y>
+		<Y>-650</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1864,7 +1864,7 @@
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1752836715726</Id>
@@ -2052,6 +2052,26 @@
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
+		<Id>1753713001191</Id>
+		<Name><![CDATA[f_updateOrderedListsAfterDeserialising]]></Name>
+		<X>70</X>
+		<Y>-630</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[newEnergyModel]]></Name>
+			<Type><![CDATA[EnergyModel]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
 		<Id>1753440184174</Id>
 		<Name><![CDATA[f_initializePresentationOrder]]></Name>
 		<X>-660</X>
@@ -2139,6 +2159,56 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>ArrayList&lt;GridConnection&gt;</ReturnType>
+		<Id>1753713085487</Id>
+		<Name><![CDATA[f_updateGClistAfterDeserialisation]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>85</X>
+		<Y>-610</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[GClist]]></Name>
+			<Type><![CDATA[ArrayList<? extends GridConnection>]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[newEnergyModel]]></Name>
+			<Type><![CDATA[EnergyModel]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>ArrayList&lt;GridConnection&gt;</ReturnType>
+		<Id>1753713662613</Id>
+		<Name><![CDATA[f_updateJ_EAlistAfterDeserialisation]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>100</X>
+		<Y>-590</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[EAlist]]></Name>
+			<Type><![CDATA[ArrayList<J_EA>]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[newEnergyModel]]></Name>
+			<Type><![CDATA[EnergyModel]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>
