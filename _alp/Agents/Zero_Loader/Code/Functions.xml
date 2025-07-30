@@ -469,8 +469,8 @@
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>OL_GridConnectionHeatingType</ReturnType>
 		<Id>1726584205825</Id>
 		<Name><![CDATA[f_setHeatingTypeSurvey]]></Name>
 		<X>460</X>
@@ -489,10 +489,6 @@
 		<Parameter>
 			<Name><![CDATA[gridConnection]]></Name>
 			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[hasHourlyGasData]]></Name>
-			<Type><![CDATA[boolean]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -1742,5 +1738,112 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753784800216</Id>
+		<Name><![CDATA[f_addHeatManagement]]></Name>
+		<X>1130</X>
+		<Y>255</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[parentGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[heatingType]]></Name>
+			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753799111185</Id>
+		<Name><![CDATA[f_heatingOrder]]></Name>
+		<X>470</X>
+		<Y>-70</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[companyGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[gridConnection]]></Name>
+			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753801098736</Id>
+		<Name><![CDATA[f_createSurveyHeatProfiles]]></Name>
+		<X>650</X>
+		<Y>-70</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gridConnection]]></Name>
+			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[heatingType]]></Name>
+			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>boolean</ReturnType>
+		<Id>1753803212846</Id>
+		<Name><![CDATA[f_surveyHasGasData]]></Name>
+		<X>560</X>
+		<Y>-190</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gridConnection]]></Name>
+			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753804393557</Id>
+		<Name><![CDATA[f_createGasProfileFromGasData]]></Name>
+		<X>650</X>
+		<Y>-120</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 	</Function>
 </Functions>
