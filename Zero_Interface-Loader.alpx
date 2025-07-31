@@ -322,6 +322,10 @@
 				<Id>1749738288352</Id>
 				<Name><![CDATA[ParkingSpace_data]]></Name>
 			</JavaClass>
+			<JavaClass>
+				<Id>1753884053162</Id>
+				<Name><![CDATA[J_ModelSave]]></Name>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>zero_engine</LibraryName>
