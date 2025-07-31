@@ -464,6 +464,9 @@
 			<Parameter>
 				<Name><![CDATA[p_avgMinHeatBufferTemperature_degC]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_avgPTPanelSize_m2]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">

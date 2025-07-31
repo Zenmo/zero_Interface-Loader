@@ -289,7 +289,7 @@ uI_Tabs.add_pop_tabEHub();
 // When using an extension of a generic tab don't forget to typecast it!
 if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
 	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_ResidentialArea().setVisible(true);
-	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDeandSliders_ResidentialArea().setVisible(true);
+	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersResidentialArea().setVisible(true);
 	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
 	((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
 }
@@ -642,6 +642,7 @@ double f_initalAssetOrdering()
 {/*ALCODESTART::1714135623471*/
 f_initialElectricVehiclesOrder();
 f_initialPVSystemsOrder();
+f_initialPTSystemsOrder_households();
 f_initialHeatingSystemsOrder();
 f_initialParkingSpacesOrder();
 f_initialHouseholdOrder();
@@ -3339,6 +3340,18 @@ for (int i=0; i< EAlist.size(); i++) {
 	EAlist.set(i,findFirst(newEnergyModel.c_gridConnections, x->x.p_gridConnectionID == GCid));
 }
 
+
+/*ALCODEEND*/}
+
+double f_initialPTSystemsOrder_households()
+{/*ALCODESTART::1753951802256*/
+List<GCHouse> houses = new ArrayList<GCHouse>(energyModel.Houses.findAll( x -> true));
+List<GCHouse> housesWithoutPT = houses.stream().filter( gc -> !gc.v_liveAssetsMetaData.hasPT ).collect(Collectors.toList());
+List<GCHouse> housesWithPT = new ArrayList<>(houses);
+housesWithPT.removeAll(housesWithoutPT);
+
+c_orderedPTSystemsHouses = new ArrayList<>(housesWithoutPT);
+c_orderedPTSystemsHouses.addAll(housesWithPT);
 
 /*ALCODEEND*/}
 

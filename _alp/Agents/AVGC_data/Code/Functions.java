@@ -65,6 +65,7 @@ dataAVGC.p_v1gProbability = p_v1gProbability;
 dataAVGC.p_v2gProbability = p_v2gProbability;
 dataAVGC.p_avgEVsPerPublicCharger = p_avgEVsPerPublicCharger;
 dataAVGC.p_avgPTPower_kWpm2 = p_avgPTPower_kWpm2;
+dataAVGC.p_avgPTPanelSize_m2 = p_avgPTPanelSize_m2;
 dataAVGC.p_avgMaxHeatBufferTemperature_degC = p_avgMaxHeatBufferTemperature_degC;
 dataAVGC.p_avgMinHeatBufferTemperature_degC = p_avgMinHeatBufferTemperature_degC;
 dataAVGC.p_avgHeatBufferWaterVolumePerPTSurface_m3pm2 = p_avgHeatBufferWaterVolumePerPTSurface_m3pm2;
