@@ -4042,12 +4042,13 @@ double f_reconstructAgent(Agent agent,AgentArrayList pop,EnergyModel energyModel
 // Code Instead of Agent.goToPopulation() (which resets many variables to default!)	
 try{ // Reflection trick to get to Agent.owner private field
 	if (agent instanceof GridNode) {
-	
 		((GridNode)agent).forceSetOwner(agent,pop);
 	} else if (agent instanceof GridConnection) {
 		((GridConnection)agent).forceSetOwner(agent,pop);
 	} else if (agent instanceof Actor) {
 		((Actor)agent).forceSetOwner(agent,pop);
+	} else if (agent instanceof GIS_Object) {
+		((GIS_Object)agent).forceSetOwner(agent,pop);
 	}
 } catch (Exception e) {
 	e.printStackTrace();
@@ -4088,9 +4089,13 @@ pop.callCreate(GC, popSize); // Update population object
 double f_addMixins()
 {/*ALCODESTART::1753451091785*/
 v_objectMapper.addMixIn(Agent.class, AgentMixin.class);
+v_objectMapper.addMixIn(AgentArrayList.class, IgnoreClassMixin.class);
 v_objectMapper.addMixIn(EnergyModel.class, EnergyModelMixin.class);
 v_objectMapper.addMixIn(Actor.class, ActorMixin.class);
 v_objectMapper.addMixIn(DataSet.class, DataSetMixin.class);
+v_objectMapper.addMixIn(TextFile.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(EnergyDataViewer.class, IgnoreClassMixin.class);
+
 v_objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, IgnoreClassMixin.class);
 //objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, TableFunctionMixin.class);
 v_objectMapper.addMixIn(com.anylogic.engine.markup.GISRegion.class, IgnoreClassMixin.class);
@@ -4133,9 +4138,9 @@ for(Actor AC : deserializedEnergyModel.c_actors){
 
 /*ALCODEEND*/}
 
-double f_reconstructGIS_Objects(EnergyModel deserializedEnergyModel)
+double f_reconstructGIS_Objects(EnergyModel deserializedEnergyModel,ArrayList<GIS_Object> c_GISObjects)
 {/*ALCODESTART::1753712697685*/
-for(GIS_Object GO : deserializedEnergyModel.c_GISObjects){
+for(GIS_Object GO : c_GISObjects){
 	GO.gisRegion = c_GISregions.get(GO.p_id);
 	
 	if (GO instanceof GIS_Building) {
@@ -4153,9 +4158,9 @@ for(GIS_Object GO : deserializedEnergyModel.c_GISObjects){
 }
 /*ALCODEEND*/}
 
-double f_reconstructGridNodes(EnergyModel deserializedEnergyModel)
+double f_reconstructGridNodes(EnergyModel deserializedEnergyModel,ArrayList<GridNode> c_gridNodes)
 {/*ALCODESTART::1753712761420*/
-for(GridNode GN : deserializedEnergyModel.c_gridNodes){
+for(GridNode GN : c_gridNodes){
 	GN.energyModel = deserializedEnergyModel;
 	f_reconstructAgent(GN, deserializedEnergyModel.pop_gridNodes, deserializedEnergyModel);
 }

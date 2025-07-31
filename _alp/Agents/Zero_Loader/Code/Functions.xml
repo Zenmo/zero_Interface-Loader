@@ -1942,6 +1942,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Name><![CDATA[deserializedEnergyModel]]></Name>
 			<Type><![CDATA[EnergyModel]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[c_GISObjects]]></Name>
+			<Type><![CDATA[ArrayList<GIS_Object>]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -1961,6 +1965,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[deserializedEnergyModel]]></Name>
 			<Type><![CDATA[EnergyModel]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[c_gridNodes]]></Name>
+			<Type><![CDATA[ArrayList<GridNode>]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
