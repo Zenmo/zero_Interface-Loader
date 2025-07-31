@@ -41,7 +41,8 @@ import com.zenmo.zummon.companysurvey.PandIDKt;
 import com.zenmo.vallum.PandKt;
 import kotlinx.datetime.DateTimeUnit;
 
-import com.zenmo.zummon.companysurvey.HeatingType;]]></Import>
+import com.zenmo.zummon.companysurvey.HeatingType;
+import com.querydsl.core.types.dsl.CaseBuilder;]]></Import>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1726584205730</Id>

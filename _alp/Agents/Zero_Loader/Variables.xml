@@ -780,8 +780,10 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 	<Variable Class="CollectionVariable">
 		<Id>1753789656643</Id>
 		<Name><![CDATA[c_defaultHeatingStrategies]]></Name>
-		<X>1130</X>
-		<Y>280</Y>
+		<Description><![CDATA[Heating type, has building boolean, has heatbuffer boolean]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>340</X>
+		<Y>-230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -791,15 +793,16 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>OL_GridConnectionHeatingType</ElementClass>
-			<ValueElementClass>I_HeatingManagement</ValueElementClass>
+			<ElementClass>Triple&lt;OL_GridConnectionHeatingType, Boolean, Boolean&gt;</ElementClass>
+			<ValueElementClass>? extends I_HeatingManagement</ValueElementClass>
 		</Properties>
 	</Variable>
 	<Variable Class="CollectionVariable">
 		<Id>1753789658412</Id>
 		<Name><![CDATA[c_smartHeatingStrategies]]></Name>
-		<X>1130</X>
-		<Y>300</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>340</X>
+		<Y>-210</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -816,8 +819,8 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 	<Variable Class="CollectionVariable">
 		<Id>1753795332544</Id>
 		<Name><![CDATA[c_surveyHeatingTypes]]></Name>
-		<X>1130</X>
-		<Y>340</Y>
+		<X>340</X>
+		<Y>-170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

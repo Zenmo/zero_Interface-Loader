@@ -303,8 +303,9 @@
 		<ReturnType>double</ReturnType>
 		<Id>1726584205805</Id>
 		<Name><![CDATA[f_addHeatDemandProfile]]></Name>
-		<X>821</X>
-		<Y>221</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>985</X>
+		<Y>-20</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -472,9 +473,10 @@
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>OL_GridConnectionHeatingType</ReturnType>
 		<Id>1726584205825</Id>
-		<Name><![CDATA[f_setHeatingTypeSurvey]]></Name>
-		<X>460</X>
-		<Y>300</Y>
+		<Name><![CDATA[f_getHeatingTypeSurvey]]></Name>
+		<Description><![CDATA[This function determines the heatingType (OL_GridConnectionHeatingType) from the list of heating types (zummon.companysurvey.HeatingType)]]></Description>
+		<X>600</X>
+		<Y>-350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -483,11 +485,11 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[companyGC]]></Name>
+			<Name><![CDATA[engineGC]]></Name>
 			<Type><![CDATA[GridConnection]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[gridConnection]]></Name>
+			<Name><![CDATA[surveyGC]]></Name>
 			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
@@ -1147,9 +1149,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>boolean</ReturnType>
 		<Id>1745336464944</Id>
-		<Name><![CDATA[f_createHeatProfileFromGasTS]]></Name>
-		<X>460</X>
-		<Y>280</Y>
+		<Name><![CDATA[function2]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>980</X>
+		<Y>-50</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1744,8 +1747,8 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1753784800216</Id>
 		<Name><![CDATA[f_addHeatManagement]]></Name>
-		<X>1130</X>
-		<Y>255</Y>
+		<X>600</X>
+		<Y>-90</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1754,12 +1757,16 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[parentGC]]></Name>
+			<Name><![CDATA[engineGC]]></Name>
 			<Type><![CDATA[GridConnection]]></Type>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[heatingType]]></Name>
 			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[isGhost]]></Name>
+			<Type><![CDATA[boolean]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -1767,9 +1774,9 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1753799111185</Id>
-		<Name><![CDATA[f_heatingOrder]]></Name>
-		<X>470</X>
-		<Y>-70</Y>
+		<Name><![CDATA[f_heatingSurveyCompany]]></Name>
+		<X>580</X>
+		<Y>-370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1778,22 +1785,22 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[companyGC]]></Name>
+			<Name><![CDATA[engineGC]]></Name>
 			<Type><![CDATA[GridConnection]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[gridConnection]]></Name>
+			<Name><![CDATA[surveyGC]]></Name>
 			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>Double</ReturnType>
 		<Id>1753801098736</Id>
 		<Name><![CDATA[f_createSurveyHeatProfiles]]></Name>
-		<X>650</X>
-		<Y>-70</Y>
+		<X>600</X>
+		<Y>-330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1802,7 +1809,11 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[gridConnection]]></Name>
+			<Name><![CDATA[engineGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[surveyGC]]></Name>
 			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
 		</Parameter>
 		<Parameter>
@@ -1816,7 +1827,51 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>boolean</ReturnType>
 		<Id>1753803212846</Id>
 		<Name><![CDATA[f_surveyHasGasData]]></Name>
-		<X>560</X>
+		<X>340</X>
+		<Y>-510</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[surveyGC]]></Name>
+			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753804393557</Id>
+		<Name><![CDATA[f_createGasProfileFromGasTS]]></Name>
+		<X>640</X>
+		<Y>-290</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[engineGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[surveyGC]]></Name>
+			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753883660006</Id>
+		<Name><![CDATA[f_createHeatProfileFromAnnualGasTotal]]></Name>
+		<X>640</X>
 		<Y>-190</Y>
 		<Label>
 			<X>10</X>
@@ -1826,18 +1881,30 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[gridConnection]]></Name>
+			<Name><![CDATA[engineGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[surveyGC]]></Name>
 			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[heatingType]]></Name>
+			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[yearlyGasDelivery_m3]]></Name>
+			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1753804393557</Id>
-		<Name><![CDATA[f_createGasProfileFromGasData]]></Name>
-		<X>650</X>
-		<Y>-120</Y>
+		<Id>1753883738731</Id>
+		<Name><![CDATA[f_createGasProfileFromAnnualGasTotal]]></Name>
+		<X>640</X>
+		<Y>-270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1845,5 +1912,263 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[engineGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[yearlyGasDelivery_m3]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753884183970</Id>
+		<Name><![CDATA[f_createGasProfileFromSurvey]]></Name>
+		<X>620</X>
+		<Y>-310</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[engineGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[surveyGC]]></Name>
+			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753884186444</Id>
+		<Name><![CDATA[f_createHeatProfileFromGasSurvey]]></Name>
+		<X>620</X>
+		<Y>-230</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[engineGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[surveyGC]]></Name>
+			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[heatingType]]></Name>
+			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753949286953</Id>
+		<Name><![CDATA[f_createHeatProfileFromGasTS]]></Name>
+		<X>640</X>
+		<Y>-210</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[engineGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[surveyGC]]></Name>
+			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[heatingType]]></Name>
+			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753951013582</Id>
+		<Name><![CDATA[f_getGasToHeatEfficiency]]></Name>
+		<X>340</X>
+		<Y>-470</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[heatingType]]></Name>
+			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753951039103</Id>
+		<Name><![CDATA[f_getRatioGasUsedForHeating]]></Name>
+		<X>340</X>
+		<Y>-490</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[surveyGC]]></Name>
+			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753955686832</Id>
+		<Name><![CDATA[f_createGasProfileFromEstimates]]></Name>
+		<X>640</X>
+		<Y>-250</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[engineGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753961830063</Id>
+		<Name><![CDATA[f_createHeatProfileFromEstimates]]></Name>
+		<X>640</X>
+		<Y>-110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[engineGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753964366889</Id>
+		<Name><![CDATA[f_createHeatProfileFromHeatTS]]></Name>
+		<X>640</X>
+		<Y>-150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[engineGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[surveyGC]]></Name>
+			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753964605708</Id>
+		<Name><![CDATA[f_createHeatProfileFromAnnualHeatTotal]]></Name>
+		<X>640</X>
+		<Y>-130</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[engineGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[yearlyConsumptionHeat_kWh]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753964654729</Id>
+		<Name><![CDATA[f_createHeatProfileFromSurvey]]></Name>
+		<X>620</X>
+		<Y>-170</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[engineGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[surveyGC]]></Name>
+			<Type><![CDATA[com.zenmo.zummon.companysurvey.GridConnection]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753968816374</Id>
+		<Name><![CDATA[function]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>340</X>
+		<Y>-260</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

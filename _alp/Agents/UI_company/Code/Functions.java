@@ -12,7 +12,7 @@ sl_heatDemandCompanyReduction.setValue(c_scenarioSettings_Future.get(v_currentSe
 //Heating type (aangenomen dat het hetzelfde blijft, want hebben geen vraag die dat stelt in het formulier)
 int nr_currentHeatingType = 0;
 switch (c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHeatingType()){
-	case GASBURNER:
+	case GAS_BURNER:
 		nr_currentHeatingType = 0;
 		break;
 
@@ -29,12 +29,8 @@ switch (c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHeatingTy
 		nr_currentHeatingType = 3;
 		break;
 
-	case GASFIRED_CHPPEAK:
+	case GAS_CHP:
 		nr_currentHeatingType = 4;
-		break;
-		
-	case OTHER:
-		//not supported
 		break;
 		
 	default:
@@ -158,7 +154,7 @@ sl_heatDemandCompanyReduction.setValue(0, true);
 //Heating type
 int nr_currentHeatingType = 0;
 switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingType()){
-	case GASBURNER:
+	case GAS_BURNER:
 		nr_currentHeatingType = 0;
 		break;
 
@@ -175,12 +171,8 @@ switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingT
 		nr_currentHeatingType = 3;
 		break;
 	
-	case GASFIRED_CHPPEAK:
+	case GAS_CHP:
 		nr_currentHeatingType = 4;
-		break;
-		
-	case OTHER:
-		//not supported
 		break;
 		
 	default:
@@ -242,7 +234,7 @@ rb_scenariosPrivateUI.setValue(0, false);
 double f_setHeatingType(GridConnection GC,OL_GridConnectionHeatingType selectedHeatingType)
 {/*ALCODESTART::1713537591106*/
 //Check if selected is not the same as previous, if not: continue with the setting of new heating type
-if (GC.p_heatingType == selectedHeatingType){
+if (GC.p_heatingManagement.getCurrentHeatingType() == selectedHeatingType){
 	//traceln("Selected heating type is the same as previous heating type");
 	return;
 }
@@ -252,19 +244,10 @@ GC.p_parentNodeHeat = null;
 GC.p_parentNodeHeatID = null;
 
 //Remove primary heating asset
-J_EA primaryHeatingAsset = GC.p_primaryHeatingAsset;
-primaryHeatingAsset.removeEnergyAsset();
-
-
-// If secondary heating asset exists, remove that too
-if (GC.p_secondaryHeatingAsset != null){
-	J_EA secondaryHeatingAsset = GC.p_secondaryHeatingAsset;
-	secondaryHeatingAsset.removeEnergyAsset();
-	//main.energyModel.c_ambientAirDependentAssets.remove(secondaryHeatingAsset); // Wanneer is secondary heating type ooit ambient air dependent??
-}
+GC.f_removeAllHeatingAssets();
 
 //Set GC heating type as newly selected heating type (NOTE: NEEDS TO HAPPEN HERE, NOT LATER, NOT SOONER)
-GC.p_heatingType = selectedHeatingType;
+//GC.p_heatingType = selectedHeatingType;
 
 //Get needed cacacity
 double capacityThermal_kW;
@@ -308,7 +291,7 @@ double belowZeroHeatpumpEtaReductionFactor;
 
 //Create selected heating type
 switch (selectedHeatingType){
-	case GASBURNER:
+	case GAS_BURNER:
 		
 		//Add primary heating asset (gasburner)
 		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner;
@@ -336,7 +319,7 @@ switch (selectedHeatingType){
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC;
 		
 		J_EAConversionGasBurner gasBurnerHybrid = new J_EAConversionGasBurner(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
-		GC.p_secondaryHeatingAsset = gasBurnerHybrid;
+		//GC.p_secondaryHeatingAsset = gasBurnerHybrid;
 		
 		break;
 	
@@ -404,7 +387,7 @@ switch (selectedHeatingType){
 		GC.p_parentNodeHeatID = GC.p_parentNodeHeat.p_gridNodeID;
 		break;
 	
-	case GASFIRED_CHPPEAK:
+	case GAS_CHP:
 
 		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyCHP_thermal_fr + zero_Interface.energyModel.avgc_data.p_avgEfficiencyCHP_electric_fr;
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureCHP_degC;
@@ -1505,7 +1488,7 @@ int nr_currentHeatingType = 0;
 String rbHeating_acces = "enabled";
 
 switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingType()){
-	case GASBURNER:
+	case GAS_BURNER:
 		nr_currentHeatingType = 0;
 		break;
 
@@ -1524,14 +1507,9 @@ switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingT
 		nr_currentHeatingType = 3;
 		break;
 	
-	case GASFIRED_CHPPEAK:
+	case GAS_CHP:
 		nr_currentHeatingType = 4;
 		gr_heatingOptionBlockerCHP.setVisible(false);
-		break;
-		
-	case OTHER:
-		//not supported
-		rbHeating_acces = "invisible";
 		break;
 		
 	default:
@@ -1603,8 +1581,8 @@ rb_scenariosPrivateUI.setEnabled(c_scenarioSettings_Current.get(v_currentSelecte
 
 //Find the current heating type
 int nr_currentHeatingType = 0;
-switch (c_ownedGridConnections.get(v_currentSelectedGCnr).p_heatingType){
-	case GASBURNER:
+switch (c_ownedGridConnections.get(v_currentSelectedGCnr).p_heatingManagement.getCurrentHeatingType()){
+	case GAS_BURNER:
 		nr_currentHeatingType = 0;
 	break;
 
@@ -1618,12 +1596,7 @@ switch (c_ownedGridConnections.get(v_currentSelectedGCnr).p_heatingType){
 		
 	case HYDROGENBURNER:
 		nr_currentHeatingType = 3;
-	break;
-		
-	case OTHER:
-		//not supported
-	break;
-		
+	break;		
 	default:
 }
 
