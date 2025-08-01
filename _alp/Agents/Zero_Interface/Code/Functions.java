@@ -3131,7 +3131,7 @@ for(OL_MapOverlayTypes mapOverlayType : c_loadedMapOverlayTypes){
 String[] RadioButtonOptions = RadioButtonOptions_list.toArray(String[]::new);
 
 //Create the radiobutton and set the correct action.
-rb_mapOverlay = new ShapeRadioButtonGroup(group_legenda.getPresentable(), ispublic, x ,y, width, height, textColor, enabled, font, vertical, RadioButtonOptions){
+rb_mapOverlay = new ShapeRadioButtonGroup(presentable, ispublic, x ,y, width, height, textColor, enabled, font, vertical, RadioButtonOptions){
 	@Override
 	public void action() {
 		f_setMapOverlay();
