@@ -2235,7 +2235,7 @@
 		<Name><![CDATA[f_simulateYearFromMainInterface]]></Name>
 		<X>1980</X>
 		<Y>360</Y>
-			<Label>
+		<Label>
 			<X>10</X>
 			<Y>0</Y>
 		</Label>

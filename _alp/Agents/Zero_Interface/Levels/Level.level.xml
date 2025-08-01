@@ -7017,7 +7017,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<PresentationFlag>true</PresentationFlag>
 								<ShowLabel>false</ShowLabel>
 								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-								<OnClickCode>f_setInfoText(i_mapOverlayLegend_congestion_Degrees, v_infoText.i_mapOverlayLegend_congestion_Degrees, i_mapOverlayLegend_congestion_Degrees.getX() + gr_mapOverlayLegend_congestion.getX() + gr_mapOverlayLegenda.getX(), i_mapOverlayLegend_congestion_Degrees.getY() + gr_mapOverlayLegend_congestion.getY() + gr_mapOverlayLegenda.getY());</OnClickCode>
+								<OnClickCode>f_setInfoText(i_mapOverlayLegend_congestion_Degrees, v_infoText.i_mapOverlayLegend_congestion_Degrees, i_mapOverlayLegend_congestion_Degrees.getX() + gr_mapOverlayLegend_congestion.getX() + gr_mapOverlayLegenda.getX()  + gr_legenda.getX(), i_mapOverlayLegend_congestion_Degrees.getY() + gr_mapOverlayLegend_congestion.getY() + gr_mapOverlayLegenda.getY()  + gr_legenda.getY());</OnClickCode>
 								<EmbeddedIcon>false</EmbeddedIcon>
 								<Z>0</Z>
 								<Width>20</Width>
@@ -7166,7 +7166,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<PresentationFlag>true</PresentationFlag>
 								<ShowLabel>false</ShowLabel>
 								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-								<OnClickCode>f_setInfoText(i_mapOverlayLegend_congestion_Types, v_infoText.i_mapOverlayLegend_congestion_Types, i_mapOverlayLegend_congestion_Types.getX() + gr_mapOverlayLegend_congestion.getX() + gr_mapOverlayLegenda.getX(), i_mapOverlayLegend_congestion_Types.getY() + gr_mapOverlayLegend_congestion.getY() + gr_mapOverlayLegenda.getY());</OnClickCode>
+								<OnClickCode>f_setInfoText(i_mapOverlayLegend_congestion_Types, v_infoText.i_mapOverlayLegend_congestion_Types, i_mapOverlayLegend_congestion_Types.getX() + gr_mapOverlayLegend_congestion.getX() + gr_mapOverlayLegenda.getX() + gr_legenda.getX(), i_mapOverlayLegend_congestion_Types.getY() + gr_mapOverlayLegend_congestion.getY() + gr_mapOverlayLegenda.getY() + gr_legenda.getY());</OnClickCode>
 								<EmbeddedIcon>false</EmbeddedIcon>
 								<Z>0</Z>
 								<Width>20</Width>

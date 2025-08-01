@@ -277,6 +277,9 @@ allModelGridConnections.addAll(energyModel.f_getPausedGridConnections());
 
 //Initialize the uI_Tabs with the gridconnections
 uI_Tabs.f_initializeUI_Tabs(allModelGridConnections);
+
+//Initialize sliders with certain presets
+f_setSliderPresets();
 /*ALCODEEND*/}
 
 double f_selectGridNode(GridNode GN)
@@ -3273,7 +3276,7 @@ uI_Tabs.add_pop_tabEHub();
 // When using an extension of a generic tab don't forget to typecast it!
 if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
 	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_ResidentialArea().setVisible(true);
-	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDeandSliders_ResidentialArea().setVisible(true);
+	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersResidentialArea().setVisible(true);
 	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
 	((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
 }

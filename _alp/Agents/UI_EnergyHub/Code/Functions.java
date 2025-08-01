@@ -50,7 +50,7 @@ uI_Tabs.gr_energyDemandSettings.setX(uI_Tabs.gr_energyDemandSettings.getX()+40);
 // When using an extension of a generic tab don't forget to typecast it!
 if (zero_Interface.p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
 	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_ResidentialArea().setVisible(true);
-	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDeandSliders_ResidentialArea().setVisible(true);
+	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersResidentialArea().setVisible(true);
 	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
 }
 else {
