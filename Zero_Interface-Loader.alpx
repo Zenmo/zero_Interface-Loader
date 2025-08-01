@@ -193,7 +193,20 @@
 				</Option>
 			</OptionList>
 		</OptionLists>
-		<Folders/>
+		<Folders>
+			<Folder>
+				<Id>1754045642067</Id>
+				<Name><![CDATA[Tabs]]></Name>
+			</Folder>
+			<Folder>
+				<Id>1754045666929</Id>
+				<Name><![CDATA[Dashboards]]></Name>
+			</Folder>
+			<Folder>
+				<Id>1754045711603</Id>
+				<Name><![CDATA[DataPackages]]></Name>
+			</Folder>
+		</Folders>
 		<ActiveObjectClasses/>
 		<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
 		<MixedEquationsMethod>RK45_NEWTON</MixedEquationsMethod>
@@ -249,38 +262,47 @@
 			<JavaClass>
 				<Id>1726584206084</Id>
 				<Name><![CDATA[Battery_data]]></Name>
+				<Folder>1754045711603</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1726584206085</Id>
 				<Name><![CDATA[Building_data]]></Name>
+				<Folder>1754045711603</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1726584206086</Id>
 				<Name><![CDATA[Cable_data]]></Name>
+				<Folder>1754045711603</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1726584206087</Id>
 				<Name><![CDATA[Chargingstation_data]]></Name>
+				<Folder>1754045711603</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1726584206088</Id>
 				<Name><![CDATA[Electrolyser_data]]></Name>
+				<Folder>1754045711603</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1726584206089</Id>
 				<Name><![CDATA[GridNode_data]]></Name>
+				<Folder>1754045711603</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1726584206090</Id>
 				<Name><![CDATA[Neighbourhood_data]]></Name>
+				<Folder>1754045711603</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1726584206091</Id>
 				<Name><![CDATA[Parcel_data]]></Name>
+				<Folder>1754045711603</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1726584206093</Id>
 				<Name><![CDATA[Project_data]]></Name>
+				<Folder>1754045711603</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1726584206094</Id>
@@ -289,6 +311,7 @@
 			<JavaClass>
 				<Id>1726584206095</Id>
 				<Name><![CDATA[Solarfarm_data]]></Name>
+				<Folder>1754045711603</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1726584206096</Id>
@@ -297,6 +320,7 @@
 			<JavaClass>
 				<Id>1726584206097</Id>
 				<Name><![CDATA[Windfarm_data]]></Name>
+				<Folder>1754045711603</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1737714961123</Id>
@@ -309,18 +333,22 @@
 			<JavaClass>
 				<Id>1749138380458</Id>
 				<Name><![CDATA[CustomProfile_data]]></Name>
+				<Folder>1754045711603</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1749549699201</Id>
 				<Name><![CDATA[DefaultProfiles_data]]></Name>
+				<Folder>1754045711603</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1749649742298</Id>
 				<Name><![CDATA[ChargerProfile_data]]></Name>
+				<Folder>1754045711603</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1749738288352</Id>
 				<Name><![CDATA[ParkingSpace_data]]></Name>
+				<Folder>1754045711603</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753884053162</Id>

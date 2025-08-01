@@ -3,6 +3,7 @@
 	<Id>1708522361862</Id>
 	<Name><![CDATA[UI_company]]></Name>
 	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
+	<Folder>1754045666929</Folder>
 	<Import><![CDATA[//import kotlinx.serialization.internal.ArrayListClassDesc;
 import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 ]]></Import>

@@ -3,6 +3,7 @@
 	<Id>1722247653561</Id>
 	<Name><![CDATA[tabElectricity]]></Name>
 	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
+	<Folder>1754045642067</Folder>
 	<ExtendsReference>
 		<PackageName>zerointerfaceloader</PackageName>
 		<ClassName>tabArea</ClassName>

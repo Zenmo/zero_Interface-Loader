@@ -3,6 +3,7 @@
 	<Id>1722245324895</Id>
 	<Name><![CDATA[tabMobility]]></Name>
 	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
+	<Folder>1754045642067</Folder>
 	<Import><![CDATA[import kotlin.Triple;]]></Import>
 	<ExtendsReference>
 		<PackageName>zerointerfaceloader</PackageName>
