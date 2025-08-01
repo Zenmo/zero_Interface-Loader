@@ -1701,6 +1701,62 @@ verbruik = levering + productie - teruglevering]]></Description>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>J_ProfilePointer</ReturnType>
+		<Id>1753349205424</Id>
+		<Name><![CDATA[f_createEngineProfile1]]></Name>
+		<Description><![CDATA[Functie van gillis voor inladen weer data!]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2109</X>
+		<Y>450</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[profileID]]></Name>
+			<Type><![CDATA[String]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[arguments]]></Name>
+			<Type><![CDATA[double[]]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[values]]></Name>
+			<Type><![CDATA[double[]]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[energyModel]]></Name>
+			<Type><![CDATA[EnergyModel]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753349205426</Id>
+		<Name><![CDATA[f_setEngineInputDataAfterDeserialisation]]></Name>
+		<Description><![CDATA[Functie van gillis voor inladen weer data!]]></Description>
+		<X>2123</X>
+		<Y>260</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[deserializedEnergyModel]]></Name>
+			<Type><![CDATA[EnergyModel]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>OL_GridConnectionHeatingType</ReturnType>
@@ -1798,6 +1854,26 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+<Id>1753449467888</Id>
+		<Name><![CDATA[f_reconstructGridConnections]]></Name>
+		<X>2123.333</X>
+		<Y>302</Y>
+<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+<Name><![CDATA[deserializedEnergyModel]]></Name>
+			<Type><![CDATA[EnergyModel]]></Type>
+</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1753883660006</Id>
@@ -1851,6 +1927,26 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Name><![CDATA[yearlyGasDelivery_m3]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+<Id>1753449467890</Id>
+		<Name><![CDATA[f_reconstructEnergyModel]]></Name>
+		<X>2123.333</X>
+		<Y>282</Y>
+<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+<Name><![CDATA[energyModel]]></Name>
+			<Type><![CDATA[EnergyModel]]></Type>
+</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -1931,6 +2027,34 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Name><![CDATA[heatingType]]></Name>
 			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+<Id>1753449467892</Id>
+		<Name><![CDATA[f_reconstructAgent]]></Name>
+		<X>2135</X>
+		<Y>379</Y>
+<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+<Name><![CDATA[agent]]></Name>
+			<Type><![CDATA[Agent]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[pop]]></Name>
+			<Type><![CDATA[AgentArrayList]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[energyModel]]></Name>
+			<Type><![CDATA[EnergyModel]]></Type>
+</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -2038,6 +2162,43 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+<Id>1753449467894</Id>
+		<Name><![CDATA[f_reconstructGridConnections1]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2110</X>
+		<Y>480</Y>
+<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+<Name><![CDATA[energyModel]]></Name>
+			<Type><![CDATA[EnergyModel]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753451091785</Id>
+		<Name><![CDATA[f_addMixins]]></Name>
+		<X>2140</X>
+		<Y>69</Y>
+<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1753964605708</Id>
@@ -2124,6 +2285,26 @@ verbruik = levering + productie - teruglevering]]></Description>
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
+<Id>1753712630322</Id>
+		<Name><![CDATA[f_reconstructActors]]></Name>
+		<X>2123</X>
+		<Y>322</Y>
+<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+<Name><![CDATA[deserializedEnergyModel]]></Name>
+			<Type><![CDATA[EnergyModel]]></Type>
+</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
 		<Id>1754050106254</Id>
 		<Name><![CDATA[f_addCustomHeatAsset]]></Name>
 		<X>970</X>
@@ -2142,6 +2323,54 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[maxHeatOutputPower_kW]]></Name>
 			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+<Id>1753712697685</Id>
+		<Name><![CDATA[f_reconstructGIS_Objects]]></Name>
+		<X>2123</X>
+		<Y>362</Y>
+<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+<Name><![CDATA[deserializedEnergyModel]]></Name>
+			<Type><![CDATA[EnergyModel]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[c_GISObjects]]></Name>
+			<Type><![CDATA[ArrayList<GIS_Object>]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753712761420</Id>
+		<Name><![CDATA[f_reconstructGridNodes]]></Name>
+		<X>2123</X>
+		<Y>342</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[deserializedEnergyModel]]></Name>
+			<Type><![CDATA[EnergyModel]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[c_gridNodes]]></Name>
+			<Type><![CDATA[ArrayList<GridNode>]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

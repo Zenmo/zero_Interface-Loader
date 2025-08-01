@@ -289,7 +289,7 @@ uI_Tabs.add_pop_tabEHub();
 // When using an extension of a generic tab don't forget to typecast it!
 if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
 	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_ResidentialArea().setVisible(true);
-	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDeandSliders_ResidentialArea().setVisible(true);
+	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersResidentialArea().setVisible(true);
 	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
 	((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
 }
@@ -641,6 +641,7 @@ double f_initalAssetOrdering()
 {/*ALCODESTART::1714135623471*/
 f_initialElectricVehiclesOrder();
 f_initialPVSystemsOrder();
+f_initialPTSystemsOrder_households();
 f_initialHeatingSystemsOrder();
 f_initialParkingSpacesOrder();
 f_initialHouseholdOrder();
@@ -2090,6 +2091,8 @@ map.fitBounds(minLat, minLon, maxLat, maxLon);
 
 double f_setStartView()
 {/*ALCODESTART::1743518032245*/
+//traceln("f_setStartView() reached!");
+
 if(map_centre_latitude != null && map_centre_longitude != null && map_centre_latitude != 0 && map_centre_longitude != 0){
 	map.setCenterLatitude(map_centre_latitude);
 	map.setCenterLongitude(map_centre_longitude);
@@ -3285,5 +3288,69 @@ b_updateLiveCongestionColors = true;
 for (GIS_Building building : energyModel.pop_GIS_Buildings){
 	f_setColorsBasedOnEnergyLabels(building);
 }
+/*ALCODEEND*/}
+
+double f_updateOrderedListsAfterDeserialising(EnergyModel newEnergyModel)
+{/*ALCODESTART::1753713001191*/
+// Update references of GClists
+for (int i=0; i< c_orderedPVSystemsHouses.size(); i++) {
+	String GCid = c_orderedPVSystemsHouses.get(i).p_gridConnectionID;
+	c_orderedPVSystemsHouses.set(i,findFirst(newEnergyModel.Houses, x->x.p_gridConnectionID == GCid));
+}
+
+for (int i=0; i< c_orderedPVSystemsCompanies.size(); i++) {
+	String GCid = c_orderedPVSystemsCompanies.get(i).p_gridConnectionID;
+	c_orderedPVSystemsCompanies.set(i,findFirst(newEnergyModel.UtilityConnections, x->x.p_gridConnectionID == GCid));
+}
+
+for (int i=0; i< c_orderedHeatingSystemsCompanies.size(); i++) {
+	String GCid = c_orderedHeatingSystemsCompanies.get(i).p_gridConnectionID;
+	c_orderedHeatingSystemsCompanies.set(i,findFirst(newEnergyModel.UtilityConnections, x->x.p_gridConnectionID == GCid));
+}
+
+for (int i=0; i< c_orderedHeatingSystemsHouses.size(); i++) {
+	String GCid = c_orderedHeatingSystemsHouses.get(i).p_gridConnectionID;
+	c_orderedHeatingSystemsHouses.set(i,findFirst(newEnergyModel.Houses, x->x.p_gridConnectionID == GCid));
+}
+
+for (int i=0; i< c_orderedPublicChargers.size(); i++) {
+	String GCid = c_orderedPublicChargers.get(i).p_gridConnectionID;
+	c_orderedPublicChargers.set(i,findFirst(newEnergyModel.PublicChargers, x->x.p_gridConnectionID == GCid));
+}
+
+// TODO: Update references of J_EAlists 
+
+/*ALCODEEND*/}
+
+ArrayList<GridConnection> f_updateGClistAfterDeserialisation(ArrayList<? extends GridConnection> GClist,EnergyModel newEnergyModel)
+{/*ALCODESTART::1753713085487*/
+for (int i=0; i< GClist.size(); i++) {
+	String GCid = GClist.get(i).p_gridConnectionID;
+	GClist.set(i,findFirst(newEnergyModel.c_gridConnections, x->x.p_gridConnectionID == GCid));
+}
+
+
+/*ALCODEEND*/}
+
+ArrayList<GridConnection> f_updateJ_EAlistAfterDeserialisation(ArrayList<J_EA> EAlist,EnergyModel newEnergyModel)
+{/*ALCODESTART::1753713662613*/
+for (int i=0; i< EAlist.size(); i++) {
+	String GCid = EAlist.get(i).getParentAgent();p_gridConnectionID;
+	EAlist.set(i,findFirst(newEnergyModel.c_gridConnections, x->x.p_gridConnectionID == GCid));
+}
+
+
+/*ALCODEEND*/}
+
+double f_initialPTSystemsOrder_households()
+{/*ALCODESTART::1753951802256*/
+List<GCHouse> houses = new ArrayList<GCHouse>(energyModel.Houses.findAll( x -> true));
+List<GCHouse> housesWithoutPT = houses.stream().filter( gc -> !gc.v_liveAssetsMetaData.hasPT ).collect(Collectors.toList());
+List<GCHouse> housesWithPT = new ArrayList<>(houses);
+housesWithPT.removeAll(housesWithoutPT);
+
+c_orderedPTSystemsHouses = new ArrayList<>(housesWithoutPT);
+c_orderedPTSystemsHouses.addAll(housesWithPT);
+
 /*ALCODEEND*/}
 

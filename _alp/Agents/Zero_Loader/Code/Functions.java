@@ -3005,7 +3005,7 @@ else{
 J_ProfilePointer f_createEngineProfile(String profileID,double[] arguments,double[] values)
 {/*ALCODESTART::1749125189323*/
 TableFunction tf_profile = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-J_ProfilePointer profilePointer = new J_ProfilePointer(profileID, tf_profile);
+J_ProfilePointer profilePointer = new J_ProfilePointer(profileID, tf_profile);	
 energyModel.f_addProfile(profilePointer);
 return profilePointer;
 /*ALCODEEND*/}
@@ -3171,6 +3171,9 @@ else {
 }
  
 double yearlyHWD_kWh = aantalBewoners * 600;  //12 * surface_m2 * 3 ; Tamelijk willekeurige formule om HWD te schalen tussen 600 - 2400 kWh bij 50m2 tot 200m2, voor een quickfix
+
+//TEST
+yearlyHWD_kWh += 0;
 
 J_EAConsumption hotwaterDemand = new J_EAConsumption( houseGC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, null);
 
@@ -3374,14 +3377,21 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	
 	//GCH.p_initialPVpanels = houseBuildingData.pv_default();
 	GCH.v_liveAssetsMetaData.initialPV_kW = houseBuildingData.pv_installed_kwp() != null ? houseBuildingData.pv_installed_kwp() : 0;
-	GCH.v_liveAssetsMetaData.PVPotential_kW = houseBuildingData.pv_potential_kwp() != null ? houseBuildingData.pv_potential_kwp() : 0;
-
+	GCH.v_liveAssetsMetaData.PVPotential_kW = houseBuildingData.pv_potential_kwp();
 	f_setHouseHeatingPreferences(GCH);
 	// TODO: Above we load in data of gas use, but the houses always have a thermal model??
 	f_addEnergyAssetsToHouses(GCH, jaarlijksElectriciteitsVerbruik );	
 	
 	i ++;
-}	
+}
+
+//Backup for when pv_potential kWp is null, needs to be after all houses have been made, so rooftop surface is distributed correctly
+for(GCHouse GCH : energyModel.Houses){
+	if(GCH.v_liveAssetsMetaData.PVPotential_kW == null){
+		GCH.v_liveAssetsMetaData.PVPotential_kW = GCH.p_roofSurfaceArea_m2*avgc_data.p_avgRatioRoofPotentialPV*avgc_data.p_avgPVPower_kWpm2;
+	}
+}
+	
 
 /*ALCODEEND*/}
 
@@ -3419,19 +3429,6 @@ if (gn.p_hasProfileData){ //dont count production if there is measured data on N
 if (installedRooftopSolar_kW > 0) {
 	f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW );
 }
-
-//add TEST PT panel
-/*
-double PTCapacity_kW = house.p_roofSurfaceArea_m2*avgc_data.p_avgPTPower_kWpm2;
-f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOTHERMAL, "PT Paneel", PTCapacity_kW);
-//Needed storage capacity buffer in kWh
-double heatBufferStorageCapacity_m3 = avgc_data.p_avgHeatBufferWaterVolumePerPTSurface_m3pm2 * PTCapacity_kW/avgc_data.p_avgPTPower_kWpm2;
-double deltaTempHeatBufferMinMax_k = avgc_data.p_avgMaxHeatBufferTemperature_degC - avgc_data.p_avgMinHeatBufferTemperature_degC; 
-double heatBufferStorageCapacity_J = avgc_data.p_waterHeatCapacity_JpkgK/ deltaTempHeatBufferMinMax_k / (heatBufferStorageCapacity_m3*avgc_data.p_waterDensity_kgpm3);
-double heatBufferStorageCapacity_kWh = heatBufferStorageCapacity_J*3.6e6;
-f_addStorage(house, 100, heatBufferStorageCapacity_kWh, OL_EnergyAssetType.STORAGE_HEAT);
-*/
-
 
 //Oprit?
 if( house.p_eigenOprit){
@@ -4038,5 +4035,215 @@ throw new RuntimeException("HeatingType is CUSTOM. You must override the functio
 double f_addCustomHeatAsset(GridConnection parentGC,double maxHeatOutputPower_kW)
 {/*ALCODESTART::1754050106254*/
 throw new RuntimeException("HeatingType is CUSTOM. You must override the function: f_addCustomHeatAsset!");
+/*ALCODEEND*/}
+
+
+J_ProfilePointer f_createEngineProfile1(String profileID,double[] arguments,double[] values,EnergyModel energyModel)
+{/*ALCODESTART::1753349205424*/
+TableFunction tf_profile = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+J_ProfilePointer profilePointer;
+if (energyModel.f_findProfile(profileID)!=null) {
+	profilePointer=energyModel.f_findProfile(profileID);
+	profilePointer.setTableFunction(tf_profile);
+} else {
+	profilePointer = new J_ProfilePointer(profileID, tf_profile);	
+	energyModel.f_addProfile(profilePointer);
+}
+return profilePointer;
+/*ALCODEEND*/}
+
+double f_setEngineInputDataAfterDeserialisation(EnergyModel deserializedEnergyModel)
+{/*ALCODESTART::1753349205426*/
+deserializedEnergyModel.p_truckTripsCsv = inputCSVtruckTrips;
+deserializedEnergyModel.p_householdTripsCsv = inputCSVhouseholdTrips;
+deserializedEnergyModel.p_cookingPatternCsv = inputCSVcookingActivities;
+deserializedEnergyModel.avgc_data = energyModel.avgc_data;
+/*ALCODEEND*/}
+
+double f_reconstructGridConnections(EnergyModel deserializedEnergyModel)
+{/*ALCODESTART::1753449467888*/
+ArrayList<GridConnection> allConnections = new ArrayList<>();
+allConnections.addAll(deserializedEnergyModel.c_gridConnections);
+allConnections.addAll(deserializedEnergyModel.c_pausedGridConnections);
+
+for(GridConnection GC : allConnections){
+	GC.energyModel = deserializedEnergyModel;
+	if (GC instanceof GCHouse){
+		//toMove.add(GC);
+		f_reconstructAgent(GC, deserializedEnergyModel.Houses, deserializedEnergyModel);
+	} else if (GC instanceof GCEnergyProduction) {
+		f_reconstructAgent(GC, deserializedEnergyModel.EnergyProductionSites, deserializedEnergyModel);
+	} else if (GC instanceof GCEnergyConversion) {
+		f_reconstructAgent(GC, deserializedEnergyModel.EnergyConversionSites, deserializedEnergyModel);
+	} else if (GC instanceof GCGridBattery) {
+		f_reconstructAgent(GC, deserializedEnergyModel.GridBatteries, deserializedEnergyModel);
+	} else if (GC instanceof GCNeighborhood) {
+		f_reconstructAgent(GC, deserializedEnergyModel.Neighborhoods, deserializedEnergyModel);
+	} else if (GC instanceof GCPublicCharger) {
+		f_reconstructAgent(GC, deserializedEnergyModel.PublicChargers, deserializedEnergyModel);
+	} else if (GC instanceof GCUtility) {
+		f_reconstructAgent(GC, deserializedEnergyModel.UtilityConnections, deserializedEnergyModel);
+	}
+	GC.f_startAfterDeserialisation();
+}
+
+
+/*ALCODEEND*/}
+
+double f_reconstructEnergyModel(EnergyModel energyModel)
+{/*ALCODESTART::1753449467890*/
+// Code Instead of Agent.goToPopulation() (which resets all parameters to default!)	
+/*
+try{ // Reflection trick to get to Agent.owner private field
+	energyModel.forceSetOwner(energyModel, pop_energyModels);
+} catch (Exception e) {
+	e.printStackTrace();
+}
+*/
+
+Agent root = this.getRootAgent();
+energyModel.restoreOwner(root);
+
+energyModel.setEngine(getEngine());	
+energyModel.instantiateBaseStructure_xjal();
+energyModel.setEnvironment(this.getEnvironment());
+
+traceln("EnergyModel owner: %s", energyModel.getOwner());
+
+energyModel.create();
+energyModel.f_startAfterDeserialisation();
+//energyModel.start(); // Why is this needed?
+/*ALCODEEND*/}
+
+double f_reconstructAgent(Agent agent,AgentArrayList pop,EnergyModel energyModel)
+{/*ALCODESTART::1753449467892*/
+/* // Code Instead of Agent.goToPopulation() (which resets many variables to default!)	
+try{ // Reflection trick to get to Agent.owner private field
+	if (agent instanceof GridNode) {
+		((GridNode)agent).forceSetOwner(agent,pop);
+	} else if (agent instanceof GridConnection) {
+		((GridConnection)agent).forceSetOwner(agent,pop);
+	} else if (agent instanceof Actor) {
+		((Actor)agent).forceSetOwner(agent,pop);
+	} else if (agent instanceof GIS_Object) {
+		((GIS_Object)agent).forceSetOwner(agent,pop);
+	}
+} catch (Exception e) {
+	e.printStackTrace();
+}*/ 
+
+agent.restoreOwner(energyModel); // simply sets agent.d = root, should replace reflection hack
+agent.restoreCollection_xjal(pop); // simple sets agent.j = pop, should replace reflection hack
+
+agent.setEngine(getEngine());	
+agent.instantiateBaseStructure_xjal();
+agent.setEnvironment(pop.getEnvironment());
+
+pop._add(agent); // Add to the population	
+//int popSize = pop.size(); 
+//pop.callCreate(agent, popSize); // Update population object
+agent.create();
+/*ALCODEEND*/}
+
+double f_reconstructGridConnections1(EnergyModel energyModel)
+{/*ALCODESTART::1753449467894*/
+// Code Instead of Agent.goToPopulation() (which resets many variables to default!)	
+GC.energyModel = energyModel;
+try{ // Reflection trick to get to Agent.owner private field
+	GC.forceSetOwner(GC,pop);
+} catch (Exception e) {
+	e.printStackTrace();
+}
+	
+traceln("GC owner: %s", GC.getOwner());
+GC.setEngine(getEngine());	
+GC.instantiateBaseStructure_xjal();
+GC.setEnvironment(pop.getEnvironment());
+
+pop._add(GC); // Add to the population
+int popSize = pop.size(); 
+pop.callCreate(GC, popSize); // Update population object
+
+/*ALCODEEND*/}
+
+double f_addMixins()
+{/*ALCODESTART::1753451091785*/
+v_objectMapper.addMixIn(Agent.class, AgentMixin.class);
+v_objectMapper.addMixIn(AgentArrayList.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(EnergyModel.class, EnergyModelMixin.class);
+v_objectMapper.addMixIn(Actor.class, ActorMixin.class);
+v_objectMapper.addMixIn(DataSet.class, DataSetMixin.class);
+v_objectMapper.addMixIn(TextFile.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(EnergyDataViewer.class, IgnoreClassMixin.class);
+
+v_objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, IgnoreClassMixin.class);
+//objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, TableFunctionMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.GISRegion.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.presentation.ViewArea.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.AgentSpacePosition.class, IgnoreClassMixin.class);
+
+// Weirdness regarding material handling toolbox	
+v_objectMapper.addMixIn(com.anylogic.engine.AgentSpacePosition.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.AbstractWall.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.RailwayTrack.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.PalletRack.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.RoadNetwork.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.AreaNode.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.AbstractFluidMarkup.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.Lift.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.ConveyorNode.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.Node.class, IgnoreClassMixin.class);
+
+/*ALCODEEND*/}
+
+double f_reconstructActors(EnergyModel deserializedEnergyModel)
+{/*ALCODESTART::1753712630322*/
+for(Actor AC : deserializedEnergyModel.c_actors){
+		
+		if (AC instanceof ConnectionOwner) {
+			((ConnectionOwner)AC).energyModel = deserializedEnergyModel;
+			f_reconstructAgent(AC, deserializedEnergyModel.pop_connectionOwners, deserializedEnergyModel);
+		} else if (AC instanceof EnergySupplier) {
+			((EnergySupplier)AC).energyModel = deserializedEnergyModel;
+			f_reconstructAgent(AC, deserializedEnergyModel.pop_energySuppliers, deserializedEnergyModel);
+		} else if (AC instanceof EnergyCoop) {
+			((EnergyCoop)AC).energyModel = deserializedEnergyModel;
+			f_reconstructAgent(AC, deserializedEnergyModel.pop_energyCoops, deserializedEnergyModel);
+			((EnergyCoop)AC).f_startAfterDeserialisation();
+		} else if (AC instanceof GridOperator) {
+			((GridOperator)AC).energyModel = deserializedEnergyModel;
+			f_reconstructAgent(AC, deserializedEnergyModel.pop_gridOperators, deserializedEnergyModel);
+		}
+	}
+
+/*ALCODEEND*/}
+
+double f_reconstructGIS_Objects(EnergyModel deserializedEnergyModel,ArrayList<GIS_Object> c_GISObjects)
+{/*ALCODESTART::1753712697685*/
+for(GIS_Object GO : c_GISObjects){
+	GO.gisRegion = c_GISregions.get(GO.p_id);
+	
+	if (GO instanceof GIS_Building) {
+		((GIS_Building)GO).energyModel = deserializedEnergyModel;
+		f_reconstructAgent(GO, deserializedEnergyModel.pop_GIS_Buildings, deserializedEnergyModel);
+	} else if (GO instanceof GIS_Parcel) {
+		((GIS_Parcel)GO).energyModel = deserializedEnergyModel;
+		f_reconstructAgent(GO, deserializedEnergyModel.pop_GIS_Parcels, deserializedEnergyModel);
+	} else {
+		GO.energyModel = deserializedEnergyModel;
+		f_reconstructAgent(GO, deserializedEnergyModel.pop_GIS_Objects, deserializedEnergyModel);
+		//GO.f_startAfterDeserialisation();
+	}
+	GO.f_resetStyle();
+}
+/*ALCODEEND*/}
+
+double f_reconstructGridNodes(EnergyModel deserializedEnergyModel,ArrayList<GridNode> c_gridNodes)
+{/*ALCODESTART::1753712761420*/
+for(GridNode GN : c_gridNodes){
+	GN.energyModel = deserializedEnergyModel;
+	f_reconstructAgent(GN, deserializedEnergyModel.pop_gridNodes, deserializedEnergyModel);
+}
+
 /*ALCODEEND*/}
 
