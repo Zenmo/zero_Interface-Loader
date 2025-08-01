@@ -314,9 +314,6 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 	if (house.p_tertiaryHeatingAsset != null) {
 		house.p_tertiaryHeatingAsset.removeEnergyAsset(); 
 	}
-	if ( house.p_heatBuffer != null){
-		house.p_heatBuffer.removeEnergyAsset();
-	}
 	
 	house.p_heatingType = OL_GridConnectionHeatingType.DISTRICTHEAT;
 	// Add a heat node
@@ -443,9 +440,6 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 	}
 	if (house.p_tertiaryHeatingAsset != null) {
 		house.p_tertiaryHeatingAsset.removeEnergyAsset(); 
-	}
-	if ( house.p_heatBuffer != null){
-		house.p_heatBuffer.removeEnergyAsset();
 	}
 	// Add a heat node
 	house.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getGridNodesTopLevel(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
