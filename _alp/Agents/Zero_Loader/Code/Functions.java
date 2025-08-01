@@ -976,75 +976,6 @@ else { // Add regular electricity and consumption profiles
 }
 /*ALCODEEND*/}
 
-double f_addHeatDemandProfile(GridConnection parentGC,double yearlyGasDemand_m3,boolean hasHourlyGasData,double ratioGasUsedForHeating,String profileName)
-{/*ALCODESTART::1726584205805*/
-J_EAConsumption heatDemand;
-double yearlyDemandHeat_kWh = 0;
-double profileTimeStep_hr = 1;
-double maxHeatOutputPower_kW = 0;
-double gasToHeatEfficiency = 0;
-
-switch (parentGC.p_heatingType){
-	case GASBURNER:
-	case HYBRID_HEATPUMP:
-		gasToHeatEfficiency = avgc_data.p_avgEfficiencyGasBurner_fr;
-		break;
-	case GASFIRED_CHPPEAK:
-		gasToHeatEfficiency = avgc_data.p_avgEfficiencyCHP_thermal_fr;
-		break;
-}
-if(hasHourlyGasData){
-	J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.HEAT, null, OL_ProfileAssetType.HEATDEMAND ,profileTimeStep_hr);		
-	profile.energyAssetName = parentGC.p_ownerID + " custom heat profile";
-	
-	List<Double> hourlyGasDemand_kWh = selectValues(double.class, "SELECT " + profileName + "_demand FROM comp_gas_consumption;");
-	List<Double> hourlyHeatDemand_kWh = new ArrayList<Double>();
-	
-	for (int i = 0; i < hourlyGasDemand_kWh.size(); i++) {
-		double gasHeatingValue_timestep_kWh = hourlyGasDemand_kWh.get(i) * avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating;
-		yearlyDemandHeat_kWh += gasHeatingValue_timestep_kWh;
-    	hourlyHeatDemand_kWh.add(i, gasHeatingValue_timestep_kWh);
-    	
-    	//Keep track of max value
-    	if((gasHeatingValue_timestep_kWh/energyModel.p_timeStep_h) > maxHeatOutputPower_kW){
-    		maxHeatOutputPower_kW = gasHeatingValue_timestep_kWh/energyModel.p_timeStep_h;
-    	}
-	}	
-	profile.a_energyProfile_kWh = hourlyHeatDemand_kWh.stream().mapToDouble(d -> max(0,d)).toArray();
-	
-	//Update v_remainingGasConsumption_m3
-	v_remainingGasConsumption_m3 -= yearlyDemandHeat_kWh/(avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
-}
-else{
-	
-	
-	if (parentGC.p_heatingType == null || parentGC.p_heatingType == OL_GridConnectionHeatingType.NONE || parentGC.p_floorSurfaceArea_m2 == 0 ){ 
-		//traceln("NO FLOOR SURFACE OR HEATING TYPE DETECTED");
-		return;
-	}
-	
-	//Determine heatdemand
-	yearlyDemandHeat_kWh = yearlyGasDemand_m3 * avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency;
-	
-	if (yearlyDemandHeat_kWh <= 0 ){// If heat demand = 0, make estimation based on floor surface area, average m3 gas consumption per m2 floor and gas burner efficiency
-		yearlyDemandHeat_kWh = avgc_data.p_avgCompanyGasConsumption_m3pm2*parentGC.p_floorSurfaceArea_m2 * avgc_data.p_gas_kWhpm3 * avgc_data.p_avgEfficiencyGasBurner_fr;
-		//traceln("NO HEAT DEMAND DETECTED: ESTIMATION MADE BASED ON FLOOR SURFACE AREA!");
-	}
-
-	//Determine heatdemand
-	heatDemand = new J_EAConsumption(parentGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, yearlyDemandHeat_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, null);
-	
-	//Calculate required thermal power
-	maxHeatOutputPower_kW = yearlyDemandHeat_kWh*defaultProfiles_data.getDefaultBuildingHeatDemandProfileMaximum_fr();
-}
-
-
-//Add heat demand asset
-f_addHeatAsset(parentGC, parentGC.p_heatingType, maxHeatOutputPower_kW);
-
-
-/*ALCODEEND*/}
-
 double f_createGISParcels()
 {/*ALCODESTART::1726584205807*/
 //Add GISObject type to the legenda
@@ -1305,7 +1236,7 @@ OL_GridConnectionHeatingType f_getHeatingTypeSurvey(GridConnection engineGC,com.
 // Storing the survey heating types
 c_surveyHeatingTypes.put(engineGC, surveyGC.getHeat().getHeatingTypes());
 // This function determines a heatingType for the GC, which will be passed on to the function that determines the heating management
-OL_GridConnectionHeatingType heatingType;
+OL_GridConnectionHeatingType heatingType = null;
 
 if (surveyGC.getHeat().getHeatingTypes().size() > 1) {
 	// We currently only recognize a couple of combinations that we assume are meant as hybrid heatpumps
@@ -1345,7 +1276,7 @@ else if (surveyGC.getHeat().getHeatingTypes().size() == 1) {
 else if (surveyGC.getHeat().getHeatingTypes().size() == 0) {
 	// There is no heating type in the survey, but there is gas consumption (either yearly total or hourly values)
 	if ( (surveyGC.getNaturalGas().getAnnualDelivery_m3() != null && surveyGC.getNaturalGas().getAnnualDelivery_m3() > 0)
-	 || surveyGC.getNaturalGas().getHourlyDelivery_m3().hasNumberOfValuesForOneYear() ) {
+	 || ( surveyGC.getNaturalGas().getHourlyDelivery_m3() != null && surveyGC.getNaturalGas().getHourlyDelivery_m3().hasNumberOfValuesForOneYear() ) ) {
 		// We assume that all gas consumption is to heat the building(s)
 		heatingType = OL_GridConnectionHeatingType.GAS_BURNER;
 	}
@@ -1357,6 +1288,7 @@ if (heatingType == null) {
 	heatingType = OL_GridConnectionHeatingType.CUSTOM;
 }
 
+traceln(engineGC.p_ownerID + " heatingType: " + heatingType);
 return heatingType;
 /*ALCODEEND*/}
 
@@ -1526,13 +1458,16 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 		double yearlyGasDemand_m3 = Remaining_gas_demand_m3_p_m2_yr*companyGC.p_floorSurfaceArea_m2;
 		double ratioGasUsedForHeating = 1;
 		
-		//companyGC.p_heatingType = avgc_data.p_avgCompanyHeatingMethod; // Assuming all avg companies have GASBURNER.
 		//Add heat demand profile
-		f_addHeatDemandProfile(companyGC, yearlyGasDemand_m3, false, ratioGasUsedForHeating, "default_building_heat_demand_fr");
+		OL_GridConnectionHeatingType heatingType = avgc_data.p_avgCompanyHeatingMethod;
+		double maxHeatOutputPower_kW = f_createHeatProfileFromAnnualGasTotal(companyGC, heatingType, yearlyGasDemand_m3, ratioGasUsedForHeating);
+		f_addHeatAsset(companyGC, heatingType, maxHeatOutputPower_kW);
+		f_addHeatManagement(companyGC, heatingType, false);
+		
+		//Set current scenario heating type
+		current_scenario_list.setCurrentHeatingType(heatingType);
+		future_scenario_list.setPlannedHeatingType(heatingType);		
 	}
-	//Set current scenario heating type
-	//current_scenario_list.setCurrentHeatingType(companyGC.p_heatingType);
-	//future_scenario_list.setPlannedHeatingType(companyGC.p_heatingType);
 }
 
 
@@ -1970,6 +1905,9 @@ v_timeOfModelStart_ms = startTime;
 
 //Send avgc data to engine
 avgc_data.f_setAVGC_data();
+
+// Set default heating strategies
+f_setDefaultHeatingStrategies();
 
 //Import excel data to the anylogic database
 f_importExcelTablesToDB();
@@ -2426,13 +2364,14 @@ else{
 }
 
 
-f_heatingSurveyCompany();
+OL_GridConnectionHeatingType heatingType = f_heatingSurveyCompany(companyGC, gridConnection);
+
 //add heating type to scenario: current and future
-//current_scenario_list.setCurrentHeatingType(companyGC.p_heatingType);
-//future_scenario_list.setPlannedHeatingType(companyGC.p_heatingType);
+current_scenario_list.setCurrentHeatingType(heatingType);
+future_scenario_list.setPlannedHeatingType(heatingType);
 
 
-////Storage
+// Electric Storage
 Float battery_power_kW = 0f;
 Float battery_capacity_kWh = 0f;
 
@@ -2821,61 +2760,6 @@ for(GridConnection connectedGC : existingBuilding.c_containedGridConnections){
 existingBuilding.p_floorSurfaceArea_m2 += connectingBuildingData.address_floor_surface_m2();
 /*ALCODEEND*/}
 
-boolean function2(GridConnection parentGC,com.zenmo.zummon.companysurvey.GridConnection gridConnectionSurvey,double ratioGasUsedForHeating)
-{/*ALCODESTART::1745336464944*/
-double gasToHeatEfficiency = 0;
-double maxHeatOutputPower_kW = 0;
-double yearlyDemandHeat_kWh = 0;
-
-double[] quarterHourlyGasDeliveryTimeSeries_m3 = f_timeSeriesToQuarterHourlyDoubleArray(gridConnectionSurvey.getNaturalGas().getHourlyDelivery_m3());
-
-if (quarterHourlyGasDeliveryTimeSeries_m3 == null) {
-	return false;
-}
-
-//Set the heating type 
-f_setHeatingTypeSurvey(parentGC, gridConnectionSurvey, true);
-
-//Check what the heat conversion efficiency is from gas
-switch (parentGC.p_heatingType){
-	case GASBURNER:
-	case HYBRID_HEATPUMP:
-		gasToHeatEfficiency = avgc_data.p_avgEfficiencyGasBurner_fr;
-		break;
-	case GASFIRED_CHPPEAK:
-		gasToHeatEfficiency = avgc_data.p_avgEfficiencyCHP_thermal_fr;
-		break;
-}
-
-J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.HEAT, null, OL_ProfileAssetType.HEATDEMAND , energyModel.p_timeStep_h);		
-profile.energyAssetName = parentGC.p_ownerID + " custom heat profile";
-
-//Initialize heat demand quarterhourly profile
-double[] quarterHourlyHeatDemandProfile_kWh = new double[quarterHourlyGasDeliveryTimeSeries_m3.length];
-double totalgasconsumption_m3 = 0;
-for (int i = 0; i < quarterHourlyGasDeliveryTimeSeries_m3.length; i++) {
-	quarterHourlyHeatDemandProfile_kWh[i] = quarterHourlyGasDeliveryTimeSeries_m3[i] * avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating;
-	yearlyDemandHeat_kWh += quarterHourlyHeatDemandProfile_kWh[i];
-	
-	//Keep track of max value
-	if((quarterHourlyHeatDemandProfile_kWh[i]/energyModel.p_timeStep_h) > maxHeatOutputPower_kW){
-		maxHeatOutputPower_kW = quarterHourlyHeatDemandProfile_kWh[i]/energyModel.p_timeStep_h;
-	}
-	totalgasconsumption_m3 += quarterHourlyGasDeliveryTimeSeries_m3[i];
-}	
-profile.a_energyProfile_kWh = quarterHourlyHeatDemandProfile_kWh;
-
-//Update v_remainingGasConsumption_m3
-v_remainingGasConsumption_m3 -= yearlyDemandHeat_kWh/(avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
-
-
-//Add heat asset
-f_addHeatAsset(parentGC, parentGC.p_heatingType, maxHeatOutputPower_kW);
-
-
-return true;
-/*ALCODEEND*/}
-
 double f_addHeatAsset(GridConnection parentGC,OL_GridConnectionHeatingType heatAssetType,double maxHeatOutputPower_kW)
 {/*ALCODESTART::1745336570663*/
 //Initialize parameters
@@ -2887,50 +2771,45 @@ OL_AmbientTempType ambientTempType;
 double sourceAssetHeatPower_kW;
 double belowZeroHeatpumpEtaReductionFactor;
 
-switch (heatAssetType){ // HOE gaan we om met meerdere heating types in survey???
+switch (heatAssetType){ // There is always only one heatingType, If there are many assets the type is CUSTOM
 
 	case GAS_BURNER:
 		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, maxHeatOutputPower_kW , avgc_data.p_avgEfficiencyGasBurner_fr, energyModel.p_timeStep_h, 90);
 		break;
 	
 	case HYBRID_HEATPUMP:
-		
+	
 		//Add primary heating asset (heatpump) (if its not part of the basic profile already
-		if( (!parentGC.v_hasQuarterHourlyValues && !parentGC.p_hasGasData) || settings.createCurrentElectricityEA()){		
-			inputCapacityElectric_kW = maxHeatOutputPower_kW / 3; //-- /3, kan nog kleiner want is hybride zodat gasbrander ook bij springt, dus kleiner MOETEN aanname voor hoe klein onderzoeken
-			efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
-			baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
-			outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
-			ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
-			sourceAssetHeatPower_kW = 0;
-			belowZeroHeatpumpEtaReductionFactor = 1;
-			
-			J_EAConversionHeatPump heatPumpHybrid = new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType);
+		inputCapacityElectric_kW = maxHeatOutputPower_kW / 3; //-- /3, kan nog kleiner want is hybride zodat gasbrander ook bij springt, dus kleiner MOETEN aanname voor hoe klein onderzoeken
+		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
+		baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
+		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
+		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
+		sourceAssetHeatPower_kW = 0;
+		belowZeroHeatpumpEtaReductionFactor = 1;
+		
+		J_EAConversionHeatPump heatPumpHybrid = new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType);
 
-			zero_Interface.energyModel.c_ambientDependentAssets.add(heatPumpHybrid);
-			
-			//Add secondary heating asset (gasburner)
-			efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner;
-			outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC;
-			
-			J_EAConversionGasBurner gasBurnerHybrid = new J_EAConversionGasBurner(parentGC, maxHeatOutputPower_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC);
-			//parentGC.p_secondaryHeatingAsset = gasBurnerHybrid;
-		}
+		zero_Interface.energyModel.c_ambientDependentAssets.add(heatPumpHybrid);
+		
+		//Add secondary heating asset (gasburner)
+		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner;
+		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC;
+		
+		J_EAConversionGasBurner gasBurnerHybrid = new J_EAConversionGasBurner(parentGC, maxHeatOutputPower_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC);		
 		break;
 	
 	case ELECTRIC_HEATPUMP:
-		if( !parentGC.v_hasQuarterHourlyValues || settings.createCurrentElectricityEA()){
-			//Add primary heating asset (heatpump)
-			inputCapacityElectric_kW = maxHeatOutputPower_kW; // Could be a lot smaller due to high cop
-			efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
-			baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
-			outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
-			ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
-			sourceAssetHeatPower_kW = 0;
-			belowZeroHeatpumpEtaReductionFactor = 1;
-			
-			new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType );		
-		}
+		//Add primary heating asset (heatpump)
+		inputCapacityElectric_kW = maxHeatOutputPower_kW; // Could be a lot smaller due to high cop
+		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
+		baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
+		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
+		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
+		sourceAssetHeatPower_kW = 0;
+		belowZeroHeatpumpEtaReductionFactor = 1;
+		
+		new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType );		
 		break;
 
 	case GAS_CHP:
@@ -2954,10 +2833,13 @@ switch (heatAssetType){ // HOE gaan we om met meerdere heating types in survey??
 		if(heatgrid == null){
 			heatgrid = f_createHeatGridNode();
 		}
-		parentGC.p_parentNodeHeatID = heatgrid.p_gridNodeID;
-			
+		parentGC.p_parentNodeHeatID = heatgrid.p_gridNodeID;	
 		break;
-
+		
+	case CUSTOM:
+		f_addCustomHeatAsset(parentGC, maxHeatOutputPower_kW);
+		break;
+		
 	default:
 		traceln("HEATING TYPE NOT FOUND FOR GC: " + parentGC);
 }
@@ -3495,14 +3377,15 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.v_liveAssetsMetaData.PVPotential_kW = houseBuildingData.pv_potential_kwp() != null ? houseBuildingData.pv_potential_kwp() : 0;
 
 	f_setHouseHeatingPreferences(GCH);
-	f_addEnergyAssetsToHouses(GCH, jaarlijksElectriciteitsVerbruik, jaarlijksGasVerbruik );	
+	// TODO: Above we load in data of gas use, but the houses always have a thermal model??
+	f_addEnergyAssetsToHouses(GCH, jaarlijksElectriciteitsVerbruik );	
 	
 	i ++;
 }	
 
 /*ALCODEEND*/}
 
-double f_addEnergyAssetsToHouses(GCHouse house,double jaarlijksElectriciteitsVerbruik,double jaarlijksGasVerbruik)
+double f_addEnergyAssetsToHouses(GCHouse house,double jaarlijksElectriciteitsVerbruik)
 {/*ALCODESTART::1749728889986*/
 //Add generic electricity demand profile 
 GridNode gn = randomWhere(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals( house.p_parentNodeElectricID));
@@ -3512,11 +3395,14 @@ if ( ! gn.p_hasProfileData ){
 
 //Add building heat model and asset
 f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2);
+		
 //house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
 double gasBurnerCapacity_kW = 50000;//40;//uniform_discr(3,5); 
 
-// TODO: Fix: I replaced p_heatingType with p_heatingManagement.getCurrentHeatingType() here, but the order will probably be the other way around
-f_addHeatAsset (house, house.p_heatingManagement.getCurrentHeatingType(), gasBurnerCapacity_kW);
+//Add heat demand profile
+OL_GridConnectionHeatingType heatingType = avgc_data.p_avgHouseHeatingMethod;
+f_addHeatAsset(house, heatingType, gasBurnerCapacity_kW);
+f_addHeatManagement(house, heatingType, false);
 
 //Add hot water and cooking demand
 f_addHotWaterDemand(house, house.p_floorSurfaceArea_m2);
@@ -3842,52 +3728,53 @@ return connectedBuildingsData;
 
 double f_addHeatManagement(GridConnection engineGC,OL_GridConnectionHeatingType heatingType,boolean isGhost)
 {/*ALCODESTART::1753784800216*/
-if (heatingType == OL_GridConnectionHeatingType.NONE) {
-	return;
-}
 if (isGhost) {
 	engineGC.p_heatingManagement = new J_HeatingManagementGhost( engineGC, heatingType );
+	return;
 }
-switch (heatingType ) {
-	case GAS_BURNER:
-		break;
-	case ELECTRIC_HEATPUMP:
-		break;
-	case HYBRID_HEATPUMP:
-		break;
-	case DISTRICTHEAT:
-		break;
-		 
+if (heatingType == OL_GridConnectionHeatingType.CUSTOM) {
+	f_addCustomHeatManagement(engineGC);
+}
+else {
+	energyModel.f_addHeatManagementToGC(engineGC, heatingType, isGhost);
 }
 /*ALCODEEND*/}
 
-double f_heatingSurveyCompany(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC)
+OL_GridConnectionHeatingType f_heatingSurveyCompany(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC)
 {/*ALCODESTART::1753799111185*/
-//set heatingType
+// Set heatingType
 OL_GridConnectionHeatingType heatingType = f_getHeatingTypeSurvey(engineGC, surveyGC);
 
-//add heating type to scenario: current and future
-//current_scenario_list.setCurrentHeatingType(heatingType);
-//future_scenario_list.setPlannedHeatingType(heatingType);
-
-//create building profiles, peakHeatConsumption_kW is null if there is no heat consumption
+// Create building profiles, peakHeatConsumption_kW is null if there is no heat consumption
 Double peakHeatConsumption_kW = f_createSurveyHeatProfiles( engineGC, surveyGC, heatingType );
 
-//create EA conversions
+// Create EA conversions
 if (peakHeatConsumption_kW != null) {
 	f_addHeatAsset(engineGC, heatingType, peakHeatConsumption_kW);
 }
 
-//heating management (needs: heatingType & assets such as building thermal model or profiles )
+if (surveyGC.getStorage() != null && surveyGC.getStorage().getHasThermalStorage() != null) {
+	//if (surveyGC.getStorage().getThermalStorageKw() != null) {
+		//double storagePower_kW = surveyGC.getStorage().getThermalStorageKw();
+	//}
+	// TODO: find a way to determine the storage capacity 
+	// f_addStorage(parentGC, storagePower_kw, storageCapacity_kWh, storageType);
+}
+
+
+// Heating management (needs: heatingType & assets such as building thermal model or profiles, survey companies never have a thermal building mdoel)
 boolean isGhost = heatingType != OL_GridConnectionHeatingType.NONE && peakHeatConsumption_kW == null;
+
 f_addHeatManagement(engineGC, heatingType, isGhost);
 
+return heatingType;
 /*ALCODEEND*/}
 
 Double f_createSurveyHeatProfiles(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC,OL_GridConnectionHeatingType heatingType)
 {/*ALCODESTART::1753801098736*/
 ////Gas and Heating
-if (surveyGC.getNaturalGas().getHasConnection() != null && surveyGC.getNaturalGas().getHasConnection()) {
+
+if (surveyGC.getNaturalGas().getHasConnection() != null && surveyGC.getNaturalGas().getHasConnection() ) {
 	switch (heatingType) {
 		case HYBRID_HEATPUMP:
 			// Exception for hybrid heatpumps, when it will be a ghost asset make gas profile
@@ -3904,7 +3791,11 @@ if (surveyGC.getNaturalGas().getHasConnection() != null && surveyGC.getNaturalGa
 			// heat consumption profiel
 			return f_createHeatProfileFromGasSurvey( engineGC, surveyGC, heatingType );
 		default:
-			if (surveyGC.getNaturalGas().getPercentageUsedForHeating() != null && surveyGC.getNaturalGas().getPercentageUsedForHeating() != 0.0) {
+			if (surveyGC.getNaturalGas().getPercentageUsedForHeating() != null && surveyGC.getNaturalGas().getPercentageUsedForHeating() != 0.0) {				
+				// TODO: Find a solution to surveys filled in without heatingType that is not this hacky
+				if (surveyGC.getNaturalGas().getEan().equals("123456789012345678")) {
+					return null;
+				}
 				throw new RuntimeException("Gas data used for heating in survey, but no corresponding heating type");
 			}
 			else {
@@ -3950,12 +3841,10 @@ j_ea.energyAssetName = engineGC.p_ownerID + " custom gas profile";
 //TODO: v_remainingGasConsumption_m3 -= yearlyGasConsumption_m3;
 /*ALCODEEND*/}
 
-double f_createHeatProfileFromAnnualGasTotal(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC,OL_GridConnectionHeatingType heatingType,double yearlyGasDelivery_m3)
+double f_createHeatProfileFromAnnualGasTotal(GridConnection engineGC,OL_GridConnectionHeatingType heatingType,double yearlyGasDelivery_m3,double ratioGasUsedForHeating)
 {/*ALCODESTART::1753883660006*/
 // First check what the heat conversion efficiency is from gas
 double gasToHeatEfficiency = f_getGasToHeatEfficiency(heatingType);
-// Then check which part of the gas consumption is used for heating
-double ratioGasUsedForHeating = f_getRatioGasUsedForHeating(surveyGC);
 // Finally, multiply the gas delivery with the total conversion factor to get the heat consumption
 double yearlyConsumptionHeat_kWh = yearlyGasDelivery_m3 * avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating;
 // We assume the heat consumption follows a standard profile
@@ -4001,7 +3890,8 @@ if (surveyGC.getNaturalGas().getHourlyDelivery_m3() != null && surveyGC.getNatur
 }
 else if ( surveyGC.getNaturalGas().getAnnualDelivery_m3() != null && surveyGC.getNaturalGas().getAnnualDelivery_m3() > 0) {
 	double yearlyGasDelivery_m3 = surveyGC.getNaturalGas().getAnnualDelivery_m3();
-	return f_createHeatProfileFromAnnualGasTotal( engineGC, surveyGC, heatingType, yearlyGasDelivery_m3 );
+	double ratioGasUsedForHeating = f_getRatioGasUsedForHeating(surveyGC);
+	return f_createHeatProfileFromAnnualGasTotal( engineGC, heatingType, yearlyGasDelivery_m3, ratioGasUsedForHeating );
 }
 else {
 	return f_createHeatProfileFromEstimates( engineGC );
@@ -4103,10 +3993,50 @@ else {
 }
 /*ALCODEEND*/}
 
-double function()
+double f_setDefaultHeatingStrategies()
 {/*ALCODESTART::1753968816374*/
-Triple<OL_GridConnectionHeatingType, Boolean, Boolean> t = new Triple(OL_GridConnectionHeatingType.GAS_BURNER, false, false);
-c_defaultHeatingStrategies.put( t, J_HeatingManagementProfileSimple.class );
+// Triples ( heatingType, hasThermalBuilding, hasHeatBuffer )
+Triple<OL_GridConnectionHeatingType, Boolean, Boolean> triple = null;
 
+triple = Triple.of(OL_GridConnectionHeatingType.GAS_BURNER, false, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileSimple.class );
+triple = Triple.of(OL_GridConnectionHeatingType.GAS_BURNER, true, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementBuildingSimple.class );
+
+triple = Triple.of(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, false, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileSimple.class );
+triple = Triple.of(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, true, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementBuildingSimple.class );
+
+triple = Triple.of(OL_GridConnectionHeatingType.HYBRID_HEATPUMP, false, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileHybridHeatPump.class );
+triple = Triple.of(OL_GridConnectionHeatingType.HYBRID_HEATPUMP, true, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementBuildingHybridHeatPump.class );
+
+triple = Triple.of(OL_GridConnectionHeatingType.DISTRICTHEAT, false, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileSimple.class );
+triple = Triple.of(OL_GridConnectionHeatingType.DISTRICTHEAT, true, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementBuildingSimple.class );
+
+triple = Triple.of(OL_GridConnectionHeatingType.LT_DISTRICTHEAT, false, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileSimple.class );
+triple = Triple.of(OL_GridConnectionHeatingType.LT_DISTRICTHEAT, true, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementBuildingSimple.class );
+
+triple = Triple.of(OL_GridConnectionHeatingType.HYDROGENBURNER, false, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileSimple.class );
+triple = Triple.of(OL_GridConnectionHeatingType.HYDROGENBURNER, true, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementBuildingSimple.class );
+
+/*ALCODEEND*/}
+
+double f_addCustomHeatManagement(GridConnection engineGC)
+{/*ALCODESTART::1754048849906*/
+throw new RuntimeException("HeatingType is CUSTOM. You must override the function: f_addCustomHeatManagement!");
+/*ALCODEEND*/}
+
+double f_addCustomHeatAsset(GridConnection parentGC,double maxHeatOutputPower_kW)
+{/*ALCODESTART::1754050106254*/
+throw new RuntimeException("HeatingType is CUSTOM. You must override the function: f_addCustomHeatAsset!");
 /*ALCODEEND*/}
 

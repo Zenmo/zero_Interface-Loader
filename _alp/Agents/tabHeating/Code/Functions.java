@@ -8,11 +8,11 @@ if(zero_Interface.c_companyUIs.size()>0){
 }
 else{
 	ArrayList<GCUtility> companies = new ArrayList<GCUtility>(zero_Interface.c_orderedHeatingSystemsCompanies.stream().filter(gcList::contains).toList());
-	double nbHeatPumps = count(gcList, gc -> gc.p_heatingManagement.getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP);
+	double nbHeatPumps = count(gcList, gc -> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP);
 	int targetHeatPumpAmount = roundToInt( targetHeatPump_pct / 100.0 * gcList.size());
 	
 	while ( targetHeatPumpAmount < nbHeatPumps) { // remove excess heatpumps, replace with gasburners.
-		GCUtility company = findFirst(companies, x->x.p_heatingManagement.getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP);
+		GCUtility company = findFirst(companies, x->x.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP);
 		if (company != null) {
 			company.c_heatingAssets.get(0).removeEnergyAsset();
 			nbHeatPumps--;
@@ -21,7 +21,7 @@ else{
 			zero_Interface.c_orderedHeatingSystemsCompanies.add(0, company);
 			double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(company);
 			new J_EAConversionGasBurner(company, peakHeatDemand_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC);
-			//company.p_heatingType = OL_GridConnectionHeatingType.GAS_BURNER;
+			zero_Interface.energyModel.f_addHeatManagementToGC(company, OL_GridConnectionHeatingType.GAS_BURNER, false);
 		}
 		else {
 			throw new RuntimeException("Can't find Heatpump in company that should have heatpump in f_setHeatingSystemsCompanies.");
@@ -29,7 +29,7 @@ else{
 	}
 	
 	while ( targetHeatPumpAmount > nbHeatPumps) { // remove gasburners, add heatpumps.
-		GCUtility company = findFirst(companies, x -> x.p_heatingManagement.getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER);
+		GCUtility company = findFirst(companies, x -> x.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER);
 		if (company != null) {			
 			company.c_heatingAssets.get(0).removeEnergyAsset();
 			nbHeatPumps++;		
@@ -38,7 +38,7 @@ else{
 			zero_Interface.c_orderedHeatingSystemsCompanies.add(0, company);	
 			double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(company);
 			new J_EAConversionHeatPump(company, peakHeatDemand_kW, 0.5, zero_Interface.energyModel.p_timeStep_h, 60,  zero_Interface.energyModel.v_currentAmbientTemperature_degC, 0, 1, OL_AmbientTempType.AMBIENT_AIR);				
-			//company.p_heatingType = OL_GridConnectionHeatingType.HEATPUMP_AIR;
+			zero_Interface.energyModel.f_addHeatManagementToGC(company, OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, false);
 		} 
 		else {
 			throw new RuntimeException("Can't find Gasburner in company that should have gasburner in f_setHeatingSystemsCompanies.");
@@ -57,11 +57,11 @@ zero_Interface.f_resetSettings();
 double f_setHeatingSystemsHouseholds(List<GCHouse> gcList,double targetHeatPump_pct)
 {/*ALCODESTART::1722256221655*/
 ArrayList<GCHouse> houses = new ArrayList<GCHouse>(zero_Interface.c_orderedHeatingSystemsHouses.stream().filter(gcList::contains).toList());
-double nbHeatPumps = count(gcList, gc -> gc.p_heatingManagement.getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP);
+double nbHeatPumps = count(gcList, gc -> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP);
 int targetHeatPumpAmount = roundToInt( targetHeatPump_pct / 100.0 * gcList.size());
 
 while ( nbHeatPumps > targetHeatPumpAmount) { // remove excess heatpumps, replace with gasburners.
-	GCHouse house = findFirst(houses, x->x.p_heatingManagement.getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP);
+	GCHouse house = findFirst(houses, x->x.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP);
 	if (house != null) {
 		house.c_heatingAssets.get(0).removeEnergyAsset();
 		nbHeatPumps--;
@@ -70,7 +70,7 @@ while ( nbHeatPumps > targetHeatPumpAmount) { // remove excess heatpumps, replac
 		zero_Interface.c_orderedHeatingSystemsHouses.add(0, house);
 		double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
 		new J_EAConversionGasBurner(house, peakHeatDemand_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC);
-		//house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
+		zero_Interface.energyModel.f_addHeatManagementToGC(house, OL_GridConnectionHeatingType.GAS_BURNER, false);
 	}
 	else {
 		throw new RuntimeException("Can't find Heatpump in house that should have heatpump in f_setHeatingSystemsHouseholds.");
@@ -78,7 +78,7 @@ while ( nbHeatPumps > targetHeatPumpAmount) { // remove excess heatpumps, replac
 }
 
 while ( nbHeatPumps < targetHeatPumpAmount) { // remove gasburners, add heatpumps.
-	GCHouse house = findFirst(houses, x -> x.p_heatingManagement.getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER);
+	GCHouse house = findFirst(houses, x -> x.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER);
 	if (house != null) {
 		house.c_heatingAssets.get(0).removeEnergyAsset();
 		nbHeatPumps++;
@@ -87,7 +87,7 @@ while ( nbHeatPumps < targetHeatPumpAmount) { // remove gasburners, add heatpump
 		zero_Interface.c_orderedHeatingSystemsHouses.add(0, house);		
 		double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
 		new J_EAConversionHeatPump(house, peakHeatDemand_kW, 0.5, zero_Interface.energyModel.p_timeStep_h, 60,  zero_Interface.energyModel.v_currentAmbientTemperature_degC, 0, 1, OL_AmbientTempType.AMBIENT_AIR);				
-		//house.p_heatingType = OL_GridConnectionHeatingType.HEATPUMP_AIR;
+		zero_Interface.energyModel.f_addHeatManagementToGC(house, OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, false);
 	} 
 	else {
 		throw new RuntimeException("Can't find Gasburner in house that should have gasburner in f_setHeatingSystemsHouseholds.");
@@ -187,12 +187,12 @@ int nbActiveCompanies = companies.size();
 Pair<Integer, Integer> pair = f_calculateNumberOfGhostHeatingSystems(companies);
 traceln("ghost pair: " + pair);
 int nbOfGhostHeatingSystems = pair.getFirst() + pair.getSecond(); // Both Electric and Hybrid heatpumps
-int nbHeatPumps = count(companies, gc -> gc.p_heatingManagement.getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP) + nbOfGhostHeatingSystems;
+int nbHeatPumps = count(companies, gc -> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP) + nbOfGhostHeatingSystems;
 int targetHeatPumpAmount = roundToInt( targetHeatPump_pct / 100.0 * nbActiveCompanies);
 
 
 while ( targetHeatPumpAmount < nbHeatPumps){ // remove excess heatpumps of companies that didnt start with a heatpump, replace with gasburners.
-	GCUtility company = findFirst(companies, gc -> gc.p_heatingManagement.getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP);
+	GCUtility company = findFirst(companies, gc -> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP);
 	if (company != null) {
 		UI_company companyUI = zero_Interface.c_companyUIs.get(company.p_owner.p_connectionOwnerIndexNr);
 		
@@ -216,7 +216,7 @@ while ( targetHeatPumpAmount < nbHeatPumps){ // remove excess heatpumps of compa
 		nbHeatPumps--;
 	}
 	else { //No more heating assets to adjust: this is the minimum: set slider to minimum and do nothing else
-		int min_nbOfHeatpumps = count(gcList, gc -> gc.v_isActive && gc.p_heatingManagement.getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP) + nbOfGhostHeatingSystems;
+		int min_nbOfHeatpumps = count(gcList, gc -> gc.v_isActive && gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP) + nbOfGhostHeatingSystems;
 		int min_pct_ElectricHeatpumpSlider = roundToInt( min_nbOfHeatpumps * 100.0 / nbActiveCompanies );
 		sliderHeatpump.setValue(min_pct_ElectricHeatpumpSlider, false);
 		sliderGasburner.setValue(100-min_pct_ElectricHeatpumpSlider, false);
@@ -226,7 +226,7 @@ while ( targetHeatPumpAmount < nbHeatPumps){ // remove excess heatpumps of compa
 
 while ( targetHeatPumpAmount > nbHeatPumps) { // remove gasburners, add heatpumps.
 		
-	GCUtility company = findFirst(companies, gc -> gc.p_heatingManagement.getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER);
+	GCUtility company = findFirst(companies, gc -> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER);
 	if (company != null) {
 		UI_company companyUI = zero_Interface.c_companyUIs.get(company.p_owner.p_connectionOwnerIndexNr);
 		companyUI.b_runningMainInterfaceSlider = true;
@@ -250,7 +250,7 @@ while ( targetHeatPumpAmount > nbHeatPumps) { // remove gasburners, add heatpump
 		nbHeatPumps++;
 	}
 	else { //No more gas burner assets to adjust: this is the minimum: set slider to minimum and do nothing else
-		int min_nbOfHeatpumps = count(gcList, gc -> gc.v_isActive && gc.p_heatingManagement.getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP) + nbOfGhostHeatingSystems;
+		int min_nbOfHeatpumps = count(gcList, gc -> gc.v_isActive && gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP) + nbOfGhostHeatingSystems;
 		int min_pct_ElectricHeatpumpSlider = roundToInt( min_nbOfHeatpumps * 100.0 / nbActiveCompanies );
 		sliderHeatpump.setValue(min_pct_ElectricHeatpumpSlider, false);
 		sliderGasburner.setValue(100-min_pct_ElectricHeatpumpSlider, false);
@@ -312,7 +312,6 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 		house.p_heatBuffer.removeEnergyAsset();
 	}
 	
-	//house.p_heatingType = OL_GridConnectionHeatingType.DISTRICTHEAT;
 	// Add a heat node
 	house.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getGridNodesTopLevel(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
 	// Create a heat node if it does not exist yet
@@ -350,6 +349,8 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 	double efficiency = 1.0;
 	
 	new J_EAConversionHeatDeliverySet(house, peakHeatDemand_kW, efficiency, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC);
+	
+	zero_Interface.energyModel.f_addHeatManagementToGC(house, OL_GridConnectionHeatingType.DISTRICTHEAT, false);
 }
 
 //Update variable to change to custom scenario
@@ -371,8 +372,6 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 	house.v_districtHeatDelivery_kW = 0;
 	
 	//add gasburner
-	//house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;	
-
 	J_EAConsumption heatDemandAsset = findFirst(house.c_consumptionAssets, j_ea -> j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
 	J_EAConversionGasBurner gasBurner;
 	//if house has follows the general heat deamnd profile
@@ -390,6 +389,7 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 		double peakHeatDemand_kW = Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
 		gasBurner = new J_EAConversionGasBurner(house, peakHeatDemand_kW, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
 	}	
+	zero_Interface.energyModel.f_addHeatManagementToGC(house, OL_GridConnectionHeatingType.GAS_BURNER, false);
 }
 
 //Update variable to change to custom scenario
@@ -466,7 +466,6 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 		zero_Interface.f_setErrorScreen("LET OP: Er is nu een 'warmtenet' gecreëerd. Maar er is geen warmtebron aanwezig in het model. Daarom zal de benodigde warmte voor het warmtenet in de resultaten te zien zijn als warmte import.");
 	}
 	house.p_parentNodeHeatID = house.p_parentNodeHeat.p_gridNodeID;
-	//house.p_heatingType = OL_GridConnectionHeatingType.LT_DISTRICTHEAT;
 	double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
 	double heatpumpElectricCapacity_kW = min(peakHeatDemand_kW / 3, 1.0);
 	double efficiency_fr = 0.5;
@@ -485,6 +484,7 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 		OL_AmbientTempType.HEAT_GRID
 	);
 	heatpump.updateParameters(inputTemperature_degC, outputTemperature_degC);		
+	zero_Interface.energyModel.f_addHeatManagementToGC(house, OL_GridConnectionHeatingType.LT_DISTRICTHEAT, false);
 }
 
 //Update variable to change to custom scenario
@@ -504,9 +504,9 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 	
 	// Remove Heatpump and replace with gasburner
 	house.f_removeAllHeatingAssets();
-	//house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;	
 	double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
 	new J_EAConversionGasBurner(house, peakHeatDemand_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC);	
+	zero_Interface.energyModel.f_addHeatManagementToGC(house, OL_GridConnectionHeatingType.GAS_BURNER, false);
 }
 
 //Update variable to change to custom scenario

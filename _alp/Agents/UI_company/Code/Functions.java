@@ -234,7 +234,7 @@ rb_scenariosPrivateUI.setValue(0, false);
 double f_setHeatingType(GridConnection GC,OL_GridConnectionHeatingType selectedHeatingType)
 {/*ALCODESTART::1713537591106*/
 //Check if selected is not the same as previous, if not: continue with the setting of new heating type
-if (GC.p_heatingManagement.getCurrentHeatingType() == selectedHeatingType){
+if (GC.f_getCurrentHeatingType() == selectedHeatingType){
 	//traceln("Selected heating type is the same as previous heating type");
 	return;
 }
@@ -245,9 +245,6 @@ GC.p_parentNodeHeatID = null;
 
 //Remove primary heating asset
 GC.f_removeAllHeatingAssets();
-
-//Set GC heating type as newly selected heating type (NOTE: NEEDS TO HAPPEN HERE, NOT LATER, NOT SOONER)
-//GC.p_heatingType = selectedHeatingType;
 
 //Get needed cacacity
 double capacityThermal_kW;
@@ -397,6 +394,10 @@ switch (selectedHeatingType){
 			
 		break;
 }
+
+// Add a management for the chosen heating type
+zero_Interface.energyModel.f_addHeatManagementToGC(GC, selectedHeatingType, false);
+
 
 if(!b_runningMainInterfaceSlider){
 	zero_Interface.f_updateMainInterfaceSliders();
@@ -1581,7 +1582,7 @@ rb_scenariosPrivateUI.setEnabled(c_scenarioSettings_Current.get(v_currentSelecte
 
 //Find the current heating type
 int nr_currentHeatingType = 0;
-switch (c_ownedGridConnections.get(v_currentSelectedGCnr).p_heatingManagement.getCurrentHeatingType()){
+switch (c_ownedGridConnections.get(v_currentSelectedGCnr).f_getCurrentHeatingType()){
 	case GAS_BURNER:
 		nr_currentHeatingType = 0;
 	break;
