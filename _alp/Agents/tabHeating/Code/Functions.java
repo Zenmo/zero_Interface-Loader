@@ -314,9 +314,6 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 	if (house.p_tertiaryHeatingAsset != null) {
 		house.p_tertiaryHeatingAsset.removeEnergyAsset(); 
 	}
-	if ( house.p_heatBuffer != null){
-		house.p_heatBuffer.removeEnergyAsset();
-	}
 	
 	house.p_heatingType = OL_GridConnectionHeatingType.DISTRICTHEAT;
 	// Add a heat node
@@ -444,9 +441,6 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 	if (house.p_tertiaryHeatingAsset != null) {
 		house.p_tertiaryHeatingAsset.removeEnergyAsset(); 
 	}
-	if ( house.p_heatBuffer != null){
-		house.p_heatBuffer.removeEnergyAsset();
-	}
 	// Add a heat node
 	house.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getGridNodesTopLevel(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
 	// Create a heat node if it does not exist yet
@@ -560,6 +554,87 @@ while (nbHousesWithImprovedInsulation > targetNbHousesWithImprovedInsulation) {
 	}
 }
 
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+double f_setPTSystemHouses(List<GCHouse> gcList,double PT_pct)
+{/*ALCODESTART::1753950993262*/
+ArrayList<GCHouse> houses = new ArrayList<GCHouse>(zero_Interface.c_orderedPTSystemsHouses.stream().filter(gcList::contains).toList());
+int nbHouses = houses.size();
+int nbHousesWithPT = count(houses, x -> x.v_liveAssetsMetaData.hasPT == true);
+int nbHousesWithPTGoal = roundToInt(PT_pct / 100.0 * nbHouses);
+
+while ( nbHousesWithPTGoal < nbHousesWithPT ) { // remove excess PV systems
+	GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.hasPT == true);	
+	J_EA ptAsset = findFirst(house.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL );
+		
+	if (ptAsset != null) {
+		ptAsset.removeEnergyAsset();
+		houses.remove(house);
+		zero_Interface.c_orderedPTSystemsHouses.remove(house);
+		zero_Interface.c_orderedPTSystemsHouses.add(0, house);
+		
+		if(house.p_heatBuffer != null){
+			house.p_heatBuffer.removeEnergyAsset();
+		}
+		if(house.v_liveAssetsMetaData.hasPV){
+			J_EAProduction pvAsset = findFirst(house.c_productionAssets, ea -> ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
+			if(pvAsset != null){
+				double newInstalledPVCapacity = min(house.v_liveAssetsMetaData.PVPotential_kW, pvAsset.getCapacityElectric_kW() + zero_Interface.energyModel.avgc_data.p_avgPTPanelSize_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2);
+				pvAsset.setCapacityElectric_kW(newInstalledPVCapacity);
+			}
+		}
+		nbHousesWithPT --; 
+	}
+	else {
+		traceln(" cant find PV asset in house that should have PV asset in f_setPVHouses (Interface)");
+	}
+}
+
+while ( nbHousesWithPTGoal > nbHousesWithPT ) {
+	GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.hasPT == false);
+	if (house == null){
+		traceln("No gridconnection without PT panels found! Current PVsystems count: %s", nbHousesWithPT);
+		break;
+	}
+	else {
+		String assetName = "Rooftop PT";
+		double installedPTCapacity_kW = zero_Interface.energyModel.avgc_data.p_avgPTPanelSize_m2*zero_Interface.energyModel.avgc_data.p_avgPTPower_kWpm2;//roundToDecimal(uniform(3,6),2);
+		
+		//Compensate for pt if it is present
+		if(house.v_liveAssetsMetaData.hasPV){
+			J_EAProduction pvAsset = findFirst(house.c_productionAssets, ea -> ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
+			if(pvAsset != null){
+				double newInstalledPVCapacity = max(0, pvAsset.getCapacityElectric_kW() - zero_Interface.energyModel.avgc_data.p_avgPTPanelSize_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2);
+				pvAsset.setCapacityElectric_kW(newInstalledPVCapacity);
+			}
+		}
+		J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOTHERMAL, assetName, OL_EnergyCarriers.HEAT, installedPTCapacity_kW, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
+		
+		//Get parameters for the heatbuffer
+		double lossFactor_WpK = 0;// For now no loss factor
+		double minTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgMinHeatBufferTemperature_degC;
+		double maxTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgMaxHeatBufferTemperature_degC;
+		double initialTemperature_degC = (minTemperature_degC + maxTemperature_degC)/2; 
+		double setTemperature_degC = initialTemperature_degC; 
+		double heatBufferStorageCapacity_m3 = zero_Interface.energyModel.avgc_data.p_avgHeatBufferWaterVolumePerPTSurface_m3pm2 * installedPTCapacity_kW/zero_Interface.energyModel.avgc_data.p_avgPTPower_kWpm2;
+		double heatCapacity_JpK = zero_Interface.energyModel.avgc_data.p_waterHeatCapacity_JpkgK*(heatBufferStorageCapacity_m3*zero_Interface.energyModel.avgc_data.p_waterDensity_kgpm3);
+		
+		//Add heatbuffer
+		J_EAStorageHeat heatbufferAsset = new J_EAStorageHeat ( house, OL_EnergyAssetType.STORAGE_HEAT, installedPTCapacity_kW, lossFactor_WpK, zero_Interface.energyModel.p_timeStep_h, initialTemperature_degC, minTemperature_degC, maxTemperature_degC, setTemperature_degC, heatCapacity_JpK, OL_AmbientTempType.FIXED); 
+
+		houses.remove(house);
+		zero_Interface.c_orderedPTSystemsHouses.remove(house);
+		zero_Interface.c_orderedPTSystemsHouses.add(0, house);
+		nbHousesWithPT ++;	
+	}
+}
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){

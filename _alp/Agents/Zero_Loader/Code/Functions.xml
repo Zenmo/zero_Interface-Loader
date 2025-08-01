@@ -1781,11 +1781,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1753349205426</Id>
-		<Name><![CDATA[f_setEngineProfilesAfterDeserialisation]]></Name>
+		<Name><![CDATA[f_setEngineInputDataAfterDeserialisation]]></Name>
 		<Description><![CDATA[Functie van gillis voor inladen weer data!]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2090</X>
-		<Y>430</Y>
+		<X>2123</X>
+		<Y>260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1794,7 +1793,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[energyModel]]></Name>
+			<Name><![CDATA[deserializedEnergyModel]]></Name>
 			<Type><![CDATA[EnergyModel]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
@@ -1942,6 +1941,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Name><![CDATA[deserializedEnergyModel]]></Name>
 			<Type><![CDATA[EnergyModel]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[c_GISObjects]]></Name>
+			<Type><![CDATA[ArrayList<GIS_Object>]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -1961,6 +1964,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[deserializedEnergyModel]]></Name>
 			<Type><![CDATA[EnergyModel]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[c_gridNodes]]></Name>
+			<Type><![CDATA[ArrayList<GridNode>]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

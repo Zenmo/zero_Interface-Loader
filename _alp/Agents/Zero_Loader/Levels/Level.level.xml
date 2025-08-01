@@ -1158,7 +1158,7 @@
 		<Id>1753449467882</Id>
 		<Name><![CDATA[deserialize2]]></Name>
 		<X>2103.333</X>
-		<Y>202</Y>
+		<Y>172</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1181,35 +1181,41 @@ try {
 	f_addMixins();
 	
 	// Deserialize the JSON into a new EnergyModel instance:
-	EnergyModel deserializedEnergyModel = v_objectMapper.readValue(new File("energyModel.json"), EnergyModel.class);
+	J_ModelSave saveObject = v_objectMapper.readValue(new File("ModelSave.json"), J_ModelSave.class);
+	EnergyModel deserializedEnergyModel = saveObject.energyModel;
+	//deserializedEnergyModel.createAndStart(this);
 	
 	// Reconstruct all Agents
 	f_reconstructEnergyModel(deserializedEnergyModel);	
+	
+	
 	f_reconstructGridConnections(deserializedEnergyModel);
 	f_reconstructActors(deserializedEnergyModel);
-	f_reconstructGridNodes(deserializedEnergyModel);
-	f_reconstructGIS_Objects(deserializedEnergyModel);
+	f_reconstructGridNodes(deserializedEnergyModel, saveObject.c_gridNodes);
+	
+	f_reconstructGIS_Objects(deserializedEnergyModel, saveObject.c_GISObjects);
 	
 	// Get profilePointer tableFunctions from 'original' energyModel
 	deserializedEnergyModel.c_profiles.forEach(x-&gt;{
 		J_ProfilePointer origProfile = energyModel.f_findProfile(x.name);
 		x.setTableFunction(origProfile.getTableFunction());
 	});
-	//loader_L4L.f_setEngineProfilesL4LafterDeserialisation(deserializedEnergyModel);
-	deserializedEnergyModel.b_isInitialized = false;
-	deserializedEnergyModel.f_initializeEngine();	
 	
-	energyModel = deserializedEnergyModel;
+	energyModel = deserializedEnergyModel;	
 	zero_Interface.energyModel = deserializedEnergyModel;
 	zero_Interface.uI_Results.energyModel = deserializedEnergyModel;
+	
+	// Reinitialize energy model
+	deserializedEnergyModel.b_isInitialized = false;
+	deserializedEnergyModel.f_initializeEngine();	
+		
+	
 	zero_Interface.f_clearSelectionAndSelectEnergyModel();
-	
-	zero_Interface.f_updateOrderedListsAfterDeserialising(deserializedEnergyModel);	
-	
-	//Get all the gridconnections of the main interface and set sliders to correct values
-	List&lt;GridConnection&gt; allModelGridConnections = new ArrayList&lt;GridConnection&gt;(energyModel.f_getActiveGridConnections());
-	allModelGridConnections.addAll(energyModel.f_getPausedGridConnections());
-	zero_Interface.uI_Tabs.f_initializeUI_Tabs(allModelGridConnections);
+	zero_Interface.f_updateMainInterfaceSliders();
+	if (zero_Interface.p_selectedProjectType==OL_ProjectType.RESIDENTIAL) {
+		zero_Interface.f_initialisationOfResidentialSliders();
+	}
+	//zero_Interface.f_updateOrderedListsAfterDeserialising(deserializedEnergyModel);
 	
 } catch (IOException e) {
 	e.printStackTrace();
@@ -1240,27 +1246,34 @@ try {
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
-			<ActionCode>energyModel.pop_gridNodes.forEach(x-&gt;energyModel.c_gridNodes.add(x));
-energyModel.pop_GIS_Buildings.forEach(x-&gt;{energyModel.c_GISObjects.add(x); c_GISregions.put(x.p_id, x.gisRegion);x.f_writeStyleStrings();});
-energyModel.pop_GIS_Objects.forEach(x-&gt;{energyModel.c_GISObjects.add(x); c_GISregions.put(x.p_id, x.gisRegion);x.f_writeStyleStrings();});
-energyModel.pop_GIS_Parcels.forEach(x-&gt;{energyModel.c_GISObjects.add(x); c_GISregions.put(x.p_id, x.gisRegion);x.f_writeStyleStrings();});
+			<ActionCode>J_ModelSave saveObject = new J_ModelSave();
+saveObject.energyModel = energyModel;
+
+energyModel.pop_gridNodes.forEach(x-&gt;saveObject.c_gridNodes.add(x));
+energyModel.pop_GIS_Buildings.forEach(x-&gt;{saveObject.c_GISObjects.add(x); c_GISregions.put(x.p_id, x.gisRegion);x.f_writeStyleStrings();});
+energyModel.pop_GIS_Objects.forEach(x-&gt;{saveObject.c_GISObjects.add(x); c_GISregions.put(x.p_id, x.gisRegion);x.f_writeStyleStrings();});
+energyModel.pop_GIS_Parcels.forEach(x-&gt;{saveObject.c_GISObjects.add(x); c_GISregions.put(x.p_id, x.gisRegion);x.f_writeStyleStrings();});
+
+saveObject.c_orderedPVSystemsCompanies = zero_Interface.c_orderedPVSystemsCompanies;
+saveObject.c_orderedPVSystemsHouses = zero_Interface.c_orderedPVSystemsHouses;
+saveObject.c_orderedVehicles = zero_Interface.c_orderedVehicles;
+saveObject.c_orderedHeatingSystemsCompanies = zero_Interface.c_orderedHeatingSystemsCompanies;
+saveObject.c_orderedHeatingSystemsHouses = zero_Interface.c_orderedHeatingSystemsHouses;
+saveObject.c_orderedActiveVehiclesPublicParking = zero_Interface.c_orderedActiveVehiclesPublicParking;
+saveObject.c_orderedNonActiveVehiclesPublicParking = zero_Interface.c_orderedNonActiveVehiclesPublicParking;
+saveObject.c_orderedVehiclesPrivateParking = zero_Interface.c_orderedVehiclesPrivateParking;
+saveObject.c_orderedParkingSpaces = zero_Interface.c_orderedParkingSpaces;
+saveObject.c_orderedV1GChargers = zero_Interface.c_orderedV1GChargers;
+saveObject.c_orderedV2GChargers = zero_Interface.c_orderedV2GChargers;
+saveObject.c_orderedPublicChargers = zero_Interface.c_orderedPublicChargers;
 
 v_objectMapper = new ObjectMapper();
 f_addMixins();
-
 v_objectMapper.setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-v_objectMapper.addMixIn(AgentArrayList.class, IgnoreClassMixin.class);
-//objectMapper.addMixIn(AgentArrayList.class, IgnoreClassMixin.class);
-v_objectMapper.addMixIn(TextFile.class, IgnoreClassMixin.class);
-v_objectMapper.addMixIn(EnergyDataViewer.class, IgnoreClassMixin.class);
-
 
 try {
-	
-	//objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-	
-	//objectMapper.writeValue(new File("objects.json"), myAgents.get(0));
-	v_objectMapper.writeValue(new File("energyModel.json"), energyModel);
+	//v_objectMapper.writeValue(new File("energyModel.json"), energyModel);
+	v_objectMapper.writeValue(new File("ModelSave.json"), saveObject);
 } catch (IOException e) {
 	e.printStackTrace();
 }

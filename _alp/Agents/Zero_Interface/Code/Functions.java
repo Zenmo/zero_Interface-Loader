@@ -619,6 +619,7 @@ double f_initalAssetOrdering()
 {/*ALCODESTART::1714135623471*/
 f_initialElectricVehiclesOrder();
 f_initialPVSystemsOrder();
+f_initialPTSystemsOrder_households();
 f_initialHeatingSystemsOrder();
 f_initialParkingSpacesOrder();
 f_initialHouseholdOrder();
@@ -3335,5 +3336,17 @@ new Thread( () -> {
 	
 	b_resultsUpToDate = true;
 }).start();
+/*ALCODEEND*/}
+
+double f_initialPTSystemsOrder_households()
+{/*ALCODESTART::1753951802256*/
+List<GCHouse> houses = new ArrayList<GCHouse>(energyModel.Houses.findAll( x -> true));
+List<GCHouse> housesWithoutPT = houses.stream().filter( gc -> !gc.v_liveAssetsMetaData.hasPT ).collect(Collectors.toList());
+List<GCHouse> housesWithPT = new ArrayList<>(houses);
+housesWithPT.removeAll(housesWithoutPT);
+
+c_orderedPTSystemsHouses = new ArrayList<>(housesWithoutPT);
+c_orderedPTSystemsHouses.addAll(housesWithPT);
+
 /*ALCODEEND*/}
 

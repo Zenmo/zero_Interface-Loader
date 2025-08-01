@@ -3376,6 +3376,9 @@ else {
  
 double yearlyHWD_kWh = aantalBewoners * 600;  //12 * surface_m2 * 3 ; Tamelijk willekeurige formule om HWD te schalen tussen 600 - 2400 kWh bij 50m2 tot 200m2, voor een quickfix
 
+//TEST
+yearlyHWD_kWh += 0;
+
 J_EAConsumption hotwaterDemand = new J_EAConsumption( houseGC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, null);
 
 //traceln("yearlyHWD_kWh "+ yearlyHWD_kWh);
@@ -3578,13 +3581,20 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	
 	//GCH.p_initialPVpanels = houseBuildingData.pv_default();
 	GCH.v_liveAssetsMetaData.initialPV_kW = houseBuildingData.pv_installed_kwp() != null ? houseBuildingData.pv_installed_kwp() : 0;
-	GCH.v_liveAssetsMetaData.PVPotential_kW = houseBuildingData.pv_potential_kwp() != null ? houseBuildingData.pv_potential_kwp() : 0;
-
+	GCH.v_liveAssetsMetaData.PVPotential_kW = houseBuildingData.pv_potential_kwp();
 	f_setHouseHeatingPreferences(GCH);
 	f_addEnergyAssetsToHouses(GCH, jaarlijksElectriciteitsVerbruik, jaarlijksGasVerbruik );	
 	
 	i ++;
-}	
+}
+
+//Backup for when pv_potential kWp is null, needs to be after all houses have been made, so rooftop surface is distributed correctly
+for(GCHouse GCH : energyModel.Houses){
+	if(GCH.v_liveAssetsMetaData.PVPotential_kW == null){
+		GCH.v_liveAssetsMetaData.PVPotential_kW = GCH.p_roofSurfaceArea_m2*avgc_data.p_avgRatioRoofPotentialPV*avgc_data.p_avgPVPower_kWpm2;
+	}
+}
+	
 
 /*ALCODEEND*/}
 
@@ -3617,19 +3627,6 @@ if (gn.p_hasProfileData){ //dont count production if there is measured data on N
 if (installedRooftopSolar_kW > 0) {
 	f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW );
 }
-
-//add TEST PT panel
-/*
-double PTCapacity_kW = house.p_roofSurfaceArea_m2*avgc_data.p_avgPTPower_kWpm2;
-f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOTHERMAL, "PT Paneel", PTCapacity_kW);
-//Needed storage capacity buffer in kWh
-double heatBufferStorageCapacity_m3 = avgc_data.p_avgHeatBufferWaterVolumePerPTSurface_m3pm2 * PTCapacity_kW/avgc_data.p_avgPTPower_kWpm2;
-double deltaTempHeatBufferMinMax_k = avgc_data.p_avgMaxHeatBufferTemperature_degC - avgc_data.p_avgMinHeatBufferTemperature_degC; 
-double heatBufferStorageCapacity_J = avgc_data.p_waterHeatCapacity_JpkgK/ deltaTempHeatBufferMinMax_k / (heatBufferStorageCapacity_m3*avgc_data.p_waterDensity_kgpm3);
-double heatBufferStorageCapacity_kWh = heatBufferStorageCapacity_J*3.6e6;
-f_addStorage(house, 100, heatBufferStorageCapacity_kWh, OL_EnergyAssetType.STORAGE_HEAT);
-*/
-
 
 //Oprit?
 if( house.p_eigenOprit){
@@ -3938,52 +3935,12 @@ if (energyModel.f_findProfile(profileID)!=null) {
 return profilePointer;
 /*ALCODEEND*/}
 
-double f_setEngineProfilesAfterDeserialisation(EnergyModel energyModel)
+double f_setEngineInputDataAfterDeserialisation(EnergyModel deserializedEnergyModel)
 {/*ALCODESTART::1753349205426*/
-energyModel.p_truckTripsCsv = inputCSVtruckTrips;
-energyModel.p_householdTripsCsv = inputCSVhouseholdTrips;
-energyModel.p_cookingPatternCsv = inputCSVcookingActivities;
-
-//Profile Arguments
-double[] a_arguments_hr = ListUtil.doubleListToArray(defaultProfiles_data.arguments_hr());
-
-//Weather data
-double[] a_ambientTemperatureProfile_degC = ListUtil.doubleListToArray(defaultProfiles_data.ambientTemperatureProfile_degC());
-double[] a_PVProductionProfile35DegSouth_fr = ListUtil.doubleListToArray(defaultProfiles_data.PVProductionProfile35DegSouth_fr());
-double[] a_PVProductionProfile15DegEastWest_fr = ListUtil.doubleListToArray(defaultProfiles_data.PVProductionProfile15DegEastWest_fr());
-double[] a_windProductionProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.windProductionProfile_fr());
-
-//EPEX data
-double[] a_epexProfile_eurpMWh = ListUtil.doubleListToArray(defaultProfiles_data.epexProfile_eurpMWh()); 
-
-//Various demand data
-double[] a_defaultHouseElectricityDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultHouseElectricityDemandProfile_fr());
-double[] a_defaultHouseHotWaterDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultHouseHotWaterDemandProfile_fr());
-double[] a_defaultHouseCookingDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultHouseCookingDemandProfile_fr());
-double[] a_defaultOfficeElectricityDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultOfficeElectricityDemandProfile_fr());
-double[] a_defaultBuildingHeatDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultBuildingHeatDemandProfile_fr());
-
-//Create Weather engine profiles
-energyModel.pp_ambientTemperature_degC = f_createEngineProfile1("ambient_temperature_degC", a_arguments_hr, a_ambientTemperatureProfile_degC, energyModel);
-energyModel.pp_PVProduction35DegSouth_fr = f_createEngineProfile1("pv_production_south_fr", a_arguments_hr, a_PVProductionProfile35DegSouth_fr, energyModel);
-energyModel.pp_PVProduction15DegEastWest_fr = f_createEngineProfile1("pv_production_eastwest_fr", a_arguments_hr, a_PVProductionProfile15DegEastWest_fr, energyModel);
-energyModel.pp_windProduction_fr = f_createEngineProfile1("wind_production_fr", a_arguments_hr, a_windProductionProfile_fr, energyModel);
-
-//Create Epex engine profile
-energyModel.pp_dayAheadElectricityPricing_eurpMWh = f_createEngineProfile1("epex_price_eurpMWh", a_arguments_hr, a_epexProfile_eurpMWh, energyModel);
-
-//Create Consumption engine profiles:
-f_createEngineProfile1("default_house_electricity_demand_fr", a_arguments_hr, a_defaultHouseElectricityDemandProfile_fr, energyModel);
-f_createEngineProfile1("default_house_hot_water_demand_fr", a_arguments_hr, a_defaultHouseHotWaterDemandProfile_fr, energyModel);
-f_createEngineProfile1("default_house_cooking_demand_fr", a_arguments_hr, a_defaultHouseCookingDemandProfile_fr, energyModel);
-f_createEngineProfile1("default_office_electricity_demand_fr", a_arguments_hr, a_defaultOfficeElectricityDemandProfile_fr, energyModel);
-f_createEngineProfile1("default_building_heat_demand_fr", a_arguments_hr, a_defaultBuildingHeatDemandProfile_fr, energyModel);
-
-
-//Create custom engine profiles
-for(CustomProfile_data customProfile : c_customProfiles_data){
-	f_createEngineProfile1(customProfile.customProfileID(), customProfile.getArgumentsArray(), customProfile.getValuesArray(), energyModel);
-}
+deserializedEnergyModel.p_truckTripsCsv = inputCSVtruckTrips;
+deserializedEnergyModel.p_householdTripsCsv = inputCSVhouseholdTrips;
+deserializedEnergyModel.p_cookingPatternCsv = inputCSVcookingActivities;
+deserializedEnergyModel.avgc_data = energyModel.avgc_data;
 /*ALCODEEND*/}
 
 double f_reconstructGridConnections(EnergyModel deserializedEnergyModel)
@@ -4019,49 +3976,56 @@ for(GridConnection GC : allConnections){
 double f_reconstructEnergyModel(EnergyModel energyModel)
 {/*ALCODESTART::1753449467890*/
 // Code Instead of Agent.goToPopulation() (which resets all parameters to default!)	
-
+/*
 try{ // Reflection trick to get to Agent.owner private field
 	energyModel.forceSetOwner(energyModel, pop_energyModels);
 } catch (Exception e) {
 	e.printStackTrace();
 }
+*/
+
+Agent root = this.getRootAgent();
+energyModel.restoreOwner(root);
 
 energyModel.setEngine(getEngine());	
 energyModel.instantiateBaseStructure_xjal();
 energyModel.setEnvironment(this.getEnvironment());
+
 traceln("EnergyModel owner: %s", energyModel.getOwner());
 
-pop_energyModels._add(energyModel ); // Add to the population
-int popSize = pop_energyModels.size(); 
-pop_energyModels.callCreate(energyModel , popSize); // Update population object
-energyModel.start();
+energyModel.create();
+energyModel.f_startAfterDeserialisation();
+//energyModel.start(); // Why is this needed?
 /*ALCODEEND*/}
 
 double f_reconstructAgent(Agent agent,AgentArrayList pop,EnergyModel energyModel)
 {/*ALCODESTART::1753449467892*/
-// Code Instead of Agent.goToPopulation() (which resets many variables to default!)	
+/* // Code Instead of Agent.goToPopulation() (which resets many variables to default!)	
 try{ // Reflection trick to get to Agent.owner private field
 	if (agent instanceof GridNode) {
-	
 		((GridNode)agent).forceSetOwner(agent,pop);
 	} else if (agent instanceof GridConnection) {
 		((GridConnection)agent).forceSetOwner(agent,pop);
 	} else if (agent instanceof Actor) {
 		((Actor)agent).forceSetOwner(agent,pop);
+	} else if (agent instanceof GIS_Object) {
+		((GIS_Object)agent).forceSetOwner(agent,pop);
 	}
 } catch (Exception e) {
 	e.printStackTrace();
-}
-	
+}*/ 
+
+agent.restoreOwner(energyModel); // simply sets agent.d = root, should replace reflection hack
+agent.restoreCollection_xjal(pop); // simple sets agent.j = pop, should replace reflection hack
 
 agent.setEngine(getEngine());	
 agent.instantiateBaseStructure_xjal();
 agent.setEnvironment(pop.getEnvironment());
 
-pop._add(agent); // Add to the population
-int popSize = pop.size(); 
-pop.callCreate(agent, popSize); // Update population object
-
+pop._add(agent); // Add to the population	
+//int popSize = pop.size(); 
+//pop.callCreate(agent, popSize); // Update population object
+agent.create();
 /*ALCODEEND*/}
 
 double f_reconstructGridConnections1(EnergyModel energyModel)
@@ -4088,9 +4052,13 @@ pop.callCreate(GC, popSize); // Update population object
 double f_addMixins()
 {/*ALCODESTART::1753451091785*/
 v_objectMapper.addMixIn(Agent.class, AgentMixin.class);
+v_objectMapper.addMixIn(AgentArrayList.class, IgnoreClassMixin.class);
 v_objectMapper.addMixIn(EnergyModel.class, EnergyModelMixin.class);
 v_objectMapper.addMixIn(Actor.class, ActorMixin.class);
 v_objectMapper.addMixIn(DataSet.class, DataSetMixin.class);
+v_objectMapper.addMixIn(TextFile.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(EnergyDataViewer.class, IgnoreClassMixin.class);
+
 v_objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, IgnoreClassMixin.class);
 //objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, TableFunctionMixin.class);
 v_objectMapper.addMixIn(com.anylogic.engine.markup.GISRegion.class, IgnoreClassMixin.class);
@@ -4133,9 +4101,9 @@ for(Actor AC : deserializedEnergyModel.c_actors){
 
 /*ALCODEEND*/}
 
-double f_reconstructGIS_Objects(EnergyModel deserializedEnergyModel)
+double f_reconstructGIS_Objects(EnergyModel deserializedEnergyModel,ArrayList<GIS_Object> c_GISObjects)
 {/*ALCODESTART::1753712697685*/
-for(GIS_Object GO : deserializedEnergyModel.c_GISObjects){
+for(GIS_Object GO : c_GISObjects){
 	GO.gisRegion = c_GISregions.get(GO.p_id);
 	
 	if (GO instanceof GIS_Building) {
@@ -4153,9 +4121,9 @@ for(GIS_Object GO : deserializedEnergyModel.c_GISObjects){
 }
 /*ALCODEEND*/}
 
-double f_reconstructGridNodes(EnergyModel deserializedEnergyModel)
+double f_reconstructGridNodes(EnergyModel deserializedEnergyModel,ArrayList<GridNode> c_gridNodes)
 {/*ALCODESTART::1753712761420*/
-for(GridNode GN : deserializedEnergyModel.c_gridNodes){
+for(GridNode GN : c_gridNodes){
 	GN.energyModel = deserializedEnergyModel;
 	f_reconstructAgent(GN, deserializedEnergyModel.pop_gridNodes, deserializedEnergyModel);
 }
