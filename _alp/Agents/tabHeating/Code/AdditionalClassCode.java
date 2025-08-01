@@ -3,10 +3,6 @@ public ShapeGroup getGroupHeatDemandSliders() {
 	return this.gr_heatDemandSliders;
 }
 
-public ShapeGroup getGroupHeatDeandSliders_ResidentialArea() {
-	return this.gr_heatDeandSlidersResidentialArea;
-}
-
 public ShapeSlider getSliderHeatDemandReductionCompanies_pct() { 
 	return this.sl_heatDemandReductionCompanies_pct;
 }

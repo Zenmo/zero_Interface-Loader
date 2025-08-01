@@ -3376,6 +3376,9 @@ else {
  
 double yearlyHWD_kWh = aantalBewoners * 600;  //12 * surface_m2 * 3 ; Tamelijk willekeurige formule om HWD te schalen tussen 600 - 2400 kWh bij 50m2 tot 200m2, voor een quickfix
 
+//TEST
+yearlyHWD_kWh += 0;
+
 J_EAConsumption hotwaterDemand = new J_EAConsumption( houseGC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, null);
 
 //traceln("yearlyHWD_kWh "+ yearlyHWD_kWh);
@@ -3578,13 +3581,20 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	
 	//GCH.p_initialPVpanels = houseBuildingData.pv_default();
 	GCH.v_liveAssetsMetaData.initialPV_kW = houseBuildingData.pv_installed_kwp() != null ? houseBuildingData.pv_installed_kwp() : 0;
-	GCH.v_liveAssetsMetaData.PVPotential_kW = houseBuildingData.pv_potential_kwp() != null ? houseBuildingData.pv_potential_kwp() : 0;
-
+	GCH.v_liveAssetsMetaData.PVPotential_kW = houseBuildingData.pv_potential_kwp();
 	f_setHouseHeatingPreferences(GCH);
 	f_addEnergyAssetsToHouses(GCH, jaarlijksElectriciteitsVerbruik, jaarlijksGasVerbruik );	
 	
 	i ++;
-}	
+}
+
+//Backup for when pv_potential kWp is null, needs to be after all houses have been made, so rooftop surface is distributed correctly
+for(GCHouse GCH : energyModel.Houses){
+	if(GCH.v_liveAssetsMetaData.PVPotential_kW == null){
+		GCH.v_liveAssetsMetaData.PVPotential_kW = GCH.p_roofSurfaceArea_m2*avgc_data.p_avgRatioRoofPotentialPV*avgc_data.p_avgPVPower_kWpm2;
+	}
+}
+	
 
 /*ALCODEEND*/}
 
@@ -3617,19 +3627,6 @@ if (gn.p_hasProfileData){ //dont count production if there is measured data on N
 if (installedRooftopSolar_kW > 0) {
 	f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW );
 }
-
-//add TEST PT panel
-/*
-double PTCapacity_kW = house.p_roofSurfaceArea_m2*avgc_data.p_avgPTPower_kWpm2;
-f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOTHERMAL, "PT Paneel", PTCapacity_kW);
-//Needed storage capacity buffer in kWh
-double heatBufferStorageCapacity_m3 = avgc_data.p_avgHeatBufferWaterVolumePerPTSurface_m3pm2 * PTCapacity_kW/avgc_data.p_avgPTPower_kWpm2;
-double deltaTempHeatBufferMinMax_k = avgc_data.p_avgMaxHeatBufferTemperature_degC - avgc_data.p_avgMinHeatBufferTemperature_degC; 
-double heatBufferStorageCapacity_J = avgc_data.p_waterHeatCapacity_JpkgK/ deltaTempHeatBufferMinMax_k / (heatBufferStorageCapacity_m3*avgc_data.p_waterDensity_kgpm3);
-double heatBufferStorageCapacity_kWh = heatBufferStorageCapacity_J*3.6e6;
-f_addStorage(house, 100, heatBufferStorageCapacity_kWh, OL_EnergyAssetType.STORAGE_HEAT);
-*/
-
 
 //Oprit?
 if( house.p_eigenOprit){
