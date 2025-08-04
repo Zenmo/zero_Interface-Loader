@@ -176,6 +176,7 @@ f_showCorrectTab();</OnClickCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>pop_tabMobility.size() &gt; 0</VisibleCode>
 				<OnClickCode>v_selectedTabType = EnergyDemandTab.MOBILITY;
 f_showCorrectTab();</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
@@ -249,6 +250,7 @@ f_showCorrectTab();</OnClickCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>pop_tabEHub.size() &gt; 0</VisibleCode>
 				<OnClickCode>v_selectedTabType = EnergyDemandTab.HUB;
 f_showCorrectTab();</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
@@ -562,6 +564,7 @@ f_showCorrectTab();</OnClickCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>gr_mobilityButton.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -587,6 +590,7 @@ f_showCorrectTab();</OnClickCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>gr_eHubButton.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
