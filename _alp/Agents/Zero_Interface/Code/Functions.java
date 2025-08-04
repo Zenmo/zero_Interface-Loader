@@ -571,7 +571,7 @@ if(!b_runningMainInterfaceScenarios){
 double f_initialPVSystemsOrder()
 {/*ALCODESTART::1714130288661*/
 List<GCHouse> houses = new ArrayList<GCHouse>(energyModel.Houses.findAll( x -> true));
-List<GCHouse> housesWithoutPV = houses.stream().filter( gc -> !gc.v_liveAssetsMetaData.hasPV ).collect(Collectors.toList());
+List<GCHouse> housesWithoutPV = houses.stream().filter( gc -> !gc.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) ).collect(Collectors.toList());
 List<GCHouse> housesWithPV = new ArrayList<>(houses);
 housesWithPV.removeAll(housesWithoutPV);
 
@@ -580,8 +580,8 @@ c_orderedPVSystemsHouses.addAll(housesWithPV);
 
 
 List<GCUtility> companies = new ArrayList<GCUtility>(energyModel.UtilityConnections.findAll( x -> true));
-List<GCUtility> companiesWithoutPV = companies.stream().filter( gc -> !gc.v_liveAssetsMetaData.hasPV ).collect(Collectors.toList());
-List<GCUtility> companiesWithPV = companies.stream().filter( gc -> gc.v_liveAssetsMetaData.hasPV ).collect(Collectors.toList());
+List<GCUtility> companiesWithoutPV = companies.stream().filter( gc -> !gc.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) ).collect(Collectors.toList());
+List<GCUtility> companiesWithPV = companies.stream().filter( gc -> gc.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) ).collect(Collectors.toList());
 List<GCUtility> detailedCompaniesWithPV = companiesWithPV.stream().filter( gc -> gc.p_owner != null && gc.p_owner.p_detailedCompany ).collect(Collectors.toList());
 List<GCUtility> genericCompaniesWithPV = new ArrayList<>(companiesWithPV);
 genericCompaniesWithPV.removeAll(detailedCompaniesWithPV);
@@ -668,7 +668,7 @@ if(gis_area.c_containedGridConnections.size() > 0){
 double f_setColorsBasedOnProduction(GIS_Object gis_area)
 {/*ALCODESTART::1715118739710*/
 if (gis_area.c_containedGridConnections.size() > 0) {
-	if (gis_area.c_containedGridConnections.get(0).v_liveAssetsMetaData.hasPV) {
+	if (gis_area.c_containedGridConnections.get(0).v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)) {
 		if (gis_area.c_containedGridConnections.get(0).c_productionAssets.get(0).getCapacityElectric_kW() < 100){
 			gis_area.f_style(rect_mapOverlayLegend_PVProduction2.getFillColor(), null, null, null);
 		}
@@ -803,7 +803,7 @@ else if ( yearlyEnergyConsumption > 6000){ gis_area.f_style( rect_mapOverlayLege
 double f_setColorsBasedOnProductionHouseholds(GIS_Object gis_area)
 {/*ALCODESTART::1718265697364*/
 if (gis_area.c_containedGridConnections.size() > 0) {
-	if (gis_area.c_containedGridConnections.get(0).v_liveAssetsMetaData.hasPV) {
+	if (gis_area.c_containedGridConnections.get(0).v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)) {
 		if (gis_area.c_containedGridConnections.get(0).c_productionAssets.get(0).getCapacityElectric_kW() < 5){
 			gis_area.f_style( rect_mapOverlayLegend_PVProduction2.getFillColor(), null, null, null );
 		}
@@ -1617,7 +1617,7 @@ c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> !GC.p_
 
 double f_filterHasPV(ArrayList<GridConnection> toBeFilteredGC)
 {/*ALCODESTART::1734448690487*/
-c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC.v_liveAssetsMetaData.hasPV));
+c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)));
 
 /*ALCODEEND*/}
 
@@ -2891,12 +2891,12 @@ Collections.shuffle(c_orderedVehiclesPrivateParking);
 double f_initialisationOfResidentialSliders()
 {/*ALCODESTART::1750340574107*/
 int nbHouses = energyModel.Houses.size();
-int nbHousesWithPV = count(energyModel.Houses, x -> x.v_liveAssetsMetaData.hasPV);
+int nbHousesWithPV = count(energyModel.Houses, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW));
 double pv_pct = 100.0 * nbHousesWithPV / nbHouses;
 uI_Tabs.pop_tabElectricity.get(0).sl_householdPVResidentialArea_pct.setValue(pv_pct, false);
 
 if ( nbHousesWithPV != 0 ) {
-	int nbHousesWithHomeBattery = count(energyModel.Houses, x -> x.v_liveAssetsMetaData.hasPV && x.p_batteryAsset != null);
+	int nbHousesWithHomeBattery = count(energyModel.Houses, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) && x.p_batteryAsset != null);
 	double battery_pct = 100.0 * nbHousesWithHomeBattery / nbHousesWithPV;
 	uI_Tabs.pop_tabElectricity.get(0).sl_householdBatteriesResidentialArea_pct.setValue(battery_pct, false);
 }
