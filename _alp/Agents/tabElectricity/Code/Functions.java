@@ -49,6 +49,11 @@ while ( nbHousesWithPVGoal < nbHousesWithPV ) { // remove excess PV systems
 		zero_Interface.c_orderedPVSystemsHouses.remove(house);
 		zero_Interface.c_orderedPVSystemsHouses.add(0, house);
 		nbHousesWithPV --; 
+		
+		if(house.p_batteryAsset != null ){
+			house.p_batteryAsset.removeEnergyAsset();
+			house.p_batteryAlgorithm = null;
+		}
 	}
 	else {
 		traceln(" cant find PV asset in house that should have PV asset in f_setPVHouses (Interface)");
@@ -77,6 +82,11 @@ while ( nbHousesWithPVGoal > nbHousesWithPV ) {
 		zero_Interface.c_orderedPVSystemsHouses.remove(house);
 		zero_Interface.c_orderedPVSystemsHouses.add(0, house);
 		nbHousesWithPV ++;	
+		
+		//Update residential battery slider, only when adding pv
+		double nbHouseBatteries = count(zero_Interface.energyModel.Houses, h -> h.p_batteryAsset != null); //f_getEnergyAssets(), p -> p.energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC && p.getParentAgent() instanceof GCHouse);
+		int householdBatterySliderValue_pct =  roundToInt((nbHouseBatteries/nbHousesWithPV)*100);	
+		sl_householdBatteriesResidentialArea_pct.setValue(householdBatterySliderValue_pct, false);
 	}
 }
 
@@ -394,7 +404,7 @@ if( nbHousesWithPV > 0 ){
 	while ( nbHouseBatteries < nbHousesWithBatteryGoal) {
 		GCHouse house = findFirst(zero_Interface.energyModel.Houses, p -> p.p_batteryAsset == null && p.v_liveAssetsMetaData.hasPV == true);
 		
-		double batteryStorageCapacity_kWh = 15;
+		double batteryStorageCapacity_kWh = zero_Interface.energyModel.avgc_data.p_avgRatioHouseBatteryStorageCapacity_v_PVPower*house.v_liveAssetsMetaData.totalInstalledPVPower_kW;
 		double batteryCapacity_kW = batteryStorageCapacity_kWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power;
 		double batteryStateOfCharge = 0.5;
 

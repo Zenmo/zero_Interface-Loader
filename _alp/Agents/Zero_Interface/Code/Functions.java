@@ -163,6 +163,9 @@ switch(selectedMapOverlayType){
 	case CONGESTION:
 		f_setColorsBasedOnCongestion_objects(gis_area);
 		break;
+	case PARKING_TYPE:
+		f_setColorsBasedOnParkingType_objects(gis_area);
+		break;
 }
 /*ALCODEEND*/}
 
@@ -246,6 +249,9 @@ switch(selectedMapOverlayType){
 	case CONGESTION:
 		f_setColorsBasedOnCongestion_gridnodes(GN, false);
 		break;
+	case PARKING_TYPE:
+		f_setColorsBasedOnParkingType_gridnodes(GN);
+		break;
 }
 /*ALCODEEND*/}
 
@@ -281,19 +287,16 @@ uI_Tabs.add_pop_tabElectricity();
 
 uI_Tabs.add_pop_tabHeating();
 
-uI_Tabs.add_pop_tabMobility();
-
-uI_Tabs.add_pop_tabEHub();
-
 // Group visibilities
 // When using an extension of a generic tab don't forget to typecast it!
 if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
 	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_ResidentialArea().setVisible(true);
 	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersResidentialArea().setVisible(true);
-	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
-	((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
 }
 else {
+	uI_Tabs.add_pop_tabMobility();
+	uI_Tabs.add_pop_tabEHub();
+	
 	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders().setVisible(true);
 	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersCompanies().setVisible(true);
 	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
@@ -372,13 +375,21 @@ else {
 			if(b.c_containedGridConnections.get(0).p_owner.p_detailedCompany){
 				text = b.c_containedGridConnections.get(0).p_owner.p_actorID + ", ";
 			}
-			else if(((GIS_Building)b).p_annotation != null){
-				text = ((GIS_Building)b).p_annotation + ", ";
+			else if(b.p_annotation != null){
+				text = b.p_annotation + ", ";
 			}
 		}
 		else {
 			text = b.p_id + ", ";
 		}
+	}
+	else{
+		if(b.p_annotation != null){
+			text = b.p_annotation + ", ";
+		}
+		else{
+			text = b.p_id + ", ";
+		}		
 	}
 	
 	//Set adres text
@@ -3090,6 +3101,9 @@ else{//Take the default
 	c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.PV_PRODUCTION);
 	c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.GRID_NEIGHBOURS);
 	c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.CONGESTION);
+	if(p_selectedProjectType == OL_ProjectType.RESIDENTIAL){
+		c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.PARKING_TYPE);
+	}
 }
 
 
@@ -3097,7 +3111,7 @@ else{//Take the default
 Presentable presentable = gr_mapOverlayLegenda.getPresentable();
 boolean ispublic = true;
 double x = 756;
-double y = 837;
+double y = c_loadedMapOverlayTypes.size() < 6 ? 837 : 837 - 18;
 double width = 130;
 double height = 0;//Not needed, automatically adjust by adding options
 Color textColor = Color.BLACK;
@@ -3125,6 +3139,9 @@ for(OL_MapOverlayTypes mapOverlayType : c_loadedMapOverlayTypes){
 		case CONGESTION:
 			RadioButtonOptions_list.add("Netbelasting");
 			break;
+		case PARKING_TYPE:
+			RadioButtonOptions_list.add("Parkeer type");
+			break;
 	}
 } 
 
@@ -3139,6 +3156,11 @@ rb_mapOverlay = new ShapeRadioButtonGroup(presentable, ispublic, x ,y, width, he
 };
 
 presentation.add(rb_mapOverlay);
+
+//For now: Adjust location of radiobutton title if 6 buttons
+if(c_loadedMapOverlayTypes.size() > 5){
+	gr_colorings.setY(-17);
+}
 /*ALCODEEND*/}
 
 double f_setMapOverlay()
@@ -3171,6 +3193,9 @@ switch(selectedMapOverlayType){
 		break;
 	case CONGESTION:
 		f_setMapOverlay_Congestion();
+		break;
+	case PARKING_TYPE:
+		f_setMapOverlay_ParkingType();
 		break;
 }
 /*ALCODEEND*/}
@@ -3353,5 +3378,62 @@ housesWithPT.removeAll(housesWithoutPT);
 c_orderedPTSystemsHouses = new ArrayList<>(housesWithoutPT);
 c_orderedPTSystemsHouses.addAll(housesWithPT);
 
+/*ALCODEEND*/}
+
+double f_setMapOverlay_ParkingType()
+{/*ALCODESTART::1754312747144*/
+//Set legend
+b_updateLiveCongestionColors = true;
+
+//Colour gis objects
+for (GIS_Building building : energyModel.pop_GIS_Buildings){
+	f_setColorsBasedOnParkingType_objects(building);
+}
+for (GridNode GN : energyModel.pop_gridNodes){
+	f_setColorsBasedOnParkingType_gridnodes(GN);
+}
+/*ALCODEEND*/}
+
+double f_setColorsBasedOnParkingType_objects(GIS_Object gis_area)
+{/*ALCODESTART::1754312755135*/
+if (gis_area.c_containedGridConnections.size() > 0) {
+	
+	//Unkown by default
+	Color objectColor = v_parkingSpaceColor_unkown;
+	Color objectLineColor = v_parkingSpaceLineColor_unkown;
+	
+	//Check if houses and if public parking
+	boolean containsHouses = false;
+	boolean containsHousesWithPublicParking = false;
+	for(GridConnection gc : gis_area.c_containedGridConnections){
+		if(gc instanceof GCHouse){
+			containsHouses = true;
+			if(!((GCHouse)gc).p_eigenOprit){
+				containsHousesWithPublicParking = true;
+			}
+		}
+	}
+	
+	//Change color based on parking type if houses present
+	if(containsHouses){
+		if(containsHousesWithPublicParking){
+			objectColor = v_parkingSpaceColor_public;
+			objectLineColor = v_parkingSpaceLineColor_public;		
+		}
+		else{
+			objectColor = v_parkingSpaceColor_private;
+			objectLineColor = v_parkingSpaceLineColor_private;
+		}
+	}
+	gis_area.f_style(objectColor, objectLineColor, null, null);
+}
+/*ALCODEEND*/}
+
+double f_setColorsBasedOnParkingType_gridnodes(GridNode GN)
+{/*ALCODESTART::1754314128315*/
+if(GN.gisRegion != null){
+	GN.gisRegion.setFillColor(v_parkingSpaceColor_unkown);
+	GN.gisRegion.setLineColor(v_parkingSpaceLineColor_unkown);
+}
 /*ALCODEEND*/}
 

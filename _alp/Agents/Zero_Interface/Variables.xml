@@ -1670,7 +1670,7 @@
               StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[40]]></Code>
+				<Code><![CDATA[30]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2386,6 +2386,50 @@
 			<Type><![CDATA[Color]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[gray.brighter()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1754312936616</Id>
+		<Name><![CDATA[v_parkingSpaceLineColor_unkown]]></Name>
+		<X>690</X>
+		<Y>1850</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[Color]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[gray.darker()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1754312949585</Id>
+		<Name><![CDATA[v_parkingSpaceColor_unkown]]></Name>
+		<X>690</X>
+		<Y>1830</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[Color]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[gray]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>

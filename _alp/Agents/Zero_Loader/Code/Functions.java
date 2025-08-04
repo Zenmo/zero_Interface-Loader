@@ -3581,7 +3581,7 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	
 	//GCH.p_initialPVpanels = houseBuildingData.pv_default();
 	GCH.v_liveAssetsMetaData.initialPV_kW = houseBuildingData.pv_installed_kwp() != null ? houseBuildingData.pv_installed_kwp() : 0;
-	GCH.v_liveAssetsMetaData.PVPotential_kW = houseBuildingData.pv_potential_kwp();
+	GCH.v_liveAssetsMetaData.PVPotential_kW = GCH.v_liveAssetsMetaData.initialPV_kW > 0 ? GCH.v_liveAssetsMetaData.initialPV_kW : houseBuildingData.pv_potential_kwp(); // To prevent sliders from changing outcomes
 	f_setHouseHeatingPreferences(GCH);
 	f_addEnergyAssetsToHouses(GCH, jaarlijksElectriciteitsVerbruik, jaarlijksGasVerbruik );	
 	
@@ -3675,7 +3675,8 @@ for (ParkingSpace_data dataParkingSpace : f_getParkingSpacesInSubScope(c_parking
 
 	//Create parking gis object	
 	GIS_Object parkingSpace = f_createGISObject(dataParkingSpace.parking_id(), dataParkingSpace.latitude(), dataParkingSpace.longitude(), dataParkingSpace.polygon(), OL_GISObjectType.PARKING);
-	parkingSpace.p_annotation = "Parking space: " + dataParkingSpace.additional_info();
+	String parkingSpaceType = dataParkingSpace.type().toString().substring(0, 1).toUpperCase() + dataParkingSpace.type().toString().substring(1).toLowerCase();
+	parkingSpace.p_annotation = "Parkeerplek: " + parkingSpaceType + ", " + dataParkingSpace.additional_info();
 	
 	//Set correct color and legend collection based on parking type
 	switch(dataParkingSpace.type()){
