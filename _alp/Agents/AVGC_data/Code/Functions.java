@@ -55,6 +55,7 @@ dataAVGC.p_avgOutputTemperatureHydrogenBurner_degC = p_avgOutputTemperatureHydro
 dataAVGC.p_avgPVPower_kWpm2= p_avgPVPower_kWpm2;
 dataAVGC.p_avgRatioRoofPotentialPV = p_avgRatioRoofPotentialPV;
 dataAVGC.p_avgRatioBatteryCapacity_v_Power = p_avgRatioBatteryCapacity_v_Power;
+dataAVGC.p_avgRatioHouseBatteryStorageCapacity_v_PVPower = p_avgRatioHouseBatteryStorageCapacity_v_PVPower;
 dataAVGC.p_avgSolarFieldPower_kWppha = p_avgSolarFieldPower_kWppha;
 dataAVGC.p_avgEfficiencyCHP_thermal_fr = p_avgEfficiencyCHP_thermal_fr;
 dataAVGC.p_avgEfficiencyCHP_electric_fr = p_avgEfficiencyCHP_thermal_fr;

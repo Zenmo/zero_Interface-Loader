@@ -191,6 +191,10 @@
 					<Id>1753108825070</Id>
 					<Name><![CDATA[ENERGY_LABEL]]></Name>
 				</Option>
+				<Option>
+					<Id>1754312700674</Id>
+					<Name><![CDATA[PARKING_TYPE]]></Name>
+				</Option>
 			</OptionList>
 		</OptionLists>
 		<Folders/>
