@@ -1092,7 +1092,8 @@ for (var survey : surveys) {
 		v_numberOfSurveyCompanies++;
 		
         for (var gridConnection: address.getGridConnections()) {
-
+			traceln("surveyGC with sequence: " + gridConnection.getSequence());
+			 
 		 	//Check if it has (or will have) a direct connection with the grid (either gas or electric), if not: skip this gc.
 		 	boolean hasNaturalGasConnection = (gridConnection.getNaturalGas().getHasConnection() != null)? gridConnection.getNaturalGas().getHasConnection() : false;	 	
 		 	boolean hasExpansionRequest = (gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() != null ) ? gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() : false;
@@ -1288,7 +1289,6 @@ if (heatingType == null) {
 	heatingType = OL_GridConnectionHeatingType.CUSTOM;
 }
 
-traceln(engineGC.p_ownerID + " heatingType: " + heatingType);
 return heatingType;
 /*ALCODEEND*/}
 
@@ -1872,10 +1872,6 @@ if (extraConsumption_kWh > 1) {
 	traceln("Consumption profile was capped to 0kW");
 }
  
-if (v_remainingElectricityDelivery_kWh < 0){
-	traceln("v_remainingElectricityDelivery_kWh became negative at GC: %s", parentGC);
-}
-
 if(yearlyHeatPumpElectricityConsumption_kWh != null){
 	for(int i = 0; i < yearlyHeatPumpElectricityConsumption_kWh.length; i++){
 		yearlyHeatPumpElectricityConsumption_kWh[i] = max(0,yearlyHeatPumpElectricityConsumption_kWh[i]);
@@ -3730,12 +3726,31 @@ if (isGhost) {
 	engineGC.p_heatingManagement = new J_HeatingManagementGhost( engineGC, heatingType );
 	return;
 }
-if (heatingType == OL_GridConnectionHeatingType.CUSTOM) {
-	f_addCustomHeatManagement(engineGC);
-}
 else {
 	energyModel.f_addHeatManagementToGC(engineGC, heatingType, isGhost);
 }
+/*ALCODEEND*/}
+
+J_ProfilePointer f_createEngineProfile1(String profileID,double[] arguments,double[] values,EnergyModel energyModel)
+{/*ALCODESTART::1753349205424*/
+TableFunction tf_profile = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+J_ProfilePointer profilePointer;
+if (energyModel.f_findProfile(profileID)!=null) {
+	profilePointer=energyModel.f_findProfile(profileID);
+	profilePointer.setTableFunction(tf_profile);
+} else {
+	profilePointer = new J_ProfilePointer(profileID, tf_profile);	
+	energyModel.f_addProfile(profilePointer);
+}
+return profilePointer;
+/*ALCODEEND*/}
+
+double f_setEngineInputDataAfterDeserialisation(EnergyModel deserializedEnergyModel)
+{/*ALCODESTART::1753349205426*/
+deserializedEnergyModel.p_truckTripsCsv = inputCSVtruckTrips;
+deserializedEnergyModel.p_householdTripsCsv = inputCSVhouseholdTrips;
+deserializedEnergyModel.p_cookingPatternCsv = inputCSVcookingActivities;
+deserializedEnergyModel.avgc_data = energyModel.avgc_data;
 /*ALCODEEND*/}
 
 OL_GridConnectionHeatingType f_heatingSurveyCompany(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC)
@@ -3743,27 +3758,33 @@ OL_GridConnectionHeatingType f_heatingSurveyCompany(GridConnection engineGC,com.
 // Set heatingType
 OL_GridConnectionHeatingType heatingType = f_getHeatingTypeSurvey(engineGC, surveyGC);
 
-// Create building profiles, peakHeatConsumption_kW is null if there is no heat consumption
-Double peakHeatConsumption_kW = f_createSurveyHeatProfiles( engineGC, surveyGC, heatingType );
-
-// Create EA conversions
-if (peakHeatConsumption_kW != null) {
-	f_addHeatAsset(engineGC, heatingType, peakHeatConsumption_kW);
+if(heatingType == OL_GridConnectionHeatingType.CUSTOM){
+	f_addCustomHeatingSetup(engineGC, surveyGC);
 }
-
-if (surveyGC.getStorage() != null && surveyGC.getStorage().getHasThermalStorage() != null) {
-	//if (surveyGC.getStorage().getThermalStorageKw() != null) {
-		//double storagePower_kW = surveyGC.getStorage().getThermalStorageKw();
-	//}
-	// TODO: find a way to determine the storage capacity 
-	// f_addStorage(parentGC, storagePower_kw, storageCapacity_kWh, storageType);
+else{
+	// Create building profiles, peakHeatConsumption_kW is null if there is no heat consumption
+	Double peakHeatConsumption_kW = f_createSurveyHeatProfiles( engineGC, surveyGC, heatingType );
+	
+	// Create EA conversions
+	if (peakHeatConsumption_kW != null) {
+		f_addHeatAsset(engineGC, heatingType, peakHeatConsumption_kW);
+	}
+	
+	if (surveyGC.getStorage() != null && surveyGC.getStorage().getHasThermalStorage() != null) {
+		//if (surveyGC.getStorage().getThermalStorageKw() != null) {
+			//double storagePower_kW = surveyGC.getStorage().getThermalStorageKw();
+		//}
+		// TODO: find a way to determine the storage capacity 
+		// f_addStorage(parentGC, storagePower_kw, storageCapacity_kWh, storageType);
+	}
+	
+	
+	// Heating management (needs: heatingType & assets such as building thermal model or profiles, survey companies never have a thermal building mdoel)
+	boolean isGhost = heatingType != OL_GridConnectionHeatingType.NONE && peakHeatConsumption_kW == null;
+	
+	//Add heating management
+	f_addHeatManagement(engineGC, heatingType, isGhost);
 }
-
-
-// Heating management (needs: heatingType & assets such as building thermal model or profiles, survey companies never have a thermal building mdoel)
-boolean isGhost = heatingType != OL_GridConnectionHeatingType.NONE && peakHeatConsumption_kW == null;
-
-f_addHeatManagement(engineGC, heatingType, isGhost);
 
 return heatingType;
 /*ALCODEEND*/}
@@ -3771,7 +3792,6 @@ return heatingType;
 Double f_createSurveyHeatProfiles(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC,OL_GridConnectionHeatingType heatingType)
 {/*ALCODESTART::1753801098736*/
 ////Gas and Heating
-
 if (surveyGC.getNaturalGas().getHasConnection() != null && surveyGC.getNaturalGas().getHasConnection() ) {
 	switch (heatingType) {
 		case HYBRID_HEATPUMP:
@@ -3839,6 +3859,36 @@ j_ea.energyAssetName = engineGC.p_ownerID + " custom gas profile";
 //TODO: v_remainingGasConsumption_m3 -= yearlyGasConsumption_m3;
 /*ALCODEEND*/}
 
+double f_reconstructGridConnections(EnergyModel deserializedEnergyModel)
+{/*ALCODESTART::1753449467888*/
+ArrayList<GridConnection> allConnections = new ArrayList<>();
+allConnections.addAll(deserializedEnergyModel.c_gridConnections);
+allConnections.addAll(deserializedEnergyModel.c_pausedGridConnections);
+
+for(GridConnection GC : allConnections){
+	GC.energyModel = deserializedEnergyModel;
+	if (GC instanceof GCHouse){
+		//toMove.add(GC);
+		f_reconstructAgent(GC, deserializedEnergyModel.Houses, deserializedEnergyModel);
+	} else if (GC instanceof GCEnergyProduction) {
+		f_reconstructAgent(GC, deserializedEnergyModel.EnergyProductionSites, deserializedEnergyModel);
+	} else if (GC instanceof GCEnergyConversion) {
+		f_reconstructAgent(GC, deserializedEnergyModel.EnergyConversionSites, deserializedEnergyModel);
+	} else if (GC instanceof GCGridBattery) {
+		f_reconstructAgent(GC, deserializedEnergyModel.GridBatteries, deserializedEnergyModel);
+	} else if (GC instanceof GCNeighborhood) {
+		f_reconstructAgent(GC, deserializedEnergyModel.Neighborhoods, deserializedEnergyModel);
+	} else if (GC instanceof GCPublicCharger) {
+		f_reconstructAgent(GC, deserializedEnergyModel.PublicChargers, deserializedEnergyModel);
+	} else if (GC instanceof GCUtility) {
+		f_reconstructAgent(GC, deserializedEnergyModel.UtilityConnections, deserializedEnergyModel);
+	}
+	GC.f_startAfterDeserialisation();
+}
+
+
+/*ALCODEEND*/}
+
 double f_createHeatProfileFromAnnualGasTotal(GridConnection engineGC,OL_GridConnectionHeatingType heatingType,double yearlyGasDelivery_m3,double ratioGasUsedForHeating)
 {/*ALCODESTART::1753883660006*/
 // First check what the heat conversion efficiency is from gas
@@ -3850,7 +3900,7 @@ String profileName = "default_building_heat_demand_fr";
 J_ProfilePointer profilePointer = energyModel.f_findProfile(profileName);
 new J_EAConsumption(engineGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, yearlyConsumptionHeat_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, profilePointer);
 
-return yearlyConsumptionHeat_kWh * max(profilePointer.getAllValues());
+return yearlyConsumptionHeat_kWh * max(profilePointer.getAllValues())/energyModel.p_timeStep_h;
 
 //TODO: v_remainingGasConsumption_m3 -= yearlyGasConsumption_m3;
 /*ALCODEEND*/}
@@ -3864,6 +3914,31 @@ String profileName = "default_building_heat_demand_fr";
 new J_EAConsumption(engineGC, OL_EnergyAssetType.METHANE_DEMAND, profileName, yearlyGasConsumption_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeStep_h, null);	 
 
 //TODO: v_remainingGasConsumption_m3 -= yearlyGasConsumption_m3;
+/*ALCODEEND*/}
+
+double f_reconstructEnergyModel(EnergyModel energyModel)
+{/*ALCODESTART::1753449467890*/
+// Code Instead of Agent.goToPopulation() (which resets all parameters to default!)	
+/*
+try{ // Reflection trick to get to Agent.owner private field
+	energyModel.forceSetOwner(energyModel, pop_energyModels);
+} catch (Exception e) {
+	e.printStackTrace();
+}
+*/
+
+Agent root = this.getRootAgent();
+energyModel.restoreOwner(root);
+
+energyModel.setEngine(getEngine());	
+energyModel.instantiateBaseStructure_xjal();
+energyModel.setEnvironment(this.getEnvironment());
+
+traceln("EnergyModel owner: %s", energyModel.getOwner());
+
+energyModel.create();
+energyModel.f_startAfterDeserialisation();
+//energyModel.start(); // Why is this needed?
 /*ALCODEEND*/}
 
 double f_createGasProfileFromSurvey(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC)
@@ -3910,9 +3985,39 @@ ZeroMath.arrayMultiply(profile, avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * r
 J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile, OL_ProfileAssetType.HEATDEMAND , energyModel.p_timeStep_h);
 j_ea.energyAssetName = engineGC.p_ownerID + " custom building heat profile";
 
-return max(profile);
+return max(profile)/energyModel.p_timeStep_h;
 
 //TODO: v_remainingGasConsumption_m3 -= yearlyGasConsumption_m3;
+/*ALCODEEND*/}
+
+double f_reconstructAgent(Agent agent,AgentArrayList pop,EnergyModel energyModel)
+{/*ALCODESTART::1753449467892*/
+/* // Code Instead of Agent.goToPopulation() (which resets many variables to default!)	
+try{ // Reflection trick to get to Agent.owner private field
+	if (agent instanceof GridNode) {
+		((GridNode)agent).forceSetOwner(agent,pop);
+	} else if (agent instanceof GridConnection) {
+		((GridConnection)agent).forceSetOwner(agent,pop);
+	} else if (agent instanceof Actor) {
+		((Actor)agent).forceSetOwner(agent,pop);
+	} else if (agent instanceof GIS_Object) {
+		((GIS_Object)agent).forceSetOwner(agent,pop);
+	}
+} catch (Exception e) {
+	e.printStackTrace();
+}*/ 
+
+agent.restoreOwner(energyModel); // simply sets agent.d = root, should replace reflection hack
+agent.restoreCollection_xjal(pop); // simple sets agent.j = pop, should replace reflection hack
+
+agent.setEngine(getEngine());	
+agent.instantiateBaseStructure_xjal();
+agent.setEnvironment(pop.getEnvironment());
+
+pop._add(agent); // Add to the population	
+//int popSize = pop.size(); 
+//pop.callCreate(agent, popSize); // Update population object
+agent.create();
 /*ALCODEEND*/}
 
 double f_getGasToHeatEfficiency(OL_GridConnectionHeatingType heatingType)
@@ -3962,7 +4067,58 @@ ZeroMath.arrayMultiply(profile, avgc_data.p_avgEfficiencyDistrictHeatingDelivery
 J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile, OL_ProfileAssetType.HEATDEMAND , energyModel.p_timeStep_h);
 j_ea.energyAssetName = engineGC.p_ownerID + " custom building heat profile";
 
-return max(profile);
+return max(profile)/energyModel.p_timeStep_h;
+/*ALCODEEND*/}
+
+double f_reconstructGridConnections1(EnergyModel energyModel)
+{/*ALCODESTART::1753449467894*/
+// Code Instead of Agent.goToPopulation() (which resets many variables to default!)	
+GC.energyModel = energyModel;
+try{ // Reflection trick to get to Agent.owner private field
+	GC.forceSetOwner(GC,pop);
+} catch (Exception e) {
+	e.printStackTrace();
+}
+	
+traceln("GC owner: %s", GC.getOwner());
+GC.setEngine(getEngine());	
+GC.instantiateBaseStructure_xjal();
+GC.setEnvironment(pop.getEnvironment());
+
+pop._add(GC); // Add to the population
+int popSize = pop.size(); 
+pop.callCreate(GC, popSize); // Update population object
+
+/*ALCODEEND*/}
+
+double f_addMixins()
+{/*ALCODESTART::1753451091785*/
+v_objectMapper.addMixIn(Agent.class, AgentMixin.class);
+v_objectMapper.addMixIn(AgentArrayList.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(EnergyModel.class, EnergyModelMixin.class);
+v_objectMapper.addMixIn(Actor.class, ActorMixin.class);
+v_objectMapper.addMixIn(DataSet.class, DataSetMixin.class);
+v_objectMapper.addMixIn(TextFile.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(EnergyDataViewer.class, IgnoreClassMixin.class);
+
+v_objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, IgnoreClassMixin.class);
+//objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, TableFunctionMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.GISRegion.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.presentation.ViewArea.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.AgentSpacePosition.class, IgnoreClassMixin.class);
+
+// Weirdness regarding material handling toolbox	
+v_objectMapper.addMixIn(com.anylogic.engine.AgentSpacePosition.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.AbstractWall.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.RailwayTrack.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.PalletRack.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.RoadNetwork.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.AreaNode.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.AbstractFluidMarkup.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.Lift.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.ConveyorNode.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.Node.class, IgnoreClassMixin.class);
+
 /*ALCODEEND*/}
 
 double f_createHeatProfileFromAnnualHeatTotal(GridConnection engineGC,double yearlyConsumptionHeat_kWh)
@@ -3972,7 +4128,7 @@ String profileName = "default_building_heat_demand_fr";
 J_ProfilePointer profilePointer = energyModel.f_findProfile(profileName);
 new J_EAConsumption(engineGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, yearlyConsumptionHeat_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, profilePointer);
 
-return yearlyConsumptionHeat_kWh * max(profilePointer.getAllValues());
+return yearlyConsumptionHeat_kWh * max(profilePointer.getAllValues())/energyModel.p_timeStep_h;
 /*ALCODEEND*/}
 
 double f_createHeatProfileFromSurvey(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC)
@@ -4028,173 +4184,9 @@ energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementBuildingS
 
 /*ALCODEEND*/}
 
-double f_addCustomHeatManagement(GridConnection engineGC)
+double f_addCustomHeatingSetup(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC)
 {/*ALCODESTART::1754048849906*/
-throw new RuntimeException("HeatingType is CUSTOM. You must override the function: f_addCustomHeatManagement!");
-/*ALCODEEND*/}
-
-double f_addCustomHeatAsset(GridConnection parentGC,double maxHeatOutputPower_kW)
-{/*ALCODESTART::1754050106254*/
-throw new RuntimeException("HeatingType is CUSTOM. You must override the function: f_addCustomHeatAsset!");
-/*ALCODEEND*/}
-
-
-J_ProfilePointer f_createEngineProfile1(String profileID,double[] arguments,double[] values,EnergyModel energyModel)
-{/*ALCODESTART::1753349205424*/
-TableFunction tf_profile = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-J_ProfilePointer profilePointer;
-if (energyModel.f_findProfile(profileID)!=null) {
-	profilePointer=energyModel.f_findProfile(profileID);
-	profilePointer.setTableFunction(tf_profile);
-} else {
-	profilePointer = new J_ProfilePointer(profileID, tf_profile);	
-	energyModel.f_addProfile(profilePointer);
-}
-return profilePointer;
-/*ALCODEEND*/}
-
-double f_setEngineInputDataAfterDeserialisation(EnergyModel deserializedEnergyModel)
-{/*ALCODESTART::1753349205426*/
-deserializedEnergyModel.p_truckTripsCsv = inputCSVtruckTrips;
-deserializedEnergyModel.p_householdTripsCsv = inputCSVhouseholdTrips;
-deserializedEnergyModel.p_cookingPatternCsv = inputCSVcookingActivities;
-deserializedEnergyModel.avgc_data = energyModel.avgc_data;
-/*ALCODEEND*/}
-
-double f_reconstructGridConnections(EnergyModel deserializedEnergyModel)
-{/*ALCODESTART::1753449467888*/
-ArrayList<GridConnection> allConnections = new ArrayList<>();
-allConnections.addAll(deserializedEnergyModel.c_gridConnections);
-allConnections.addAll(deserializedEnergyModel.c_pausedGridConnections);
-
-for(GridConnection GC : allConnections){
-	GC.energyModel = deserializedEnergyModel;
-	if (GC instanceof GCHouse){
-		//toMove.add(GC);
-		f_reconstructAgent(GC, deserializedEnergyModel.Houses, deserializedEnergyModel);
-	} else if (GC instanceof GCEnergyProduction) {
-		f_reconstructAgent(GC, deserializedEnergyModel.EnergyProductionSites, deserializedEnergyModel);
-	} else if (GC instanceof GCEnergyConversion) {
-		f_reconstructAgent(GC, deserializedEnergyModel.EnergyConversionSites, deserializedEnergyModel);
-	} else if (GC instanceof GCGridBattery) {
-		f_reconstructAgent(GC, deserializedEnergyModel.GridBatteries, deserializedEnergyModel);
-	} else if (GC instanceof GCNeighborhood) {
-		f_reconstructAgent(GC, deserializedEnergyModel.Neighborhoods, deserializedEnergyModel);
-	} else if (GC instanceof GCPublicCharger) {
-		f_reconstructAgent(GC, deserializedEnergyModel.PublicChargers, deserializedEnergyModel);
-	} else if (GC instanceof GCUtility) {
-		f_reconstructAgent(GC, deserializedEnergyModel.UtilityConnections, deserializedEnergyModel);
-	}
-	GC.f_startAfterDeserialisation();
-}
-
-
-/*ALCODEEND*/}
-
-double f_reconstructEnergyModel(EnergyModel energyModel)
-{/*ALCODESTART::1753449467890*/
-// Code Instead of Agent.goToPopulation() (which resets all parameters to default!)	
-/*
-try{ // Reflection trick to get to Agent.owner private field
-	energyModel.forceSetOwner(energyModel, pop_energyModels);
-} catch (Exception e) {
-	e.printStackTrace();
-}
-*/
-
-Agent root = this.getRootAgent();
-energyModel.restoreOwner(root);
-
-energyModel.setEngine(getEngine());	
-energyModel.instantiateBaseStructure_xjal();
-energyModel.setEnvironment(this.getEnvironment());
-
-traceln("EnergyModel owner: %s", energyModel.getOwner());
-
-energyModel.create();
-energyModel.f_startAfterDeserialisation();
-//energyModel.start(); // Why is this needed?
-/*ALCODEEND*/}
-
-double f_reconstructAgent(Agent agent,AgentArrayList pop,EnergyModel energyModel)
-{/*ALCODESTART::1753449467892*/
-/* // Code Instead of Agent.goToPopulation() (which resets many variables to default!)	
-try{ // Reflection trick to get to Agent.owner private field
-	if (agent instanceof GridNode) {
-		((GridNode)agent).forceSetOwner(agent,pop);
-	} else if (agent instanceof GridConnection) {
-		((GridConnection)agent).forceSetOwner(agent,pop);
-	} else if (agent instanceof Actor) {
-		((Actor)agent).forceSetOwner(agent,pop);
-	} else if (agent instanceof GIS_Object) {
-		((GIS_Object)agent).forceSetOwner(agent,pop);
-	}
-} catch (Exception e) {
-	e.printStackTrace();
-}*/ 
-
-agent.restoreOwner(energyModel); // simply sets agent.d = root, should replace reflection hack
-agent.restoreCollection_xjal(pop); // simple sets agent.j = pop, should replace reflection hack
-
-agent.setEngine(getEngine());	
-agent.instantiateBaseStructure_xjal();
-agent.setEnvironment(pop.getEnvironment());
-
-pop._add(agent); // Add to the population	
-//int popSize = pop.size(); 
-//pop.callCreate(agent, popSize); // Update population object
-agent.create();
-/*ALCODEEND*/}
-
-double f_reconstructGridConnections1(EnergyModel energyModel)
-{/*ALCODESTART::1753449467894*/
-// Code Instead of Agent.goToPopulation() (which resets many variables to default!)	
-GC.energyModel = energyModel;
-try{ // Reflection trick to get to Agent.owner private field
-	GC.forceSetOwner(GC,pop);
-} catch (Exception e) {
-	e.printStackTrace();
-}
-	
-traceln("GC owner: %s", GC.getOwner());
-GC.setEngine(getEngine());	
-GC.instantiateBaseStructure_xjal();
-GC.setEnvironment(pop.getEnvironment());
-
-pop._add(GC); // Add to the population
-int popSize = pop.size(); 
-pop.callCreate(GC, popSize); // Update population object
-
-/*ALCODEEND*/}
-
-double f_addMixins()
-{/*ALCODESTART::1753451091785*/
-v_objectMapper.addMixIn(Agent.class, AgentMixin.class);
-v_objectMapper.addMixIn(AgentArrayList.class, IgnoreClassMixin.class);
-v_objectMapper.addMixIn(EnergyModel.class, EnergyModelMixin.class);
-v_objectMapper.addMixIn(Actor.class, ActorMixin.class);
-v_objectMapper.addMixIn(DataSet.class, DataSetMixin.class);
-v_objectMapper.addMixIn(TextFile.class, IgnoreClassMixin.class);
-v_objectMapper.addMixIn(EnergyDataViewer.class, IgnoreClassMixin.class);
-
-v_objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, IgnoreClassMixin.class);
-//objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, TableFunctionMixin.class);
-v_objectMapper.addMixIn(com.anylogic.engine.markup.GISRegion.class, IgnoreClassMixin.class);
-v_objectMapper.addMixIn(com.anylogic.engine.presentation.ViewArea.class, IgnoreClassMixin.class);
-v_objectMapper.addMixIn(com.anylogic.engine.AgentSpacePosition.class, IgnoreClassMixin.class);
-
-// Weirdness regarding material handling toolbox	
-v_objectMapper.addMixIn(com.anylogic.engine.AgentSpacePosition.class, IgnoreClassMixin.class);
-v_objectMapper.addMixIn(com.anylogic.engine.markup.AbstractWall.class, IgnoreClassMixin.class);
-v_objectMapper.addMixIn(com.anylogic.engine.markup.RailwayTrack.class, IgnoreClassMixin.class);
-v_objectMapper.addMixIn(com.anylogic.engine.markup.PalletRack.class, IgnoreClassMixin.class);
-v_objectMapper.addMixIn(com.anylogic.engine.markup.RoadNetwork.class, IgnoreClassMixin.class);
-v_objectMapper.addMixIn(com.anylogic.engine.markup.AreaNode.class, IgnoreClassMixin.class);
-v_objectMapper.addMixIn(com.anylogic.engine.markup.AbstractFluidMarkup.class, IgnoreClassMixin.class);
-v_objectMapper.addMixIn(com.anylogic.engine.markup.Lift.class, IgnoreClassMixin.class);
-v_objectMapper.addMixIn(com.anylogic.engine.markup.ConveyorNode.class, IgnoreClassMixin.class);
-v_objectMapper.addMixIn(com.anylogic.engine.markup.Node.class, IgnoreClassMixin.class);
-
+throw new RuntimeException("HeatingType is CUSTOM. You must override the function: f_addCustomHeatingSetup!");
 /*ALCODEEND*/}
 
 double f_reconstructActors(EnergyModel deserializedEnergyModel)
@@ -4217,6 +4209,11 @@ for(Actor AC : deserializedEnergyModel.c_actors){
 		}
 	}
 
+/*ALCODEEND*/}
+
+double f_addCustomHeatAsset(GridConnection parentGC,double maxHeatOutputPower_kW)
+{/*ALCODESTART::1754050106254*/
+throw new RuntimeException("HeatingType is CUSTOM. You must override the function: f_addCustomHeatAsset!");
 /*ALCODEEND*/}
 
 double f_reconstructGIS_Objects(EnergyModel deserializedEnergyModel,ArrayList<GIS_Object> c_GISObjects)

@@ -814,12 +814,12 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 			<ValueElementClass>List&lt;HeatingType&gt;</ValueElementClass>
 		</Properties>
 	</Variable>
-		<Variable Class="CollectionVariable">
-<Id>1753449467886</Id>
+	<Variable Class="CollectionVariable">
+		<Id>1753449467886</Id>
 		<Name><![CDATA[c_GISregions]]></Name>
 		<X>2135.333</X>
 		<Y>153</Y>
-<Label>
+		<Label>
 			<X>10</X>
 			<Y>0</Y>
 		</Label>
@@ -828,8 +828,8 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>LinkedHashMap</CollectionClass>
-<ElementClass>String</ElementClass>
+			<ElementClass>String</ElementClass>
 			<ValueElementClass>GISRegion</ValueElementClass>
-</Properties>
+		</Properties>
 	</Variable>
 </Variables>

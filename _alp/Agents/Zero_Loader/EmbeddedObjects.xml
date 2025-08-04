@@ -75,15 +75,6 @@
 			<Parameter>
 				<Name><![CDATA[p_regionName]]></Name>
 			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_undergroundTemperature_degC]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_plotInterval_h]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_gridNodeTimeSeriesExcel]]></Name>
-			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">
