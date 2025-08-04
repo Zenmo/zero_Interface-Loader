@@ -294,6 +294,9 @@ if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
 	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersResidentialArea().setVisible(true);
 }
 else {
+	uI_Tabs.add_pop_tabMobility();
+	uI_Tabs.add_pop_tabEHub();
+	
 	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders().setVisible(true);
 	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersCompanies().setVisible(true);
 	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
