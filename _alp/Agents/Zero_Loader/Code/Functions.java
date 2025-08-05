@@ -1092,8 +1092,7 @@ for (var survey : surveys) {
 		v_numberOfSurveyCompanies++;
 		
         for (var gridConnection: address.getGridConnections()) {
-			traceln("surveyGC with sequence: " + gridConnection.getSequence());
-			 
+
 		 	//Check if it has (or will have) a direct connection with the grid (either gas or electric), if not: skip this gc.
 		 	boolean hasNaturalGasConnection = (gridConnection.getNaturalGas().getHasConnection() != null)? gridConnection.getNaturalGas().getHasConnection() : false;	 	
 		 	boolean hasExpansionRequest = (gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() != null ) ? gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() : false;
@@ -3727,7 +3726,7 @@ if (isGhost) {
 	return;
 }
 else {
-	energyModel.f_addHeatManagementToGC(engineGC, heatingType, isGhost);
+	engineGC.f_addHeatManagementToGC(engineGC, heatingType, isGhost);
 }
 /*ALCODEEND*/}
 
@@ -3829,6 +3828,14 @@ else if ( heatingType == OL_GridConnectionHeatingType.NONE ) {
 	return null;
 }
 else {
+	if(!settings.createCurrentElectricityEA() && engineGC.v_hasQuarterHourlyValues){
+		if(heatingType == OL_GridConnectionHeatingType.HYBRID_HEATPUMP){
+			return null; // Could create an estimated gas profile here: not done for now.
+		}
+		if(heatingType == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP){
+			return null;
+		}
+	}
 	return f_createHeatProfileFromEstimates(engineGC);
 }
 /*ALCODEEND*/}
@@ -3951,7 +3958,6 @@ else if (surveyGC.getNaturalGas().getAnnualDelivery_m3() != null && surveyGC.get
 	f_createGasProfileFromAnnualGasTotal( engineGC, yearlyGasDelivery_m3 );
 }
 else {
-	// is this used?
 	f_createGasProfileFromEstimates( engineGC );
 }
 /*ALCODEEND*/}

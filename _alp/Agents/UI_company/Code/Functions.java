@@ -396,7 +396,7 @@ switch (selectedHeatingType){
 }
 
 // Add a management for the chosen heating type
-zero_Interface.energyModel.f_addHeatManagementToGC(GC, selectedHeatingType, false);
+GC.f_addHeatManagementToGC(GC, selectedHeatingType, false);
 
 
 if(!b_runningMainInterfaceSlider){
