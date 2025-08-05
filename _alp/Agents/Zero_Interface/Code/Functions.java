@@ -356,7 +356,7 @@ if (!c_selectedObjects.get(0).c_containedGridConnections.get(0).p_ownerID.equals
 	}
 }
 
-//Check the amount of GC in building
+//Check the number of GCs in building
 v_nbGridConnectionsInSelectedBuilding = b.c_containedGridConnections.size();
 
 //Multiple GC in building: set additional adress in building info + buttons
@@ -564,6 +564,7 @@ if(!b_runningMainInterfaceScenarios){
 			f_enableLivePlotsOnly(companyUI.uI_Results);
 		}
 	}
+	//traceln("f_resetSettings called");
 	runSimulation();
 }
 /*ALCODEEND*/}
