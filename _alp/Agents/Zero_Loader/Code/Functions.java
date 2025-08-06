@@ -3187,7 +3187,7 @@ double maxPowerHeat_kW = 1000; 				//Dit is hoeveel vermogen het huis kan afgeve
 double lossfactor_WpK; 						//Dit is wat bepaalt hoeveel warmte het huis verliest/opneemt per tijdstap per delta_T
 double initialTemp = uniform_discr(15,22); 	//starttemperatuur
 double heatCapacity_JpK; 					//hoeveel lucht zit er in je huis dat je moet verwarmen?
-double effectiveSolarAbsorptionSurface_m2; 	//hoeveel m2 effectieve dak en muur oppervlakte er is dat opwarmt door zonneinstraling
+double solarAbsorptionFactor_m2; 	//hoeveel m2 effectieve dak en muur oppervlakte er is dat opwarmt door zonneinstraling
  
 switch (parentGC.p_energyLabel){
 	case A:
@@ -3208,12 +3208,12 @@ switch (parentGC.p_energyLabel){
 }
 
 lossfactor_WpK = roundToDecimal(lossfactor_WpK,2);
-effectiveSolarAbsorptionSurface_m2 = floorArea_m2 * 0.1; //solar irradiance [W/m2]
+solarAbsorptionFactor_m2 = floorArea_m2 * 0.1; //solar irradiance [W/m2]
  
 heatCapacity_JpK = floorArea_m2 * 50000;
  
  
-parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossfactor_WpK, energyModel.p_timeStep_h, initialTemp, heatCapacity_JpK, effectiveSolarAbsorptionSurface_m2 );
+parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossfactor_WpK, energyModel.p_timeStep_h, initialTemp, heatCapacity_JpK, solarAbsorptionFactor_m2 );
 energyModel.c_ambientDependentAssets.add( parentGC.p_BuildingThermalAsset );
  
 double delayHeatReleaseInteriorHeatsink_hr = 0;
