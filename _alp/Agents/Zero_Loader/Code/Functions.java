@@ -1233,8 +1233,6 @@ f_createEnergyActors();
 
 OL_GridConnectionHeatingType f_getHeatingTypeSurvey(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC)
 {/*ALCODESTART::1726584205825*/
-// Storing the survey heating types
-c_surveyHeatingTypes.put(engineGC, surveyGC.getHeat().getHeatingTypes());
 // This function determines a heatingType for the GC, which will be passed on to the function that determines the heating management
 OL_GridConnectionHeatingType heatingType = null;
 
