@@ -4176,37 +4176,7 @@ double f_setDefaultHeatingStrategies()
 {/*ALCODESTART::1753968816374*/
 // Triples ( heatingType, hasThermalBuilding, hasHeatBuffer )
 Triple<OL_GridConnectionHeatingType, Boolean, Boolean> triple = null;
-/*
-triple = Triple.of(OL_GridConnectionHeatingType.GAS_BURNER, false, false);
-energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileSimple.class );
-triple = Triple.of(OL_GridConnectionHeatingType.GAS_BURNER, true, false);
-energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementBuildingSimple.class );
 
-triple = Triple.of(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, false, false);
-energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileSimple.class );
-triple = Triple.of(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, true, false);
-energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementBuildingSimple.class );
-
-triple = Triple.of(OL_GridConnectionHeatingType.HYBRID_HEATPUMP, false, false);
-energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileHybridHeatPump.class );
-triple = Triple.of(OL_GridConnectionHeatingType.HYBRID_HEATPUMP, true, false);
-energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementBuildingHybridHeatPump.class );
-
-triple = Triple.of(OL_GridConnectionHeatingType.DISTRICTHEAT, false, false);
-energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileSimple.class );
-triple = Triple.of(OL_GridConnectionHeatingType.DISTRICTHEAT, true, false);
-energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementBuildingSimple.class );
-
-triple = Triple.of(OL_GridConnectionHeatingType.LT_DISTRICTHEAT, false, false);
-energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileSimple.class );
-triple = Triple.of(OL_GridConnectionHeatingType.LT_DISTRICTHEAT, true, false);
-energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementBuildingSimple.class );
-
-triple = Triple.of(OL_GridConnectionHeatingType.HYDROGENBURNER, false, false);
-energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileSimple.class );
-triple = Triple.of(OL_GridConnectionHeatingType.HYDROGENBURNER, true, false);
-energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementBuildingSimple.class );
-*/
 triple = Triple.of(OL_GridConnectionHeatingType.GAS_BURNER, false, false);
 energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
 triple = Triple.of(OL_GridConnectionHeatingType.GAS_BURNER, true, false);
@@ -4216,7 +4186,7 @@ energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.cl
 
 triple = Triple.of(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, false, false);
 energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
-triple = Triple.of(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, true, true);
+triple = Triple.of(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, true, false);
 energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
 triple = Triple.of(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, true, true);
 energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
@@ -4225,7 +4195,6 @@ triple = Triple.of(OL_GridConnectionHeatingType.HYBRID_HEATPUMP, false, false);
 energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileHybridHeatPump.class );
 triple = Triple.of(OL_GridConnectionHeatingType.HYBRID_HEATPUMP, true, false);
 energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementBuildingHybridHeatPump.class );
-
 
 triple = Triple.of(OL_GridConnectionHeatingType.DISTRICTHEAT, false, false);
 energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );

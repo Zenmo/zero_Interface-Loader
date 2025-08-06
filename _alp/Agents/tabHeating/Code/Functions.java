@@ -86,7 +86,7 @@ while ( nbHeatPumps < targetHeatPumpAmount) { // remove gasburners, add heatpump
 		zero_Interface.c_orderedHeatingSystemsHouses.remove(house);
 		zero_Interface.c_orderedHeatingSystemsHouses.add(0, house);		
 		double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
-		new J_EAConversionHeatPump(house, peakHeatDemand_kW, 0.5, zero_Interface.energyModel.p_timeStep_h, 60,  zero_Interface.energyModel.v_currentAmbientTemperature_degC, 0, 1, OL_AmbientTempType.AMBIENT_AIR);				
+		new J_EAConversionHeatPump(house, peakHeatDemand_kW/3, 0.5, zero_Interface.energyModel.p_timeStep_h, 60,  zero_Interface.energyModel.v_currentAmbientTemperature_degC, 0, 1, OL_AmbientTempType.AMBIENT_AIR);				
 		house.f_addHeatManagementToGC(house, OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, false);
 	} 
 	else {
