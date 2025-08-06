@@ -70,7 +70,7 @@
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[OL_GridConnectionHeatingType.GASBURNER]]></Code>
+				<Code><![CDATA[OL_GridConnectionHeatingType.GAS_BURNER]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1726584205580</Id>
@@ -130,7 +130,7 @@
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[OL_GridConnectionHeatingType.GASBURNER]]></Code>
+				<Code><![CDATA[OL_GridConnectionHeatingType.GAS_BURNER]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1726584205586</Id>
@@ -1166,7 +1166,7 @@ https://nos.nl/artikel/2483604-elektrische-vrachtwagens-blijven-achter-door-comp
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[OL_GridConnectionHeatingType.GASBURNER]]></Code>
+				<Code><![CDATA[OL_GridConnectionHeatingType.GAS_BURNER]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1726584205688</Id>
@@ -1214,7 +1214,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Description><![CDATA[Average ratio of battery capacity over battery power.
 --> If battery capacity (in kWh) is twice the battery power (in kW) --> ratio = 2.]]></Description>
 		<X>50</X>
-		<Y>1030</Y>
+		<Y>1010</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2082,7 +2082,7 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 		<Name><![CDATA[p_avgHeatBufferWaterVolumePerHPPower_m3pkW]]></Name>
 		<Description><![CDATA[https://www.kachelplaats.nl/buffervaten-cv-houtkachels/ -> 25 liter per kW warmtepomp vermogen = 0.025 m3/kW]]></Description>
 		<X>530</X>
-		<Y>1060</Y>
+		<Y>1080</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2111,7 +2111,7 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 		<Name><![CDATA[p_avgHeatBufferWaterVolumePerPTSurface_m3pm2]]></Name>
 		<Description><![CDATA[https://www.kachelplaats.nl/buffervaten-cv-houtkachels/ -> 50 liter per m2 zonnecollector = 0.050 m3/m2]]></Description>
 		<X>530</X>
-		<Y>1040</Y>
+		<Y>1060</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2203,7 +2203,7 @@ Voor nu gekozen voor 4185.
 		<Name><![CDATA[p_avgMaxHeatBufferTemperature_degC]]></Name>
 		<Description><![CDATA[???]]></Description>
 		<X>530</X>
-		<Y>990</Y>
+		<Y>1010</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2231,7 +2231,7 @@ Voor nu gekozen voor 4185.
 		<Id>1751906126857</Id>
 		<Name><![CDATA[p_avgMinHeatBufferTemperature_degC]]></Name>
 		<X>530</X>
-		<Y>1010</Y>
+		<Y>1030</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2248,6 +2248,64 @@ Voor nu gekozen voor 4185.
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1751906126855</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1753950741783</Id>
+		<Name><![CDATA[p_avgPTPanelSize_m2]]></Name>
+		<Description><![CDATA[https://www.econo.nl/m24hpcpc-400-h2-heatpipe-zonnecollector-prisma-pro-24-cpc -> +- 4 m2]]></Description>
+		<X>530</X>
+		<Y>950</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[4]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1753950741781</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1754309475986</Id>
+		<Name><![CDATA[p_avgRatioHouseBatteryStorageCapacity_v_PVPower]]></Name>
+		<Description><![CDATA[https://www.essent.nl/thuisbatterij/capaciteit-thuisbatterij : Essent: "Over het algemeen kun je ervan uitgaan dat een thuisbatterij zo'n 1 à 1,5 kWh capaciteit nodig heeft per kWp zonnepanelen vermogen. " ]]></Description>
+		<X>50</X>
+		<Y>1030</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[1.25]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1754309475984</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>

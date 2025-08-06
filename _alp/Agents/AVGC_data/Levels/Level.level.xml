@@ -336,7 +336,7 @@
 		<Id>1726584205562</Id>
 		<Name><![CDATA[txt_avgBat]]></Name>
 		<X>40</X>
-		<Y>1005</Y>
+		<Y>985</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -639,7 +639,7 @@
 		<Id>1751906160194</Id>
 		<Name><![CDATA[txt_avgHeatBuffer]]></Name>
 		<X>520</X>
-		<Y>960</Y>
+		<Y>980</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>

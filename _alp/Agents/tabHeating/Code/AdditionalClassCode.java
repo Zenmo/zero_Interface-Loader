@@ -3,10 +3,6 @@ public ShapeGroup getGroupHeatDemandSliders() {
 	return this.gr_heatDemandSliders;
 }
 
-public ShapeGroup getGroupHeatDeandSliders_ResidentialArea() {
-	return this.gr_heatDeandSlidersResidentialArea;
-}
-
 public ShapeSlider getSliderHeatDemandReductionCompanies_pct() { 
 	return this.sl_heatDemandReductionCompanies_pct;
 }
@@ -59,4 +55,16 @@ public ShapeSlider getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct() {
 
 public ShapeSlider getSliderHeatDemandSlidersCompaniesElectricHeatPumpCompanies_pct() { 
 	return this.sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct;
+}
+
+public ShapeSlider getSl_heatingTypeSlidersCompaniesCustom_pct(){
+	return this.sl_heatingTypeSlidersCompaniesCustom_pct;
+}
+
+public ShapeSlider getSl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct(){
+	return this.sl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct;
+}
+
+public ShapeSlider getSl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct(){
+	return this.sl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct;
 }
