@@ -109,19 +109,19 @@ if (zero_Interface.c_companyUIs.size() > 0) {
 	}
 }
 
-return new Triple(numberOfGhostVehicle_Cars, numberOfGhostVehicle_Vans, numberOfGhostVehicle_Trucks);
+return Triple.of(numberOfGhostVehicle_Cars, numberOfGhostVehicle_Vans, numberOfGhostVehicle_Trucks);
 /*ALCODEEND*/}
 
 double f_setDieselTrucks(List<GridConnection> gcList,ShapeSlider sliderElectricTrucks,ShapeSlider sliderHydrogenTrucks,ShapeSlider sliderFossilFuelTrucks)
 {/*ALCODESTART::1746008458894*/
 double pctDieselTrucksGoal = sliderFossilFuelTrucks.getValue();
 
-int numberOfGhostVehicle_Trucks = f_calculateNumberOfGhostVehicles(gcList).getThird();
+int numberOfGhostVehicle_Trucks = f_calculateNumberOfGhostVehicles(gcList).getRight();
 Triple<Integer, Integer, Integer> triple = f_calculateCurrentNumberOfTrucks( gcList, numberOfGhostVehicle_Trucks );
 
-int nbEtruckCurrent = triple.getFirst();
-int nbHydrogentrucksCurrent = triple.getSecond();
-int nbDieseltrucksCurrent = triple.getThird();
+int nbEtruckCurrent = triple.getLeft();
+int nbHydrogentrucksCurrent = triple.getMiddle();
+int nbDieseltrucksCurrent = triple.getRight();
 int total_vehicles = nbEtruckCurrent + nbHydrogentrucksCurrent + nbDieseltrucksCurrent;
 
 int nbDieselTrucksGoal = roundToInt(total_vehicles*pctDieselTrucksGoal/100.0);
@@ -181,12 +181,12 @@ double f_setHydrogenTrucks(List<GridConnection> gcList,ShapeSlider sliderElectri
 {/*ALCODESTART::1746008458907*/
 double pctHydrogenTrucksGoal = sliderHydrogenTrucks.getValue();
 
-int numberOfGhostVehicle_Trucks = f_calculateNumberOfGhostVehicles(gcList).getThird();
+int numberOfGhostVehicle_Trucks = f_calculateNumberOfGhostVehicles(gcList).getRight();
 Triple<Integer, Integer, Integer> triple = f_calculateCurrentNumberOfTrucks( gcList, numberOfGhostVehicle_Trucks );
 
-int nbEtruckCurrent = triple.getFirst();
-int nbHydrogentrucksCurrent = triple.getSecond();
-int nbDieseltrucksCurrent = triple.getThird();
+int nbEtruckCurrent = triple.getLeft();
+int nbHydrogentrucksCurrent = triple.getMiddle();
+int nbDieseltrucksCurrent = triple.getRight();
 int total_vehicles = nbEtruckCurrent + nbHydrogentrucksCurrent + nbDieseltrucksCurrent;
 
 int nbHydrogenTrucksGoal = roundToInt(total_vehicles*pctHydrogenTrucksGoal/100.0);
@@ -244,12 +244,12 @@ double f_setElectricTrucks(List<GridConnection> gcList,ShapeSlider sliderElectri
 {/*ALCODESTART::1746008458917*/
 double pctElectricTrucksGoal = sliderElectricTrucks.getValue();
 
-int numberOfGhostVehicle_Trucks = f_calculateNumberOfGhostVehicles(gcList).getThird();
+int numberOfGhostVehicle_Trucks = f_calculateNumberOfGhostVehicles(gcList).getRight();
 Triple<Integer, Integer, Integer> triple = f_calculateCurrentNumberOfTrucks( gcList, numberOfGhostVehicle_Trucks );
 
-int nbEtruckCurrent = triple.getFirst();
-int nbHydrogentrucksCurrent = triple.getSecond();
-int nbDieseltrucksCurrent = triple.getThird();
+int nbEtruckCurrent = triple.getLeft();
+int nbHydrogentrucksCurrent = triple.getMiddle();
+int nbDieseltrucksCurrent = triple.getRight();
 int total_vehicles = nbEtruckCurrent + nbHydrogentrucksCurrent + nbDieseltrucksCurrent;
 
 int nbElectricTrucksGoal = roundToInt(total_vehicles*pctElectricTrucksGoal/100.0);
@@ -747,7 +747,7 @@ for (GridConnection gc : gcList) {
 	}
 }
 
-int numberOfGhostVehicle_Trucks = f_calculateNumberOfGhostVehicles(gcList).getThird();
+int numberOfGhostVehicle_Trucks = f_calculateNumberOfGhostVehicles(gcList).getRight();
 
 int nbElectricTrucksCurrent = count(vehicles, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK && !(p.getParentAgent() instanceof GCPublicCharger)) + numberOfGhostVehicle_Trucks;
 int nbDieseltrucksCurrent = count(vehicles, p->p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK);
@@ -780,7 +780,7 @@ zero_Interface.f_resetSettings();
 Triple<Integer, Integer, Integer> f_calculateCurrentNumberOfTrucks(List<GridConnection> gcList,Integer numberOfGhostVehicle_Trucks)
 {/*ALCODESTART::1749134655530*/
 if (numberOfGhostVehicle_Trucks == null) {
-	numberOfGhostVehicle_Trucks = f_calculateNumberOfGhostVehicles(gcList).getThird();
+	numberOfGhostVehicle_Trucks = f_calculateNumberOfGhostVehicles(gcList).getRight();
 }
 
 int nbEtruckCurrent = numberOfGhostVehicle_Trucks;
@@ -792,7 +792,7 @@ for ( GridConnection gc : gcList ) {
 	nbDieselTrucksCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK && gc.v_isActive);
 }
 
-return new Triple(nbEtruckCurrent, nbHydrogenTrucksCurrent, nbDieselTrucksCurrent);
+return Triple.of(nbEtruckCurrent, nbHydrogenTrucksCurrent, nbDieselTrucksCurrent);
 /*ALCODEEND*/}
 
 boolean f_dieselToElectricVan(List<GridConnection> gcList)
@@ -1096,7 +1096,7 @@ return true;
 Triple<Integer, Integer, Integer> f_calculateCurrentNumberOfVans(List<GridConnection> gcList,Integer numberOfGhostVehicle_Vans)
 {/*ALCODESTART::1749655535164*/
 if (numberOfGhostVehicle_Vans == null) {
-	numberOfGhostVehicle_Vans = f_calculateNumberOfGhostVehicles(gcList).getSecond();
+	numberOfGhostVehicle_Vans = f_calculateNumberOfGhostVehicles(gcList).getMiddle();
 }
 
 int nbEVansCurrent = numberOfGhostVehicle_Vans;
@@ -1108,13 +1108,13 @@ for ( GridConnection gc : gcList ) {
 	nbDieselVansCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.DIESEL_VAN && gc.v_isActive);
 }
 
-return new Triple(nbEVansCurrent, nbHydrogenVansCurrent, nbDieselVansCurrent);
+return Triple.of(nbEVansCurrent, nbHydrogenVansCurrent, nbDieselVansCurrent);
 /*ALCODEEND*/}
 
 Triple<Integer, Integer, Integer> f_calculateCurrentNumberOfCars(List<GridConnection> gcList,Integer numberOfGhostVehicle_Cars)
 {/*ALCODESTART::1749655667960*/
 if (numberOfGhostVehicle_Cars == null) {
-	numberOfGhostVehicle_Cars = f_calculateNumberOfGhostVehicles(gcList).getSecond();
+	numberOfGhostVehicle_Cars = f_calculateNumberOfGhostVehicles(gcList).getMiddle();
 }
 
 int nbEVsCurrent = numberOfGhostVehicle_Cars;
@@ -1126,18 +1126,18 @@ for ( GridConnection gc : gcList ) {
 	nbDieselCarsCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.DIESEL_VEHICLE && gc.v_isActive);
 }
 
-return new Triple(nbEVsCurrent, nbHydrogenCarsCurrent, nbDieselCarsCurrent);
+return Triple.of(nbEVsCurrent, nbHydrogenCarsCurrent, nbDieselCarsCurrent);
 /*ALCODEEND*/}
 
 double f_setDieselVans(List<GridConnection> gcList,ShapeSlider sliderElectricVans,ShapeSlider sliderFossilFuelVans)
 {/*ALCODESTART::1749655752858*/
 double pctDieselVansGoal = sliderFossilFuelVans.getValue();
 
-int numberOfGhostVehicle_Vans = f_calculateNumberOfGhostVehicles(gcList).getSecond();
+int numberOfGhostVehicle_Vans = f_calculateNumberOfGhostVehicles(gcList).getMiddle();
 Triple<Integer, Integer, Integer> triple = f_calculateCurrentNumberOfVans( gcList, numberOfGhostVehicle_Vans );
 
-int nbEvanCurrent = triple.getFirst();
-int nbDieselvansCurrent = triple.getThird();
+int nbEvanCurrent = triple.getLeft();
+int nbDieselvansCurrent = triple.getRight();
 
 int total_vehicles = nbEvanCurrent + nbDieselvansCurrent;
 
@@ -1184,11 +1184,11 @@ double f_setElectricVans(List<GridConnection> gcList,ShapeSlider sliderElectricV
 {/*ALCODESTART::1749656346356*/
 double pctElectricVansGoal = sliderElectricVans.getValue();
 
-int numberOfGhostVehicle_Vans = f_calculateNumberOfGhostVehicles(gcList).getSecond();
+int numberOfGhostVehicle_Vans = f_calculateNumberOfGhostVehicles(gcList).getMiddle();
 Triple<Integer, Integer, Integer> triple = f_calculateCurrentNumberOfVans( gcList, numberOfGhostVehicle_Vans );
 
-int nbEvanCurrent = triple.getFirst();
-int nbDieselvansCurrent = triple.getThird();
+int nbEvanCurrent = triple.getLeft();
+int nbDieselvansCurrent = triple.getRight();
 
 int total_vehicles = nbEvanCurrent + nbDieselvansCurrent;
 
@@ -1234,11 +1234,11 @@ double f_setDieselCars(List<GridConnection> gcList,ShapeSlider sliderElectricCar
 {/*ALCODESTART::1749717776391*/
 double pctDieselCarsGoal = sliderFossilFuelCars.getValue();
 
-int numberOfGhostVehicle_Cars = f_calculateNumberOfGhostVehicles(gcList).getSecond();
+int numberOfGhostVehicle_Cars = f_calculateNumberOfGhostVehicles(gcList).getMiddle();
 Triple<Integer, Integer, Integer> triple = f_calculateCurrentNumberOfCars( gcList, numberOfGhostVehicle_Cars );
 
-int nbEcarCurrent = triple.getFirst();
-int nbDieselcarsCurrent = triple.getThird();
+int nbEcarCurrent = triple.getLeft();
+int nbDieselcarsCurrent = triple.getRight();
 
 int total_vehicles = nbEcarCurrent + nbDieselcarsCurrent;
 
@@ -1285,11 +1285,11 @@ double f_setElectricCars(List<GridConnection> gcList,ShapeSlider sliderElectricC
 {/*ALCODESTART::1749717779317*/
 double pctElectricCarsGoal = sliderElectricCars.getValue();
 
-int numberOfGhostVehicle_Cars = f_calculateNumberOfGhostVehicles(gcList).getSecond();
+int numberOfGhostVehicle_Cars = f_calculateNumberOfGhostVehicles(gcList).getMiddle();
 Triple<Integer, Integer, Integer> triple = f_calculateCurrentNumberOfCars( gcList, numberOfGhostVehicle_Cars );
 
-int nbEcarCurrent = triple.getFirst();
-int nbDieselcarsCurrent = triple.getThird();
+int nbEcarCurrent = triple.getLeft();
+int nbDieselcarsCurrent = triple.getRight();
 
 int total_vehicles = nbEcarCurrent + nbDieselcarsCurrent;
 
@@ -1340,7 +1340,7 @@ for (GridConnection gc : gcList) {
 	}
 }
 
-int numberOfGhostVehicle_Vans = f_calculateNumberOfGhostVehicles(gcList).getThird();
+int numberOfGhostVehicle_Vans = f_calculateNumberOfGhostVehicles(gcList).getRight();
 
 int nbElectricVansCurrent = count(vehicles, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN && !(p.getParentAgent() instanceof GCPublicCharger)) + numberOfGhostVehicle_Vans;
 int nbDieselvansCurrent = count(vehicles, p->p.energyAssetType == OL_EnergyAssetType.DIESEL_VAN);
@@ -1380,7 +1380,7 @@ for (GridConnection gc : gcList) {
 	}
 }
 
-int numberOfGhostVehicle_Cars = f_calculateNumberOfGhostVehicles(gcList).getThird();
+int numberOfGhostVehicle_Cars = f_calculateNumberOfGhostVehicles(gcList).getRight();
 
 int nbElectricCarsCurrent = count(vehicles, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && !(p.getParentAgent() instanceof GCPublicCharger)) + numberOfGhostVehicle_Cars;
 int nbDieselcarsCurrent = count(vehicles, p->p.energyAssetType == OL_EnergyAssetType.DIESEL_VEHICLE);

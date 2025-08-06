@@ -2288,7 +2288,7 @@ f_setSimulateYearScreen();</ActionCode>
 OL_GridConnectionHeatingType selectedHeatingType;
 switch (rb_heatingTypePrivateUI.getValue()){
 	case 0:
-		selectedHeatingType = OL_GridConnectionHeatingType.GASBURNER;
+		selectedHeatingType = OL_GridConnectionHeatingType.GAS_BURNER;
 	break;
 	case 1:
 		selectedHeatingType = OL_GridConnectionHeatingType.HYBRID_HEATPUMP;
@@ -2301,7 +2301,7 @@ switch (rb_heatingTypePrivateUI.getValue()){
 		//selectedHeatingType = OL_GridConnectionHeatingType.HYDROGENBURNER;
 	break;
 	case 4:
-		selectedHeatingType = OL_GridConnectionHeatingType.GASFIRED_CHPPEAK;
+		selectedHeatingType = OL_GridConnectionHeatingType.GAS_CHP;
 	break;
 	default:
 		selectedHeatingType = OL_GridConnectionHeatingType.NONE;

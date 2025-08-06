@@ -70,7 +70,7 @@
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[OL_GridConnectionHeatingType.GASBURNER]]></Code>
+				<Code><![CDATA[OL_GridConnectionHeatingType.GAS_BURNER]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1726584205580</Id>
@@ -130,7 +130,7 @@
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[OL_GridConnectionHeatingType.GASBURNER]]></Code>
+				<Code><![CDATA[OL_GridConnectionHeatingType.GAS_BURNER]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1726584205586</Id>
@@ -1166,7 +1166,7 @@ https://nos.nl/artikel/2483604-elektrische-vrachtwagens-blijven-achter-door-comp
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[OL_GridConnectionHeatingType.GASBURNER]]></Code>
+				<Code><![CDATA[OL_GridConnectionHeatingType.GAS_BURNER]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1726584205688</Id>

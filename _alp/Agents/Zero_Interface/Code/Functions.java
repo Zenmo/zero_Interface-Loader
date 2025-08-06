@@ -533,13 +533,15 @@ v_connectionOwnerIndexNr = 0;
 
 //Get the ghost vehicles for the transport slider tab
 Triple<Integer, Integer, Integer> triple = uI_Tabs.pop_tabMobility.get(0).f_calculateNumberOfGhostVehicles( new ArrayList<GridConnection>(energyModel.UtilityConnections.findAll( x -> true)) );
-uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Cars = triple.getFirst();
-uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Vans = triple.getSecond();
-uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Trucks = triple.getThird();
+uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Cars = triple.getLeft();
+uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Vans = triple.getMiddle();
+uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Trucks = triple.getRight();
 //Get the ghost heating systems
 Pair<Integer, Integer> pair = uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfGhostHeatingSystems( energyModel.UtilityConnections.findAll( x -> true) );
 uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps = pair.getFirst();
 uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_HybridHeatpumps = pair.getSecond();
+
+uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfCustomHeatingSystems = uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfCustomHeatingSystems(new ArrayList<GridConnection>(energyModel.UtilityConnections.findAll( x -> true)));
 
 /*ALCODEEND*/}
 
@@ -627,17 +629,16 @@ c_orderedVehicles = otherEAs;
 double f_initialHeatingSystemsOrder()
 {/*ALCODESTART::1714131269202*/
 List<GCHouse> houses = new ArrayList<GCHouse>(energyModel.Houses.findAll( x -> true));
-List<GCHouse> housesWithoutHP = houses.stream().filter( gc -> gc.p_heatingType != OL_GridConnectionHeatingType.HEATPUMP_AIR ).collect(Collectors.toList());
+List<GCHouse> housesWithoutHP = houses.stream().filter( gc -> gc.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP ).collect(Collectors.toList());
 List<GCHouse> housesWithHP = new ArrayList<>(houses);
 housesWithHP.removeAll(housesWithoutHP);
 
 c_orderedHeatingSystemsHouses = new ArrayList<>(housesWithoutHP);
 c_orderedHeatingSystemsHouses.addAll(housesWithHP);
 
-
-List<GCUtility> companies = new ArrayList<GCUtility>(energyModel.UtilityConnections.findAll( gc -> gc.p_heatingType != OL_GridConnectionHeatingType.NONE));
-List<GCUtility> companiesWithoutHP = companies.stream().filter( gc -> gc.p_heatingType != OL_GridConnectionHeatingType.HEATPUMP_AIR).collect(Collectors.toList());
-List<GCUtility> companiesWithHP = companies.stream().filter( gc -> gc.p_heatingType == OL_GridConnectionHeatingType.HEATPUMP_AIR ).collect(Collectors.toList());
+List<GCUtility> companies = new ArrayList<GCUtility>(energyModel.UtilityConnections.findAll( gc -> gc.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE && gc.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.CUSTOM));
+List<GCUtility> companiesWithoutHP = companies.stream().filter( gc -> gc.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP).collect(Collectors.toList());
+List<GCUtility> companiesWithHP = companies.stream().filter( gc -> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP ).collect(Collectors.toList());
 List<GCUtility> detailedCompaniesWithHP = companiesWithHP.stream().filter( gc -> gc.p_owner != null && gc.p_owner.p_detailedCompany ).collect(Collectors.toList());
 List<GCUtility> genericCompaniesWithHP = new ArrayList<>(companiesWithHP);
 genericCompaniesWithHP.removeAll(detailedCompaniesWithHP);
@@ -842,14 +843,17 @@ int PV_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());
 uI_Tabs.pop_tabElectricity.get(0).getSliderRooftopPVCompanies_pct().setValue(PV_pct, false);
 
 // GAS_BURNER / HEATING SYSTEMS: // Still a slight error. GasBurners + HeatPumps != total, because some GC have primary heating asset null
-int GasBurners = count(energyModel.UtilityConnections, gc->gc.p_primaryHeatingAsset instanceof J_EAConversionGasBurner && gc.v_isActive);
-int GasBurners_pct = roundToInt(100.0 * GasBurners / (count(energyModel.UtilityConnections, x -> x.v_isActive && x.p_primaryHeatingAsset != null) + uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps + uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_HybridHeatpumps));
+int GasBurners = count(energyModel.UtilityConnections, gc->gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
+int GasBurners_pct = roundToInt(100.0 * GasBurners / count(energyModel.UtilityConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE));
+int customHeating = uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfCustomHeatingSystems(new ArrayList<GridConnection>(findAll(energyModel.UtilityConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE)));
+int customHeating_pct = roundToInt(100.0 * customHeating / count(energyModel.UtilityConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE));
 
+uI_Tabs.pop_tabHeating.get(0).getSl_heatingTypeSlidersCompaniesCustom_pct().setValue(customHeating_pct, false);
 uI_Tabs.pop_tabHeating.get(0).getSliderGasBurnerCompanies_pct().setValue(GasBurners_pct, false);
-uI_Tabs.pop_tabHeating.get(0).f_setHeatingSliders( 0, uI_Tabs.pop_tabHeating.get(0).getSliderGasBurnerCompanies_pct(), uI_Tabs.pop_tabHeating.get(0).getSliderElectricHeatPumpCompanies_pct(), null, null );
+uI_Tabs.pop_tabHeating.get(0).f_setHeatingSliders( 0, uI_Tabs.pop_tabHeating.get(0).getSliderGasBurnerCompanies_pct(), uI_Tabs.pop_tabHeating.get(0).getSliderElectricHeatPumpCompanies_pct(), null, null, uI_Tabs.pop_tabHeating.get(0).getSl_heatingTypeSlidersCompaniesCustom_pct() );
 
 uI_Tabs.pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct().setValue(GasBurners_pct, false);
-uI_Tabs.pop_tabHeating.get(0).f_setHeatingSliders( 0, uI_Tabs.pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct(), uI_Tabs.pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesElectricHeatPumpCompanies_pct(), null, null );
+uI_Tabs.pop_tabHeating.get(0).f_setHeatingSliders( 0, uI_Tabs.pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct(), uI_Tabs.pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesElectricHeatPumpCompanies_pct(), null, null, uI_Tabs.pop_tabHeating.get(0).getSl_heatingTypeSlidersCompaniesCustom_pct() );
 
 
 // HEAT_PUMP_AIR:
