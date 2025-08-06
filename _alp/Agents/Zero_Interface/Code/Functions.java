@@ -3376,7 +3376,7 @@ for (int i=0; i< EAlist.size(); i++) {
 double f_initialPTSystemsOrder_households()
 {/*ALCODESTART::1753951802256*/
 List<GCHouse> houses = new ArrayList<GCHouse>(energyModel.Houses.findAll( x -> true));
-List<GCHouse> housesWithoutPT = houses.stream().filter( gc -> !gc.v_liveAssetsMetaData.hasPT ).collect(Collectors.toList());
+List<GCHouse> housesWithoutPT = houses.stream().filter( gc -> !gc.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW) ).collect(Collectors.toList());
 List<GCHouse> housesWithPT = new ArrayList<>(houses);
 housesWithPT.removeAll(housesWithoutPT);
 

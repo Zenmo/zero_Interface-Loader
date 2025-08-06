@@ -554,11 +554,11 @@ double f_setPTSystemHouses(List<GCHouse> gcList,double PT_pct)
 {/*ALCODESTART::1753950993262*/
 ArrayList<GCHouse> houses = new ArrayList<GCHouse>(zero_Interface.c_orderedPTSystemsHouses.stream().filter(gcList::contains).toList());
 int nbHouses = houses.size();
-int nbHousesWithPT = count(houses, x -> x.v_liveAssetsMetaData.hasPT == true);
+int nbHousesWithPT = count(houses, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW) == true);
 int nbHousesWithPTGoal = roundToInt(PT_pct / 100.0 * nbHouses);
 
 while ( nbHousesWithPTGoal < nbHousesWithPT ) { // remove excess PV systems
-	GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.hasPT == true);	
+	GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW) == true);	
 	J_EA ptAsset = findFirst(house.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL );
 		
 	if (ptAsset != null) {
@@ -570,7 +570,7 @@ while ( nbHousesWithPTGoal < nbHousesWithPT ) { // remove excess PV systems
 		if(house.p_heatBuffer != null){
 			house.p_heatBuffer.removeEnergyAsset();
 		}
-		if(house.v_liveAssetsMetaData.hasPV){
+		if(house.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
 			J_EAProduction pvAsset = findFirst(house.c_productionAssets, ea -> ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
 			if(pvAsset != null){
 				double newInstalledPVCapacity = min(house.v_liveAssetsMetaData.PVPotential_kW, pvAsset.getCapacityElectric_kW() + zero_Interface.energyModel.avgc_data.p_avgPTPanelSize_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2);
@@ -585,7 +585,7 @@ while ( nbHousesWithPTGoal < nbHousesWithPT ) { // remove excess PV systems
 }
 
 while ( nbHousesWithPTGoal > nbHousesWithPT ) {
-	GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.hasPT == false);
+	GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW) == false);
 	if (house == null){
 		traceln("No gridconnection without PT panels found! Current PVsystems count: %s", nbHousesWithPT);
 		break;
@@ -595,7 +595,7 @@ while ( nbHousesWithPTGoal > nbHousesWithPT ) {
 		double installedPTCapacity_kW = zero_Interface.energyModel.avgc_data.p_avgPTPanelSize_m2*zero_Interface.energyModel.avgc_data.p_avgPTPower_kWpm2;//roundToDecimal(uniform(3,6),2);
 		
 		//Compensate for pt if it is present
-		if(house.v_liveAssetsMetaData.hasPV){
+		if(house.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
 			J_EAProduction pvAsset = findFirst(house.c_productionAssets, ea -> ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
 			if(pvAsset != null){
 				double newInstalledPVCapacity = max(0, pvAsset.getCapacityElectric_kW() - zero_Interface.energyModel.avgc_data.p_avgPTPanelSize_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2);

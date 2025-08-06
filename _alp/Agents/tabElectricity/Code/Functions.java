@@ -74,7 +74,7 @@ while ( nbHousesWithPVGoal > nbHousesWithPV ) {
 		double installedPVCapacity_kW = house.v_liveAssetsMetaData.PVPotential_kW;//roundToDecimal(uniform(3,6),2);
 		
 		//Compensate for pt if it is present
-		if(house.v_liveAssetsMetaData.hasPT){
+		if(house.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW)){
 			installedPVCapacity_kW = max(0, installedPVCapacity_kW-zero_Interface.energyModel.avgc_data.p_avgPTPanelSize_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2); //For now just 1 panel
 		}
 		J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, OL_EnergyCarriers.ELECTRICITY, installedPVCapacity_kW, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
