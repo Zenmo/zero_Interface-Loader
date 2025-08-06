@@ -463,7 +463,7 @@
 		<Id>1726584205827</Id>
 		<Name><![CDATA[f_addElectricVehicle]]></Name>
 		<X>900</X>
-		<Y>720</Y>
+		<Y>740</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -499,7 +499,7 @@
 		<Id>1726584205829</Id>
 		<Name><![CDATA[f_addDieselVehicle]]></Name>
 		<X>900</X>
-		<Y>740</Y>
+		<Y>760</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -531,7 +531,7 @@
 		<Id>1726584205831</Id>
 		<Name><![CDATA[f_addStorage]]></Name>
 		<X>900</X>
-		<Y>660</Y>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -604,7 +604,7 @@
 		<Id>1726584205837</Id>
 		<Name><![CDATA[f_addTransportHydrogen]]></Name>
 		<X>900</X>
-		<Y>760</Y>
+		<Y>780</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -636,7 +636,7 @@
 		<Id>1726584205845</Id>
 		<Name><![CDATA[f_addChargingDemandProfile]]></Name>
 		<X>900</X>
-		<Y>700</Y>
+		<Y>720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1018,7 +1018,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1737712184349</Id>
 		<Name><![CDATA[f_createDieselTractors]]></Name>
 		<X>900</X>
-		<Y>780</Y>
+		<Y>800</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1360,7 +1360,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1749726189312</Id>
 		<Name><![CDATA[f_addCookingAsset]]></Name>
 		<X>900</X>
-		<Y>600</Y>
+		<Y>620</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1388,7 +1388,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1749726279652</Id>
 		<Name><![CDATA[f_addHotWaterDemand]]></Name>
 		<X>900</X>
-		<Y>620</Y>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1679,7 +1679,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Name><![CDATA[f_addHeatManagement]]></Name>
 		<Description><![CDATA[This function takes heatingType as an argument and adds the default heating management class to the GridConnection]]></Description>
 		<X>900</X>
-		<Y>550</Y>
+		<Y>570</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1833,8 +1833,8 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1753804393557</Id>
 		<Name><![CDATA[f_createGasProfileFromGasTS]]></Name>
-		<X>900</X>
-		<Y>300</Y>
+		<X>520</X>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1878,7 +1878,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753883660006</Id>
 		<Name><![CDATA[f_createHeatProfileFromAnnualGasTotal]]></Name>
 		<X>900</X>
-		<Y>385</Y>
+		<Y>365</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1978,7 +1978,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753884186444</Id>
 		<Name><![CDATA[f_createHeatProfileFromGasSurvey]]></Name>
 		<X>500</X>
-		<Y>380</Y>
+		<Y>400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2005,8 +2005,8 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1753949286953</Id>
 		<Name><![CDATA[f_createHeatProfileFromGasTS]]></Name>
-		<X>900</X>
-		<Y>365</Y>
+		<X>520</X>
+		<Y>420</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2062,7 +2062,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753951013582</Id>
 		<Name><![CDATA[f_getGasToHeatEfficiency]]></Name>
 		<X>920</X>
-		<Y>405</Y>
+		<Y>385</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2081,7 +2081,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1753951039103</Id>
 		<Name><![CDATA[f_getRatioGasUsedForHeating]]></Name>
-		<X>500</X>
+		<X>540</X>
 		<Y>440</Y>
 		<Label>
 			<X>10</X>
@@ -2122,7 +2122,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753961830063</Id>
 		<Name><![CDATA[f_createHeatProfileFromEstimates]]></Name>
 		<X>900</X>
-		<Y>470</Y>
+		<Y>450</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2142,7 +2142,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753964366889</Id>
 		<Name><![CDATA[f_createHeatProfileFromHeatTS]]></Name>
 		<X>900</X>
-		<Y>430</Y>
+		<Y>410</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2203,7 +2203,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753964605708</Id>
 		<Name><![CDATA[f_createHeatProfileFromAnnualHeatTotal]]></Name>
 		<X>900</X>
-		<Y>450</Y>
+		<Y>430</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2227,7 +2227,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753964654729</Id>
 		<Name><![CDATA[f_createHeatProfileFromSurvey]]></Name>
 		<X>500</X>
-		<Y>400</Y>
+		<Y>460</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
