@@ -2358,7 +2358,7 @@ else{
 	future_scenario_list.setPlannedWind_kW(current_scenario_list.getCurrentWind_kW());
 }
 
-
+////Heating and gas
 OL_GridConnectionHeatingType heatingType = f_heatingSurveyCompany(companyGC, gridConnection);
 
 //add heating type to scenario: current and future
@@ -3856,14 +3856,20 @@ else {
 double f_createGasProfileFromGasTS(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC)
 {/*ALCODESTART::1753804393557*/
 // Gas delivery profile in m3
-double[] profile = f_timeSeriesToQuarterHourlyDoubleArray(surveyGC.getNaturalGas().getHourlyDelivery_m3());
+double[] profile_m3 = f_timeSeriesToQuarterHourlyDoubleArray(surveyGC.getNaturalGas().getHourlyDelivery_m3());
+
+//Calculate yearly gas delivery
+double yearlyGasDelivery_m3 = Arrays.stream(profile_m3).sum();
+
 // We assume all delivery is consumption and convert m3 to kWh
-ZeroMath.arrayMultiply(profile, avgc_data.p_gas_kWhpm3);
+ZeroMath.arrayMultiply(profile_m3, avgc_data.p_gas_kWhpm3);
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.METHANE, profile, OL_ProfileAssetType.METHANEDEMAND , energyModel.p_timeStep_h);
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.METHANE, profile_m3, OL_ProfileAssetType.METHANEDEMAND , energyModel.p_timeStep_h);
 j_ea.energyAssetName = engineGC.p_ownerID + " custom gas profile";
 
-//TODO: v_remainingGasConsumption_m3 -= yearlyGasConsumption_m3;
+if(engineGC.p_owner.p_detailedCompany){
+	v_remainingGasConsumption_m3 -= yearlyGasDelivery_m3;
+}
 /*ALCODEEND*/}
 
 double f_reconstructGridConnections(EnergyModel deserializedEnergyModel)
@@ -3907,9 +3913,11 @@ String profileName = "default_building_heat_demand_fr";
 J_ProfilePointer profilePointer = energyModel.f_findProfile(profileName);
 new J_EAConsumption(engineGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, yearlyConsumptionHeat_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, profilePointer);
 
-return yearlyConsumptionHeat_kWh * max(profilePointer.getAllValues())/energyModel.p_timeStep_h;
+if(engineGC.p_owner.p_detailedCompany){
+	v_remainingGasConsumption_m3 -= yearlyGasDelivery_m3;
+}
 
-//TODO: v_remainingGasConsumption_m3 -= yearlyGasConsumption_m3;
+return yearlyConsumptionHeat_kWh * max(profilePointer.getAllValues())/energyModel.p_timeStep_h;
 /*ALCODEEND*/}
 
 double f_createGasProfileFromAnnualGasTotal(GridConnection engineGC,double yearlyGasDelivery_m3)
@@ -3920,7 +3928,9 @@ double yearlyGasConsumption_kWh = yearlyGasDelivery_m3 * avgc_data.p_gas_kWhpm3;
 String profileName = "default_building_heat_demand_fr";
 new J_EAConsumption(engineGC, OL_EnergyAssetType.METHANE_DEMAND, profileName, yearlyGasConsumption_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeStep_h, null);	 
 
-//TODO: v_remainingGasConsumption_m3 -= yearlyGasConsumption_m3;
+if(engineGC.p_owner.p_detailedCompany){
+	v_remainingGasConsumption_m3 -= yearlyGasDelivery_m3;
+}
 /*ALCODEEND*/}
 
 double f_reconstructEnergyModel(EnergyModel energyModel)
@@ -3980,20 +3990,25 @@ else {
 double f_createHeatProfileFromGasTS(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC,OL_GridConnectionHeatingType heatingType)
 {/*ALCODESTART::1753949286953*/
 // Gas profile
-double[] profile = f_timeSeriesToQuarterHourlyDoubleArray(surveyGC.getNaturalGas().getHourlyDelivery_m3());
+double[] profile_m3 = f_timeSeriesToQuarterHourlyDoubleArray(surveyGC.getNaturalGas().getHourlyDelivery_m3());
+
+double yearlyGasDelivery_m3 = Arrays.stream(profile_m3).sum();
+
 // First check what the heat conversion efficiency is from gas
 double gasToHeatEfficiency = f_getGasToHeatEfficiency(heatingType);
 // Then check which part of the gas consumption is used for heating
 double ratioGasUsedForHeating = f_getRatioGasUsedForHeating(surveyGC);
 // Finally, multiply the gas profile with the total conversion factor to get the heat profile
-ZeroMath.arrayMultiply(profile, avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
+ZeroMath.arrayMultiply(profile_m3, avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile, OL_ProfileAssetType.HEATDEMAND , energyModel.p_timeStep_h);
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile_m3, OL_ProfileAssetType.HEATDEMAND , energyModel.p_timeStep_h);
 j_ea.energyAssetName = engineGC.p_ownerID + " custom building heat profile";
 
-return max(profile)/energyModel.p_timeStep_h;
+if(engineGC.p_owner.p_detailedCompany){
+	v_remainingGasConsumption_m3 -= yearlyGasDelivery_m3;
+}
 
-//TODO: v_remainingGasConsumption_m3 -= yearlyGasConsumption_m3;
+return max(profile_m3)/energyModel.p_timeStep_h;
 /*ALCODEEND*/}
 
 double f_reconstructAgent(Agent agent,AgentArrayList pop,EnergyModel energyModel)
@@ -4053,6 +4068,10 @@ double f_createGasProfileFromEstimates(GridConnection engineGC)
 {/*ALCODESTART::1753955686832*/
 double yearlyGasDelivery_m3 = engineGC.p_floorSurfaceArea_m2 * avgc_data.p_avgCompanyGasConsumption_m3pm2;
 f_createGasProfileFromAnnualGasTotal(engineGC, yearlyGasDelivery_m3);
+
+if(engineGC.p_owner.p_detailedCompany){
+	v_remainingGasConsumption_m3 -= yearlyGasDelivery_m3;
+}
 /*ALCODEEND*/}
 
 double f_createHeatProfileFromEstimates(GridConnection engineGC)
@@ -4157,7 +4176,7 @@ double f_setDefaultHeatingStrategies()
 {/*ALCODESTART::1753968816374*/
 // Triples ( heatingType, hasThermalBuilding, hasHeatBuffer )
 Triple<OL_GridConnectionHeatingType, Boolean, Boolean> triple = null;
-
+/*
 triple = Triple.of(OL_GridConnectionHeatingType.GAS_BURNER, false, false);
 energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileSimple.class );
 triple = Triple.of(OL_GridConnectionHeatingType.GAS_BURNER, true, false);
@@ -4187,7 +4206,47 @@ triple = Triple.of(OL_GridConnectionHeatingType.HYDROGENBURNER, false, false);
 energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileSimple.class );
 triple = Triple.of(OL_GridConnectionHeatingType.HYDROGENBURNER, true, false);
 energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementBuildingSimple.class );
+*/
+triple = Triple.of(OL_GridConnectionHeatingType.GAS_BURNER, false, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
+triple = Triple.of(OL_GridConnectionHeatingType.GAS_BURNER, true, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
+triple = Triple.of(OL_GridConnectionHeatingType.GAS_BURNER, true, true);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
 
+triple = Triple.of(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, false, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
+triple = Triple.of(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, true, true);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
+triple = Triple.of(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, true, true);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
+
+triple = Triple.of(OL_GridConnectionHeatingType.HYBRID_HEATPUMP, false, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileHybridHeatPump.class );
+triple = Triple.of(OL_GridConnectionHeatingType.HYBRID_HEATPUMP, true, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementBuildingHybridHeatPump.class );
+
+
+triple = Triple.of(OL_GridConnectionHeatingType.DISTRICTHEAT, false, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
+triple = Triple.of(OL_GridConnectionHeatingType.DISTRICTHEAT, true, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
+triple = Triple.of(OL_GridConnectionHeatingType.DISTRICTHEAT, true, true);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
+
+triple = Triple.of(OL_GridConnectionHeatingType.LT_DISTRICTHEAT, false, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
+triple = Triple.of(OL_GridConnectionHeatingType.LT_DISTRICTHEAT, true, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
+triple = Triple.of(OL_GridConnectionHeatingType.LT_DISTRICTHEAT, true, true);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
+
+triple = Triple.of(OL_GridConnectionHeatingType.HYDROGENBURNER, false, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
+triple = Triple.of(OL_GridConnectionHeatingType.HYDROGENBURNER, true, false);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
+triple = Triple.of(OL_GridConnectionHeatingType.HYDROGENBURNER, true, true);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
 /*ALCODEEND*/}
 
 double f_addCustomHeatingSetup(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC)
