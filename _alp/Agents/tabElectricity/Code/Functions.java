@@ -37,11 +37,11 @@ double f_setPVSystemHouses(List<GCHouse> gcList,double PV_pct)
 {/*ALCODESTART::1722256142375*/
 ArrayList<GCHouse> houses = new ArrayList<GCHouse>(zero_Interface.c_orderedPVSystemsHouses.stream().filter(gcList::contains).toList());
 int nbHouses = houses.size();
-int nbHousesWithPV = count(houses, x -> x.v_liveAssetsMetaData.hasPV == true);
+int nbHousesWithPV = count(houses, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW));
 int nbHousesWithPVGoal = roundToInt(PV_pct / 100.0 * nbHouses);
 
 while ( nbHousesWithPVGoal < nbHousesWithPV ) { // remove excess PV systems
-	GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.hasPV == true);	
+	GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW));	
 	J_EA pvAsset = findFirst(house.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
 	if (pvAsset != null) {
 		pvAsset.removeEnergyAsset();
@@ -61,7 +61,7 @@ while ( nbHousesWithPVGoal < nbHousesWithPV ) { // remove excess PV systems
 }
 
 while ( nbHousesWithPVGoal > nbHousesWithPV ) {
-	GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.hasPV == false);
+	GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) == false);
 	if (house == null){
 		traceln("No gridconnection without PV panels found! Current PVsystems count: %s", nbHousesWithPV);
 		break;
@@ -74,7 +74,7 @@ while ( nbHousesWithPVGoal > nbHousesWithPV ) {
 		double installedPVCapacity_kW = house.v_liveAssetsMetaData.PVPotential_kW;//roundToDecimal(uniform(3,6),2);
 		
 		//Compensate for pt if it is present
-		if(house.v_liveAssetsMetaData.hasPT){
+		if(house.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW)){
 			installedPVCapacity_kW = max(0, installedPVCapacity_kW-zero_Interface.energyModel.avgc_data.p_avgPTPanelSize_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2); //For now just 1 panel
 		}
 		J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, OL_EnergyCarriers.ELECTRICITY, installedPVCapacity_kW, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
@@ -191,7 +191,7 @@ double averageEffectivePV_kWppm2 = zero_Interface.energyModel.avgc_data.p_avgRat
 
 for (GridConnection gc : gcList ) {
 	double gcInstalledPV_kWp = 0.0;
-	if ( gc.v_liveAssetsMetaData.hasPV ) {
+	if ( gc.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) ) {
 		for ( J_EAProduction j_ea : gc.c_productionAssets ) {
 			if ( j_ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC ) {
 				gcInstalledPV_kWp += j_ea.getCapacityElectric_kW();
@@ -230,7 +230,7 @@ if ( remaining_kWp > 0 ) {
 else {
 	// remove pv
 	for ( GCUtility company : new ArrayList<GCUtility>(activeGCs) ) {
-		if ( company.v_liveAssetsMetaData.hasPV ) {
+		if ( company.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) ) {
 			// find companyUI to check if the company already has PV on model startup			
 			remaining_kWp += company.v_liveAssetsMetaData.totalInstalledPVPower_kW;
 			f_removePVSystem( company );		
@@ -266,7 +266,7 @@ zero_Interface.f_resetSettings();
 
 double f_addPVSystem(GridConnection gc,double capacity_kWp)
 {/*ALCODESTART::1747306690517*/
-if ( gc.v_liveAssetsMetaData.hasPV ) {
+if ( gc.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) ) {
 	// Add the capacity to the existing asset
 	J_EAProduction pvAsset = findFirst(gc.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
 	if ( pvAsset == null ) {
@@ -391,7 +391,7 @@ double f_setResidentialBatteries(double homeBatteries_pct)
 {/*ALCODESTART::1750063382310*/
 // Setting houseBatteries
 double nbHouseBatteries = count(zero_Interface.energyModel.Houses, h -> h.p_batteryAsset != null); //f_getEnergyAssets(), p -> p.energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC && p.getParentAgent() instanceof GCHouse);
-double nbHousesWithPV = count(zero_Interface.energyModel.Houses, x -> x.v_liveAssetsMetaData.hasPV == true); //count(energyModel.f_getGridConnections(), p->p instanceof GCHouse);
+double nbHousesWithPV = count(zero_Interface.energyModel.Houses, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)); //count(energyModel.f_getGridConnections(), p->p instanceof GCHouse);
 double nbHousesWithBatteryGoal = roundToInt(nbHousesWithPV * homeBatteries_pct / 100);
 
 if( nbHousesWithPV > 0 ){
@@ -402,7 +402,7 @@ if( nbHousesWithPV > 0 ){
 		nbHouseBatteries--;
 	}
 	while ( nbHouseBatteries < nbHousesWithBatteryGoal) {
-		GCHouse house = findFirst(zero_Interface.energyModel.Houses, p -> p.p_batteryAsset == null && p.v_liveAssetsMetaData.hasPV == true);
+		GCHouse house = findFirst(zero_Interface.energyModel.Houses, p -> p.p_batteryAsset == null && p.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW));
 		
 		double batteryStorageCapacity_kWh = zero_Interface.energyModel.avgc_data.p_avgRatioHouseBatteryStorageCapacity_v_PVPower*house.v_liveAssetsMetaData.totalInstalledPVPower_kW;
 		double batteryCapacity_kW = batteryStorageCapacity_kWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power;

@@ -1328,10 +1328,12 @@ switch(vehicle_type){
 	
 }
 
-if (!isDefaultVehicle && maxChargingPower_kW != 0){
+if (!isDefaultVehicle && maxChargingPower_kW > 0){
 	capacityElectricity_kW	= maxChargingPower_kW;
 }
-
+if (maxChargingPower_kW <= 0) {
+	traceln("Survey data contains 0 or negative maxChargingPower_kW: %s", maxChargingPower_kW);
+}
 
 //Create the EV vehicle energy asset with the set parameters + links
 J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timestep_h, energyConsumption_kWhpkm, vehicleScaling, vehicle_type, null);	
@@ -1473,9 +1475,6 @@ if(pv_installed_kwp != null && pv_installed_kwp > 0){
 	f_addEnergyProduction(companyGC, OL_EnergyAssetType.PHOTOVOLTAIC, "Rooftop Solar", pv_installed_kwp);
 }
 
-
-//Battery with capacity 0 (initialize the slider)
-f_addStorage(companyGC, 0, 0, OL_EnergyAssetType.STORAGE_ELECTRIC);
 
 //add to scenario: current & future
 current_scenario_list.setCurrentBatteryPower_kW(0f);
@@ -2375,10 +2374,12 @@ if (gridConnection.getStorage().getHasBattery() != null && gridConnection.getSto
 	if (gridConnection.getStorage().getBatteryCapacityKwh() != null){
 		battery_capacity_kWh = gridConnection.getStorage().getBatteryCapacityKwh();	
 	}
+	
+	if (battery_power_kW > 0 && battery_capacity_kWh > 0) {
+		f_addStorage(companyGC, battery_power_kW, battery_capacity_kWh, OL_EnergyAssetType.STORAGE_ELECTRIC);
+		companyGC.p_batteryAlgorithm = new J_BatteryManagementSelfConsumption(companyGC);
+	}	
 }
-// Elke survey company krijgt hoe dan ook een batterij EA (ook als op dit moment nog geen batterij aanwezig is, maar dan is capaciteit gewoon 0)
-f_addStorage(companyGC, battery_power_kW, battery_capacity_kWh, OL_EnergyAssetType.STORAGE_ELECTRIC);
-companyGC.p_batteryAlgorithm = new J_BatteryManagementSelfConsumption(companyGC);
 
 //add to scenario: current
 current_scenario_list.setCurrentBatteryCapacity_kWh(battery_capacity_kWh);
