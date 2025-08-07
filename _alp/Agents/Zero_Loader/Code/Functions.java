@@ -1476,9 +1476,6 @@ if(pv_installed_kwp != null && pv_installed_kwp > 0){
 }
 
 
-//Battery with capacity 0 (initialize the slider)
-f_addStorage(companyGC, 0, 0, OL_EnergyAssetType.STORAGE_ELECTRIC);
-
 //add to scenario: current & future
 current_scenario_list.setCurrentBatteryPower_kW(0f);
 current_scenario_list.setCurrentBatteryCapacity_kWh(0f);
@@ -2377,10 +2374,12 @@ if (gridConnection.getStorage().getHasBattery() != null && gridConnection.getSto
 	if (gridConnection.getStorage().getBatteryCapacityKwh() != null){
 		battery_capacity_kWh = gridConnection.getStorage().getBatteryCapacityKwh();	
 	}
+	
+	if (battery_power_kW > 0 && battery_capacity_kWh > 0) {
+		f_addStorage(companyGC, battery_power_kW, battery_capacity_kWh, OL_EnergyAssetType.STORAGE_ELECTRIC);
+		companyGC.p_batteryAlgorithm = new J_BatteryManagementSelfConsumption(companyGC);
+	}	
 }
-// Elke survey company krijgt hoe dan ook een batterij EA (ook als op dit moment nog geen batterij aanwezig is, maar dan is capaciteit gewoon 0)
-f_addStorage(companyGC, battery_power_kW, battery_capacity_kWh, OL_EnergyAssetType.STORAGE_ELECTRIC);
-companyGC.p_batteryAlgorithm = new J_BatteryManagementSelfConsumption(companyGC);
 
 //add to scenario: current
 current_scenario_list.setCurrentBatteryCapacity_kWh(battery_capacity_kWh);
