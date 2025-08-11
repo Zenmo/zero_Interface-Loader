@@ -4,7 +4,7 @@
 	<Name><![CDATA[tabMobility]]></Name>
 	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Folder>1754045642067</Folder>
-	<Import><![CDATA[import kotlin.Triple;]]></Import>
+	<Import><![CDATA[import org.apache.commons.lang3.tuple.Triple;]]></Import>
 	<ExtendsReference>
 		<PackageName>zerointerfaceloader</PackageName>
 		<ClassName>tabArea</ClassName>

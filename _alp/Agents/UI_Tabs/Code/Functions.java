@@ -43,14 +43,14 @@ int PV_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());
 pop_tabElectricity.get(0).getSliderRooftopPVCompanies_pct().setValue(PV_pct, false);
 
 // GAS_BURNER / HEATING SYSTEMS: // Still a slight error. GasBurners + HeatPumps != total, because some GC have primary heating asset null
-int GasBurners = count(c_utilityGridConnections, gc->gc.p_primaryHeatingAsset instanceof J_EAConversionGasBurner && gc.v_isActive);
-int GasBurners_pct = roundToInt(100.0 * GasBurners / (count(c_utilityGridConnections, x -> x.v_isActive && x.p_primaryHeatingAsset != null) + pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps + pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_HybridHeatpumps));
+int GasBurners = count(c_utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
+int GasBurners_pct = roundToInt(100.0 * GasBurners / (count(c_utilityGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE) + pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps + pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_HybridHeatpumps));
 
 pop_tabHeating.get(0).getSliderGasBurnerCompanies_pct().setValue(GasBurners_pct, false);
-pop_tabHeating.get(0).f_setHeatingSliders( 0, pop_tabHeating.get(0).getSliderGasBurnerCompanies_pct(), pop_tabHeating.get(0).getSliderElectricHeatPumpCompanies_pct(), null, null );
+pop_tabHeating.get(0).f_setHeatingSliders( 0, pop_tabHeating.get(0).getSliderGasBurnerCompanies_pct(), pop_tabHeating.get(0).getSliderElectricHeatPumpCompanies_pct(), null, null, null );
 
 pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct().setValue(GasBurners_pct, false);
-pop_tabHeating.get(0).f_setHeatingSliders( 0, pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct(), pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesElectricHeatPumpCompanies_pct(), null, null );
+pop_tabHeating.get(0).f_setHeatingSliders( 0, pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct(), pop_tabHeating.get(0).getSliderHeatDemandSlidersCompaniesElectricHeatPumpCompanies_pct(), null, null, null );
 
 
 // HEAT_PUMP_AIR:
@@ -163,12 +163,12 @@ pop_tabMobility.get(0).getSliderElectricCars_pct().setValue(ElectricCars_pct, fa
 double f_updateResidentialSliders()
 {/*ALCODESTART::1753870299960*/
 int nbHouses = c_houseGridConnections.size();
-int nbHousesWithPV = count(c_houseGridConnections, x -> x.v_liveAssetsMetaData.hasPV);
+int nbHousesWithPV = count(c_houseGridConnections, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW));
 double pv_pct = 100.0 * nbHousesWithPV / nbHouses;
 pop_tabElectricity.get(0).sl_householdPVResidentialArea_pct.setValue(pv_pct, false);
 
 if ( nbHousesWithPV != 0 ) {
-	int nbHousesWithHomeBattery = count(c_houseGridConnections, x -> x.v_liveAssetsMetaData.hasPV && x.p_batteryAsset != null);
+	int nbHousesWithHomeBattery = count(c_houseGridConnections, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) && x.p_batteryAsset != null);
 	double battery_pct = 100.0 * nbHousesWithHomeBattery / nbHousesWithPV;
 	pop_tabElectricity.get(0).sl_householdBatteriesResidentialArea_pct.setValue(battery_pct, false);
 }
@@ -226,10 +226,10 @@ for(GridConnection GC : gridConnections){
 		c_houseGridConnections.add((GCHouse)GC);		
 	}
 	else if(GC instanceof GCEnergyProduction){
-		if(GC.c_pvAssets.size()>0){
+		if(GC.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
 			c_solarFarmGridConnections.add((GCEnergyProduction)GC);		
 		}
-		if(GC.c_windAssets.size()>0){
+		if(GC.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.windProductionElectric_kW)){
 			c_windFarmGridConnections.add((GCEnergyProduction)GC);
 		}
 	}
