@@ -1817,29 +1817,34 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() )
 		gr_settingsV1G.setVisible(false);
 		gr_settingsV2G.setVisible(false);
 		
-		//zero_Interface.energyModel.v_smartChargingActive = false;
-		//zero_Interface.energyModel.v_V2GProbability = 0;
 		for( GCHouse house : zero_Interface.energyModel.Houses ){
-			house.p_chargingAttitudeVehicles = OL_ChargingAttitude.SIMPLE;
+			house.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
+		}
+		for( GCPublicCharger publicCharger : zero_Interface.energyModel.PublicChargers ){
+			publicCharger.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
 		}
 		break;
 	case 1:
 		gr_settingsV1G.setVisible(true);
 		gr_settingsV2G.setVisible(false);
-		//zero_Interface.energyModel.v_smartChargingActive = true;
+
 		for( GCHouse house : zero_Interface.energyModel.Houses ){
-			house.p_chargingAttitudeVehicles = OL_ChargingAttitude.V1G;
+			house.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.V1G);
 		}
-		//zero_Interface.energyModel.v_V2GProbability = 0;
+		for( GCPublicCharger publicCharger : zero_Interface.energyModel.PublicChargers ){
+			publicCharger.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.V1G);
+		}
 		break;
 	case 2:
 		gr_settingsV1G.setVisible(false);
 		gr_settingsV2G.setVisible(true);
+		
 		for( GCHouse house : zero_Interface.energyModel.Houses ){
-			house.p_chargingAttitudeVehicles = OL_ChargingAttitude.V2G; 
+			house.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.V2G); 
 		}
-		//zero_Interface.energyModel.v_smartChargingActive = true;
-		//zero_Interface.energyModel.v_V2GProbability = 1;
+		for( GCPublicCharger publicCharger : zero_Interface.energyModel.PublicChargers ){
+			publicCharger.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.V2G);
+		}
 		break;
 }
 

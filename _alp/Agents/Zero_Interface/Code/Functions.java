@@ -163,6 +163,9 @@ switch(selectedMapOverlayType){
 	case CONGESTION:
 		f_setColorsBasedOnCongestion_objects(gis_area);
 		break;
+	case PARKING_TYPE:
+		f_setColorsBasedOnParkingType_objects(gis_area);
+		break;
 }
 /*ALCODEEND*/}
 
@@ -245,6 +248,9 @@ switch(selectedMapOverlayType){
 		break;
 	case CONGESTION:
 		f_setColorsBasedOnCongestion_gridnodes(GN, false);
+		break;
+	case PARKING_TYPE:
+		f_setColorsBasedOnParkingType_gridnodes(GN);
 		break;
 }
 /*ALCODEEND*/}
@@ -336,7 +342,7 @@ if (!c_selectedObjects.get(0).c_containedGridConnections.get(0).p_ownerID.equals
 	}
 }
 
-//Check the amount of GC in building
+//Check the number of GCs in building
 v_nbGridConnectionsInSelectedBuilding = b.c_containedGridConnections.size();
 
 //Multiple GC in building: set additional adress in building info + buttons
@@ -352,13 +358,21 @@ else {
 			if(b.c_containedGridConnections.get(0).p_owner.p_detailedCompany){
 				text = b.c_containedGridConnections.get(0).p_owner.p_actorID + ", ";
 			}
-			else if(((GIS_Building)b).p_annotation != null){
-				text = ((GIS_Building)b).p_annotation + ", ";
+			else if(b.p_annotation != null){
+				text = b.p_annotation + ", ";
 			}
 		}
 		else {
 			text = b.p_id + ", ";
 		}
+	}
+	else{
+		if(b.p_annotation != null){
+			text = b.p_annotation + ", ";
+		}
+		else{
+			text = b.p_id + ", ";
+		}		
 	}
 	
 	//Set adres text
@@ -502,13 +516,15 @@ v_connectionOwnerIndexNr = 0;
 
 //Get the ghost vehicles for the transport slider tab
 Triple<Integer, Integer, Integer> triple = uI_Tabs.pop_tabMobility.get(0).f_calculateNumberOfGhostVehicles( new ArrayList<GridConnection>(energyModel.UtilityConnections.findAll( x -> true)) );
-uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Cars = triple.getFirst();
-uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Vans = triple.getSecond();
-uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Trucks = triple.getThird();
+uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Cars = triple.getLeft();
+uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Vans = triple.getMiddle();
+uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Trucks = triple.getRight();
 //Get the ghost heating systems
 Pair<Integer, Integer> pair = uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfGhostHeatingSystems( energyModel.UtilityConnections.findAll( x -> true) );
 uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps = pair.getFirst();
 uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_HybridHeatpumps = pair.getSecond();
+
+uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfCustomHeatingSystems = uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfCustomHeatingSystems(new ArrayList<GridConnection>(energyModel.UtilityConnections.findAll( x -> true)));
 
 /*ALCODEEND*/}
 
@@ -544,6 +560,7 @@ if(!b_runningMainInterfaceScenarios){
 			f_enableLivePlotsOnly(companyUI.uI_Results);
 		}
 	}
+	//traceln("f_resetSettings called");
 	runSimulation();
 }
 /*ALCODEEND*/}
@@ -551,7 +568,7 @@ if(!b_runningMainInterfaceScenarios){
 double f_initialPVSystemsOrder()
 {/*ALCODESTART::1714130288661*/
 List<GCHouse> houses = new ArrayList<GCHouse>(energyModel.Houses.findAll( x -> true));
-List<GCHouse> housesWithoutPV = houses.stream().filter( gc -> !gc.v_liveAssetsMetaData.hasPV ).collect(Collectors.toList());
+List<GCHouse> housesWithoutPV = houses.stream().filter( gc -> !gc.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) ).collect(Collectors.toList());
 List<GCHouse> housesWithPV = new ArrayList<>(houses);
 housesWithPV.removeAll(housesWithoutPV);
 
@@ -560,8 +577,8 @@ c_orderedPVSystemsHouses.addAll(housesWithPV);
 
 
 List<GCUtility> companies = new ArrayList<GCUtility>(energyModel.UtilityConnections.findAll( x -> true));
-List<GCUtility> companiesWithoutPV = companies.stream().filter( gc -> !gc.v_liveAssetsMetaData.hasPV ).collect(Collectors.toList());
-List<GCUtility> companiesWithPV = companies.stream().filter( gc -> gc.v_liveAssetsMetaData.hasPV ).collect(Collectors.toList());
+List<GCUtility> companiesWithoutPV = companies.stream().filter( gc -> !gc.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) ).collect(Collectors.toList());
+List<GCUtility> companiesWithPV = companies.stream().filter( gc -> gc.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) ).collect(Collectors.toList());
 List<GCUtility> detailedCompaniesWithPV = companiesWithPV.stream().filter( gc -> gc.p_owner != null && gc.p_owner.p_detailedCompany ).collect(Collectors.toList());
 List<GCUtility> genericCompaniesWithPV = new ArrayList<>(companiesWithPV);
 genericCompaniesWithPV.removeAll(detailedCompaniesWithPV);
@@ -596,17 +613,16 @@ c_orderedVehicles = otherEAs;
 double f_initialHeatingSystemsOrder()
 {/*ALCODESTART::1714131269202*/
 List<GCHouse> houses = new ArrayList<GCHouse>(energyModel.Houses.findAll( x -> true));
-List<GCHouse> housesWithoutHP = houses.stream().filter( gc -> gc.p_heatingType != OL_GridConnectionHeatingType.HEATPUMP_AIR ).collect(Collectors.toList());
+List<GCHouse> housesWithoutHP = houses.stream().filter( gc -> gc.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP ).collect(Collectors.toList());
 List<GCHouse> housesWithHP = new ArrayList<>(houses);
 housesWithHP.removeAll(housesWithoutHP);
 
 c_orderedHeatingSystemsHouses = new ArrayList<>(housesWithoutHP);
 c_orderedHeatingSystemsHouses.addAll(housesWithHP);
 
-
-List<GCUtility> companies = new ArrayList<GCUtility>(energyModel.UtilityConnections.findAll( gc -> gc.p_heatingType != OL_GridConnectionHeatingType.NONE));
-List<GCUtility> companiesWithoutHP = companies.stream().filter( gc -> gc.p_heatingType != OL_GridConnectionHeatingType.HEATPUMP_AIR).collect(Collectors.toList());
-List<GCUtility> companiesWithHP = companies.stream().filter( gc -> gc.p_heatingType == OL_GridConnectionHeatingType.HEATPUMP_AIR ).collect(Collectors.toList());
+List<GCUtility> companies = new ArrayList<GCUtility>(energyModel.UtilityConnections.findAll( gc -> gc.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE && gc.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.CUSTOM));
+List<GCUtility> companiesWithoutHP = companies.stream().filter( gc -> gc.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP).collect(Collectors.toList());
+List<GCUtility> companiesWithHP = companies.stream().filter( gc -> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP ).collect(Collectors.toList());
 List<GCUtility> detailedCompaniesWithHP = companiesWithHP.stream().filter( gc -> gc.p_owner != null && gc.p_owner.p_detailedCompany ).collect(Collectors.toList());
 List<GCUtility> genericCompaniesWithHP = new ArrayList<>(companiesWithHP);
 genericCompaniesWithHP.removeAll(detailedCompaniesWithHP);
@@ -649,7 +665,7 @@ if(gis_area.c_containedGridConnections.size() > 0){
 double f_setColorsBasedOnProduction(GIS_Object gis_area)
 {/*ALCODESTART::1715118739710*/
 if (gis_area.c_containedGridConnections.size() > 0) {
-	if (gis_area.c_containedGridConnections.get(0).v_liveAssetsMetaData.hasPV) {
+	if (gis_area.c_containedGridConnections.get(0).v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)) {
 		if (gis_area.c_containedGridConnections.get(0).c_productionAssets.get(0).getCapacityElectric_kW() < 100){
 			gis_area.f_style(rect_mapOverlayLegend_PVProduction2.getFillColor(), null, null, null);
 		}
@@ -786,7 +802,7 @@ else if ( yearlyEnergyConsumption > 6000){ gis_area.f_style( rect_mapOverlayLege
 double f_setColorsBasedOnProductionHouseholds(GIS_Object gis_area)
 {/*ALCODESTART::1718265697364*/
 if (gis_area.c_containedGridConnections.size() > 0) {
-	if (gis_area.c_containedGridConnections.get(0).v_liveAssetsMetaData.hasPV) {
+	if (gis_area.c_containedGridConnections.get(0).v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)) {
 		if (gis_area.c_containedGridConnections.get(0).c_productionAssets.get(0).getCapacityElectric_kW() < 5){
 			gis_area.f_style( rect_mapOverlayLegend_PVProduction2.getFillColor(), null, null, null );
 		}
@@ -1495,7 +1511,7 @@ c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> !GC.p_
 
 double f_filterHasPV(ArrayList<GridConnection> toBeFilteredGC)
 {/*ALCODESTART::1734448690487*/
-c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC.v_liveAssetsMetaData.hasPV));
+c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)));
 
 /*ALCODEEND*/}
 
@@ -2918,6 +2934,9 @@ else{//Take the default
 	c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.PV_PRODUCTION);
 	c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.GRID_NEIGHBOURS);
 	c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.CONGESTION);
+	if(p_selectedProjectType == OL_ProjectType.RESIDENTIAL){
+		c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.PARKING_TYPE);
+	}
 }
 
 
@@ -2925,7 +2944,7 @@ else{//Take the default
 Presentable presentable = gr_mapOverlayLegenda.getPresentable();
 boolean ispublic = true;
 double x = 756;
-double y = 837;
+double y = c_loadedMapOverlayTypes.size() < 6 ? 837 : 837 - 18;
 double width = 130;
 double height = 0;//Not needed, automatically adjust by adding options
 Color textColor = Color.BLACK;
@@ -2953,6 +2972,9 @@ for(OL_MapOverlayTypes mapOverlayType : c_loadedMapOverlayTypes){
 		case CONGESTION:
 			RadioButtonOptions_list.add("Netbelasting");
 			break;
+		case PARKING_TYPE:
+			RadioButtonOptions_list.add("Parkeer type");
+			break;
 	}
 } 
 
@@ -2967,6 +2989,11 @@ rb_mapOverlay = new ShapeRadioButtonGroup(presentable, ispublic, x ,y, width, he
 };
 
 presentation.add(rb_mapOverlay);
+
+//For now: Adjust location of radiobutton title if 6 buttons
+if(c_loadedMapOverlayTypes.size() > 5){
+	gr_colorings.setY(-17);
+}
 /*ALCODEEND*/}
 
 double f_setMapOverlay()
@@ -3002,6 +3029,9 @@ switch(selectedMapOverlayType){
 		break;
 	case CONGESTION:
 		f_setMapOverlay_Congestion();
+		break;
+	case PARKING_TYPE:
+		f_setMapOverlay_ParkingType();
 		break;
 }
 /*ALCODEEND*/}
@@ -3344,12 +3374,69 @@ new Thread( () -> {
 double f_initialPTSystemsOrder_households()
 {/*ALCODESTART::1753951802256*/
 List<GCHouse> houses = new ArrayList<GCHouse>(energyModel.Houses.findAll( x -> true));
-List<GCHouse> housesWithoutPT = houses.stream().filter( gc -> !gc.v_liveAssetsMetaData.hasPT ).collect(Collectors.toList());
+List<GCHouse> housesWithoutPT = houses.stream().filter( gc -> !gc.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW) ).collect(Collectors.toList());
 List<GCHouse> housesWithPT = new ArrayList<>(houses);
 housesWithPT.removeAll(housesWithoutPT);
 
 c_orderedPTSystemsHouses = new ArrayList<>(housesWithoutPT);
 c_orderedPTSystemsHouses.addAll(housesWithPT);
 
+/*ALCODEEND*/}
+
+double f_setMapOverlay_ParkingType()
+{/*ALCODESTART::1754312747144*/
+//Set legend
+b_updateLiveCongestionColors = true;
+
+//Colour gis objects
+for (GIS_Building building : energyModel.pop_GIS_Buildings){
+	f_setColorsBasedOnParkingType_objects(building);
+}
+for (GridNode GN : energyModel.pop_gridNodes){
+	f_setColorsBasedOnParkingType_gridnodes(GN);
+}
+/*ALCODEEND*/}
+
+double f_setColorsBasedOnParkingType_objects(GIS_Object gis_area)
+{/*ALCODESTART::1754312755135*/
+if (gis_area.c_containedGridConnections.size() > 0) {
+	
+	//Unkown by default
+	Color objectColor = v_parkingSpaceColor_unkown;
+	Color objectLineColor = v_parkingSpaceLineColor_unkown;
+	
+	//Check if houses and if public parking
+	boolean containsHouses = false;
+	boolean containsHousesWithPublicParking = false;
+	for(GridConnection gc : gis_area.c_containedGridConnections){
+		if(gc instanceof GCHouse){
+			containsHouses = true;
+			if(!((GCHouse)gc).p_eigenOprit){
+				containsHousesWithPublicParking = true;
+			}
+		}
+	}
+	
+	//Change color based on parking type if houses present
+	if(containsHouses){
+		if(containsHousesWithPublicParking){
+			objectColor = v_parkingSpaceColor_public;
+			objectLineColor = v_parkingSpaceLineColor_public;		
+		}
+		else{
+			objectColor = v_parkingSpaceColor_private;
+			objectLineColor = v_parkingSpaceLineColor_private;
+		}
+	}
+	gis_area.f_style(objectColor, objectLineColor, null, null);
+}
+/*ALCODEEND*/}
+
+double f_setColorsBasedOnParkingType_gridnodes(GridNode GN)
+{/*ALCODESTART::1754314128315*/
+if(GN.gisRegion != null){
+	GN.gisRegion.setFillColor(v_parkingSpaceColor_unkown);
+	GN.gisRegion.setLineColor(v_parkingSpaceLineColor_unkown);
+}
 /*ALCODEEND*/}
 
