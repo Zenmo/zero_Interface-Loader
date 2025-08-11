@@ -3,7 +3,7 @@
 	<Rectangle>
 		<Id>1722344806530</Id>
 		<Name><![CDATA[rect_generalFunctions]]></Name>
-		<X>450</X>
+		<X>430</X>
 		<Y>650</Y>
 		<Label>
 			<X>10</X>
@@ -20,8 +20,8 @@
 		<LineColor>-16777216</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>200</Width>
-		<Height>100</Height>
+		<Width>230</Width>
+		<Height>170</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -1318,7 +1318,7 @@ f_resetNFATOSettings();</ActionCode>
 	<Text>
 		<Id>1722344870135</Id>
 		<Name><![CDATA[t_generalFunctionsDescription]]></Name>
-		<X>480</X>
+		<X>460</X>
 		<Y>660</Y>
 		<Label>
 			<X>0</X>

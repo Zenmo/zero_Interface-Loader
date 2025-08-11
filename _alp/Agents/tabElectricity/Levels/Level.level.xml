@@ -28,7 +28,7 @@
 	</Rectangle>
 	<Group>
 		<Id>1722328776701</Id>
-		<Name><![CDATA[gr_electricityDemandSliders]]></Name>
+		<Name><![CDATA[gr_electricitySliders_default]]></Name>
 		<X>0</X>
 		<Y>0</Y>
 		<Label>
@@ -842,7 +842,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 	</Text>
 	<Group>
 		<Id>1728384392418</Id>
-		<Name><![CDATA[gr_electricityDemandSliders_Businesspark]]></Name>
+		<Name><![CDATA[gr_electricitySliders_businesspark]]></Name>
 		<X>400</X>
 		<Y>0</Y>
 		<Label>
@@ -1367,7 +1367,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 	</Group>
 	<Group>
 		<Id>1750063382217</Id>
-		<Name><![CDATA[gr_electricityDemandSlidersResidentialArea]]></Name>
+		<Name><![CDATA[gr_electricitySliders_residential]]></Name>
 		<X>800</X>
 		<Y>0</Y>
 		<Label>

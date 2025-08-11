@@ -3,7 +3,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1722245555993</Id>
 		<Name><![CDATA[v_selectedTabType]]></Name>
-		<X>250</X>
+		<X>270</X>
 		<Y>40</Y>
 		<Label>
 			<X>10</X>
@@ -25,7 +25,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1746099651858</Id>
 		<Name><![CDATA[v_presentationXOffset]]></Name>
-		<X>250</X>
+		<X>270</X>
 		<Y>130</Y>
 		<Label>
 			<X>10</X>
@@ -47,7 +47,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1746099651890</Id>
 		<Name><![CDATA[v_presentationYOffset]]></Name>
-		<X>250</X>
+		<X>270</X>
 		<Y>150</Y>
 		<Label>
 			<X>10</X>
@@ -66,10 +66,30 @@
 			</InitialValue>
 		</Properties>
 	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1754908036761</Id>
+		<Name><![CDATA[v_sliderGridConnections]]></Name>
+		<X>530</X>
+		<Y>50</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[List<GridConnection>]]></Type>
+		</Properties>
+	</Variable>
 	<Variable Class="CollectionVariable">
 		<Id>1753869985994</Id>
 		<Name><![CDATA[c_utilityGridConnections]]></Name>
-		<X>610</X>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1170</X>
 		<Y>75</Y>
 		<Label>
 			<X>10</X>
@@ -87,7 +107,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1753869993825</Id>
 		<Name><![CDATA[c_houseGridConnections]]></Name>
-		<X>610</X>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1170</X>
 		<Y>100</Y>
 		<Label>
 			<X>10</X>
@@ -105,7 +126,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1753870454474</Id>
 		<Name><![CDATA[c_gridBatteryGridConnections]]></Name>
-		<X>610</X>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1170</X>
 		<Y>125</Y>
 		<Label>
 			<X>10</X>
@@ -123,7 +145,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1753870466643</Id>
 		<Name><![CDATA[c_solarFarmGridConnections]]></Name>
-		<X>610</X>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1170</X>
 		<Y>150</Y>
 		<Label>
 			<X>10</X>
@@ -141,7 +164,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1753870491136</Id>
 		<Name><![CDATA[c_windFarmGridConnections]]></Name>
-		<X>610</X>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1170</X>
 		<Y>175</Y>
 		<Label>
 			<X>10</X>
@@ -159,7 +183,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1753870502247</Id>
 		<Name><![CDATA[c_chargerGridConnections]]></Name>
-		<X>610</X>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1170</X>
 		<Y>200</Y>
 		<Label>
 			<X>10</X>

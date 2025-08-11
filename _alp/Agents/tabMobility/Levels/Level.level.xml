@@ -53,7 +53,7 @@
 	</Text>
 	<Group>
 		<Id>1722247567090</Id>
-		<Name><![CDATA[gr_mobilityDemandSliders]]></Name>
+		<Name><![CDATA[gr_mobilitySliders_default]]></Name>
 		<X>0</X>
 		<Y>0</Y>
 		<Label>

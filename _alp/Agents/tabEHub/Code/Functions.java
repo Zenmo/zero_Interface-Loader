@@ -302,3 +302,9 @@ else {
 }
 /*ALCODEEND*/}
 
+double f_updateSliders_EHub()
+{/*ALCODESTART::1754923608234*/
+//Function that can be used to update sliders/buttons to the engine state
+//--> empty for now
+/*ALCODEEND*/}
+

@@ -18,7 +18,6 @@ switch (v_selectedTabType) {
 	case HUB:
 	case NFATO:
 		pop_tabEHub_presentation.setVisible(true);
-		//tabEHub.f_setTab();
 		break;
 }
 
@@ -38,13 +37,16 @@ double f_updateBusinessparkSliders()
 // PV SYSTEMS:
 //double PVsystems = count(energyModel.UtilityConnections, x->x.v_liveAssetsMetaData.hasPV == true && x.v_isActive);		
 //int PV_pct = roundToInt(100 * PVsystems / count(energyModel.UtilityConnections, x->x.v_isActive));
-Pair<Double, Double> pair = pop_tabElectricity.get(0).f_getPVSystemPercentage( new ArrayList<GridConnection>(findAll(c_utilityGridConnections, x -> x.v_isActive) ) );
+
+List<GCUtility> utilityGridConnections = f_getSliderGridConnections_utilities();
+
+Pair<Double, Double> pair = pop_tabElectricity.get(0).f_getPVSystemPercentage( new ArrayList<GridConnection>(findAll(utilityGridConnections, x -> x.v_isActive) ) );
 int PV_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());
 pop_tabElectricity.get(0).getSliderRooftopPVCompanies_pct().setValue(PV_pct, false);
 
 // GAS_BURNER / HEATING SYSTEMS: // Still a slight error. GasBurners + HeatPumps != total, because some GC have primary heating asset null
-int GasBurners = count(c_utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
-int GasBurners_pct = roundToInt(100.0 * GasBurners / (count(c_utilityGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE) + pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps + pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_HybridHeatpumps));
+int GasBurners = count(utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
+int GasBurners_pct = roundToInt(100.0 * GasBurners / (count(utilityGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE) + pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps + pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_HybridHeatpumps));
 
 pop_tabHeating.get(0).getSliderGasBurnerCompanies_pct().setValue(GasBurners_pct, false);
 pop_tabHeating.get(0).f_setHeatingSliders( 0, pop_tabHeating.get(0).getSliderGasBurnerCompanies_pct(), pop_tabHeating.get(0).getSliderElectricHeatPumpCompanies_pct(), null, null, null );
@@ -63,7 +65,7 @@ pop_tabHeating.get(0).f_setHeatingSliders( 0, pop_tabHeating.get(0).getSliderHea
 int DieselTrucks = 0;
 int ElectricTrucks = pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Trucks;
 int HydrogenTrucks = 0;
-for (GCUtility gc : c_utilityGridConnections) {
+for (GCUtility gc : utilityGridConnections) {
 	if(gc.v_isActive){
 		for (J_EAVehicle vehicle : gc.c_vehicleAssets) {
 			if (vehicle instanceof J_EADieselVehicle && vehicle.getEAType() == OL_EnergyAssetType.DIESEL_TRUCK) {
@@ -96,7 +98,7 @@ pop_tabMobility.get(0).getSliderHydrogenTrucks_pct().setValue(HydrogenTrucks_pct
 int DieselVans = 0;
 int ElectricVans = pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Vans;
 int HydrogenVans = 0;
-for (GCUtility gc : c_utilityGridConnections) {
+for (GCUtility gc : utilityGridConnections) {
 	if(gc.v_isActive){
 		for (J_EAVehicle vehicle : gc.c_vehicleAssets) {
 			if (vehicle instanceof J_EADieselVehicle && vehicle.getEAType() == OL_EnergyAssetType.DIESEL_VAN) {
@@ -129,7 +131,7 @@ pop_tabMobility.get(0).getSliderElectricVans_pct().setValue(ElectricVans_pct, fa
 int DieselCars = 0;
 int ElectricCars = pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Cars;
 int HydrogenCars = 0;
-for (GCUtility gc : c_utilityGridConnections) {
+for (GCUtility gc : utilityGridConnections) {
 	if(gc.v_isActive){
 		for (J_EAVehicle vehicle : gc.c_vehicleAssets) {
 			if (vehicle instanceof J_EADieselVehicle && vehicle.getEAType() == OL_EnergyAssetType.DIESEL_VEHICLE) {
@@ -162,18 +164,34 @@ pop_tabMobility.get(0).getSliderElectricCars_pct().setValue(ElectricCars_pct, fa
 
 double f_updateResidentialSliders()
 {/*ALCODESTART::1753870299960*/
-int nbHouses = c_houseGridConnections.size();
-int nbHousesWithPV = count(c_houseGridConnections, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW));
+List<GCHouse> houseGridConnections = new ArrayList<>();
+List<GCPublicCharger> chargerGridConnections = new ArrayList<>();
+List<GCGridBattery> gridBatteryGridConnections = new ArrayList<>();
+
+for (GridConnection GC : findAll(v_sliderGridConnections, gc -> gc.v_isActive)) {
+   	if(GC instanceof GCHouse){
+		houseGridConnections.add((GCHouse)GC);		
+	}
+	else if(GC instanceof GCPublicCharger){
+		chargerGridConnections.add((GCPublicCharger)GC);		
+	}
+	else if(GC instanceof GCGridBattery){
+		gridBatteryGridConnections.add((GCGridBattery)GC);		
+	}
+}
+
+int nbHouses = houseGridConnections.size();
+int nbHousesWithPV = count(houseGridConnections, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW));
 double pv_pct = 100.0 * nbHousesWithPV / nbHouses;
 pop_tabElectricity.get(0).sl_householdPVResidentialArea_pct.setValue(pv_pct, false);
 
 if ( nbHousesWithPV != 0 ) {
-	int nbHousesWithHomeBattery = count(c_houseGridConnections, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) && x.p_batteryAsset != null);
+	int nbHousesWithHomeBattery = count(houseGridConnections, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) && x.p_batteryAsset != null);
 	double battery_pct = 100.0 * nbHousesWithHomeBattery / nbHousesWithPV;
 	pop_tabElectricity.get(0).sl_householdBatteriesResidentialArea_pct.setValue(battery_pct, false);
 }
 
-int nbHousesWithElectricCooking = count(c_houseGridConnections, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.ELECTRIC);
+int nbHousesWithElectricCooking = count(houseGridConnections, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.ELECTRIC);
 double cooking_pct = 100.0 * nbHousesWithElectricCooking / nbHouses;
 pop_tabElectricity.get(0).sl_householdElectricCookingResidentialArea_pct.setValue(cooking_pct, false);
 
@@ -185,13 +203,13 @@ if (zero_Interface.c_orderedVehiclesPrivateParking.size() > 0) {
 
 
 //Update chargers
-int nbPublicChargers = c_chargerGridConnections.size();
-int nbActivePublicChargers = count(c_chargerGridConnections, x -> x.v_isActive);
+int nbPublicChargers = chargerGridConnections.size();
+int nbActivePublicChargers = count(chargerGridConnections, x -> x.v_isActive);
 double activePublicChargers_pct = 100.0 * nbActivePublicChargers / nbPublicChargers;
 pop_tabElectricity.get(0).sl_publicChargersResidentialArea_pct.setValue(activePublicChargers_pct, false);
 
-int nbV1GChargers = count(zero_Interface.c_orderedV1GChargers, x -> c_chargerGridConnections.contains(x) && x.V1GCapable);
-int nbV2GChargers =count(zero_Interface.c_orderedV2GChargers, x -> c_chargerGridConnections.contains(x) && x.V2GCapable);
+int nbV1GChargers = count(zero_Interface.c_orderedV1GChargers, x -> chargerGridConnections.contains(x) && x.V1GCapable);
+int nbV2GChargers =count(zero_Interface.c_orderedV2GChargers, x -> chargerGridConnections.contains(x) && x.V2GCapable);
 double V1G_pct = 100.0 * nbV1GChargers / nbPublicChargers;
 double V2G_pct = 100.0 * nbV2GChargers / nbPublicChargers;
 pop_tabElectricity.get(0).sl_chargersThatSupportV1G_pct.setValue(V1G_pct, false);
@@ -200,10 +218,10 @@ pop_tabElectricity.get(0).sl_chargersThatSupportV2G_pct.setValue(V2G_pct, false)
 
 
 double averageNeighbourhoodBatterySize_kWh = 0;
-for (GCGridBattery gc : c_gridBatteryGridConnections) {
+for (GCGridBattery gc : gridBatteryGridConnections) {
 	averageNeighbourhoodBatterySize_kWh += gc.p_batteryAsset.getStorageCapacity_kWh();
 }
-averageNeighbourhoodBatterySize_kWh /= c_gridBatteryGridConnections.size();
+averageNeighbourhoodBatterySize_kWh /= gridBatteryGridConnections.size();
 pop_tabElectricity.get(0).sl_gridBatteriesResidentialArea_kWh.setValue(averageNeighbourhoodBatterySize_kWh, false);
 
 /*ALCODEEND*/}
@@ -242,24 +260,101 @@ for(GridConnection GC : gridConnections){
 }
 /*ALCODEEND*/}
 
+double f_initializeSliderGCPointer(List<GridConnection> gridConnections)
+{/*ALCODESTART::1754908006859*/
+v_sliderGridConnections = gridConnections;
+/*ALCODEEND*/}
+
 double f_initializeUI_Tabs(List<GridConnection> gridConnections)
-{/*ALCODESTART::1753881420434*/
+{/*ALCODESTART::1754908356478*/
 //Initialize the GridConnections
-f_initializeSliderGridConnections(gridConnections);
+f_initializeSliderGCPointer(gridConnections);
 
 //Set sliders to engine state of the gridconnections
-if(zero_Interface.p_selectedProjectType == OL_ProjectType.BUSINESSPARK){
-	f_updateBusinessparkSliders();
-}
-else if(zero_Interface.p_selectedProjectType == OL_ProjectType.RESIDENTIAL){
-	f_updateResidentialSliders();
-}
-else{
-	f_updateBusinessparkSliders();
-	f_updateResidentialSliders();
-}
+f_updateSliders();
 
 //Show correct tab
 f_showCorrectTab();
+/*ALCODEEND*/}
+
+List<GCHouse> f_getSliderGridConnections_houses()
+{/*ALCODESTART::1754919017244*/
+List<GCHouse> houseGridConnections = new ArrayList<>();
+
+for(GridConnection GC : v_sliderGridConnections){
+	if(GC instanceof GCHouse){
+		houseGridConnections.add((GCHouse)GC);		
+	}
+}
+
+return houseGridConnections;
+/*ALCODEEND*/}
+
+List<GCUtility> f_getSliderGridConnections_utilities()
+{/*ALCODESTART::1754922545766*/
+List<GCUtility> utilityGridConnections = new ArrayList<>();
+
+for(GridConnection GC : v_sliderGridConnections){
+	if(GC instanceof GCUtility){
+		utilityGridConnections.add((GCUtility)GC);
+	}
+}
+
+return utilityGridConnections;
+/*ALCODEEND*/}
+
+List<GCGridBattery> f_getSliderGridConnections_gridBatteries()
+{/*ALCODESTART::1754922546986*/
+List<GCGridBattery> gridBatteryGridConnections = new ArrayList<>();
+
+for(GridConnection GC : v_sliderGridConnections){
+	if(GC instanceof GCGridBattery){
+		gridBatteryGridConnections.add((GCGridBattery)GC);		
+	}
+}
+
+return gridBatteryGridConnections;
+/*ALCODEEND*/}
+
+List<GCPublicCharger> f_getSliderGridConnections_chargers()
+{/*ALCODESTART::1754922547989*/
+List<GCPublicCharger> chargerGridConnections = new ArrayList<>();
+
+for(GridConnection GC : v_sliderGridConnections){
+	if(GC instanceof GCPublicCharger){
+		chargerGridConnections.add((GCPublicCharger)GC);		
+	}
+}
+
+return chargerGridConnections;
+/*ALCODEEND*/}
+
+List<GCEnergyProduction> f_getSliderGridConnections_production()
+{/*ALCODESTART::1754922591622*/
+List<GCEnergyProduction> productionGridConnections = new ArrayList<>();
+
+for(GridConnection GC : v_sliderGridConnections){
+	if(GC instanceof GCEnergyProduction){
+		productionGridConnections.add((GCEnergyProduction)GC);
+	}
+}
+
+return productionGridConnections;
+/*ALCODEEND*/}
+
+double f_updateSliders()
+{/*ALCODESTART::1754929564839*/
+if(!pop_tabElectricity.isEmpty()){
+	pop_tabElectricity.get(0).f_updateSliders_Electricity();
+}
+if(!pop_tabHeating.isEmpty()){
+	pop_tabHeating.get(0).f_updateSliders_Heating();
+}
+if(!pop_tabMobility.isEmpty()){
+	pop_tabMobility.get(0).f_updateSliders_Mobility();
+}
+if(!pop_tabEHub.isEmpty()){
+	pop_tabEHub.get(0).f_updateSliders_EHub();
+}
 /*ALCODEEND*/}
 

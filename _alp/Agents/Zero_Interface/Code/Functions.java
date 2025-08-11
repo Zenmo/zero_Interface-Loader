@@ -282,7 +282,8 @@ List<GridConnection> allModelGridConnections = new ArrayList<GridConnection>(ene
 allModelGridConnections.addAll(energyModel.f_getPausedGridConnections());
 
 //Initialize the uI_Tabs with the gridconnections
-uI_Tabs.f_initializeUI_Tabs(allModelGridConnections);
+//uI_Tabs.f_initializeUI_Tabs(allModelGridConnections);
+uI_Tabs.f_initializeUI_Tabs(energyModel.f_getGridConnectionsCollectionPointer());
 
 //Initialize sliders with certain presets
 f_setSliderPresets();
@@ -513,19 +514,6 @@ while (v_connectionOwnerIndexNr < c_COCompanies.size()){
 }
 
 v_connectionOwnerIndexNr = 0;
-
-//Get the ghost vehicles for the transport slider tab
-Triple<Integer, Integer, Integer> triple = uI_Tabs.pop_tabMobility.get(0).f_calculateNumberOfGhostVehicles( new ArrayList<GridConnection>(energyModel.UtilityConnections.findAll( x -> true)) );
-uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Cars = triple.getLeft();
-uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Vans = triple.getMiddle();
-uI_Tabs.pop_tabMobility.get(0).v_totalNumberOfGhostVehicle_Trucks = triple.getRight();
-//Get the ghost heating systems
-Pair<Integer, Integer> pair = uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfGhostHeatingSystems( energyModel.UtilityConnections.findAll( x -> true) );
-uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps = pair.getFirst();
-uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfGhostHeatingSystems_HybridHeatpumps = pair.getSecond();
-
-uI_Tabs.pop_tabHeating.get(0).v_totalNumberOfCustomHeatingSystems = uI_Tabs.pop_tabHeating.get(0).f_calculateNumberOfCustomHeatingSystems(new ArrayList<GridConnection>(energyModel.UtilityConnections.findAll( x -> true)));
-
 /*ALCODEEND*/}
 
 double f_connectResultsUI()
@@ -819,18 +807,7 @@ gis_area.f_style( rect_mapOverlayLegend_PVProduction1.getFillColor(), null, null
 
 double f_updateMainInterfaceSliders()
 {/*ALCODESTART::1718288402102*/
-// ATTENTION: If you have custom tabs it may be neccesary to override this function and add updates to your custom sliders!
-
-if(p_selectedProjectType == OL_ProjectType.BUSINESSPARK){
-	uI_Tabs.f_updateBusinessparkSliders();
-}
-else if(p_selectedProjectType == OL_ProjectType.RESIDENTIAL){
-	uI_Tabs.f_updateResidentialSliders();
-}
-else{
-	uI_Tabs.f_updateBusinessparkSliders();
-	uI_Tabs.f_updateResidentialSliders();
-}
+uI_Tabs.f_updateSliders();
 /*ALCODEEND*/}
 
 double f_selectCharger(GCPublicCharger charger,GIS_Object objectGIS)
@@ -3295,22 +3272,17 @@ double f_createUITabs_default()
 
 
 uI_Tabs.add_pop_tabElectricity();
-
 uI_Tabs.add_pop_tabHeating();
-
-uI_Tabs.add_pop_tabMobility();
-
-uI_Tabs.add_pop_tabEHub();
 
 // Group visibilities
 // When using an extension of a generic tab don't forget to typecast it!
 if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
 	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_ResidentialArea().setVisible(true);
 	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersResidentialArea().setVisible(true);
-	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
-	((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
 }
 else {
+	uI_Tabs.add_pop_tabMobility();
+	uI_Tabs.add_pop_tabEHub();
 	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders().setVisible(true);
 	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersCompanies().setVisible(true);
 	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);

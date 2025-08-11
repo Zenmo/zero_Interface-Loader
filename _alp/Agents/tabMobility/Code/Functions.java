@@ -1411,3 +1411,140 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
+double f_updateSliders_Mobility()
+{/*ALCODESTART::1754928402690*/
+Triple<Integer, Integer, Integer> triple = f_calculateNumberOfGhostVehicles( new ArrayList<GridConnection>(uI_Tabs.f_getSliderGridConnections_utilities()) );
+v_totalNumberOfGhostVehicle_Cars = triple.getLeft();
+v_totalNumberOfGhostVehicle_Vans = triple.getMiddle();
+v_totalNumberOfGhostVehicle_Trucks = triple.getRight();
+
+
+if(gr_mobilitySliders_default.isVisible()){
+	f_updateMobilitySliders_default();
+}
+else{
+	f_updateMobilitySliders_custom();
+}
+/*ALCODEEND*/}
+
+double f_updateMobilitySliders_default()
+{/*ALCODESTART::1754928402694*/
+List<GridConnection> consumerGridConnections = new ArrayList<>();
+
+for(GridConnection GC : uI_Tabs.v_sliderGridConnections){
+	if(GC instanceof GCUtility || GC instanceof GCHouse){
+		consumerGridConnections.add(GC);
+	}
+}
+
+// CARS  // Currently only for Company Cars not household Cars / EVs
+int DieselCars = 0;
+int ElectricCars = v_totalNumberOfGhostVehicle_Cars;
+int HydrogenCars = 0;
+
+int DieselVans = 0;
+int ElectricVans = v_totalNumberOfGhostVehicle_Vans;
+int HydrogenVans = 0;
+
+int DieselTrucks = 0;
+int ElectricTrucks = v_totalNumberOfGhostVehicle_Trucks;
+int HydrogenTrucks = 0;
+
+
+for (GridConnection gc : consumerGridConnections) {
+	if(gc.v_isActive){
+		for (J_EAVehicle vehicle : gc.c_vehicleAssets) {
+			if (vehicle instanceof J_EADieselVehicle){
+			 	switch(vehicle.getEAType()){
+			 		case DIESEL_VEHICLE:
+						DieselCars += 1;
+					break;
+					case DIESEL_VAN:
+						DieselVans += 1;
+					break;
+					case DIESEL_TRUCK:
+						DieselTrucks += 1;
+					break;
+				}
+			}
+			else if (vehicle instanceof J_EAEV){
+			 	switch(vehicle.getEAType()){
+			 		case ELECTRIC_VEHICLE:
+						ElectricCars += 1;
+					break;
+					case ELECTRIC_VAN:
+						ElectricVans += 1;
+					break;
+					case ELECTRIC_TRUCK:
+						ElectricTrucks += 1;
+					break;
+				}
+			}
+			else if (vehicle instanceof J_EAHydrogenVehicle){
+			 	switch(vehicle.getEAType()){
+			 		case HYDROGEN_VEHICLE:
+						HydrogenCars += 1;
+					break;
+					case HYDROGEN_VAN:
+						HydrogenVans += 1;
+					break;
+					case HYDROGEN_TRUCK:
+						HydrogenTrucks += 1;
+					break;
+				}
+			}
+		}
+	}
+}
+
+
+//Set CAR sliders
+int totalCars = DieselCars + ElectricCars + HydrogenCars;
+int DieselCars_pct = 100;
+int ElectricCars_pct = 0;
+int HydrogenCars_pct = 0;
+if (totalCars != 0) {
+	DieselCars_pct = roundToInt((100.0 * DieselCars) / totalCars);
+	ElectricCars_pct = roundToInt((100.0 * ElectricCars) / totalCars);
+	HydrogenCars_pct = roundToInt((100.0 * HydrogenCars) / totalCars);
+}
+getSliderFossilFuelCars_pct().setValue(DieselCars_pct, false);
+getSliderElectricCars_pct().setValue(ElectricCars_pct, false);
+
+
+//Set VAN sliders
+int totalVans = DieselVans + ElectricVans + HydrogenVans;
+int DieselVans_pct = 100;
+int ElectricVans_pct = 0;
+int HydrogenVans_pct = 0;
+if (totalVans != 0) {
+	DieselVans_pct = roundToInt(100.0 * DieselVans / totalVans);
+	ElectricVans_pct = roundToInt(100.0 * ElectricVans / totalVans);
+	HydrogenVans_pct = roundToInt(100.0 * HydrogenVans / totalVans);
+}
+getSliderFossilFuelVans_pct().setValue(DieselVans_pct, false);
+getSliderElectricVans_pct().setValue(ElectricVans_pct, false);
+
+
+//Set TRUCK sliders
+int totalTrucks = DieselTrucks + ElectricTrucks + HydrogenTrucks;
+int DieselTrucks_pct = 100;
+int ElectricTrucks_pct = 0;
+int HydrogenTrucks_pct = 0;
+if (totalTrucks != 0) {
+	DieselTrucks_pct = roundToInt(100.0 * DieselTrucks / totalTrucks);
+	ElectricTrucks_pct = roundToInt(100.0 * ElectricTrucks / totalTrucks);
+	HydrogenTrucks_pct = roundToInt(100.0 * HydrogenTrucks / totalTrucks);
+}
+getSliderFossilFuelTrucks_pct().setValue(DieselTrucks_pct, false);
+getSliderElectricTrucks_pct().setValue(ElectricTrucks_pct, false);
+getSliderHydrogenTrucks_pct().setValue(HydrogenTrucks_pct, false);
+/*ALCODEEND*/}
+
+double f_updateMobilitySliders_custom()
+{/*ALCODESTART::1754928402700*/
+//If you have a custom tab, 
+//override this function to make it update automatically
+traceln("Forgot to override the update custom electricity sliders functionality");
+/*ALCODEEND*/}
+

@@ -58,12 +58,10 @@ else {
 	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersCompanies().setVisible(true);
 	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
 }
-uI_Tabs.f_showCorrectTab();
 
 //Initialize slider gcs and set sliders
-uI_Tabs.f_initializeSliderGridConnections(c_selectedEnergyHubGC);
-uI_Tabs.f_updateBusinessparkSliders();
-uI_Tabs.f_updateResidentialSliders();
+uI_Tabs.f_initializeUI_Tabs(c_selectedEnergyHubGC);
+
 
 /*ALCODEEND*/}
 

@@ -668,3 +668,108 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
+double f_updateSliders_Electricity()
+{/*ALCODESTART::1754926103683*/
+if(gr_electricitySliders_default.isVisible()){
+	f_updateElectricitySliders_default();
+}
+else if(gr_electricitySliders_businesspark.isVisible()){
+	f_updateElectricitySliders_businesspark();
+}
+else if(gr_electricitySliders_residential.isVisible()){
+	f_updateElectricitySliders_residential();
+}
+else{
+	f_updateElectricitySliders_custom();
+}
+/*ALCODEEND*/}
+
+double f_updateElectricitySliders_default()
+{/*ALCODESTART::1754926103685*/
+List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
+List<GCUtility> utilityGridConnections = uI_Tabs.f_getSliderGridConnections_utilities();
+/*ALCODEEND*/}
+
+double f_updateElectricitySliders_residential()
+{/*ALCODESTART::1754926103687*/
+List<GCHouse> houseGridConnections = new ArrayList<>();
+List<GCPublicCharger> chargerGridConnections = new ArrayList<>();
+List<GCGridBattery> gridBatteryGridConnections = new ArrayList<>();
+
+for (GridConnection GC : findAll(uI_Tabs.v_sliderGridConnections, gc -> gc.v_isActive)) {
+   	if(GC instanceof GCHouse){
+		houseGridConnections.add((GCHouse)GC);		
+	}
+	else if(GC instanceof GCPublicCharger){
+		chargerGridConnections.add((GCPublicCharger)GC);		
+	}
+	else if(GC instanceof GCGridBattery){
+		gridBatteryGridConnections.add((GCGridBattery)GC);		
+	}
+}
+
+int nbHouses = houseGridConnections.size();
+int nbHousesWithPV = count(houseGridConnections, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW));
+double pv_pct = 100.0 * nbHousesWithPV / nbHouses;
+sl_householdPVResidentialArea_pct.setValue(pv_pct, false);
+
+if ( nbHousesWithPV != 0 ) {
+	int nbHousesWithHomeBattery = count(houseGridConnections, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) && x.p_batteryAsset != null);
+	double battery_pct = 100.0 * nbHousesWithHomeBattery / nbHousesWithPV;
+	sl_householdBatteriesResidentialArea_pct.setValue(battery_pct, false);
+}
+
+int nbHousesWithElectricCooking = count(houseGridConnections, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.ELECTRIC);
+double cooking_pct = 100.0 * nbHousesWithElectricCooking / nbHouses;
+sl_householdElectricCookingResidentialArea_pct.setValue(cooking_pct, false);
+
+if (zero_Interface.c_orderedVehiclesPrivateParking.size() > 0) {
+	int nbPrivateEVs = count(zero_Interface.c_orderedVehiclesPrivateParking, x -> x instanceof J_EAEV);
+	double privateEVs_pct = 100.0 * nbPrivateEVs / zero_Interface.c_orderedVehiclesPrivateParking.size();
+	sl_privateEVsResidentialArea_pct.setValue(privateEVs_pct, false);
+}
+
+
+//Chargers
+int nbPublicChargers = chargerGridConnections.size();
+int nbActivePublicChargers = count(chargerGridConnections, x -> x.v_isActive);
+double activePublicChargers_pct = 100.0 * nbActivePublicChargers / nbPublicChargers;
+sl_publicChargersResidentialArea_pct.setValue(activePublicChargers_pct, false);
+
+int nbV1GChargers = count(zero_Interface.c_orderedV1GChargers, x -> chargerGridConnections.contains(x) && x.V1GCapable);
+int nbV2GChargers =count(zero_Interface.c_orderedV2GChargers, x -> chargerGridConnections.contains(x) && x.V2GCapable);
+double V1G_pct = 100.0 * nbV1GChargers / nbPublicChargers;
+double V2G_pct = 100.0 * nbV2GChargers / nbPublicChargers;
+sl_chargersThatSupportV1G_pct.setValue(V1G_pct, false);
+sl_chargersThatSupportV2G_pct.setValue(V2G_pct, false);
+
+
+
+//Gridbatteries
+double averageNeighbourhoodBatterySize_kWh = 0;
+for (GCGridBattery gc : gridBatteryGridConnections) {
+	averageNeighbourhoodBatterySize_kWh += gc.p_batteryAsset.getStorageCapacity_kWh();
+}
+averageNeighbourhoodBatterySize_kWh /= gridBatteryGridConnections.size();
+sl_gridBatteriesResidentialArea_kWh.setValue(averageNeighbourhoodBatterySize_kWh, false);
+
+/*ALCODEEND*/}
+
+double f_updateElectricitySliders_businesspark()
+{/*ALCODESTART::1754926103689*/
+// Rooftop PV SYSTEMS:
+List<GridConnection> utilityGridConnections = new ArrayList<>(uI_Tabs.f_getSliderGridConnections_utilities());
+Pair<Double, Double> pair = f_getPVSystemPercentage( utilityGridConnections );
+int PV_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());
+getSliderRooftopPVCompanies_pct().setValue(PV_pct, false);
+
+
+/*ALCODEEND*/}
+
+double f_updateElectricitySliders_custom()
+{/*ALCODESTART::1754926103691*/
+//If you have a custom tab, 
+//override this function to make it update automatically
+traceln("Forgot to override the update custom electricity sliders functionality");
+/*ALCODEEND*/}
+

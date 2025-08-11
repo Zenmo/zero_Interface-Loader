@@ -102,49 +102,6 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-double f_setHeatingSliders_OLD(int sliderIndex,ShapeSlider gasBurnerSlider,ShapeSlider heatPumpSlider,ShapeSlider hybridHeatPumpSlider,ShapeSlider districtHeatingSlider)
-{/*ALCODESTART::1722256269495*/
-double pct_naturalGasBurner = gasBurnerSlider.getValue();
-double pct_electricHeatPump = heatPumpSlider.getValue();
-double pct_hybridHeatPump = 0;
-double pct_districtHeating = 0;
-//double pct_customHeatingSlider = customHeatingSlider.getValue();
-
-if ( hybridHeatPumpSlider != null ) {
-	pct_hybridHeatPump = hybridHeatPumpSlider.getValue();
-}
-if ( districtHeatingSlider != null ) {
-	pct_districtHeating = districtHeatingSlider.getValue();
-}
-
-//Set array with pct values
-double pctArray[] = {pct_naturalGasBurner, pct_electricHeatPump, pct_hybridHeatPump, pct_districtHeating};//, pct_customHeatingSlider};
-double pctExcess = Arrays.stream(pctArray).sum() - 100;
-for (int i = 0; i < pctArray.length; i++){
-	if (i != (int) sliderIndex) {
-		pctArray[i] = max(0, pctArray[i] - pctExcess);
-		pctExcess = Arrays.stream(pctArray).sum() - 100;
-	}
-}
-if (pctExcess != 0) {
-	traceln("Sliders don't add up to 100%!");
-}
-
-// Set Sliders
-gasBurnerSlider.setValue(pctArray[0], false);
-heatPumpSlider.setValue(pctArray[1], false);
-if ( hybridHeatPumpSlider != null ) {
-	hybridHeatPumpSlider.setValue(pctArray[2], false);
-}
-if ( districtHeatingSlider != null ) {
-	districtHeatingSlider.setValue(pctArray[3], false);
-}
-//customHeatingSlider.setValue(pctArray[4], false);
-
-
-
-/*ALCODEEND*/}
-
 double f_setDemandReductionHeating(List<GridConnection> gcList,double demandReduction_pct)
 {/*ALCODESTART::1722335783993*/
 double scalingFactor = 1 - demandReduction_pct/100;
@@ -695,5 +652,67 @@ if(customHeatingSlider != null){
 }
 
 
+/*ALCODEEND*/}
+
+double f_updateSliders_Heating()
+{/*ALCODESTART::1754923748794*/
+if(gr_heatingSliders_default.isVisible()){
+	f_updateHeatingSliders_default();
+}
+else if(gr_heatingSliders_businesspark.isVisible()){
+	//For now only for businessparks, future it will be made functional for other models as well!
+	Pair<Integer, Integer> pair = f_calculateNumberOfGhostHeatingSystems( uI_Tabs.f_getSliderGridConnections_utilities());
+	v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps = pair.getFirst();
+	v_totalNumberOfGhostHeatingSystems_HybridHeatpumps = pair.getSecond();
+	v_totalNumberOfCustomHeatingSystems = f_calculateNumberOfCustomHeatingSystems(uI_Tabs.v_sliderGridConnections);
+
+	f_updateHeatingSliders_businesspark();
+}
+else if(gr_heatingSliders_residential.isVisible()){
+	f_updateHeatingSliders_residential();
+}
+else{
+	f_updateHeatingSliders_custom();
+}
+/*ALCODEEND*/}
+
+double f_updateHeatingSliders_default()
+{/*ALCODESTART::1754924509667*/
+List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
+List<GCUtility> utilityGridConnections = uI_Tabs.f_getSliderGridConnections_utilities();
+/*ALCODEEND*/}
+
+double f_updateHeatingSliders_residential()
+{/*ALCODESTART::1754924542535*/
+List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
+/*ALCODEEND*/}
+
+double f_updateHeatingSliders_businesspark()
+{/*ALCODESTART::1754924544023*/
+List<GCUtility> utilityGridConnections = uI_Tabs.f_getSliderGridConnections_utilities();
+
+// GAS_BURNER / HEATING SYSTEMS: // Still a slight error. GasBurners + HeatPumps != total, because some GC have primary heating asset null
+int GasBurners = count(utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
+int GasBurners_pct = roundToInt(100.0 * GasBurners / (count(utilityGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE) + v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps + v_totalNumberOfGhostHeatingSystems_HybridHeatpumps));
+
+getSliderGasBurnerCompanies_pct().setValue(GasBurners_pct, false);
+f_setHeatingSliders( 0, getSliderGasBurnerCompanies_pct(), getSliderElectricHeatPumpCompanies_pct(), null, null, null );
+
+getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct().setValue(GasBurners_pct, false);
+f_setHeatingSliders( 0, getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct(), getSliderHeatDemandSlidersCompaniesElectricHeatPumpCompanies_pct(), null, null, null );
+
+
+// HEAT_PUMP_AIR:
+//		int HeatPumps = count(energyModel.UtilityConnections, gc->gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump);
+//		int HeatPumps_pct = roundToInt(100 * HeatPumps / energyModel.UtilityConnections.size());
+//		sl_electricHeatPumpCompanies.setValue(HeatPumps_pct, false);
+//		f_setHeatingSlidersCompanies(1);
+/*ALCODEEND*/}
+
+double f_updateHeatingSliders_custom()
+{/*ALCODESTART::1754924574713*/
+//If you have a custom tab, 
+//override this function to make it update automatically
+traceln("Forgot to override the update custom heating sliders functionality");
 /*ALCODEEND*/}
 
