@@ -1591,7 +1591,7 @@ else if (vehicle_type == OL_EnergyAssetType.HYDROGEN_VAN){
 
 double f_addChargingDemandProfile(GCPublicCharger GC,String profileName)
 {/*ALCODESTART::1726584205845*/
-J_EAProfile profile = new J_EAProfile(GC, OL_EnergyCarriers.ELECTRICITY, null, OL_ProfileAssetType.CHARGING, energyModel.p_timeStep_h);		
+J_EAProfile profile = new J_EAProfile(GC, OL_EnergyCarriers.ELECTRICITY, null, OL_AssetFlowCategories.evChargingPower_kW, energyModel.p_timeStep_h);		
 profile.energyAssetName = "charging profile";
 List<Double> quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + profileName + " FROM charging_profiles;");			
 profile.a_energyProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> max(0,d)).map( d -> d / 4).toArray();
@@ -1803,7 +1803,7 @@ for (Cable_data dataCable : c_cable_data) {
 double f_createPreprocessedElectricityProfile_PV(GridConnection parentGC,double[] yearlyElectricityDelivery_kWh,double[] yearlyElectricityFeedin_kWh,double[] yearlyElectricityProduction_kWh,Double pvPower_kW,double[] yearlyHeatPumpElectricityConsumption_kWh)
 {/*ALCODESTART::1726584205861*/
 //Create the profile 
-J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, null, OL_ProfileAssetType.ELECTRICITYBASELOAD, energyModel.p_timeStep_h);		
+J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, null, OL_AssetFlowCategories.fixedConsumptionElectric_kW, energyModel.p_timeStep_h);		
 profile.setStartTime_h(v_simStartHour_h);
 profile.energyAssetName = parentGC.p_ownerID + " custom profile";
 double extraConsumption_kWh = 0;
@@ -1878,7 +1878,7 @@ if(yearlyHeatPumpElectricityConsumption_kWh != null){
 	}
 	profile.a_energyProfile_kWh = preProcessedDefaultConsumptionProfile;
 	
-	J_EAProfile profileHeatPumpElectricityConsumption = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, yearlyHeatPumpElectricityConsumption_kWh, OL_ProfileAssetType.HEATPUMP_ELECTRICITY_CONSUMPTION, energyModel.p_timeStep_h);		
+	J_EAProfile profileHeatPumpElectricityConsumption = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, yearlyHeatPumpElectricityConsumption_kWh, OL_AssetFlowCategories.heatPumpElectricityConsumption_kW, energyModel.p_timeStep_h);		
 	profileHeatPumpElectricityConsumption.setStartTime_h(v_simStartHour_h);
 	profileHeatPumpElectricityConsumption.energyAssetName = parentGC.p_ownerID + " custom heat pump electricity consumption profile";
 }
@@ -3079,7 +3079,7 @@ if(project_data.gridnode_profile_timestep_hr() == null){
 double profileTimestep_hr = project_data.gridnode_profile_timestep_hr();
 
 //Add profile to the GC
-J_EAProfile profile = new J_EAProfile(GC_GridNode_profile, OL_EnergyCarriers.ELECTRICITY, profile_data_kWh, OL_ProfileAssetType.ELECTRICITYBASELOAD, profileTimestep_hr);	
+J_EAProfile profile = new J_EAProfile(GC_GridNode_profile, OL_EnergyCarriers.ELECTRICITY, profile_data_kWh, OL_AssetFlowCategories.fixedConsumptionElectric_kW, profileTimestep_hr);	
 profile.setStartTime_h(v_simStartHour_h);
 profile.energyAssetName = "GridNode " + gridnode.p_gridNodeID + " profile";
 
@@ -3863,7 +3863,7 @@ double yearlyGasDelivery_m3 = Arrays.stream(profile_m3).sum();
 // We assume all delivery is consumption and convert m3 to kWh
 ZeroMath.arrayMultiply(profile_m3, avgc_data.p_gas_kWhpm3);
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.METHANE, profile_m3, OL_ProfileAssetType.METHANEDEMAND , energyModel.p_timeStep_h);
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.METHANE, profile_m3, null, energyModel.p_timeStep_h);
 j_ea.energyAssetName = engineGC.p_ownerID + " custom gas profile";
 
 if(engineGC.p_owner.p_detailedCompany){
@@ -4000,7 +4000,7 @@ double ratioGasUsedForHeating = f_getRatioGasUsedForHeating(surveyGC);
 // Finally, multiply the gas profile with the total conversion factor to get the heat profile
 ZeroMath.arrayMultiply(profile_m3, avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile_m3, OL_ProfileAssetType.HEATDEMAND , energyModel.p_timeStep_h);
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile_m3, null , energyModel.p_timeStep_h);
 j_ea.energyAssetName = engineGC.p_ownerID + " custom building heat profile";
 
 if(engineGC.p_owner.p_detailedCompany){
@@ -4088,7 +4088,7 @@ double[] profile = f_timeSeriesToQuarterHourlyDoubleArray(surveyGC.getHeat().get
 // TODO: Fix this for LT_DISTRICTHEAT, they have a different efficiency!
 ZeroMath.arrayMultiply(profile, avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr);
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile, OL_ProfileAssetType.HEATDEMAND , energyModel.p_timeStep_h);
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile, null , energyModel.p_timeStep_h);
 j_ea.energyAssetName = engineGC.p_ownerID + " custom building heat profile";
 
 return max(profile)/energyModel.p_timeStep_h;
