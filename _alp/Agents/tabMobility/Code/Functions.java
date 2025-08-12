@@ -1429,14 +1429,6 @@ else{
 
 double f_updateMobilitySliders_default()
 {/*ALCODESTART::1754928402694*/
-List<GridConnection> consumerGridConnections = new ArrayList<>();
-
-for(GridConnection GC : uI_Tabs.v_sliderGridConnections){
-	if(GC instanceof GCUtility || GC instanceof GCHouse){
-		consumerGridConnections.add(GC);
-	}
-}
-
 // CARS  // Currently only for Company Cars not household Cars / EVs
 int DieselCars = 0;
 int ElectricCars = v_totalNumberOfGhostVehicle_Cars;
@@ -1451,7 +1443,7 @@ int ElectricTrucks = v_totalNumberOfGhostVehicle_Trucks;
 int HydrogenTrucks = 0;
 
 
-for (GridConnection gc : consumerGridConnections) {
+for (GridConnection gc : uI_Tabs.f_getSliderGridConnections_consumption()) {
 	if(gc.v_isActive){
 		for (J_EAVehicle vehicle : gc.c_vehicleAssets) {
 			if (vehicle instanceof J_EADieselVehicle){
@@ -1508,8 +1500,8 @@ if (totalCars != 0) {
 	ElectricCars_pct = roundToInt((100.0 * ElectricCars) / totalCars);
 	HydrogenCars_pct = roundToInt((100.0 * HydrogenCars) / totalCars);
 }
-getSliderFossilFuelCars_pct().setValue(DieselCars_pct, false);
-getSliderElectricCars_pct().setValue(ElectricCars_pct, false);
+sl_fossilFuelCars_pct.setValue(DieselCars_pct, false);
+sl_electricCars_pct.setValue(ElectricCars_pct, false);
 
 
 //Set VAN sliders
@@ -1522,8 +1514,8 @@ if (totalVans != 0) {
 	ElectricVans_pct = roundToInt(100.0 * ElectricVans / totalVans);
 	HydrogenVans_pct = roundToInt(100.0 * HydrogenVans / totalVans);
 }
-getSliderFossilFuelVans_pct().setValue(DieselVans_pct, false);
-getSliderElectricVans_pct().setValue(ElectricVans_pct, false);
+sl_fossilFuelVans_pct.setValue(DieselVans_pct, false);
+sl_electricVans_pct.setValue(ElectricVans_pct, false);
 
 
 //Set TRUCK sliders
@@ -1536,9 +1528,9 @@ if (totalTrucks != 0) {
 	ElectricTrucks_pct = roundToInt(100.0 * ElectricTrucks / totalTrucks);
 	HydrogenTrucks_pct = roundToInt(100.0 * HydrogenTrucks / totalTrucks);
 }
-getSliderFossilFuelTrucks_pct().setValue(DieselTrucks_pct, false);
-getSliderElectricTrucks_pct().setValue(ElectricTrucks_pct, false);
-getSliderHydrogenTrucks_pct().setValue(HydrogenTrucks_pct, false);
+sl_fossilFuelTrucks_pct.setValue(DieselTrucks_pct, false);
+sl_electricTrucks_pct.setValue(ElectricTrucks_pct, false);
+sl_hydrogenTrucks_pct.setValue(HydrogenTrucks_pct, false);
 /*ALCODEEND*/}
 
 double f_updateMobilitySliders_custom()
@@ -1546,5 +1538,18 @@ double f_updateMobilitySliders_custom()
 //If you have a custom tab, 
 //override this function to make it update automatically
 traceln("Forgot to override the update custom electricity sliders functionality");
+/*ALCODEEND*/}
+
+double f_setChargingAttitude(OL_ChargingAttitude selectedChargingAttitude,List<GridConnection> gcList)
+{/*ALCODESTART::1754990674760*/
+gcList.forEach(x -> x.set_p_chargingAttitudeVehicles(selectedChargingAttitude));
+
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 

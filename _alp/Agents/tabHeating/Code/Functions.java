@@ -352,19 +352,19 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-double f_setAircos(double desiredShare)
+double f_setAircos(List<GCHouse> gcListHouses,double desiredShare)
 {/*ALCODESTART::1749739532217*/
-double nbHousesWithAirco = count(zero_Interface.energyModel.Houses, x -> x.p_airco != null);
-double nbHouses = zero_Interface.energyModel.Houses.size();
+double nbHousesWithAirco = count(gcListHouses, x -> x.p_airco != null);
+double nbHouses = gcListHouses.size();
 traceln("Previous nb households with airco: " + nbHousesWithAirco);
 while ( roundToInt(nbHouses * desiredShare) > nbHousesWithAirco ) {
-	GCHouse house = randomWhere(zero_Interface.energyModel.Houses, x -> x.p_airco == null);
+	GCHouse house = randomWhere(gcListHouses, x -> x.p_airco == null);
 	double aircoPower_kW = roundToDecimal(uniform(3,6),1);
 	new J_EAAirco(house, aircoPower_kW, zero_Interface.energyModel.p_timeStep_h);
 	nbHousesWithAirco ++;
 }
 while ( roundToInt(nbHouses * desiredShare) < nbHousesWithAirco ) {
-	GCHouse house = randomWhere(zero_Interface.energyModel.Houses, x -> x.p_airco != null);
+	GCHouse house = randomWhere(gcListHouses, x -> x.p_airco != null);
 	house.p_airco.removeEnergyAsset();
 	nbHousesWithAirco --;
 }
@@ -511,11 +511,11 @@ double f_setPTSystemHouses(List<GCHouse> gcList,double PT_pct)
 {/*ALCODESTART::1753950993262*/
 ArrayList<GCHouse> houses = new ArrayList<GCHouse>(zero_Interface.c_orderedPTSystemsHouses.stream().filter(gcList::contains).toList());
 int nbHouses = houses.size();
-int nbHousesWithPT = count(houses, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW) == true);
+int nbHousesWithPT = count(houses, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW));
 int nbHousesWithPTGoal = roundToInt(PT_pct / 100.0 * nbHouses);
 
 while ( nbHousesWithPTGoal < nbHousesWithPT ) { // remove excess PV systems
-	GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW) == true);	
+	GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW));	
 	J_EA ptAsset = findFirst(house.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL );
 		
 	if (ptAsset != null) {
@@ -542,7 +542,7 @@ while ( nbHousesWithPTGoal < nbHousesWithPT ) { // remove excess PV systems
 }
 
 while ( nbHousesWithPTGoal > nbHousesWithPT ) {
-	GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW) == false);
+	GCHouse house = findFirst(houses, x -> !x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW));
 	if (house == null){
 		traceln("No gridconnection without PT panels found! Current PVsystems count: %s", nbHousesWithPT);
 		break;
@@ -664,7 +664,7 @@ else if(gr_heatingSliders_businesspark.isVisible()){
 	Pair<Integer, Integer> pair = f_calculateNumberOfGhostHeatingSystems( uI_Tabs.f_getSliderGridConnections_utilities());
 	v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps = pair.getFirst();
 	v_totalNumberOfGhostHeatingSystems_HybridHeatpumps = pair.getSecond();
-	v_totalNumberOfCustomHeatingSystems = f_calculateNumberOfCustomHeatingSystems(uI_Tabs.v_sliderGridConnections);
+	v_totalNumberOfCustomHeatingSystems = f_calculateNumberOfCustomHeatingSystems(uI_Tabs.f_getSliderGridConnections_all());
 
 	f_updateHeatingSliders_businesspark();
 }
@@ -678,28 +678,54 @@ else{
 
 double f_updateHeatingSliders_default()
 {/*ALCODESTART::1754924509667*/
-List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
+//Companies
 List<GCUtility> utilityGridConnections = uI_Tabs.f_getSliderGridConnections_utilities();
+
+int GasBurners = count(utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
+int GasBurners_pct = roundToInt(100.0 * GasBurners / (count(utilityGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE) + v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps + v_totalNumberOfGhostHeatingSystems_HybridHeatpumps));
+
+sl_gasBurnerCompanies_pct.setValue(GasBurners_pct, false);
+f_setHeatingSliders( 0, sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct, null, null, null );
+
+//Houses
+List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
+
+GasBurners = count(houseGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
+GasBurners_pct = roundToInt(100.0 * GasBurners / (count(houseGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE)));
+
+sl_gasBurnerHouseholds_pct.setValue(GasBurners_pct, false);
+f_setHeatingSliders( 0, sl_gasBurnerHouseholds_pct, sl_electricHeatPumpHouseholds_pct, null, null, null );
+
 /*ALCODEEND*/}
 
 double f_updateHeatingSliders_residential()
 {/*ALCODESTART::1754924542535*/
 List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
+
+//Heating type
+int GasBurners = count(houseGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
+int GasBurners_pct = roundToInt(100.0 * GasBurners / (count(houseGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE)));
+
+sl_householdGasBurnerResidentialArea_pct.setValue(GasBurners_pct, false);
+f_setHeatingSliders( 0, sl_householdGasBurnerResidentialArea_pct, sl_householdElectricHeatPumpResidentialArea_pct, null, null, null );
+
+
+//PT
+int nbHouses = houseGridConnections.size();
+int nbHousesWithPT = count(houseGridConnections, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW));
+
+sl_rooftopPTHouses_pct.setValue((nbHousesWithPT*100.0)/nbHouses, false);
 /*ALCODEEND*/}
 
 double f_updateHeatingSliders_businesspark()
 {/*ALCODESTART::1754924544023*/
 List<GCUtility> utilityGridConnections = uI_Tabs.f_getSliderGridConnections_utilities();
 
-// GAS_BURNER / HEATING SYSTEMS: // Still a slight error. GasBurners + HeatPumps != total, because some GC have primary heating asset null
 int GasBurners = count(utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
 int GasBurners_pct = roundToInt(100.0 * GasBurners / (count(utilityGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE) + v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps + v_totalNumberOfGhostHeatingSystems_HybridHeatpumps));
 
-getSliderGasBurnerCompanies_pct().setValue(GasBurners_pct, false);
-f_setHeatingSliders( 0, getSliderGasBurnerCompanies_pct(), getSliderElectricHeatPumpCompanies_pct(), null, null, null );
-
-getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct().setValue(GasBurners_pct, false);
-f_setHeatingSliders( 0, getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct(), getSliderHeatDemandSlidersCompaniesElectricHeatPumpCompanies_pct(), null, null, null );
+sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct.setValue(GasBurners_pct, false);
+f_setHeatingSliders( 0, sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct, sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct, null, null, null );
 
 
 // HEAT_PUMP_AIR:

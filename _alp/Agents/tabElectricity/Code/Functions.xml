@@ -7,7 +7,7 @@
 		<Name><![CDATA[f_setPVOnLand]]></Name>
 		<Description><![CDATA[Function that changes the electric capacity of the energy asset of the "Solar field". Takes an area size in hectares as a parameter and assumes that 1 MWp of solarpannels fits on 1 ha. The variables for amount of installed PV are updated automatically in the zero_engine. The function also modifies the connection capacity of the energy production site to match the new installed PV Power.]]></Description>
 		<X>70</X>
-		<Y>880</Y>
+		<Y>840</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -19,6 +19,10 @@
 			<Name><![CDATA[hectare]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[gcListProduction]]></Name>
+			<Type><![CDATA[List<GCEnergyProduction>]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
@@ -29,7 +33,7 @@
 		<Description><![CDATA[Function that adds or removes photovoltaic production assets to houses. Takes a percentage as a parameter and runs untill that percentage of all the houses has a PV asset. If a new asset is created it takes as its electric capacity a random value between 3 and 6 kW. The variables for amount of installed PV are updated automatically in the zero_engine.
 ]]></Description>
 		<X>70</X>
-		<Y>850</Y>
+		<Y>810</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -53,8 +57,8 @@
 		<Id>1722256248965</Id>
 		<Name><![CDATA[f_setWindTurbines]]></Name>
 		<Description><![CDATA[Function that changes the electric capacity of the energy asset of the "Wind Farm". Takes an amount of MW as a parameter. The variables for amount of installed Wind are updated automatically in the zero_engine. The function also modifies the connection capacity of the energy production site to match the new installed Wind Power.]]></Description>
-		<X>80</X>
-		<Y>1010</Y>
+		<X>70</X>
+		<Y>870</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -66,6 +70,10 @@
 			<Name><![CDATA[AllocatedWindPower_MW]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[gcListProduction]]></Name>
+			<Type><![CDATA[List<GCEnergyProduction>]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
@@ -75,7 +83,7 @@
 		<Name><![CDATA[f_setDemandReduction]]></Name>
 		<Description><![CDATA[Function that reduces the electricity demand of all consumption assets. Takes as an argument a percentage to reduce by compared to the default value of the consumption assets.]]></Description>
 		<X>60</X>
-		<Y>600</Y>
+		<Y>590</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -99,7 +107,7 @@
 		<Id>1745483988251</Id>
 		<Name><![CDATA[f_getCurrentPVOnLandAndWindturbineValues]]></Name>
 		<X>30</X>
-		<Y>1120</Y>
+		<Y>1230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -116,7 +124,7 @@
 		<Name><![CDATA[f_getPVSystemPercentage]]></Name>
 		<Description><![CDATA[Calculates the amount of installed PV compared to the total potential based on roof surface area. Assumes that 50% of the roof surface is available for PV. If a GridConnection already has more than this installed it takes the installed capacity instead.]]></Description>
 		<X>90</X>
-		<Y>820</Y>
+		<Y>780</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -137,7 +145,7 @@
 		<Name><![CDATA[f_setPVSystemCompanies]]></Name>
 		<Description><![CDATA[Adds or removes photovoltaic production assets to GridConnections. Takes as arguments a list of Gridconnections and a target percentage. It runs untill that list of GCs has that percentage of PV installed, compared to the total potential PV. If a new asset is created it determines its electric capacity by the total roof area of all the buildings connected to the GC. The function also updates the PV slider in the company UI if the GC is a company. The variables in the engine that keep track of the amount of installed PV are updated automatically.]]></Description>
 		<X>70</X>
-		<Y>740</Y>
+		<Y>720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -166,7 +174,7 @@
 		<Name><![CDATA[f_addPVSystem]]></Name>
 		<Description><![CDATA[Takes as an argument a GridConnection and a capacity. If the GC already has a solar panel, it adds the capacity to the existing one. Otherwise it creates a new energy asset. If the GridConnection is a GCUtility it also updates the companyUI if it exists.]]></Description>
 		<X>90</X>
-		<Y>780</Y>
+		<Y>740</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -190,7 +198,7 @@
 		<Id>1747306699629</Id>
 		<Name><![CDATA[f_removePVSystem]]></Name>
 		<X>90</X>
-		<Y>800</Y>
+		<Y>760</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -207,36 +215,10 @@
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1747825874398</Id>
-		<Name><![CDATA[f_setPVSystemHouses1]]></Name>
-		<Description><![CDATA[Adds or removes photovoltaic production assets to GridConnections. Takes as arguments a list of Gridconnections and a target percentage. It runs untill that list of GCs has that percentage of PV installed, compared to the total potential PV. If a new asset is created it determines its electric capacity by the total roof area of all the buildings connected to the GC. The function also updates the PV slider in the company UI if the GC is a company. The variables in the engine that keep track of the amount of installed PV are updated automatically.]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>70</X>
-		<Y>760</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>false</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[gcList]]></Name>
-			<Type><![CDATA[List<GCHouse>]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[target_pct]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1750063382310</Id>
 		<Name><![CDATA[f_setResidentialBatteries]]></Name>
-		<X>890</X>
-		<Y>550</Y>
+		<X>90</X>
+		<Y>1020</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -248,15 +230,19 @@
 			<Name><![CDATA[homeBatteries_pct]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[gcListHouses]]></Name>
+			<Type><![CDATA[List<GCHouse>]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1750063382312</Id>
-		<Name><![CDATA[f_setGridBatteries]]></Name>
-		<X>890</X>
-		<Y>570</Y>
+		<Name><![CDATA[f_setGridBatteries_residential]]></Name>
+		<X>90</X>
+		<Y>1000</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -268,6 +254,10 @@
 			<Name><![CDATA[storageCapacity_kWh]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[gcListGridBatteries]]></Name>
+			<Type><![CDATA[List<GCGridBattery>]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -275,8 +265,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1750063382324</Id>
 		<Name><![CDATA[f_setElectricCooking]]></Name>
-		<X>890</X>
-		<Y>590</Y>
+		<X>60</X>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -284,6 +274,10 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gcListHouses]]></Name>
+			<Type><![CDATA[List<GCHouse>]]></Type>
+		</Parameter>
 		<Parameter>
 			<Name><![CDATA[electricCookingGoal_pct]]></Name>
 			<Type><![CDATA[double]]></Type>
@@ -295,8 +289,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1750063382330</Id>
 		<Name><![CDATA[f_setPublicChargingStations]]></Name>
-		<X>890</X>
-		<Y>510</Y>
+		<X>80</X>
+		<Y>1130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -315,8 +309,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1750259219309</Id>
 		<Name><![CDATA[f_setV1GChargerCapabilities]]></Name>
-		<X>890</X>
-		<Y>470</Y>
+		<X>80</X>
+		<Y>1090</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -335,8 +329,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1750259468109</Id>
 		<Name><![CDATA[f_setV2GChargerCapabilities]]></Name>
-		<X>890</X>
-		<Y>490</Y>
+		<X>80</X>
+		<Y>1110</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -356,7 +350,7 @@
 		<Id>1750326729005</Id>
 		<Name><![CDATA[f_setDemandIncrease]]></Name>
 		<X>60</X>
-		<Y>620</Y>
+		<Y>610</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -379,8 +373,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1750328750011</Id>
 		<Name><![CDATA[f_setVehiclesPrivateParking]]></Name>
-		<X>890</X>
-		<Y>530</Y>
+		<X>80</X>
+		<Y>1150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -389,7 +383,11 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[privateParking_pct]]></Name>
+			<Name><![CDATA[gcListHouses]]></Name>
+			<Type><![CDATA[List<GCHouse>]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[privateParkingEV_pct]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
@@ -472,6 +470,55 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1754985710087</Id>
+		<Name><![CDATA[f_setGridBatteries]]></Name>
+		<Description><![CDATA[Function that takes a capacity in MWh as a parameter and sets the first GCGridBattery to this capacity, with the default ratio of storage to electric capacity from the AVGC data.]]></Description>
+		<X>89</X>
+		<Y>981</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[capacity_MWh]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[gcListGridBatteries]]></Name>
+			<Type><![CDATA[List<GCGridBattery>]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1754986167346</Id>
+		<Name><![CDATA[f_setCurtailment]]></Name>
+		<X>70</X>
+		<Y>900</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[activateCurtailment]]></Name>
+			<Type><![CDATA[boolean]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[gcList]]></Name>
+			<Type><![CDATA[List<GridConnection>]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

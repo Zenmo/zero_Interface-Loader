@@ -80,7 +80,26 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
               Constant="false"
-              AccessType="public"
+              AccessType="private"
+              StaticVariable="false">
+			<Type><![CDATA[List<GridConnection>]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1755013554753</Id>
+		<Name><![CDATA[v_pausedSliderGridConnections]]></Name>
+		<X>530</X>
+		<Y>70</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="private"
               StaticVariable="false">
 			<Type><![CDATA[List<GridConnection>]]></Type>
 		</Properties>

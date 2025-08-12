@@ -4,7 +4,7 @@
 		<Id>1716193013122</Id>
 		<Name><![CDATA[uI_Results]]></Name>
 		<X>-350</X>
-		<Y>110</Y>
+		<Y>130</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -83,7 +83,7 @@
 		<Id>1722252541830</Id>
 		<Name><![CDATA[uI_Tabs]]></Name>
 		<X>-350</X>
-		<Y>160</Y>
+		<Y>180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

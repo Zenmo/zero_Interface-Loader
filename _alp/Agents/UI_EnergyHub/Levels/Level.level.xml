@@ -745,6 +745,7 @@ zero_Interface.map.setPos(410, 130);
 zero_Interface.button_clearFilters.action();
 zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT),true);
 zero_Interface.cb_showFilterInterface.setSelected(false, true);
+zero_Interface.f_updateMainInterfaceSliders();
 zero_Interface.va_Interface.navigateTo();
 
 c_selectedEnergyHubGC.clear();

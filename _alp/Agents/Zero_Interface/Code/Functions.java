@@ -283,7 +283,7 @@ allModelGridConnections.addAll(energyModel.f_getPausedGridConnections());
 
 //Initialize the uI_Tabs with the gridconnections
 //uI_Tabs.f_initializeUI_Tabs(allModelGridConnections);
-uI_Tabs.f_initializeUI_Tabs(energyModel.f_getGridConnectionsCollectionPointer());
+uI_Tabs.f_initializeUI_Tabs(energyModel.f_getGridConnectionsCollectionPointer(), energyModel.f_getPausedGridConnectionsCollectionPointer());
 
 //Initialize sliders with certain presets
 f_setSliderPresets();
@@ -3283,7 +3283,7 @@ if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
 else {
 	uI_Tabs.add_pop_tabMobility();
 	uI_Tabs.add_pop_tabEHub();
-	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders().setVisible(true);
+	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_Businesspark().setVisible(true);
 	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersCompanies().setVisible(true);
 	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
 	((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);

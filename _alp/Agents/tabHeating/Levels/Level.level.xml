@@ -21,7 +21,7 @@
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>450</Width>
-		<Height>470</Height>
+		<Height>580</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -29,7 +29,7 @@
 	<Text>
 		<Id>1722350093702</Id>
 		<Name><![CDATA[t_genericFunctions]]></Name>
-		<X>100</X>
+		<X>140</X>
 		<Y>480</Y>
 		<Label>
 			<X>0</X>
@@ -352,7 +352,7 @@
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( 0, sl_gasBurnerHouseholds_pct, sl_electricHeatPumpHouseholds_pct, null, null, null );
-f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_electricHeatPumpHouseholds_pct.getValue() );
+f_setHeatingSystemsHouseholds( uI_Tabs.f_getSliderGridConnections_houses(), sl_electricHeatPumpHouseholds_pct.getValue() );
 </ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -415,7 +415,7 @@ f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( 1, sl_gasBurnerHouseholds_pct, sl_electricHeatPumpHouseholds_pct, null, null, null );
-f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_electricHeatPumpHouseholds_pct.getValue() );
+f_setHeatingSystemsHouseholds( uI_Tabs.f_getSliderGridConnections_houses(), sl_electricHeatPumpHouseholds_pct.getValue() );
 </ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -444,7 +444,7 @@ f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReductionHeating( new ArrayList&lt;GridConnection&gt;(zero_Interface.energyModel.Houses.findAll( x -&gt; true)), sl_heatDemandReductionHouseholds_pct.getValue() );</ActionCode>
+					<ActionCode>f_setDemandReductionHeating( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getSliderGridConnections_houses()), sl_heatDemandReductionHouseholds_pct.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -548,7 +548,7 @@ f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReductionHeating( new ArrayList&lt;GridConnection&gt;(zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true)), sl_heatDemandReductionCompanies_pct.getValue() );</ActionCode>
+					<ActionCode>f_setDemandReductionHeating( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getSliderGridConnections_utilities()), sl_heatDemandReductionCompanies_pct.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -867,7 +867,7 @@ f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( 0, sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct, null, null, null );
-f_setHeatingSystemsCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct );
+f_setHeatingSystemsCompanies( uI_Tabs.f_getSliderGridConnections_utilities(), sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct );
 
 zero_Interface.f_resetSettings();</ActionCode>
 				</BasicProperties>
@@ -930,7 +930,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( 1, sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct, null, null, null );
-f_setHeatingSystemsCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct);
+f_setHeatingSystemsCompanies( uI_Tabs.f_getSliderGridConnections_utilities(), sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct);
 
 zero_Interface.f_resetSettings();</ActionCode>
 				</BasicProperties>
@@ -2088,7 +2088,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 		<Id>1722335783989</Id>
 		<Name><![CDATA[rect_demandFunctions]]></Name>
 		<X>40</X>
-		<Y>600</Y>
+		<Y>510</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -2105,16 +2105,16 @@ zero_Interface.f_resetSettings();</ActionCode>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>390</Width>
-		<Height>90</Height>
+		<Height>120</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
 	</Rectangle>
 	<Text>
 		<Id>1722335783991</Id>
-		<Name><![CDATA[t_demandFunctionsDescription]]></Name>
+		<Name><![CDATA[txt_demandFunctionsDescription]]></Name>
 		<X>240</X>
-		<Y>610</Y>
+		<Y>520</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -2139,7 +2139,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 		<Id>1722338183031</Id>
 		<Name><![CDATA[rect_heatingFunctions]]></Name>
 		<X>40</X>
-		<Y>710</Y>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -2155,7 +2155,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 		<LineColor>-5952982</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>400</Width>
+		<Width>390</Width>
 		<Height>150</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
@@ -2163,9 +2163,9 @@ zero_Interface.f_resetSettings();</ActionCode>
 	</Rectangle>
 	<Text>
 		<Id>1722338183033</Id>
-		<Name><![CDATA[t_heatingFunctionsDescription]]></Name>
+		<Name><![CDATA[txt_heatingFunctionsDescription]]></Name>
 		<X>130</X>
-		<Y>720</Y>
+		<Y>650</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -2527,7 +2527,7 @@ f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setAircos(sl_householdAircoResidentialArea_pct.getValue() / 100.0);</ActionCode>
+					<ActionCode>f_setAircos(uI_Tabs.f_getSliderGridConnections_houses(), sl_householdAircoResidentialArea_pct.getValue() / 100.0);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -2963,4 +2963,106 @@ else{
 			</Group>
 		</Presentation>
 	</Group>
+	<Rectangle>
+		<Id>1755004749570</Id>
+		<Name><![CDATA[rect_districtHeatingFunctions]]></Name>
+		<X>40</X>
+		<Y>800</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>3</LineWidth>
+		<LineColor>-65536</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>390</Width>
+		<Height>150</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Rectangle>
+	<Text>
+		<Id>1755004766095</Id>
+		<Name><![CDATA[txt_districtheatingFunctionsDescription]]></Name>
+		<X>160</X>
+		<Y>810</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[District Heating Functions]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>18</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>CENTER</Alignment>
+	</Text>
+	<Rectangle>
+		<Id>1755004809972</Id>
+		<Name><![CDATA[rect_heatingProductionFunctions]]></Name>
+		<X>40</X>
+		<Y>960</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>3</LineWidth>
+		<LineColor>-16711936</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>390</Width>
+		<Height>70</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Rectangle>
+	<Text>
+		<Id>1755004834735</Id>
+		<Name><![CDATA[txt_heatingProductionFunctionsDescription]]></Name>
+		<X>160</X>
+		<Y>970</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[District Heating Functions]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>18</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>CENTER</Alignment>
+	</Text>
 </Presentation>
