@@ -1,54 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Variables>
 	<Variable Class="PlainVariable">
-		<Id>1729262524509</Id>
-		<Name><![CDATA[v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps]]></Name>
-		<X>60</X>
-		<Y>1150</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[int]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[0]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1729262555712</Id>
-		<Name><![CDATA[v_totalNumberOfGhostHeatingSystems_HybridHeatpumps]]></Name>
-		<X>60</X>
-		<Y>1170</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[int]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[0]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1754386301951</Id>
 		<Name><![CDATA[v_totalNumberOfCustomHeatingSystems]]></Name>
 		<X>60</X>
-		<Y>1230</Y>
+		<Y>1180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

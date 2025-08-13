@@ -291,7 +291,7 @@
 		<Id>1754385214478</Id>
 		<Name><![CDATA[f_calculateNumberOfCustomHeatingSystems]]></Name>
 		<X>40</X>
-		<Y>1210</Y>
+		<Y>1160</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -384,7 +384,7 @@
 		<Id>1754924542535</Id>
 		<Name><![CDATA[f_updateHeatingSliders_residential]]></Name>
 		<X>-360</X>
-		<Y>70</Y>
+		<Y>90</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -400,7 +400,7 @@
 		<Id>1754924544023</Id>
 		<Name><![CDATA[f_updateHeatingSliders_businesspark]]></Name>
 		<X>-360</X>
-		<Y>90</Y>
+		<Y>70</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

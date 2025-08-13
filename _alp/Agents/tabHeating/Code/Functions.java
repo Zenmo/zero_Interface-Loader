@@ -620,7 +620,7 @@ double pctArray[] = {
 double pctExcess = Arrays.stream(pctArray).sum() - 100;
 
 for (int i = 0; i < pctArray.length; i++) {
-    if (i != sliderIndex && i != 4){// Skip moved slider & custom slider
+    if (i != sliderIndex && i != 4 && i != 2 && i != 3){// Skip moved slider & custom slider (AND DISTRICT HEAT AND HYBRID FOR NOW)
     	pctExcess = Arrays.stream(pctArray).sum() - 100; // recalc each time
         
         if(pctExcess == 0){
@@ -660,12 +660,6 @@ if(gr_heatingSliders_default.isVisible()){
 	f_updateHeatingSliders_default();
 }
 else if(gr_heatingSliders_businesspark.isVisible()){
-	//For now only for businessparks, future it will be made functional for other models as well!
-	Pair<Integer, Integer> pair = f_calculateNumberOfGhostHeatingSystems( uI_Tabs.f_getSliderGridConnections_utilities());
-	v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps = pair.getFirst();
-	v_totalNumberOfGhostHeatingSystems_HybridHeatpumps = pair.getSecond();
-	v_totalNumberOfCustomHeatingSystems = f_calculateNumberOfCustomHeatingSystems(uI_Tabs.f_getSliderGridConnections_all());
-
 	f_updateHeatingSliders_businesspark();
 }
 else if(gr_heatingSliders_residential.isVisible()){
@@ -682,7 +676,7 @@ double f_updateHeatingSliders_default()
 List<GCUtility> utilityGridConnections = uI_Tabs.f_getSliderGridConnections_utilities();
 
 int GasBurners = count(utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
-int GasBurners_pct = roundToInt(100.0 * GasBurners / (count(utilityGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE) + v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps + v_totalNumberOfGhostHeatingSystems_HybridHeatpumps));
+int GasBurners_pct = roundToInt(100.0 * GasBurners / count(utilityGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE));
 
 sl_gasBurnerCompanies_pct.setValue(GasBurners_pct, false);
 f_setHeatingSliders( 0, sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct, null, null, null );
@@ -721,18 +715,32 @@ double f_updateHeatingSliders_businesspark()
 {/*ALCODESTART::1754924544023*/
 List<GCUtility> utilityGridConnections = uI_Tabs.f_getSliderGridConnections_utilities();
 
-int GasBurners = count(utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
-int GasBurners_pct = roundToInt(100.0 * GasBurners / (count(utilityGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE) + v_totalNumberOfGhostHeatingSystems_ElectricHeatpumps + v_totalNumberOfGhostHeatingSystems_HybridHeatpumps));
+//For now ghost and custom only for businessparks, future it should be made functional for other models as well!
+Pair<Integer, Integer> pair = f_calculateNumberOfGhostHeatingSystems( utilityGridConnections);
+v_totalNumberOfCustomHeatingSystems = f_calculateNumberOfCustomHeatingSystems(new ArrayList<GridConnection>(utilityGridConnections));
 
-sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct.setValue(GasBurners_pct, false);
-f_setHeatingSliders( 0, sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct, sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct, null, null, null );
+int totalCompaniesWithHeating = count(utilityGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE);
 
+int gasBurners = count(utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
+int hybridHeatpump = count(utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.HYBRID_HEATPUMP && gc.v_isActive);
+int electricHeatpump = count(utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP && gc.v_isActive);
+int districtHeating = count(utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.DISTRICTHEAT && gc.v_isActive);
+int LTDistrictHeating = count(utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.LT_DISTRICTHEAT && gc.v_isActive);
 
-// HEAT_PUMP_AIR:
-//		int HeatPumps = count(energyModel.UtilityConnections, gc->gc.p_primaryHeatingAsset instanceof J_EAConversionHeatPump);
-//		int HeatPumps_pct = roundToInt(100 * HeatPumps / energyModel.UtilityConnections.size());
-//		sl_electricHeatPumpCompanies.setValue(HeatPumps_pct, false);
-//		f_setHeatingSlidersCompanies(1);
+int gasBurners_pct = roundToInt(100.0 * gasBurners / totalCompaniesWithHeating);
+int hybridHeatpump_pct = roundToInt(100.0 * hybridHeatpump / totalCompaniesWithHeating);
+int electricHeatpump_pct = roundToInt(100.0 * electricHeatpump / totalCompaniesWithHeating);
+int districtHeating_pct = roundToInt(100.0 * districtHeating / totalCompaniesWithHeating);
+int LTDistrictHeating_pct = roundToInt(100.0 * LTDistrictHeating / totalCompaniesWithHeating);
+int customHeating_pct = roundToInt(100.0 * v_totalNumberOfCustomHeatingSystems/totalCompaniesWithHeating);
+
+sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct.setValue(gasBurners_pct, false);
+sl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct.setValue(hybridHeatpump_pct, false);
+sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct.setValue(electricHeatpump_pct, false);
+sl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct.setValue(districtHeating_pct, false);
+//sl_heatDemandSlidersCompaniesLTDistrictHeatingCompanies_pct.setValue(LTDistrictHeating_pct, false); Doesnt exist (yet) for companies
+sl_heatingTypeSlidersCompaniesCustom_pct.setValue(customHeating_pct, false);
+
 /*ALCODEEND*/}
 
 double f_updateHeatingSliders_custom()

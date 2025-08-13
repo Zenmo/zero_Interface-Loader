@@ -1252,7 +1252,7 @@ if(selectedChargingAttitude != null){
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<OnClickCode>zero_Interface.f_setInfoText(i_mobilityChargingAttitude, zero_Interface.v_infoText.mobilityDemandReduction, i_mobilityChargingAttitude.getX() + uI_Tabs.v_presentationXOffset, i_mobilityChargingAttitude.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+		<OnClickCode>zero_Interface.f_setInfoText(i_mobilityChargingAttitude, zero_Interface.v_infoText.mobilitySmartCharging, i_mobilityChargingAttitude.getX() + uI_Tabs.v_presentationXOffset, i_mobilityChargingAttitude.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Width>20</Width>
