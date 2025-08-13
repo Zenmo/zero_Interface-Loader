@@ -311,7 +311,6 @@ for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data))
 			owner = energyModel.add_pop_connectionOwners();
 			
 			owner.set_p_actorID( dataSolarfarm.owner_id());
-			owner.set_p_actorType( OL_ActorType.CONNECTIONOWNER );
 			owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.SOLARFARM_OP );
 			owner.b_dataSharingAgreed = true;
 			existing_actors.add(owner.p_actorID);
@@ -357,7 +356,6 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) { // M
 	
 	//Owner parameters
 	owner.set_p_actorID( dataBattery.owner_id() );
-	owner.set_p_actorType( OL_ActorType.CONNECTIONOWNER );
 	owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.BATTERY_OP );
 	owner.b_dataSharingAgreed = true;
 	
@@ -494,7 +492,6 @@ for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electro
 		owner = energyModel.add_pop_connectionOwners();
 		
 		owner.set_p_actorID( H2Electrolyser.p_ownerID );
-		owner.set_p_actorType( OL_ActorType.CONNECTIONOWNER );
 		owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.ELECTROLYSER_OP );
 		owner.b_dataSharingAgreed = true;
 	}
@@ -568,7 +565,7 @@ for (Windfarm_data dataWindfarm : f_getWindfarmsInSubScope(c_windfarm_data)) {
 			owner = energyModel.add_pop_connectionOwners();
 			
 			owner.set_p_actorID( windfarm.p_ownerID );
-			owner.set_p_actorType( OL_ActorType.CONNECTIONOWNER );
+			//owner.set_p_actorType( OL_ActorType.CONNECTIONOWNER );
 			owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.WINDFARM_OP );
 			owner.b_dataSharingAgreed = true;
 		}
@@ -712,7 +709,6 @@ double f_createEnergyActors()
 GridOperator GO = energyModel.add_pop_gridOperators();
 
 GO.p_actorID = project_data.grid_operator();
-GO.p_actorType = OL_ActorType.OPERATORGRID;
 GO.p_hasCongestionPricing = project_data.hasCongestionPricing() != null ? project_data.hasCongestionPricing() : false;
 
 
@@ -722,7 +718,6 @@ if (project_data.energy_coop() != null && !project_data.energy_coop().equals("No
 	EnergyCoop EC = energyModel.add_pop_energyCoops();
 	
 	EC.p_actorID = project_data.energy_coop();
-	EC.p_actorType = OL_ActorType.COOPENERGY;
 	EC.p_gridOperator = GO;
 	//EC.p_CoopParent = EC.p_actorID; // WAT BETEKENT COOP PARENT??
 }
@@ -734,7 +729,6 @@ if (project_data.energy_supplier() != null && !project_data.energy_supplier().eq
 	EnergySupplier ES = energyModel.add_pop_energySuppliers(); 
 	
 	ES.p_actorID = project_data.energy_supplier();
-	ES.p_actorType = OL_ActorType.SUPPLIERENERGY;
 }
 
 
@@ -816,7 +810,6 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
 			
 		COC.p_actorID = genericCompany.address_id();
-		COC.p_actorType = OL_ActorType.CONNECTIONOWNER;
 		COC.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
 		COC.p_detailedCompany = false;
 		COC.b_dataSharingAgreed = true;
@@ -1081,7 +1074,7 @@ for (var survey : surveys) {
 	//Create connection owner
 	ConnectionOwner survey_owner = energyModel.add_pop_connectionOwners();
 	survey_owner.p_actorID = survey.getCompanyName();
-	survey_owner.p_actorType = OL_ActorType.CONNECTIONOWNER;
+	//survey_owner.p_actorType = OL_ActorType.CONNECTIONOWNER;
 	survey_owner.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
 	survey_owner.p_detailedCompany = true;
 	survey_owner.b_dataSharingAgreed = survey.getDataSharingAgreed();
@@ -1591,7 +1584,7 @@ else if (vehicle_type == OL_EnergyAssetType.HYDROGEN_VAN){
 
 double f_addChargingDemandProfile(GCPublicCharger GC,String profileName)
 {/*ALCODESTART::1726584205845*/
-J_EAProfile profile = new J_EAProfile(GC, OL_EnergyCarriers.ELECTRICITY, null, OL_ProfileAssetType.CHARGING, energyModel.p_timeStep_h);		
+J_EAProfile profile = new J_EAProfile(GC, OL_EnergyCarriers.ELECTRICITY, null, OL_AssetFlowCategories.evChargingPower_kW, energyModel.p_timeStep_h);		
 profile.energyAssetName = "charging profile";
 List<Double> quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + profileName + " FROM charging_profiles;");			
 profile.a_energyProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> max(0,d)).map( d -> d / 4).toArray();
@@ -1655,7 +1648,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 
 	chargingStation.set_p_ownerID( dataChargingStation.owner_id());				
 	owner.set_p_actorID( chargingStation.p_ownerID );
-	owner.set_p_actorType( OL_ActorType.CONNECTIONOWNER );
+	//owner.set_p_actorType( OL_ActorType.CONNECTIONOWNER );
 	owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.CHARGEPOINT_OP );
 	owner.b_dataSharingAgreed = true;
 	
@@ -1803,7 +1796,7 @@ for (Cable_data dataCable : c_cable_data) {
 double f_createPreprocessedElectricityProfile_PV(GridConnection parentGC,double[] yearlyElectricityDelivery_kWh,double[] yearlyElectricityFeedin_kWh,double[] yearlyElectricityProduction_kWh,Double pvPower_kW,double[] yearlyHeatPumpElectricityConsumption_kWh)
 {/*ALCODESTART::1726584205861*/
 //Create the profile 
-J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, null, OL_ProfileAssetType.ELECTRICITYBASELOAD, energyModel.p_timeStep_h);		
+J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, null, OL_AssetFlowCategories.fixedConsumptionElectric_kW, energyModel.p_timeStep_h);		
 profile.setStartTime_h(v_simStartHour_h);
 profile.energyAssetName = parentGC.p_ownerID + " custom profile";
 double extraConsumption_kWh = 0;
@@ -1878,7 +1871,7 @@ if(yearlyHeatPumpElectricityConsumption_kWh != null){
 	}
 	profile.a_energyProfile_kWh = preProcessedDefaultConsumptionProfile;
 	
-	J_EAProfile profileHeatPumpElectricityConsumption = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, yearlyHeatPumpElectricityConsumption_kWh, OL_ProfileAssetType.HEATPUMP_ELECTRICITY_CONSUMPTION, energyModel.p_timeStep_h);		
+	J_EAProfile profileHeatPumpElectricityConsumption = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, yearlyHeatPumpElectricityConsumption_kWh, OL_AssetFlowCategories.heatPumpElectricityConsumption_kW, energyModel.p_timeStep_h);		
 	profileHeatPumpElectricityConsumption.setStartTime_h(v_simStartHour_h);
 	profileHeatPumpElectricityConsumption.energyAssetName = parentGC.p_ownerID + " custom heat pump electricity consumption profile";
 }
@@ -3079,7 +3072,7 @@ if(project_data.gridnode_profile_timestep_hr() == null){
 double profileTimestep_hr = project_data.gridnode_profile_timestep_hr();
 
 //Add profile to the GC
-J_EAProfile profile = new J_EAProfile(GC_GridNode_profile, OL_EnergyCarriers.ELECTRICITY, profile_data_kWh, OL_ProfileAssetType.ELECTRICITYBASELOAD, profileTimestep_hr);	
+J_EAProfile profile = new J_EAProfile(GC_GridNode_profile, OL_EnergyCarriers.ELECTRICITY, profile_data_kWh, OL_AssetFlowCategories.fixedConsumptionElectric_kW, profileTimestep_hr);	
 profile.setStartTime_h(v_simStartHour_h);
 profile.energyAssetName = "GridNode " + gridnode.p_gridNodeID + " profile";
 
@@ -3328,7 +3321,6 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 		
 	//Set parameters for the Actor: ConnectionOwner
 	COH.p_actorID = GCH.p_ownerID;
-	COH.p_actorType = OL_ActorType.CONNECTIONOWNER;
 	COH.p_connectionOwnerType = OL_ConnectionOwnerType.HOUSEHOLD;
 	COH.p_detailedCompany = false;
 	GCH.p_owner = COH;
@@ -3528,7 +3520,6 @@ for (ParkingSpace_data dataParkingSpace : f_getParkingSpacesInSubScope(c_parking
 		ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
 			
 		COC.p_actorID = "Parking space connection owner: " + dataParkingSpace.parking_id();
-		COC.p_actorType = OL_ActorType.CONNECTIONOWNER;
 		COC.p_connectionOwnerType = OL_ConnectionOwnerType.PARKINGSPACE_OP;
 		COC.p_detailedCompany = false;
 		COC.b_dataSharingAgreed = true;
@@ -3863,7 +3854,7 @@ double yearlyGasDelivery_m3 = Arrays.stream(profile_m3).sum();
 // We assume all delivery is consumption and convert m3 to kWh
 ZeroMath.arrayMultiply(profile_m3, avgc_data.p_gas_kWhpm3);
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.METHANE, profile_m3, OL_ProfileAssetType.METHANEDEMAND , energyModel.p_timeStep_h);
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.METHANE, profile_m3, null, energyModel.p_timeStep_h);
 j_ea.energyAssetName = engineGC.p_ownerID + " custom gas profile";
 
 if(engineGC.p_owner.p_detailedCompany){
@@ -4000,7 +3991,7 @@ double ratioGasUsedForHeating = f_getRatioGasUsedForHeating(surveyGC);
 // Finally, multiply the gas profile with the total conversion factor to get the heat profile
 ZeroMath.arrayMultiply(profile_m3, avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile_m3, OL_ProfileAssetType.HEATDEMAND , energyModel.p_timeStep_h);
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile_m3, null , energyModel.p_timeStep_h);
 j_ea.energyAssetName = engineGC.p_ownerID + " custom building heat profile";
 
 if(engineGC.p_owner.p_detailedCompany){
@@ -4088,7 +4079,7 @@ double[] profile = f_timeSeriesToQuarterHourlyDoubleArray(surveyGC.getHeat().get
 // TODO: Fix this for LT_DISTRICTHEAT, they have a different efficiency!
 ZeroMath.arrayMultiply(profile, avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr);
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile, OL_ProfileAssetType.HEATDEMAND , energyModel.p_timeStep_h);
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile, null , energyModel.p_timeStep_h);
 j_ea.energyAssetName = engineGC.p_ownerID + " custom building heat profile";
 
 return max(profile)/energyModel.p_timeStep_h;
