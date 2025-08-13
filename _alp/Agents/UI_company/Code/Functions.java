@@ -1609,7 +1609,7 @@ if (consumptionEAHEAT != null){
 	currentHeatSavings = roundToInt((consumptionEAHEAT.getConsumptionScaling_fr() - 1)*-100);
 }
 else{   
-	J_EAProfile profileEAHEAT = findFirst(c_ownedGridConnections.get(v_currentSelectedGCnr).c_profileAssets, profileAsset -> profileAsset.profileType == OL_ProfileAssetType.HEATDEMAND);
+	J_EAProfile profileEAHEAT = findFirst(c_ownedGridConnections.get(v_currentSelectedGCnr).c_profileAssets, profileAsset -> profileAsset.energyCarrier == OL_EnergyCarriers.HEAT);
 	if (profileEAHEAT != null){
 		currentHeatSavings = roundToInt((profileEAHEAT.getProfileScaling_fr() - 1)*-100);
 	}
@@ -1623,7 +1623,7 @@ if (consumptionEAELECTRIC != null){
 	currentElectricitySavings = roundToInt((consumptionEAELECTRIC.getConsumptionScaling_fr() - 1)*-100);
 }
 else{
-	J_EAProfile profileEAELECTRIC = findFirst(c_ownedGridConnections.get(v_currentSelectedGCnr).c_profileAssets, profileAsset -> profileAsset.profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD);
+	J_EAProfile profileEAELECTRIC = findFirst(c_ownedGridConnections.get(v_currentSelectedGCnr).c_profileAssets, profileAsset -> profileAsset.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 	if (profileEAELECTRIC != null){
 		currentElectricitySavings = roundToInt((profileEAELECTRIC.getProfileScaling_fr() - 1)*-100);
 	}
