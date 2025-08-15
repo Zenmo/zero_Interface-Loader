@@ -1680,7 +1680,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 			List<J_ChargingSession> chargerProfile = f_getChargerProfile();
 			boolean V1GCapable = randomTrue(avgc_data.p_v1gProbability);
 			boolean V2GCapable = randomTrue(avgc_data.p_v2gProbability);
-			new J_EACharger(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile, V1GCapable, V2GCapable);
+			new J_EAChargePoint(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile, V1GCapable, V2GCapable, 2);
 		}
 		else{
 			for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerChargePoint; k++ ){
@@ -1726,9 +1726,9 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 		//Create vehicles that charge at the charging station
 		if(chargingStation.p_chargingVehicleType == OL_EnergyAssetType.CHARGER){
 			List<J_ChargingSession> chargerProfile = f_getChargerProfile();
-			boolean V1GCapable = randomTrue(avgc_data.p_v1gProbability);
-			boolean V2GCapable = randomTrue(avgc_data.p_v2gProbability);
-			new J_EACharger(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile, V1GCapable, V2GCapable);
+			boolean V1GCapable = true; //randomTrue(avgc_data.p_v1gProbability);
+			boolean V2GCapable = true; //randomTrue(avgc_data.p_v2gProbability);
+			new J_EAChargePoint(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile, V1GCapable, V2GCapable, 2);
 		}
 		else{
 			for(int k = 0; k < avgc_data.p_avgVehiclesPerChargePoint; k++ ){
