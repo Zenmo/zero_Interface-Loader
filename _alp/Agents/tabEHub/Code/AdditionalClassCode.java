@@ -6,9 +6,9 @@ public ShapeCheckBox getCb_powerChargingEVs() {
 	return this.cb_powerChargingEVs;
 }
 
-public ShapeCheckBox getCb_spreadChargingEVs() {
+/*public ShapeCheckBox getCb_spreadChargingEVs() {
 	return this.cb_spreadChargingEVs;
-}
+}*/
 
 public ShapeCheckBox getCb_curtailment() {
 	return this.cb_curtailment;

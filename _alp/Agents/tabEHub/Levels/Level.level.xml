@@ -99,8 +99,9 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722253487935</Id>
 				<Name><![CDATA[cb_spreadChargingEVs]]></Name>
-				<X>260</X>
-				<Y>33</Y>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<X>450</X>
+				<Y>30</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -444,7 +445,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<Id>1725277950476</Id>
 				<Name><![CDATA[cb_powerChargingEVs]]></Name>
 				<X>260</X>
-				<Y>59</Y>
+				<Y>29</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -458,7 +459,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>if (cb_powerChargingEVs.isSelected()) {
-	cb_spreadChargingEVs.setSelected(false);
+	//cb_spreadChargingEVs.setSelected(false);
 	for(GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()){
 		if(GC instanceof GCPublicCharger){
 			//Leave it on basic setting (MAX_SPREAD)
@@ -496,6 +497,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 			<Text>
 				<Id>1725277950478</Id>
 				<Name><![CDATA[t_powerChargingEVsDescription]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<X>15</X>
 				<Y>66</Y>
 				<Label>

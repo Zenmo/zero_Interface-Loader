@@ -1829,10 +1829,10 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() )
 		gr_settingsV2G.setVisible(false);
 
 		for( GCHouse house : zero_Interface.energyModel.Houses ){
-			house.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.V1G);
+			house.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.PRICE);
 		}
 		for( GCPublicCharger publicCharger : zero_Interface.energyModel.PublicChargers ){
-			publicCharger.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.V1G);
+			publicCharger.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.PRICE);
 		}
 		break;
 	case 2:

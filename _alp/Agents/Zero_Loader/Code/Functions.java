@@ -1640,8 +1640,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 	//Is active at start?
 	chargingStation.v_isActive = dataChargingStation.initially_active();
 
-	//Set charging attitude: MAX_POWER should always be the starting case for charge stations to prevent more charging than possible
-	chargingStation.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.MAX_SPREAD);
+	chargingStation.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
 			
 	//Create and connect owner
 	ConnectionOwner owner = energyModel.add_pop_connectionOwners();
