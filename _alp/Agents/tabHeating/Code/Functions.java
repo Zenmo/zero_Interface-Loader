@@ -362,10 +362,7 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 	house.f_removeAllHeatingAssets();
 	house.p_parentNodeHeat = null;
 	house.p_parentNodeHeatID = null;
-	
-	//house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
-	house.v_districtHeatDelivery_kW = 0;
-	
+		
 	//add gasburner
 	J_EAConsumption heatDemandAsset = findFirst(house.c_consumptionAssets, j_ea -> j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
 	J_EAConversionGasBurner gasBurner;
@@ -493,7 +490,6 @@ double f_removeLTDH()
 for (GCHouse house: zero_Interface.energyModel.Houses ) {
 	// Disconnect from GridNode Heat
 	house.p_parentNodeHeat = null;
-	house.v_districtHeatDelivery_kW = 0;
 	
 	// Remove Heatpump and replace with gasburner
 	house.f_removeAllHeatingAssets();

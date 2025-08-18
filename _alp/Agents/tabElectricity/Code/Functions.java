@@ -625,7 +625,7 @@ f_setDemandReduction(gcList, -demandReduction_pct);
 
 double f_setVehiclesPrivateParking(double privateParking_pct)
 {/*ALCODESTART::1750328750011*/
-int nbHousesWithEV = count(zero_Interface.energyModel.Houses, x -> x.p_eigenOprit && x.p_householdEV != null);
+int nbHousesWithEV = count(zero_Interface.energyModel.Houses, x -> x.p_eigenOprit && x.c_electricVehicles.size() > 0);
 int desiredNbOfHousesWithEV = roundToInt(privateParking_pct / 100 * zero_Interface.c_orderedVehiclesPrivateParking.size());
 
 // we scale the consumption instead of getting the diesel/EV parameter from avgc data to represent the 'size' of the car

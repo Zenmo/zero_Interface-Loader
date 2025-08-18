@@ -3384,7 +3384,7 @@ for(GCHouse GCH : energyModel.Houses){
 double f_addEnergyAssetsToHouses(GCHouse house,double jaarlijksElectriciteitsVerbruik)
 {/*ALCODESTART::1749728889986*/
 //Add generic electricity demand profile 
-GridNode gn = randomWhere(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals( house.p_parentNodeElectricID));
+GridNode gn = randomWhere(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals( house.p_parentNodeElectricID)); // Why random??
 if ( ! gn.p_hasProfileData ){
 	f_addElectricityDemandProfile(house, jaarlijksElectriciteitsVerbruik, null, false, "default_house_electricity_demand_fr");
 }
@@ -3432,26 +3432,28 @@ else {
 
 double f_setHouseHeatingPreferences(GCHouse house)
 {/*ALCODESTART::1749728889988*/
-if( randomTrue(0.5) ){ //50% kans op ochtend ritme
-	house.v_nightTempSetpoint_degC = uniform_discr(12,18);
-	house.v_dayTempSetpoint_degC = uniform_discr(18, 24);
-	house.v_heatingOn_time = uniform_discr(5,10) + uniform_discr(0,4) / 4.0;
-	house.v_heatingOff_time = uniform_discr(21,23);
-	house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0,1),1);
-}
-else if (randomTrue(0.5) ){ // 25% kans op hele dag aan
-	house.v_nightTempSetpoint_degC = uniform_discr(18,21);
-	house.v_dayTempSetpoint_degC = house.v_nightTempSetpoint_degC;
-	house.v_heatingOn_time = -1;
-	house.v_heatingOff_time = 25;
-	house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0, 1),1);
-}
-else { // 25% kans op smiddags/savonds aan
-	house.v_nightTempSetpoint_degC = uniform_discr(12,18);
-	house.v_dayTempSetpoint_degC = uniform_discr(18, 24);
-	house.v_heatingOn_time = uniform_discr(14, 16) + uniform_discr(0,4) / 4.0;
-	house.v_heatingOff_time = uniform_discr(21,23);
-	house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0, 1),1);
+if (house.p_heatingManagement instanceof J_HeatingManagementSimple heatingManagement) {
+	if( randomTrue(0.5) ){ //50% kans op ochtend ritme
+		heatingManagement.nightTimeSetPoint_degC = uniform_discr(12,18);
+		heatingManagement.dayTimeSetPoint_degC = uniform_discr(18, 24);
+		heatingManagement.startOfDay_h = uniform_discr(5,10) + uniform_discr(0,4) / 4.0;
+		heatingManagement.startOfNight_h = uniform_discr(21,23);
+		// house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0,1),1);
+	}
+	else if (randomTrue(0.5) ){ // 25% kans op hele dag aan
+		heatingManagement.nightTimeSetPoint_degC = uniform_discr(18,21);
+		heatingManagement.dayTimeSetPoint_degC = heatingManagement.nightTimeSetPoint_degC;
+		heatingManagement.startOfDay_h= -1;
+		heatingManagement.startOfNight_h = 25;
+		//house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0, 1),1);
+	}
+	else { // 25% kans op smiddags/savonds aan
+		heatingManagement.nightTimeSetPoint_degC = uniform_discr(12,18);
+		heatingManagement.dayTimeSetPoint_degC = uniform_discr(18, 24);
+		heatingManagement.startOfDay_h = uniform_discr(14, 16) + uniform_discr(0,4) / 4.0;
+		heatingManagement.startOfNight_h = uniform_discr(21,23);
+		//house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0, 1),1);
+	}
 }
 /*ALCODEEND*/}
 
