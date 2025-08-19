@@ -277,12 +277,7 @@ double f_setUITabs()
 //Create the tabs for the project
 f_createUITabs_default();
 
-//Get all the gridconnections of the main interface
-List<GridConnection> allModelGridConnections = new ArrayList<GridConnection>(energyModel.f_getActiveGridConnections());
-allModelGridConnections.addAll(energyModel.f_getPausedGridConnections());
-
 //Initialize the uI_Tabs with the gridconnections
-//uI_Tabs.f_initializeUI_Tabs(allModelGridConnections);
 uI_Tabs.f_initializeUI_Tabs(energyModel.f_getGridConnectionsCollectionPointer(), energyModel.f_getPausedGridConnectionsCollectionPointer());
 
 //Initialize sliders with certain presets
@@ -682,11 +677,11 @@ f_initalAssetOrdering();
 //Connect the results UI
 f_connectResultsUI();
 
-//Initialize the UI elements (positioning, etc.)
-f_setUITabs();
-
 //Project specific settings
 f_projectSpecificSettings();
+
+//Initialize the UI elements (positioning, etc.)
+f_setUITabs();
 
 // Create the Private UI for companies
 f_createAdditionalUIs();
@@ -724,19 +719,9 @@ b_updateLiveCongestionColors = true;
 //Initialize map overlay buttons
 f_initializeMapOverlayRadioButton();
 
-
 //Set order of certain layovers and submenus
 f_initializePresentationOrder();
-/*
-presentation.remove(gr_sliderClickBlocker);
-presentation.insert(presentation.size(), gr_sliderClickBlocker);
-presentation.remove(gr_forceMapSelection);
-presentation.insert(presentation.size(), gr_forceMapSelection);
-presentation.remove(gr_filterInterface);
-presentation.insert(presentation.size(), gr_filterInterface);
-presentation.remove(gr_infoText);
-presentation.insert(presentation.size(), gr_infoText);
-*/
+
 /*ALCODEEND*/}
 
 GISRegion f_createGISObject(double[] gisTokens)

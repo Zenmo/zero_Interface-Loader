@@ -867,7 +867,7 @@ f_setHeatingSystemsHouseholds( uI_Tabs.f_getSliderGridConnections_houses(), sl_e
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( 0, sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct, null, null, null );
-f_setHeatingSystemsCompanies( uI_Tabs.f_getSliderGridConnections_utilities(), sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct );
+f_setHeatingSystemsCompanies( uI_Tabs.f_getSliderGridConnections_utilities(), sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct, null, null, null  );
 
 zero_Interface.f_resetSettings();</ActionCode>
 				</BasicProperties>
@@ -930,7 +930,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( 1, sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct, null, null, null );
-f_setHeatingSystemsCompanies( uI_Tabs.f_getSliderGridConnections_utilities(), sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct);
+f_setHeatingSystemsCompanies( uI_Tabs.f_getSliderGridConnections_utilities(), sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct, null, null, null );
 
 zero_Interface.f_resetSettings();</ActionCode>
 				</BasicProperties>
@@ -1305,7 +1305,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReductionHeating( new ArrayList&lt;GridConnection&gt;(zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true)), sl_heatDemandSlidersCompaniesHeatDemandReductionCompanies_pct.getValue());</ActionCode>
+					<ActionCode>f_setDemandReductionHeating( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getSliderGridConnections_utilities()), sl_heatDemandSlidersCompaniesHeatDemandReductionCompanies_pct.getValue());</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1622,7 +1622,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( 0, sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct, sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct, sl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct, sl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct, sl_heatingTypeSlidersCompaniesCustom_pct );
-f_setHeatingSystemsCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct, sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct);
+f_setHeatingSystemsCompanies( uI_Tabs.f_getSliderGridConnections_utilities(), sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct, sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct, sl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct, sl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct, sl_heatingTypeSlidersCompaniesCustom_pct );
 
 zero_Interface.f_resetSettings();</ActionCode>
 				</BasicProperties>
@@ -1685,7 +1685,7 @@ traceln("Slider doet nog niets!!");//f_setHeatingSlidersCompanies(2);
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( 1, sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct, sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct, sl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct, sl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct, sl_heatingTypeSlidersCompaniesCustom_pct );
-f_setHeatingSystemsCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct, sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct);
+f_setHeatingSystemsCompanies( uI_Tabs.f_getSliderGridConnections_utilities(), sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct, sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct, sl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct, sl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct, sl_heatingTypeSlidersCompaniesCustom_pct );
 
 zero_Interface.f_resetSettings();</ActionCode>
 				</BasicProperties>
@@ -2356,7 +2356,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 	f_removeDistrictHeatingFromAllHouses();
 }
 f_setHeatingSliders( 0, sl_householdGasBurnerResidentialArea_pct, sl_householdElectricHeatPumpResidentialArea_pct, null, null, null );
-f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_householdElectricHeatPumpResidentialArea_pct.getValue() );
+f_setHeatingSystemsHouseholds( uI_Tabs.f_getSliderGridConnections_houses(), sl_householdElectricHeatPumpResidentialArea_pct.getValue() );
 </ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -2390,7 +2390,7 @@ f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt
 	f_removeDistrictHeatingFromAllHouses();
 }
 f_setHeatingSliders( 1, sl_householdGasBurnerResidentialArea_pct, sl_householdElectricHeatPumpResidentialArea_pct, null, null, null );
-f_setHeatingSystemsHouseholds( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_householdElectricHeatPumpResidentialArea_pct.getValue() );
+f_setHeatingSystemsHouseholds( uI_Tabs.f_getSliderGridConnections_houses(), sl_householdElectricHeatPumpResidentialArea_pct.getValue() );
 </ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -2892,7 +2892,7 @@ else{
 						<BasicProperties Width="100" Height="30">
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
-							<ActionCode>f_setPTSystemHouses( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_rooftopPTHouses_pct.getValue() );</ActionCode>
+							<ActionCode>f_setPTSystemHouses( uI_Tabs.f_getSliderGridConnections_houses(), sl_rooftopPTHouses_pct.getValue() );</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
 							<DefaultValueCode>0</DefaultValueCode>

@@ -775,7 +775,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1754984198974</Id>
 				<Name><![CDATA[cb_curtailment_default]]></Name>
-				<X>260</X>
+				<X>300</X>
 				<Y>202</Y>
 				<Label>
 					<X>0</X>
@@ -1072,7 +1072,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
+					<MinValue>-50</MinValue>
 					<MaxValue>50</MaxValue>
 					<Step>5</Step>
 					<LinkTo>false</LinkTo>
@@ -1532,7 +1532,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1754985531358</Id>
 				<Name><![CDATA[cb_curtailment_businesspark]]></Name>
-				<X>260</X>
+				<X>300</X>
 				<Y>177</Y>
 				<Label>
 					<X>0</X>

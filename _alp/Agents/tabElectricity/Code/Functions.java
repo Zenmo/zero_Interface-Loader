@@ -257,12 +257,8 @@ zero_Interface.f_resetSettings();
 
 double f_addPVSystem(GridConnection gc,double capacity_kWp)
 {/*ALCODESTART::1747306690517*/
-if ( gc.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) ) {
-	// Add the capacity to the existing asset
-	J_EAProduction pvAsset = findFirst(gc.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
-	if ( pvAsset == null ) {
-		throw new RuntimeException("Could not find photovoltaic asset in GridConnection: " + gc.p_ownerID + ", even though hasPV is True.");
-	}
+J_EAProduction pvAsset = findFirst(gc.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
+if (pvAsset != null) {
 	capacity_kWp += pvAsset.getCapacityElectric_kW();
 	pvAsset.setCapacityElectric_kW( capacity_kWp );
 }

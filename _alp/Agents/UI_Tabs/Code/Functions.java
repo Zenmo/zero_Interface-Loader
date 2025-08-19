@@ -120,7 +120,11 @@ for(GridConnection GC : v_sliderGridConnections){
 		gridBatteryGridConnections.add((GCGridBattery)GC);		
 	}
 }
-
+for(GridConnection GC : v_pausedSliderGridConnections){
+	if(GC instanceof GCGridBattery){
+		gridBatteryGridConnections.add((GCGridBattery)GC);
+	}
+}
 return gridBatteryGridConnections;
 /*ALCODEEND*/}
 
@@ -146,7 +150,11 @@ for(GridConnection GC : v_sliderGridConnections){
 		productionGridConnections.add((GCEnergyProduction)GC);
 	}
 }
-
+for(GridConnection GC : v_pausedSliderGridConnections){
+	if(GC instanceof GCEnergyProduction){
+		productionGridConnections.add((GCEnergyProduction)GC);
+	}
+}
 return productionGridConnections;
 /*ALCODEEND*/}
 

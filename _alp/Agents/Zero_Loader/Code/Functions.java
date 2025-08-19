@@ -1324,8 +1324,8 @@ switch(vehicle_type){
 if (!isDefaultVehicle && maxChargingPower_kW > 0){
 	capacityElectricity_kW	= maxChargingPower_kW;
 }
-if (maxChargingPower_kW <= 0) {
-	traceln("Survey data contains 0 or negative maxChargingPower_kW: %s", maxChargingPower_kW);
+if (maxChargingPower_kW < 0) {
+	traceln("Survey data contains negative maxChargingPower_kW: %s", maxChargingPower_kW);
 }
 
 //Create the EV vehicle energy asset with the set parameters + links
