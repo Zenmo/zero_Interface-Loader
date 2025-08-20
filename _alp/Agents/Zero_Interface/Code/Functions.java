@@ -150,12 +150,7 @@ switch(selectedMapOverlayType){
 		}
 		break;
 	case PV_PRODUCTION:
-		if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
-			f_setColorsBasedOnProductionHouseholds(gis_area);
-		}
-		else {
-			f_setColorsBasedOnProduction(gis_area);
-		}
+		f_setColorsBasedOnProduction(gis_area);
 		break;
 	case GRID_NEIGHBOURS:
 		f_setColorsBasedOnGridTopology_objects(gis_area);
@@ -648,16 +643,29 @@ if(gis_area.c_containedGridConnections.size() > 0){
 double f_setColorsBasedOnProduction(GIS_Object gis_area)
 {/*ALCODESTART::1715118739710*/
 if (gis_area.c_containedGridConnections.size() > 0) {
-	if (gis_area.c_containedGridConnections.get(0).v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)) {
-		if (gis_area.c_containedGridConnections.get(0).c_productionAssets.get(0).getCapacityElectric_kW() < 100){
-			gis_area.f_style(rect_mapOverlayLegend_PVProduction2.getFillColor(), null, null, null);
-		}
-		else {
-			gis_area.f_style(rect_mapOverlayLegend_PVProduction3.getFillColor(), null, null, null);
-		}
-		return;
+	
+	//Define medium PV Value
+	double mediumPVValue_kWp = 100;
+	if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL){
+		mediumPVValue_kWp = 5;
 	}
-	gis_area.f_style(rect_mapOverlayLegend_PVProduction1.getFillColor(), null, null, null);
+	
+	//Calculate total pv capacity on the gis object
+	double totalPVCapacity_kWp = 0;
+	for(GridConnection GC : gis_area.c_containedGridConnections){
+		totalPVCapacity_kWp += GC.v_liveAssetsMetaData.totalInstalledPVPower_kW;
+	}
+	
+	//Set color of object based on total pv capacity
+	if(totalPVCapacity_kWp == 0){
+		gis_area.f_style(rect_mapOverlayLegend_PVProduction1.getFillColor(), null, null, null);
+	}
+	else if (totalPVCapacity_kWp < mediumPVValue_kWp){
+		gis_area.f_style(rect_mapOverlayLegend_PVProduction2.getFillColor(), null, null, null);
+	}
+	else{
+		gis_area.f_style(rect_mapOverlayLegend_PVProduction3.getFillColor(), null, null, null);
+	}
 }
 /*ALCODEEND*/}
 
@@ -769,24 +777,6 @@ else if ( yearlyEnergyConsumption < 4000){ gis_area.f_style( rect_mapOverlayLege
 else if ( yearlyEnergyConsumption < 6000){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption4.getFillColor(), null, null, null);}
 else if ( yearlyEnergyConsumption > 6000){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption5.getFillColor(), null, null, null);}
 	
-
-/*ALCODEEND*/}
-
-double f_setColorsBasedOnProductionHouseholds(GIS_Object gis_area)
-{/*ALCODESTART::1718265697364*/
-if (gis_area.c_containedGridConnections.size() > 0) {
-	if (gis_area.c_containedGridConnections.get(0).v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)) {
-		if (gis_area.c_containedGridConnections.get(0).c_productionAssets.get(0).getCapacityElectric_kW() < 5){
-			gis_area.f_style( rect_mapOverlayLegend_PVProduction2.getFillColor(), null, null, null );
-		}
-		else {
-			gis_area.f_style( rect_mapOverlayLegend_PVProduction3.getFillColor(), null, null, null );
-		}
-		return;
-	}
-}
-gis_area.f_style( rect_mapOverlayLegend_PVProduction1.getFillColor(), null, null, null );
-
 
 /*ALCODEEND*/}
 
@@ -3035,19 +3025,12 @@ b_updateLiveCongestionColors = true;
 gr_mapOverlayLegend_PVProduction.setVisible(true);
 
 //Colour gis objects
-if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL){
-	for (GIS_Building building : energyModel.pop_GIS_Buildings){
-		f_setColorsBasedOnProductionHouseholds(building);
-	}
+for (GIS_Building building : energyModel.pop_GIS_Buildings){
+	f_setColorsBasedOnProduction(building);
 }
-else {
-	for (GIS_Building building : energyModel.pop_GIS_Buildings){
-		f_setColorsBasedOnProduction(building);
-	}
-	/*for (GIS_Object object : energyModel.pop_GIS_Objects){
-		f_setColorsBasedOnProduction(object);
-	}*/
-}
+/*for (GIS_Object object : energyModel.pop_GIS_Objects){
+	f_setColorsBasedOnProduction(object);
+}*/
 /*ALCODEEND*/}
 
 double f_setMapOverlay_GridTopology()
