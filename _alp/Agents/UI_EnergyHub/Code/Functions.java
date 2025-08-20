@@ -4,7 +4,7 @@ double f_initializeEnergyHubDashboard()
 zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT),true);
 zero_Interface.b_updateLiveCongestionColors = false;
 
-for (GridConnection GC : c_selectedEnergyHubGC) { //Buildings that are grouped, select as well.
+for (GridConnection GC : v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer()) { //Buildings that are grouped, select as well.
 	for (GIS_Object object : GC.c_connectedGISObjects) { //Buildings that are grouped, select as well.
 		object.gisRegion.setFillColor(zero_Interface.v_selectionColorAddBuildings);
 	}
@@ -64,7 +64,7 @@ else {
 }
 
 //Initialize slider gcs and set sliders
-uI_Tabs.f_initializeUI_Tabs(c_selectedEnergyHubGC, null);
+uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null);
 
 
 /*ALCODEEND*/}

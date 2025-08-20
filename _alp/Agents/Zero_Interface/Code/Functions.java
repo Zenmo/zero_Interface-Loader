@@ -3213,7 +3213,6 @@ if(b_inEnergyHubSelectionMode){
 	va_EHubDashboard.navigateTo();
 	
 	//Copy selected GC and coop to e-hub dashboard
-	uI_EnergyHub.c_selectedEnergyHubGC = new ArrayList<GridConnection>(c_selectedGridConnections);
 	uI_EnergyHub.v_energyHubCoop = v_customEnergyCoop;
 	
 	//Set E-hub selection mode false

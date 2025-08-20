@@ -667,7 +667,6 @@ zero_Interface.va_Interface.navigateTo();
 //zero_Interface.c_selectedGridConnections = new ArrayList&lt;GridConnection&gt;(c_selectedEnergyHubGC);
 //zero_Interface.v_customEnergyCoop = v_energyHubCoop;
 	
-c_selectedEnergyHubGC.clear();
 v_energyHubCoop = null;
 
 zero_Interface.b_inEnergyHubSelectionMode = true;</ActionCode>
@@ -748,7 +747,6 @@ zero_Interface.cb_showFilterInterface.setSelected(false, true);
 zero_Interface.f_updateMainInterfaceSliders();
 zero_Interface.va_Interface.navigateTo();
 
-c_selectedEnergyHubGC.clear();
 v_energyHubCoop = null;
 
 zero_Interface.b_inEnergyHubMode = false;
