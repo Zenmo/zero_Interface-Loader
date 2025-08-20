@@ -3084,8 +3084,8 @@ J_ChargingSession f_createChargingSession(String chargingSessionData)
 {/*ALCODESTART::1749648772203*/
 String[] chargingSessionInfo = chargingSessionData.split("/"); 
 
-int startIndex = Integer.parseInt(chargingSessionInfo[0]);
-int endIndex = Integer.parseInt(chargingSessionInfo[1]);
+double startIndex = Double.parseDouble(chargingSessionInfo[0]);
+double endIndex = Double.parseDouble(chargingSessionInfo[1]);
 double chargingDemand_kWh = Double.parseDouble(chargingSessionInfo[2]);
 double batteryCap_kWh = Double.parseDouble(chargingSessionInfo[3]);
 double chargingPower_kW = Double.parseDouble(chargingSessionInfo[5]);
