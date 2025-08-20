@@ -243,5 +243,21 @@ import org.apache.commons.lang3.tuple.Triple;]]></Import>
 			<Width>1920</Width>
 			<Height>980</Height>
 		</Area>
+		<Area>
+			<Id>1747229303402</Id>
+			<Name><![CDATA[va_EHubDashboard]]></Name>
+			<X>2600</X>
+			<Y>-2200</Y>
+			<Label>
+				<X>0</X>
+				<Y>-10</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>false</ShowLabel>
+			<Title/>
+			<Width>1920</Width>
+			<Height>980</Height>
+		</Area>
 	</Areas>
 </ActiveObjectClass>

@@ -43,8 +43,8 @@
 	<Event>
 		<Id>1743509682728</Id>
 		<Name><![CDATA[e_setStartView]]></Name>
-		<X>-670</X>
-		<Y>275</Y>
+		<X>-660</X>
+		<Y>295</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

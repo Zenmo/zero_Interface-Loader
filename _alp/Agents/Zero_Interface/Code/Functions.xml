@@ -52,7 +52,7 @@
 		<Id>1702045084338</Id>
 		<Name><![CDATA[f_styleAreas]]></Name>
 		<X>-670</X>
-		<Y>371</Y>
+		<Y>451</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -72,7 +72,7 @@
 		<Id>1702385530773</Id>
 		<Name><![CDATA[f_styleSimulationAreas]]></Name>
 		<X>-670</X>
-		<Y>351</Y>
+		<Y>431</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -92,7 +92,7 @@
 		<Id>1705499586056</Id>
 		<Name><![CDATA[f_styleGridNodes]]></Name>
 		<X>-670</X>
-		<Y>391</Y>
+		<Y>471</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -112,7 +112,7 @@
 		<Id>1705505495599</Id>
 		<Name><![CDATA[f_styleMVLV]]></Name>
 		<X>-650</X>
-		<Y>471</Y>
+		<Y>551</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -132,7 +132,7 @@
 		<Id>1705505509120</Id>
 		<Name><![CDATA[f_styleHVMV]]></Name>
 		<X>-650</X>
-		<Y>411</Y>
+		<Y>491</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -152,7 +152,7 @@
 		<Id>1705925024602</Id>
 		<Name><![CDATA[f_setUITabs]]></Name>
 		<X>-670</X>
-		<Y>731</Y>
+		<Y>711</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -244,8 +244,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1709716821854</Id>
 		<Name><![CDATA[f_connectResultsUI]]></Name>
-		<X>-670</X>
-		<Y>631</Y>
+		<X>-270</X>
+		<Y>690</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -380,8 +380,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1715157302225</Id>
 		<Name><![CDATA[f_projectSpecificSettings]]></Name>
-		<X>-670</X>
-		<Y>250</Y>
+		<X>-660</X>
+		<Y>270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -433,8 +433,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1716419446045</Id>
 		<Name><![CDATA[f_enableTraceln]]></Name>
-		<X>-480</X>
-		<Y>-100</Y>
+		<X>-640</X>
+		<Y>-120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -453,8 +453,8 @@
 		<ReturnType>PrintStream</ReturnType>
 		<Id>1716419448047</Id>
 		<Name><![CDATA[f_disableTraceln]]></Name>
-		<X>-480</X>
-		<Y>-120</Y>
+		<X>-640</X>
+		<Y>-140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -510,7 +510,7 @@
 		<Id>1718288402102</Id>
 		<Name><![CDATA[f_updateMainInterfaceSliders]]></Name>
 		<X>-670</X>
-		<Y>771</Y>
+		<Y>776</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -602,7 +602,7 @@
 		<Id>1721991420806</Id>
 		<Name><![CDATA[f_setGridTopologyColors]]></Name>
 		<X>-650</X>
-		<Y>511</Y>
+		<Y>591</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -618,7 +618,7 @@
 		<Id>1721991963719</Id>
 		<Name><![CDATA[f_styleSUBMV]]></Name>
 		<X>-650</X>
-		<Y>451</Y>
+		<Y>531</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -638,7 +638,7 @@
 		<Id>1721992103665</Id>
 		<Name><![CDATA[f_styleMVMV]]></Name>
 		<X>-650</X>
-		<Y>431</Y>
+		<Y>511</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -781,7 +781,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1725977409304</Id>
 		<Name><![CDATA[f_setSliderPresets]]></Name>
-		<X>-670</X>
+		<X>-650</X>
 		<Y>751</Y>
 		<Label>
 			<X>10</X>
@@ -797,8 +797,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1726068314849</Id>
 		<Name><![CDATA[f_projectSpecificStyling]]></Name>
-		<X>-670</X>
-		<Y>230</Y>
+		<X>-660</X>
+		<Y>250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1177,8 +1177,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1736442051389</Id>
 		<Name><![CDATA[f_styleResultsUI]]></Name>
-		<X>-650</X>
-		<Y>651</Y>
+		<X>-250</X>
+		<Y>710</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1300,7 +1300,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1742300624199</Id>
-		<Name><![CDATA[f_setForcedClickScreen]]></Name>
+		<Name><![CDATA[f_setForcedClickScreenText]]></Name>
 		<X>140</X>
 		<Y>-880</Y>
 		<Label>
@@ -1310,10 +1310,6 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[showForcedClickScreen]]></Name>
-			<Type><![CDATA[boolean]]></Type>
-		</Parameter>
 		<Parameter>
 			<Name><![CDATA[forcedClickScreenText]]></Name>
 			<Type><![CDATA[String]]></Type>
@@ -1325,8 +1321,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1743509491686</Id>
 		<Name><![CDATA[f_setMapViewBounds]]></Name>
-		<X>-480</X>
-		<Y>-60</Y>
+		<X>-640</X>
+		<Y>-90</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1346,7 +1342,7 @@
 		<Id>1743518032245</Id>
 		<Name><![CDATA[f_setStartView]]></Name>
 		<X>-640</X>
-		<Y>295</Y>
+		<Y>315</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1538,7 +1534,7 @@
 		<Name><![CDATA[f_selectGISRegion_publicModel]]></Name>
 		<Description><![CDATA[Function that selects gisregions after click on the map]]></Description>
 		<X>-670</X>
-		<Y>870</Y>
+		<Y>895</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1562,7 +1558,7 @@
 		<Id>1746085650084</Id>
 		<Name><![CDATA[f_changeDefaultColorOfPrivateGC]]></Name>
 		<X>-670</X>
-		<Y>910</Y>
+		<Y>935</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1808,22 +1804,6 @@
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1750340574107</Id>
-		<Name><![CDATA[f_initialisationOfResidentialSliders]]></Name>
-		<X>400</X>
-		<Y>-340</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
@@ -1890,7 +1870,7 @@
 		<Id>1752837115143</Id>
 		<Name><![CDATA[f_styleLVLV]]></Name>
 		<X>-650</X>
-		<Y>490</Y>
+		<Y>570</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2036,11 +2016,31 @@
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
+		<Id>1753440028514</Id>
+		<Name><![CDATA[f_setShapePresentationOnTop]]></Name>
+		<X>-640</X>
+		<Y>-60</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[shape]]></Name>
+			<Type><![CDATA[Shape]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
 		<Id>1753713001191</Id>
 		<Name><![CDATA[f_updateOrderedListsAfterDeserialising]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>70</X>
-		<Y>-630</Y>
+		<Y>-610</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2056,12 +2056,104 @@
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753440184174</Id>
+		<Name><![CDATA[f_initializePresentationOrder]]></Name>
+		<X>-660</X>
+		<Y>230</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753445407428</Id>
+		<Name><![CDATA[f_setForcedClickScreenVisibility]]></Name>
+		<X>140</X>
+		<Y>-860</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[showForcedClickScreen]]></Name>
+			<Type><![CDATA[boolean]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753446312775</Id>
+		<Name><![CDATA[f_selectEnergyHubGC]]></Name>
+		<X>2240</X>
+		<Y>-2050</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[clickx]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[clicky]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753698716095</Id>
+		<Name><![CDATA[f_startEnergyHubConfiguration]]></Name>
+		<X>2240</X>
+		<Y>-2120</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753698810590</Id>
+		<Name><![CDATA[f_finalizeEnergyHubConfiguration]]></Name>
+		<X>2240</X>
+		<Y>-2020</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>ArrayList&lt;GridConnection&gt;</ReturnType>
 		<Id>1753713085487</Id>
 		<Name><![CDATA[f_updateGClistAfterDeserialisation]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>85</X>
-		<Y>-610</Y>
+		<Y>-590</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2086,7 +2178,7 @@
 		<Name><![CDATA[f_updateJ_EAlistAfterDeserialisation]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>100</X>
-		<Y>-590</Y>
+		<Y>-570</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2102,6 +2194,54 @@
 			<Name><![CDATA[newEnergyModel]]></Name>
 			<Type><![CDATA[EnergyModel]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753881971788</Id>
+		<Name><![CDATA[f_createUITabs_default]]></Name>
+		<X>-650</X>
+		<Y>730</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753882411689</Id>
+		<Name><![CDATA[f_initializeNonActiveVehiclesPublicParking]]></Name>
+		<X>85</X>
+		<Y>-630</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753884000493</Id>
+		<Name><![CDATA[f_simulateYearFromMainInterface]]></Name>
+		<X>1980</X>
+		<Y>360</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">

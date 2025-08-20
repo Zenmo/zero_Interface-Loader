@@ -93,7 +93,7 @@
 	<Resource>
 		<Id>1658477089983</Id>
 		<Path>Export_ModelData.xlsx</Path>
-		<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		<ReferencedFromUserCode>true</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>

@@ -1,10 +1,8 @@
-double f_setPVOnLand(double hectare)
+double f_setPVOnLand(double hectare,List<GCEnergyProduction> gcListProduction)
 {/*ALCODESTART::1722256117103*/
 // TODO: Change to work for multiple solar fields in one model.
 // to do so it should probably first calculate the total installed pv in all solar fields
-
-// TODO: make this work nicer with the new pause function (when setting capacity to 0 pause again?)
-for ( GCEnergyProduction GCEP : zero_Interface.energyModel.EnergyProductionSites) {
+for ( GCEnergyProduction GCEP : gcListProduction) {
 	for(J_EAProduction j_ea : GCEP.c_productionAssets) {
 		if (j_ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC && GCEP.p_isSliderGC) {
 			if (!GCEP.v_isActive) {
@@ -82,11 +80,6 @@ while ( nbHousesWithPVGoal > nbHousesWithPV ) {
 		zero_Interface.c_orderedPVSystemsHouses.remove(house);
 		zero_Interface.c_orderedPVSystemsHouses.add(0, house);
 		nbHousesWithPV ++;	
-		
-		//Update residential battery slider, only when adding pv
-		double nbHouseBatteries = count(zero_Interface.energyModel.Houses, h -> h.p_batteryAsset != null); //f_getEnergyAssets(), p -> p.energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC && p.getParentAgent() instanceof GCHouse);
-		int householdBatterySliderValue_pct =  roundToInt((nbHouseBatteries/nbHousesWithPV)*100);	
-		sl_householdBatteriesResidentialArea_pct.setValue(householdBatterySliderValue_pct, false);
 	}
 }
 
@@ -98,14 +91,12 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-double f_setWindTurbines(double AllocatedWindPower_MW)
+double f_setWindTurbines(double AllocatedWindPower_MW,List<GCEnergyProduction> gcListProduction)
 {/*ALCODESTART::1722256248965*/
 // TODO: Change to work for multiple wind farms in one model.
 // to do so it should probably first calculate the total installed wind power in all wind farms
 
-// TODO: make this work nicer with the new pause function (when setting capacity to 0 pause again?)
-
-for ( GCEnergyProduction GCEP : zero_Interface.energyModel.EnergyProductionSites) {
+for ( GCEnergyProduction GCEP : gcListProduction) {
 	for(J_EAProduction j_ea : GCEP.c_productionAssets) {
 		if (j_ea.getEAType() == OL_EnergyAssetType.WINDMILL && GCEP.p_isSliderGC) {
 			if (!GCEP.v_isActive) {
@@ -266,12 +257,8 @@ zero_Interface.f_resetSettings();
 
 double f_addPVSystem(GridConnection gc,double capacity_kWp)
 {/*ALCODESTART::1747306690517*/
-if ( gc.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) ) {
-	// Add the capacity to the existing asset
-	J_EAProduction pvAsset = findFirst(gc.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
-	if ( pvAsset == null ) {
-		throw new RuntimeException("Could not find photovoltaic asset in GridConnection: " + gc.p_ownerID + ", even though hasPV is True.");
-	}
+J_EAProduction pvAsset = findFirst(gc.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
+if (pvAsset != null) {
 	capacity_kWp += pvAsset.getCapacityElectric_kW();
 	pvAsset.setCapacityElectric_kW( capacity_kWp );
 }
@@ -347,62 +334,22 @@ if ( pvAsset != null ) {
 }
 /*ALCODEEND*/}
 
-double f_setPVSystemHouses1(List<GCHouse> gcList,double target_pct)
-{/*ALCODESTART::1747825874398*/
-Pair<Double, Double> pair = f_getPVSystemPercentage( new ArrayList<GridConnection>(gcList));
-
-double remaining_kWp = target_pct / 100 * pair.getSecond()  - pair.getFirst();
-double averageEffectivePV_kWppm2 = zero_Interface.energyModel.avgc_data.p_avgRatioRoofPotentialPV * zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2;
-
-if ( remaining_kWp > 0 ) {
-	// add more PV
-	for ( GCHouse house : new ArrayList<GCHouse>(zero_Interface.c_orderedPVSystemsHouses) ) {
-		double remainingPotential_kWp = min( remaining_kWp, house.p_roofSurfaceArea_m2 * averageEffectivePV_kWppm2 - house.v_liveAssetsMetaData.totalInstalledPVPower_kW );
-		if ( remainingPotential_kWp > 0 ) {
-			remaining_kWp -= remainingPotential_kWp;
-			f_addPVSystem( house, remainingPotential_kWp );
-		}
-		
-		if ( remaining_kWp <= 0 ) {
-			zero_Interface.f_resetSettings();		
-			return;
-		}
-	}
-}
-else {
-	// remove pv
-	for ( GCHouse house : new ArrayList<GCHouse>(zero_Interface.c_orderedPVSystemsHouses) ) {
-		if ( house.v_liveAssetsMetaData.hasPV ) {
-			remaining_kWp += house.v_liveAssetsMetaData.totalInstalledPVPower_kW;
-			f_removePVSystem( house );
-		}
-		if ( remaining_kWp >= 0 ) {
-			// removed slightly too much pv
-			f_addPVSystem( house, remaining_kWp );
-			zero_Interface.f_resetSettings();			
-			return;
-		}
-	}
-}
-zero_Interface.f_resetSettings();
-/*ALCODEEND*/}
-
-double f_setResidentialBatteries(double homeBatteries_pct)
+double f_setResidentialBatteries(double homeBatteries_pct,List<GCHouse> gcListHouses)
 {/*ALCODESTART::1750063382310*/
 // Setting houseBatteries
-double nbHouseBatteries = count(zero_Interface.energyModel.Houses, h -> h.p_batteryAsset != null); //f_getEnergyAssets(), p -> p.energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC && p.getParentAgent() instanceof GCHouse);
-double nbHousesWithPV = count(zero_Interface.energyModel.Houses, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)); //count(energyModel.f_getGridConnections(), p->p instanceof GCHouse);
+double nbHouseBatteries = count(gcListHouses, h -> h.p_batteryAsset != null); //f_getEnergyAssets(), p -> p.energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC && p.getParentAgent() instanceof GCHouse);
+double nbHousesWithPV = count(gcListHouses, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)); //count(energyModel.f_getGridConnections(), p->p instanceof GCHouse);
 double nbHousesWithBatteryGoal = roundToInt(nbHousesWithPV * homeBatteries_pct / 100);
 
 if( nbHousesWithPV > 0 ){
 	while ( nbHouseBatteries > nbHousesWithBatteryGoal ) {
-		GCHouse house = findFirst(zero_Interface.energyModel.Houses, p -> p.p_batteryAsset != null );
+		GCHouse house = findFirst(gcListHouses, p -> p.p_batteryAsset != null );
 		house.p_batteryAsset.removeEnergyAsset();
 		house.p_batteryAlgorithm = null;
 		nbHouseBatteries--;
 	}
 	while ( nbHouseBatteries < nbHousesWithBatteryGoal) {
-		GCHouse house = findFirst(zero_Interface.energyModel.Houses, p -> p.p_batteryAsset == null && p.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW));
+		GCHouse house = findFirst(gcListHouses, p -> p.p_batteryAsset == null && p.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW));
 		
 		double batteryStorageCapacity_kWh = zero_Interface.energyModel.avgc_data.p_avgRatioHouseBatteryStorageCapacity_v_PVPower*house.v_liveAssetsMetaData.totalInstalledPVPower_kW;
 		double batteryCapacity_kW = batteryStorageCapacity_kWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power;
@@ -422,9 +369,9 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-double f_setGridBatteries(double storageCapacity_kWh)
+double f_setGridBatteries_residential(double storageCapacity_kWh,List<GCGridBattery> gcListGridBatteries)
 {/*ALCODESTART::1750063382312*/
-for ( GCGridBattery battery : zero_Interface.energyModel.GridBatteries) {
+for ( GCGridBattery battery : gcListGridBatteries) {
 	if(battery.p_isSliderGC){
 		for(J_EAStorage j_ea : battery.c_storageAssets) {
 			J_EAStorageElectric batteryAsset = ((J_EAStorageElectric)j_ea);
@@ -449,14 +396,14 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-double f_setElectricCooking(double electricCookingGoal_pct)
+double f_setElectricCooking(List<GCHouse> gcListHouses,double electricCookingGoal_pct)
 {/*ALCODESTART::1750063382324*/
-int nbHousesWithElectricCooking = findAll(zero_Interface.energyModel.Houses, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.ELECTRIC).size();
-int nbHousesWithElectricCookingGoal = roundToInt(electricCookingGoal_pct / 100 * zero_Interface.energyModel.Houses.size());
+int nbHousesWithElectricCooking = findAll(gcListHouses, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.ELECTRIC).size();
+int nbHousesWithElectricCookingGoal = roundToInt(electricCookingGoal_pct / 100 * gcListHouses.size());
 
 
 while ( nbHousesWithElectricCooking > nbHousesWithElectricCookingGoal ) { // remove excess cooking systems
-	GCHouse house = randomWhere(zero_Interface.energyModel.Houses, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.ELECTRIC);		
+	GCHouse house = randomWhere(gcListHouses, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.ELECTRIC);		
 	J_EAConsumption cookingAsset = findFirst(house.c_consumptionAssets, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB );
 	if (cookingAsset != null) {
 		double yearlyCookingDemand_kWh = cookingAsset.yearlyDemand_kWh;
@@ -472,7 +419,7 @@ while ( nbHousesWithElectricCooking > nbHousesWithElectricCookingGoal ) { // rem
 }
  
 while ( nbHousesWithElectricCooking < nbHousesWithElectricCookingGoal) {
-	GCHouse house = randomWhere(zero_Interface.energyModel.Houses, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.GAS);
+	GCHouse house = randomWhere(gcListHouses, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.GAS);
 	if (house == null){
 		throw new RuntimeException("No gridconnection without GAS cooking asset found! Current electric cooking count: " + nbHousesWithElectricCooking);
 	}
@@ -623,42 +570,217 @@ double f_setDemandIncrease(List<GridConnection> gcList,double demandReduction_pc
 f_setDemandReduction(gcList, -demandReduction_pct);
 /*ALCODEEND*/}
 
-double f_setVehiclesPrivateParking(double privateParking_pct)
+double f_setVehiclesPrivateParking(List<GCHouse> gcListHouses,double privateParkingEV_pct)
 {/*ALCODESTART::1750328750011*/
-int nbHousesWithEV = count(zero_Interface.energyModel.Houses, x -> x.p_eigenOprit && x.p_householdEV != null);
-int desiredNbOfHousesWithEV = roundToInt(privateParking_pct / 100 * zero_Interface.c_orderedVehiclesPrivateParking.size());
+List<J_EAVehicle> gcListOrderedVehiclesPrivateParking = findAll( zero_Interface.c_orderedVehiclesPrivateParking, h -> gcListHouses.contains(h.getParentAgent()));
+
+int nbOfPrivateParkedEV = (int)sum(findAll(gcListHouses, gc -> gc.p_eigenOprit), x -> x.c_electricVehicles.size());
+int desiredNbOfPrivateParkedEV = roundToInt(privateParkingEV_pct / 100 * gcListOrderedVehiclesPrivateParking.size());
+
 
 // we scale the consumption instead of getting the diesel/EV parameter from avgc data to represent the 'size' of the car
 double ratioEVToDieselConsumption = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionCar_kWhpkm / zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionCar_kWhpkm;
 
-while ( nbHousesWithEV > desiredNbOfHousesWithEV){
-	J_EAVehicle j_ea = findFirst( zero_Interface.c_orderedVehiclesPrivateParking, h -> h instanceof J_EAEV);
+while ( nbOfPrivateParkedEV > desiredNbOfPrivateParkedEV){
+	J_EAVehicle j_ea = findFirst( gcListOrderedVehiclesPrivateParking, h -> h instanceof J_EAEV);
 	if (j_ea.vehicleScaling != 1) {
 		throw new RuntimeException("f_setVehiclesPrivateParking does not work with vehicles that have a vehicleScaling other than 1");
 	}
 	J_ActivityTrackerTrips triptracker = j_ea.tripTracker;
 	double energyConsumption_kWhpkm = j_ea.getEnergyConsumption_kWhpkm() / ratioEVToDieselConsumption; 
 	j_ea.removeEnergyAsset();
+	gcListOrderedVehiclesPrivateParking.remove(j_ea);
 	zero_Interface.c_orderedVehiclesPrivateParking.remove(j_ea);
 	J_EADieselVehicle dieselCar = new J_EADieselVehicle(j_ea.getParentAgent(), energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, 1, OL_EnergyAssetType.DIESEL_VEHICLE, triptracker);
+	gcListOrderedVehiclesPrivateParking.add(dieselCar);
 	zero_Interface.c_orderedVehiclesPrivateParking.add(dieselCar);
-	nbHousesWithEV --;
+	nbOfPrivateParkedEV --;
 }
-while ( nbHousesWithEV < desiredNbOfHousesWithEV){
-	J_EAVehicle j_ea = findFirst( zero_Interface.c_orderedVehiclesPrivateParking, h -> h instanceof J_EADieselVehicle);
+while ( nbOfPrivateParkedEV < desiredNbOfPrivateParkedEV){
+	J_EAVehicle j_ea = findFirst( gcListOrderedVehiclesPrivateParking, h -> h instanceof J_EADieselVehicle);
 	if (j_ea.vehicleScaling != 1) {
 		throw new RuntimeException("f_setVehiclesPrivateParking does not work with vehicles that have a vehicleScaling other than 1");
 	}
 	J_ActivityTrackerTrips triptracker = j_ea.tripTracker;
 	double energyConsumption_kWhpkm = j_ea.getEnergyConsumption_kWhpkm() * ratioEVToDieselConsumption;
-	j_ea.removeEnergyAsset();	
+	j_ea.removeEnergyAsset();
+	gcListOrderedVehiclesPrivateParking.remove(j_ea);
 	zero_Interface.c_orderedVehiclesPrivateParking.remove(j_ea);
 	double capacityElectricity_kW = randomTrue(0.6) ? randomTrue(0.4) ? 3.2 : 5.6 : 11.0;
 	double storageCapacity_kWh = uniform_discr(65,90);
 	J_EAEV ev = new J_EAEV(j_ea.getParentAgent(), capacityElectricity_kW, storageCapacity_kWh, 1, zero_Interface.energyModel.p_timeStep_h, energyConsumption_kWhpkm, 1, OL_EnergyAssetType.ELECTRIC_VEHICLE, triptracker);	
+	gcListOrderedVehiclesPrivateParking.add(ev);
 	zero_Interface.c_orderedVehiclesPrivateParking.add(ev);
-	nbHousesWithEV++;
+	nbOfPrivateParkedEV++;
 }
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+double f_updateSliders_Electricity()
+{/*ALCODESTART::1754926103683*/
+if(gr_electricitySliders_default.isVisible()){
+	f_updateElectricitySliders_default();
+}
+else if(gr_electricitySliders_businesspark.isVisible()){
+	f_updateElectricitySliders_businesspark();
+}
+else if(gr_electricitySliders_residential.isVisible()){
+	f_updateElectricitySliders_residential();
+}
+else{
+	f_updateElectricitySliders_custom();
+}
+/*ALCODEEND*/}
+
+double f_updateElectricitySliders_default()
+{/*ALCODESTART::1754926103685*/
+//Companies
+List<GCUtility> utilityGridConnections = uI_Tabs.f_getSliderGridConnections_utilities();
+
+List<GridConnection> utilityGridConnections_GC = new ArrayList<>(utilityGridConnections);
+Pair<Double, Double> pair = f_getPVSystemPercentage( utilityGridConnections_GC );
+int PV_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());
+sl_rooftopPVCompanies_pct_Businesspark.setValue(PV_pct, false);
+
+//Houses
+List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
+
+List<GridConnection> houseGridConnections_GC = new ArrayList<>(utilityGridConnections);
+pair = f_getPVSystemPercentage( houseGridConnections_GC );
+PV_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());
+sl_rooftopPVHouses_pct.setValue(PV_pct, false);
+/*ALCODEEND*/}
+
+double f_updateElectricitySliders_residential()
+{/*ALCODESTART::1754926103687*/
+List<GCHouse> houseGridConnections = new ArrayList<>();
+List<GCPublicCharger> chargerGridConnections = new ArrayList<>();
+List<GCGridBattery> gridBatteryGridConnections = new ArrayList<>();
+
+for (GridConnection GC : findAll(uI_Tabs.f_getSliderGridConnections_all(), gc -> gc.v_isActive)) {
+   	if(GC instanceof GCHouse){
+		houseGridConnections.add((GCHouse)GC);		
+	}
+	else if(GC instanceof GCPublicCharger){
+		chargerGridConnections.add((GCPublicCharger)GC);		
+	}
+	else if(GC instanceof GCGridBattery){
+		gridBatteryGridConnections.add((GCGridBattery)GC);		
+	}
+}
+chargerGridConnections.addAll(uI_Tabs.f_getPausedSliderGridConnections_chargers());
+
+
+int nbHouses = houseGridConnections.size();
+int nbHousesWithPV = count(houseGridConnections, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW));
+double pv_pct = 100.0 * nbHousesWithPV / nbHouses;
+sl_householdPVResidentialArea_pct.setValue(pv_pct, false);
+
+if ( nbHousesWithPV != 0 ) {
+	int nbHousesWithHomeBattery = count(houseGridConnections, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) && x.p_batteryAsset != null);
+	double battery_pct = 100.0 * nbHousesWithHomeBattery / nbHousesWithPV;
+	sl_householdBatteriesResidentialArea_pct.setValue(battery_pct, false);
+}
+
+int nbHousesWithElectricCooking = count(houseGridConnections, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.ELECTRIC);
+double cooking_pct = 100.0 * nbHousesWithElectricCooking / nbHouses;
+sl_householdElectricCookingResidentialArea_pct.setValue(cooking_pct, false);
+
+if (zero_Interface.c_orderedVehiclesPrivateParking.size() > 0) {
+	int nbPrivateEVs = count(zero_Interface.c_orderedVehiclesPrivateParking, x -> x instanceof J_EAEV);
+	double privateEVs_pct = 100.0 * nbPrivateEVs / zero_Interface.c_orderedVehiclesPrivateParking.size();
+	sl_privateEVsResidentialArea_pct.setValue(privateEVs_pct, false);
+}
+
+
+//Chargers
+int nbPublicChargers = chargerGridConnections.size();
+int nbActivePublicChargers = count(chargerGridConnections, x -> x.v_isActive);
+double activePublicChargers_pct = 100.0 * nbActivePublicChargers / nbPublicChargers;
+sl_publicChargersResidentialArea_pct.setValue(activePublicChargers_pct, false);
+
+int nbV1GChargers = count(zero_Interface.c_orderedV1GChargers, x -> chargerGridConnections.contains(x) && x.V1GCapable);
+int nbV2GChargers =count(zero_Interface.c_orderedV2GChargers, x -> chargerGridConnections.contains(x) && x.V2GCapable);
+double V1G_pct = 100.0 * nbV1GChargers / nbPublicChargers;
+double V2G_pct = 100.0 * nbV2GChargers / nbPublicChargers;
+sl_chargersThatSupportV1G_pct.setValue(V1G_pct, false);
+sl_chargersThatSupportV2G_pct.setValue(V2G_pct, false);
+
+
+
+//Gridbatteries
+double averageNeighbourhoodBatterySize_kWh = 0;
+for (GCGridBattery gc : gridBatteryGridConnections) {
+	averageNeighbourhoodBatterySize_kWh += gc.p_batteryAsset.getStorageCapacity_kWh()/gridBatteryGridConnections.size();
+	traceln("gc.p_batteryAsset.getStorageCapacity_kWh(): " + gc.p_batteryAsset.getStorageCapacity_kWh());
+}
+sl_gridBatteriesResidentialArea_kWh.setValue(averageNeighbourhoodBatterySize_kWh, false);
+
+/*ALCODEEND*/}
+
+double f_updateElectricitySliders_businesspark()
+{/*ALCODESTART::1754926103689*/
+// Rooftop PV SYSTEMS:
+List<GridConnection> utilityGridConnections = new ArrayList<>(uI_Tabs.f_getSliderGridConnections_utilities());
+Pair<Double, Double> pair = f_getPVSystemPercentage( utilityGridConnections );
+int PV_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());
+sl_rooftopPVCompanies_pct_Businesspark.setValue(PV_pct, false);
+
+
+/*ALCODEEND*/}
+
+double f_updateElectricitySliders_custom()
+{/*ALCODESTART::1754926103691*/
+//If you have a custom tab, 
+//override this function to make it update automatically
+traceln("Forgot to override the update custom electricity sliders functionality");
+/*ALCODEEND*/}
+
+double f_setGridBatteries(double capacity_MWh,List<GCGridBattery> gcListGridBatteries)
+{/*ALCODESTART::1754985710087*/
+// TODO: make this work nicer with the new pause function (when setting capacity to 0 pause again?)
+
+if ( gcListGridBatteries.size() > 0 ){	
+	GCGridBattery GC = findFirst(gcListGridBatteries, GB -> GB.p_isSliderGC);
+	if(GC == null){
+		traceln("WARNING: no specified slider grid battery in the model: random grid battery selected");
+		GC = zero_Interface.energyModel.GridBatteries.get(0);
+	}
+
+	if (!GC.v_isActive) {
+		GC.f_setActive(true);
+	}
+	GC.p_batteryAsset.setStorageCapacity_kWh(1000*capacity_MWh);
+	double capacityElectric_kW = 1000*capacity_MWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power;
+	GC.p_batteryAsset.setCapacityElectric_kW(capacityElectric_kW);
+	GC.v_liveConnectionMetaData.physicalCapacity_kW = capacityElectric_kW;
+	GC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = capacityElectric_kW;
+	GC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = capacityElectric_kW;
+}
+else {
+	throw new IllegalStateException("Model does not contain any GCGridBattery agent");
+}
+/*ALCODEEND*/}
+
+double f_setCurtailment(boolean activateCurtailment,List<GridConnection> gcList)
+{/*ALCODESTART::1754986167346*/
+for (GridConnection GC : gcList) {
+	GC.v_enableCurtailment = activateCurtailment;
+	
+	if (zero_Interface.c_companyUIs.size()>0 && GC instanceof GCUtility){
+		UI_company companyUI = zero_Interface.c_companyUIs.get(GC.p_owner.p_connectionOwnerIndexNr);
+		if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == GC) { // should also check the setting of selected GC
+			companyUI.cb_curtailmentCompany.setSelected(activateCurtailment, false);
+		}
+	}
+}
+
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
