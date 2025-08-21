@@ -3,6 +3,7 @@
 	<Id>1722245324895</Id>
 	<Name><![CDATA[tabMobility]]></Name>
 	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
+	<Folder>1754045642067</Folder>
 	<Import><![CDATA[import org.apache.commons.lang3.tuple.Triple;]]></Import>
 	<ExtendsReference>
 		<PackageName>zerointerfaceloader</PackageName>
@@ -159,6 +160,23 @@
 			<ActiveObjectClass>
 				<PackageName>zerointerfaceloader</PackageName>
 				<ClassName>Zero_Interface</ClassName>
+			</ActiveObjectClass>
+		</ContainerLink>
+		<ContainerLink>
+			<Id>1753694295455</Id>
+			<Name><![CDATA[uI_EnergyHub]]></Name>
+			<X>300</X>
+			<Y>-100</Y>
+			<Label>
+				<X>10</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<ActiveObjectClass>
+				<PackageName>zerointerfaceloader</PackageName>
+				<ClassName>UI_EnergyHub</ClassName>
 			</ActiveObjectClass>
 		</ContainerLink>
 	</ContainerLinks>

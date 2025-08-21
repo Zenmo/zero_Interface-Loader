@@ -5,7 +5,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1722245473562</Id>
 		<Name><![CDATA[f_showCorrectTab]]></Name>
-		<X>250</X>
+		<X>270</X>
 		<Y>70</Y>
 		<Label>
 			<X>10</X>
@@ -21,7 +21,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1722259092945</Id>
 		<Name><![CDATA[f_setTab]]></Name>
-		<X>250</X>
+		<X>270</X>
 		<Y>100</Y>
 		<Label>
 			<X>10</X>
@@ -34,6 +34,219 @@
 			<Name><![CDATA[tab]]></Name>
 			<Type><![CDATA[EnergyDemandTab]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753881126492</Id>
+		<Name><![CDATA[f_initializeSliderGridConnections]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1170</X>
+		<Y>50</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gridConnections]]></Name>
+			<Type><![CDATA[List<GridConnection>]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1754908006859</Id>
+		<Name><![CDATA[f_initializeSliderGCPointers]]></Name>
+		<X>530</X>
+		<Y>30</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[activeGridConnections]]></Name>
+			<Type><![CDATA[List<GridConnection>]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[pausedGridConnections]]></Name>
+			<Type><![CDATA[List<GridConnection>]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1754908356478</Id>
+		<Name><![CDATA[f_initializeUI_Tabs]]></Name>
+		<X>50</X>
+		<Y>150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[activeGridConnections]]></Name>
+			<Type><![CDATA[List<GridConnection>]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[pausedGridConnections]]></Name>
+			<Type><![CDATA[List<GridConnection>]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>List&lt;GCHouse&gt;</ReturnType>
+		<Id>1754919017244</Id>
+		<Name><![CDATA[f_getSliderGridConnections_houses]]></Name>
+		<X>540</X>
+		<Y>150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>List&lt;GCUtility&gt;</ReturnType>
+		<Id>1754922545766</Id>
+		<Name><![CDATA[f_getSliderGridConnections_utilities]]></Name>
+		<X>540</X>
+		<Y>130</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>List&lt;GCGridBattery&gt;</ReturnType>
+		<Id>1754922546986</Id>
+		<Name><![CDATA[f_getSliderGridConnections_gridBatteries]]></Name>
+		<X>540</X>
+		<Y>200</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>List&lt;GCPublicCharger&gt;</ReturnType>
+		<Id>1754922547989</Id>
+		<Name><![CDATA[f_getSliderGridConnections_chargers]]></Name>
+		<X>540</X>
+		<Y>220</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>List&lt;GCEnergyProduction&gt;</ReturnType>
+		<Id>1754922591622</Id>
+		<Name><![CDATA[f_getSliderGridConnections_production]]></Name>
+		<X>540</X>
+		<Y>240</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1754929564839</Id>
+		<Name><![CDATA[f_updateSliders]]></Name>
+		<X>50</X>
+		<Y>180</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>List&lt;GridConnection&gt;</ReturnType>
+		<Id>1754986474226</Id>
+		<Name><![CDATA[f_getSliderGridConnections_consumption]]></Name>
+		<X>550</X>
+		<Y>170</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>List&lt;GridConnection&gt;</ReturnType>
+		<Id>1754991155553</Id>
+		<Name><![CDATA[f_getSliderGridConnections_all]]></Name>
+		<X>540</X>
+		<Y>110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>List&lt;GCPublicCharger&gt;</ReturnType>
+		<Id>1755013777878</Id>
+		<Name><![CDATA[f_getPausedSliderGridConnections_chargers]]></Name>
+		<X>540</X>
+		<Y>280</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

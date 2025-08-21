@@ -1,14 +1,14 @@
 // Default Sliders
 public ShapeGroup getGroupElectricityDemandSliders() {
-	return this.gr_electricityDemandSliders;
+	return this.gr_electricitySliders_default;
 }
 
 public ShapeGroup getGroupElectricityDemandSliders_Businesspark() {
-	return this.gr_electricityDemandSliders_Businesspark;
+	return this.gr_electricitySliders_businesspark;
 }
 
 public ShapeGroup getGroupElectricityDemandSliders_ResidentialArea() {
-	return this.gr_electricityDemandSlidersResidentialArea;
+	return this.gr_electricitySliders_residential;
 }
 public ShapeSlider getSliderElectricityDemandReduction_pct() {
 	return this.sl_electricityDemandReduction_pct;

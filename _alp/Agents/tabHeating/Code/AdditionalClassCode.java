@@ -1,6 +1,6 @@
 // Default Sliders
 public ShapeGroup getGroupHeatDemandSliders() {
-	return this.gr_heatDemandSliders;
+	return this.gr_heatingSliders_default;
 }
 
 public ShapeSlider getSliderHeatDemandReductionCompanies_pct() { 
@@ -29,7 +29,7 @@ public ShapeSlider getSliderElectricHeatPumpHouseholds_pct() {
 
 // Residential Tab Sliders
 public ShapeGroup getGroupHeatDemandSlidersResidentialArea() {
-	return this.gr_heatDemandSlidersResidentialArea;
+	return this.gr_heatingSliders_residential;
 }
 
 public ShapeSlider getSliderHeatDemandSlidersResidentialAreaHouseholdsGasBurner_pct() { 
@@ -42,7 +42,7 @@ public ShapeSlider getSliderHeatDemandSlidersResidentialAreaHouseholdsElectricHe
 
 // Company Tab Sliders
 public ShapeGroup getGroupHeatDemandSlidersCompanies() {
-	return this.gr_heatDemandSlidersCompanies;
+	return this.gr_heatingSliders_businesspark;
 }
 
 public ShapeSlider getSliderHeatDemandSlidersCompaniesHeatDemandReductionCompanies_pct() { 

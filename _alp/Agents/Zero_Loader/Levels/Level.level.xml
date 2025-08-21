@@ -1185,9 +1185,6 @@ try {
 	
 	zero_Interface.f_clearSelectionAndSelectEnergyModel();
 	zero_Interface.f_updateMainInterfaceSliders();
-	if (zero_Interface.p_selectedProjectType==OL_ProjectType.RESIDENTIAL) {
-		zero_Interface.f_initialisationOfResidentialSliders();
-	}
 	//zero_Interface.f_updateOrderedListsAfterDeserialising(deserializedEnergyModel);
 	
 } catch (IOException e) {

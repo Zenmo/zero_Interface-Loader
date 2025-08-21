@@ -6,14 +6,14 @@
 @lombok.experimental.Accessors(fluent = true)
 public class CustomProfile_data {
 	
-	String customProfileID;
+	public String customProfileID;
 	List<Double> argumentsList;
 	List<Double> valuesList;
 	
-	double[] getArgumentsArray() {
+	public double[] getArgumentsArray() {
 		return ListUtil.doubleListToArray(argumentsList);
 	}
-	double[] getValuesArray() {
+	public double[] getValuesArray() {
 		return ListUtil.doubleListToArray(valuesList);
 	}
 

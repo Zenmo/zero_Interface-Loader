@@ -1790,7 +1790,7 @@
 		<Id>1731425176471</Id>
 		<Name><![CDATA[b_changeToCustomScenario]]></Name>
 		<X>-670</X>
-		<Y>811</Y>
+		<Y>816</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1812,7 +1812,7 @@
 		<Id>1732027307811</Id>
 		<Name><![CDATA[b_runningMainInterfaceScenarios]]></Name>
 		<X>-670</X>
-		<Y>791</Y>
+		<Y>796</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1834,7 +1834,7 @@
 		<Id>1734617425109</Id>
 		<Name><![CDATA[b_gridLoopsAreDefined]]></Name>
 		<X>-630</X>
-		<Y>530</Y>
+		<Y>610</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1939,7 +1939,7 @@
 		<Id>1742298194173</Id>
 		<Name><![CDATA[v_forcedClickScreenColor]]></Name>
 		<X>140</X>
-		<Y>-860</Y>
+		<Y>-840</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2327,7 +2327,7 @@
 		<Id>1753110308594</Id>
 		<Name><![CDATA[v_amountOfDefinedGridLoops]]></Name>
 		<X>-630</X>
-		<Y>550</Y>
+		<Y>630</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2644,7 +2644,7 @@
 		<Id>1745937830300</Id>
 		<Name><![CDATA[p_minSelectedGCForPublicAggregation]]></Name>
 		<X>-670</X>
-		<Y>890</Y>
+		<Y>915</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2662,6 +2662,62 @@
 			<ParameterEditor>
 				<Id>1745937830298</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1753446312779</Id>
+		<Name><![CDATA[b_inEnergyHubSelectionMode]]></Name>
+		<X>2240</X>
+		<Y>-2070</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[boolean]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[false]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1753446312777</Id>
+				<EditorContolType>CHECK_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1753446312783</Id>
+		<Name><![CDATA[b_inEnergyHubMode]]></Name>
+		<X>2240</X>
+		<Y>-2090</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[boolean]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[false]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1753446312781</Id>
+				<EditorContolType>CHECK_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
 				<DelimeterType>NO_DELIMETER</DelimeterType>
@@ -2744,7 +2800,7 @@
 		<Id>1715178022675</Id>
 		<Name><![CDATA[c_orderedVehicles]]></Name>
 		<X>68</X>
-		<Y>-520</Y>
+		<Y>-500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2762,7 +2818,7 @@
 		<Id>1715183417595</Id>
 		<Name><![CDATA[c_orderedHeatingSystemsCompanies]]></Name>
 		<X>68</X>
-		<Y>-495</Y>
+		<Y>-475</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2780,7 +2836,7 @@
 		<Id>1715183423011</Id>
 		<Name><![CDATA[c_orderedPVSystemsCompanies]]></Name>
 		<X>68</X>
-		<Y>-570</Y>
+		<Y>-550</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2798,7 +2854,7 @@
 		<Id>1719176257019</Id>
 		<Name><![CDATA[c_orderedHeatingSystemsHouses]]></Name>
 		<X>68</X>
-		<Y>-475</Y>
+		<Y>-455</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3091,7 +3147,7 @@
 		<Id>1749741070275</Id>
 		<Name><![CDATA[c_orderedParkingSpaces]]></Name>
 		<X>70</X>
-		<Y>-370</Y>
+		<Y>-360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3109,7 +3165,7 @@
 		<Id>1747300275742</Id>
 		<Name><![CDATA[c_orderedPVSystemsHouses]]></Name>
 		<X>68</X>
-		<Y>-545</Y>
+		<Y>-525</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3217,7 +3273,7 @@
 		<Id>1750333596459</Id>
 		<Name><![CDATA[c_orderedActiveVehiclesPublicParking]]></Name>
 		<X>70</X>
-		<Y>-430</Y>
+		<Y>-420</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3235,7 +3291,7 @@
 		<Id>1750333624380</Id>
 		<Name><![CDATA[c_orderedNonActiveVehiclesPublicParking]]></Name>
 		<X>70</X>
-		<Y>-410</Y>
+		<Y>-400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3253,7 +3309,7 @@
 		<Id>1750333680450</Id>
 		<Name><![CDATA[c_orderedVehiclesPrivateParking]]></Name>
 		<X>70</X>
-		<Y>-390</Y>
+		<Y>-380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

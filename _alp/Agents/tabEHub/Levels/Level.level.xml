@@ -3,7 +3,7 @@
 	<Rectangle>
 		<Id>1722344806530</Id>
 		<Name><![CDATA[rect_generalFunctions]]></Name>
-		<X>450</X>
+		<X>430</X>
 		<Y>650</Y>
 		<Label>
 			<X>10</X>
@@ -20,8 +20,8 @@
 		<LineColor>-16777216</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>200</Width>
-		<Height>100</Height>
+		<Width>230</Width>
+		<Height>170</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -95,252 +95,12 @@
 				<FillColor>-3736634</FillColor>
 				<FillMaterial>null</FillMaterial>
 			</Rectangle>
-			<Control Type="CheckBox">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1722253487935</Id>
-				<Name><![CDATA[cb_spreadChargingEVs]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<X>450</X>
-				<Y>30</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="40" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor>-16777216</TextColor>
-					<Enabled>true</Enabled>
-					<ActionCode>if (cb_spreadChargingEVs.isSelected()) {
-	cb_powerChargingEVs.setSelected(false);
-	zero_Interface.energyModel.f_getActiveGridConnections().forEach(x -&gt; x.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.MAX_SPREAD));
-} else {
-	for(GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()){
-		if(GC instanceof GCPublicCharger){
-			//Leave it on basic setting (MAX_SPREAD)
-		}
-		else{
-			GC.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
-		}
-	}
-	
-}
-
-
-//Update variable to change to custom scenario
-if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
-}
-
-zero_Interface.f_resetSettings();</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<Font Name="Dialog" Size="11" Style="0"/>
-					<LabelText/>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1722253487937</Id>
-				<Name><![CDATA[t_collectiveBatteries1]]></Name>
-				<X>220</X>
-				<Y>100</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_collectiveBattery_MWh.getIntValue() + " MWh"</TextCode>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>RIGHT</Alignment>
-			</Text>
-			<Text>
-				<Id>1722253487939</Id>
-				<Name><![CDATA[t_spreadChargingEVsDescription]]></Name>
-				<X>15</X>
-				<Y>40</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Slim laden]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1722253487941</Id>
-				<Name><![CDATA[sl_collectiveBattery_MWh]]></Name>
-				<X>255</X>
-				<Y>95</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>f_setGridBatteries(sl_collectiveBattery_MWh.getValue());
-
-//Update variable to change to custom scenario
-if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
-}
-
-zero_Interface.f_resetSettings();</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>50</MaxValue>
-					<Step>1</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1722253487943</Id>
-				<Name><![CDATA[t_curtailmentDescription]]></Name>
-				<X>15</X>
-				<Y>15</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Curtailment opwek]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1722253487945</Id>
-				<Name><![CDATA[t_collectiveBatteryDescription]]></Name>
-				<X>15</X>
-				<Y>100</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Collectieve batterijen]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Control Type="CheckBox">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1722253487947</Id>
-				<Name><![CDATA[cb_curtailment]]></Name>
-				<X>260</X>
-				<Y>7</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="40" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor>-16777216</TextColor>
-					<Enabled>true</Enabled>
-					<ActionCode>if (cb_curtailment.isSelected()) {
-	for (GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()) {
-		GC.v_enableCurtailment = true;
-		
-		if (zero_Interface.c_companyUIs.size()&gt;0){
-			UI_company companyUI = zero_Interface.c_companyUIs.get(GC.p_owner.p_connectionOwnerIndexNr);
-			if (companyUI != null &amp;&amp; companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == GC) { // should also check the setting of selected GC
-				companyUI.cb_curtailmentCompany.setSelected(true, false);
-			}
-		}
-	}
-}
-else {
-	for (GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()) {
-		GC.v_enableCurtailment = false;
-		
-		if (zero_Interface.c_companyUIs.size()&gt;0){
-			UI_company companyUI = zero_Interface.c_companyUIs.get(GC.p_owner.p_connectionOwnerIndexNr);
-			if (companyUI != null &amp;&amp; companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == GC) { // should also check the setting of selected GC
-				companyUI.cb_curtailmentCompany.setSelected(false, false);
-			}
-		}
-	}
-}
-
-//Update variable to change to custom scenario
-if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
-}
-
-zero_Interface.f_resetSettings();</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<Font Name="Dialog" Size="11" Style="0"/>
-					<LabelText/>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
 			<Control Type="Button">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722253487949</Id>
 				<Name><![CDATA[button_add_nfato]]></Name>
-				<X>15</X>
-				<Y>130</Y>
+				<X>20</X>
+				<Y>45</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -402,8 +162,8 @@ else {
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722253487951</Id>
 				<Name><![CDATA[button_remove_nfato]]></Name>
-				<X>185</X>
-				<Y>130</Y>
+				<X>190</X>
+				<Y>45</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -442,91 +202,10 @@ zero_Interface.f_resetSettings();</ActionCode>
 			</Control>
 			<Control Type="CheckBox">
 				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1725277950476</Id>
-				<Name><![CDATA[cb_powerChargingEVs]]></Name>
-				<X>260</X>
-				<Y>29</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="40" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor>-16777216</TextColor>
-					<Enabled>true</Enabled>
-					<ActionCode>if (cb_powerChargingEVs.isSelected()) {
-	//cb_spreadChargingEVs.setSelected(false);
-	for(GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()){
-		if(GC instanceof GCPublicCharger){
-			GC.c_chargers.forEach(c -&gt; c.setChargingCapabilities(true, false));
-		}
-		else{
-			GC.p_chargingManagement = new J_ChargingManagementMaxAvailablePower(GC);// set_p_chargingAttitudeVehicles(OL_ChargingAttitude.MAX_POWER);
-		}
-	}
-
-} else {
-	for(GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()){
-		if(GC instanceof GCPublicCharger){
-			GC.c_chargers.forEach(c -&gt; c.setChargingCapabilities(false, false));
-		}
-		else{
-			GC.p_chargingManagement = new J_ChargingManagementSimple(GC); //GC.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
-		}
-	}
-
-}
-
-//Update variable to change to custom scenario
-if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
-}
-
-zero_Interface.f_resetSettings();</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<Font Name="Dialog" Size="11" Style="0"/>
-					<LabelText/>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1725277950478</Id>
-				<Name><![CDATA[t_powerChargingEVsDescription]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<X>15</X>
-				<Y>66</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>cb_powerChargingEVs.isVisible()</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Max Power laden elek. trucks]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Control Type="CheckBox">
-				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1736425642857</Id>
 				<Name><![CDATA[cb_EHubSelect]]></Name>
-				<X>20</X>
-				<Y>170</Y>
+				<X>25</X>
+				<Y>85</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -631,8 +310,8 @@ zero_Interface.uI_Results.f_showCorrectChart();
 			<Text>
 				<Id>1736425642864</Id>
 				<Name><![CDATA[t_baseGroepInfo]]></Name>
-				<X>30</X>
-				<Y>210</Y>
+				<X>35</X>
+				<Y>125</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -656,8 +335,8 @@ zero_Interface.uI_Results.f_showCorrectChart();
 			<Text>
 				<Id>1736425642870</Id>
 				<Name><![CDATA[t_cumulatiefGTV_kW]]></Name>
-				<X>30</X>
-				<Y>250</Y>
+				<X>35</X>
+				<Y>165</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -681,8 +360,8 @@ zero_Interface.uI_Results.f_showCorrectChart();
 			<Text>
 				<Id>1736425642875</Id>
 				<Name><![CDATA[t_warnings]]></Name>
-				<X>30</X>
-				<Y>270</Y>
+				<X>35</X>
+				<Y>185</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -707,8 +386,8 @@ zero_Interface.uI_Results.f_showCorrectChart();
 			<Text>
 				<Id>1736425642881</Id>
 				<Name><![CDATA[t_groepsGTV_kW]]></Name>
-				<X>30</X>
-				<Y>230</Y>
+				<X>35</X>
+				<Y>145</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -728,6 +407,82 @@ zero_Interface.uI_Results.f_showCorrectChart();
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1753434467432</Id>
+				<Name><![CDATA[button_createEnergyHub]]></Name>
+				<X>40</X>
+				<Y>260</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="290" Height="70">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<VisibleCode>false</VisibleCode>
+					<Enabled>true</Enabled>
+					<ActionCode>zero_Interface.f_startEnergyHubConfiguration();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Creeër je eigen Energie Hub</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1754990508102</Id>
+				<Name><![CDATA[txt_NonFirmAtoOptions]]></Name>
+				<X>185</X>
+				<Y>20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Non-Firm ATO opties]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Text>
+				<Id>1754990563477</Id>
+				<Name><![CDATA[txt_energyHubOptions]]></Name>
+				<X>185</X>
+				<Y>235</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Energie Hub]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
 			</Text>
 		</Presentation>
 	</Group>
@@ -1295,7 +1050,7 @@ f_resetNFATOSettings();</ActionCode>
 	<Text>
 		<Id>1722344870135</Id>
 		<Name><![CDATA[t_generalFunctionsDescription]]></Name>
-		<X>480</X>
+		<X>460</X>
 		<Y>660</Y>
 		<Label>
 			<X>0</X>
@@ -1317,63 +1072,12 @@ f_resetNFATOSettings();</ActionCode>
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
-	<Rectangle>
-		<Id>1722344920583</Id>
-		<Name><![CDATA[rect_batteryFunctions]]></Name>
-		<X>1050</X>
-		<Y>650</Y>
-		<Label>
-			<X>10</X>
-			<Y>10</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>3</LineWidth>
-		<LineColor>-16744320</LineColor>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<Width>300</Width>
-		<Height>100</Height>
-		<Rotation>0.0</Rotation>
-		<FillColor>-1</FillColor>
-		<FillMaterial>null</FillMaterial>
-	</Rectangle>
-	<Text>
-		<Id>1722344920585</Id>
-		<Name><![CDATA[t_batteryFunctionsDescription]]></Name>
-		<X>1200</X>
-		<Y>655</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Battery Functions]]></Text>
-		<Font>
-			<Name><![CDATA[Dialog]]></Name>
-			<Size>18</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>CENTER</Alignment>
-	</Text>
 	<Group>
 		<Id>1736429614133</Id>
 		<Name><![CDATA[gr_groepscontract]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>500</X>
-		<Y>-80</Y>
+		<X>150</X>
+		<Y>1060</Y>
 		<Label>
 			<X>6.511</X>
 			<Y>0</Y>
@@ -1665,4 +1369,160 @@ zero_Interface.f_resetSettings();</ActionCode>
 			</Text>
 		</Presentation>
 	</Group>
+	<Control Type="CheckBox">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1722253487935</Id>
+		<Name><![CDATA[cb_spreadChargingEVs]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>265</X>
+		<Y>883</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<BasicProperties Width="40" Height="30">
+			<EmbeddedIcon>false</EmbeddedIcon>
+			<TextColor>-16777216</TextColor>
+			<Enabled>true</Enabled>
+			<ActionCode>if (cb_spreadChargingEVs.isSelected()) {
+	cb_powerChargingEVs.setSelected(false);
+	zero_Interface.energyModel.f_getActiveGridConnections().forEach(x -&gt; x.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.MAX_SPREAD));
+} else {
+	for(GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()){
+		if(GC instanceof GCPublicCharger){
+			//Leave it on basic setting (MAX_SPREAD)
+		}
+		else{
+			GC.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
+		}
+	}
+	
+}
+
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();</ActionCode>
+		</BasicProperties>
+		<ExtendedProperties>
+			<Font Name="Dialog" Size="11" Style="0"/>
+			<LabelText/>
+			<LinkTo>false</LinkTo>
+		</ExtendedProperties>
+	</Control>
+	<Text>
+		<Id>1722253487939</Id>
+		<Name><![CDATA[t_spreadChargingEVsDescription]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>20</X>
+		<Y>890</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Slim laden]]></Text>
+		<Font>
+			<Name><![CDATA[Dialog]]></Name>
+			<Size>14</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Control Type="CheckBox">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1725277950476</Id>
+		<Name><![CDATA[cb_powerChargingEVs]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>265</X>
+		<Y>909</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<BasicProperties Width="40" Height="30">
+			<EmbeddedIcon>false</EmbeddedIcon>
+			<TextColor>-16777216</TextColor>
+			<Enabled>true</Enabled>
+			<ActionCode>if (cb_powerChargingEVs.isSelected()) {
+	cb_spreadChargingEVs.setSelected(false);
+	for(GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()){
+		if(GC instanceof GCPublicCharger){
+			//Leave it on basic setting (MAX_SPREAD)
+		}
+		else{
+			GC.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.MAX_POWER);
+		}
+	}
+	//zero_Interface.energyModel.f_getGridConnections().forEach(x -&gt; x.p_chargingAttitudeVehicles = OL_ChargingAttitude.MAX_POWER);
+} else {
+	for(GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()){
+		if(GC instanceof GCPublicCharger){
+			//Leave it on basic setting (MAX_SPREAD)
+		}
+		else{
+			GC.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
+		}
+	}
+	//zero_Interface.energyModel.f_getGridConnections().forEach(x -&gt; x.p_chargingAttitudeVehicles = OL_ChargingAttitude.SIMPLE);
+}
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();</ActionCode>
+		</BasicProperties>
+		<ExtendedProperties>
+			<Font Name="Dialog" Size="11" Style="0"/>
+			<LabelText/>
+			<LinkTo>false</LinkTo>
+		</ExtendedProperties>
+	</Control>
+	<Text>
+		<Id>1725277950478</Id>
+		<Name><![CDATA[t_powerChargingEVsDescription]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>20</X>
+		<Y>916</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<VisibleCode>cb_powerChargingEVs.isVisible()</VisibleCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Max Power laden elek. trucks]]></Text>
+		<Font>
+			<Name><![CDATA[Dialog]]></Name>
+			<Size>14</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
 </Presentation>

@@ -1,29 +1,3 @@
-double f_setGridBatteries(double capacity_MWh)
-{/*ALCODESTART::1722256335789*/
-// TODO: make this work nicer with the new pause function (when setting capacity to 0 pause again?)
-
-if ( zero_Interface.energyModel.GridBatteries.size() > 0 ){	
-	GCGridBattery GC = findFirst(zero_Interface.energyModel.GridBatteries, GB -> GB.p_isSliderGC);
-	if(GC == null){
-		traceln("WARNING: no specified slider grid battery in the model: random grid battery selected");
-		GC = zero_Interface.energyModel.GridBatteries.get(0);
-	}
-
-	if (!GC.v_isActive) {
-		GC.f_setActive(true);
-	}
-	GC.p_batteryAsset.setStorageCapacity_kWh(1000*capacity_MWh);
-	double capacityElectric_kW = 1000*capacity_MWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power;
-	GC.p_batteryAsset.setCapacityElectric_kW(capacityElectric_kW);
-	GC.v_liveConnectionMetaData.physicalCapacity_kW = capacityElectric_kW;
-	GC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = capacityElectric_kW;
-	GC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = capacityElectric_kW;
-}
-else {
-	throw new IllegalStateException("Model does not contain any GCGridBattery agent");
-}
-/*ALCODEEND*/}
-
 boolean f_setNFATO(double[] weekCapacities,double[] weekendCapacities)
 {/*ALCODESTART::1722256365452*/
 GridConnection gc1 = v_nfatoFirstGC;
@@ -300,5 +274,11 @@ else {
 	gr_nfatoSettings.setVisible(false);
 	gr_hubSliders.setVisible(true);
 }
+/*ALCODEEND*/}
+
+double f_updateSliders_EHub()
+{/*ALCODESTART::1754923608234*/
+//Function that can be used to update sliders/buttons to the engine state
+//--> empty for now
 /*ALCODEEND*/}
 

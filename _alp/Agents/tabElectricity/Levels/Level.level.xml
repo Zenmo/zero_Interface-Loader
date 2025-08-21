@@ -21,15 +21,15 @@
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>370</Width>
-		<Height>620</Height>
+		<Height>710</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
 	</Rectangle>
 	<Group>
 		<Id>1722328776701</Id>
-		<Name><![CDATA[gr_electricityDemandSliders]]></Name>
-		<X>0</X>
+		<Name><![CDATA[gr_electricitySliders_default]]></Name>
+		<X>-10</X>
 		<Y>0</Y>
 		<Label>
 			<X>10</X>
@@ -112,7 +112,7 @@
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReduction( zero_Interface.energyModel.f_getActiveGridConnections(), sl_electricityDemandReduction_pct.getValue() );</ActionCode>
+					<ActionCode>f_setDemandReduction( uI_Tabs.f_getSliderGridConnections_consumption(), sl_electricityDemandReduction_pct.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -150,7 +150,7 @@
 			</Text>
 			<Text>
 				<Id>1722328776717</Id>
-				<Name><![CDATA[t_solarDescription]]></Name>
+				<Name><![CDATA[txt_productionDescription]]></Name>
 				<X>15</X>
 				<Y>55</Y>
 				<Label>
@@ -165,7 +165,7 @@
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Zon]]></Text>
+				<Text><![CDATA[Opwek]]></Text>
 				<Font>
 					<Name><![CDATA[Calibri]]></Name>
 					<Size>18</Size>
@@ -216,7 +216,7 @@
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_rooftopPVCompanies_pct.getValue(), sl_rooftopPVCompanies_pct );
+					<ActionCode>f_setPVSystemCompanies( uI_Tabs.f_getSliderGridConnections_utilities(), sl_rooftopPVCompanies_pct.getValue(), sl_rooftopPVCompanies_pct );
 
 if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
 	zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
@@ -260,7 +260,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1722328776725</Id>
 				<Name><![CDATA[t_largeScalePV_ha]]></Name>
 				<X>230</X>
-				<Y>110</Y>
+				<Y>145</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -287,7 +287,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1722328776727</Id>
 				<Name><![CDATA[sl_largeScalePV_ha]]></Name>
 				<X>260</X>
-				<Y>105</Y>
+				<Y>140</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -299,7 +299,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_currentPVOnLand_ha);</ActionCode>
+					<ActionCode>f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_currentPVOnLand_ha, uI_Tabs.f_getSliderGridConnections_production());</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -314,7 +314,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1722328776729</Id>
 				<Name><![CDATA[t_largeScalePVDescription]]></Name>
 				<X>15</X>
-				<Y>110</Y>
+				<Y>145</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -337,9 +337,9 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 			</Text>
 			<Text>
 				<Id>1722328776731</Id>
-				<Name><![CDATA[t_windDescription]]></Name>
+				<Name><![CDATA[txt_batteryDescription_default]]></Name>
 				<X>15</X>
-				<Y>175</Y>
+				<Y>250</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -352,7 +352,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Wind]]></Text>
+				<Text><![CDATA[Batterijen]]></Text>
 				<Font>
 					<Name><![CDATA[Calibri]]></Name>
 					<Size>18</Size>
@@ -365,7 +365,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1722328776737</Id>
 				<Name><![CDATA[sl_largeScaleWind_MW]]></Name>
 				<X>260</X>
-				<Y>200</Y>
+				<Y>170</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -377,7 +377,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW);</ActionCode>
+					<ActionCode>f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, uI_Tabs.f_getSliderGridConnections_production());</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -392,7 +392,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1722328776739</Id>
 				<Name><![CDATA[t_largeScaleWindDescription]]></Name>
 				<X>15</X>
-				<Y>205</Y>
+				<Y>175</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -417,7 +417,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1722328776741</Id>
 				<Name><![CDATA[t_largeScaleWind_MW]]></Name>
 				<X>230</X>
-				<Y>205</Y>
+				<Y>175</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -443,7 +443,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1722329161559</Id>
 				<Name><![CDATA[t_rooftopPVHouses_pct]]></Name>
 				<X>230</X>
-				<Y>140</Y>
+				<Y>110</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -471,7 +471,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1722329161561</Id>
 				<Name><![CDATA[sl_rooftopPVHouses_pct]]></Name>
 				<X>260</X>
-				<Y>135</Y>
+				<Y>105</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -483,7 +483,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemHouses( zero_Interface.energyModel.Houses.findAll( x -&gt; true), sl_rooftopPVHouses_pct.getValue() );
+					<ActionCode>f_setPVSystemHouses( uI_Tabs.f_getSliderGridConnections_houses(), sl_rooftopPVHouses_pct.getValue() );
 
 if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
 	zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
@@ -502,7 +502,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1722329161563</Id>
 				<Name><![CDATA[t_rooftopPVHousesDescription]]></Name>
 				<X>15</X>
-				<Y>140</Y>
+				<Y>110</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -528,7 +528,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1746091167061</Id>
 				<Name><![CDATA[i_householdPV]]></Name>
 				<X>160</X>
-				<Y>140</Y>
+				<Y>110</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -556,7 +556,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1746091167075</Id>
 				<Name><![CDATA[i_landPV]]></Name>
 				<X>160</X>
-				<Y>110</Y>
+				<Y>145</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -637,7 +637,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1746091167111</Id>
 				<Name><![CDATA[i_landWind]]></Name>
 				<X>160</X>
-				<Y>205</Y>
+				<Y>175</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -660,13 +660,204 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				</ImageFiles>
 				<OriginalSize>false</OriginalSize>
 			</Image>
+			<Text>
+				<Id>1754984198964</Id>
+				<Name><![CDATA[t_collectiveBatteries_default]]></Name>
+				<X>230</X>
+				<Y>275</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[#]]></Text>
+				<TextCode>sl_collectiveBattery_MWh_default.getIntValue() + " MWh"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1754984198968</Id>
+				<Name><![CDATA[sl_collectiveBattery_MWh_default]]></Name>
+				<X>255</X>
+				<Y>270</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setGridBatteries(sl_collectiveBattery_MWh_default.getValue(), uI_Tabs.f_getSliderGridConnections_gridBatteries());
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>50</MaxValue>
+					<Step>1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1754984198970</Id>
+				<Name><![CDATA[txt_curtailmentDescription_default]]></Name>
+				<X>15</X>
+				<Y>210</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Curtailment opwek]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1754984198972</Id>
+				<Name><![CDATA[txt_collectiveBatteryDescription_default]]></Name>
+				<X>15</X>
+				<Y>275</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Collectieve batterijen]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1754984198974</Id>
+				<Name><![CDATA[cb_curtailment_default]]></Name>
+				<X>300</X>
+				<Y>202</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="40" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setCurtailment(cb_curtailment_default.isSelected(), uI_Tabs.f_getSliderGridConnections_consumption());</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText/>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Image>
+				<Id>1754984362078</Id>
+				<Name><![CDATA[i_curtailment_default]]></Name>
+				<X>160</X>
+				<Y>210</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_curtailment_default, zero_Interface.v_infoText.curtailment, i_curtailment_default.getX() + uI_Tabs.v_presentationXOffset, i_curtailment_default.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1754984365522</Id>
+				<Name><![CDATA[i_collectiveBatteries_default]]></Name>
+				<X>160</X>
+				<Y>275</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_collectiveBatteries_default, zero_Interface.v_infoText.gridBattery_default, i_collectiveBatteries_default.getX() + uI_Tabs.v_presentationXOffset, i_collectiveBatteries_default.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
 		</Presentation>
 	</Group>
 	<Rectangle>
 		<Id>1722334503404</Id>
 		<Name><![CDATA[rect_PVFunctions]]></Name>
 		<X>40</X>
-		<Y>700</Y>
+		<Y>670</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -682,17 +873,17 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 		<LineColor>-10496</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>300</Width>
-		<Height>200</Height>
+		<Width>310</Width>
+		<Height>250</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
 	</Rectangle>
 	<Text>
 		<Id>1722334611918</Id>
-		<Name><![CDATA[t_PVFunctionsDescription]]></Name>
+		<Name><![CDATA[txt_ProductionFunctionsDescription]]></Name>
 		<X>190</X>
-		<Y>710</Y>
+		<Y>680</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -705,58 +896,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
-		<Text><![CDATA[PV Functions]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>18</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>CENTER</Alignment>
-	</Text>
-	<Rectangle>
-		<Id>1722334647855</Id>
-		<Name><![CDATA[rect_windFunctions]]></Name>
-		<X>40</X>
-		<Y>950</Y>
-		<Label>
-			<X>10</X>
-			<Y>10</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>3</LineWidth>
-		<LineColor>-14774017</LineColor>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<Width>300</Width>
-		<Height>100</Height>
-		<Rotation>0.0</Rotation>
-		<FillColor>-1</FillColor>
-		<FillMaterial>null</FillMaterial>
-	</Rectangle>
-	<Text>
-		<Id>1722334664308</Id>
-		<Name><![CDATA[t_windFunctionsDescription]]></Name>
-		<X>190</X>
-		<Y>960</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Wind Functions]]></Text>
+		<Text><![CDATA[Production Functions]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>18</Size>
@@ -768,7 +908,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 		<Id>1722335253828</Id>
 		<Name><![CDATA[rect_demandFunctions]]></Name>
 		<X>40</X>
-		<Y>550</Y>
+		<Y>540</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -784,8 +924,8 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 		<LineColor>-8355840</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>300</Width>
-		<Height>100</Height>
+		<Width>310</Width>
+		<Height>120</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -794,7 +934,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 		<Id>1722335253832</Id>
 		<Name><![CDATA[t_demandFunctionsDescription]]></Name>
 		<X>190</X>
-		<Y>560</Y>
+		<Y>550</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -842,7 +982,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 	</Text>
 	<Group>
 		<Id>1728384392418</Id>
-		<Name><![CDATA[gr_electricityDemandSliders_Businesspark]]></Name>
+		<Name><![CDATA[gr_electricitySliders_businesspark]]></Name>
 		<X>400</X>
 		<Y>0</Y>
 		<Label>
@@ -927,12 +1067,12 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReduction( zero_Interface.energyModel.f_getActiveGridConnections(), sl_electricityDemandReduction_pct_Businesspark.getValue() );</ActionCode>
+					<ActionCode>f_setDemandReduction( uI_Tabs.f_getSliderGridConnections_consumption(), sl_electricityDemandReduction_pct_Businesspark.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
+					<MinValue>-50</MinValue>
 					<MaxValue>50</MaxValue>
 					<Step>5</Step>
 					<LinkTo>false</LinkTo>
@@ -965,7 +1105,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 			</Text>
 			<Text>
 				<Id>1728384392428</Id>
-				<Name><![CDATA[txt_solarDescription_Businesspark]]></Name>
+				<Name><![CDATA[txt_productionDescription_Businesspark]]></Name>
 				<X>15</X>
 				<Y>55</Y>
 				<Label>
@@ -980,7 +1120,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Zon]]></Text>
+				<Text><![CDATA[Opwek]]></Text>
 				<Font>
 					<Name><![CDATA[Calibri]]></Name>
 					<Size>18</Size>
@@ -1031,7 +1171,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemCompanies( zero_Interface.energyModel.UtilityConnections.findAll( x -&gt; true), sl_rooftopPVCompanies_pct_Businesspark.getValue(), sl_rooftopPVCompanies_pct_Businesspark );
+					<ActionCode>f_setPVSystemCompanies( uI_Tabs.f_getSliderGridConnections_utilities(), sl_rooftopPVCompanies_pct_Businesspark.getValue(), sl_rooftopPVCompanies_pct_Businesspark );
 
 //If on pv map overlay, adjust colouring
 if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
@@ -1076,7 +1216,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1728384392436</Id>
 				<Name><![CDATA[t_largeScalePV_ha_Businesspark]]></Name>
 				<X>230</X>
-				<Y>110</Y>
+				<Y>115</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1103,7 +1243,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1728384392438</Id>
 				<Name><![CDATA[sl_largeScalePV_ha_Businesspark]]></Name>
 				<X>260</X>
-				<Y>105</Y>
+				<Y>110</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1115,7 +1255,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVOnLand(sl_largeScalePV_ha_Businesspark.getValue()- p_currentPVOnLand_ha);</ActionCode>
+					<ActionCode>f_setPVOnLand(sl_largeScalePV_ha_Businesspark.getValue()- p_currentPVOnLand_ha, uI_Tabs.f_getSliderGridConnections_production());</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1130,7 +1270,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1728384392440</Id>
 				<Name><![CDATA[txt_largeScalePVDescription_Businesspark]]></Name>
 				<X>15</X>
-				<Y>110</Y>
+				<Y>115</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1153,9 +1293,9 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 			</Text>
 			<Text>
 				<Id>1728384392442</Id>
-				<Name><![CDATA[txt_windDescription_Businesspark]]></Name>
+				<Name><![CDATA[txt_batteryDescription_businesspark]]></Name>
 				<X>15</X>
-				<Y>155</Y>
+				<Y>230</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1168,7 +1308,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Wind]]></Text>
+				<Text><![CDATA[Batterijen]]></Text>
 				<Font>
 					<Name><![CDATA[Calibri]]></Name>
 					<Size>18</Size>
@@ -1181,7 +1321,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1728384392444</Id>
 				<Name><![CDATA[sl_largeScaleWind_MW_Businesspark]]></Name>
 				<X>260</X>
-				<Y>180</Y>
+				<Y>145</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1193,7 +1333,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setWindTurbines( sl_largeScaleWind_MW_Businesspark.getValue() - p_currentWindTurbines_MW);</ActionCode>
+					<ActionCode>f_setWindTurbines( sl_largeScaleWind_MW_Businesspark.getValue() - p_currentWindTurbines_MW, uI_Tabs.f_getSliderGridConnections_production());</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1208,7 +1348,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1728384392446</Id>
 				<Name><![CDATA[txt_largeScaleWindDescription_Businesspark]]></Name>
 				<X>15</X>
-				<Y>185</Y>
+				<Y>150</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1233,7 +1373,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1728384392448</Id>
 				<Name><![CDATA[t_largeScaleWind_MW_Businesspark]]></Name>
 				<X>230</X>
-				<Y>185</Y>
+				<Y>150</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1259,7 +1399,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1746091438812</Id>
 				<Name><![CDATA[i_landPV_Businesspark]]></Name>
 				<X>160</X>
-				<Y>110</Y>
+				<Y>115</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1340,7 +1480,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Id>1746091438954</Id>
 				<Name><![CDATA[i_landWind_Businesspark]]></Name>
 				<X>160</X>
-				<Y>185</Y>
+				<Y>150</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1363,11 +1503,202 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				</ImageFiles>
 				<OriginalSize>false</OriginalSize>
 			</Image>
+			<Text>
+				<Id>1754985531354</Id>
+				<Name><![CDATA[txt_curtailmentDescription_businesspark]]></Name>
+				<X>15</X>
+				<Y>185</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Curtailment opwek]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1754985531358</Id>
+				<Name><![CDATA[cb_curtailment_businesspark]]></Name>
+				<X>300</X>
+				<Y>177</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="40" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setCurtailment(cb_curtailment_businesspark.isSelected(), uI_Tabs.f_getSliderGridConnections_consumption());</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText/>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Image>
+				<Id>1754985531361</Id>
+				<Name><![CDATA[i_curtailment_businesspark]]></Name>
+				<X>160</X>
+				<Y>185</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_curtailment_businesspark, zero_Interface.v_infoText.curtailment, i_curtailment_businesspark.getX() + uI_Tabs.v_presentationXOffset, i_curtailment_businesspark.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1754985653985</Id>
+				<Name><![CDATA[i_collectiveBatteries_businesspark]]></Name>
+				<X>160</X>
+				<Y>260</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_collectiveBatteries_businesspark, zero_Interface.v_infoText.gridBattery_default, i_collectiveBatteries_businesspark.getX() + uI_Tabs.v_presentationXOffset, i_collectiveBatteries_businesspark.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1754985653994</Id>
+				<Name><![CDATA[txt_collectiveBatteryDescription_businesspark]]></Name>
+				<X>15</X>
+				<Y>260</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Collectieve batterijen]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1754985653996</Id>
+				<Name><![CDATA[t_collectiveBatteries_businesspark]]></Name>
+				<X>230</X>
+				<Y>260</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[#]]></Text>
+				<TextCode>sl_collectiveBattery_MWh_default.getIntValue() + " MWh"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1754985653998</Id>
+				<Name><![CDATA[sl_collectiveBattery_MWh_businesspark]]></Name>
+				<X>255</X>
+				<Y>255</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setGridBatteries(sl_collectiveBattery_MWh_businesspark.getValue(), uI_Tabs.f_getSliderGridConnections_gridBatteries());
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>50</MaxValue>
+					<Step>1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
 		</Presentation>
 	</Group>
 	<Group>
 		<Id>1750063382217</Id>
-		<Name><![CDATA[gr_electricityDemandSlidersResidentialArea]]></Name>
+		<Name><![CDATA[gr_electricitySliders_residential]]></Name>
 		<X>800</X>
 		<Y>0</Y>
 		<Label>
@@ -1480,7 +1811,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemHouses( findAll(zero_Interface.energyModel.Houses, x -&gt; true), sl_householdPVResidentialArea_pct.getValue() );
+					<ActionCode>f_setPVSystemHouses( uI_Tabs.f_getSliderGridConnections_houses(), sl_householdPVResidentialArea_pct.getValue() );
 
 //If on pv map overlay, adjust colouring
 if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
@@ -1488,7 +1819,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 }
 
 // Also updates the home batteries
-f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() );</ActionCode>
+f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), uI_Tabs.f_getSliderGridConnections_houses() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1674,7 +2005,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() )
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() );</ActionCode>
+					<ActionCode>f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), uI_Tabs.f_getSliderGridConnections_houses() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1729,7 +2060,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() )
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setGridBatteries( sl_gridBatteriesResidentialArea_kWh.getValue() );
+					<ActionCode>f_setGridBatteries_residential( sl_gridBatteriesResidentialArea_kWh.getValue(), uI_Tabs.f_getSliderGridConnections_gridBatteries() );
 </ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -1971,7 +2302,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setElectricCooking( sl_householdElectricCookingResidentialArea_pct.getValue() );</ActionCode>
+					<ActionCode>f_setElectricCooking(uI_Tabs.f_getSliderGridConnections_houses(), sl_householdElectricCookingResidentialArea_pct.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -2087,7 +2418,7 @@ if ( sliderValue &lt; p_minPVHouseholdSlider ){
 	traceln("SLIDER MESSAGE: Can't set slider lower than the initial value of simulated area");
 }
 */
-f_setVehiclesPrivateParking(sl_privateEVsResidentialArea_pct.getValue());</ActionCode>
+f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_privateEVsResidentialArea_pct.getValue());</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -2591,7 +2922,7 @@ f_setVehiclesPrivateParking(sl_privateEVsResidentialArea_pct.getValue());</Actio
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<VisibleCode>sl_gridBatteriesResidentialArea_kWh.isVisible()</VisibleCode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_householdNeighbourhoodBatteries, zero_Interface.v_infoText.neighbourhoodBatteries, i_householdNeighbourhoodBatteries.getX() + uI_Tabs.v_presentationXOffset, i_householdNeighbourhoodBatteries.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdNeighbourhoodBatteries, zero_Interface.v_infoText.gridBattery_residential, i_householdNeighbourhoodBatteries.getX() + uI_Tabs.v_presentationXOffset, i_householdNeighbourhoodBatteries.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
@@ -2974,4 +3305,106 @@ zero_Interface.f_setTrafoText();
 			</Text>
 		</Presentation>
 	</Group>
+	<Rectangle>
+		<Id>1754985710083</Id>
+		<Name><![CDATA[rect_batteryFunctions]]></Name>
+		<X>39</X>
+		<Y>931</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>3</LineWidth>
+		<LineColor>-16744320</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>311</Width>
+		<Height>109</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Rectangle>
+	<Text>
+		<Id>1754985710085</Id>
+		<Name><![CDATA[t_batteryFunctionsDescription]]></Name>
+		<X>189</X>
+		<Y>936</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Battery Functions]]></Text>
+		<Font>
+			<Name><![CDATA[Dialog]]></Name>
+			<Size>18</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>CENTER</Alignment>
+	</Text>
+	<Rectangle>
+		<Id>1754985941671</Id>
+		<Name><![CDATA[rect_mobilityFunctions]]></Name>
+		<X>40</X>
+		<Y>1050</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>3</LineWidth>
+		<LineColor>-16711936</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>310</Width>
+		<Height>120</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Rectangle>
+	<Text>
+		<Id>1754985941673</Id>
+		<Name><![CDATA[txt_mobilityFunctionsDescription]]></Name>
+		<X>190</X>
+		<Y>1055</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Mobility Functions]]></Text>
+		<Font>
+			<Name><![CDATA[Dialog]]></Name>
+			<Size>18</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>CENTER</Alignment>
+	</Text>
 </Presentation>

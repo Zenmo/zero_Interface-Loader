@@ -1324,8 +1324,8 @@ switch(vehicle_type){
 if (!isDefaultVehicle && maxChargingPower_kW > 0){
 	capacityElectricity_kW	= maxChargingPower_kW;
 }
-if (maxChargingPower_kW <= 0) {
-	traceln("Survey data contains 0 or negative maxChargingPower_kW: %s", maxChargingPower_kW);
+if (maxChargingPower_kW < 0) {
+	traceln("Survey data contains negative maxChargingPower_kW: %s", maxChargingPower_kW);
 }
 
 //Create the EV vehicle energy asset with the set parameters + links
@@ -1933,8 +1933,8 @@ traceln(" ");
 //Simulate full year simulation for initial KPIs
 if( settings.runHeadlessAtStartup() ){
 	energyModel.f_runRapidSimulation(); // Do a full year run to have KPIs right away!
-	zero_Interface.gr_simulateYearScreenSmall.setVisible(false);
-	zero_Interface.gr_loadIconSmall.setVisible(false);
+	zero_Interface.gr_simulateYear.setVisible(false);
+	zero_Interface.gr_loadIconYearSimulation.setVisible(false);
 	zero_Interface.b_resultsUpToDate = true;
 	zero_Interface.uI_Results.f_enableNonLivePlotRadioButtons(true);
 }
