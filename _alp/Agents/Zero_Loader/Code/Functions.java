@@ -1640,7 +1640,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 	//Is active at start?
 	chargingStation.v_isActive = dataChargingStation.initially_active();
 
-	chargingStation.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
+	//chargingStation.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
 			
 	//Create and connect owner
 	ConnectionOwner owner = energyModel.add_pop_connectionOwners();

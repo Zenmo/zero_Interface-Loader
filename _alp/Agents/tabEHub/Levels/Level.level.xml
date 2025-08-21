@@ -462,23 +462,23 @@ zero_Interface.f_resetSettings();</ActionCode>
 	//cb_spreadChargingEVs.setSelected(false);
 	for(GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()){
 		if(GC instanceof GCPublicCharger){
-			//Leave it on basic setting (MAX_SPREAD)
+			GC.c_chargers.forEach(c -&gt; c.setChargingCapabilities(true, false));
 		}
 		else{
-			GC.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.MAX_POWER);
+			GC.p_chargingManagement = new J_ChargingManagementMaxAvailablePower(GC);// set_p_chargingAttitudeVehicles(OL_ChargingAttitude.MAX_POWER);
 		}
 	}
-	//zero_Interface.energyModel.f_getGridConnections().forEach(x -&gt; x.p_chargingAttitudeVehicles = OL_ChargingAttitude.MAX_POWER);
+
 } else {
 	for(GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()){
 		if(GC instanceof GCPublicCharger){
-			//Leave it on basic setting (MAX_SPREAD)
+			GC.c_chargers.forEach(c -&gt; c.setChargingCapabilities(false, false));
 		}
 		else{
-			GC.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
+			GC.p_chargingManagement = new J_ChargingManagementSimple(GC); //GC.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
 		}
 	}
-	//zero_Interface.energyModel.f_getGridConnections().forEach(x -&gt; x.p_chargingAttitudeVehicles = OL_ChargingAttitude.SIMPLE);
+
 }
 
 //Update variable to change to custom scenario

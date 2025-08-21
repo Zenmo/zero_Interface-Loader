@@ -1818,10 +1818,13 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() )
 		gr_settingsV2G.setVisible(false);
 		
 		for( GCHouse house : zero_Interface.energyModel.Houses ){
-			house.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
+			//house.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
+			house.f_addChargingManagementToGC(OL_ChargingAttitude.SIMPLE, false);
+			house.f_activateV2GChargingMode(false);
 		}
 		for( GCPublicCharger publicCharger : zero_Interface.energyModel.PublicChargers ){
-			publicCharger.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
+			//publicCharger.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
+			publicCharger.f_activateV2GChargingMode(false);
 		}
 		break;
 	case 1:
@@ -1829,10 +1832,13 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() )
 		gr_settingsV2G.setVisible(false);
 
 		for( GCHouse house : zero_Interface.energyModel.Houses ){
-			house.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.PRICE);
+			//house.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.BALANCE);
+			house.f_addChargingManagementToGC(OL_ChargingAttitude.BALANCE, false);
+			house.f_activateV2GChargingMode(false);
 		}
 		for( GCPublicCharger publicCharger : zero_Interface.energyModel.PublicChargers ){
-			publicCharger.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.PRICE);
+			//publicCharger.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.PRICE);
+			publicCharger.f_activateV2GChargingMode(false);
 		}
 		break;
 	case 2:
@@ -1840,10 +1846,13 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue() )
 		gr_settingsV2G.setVisible(true);
 		
 		for( GCHouse house : zero_Interface.energyModel.Houses ){
-			house.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.V2G); 
+			//house.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.V2G); 
+			house.f_addChargingManagementToGC(OL_ChargingAttitude.BALANCE, false);
+			house.f_activateV2GChargingMode(true);
 		}
 		for( GCPublicCharger publicCharger : zero_Interface.energyModel.PublicChargers ){
-			publicCharger.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.V2G);
+			//publicCharger.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.V2G);
+			publicCharger.f_activateV2GChargingMode(true);
 		}
 		break;
 }
