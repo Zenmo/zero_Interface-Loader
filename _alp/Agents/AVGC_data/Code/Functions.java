@@ -8,6 +8,7 @@ dataAVGC.p_avgHouseElectricityConsumption_kWh_yr = p_avgHouseElectricityConsumpt
 dataAVGC.p_avgEVMaxChargePowerVan_kW = p_avgEVMaxChargePowerVan_kW;
 dataAVGC.p_avgHouseConnectionCapacity_kW = p_avgHouseConnectionCapacity_kW;
 dataAVGC.p_avgHouseHeatingMethod = p_avgHouseHeatingMethod;
+dataAVGC.p_avgNrOfCarsPerHouse = p_avgNrOfCarsPerHouse;
 dataAVGC.p_ratioEVHousePersonalCars = p_shareOfElectricVehicleOwnership;
 dataAVGC.p_avgEVMaxChargePowerCar_kW = p_avgEVMaxChargePowerCar_kW;
 dataAVGC.p_avgEVMaxChargePowerTruck_kW = p_avgEVMaxChargePowerTruck_kW;
