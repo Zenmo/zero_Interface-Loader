@@ -3415,18 +3415,31 @@ if (installedRooftopSolar_kW > 0) {
 	f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW );
 }
 
-//Oprit?
-if( house.p_eigenOprit){
-	if (randomTrue( 0.08)){
-		f_addElectricVehicle(house, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, 0, 0);
+//Determine the amount of owned cars based on a random true and the averages
+int amountOfOwnedCars = (int) floor(avgc_data.p_avgNrOfCarsPerHouse) + (randomTrue(avgc_data.p_avgNrOfCarsPerHouse - floor(avgc_data.p_avgNrOfCarsPerHouse)) ? 1 : 0);
+
+if(house.p_eigenOprit && avgc_data.p_avgNrOfCarsPerHouse > 1 && amountOfOwnedCars == 1){
+	amountOfOwnedCars = 2; // If the average is higher then 1, always make sure houses with their own drive have 2 cars.
+}
+else if(!house.p_eigenOprit && amountOfOwnedCars > 1){
+	amountOfOwnedCars = 1; // If no own drive, then never more than 1 car.
+}
+
+for(int i = 0; i < amountOfOwnedCars ; i++){
+	//Oprit? -> only then you should have a chance to start with EV
+	if( house.p_eigenOprit){
+		if (randomTrue( avgc_data.p_shareOfElectricVehicleOwnership)){
+			f_addElectricVehicle(house, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, 0, 0);
+		}
+		else{
+			f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
+		}
 	}
-	else{
+	else {
 		f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
 	}
 }
-else {
-	f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
-}
+
 /*ALCODEEND*/}
 
 double f_setHouseHeatingPreferences(GCHouse house)
@@ -3989,9 +4002,9 @@ double gasToHeatEfficiency = f_getGasToHeatEfficiency(heatingType);
 // Then check which part of the gas consumption is used for heating
 double ratioGasUsedForHeating = f_getRatioGasUsedForHeating(surveyGC);
 // Finally, multiply the gas profile with the total conversion factor to get the heat profile
-ZeroMath.arrayMultiply(profile_m3, avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
+double[] profile_kWh = ZeroMath.arrayMultiply(profile_m3, avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile_m3, null , energyModel.p_timeStep_h);
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile_kWh, null , energyModel.p_timeStep_h);
 j_ea.energyAssetName = engineGC.p_ownerID + " custom building heat profile";
 
 if(engineGC.p_owner.p_detailedCompany){
