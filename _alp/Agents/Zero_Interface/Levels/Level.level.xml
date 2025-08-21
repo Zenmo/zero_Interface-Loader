@@ -117,7 +117,7 @@
 			<Image>
 				<Id>1724074975228</Id>
 				<Name><![CDATA[image_zenmoLogo]]></Name>
-				<X>625</X>
+				<X>645</X>
 				<Y>20</Y>
 				<Label>
 					<X>0</X>
@@ -171,7 +171,7 @@
 			<Image>
 				<Id>1724074987235</Id>
 				<Name><![CDATA[image_tueLogo]]></Name>
-				<X>410</X>
+				<X>430</X>
 				<Y>20</Y>
 				<Label>
 					<X>0</X>
@@ -202,7 +202,7 @@
 			<Image>
 				<Id>1731938214224</Id>
 				<Name><![CDATA[image_luxLogo]]></Name>
-				<X>780</X>
+				<X>800</X>
 				<Y>15</Y>
 				<Label>
 					<X>0</X>
@@ -213,7 +213,7 @@
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<OnClickCode>//Go to website on click
-getExperimentHost().openWebSite("https://holons.energy/");
+getExperimentHost().openWebSite("https://lux.energy/");
 </OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>

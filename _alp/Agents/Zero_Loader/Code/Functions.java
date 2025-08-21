@@ -3768,7 +3768,6 @@ else{
 		// f_addStorage(parentGC, storagePower_kw, storageCapacity_kWh, storageType);
 	}
 	
-	
 	// Heating management (needs: heatingType & assets such as building thermal model or profiles, survey companies never have a thermal building mdoel)
 	boolean isGhost = heatingType != OL_GridConnectionHeatingType.NONE && peakHeatConsumption_kW == null;
 	
@@ -4048,7 +4047,7 @@ switch (heatingType){
 double f_getRatioGasUsedForHeating(com.zenmo.zummon.companysurvey.GridConnection surveyGC)
 {/*ALCODESTART::1753951039103*/
 if (surveyGC.getNaturalGas().getPercentageUsedForHeating() != null) {
-	return surveyGC.getNaturalGas().getPercentageUsedForHeating() / 100;
+	return surveyGC.getNaturalGas().getPercentageUsedForHeating() / 100.0;
 }
 else {
 	return 1.0;
