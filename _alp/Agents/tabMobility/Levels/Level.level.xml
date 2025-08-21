@@ -1045,7 +1045,7 @@ f_setElectricVans( zero_Interface.energyModel.f_getActiveGridConnections(), sl_e
 					<Enabled>true</Enabled>
 					<ActionCode>OL_ChargingAttitude selectedChargingAttitude = OL_ChargingAttitude.SIMPLE; 
 if(cb_spreadChargingEVs.isSelected()){
-	selectedChargingAttitude = OL_ChargingAttitude.MAX_SPREAD; 
+	selectedChargingAttitude = OL_ChargingAttitude.MAX_POWER; 
 }
 
 f_setChargingAttitude(selectedChargingAttitude, uI_Tabs.f_getSliderGridConnections_all());</ActionCode>
@@ -1207,17 +1207,17 @@ f_setChargingAttitude(selectedChargingAttitude, uI_Tabs.f_getSliderGridConnectio
 			<ActionCode>OL_ChargingAttitude selectedChargingAttitude = null;
  
 switch(cb_setChargingAttitude.getValue()){
-	case "Simpel":
+	case "Standaard":
 		selectedChargingAttitude = OL_ChargingAttitude.SIMPLE;
 		break;
 	case "Gelimiteerd vermogen":
 		selectedChargingAttitude = OL_ChargingAttitude.MAX_POWER;
 		break;
-	case "Slimme spreiding":
+	/*case "Slimme spreiding":
 		selectedChargingAttitude = OL_ChargingAttitude.MAX_SPREAD;
-		break;
-	case "V2G":
-		selectedChargingAttitude = OL_ChargingAttitude.V2G;
+		break;*/
+	case "Prijsgestuurd":
+		selectedChargingAttitude = OL_ChargingAttitude.PRICE;
 		break;
 	case "Custom":
 		selectedChargingAttitude = null;
@@ -1231,10 +1231,9 @@ if(selectedChargingAttitude != null){
 		<ExtendedProperties>
 			<Font Name="Dialog" Size="11" Style="0"/>
 			<Editable>false</Editable>
-			<Button>Simpel</Button>
+			<Button>Standaard</Button>
 			<Button>Gelimiteerd vermogen</Button>
-			<Button>Slimme spreiding</Button>
-			<Button>V2G</Button>
+			<Button>Prijsgestuurd</Button>
 			<Button>Custom</Button>
 			<LinkTo>false</LinkTo>
 		</ExtendedProperties>
