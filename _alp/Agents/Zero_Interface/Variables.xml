@@ -879,50 +879,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1706003981173</Id>
-		<Name><![CDATA[v_isViewAreaMenuVisible]]></Name>
-		<X>1312</X>
-		<Y>1060</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[boolean]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[false]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1706003981175</Id>
-		<Name><![CDATA[v_menuFrameColor]]></Name>
-		<X>1312</X>
-		<Y>1120</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[Color]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new Color (226,0,37,180)]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1706892713276</Id>
 		<Name><![CDATA[GISregion_antiLaag]]></Name>
 		<X>-280</X>
@@ -945,7 +901,7 @@
 		<Id>1706990909665</Id>
 		<Name><![CDATA[v_themeColor]]></Name>
 		<X>1312</X>
-		<Y>1100</Y>
+		<Y>1080</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -967,7 +923,7 @@
 		<Id>1706990958029</Id>
 		<Name><![CDATA[v_backgroundColor]]></Name>
 		<X>1312</X>
-		<Y>1080</Y>
+		<Y>1060</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2431,6 +2387,25 @@
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[gray]]></Code>
 			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1755771109351</Id>
+		<Name><![CDATA[v_themeColor2]]></Name>
+		<X>1312</X>
+		<Y>1100</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[Color]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
