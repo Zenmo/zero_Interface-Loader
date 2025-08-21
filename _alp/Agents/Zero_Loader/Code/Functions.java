@@ -1640,8 +1640,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 	//Is active at start?
 	chargingStation.v_isActive = dataChargingStation.initially_active();
 
-	//Set charging attitude: MAX_POWER should always be the starting case for charge stations to prevent more charging than possible
-	chargingStation.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.MAX_SPREAD);
+	//chargingStation.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
 			
 	//Create and connect owner
 	ConnectionOwner owner = energyModel.add_pop_connectionOwners();
@@ -1680,7 +1679,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 			List<J_ChargingSession> chargerProfile = f_getChargerProfile();
 			boolean V1GCapable = randomTrue(avgc_data.p_v1gProbability);
 			boolean V2GCapable = randomTrue(avgc_data.p_v2gProbability);
-			new J_EACharger(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile, V1GCapable, V2GCapable);
+			new J_EAChargePoint(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile, V1GCapable, V2GCapable, 2);
 		}
 		else{
 			for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerChargePoint; k++ ){
@@ -1726,9 +1725,9 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 		//Create vehicles that charge at the charging station
 		if(chargingStation.p_chargingVehicleType == OL_EnergyAssetType.CHARGER){
 			List<J_ChargingSession> chargerProfile = f_getChargerProfile();
-			boolean V1GCapable = randomTrue(avgc_data.p_v1gProbability);
-			boolean V2GCapable = randomTrue(avgc_data.p_v2gProbability);
-			new J_EACharger(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile, V1GCapable, V2GCapable);
+			boolean V1GCapable = true; //randomTrue(avgc_data.p_v1gProbability);
+			boolean V2GCapable = true; //randomTrue(avgc_data.p_v2gProbability);
+			new J_EAChargePoint(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile, V1GCapable, V2GCapable, 2);
 		}
 		else{
 			for(int k = 0; k < avgc_data.p_avgVehiclesPerChargePoint; k++ ){
@@ -3085,8 +3084,8 @@ J_ChargingSession f_createChargingSession(String chargingSessionData)
 {/*ALCODESTART::1749648772203*/
 String[] chargingSessionInfo = chargingSessionData.split("/"); 
 
-int startIndex = Integer.parseInt(chargingSessionInfo[0]);
-int endIndex = Integer.parseInt(chargingSessionInfo[1]);
+double startIndex = Double.parseDouble(chargingSessionInfo[0]);
+double endIndex = Double.parseDouble(chargingSessionInfo[1]);
 double chargingDemand_kWh = Double.parseDouble(chargingSessionInfo[2]);
 double batteryCap_kWh = Double.parseDouble(chargingSessionInfo[3]);
 double chargingPower_kW = Double.parseDouble(chargingSessionInfo[5]);
@@ -3384,7 +3383,7 @@ for(GCHouse GCH : energyModel.Houses){
 double f_addEnergyAssetsToHouses(GCHouse house,double jaarlijksElectriciteitsVerbruik)
 {/*ALCODESTART::1749728889986*/
 //Add generic electricity demand profile 
-GridNode gn = randomWhere(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals( house.p_parentNodeElectricID));
+GridNode gn = randomWhere(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals( house.p_parentNodeElectricID)); // Why random??
 if ( ! gn.p_hasProfileData ){
 	f_addElectricityDemandProfile(house, jaarlijksElectriciteitsVerbruik, null, false, "default_house_electricity_demand_fr");
 }
@@ -3432,26 +3431,28 @@ else {
 
 double f_setHouseHeatingPreferences(GCHouse house)
 {/*ALCODESTART::1749728889988*/
-if( randomTrue(0.5) ){ //50% kans op ochtend ritme
-	house.v_nightTempSetpoint_degC = uniform_discr(12,18);
-	house.v_dayTempSetpoint_degC = uniform_discr(18, 24);
-	house.v_heatingOn_time = uniform_discr(5,10) + uniform_discr(0,4) / 4.0;
-	house.v_heatingOff_time = uniform_discr(21,23);
-	house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0,1),1);
-}
-else if (randomTrue(0.5) ){ // 25% kans op hele dag aan
-	house.v_nightTempSetpoint_degC = uniform_discr(18,21);
-	house.v_dayTempSetpoint_degC = house.v_nightTempSetpoint_degC;
-	house.v_heatingOn_time = -1;
-	house.v_heatingOff_time = 25;
-	house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0, 1),1);
-}
-else { // 25% kans op smiddags/savonds aan
-	house.v_nightTempSetpoint_degC = uniform_discr(12,18);
-	house.v_dayTempSetpoint_degC = uniform_discr(18, 24);
-	house.v_heatingOn_time = uniform_discr(14, 16) + uniform_discr(0,4) / 4.0;
-	house.v_heatingOff_time = uniform_discr(21,23);
-	house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0, 1),1);
+if (house.p_heatingManagement instanceof J_HeatingManagementSimple heatingManagement) {
+	if( randomTrue(0.5) ){ //50% kans op ochtend ritme
+		heatingManagement.nightTimeSetPoint_degC = uniform_discr(12,18);
+		heatingManagement.dayTimeSetPoint_degC = uniform_discr(18, 24);
+		heatingManagement.startOfDay_h = uniform_discr(5,10) + uniform_discr(0,4) / 4.0;
+		heatingManagement.startOfNight_h = uniform_discr(21,23);
+		// house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0,1),1);
+	}
+	else if (randomTrue(0.5) ){ // 25% kans op hele dag aan
+		heatingManagement.nightTimeSetPoint_degC = uniform_discr(18,21);
+		heatingManagement.dayTimeSetPoint_degC = heatingManagement.nightTimeSetPoint_degC;
+		heatingManagement.startOfDay_h= -1;
+		heatingManagement.startOfNight_h = 25;
+		//house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0, 1),1);
+	}
+	else { // 25% kans op smiddags/savonds aan
+		heatingManagement.nightTimeSetPoint_degC = uniform_discr(12,18);
+		heatingManagement.dayTimeSetPoint_degC = uniform_discr(18, 24);
+		heatingManagement.startOfDay_h = uniform_discr(14, 16) + uniform_discr(0,4) / 4.0;
+		heatingManagement.startOfNight_h = uniform_discr(21,23);
+		//house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0, 1),1);
+	}
 }
 /*ALCODEEND*/}
 
