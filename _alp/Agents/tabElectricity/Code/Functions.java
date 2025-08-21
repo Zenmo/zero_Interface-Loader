@@ -512,7 +512,7 @@ int currentNbChargers = count(zero_Interface.c_orderedV1GChargers, x -> x.V1GCap
 int nbChargersGoal = roundToInt(goal_pct / 100.0 * totalNbChargers);
 
 while (currentNbChargers < nbChargersGoal) {
-	J_EACharger j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> !x.V1GCapable);
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> !x.V1GCapable);
 	j_ea.V1GCapable = true;
 	currentNbChargers++;
 	zero_Interface.c_orderedV1GChargers.remove(j_ea);
@@ -520,7 +520,7 @@ while (currentNbChargers < nbChargersGoal) {
 	
 }
 while (currentNbChargers > nbChargersGoal) {
-	J_EACharger j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> x.V1GCapable);
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> x.V1GCapable);
 	j_ea.V1GCapable = false;
 	currentNbChargers--;
 	zero_Interface.c_orderedV1GChargers.remove(j_ea);
@@ -542,7 +542,7 @@ int currentNbChargers = count(zero_Interface.c_orderedV2GChargers, x -> x.V2GCap
 int nbChargersGoal = roundToInt(goal_pct / 100.0 * totalNbChargers);
 
 while (currentNbChargers < nbChargersGoal) {
-	J_EACharger j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> !x.V2GCapable);
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> !x.V2GCapable);
 	j_ea.V2GCapable = true;
 	currentNbChargers++;
 	zero_Interface.c_orderedV2GChargers.remove(j_ea);
@@ -550,7 +550,7 @@ while (currentNbChargers < nbChargersGoal) {
 	
 }
 while (currentNbChargers > nbChargersGoal) {
-	J_EACharger j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> x.V2GCapable);
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> x.V2GCapable);
 	j_ea.V2GCapable = false;
 	currentNbChargers--;
 	zero_Interface.c_orderedV2GChargers.remove(j_ea);

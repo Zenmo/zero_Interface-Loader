@@ -2427,15 +2427,15 @@ Collections.shuffle(c_orderedParkingSpaces);
 
 double f_initialChargerOrder()
 {/*ALCODESTART::1750247111856*/
-c_orderedV1GChargers = new ArrayList<J_EACharger>();
-c_orderedV2GChargers = new ArrayList<J_EACharger>();
+c_orderedV1GChargers = new ArrayList<J_EAChargePoint>();
+c_orderedV2GChargers = new ArrayList<J_EAChargePoint>();
 c_orderedPublicChargers = new ArrayList<GCPublicCharger>();
 
-List<J_EACharger> c_inactiveV1GChargers = new ArrayList<J_EACharger>();
-List<J_EACharger> c_inactiveV2GChargers = new ArrayList<J_EACharger>();
+List<J_EAChargePoint> c_inactiveV1GChargers = new ArrayList<J_EAChargePoint>();
+List<J_EAChargePoint> c_inactiveV2GChargers = new ArrayList<J_EAChargePoint>();
 
 for (GridConnection gc : energyModel.f_getActiveGridConnections()) {
-	for (J_EACharger charger : gc.c_chargers) {
+	for (J_EAChargePoint charger : gc.c_chargers) {
 		if (charger.V1GCapable) {
 			c_orderedV1GChargers.add(0, charger);
 		}
@@ -2452,7 +2452,7 @@ for (GridConnection gc : energyModel.f_getActiveGridConnections()) {
 }
 
 for (GridConnection gc : energyModel.f_getPausedGridConnections()) {
-	for (J_EACharger charger : gc.c_chargers) {
+	for (J_EAChargePoint charger : gc.c_chargers) {
 		if (charger.V1GCapable) {
 			c_inactiveV1GChargers.add(0, charger);
 		}
