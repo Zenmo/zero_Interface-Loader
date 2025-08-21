@@ -3741,6 +3741,7 @@ deserializedEnergyModel.p_truckTripsCsv = inputCSVtruckTrips;
 deserializedEnergyModel.p_householdTripsCsv = inputCSVhouseholdTrips;
 deserializedEnergyModel.p_cookingPatternCsv = inputCSVcookingActivities;
 deserializedEnergyModel.avgc_data = energyModel.avgc_data;
+deserializedEnergyModel.c_defaultHeatingStrategies = energyModel.c_defaultHeatingStrategies;
 /*ALCODEEND*/}
 
 OL_GridConnectionHeatingType f_heatingSurveyCompany(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC)

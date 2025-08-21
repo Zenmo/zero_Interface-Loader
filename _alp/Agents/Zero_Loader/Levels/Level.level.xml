@@ -1184,7 +1184,9 @@ try {
 		
 	
 	zero_Interface.f_clearSelectionAndSelectEnergyModel();
+	zero_Interface.uI_Tabs.f_initializeUI_Tabs(energyModel.f_getGridConnectionsCollectionPointer(), energyModel.f_getPausedGridConnectionsCollectionPointer());
 	zero_Interface.f_updateMainInterfaceSliders();
+	
 	//zero_Interface.f_updateOrderedListsAfterDeserialising(deserializedEnergyModel);
 	
 } catch (IOException e) {
@@ -1216,7 +1218,8 @@ try {
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
-			<ActionCode>J_ModelSave saveObject = new J_ModelSave();
+			<ActionCode>traceln("Starting model serialisation...");
+J_ModelSave saveObject = new J_ModelSave();
 saveObject.energyModel = energyModel;
 
 energyModel.pop_gridNodes.forEach(x-&gt;saveObject.c_gridNodes.add(x));
@@ -1242,6 +1245,7 @@ f_addMixins();
 v_objectMapper.setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 
 try {
+	traceln("Trying to save to file");
 	//v_objectMapper.writeValue(new File("energyModel.json"), energyModel);
 	v_objectMapper.writeValue(new File("ModelSave.json"), saveObject);
 } catch (IOException e) {
