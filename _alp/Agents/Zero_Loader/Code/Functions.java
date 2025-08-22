@@ -1354,7 +1354,6 @@ switch (vehicle_type){
 	
 	case DIESEL_VAN:
 		energyConsumption_kWhpkm = avgc_data.p_avgDieselConsumptionVan_kWhpkm;
-		v_nbCreatedVans++;
 	break;
 	
 	case DIESEL_TRUCK:
@@ -1479,11 +1478,11 @@ future_scenario_list.setPlannedBatteryCapacity_kWh(0f);
 //Transport (total remaining cars, vans and trucks (total as defined in project selection - survey company usage)
 
 //Vans
-if(v_remainingNumberOfCars > 0){
+if(v_remainingNumberOfCars_Companies > 0){
 	int nbCars = 0;
-	for (int k = 0; k< ceil((double)v_remainingNumberOfCars/(double)v_numberOfCompaniesNoSurvey); k++){
+	for (int k = 0; k< ceil((double)v_remainingNumberOfCars_Companies/(double)v_numberOfCompaniesNoSurvey); k++){
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
-		v_remainingNumberOfCars--;
+		v_remainingNumberOfCars_Companies--;
 		nbCars++;
 	}
 	
@@ -1494,11 +1493,11 @@ if(v_remainingNumberOfCars > 0){
 }
 
 //Vans
-if(v_remainingNumberOfVans > 0){
+if(v_remainingNumberOfVans_Companies > 0){
 	int nbVans = 0;
-	for (int k = 0; k< ceil((double)v_remainingNumberOfVans/(double)v_numberOfCompaniesNoSurvey); k++){
+	for (int k = 0; k< ceil((double)v_remainingNumberOfVans_Companies/(double)v_numberOfCompaniesNoSurvey); k++){
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VAN, true, 0);
-		v_remainingNumberOfVans--;
+		v_remainingNumberOfVans_Companies--;
 		nbVans++;
 	}
 	
@@ -1509,11 +1508,11 @@ if(v_remainingNumberOfVans > 0){
 }
 
 //Trucks
-if (v_remainingNumberOfTrucks > 0){
+if (v_remainingNumberOfTrucks_Companies > 0){
 	int nbTrucks=0;
-	for (int k = 0; k< ceil((double)v_remainingNumberOfTrucks/(double)v_numberOfCompaniesNoSurvey); k++){
+	for (int k = 0; k< ceil((double)v_remainingNumberOfTrucks_Companies/(double)v_numberOfCompaniesNoSurvey); k++){
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_TRUCK, true, 0);
-		v_remainingNumberOfTrucks--;
+		v_remainingNumberOfTrucks_Companies--;
 		nbTrucks++;
 	}
 	
@@ -2446,7 +2445,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		
 		
 		//Update v_remaningAmount of cars (company owned only)
-		v_remainingNumberOfCars -= gridConnection.getTransport().getCars().getNumCars();
+		v_remainingNumberOfCars_Companies -= gridConnection.getTransport().getCars().getNumCars();
 		
 		//gridConnection.getTransport().getCars().getNumChargePoints(); // Wat doen we hier mee????????
 		
@@ -2501,7 +2500,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 	if (gridConnection.getTransport().getVans().getNumVans() != null && gridConnection.getTransport().getVans().getNumVans() != 0){
 		
 		//Update v_remaningAmount of vans
-		v_remainingNumberOfVans -= gridConnection.getTransport().getVans().getNumVans();
+		v_remainingNumberOfVans_Companies -= gridConnection.getTransport().getVans().getNumVans();
 		
 		
 		//gridConnection.getTransport().getVans().getNumChargePoints(); // Wat doen we hier mee????????
@@ -2556,7 +2555,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 	if (gridConnection.getTransport().getTrucks().getNumTrucks() != null && gridConnection.getTransport().getTrucks().getNumTrucks() != 0){
 		
 		//Update v_remaningAmount of trucks
-		v_remainingNumberOfTrucks -= gridConnection.getTransport().getTrucks().getNumTrucks();
+		v_remainingNumberOfTrucks_Companies -= gridConnection.getTransport().getTrucks().getNumTrucks();
 
 
 		//gridConnection.getTransport().getTrucks().getNumChargePoints(); // Wat doen we hier mee????????
@@ -3250,10 +3249,16 @@ traceln("Aantal panden met woonfunctie in BAG data: " + buildingDataHouses.size(
 
 int i = 0;
 
-//Add houses to the legend if in model
+
 if(buildingDataHouses.size()>0){
+	//Add houses to the legend if in model
 	zero_Interface.c_modelActiveDefaultGISBuildings.add(OL_GISBuildingTypes.HOUSE);
+	
+	//PreCalculate the probabilities for an additional Car for houses
+	f_calculateProbabilitiesForAdditionalCar(buildingDataHouses);
 }
+
+
 
 for (Building_data houseBuildingData : buildingDataHouses) {
 	GCHouse GCH = energyModel.add_Houses();
@@ -3363,7 +3368,7 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	//GCH.p_initialPVpanels = houseBuildingData.pv_default();
 	GCH.v_liveAssetsMetaData.initialPV_kW = houseBuildingData.pv_installed_kwp() != null ? houseBuildingData.pv_installed_kwp() : 0;
 	GCH.v_liveAssetsMetaData.PVPotential_kW = GCH.v_liveAssetsMetaData.initialPV_kW > 0 ? GCH.v_liveAssetsMetaData.initialPV_kW : houseBuildingData.pv_potential_kwp(); // To prevent sliders from changing outcomes
-	f_setHouseHeatingPreferences(GCH);
+
 	// TODO: Above we load in data of gas use, but the houses always have a thermal model??
 	f_addEnergyAssetsToHouses(GCH, jaarlijksElectriciteitsVerbruik );	
 	
@@ -3398,6 +3403,7 @@ double gasBurnerCapacity_kW = 50000;//40;//uniform_discr(3,5);
 OL_GridConnectionHeatingType heatingType = avgc_data.p_avgHouseHeatingMethod;
 f_addHeatAsset(house, heatingType, gasBurnerCapacity_kW);
 f_addHeatManagement(house, heatingType, false);
+f_setHouseHeatingPreferences(house);
 
 //Add hot water and cooking demand
 f_addHotWaterDemand(house, house.p_floorSurfaceArea_m2);
@@ -3415,30 +3421,8 @@ if (installedRooftopSolar_kW > 0) {
 	f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW );
 }
 
-//Determine the amount of owned cars based on a random true and the averages
-int amountOfOwnedCars = (int) floor(avgc_data.p_avgNrOfCarsPerHouse) + (randomTrue(avgc_data.p_avgNrOfCarsPerHouse - floor(avgc_data.p_avgNrOfCarsPerHouse)) ? 1 : 0);
-
-if(house.p_eigenOprit && avgc_data.p_avgNrOfCarsPerHouse > 1 && amountOfOwnedCars == 1){
-	amountOfOwnedCars = 2; // If the average is higher then 1, always make sure houses with their own drive have 2 cars.
-}
-else if(!house.p_eigenOprit && amountOfOwnedCars > 1){
-	amountOfOwnedCars = 1; // If no own drive, then never more than 1 car.
-}
-
-for(int i = 0; i < amountOfOwnedCars ; i++){
-	//Oprit? -> only then you should have a chance to start with EV
-	if( house.p_eigenOprit){
-		if (randomTrue( avgc_data.p_shareOfElectricVehicleOwnership)){
-			f_addElectricVehicle(house, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, 0, 0);
-		}
-		else{
-			f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
-		}
-	}
-	else {
-		f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
-	}
-}
+//Add cars
+f_addCarsToHouses(house);
 
 /*ALCODEEND*/}
 
@@ -4280,6 +4264,63 @@ for(GridNode GN : c_gridNodes){
 	GN.energyModel = deserializedEnergyModel;
 	f_reconstructAgent(GN, deserializedEnergyModel.pop_gridNodes, deserializedEnergyModel);
 }
+
+/*ALCODEEND*/}
+
+double f_addCarsToHouses(GCHouse house)
+{/*ALCODESTART::1755866291695*/
+double probabilityForLeftOverCar = house.p_eigenOprit ? v_probabilityForAdditionalCar_privateParking : v_probabilityForAdditionalCar_publicParking;
+int amountOfOwnedCars = (int) floor(avgc_data.p_avgNrOfCarsPerHouse) + (randomTrue(probabilityForLeftOverCar) ? 1 : 0);
+
+////Create Vehicles based on the amount of owned cars
+for(int i = 0; i < amountOfOwnedCars ; i++){
+	double annualTravelDistanceCar = avgc_data.p_avgAnnualTravelDistancePrivateCar_km;
+	
+	if(i>0){//If more than 2 cars: 2+ cars all have smaller travel average travel distance
+		annualTravelDistanceCar *= avgc_data.p_avgAnnualTravelDistanceSecondVSFirstCar_fr;
+	}
+	//Oprit? -> only then you should have a chance to start with EV (public ev is not supported by sliders, public chargepoint is then used instead)
+	if( house.p_eigenOprit){
+		if (randomTrue( avgc_data.p_shareOfElectricVehicleOwnership)){
+			f_addElectricVehicle(house, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, annualTravelDistanceCar, 0);
+		}
+		else{
+			f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, annualTravelDistanceCar);
+		}
+	}
+	else {
+		f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, annualTravelDistanceCar);
+	}
+}
+/*ALCODEEND*/}
+
+double f_calculateProbabilitiesForAdditionalCar(List<Building_data> buildingDataHouses)
+{/*ALCODESTART::1755876470177*/
+//Precalculate the amount of households and households that have private parking for vehicle distribution
+int totalNumberOfHouses = 0;
+int numberOfHousesPrivateParking = 0;
+for (Building_data houseBuildingData : buildingDataHouses) {
+	totalNumberOfHouses++;
+	if(houseBuildingData.has_private_parking()){
+		numberOfHousesPrivateParking++;
+	}
+}
+
+//Determine the total cars in the area based on the average of the area
+int totalCars = roundToInt(avgc_data.p_avgNrOfCarsPerHouse * totalNumberOfHouses);
+int numberOfHousesPublicParking = totalNumberOfHouses - numberOfHousesPrivateParking;
+
+//Calculate the base number of cars that everyone gets, and the total leftover cars that should be distributed
+int baseCars = (int) floor(avgc_data.p_avgNrOfCarsPerHouse);
+int leftOverCars = totalCars - baseCars * totalNumberOfHouses;
+
+// Determine leftover cars distributed for private and public parking (bias to private parking)
+int leftOverForPrivateParking = min(leftOverCars, numberOfHousesPrivateParking);
+int leftOverForPublicParking = max(0, leftOverCars - leftOverForPrivateParking);
+
+//Calculate the leftover car probability for private and public parking
+v_probabilityForAdditionalCar_privateParking = ((double) leftOverForPrivateParking) / numberOfHousesPrivateParking; // Calculate probability for leftover car for private parking
+v_probabilityForAdditionalCar_publicParking = ((double) leftOverForPublicParking) / numberOfHousesPublicParking; // Calculate probability for leftover car for public parking
 
 /*ALCODEEND*/}
 

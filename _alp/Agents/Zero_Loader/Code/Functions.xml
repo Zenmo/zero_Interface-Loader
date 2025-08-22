@@ -122,7 +122,7 @@
 		<Name><![CDATA[f_createSolarParks]]></Name>
 		<Description><![CDATA[Function used to generate solar parks: grid connections and park owner (connection owner actor)]]></Description>
 		<X>430.001</X>
-		<Y>770.001</Y>
+		<Y>790.001</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -139,7 +139,7 @@
 		<Name><![CDATA[f_createBatteries]]></Name>
 		<Description><![CDATA[Function used to create (neighborhood) battery grid connection and actor]]></Description>
 		<X>430.001</X>
-		<Y>910</Y>
+		<Y>930</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -156,7 +156,7 @@
 		<Name><![CDATA[f_createElectrolysers]]></Name>
 		<Description><![CDATA[Function used to create electrolyser grid connections and actors]]></Description>
 		<X>430</X>
-		<Y>890</Y>
+		<Y>910</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -173,7 +173,7 @@
 		<Name><![CDATA[f_createWindFarms]]></Name>
 		<Description><![CDATA[Function used to create all windfarm grid connections, actors, EAs and GISObjects]]></Description>
 		<X>430.001</X>
-		<Y>790</Y>
+		<Y>810</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -684,7 +684,7 @@
 		<Id>1726584205849</Id>
 		<Name><![CDATA[f_createChargingStations]]></Name>
 		<X>431</X>
-		<Y>811</Y>
+		<Y>831</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1304,7 +1304,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1749648772203</Id>
 		<Name><![CDATA[f_createChargingSession]]></Name>
 		<X>490</X>
-		<Y>870</Y>
+		<Y>890</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1324,7 +1324,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1749649169603</Id>
 		<Name><![CDATA[f_createNewChargerProfile]]></Name>
 		<X>470</X>
-		<Y>850</Y>
+		<Y>870</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1344,7 +1344,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1749649390125</Id>
 		<Name><![CDATA[f_getChargerProfile]]></Name>
 		<X>450</X>
-		<Y>830</Y>
+		<Y>850</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1474,7 +1474,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Name><![CDATA[f_addEnergyAssetsToHouses]]></Name>
 		<Description><![CDATA[Initialisation of the Energy assets using average values for houses]]></Description>
 		<X>440</X>
-		<Y>660</Y>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1497,8 +1497,8 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1749728889988</Id>
 		<Name><![CDATA[f_setHouseHeatingPreferences]]></Name>
-		<X>440</X>
-		<Y>680</Y>
+		<X>460</X>
+		<Y>700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1518,7 +1518,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1749729268458</Id>
 		<Name><![CDATA[f_createParkingSpots]]></Name>
 		<X>430</X>
-		<Y>930</Y>
+		<Y>950</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2374,6 +2374,46 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[c_gridNodes]]></Name>
 			<Type><![CDATA[ArrayList<GridNode>]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1755866291695</Id>
+		<Name><![CDATA[f_addCarsToHouses]]></Name>
+		<X>460</X>
+		<Y>720</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[house]]></Name>
+			<Type><![CDATA[GCHouse]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1755876470177</Id>
+		<Name><![CDATA[f_calculateProbabilitiesForAdditionalCar]]></Name>
+		<X>440</X>
+		<Y>660</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[buildingDataHouses]]></Name>
+			<Type><![CDATA[List<Building_data>]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
