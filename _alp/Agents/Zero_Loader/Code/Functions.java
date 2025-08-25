@@ -1983,15 +1983,22 @@ traceln("Survey companies excel should be overridden with your own code");
 
 double f_createCompanies()
 {/*ALCODESTART::1726584205873*/
+//Initialize company totals
+
+
 //Create survey companies based on survey inload structure
 switch(project_data.survey_type()){
 	
 	case ZORM:
 		f_createSurveyCompanies_Zorm();
 		break;
-	
+		
 	case EXCEL:
 		f_createSurveyCompanies_Excel();
+		break;
+		
+	case NONE:
+		//Do nothing.
 		break;
 }
 
@@ -4322,5 +4329,15 @@ int leftOverForPublicParking = max(0, leftOverCars - leftOverForPrivateParking);
 v_probabilityForAdditionalCar_privateParking = ((double) leftOverForPrivateParking) / numberOfHousesPrivateParking; // Calculate probability for leftover car for private parking
 v_probabilityForAdditionalCar_publicParking = ((double) leftOverForPublicParking) / numberOfHousesPublicParking; // Calculate probability for leftover car for public parking
 
+/*ALCODEEND*/}
+
+double f_initializeCompanyTotals()
+{/*ALCODESTART::1756132258795*/
+//Initialize remaining totals of the area
+v_remainingNumberOfCars_Companies = project_data.total_cars_companies() != null ? project_data.total_cars_companies() : 0;
+v_remainingNumberOfVans_Companies = project_data.total_vans_companies() != null ? project_data.total_vans_companies() : 0;
+v_remainingNumberOfTrucks_Companies = project_data.total_trucks_companies() != null ? project_data.total_trucks_companies() : 0;
+v_remainingElectricityDelivery_kWh = project_data.total_electricity_consumption_companies_kWh_p_yr() != null ? project_data.total_electricity_consumption_companies_kWh_p_yr() : 0;
+v_remainingGasConsumption_m3 = project_data.total_gas_consumption_companies_m3_p_yr() != null ? project_data.total_gas_consumption_companies_m3_p_yr() : 0;
 /*ALCODEEND*/}
 

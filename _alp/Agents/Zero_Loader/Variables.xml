@@ -160,9 +160,6 @@ Calculated by: initial value (total floor area of the area) - total floor area o
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[Double.POSITIVE_INFINITY]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">

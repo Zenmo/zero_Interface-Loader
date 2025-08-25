@@ -453,10 +453,6 @@ int totalNbChargers = zero_Interface.c_orderedPublicChargers.size();
 int currentNbChargers = count(zero_Interface.c_orderedPublicChargers, x -> x.v_isActive);
 int nbChargersGoal = roundToInt(publicChargers_pct / 100 * totalNbChargers) ;
 
-// TODO: for now we assume that a public charger supports two EVs. Just to implement the code that removes diesel vehicles.
-// We will need to decide if we want to make this a fixed number, or have it depend on the number of chargers / diesel vehicles.
-int amountOfVehiclesPerCharger = zero_Interface.energyModel.avgc_data.p_avgEVsPerPublicCharger;
-
 while ( currentNbChargers > nbChargersGoal ) {
 	GCPublicCharger gc = findFirst(zero_Interface.c_orderedPublicChargers, x -> x.v_isActive);
 	if (gc != null) {
@@ -465,10 +461,7 @@ while ( currentNbChargers > nbChargersGoal ) {
 		zero_Interface.c_orderedPublicChargers.add(0, gc);
 		currentNbChargers--;
 		
-		List<J_EADieselVehicle> cars = new ArrayList<>(zero_Interface.c_orderedNonActiveVehiclesPublicParking.subList(0, amountOfVehiclesPerCharger));
-		for (J_EADieselVehicle car : cars) {
-			zero_Interface.c_orderedNonActiveVehiclesPublicParking.remove(car);
-			zero_Interface.c_orderedActiveVehiclesPublicParking.add(0, car);
+		for (J_EADieselVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc)) {
 			car.reRegisterEnergyAsset();
 		}
 	}
@@ -484,10 +477,7 @@ while ( currentNbChargers < nbChargersGoal){
 		zero_Interface.c_orderedPublicChargers.add(0, gc);
 		currentNbChargers++;
 		
-		List<J_EADieselVehicle> cars = new ArrayList<>(zero_Interface.c_orderedActiveVehiclesPublicParking.subList(0, amountOfVehiclesPerCharger));
-		for (J_EADieselVehicle car : cars) {
-			zero_Interface.c_orderedActiveVehiclesPublicParking.remove(car);
-			zero_Interface.c_orderedNonActiveVehiclesPublicParking.add(0, car);
+		for (J_EADieselVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc)) {
 			car.removeEnergyAsset();
 		}
 	}
