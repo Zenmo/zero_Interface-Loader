@@ -30,7 +30,7 @@
 	<Rectangle>
 		<Id>1726584205907</Id>
 		<Name><![CDATA[rect_projectDataTracking]]></Name>
-		<X>1580</X>
+		<X>1520</X>
 		<Y>20</Y>
 		<Label>
 			<X>10</X>
@@ -47,7 +47,7 @@
 		<LineColor>-65536</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>320</Width>
+		<Width>380</Width>
 		<Height>450</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
@@ -160,7 +160,7 @@
 	<Text>
 		<Id>1726584205921</Id>
 		<Name><![CDATA[txt_projectDataTracking]]></Name>
-		<X>1600</X>
+		<X>1540</X>
 		<Y>40</Y>
 		<Label>
 			<X>0</X>
@@ -493,7 +493,7 @@
 		<Id>1726584205947</Id>
 		<Name><![CDATA[rect_createEnergyGC]]></Name>
 		<X>400</X>
-		<Y>720</Y>
+		<Y>740</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -510,7 +510,7 @@
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>400</Width>
-		<Height>240</Height>
+		<Height>230</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -519,7 +519,7 @@
 		<Id>1726584205949</Id>
 		<Name><![CDATA[txt_createEnergyGC]]></Name>
 		<X>410</X>
-		<Y>730</Y>
+		<Y>750</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -579,7 +579,7 @@
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>400</Width>
-				<Height>110</Height>
+				<Height>140</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
 				<FillMaterial>null</FillMaterial>
@@ -1232,8 +1232,8 @@ saveObject.c_orderedPVSystemsHouses = zero_Interface.c_orderedPVSystemsHouses;
 saveObject.c_orderedVehicles = zero_Interface.c_orderedVehicles;
 saveObject.c_orderedHeatingSystemsCompanies = zero_Interface.c_orderedHeatingSystemsCompanies;
 saveObject.c_orderedHeatingSystemsHouses = zero_Interface.c_orderedHeatingSystemsHouses;
-saveObject.c_orderedActiveVehiclesPublicParking = zero_Interface.c_orderedActiveVehiclesPublicParking;
-saveObject.c_orderedNonActiveVehiclesPublicParking = zero_Interface.c_orderedNonActiveVehiclesPublicParking;
+//saveObject.c_orderedActiveVehiclesPublicParking = zero_Interface.c_orderedActiveVehiclesPublicParking;
+//saveObject.c_orderedNonActiveVehiclesPublicParking = zero_Interface.c_orderedNonActiveVehiclesPublicParking;
 saveObject.c_orderedVehiclesPrivateParking = zero_Interface.c_orderedVehiclesPrivateParking;
 saveObject.c_orderedParkingSpaces = zero_Interface.c_orderedParkingSpaces;
 saveObject.c_orderedV1GChargers = zero_Interface.c_orderedV1GChargers;

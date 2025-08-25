@@ -4,7 +4,7 @@
 		<Id>1745483322704</Id>
 		<Name><![CDATA[p_currentPVOnLand_ha]]></Name>
 		<X>50</X>
-		<Y>1250</Y>
+		<Y>1270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -32,7 +32,7 @@
 		<Id>1745483371462</Id>
 		<Name><![CDATA[p_currentWindTurbines_MW]]></Name>
 		<X>50</X>
-		<Y>1270</Y>
+		<Y>1290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

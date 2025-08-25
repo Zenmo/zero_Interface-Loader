@@ -107,7 +107,7 @@
 		<Id>1745483988251</Id>
 		<Name><![CDATA[f_getCurrentPVOnLandAndWindturbineValues]]></Name>
 		<X>30</X>
-		<Y>1230</Y>
+		<Y>1250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -374,7 +374,7 @@
 		<Id>1750328750011</Id>
 		<Name><![CDATA[f_setVehiclesPrivateParking]]></Name>
 		<X>80</X>
-		<Y>1150</Y>
+		<Y>1170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

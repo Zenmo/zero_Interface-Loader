@@ -290,7 +290,7 @@
 				<Name><![CDATA[p_avgAnnualTravelDistanceVan_km]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgAnnualTravelDistanceCar_km]]></Name>
+				<Name><![CDATA[p_avgAnnualTravelDistanceCompanyCar_km]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgAnnualTravelDistanceTruck_km]]></Name>
@@ -363,6 +363,12 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgNrOfCarsPerHouse]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_avgAnnualTravelDistancePrivateCar_km]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_avgAnnualTravelDistanceSecondVSFirstCar_fr]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
