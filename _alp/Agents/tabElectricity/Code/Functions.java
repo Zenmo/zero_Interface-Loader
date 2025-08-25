@@ -478,7 +478,9 @@ while ( currentNbChargers < nbChargersGoal){
 		currentNbChargers++;
 		
 		for (J_EADieselVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc)) {
+			J_ActivityTrackerTrips tripTracker = car.getTripTracker(); //Needed, as triptracker is removed when removeEnergyAsset is called.
 			car.removeEnergyAsset();
+			car.setTripTracker(tripTracker);//Re-set the triptracker again, for storing.
 		}
 	}
 	else {

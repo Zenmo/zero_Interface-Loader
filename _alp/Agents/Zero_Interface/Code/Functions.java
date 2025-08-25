@@ -3134,6 +3134,7 @@ if(totalChargers > 0){
 	    index += numberOfCars;
 	}
 }
+
 /*ALCODEEND*/}
 
 double f_simulateYearFromMainInterface()
