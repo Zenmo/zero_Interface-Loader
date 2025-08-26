@@ -4344,10 +4344,10 @@ v_probabilityForAdditionalCar_publicParking = ((double) leftOverForPublicParking
 double f_initializeCompanyTotals()
 {/*ALCODESTART::1756132258795*/
 //Initialize remaining totals of the area
-v_remainingNumberOfCars_Companies = project_data.total_cars_companies() != null ? project_data.total_cars_companies() : 0;
-v_remainingNumberOfVans_Companies = project_data.total_vans_companies() != null ? project_data.total_vans_companies() : 0;
-v_remainingNumberOfTrucks_Companies = project_data.total_trucks_companies() != null ? project_data.total_trucks_companies() : 0;
-v_remainingElectricityDelivery_kWh = project_data.total_electricity_consumption_companies_kWh_p_yr() != null ? project_data.total_electricity_consumption_companies_kWh_p_yr() : 0;
-v_remainingGasConsumption_m3 = project_data.total_gas_consumption_companies_m3_p_yr() != null ? project_data.total_gas_consumption_companies_m3_p_yr() : 0;
+v_remainingNumberOfCars_Companies = project_data.total_cars_companies() != null ? max(0, project_data.total_cars_companies()) : 0;
+v_remainingNumberOfVans_Companies = project_data.total_vans_companies() != null ? max(0, project_data.total_vans_companies()) : 0;
+v_remainingNumberOfTrucks_Companies = project_data.total_trucks_companies() != null ? max(0, project_data.total_trucks_companies()) : 0;
+v_remainingElectricityDelivery_kWh = project_data.total_electricity_consumption_companies_kWh_p_yr() != null ? max(0, project_data.total_electricity_consumption_companies_kWh_p_yr()) : 0;
+v_remainingGasConsumption_m3 = project_data.total_gas_consumption_companies_m3_p_yr() != null ? max(0, project_data.total_gas_consumption_companies_m3_p_yr()) : 0;
 /*ALCODEEND*/}
 
