@@ -1282,7 +1282,7 @@ if (heatingType == null) {
 return heatingType;
 /*ALCODEEND*/}
 
-double f_addElectricVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_type,boolean isDefaultVehicle,double annualTravelDistance_km,double maxChargingPower_kW)
+J_EAEV f_addElectricVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_type,boolean isDefaultVehicle,double annualTravelDistance_km,double maxChargingPower_kW)
 {/*ALCODESTART::1726584205827*/
 double storageCapacity_kWh 		= 0;
 double energyConsumption_kWhpkm = 0;
@@ -1338,9 +1338,10 @@ else if (vehicle_type == OL_EnergyAssetType.ELECTRIC_VAN){
 		electricVehicle.tripTracker.setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
 }
 
+return electricVehicle;
 /*ALCODEEND*/}
 
-double f_addDieselVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_type,Boolean isDefaultVehicle,double annualTravelDistance_km)
+J_EADieselVehicle f_addDieselVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_type,Boolean isDefaultVehicle,double annualTravelDistance_km)
 {/*ALCODESTART::1726584205829*/
 double energyConsumption_kWhpkm = 0;
 double vehicleScaling = 1.0;
@@ -1371,6 +1372,12 @@ if (!isDefaultVehicle && annualTravelDistance_km > 1000){
 else if (vehicle_type == OL_EnergyAssetType.DIESEL_VAN){
 		dieselVehicle.tripTracker.setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
 }
+
+return dieselVehicle;
+
+
+
+
 /*ALCODEEND*/}
 
 double f_addStorage(GridConnection parentGC,double storagePower_kw,double storageCapacity_kWh,OL_EnergyAssetType storageType)
@@ -4281,22 +4288,25 @@ int amountOfOwnedCars = (int) floor(avgc_data.p_avgNrOfCarsPerHouse) + (randomTr
 
 ////Create Vehicles based on the amount of owned cars
 for(int i = 0; i < amountOfOwnedCars ; i++){
-	double annualTravelDistanceCar = avgc_data.p_avgAnnualTravelDistancePrivateCar_km;
+	double tripTrackerScaling = 1;
 	
-	if(i>0){//If more than 2 cars: 2+ cars all have smaller travel average travel distance
-		annualTravelDistanceCar *= avgc_data.p_avgAnnualTravelDistanceSecondVSFirstCar_fr;
+	if(i>0){//If more than 1 car: 2+ cars all have smaller travel average travel distance
+		tripTrackerScaling *= avgc_data.p_avgAnnualTravelDistanceSecondVSFirstCar_fr;
 	}
 	//Oprit? -> only then you should have a chance to start with EV (public ev is not supported by sliders, public chargepoint is then used instead)
 	if( house.p_eigenOprit){
 		if (randomTrue( avgc_data.p_shareOfElectricVehicleOwnership)){
-			f_addElectricVehicle(house, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, annualTravelDistanceCar, 0);
+			J_EAEV ev = f_addElectricVehicle(house, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, 0, 0);
+			ev.tripTracker.setAnnualDistance_km(ev.tripTracker.getAnnualDistance_km()*tripTrackerScaling);
 		}
 		else{
-			f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, annualTravelDistanceCar);
+			J_EADieselVehicle dieselVehicle = f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
+			dieselVehicle.tripTracker.setAnnualDistance_km(dieselVehicle.tripTracker.getAnnualDistance_km()*tripTrackerScaling);
 		}
 	}
 	else {
-		f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, annualTravelDistanceCar);
+		J_EADieselVehicle dieselVehicle = f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
+		dieselVehicle.tripTracker.setAnnualDistance_km(dieselVehicle.tripTracker.getAnnualDistance_km()*tripTrackerScaling);
 	}
 }
 /*ALCODEEND*/}

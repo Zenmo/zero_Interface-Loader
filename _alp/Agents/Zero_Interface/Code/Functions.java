@@ -3127,7 +3127,9 @@ if(totalChargers > 0){
 	    // Place vehicles depending on whether the charger is active
 	    if (charger.v_isActive) {
 	        for (J_EADieselVehicle car : assignedCars) {
-	            car.removeEnergyAsset();
+	           	J_ActivityTrackerTrips tripTracker = car.getTripTracker(); //Needed, as triptracker is removed when removeEnergyAsset is called.
+				car.removeEnergyAsset();
+				car.setTripTracker(tripTracker);//Re-set the triptracker again, for storing.
 	        }
 	    }
 	

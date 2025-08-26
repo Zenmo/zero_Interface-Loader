@@ -458,8 +458,8 @@
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>J_EAEV</ReturnType>
 		<Id>1726584205827</Id>
 		<Name><![CDATA[f_addElectricVehicle]]></Name>
 		<X>900</X>
@@ -494,8 +494,8 @@
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>J_EADieselVehicle</ReturnType>
 		<Id>1726584205829</Id>
 		<Name><![CDATA[f_addDieselVehicle]]></Name>
 		<X>900</X>
