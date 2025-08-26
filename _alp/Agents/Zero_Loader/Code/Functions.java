@@ -1991,7 +1991,7 @@ traceln("Survey companies excel should be overridden with your own code");
 double f_createCompanies()
 {/*ALCODESTART::1726584205873*/
 //Initialize company totals
-
+f_initializeCompanyTotals();
 
 //Create survey companies based on survey inload structure
 switch(project_data.survey_type()){
