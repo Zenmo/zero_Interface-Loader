@@ -516,6 +516,11 @@ if(settings.resultsUIRadioButtonSetup() != null){
 	uI_Results.v_selectedRadioButtonSetup = settings.resultsUIRadioButtonSetup();
 }
 
+//Disable summary button if summary is not selected
+if(settings.showKPISummary() == null || !settings.showKPISummary()){
+	uI_Results.getCheckbox_KPISummary().setVisible(false);
+}
+
 //Connect resultsUI
 uI_Results.f_initializeResultsUI();
 
@@ -612,17 +617,17 @@ c_orderedHeatingSystemsCompanies.addAll(detailedCompaniesWithHP);
 
 /*ALCODEEND*/}
 
-double f_initalAssetOrdering()
+double f_initialAssetOrdering()
 {/*ALCODESTART::1714135623471*/
 f_initialElectricVehiclesOrder();
 f_initialPVSystemsOrder();
 f_initialPTSystemsOrder_households();
 f_initialHeatingSystemsOrder();
 f_initialParkingSpacesOrder();
-f_initialHouseholdOrder();
 f_initialChargerOrder();
+f_initializePrivateAndPublicParkingCarsOrder();
 f_projectSpecificOrderedCollectionAdjustments();
-f_initializeNonActiveVehiclesPublicParking();
+
 
 /*ALCODEEND*/}
 
@@ -679,56 +684,46 @@ double f_UIStartup()
 {/*ALCODESTART::1715859145993*/
 // UI elements
 
-// We call this function to set the parameters so there is no nullpointer errors, but its not loading the correct values yet FIX Later to remove this call.
-f_initalAssetOrdering();
+//Project specific settings
+f_projectSpecificSettings();
+
+// Initialize the slider Asset Ordering lists
+f_initialAssetOrdering();
 
 //Connect the results UI
 f_connectResultsUI();
 
-//Project specific settings
-f_projectSpecificSettings();
-
-//Initialize the UI elements (positioning, etc.)
+//Initialize the UITabs
 f_setUITabs();
+
+//Initialize the legend
+f_initializeLegend();
+
+//Initialize map overlay buttons
+f_initializeMapOverlayRadioButton();
 
 // Create the Private UI for companies
 f_createAdditionalUIs();
 button_goToUI.setVisible(false);
 
-// Now that the sliders are set we can load the correct starting values
-f_initalAssetOrdering();
-
 //Create and set the grid topology colors (Netvlakken)
 f_setGridTopologyColors();
-
-//Initialize the sliders of the main UI
-f_setSliderPresets();
-
-//Initialize the legend
-f_initializeLegend();
 
 //Disable cable button if no cables have been loaded in
 if(c_LVCables.size() == 0 && c_MVCables.size() == 0){
 	checkbox_cabels.setVisible(false);
 }
 
-//Disable summary button if summary is not selected
-if(settings.showKPISummary() == null || !settings.showKPISummary()){
-	uI_Results.getCheckbox_KPISummary().setVisible(false);
-}
+//Set order of certain layovers and submenus
+f_initializePresentationOrder();
 
+//Set to public model version styling if activated
 if(settings.isPublicModel()){
 	f_changeDefaultColorOfPrivateGC();
 }
 
 //Turn on update of live congestion colloring
 b_updateLiveCongestionColors = true;
-
-//Initialize map overlay buttons
-f_initializeMapOverlayRadioButton();
-
-//Set order of certain layovers and submenus
-f_initializePresentationOrder();
 
 /*ALCODEEND*/}
 
@@ -1576,150 +1571,6 @@ t_errorMessage.setY(t_errorMessage.getY() - 40 * additionalLines);
 
 t_errorMessage.setText(errorMessage);
 gr_errorScreen.setVisible(true);
-/*ALCODEEND*/}
-
-double[] f_calculateGroupATOConnectionCapacity(ArrayList<GridConnection> gcList)
-{/*ALCODESTART::1736425024531*/
-// TODO: Add as an argument the grid operator when different calculations are available.
-// For now only Stedin is implemented, so this calculation is always chosen.
-
-double deliveryCapacity_kW = 0;
-double feedInCapacity_kW = 0;
-
-ArrayList<String> warnings = new ArrayList<>();
-
-//TODO: First we check if all the gridconnections are on a single ring in the grid topology. If not we add a warning
-HashSet<GridNode> parentNodes = new HashSet<>();
-
-for (GridConnection gc : gcList) {
-	
-	// GridTopology Check
-	GridNode gn = gc.l_parentNodeElectric.getConnectedAgent();
-	// TODO: Improve this so it uses an OptionList instead of string comparison
-	if ( gn.p_description.toLowerCase().contains("klantstation") ) {
-		GridNode parentNode = findFirst(energyModel.pop_gridNodes, p -> p.p_gridNodeID.equals(gn.p_parentNodeID));
-		if (parentNode == null) {
-			traceln("Warning! Could not find parentnode of klantstation of GC: " + gc.p_ownerID);			
-		}
-		else if (parentNode.p_nodeType != OL_GridNodeType.SUBMV) {
-			// add warning, gc has klantstation, but this one is not on a ring
-			traceln("Warning! GC: " + gc.p_ownerID + " is not connected to a ring in the grid topology.");
-			warnings.add(gc.p_ownerID + " is niet aangesloten op een ring");
-			parentNodes.add(parentNode);
-		}
-		else {
-			parentNodes.add(parentNode);
-		}
-	}
-	else if ( gn.p_nodeType != OL_GridNodeType.SUBMV ) {
-		// add warning, this one is not on a ring
-		traceln("Warning! GC: " + gc.p_ownerID + " is not connected to a ring in the grid topology.");
-		warnings.add(gc.p_ownerID + " is niet aangesloten op een ring");
-		parentNodes.add(gn);
-	}
-	else {
-		parentNodes.add(gn);	
-	}
-	
-	// Adding up the GTO Connection Capacity contributions
-	traceln("gto capacities: " + Arrays.toString( v_GCGTOConnectionCapacities.get(gc)));
-	deliveryCapacity_kW += v_GCGTOConnectionCapacities.get(gc)[0];
-	feedInCapacity_kW += v_GCGTOConnectionCapacities.get(gc)[1];
-}
-
-if ( parentNodes.size() > 1 ) {
-	// add warning
-	traceln("Warning! Selected GridConnections for E-Hub are not on a single ring.");
-	warnings.add("Let op! Er zijn bedrijven op verschillende ringen geselecteerd");
-}
-
-v_groupATODeliveryCapacity_kW = deliveryCapacity_kW;
-v_groupATOFeedInCapacity_kW = feedInCapacity_kW;
-
-
-f_EHubTabCapacityInformation(true, null);
-
-if (gcList.size() > 0) {
-	
-	// fix for the WKK
-	List<GridConnection> gcListWithoutWKK = new ArrayList<>(gcList);
-	GridConnection GCWKK = findFirst(energyModel.EnergyConversionSites, gc -> gc.p_name.toLowerCase().contains("wkk"));
-	//if (GCWKK != null) {
-	gcListWithoutWKK.remove(GCWKK);
-	//}
-	
-	f_EHubTabCapacityInformation(false, "De ring van " + gcList.get(0).p_ownerID + " is geselecteerd. \n");
-	
-	f_EHubTabCapacityInformation(false, 
-		"De bedrijven hebben samen een leveringscapaciteit van " +
-		(int) sum(gcListWithoutWKK, gc -> gc.p_contractedDeliveryCapacity_kW)  +
-		"  kW. \nDe E-Hub zou een groepscontract kunnen krijgen van " +
-		(int) deliveryCapacity_kW + " kW. \n"
-		);
-	if (warnings.size() > 0) {
-		f_EHubTabCapacityInformation(false, "Waarschuwingen: \n");
-		for (String str : warnings) {
-			f_EHubTabCapacityInformation(false, str);
-			f_EHubTabCapacityInformation(false, "\n");
-		}
-	}
-}
-else {
-	f_EHubTabCapacityInformation(false, "Nog geen E-Hub samengesteld");
-}
-/*ALCODEEND*/}
-
-double f_resetEHubConfigurationButton()
-{/*ALCODESTART::1736425024533*/
-v_clickedObjectText = "None";
-uI_Results.b_showGroupContractValues = false;
-uI_Tabs.pop_tabEHub.get(0).cb_EHubSelect.setSelected(false);
-uI_Tabs.pop_tabEHub.get(0).t_baseGroepInfo.setText("Selecteer minimaal twee panden");
-uI_Tabs.pop_tabEHub.get(0).t_groepsGTV_kW.setText("");
-uI_Tabs.pop_tabEHub.get(0).t_cumulatiefGTV_kW.setText("");
-uI_Tabs.pop_tabEHub.get(0).t_warnings.setText("");
-/*ALCODEEND*/}
-
-double f_EHubTabCapacityInformation(boolean reset,String textToAdd)
-{/*ALCODESTART::1736425024535*/
-if (reset) {
-	uI_Tabs.pop_tabEHub.get(0).t_baseGroepInfo.setText("");
-	uI_Tabs.pop_tabEHub.get(0).t_groepsGTV_kW.setText("");
-	uI_Tabs.pop_tabEHub.get(0).t_cumulatiefGTV_kW.setText("");
-	uI_Tabs.pop_tabEHub.get(0).t_warnings.setText("");
-}
-else {
-	String currentWarningString = uI_Tabs.pop_tabEHub.get(0).t_warnings.getText();
-	uI_Tabs.pop_tabEHub.get(0).t_warnings.setText(currentWarningString + textToAdd);
-}
-
-
-/*ALCODEEND*/}
-
-double f_calculateGTOConnectionCapacities()
-{/*ALCODESTART::1736425024537*/
-// Calculation
-// Stedin: remove the top 0.1% of peak loads of the past years quarterhourly values, then add the remaining maximum to the group capacity
-// First we find the quarterhourly values, or if they are not available the assigned base load and add a warning that not all data was available
-
-List<GridConnection> gcList = new ArrayList<>();
-gcList.addAll(energyModel.f_getGridConnections());
-//gcList.addAll(energyModel.f_getPausedGridConnections());
-
-for (GridConnection gc : gcList) {
-	int amountOfDataPoints = gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW().length;
-	double[] quarterHourlyValues = Arrays.copyOf(gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW(), amountOfDataPoints);
-	Arrays.sort(quarterHourlyValues);
-	double filteredMaximum_kW = min(gc.p_contractedDeliveryCapacity_kW , max(0, quarterHourlyValues[amountOfDataPoints - (int) (amountOfDataPoints*0.001) - 1]));
-	double filteredMinimum_kW = min(gc.p_contractedFeedinCapacity_kW, -min(0, quarterHourlyValues[(int)(amountOfDataPoints*0.001)]));
-	v_GCGTOConnectionCapacities.put(gc, new double[]{filteredMaximum_kW, filteredMinimum_kW});
-}
-
-// fix for the WKK
-GridConnection GCWKK = findFirst(energyModel.EnergyConversionSites, gc -> gc.p_name.toLowerCase().contains("wkk"));
-if (GCWKK != null) {
-	v_GCGTOConnectionCapacities.put(GCWKK, new double[]{0.0, 0.0});
-}
 /*ALCODEEND*/}
 
 double f_styleResultsUI()
@@ -2722,25 +2573,6 @@ switch(activeDefaultGISBuildingType){
 
 /*ALCODEEND*/}
 
-double f_initialHouseholdOrder()
-{/*ALCODESTART::1750333147816*/
-c_orderedActiveVehiclesPublicParking = new ArrayList<J_EADieselVehicle>();
-c_orderedVehiclesPrivateParking = new ArrayList<J_EAVehicle>();
-
-for (GCHouse house : energyModel.Houses) {
-	if (!house.p_eigenOprit) {
-		c_orderedActiveVehiclesPublicParking.addAll(house.c_dieselVehicles);
-	}
-	else {
-		c_orderedVehiclesPrivateParking.addAll(house.c_vehicleAssets);
-	}
-}
-
-Collections.shuffle(c_orderedActiveVehiclesPublicParking);
-Collections.shuffle(c_orderedVehiclesPrivateParking);
-
-/*ALCODEEND*/}
-
 double f_setColorsBasedOnCongestion_objects(GIS_Object gis_area)
 {/*ALCODESTART::1752756002220*/
 if (gis_area.c_containedGridConnections.size() > 0) {
@@ -3257,20 +3089,54 @@ else {
 }
 /*ALCODEEND*/}
 
-double f_initializeNonActiveVehiclesPublicParking()
+double f_initializePrivateAndPublicParkingCarsOrder()
 {/*ALCODESTART::1753882411689*/
-int nbActivePublicChargers = count(c_orderedPublicChargers, x -> x.v_isActive);
-double activePublicChargers_pct = 100.0 * nbActivePublicChargers / c_orderedPublicChargers.size();
-if (c_orderedActiveVehiclesPublicParking.size() > 0) {
-	// Put some of the diesel cars into the non active vehicles
-	int nbCarsPerCharger = energyModel.avgc_data.p_avgEVsPerPublicCharger;
-	List<J_EADieselVehicle> cars = new ArrayList<>(c_orderedActiveVehiclesPublicParking.subList(0, nbActivePublicChargers * nbCarsPerCharger));
-	for (J_EADieselVehicle car : cars) {
-		c_orderedActiveVehiclesPublicParking.remove(car);
-		c_orderedNonActiveVehiclesPublicParking.add(0, car);
-		car.removeEnergyAsset();
+//Get all public and private parked cars
+c_orderedVehiclesPrivateParking = new ArrayList<J_EAVehicle>();
+List<J_EADieselVehicle> allPublicParkedCars = new ArrayList<J_EADieselVehicle>();
+for (GCHouse house : energyModel.Houses) {
+	if (house.p_eigenOprit) {
+		c_orderedVehiclesPrivateParking.addAll(house.c_vehicleAssets);
+	}
+	else{
+		allPublicParkedCars.addAll(house.c_dieselVehicles);	
 	}
 }
+
+//Shuffle the collections to not have skewed initialization
+Collections.shuffle(c_orderedVehiclesPrivateParking);
+Collections.shuffle(allPublicParkedCars);
+
+//Get the total amount of public chargers
+int totalChargers = c_orderedPublicChargers.size();
+
+if(totalChargers > 0){
+	// Fair distribution of vehicles across chargers
+	List<Integer> numberOfCarsPerCharger = f_getNumberOfCarsPerCharger(allPublicParkedCars.size(), totalChargers);
+	
+	// Assign vehicles to chargers
+	c_mappingOfVehiclesPerCharger.clear();
+	int index = 0;
+	for (int i = 0; i < totalChargers; i++) {
+	    GCPublicCharger charger = c_orderedPublicChargers.get(i);
+	    int numberOfCars = numberOfCarsPerCharger.get(i);
+	
+	    List<J_EADieselVehicle> assignedCars = new ArrayList<>(allPublicParkedCars.subList(index, index + numberOfCars));
+	    c_mappingOfVehiclesPerCharger.put(charger, assignedCars);
+	
+	    // Place vehicles depending on whether the charger is active
+	    if (charger.v_isActive) {
+	        for (J_EADieselVehicle car : assignedCars) {
+	           	J_ActivityTrackerTrips tripTracker = car.getTripTracker(); //Needed, as triptracker is removed when removeEnergyAsset is called.
+				car.removeEnergyAsset();
+				car.setTripTracker(tripTracker);//Re-set the triptracker again, for storing.
+	        }
+	    }
+	
+	    index += numberOfCars;
+	}
+}
+
 /*ALCODEEND*/}
 
 double f_simulateYearFromMainInterface()
@@ -3377,5 +3243,26 @@ if(GN.gisRegion != null){
 	GN.gisRegion.setFillColor(v_parkingSpaceColor_unkown);
 	GN.gisRegion.setLineColor(v_parkingSpaceLineColor_unkown);
 }
+/*ALCODEEND*/}
+
+List<Integer> f_getNumberOfCarsPerCharger(int totalPublicParkedCars,int totalPublicChargers)
+{/*ALCODESTART::1756122011053*/
+List<Integer> numberOfCarsPerCharger = new ArrayList<>();
+if(totalPublicChargers > 0){
+
+	    
+	int baseNumberOfCars = (int) floor(totalPublicParkedCars / totalPublicChargers); //Could also simply be totalPublicParkedCars / totalPublicChargers, as int/int is already floored, but just to make sure what should happen here it is written in full
+	int remainingCars = totalPublicParkedCars % totalPublicChargers;  // extra vehicles that can be distributed
+	
+	for (int i = 0; i < totalPublicChargers; i++) {
+	    if (i < remainingCars) {
+	        numberOfCarsPerCharger.add(baseNumberOfCars + 1); // some chargers get one extra
+	    } else {
+	        numberOfCarsPerCharger.add(baseNumberOfCars);
+	    }
+	}
+}
+
+return numberOfCarsPerCharger;
 /*ALCODEEND*/}
 

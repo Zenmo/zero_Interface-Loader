@@ -3,8 +3,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1726584205883</Id>
 		<Name><![CDATA[v_timeOfModelStart_ms]]></Name>
-		<X>1620</X>
-		<Y>150</Y>
+		<X>1560</X>
+		<Y>130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -22,8 +22,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1726584205885</Id>
 		<Name><![CDATA[v_modelStartUpDuration_s]]></Name>
-		<X>1620</X>
-		<Y>170</Y>
+		<X>1560</X>
+		<Y>150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -45,8 +45,8 @@
 		<Id>1726584205887</Id>
 		<Name><![CDATA[v_hourOfYearStart]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1620</X>
-		<Y>80</Y>
+		<X>1560</X>
+		<Y>70</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -66,9 +66,9 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1726584205889</Id>
-		<Name><![CDATA[v_remainingNumberOfTrucks]]></Name>
-		<X>1620</X>
-		<Y>350</Y>
+		<Name><![CDATA[v_remainingNumberOfTrucks_Companies]]></Name>
+		<X>1560</X>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -88,8 +88,8 @@
 		<Name><![CDATA[v_totalFloorAreaAnonymousCompanies_m2]]></Name>
 		<Description><![CDATA[variable that tracks how much floor area remains for the average companies. (this will be used to determine the average m3 and kwh per m2 floor area to be used by the unkown companies (that have not filled in the survey). 
 Calculated by: initial value (total floor area of the area) - total floor area of the survey companies]]></Description>
-		<X>1621</X>
-		<Y>241</Y>
+		<X>1561</X>
+		<Y>271</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -107,8 +107,8 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 	<Variable Class="PlainVariable">
 		<Id>1726584205893</Id>
 		<Name><![CDATA[v_numberOfCompaniesNoSurvey]]></Name>
-		<X>1621</X>
-		<Y>221</Y>
+		<X>1561</X>
+		<Y>251</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -126,8 +126,8 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 	<Variable Class="PlainVariable">
 		<Id>1726584205895</Id>
 		<Name><![CDATA[v_remainingGasConsumption_m3]]></Name>
-		<X>1621</X>
-		<Y>281</Y>
+		<X>1561</X>
+		<Y>311</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -146,8 +146,8 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205897</Id>
 		<Name><![CDATA[v_remainingElectricityDelivery_kWh]]></Name>
 		<Description><![CDATA[This variable indicates an annual maximum consumption for all the created consumption profiles combined. Setting it produces warnings if this is exceeded.]]></Description>
-		<X>1621</X>
-		<Y>261</Y>
+		<X>1561</X>
+		<Y>291</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -160,16 +160,13 @@ Calculated by: initial value (total floor area of the area) - total floor area o
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[Double.POSITIVE_INFINITY]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1726584205899</Id>
-		<Name><![CDATA[v_remainingNumberOfVans]]></Name>
-		<X>1621</X>
-		<Y>331</Y>
+		<Name><![CDATA[v_remainingNumberOfVans_Companies]]></Name>
+		<X>1561</X>
+		<Y>361</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -182,35 +179,13 @@ Calculated by: initial value (total floor area of the area) - total floor area o
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[int]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1727683925084</Id>
-		<Name><![CDATA[v_nbCreatedVans]]></Name>
-		<X>1620</X>
-		<Y>380</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[int]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[0]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1733235094633</Id>
 		<Name><![CDATA[v_numberOfSurveyCompanies]]></Name>
-		<X>1620</X>
-		<Y>200</Y>
+		<X>1560</X>
+		<Y>230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -229,8 +204,8 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1733389557748</Id>
 		<Name><![CDATA[v_simStartHour_h]]></Name>
 		<Description><![CDATA[The hour 0 is defined as january 1st, 00:00h in the year energyModel.p_year]]></Description>
-		<X>1620</X>
-		<Y>99</Y>
+		<X>1560</X>
+		<Y>89</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -251,8 +226,8 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 	<Variable Class="PlainVariable">
 		<Id>1733390702422</Id>
 		<Name><![CDATA[v_simDuration_h]]></Name>
-		<X>1620</X>
-		<Y>118</Y>
+		<X>1560</X>
+		<Y>108</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -272,9 +247,9 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1736255870137</Id>
-		<Name><![CDATA[v_remainingNumberOfCars]]></Name>
-		<X>1620</X>
-		<Y>310</Y>
+		<Name><![CDATA[v_remainingNumberOfCars_Companies]]></Name>
+		<X>1560</X>
+		<Y>340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -325,6 +300,44 @@ Calculated by: initial value (total floor area of the area) - total floor area o
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[ObjectMapper]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1755876520422</Id>
+		<Name><![CDATA[v_probabilityForAdditionalCar_privateParking]]></Name>
+		<X>1560</X>
+		<Y>180</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1755876547633</Id>
+		<Name><![CDATA[v_probabilityForAdditionalCar_publicParking]]></Name>
+		<X>1560</X>
+		<Y>200</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
@@ -457,7 +470,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 	<Variable Class="CollectionVariable">
 		<Id>1726584205737</Id>
 		<Name><![CDATA[c_gridNodeIDsInScope]]></Name>
-		<X>1620</X>
+		<X>1560</X>
 		<Y>410</Y>
 		<Label>
 			<X>10</X>
@@ -745,7 +758,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 	<Variable Class="CollectionVariable">
 		<Id>1749631164240</Id>
 		<Name><![CDATA[c_gridNodeIDsWithProfiles]]></Name>
-		<X>1620</X>
+		<X>1560</X>
 		<Y>450</Y>
 		<Label>
 			<X>10</X>

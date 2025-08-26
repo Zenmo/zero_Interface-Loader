@@ -1578,7 +1578,36 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 	<Variable Class="Parameter">
 		<Id>1728032263201</Id>
 		<Name><![CDATA[p_avgAnnualTravelDistanceVan_km]]></Name>
-		<Description><![CDATA[??]]></Description>
+		<Description><![CDATA[https://www.cbs.nl/nl-nl/visualisaties/verkeer-en-vervoer/verkeer/verkeersprestaties-bestelautos -> 4 jaar oude bestlbussen gemiddeld 22.2 duizend km in een jaar.]]></Description>
+		<X>570</X>
+		<Y>790</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[22200]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1728032263199</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1728032304301</Id>
+		<Name><![CDATA[p_avgAnnualTravelDistanceCompanyCar_km]]></Name>
+		<Description><![CDATA[https://www.cbs.nl/nl-nl/visualisaties/verkeer-en-vervoer/verkeer/verkeersprestaties-personenautos]]></Description>
 		<X>570</X>
 		<Y>770</Y>
 		<Label>
@@ -1593,33 +1622,8 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[30000]]></Code>
+				<Code><![CDATA[20500]]></Code>
 			</DefaultValue>
-			<ParameterEditor>
-				<Id>1728032263199</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1728032304301</Id>
-		<Name><![CDATA[p_avgAnnualTravelDistanceCar_km]]></Name>
-		<X>570</X>
-		<Y>750</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[double]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
 			<ParameterEditor>
 				<Id>1728032304299</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
@@ -1632,8 +1636,9 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 	<Variable Class="Parameter">
 		<Id>1728032305440</Id>
 		<Name><![CDATA[p_avgAnnualTravelDistanceTruck_km]]></Name>
+		<Description><![CDATA[https://www.cbs.nl/nl-nl/cijfers/detail/84651NED]]></Description>
 		<X>570</X>
-		<Y>790</Y>
+		<Y>810</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1645,6 +1650,9 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 			<Type><![CDATA[double]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[54505]]></Code>
+			</DefaultValue>
 			<ParameterEditor>
 				<Id>1728032305438</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
@@ -2025,7 +2033,7 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 		<Name><![CDATA[p_avgEVsPerPublicCharger]]></Name>
 		<Description><![CDATA[TODO: Determine this value]]></Description>
 		<X>570</X>
-		<Y>840</Y>
+		<Y>860</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2336,6 +2344,64 @@ Voor nu gekozen voor 4185.
 			<ParameterEditor>
 				<Id>1755767836352</Id>
 				<Label><![CDATA[p_avgHousePVInstallationPower_kWp1]]></Label>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1755873729807</Id>
+		<Name><![CDATA[p_avgAnnualTravelDistancePrivateCar_km]]></Name>
+		<Description><![CDATA[https://www.cbs.nl/nl-nl/visualisaties/verkeer-en-vervoer/verkeer/verkeersprestaties-personenautos]]></Description>
+		<X>570</X>
+		<Y>730</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[11200]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1755873729805</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1755874747343</Id>
+		<Name><![CDATA[p_avgAnnualTravelDistanceSecondVSFirstCar_fr]]></Name>
+		<Description><![CDATA[Scaling factor used to scale down the average annual travel distance of the additional cars for households that have multiple cars. SOURCE!???]]></Description>
+		<X>570</X>
+		<Y>750</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.6]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1755874747341</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>

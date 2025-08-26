@@ -72,5 +72,9 @@ dataAVGC.p_avgMaxHeatBufferTemperature_degC = p_avgMaxHeatBufferTemperature_degC
 dataAVGC.p_avgMinHeatBufferTemperature_degC = p_avgMinHeatBufferTemperature_degC;
 dataAVGC.p_avgHeatBufferWaterVolumePerPTSurface_m3pm2 = p_avgHeatBufferWaterVolumePerPTSurface_m3pm2;
 dataAVGC.p_avgHeatBufferWaterVolumePerHPPower_m3pkW = p_avgHeatBufferWaterVolumePerHPPower_m3pkW;
+dataAVGC.p_avgAnnualTravelDistancePrivateCar_km = p_avgAnnualTravelDistancePrivateCar_km;
+dataAVGC.p_avgAnnualTravelDistanceCompanyCar_km = p_avgAnnualTravelDistanceCompanyCar_km;
+dataAVGC.p_avgAnnualTravelDistanceVan_km = p_avgAnnualTravelDistanceVan_km;
+dataAVGC.p_avgAnnualTravelDistanceTruck_km = p_avgAnnualTravelDistanceTruck_km;
 /*ALCODEEND*/}
 

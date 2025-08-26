@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ModelResources>
 	<Resource>
-		<Id>1658477089999</Id>
-		<Path>icon_arrow.png</Path>
-		<ReferencedFromUserCode>false</ReferencedFromUserCode>
-		<Location>FILE_SYSTEM</Location>
-	</Resource>
-	<Resource>
 		<Id>1658477089998</Id>
 		<Path>icon_greater_than.png</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
@@ -85,12 +79,6 @@
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Id>1658477089985</Id>
-		<Path>logo holon.png</Path>
-		<ReferencedFromUserCode>false</ReferencedFromUserCode>
-		<Location>FILE_SYSTEM</Location>
-	</Resource>
-	<Resource>
 		<Id>1658477089983</Id>
 		<Path>Export_ModelData.xlsx</Path>
 		<ReferencedFromUserCode>true</ReferencedFromUserCode>
@@ -99,6 +87,12 @@
 	<Resource>
 		<Id>1753777513193</Id>
 		<Path>vallum-production-741-d257d2f-all.jar</Path>
+		<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		<Location>FILE_SYSTEM</Location>
+	</Resource>
+	<Resource>
+		<Id>1755770343502</Id>
+		<Path>logo_lux-energy-twin.png</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>

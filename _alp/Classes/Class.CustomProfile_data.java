@@ -6,7 +6,7 @@
 @lombok.experimental.Accessors(fluent = true)
 public class CustomProfile_data {
 	
-	public String customProfileID;
+	String customProfileID;
 	List<Double> argumentsList;
 	List<Double> valuesList;
 	
