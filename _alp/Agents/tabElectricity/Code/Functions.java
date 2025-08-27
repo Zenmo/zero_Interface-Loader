@@ -160,7 +160,7 @@ zero_Interface.f_resetSettings();
 
 double f_getCurrentPVOnLandAndWindturbineValues()
 {/*ALCODESTART::1745483988251*/
-for(GCEnergyProduction GCProd : zero_Interface.energyModel.EnergyProductionSites){
+for(GCEnergyProduction GCProd : uI_Tabs.f_getSliderGridConnections_production()){
 	if(!GCProd.p_isSliderGC && GCProd.v_isActive){
 		for(J_EAProduction ea : GCProd.c_productionAssets){
 			if(ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC){
@@ -632,21 +632,95 @@ else{
 
 double f_updateElectricitySliders_default()
 {/*ALCODESTART::1754926103685*/
-//Companies
+List<GridConnection> allConsumerGridConnections = uI_Tabs.f_getSliderGridConnections_consumption();
+
+
+//Savings
+double totalBaseConsumption_kWh = 0;
+double totalSavedConsumption_kWh = 0;
+for(GridConnection GC : allConsumerGridConnections){
+	if(GC.v_isActive){
+		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
+		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
+		for(J_EAProfile profileEA : profileEAs){
+			double currentTotalEnergyConsumption_kWh = ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			totalBaseConsumption_kWh += currentTotalEnergyConsumption_kWh/profileEA.getProfileScaling_fr();
+			totalSavedConsumption_kWh += currentTotalEnergyConsumption_kWh/profileEA.getProfileScaling_fr() - currentTotalEnergyConsumption_kWh;
+		}
+		for(J_EAConsumption consumptionEA : consumptionEAs){
+			totalBaseConsumption_kWh += consumptionEA.yearlyDemand_kWh;
+			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.yearlyDemand_kWh;
+		}
+	}
+}
+
+double electricitySavings_pct = totalBaseConsumption_kWh > 0 ? (totalSavedConsumption_kWh/totalBaseConsumption_kWh * 100) : 0;
+sl_electricityDemandReduction_pct.setValue(roundToInt(electricitySavings_pct), false);
+
+
+//Companies rooftop PV
 List<GCUtility> utilityGridConnections = uI_Tabs.f_getSliderGridConnections_utilities();
 
 List<GridConnection> utilityGridConnections_GC = new ArrayList<>(utilityGridConnections);
 Pair<Double, Double> pair = f_getPVSystemPercentage( utilityGridConnections_GC );
 int PV_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());
-sl_rooftopPVCompanies_pct_Businesspark.setValue(PV_pct, false);
+sl_rooftopPVCompanies_pct.setValue(PV_pct, false);
 
-//Houses
+//Houses rooftop PV
 List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
 
 List<GridConnection> houseGridConnections_GC = new ArrayList<>(utilityGridConnections);
 pair = f_getPVSystemPercentage( houseGridConnections_GC );
 PV_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());
 sl_rooftopPVHouses_pct.setValue(PV_pct, false);
+
+//Large scale EA production systems (PV on land And Wind)
+double totalPVOnLand_kW = 0;
+double totalWind_kW = 0;
+
+for(GCEnergyProduction productionGC : uI_Tabs.f_getSliderGridConnections_production()){
+	if(productionGC.v_isActive && productionGC.p_isSliderGC){
+		if(productionGC.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
+			for(J_EAProduction productionEA : productionGC.c_productionAssets){
+				if(productionEA.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC){
+					totalPVOnLand_kW += productionEA.getCapacityElectric_kW();
+				}
+			}
+		}
+		else if(productionGC.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.windProductionElectric_kW)){
+			for(J_EAProduction productionEA : productionGC.c_productionAssets){
+				if(productionEA.getEAType() == OL_EnergyAssetType.WINDMILL){
+					totalWind_kW += productionEA.getCapacityElectric_kW();
+				}
+			}
+		}
+	}
+}
+
+sl_largeScalePV_ha.setValue((totalPVOnLand_kW/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha) + p_currentPVOnLand_ha, false);
+sl_largeScaleWind_MW.setValue((totalWind_kW/1000) + p_currentWindTurbines_MW, false);
+
+//Curtailment
+boolean curtailment = true;
+for(GridConnection GC : allConsumerGridConnections){
+	if(!GC.v_enableCurtailment){
+		curtailment = false;
+		break;
+	}
+}
+cb_curtailment_default.setSelected(curtailment, false);
+
+
+//Large scale battery systems
+double totalBatteryStorage_kWh = 0;
+for(GCGridBattery batteryGC : uI_Tabs.f_getSliderGridConnections_gridBatteries()){
+	if(batteryGC.v_isActive && batteryGC.p_isSliderGC){
+		totalBatteryStorage_kWh += batteryGC.p_batteryAsset.getStorageCapacity_kWh();
+	}
+}
+
+sl_collectiveBattery_MWh_default.setValue(totalBatteryStorage_kWh/1000, false);
+
 /*ALCODEEND*/}
 
 double f_updateElectricitySliders_residential()
@@ -680,15 +754,41 @@ if ( nbHousesWithPV != 0 ) {
 	sl_householdBatteriesResidentialArea_pct.setValue(battery_pct, false);
 }
 
+//Electric cooking
 int nbHousesWithElectricCooking = count(houseGridConnections, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.ELECTRIC);
 double cooking_pct = 100.0 * nbHousesWithElectricCooking / nbHouses;
 sl_householdElectricCookingResidentialArea_pct.setValue(cooking_pct, false);
 
+//Consumption growth
+double totalBaseConsumption_kWh = 0;
+double totalSavedConsumption_kWh = 0;
+for(GCHouse GC : houseGridConnections){
+	if(GC.v_isActive){
+		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
+		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
+		for(J_EAProfile profileEA : profileEAs){
+			double currentTotalEnergyConsumption_kWh = ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			totalBaseConsumption_kWh += currentTotalEnergyConsumption_kWh/profileEA.getProfileScaling_fr();
+			totalSavedConsumption_kWh += currentTotalEnergyConsumption_kWh/profileEA.getProfileScaling_fr() - currentTotalEnergyConsumption_kWh;
+		}
+		for(J_EAConsumption consumptionEA : consumptionEAs){
+			totalBaseConsumption_kWh += consumptionEA.yearlyDemand_kWh;
+			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.yearlyDemand_kWh;
+		}
+	}
+}
+
+double electricityDemandIncrease_pct = totalBaseConsumption_kWh > 0 ? ( (- totalSavedConsumption_kWh)/totalBaseConsumption_kWh * 100) : 0;
+sl_electricityDemandIncreaseResidentialArea_pct.setValue(roundToInt(electricityDemandIncrease_pct), false);
+
+
+//Private EV
 if (zero_Interface.c_orderedVehiclesPrivateParking.size() > 0) {
 	int nbPrivateEVs = count(zero_Interface.c_orderedVehiclesPrivateParking, x -> x instanceof J_EAEV);
 	double privateEVs_pct = 100.0 * nbPrivateEVs / zero_Interface.c_orderedVehiclesPrivateParking.size();
 	sl_privateEVsResidentialArea_pct.setValue(privateEVs_pct, false);
 }
+
 
 
 //Chargers
@@ -718,11 +818,83 @@ sl_gridBatteriesResidentialArea_kWh.setValue(averageNeighbourhoodBatterySize_kWh
 
 double f_updateElectricitySliders_businesspark()
 {/*ALCODESTART::1754926103689*/
-// Rooftop PV SYSTEMS:
+//Get the utility connections
 List<GridConnection> utilityGridConnections = new ArrayList<>(uI_Tabs.f_getSliderGridConnections_utilities());
+
+
+//Savings
+double totalBaseConsumption_kWh = 0;
+double totalSavedConsumption_kWh = 0;
+for(GridConnection GC : utilityGridConnections){
+	if(GC.v_isActive){
+		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
+		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
+		for(J_EAProfile profileEA : profileEAs){
+			double currentTotalEnergyConsumption_kWh = ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			totalBaseConsumption_kWh += currentTotalEnergyConsumption_kWh/profileEA.getProfileScaling_fr();
+			totalSavedConsumption_kWh += currentTotalEnergyConsumption_kWh/profileEA.getProfileScaling_fr() - currentTotalEnergyConsumption_kWh;
+		}
+		for(J_EAConsumption consumptionEA : consumptionEAs){
+			totalBaseConsumption_kWh += consumptionEA.yearlyDemand_kWh;
+			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.yearlyDemand_kWh;
+		}
+	}
+}
+
+double electricitySavings_pct = totalBaseConsumption_kWh > 0 ? (totalSavedConsumption_kWh/totalBaseConsumption_kWh * 100) : 0;
+sl_electricityDemandReduction_pct_Businesspark.setValue(roundToInt(electricitySavings_pct), false);
+
+// Rooftop PV SYSTEMS:
 Pair<Double, Double> pair = f_getPVSystemPercentage( utilityGridConnections );
 int PV_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());
 sl_rooftopPVCompanies_pct_Businesspark.setValue(PV_pct, false);
+
+//Large scale EA production systems (PV on land And Wind)
+double totalPVOnLand_kW = 0;
+double totalWind_kW = 0;
+
+for(GCEnergyProduction productionGC : uI_Tabs.f_getSliderGridConnections_production()){
+	if(productionGC.v_isActive && productionGC.p_isSliderGC){
+		if(productionGC.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
+			for(J_EAProduction productionEA : productionGC.c_productionAssets){
+				if(productionEA.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC){
+					totalPVOnLand_kW += productionEA.getCapacityElectric_kW();
+				}
+			}
+		}
+		else if(productionGC.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.windProductionElectric_kW)){
+			for(J_EAProduction productionEA : productionGC.c_productionAssets){
+				if(productionEA.getEAType() == OL_EnergyAssetType.WINDMILL){
+					totalWind_kW += productionEA.getCapacityElectric_kW();
+				}
+			}
+		}
+	}
+}
+
+sl_largeScalePV_ha_Businesspark.setValue((totalPVOnLand_kW/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha) + p_currentPVOnLand_ha, false);
+sl_largeScaleWind_MW_Businesspark.setValue((totalWind_kW/1000) + p_currentWindTurbines_MW, false);
+
+//Curtailment
+boolean curtailment = true;
+for(GridConnection GC : utilityGridConnections){
+	if(!GC.v_enableCurtailment){
+		curtailment = false;
+		break;
+	}
+}
+cb_curtailment_businesspark.setSelected(curtailment, false);
+
+
+//Large scale battery systems
+double totalBatteryStorage_kWh = 0;
+for(GCGridBattery batteryGC : uI_Tabs.f_getSliderGridConnections_gridBatteries()){
+	if(batteryGC.v_isActive && batteryGC.p_isSliderGC){
+		totalBatteryStorage_kWh += batteryGC.p_batteryAsset.getStorageCapacity_kWh();
+	}
+}
+
+sl_collectiveBattery_MWh_businesspark.setValue(totalBatteryStorage_kWh/1000, false);
 
 
 /*ALCODEEND*/}
@@ -780,5 +952,10 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 }
 
 zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+double f_initializeTab_Electricity()
+{/*ALCODESTART::1756302457919*/
+f_getCurrentPVOnLandAndWindturbineValues();
 /*ALCODEEND*/}
 

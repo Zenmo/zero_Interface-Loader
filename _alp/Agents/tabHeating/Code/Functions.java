@@ -708,6 +708,30 @@ double f_updateHeatingSliders_businesspark()
 {/*ALCODESTART::1754924544023*/
 List<GCUtility> utilityGridConnections = uI_Tabs.f_getSliderGridConnections_utilities();
 
+//Savings (IN PROGRESS, WHAT ABOUT THERMAL BUILDINGS?????)
+double totalBaseConsumption_kWh = 0;
+double totalSavedConsumption_kWh = 0;
+for(GridConnection GC : utilityGridConnections){
+	if(GC.v_isActive){
+		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
+		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.getActiveEnergyCarriers().contains(OL_EnergyCarriers.HEAT));
+		for(J_EAProfile profileEA : profileEAs){
+			double currentTotalEnergyConsumption_kWh = ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			totalBaseConsumption_kWh += currentTotalEnergyConsumption_kWh/profileEA.getProfileScaling_fr();
+			totalSavedConsumption_kWh += currentTotalEnergyConsumption_kWh/profileEA.getProfileScaling_fr() - currentTotalEnergyConsumption_kWh;
+		}
+		for(J_EAConsumption consumptionEA : consumptionEAs){
+			totalBaseConsumption_kWh += consumptionEA.yearlyDemand_kWh;
+			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.yearlyDemand_kWh;
+		}
+	}
+}
+
+double heatSavings_pct = totalBaseConsumption_kWh > 0 ? (totalSavedConsumption_kWh/totalBaseConsumption_kWh * 100) : 0;
+sl_heatDemandSlidersCompaniesHeatDemandReductionCompanies_pct.setValue(roundToInt(heatSavings_pct), false);
+
+
+
 //For now custom only for businessparks, future it should be made functional for other models as well!
 v_totalNumberOfCustomHeatingSystems = f_calculateNumberOfCustomHeatingSystems(new ArrayList<GridConnection>(utilityGridConnections));
 
