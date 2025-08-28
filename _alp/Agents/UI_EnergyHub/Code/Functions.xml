@@ -22,7 +22,7 @@
 		<Id>1753694353046</Id>
 		<Name><![CDATA[f_initializeEnergyHubResultsUI]]></Name>
 		<X>-370</X>
-		<Y>90</Y>
+		<Y>125</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -38,7 +38,7 @@
 		<Id>1753694406870</Id>
 		<Name><![CDATA[f_initializeEnergyHubTabs]]></Name>
 		<X>-370</X>
-		<Y>160</Y>
+		<Y>195</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -54,7 +54,7 @@
 		<Id>1753694556229</Id>
 		<Name><![CDATA[f_styleEnergyHubResultsUI]]></Name>
 		<X>-350</X>
-		<Y>110</Y>
+		<Y>145</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -69,9 +69,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1755014317038</Id>
 		<Name><![CDATA[f_addSliderEAGridConnections]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-370</X>
-		<Y>70</Y>
+		<Y>100</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -169,7 +168,23 @@
 		<Id>1756302765458</Id>
 		<Name><![CDATA[f_initializeEnergyHubMemberNames]]></Name>
 		<X>-370</X>
-		<Y>220</Y>
+		<Y>75</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1756395572049</Id>
+		<Name><![CDATA[f_initializeUserSavedScenarios]]></Name>
+		<X>-370</X>
+		<Y>340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

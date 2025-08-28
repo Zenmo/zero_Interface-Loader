@@ -535,7 +535,8 @@ if(!b_runningMainInterfaceScenarios){
 	// Switch to the live plots and do not allow the user to switch away from the live plot when the year is not yet simulated
 	energyModel.f_updateActiveAssetsMetaData();
 	f_enableLivePlotsOnly(uI_Results);
-	
+	f_enableLivePlotsOnly(uI_EnergyHub.uI_Results);
+	uI_EnergyHub.gr_simulateYearScreenEnergyHub.setVisible(true);
 	
 	//Set simulation and live graph for companyUIs as well!
 	for(UI_company companyUI : c_companyUIs){

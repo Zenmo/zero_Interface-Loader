@@ -10,8 +10,11 @@ for (GridConnection GC : v_energyHubCoop.f_getMemberGridConnectionsCollectionPoi
 	}
 }
 
+// Sets the names of the members below the map (call before adding sliders)
+f_initializeEnergyHubMemberNames();
+
 //Add slider GC Needs to happen before EnergyCoop creation in some way!!!
-//f_addSliderEAGridConnections();
+f_addSliderEAGridConnections();
 
 //Initialize the ui_results
 f_initializeEnergyHubResultsUI();
@@ -19,8 +22,8 @@ f_initializeEnergyHubResultsUI();
 //Initialize the ui_tabs
 f_initializeEnergyHubTabs();
 
-// Sets the names of the members below the map
-f_initializeEnergyHubMemberNames();
+//Initialize custom user saved scenarios
+f_initializeUserSavedScenarios();
 
 runSimulation();
 /*ALCODEEND*/}
@@ -83,34 +86,52 @@ uI_Results.f_styleResultsUIHeader(p_energyHubLineColor, p_energyHubLineColor, p_
 
 double f_addSliderEAGridConnections()
 {/*ALCODESTART::1755014317038*/
-GCEnergyProduction sliderGC_solarFarm = null;
-GCEnergyProduction sliderGC_windFarm = null;
-for (GCEnergyProduction GC : zero_Interface.energyModel.EnergyProductionSites) {
-    if (GC.p_isSliderGC) {
-        if(sliderGC_solarFarm != null && GC.c_productionAssets.stream().anyMatch(asset -> asset.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC)){
-			sliderGC_solarFarm = GC;
-		}
-		else if(sliderGC_windFarm != null && GC.c_productionAssets.stream().anyMatch(asset -> asset.energyAssetType == OL_EnergyAssetType.WINDMILL)){
-			sliderGC_windFarm = GC;
-		}
-    }
+//Check if a slider EA GC has been manually selected
+GridConnection manualSelectedSliderGC_solarFarm = null;
+GridConnection manualSelectedSliderGC_windFarm = null;
+GridConnection manualSelectedSliderGC_gridBattery = null;
+for (GridConnection GC : v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer()) {
+	if(GC instanceof GCEnergyProduction){
+	    if (((GCEnergyProduction)GC).p_isSliderGC) {
+	        if(manualSelectedSliderGC_solarFarm == null && GC.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
+				manualSelectedSliderGC_solarFarm = GC;
+			}
+			else if(manualSelectedSliderGC_windFarm == null && GC.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.windProductionElectric_kW)){
+				manualSelectedSliderGC_windFarm = GC;
+			}
+	    }
+	}
+	if(manualSelectedSliderGC_gridBattery == null && GC instanceof GCGridBattery && ((GCGridBattery)GC).p_isSliderGC && GC.p_batteryAsset != null){
+		manualSelectedSliderGC_gridBattery = GC;
+	}
 }
 
-GCGridBattery sliderGC_gridBattery = findFirst(zero_Interface.energyModel.GridBatteries, battery -> battery.p_isSliderGC && battery.p_batteryAsset != null);
+//If a slider EA GC has not been manually selected:
+GridConnection sliderGC_solarFarm = null;
+GridConnection sliderGC_windFarm = null;
+GridConnection sliderGC_gridBattery = null;
+if(manualSelectedSliderGC_solarFarm == null){
+	sliderGC_solarFarm = findFirst(zero_Interface.energyModel.EnergyProductionSites, gc -> gc.p_gridConnectionID.equals("EnergyHub solarfarm slider"));
+}
+if(manualSelectedSliderGC_windFarm == null){
+	sliderGC_windFarm = findFirst(zero_Interface.energyModel.EnergyProductionSites, gc -> gc.p_gridConnectionID.equals("EnergyHub windfarm slider"));
+}
+if(manualSelectedSliderGC_gridBattery == null){
+	sliderGC_gridBattery = findFirst(zero_Interface.energyModel.GridBatteries, gc -> gc.p_gridConnectionID.equals("EnergyHub battery slider"));
+}
 
 //Add to coop and other collections
 if(sliderGC_solarFarm != null){
-	v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer().add(sliderGC_solarFarm);
-	c_selectedEnergyHubGC.add(sliderGC_gridBattery);
+	c_sliderEAGCs.add(sliderGC_solarFarm);
 }
 if(sliderGC_windFarm != null){
-	v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer().add(sliderGC_windFarm);
-	c_selectedEnergyHubGC.add(sliderGC_gridBattery);
+	c_sliderEAGCs.add(sliderGC_windFarm);
 }
 if(sliderGC_gridBattery != null){
-	v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer().add(sliderGC_gridBattery);
-	c_selectedEnergyHubGC.add(sliderGC_gridBattery);
+	c_sliderEAGCs.add(sliderGC_gridBattery);
 }
+
+v_energyHubCoop.f_addMemberGCs(c_sliderEAGCs);
 /*ALCODEEND*/}
 
 double[] f_calculateGroupATOConnectionCapacity(ArrayList<GridConnection> gcList)
@@ -312,6 +333,15 @@ catch (Exception exception) {
 	else {
 		exception.printStackTrace();
 	}
+}
+/*ALCODEEND*/}
+
+double f_initializeUserSavedScenarios()
+{/*ALCODESTART::1756395572049*/
+String userIdToken = zero_Interface.user.userIdToken();
+
+if(userIdToken != null){
+	
 }
 /*ALCODEEND*/}
 

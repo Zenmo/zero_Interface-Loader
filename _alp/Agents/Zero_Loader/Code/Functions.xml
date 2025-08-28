@@ -700,7 +700,7 @@
 		<Id>1726584205853</Id>
 		<Name><![CDATA[f_createInterface]]></Name>
 		<X>30</X>
-		<Y>950</Y>
+		<Y>930</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1167,6 +1167,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
+			<Name><![CDATA[sliderGCID]]></Name>
+			<Type><![CDATA[String]]></Type>
+		</Parameter>
+		<Parameter>
 			<Name><![CDATA[gridNodeID]]></Name>
 			<Type><![CDATA[String]]></Type>
 		</Parameter>
@@ -1187,6 +1191,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
+			<Name><![CDATA[sliderGCID]]></Name>
+			<Type><![CDATA[String]]></Type>
+		</Parameter>
+		<Parameter>
 			<Name><![CDATA[gridNodeID]]></Name>
 			<Type><![CDATA[String]]></Type>
 		</Parameter>
@@ -1206,6 +1214,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[sliderGCID]]></Name>
+			<Type><![CDATA[String]]></Type>
+		</Parameter>
 		<Parameter>
 			<Name><![CDATA[gridNodeID]]></Name>
 			<Type><![CDATA[String]]></Type>
@@ -2424,6 +2436,22 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Name><![CDATA[f_initializeCompanyTotals]]></Name>
 		<X>430</X>
 		<Y>135</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1756395236522</Id>
+		<Name><![CDATA[f_initializeInterfacePointers]]></Name>
+		<X>30</X>
+		<Y>950</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
