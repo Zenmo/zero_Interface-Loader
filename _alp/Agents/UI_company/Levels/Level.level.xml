@@ -2521,7 +2521,9 @@ f_setSimulateYearScreen();</ActionCode>
 			<Enabled>true</Enabled>
 			<ActionCode>zero_Interface.uI_Results.getCheckbox_KPISummary().setSelected(false, true);
 
-zero_Interface.va_Interface.navigateTo();</ActionCode>
+zero_Interface.va_Interface.navigateTo();
+zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
+</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
 			<Font Name="Dialog" Size="14" Style="0"/>

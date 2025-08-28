@@ -29,6 +29,8 @@ double f_initializeEnergyHubResultsUI()
 {/*ALCODESTART::1753694353046*/
 //Initialize the ui_results
 uI_Results.energyModel = zero_Interface.energyModel;
+uI_Results.v_interfaceViewAreaXOffset = zero_Interface.va_EHubDashboard.getX();
+uI_Results.v_interfaceViewAreaYOffset = zero_Interface.va_EHubDashboard.getY();
 
 //Style resultsUI
 f_styleEnergyHubResultsUI();
@@ -69,7 +71,8 @@ else {
 //Initialize slider gcs and set sliders
 uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null);
 
-
+uI_Tabs.v_presentationXOffset += zero_Interface.va_EHubDashboard.getX();
+uI_Tabs.v_presentationYOffset += zero_Interface.va_EHubDashboard.getY();
 /*ALCODEEND*/}
 
 double f_styleEnergyHubResultsUI()
