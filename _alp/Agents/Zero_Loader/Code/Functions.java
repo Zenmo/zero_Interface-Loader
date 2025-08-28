@@ -3285,7 +3285,6 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.p_purposeBAG = houseBuildingData.purpose();
 	
 	//pand gegevens
-	//GCH.p_heatingType = avgc_data.p_avgHouseHeatingMethod ;
 	GCH.p_bouwjaar = houseBuildingData.build_year();
 	GCH.p_eigenOprit = houseBuildingData.has_private_parking() != null ? houseBuildingData.has_private_parking() : false;
 	
@@ -4318,7 +4317,7 @@ int totalNumberOfHouses = 0;
 int numberOfHousesPrivateParking = 0;
 for (Building_data houseBuildingData : buildingDataHouses) {
 	totalNumberOfHouses++;
-	if(houseBuildingData.has_private_parking()){
+	if(houseBuildingData.has_private_parking() != null && houseBuildingData.has_private_parking()){
 		numberOfHousesPrivateParking++;
 	}
 }

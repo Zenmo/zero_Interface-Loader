@@ -1746,7 +1746,7 @@
 		<Id>1731425176471</Id>
 		<Name><![CDATA[b_changeToCustomScenario]]></Name>
 		<X>-670</X>
-		<Y>816</Y>
+		<Y>756</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1768,7 +1768,7 @@
 		<Id>1732027307811</Id>
 		<Name><![CDATA[b_runningMainInterfaceScenarios]]></Name>
 		<X>-670</X>
-		<Y>796</Y>
+		<Y>736</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1790,7 +1790,7 @@
 		<Id>1734617425109</Id>
 		<Name><![CDATA[b_gridLoopsAreDefined]]></Name>
 		<X>-630</X>
-		<Y>610</Y>
+		<Y>550</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2219,7 +2219,7 @@
 		<Id>1753110308594</Id>
 		<Name><![CDATA[v_amountOfDefinedGridLoops]]></Name>
 		<X>-630</X>
-		<Y>630</Y>
+		<Y>570</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2578,7 +2578,7 @@
 		<Id>1745937830300</Id>
 		<Name><![CDATA[p_minSelectedGCForPublicAggregation]]></Name>
 		<X>-670</X>
-		<Y>915</Y>
+		<Y>925</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
