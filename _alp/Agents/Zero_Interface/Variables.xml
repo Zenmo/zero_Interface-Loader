@@ -2548,6 +2548,7 @@
 	<Variable Class="Parameter">
 		<Id>1744987127500</Id>
 		<Name><![CDATA[p_maxNrSelectedGCForExport]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-555</X>
 		<Y>-440</Y>
 		<Label>

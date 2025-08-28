@@ -632,7 +632,7 @@
 			<Enabled>true</Enabled>
 			<ActionCode>pauseSimulation();
 
-f_getScenarioButtons().setPos( 19, 144);
+zero_Interface.f_getScenarioButtons().setPos( 19, 144);
 
 zero_Interface.map.setScale( 1.0, 1.0);
 zero_Interface.map.setPos(410, 130);
@@ -713,7 +713,7 @@ zero_Interface.b_inEnergyHubSelectionMode = true;</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor/>
 					<Enabled>true</Enabled>
-					<ActionCode>f_getScenarioButtons().setPos( 19, 144);
+					<ActionCode>zero_Interface.f_getScenarioButtons().setPos( 19, 144);
 
 zero_Interface.map.setScale( 1.0, 1.0);
 zero_Interface.map.setPos(410, 130);

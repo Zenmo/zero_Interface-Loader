@@ -1212,8 +1212,8 @@ else{
 
 surveys = vallum.getEnabledSurveysByProjectNames(zorm_project_names);
 
-//Clear user data
-user = null;
+//Clear vallum user data
+user = user.clearVallumUser();
 
 return surveys;
 /*ALCODEEND*/}

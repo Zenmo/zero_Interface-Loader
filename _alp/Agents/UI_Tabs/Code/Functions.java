@@ -123,9 +123,11 @@ for(GridConnection GC : v_sliderGridConnections){
 		gridBatteryGridConnections.add((GCGridBattery)GC);		
 	}
 }
-for(GridConnection GC : v_pausedSliderGridConnections){
-	if(GC instanceof GCGridBattery){
-		gridBatteryGridConnections.add((GCGridBattery)GC);
+if(v_pausedSliderGridConnections != null){
+	for(GridConnection GC : v_pausedSliderGridConnections){
+		if(GC instanceof GCGridBattery){
+			gridBatteryGridConnections.add((GCGridBattery)GC);
+		}
 	}
 }
 return gridBatteryGridConnections;
@@ -153,9 +155,11 @@ for(GridConnection GC : v_sliderGridConnections){
 		productionGridConnections.add((GCEnergyProduction)GC);
 	}
 }
-for(GridConnection GC : v_pausedSliderGridConnections){
-	if(GC instanceof GCEnergyProduction){
-		productionGridConnections.add((GCEnergyProduction)GC);
+if(v_pausedSliderGridConnections != null){
+	for(GridConnection GC : v_pausedSliderGridConnections){
+		if(GC instanceof GCEnergyProduction){
+			productionGridConnections.add((GCEnergyProduction)GC);
+		}
 	}
 }
 return productionGridConnections;
@@ -204,9 +208,11 @@ List<GCPublicCharger> f_getPausedSliderGridConnections_chargers()
 {/*ALCODESTART::1755013777878*/
 List<GCPublicCharger> pausedChargerGridConnections = new ArrayList<>();
 
-for(GridConnection GC : v_pausedSliderGridConnections){
-	if(GC instanceof GCPublicCharger){
-		pausedChargerGridConnections.add((GCPublicCharger)GC);		
+if(v_pausedSliderGridConnections != null){
+	for(GridConnection GC : v_pausedSliderGridConnections){
+		if(GC instanceof GCPublicCharger){
+			pausedChargerGridConnections.add((GCPublicCharger)GC);		
+		}
 	}
 }
 

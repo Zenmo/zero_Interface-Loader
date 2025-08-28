@@ -425,7 +425,7 @@ zero_Interface.uI_Results.f_showCorrectChart();
 				<BasicProperties Width="290" Height="70">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
-					<VisibleCode>true</VisibleCode>
+					<VisibleCode>false</VisibleCode>
 					<Enabled>true</Enabled>
 					<ActionCode>zero_Interface.f_startEnergyHubConfiguration();</ActionCode>
 				</BasicProperties>

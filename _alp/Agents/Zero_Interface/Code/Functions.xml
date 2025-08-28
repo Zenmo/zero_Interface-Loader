@@ -1352,6 +1352,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1744624088848</Id>
 		<Name><![CDATA[f_harvestEnergyModelLoadData]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-556</X>
 		<Y>-710</Y>
 		<Label>
@@ -1368,6 +1369,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1744624088850</Id>
 		<Name><![CDATA[f_harvestSelectedGCLoadData]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-556</X>
 		<Y>-470</Y>
 		<Label>
@@ -1384,6 +1386,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1744624088852</Id>
 		<Name><![CDATA[f_harvestTotalBalanceLoadOfSelectedEnergyCoop]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-556</X>
 		<Y>-590</Y>
 		<Label>
@@ -1400,6 +1403,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1744985599017</Id>
 		<Name><![CDATA[f_setAllFileDownloadersDisabled]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-556</X>
 		<Y>-410</Y>
 		<Label>
@@ -1416,6 +1420,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1744986150240</Id>
 		<Name><![CDATA[f_clearExportSheet]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-556</X>
 		<Y>-390</Y>
 		<Label>

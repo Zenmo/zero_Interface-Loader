@@ -148,6 +148,7 @@ import javax.media.jai.widget.ViewportListener;]]></Import>
 		<ExcelFile>
 			<Id>1744624088854</Id>
 			<Name><![CDATA[excel_exportBalanceLoadData]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>-555</X>
 			<Y>-365</Y>
 			<Label>
