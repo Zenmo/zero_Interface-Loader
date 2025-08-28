@@ -539,11 +539,13 @@ if(!b_runningMainInterfaceScenarios){
 	
 	//Set simulation and live graph for companyUIs as well!
 	for(UI_company companyUI : c_companyUIs){
+		companyUI.gr_simulateYearScreen.setVisible(true);
 		if(companyUI.uI_Results.f_getSelectedObjectData() != null){
 			f_enableLivePlotsOnly(companyUI.uI_Results);
+			
 		}
 	}
-	//traceln("f_resetSettings called");
+
 	runSimulation();
 }
 /*ALCODEEND*/}
@@ -3170,7 +3172,7 @@ new Thread( () -> {
 	
 	//Enable radio buttons again
 	uI_Results.f_enableNonLivePlotRadioButtons(true);
-	c_companyUIs.forEach(companyUI -> companyUI.uI_Results.f_enableNonLivePlotRadioButtons(true));
+	c_companyUIs.forEach(companyUI -> {companyUI.uI_Results.f_enableNonLivePlotRadioButtons(true); companyUI.gr_simulateYearScreen.setVisible(false);});
 	
 	b_resultsUpToDate = true;
 }).start();

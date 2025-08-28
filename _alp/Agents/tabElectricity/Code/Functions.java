@@ -841,6 +841,7 @@ for(GridConnection GC : utilityGridConnections){
 	}
 }
 
+traceln("totalBaseConsumption_kWh: " + totalBaseConsumption_kWh + " and totalSavedConsumption_kWh: " + totalSavedConsumption_kWh);
 double electricitySavings_pct = totalBaseConsumption_kWh > 0 ? (totalSavedConsumption_kWh/totalBaseConsumption_kWh * 100) : 0;
 sl_electricityDemandReduction_pct_Businesspark.setValue(roundToInt(electricitySavings_pct), false);
 
