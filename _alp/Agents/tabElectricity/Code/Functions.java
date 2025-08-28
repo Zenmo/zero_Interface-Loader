@@ -786,25 +786,30 @@ sl_electricityDemandIncreaseResidentialArea_pct.setValue(roundToInt(electricityD
 if (zero_Interface.c_orderedVehiclesPrivateParking.size() > 0) {
 	int nbPrivateEVs = count(zero_Interface.c_orderedVehiclesPrivateParking, x -> x instanceof J_EAEV);
 	double privateEVs_pct = 100.0 * nbPrivateEVs / zero_Interface.c_orderedVehiclesPrivateParking.size();
-	sl_privateEVsResidentialArea_pct.setValue(privateEVs_pct, false);
+	sl_privateEVsResidentialArea_pct.setValue(roundToInt(privateEVs_pct), false);
 }
 
 
 
 //Chargers
 int nbPublicChargers = chargerGridConnections.size();
-int nbActivePublicChargers = count(chargerGridConnections, x -> x.v_isActive);
-double activePublicChargers_pct = 100.0 * nbActivePublicChargers / nbPublicChargers;
-sl_publicChargersResidentialArea_pct.setValue(activePublicChargers_pct, false);
-
-int nbV1GChargers = count(zero_Interface.c_orderedV1GChargers, x -> chargerGridConnections.contains(x) && x.V1GCapable);
-int nbV2GChargers =count(zero_Interface.c_orderedV2GChargers, x -> chargerGridConnections.contains(x) && x.V2GCapable);
-double V1G_pct = 100.0 * nbV1GChargers / nbPublicChargers;
-double V2G_pct = 100.0 * nbV2GChargers / nbPublicChargers;
-sl_chargersThatSupportV1G_pct.setValue(V1G_pct, false);
-sl_chargersThatSupportV2G_pct.setValue(V2G_pct, false);
-
-
+if(nbPublicChargers > 0 ){
+	int nbActivePublicChargers = count(chargerGridConnections, x -> x.v_isActive);
+	double activePublicChargers_pct = 100.0 * nbActivePublicChargers / nbPublicChargers;
+	sl_publicChargersResidentialArea_pct.setValue(activePublicChargers_pct, false);
+	
+	int nbV1GChargers = count(zero_Interface.c_orderedV1GChargers, x -> chargerGridConnections.contains(x) && x.V1GCapable);
+	int nbV2GChargers =count(zero_Interface.c_orderedV2GChargers, x -> chargerGridConnections.contains(x) && x.V2GCapable);
+	double V1G_pct = 100.0 * nbV1GChargers / nbPublicChargers;
+	double V2G_pct = 100.0 * nbV2GChargers / nbPublicChargers;
+	sl_chargersThatSupportV1G_pct.setValue(V1G_pct, false);
+	sl_chargersThatSupportV2G_pct.setValue(V2G_pct, false);
+}
+else{
+	sl_publicChargersResidentialArea_pct.setEnabled(false);
+	sl_chargersThatSupportV1G_pct.setEnabled(false);
+	sl_chargersThatSupportV2G_pct.setEnabled(false);
+}
 
 //Gridbatteries
 double averageNeighbourhoodBatterySize_kWh = 0;

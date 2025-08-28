@@ -763,7 +763,7 @@ getExperimentHost().openWebSite("https://lux.energy/");
 		<Id>1702552223737</Id>
 		<Name><![CDATA[t_stylingFunctions]]></Name>
 		<X>-680</X>
-		<Y>401</Y>
+		<Y>341</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1355,8 +1355,8 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 	<Text>
 		<Id>1710174312959</Id>
 		<Name><![CDATA[t_resultsUIFunctions]]></Name>
-		<X>-280</X>
-		<Y>600</Y>
+		<X>-680</X>
+		<Y>780</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -2175,7 +2175,7 @@ else{
 		<Id>1725456122345</Id>
 		<Name><![CDATA[txt_sliderInitialization]]></Name>
 		<X>-680</X>
-		<Y>661</Y>
+		<Y>601</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -3274,7 +3274,7 @@ fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(true);</ActionCode>
 		<Id>1745935981029</Id>
 		<Name><![CDATA[txt_publicModelFunctionalities]]></Name>
 		<X>-680</X>
-		<Y>865</Y>
+		<Y>875</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
