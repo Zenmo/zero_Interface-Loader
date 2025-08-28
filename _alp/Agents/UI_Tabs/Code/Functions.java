@@ -78,6 +78,9 @@ double f_initializeUI_Tabs(List<GridConnection> activeGridConnections,List<GridC
 //Initialize the GridConnections
 f_initializeSliderGCPointers(activeGridConnections, pausedGridConnections);
 
+//Initialize the tabs
+f_initializeActiveTabs();
+
 //Set sliders to engine state of the gridconnections
 f_updateSliders();
 
@@ -208,5 +211,21 @@ for(GridConnection GC : v_pausedSliderGridConnections){
 }
 
 return pausedChargerGridConnections;
+/*ALCODEEND*/}
+
+double f_initializeActiveTabs()
+{/*ALCODESTART::1756302560139*/
+if(!pop_tabElectricity.isEmpty()){
+	pop_tabElectricity.get(0).f_initializeTab_Electricity();
+}
+if(!pop_tabHeating.isEmpty()){
+	//pop_tabHeating.get(0).f_initializeTab_Heating();
+}
+if(!pop_tabMobility.isEmpty()){
+	//pop_tabMobility.get(0).f_initializeTab_Mobility();
+}
+if(!pop_tabEHub.isEmpty()){
+	//pop_tabEHub.get(0).f_initializeTab_EHub();
+}
 /*ALCODEEND*/}
 
