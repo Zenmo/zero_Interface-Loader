@@ -1073,14 +1073,18 @@ traceln( v_themeColor.getRGB() );</ActionCode>
 		
 		//Go to the companyUI view
 		c_companyUIs.get(v_connectionOwnerIndexNr).va_companyUI.navigateTo();
+		v_currentViewArea = c_companyUIs.get(v_connectionOwnerIndexNr).va_companyUI;
+		
 		break;
 	
 	case ELECTROLYSER:
 		ui_Hydrogen.get(0).va_hydrogenUI.navigateTo();
+		v_currentViewArea = ui_Hydrogen.get(0).va_hydrogenUI;
 		break;
 	
 	case BATTERY:
 		ui_Battery.get(0).va_batteryUI.navigateTo();
+		v_currentViewArea = ui_Battery.get(0).va_batteryUI;
 		break;
 	
 	case SOLARFARM:

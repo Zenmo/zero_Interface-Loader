@@ -19,6 +19,9 @@ f_initializeEnergyHubResultsUI();
 //Initialize the ui_tabs
 f_initializeEnergyHubTabs();
 
+// Sets the names of the members below the map
+f_initializeEnergyHubMemberNames();
+
 runSimulation();
 /*ALCODEEND*/}
 
@@ -26,6 +29,8 @@ double f_initializeEnergyHubResultsUI()
 {/*ALCODESTART::1753694353046*/
 //Initialize the ui_results
 uI_Results.energyModel = zero_Interface.energyModel;
+uI_Results.v_interfaceViewAreaXOffset = zero_Interface.va_EHubDashboard.getX();
+uI_Results.v_interfaceViewAreaYOffset = zero_Interface.va_EHubDashboard.getY();
 
 //Style resultsUI
 f_styleEnergyHubResultsUI();
@@ -48,7 +53,7 @@ uI_Tabs.add_pop_tabHeating();
 uI_Tabs.add_pop_tabMobility();
 
 //Adjust location of buttons to account for missing e-hub tab
-uI_Tabs.gr_energyDemandSettings.setX(uI_Tabs.gr_energyDemandSettings.getX()+40);
+uI_Tabs.gr_energyDemandSettings.setX(zero_Interface.uI_Tabs.gr_energyDemandSettings.getX()+40);
 
 // Group visibilities
 // When using an extension of a generic tab don't forget to typecast it!
@@ -66,7 +71,8 @@ else {
 //Initialize slider gcs and set sliders
 uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null);
 
-
+uI_Tabs.v_presentationXOffset += zero_Interface.va_EHubDashboard.getX();
+uI_Tabs.v_presentationYOffset += zero_Interface.va_EHubDashboard.getY();
 /*ALCODEEND*/}
 
 double f_styleEnergyHubResultsUI()
@@ -248,6 +254,64 @@ for (GridConnection gc : gcList) {
 GridConnection GCWKK = findFirst(energyModel.EnergyConversionSites, gc -> gc.p_name.toLowerCase().contains("wkk"));
 if (GCWKK != null) {
 	v_GCGTOConnectionCapacities.put(GCWKK, new double[]{0.0, 0.0});
+}
+/*ALCODEEND*/}
+
+double f_initializeEnergyHubMemberNames()
+{/*ALCODESTART::1756302765458*/
+t_energyHubMember1.setVisible(false);
+t_energyHubMember2.setVisible(false);
+t_energyHubMember3.setVisible(false);
+t_energyHubMember4.setVisible(false);
+t_energyHubMember5.setVisible(false);
+t_energyHubMember6.setVisible(false);
+t_energyHubMember7.setVisible(false);
+t_energyHubMemberOthers.setVisible(false);
+
+int maxChars = 20;
+String name = "";
+
+try {
+	List<GridConnection> members = v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer();
+	name = members.get(0).p_ownerID;
+	t_energyHubMember1.setText(name.substring(0, min(maxChars, name.length()) ));
+	t_energyHubMember1.setVisible(true);
+	name = members.get(1).p_ownerID;
+	t_energyHubMember2.setText(name.substring(0, min(maxChars, name.length()) ));
+	t_energyHubMember2.setVisible(true);
+	name = members.get(2).p_ownerID;
+	t_energyHubMember3.setText(name.substring(0, min(maxChars, name.length()) ));
+	t_energyHubMember3.setVisible(true);
+	name = members.get(3).p_ownerID;
+	t_energyHubMember4.setText(name.substring(0, min(maxChars, name.length()) ));
+	t_energyHubMember4.setVisible(true);
+	name = members.get(4).p_ownerID;
+	t_energyHubMember5.setText(name.substring(0, min(maxChars, name.length()) ));
+	t_energyHubMember5.setVisible(true);
+	name = members.get(5).p_ownerID;
+	t_energyHubMember6.setText(name.substring(0, min(maxChars, name.length()) ));
+	t_energyHubMember6.setVisible(true);
+	name = members.get(6).p_ownerID;
+	t_energyHubMember7.setText(name.substring(0, min(maxChars, name.length()) ));
+	t_energyHubMember7.setVisible(true);
+	if (members.size() == 8) {
+		name = members.get(7).p_ownerID;		
+		t_energyHubMemberOthers.setText(name.substring(0, min(maxChars, name.length()) ));
+		t_energyHubMemberOthers.setVisible(true);
+	}
+	else if (members.size() > 8) {
+		int nbOthers = members.size() - 7;
+		t_energyHubMemberOthers.setText("En nog " + nbOthers + " andere leden");
+		t_energyHubMemberOthers.setVisible(true);
+	}
+}
+catch (Exception exception) {
+	if (exception instanceof IndexOutOfBoundsException) {
+		traceln("Ignoring IndexOutOfBoundsException"); // do nothing
+	}
+	else {
+		exception.printStackTrace();
+	}
 }
 /*ALCODEEND*/}
 

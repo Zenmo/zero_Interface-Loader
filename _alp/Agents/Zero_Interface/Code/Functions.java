@@ -1823,6 +1823,7 @@ if(map_scale != null){
 }
 
 va_Interface.navigateTo();
+v_currentViewArea = va_Interface;
 /*ALCODEEND*/}
 
 double f_setInfoText(ShapeImage infoBubble,String descriptionText,double xPosition,double yPosition)
@@ -1850,7 +1851,7 @@ else {
 	double margin_px = 15;
 	//double posX = f_getAbsolutePosition(infoBubble).getX();
 	//double posY = f_getAbsolutePosition(infoBubble).getY();
-	if (xPosition < (va_Interface.getX() + va_Interface.getWidth()/2) ) {
+	if (xPosition < (v_currentViewArea.getX() + v_currentViewArea.getWidth()/2) ) {
 		// bubble is on the left half, so text should appear to the right
 		gr_infoText.setX( xPosition + margin_px + infoBubble.getWidth()/2);
 	}
@@ -1860,7 +1861,7 @@ else {
 	}
 	
 	// In AnyLogic the Y-Axis is inverted
-	if (yPosition > (va_Interface.getY() + va_Interface.getHeight()/2) ) {
+	if (yPosition > (v_currentViewArea.getY() + v_currentViewArea.getHeight()/2) ) {
 		// bubble is on the bottom half, so text should appear above
 		gr_infoText.setY( yPosition - margin_px + infoBubble.getHeight()/2 - rect_infoText.getHeight());
 	}
@@ -3024,10 +3025,14 @@ if(b_inEnergyHubSelectionMode){
 	}
 
 
+	//Move scenario radiobuttons over
+	f_getScenarioButtons().setPos( gr_energyHubPresentation.getX() + 50, gr_energyHubPresentation.getY() + 200);
+	
 	//Set map in correct pos and navigate to e-hub view
 	map.setPos( gr_energyHubPresentation.getX() + uI_EnergyHub.rect_map.getX() + 10.0, gr_energyHubPresentation.getY() + uI_EnergyHub.rect_map.getY() + 10.0 );
 	map.setScale( 0.85, 0.85 );
 	va_EHubDashboard.navigateTo();
+	v_currentViewArea = va_EHubDashboard;
 	
 	//Copy selected GC and coop to e-hub dashboard
 	uI_EnergyHub.v_energyHubCoop = v_customEnergyCoop;
@@ -3266,5 +3271,10 @@ if(totalPublicChargers > 0){
 }
 
 return numberOfCarsPerCharger;
+/*ALCODEEND*/}
+
+ShapeRadioButtonGroup f_getScenarioButtons()
+{/*ALCODESTART::1756369604291*/
+return rb_scenarios;
 /*ALCODEEND*/}
 
