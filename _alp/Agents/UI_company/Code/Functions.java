@@ -397,11 +397,6 @@ switch (selectedHeatingType){
 
 // Add a management for the chosen heating type
 GC.f_addHeatManagementToGC(GC, selectedHeatingType, false);
-
-
-if(!b_runningMainInterfaceSlider){
-	zero_Interface.f_updateMainInterfaceSliders();
-}
 /*ALCODEEND*/}
 
 double f_setGCCapacity(GridConnection GC,double setGridConnectionCapacity_kW,String type)
@@ -466,10 +461,6 @@ else{
 	if (v_rooftopPV_kWp != 0) {
 		f_addPVAsset(GC, OL_EnergyAssetType.PHOTOVOLTAIC, v_rooftopPV_kWp);
 	}
-}
-
-if(!b_runningMainInterfaceSlider){
-	zero_Interface.f_updateMainInterfaceSliders();
 }
 /*ALCODEEND*/}
 
@@ -971,10 +962,6 @@ switch (vehicleType){
 		
 	break;
 }
-
-if(!b_runningMainInterfaceSlider){
-	zero_Interface.f_updateMainInterfaceSliders();
-}
 /*ALCODEEND*/}
 
 int f_setDieselVehicleSliders(GridConnection GC,OL_EnergyAssetType vehicleType,int setAmountOfVehicles)
@@ -1186,10 +1173,6 @@ switch (vehicleType){
 	v_nbDieselTrucks = local_DieselV_nb;
 	v_nbHydrogenTrucks = local_HydrogenV_nb;
 	break;
-}
-
-if(!b_runningMainInterfaceSlider){
-	zero_Interface.f_updateMainInterfaceSliders();
 }
 /*ALCODEEND*/}
 
@@ -1408,10 +1391,6 @@ switch (vehicleType){
 	v_nbHydrogenTrucks = local_HydrogenV_nb;
 	
 	break;
-}
-
-if(!b_runningMainInterfaceSlider){
-	zero_Interface.f_updateMainInterfaceSliders();
 }
 /*ALCODEEND*/}
 
@@ -1773,6 +1752,9 @@ gr_simulateYearScreen.setVisible(true);
 
 
 if(!b_runningMainInterfaceScenarioSettings && !b_runningMainInterfaceSlider){
+	//Update main interface sliders according to the companyUI changes 
+	zero_Interface.f_updateMainInterfaceSliders();
+	
 	//Set it for main interface as well
 	zero_Interface.f_resetSettings();
 	

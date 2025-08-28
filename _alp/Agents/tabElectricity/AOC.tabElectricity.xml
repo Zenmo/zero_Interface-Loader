@@ -4,11 +4,11 @@
 	<Name><![CDATA[tabElectricity]]></Name>
 	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Folder>1754045642067</Folder>
+	<Import><![CDATA[import zeroPackage.ZeroMath;]]></Import>
 	<ExtendsReference>
 		<PackageName>zerointerfaceloader</PackageName>
 		<ClassName>tabArea</ClassName>
 	</ExtendsReference>
-	<StartupCode><![CDATA[f_getCurrentPVOnLandAndWindturbineValues();]]></StartupCode>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1722247653567</Id>

@@ -398,7 +398,7 @@
 		<Id>1754926103683</Id>
 		<Name><![CDATA[f_updateSliders_Electricity]]></Name>
 		<X>-350</X>
-		<Y>20</Y>
+		<Y>70</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -414,7 +414,7 @@
 		<Id>1754926103685</Id>
 		<Name><![CDATA[f_updateElectricitySliders_default]]></Name>
 		<X>-330</X>
-		<Y>40</Y>
+		<Y>90</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -430,7 +430,7 @@
 		<Id>1754926103687</Id>
 		<Name><![CDATA[f_updateElectricitySliders_residential]]></Name>
 		<X>-330</X>
-		<Y>80</Y>
+		<Y>130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -446,7 +446,7 @@
 		<Id>1754926103689</Id>
 		<Name><![CDATA[f_updateElectricitySliders_businesspark]]></Name>
 		<X>-330</X>
-		<Y>60</Y>
+		<Y>110</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -462,7 +462,7 @@
 		<Id>1754926103691</Id>
 		<Name><![CDATA[f_updateElectricitySliders_custom]]></Name>
 		<X>-330</X>
-		<Y>100</Y>
+		<Y>150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -519,6 +519,22 @@
 			<Name><![CDATA[gcList]]></Name>
 			<Type><![CDATA[List<GridConnection>]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1756302457919</Id>
+		<Name><![CDATA[f_initializeTab_Electricity]]></Name>
+		<X>-350</X>
+		<Y>30</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

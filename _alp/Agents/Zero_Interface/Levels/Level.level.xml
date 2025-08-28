@@ -1056,13 +1056,11 @@ traceln( v_themeColor.getRGB() );</ActionCode>
 			<ActionCode>switch(v_clickedObjectType){
 
 	case BUILDING:
-		//c_companyUIs.get(v_connectionOwnerIndexNr).f_setResultsUIPresets();
 		UI_company companyUI = c_companyUIs.get(v_connectionOwnerIndexNr);
 		
 		//Connect resultsUI of the main with resultsUI of CompanyUI
 		companyUI.f_updateUIResultsCompanyUI();	
 
-		
 		//Set sliders to the correct GC if there are more than 1 GC
 		if(companyUI.c_ownedGridConnections.size()&gt;1){
 			GridConnection selectedGC = findFirst(companyUI.c_ownedGridConnections, GC -&gt; GC == c_selectedGridConnections.get(0));  
@@ -1071,14 +1069,6 @@ traceln( v_themeColor.getRGB() );</ActionCode>
 		else{
 			companyUI.uI_Results.f_setAllCharts();
 			companyUI.f_getNFATOValues();
-		}
-		
-		//This check should be done AFTER the uiResults has been copied.
-		if(!b_resultsUpToDate){
-			companyUI.f_setSimulateYearScreen();
-		}
-		else{
-			companyUI.gr_simulateYearScreen.setVisible(false);	
 		}
 		
 		//Go to the companyUI view

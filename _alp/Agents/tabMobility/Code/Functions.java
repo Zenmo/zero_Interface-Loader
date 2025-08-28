@@ -1429,7 +1429,26 @@ else{
 
 double f_updateMobilitySliders_default()
 {/*ALCODESTART::1754928402694*/
-// CARS  // Currently only for Company Cars not household Cars / EVs
+List<GridConnection> allConsumerGridConnections = uI_Tabs.f_getSliderGridConnections_consumption();
+
+////Savings
+double totalBaseTravelDistance_km = 0;
+double totalSavedTravelDistance_km = 0;
+for(GridConnection GC : allConsumerGridConnections){
+	if(GC.v_isActive){
+		for(J_ActivityTrackerTrips tripTracker : GC.c_tripTrackers){
+			totalBaseTravelDistance_km += tripTracker.getAnnualDistance_km();
+			totalSavedTravelDistance_km += (1-tripTracker.getDistanceScaling_fr())*totalBaseTravelDistance_km;
+		}
+	}
+}
+
+double mobilitySavings_pct = totalBaseTravelDistance_km > 0 ? (totalSavedTravelDistance_km/totalBaseTravelDistance_km * 100) : 0;
+sl_mobilityDemandReduction_pct.setValue(roundToInt(mobilitySavings_pct), false);
+
+
+////Vehicles
+// Initialize the vehicle counters
 int DieselCars = 0;
 int ElectricCars = v_totalNumberOfGhostVehicle_Cars;
 int HydrogenCars = 0;
@@ -1442,8 +1461,8 @@ int DieselTrucks = 0;
 int ElectricTrucks = v_totalNumberOfGhostVehicle_Trucks;
 int HydrogenTrucks = 0;
 
-
-for (GridConnection gc : uI_Tabs.f_getSliderGridConnections_consumption()) {
+//Count the amount of vehicles for each type
+for (GridConnection gc : allConsumerGridConnections) {
 	if(gc.v_isActive){
 		for (J_EAVehicle vehicle : gc.c_vehicleAssets) {
 			if (vehicle instanceof J_EADieselVehicle){

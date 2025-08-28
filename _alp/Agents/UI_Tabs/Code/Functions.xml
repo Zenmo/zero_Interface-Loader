@@ -191,7 +191,7 @@
 		<Id>1754929564839</Id>
 		<Name><![CDATA[f_updateSliders]]></Name>
 		<X>50</X>
-		<Y>180</Y>
+		<Y>200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -240,6 +240,22 @@
 		<Name><![CDATA[f_getPausedSliderGridConnections_chargers]]></Name>
 		<X>540</X>
 		<Y>280</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1756302560139</Id>
+		<Name><![CDATA[f_initializeActiveTabs]]></Name>
+		<X>70</X>
+		<Y>170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

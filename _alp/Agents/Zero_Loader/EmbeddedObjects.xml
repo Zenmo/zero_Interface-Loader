@@ -31,15 +31,6 @@
 				<Name><![CDATA[p_forecastTime_h]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_truckTripsCsv]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_householdTripsCsv]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_cookingPatternCsv]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_year]]></Name>
 			</Parameter>
 			<Parameter>
@@ -74,6 +65,15 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_regionName]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_truckTripsCsv]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_householdTripsCsv]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_cookingPatternCsv]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
