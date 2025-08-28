@@ -665,18 +665,51 @@ else{
 
 double f_updateHeatingSliders_default()
 {/*ALCODESTART::1754924509667*/
-//Companies
+////Companies
 List<GCUtility> utilityGridConnections = uI_Tabs.f_getSliderGridConnections_utilities();
 
+//Savings (IN PROGRESS, WHAT ABOUT THERMAL BUILDINGS?????)
+double totalBaseConsumption_kWh = 0;
+double totalSavedConsumption_kWh = 0;
+for(GridConnection GC : utilityGridConnections){
+	if(GC.v_isActive){
+		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
+		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.getActiveEnergyCarriers().contains(OL_EnergyCarriers.HEAT));
+		for(J_EAProfile profileEA : profileEAs){
+			double currentTotalEnergyConsumption_kWh = ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			totalBaseConsumption_kWh += currentTotalEnergyConsumption_kWh/profileEA.getProfileScaling_fr();
+			totalSavedConsumption_kWh += currentTotalEnergyConsumption_kWh/profileEA.getProfileScaling_fr() - currentTotalEnergyConsumption_kWh;
+		}
+		for(J_EAConsumption consumptionEA : consumptionEAs){
+			totalBaseConsumption_kWh += consumptionEA.yearlyDemand_kWh;
+			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.yearlyDemand_kWh;
+		}
+		
+		if(GC.p_BuildingThermalAsset != null){
+			traceln("WARNING: SLIDER SAVINGS UPDATE FUNCTION IS NOT FUNCTIONAL YET FOR COMPANIES WITH THERMAL BUILDING ASSETS");
+		}
+	}
+}
+
+double heatSavings_pct = totalBaseConsumption_kWh > 0 ? (totalSavedConsumption_kWh/totalBaseConsumption_kWh * 100) : 0;
+sl_heatDemandReductionCompanies_pct.setValue(roundToInt(heatSavings_pct), false);
+
+
+//Heating assets
 int GasBurners = count(utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
 int GasBurners_pct = roundToInt(100.0 * GasBurners / count(utilityGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE));
 
 sl_gasBurnerCompanies_pct.setValue(GasBurners_pct, false);
 f_setHeatingSliders( 0, sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct, null, null, null );
 
-//Houses
+////Houses
 List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
 
+//Savings
+traceln("WARNING: SLIDER SAVINGS UPDATE FUNCTION IS NOT FUNCTIONAL YET FOR HOUSES");
+
+
+//Assets
 GasBurners = count(houseGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
 GasBurners_pct = roundToInt(100.0 * GasBurners / (count(houseGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE)));
 
@@ -688,6 +721,9 @@ f_setHeatingSliders( 0, sl_gasBurnerHouseholds_pct, sl_electricHeatPumpHousehold
 double f_updateHeatingSliders_residential()
 {/*ALCODESTART::1754924542535*/
 List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
+
+//Savings
+traceln("WARNING: SLIDER WITH BETTER INSULATION UPDATE FUNCTION IS NOT FUNCTIONAL YET FOR HOUSES");
 
 //Heating type
 int GasBurners = count(houseGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
@@ -723,6 +759,10 @@ for(GridConnection GC : utilityGridConnections){
 		for(J_EAConsumption consumptionEA : consumptionEAs){
 			totalBaseConsumption_kWh += consumptionEA.yearlyDemand_kWh;
 			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.yearlyDemand_kWh;
+		}
+		
+		if(GC.p_BuildingThermalAsset != null){
+			traceln("WARNING: SLIDER SAVINGS UPDATE FUNCTION IS NOT FUNCTIONAL YET FOR COMPANIES WITH THERMAL BUILDING ASSETS");
 		}
 	}
 }

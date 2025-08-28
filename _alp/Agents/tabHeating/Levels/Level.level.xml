@@ -449,7 +449,7 @@ f_setHeatingSystemsHouseholds( uI_Tabs.f_getSliderGridConnections_houses(), sl_e
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
+					<MinValue>-50</MinValue>
 					<MaxValue>50</MaxValue>
 					<Step>1</Step>
 					<LinkTo>false</LinkTo>
@@ -553,9 +553,9 @@ f_setHeatingSystemsHouseholds( uI_Tabs.f_getSliderGridConnections_houses(), sl_e
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
+					<MinValue>-50</MinValue>
 					<MaxValue>50</MaxValue>
-					<Step>5</Step>
+					<Step>1</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -1310,9 +1310,9 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
+					<MinValue>-50</MinValue>
 					<MaxValue>50</MaxValue>
-					<Step>5</Step>
+					<Step>1</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>

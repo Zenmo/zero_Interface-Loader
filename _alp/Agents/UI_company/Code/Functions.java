@@ -1752,7 +1752,7 @@ gr_simulateYearScreen.setVisible(true);
 
 
 if(!b_runningMainInterfaceScenarioSettings && !b_runningMainInterfaceSlider){
-	//Update sliders accordingly
+	//Update main interface sliders according to the companyUI changes 
 	zero_Interface.f_updateMainInterfaceSliders();
 	
 	//Set it for main interface as well
