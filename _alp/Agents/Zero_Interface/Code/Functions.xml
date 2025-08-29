@@ -381,7 +381,7 @@
 		<Id>1715157302225</Id>
 		<Name><![CDATA[f_projectSpecificSettings]]></Name>
 		<X>-660</X>
-		<Y>270</Y>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -397,7 +397,7 @@
 		<Id>1715859145993</Id>
 		<Name><![CDATA[f_UIStartup]]></Name>
 		<X>-670</X>
-		<Y>210</Y>
+		<Y>230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -778,7 +778,7 @@
 		<Id>1726068314849</Id>
 		<Name><![CDATA[f_projectSpecificStyling]]></Name>
 		<X>-660</X>
-		<Y>250</Y>
+		<Y>270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1242,7 +1242,7 @@
 		<Id>1743518032245</Id>
 		<Name><![CDATA[f_setStartView]]></Name>
 		<X>-640</X>
-		<Y>315</Y>
+		<Y>335</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1949,7 +1949,7 @@
 		<Id>1753440184174</Id>
 		<Name><![CDATA[f_initializePresentationOrder]]></Name>
 		<X>-660</X>
-		<Y>230</Y>
+		<Y>250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

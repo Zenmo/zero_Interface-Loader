@@ -1213,7 +1213,7 @@ else{
 surveys = vallum.getEnabledSurveysByProjectNames(zorm_project_names);
 
 //Clear vallum user data
-user = user.clearVallumUser();
+user.clearVallumUser();
 
 return surveys;
 /*ALCODEEND*/}
@@ -1779,12 +1779,7 @@ double f_createInterface()
 {/*ALCODESTART::1726584205853*/
 //OVERRIDE THE zero_Interface parameter here
 //zero_Interface = YOUR INTERFACE;
-
-//Set parameters/pointers in the interface
-zero_Interface.energyModel = energyModel;
-zero_Interface.uI_Results.energyModel = energyModel;
-zero_Interface.p_selectedProjectType = project_data.project_type();
-zero_Interface.settings = settings;
+throw new RuntimeException("Didnt replace the generic interface with a project interface!");
 /*ALCODEEND*/}
 
 double f_createGISCables()
@@ -1910,6 +1905,9 @@ f_setEngineProfiles();
 
 //Create the project interface
 f_createInterface();
+
+//Initialize the pointers on the interface
+f_initializeInterfacePointers();
 
 //Project specific styling (Needs to happen before configuring the engine)
 zero_Interface.f_projectSpecificStyling();
@@ -2881,12 +2879,12 @@ zero_Interface.c_GISNodes.add(GN.gisRegion);
 return GN_heat;
 /*ALCODEEND*/}
 
-double f_addSliderSolarfarm(String gridNodeID)
+double f_addSliderSolarfarm(String sliderGCID,String gridNodeID)
 {/*ALCODESTART::1747829476305*/
 c_solarfarm_data.add(0, Solarfarm_data.builder().
 isSliderGC(true).
 
-gc_id("Slider solarfarm").
+gc_id(sliderGCID).
 gc_name("Slider solarfarm").
 owner_id("Slider solarfarm owner").
 streetname(null).
@@ -2909,12 +2907,12 @@ polygon(null).
 build());
 /*ALCODEEND*/}
 
-double f_addSliderWindfarm(String gridNodeID)
+double f_addSliderWindfarm(String sliderGCID,String gridNodeID)
 {/*ALCODESTART::1747829476307*/
 c_windfarm_data.add(0, Windfarm_data.builder().
 isSliderGC(true).
 
-gc_id("Slider windfarm").
+gc_id(sliderGCID).
 gc_name("Slider windfarm").
 owner_id("Slider windfarm owner").
 streetname(null).
@@ -2938,12 +2936,12 @@ build());
 
 /*ALCODEEND*/}
 
-double f_addSliderBattery(String gridNodeID)
+double f_addSliderBattery(String sliderGCID,String gridNodeID)
 {/*ALCODESTART::1747829476311*/
 c_battery_data.add(0, Battery_data.builder().
 isSliderGC(true).
 
-gc_id("Slider battery").
+gc_id(sliderGCID).
 gc_name("Slider battery").
 owner_id("Slider battery owner").
 streetname(null).
@@ -2982,21 +2980,26 @@ if ( topGridNode == null ) {
 }
 String topGridNodeID = topGridNode.gridnode_id();
 
+//Create data package for e-hub dashboard slider gcs
+f_addSliderSolarfarm("EnergyHub solarfarm slider", topGridNodeID);
+f_addSliderWindfarm("EnergyHub windfarm slider", topGridNodeID);
+f_addSliderBattery("EnergyHub battery slider", topGridNodeID);
 
+//If no slider data package is present yet for the main: add one as well.
 if(sliderSolarfarm_data == null){
-	f_addSliderSolarfarm(topGridNodeID);
+	f_addSliderSolarfarm("Main solarfarm slider", topGridNodeID);
 }
 if(sliderWindfarm_data == null){
-	f_addSliderWindfarm(topGridNodeID);
+	f_addSliderWindfarm("Main windfarm slider", topGridNodeID);
 }
 if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 	for(GridNode_data nodeData : c_gridNode_data){
-		f_addSliderBattery(nodeData.gridnode_id());
+		f_addSliderBattery("Main battery slider", nodeData.gridnode_id());
 	}
 }
 else{
 	if(sliderBattery_data == null){
-		f_addSliderBattery(topGridNodeID);
+		f_addSliderBattery("Main battery slider", topGridNodeID);
 	}
 }
 /*ALCODEEND*/}
@@ -4348,5 +4351,15 @@ v_remainingNumberOfVans_Companies = project_data.total_vans_companies() != null 
 v_remainingNumberOfTrucks_Companies = project_data.total_trucks_companies() != null ? max(0, project_data.total_trucks_companies()) : 0;
 v_remainingElectricityDelivery_kWh = project_data.total_electricity_consumption_companies_kWh_p_yr() != null ? max(0, project_data.total_electricity_consumption_companies_kWh_p_yr()) : 0;
 v_remainingGasConsumption_m3 = project_data.total_gas_consumption_companies_m3_p_yr() != null ? max(0, project_data.total_gas_consumption_companies_m3_p_yr()) : 0;
+/*ALCODEEND*/}
+
+double f_initializeInterfacePointers()
+{/*ALCODESTART::1756395236522*/
+//Set parameters/pointers in the interface
+zero_Interface.energyModel = energyModel;
+zero_Interface.uI_Results.energyModel = energyModel;
+zero_Interface.p_selectedProjectType = project_data.project_type();
+zero_Interface.settings = settings;
+zero_Interface.user = user;
 /*ALCODEEND*/}
 

@@ -1,8 +1,8 @@
 import lombok.Builder;
-import lombok.Value;
+import lombok.Data;
 import lombok.experimental.Accessors;
 
-@Value
+@Data
 @Builder(toBuilder = true)
 @Accessors(fluent = true)
 public class User {
@@ -11,11 +11,9 @@ public class User {
     String PROJECT_CLIENT_ID;
     String PROJECT_CLIENT_SECRET;
 
-    public User clearVallumUser() {
-        return this.toBuilder()
-                   .PROJECT_CLIENT_ID(null)
-                   .PROJECT_CLIENT_SECRET(null)
-                   .build();
+    public void clearVallumUser() {
+        this.PROJECT_CLIENT_ID = null;
+        this.PROJECT_CLIENT_SECRET = null;
     }
     
     // User id token (Used for storing scenarios for example)
