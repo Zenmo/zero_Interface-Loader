@@ -536,7 +536,7 @@ if(!b_runningMainInterfaceScenarios){
 	energyModel.f_updateActiveAssetsMetaData();
 	f_enableLivePlotsOnly(uI_Results);
 	f_enableLivePlotsOnly(uI_EnergyHub.uI_Results);
-	uI_EnergyHub.gr_simulateYearScreenEnergyHub.setVisible(true);
+	uI_EnergyHub.gr_simulateYearEnergyHub.setVisible(true);
 	
 	//Set simulation and live graph for companyUIs as well!
 	for(UI_company companyUI : c_companyUIs){
@@ -3160,7 +3160,8 @@ new Thread( () -> {
 	
 	//After rapid run: remove loading screen
 	gr_loadIconYearSimulation.setVisible(false);
-		
+	uI_EnergyHub.gr_loadIconYearSimulationEnergyHub.setVisible(false);
+			
 	if (c_selectedGridConnections.size() == 0){//Update main area collection
 		uI_Results.f_updateResultsUI(energyModel);
 	}
@@ -3171,6 +3172,8 @@ new Thread( () -> {
 		uI_Results.f_updateResultsUI(v_customEnergyCoop);
 	}
 	
+	uI_EnergyHub.uI_Results.f_updateResultsUI(uI_EnergyHub.v_energyHubCoop);
+	
 	//Update and show kpi summary chart after run
 	if(settings.showKPISummary() != null && settings.showKPISummary() && v_clickedObjectType != OL_GISObjectType.GRIDNODE){
 		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
@@ -3178,6 +3181,7 @@ new Thread( () -> {
 	
 	//Enable radio buttons again
 	uI_Results.f_enableNonLivePlotRadioButtons(true);
+	uI_EnergyHub.uI_Results.f_enableNonLivePlotRadioButtons(true);
 	c_companyUIs.forEach(companyUI -> {companyUI.uI_Results.f_enableNonLivePlotRadioButtons(true); companyUI.gr_simulateYearScreen.setVisible(false);});
 	
 	b_resultsUpToDate = true;

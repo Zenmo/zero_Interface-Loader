@@ -912,7 +912,7 @@ else{
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<XCode>-250</XCode>
-				<YCode>20</YCode>
+				<YCode>15</YCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>

@@ -412,6 +412,7 @@ zero_Interface.uI_Results.f_showCorrectChart();
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1753434467432</Id>
 				<Name><![CDATA[button_createEnergyHub]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<X>40</X>
 				<Y>260</Y>
 				<Label>
