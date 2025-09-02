@@ -3175,8 +3175,9 @@ new Thread( () -> {
 		uI_Results.f_updateResultsUI(v_customEnergyCoop);
 	}
 	
-	uI_EnergyHub.uI_Results.f_updateResultsUI(uI_EnergyHub.v_energyHubCoop);
-	
+	if (uI_EnergyHub.uI_Results.f_getSelectedObjectData() != null){
+		uI_EnergyHub.uI_Results.f_updateResultsUI(uI_EnergyHub.v_energyHubCoop);
+	}
 	//Update and show kpi summary chart after run
 	if(settings.showKPISummary() != null && settings.showKPISummary() && v_clickedObjectType != OL_GISObjectType.GRIDNODE){
 		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
