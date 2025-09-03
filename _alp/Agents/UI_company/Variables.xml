@@ -1176,8 +1176,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1756376301806</Id>
 		<Name><![CDATA[v_minSavingsSliders]]></Name>
-		<X>-1060</X>
-		<Y>1230</Y>
+		<X>-1050</X>
+		<Y>1240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1198,8 +1198,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1756376314706</Id>
 		<Name><![CDATA[v_maxSavingsSliders]]></Name>
-		<X>-1060</X>
-		<Y>1250</Y>
+		<X>-1050</X>
+		<Y>1260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
