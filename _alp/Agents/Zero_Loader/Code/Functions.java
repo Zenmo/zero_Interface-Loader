@@ -2779,7 +2779,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		//Add primary heating asset (heatpump) (if its not part of the basic profile already
 		inputCapacityElectric_kW = maxHeatOutputPower_kW / 3; //-- /3, kan nog kleiner want is hybride zodat gasbrander ook bij springt, dus kleiner MOETEN aanname voor hoe klein onderzoeken
 		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
-		baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
+		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
@@ -2800,7 +2800,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		//Add primary heating asset (heatpump)
 		inputCapacityElectric_kW = maxHeatOutputPower_kW; // Could be a lot smaller due to high cop
 		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
-		baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
+		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
