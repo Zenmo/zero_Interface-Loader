@@ -278,7 +278,7 @@ double efficiency;
 double outputTemperature_degC;
 
 //Heatpump specifieke parameters
-double baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
+double baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
 double capacityElectric_kW;		
 OL_AmbientTempType ambientTempType;
 double sourceAssetHeatPower_kW;
