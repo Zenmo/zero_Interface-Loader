@@ -3030,10 +3030,16 @@ if(b_inEnergyHubSelectionMode){
 
 
 	//Move scenario radiobuttons over
-	f_getScenarioButtons().setPos( gr_energyHubPresentation.getX() + 50, gr_energyHubPresentation.getY() + 200);
+	f_getScenarioButtons().setPos( 
+		gr_energyHubPresentation.getX() + uI_EnergyHub.rect_scenarios.getX() + 25.0,
+		gr_energyHubPresentation.getY() + uI_EnergyHub.rect_scenarios.getY() + 50.0
+	);
 	
 	//Set map in correct pos and navigate to e-hub view
-	map.setPos( gr_energyHubPresentation.getX() + uI_EnergyHub.rect_map.getX() + 10.0, gr_energyHubPresentation.getY() + uI_EnergyHub.rect_map.getY() + 10.0 );
+	map.setPos( 
+		gr_energyHubPresentation.getX() + uI_EnergyHub.rect_map.getX() + 10.0,
+		gr_energyHubPresentation.getY() + uI_EnergyHub.rect_map.getY() + 10.0
+	);
 	map.setScale( 0.85, 0.85 );
 	va_EHubDashboard.navigateTo();
 	v_currentViewArea = va_EHubDashboard;

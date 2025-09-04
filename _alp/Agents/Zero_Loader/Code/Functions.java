@@ -3949,7 +3949,7 @@ try{ // Reflection trick to get to Agent.owner private field
 */
 
 Agent root = this.getRootAgent();
-energyModel.restoreOwner(root);
+energyModel.restoreOwner(this);
 
 energyModel.setEngine(getEngine());	
 energyModel.instantiateBaseStructure_xjal();
@@ -4361,5 +4361,21 @@ zero_Interface.uI_Results.energyModel = energyModel;
 zero_Interface.p_selectedProjectType = project_data.project_type();
 zero_Interface.settings = settings;
 zero_Interface.user = user;
+/*ALCODEEND*/}
+
+double f_reconstructOrderedCollections(J_ModelSave saveObject)
+{/*ALCODESTART::1756735137677*/
+zero_Interface.c_orderedPVSystemsCompanies = saveObject.c_orderedPVSystemsCompanies;
+zero_Interface.c_orderedPVSystemsHouses = saveObject.c_orderedPVSystemsHouses;
+zero_Interface.c_orderedVehicles = saveObject.c_orderedVehicles;
+zero_Interface.c_orderedHeatingSystemsCompanies = saveObject.c_orderedHeatingSystemsCompanies;
+zero_Interface.c_orderedHeatingSystemsHouses = saveObject.c_orderedHeatingSystemsHouses;
+zero_Interface.c_orderedVehiclesPrivateParking = saveObject.c_orderedVehiclesPrivateParking;
+zero_Interface.c_orderedParkingSpaces = saveObject.c_orderedParkingSpaces;
+zero_Interface.c_orderedV1GChargers = saveObject.c_orderedV1GChargers;
+zero_Interface.c_orderedV2GChargers = saveObject.c_orderedV2GChargers;
+zero_Interface.c_orderedPublicChargers = saveObject.c_orderedPublicChargers;
+//zero_Interface.c_mappingOfVehiclesPerCharger = saveObject.c_mappingOfVehiclesPerCharger;
+
 /*ALCODEEND*/}
 

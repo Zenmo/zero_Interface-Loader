@@ -129,7 +129,7 @@
 		<Id>1747228569476</Id>
 		<Name><![CDATA[rect_scenarios]]></Name>
 		<X>10</X>
-		<Y>140</Y>
+		<Y>90</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -149,7 +149,7 @@
 		<LineStyle>SOLID</LineStyle>
 		<LineStyleCode>p_energyHubLineStyle</LineStyleCode>
 		<Width>380</Width>
-		<Height>210</Height>
+		<Height>250</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -159,7 +159,7 @@
 		<Id>1747228738085</Id>
 		<Name><![CDATA[t_scenario]]></Name>
 		<X>200</X>
-		<Y>150</Y>
+		<Y>100</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -750,8 +750,8 @@ runSimulation();</ActionCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1753719240339</Id>
 		<Name><![CDATA[cb_EhubConfig]]></Name>
-		<X>70</X>
-		<Y>300</Y>
+		<X>20</X>
+		<Y>20</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1425,12 +1425,244 @@ zero_Interface.f_simulateYearFromMainInterface();	</OnClickCode>
 		</Font>
 		<Alignment>RIGHT</Alignment>
 	</Text>
-	<Control Type="ComboBox">
+	<Group>
+		<Id>1756800864903</Id>
+		<Name><![CDATA[gr_saveAndLoadScenarios]]></Name>
+		<X>390</X>
+		<Y>-320</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1756395708900</Id>
-		<Name><![CDATA[cb_userSavedScenarios]]></Name>
-		<X>260</X>
-		<Y>300</Y>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1756805661148</Id>
+				<Name><![CDATA[cb_saveScenario]]></Name>
+				<X>-330</X>
+				<Y>570</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="110" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>cb_loadScenario.setSelected(!cb_saveScenario.isSelected());
+
+if (cb_saveScenario.isSelected()) {
+	gr_saveScenario.setVisible(true);
+	gr_loadScenario.setVisible(false);
+}</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Save a Scenario</LabelText>
+					<DefaultValueCode>true</DefaultValueCode>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1756805661158</Id>
+				<Name><![CDATA[cb_loadScenario]]></Name>
+				<X>-220</X>
+				<Y>570</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="110" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>cb_saveScenario.setSelected(!cb_loadScenario.isSelected());
+
+if (cb_loadScenario.isSelected()) {
+	f_initializeUserSavedScenarios();
+	gr_saveScenario.setVisible(false);
+	gr_loadScenario.setVisible(true);
+}</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Load a Scenario</LabelText>
+					<DefaultValueCode>false</DefaultValueCode>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Group>
+				<Id>1756805661168</Id>
+				<Name><![CDATA[gr_saveScenario]]></Name>
+				<X>-330</X>
+				<Y>600</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Image>
+						<Id>1756805661170</Id>
+						<Name><![CDATA[image_saveScenario]]></Name>
+						<X>225</X>
+						<Y>-5</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<OnClickCode>f_saveScenario(v_scenarioName);</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>32</Width>
+						<Height>32</Height>
+						<Rotation>0.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>save_icon.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>true</OriginalSize>
+					</Image>
+					<Control Type="EditBox">
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Id>1756805661172</Id>
+						<Name><![CDATA[eb_scenarioName]]></Name>
+						<X>0</X>
+						<Y>0</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<BasicProperties Width="220" Height="25">
+							<EmbeddedIcon>false</EmbeddedIcon>
+							<FillColor>-1</FillColor>
+							<TextColor>-16777216</TextColor>
+							<Enabled>true</Enabled>
+						</BasicProperties>
+						<ExtendedProperties>
+							<Font Name="Dialog" Size="11" Style="0"/>
+							<LinkTo>true</LinkTo>
+							<Link>v_scenarioName</Link>
+						</ExtendedProperties>
+					</Control>
+				</Presentation>
+			</Group>
+			<Group>
+				<Id>1756805661208</Id>
+				<Name><![CDATA[gr_loadScenario]]></Name>
+				<X>-330</X>
+				<Y>630</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<YCode>600</YCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Image>
+						<Id>1756805661210</Id>
+						<Name><![CDATA[image_loadScenario]]></Name>
+						<X>225</X>
+						<Y>-5</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<OnClickCode>f_loadScenario(combobox_selectScenario.getValueIndex());</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>32</Width>
+						<Height>32</Height>
+						<Rotation>0.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>load_icon.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
+					<Control Type="ComboBox">
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Id>1756805661212</Id>
+						<Name><![CDATA[combobox_selectScenario]]></Name>
+						<X>0</X>
+						<Y>0</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<BasicProperties Width="220" Height="25">
+							<EmbeddedIcon>false</EmbeddedIcon>
+							<FillColor>-1</FillColor>
+							<TextColor>-16777216</TextColor>
+							<Enabled>true</Enabled>
+						</BasicProperties>
+						<ExtendedProperties>
+							<Font Name="Dialog" Size="11" Style="0"/>
+							<Editable>false</Editable>
+							<Button>One</Button>
+							<Button>Two</Button>
+							<Button>Three</Button>
+							<LinkTo>false</LinkTo>
+						</ExtendedProperties>
+					</Control>
+				</Presentation>
+			</Group>
+		</Presentation>
+	</Group>
+	<Control Type="Button">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1756802763425</Id>
+		<Name><![CDATA[button_debug]]></Name>
+		<X>-520</X>
+		<Y>330</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1439,16 +1671,15 @@ zero_Interface.f_simulateYearFromMainInterface();	</OnClickCode>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="100" Height="20">
+		<BasicProperties Width="130" Height="30">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<FillColor>-1</FillColor>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
+			<ActionCode>f_initializeUserSavedScenarios();</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
 			<Font Name="Dialog" Size="11" Style="0"/>
-			<Editable>false</Editable>
-			<LinkTo>false</LinkTo>
+			<LabelText>update combo box</LabelText>
 		</ExtendedProperties>
 	</Control>
 </Presentation>
