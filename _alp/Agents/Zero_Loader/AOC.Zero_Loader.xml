@@ -146,10 +146,10 @@ import java.util.UUID;]]></Import>
 	<Functions xmlns:al="http://anylogic.com"/>
 	<Connectivity>
 		<TextFile>
-			<Id>1750947055322</Id>
+			<Id>1756980503493</Id>
 			<Name><![CDATA[inputCSVcookingActivities]]></Name>
-			<X>-370</X>
-			<Y>760</Y>
+			<X>-369</X>
+			<Y>759</Y>
 			<Label>
 				<X>10</X>
 				<Y>0</Y>
@@ -168,10 +168,10 @@ import java.util.UUID;]]></Import>
 			<Separators>,</Separators>
 		</TextFile>
 		<TextFile>
-			<Id>1750949192704</Id>
+			<Id>1756980506290</Id>
 			<Name><![CDATA[inputCSVhouseholdTrips]]></Name>
-			<X>-370</X>
-			<Y>800</Y>
+			<X>-369</X>
+			<Y>799</Y>
 			<Label>
 				<X>10</X>
 				<Y>0</Y>
@@ -190,10 +190,10 @@ import java.util.UUID;]]></Import>
 			<Separators>,</Separators>
 		</TextFile>
 		<TextFile>
-			<Id>1750949507008</Id>
+			<Id>1756980507645</Id>
 			<Name><![CDATA[inputCSVtruckTrips]]></Name>
-			<X>-370</X>
-			<Y>780</Y>
+			<X>-369</X>
+			<Y>779</Y>
 			<Label>
 				<X>10</X>
 				<Y>0</Y>

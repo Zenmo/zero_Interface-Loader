@@ -1153,6 +1153,7 @@ try {
 	v_objectMapper = new ObjectMapper();
 	f_addMixins();
 	
+	/*
 	String userIdToken = "6b87f0f9-fdf6-4c05-9e0f-b75e46950113"; //user.userIdToken();
 
 	var repository = UserScenarioRepository.builder()
@@ -1168,10 +1169,10 @@ try {
     
     var jsonStream = repository.fetchUserScenarioContent(scenarioList.get(0).getId());
 	J_ModelSave saveObject = v_objectMapper.readValue(jsonStream, J_ModelSave.class);
-	
+	*/
 	
 	// Deserialize the JSON into a new EnergyModel instance:
-	//J_ModelSave saveObject = v_objectMapper.readValue(new File("ModelSave.json"), J_ModelSave.class);
+	J_ModelSave saveObject = v_objectMapper.readValue(new File("ModelSave.json"), J_ModelSave.class);
 	EnergyModel deserializedEnergyModel = saveObject.energyModel;
 	//deserializedEnergyModel.createAndStart(this);
 	
@@ -1266,8 +1267,8 @@ try {
 	traceln("Trying to save to file");
 	//v_objectMapper.writeValue(new File("energyModel.json"), energyModel);
 
-	//v_objectMapper.writeValue(new File("ModelSave.json"), saveObject);
-	
+	v_objectMapper.writeValue(new File("ModelSave.json"), saveObject);
+	/*
 	String userIdToken = "6b87f0f9-fdf6-4c05-9e0f-b75e46950113"; //user.userIdToken();
 
 	var repository = UserScenarioRepository.builder()
@@ -1280,7 +1281,7 @@ try {
         "Test Scenario",
         v_objectMapper.writeValueAsBytes(saveObject)
 	);
-	
+	*/
 	
 } catch (IOException e) {
 	e.printStackTrace();

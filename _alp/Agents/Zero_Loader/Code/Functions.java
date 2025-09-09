@@ -756,7 +756,7 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 	if(companyGC == null){
 		//Create new companyGC
 		companyGC = energyModel.add_UtilityConnections();
-		
+
 		//Update counter and collections
 		v_numberOfCompaniesNoSurvey++;
 		generic_company_GCs.add(companyGC);
@@ -1421,10 +1421,10 @@ double f_iEAGenericCompanies(GridConnection companyGC,Double pv_installed_kwp)
 {/*ALCODESTART::1726584205833*/
 //Create current & future scenario parameter list
 J_scenario_Current current_scenario_list = new J_scenario_Current();
-zero_Interface.c_scenarioMap_Current.put(companyGC, current_scenario_list);
+zero_Interface.c_scenarioMap_Current.put(companyGC.p_uid, current_scenario_list);
 
 J_scenario_Future future_scenario_list = new J_scenario_Future();
-zero_Interface.c_scenarioMap_Future.put(companyGC, future_scenario_list);
+zero_Interface.c_scenarioMap_Future.put(companyGC.p_uid, future_scenario_list);
 
 //Set parent
 current_scenario_list.setParentAgent(companyGC);
@@ -2133,11 +2133,11 @@ final int targetYear = 2023;
 
 //Create current scenario parameter list
 J_scenario_Current current_scenario_list = new J_scenario_Current();
-zero_Interface.c_scenarioMap_Current.put(companyGC, current_scenario_list);
+zero_Interface.c_scenarioMap_Current.put(companyGC.p_uid, current_scenario_list);
 
 //Create future scenario parameter list
 J_scenario_Future future_scenario_list = new J_scenario_Future();
-zero_Interface.c_scenarioMap_Future.put(companyGC, future_scenario_list);
+zero_Interface.c_scenarioMap_Future.put(companyGC.p_uid, future_scenario_list);
 
 
 
@@ -3512,6 +3512,7 @@ for (ParkingSpace_data dataParkingSpace : f_getParkingSpacesInSubScope(c_parking
 	
 	if(carportGC == null){ // If non existend -> Create one.
 		carportGC = energyModel.add_EnergyProductionSites();
+		
 		carportGC.p_gridConnectionID = "Parking space gridconnection: " + dataParkingSpace.parking_id();
 		carportGC.v_liveConnectionMetaData.physicalCapacity_kW = dataParkingSpace.pv_potential_kwp();
 		carportGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = 0.0;
@@ -3900,7 +3901,7 @@ for(GridConnection GC : allConnections){
 	} else if (GC instanceof GCUtility) {
 		f_reconstructAgent(GC, deserializedEnergyModel.UtilityConnections, deserializedEnergyModel);
 	}
-	GC.f_startAfterDeserialisation();
+	//GC.f_startAfterDeserialisation();
 }
 
 
@@ -4240,7 +4241,7 @@ for(Actor AC : deserializedEnergyModel.c_actors){
 		} else if (AC instanceof EnergyCoop) {
 			((EnergyCoop)AC).energyModel = deserializedEnergyModel;
 			f_reconstructAgent(AC, deserializedEnergyModel.pop_energyCoops, deserializedEnergyModel);
-			((EnergyCoop)AC).f_startAfterDeserialisation();
+			//((EnergyCoop)AC).f_startAfterDeserialisation();
 		} else if (AC instanceof GridOperator) {
 			((GridOperator)AC).energyModel = deserializedEnergyModel;
 			f_reconstructAgent(AC, deserializedEnergyModel.pop_gridOperators, deserializedEnergyModel);

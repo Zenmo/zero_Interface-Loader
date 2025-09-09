@@ -227,7 +227,7 @@ else {
 			f_removePVSystem( company );		
 			double PVAtStartup_kWp = 0;
 			if (zero_Interface.c_companyUIs.size() > 0) {
-				PVAtStartup_kWp = zero_Interface.c_scenarioMap_Current.get(company).getCurrentPV_kW();
+				PVAtStartup_kWp = zero_Interface.c_scenarioMap_Current.get(company.p_uid).getCurrentPV_kW();
 			}
 			if (PVAtStartup_kWp != 0) {
 				f_addPVSystem( company, PVAtStartup_kWp );

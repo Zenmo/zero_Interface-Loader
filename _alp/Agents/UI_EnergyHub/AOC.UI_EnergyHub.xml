@@ -11,6 +11,8 @@ import java.io.IOException;
 
 import energy.lux.uplux.*;
 import java.util.UUID;]]></Import>
+	<StartupCode><![CDATA[zero_Interface.c_UIResultsInstances.add(uI_Results);
+zero_Interface.c_UITabsInstances.add(uI_Tabs);]]></StartupCode>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1709049506460</Id>

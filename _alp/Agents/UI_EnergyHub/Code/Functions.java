@@ -359,7 +359,7 @@ combobox_selectScenario.setItems(scenarioNames);
 
 double f_loadScenario(int index)
 {/*ALCODESTART::1756805429105*/
-pauseSimulation();
+//pauseSimulation();
 // Collect GIS_Objects into hashmap, to link to new EnergyModel.
 zero_Interface.energyModel.pop_GIS_Buildings.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
 zero_Interface.energyModel.pop_GIS_Objects.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
@@ -406,11 +406,14 @@ try {
 		x.setTableFunction(origProfile.getTableFunction());
 	});
 	
+	deserializedEnergyModel.f_startAfterDeserialisation();
+	
 	f_setEngineInputDataAfterDeserialisation(deserializedEnergyModel);
 	
 	zero_Interface.energyModel = deserializedEnergyModel;
 	zero_Interface.uI_Results.energyModel = deserializedEnergyModel;
 	
+
 	// Reinitialize energy model
 	deserializedEnergyModel.b_isInitialized = false;
 	deserializedEnergyModel.f_initializeEngine();	
@@ -549,7 +552,7 @@ for(GridConnection GC : allConnections){
 	} else if (GC instanceof GCUtility) {
 		f_reconstructAgent(GC, deserializedEnergyModel.UtilityConnections, deserializedEnergyModel);
 	}
-	GC.f_startAfterDeserialisation();
+	//GC.f_startAfterDeserialisation();
 }
 
 
@@ -577,7 +580,6 @@ energyModel.setEnvironment(this.getEnvironment());
 traceln("EnergyModel owner: %s", energyModel.getOwner());
 
 energyModel.create();
-energyModel.f_startAfterDeserialisation();
 //energyModel.start(); // Why is this needed?
 /*ALCODEEND*/}
 
@@ -624,7 +626,7 @@ for(Actor AC : deserializedEnergyModel.c_actors){
 		} else if (AC instanceof EnergyCoop) {
 			((EnergyCoop)AC).energyModel = deserializedEnergyModel;
 			f_reconstructAgent(AC, deserializedEnergyModel.pop_energyCoops, deserializedEnergyModel);
-			((EnergyCoop)AC).f_startAfterDeserialisation();
+			//((EnergyCoop)AC).f_startAfterDeserialisation();
 		} else if (AC instanceof GridOperator) {
 			((GridOperator)AC).energyModel = deserializedEnergyModel;
 			f_reconstructAgent(AC, deserializedEnergyModel.pop_gridOperators, deserializedEnergyModel);

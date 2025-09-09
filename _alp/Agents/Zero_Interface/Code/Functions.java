@@ -277,6 +277,8 @@ uI_Tabs.f_initializeUI_Tabs(energyModel.f_getGridConnectionsCollectionPointer(),
 
 //Initialize sliders with certain presets
 f_setSliderPresets();
+
+c_UITabsInstances.add(uI_Tabs);
 /*ALCODEEND*/}
 
 double f_selectGridNode(GridNode GN)
@@ -452,6 +454,7 @@ while (i < c_COCompanies.size()){
 while (v_connectionOwnerIndexNr < c_COCompanies.size()){
 	
 	UI_company companyUI = add_ui_companies();
+	c_UIResultsInstances.add(companyUI.uI_Results);
 	ConnectionOwner COC = findFirst(c_COCompanies, p -> p.p_connectionOwnerIndexNr == v_connectionOwnerIndexNr );	
 	
 	////Set unique parameters for every company_ui
@@ -472,8 +475,8 @@ while (v_connectionOwnerIndexNr < c_COCompanies.size()){
 		companyUI.c_connectedTrafos.add(GC.p_parentNodeElectricID);
 	
 		//Add scenario settings for each GC
-		companyUI.c_scenarioSettings_Current.add(c_scenarioMap_Current.get(GC));
-		companyUI.c_scenarioSettings_Future.add(c_scenarioMap_Future.get(GC));
+		companyUI.c_scenarioSettings_Current.add(c_scenarioMap_Current.get(GC.p_uid));
+		companyUI.c_scenarioSettings_Future.add(c_scenarioMap_Future.get(GC.p_uid));
 		
 		//Initialize additional vehicles collection for each GC
 		companyUI.c_additionalVehicles.put(GC, new ArrayList<J_EAVehicle>());
@@ -524,32 +527,25 @@ if(settings.showKPISummary() == null || !settings.showKPISummary()){
 //Connect resultsUI
 uI_Results.f_initializeResultsUI();
 
+c_UIResultsInstances.add(uI_Results);
 /*ALCODEEND*/}
 
 double f_resetSettings()
 {/*ALCODESTART::1709718252272*/
 if(!b_runningMainInterfaceScenarios){
 	b_resultsUpToDate = false;
-	gr_simulateYear.setVisible(true);
-	
-	// Switch to the live plots and do not allow the user to switch away from the live plot when the year is not yet simulated
-	energyModel.f_updateActiveAssetsMetaData();
-	f_enableLivePlotsOnly(uI_Results);
-	if (uI_EnergyHub.uI_Results.v_selectedObjectInterface != null) {
-		f_enableLivePlotsOnly(uI_EnergyHub.uI_Results);
-	}
-	uI_EnergyHub.gr_simulateYearEnergyHub.setVisible(true);
-	
-	
-	//Set simulation and live graph for companyUIs as well!
-	for(UI_company companyUI : c_companyUIs){
-		companyUI.gr_simulateYearScreen.setVisible(true);
-		if(companyUI.uI_Results.f_getSelectedObjectData() != null){
-			f_enableLivePlotsOnly(companyUI.uI_Results);
-			
-		}
-	}
 
+	// Update asset flow categories of all agents
+	energyModel.f_updateActiveAssetsMetaData();
+	
+	// Switch to the live plots and do not allow the user to switch away from the live plot when the year is not yet simulated	
+	for (UI_Results ui_results : c_UIResultsInstances) {
+		f_enableLivePlotsOnly(ui_results);
+	}
+	
+	// On all screens cover the resultsUI Buttons with the simulate year button
+	f_setAllSimulateYearScreens();
+	
 	runSimulation();
 }
 /*ALCODEEND*/}
@@ -1637,11 +1633,13 @@ c_selectedGridConnections = new ArrayList<>(gridConnectionsInNeighborhood);
 
 double f_enableLivePlotsOnly(UI_Results resultsUI)
 {/*ALCODESTART::1740043548084*/
-if(resultsUI.getGr_resultsUIHeader().isVisible()){
-	resultsUI.getRadioButtons().setValue(0, true);
+if (resultsUI.f_getSelectedObjectData() != null) {
+	if(resultsUI.getGr_resultsUIHeader().isVisible()){
+		resultsUI.getRadioButtons().setValue(0, true);
+	}
+	resultsUI.chartProfielen.getPeriodRadioButton().setValue(0, true);
+	resultsUI.f_enableNonLivePlotRadioButtons(false);
 }
-resultsUI.chartProfielen.getPeriodRadioButton().setValue(0, true);
-resultsUI.f_enableNonLivePlotRadioButtons(false);
 /*ALCODEEND*/}
 
 double f_filterManualSelection(ArrayList<GridConnection> toBeFilteredGC)
@@ -3180,9 +3178,9 @@ new Thread( () -> {
 	else if(c_selectedGridConnections.size() > 1){//Update COOP area collection
 		uI_Results.f_updateResultsUI(v_customEnergyCoop);
 	}
-	
-	uI_EnergyHub.uI_Results.f_updateResultsUI(uI_EnergyHub.v_energyHubCoop);
-	
+	if (uI_EnergyHub.v_energyHubCoop != null) {
+		uI_EnergyHub.uI_Results.f_updateResultsUI(uI_EnergyHub.v_energyHubCoop);
+	}
 	//Update and show kpi summary chart after run
 	if(settings.showKPISummary() != null && settings.showKPISummary() && v_clickedObjectType != OL_GISObjectType.GRIDNODE){
 		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
@@ -3290,5 +3288,31 @@ return numberOfCarsPerCharger;
 ShapeRadioButtonGroup f_getScenarioButtons()
 {/*ALCODESTART::1756369604291*/
 return rb_scenarios;
+/*ALCODEEND*/}
+
+double f_enableAllPlots(UI_Results resultsUI,I_EnergyData selectedObjectInterface)
+{/*ALCODESTART::1756994047356*/
+if (resultsUI.f_getSelectedObjectData() != null) {	
+	uI_Results.f_updateResultsUI(selectedObjectInterface);
+	uI_Results.f_enableNonLivePlotRadioButtons(true);
+}
+/*ALCODEEND*/}
+
+double f_setAllSimulateYearScreens()
+{/*ALCODESTART::1756995218301*/
+gr_simulateYear.setVisible(true);
+uI_EnergyHub.gr_simulateYearEnergyHub.setVisible(true);
+for(UI_company companyUI : c_companyUIs){
+	companyUI.gr_simulateYearScreen.setVisible(true);
+}
+/*ALCODEEND*/}
+
+double f_removeAllSimulateYearScreens()
+{/*ALCODESTART::1756997038652*/
+gr_simulateYear.setVisible(false);
+uI_EnergyHub.gr_simulateYearEnergyHub.setVisible(false);
+for(UI_company companyUI : c_companyUIs){
+	companyUI.gr_simulateYearScreen.setVisible(false);
+}
 /*ALCODEEND*/}
 
