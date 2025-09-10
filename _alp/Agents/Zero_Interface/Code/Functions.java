@@ -1640,7 +1640,11 @@ double f_enableLivePlotsOnly(UI_Results resultsUI)
 if(resultsUI.getGr_resultsUIHeader().isVisible()){
 	resultsUI.getRadioButtons().setValue(0, true);
 }
+for (ShapeRadioButtonGroup rb :resultsUI.chartProfielen.getAllPeriodRadioButtons()) {
+	rb.setValue(0, false);
+}
 resultsUI.chartProfielen.getPeriodRadioButton().setValue(0, true);
+
 resultsUI.f_enableNonLivePlotRadioButtons(false);
 /*ALCODEEND*/}
 
