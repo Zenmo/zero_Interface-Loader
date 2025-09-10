@@ -3712,7 +3712,7 @@ if ( vallumGC.getPandIds() != null && !vallumGC.getPandIds().isEmpty()) {
 } 
 else {// No building connected in zorm? -> check if it is manually connected in excel (using gc_id column)
 	connectedBuildingsData = findAll(c_companyBuilding_data, b -> b.gc_id() != null && b.gc_id().equals(companyGC.p_gridConnectionID));
-	if(connectedBuildingsData == null){
+	if(connectedBuildingsData == null || connectedBuildingsData.size() == 0){
 		traceln("GC %s has no building in zorm and also no manual connection with building in excel", companyGC.p_gridConnectionID);
 	}
 	else{
