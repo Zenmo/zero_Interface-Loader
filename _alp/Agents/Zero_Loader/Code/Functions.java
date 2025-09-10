@@ -1387,8 +1387,8 @@ J_EAStorage storage = null;
 switch (storageType){
 
 	case STORAGE_ELECTRIC:
-	
-		storage = new J_EAStorageElectric(parentGC, storagePower_kw, storageCapacity_kWh, 0, energyModel.p_timeStep_h);
+		double initialStateOfCharge_fr = 0.5;
+		storage = new J_EAStorageElectric(parentGC, storagePower_kw, storageCapacity_kWh, initialStateOfCharge_fr, energyModel.p_timeStep_h);
 		//traceln("Battery with StorageCapacity_kWh: %s", storageCapacity_kWh);
 	break;
 	
