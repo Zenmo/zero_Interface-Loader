@@ -1387,8 +1387,8 @@ J_EAStorage storage = null;
 switch (storageType){
 
 	case STORAGE_ELECTRIC:
-	
-		storage = new J_EAStorageElectric(parentGC, storagePower_kw, storageCapacity_kWh, 0, energyModel.p_timeStep_h);
+		double initialStateOfCharge_fr = 0.5;
+		storage = new J_EAStorageElectric(parentGC, storagePower_kw, storageCapacity_kWh, initialStateOfCharge_fr, energyModel.p_timeStep_h);
 		//traceln("Battery with StorageCapacity_kWh: %s", storageCapacity_kWh);
 	break;
 	
@@ -2779,7 +2779,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		//Add primary heating asset (heatpump) (if its not part of the basic profile already
 		inputCapacityElectric_kW = maxHeatOutputPower_kW / 3; //-- /3, kan nog kleiner want is hybride zodat gasbrander ook bij springt, dus kleiner MOETEN aanname voor hoe klein onderzoeken
 		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
-		baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
+		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
@@ -2800,7 +2800,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		//Add primary heating asset (heatpump)
 		inputCapacityElectric_kW = maxHeatOutputPower_kW; // Could be a lot smaller due to high cop
 		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
-		baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
+		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
@@ -3713,7 +3713,7 @@ if ( vallumGC.getPandIds() != null && !vallumGC.getPandIds().isEmpty()) {
 } 
 else {// No building connected in zorm? -> check if it is manually connected in excel (using gc_id column)
 	connectedBuildingsData = findAll(c_companyBuilding_data, b -> b.gc_id() != null && b.gc_id().equals(companyGC.p_gridConnectionID));
-	if(connectedBuildingsData == null){
+	if(connectedBuildingsData == null || connectedBuildingsData.size() == 0){
 		traceln("GC %s has no building in zorm and also no manual connection with building in excel", companyGC.p_gridConnectionID);
 	}
 	else{

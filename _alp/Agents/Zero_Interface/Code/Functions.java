@@ -815,10 +815,10 @@ if (gis_area.c_containedGridConnections.size() > 0) {
 
 double f_getWeatherInfo()
 {/*ALCODESTART::1719830600300*/
-v_outsideTemperature = roundToDecimal(energyModel.v_currentAmbientTemperature_degC, 1);
-v_solarIrradiance = roundToInt(energyModel.v_currentSolarPowerNormalized_r * 1200);
+v_outsideTemperature = roundToDecimal(energyModel.pp_ambientTemperature_degC.getCurrentValue(), 1);
+v_solarIrradiance = roundToInt(energyModel.pp_PVProduction35DegSouth_fr.getCurrentValue() * 1000);
 
-double windspeed = roundToDecimal(energyModel.v_currentWindPowerNormalized_r, 1);
+double windspeed = roundToDecimal(energyModel.pp_windProduction_fr.getCurrentValue(), 1);
 if (windspeed < 0.2){
 	v_windspeed = "Laag";
 }
@@ -1640,6 +1640,12 @@ if (resultsUI.f_getSelectedObjectData() != null) {
 	resultsUI.chartProfielen.getPeriodRadioButton().setValue(0, true);
 	resultsUI.f_enableNonLivePlotRadioButtons(false);
 }
+for (ShapeRadioButtonGroup rb :resultsUI.chartProfielen.getAllPeriodRadioButtons()) {
+	rb.setValue(0, false);
+}
+resultsUI.chartProfielen.getPeriodRadioButton().setValue(0, true);
+
+resultsUI.f_enableNonLivePlotRadioButtons(false);
 /*ALCODEEND*/}
 
 double f_filterManualSelection(ArrayList<GridConnection> toBeFilteredGC)

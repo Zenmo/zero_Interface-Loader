@@ -278,7 +278,7 @@ double efficiency;
 double outputTemperature_degC;
 
 //Heatpump specifieke parameters
-double baseTemperature_degC = zero_Interface.energyModel.v_currentAmbientTemperature_degC;
+double baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
 double capacityElectric_kW;		
 OL_AmbientTempType ambientTempType;
 double sourceAssetHeatPower_kW;
@@ -484,6 +484,8 @@ f_setBatSliderPresets();
 //Vehicles sliders
 f_setVehicleSliderPresets();
 
+//Demand Reduction sliders
+f_setDemandReductionSliderPresets();
 /*ALCODEEND*/}
 
 double f_setComboBoxGC()
@@ -1941,5 +1943,12 @@ t_errorMessage.setY(t_errorMessage.getY() - 40 * additionalLines);
 
 t_errorMessage.setText(errorMessage);
 gr_errorScreen.setVisible(true);
+/*ALCODEEND*/}
+
+double f_setDemandReductionSliderPresets()
+{/*ALCODESTART::1756898097088*/
+sl_heatDemandCompanyReduction.setRange(v_minSavingsSliders, v_maxSavingsSliders);
+sl_electricityDemandCompanyReduction.setRange(v_minSavingsSliders, v_maxSavingsSliders);
+sl_mobilityDemandCompanyReduction.setRange(v_minSavingsSliders, v_maxSavingsSliders);
 /*ALCODEEND*/}
 
