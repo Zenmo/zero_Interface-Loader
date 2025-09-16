@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.5.202506190548"
-                   AlpVersion="8.9.5">
+                   AnyLogicVersion="8.9.6.202509050523"
+                   AlpVersion="8.9.6">
 	<Model>
 		<Id>1658477103134</Id>
 		<Name><![CDATA[Zero_Interface-Loader]]></Name>
@@ -129,26 +129,6 @@
 				</Option>
 			</OptionList>
 			<OptionList>
-				<Id>1726584216672</Id>
-				<Name><![CDATA[OL_IsolationLevelHouse]]></Name>
-				<Option>
-					<Id>1726584216674</Id>
-					<Name><![CDATA[A]]></Name>
-				</Option>
-				<Option>
-					<Id>1726584216676</Id>
-					<Name><![CDATA[B]]></Name>
-				</Option>
-				<Option>
-					<Id>1726584216678</Id>
-					<Name><![CDATA[C]]></Name>
-				</Option>
-				<Option>
-					<Id>1726584216680</Id>
-					<Name><![CDATA[D]]></Name>
-				</Option>
-			</OptionList>
-			<OptionList>
 				<Id>1726584216682</Id>
 				<Name><![CDATA[OL_SurveyType]]></Name>
 				<Option>
@@ -219,6 +199,7 @@
 		<FixedTimeStep>1.0</FixedTimeStep>
 		<RelativeAccuracy>1.0</RelativeAccuracy>
 		<TimeAccuracy>0.1</TimeAccuracy>
+		<InspectionWindowColorTheme>DEFAULT</InspectionWindowColorTheme>
 		<Frame>
 			<Id>1658477089982</Id>
 			<Width>1920</Width>
@@ -446,5 +427,7 @@
 		<Uuid>e6625695-25a2-43d0-9056-1e9a1a594b1e</Uuid>
 		<Uuid>91990287-4edf-4e38-aa6c-66d0e906807b</Uuid>
 		<Uuid>2216cdd0-177c-5678-9e88-dd8b95312234</Uuid>
+		<Uuid>1737c8c6-b526-4dd8-589e-ee4e205b06f4</Uuid>
+		<Uuid>6a43bef6-8b70-4253-a828-82c3ab399655</Uuid>
 	</ConvertersApplied>
 </AnyLogicWorkspace>
