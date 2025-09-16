@@ -2156,12 +2156,10 @@ else{
 		<BorderColor>-4144960</BorderColor>
 		<FillColor>-1</FillColor>
 		<ShowTiles>true</ShowTiles>
-		<TileURLProvider>ANYLOGIC</TileURLProvider>
 		<CustomTileURL>false</CustomTileURL>
 		<TileURL>https://a.tile.openstreetmap.org/[zoom]/[x]/[y].png</TileURL>
 		<RouteProviderType>WEB_SERVICE</RouteProviderType>
 		<RouteNotFound>CREATE_STRAIGHT_LINE</RouteNotFound>
-		<OnlineRouteProvider>ANYLOGIC</OnlineRouteProvider>
 		<TransportType>CAR</TransportType>
 		<RoutingMethod>FASTEST</RoutingMethod>
 		<PathfindingAlgorithm>DIJKSTRABI</PathfindingAlgorithm>
