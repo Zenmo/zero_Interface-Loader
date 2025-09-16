@@ -129,26 +129,6 @@
 				</Option>
 			</OptionList>
 			<OptionList>
-				<Id>1726584216672</Id>
-				<Name><![CDATA[OL_IsolationLevelHouse]]></Name>
-				<Option>
-					<Id>1726584216674</Id>
-					<Name><![CDATA[A]]></Name>
-				</Option>
-				<Option>
-					<Id>1726584216676</Id>
-					<Name><![CDATA[B]]></Name>
-				</Option>
-				<Option>
-					<Id>1726584216678</Id>
-					<Name><![CDATA[C]]></Name>
-				</Option>
-				<Option>
-					<Id>1726584216680</Id>
-					<Name><![CDATA[D]]></Name>
-				</Option>
-			</OptionList>
-			<OptionList>
 				<Id>1726584216682</Id>
 				<Name><![CDATA[OL_SurveyType]]></Name>
 				<Option>

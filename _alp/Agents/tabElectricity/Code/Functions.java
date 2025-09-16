@@ -788,7 +788,9 @@ if (zero_Interface.c_orderedVehiclesPrivateParking.size() > 0) {
 	double privateEVs_pct = 100.0 * nbPrivateEVs / zero_Interface.c_orderedVehiclesPrivateParking.size();
 	sl_privateEVsResidentialArea_pct.setValue(roundToInt(privateEVs_pct), false);
 }
-
+else{
+	sl_privateEVsResidentialArea_pct.setEnabled(false);
+}
 
 
 //Chargers
