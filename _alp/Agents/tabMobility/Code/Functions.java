@@ -1422,6 +1422,9 @@ v_totalNumberOfGhostVehicle_Trucks = triple.getRight();
 if(gr_mobilitySliders_default.isVisible()){
 	f_updateMobilitySliders_default();
 }
+else if(gr_mobilitySliders_residential.isVisible()){
+	f_updateMobilitySliders_residential();
+}
 else{
 	f_updateMobilitySliders_custom();
 }
@@ -1563,6 +1566,206 @@ double f_setChargingAttitude(OL_ChargingAttitude selectedChargingAttitude,List<G
 {/*ALCODESTART::1754990674760*/
 gcList.forEach(x -> x.f_addChargingManagementToGC(selectedChargingAttitude, false));
 
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+double f_updateMobilitySliders_residential()
+{/*ALCODESTART::1758183013077*/
+List<GCPublicCharger> chargerGridConnections = uI_Tabs.f_getSliderGridConnections_chargers();
+chargerGridConnections.addAll(uI_Tabs.f_getPausedSliderGridConnections_chargers());
+
+
+//Private EV
+if (zero_Interface.c_orderedVehiclesPrivateParking.size() > 0) {
+	int nbPrivateEVs = count(zero_Interface.c_orderedVehiclesPrivateParking, x -> x instanceof J_EAEV);
+	double privateEVs_pct = 100.0 * nbPrivateEVs / zero_Interface.c_orderedVehiclesPrivateParking.size();
+	sl_privateEVsResidentialArea_pct.setValue(roundToInt(privateEVs_pct), false);
+}
+else{
+	sl_privateEVsResidentialArea_pct.setEnabled(false);
+}
+
+
+//Chargers
+int nbPublicChargers = chargerGridConnections.size();
+if(nbPublicChargers > 0 ){
+	int nbActivePublicChargers = count(chargerGridConnections, x -> x.v_isActive);
+	double activePublicChargers_pct = 100.0 * nbActivePublicChargers / nbPublicChargers;
+	sl_publicChargersResidentialArea_pct.setValue(activePublicChargers_pct, false);
+	
+	int nbV1GChargers = count(zero_Interface.c_orderedV1GChargers, x -> chargerGridConnections.contains(x) && x.V1GCapable);
+	int nbV2GChargers =count(zero_Interface.c_orderedV2GChargers, x -> chargerGridConnections.contains(x) && x.V2GCapable);
+	double V1G_pct = 100.0 * nbV1GChargers / nbPublicChargers;
+	double V2G_pct = 100.0 * nbV2GChargers / nbPublicChargers;
+	sl_chargersThatSupportV1G_pct.setValue(V1G_pct, false);
+	sl_chargersThatSupportV2G_pct.setValue(V2G_pct, false);
+}
+else{
+	sl_publicChargersResidentialArea_pct.setEnabled(false);
+	sl_chargersThatSupportV1G_pct.setEnabled(false);
+	sl_chargersThatSupportV2G_pct.setEnabled(false);
+}
+/*ALCODEEND*/}
+
+double f_setPublicChargingStations(double publicChargers_pct)
+{/*ALCODESTART::1758183975214*/
+int totalNbChargers = zero_Interface.c_orderedPublicChargers.size();
+int currentNbChargers = count(zero_Interface.c_orderedPublicChargers, x -> x.v_isActive);
+int nbChargersGoal = roundToInt(publicChargers_pct / 100 * totalNbChargers) ;
+
+while ( currentNbChargers > nbChargersGoal ) {
+	GCPublicCharger gc = findFirst(zero_Interface.c_orderedPublicChargers, x -> x.v_isActive);
+	if (gc != null) {
+		gc.f_setActive(false);
+		zero_Interface.c_orderedPublicChargers.remove(gc);
+		zero_Interface.c_orderedPublicChargers.add(0, gc);
+		currentNbChargers--;
+		
+		for (J_EADieselVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc)) {
+			car.reRegisterEnergyAsset();
+		}
+	}
+	else {
+		throw new RuntimeException("Charger slider error: there are not sufficient chargers to remove");
+	}
+}
+while ( currentNbChargers < nbChargersGoal){
+	GCPublicCharger gc = findFirst(zero_Interface.c_orderedPublicChargers, x -> !x.v_isActive);
+	if (gc != null) {
+		gc.f_setActive(true);
+		zero_Interface.c_orderedPublicChargers.remove(gc);
+		zero_Interface.c_orderedPublicChargers.add(0, gc);
+		currentNbChargers++;
+		
+		for (J_EADieselVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc)) {
+			J_ActivityTrackerTrips tripTracker = car.getTripTracker(); //Needed, as triptracker is removed when removeEnergyAsset is called.
+			car.removeEnergyAsset();
+			car.setTripTracker(tripTracker);//Re-set the triptracker again, for storing.
+		}
+	}
+	else {
+		throw new RuntimeException("Charger slider error: there are no more chargers to add");
+	}
+}
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
+
+/*ALCODEEND*/}
+
+double f_setV1GChargerCapabilities(double goal_pct)
+{/*ALCODESTART::1758183975221*/
+int totalNbChargers = zero_Interface.c_orderedV1GChargers.size();
+int currentNbChargers = count(zero_Interface.c_orderedV1GChargers, x -> x.V1GCapable);
+int nbChargersGoal = roundToInt(goal_pct / 100.0 * totalNbChargers);
+
+while (currentNbChargers < nbChargersGoal) {
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> !x.V1GCapable);
+	j_ea.V1GCapable = true;
+	currentNbChargers++;
+	zero_Interface.c_orderedV1GChargers.remove(j_ea);
+	zero_Interface.c_orderedV1GChargers.add(0, j_ea);
+	
+}
+while (currentNbChargers > nbChargersGoal) {
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> x.V1GCapable);
+	j_ea.V1GCapable = false;
+	currentNbChargers--;
+	zero_Interface.c_orderedV1GChargers.remove(j_ea);
+	zero_Interface.c_orderedV1GChargers.add(0, j_ea);
+}
+
+// Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+double f_setV2GChargerCapabilities(double goal_pct)
+{/*ALCODESTART::1758183975227*/
+int totalNbChargers = zero_Interface.c_orderedV2GChargers.size();
+int currentNbChargers = count(zero_Interface.c_orderedV2GChargers, x -> x.V2GCapable);
+int nbChargersGoal = roundToInt(goal_pct / 100.0 * totalNbChargers);
+
+while (currentNbChargers < nbChargersGoal) {
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> !x.V2GCapable);
+	j_ea.V2GCapable = true;
+	currentNbChargers++;
+	zero_Interface.c_orderedV2GChargers.remove(j_ea);
+	zero_Interface.c_orderedV2GChargers.add(0, j_ea);
+	
+}
+while (currentNbChargers > nbChargersGoal) {
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> x.V2GCapable);
+	j_ea.V2GCapable = false;
+	currentNbChargers--;
+	zero_Interface.c_orderedV2GChargers.remove(j_ea);
+	zero_Interface.c_orderedV2GChargers.add(0, j_ea);
+}
+
+// Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+double f_setVehiclesPrivateParking(List<GCHouse> gcListHouses,double privateParkingEV_pct)
+{/*ALCODESTART::1758183975234*/
+List<J_EAVehicle> gcListOrderedVehiclesPrivateParking = findAll( zero_Interface.c_orderedVehiclesPrivateParking, h -> gcListHouses.contains(h.getParentAgent()));
+
+int nbOfPrivateParkedEV = (int)sum(findAll(gcListHouses, gc -> gc.p_eigenOprit), x -> x.c_electricVehicles.size());
+int desiredNbOfPrivateParkedEV = roundToInt(privateParkingEV_pct / 100 * gcListOrderedVehiclesPrivateParking.size());
+
+
+// we scale the consumption instead of getting the diesel/EV parameter from avgc data to represent the 'size' of the car
+double ratioEVToDieselConsumption = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionCar_kWhpkm / zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionCar_kWhpkm;
+
+while ( nbOfPrivateParkedEV > desiredNbOfPrivateParkedEV){
+	J_EAVehicle j_ea = findFirst( gcListOrderedVehiclesPrivateParking, h -> h instanceof J_EAEV);
+	if (j_ea.vehicleScaling != 1) {
+		throw new RuntimeException("f_setVehiclesPrivateParking does not work with vehicles that have a vehicleScaling other than 1");
+	}
+	J_ActivityTrackerTrips triptracker = j_ea.tripTracker;
+	double energyConsumption_kWhpkm = j_ea.getEnergyConsumption_kWhpkm() / ratioEVToDieselConsumption; 
+	j_ea.removeEnergyAsset();
+	gcListOrderedVehiclesPrivateParking.remove(j_ea);
+	zero_Interface.c_orderedVehiclesPrivateParking.remove(j_ea);
+	J_EADieselVehicle dieselCar = new J_EADieselVehicle(j_ea.getParentAgent(), energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, 1, OL_EnergyAssetType.DIESEL_VEHICLE, triptracker);
+	gcListOrderedVehiclesPrivateParking.add(dieselCar);
+	zero_Interface.c_orderedVehiclesPrivateParking.add(dieselCar);
+	nbOfPrivateParkedEV --;
+}
+while ( nbOfPrivateParkedEV < desiredNbOfPrivateParkedEV){
+	J_EAVehicle j_ea = findFirst( gcListOrderedVehiclesPrivateParking, h -> h instanceof J_EADieselVehicle);
+	if (j_ea.vehicleScaling != 1) {
+		throw new RuntimeException("f_setVehiclesPrivateParking does not work with vehicles that have a vehicleScaling other than 1");
+	}
+	J_ActivityTrackerTrips triptracker = j_ea.tripTracker;
+	double energyConsumption_kWhpkm = j_ea.getEnergyConsumption_kWhpkm() * ratioEVToDieselConsumption;
+	j_ea.removeEnergyAsset();
+	gcListOrderedVehiclesPrivateParking.remove(j_ea);
+	zero_Interface.c_orderedVehiclesPrivateParking.remove(j_ea);
+	double capacityElectricity_kW = randomTrue(0.6) ? randomTrue(0.4) ? 3.2 : 5.6 : 11.0;
+	double storageCapacity_kWh = uniform_discr(65,90);
+	J_EAEV ev = new J_EAEV(j_ea.getParentAgent(), capacityElectricity_kW, storageCapacity_kWh, 1, zero_Interface.energyModel.p_timeStep_h, energyConsumption_kWhpkm, 1, OL_EnergyAssetType.ELECTRIC_VEHICLE, triptracker);	
+	gcListOrderedVehiclesPrivateParking.add(ev);
+	zero_Interface.c_orderedVehiclesPrivateParking.add(ev);
+	nbOfPrivateParkedEV++;
+}
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
