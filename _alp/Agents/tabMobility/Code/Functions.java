@@ -1564,7 +1564,7 @@ traceln("Forgot to override the update custom electricity sliders functionality"
 
 double f_setChargingAttitude(OL_ChargingAttitude selectedChargingAttitude,List<GridConnection> gcList)
 {/*ALCODESTART::1754990674760*/
-gcList.forEach(x -> x.f_addChargingManagementToGC(selectedChargingAttitude, false));
+gcList.forEach(x -> x.f_addChargingManagementToGC(selectedChargingAttitude));
 
 
 //Update variable to change to custom scenario
