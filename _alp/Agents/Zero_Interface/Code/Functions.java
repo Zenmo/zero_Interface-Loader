@@ -200,6 +200,9 @@ switch(selectedMapOverlayType){
 	case CONGESTION:
 		f_setColorsBasedOnCongestion_objects(gis_area);
 		break;
+	case ENERGY_LABEL:
+		f_setColorsBasedOnEnergyLabels(gis_area);
+		break;
 	case PARKING_TYPE:
 		f_setColorsBasedOnParkingType_objects(gis_area);
 		break;
@@ -2854,6 +2857,7 @@ gr_mapOverlayLegend_ElectricityConsumption.setVisible(false);
 gr_mapOverlayLegend_PVProduction.setVisible(false);
 gr_mapOverlayLegend_gridNeighbours.setVisible(false);
 gr_mapOverlayLegend_congestion.setVisible(false);
+gr_mapOverlayLegend_EnergyLabel.setVisible(false);
 b_updateLiveCongestionColors = false;
 
 if(!b_inEnergyHubMode){

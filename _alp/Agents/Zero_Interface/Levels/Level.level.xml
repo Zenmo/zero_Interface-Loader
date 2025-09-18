@@ -208,7 +208,7 @@
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>getExperimentHost().openWebSite("https://www.tue.nl/en/research/research-groups/innovation-sciences/technology-innovation-society/projects/new-energy-outlook-for-the-netherlands/");</OnClickCode>
+				<OnClickCode>getExperimentHost().openWebSite("https://www.tue.nl/en/");</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>205.802</Width>
