@@ -1339,7 +1339,7 @@ if(selectedChargingAttitude != null){
 				<Id>1758183152912</Id>
 				<Name><![CDATA[txt_publicChargePoints]]></Name>
 				<X>15</X>
-				<Y>150</Y>
+				<Y>165</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1364,8 +1364,8 @@ if(selectedChargingAttitude != null){
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1758183196756</Id>
 				<Name><![CDATA[sl_publicChargersResidentialArea_pct]]></Name>
-				<X>265</X>
-				<Y>175</Y>
+				<X>260</X>
+				<Y>190</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1392,7 +1392,7 @@ if(selectedChargingAttitude != null){
 				<Id>1758183196774</Id>
 				<Name><![CDATA[t_publicEVsResidentialAreaDescription]]></Name>
 				<X>15</X>
-				<Y>180</Y>
+				<Y>195</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1406,7 +1406,7 @@ if(selectedChargingAttitude != null){
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Public chargers in area]]></Text>
+				<Text><![CDATA[Actieve laadpalen in gebied]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
@@ -1418,7 +1418,7 @@ if(selectedChargingAttitude != null){
 				<Id>1758183196782</Id>
 				<Name><![CDATA[t_publicEVsResidentialArea_pct]]></Name>
 				<X>245</X>
-				<Y>180</Y>
+				<Y>195</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1471,7 +1471,7 @@ if(selectedChargingAttitude != null){
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1758183196803</Id>
 				<Name><![CDATA[sl_privateEVsResidentialArea_pct]]></Name>
-				<X>265</X>
+				<X>260</X>
 				<Y>34</Y>
 				<Label>
 					<X>0</X>
@@ -1484,15 +1484,7 @@ if(selectedChargingAttitude != null){
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>/*
-int sliderValue = sl_privateEVsResidentialArea_pct.getIntValue();
-if ( sliderValue &lt; p_minPVHouseholdSlider ){
-	sliderValue = p_minPVHouseholdSlider;
-	sl_publicEVsResidentialArea_pct.setValue( p_minPVHouseholdSlider, false);
-	traceln("SLIDER MESSAGE: Can't set slider lower than the initial value of simulated area");
-}
-*/
-f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_privateEVsResidentialArea_pct.getValue());</ActionCode>
+					<ActionCode>f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_privateEVsResidentialArea_pct.getValue());</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1534,7 +1526,7 @@ f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_priv
 				<Id>1758183196871</Id>
 				<Name><![CDATA[gr_settingsV2G_publicChargers]]></Name>
 				<X>9</X>
-				<Y>301</Y>
+				<Y>311</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -1543,8 +1535,6 @@ f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_priv
 				<PresentationFlag>false</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<XCode>5</XCode>
-				<YCode>270</YCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -1553,7 +1543,7 @@ f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_priv
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1758183196873</Id>
 						<Name><![CDATA[sl_chargersThatSupportV2G_pct]]></Name>
-						<X>256</X>
+						<X>251</X>
 						<Y>4</Y>
 						<Label>
 							<X>0</X>
@@ -1595,7 +1585,7 @@ f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_priv
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
 						<Color>-16777216</Color>
-						<Text><![CDATA[Chargers that support V2G]]></Text>
+						<Text><![CDATA[Laadpalen met V2G]]></Text>
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
@@ -1607,7 +1597,7 @@ f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_priv
 						<Id>1758183196877</Id>
 						<Name><![CDATA[t_chargersThatSupportV2G_pct]]></Name>
 						<X>226</X>
-						<Y>9</Y>
+						<Y>11</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1692,7 +1682,7 @@ f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_priv
 				<Id>1758183196939</Id>
 				<Name><![CDATA[i_householdPublicChargers]]></Name>
 				<X>190</X>
-				<Y>178</Y>
+				<Y>193</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1720,7 +1710,7 @@ f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_priv
 				<Id>1758183196817</Id>
 				<Name><![CDATA[gr_settingsV1G_publicChargers]]></Name>
 				<X>5</X>
-				<Y>240</Y>
+				<Y>250</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -1729,8 +1719,6 @@ f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_priv
 				<PresentationFlag>false</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<XCode>5</XCode>
-				<YCode>270</YCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -1739,7 +1727,7 @@ f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_priv
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1758183196819</Id>
 						<Name><![CDATA[sl_chargersThatSupportV1G_pct]]></Name>
-						<X>260</X>
+						<X>255</X>
 						<Y>0</Y>
 						<Label>
 							<X>0</X>
@@ -1781,7 +1769,7 @@ f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_priv
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
 						<Color>-16777216</Color>
-						<Text><![CDATA[Chargers that support V1G]]></Text>
+						<Text><![CDATA[Laadpalen met V1G]]></Text>
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
@@ -1793,7 +1781,7 @@ f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_priv
 						<Id>1758183196823</Id>
 						<Name><![CDATA[t_chargersThatSupportV1G_pct]]></Name>
 						<X>240</X>
-						<Y>5</Y>
+						<Y>7</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1850,7 +1838,7 @@ f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_priv
 				<Id>1758191125495</Id>
 				<Name><![CDATA[gr_activateV2GPrivateParkedCars]]></Name>
 				<X>170</X>
-				<Y>115</Y>
+				<Y>110</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -1881,6 +1869,8 @@ f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_priv
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<TextColor>-16777216</TextColor>
 							<Enabled>true</Enabled>
+							<ActionCode>f_activateV2G(new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getSliderGridConnections_houses()), cb_activateV2GPrivateParkedCars.isSelected());
+gr_settingsV2G_privateParkedCars.setVisible(cb_activateV2GPrivateParkedCars.isSelected());</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
 							<Font Name="Dialog" Size="11" Style="0"/>
@@ -1902,7 +1892,7 @@ f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_priv
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 						<VisibleCode>cb_activateV2GPrivateParkedCars.isVisible()</VisibleCode>
-						<OnClickCode>zero_Interface.f_setInfoText(i_activateV2GPrivateParkedCars, zero_Interface.v_infoText.i_activateV2GPrivateParkedCars, i_activateV2GPrivateParkedCars.getX() + uI_Tabs.v_presentationXOffset, i_activateV2GPrivateParkedCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+						<OnClickCode>zero_Interface.f_setInfoText(i_activateV2GPrivateParkedCars, zero_Interface.v_infoText.activateV2GPrivateParkedCars, i_activateV2GPrivateParkedCars.getX() + gr_activateV2GPrivateParkedCars.getX() + uI_Tabs.v_presentationXOffset, i_activateV2GPrivateParkedCars.getY() + gr_activateV2GPrivateParkedCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Width>20</Width>
@@ -1948,7 +1938,7 @@ f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_priv
 				<Id>1758189201608</Id>
 				<Name><![CDATA[txt_chargingStrategyPrivateParkedCars]]></Name>
 				<X>15</X>
-				<Y>75</Y>
+				<Y>70</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1974,8 +1964,8 @@ f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_priv
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1758189233415</Id>
 				<Name><![CDATA[cb_chargingAttitudePrivateParkedCars]]></Name>
-				<X>225</X>
-				<Y>75</Y>
+				<X>221</X>
+				<Y>70</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1989,8 +1979,11 @@ f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_priv
 					<FillColor>-1</FillColor>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
+					<EnableExpression>sl_privateEVsResidentialArea_pct.isEnabled()</EnableExpression>
 					<ActionCode>OL_ChargingAttitude selectedChargingAttitude = null;
 gr_activateV2GPrivateParkedCars.setVisible(false);
+cb_activateV2GPrivateParkedCars.setSelected(false, false);
+gr_settingsV2G_privateParkedCars.setVisible(false);
 
 switch(cb_chargingAttitudePrivateParkedCars.getValue()){
 	case "Niet slim laden":
@@ -2005,20 +1998,20 @@ switch(cb_chargingAttitudePrivateParkedCars.getValue()){
 		gr_activateV2GPrivateParkedCars.setVisible(true);
 		break;
 	case "Slim laden: Zelfconsumptie":
-		selectedChargingAttitude = OL_ChargingAttitude.BALANCE;
+		selectedChargingAttitude = OL_ChargingAttitude.BALANCE_LOCAL;
 		gr_activateV2GPrivateParkedCars.setVisible(true);
 		break;
 	case "Gevarieerd":
 		zero_Interface.f_setErrorScreen("De geselecteerde laad strategie is er alleen ter visualisatie in het geval niet elk huis dezelfde laad strategie heeft. Dit is dus niet een strategie die je handmatig aan kunt zetten. Voor nu is 'Niet slim laden' weer geselecteerd.");
 		selectedChargingAttitude = null;
-		return;
+		break;
 }
 
 if(selectedChargingAttitude != null){
 	f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getSliderGridConnections_houses()));
 }
 else{
-	cb_chargingAttitudePrivateParkedCars.setValue(0, true);
+	cb_chargingAttitudePrivateParkedCars.setValue("Niet slim laden", true);
 }</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -2036,7 +2029,7 @@ else{
 				<Id>1758189262812</Id>
 				<Name><![CDATA[i_chargingAttitudePrivateParkedCars]]></Name>
 				<X>190</X>
-				<Y>75</Y>
+				<Y>70</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2046,7 +2039,7 @@ else{
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<VisibleCode>cb_chargingAttitudePrivateParkedCars.isVisible()</VisibleCode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_chargingAttitudePrivateParkedCars, zero_Interface.v_infoText.i_chargingAttitudePrivateParkedCars, i_chargingAttitudePrivateParkedCars.getX() + uI_Tabs.v_presentationXOffset, i_chargingAttitudePrivateParkedCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_chargingAttitudePrivateParkedCars, zero_Interface.v_infoText.chargingAttitudePrivateParkedCars, i_chargingAttitudePrivateParkedCars.getX() + uI_Tabs.v_presentationXOffset, i_chargingAttitudePrivateParkedCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
@@ -2064,7 +2057,7 @@ else{
 				<Id>1758192054421</Id>
 				<Name><![CDATA[txt_chargingStrategyPublicChargers]]></Name>
 				<X>15</X>
-				<Y>215</Y>
+				<Y>225</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2073,7 +2066,7 @@ else{
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>cb_chargingAttitudePrivateParkedCars.isVisible()</VisibleCode>
+				<VisibleCode>cb_chargingAttitudePrivatePublicChargers.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -2090,8 +2083,8 @@ else{
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1758192054440</Id>
 				<Name><![CDATA[cb_chargingAttitudePrivatePublicChargers]]></Name>
-				<X>225</X>
-				<Y>215</Y>
+				<X>221</X>
+				<Y>225</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2105,8 +2098,10 @@ else{
 					<FillColor>-1</FillColor>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
+					<EnableExpression>sl_publicChargersResidentialArea_pct.isEnabled()</EnableExpression>
 					<ActionCode>OL_ChargingAttitude selectedChargingAttitude = null;
-gr_activateV2GPrivateParkedCars.setVisible(false);
+gr_activateV2GPublicChargers.setVisible(false);
+cb_activateV2GPrivatePublicChargers.setSelected(false, true); // True call for now needed for chargepoints only
 gr_settingsV1G_publicChargers.setVisible(false);
 gr_settingsV2G_publicChargers.setVisible(false);
 
@@ -2116,20 +2111,18 @@ switch(cb_chargingAttitudePrivatePublicChargers.getValue()){
 		break;
 	case "Slim laden: Prijs gestuurd":
 		selectedChargingAttitude = OL_ChargingAttitude.PRICE;
-		gr_activateV2GPrivateParkedCars.setVisible(true);
+		gr_activateV2GPublicChargers.setVisible(true);
 		gr_settingsV1G_publicChargers.setVisible(true);
-		gr_settingsV2G_publicChargers.setVisible(true);
 		break;
 	case "Slim laden: Netbewust":
 		selectedChargingAttitude = OL_ChargingAttitude.BALANCE_GRID;
-		gr_activateV2GPrivateParkedCars.setVisible(true);
+		gr_activateV2GPublicChargers.setVisible(true);
 		gr_settingsV1G_publicChargers.setVisible(true);
-		gr_settingsV2G_publicChargers.setVisible(true);
 		break;
 	case "Gevarieerd":
 		zero_Interface.f_setErrorScreen("De geselecteerde laad strategie is er alleen ter visualisatie in het geval niet elk huis dezelfde laad strategie heeft. Dit is dus niet een strategie die je handmatig aan kunt zetten. Voor nu is 'Niet slim laden' weer geselecteerd.");
 		selectedChargingAttitude = null;
-		return;
+		break;
 }
 
 if(selectedChargingAttitude != null){
@@ -2138,7 +2131,7 @@ if(selectedChargingAttitude != null){
 	f_setChargingAttitude(selectedChargingAttitude, allChargersInModel);
 }
 else{
-	cb_chargingAttitudePrivatePublicChargers.setValue(0, true);
+	cb_chargingAttitudePrivatePublicChargers.setValue("Niet slim laden", true);
 }</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -2155,7 +2148,7 @@ else{
 				<Id>1758192054460</Id>
 				<Name><![CDATA[i_chargingStrategyPublicChargers]]></Name>
 				<X>190</X>
-				<Y>215</Y>
+				<Y>225</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2164,8 +2157,8 @@ else{
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>cb_chargingAttitudePrivateParkedCars.isVisible()</VisibleCode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_chargingStrategyPublicChargers, zero_Interface.v_infoText.i_chargingStrategyPublicChargers, i_chargingStrategyPublicChargers.getX() + uI_Tabs.v_presentationXOffset, i_chargingStrategyPublicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<VisibleCode>cb_chargingAttitudePrivatePublicChargers.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_chargingStrategyPublicChargers, zero_Interface.v_infoText.chargingStrategyPublicChargers, i_chargingStrategyPublicChargers.getX() + uI_Tabs.v_presentationXOffset, i_chargingStrategyPublicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
@@ -2181,9 +2174,9 @@ else{
 			</Image>
 			<Group>
 				<Id>1758192011387</Id>
-				<Name><![CDATA[gr_activateV2GPrivateParkedCars1]]></Name>
+				<Name><![CDATA[gr_activateV2GPublicChargers]]></Name>
 				<X>170</X>
-				<Y>290</Y>
+				<Y>300</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -2214,6 +2207,8 @@ else{
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<TextColor>-16777216</TextColor>
 							<Enabled>true</Enabled>
+							<ActionCode>f_activateV2G(new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getAllSliderGridConnections_chargers()), cb_activateV2GPrivatePublicChargers.isSelected());
+gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPrivatePublicChargers.isSelected());</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
 							<Font Name="Dialog" Size="11" Style="0"/>
@@ -2234,8 +2229,8 @@ else{
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<VisibleCode>cb_activateV2GPrivateParkedCars.isVisible()</VisibleCode>
-						<OnClickCode>zero_Interface.f_setInfoText(i_activateV2GPrivateParkedCars, zero_Interface.v_infoText.i_activateV2GPrivateParkedCars, i_activateV2GPrivateParkedCars.getX() + uI_Tabs.v_presentationXOffset, i_activateV2GPrivateParkedCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+						<VisibleCode>cb_activateV2GPrivatePublicChargers.isVisible()</VisibleCode>
+						<OnClickCode>zero_Interface.f_setInfoText(i_activateV2GPrivatePublicChargers, zero_Interface.v_infoText.activateV2GPrivatePublicChargers, i_activateV2GPrivatePublicChargers.getX() + gr_activateV2GPublicChargers.getX() + uI_Tabs.v_presentationXOffset, i_activateV2GPrivatePublicChargers.getY() + gr_activateV2GPublicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Width>20</Width>
@@ -2262,7 +2257,7 @@ else{
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>cb_activateV2GPrivateParkedCars.isVisible()</VisibleCode>
+						<VisibleCode>cb_activateV2GPrivatePublicChargers.isVisible()</VisibleCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
@@ -2277,13 +2272,141 @@ else{
 					</Text>
 				</Presentation>
 			</Group>
+			<Group>
+				<Id>1758274187930</Id>
+				<Name><![CDATA[gr_settingsV2G_privateParkedCars]]></Name>
+				<X>9</X>
+				<Y>121</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Control Type="Slider">
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Id>1758274187932</Id>
+						<Name><![CDATA[sl_EVsThatSupportV2G_pct]]></Name>
+						<X>251</X>
+						<Y>4</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<BasicProperties Width="100" Height="30">
+							<EmbeddedIcon>false</EmbeddedIcon>
+							<Enabled>true</Enabled>
+							<ActionCode>f_setV2GEVCapabilities( uI_Tabs.f_getSliderGridConnections_houses(), sl_EVsThatSupportV2G_pct.getValue() );</ActionCode>
+						</BasicProperties>
+						<ExtendedProperties>
+							<DefaultValueCode>0</DefaultValueCode>
+							<Orientation>HORIZONTAL</Orientation>
+							<MinValue>0</MinValue>
+							<MaxValue>100</MaxValue>
+							<Step>1</Step>
+							<LinkTo>false</LinkTo>
+						</ExtendedProperties>
+					</Control>
+					<Text>
+						<Id>1758274187934</Id>
+						<Name><![CDATA[txt_EVsThatSupportV2GDescription]]></Name>
+						<X>5</X>
+						<Y>10</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<VisibleCode>sl_EVsThatSupportV2G_pct.isVisible()</VisibleCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[EVs die V2G ondersteunen]]></Text>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>14</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1758274187936</Id>
+						<Name><![CDATA[txt_EVsThatSupportV2G_pct]]></Name>
+						<X>226</X>
+						<Y>10</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<VisibleCode>sl_EVsThatSupportV2G_pct.isVisible()</VisibleCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[0%]]></Text>
+						<TextCode>sl_EVsThatSupportV2G_pct.getIntValue() + " %"</TextCode>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>12</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
+					</Text>
+					<Image>
+						<Id>1758274187938</Id>
+						<Name><![CDATA[i_EVsThatSupportV2G]]></Name>
+						<X>181</X>
+						<Y>8</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<VisibleCode>sl_EVsThatSupportV2G_pct.isVisible()</VisibleCode>
+						<OnClickCode>zero_Interface.f_setInfoText(i_EVsThatSupportV2G, zero_Interface.v_infoText.EVsThatSupportV2G, i_EVsThatSupportV2G.getX() + gr_settingsV2G_privateParkedCars.getX() + uI_Tabs.v_presentationXOffset, i_EVsThatSupportV2G.getY() + gr_settingsV2G_privateParkedCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>20</Width>
+						<Height>20</Height>
+						<Rotation>0.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>icon_i.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
+				</Presentation>
+			</Group>
 		</Presentation>
 	</Group>
 	<Text>
 		<Id>1758183975194</Id>
 		<Name><![CDATA[txt_mobilityFunctionsDescription]]></Name>
 		<X>590</X>
-		<Y>535</Y>
+		<Y>510</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -2308,7 +2431,7 @@ else{
 		<Id>1758183975205</Id>
 		<Name><![CDATA[rect_mobilityFunctions1]]></Name>
 		<X>440</X>
-		<Y>530</Y>
+		<Y>500</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -2325,7 +2448,7 @@ else{
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>310</Width>
-		<Height>140</Height>
+		<Height>170</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -2334,7 +2457,7 @@ else{
 		<Id>1758184003102</Id>
 		<Name><![CDATA[t_mobilityFunctionsDescription1]]></Name>
 		<X>590</X>
-		<Y>535</Y>
+		<Y>510</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -2355,111 +2478,4 @@ else{
 		</Font>
 		<Alignment>CENTER</Alignment>
 	</Text>
-	<Control Type="RadioButtons">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1758183196788</Id>
-		<Name><![CDATA[chargingMethodResidentialArea]]></Name>
-		<X>790</X>
-		<Y>50</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="310" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor>-16777216</TextColor>
-			<Enabled>true</Enabled>
-			<ActionCode>switch (chargingMethodResidentialArea.getValue()){
-	case 0:
-		gr_settingsV1G_publicChargers.setVisible(false);
-		gr_settingsV2G_publicChargers.setVisible(false);
-		
-		for( GCHouse house : zero_Interface.energyModel.Houses ){
-			//house.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
-			house.f_addChargingManagementToGC(OL_ChargingAttitude.SIMPLE);
-			house.f_activateV2GChargingMode(false, false);
-		}
-		for( GCPublicCharger publicCharger : zero_Interface.energyModel.PublicChargers ){
-			//publicCharger.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
-			publicCharger.f_activateV2GChargingMode(false, false);
-		}
-		break;
-	case 1:
-		gr_settingsV1G_publicChargers.setVisible(true);
-		gr_settingsV2G_publicChargers.setVisible(false);
-
-		for( GCHouse house : zero_Interface.energyModel.Houses ){
-			//house.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.BALANCE);
-			house.f_addChargingManagementToGC(OL_ChargingAttitude.BALANCE);
-			house.f_activateV2GChargingMode(false, true);
-		}
-		for( GCPublicCharger publicCharger : zero_Interface.energyModel.PublicChargers ){
-			//publicCharger.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.PRICE);
-			publicCharger.f_activateV2GChargingMode(false, true);
-		}
-		break;
-	case 2:
-		gr_settingsV1G_publicChargers.setVisible(false);
-		gr_settingsV2G_publicChargers.setVisible(true);
-		
-		for( GCHouse house : zero_Interface.energyModel.Houses ){
-			//house.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.V2G); 
-			house.f_addChargingManagementToGC(OL_ChargingAttitude.BALANCE);
-			house.f_activateV2GChargingMode(true, true);
-		}
-		for( GCPublicCharger publicCharger : zero_Interface.energyModel.PublicChargers ){
-			//publicCharger.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.V2G);
-			publicCharger.f_activateV2GChargingMode(true, true);
-		}
-		break;
-}
-
-// Update variable to change to custom scenario
-if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
-}
-
-zero_Interface.f_resetSettings();</ActionCode>
-		</BasicProperties>
-		<ExtendedProperties>
-			<Font Name="Dialog" Size="11" Style="0"/>
-			<Orientation>HORIZONTAL</Orientation>
-			<Button>Uncontrolled charging</Button>
-			<Button>V1G smart</Button>
-			<Button>V2G smart</Button>
-			<LinkTo>false</LinkTo>
-		</ExtendedProperties>
-	</Control>
-	<Image>
-		<Id>1758183196955</Id>
-		<Name><![CDATA[i_householdPublicChargersBehaviour]]></Name>
-		<X>1105</X>
-		<Y>55</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<VisibleCode>chargingMethodResidentialArea.isVisible()</VisibleCode>
-		<OnClickCode>zero_Interface.f_setInfoText(i_householdPublicChargersBehaviour, zero_Interface.v_infoText.householdPublicChargersBehaviour, i_householdPublicChargersBehaviour.getX() + uI_Tabs.v_presentationXOffset, i_householdPublicChargersBehaviour.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Width>20</Width>
-		<Height>20</Height>
-		<Rotation>0.0</Rotation>
-		<ImageFiles>
-			<ImageResourceReference>
-				<PackageName>zerointerfaceloader</PackageName>
-				<ClassName>icon_i.png</ClassName>
-			</ImageResourceReference>
-		</ImageFiles>
-		<OriginalSize>false</OriginalSize>
-	</Image>
 </Presentation>

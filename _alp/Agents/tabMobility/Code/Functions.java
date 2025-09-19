@@ -1615,6 +1615,7 @@ else{
 
 double f_setPublicChargingStations(double publicChargers_pct)
 {/*ALCODESTART::1758183975214*/
+//MAAK WERKEND VOOR EEN GCLIST ALS INPUT
 int totalNbChargers = zero_Interface.c_orderedPublicChargers.size();
 int currentNbChargers = count(zero_Interface.c_orderedPublicChargers, x -> x.v_isActive);
 int nbChargersGoal = roundToInt(publicChargers_pct / 100 * totalNbChargers) ;
@@ -1665,6 +1666,7 @@ zero_Interface.f_resetSettings();
 
 double f_setV1GChargerCapabilities(double goal_pct)
 {/*ALCODESTART::1758183975221*/
+//MAAK WERKEND VOOR EEN GCLIST ALS INPUT
 int totalNbChargers = zero_Interface.c_orderedV1GChargers.size();
 int currentNbChargers = count(zero_Interface.c_orderedV1GChargers, x -> x.V1GCapable);
 int nbChargersGoal = roundToInt(goal_pct / 100.0 * totalNbChargers);
@@ -1695,6 +1697,7 @@ zero_Interface.f_resetSettings();
 
 double f_setV2GChargerCapabilities(double goal_pct)
 {/*ALCODESTART::1758183975227*/
+//MAAK WERKEND VOOR EEN GCLIST ALS INPUT
 int totalNbChargers = zero_Interface.c_orderedV2GChargers.size();
 int currentNbChargers = count(zero_Interface.c_orderedV2GChargers, x -> x.V2GCapable);
 int nbChargersGoal = roundToInt(goal_pct / 100.0 * totalNbChargers);
@@ -1725,6 +1728,7 @@ zero_Interface.f_resetSettings();
 
 double f_setVehiclesPrivateParking(List<GCHouse> gcListHouses,double privateParkingEV_pct)
 {/*ALCODESTART::1758183975234*/
+//Voor nu zo opgelost, echter gaat dit niet goed werken met de volgorde. BEDENK EEN BETER MANIER!?
 List<J_EAVehicle> gcListOrderedVehiclesPrivateParking = findAll( zero_Interface.c_orderedVehiclesPrivateParking, h -> gcListHouses.contains(h.getParentAgent()));
 
 int nbOfPrivateParkedEV = (int)sum(findAll(gcListHouses, gc -> gc.p_eigenOprit), x -> x.c_electricVehicles.size());
@@ -1765,6 +1769,56 @@ while ( nbOfPrivateParkedEV < desiredNbOfPrivateParkedEV){
 	gcListOrderedVehiclesPrivateParking.add(ev);
 	zero_Interface.c_orderedVehiclesPrivateParking.add(ev);
 	nbOfPrivateParkedEV++;
+}
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+double f_setV2GEVCapabilities(List<GCHouse> gcListHouses,double goal_pct)
+{/*ALCODESTART::1758275653317*/
+//Voor nu zo werkend gemaakt met gclist als input, echter gaat dit niet goed werken en gaat de volgorde veranderen. BEDENK EEN BETER MANIER!?
+
+List<J_EAVehicle> gcListOrderedVehiclesPrivateParking_all = findAll( zero_Interface.c_orderedVehiclesPrivateParking, vehicle -> gcListHouses.contains(vehicle.getParentAgent()) && vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE);
+
+List<J_EAEV> gcListOrderedVehiclesPrivateParking = gcListOrderedVehiclesPrivateParking_all.stream().map(v -> (J_EAEV) v).collect(Collectors.toList());
+
+int totalNbEVs = gcListOrderedVehiclesPrivateParking.size();
+int currentNbEVsV2GCapable = count(gcListOrderedVehiclesPrivateParking, x -> x.getV2GCapable());
+int nbEVsV2GCapableGoal = roundToInt(goal_pct / 100.0 * totalNbEVs);
+
+while (currentNbEVsV2GCapable < nbEVsV2GCapableGoal) {
+	J_EAEV j_ea = findFirst(gcListOrderedVehiclesPrivateParking, x -> x.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && !x.getV2GCapable());
+	j_ea.setV2GCapable(true);
+	currentNbEVsV2GCapable++;
+	gcListOrderedVehiclesPrivateParking.remove(j_ea);
+	gcListOrderedVehiclesPrivateParking.add(0, j_ea);
+	
+}
+while (currentNbEVsV2GCapable > nbEVsV2GCapableGoal) {
+	J_EAEV j_ea = findFirst(gcListOrderedVehiclesPrivateParking, x -> x.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && x.getV2GCapable());
+	j_ea.setV2GCapable(false);
+	currentNbEVsV2GCapable--;
+	gcListOrderedVehiclesPrivateParking.remove(j_ea);
+	gcListOrderedVehiclesPrivateParking.add(0, j_ea);
+}
+
+// Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+double f_activateV2G(List<GridConnection> gcList,boolean activateV2G)
+{/*ALCODESTART::1758276936913*/
+for(GridConnection GC : gcList){
+	GC.f_activateV2GChargingMode(activateV2G);
 }
 
 //Update variable to change to custom scenario
