@@ -1577,15 +1577,19 @@ zero_Interface.f_resetSettings();
 
 double f_updateMobilitySliders_residential()
 {/*ALCODESTART::1758183013077*/
-List<GCPublicCharger> chargerGridConnections = uI_Tabs.f_getSliderGridConnections_chargers();
-chargerGridConnections.addAll(uI_Tabs.f_getPausedSliderGridConnections_chargers());
+List<GCPublicCharger> chargerGridConnections = uI_Tabs.f_getAllSliderGridConnections_chargers();
+List<J_EAChargePoint> chargersEA = new ArrayList<J_EAChargePoint>();
+chargerGridConnections.forEach(gc -> chargersEA.addAll(gc.c_chargers));
 
 
 //Private EV
 if (zero_Interface.c_orderedVehiclesPrivateParking.size() > 0) {
 	int nbPrivateEVs = count(zero_Interface.c_orderedVehiclesPrivateParking, x -> x instanceof J_EAEV);
+	int nbPrivateEVsThatSupportV2G = count(zero_Interface.c_orderedVehiclesPrivateParking, x -> x instanceof J_EAEV && ((J_EAEV)x).getV2GCapable());
 	double privateEVs_pct = 100.0 * nbPrivateEVs / zero_Interface.c_orderedVehiclesPrivateParking.size();
+	double privateEVsThatSupportV2G_pct = 100.0 * nbPrivateEVsThatSupportV2G / nbPrivateEVs;
 	sl_privateEVsResidentialArea_pct.setValue(roundToInt(privateEVs_pct), false);
+	sl_EVsThatSupportV2G_pct.setValue(roundToInt(privateEVsThatSupportV2G_pct), false);
 }
 else{
 	sl_privateEVsResidentialArea_pct.setEnabled(false);
@@ -1593,14 +1597,17 @@ else{
 
 
 //Chargers
-int nbPublicChargers = chargerGridConnections.size();
-if(nbPublicChargers > 0 ){
-	int nbActivePublicChargers = count(chargerGridConnections, x -> x.v_isActive);
-	double activePublicChargers_pct = 100.0 * nbActivePublicChargers / nbPublicChargers;
+int nbPublicChargerGC = chargerGridConnections.size();
+
+if(nbPublicChargerGC > 0 ){
+	int nbActivePublicChargersGC = count(chargerGridConnections, x -> x.v_isActive);
+	double activePublicChargers_pct = 100.0 * nbActivePublicChargersGC / nbPublicChargerGC;
 	sl_publicChargersResidentialArea_pct.setValue(activePublicChargers_pct, false);
 	
-	int nbV1GChargers = count(zero_Interface.c_orderedV1GChargers, x -> chargerGridConnections.contains(x) && x.V1GCapable);
-	int nbV2GChargers =count(zero_Interface.c_orderedV2GChargers, x -> chargerGridConnections.contains(x) && x.V2GCapable);
+	int nbV1GChargers = count(zero_Interface.c_orderedV1GChargers, x -> chargersEA.contains(x) && x.getV1GCapable());
+	int nbV2GChargers =count(zero_Interface.c_orderedV2GChargers, x -> chargersEA.contains(x) && x.getV2GCapable());
+	int nbPublicChargers = chargersEA.size();
+		
 	double V1G_pct = 100.0 * nbV1GChargers / nbPublicChargers;
 	double V2G_pct = 100.0 * nbV2GChargers / nbPublicChargers;
 	sl_chargersThatSupportV1G_pct.setValue(V1G_pct, false);
@@ -1668,20 +1675,20 @@ double f_setV1GChargerCapabilities(double goal_pct)
 {/*ALCODESTART::1758183975221*/
 //MAAK WERKEND VOOR EEN GCLIST ALS INPUT
 int totalNbChargers = zero_Interface.c_orderedV1GChargers.size();
-int currentNbChargers = count(zero_Interface.c_orderedV1GChargers, x -> x.V1GCapable);
+int currentNbChargers = count(zero_Interface.c_orderedV1GChargers, x -> x.getV1GCapable());
 int nbChargersGoal = roundToInt(goal_pct / 100.0 * totalNbChargers);
 
 while (currentNbChargers < nbChargersGoal) {
-	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> !x.V1GCapable);
-	j_ea.V1GCapable = true;
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> !x.getV1GCapable());
+	j_ea.setV1GCapability(true);
 	currentNbChargers++;
 	zero_Interface.c_orderedV1GChargers.remove(j_ea);
 	zero_Interface.c_orderedV1GChargers.add(0, j_ea);
 	
 }
 while (currentNbChargers > nbChargersGoal) {
-	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> x.V1GCapable);
-	j_ea.V1GCapable = false;
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> x.getV1GCapable());
+	j_ea.setV1GCapability(false);
 	currentNbChargers--;
 	zero_Interface.c_orderedV1GChargers.remove(j_ea);
 	zero_Interface.c_orderedV1GChargers.add(0, j_ea);
@@ -1699,20 +1706,20 @@ double f_setV2GChargerCapabilities(double goal_pct)
 {/*ALCODESTART::1758183975227*/
 //MAAK WERKEND VOOR EEN GCLIST ALS INPUT
 int totalNbChargers = zero_Interface.c_orderedV2GChargers.size();
-int currentNbChargers = count(zero_Interface.c_orderedV2GChargers, x -> x.V2GCapable);
+int currentNbChargers = count(zero_Interface.c_orderedV2GChargers, x -> x.getV2GCapable());
 int nbChargersGoal = roundToInt(goal_pct / 100.0 * totalNbChargers);
 
 while (currentNbChargers < nbChargersGoal) {
-	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> !x.V2GCapable);
-	j_ea.V2GCapable = true;
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> !x.getV2GCapable());
+	j_ea.setV2GCapability(true);
 	currentNbChargers++;
 	zero_Interface.c_orderedV2GChargers.remove(j_ea);
 	zero_Interface.c_orderedV2GChargers.add(0, j_ea);
 	
 }
 while (currentNbChargers > nbChargersGoal) {
-	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> x.V2GCapable);
-	j_ea.V2GCapable = false;
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> x.getV2GCapable());
+	j_ea.setV2GCapability(false);
 	currentNbChargers--;
 	zero_Interface.c_orderedV2GChargers.remove(j_ea);
 	zero_Interface.c_orderedV2GChargers.add(0, j_ea);

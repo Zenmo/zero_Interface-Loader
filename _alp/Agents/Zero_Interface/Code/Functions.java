@@ -2343,13 +2343,13 @@ List<J_EAChargePoint> c_inactiveV2GChargers = new ArrayList<J_EAChargePoint>();
 
 for (GridConnection gc : energyModel.f_getActiveGridConnections()) {
 	for (J_EAChargePoint charger : gc.c_chargers) {
-		if (charger.V1GCapable) {
+		if (charger.getV1GCapable()) {
 			c_orderedV1GChargers.add(0, charger);
 		}
 		else {
 			c_orderedV1GChargers.add(charger);
 		}
-		if (charger.V2GCapable) {
+		if (charger.getV2GCapable()) {
 			c_orderedV2GChargers.add(0, charger);
 		}
 		else {
@@ -2360,13 +2360,13 @@ for (GridConnection gc : energyModel.f_getActiveGridConnections()) {
 
 for (GridConnection gc : energyModel.f_getPausedGridConnections()) {
 	for (J_EAChargePoint charger : gc.c_chargers) {
-		if (charger.V1GCapable) {
+		if (charger.getV1GCapable()) {
 			c_inactiveV1GChargers.add(0, charger);
 		}
 		else {
 			c_inactiveV1GChargers.add(charger);
 		}
-		if (charger.V2GCapable) {
+		if (charger.getV2GCapable()) {
 			c_inactiveV2GChargers.add(0, charger);
 		}
 		else {
