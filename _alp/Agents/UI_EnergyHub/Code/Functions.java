@@ -60,7 +60,7 @@ uI_Tabs.gr_energyDemandSettings.setX(zero_Interface.uI_Tabs.gr_energyDemandSetti
 
 // Group visibilities
 // When using an extension of a generic tab don't forget to typecast it!
-if (zero_Interface.p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
+if (zero_Interface.project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
 	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_ResidentialArea().setVisible(true);
 	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersResidentialArea().setVisible(true);
 	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
@@ -338,13 +338,13 @@ catch (Exception exception) {
 
 double f_initializeUserSavedScenarios()
 {/*ALCODESTART::1756395572049*/
-//String userIdToken = zero_Interface.user.userIdToken();
-String userIdToken = "6b87f0f9-fdf6-4c05-9e0f-b75e46950113";
+if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToken() == "") {
+	return;
+}
 
 var repository = UserScenarioRepository.builder()
-    //.userId(UUID.fromString("6b87f0f9-fdf6-4c05-9e0f-b75e46950113"))
-    .userId(UUID.fromString(userIdToken))
-    .modelName("ModelTestName")
+    .userId(UUID.fromString(zero_Interface.user.userIdToken()))
+    .modelName(zero_Interface.project_data.project_name())
     .build();
 
 var scenarioList = repository.listUserScenarios();
@@ -359,6 +359,11 @@ combobox_selectScenario.setItems(scenarioNames);
 
 double f_loadScenario(int index)
 {/*ALCODESTART::1756805429105*/
+if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToken() == "") {
+	zero_Interface.f_setErrorScreen("Niet mogelijk om scenario's in te laden. Er is geen gebruiker ingelogd.", zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
+	return;
+}
+
 //pauseSimulation();
 // Collect GIS_Objects into hashmap, to link to new EnergyModel.
 zero_Interface.energyModel.pop_GIS_Buildings.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
@@ -369,19 +374,12 @@ try {
 	v_objectMapper = new ObjectMapper();
 	f_addMixins();
 	
-	String userIdToken = "6b87f0f9-fdf6-4c05-9e0f-b75e46950113"; //user.userIdToken();
-
 	var repository = UserScenarioRepository.builder()
-        //.userId(UUID.fromString("6b87f0f9-fdf6-4c05-9e0f-b75e46950113"))
-        .userId(UUID.fromString(userIdToken))
-        .modelName("ModelTestName")
+	    .userId(UUID.fromString(zero_Interface.user.userIdToken()))
+	    .modelName(zero_Interface.project_data.project_name())
         .build();
       
-    var scenarioList = repository.listUserScenarios();
-	for (var scenario : scenarioList) {
-	    System.out.println(scenario.getName());
-	}
-    
+    var scenarioList = repository.listUserScenarios();   
 
 	// Deserialize the JSON into a new EnergyModel instance:
     var jsonStream = repository.fetchUserScenarioContent(scenarioList.get(index).getId());
@@ -412,8 +410,18 @@ try {
 	
 	zero_Interface.energyModel = deserializedEnergyModel;
 	zero_Interface.uI_Results.energyModel = deserializedEnergyModel;
-	
+	uI_Results.energyModel = deserializedEnergyModel;
 
+	//Date startDate = getExperiment().getEngine().getStartDate();
+	//traceln("startDate# " + startDate);
+	//Date currentDate = date();
+	//traceln("currentDate# " + currentDate);
+	//startDate.setYear(startDate.getYear() - currentDate.getYear());
+	//startDate.setMonth(startDate.getMonth() - currentDate.getMonth());
+	//startDate.setDate(startDate.getDate() - currentDate.getDate());
+	//getExperiment().getEngine().setStartDate(startDate);
+	//traceln("Reduced anylogic date by one year, looping all data");
+	
 	// Reinitialize energy model
 	deserializedEnergyModel.b_isInitialized = false;
 	deserializedEnergyModel.f_initializeEngine();	
@@ -421,12 +429,34 @@ try {
 	// Putting back the ordered collections in the interface
 	f_reconstructOrderedCollections(saveObject);
 	
-	zero_Interface.f_clearSelectionAndSelectEnergyModel();
+	//zero_Interface.f_clearSelectionAndSelectEnergyModel();
+	
+	/*
 	zero_Interface.uI_Tabs.f_initializeUI_Tabs(zero_Interface.energyModel.f_getGridConnectionsCollectionPointer(), zero_Interface.energyModel.f_getPausedGridConnectionsCollectionPointer());
+	uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null);
 	zero_Interface.f_updateMainInterfaceSliders();
 	
 	zero_Interface.f_resetSettings();
+	*/
+	button_exit.action();
+	
+	zero_Interface.uI_Tabs.f_initializeUI_Tabs(zero_Interface.energyModel.f_getGridConnectionsCollectionPointer(), zero_Interface.energyModel.f_getPausedGridConnectionsCollectionPointer());
+	// v_energyHubCoop not updated to point to 'new' coop
+	//uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null);
+	
+	zero_Interface.f_simulateYearFromMainInterface();
 	//zero_Interface.f_updateOrderedListsAfterDeserialising(deserializedEnergyModel);
+	
+	/*
+	Date startDate = getExperiment().getEngine().getStartDate();
+	int day = getExperiment().getEngine().getDayOfMonth();
+	int month = getExperiment().getEngine().getMonth();
+	traceln("day: " + day);
+	traceln("month: " + month);
+	startDate.setMonth(startDate.getMonth() - month);
+	startDate.setDate(startDate.getDate() - day);
+	getExperiment().getEngine().setStartDate(startDate);
+	*/
 	
 } catch (IOException e) {
 	e.printStackTrace();
@@ -437,6 +467,11 @@ try {
 
 double f_saveScenario(String scenarioName)
 {/*ALCODESTART::1756805443177*/
+if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToken() == "") {
+	zero_Interface.f_setErrorScreen("Niet mogelijk om scenario's op te slaan. Er is geen gebruiker ingelogd.", zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
+	return;
+}
+
 traceln("Starting model serialisation...");
 J_ModelSave saveObject = new J_ModelSave();
 saveObject.energyModel = zero_Interface.energyModel;
@@ -456,7 +491,15 @@ saveObject.c_orderedParkingSpaces = zero_Interface.c_orderedParkingSpaces;
 saveObject.c_orderedV1GChargers = zero_Interface.c_orderedV1GChargers;
 saveObject.c_orderedV2GChargers = zero_Interface.c_orderedV2GChargers;
 saveObject.c_orderedPublicChargers = zero_Interface.c_orderedPublicChargers;
-//saveObject.c_mappingOfVehiclesPerCharger = zero_Interface.c_mappingOfVehiclesPerCharger;
+saveObject.c_mappingOfVehiclesPerCharger = zero_Interface.c_mappingOfVehiclesPerCharger;
+saveObject.c_scenarioMap_Current = zero_Interface.c_scenarioMap_Current;
+saveObject.c_scenarioMap_Future = zero_Interface.c_scenarioMap_Future;
+
+List<LinkedHashMap<String, List<J_EAVehicle>>> c_additionalVehicleHashMaps = new ArrayList<LinkedHashMap<String, List<J_EAVehicle>>>();
+for (UI_company companyUI : zero_Interface.c_companyUIs) {
+	c_additionalVehicleHashMaps.add(companyUI.c_additionalVehicles);
+}
+saveObject.c_additionalVehicleHashMaps = c_additionalVehicleHashMaps;
 
 v_objectMapper = new ObjectMapper();
 f_addMixins();
@@ -467,13 +510,10 @@ try {
 	//v_objectMapper.writeValue(new File("energyModel.json"), energyModel);
 
 	//v_objectMapper.writeValue(new File("ModelSave.json"), saveObject);
-	
-	String userIdToken = "6b87f0f9-fdf6-4c05-9e0f-b75e46950113"; //user.userIdToken();
 
 	var repository = UserScenarioRepository.builder()
-        //.userId(UUID.fromString("6b87f0f9-fdf6-4c05-9e0f-b75e46950113"))
-        .userId(UUID.fromString(userIdToken))
-        .modelName("ModelTestName")
+	    .userId(UUID.fromString(zero_Interface.user.userIdToken()))
+	    .modelName(zero_Interface.project_data.project_name())
         .build();
     
 	repository.saveUserScenario(
@@ -676,7 +716,21 @@ zero_Interface.c_orderedParkingSpaces = saveObject.c_orderedParkingSpaces;
 zero_Interface.c_orderedV1GChargers = saveObject.c_orderedV1GChargers;
 zero_Interface.c_orderedV2GChargers = saveObject.c_orderedV2GChargers;
 zero_Interface.c_orderedPublicChargers = saveObject.c_orderedPublicChargers;
-//zero_Interface.c_mappingOfVehiclesPerCharger = saveObject.c_mappingOfVehiclesPerCharger;
+zero_Interface.c_mappingOfVehiclesPerCharger = saveObject.c_mappingOfVehiclesPerCharger;
+zero_Interface.c_scenarioMap_Current = saveObject.c_scenarioMap_Current;
+zero_Interface.c_scenarioMap_Future = saveObject.c_scenarioMap_Future;
+
+List<ConnectionOwner> c_COCompanies = findAll(zero_Interface.energyModel.pop_connectionOwners, p -> p.p_connectionOwnerType == OL_ConnectionOwnerType.COMPANY); 
+
+int i = 0;
+for (ConnectionOwner CO : c_COCompanies) {
+	UI_company companyUI = zero_Interface.c_companyUIs.get(CO.p_connectionOwnerIndexNr);
+	companyUI.p_company = CO;
+	companyUI.c_ownedGridConnections = companyUI.p_company.f_getOwnedGridConnections();
+	companyUI.c_additionalVehicles = saveObject.c_additionalVehicleHashMaps.get(i);
+	companyUI.f_setSelectedGCSliders();
+	i++;
+}
 
 /*ALCODEEND*/}
 

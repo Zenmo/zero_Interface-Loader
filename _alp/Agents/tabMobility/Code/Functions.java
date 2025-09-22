@@ -341,7 +341,7 @@ if (dieselTruck!=null) {
 			companyUI.sl_electricTrucksCompany.setValue(companyUI.v_nbEVTrucks, false);
 			companyUI.rb_scenariosPrivateUI.setValue(2, false);
 			if (foundAdditionalVehicle) {
-				companyUI.c_additionalVehicles.get(gc).remove(dieselTruck);
+				companyUI.c_additionalVehicles.get(gc.p_uid).remove(dieselTruck);
 			}
 		}
 	}
@@ -364,7 +364,7 @@ if (dieselTruck!=null) {
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
 	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc).add(electricTruck);
+		companyUI.c_additionalVehicles.get(gc.p_uid).add(electricTruck);
 	}
 }
 
@@ -415,7 +415,7 @@ if (hydrogenTruck!=null) {
 			companyUI.rb_scenariosPrivateUI.setValue(2, false);	
 		}
 		if(foundAdditionalVehicle){
-			companyUI.c_additionalVehicles.get(gc).remove(hydrogenTruck);
+			companyUI.c_additionalVehicles.get(gc.p_uid).remove(hydrogenTruck);
 		}
 	}
 	
@@ -439,7 +439,7 @@ if (hydrogenTruck!=null) {
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
 	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc).add(electricTruck);
+		companyUI.c_additionalVehicles.get(gc.p_uid).add(electricTruck);
 	}
 }
 else {
@@ -490,7 +490,7 @@ if (electricTruck!=null) {
 			
 		}
 		if(foundAdditionalVehicle){
-			companyUI.c_additionalVehicles.get(gc).remove(electricTruck);
+			companyUI.c_additionalVehicles.get(gc.p_uid).remove(electricTruck);
 		}
 	}
 	
@@ -510,7 +510,7 @@ if (electricTruck!=null) {
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
 	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc).add(hydrogenVehicle);
+		companyUI.c_additionalVehicles.get(gc.p_uid).add(hydrogenVehicle);
 	}
 }				
 else {
@@ -561,7 +561,7 @@ if (dieselTruck!=null) {
 			
 		}
 		if(foundAdditionalVehicle){
-			companyUI.c_additionalVehicles.get(gc).remove(dieselTruck);
+			companyUI.c_additionalVehicles.get(gc.p_uid).remove(dieselTruck);
 		}
 	}
 	
@@ -581,7 +581,7 @@ if (dieselTruck!=null) {
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
 	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc).add(hydrogenVehicle);
+		companyUI.c_additionalVehicles.get(gc.p_uid).add(hydrogenVehicle);
 	}
 }
 else {
@@ -637,7 +637,7 @@ if ( electricTruck != null ) {
 			
 		}
 		if(foundAdditionalVehicle){
-			companyUI.c_additionalVehicles.get(gc).remove(electricTruck);
+			companyUI.c_additionalVehicles.get(gc.p_uid).remove(electricTruck);
 		}
 	}
 	
@@ -657,7 +657,7 @@ if ( electricTruck != null ) {
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
 	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc).add(dieselVehicle);
+		companyUI.c_additionalVehicles.get(gc.p_uid).add(dieselVehicle);
 	}
 }
 else {
@@ -707,7 +707,7 @@ if ( hydrogenTruck != null ) {
 			companyUI.rb_scenariosPrivateUI.setValue(2, false);
 		}
 		if(foundAdditionalVehicle){
-			companyUI.c_additionalVehicles.get(gc).remove(hydrogenTruck);
+			companyUI.c_additionalVehicles.get(gc.p_uid).remove(hydrogenTruck);
 		}
 	}
 	
@@ -727,7 +727,7 @@ if ( hydrogenTruck != null ) {
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
 	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc).add(dieselVehicle);
+		companyUI.c_additionalVehicles.get(gc.p_uid).add(dieselVehicle);
 	}
 }
 else {
@@ -833,7 +833,7 @@ if (dieselVan!=null) {
 			companyUI.sl_electricVansCompany.setValue(companyUI.v_nbEVVans, false);
 			companyUI.rb_scenariosPrivateUI.setValue(2, false);
 			if (foundAdditionalVehicle) {
-				companyUI.c_additionalVehicles.get(gc).remove(dieselVan);
+				companyUI.c_additionalVehicles.get(gc.p_uid).remove(dieselVan);
 			}
 		}
 	}
@@ -856,7 +856,7 @@ if (dieselVan!=null) {
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
 	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc).add(electricVan);
+		companyUI.c_additionalVehicles.get(gc.p_uid).add(electricVan);
 	}
 }
 
@@ -913,7 +913,7 @@ if ( electricVan != null ) {
 			
 		}
 		if(foundAdditionalVehicle){
-			companyUI.c_additionalVehicles.get(gc).remove(electricVan);
+			companyUI.c_additionalVehicles.get(gc.p_uid).remove(electricVan);
 		}
 	}
 	
@@ -933,7 +933,7 @@ if ( electricVan != null ) {
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
 	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc).add(dieselVehicle);
+		companyUI.c_additionalVehicles.get(gc.p_uid).add(dieselVehicle);
 	}
 }
 else {
@@ -982,7 +982,7 @@ if (dieselCar!=null) {
 			companyUI.sl_electricCarsCompany.setValue(companyUI.v_nbEVCars, false);
 			companyUI.rb_scenariosPrivateUI.setValue(2, false);
 			if (foundAdditionalVehicle) {
-				companyUI.c_additionalVehicles.get(gc).remove(dieselCar);
+				companyUI.c_additionalVehicles.get(gc.p_uid).remove(dieselCar);
 			}
 		}
 	}
@@ -1005,7 +1005,7 @@ if (dieselCar!=null) {
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
 	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc).add(electricCar);
+		companyUI.c_additionalVehicles.get(gc.p_uid).add(electricCar);
 	}
 }
 
@@ -1062,7 +1062,7 @@ if ( electricCar != null ) {
 			
 		}
 		if(foundAdditionalVehicle){
-			companyUI.c_additionalVehicles.get(gc).remove(electricCar);
+			companyUI.c_additionalVehicles.get(gc.p_uid).remove(electricCar);
 		}
 	}
 	
@@ -1082,7 +1082,7 @@ if ( electricCar != null ) {
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
 	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc).add(dieselVehicle);
+		companyUI.c_additionalVehicles.get(gc.p_uid).add(dieselVehicle);
 	}
 }
 else {

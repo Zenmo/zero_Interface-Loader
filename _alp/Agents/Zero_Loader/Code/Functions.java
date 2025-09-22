@@ -1062,7 +1062,7 @@ try{
 	map_buildingData_Vallum = com.zenmo.vallum.PandKt.fetchBagPanden(surveys);
 }
 catch (Exception e){ //if api of bag is down, leave bag buildings empty and display error message
-	zero_Interface.f_setErrorScreen("BAG API is offline, het is mogelijk dat bepaalde panden niet zijn ingeladen!");
+	zero_Interface.f_setErrorScreen("BAG API is offline, het is mogelijk dat bepaalde panden niet zijn ingeladen!", 0, 0);
 }
 
 
@@ -1915,10 +1915,7 @@ zero_Interface.f_projectSpecificStyling();
 // Populate the model
 f_configureEngine_default();
 
-//send the GIS map centre location to the Interface 
-zero_Interface.map_centre_latitude = project_data.map_centre_latitude();
-zero_Interface.map_centre_longitude = project_data.map_centre_longitude();
-zero_Interface.map_scale = project_data.map_scale();
+// here used to be the update to the map coordinates in interface, now is done via project_data
 
 //Start up of the User Interface (Needs to happen after configuring the engine)
 zero_Interface.f_UIStartup();
@@ -1943,8 +1940,10 @@ if( settings.runHeadlessAtStartup() ){
 	zero_Interface.uI_Results.f_enableNonLivePlotRadioButtons(true);
 }
 else {
-		zero_Interface.f_resetSettings();
+	zero_Interface.f_resetSettings();
 }
+
+zero_Interface.uI_Results.f_updateResultsUI(energyModel);
 
 //Clear all data record collections after loader is done
 f_clearDataRecords();
@@ -4359,9 +4358,10 @@ double f_initializeInterfacePointers()
 //Set parameters/pointers in the interface
 zero_Interface.energyModel = energyModel;
 zero_Interface.uI_Results.energyModel = energyModel;
-zero_Interface.p_selectedProjectType = project_data.project_type();
+zero_Interface.project_data = project_data;
 zero_Interface.settings = settings;
 zero_Interface.user = user;
+
 /*ALCODEEND*/}
 
 double f_reconstructOrderedCollections(J_ModelSave saveObject)

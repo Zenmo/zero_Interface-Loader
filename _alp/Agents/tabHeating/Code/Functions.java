@@ -271,7 +271,7 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 		house.p_parentNodeHeat = GN_heat;
 		
 		//Show warning that heat grid is not a simple solution
-		zero_Interface.f_setErrorScreen("LET OP: Er is nu een 'warmtenet' gecreëerd. Maar er is geen warmtebron aanwezig in het model. Daarom zal de benodigde warmte voor het warmtenet in de resultaten te zien zijn als warmte import.");
+		zero_Interface.f_setErrorScreen("LET OP: Er is nu een 'warmtenet' gecreëerd. Maar er is geen warmtebron aanwezig in het model. Daarom zal de benodigde warmte voor het warmtenet in de resultaten te zien zijn als warmte import.", 0, 0);
 	}
 	house.p_parentNodeHeatID = house.p_parentNodeHeat.p_gridNodeID;
 	
@@ -389,7 +389,7 @@ for (GCHouse house: zero_Interface.energyModel.Houses ) {
 		house.p_parentNodeHeat = GN_heat;
 		
 		//Show warning that heat grid is not a simple solution
-		zero_Interface.f_setErrorScreen("LET OP: Er is nu een 'warmtenet' gecreëerd. Maar er is geen warmtebron aanwezig in het model. Daarom zal de benodigde warmte voor het warmtenet in de resultaten te zien zijn als warmte import.");
+		zero_Interface.f_setErrorScreen("LET OP: Er is nu een 'warmtenet' gecreëerd. Maar er is geen warmtebron aanwezig in het model. Daarom zal de benodigde warmte voor het warmtenet in de resultaten te zien zijn als warmte import.", 0, 0);
 	}
 	house.p_parentNodeHeatID = house.p_parentNodeHeat.p_gridNodeID;
 	double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);

@@ -681,7 +681,7 @@ if (vehicleType == OL_EnergyAssetType.ELECTRIC_VEHICLE || vehicleType == OL_Ener
 	
 	
 	if (isAdditionalVehicle){
-		c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr)).add(electricVehicle);
+		c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid).add(electricVehicle);
 	}
 	else{
 		zero_Interface.c_orderedVehicles.add(0, electricVehicle);
@@ -711,7 +711,7 @@ else if (vehicleType == OL_EnergyAssetType.DIESEL_VEHICLE || vehicleType == OL_E
 	
 	
 	if (isAdditionalVehicle){
-		c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr)).add(dieselVehicle);
+		c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid).add(dieselVehicle);
 	}
 	else{
 		zero_Interface.c_orderedVehicles.add(0, dieselVehicle);
@@ -739,7 +739,7 @@ else{ // (Hydrogen vehicles)
 	
 	
 	if (isAdditionalVehicle){
-		c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr)).add(hydrogenVehicle);
+		c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid).add(hydrogenVehicle);
 	}
 	else{
 		zero_Interface.c_orderedVehicles.add(0, hydrogenVehicle);
@@ -809,11 +809,11 @@ switch (vehicleType){
 if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of selected vehicles
 	
 	//First convert all other existing additional vehicles
-	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(c_additionalVehicles.get(GC), p -> p.energyAssetType == vehicleType_diesel || p.energyAssetType == vehicleType_hydrogen).size();
+	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(c_additionalVehicles.get(GC.p_uid), p -> p.energyAssetType == vehicleType_diesel || p.energyAssetType == vehicleType_hydrogen).size();
 	while(setAmountOfVehicles > local_EV_nb && nbOfOtherAdditionalVehiclesOfThisClass > 0 ){
 		
 		// Find an additional Diesel vehicle
-		J_EAVehicle dieselVehicle = findFirst(c_additionalVehicles.get(GC), p -> p.energyAssetType == vehicleType_diesel);
+		J_EAVehicle dieselVehicle = findFirst(c_additionalVehicles.get(GC.p_uid), p -> p.energyAssetType == vehicleType_diesel);
 		
 		if(dieselVehicle != null){
 			J_ActivityTrackerTrips tripTracker = dieselVehicle.tripTracker;
@@ -821,7 +821,7 @@ if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of se
 			// Remove Diesel vehicle		
 			boolean available = dieselVehicle.getAvailability();
 			dieselVehicle.removeEnergyAsset();
-			c_additionalVehicles.get(GC).remove(dieselVehicle);
+			c_additionalVehicles.get(GC.p_uid).remove(dieselVehicle);
 			zero_Interface.c_orderedVehicles.remove(dieselVehicle);
 			
 			//Create new additional EV
@@ -834,13 +834,13 @@ if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of se
 		}
 		else{
 			// Find an additional Hydrogen vehicle
-			J_EAVehicle hydrogenVehicle = findFirst(c_additionalVehicles.get(GC), p -> p.energyAssetType == vehicleType_hydrogen);
+			J_EAVehicle hydrogenVehicle = findFirst(c_additionalVehicles.get(GC.p_uid), p -> p.energyAssetType == vehicleType_hydrogen);
 			J_ActivityTrackerTrips tripTracker = hydrogenVehicle.tripTracker;
 			
 			// Remove Hydrogen vehicle		
 			boolean available = hydrogenVehicle.getAvailability();
 			hydrogenVehicle.removeEnergyAsset();
-			c_additionalVehicles.get(GC).remove(hydrogenVehicle);
+			c_additionalVehicles.get(GC.p_uid).remove(hydrogenVehicle);
 			zero_Interface.c_orderedVehicles.remove(hydrogenVehicle);
 			
 			//Create new additional EV
@@ -901,7 +901,7 @@ if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of se
 }
 else if(setAmountOfVehicles < local_EV_nb){ // Slider has decreased the amount of selected vehicles
 	
-	ArrayList<J_EAVehicle> additionalVehicles = new ArrayList<J_EAVehicle>(findAll(c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr)), vehicle -> vehicle.energyAssetType == vehicleType ));
+	ArrayList<J_EAVehicle> additionalVehicles = new ArrayList<J_EAVehicle>(findAll(c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid), vehicle -> vehicle.energyAssetType == vehicleType ));
 	while(setAmountOfVehicles < local_EV_nb && additionalVehicles.size() > 0){ //If there are additional EV, remove them first
 
 		//Find additional created vehicle
@@ -909,7 +909,7 @@ else if(setAmountOfVehicles < local_EV_nb){ // Slider has decreased the amount o
 		
 		// Remove electric vehicle
 		additionalVehicles.remove(ev);
-		c_additionalVehicles.get(GC).remove(ev);
+		c_additionalVehicles.get(GC.p_uid).remove(ev);
 		zero_Interface.c_orderedVehicles.remove(ev);
 		ev.removeEnergyAsset();
 			
@@ -919,7 +919,7 @@ else if(setAmountOfVehicles < local_EV_nb){ // Slider has decreased the amount o
 	while ( setAmountOfVehicles < local_EV_nb && local_DieselV_nb < max_amount_diesel_vehicles) {
 
 		//Find a to be removed EV
-		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType && !c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr)).contains(p)  && ((GridConnection)p.getParentAgent()) == GC);
+		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType && !c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid).contains(p)  && ((GridConnection)p.getParentAgent()) == GC);
 		J_ActivityTrackerTrips tripTracker = ev.tripTracker;
 
 		//Remove EV
@@ -1030,11 +1030,11 @@ switch (vehicleType){
 
 if (setAmountOfVehicles > local_DieselV_nb){ // Slider has increased the amount of selected vehicles
 	//First convert all other existing additional vehicles
-	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(c_additionalVehicles.get(GC), p -> p.energyAssetType == vehicleType_hydrogen || p.energyAssetType == vehicleType_electric).size();
+	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(c_additionalVehicles.get(GC.p_uid), p -> p.energyAssetType == vehicleType_hydrogen || p.energyAssetType == vehicleType_electric).size();
 	while(setAmountOfVehicles > local_DieselV_nb && nbOfOtherAdditionalVehiclesOfThisClass > 0 ){
 
 		// Find an additional EV vehicle
-		J_EAVehicle ev = findFirst(c_additionalVehicles.get(GC), p -> p.energyAssetType == vehicleType_electric);
+		J_EAVehicle ev = findFirst(c_additionalVehicles.get(GC.p_uid), p -> p.energyAssetType == vehicleType_electric);
 			
 		if(ev != null){
 			J_ActivityTrackerTrips tripTracker = ev.tripTracker;
@@ -1042,7 +1042,7 @@ if (setAmountOfVehicles > local_DieselV_nb){ // Slider has increased the amount 
 			// Remove EV
 			boolean available = ev.getAvailability();
 			ev.removeEnergyAsset();
-			c_additionalVehicles.get(GC).remove(ev);
+			c_additionalVehicles.get(GC.p_uid).remove(ev);
 			zero_Interface.c_orderedVehicles.remove(ev);
 			
 			//Create new additional Diesel vehicle
@@ -1055,13 +1055,13 @@ if (setAmountOfVehicles > local_DieselV_nb){ // Slider has increased the amount 
 		}
 		else{
 			// Find an additional Hydrogen vehicle
-			J_EAVehicle hydrogenVehicle = findFirst(c_additionalVehicles.get(GC), p -> p.energyAssetType == vehicleType_hydrogen);
+			J_EAVehicle hydrogenVehicle = findFirst(c_additionalVehicles.get(GC.p_uid), p -> p.energyAssetType == vehicleType_hydrogen);
 			J_ActivityTrackerTrips tripTracker = hydrogenVehicle.tripTracker;
 			
 			// Remove Hydrogen vehicle		
 			boolean available = hydrogenVehicle.getAvailability();
 			hydrogenVehicle.removeEnergyAsset();
-			c_additionalVehicles.get(GC).remove(hydrogenVehicle);
+			c_additionalVehicles.get(GC.p_uid).remove(hydrogenVehicle);
 			zero_Interface.c_orderedVehicles.remove(hydrogenVehicle);
 			
 			//Create new additional Diesel vehicle
@@ -1118,7 +1118,7 @@ if (setAmountOfVehicles > local_DieselV_nb){ // Slider has increased the amount 
 }
 else if(setAmountOfVehicles < local_DieselV_nb){ // Slider has decreased the amount of selected vehicles
 	
-	ArrayList<J_EAVehicle> additionalVehicles = new ArrayList<J_EAVehicle>(findAll(c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr)), vehicle -> vehicle.energyAssetType == vehicleType ));
+	ArrayList<J_EAVehicle> additionalVehicles = new ArrayList<J_EAVehicle>(findAll(c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid), vehicle -> vehicle.energyAssetType == vehicleType ));
 	while(setAmountOfVehicles < local_DieselV_nb && additionalVehicles.size() > 0){ //Remove additional Diesel vehicles first
 	
 	//Find additional created vehicle
@@ -1126,7 +1126,7 @@ else if(setAmountOfVehicles < local_DieselV_nb){ // Slider has decreased the amo
 	
 	// Remove diesel vehicle
 	additionalVehicles.remove(dieselVehicle);
-	c_additionalVehicles.get(GC).remove(dieselVehicle);
+	c_additionalVehicles.get(GC.p_uid).remove(dieselVehicle);
 	dieselVehicle.removeEnergyAsset();
 	zero_Interface.c_orderedVehicles.remove(dieselVehicle);
 	
@@ -1136,7 +1136,7 @@ else if(setAmountOfVehicles < local_DieselV_nb){ // Slider has decreased the amo
 	while ( setAmountOfVehicles < local_DieselV_nb && local_EV_nb < max_amount_EV) {
 	
 	// Find a to be removed Diesel vehicle
-		J_EADieselVehicle dieselVehicle = (J_EADieselVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType && !c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr)).contains(p)  && ((GridConnection)p.getParentAgent()) == GC);
+		J_EADieselVehicle dieselVehicle = (J_EADieselVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType && !c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid).contains(p)  && ((GridConnection)p.getParentAgent()) == GC);
 		J_ActivityTrackerTrips tripTracker = dieselVehicle.tripTracker;
 		
 		// Remove diesel vehicle		
@@ -1242,11 +1242,11 @@ switch (vehicleType){
 if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amount of selected vehicles
 	
 	//First convert all other existing additional vehicles
-	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(c_additionalVehicles.get(GC), p -> p.energyAssetType == vehicleType_diesel || p.energyAssetType == vehicleType_electric).size();
+	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(c_additionalVehicles.get(GC.p_uid), p -> p.energyAssetType == vehicleType_diesel || p.energyAssetType == vehicleType_electric).size();
 	while(setAmountOfVehicles > local_HydrogenV_nb && nbOfOtherAdditionalVehiclesOfThisClass > 0 ){
 		
 		// Find an additional Diesel vehicle
-		J_EAVehicle dieselVehicle = findFirst(c_additionalVehicles.get(GC), p -> p.energyAssetType == vehicleType_diesel);
+		J_EAVehicle dieselVehicle = findFirst(c_additionalVehicles.get(GC.p_uid), p -> p.energyAssetType == vehicleType_diesel);
 		
 		if(dieselVehicle != null){
 			J_ActivityTrackerTrips tripTracker = dieselVehicle.tripTracker;
@@ -1254,7 +1254,7 @@ if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amoun
 			// Remove Diesel vehicle		
 			boolean available = dieselVehicle.getAvailability();
 			dieselVehicle.removeEnergyAsset();
-			c_additionalVehicles.get(GC).remove(dieselVehicle);
+			c_additionalVehicles.get(GC.p_uid).remove(dieselVehicle);
 			zero_Interface.c_orderedVehicles.remove(dieselVehicle);
 			
 			//Create new additional Hydrogen vehicle
@@ -1267,13 +1267,13 @@ if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amoun
 		}
 		else{
 			// Find an additional EV vehicle
-			J_EAVehicle ev = findFirst(c_additionalVehicles.get(GC), p -> p.energyAssetType == vehicleType_electric);
+			J_EAVehicle ev = findFirst(c_additionalVehicles.get(GC.p_uid), p -> p.energyAssetType == vehicleType_electric);
 			J_ActivityTrackerTrips tripTracker = ev.tripTracker;
 		
 			// Remove EV
 			boolean available = ev.getAvailability();
 			ev.removeEnergyAsset();
-			c_additionalVehicles.get(GC).remove(ev);
+			c_additionalVehicles.get(GC.p_uid).remove(ev);
 			zero_Interface.c_orderedVehicles.remove(ev);
 			
 			//Create new additional Hydrogen vehicle
@@ -1332,7 +1332,7 @@ if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amoun
 }
 else if(setAmountOfVehicles < local_HydrogenV_nb){ // Slider has decreased the amount of selected vehicles
 	
-	ArrayList<J_EAVehicle> additionalVehicles = new ArrayList<J_EAVehicle>(findAll(c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr)), vehicle -> vehicle.energyAssetType == vehicleType ));
+	ArrayList<J_EAVehicle> additionalVehicles = new ArrayList<J_EAVehicle>(findAll(c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid), vehicle -> vehicle.energyAssetType == vehicleType ));
 	while(setAmountOfVehicles < local_HydrogenV_nb && additionalVehicles.size() > 0){//Remove additional Hydrogen vehicles first
 
 	//Find additional created vehicle
@@ -1340,7 +1340,7 @@ else if(setAmountOfVehicles < local_HydrogenV_nb){ // Slider has decreased the a
 	
 	// Remove hydrogen vehicle
 	additionalVehicles.remove(hydrogenVehicle);
-	c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr)).remove(hydrogenVehicle);
+	c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid).remove(hydrogenVehicle);
 	hydrogenVehicle.removeEnergyAsset();
 	zero_Interface.c_orderedVehicles.remove(hydrogenVehicle);
 	
@@ -1350,7 +1350,7 @@ else if(setAmountOfVehicles < local_HydrogenV_nb){ // Slider has decreased the a
 	while ( setAmountOfVehicles < local_HydrogenV_nb && local_EV_nb < max_amount_EV) {
 	
 		// Find a to be removed Hydrogen vehicle
-		J_EAHydrogenVehicle hydrogenVehicle = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType && !c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr)).contains(p)  && ((GridConnection)p.getParentAgent()) == GC);
+		J_EAHydrogenVehicle hydrogenVehicle = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType && !c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid).contains(p)  && ((GridConnection)p.getParentAgent()) == GC);
 		J_ActivityTrackerTrips tripTracker = hydrogenVehicle.tripTracker;
 		
 		// Remove hydrogen vehicle			

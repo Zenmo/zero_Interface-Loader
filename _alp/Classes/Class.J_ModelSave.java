@@ -21,7 +21,11 @@ public class J_ModelSave implements Serializable {
 	public ArrayList<J_EAChargePoint> c_orderedV2GChargers;
 	public ArrayList<GCPublicCharger> c_orderedPublicChargers;
 
-	//public LinkedHashMap<GCPublicCharger, List<J_EADieselVehicle>> c_mappingOfVehiclesPerCharger;
+	public LinkedHashMap<String, List<J_EADieselVehicle>> c_mappingOfVehiclesPerCharger;
+	public LinkedHashMap<String, J_scenario_Current> c_scenarioMap_Current;
+	public LinkedHashMap<String, J_scenario_Future> c_scenarioMap_Future;
+	
+	public List<LinkedHashMap<String, List<J_EAVehicle>>> c_additionalVehicleHashMaps;
 	
     /**
      * Default constructor

@@ -1450,7 +1450,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>GridConnection</ElementClass>
+			<ElementClass>String</ElementClass>
 			<ValueElementClass>List&lt;J_EAVehicle&gt;</ValueElementClass>
 		</Properties>
 	</Variable>

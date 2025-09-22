@@ -289,6 +289,9 @@ else if ( gc instanceof GCUtility ) {
 			companyUI.b_runningMainInterfaceSlider = true;
 			if(companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) != gc){
 				int i = indexOf(companyUI.c_ownedGridConnections.stream().toArray(), gc);
+				if (i == -1) {
+					throw new RuntimeException("Error: Unable to find gc: " + gc.p_ownerID + " in companyUI number " + gc.p_owner.p_connectionOwnerIndexNr);
+				}
 				companyUI.GCnr_selection.setValue(i, true);
 			}
 			companyUI.b_runningMainInterfaceSlider = false;	
@@ -461,7 +464,7 @@ while ( currentNbChargers > nbChargersGoal ) {
 		zero_Interface.c_orderedPublicChargers.add(0, gc);
 		currentNbChargers--;
 		
-		for (J_EADieselVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc)) {
+		for (J_EADieselVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc.p_uid)) {
 			car.reRegisterEnergyAsset();
 		}
 	}
@@ -477,7 +480,7 @@ while ( currentNbChargers < nbChargersGoal){
 		zero_Interface.c_orderedPublicChargers.add(0, gc);
 		currentNbChargers++;
 		
-		for (J_EADieselVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc)) {
+		for (J_EADieselVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc.p_uid)) {
 			J_ActivityTrackerTrips tripTracker = car.getTripTracker(); //Needed, as triptracker is removed when removeEnergyAsset is called.
 			car.removeEnergyAsset();
 			car.setTripTracker(tripTracker);//Re-set the triptracker again, for storing.

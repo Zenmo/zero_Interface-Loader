@@ -2377,7 +2377,7 @@
 		</Label>
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
+		<ShowLabel>false</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
 			<Type><![CDATA[EnergyModel]]></Type>
 			<UnitType>NONE</UnitType>
@@ -2392,85 +2392,10 @@
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
-		<Id>1715867611441</Id>
-		<Name><![CDATA[map_centre_latitude]]></Name>
-		<X>-670</X>
-		<Y>100</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[Double]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1715867611439</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1715867648777</Id>
-		<Name><![CDATA[map_centre_longitude]]></Name>
-		<X>-670</X>
-		<Y>120</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[Double]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1715867648775</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1724757837316</Id>
-		<Name><![CDATA[p_selectedProjectType]]></Name>
-		<X>-670</X>
-		<Y>80</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[OL_ProjectType]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1724757837314</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
 		<Id>1727251571552</Id>
 		<Name><![CDATA[settings]]></Name>
 		<X>-670</X>
-		<Y>160</Y>
+		<Y>110</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2485,31 +2410,6 @@
 			<ParameterEditor>
 				<Id>1727251571550</Id>
 				<Label><![CDATA[settings]]></Label>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1728030131094</Id>
-		<Name><![CDATA[map_scale]]></Name>
-		<X>-670</X>
-		<Y>140</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[Double]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1728030131092</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
@@ -2606,7 +2506,7 @@
 		<Id>1753446312779</Id>
 		<Name><![CDATA[b_inEnergyHubSelectionMode]]></Name>
 		<X>2240</X>
-		<Y>-2070</Y>
+		<Y>-2130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2634,7 +2534,7 @@
 		<Id>1753446312783</Id>
 		<Name><![CDATA[b_inEnergyHubMode]]></Name>
 		<X>2240</X>
-		<Y>-2090</Y>
+		<Y>-2150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2662,7 +2562,7 @@
 		<Id>1756395079958</Id>
 		<Name><![CDATA[user]]></Name>
 		<X>-670</X>
-		<Y>180</Y>
+		<Y>130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2676,6 +2576,32 @@
 			<SdArray>false</SdArray>
 			<ParameterEditor>
 				<Id>1756395079956</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1758028435828</Id>
+		<Name><![CDATA[project_data]]></Name>
+		<Description><![CDATA[Should be filled with the Project_data record created in the startup of the project model]]></Description>
+		<X>-670</X>
+		<Y>90</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Project_data]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1758028435826</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
@@ -3258,7 +3184,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>GCPublicCharger</ElementClass>
+			<ElementClass>String</ElementClass>
 			<ValueElementClass>List&lt;J_EADieselVehicle&gt;</ValueElementClass>
 		</Properties>
 	</Variable>
@@ -3277,24 +3203,6 @@
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>UI_Results</ElementClass>
-			<ValueElementClass>String</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1756993791971</Id>
-		<Name><![CDATA[c_UITabsInstances]]></Name>
-		<X>-270</X>
-		<Y>720</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>UI_Tabs</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>
