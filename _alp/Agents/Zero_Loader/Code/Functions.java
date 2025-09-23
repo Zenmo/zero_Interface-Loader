@@ -3107,6 +3107,11 @@ double batteryCap_kWh = Double.parseDouble(chargingSessionInfo[3]);
 double chargingPower_kW = Double.parseDouble(chargingSessionInfo[5]);
 int socket = Integer.parseInt(chargingSessionInfo[6]);
 
+if(chargingDemand_kWh > (chargingPower_kW * (endIndex - startIndex)*0.25)){
+	chargingDemand_kWh = (chargingPower_kW * (endIndex - startIndex)*0.25); //Cap this to prevent errors with data
+}
+
+
 return new J_ChargingSession(startIndex, endIndex, chargingDemand_kWh, batteryCap_kWh, chargingPower_kW, socket, 0.25);
 /*ALCODEEND*/}
 
