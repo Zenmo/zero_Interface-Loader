@@ -51,7 +51,7 @@
 		<Id>1702045084338</Id>
 		<Name><![CDATA[f_styleAreas]]></Name>
 		<X>-670</X>
-		<Y>401</Y>
+		<Y>351</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -71,7 +71,7 @@
 		<Id>1702385530773</Id>
 		<Name><![CDATA[f_styleSimulationAreas]]></Name>
 		<X>-670</X>
-		<Y>381</Y>
+		<Y>331</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -91,7 +91,7 @@
 		<Id>1705499586056</Id>
 		<Name><![CDATA[f_styleGridNodes]]></Name>
 		<X>-670</X>
-		<Y>421</Y>
+		<Y>371</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -111,7 +111,7 @@
 		<Id>1705505495599</Id>
 		<Name><![CDATA[f_styleMVLV]]></Name>
 		<X>-650</X>
-		<Y>501</Y>
+		<Y>451</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -131,7 +131,7 @@
 		<Id>1705505509120</Id>
 		<Name><![CDATA[f_styleHVMV]]></Name>
 		<X>-650</X>
-		<Y>441</Y>
+		<Y>391</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -151,7 +151,7 @@
 		<Id>1705925024602</Id>
 		<Name><![CDATA[f_setUITabs]]></Name>
 		<X>-670</X>
-		<Y>651</Y>
+		<Y>601</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -244,7 +244,7 @@
 		<Id>1709716821854</Id>
 		<Name><![CDATA[f_connectResultsUI]]></Name>
 		<X>-670</X>
-		<Y>830</Y>
+		<Y>780</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -259,8 +259,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1709718252272</Id>
 		<Name><![CDATA[f_resetSettings]]></Name>
-		<X>-260</X>
-		<Y>740</Y>
+		<X>-290</X>
+		<Y>750</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -380,7 +380,7 @@
 		<Id>1715157302225</Id>
 		<Name><![CDATA[f_projectSpecificSettings]]></Name>
 		<X>-660</X>
-		<Y>290</Y>
+		<Y>240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -396,7 +396,7 @@
 		<Id>1715859145993</Id>
 		<Name><![CDATA[f_UIStartup]]></Name>
 		<X>-670</X>
-		<Y>230</Y>
+		<Y>180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -489,7 +489,7 @@
 		<Id>1718288402102</Id>
 		<Name><![CDATA[f_updateMainInterfaceSliders]]></Name>
 		<X>-670</X>
-		<Y>716</Y>
+		<Y>666</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -581,7 +581,7 @@
 		<Id>1721991420806</Id>
 		<Name><![CDATA[f_setGridTopologyColors]]></Name>
 		<X>-650</X>
-		<Y>541</Y>
+		<Y>491</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -597,7 +597,7 @@
 		<Id>1721991963719</Id>
 		<Name><![CDATA[f_styleSUBMV]]></Name>
 		<X>-650</X>
-		<Y>481</Y>
+		<Y>431</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -617,7 +617,7 @@
 		<Id>1721992103665</Id>
 		<Name><![CDATA[f_styleMVMV]]></Name>
 		<X>-650</X>
-		<Y>461</Y>
+		<Y>411</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -761,7 +761,7 @@
 		<Id>1725977409304</Id>
 		<Name><![CDATA[f_setSliderPresets]]></Name>
 		<X>-650</X>
-		<Y>691</Y>
+		<Y>641</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -777,7 +777,7 @@
 		<Id>1726068314849</Id>
 		<Name><![CDATA[f_projectSpecificStyling]]></Name>
 		<X>-660</X>
-		<Y>270</Y>
+		<Y>220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1085,7 +1085,7 @@
 		<Id>1736442051389</Id>
 		<Name><![CDATA[f_styleResultsUI]]></Name>
 		<X>-650</X>
-		<Y>850</Y>
+		<Y>800</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1144,8 +1144,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1740043548084</Id>
 		<Name><![CDATA[f_enableLivePlotsOnly]]></Name>
-		<X>-240</X>
-		<Y>760</Y>
+		<X>-270</X>
+		<Y>770</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1249,7 +1249,7 @@
 		<Id>1743518032245</Id>
 		<Name><![CDATA[f_setStartView]]></Name>
 		<X>-640</X>
-		<Y>335</Y>
+		<Y>285</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1446,7 +1446,7 @@
 		<Name><![CDATA[f_selectGISRegion_publicModel]]></Name>
 		<Description><![CDATA[Function that selects gisregions after click on the map]]></Description>
 		<X>-670</X>
-		<Y>905</Y>
+		<Y>875</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1470,7 +1470,7 @@
 		<Id>1746085650084</Id>
 		<Name><![CDATA[f_changeDefaultColorOfPrivateGC]]></Name>
 		<X>-670</X>
-		<Y>945</Y>
+		<Y>915</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1766,7 +1766,7 @@
 		<Id>1752837115143</Id>
 		<Name><![CDATA[f_styleLVLV]]></Name>
 		<X>-650</X>
-		<Y>520</Y>
+		<Y>470</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1955,7 +1955,7 @@
 		<Id>1753440184174</Id>
 		<Name><![CDATA[f_initializePresentationOrder]]></Name>
 		<X>-660</X>
-		<Y>250</Y>
+		<Y>200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2097,7 +2097,7 @@
 		<Id>1753881971788</Id>
 		<Name><![CDATA[f_createUITabs_default]]></Name>
 		<X>-650</X>
-		<Y>670</Y>
+		<Y>620</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2256,8 +2256,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1756994047356</Id>
 		<Name><![CDATA[f_enableAllPlots]]></Name>
-		<X>-250</X>
-		<Y>650</Y>
+		<X>-290</X>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2280,8 +2280,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1756995218301</Id>
 		<Name><![CDATA[f_setAllSimulateYearScreens]]></Name>
-		<X>-250</X>
-		<Y>670</Y>
+		<X>-290</X>
+		<Y>700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2296,8 +2296,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1756997038652</Id>
 		<Name><![CDATA[f_removeAllSimulateYearScreens]]></Name>
-		<X>-250</X>
-		<Y>690</Y>
+		<X>-290</X>
+		<Y>720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
