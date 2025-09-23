@@ -4,7 +4,7 @@
 		<Id>1663238634515</Id>
 		<Name><![CDATA[v_timeStepsElapsed]]></Name>
 		<X>-240</X>
-		<Y>890</Y>
+		<Y>855</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -26,7 +26,7 @@
 		<Id>1696837759932</Id>
 		<Name><![CDATA[v_LVGridColor]]></Name>
 		<X>395</X>
-		<Y>1100</Y>
+		<Y>1220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -48,7 +48,7 @@
 		<Id>1696837759935</Id>
 		<Name><![CDATA[v_HVGridColor]]></Name>
 		<X>395</X>
-		<Y>1060</Y>
+		<Y>1180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -70,7 +70,7 @@
 		<Id>1696837759938</Id>
 		<Name><![CDATA[v_gasGridColor]]></Name>
 		<X>395</X>
-		<Y>1120</Y>
+		<Y>1240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -90,10 +90,9 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1696837759945</Id>
-		<Name><![CDATA[v_energieLabelAColor]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<Name><![CDATA[v_energyLabelAColor]]></Name>
 		<X>395</X>
-		<Y>1165</Y>
+		<Y>1325</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -113,10 +112,9 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1696837759948</Id>
-		<Name><![CDATA[v_energieLabelBColor]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<Name><![CDATA[v_energyLabelBColor]]></Name>
 		<X>395</X>
-		<Y>1185</Y>
+		<Y>1345</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -136,10 +134,9 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1696837759950</Id>
-		<Name><![CDATA[v_energieLabelCColor]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<Name><![CDATA[v_energyLabelCColor]]></Name>
 		<X>395</X>
-		<Y>1205</Y>
+		<Y>1365</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -159,10 +156,9 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1696837759953</Id>
-		<Name><![CDATA[v_energieLabelDColor]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<Name><![CDATA[v_energyLabelDColor]]></Name>
 		<X>395</X>
-		<Y>1225</Y>
+		<Y>1385</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -182,10 +178,9 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1696837759955</Id>
-		<Name><![CDATA[v_energieLabelEColor]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<Name><![CDATA[v_energyLabelEColor]]></Name>
 		<X>395</X>
-		<Y>1245</Y>
+		<Y>1405</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -205,10 +200,9 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1696837759958</Id>
-		<Name><![CDATA[v_energieLabelFColor]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<Name><![CDATA[v_energyLabelFColor]]></Name>
 		<X>395</X>
-		<Y>1265</Y>
+		<Y>1425</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -228,10 +222,9 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1696837759961</Id>
-		<Name><![CDATA[v_energieLabelOnbekendColor]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<Name><![CDATA[v_energyLabelUnknownColor]]></Name>
 		<X>395</X>
-		<Y>1305</Y>
+		<Y>1465</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -245,16 +238,15 @@
               StaticVariable="false">
 			<Type><![CDATA[Color]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[peru]]></Code>
+				<Code><![CDATA[gray]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1696837759963</Id>
-		<Name><![CDATA[v_energieLabelGColor]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<Name><![CDATA[v_energyLabelGColor]]></Name>
 		<X>395</X>
-		<Y>1285</Y>
+		<Y>1445</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -276,7 +268,7 @@
 		<Id>1696837759966</Id>
 		<Name><![CDATA[v_MVGridColor]]></Name>
 		<X>395</X>
-		<Y>1080</Y>
+		<Y>1200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -320,7 +312,7 @@
 		<Id>1701164360663</Id>
 		<Name><![CDATA[b_resultsUpToDate]]></Name>
 		<X>-240</X>
-		<Y>920</Y>
+		<Y>880</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -536,8 +528,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1704463271534</Id>
 		<Name><![CDATA[v_selectionColor]]></Name>
-		<X>410</X>
-		<Y>1360</Y>
+		<X>400</X>
+		<Y>1080</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -558,8 +550,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1704463281781</Id>
 		<Name><![CDATA[v_selectionColorAddBuildings]]></Name>
-		<X>410</X>
-		<Y>1380</Y>
+		<X>400</X>
+		<Y>1100</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -985,8 +977,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1709803708318</Id>
 		<Name><![CDATA[v_gridNodeFeedinColor]]></Name>
-		<X>410</X>
-		<Y>1400</Y>
+		<X>400</X>
+		<Y>1120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1228,7 +1220,7 @@
 		<Id>1718264413499</Id>
 		<Name><![CDATA[v_unknownConsumptionColor]]></Name>
 		<X>395</X>
-		<Y>1145</Y>
+		<Y>1305</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1272,7 +1264,7 @@
 		<Id>1719311576065</Id>
 		<Name><![CDATA[v_newChargingStationColor]]></Name>
 		<X>690</X>
-		<Y>1580</Y>
+		<Y>1540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1294,7 +1286,7 @@
 		<Id>1719311576067</Id>
 		<Name><![CDATA[v_newChargingStationLineColor]]></Name>
 		<X>690</X>
-		<Y>1600</Y>
+		<Y>1560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1502,7 +1494,7 @@
 		<Id>1721729327873</Id>
 		<Name><![CDATA[v_parcelColor]]></Name>
 		<X>690</X>
-		<Y>1630</Y>
+		<Y>1590</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1524,7 +1516,7 @@
 		<Id>1721729331151</Id>
 		<Name><![CDATA[v_parcelLineColor]]></Name>
 		<X>690</X>
-		<Y>1650</Y>
+		<Y>1610</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1675,52 +1667,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1726752465730</Id>
-		<Name><![CDATA[v_chargingCentreColor]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>690</X>
-		<Y>1530</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[Color]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[purple]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1726752465732</Id>
-		<Name><![CDATA[v_chargingCentreLineColor]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>690</X>
-		<Y>1550</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[Color]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new Color(48, 25, 52)]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1728404379677</Id>
 		<Name><![CDATA[v_energyAssetLineWidth]]></Name>
 		<X>690</X>
@@ -1790,7 +1736,7 @@
 		<Id>1734617425109</Id>
 		<Name><![CDATA[b_gridLoopsAreDefined]]></Name>
 		<X>-630</X>
-		<Y>550</Y>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1917,7 +1863,7 @@
 		<Id>1750086295616</Id>
 		<Name><![CDATA[v_parkingSpaceColor_private]]></Name>
 		<X>690</X>
-		<Y>1760</Y>
+		<Y>1720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1939,7 +1885,7 @@
 		<Id>1750086307414</Id>
 		<Name><![CDATA[v_parkingSpaceLineColor_private]]></Name>
 		<X>690</X>
-		<Y>1780</Y>
+		<Y>1740</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1961,7 +1907,7 @@
 		<Id>1750089169786</Id>
 		<Name><![CDATA[v_parkingSpaceColor_electric]]></Name>
 		<X>690</X>
-		<Y>1720</Y>
+		<Y>1680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1983,7 +1929,7 @@
 		<Id>1750089169788</Id>
 		<Name><![CDATA[v_parkingSpaceLineColor_electric]]></Name>
 		<X>690</X>
-		<Y>1740</Y>
+		<Y>1700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2005,7 +1951,7 @@
 		<Id>1750089171472</Id>
 		<Name><![CDATA[v_parkingSpaceColor_public]]></Name>
 		<X>690</X>
-		<Y>1680</Y>
+		<Y>1640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2027,7 +1973,7 @@
 		<Id>1750089171474</Id>
 		<Name><![CDATA[v_parkingSpaceLineColor_public]]></Name>
 		<X>690</X>
-		<Y>1700</Y>
+		<Y>1660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2219,7 +2165,7 @@
 		<Id>1753110308594</Id>
 		<Name><![CDATA[v_amountOfDefinedGridLoops]]></Name>
 		<X>-630</X>
-		<Y>570</Y>
+		<Y>580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2285,7 +2231,7 @@
 		<Id>1754312936616</Id>
 		<Name><![CDATA[v_parkingSpaceLineColor_unkown]]></Name>
 		<X>690</X>
-		<Y>1850</Y>
+		<Y>1810</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2307,7 +2253,7 @@
 		<Id>1754312949585</Id>
 		<Name><![CDATA[v_parkingSpaceColor_unkown]]></Name>
 		<X>690</X>
-		<Y>1830</Y>
+		<Y>1790</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2370,7 +2316,7 @@
 		<Id>1715858732720</Id>
 		<Name><![CDATA[energyModel]]></Name>
 		<X>-240</X>
-		<Y>950</Y>
+		<Y>905</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

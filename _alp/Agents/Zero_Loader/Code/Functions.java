@@ -3208,9 +3208,20 @@ switch (parentGC.p_energyLabel){
 	case D:
 		lossfactor_WpK = 0.85 * floorArea_m2;
 	break;
-	default:
-		lossfactor_WpK = uniform (0.4, 1.2) * floorArea_m2;
+	case E:
+		lossfactor_WpK = 0.105 * floorArea_m2;
 	break;
+	case F:
+		lossfactor_WpK = 0.125 * floorArea_m2;
+	break;
+	case G:
+		lossfactor_WpK = 0.145 * floorArea_m2;
+	break;
+	case NONE:
+		lossfactor_WpK = uniform (0.85, 1.2) * floorArea_m2;
+	break;
+	default:
+		lossfactor_WpK = uniform (0.85, 1.2) * floorArea_m2;
 }
 
 lossfactor_WpK = roundToDecimal(lossfactor_WpK,2);

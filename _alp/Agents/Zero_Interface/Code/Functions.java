@@ -1,37 +1,79 @@
 double f_setColorsBasedOnEnergyLabels(GIS_Object b)
 {/*ALCODESTART::1696837759924*/
 if (b.gisRegion != null){
-	if (indexOfMax(b.ar_countEnergyLabels) < 4){
-		b.gisRegion.setFillColor(v_energieLabelAColor);
+
+	OL_GridConnectionIsolationLabel buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.NONE;
+	
+	//Find the lowest energy label in the building
+	for(GridConnection GC : b.c_containedGridConnections){
+		switch(GC.p_energyLabel){
+			case A:
+				if(buildingLowestEnergyLabel == OL_GridConnectionIsolationLabel.NONE){
+					buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.A;
+				}
+			break;
+			case B:
+				if(buildingLowestEnergyLabel == OL_GridConnectionIsolationLabel.NONE || buildingLowestEnergyLabel == OL_GridConnectionIsolationLabel.A){
+					buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.B;
+				}
+			break;
+			case C:
+				if(buildingLowestEnergyLabel == OL_GridConnectionIsolationLabel.NONE || buildingLowestEnergyLabel == OL_GridConnectionIsolationLabel.B
+				   || buildingLowestEnergyLabel == OL_GridConnectionIsolationLabel.C){
+					buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.C;
+				}
+			break;
+			case D:
+				if(buildingLowestEnergyLabel != OL_GridConnectionIsolationLabel.E || buildingLowestEnergyLabel != OL_GridConnectionIsolationLabel.F
+				   || buildingLowestEnergyLabel != OL_GridConnectionIsolationLabel.G){
+					buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.D;
+				}
+			break;
+			case E:
+				if(buildingLowestEnergyLabel != OL_GridConnectionIsolationLabel.F || buildingLowestEnergyLabel != OL_GridConnectionIsolationLabel.G){
+					buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.E;
+				}
+			break;
+			case F:
+				if(buildingLowestEnergyLabel != OL_GridConnectionIsolationLabel.G){
+					buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.F;
+				}
+			break;
+			case G:
+				buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.G;
+			break;								
+		}
 	}
-	else if (indexOfMax(b.ar_countEnergyLabels) == 4){
-		b.gisRegion.setFillColor(v_energieLabelBColor);
-	}
-	else if (indexOfMax(b.ar_countEnergyLabels) == 5){
-		b.gisRegion.setFillColor(v_energieLabelCColor);
-	}
-	else if (indexOfMax(b.ar_countEnergyLabels) == 6){
-		b.gisRegion.setFillColor(v_energieLabelDColor);
-	}
-	else if (indexOfMax(b.ar_countEnergyLabels) == 7){
-		b.gisRegion.setFillColor(v_energieLabelEColor);
-	}
-	else if (indexOfMax(b.ar_countEnergyLabels) == 8){
-		b.gisRegion.setFillColor(v_energieLabelFColor);
-	}
-	else if (indexOfMax(b.ar_countEnergyLabels) == 9){
-		b.gisRegion.setFillColor(v_energieLabelGColor);
-	}
-	else if (indexOfMax(b.ar_countEnergyLabels) == 10){
-		b.gisRegion.setFillColor(v_energieLabelOnbekendColor);
-	}
-	else {
-		b.gisRegion.setFillColor(black);
+	
+	//Color building based on lowest energy label
+	switch(buildingLowestEnergyLabel){
+	
+		case A:
+			b.gisRegion.setFillColor(v_energyLabelAColor);
+		break;
+		case B:
+			b.gisRegion.setFillColor(v_energyLabelBColor);
+		break;
+		case C:
+			b.gisRegion.setFillColor(v_energyLabelCColor);
+		break;
+		case D:
+			b.gisRegion.setFillColor(v_energyLabelDColor);
+		break;
+		case E:
+			b.gisRegion.setFillColor(v_energyLabelEColor);
+		break;
+		case F:
+			b.gisRegion.setFillColor(v_energyLabelFColor);
+		break;
+		case G:
+			b.gisRegion.setFillColor(v_energyLabelGColor);
+		break;
+		case NONE:
+			b.gisRegion.setFillColor(v_energyLabelUnknownColor);
+		break;
 	}
 }
-
-
-
 /*ALCODEEND*/}
 
 double f_selectGISRegion(double clickx,double clicky)
@@ -157,6 +199,9 @@ switch(selectedMapOverlayType){
 		break;
 	case CONGESTION:
 		f_setColorsBasedOnCongestion_objects(gis_area);
+		break;
+	case ENERGY_LABEL:
+		f_setColorsBasedOnEnergyLabels(gis_area);
 		break;
 	case PARKING_TYPE:
 		f_setColorsBasedOnParkingType_objects(gis_area);
@@ -2361,6 +2406,16 @@ for(OL_GISObjectType activeSpecialGISObjectType : c_modelActiveSpecialGISObjects
 		numberOfSpecialActiveGISObjectTypes ++;
 		Pair<ShapeText, ShapeRectangle> legendShapes = f_getNextSpecialLegendShapes(numberOfSpecialActiveGISObjectTypes);
 		f_setSpecialGISObjectLegendItem(activeSpecialGISObjectType, legendShapes.getFirst(), legendShapes.getSecond());
+		
+		if(activeSpecialGISObjectType == OL_GISObjectType.CHARGER){
+			numberOfSpecialActiveGISObjectTypes ++;
+			legendShapes = f_getNextSpecialLegendShapes(numberOfSpecialActiveGISObjectTypes);
+			legendShapes.getFirst().setVisible(true);
+			legendShapes.getSecond().setVisible(true);
+			legendShapes.getFirst().setText("Laadpaal/plein (Toegevoegd)");
+			legendShapes.getSecond().setFillColor(v_newChargingStationColor);
+			legendShapes.getSecond().setLineColor(v_newChargingStationLineColor);	
+		}
 	}
 }
 /*ALCODEEND*/}
@@ -2392,7 +2447,7 @@ switch(activeSpecialGISObjectType){
 		legendRect.setLineColor(v_windFarmLineColor);
 		break;
 	case CHARGER:
-		legendText.setText("Laadpaal/plein");
+		legendText.setText("Laadpaal/plein (Bestaand)");
 		legendRect.setFillColor(v_chargingStationColor);
 		legendRect.setLineColor(v_chargingStationLineColor);
 		break;
@@ -2770,6 +2825,9 @@ for(OL_MapOverlayTypes mapOverlayType : c_loadedMapOverlayTypes){
 		case CONGESTION:
 			RadioButtonOptions_list.add("Netbelasting");
 			break;
+		case ENERGY_LABEL:
+			RadioButtonOptions_list.add("Energielabel");
+			break;
 		case PARKING_TYPE:
 			RadioButtonOptions_list.add("Parkeer type");
 			break;
@@ -2802,6 +2860,7 @@ gr_mapOverlayLegend_ElectricityConsumption.setVisible(false);
 gr_mapOverlayLegend_PVProduction.setVisible(false);
 gr_mapOverlayLegend_gridNeighbours.setVisible(false);
 gr_mapOverlayLegend_congestion.setVisible(false);
+gr_mapOverlayLegend_EnergyLabel.setVisible(false);
 b_updateLiveCongestionColors = false;
 
 if(!b_inEnergyHubMode){
@@ -2827,6 +2886,9 @@ switch(selectedMapOverlayType){
 		break;
 	case CONGESTION:
 		f_setMapOverlay_Congestion();
+		break;
+	case ENERGY_LABEL:
+		f_setMapOverlay_EnergyLabel();
 		break;
 	case PARKING_TYPE:
 		f_setMapOverlay_ParkingType();
@@ -2937,7 +2999,10 @@ for (GIS_Building b: energyModel.pop_GIS_Buildings) {
 
 double f_setMapOverlay_EnergyLabel()
 {/*ALCODESTART::1753108764992*/
+//Set legend
 b_updateLiveCongestionColors = true;
+gr_mapOverlayLegend_EnergyLabel.setVisible(true);
+
 for (GIS_Building building : energyModel.pop_GIS_Buildings){
 	f_setColorsBasedOnEnergyLabels(building);
 }

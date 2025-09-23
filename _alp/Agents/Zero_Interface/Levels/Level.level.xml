@@ -12,6 +12,7 @@
 		<PublicFlag>true</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
+		<Lock>true</Lock>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
@@ -207,7 +208,7 @@
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>getExperimentHost().openWebSite("https://www.tue.nl/en/research/research-groups/innovation-sciences/technology-innovation-society/projects/new-energy-outlook-for-the-netherlands/");</OnClickCode>
+				<OnClickCode>getExperimentHost().openWebSite("https://www.tue.nl/en/");</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>205.802</Width>
@@ -287,7 +288,7 @@ getExperimentHost().openWebSite("https://lux.energy/");
 		<Id>1705481955546</Id>
 		<Name><![CDATA[rect_simulationEngine]]></Name>
 		<X>-270</X>
-		<Y>820</Y>
+		<Y>780</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -305,7 +306,7 @@ getExperimentHost().openWebSite("https://lux.energy/");
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>250</Width>
-		<Height>150</Height>
+		<Height>190</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -365,7 +366,7 @@ getExperimentHost().openWebSite("https://lux.energy/");
 		<Id>1690205003572</Id>
 		<Name><![CDATA[line_simulationEngine]]></Name>
 		<X>-230</X>
-		<Y>850</Y>
+		<Y>810</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -393,7 +394,7 @@ getExperimentHost().openWebSite("https://lux.energy/");
 		<Id>1690205003577</Id>
 		<Name><![CDATA[t_simulationEngine]]></Name>
 		<X>-151</X>
-		<Y>830</Y>
+		<Y>790</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -763,7 +764,7 @@ getExperimentHost().openWebSite("https://lux.energy/");
 		<Id>1702552223737</Id>
 		<Name><![CDATA[t_stylingFunctions]]></Name>
 		<X>-680</X>
-		<Y>341</Y>
+		<Y>351</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1456,8 +1457,8 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1716988295617</Id>
 		<Name><![CDATA[button_gotoEngine]]></Name>
-		<X>-240</X>
-		<Y>760</Y>
+		<X>-250</X>
+		<Y>920</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1466,7 +1467,7 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="170" Height="40">
+		<BasicProperties Width="210" Height="40">
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
@@ -2156,12 +2157,10 @@ else{
 		<BorderColor>-4144960</BorderColor>
 		<FillColor>-1</FillColor>
 		<ShowTiles>true</ShowTiles>
-		<TileURLProvider>ANYLOGIC</TileURLProvider>
 		<CustomTileURL>false</CustomTileURL>
 		<TileURL>https://a.tile.openstreetmap.org/[zoom]/[x]/[y].png</TileURL>
 		<RouteProviderType>WEB_SERVICE</RouteProviderType>
 		<RouteNotFound>CREATE_STRAIGHT_LINE</RouteNotFound>
-		<OnlineRouteProvider>ANYLOGIC</OnlineRouteProvider>
 		<TransportType>CAR</TransportType>
 		<RoutingMethod>FASTEST</RoutingMethod>
 		<PathfindingAlgorithm>DIJKSTRABI</PathfindingAlgorithm>
@@ -2292,8 +2291,8 @@ else{
 	<Text>
 		<Id>1734443343976</Id>
 		<Name><![CDATA[t_selectionColors]]></Name>
-		<X>390</X>
-		<Y>1330</Y>
+		<X>380</X>
+		<Y>1050</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -6394,6 +6393,443 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							</Image>
 						</Presentation>
 					</Group>
+					<Group>
+						<Id>1758020855460</Id>
+						<Name><![CDATA[gr_mapOverlayLegend_EnergyLabel]]></Name>
+						<X>985</X>
+						<Y>-5</Y>
+						<Label>
+							<X>10</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>false</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<XCode>10</XCode>
+						<YCode>-20</YCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Presentation>
+							<Rectangle>
+								<Id>1758020855462</Id>
+								<Name><![CDATA[rect_mapOverlayLegend_EnergyLabelA]]></Name>
+								<X>-60</X>
+								<Y>-52</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-8355712</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>25</Width>
+								<Height>15</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-16751616</FillColor>
+								<FillColorCode>v_energyLabelAColor</FillColorCode>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Rectangle>
+								<Id>1758020855464</Id>
+								<Name><![CDATA[rect_mapOverlayLegend_EnergyLabelB]]></Name>
+								<X>-60</X>
+								<Y>-35</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-8355712</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>25</Width>
+								<Height>15</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-16744448</FillColor>
+								<FillColorCode>v_energyLabelBColor</FillColorCode>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Rectangle>
+								<Id>1758020855466</Id>
+								<Name><![CDATA[rect_mapOverlayLegend_EnergyLabelC]]></Name>
+								<X>-60</X>
+								<Y>-18</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-8355712</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>25</Width>
+								<Height>15</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-6632142</FillColor>
+								<FillColorCode>v_energyLabelCColor</FillColorCode>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Rectangle>
+								<Id>1758020855468</Id>
+								<Name><![CDATA[rect_mapOverlayLegend_EnergyLabelD]]></Name>
+								<X>-60</X>
+								<Y>-1</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-8355712</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>25</Width>
+								<Height>15</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-10496</FillColor>
+								<FillColorCode>v_energyLabelDColor</FillColorCode>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Rectangle>
+								<Id>1758020855470</Id>
+								<Name><![CDATA[rect_mapOverlayLegend_EnergyLabelE]]></Name>
+								<X>-60</X>
+								<Y>16</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-8355712</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>25</Width>
+								<Height>15</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-23296</FillColor>
+								<FillColorCode>v_energyLabelEColor</FillColorCode>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Text>
+								<Id>1758020855472</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_EnergyLabelA]]></Name>
+								<X>-20</X>
+								<Y>-51</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[Energielabel A]]></Text>
+								<Font>
+									<Name><![CDATA[SansSerif]]></Name>
+									<Size>10</Size>
+									<Style>0</Style>
+								</Font>
+								<Alignment>LEFT</Alignment>
+							</Text>
+							<Text>
+								<Id>1758020855474</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_EnergyLabelB]]></Name>
+								<X>-20</X>
+								<Y>-35</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[Energielabel B]]></Text>
+								<Font>
+									<Name><![CDATA[SansSerif]]></Name>
+									<Size>10</Size>
+									<Style>0</Style>
+								</Font>
+								<Alignment>LEFT</Alignment>
+							</Text>
+							<Text>
+								<Id>1758020855476</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_EnergyLabelC]]></Name>
+								<X>-20</X>
+								<Y>-17</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[Energielabel C]]></Text>
+								<Font>
+									<Name><![CDATA[SansSerif]]></Name>
+									<Size>10</Size>
+									<Style>0</Style>
+								</Font>
+								<Alignment>LEFT</Alignment>
+							</Text>
+							<Text>
+								<Id>1758020855478</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_EnergyLabelD]]></Name>
+								<X>-20</X>
+								<Y>0</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[Energielabel D]]></Text>
+								<Font>
+									<Name><![CDATA[SansSerif]]></Name>
+									<Size>10</Size>
+									<Style>0</Style>
+								</Font>
+								<Alignment>LEFT</Alignment>
+							</Text>
+							<Text>
+								<Id>1758020855480</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_EnergyLabelE]]></Name>
+								<X>-20</X>
+								<Y>17</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[Energielabel E]]></Text>
+								<Font>
+									<Name><![CDATA[SansSerif]]></Name>
+									<Size>10</Size>
+									<Style>0</Style>
+								</Font>
+								<Alignment>LEFT</Alignment>
+							</Text>
+							<Rectangle>
+								<Id>1758022404682</Id>
+								<Name><![CDATA[rect_mapOverlayLegend_EnergyLabelF]]></Name>
+								<X>-60</X>
+								<Y>33</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-8355712</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>25</Width>
+								<Height>15</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-47872</FillColor>
+								<FillColorCode>v_energyLabelFColor</FillColorCode>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Text>
+								<Id>1758022404684</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_EnergyLabelF]]></Name>
+								<X>-20</X>
+								<Y>34</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[Energielabel F]]></Text>
+								<Font>
+									<Name><![CDATA[SansSerif]]></Name>
+									<Size>10</Size>
+									<Style>0</Style>
+								</Font>
+								<Alignment>LEFT</Alignment>
+							</Text>
+							<Rectangle>
+								<Id>1758022520158</Id>
+								<Name><![CDATA[rect_mapOverlayLegend_EnergyLabelG]]></Name>
+								<X>-60</X>
+								<Y>50</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-8355712</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>25</Width>
+								<Height>15</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-65536</FillColor>
+								<FillColorCode>v_energyLabelGColor</FillColorCode>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Text>
+								<Id>1758022520160</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_EnergyLabelG]]></Name>
+								<X>-20</X>
+								<Y>51</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[Energielabel G]]></Text>
+								<Font>
+									<Name><![CDATA[SansSerif]]></Name>
+									<Size>10</Size>
+									<Style>0</Style>
+								</Font>
+								<Alignment>LEFT</Alignment>
+							</Text>
+							<Rectangle>
+								<Id>1758026700134</Id>
+								<Name><![CDATA[rect_mapOverlayLegend_EnergyLabelUnknown]]></Name>
+								<X>-60</X>
+								<Y>67</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-8355712</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>25</Width>
+								<Height>15</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-8355712</FillColor>
+								<FillColorCode>v_energyLabelUnknownColor</FillColorCode>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Text>
+								<Id>1758026700136</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_EnergyLabelUnknown]]></Name>
+								<X>-20</X>
+								<Y>68</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[Onbekend]]></Text>
+								<Font>
+									<Name><![CDATA[SansSerif]]></Name>
+									<Size>10</Size>
+									<Style>0</Style>
+								</Font>
+								<Alignment>LEFT</Alignment>
+							</Text>
+						</Presentation>
+					</Group>
 				</Presentation>
 			</Group>
 			<Group>
@@ -7400,4 +7836,54 @@ else{
 			</Group>
 		</Presentation>
 	</Group>
+	<Text>
+		<Id>1758032385328</Id>
+		<Name><![CDATA[txt_cablesAndPipesColors]]></Name>
+		<X>380</X>
+		<Y>1150</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Cables and pipes colors]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>14</Size>
+			<Style>1</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Text>
+		<Id>1758032461183</Id>
+		<Name><![CDATA[txt_mapOverlayColors]]></Name>
+		<X>380</X>
+		<Y>1270</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Specific map overlay colors]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>14</Size>
+			<Style>1</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
 </Presentation>
