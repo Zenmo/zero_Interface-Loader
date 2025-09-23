@@ -1192,6 +1192,8 @@ try {
 		x.setTableFunction(origProfile.getTableFunction());
 	});
 	
+	energyModel.f_startAfterDeserialisation();
+	
 	energyModel = deserializedEnergyModel;	
 	zero_Interface.energyModel = deserializedEnergyModel;
 	zero_Interface.uI_Results.energyModel = deserializedEnergyModel;

@@ -3958,7 +3958,6 @@ energyModel.setEnvironment(this.getEnvironment());
 traceln("EnergyModel owner: %s", energyModel.getOwner());
 
 energyModel.create();
-energyModel.f_startAfterDeserialisation();
 //energyModel.start(); // Why is this needed?
 /*ALCODEEND*/}
 

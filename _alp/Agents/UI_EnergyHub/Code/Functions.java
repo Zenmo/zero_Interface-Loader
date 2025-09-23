@@ -365,6 +365,7 @@ if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToke
 }
 
 //pauseSimulation();
+
 // Collect GIS_Objects into hashmap, to link to new EnergyModel.
 zero_Interface.energyModel.pop_GIS_Buildings.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
 zero_Interface.energyModel.pop_GIS_Objects.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
@@ -438,13 +439,45 @@ try {
 	
 	zero_Interface.f_resetSettings();
 	*/
-	button_exit.action();
 	
-	zero_Interface.uI_Tabs.f_initializeUI_Tabs(zero_Interface.energyModel.f_getGridConnectionsCollectionPointer(), zero_Interface.energyModel.f_getPausedGridConnectionsCollectionPointer());
+	///button_exit.action();
+	
+	///zero_Interface.uI_Tabs.f_initializeUI_Tabs(zero_Interface.energyModel.f_getGridConnectionsCollectionPointer(), zero_Interface.energyModel.f_getPausedGridConnectionsCollectionPointer());
 	// v_energyHubCoop not updated to point to 'new' coop
 	//uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null);
 	
-	zero_Interface.f_simulateYearFromMainInterface();
+	///zero_Interface.f_simulateYearFromMainInterface();
+	
+	v_energyHubCoop = zero_Interface.energyModel.pop_energyCoops.get(0);
+	
+	// Update the E-Hub Dashboard with the loaded E-Hub from savefile
+	f_initializeEnergyHubMemberNames();
+	uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null);
+	uI_Results.f_updateResultsUI(v_energyHubCoop);
+	
+	// Update the main interface with the loaded E-Hub from savefile
+	zero_Interface.c_selectedGridConnections = new ArrayList<>(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer());
+	
+	// Reset all colors on the GIS map
+	zero_Interface.energyModel.pop_GIS_Buildings.forEach(x -> zero_Interface.f_styleAreas(x));
+	zero_Interface.energyModel.pop_GIS_Objects.forEach(x -> zero_Interface.f_styleAreas(x));
+	zero_Interface.energyModel.pop_GIS_Parcels.forEach(x -> zero_Interface.f_styleAreas(x));
+	
+	// Color all selected GC 
+	for (GridConnection gc : zero_Interface.c_selectedGridConnections) {
+		gc.c_connectedGISObjects.forEach(x -> x.gisRegion.setFillColor(zero_Interface.v_selectionColor));		
+	}
+	
+	// Simulate a year
+	gr_simulateYearEnergyHub.setVisible(false);		
+	gr_loadIconYearSimulationEnergyHub.setVisible(true);
+	zero_Interface.f_simulateYearFromMainInterface();	
+	
+	
+	pauseSimulation();
+	//zero_Interface.b_inEnergyHubSelectionMode = true;
+	//zero_Interface.f_finalizeEnergyHubConfiguration();
+	
 	//zero_Interface.f_updateOrderedListsAfterDeserialising(deserializedEnergyModel);
 	
 	/*
