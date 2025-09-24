@@ -2343,13 +2343,13 @@ List<J_EAChargePoint> c_inactiveV2GChargers = new ArrayList<J_EAChargePoint>();
 
 for (GridConnection gc : energyModel.f_getActiveGridConnections()) {
 	for (J_EAChargePoint charger : gc.c_chargers) {
-		if (charger.V1GCapable) {
+		if (charger.getV1GCapable()) {
 			c_orderedV1GChargers.add(0, charger);
 		}
 		else {
 			c_orderedV1GChargers.add(charger);
 		}
-		if (charger.V2GCapable) {
+		if (charger.getV2GCapable()) {
 			c_orderedV2GChargers.add(0, charger);
 		}
 		else {
@@ -2360,13 +2360,13 @@ for (GridConnection gc : energyModel.f_getActiveGridConnections()) {
 
 for (GridConnection gc : energyModel.f_getPausedGridConnections()) {
 	for (J_EAChargePoint charger : gc.c_chargers) {
-		if (charger.V1GCapable) {
+		if (charger.getV1GCapable()) {
 			c_inactiveV1GChargers.add(0, charger);
 		}
 		else {
 			c_inactiveV1GChargers.add(charger);
 		}
-		if (charger.V2GCapable) {
+		if (charger.getV2GCapable()) {
 			c_inactiveV2GChargers.add(0, charger);
 		}
 		else {
@@ -3152,19 +3152,20 @@ double f_createUITabs_default()
 
 uI_Tabs.add_pop_tabElectricity();
 uI_Tabs.add_pop_tabHeating();
+uI_Tabs.add_pop_tabMobility();
 
 // Group visibilities
 // When using an extension of a generic tab don't forget to typecast it!
 if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
 	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_ResidentialArea().setVisible(true);
 	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersResidentialArea().setVisible(true);
+	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGr_mobilitySliders_residential().setVisible(true);
 }
 else {
-	uI_Tabs.add_pop_tabMobility();
 	uI_Tabs.add_pop_tabEHub();
 	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_Businesspark().setVisible(true);
 	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersCompanies().setVisible(true);
-	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGroupMobilityDemandSliders().setVisible(true);
+	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGr_mobilitySliders_default().setVisible(true);
 	((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
 }
 /*ALCODEEND*/}

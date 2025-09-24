@@ -235,3 +235,23 @@ if(!pop_tabEHub.isEmpty()){
 }
 /*ALCODEEND*/}
 
+List<GCPublicCharger> f_getAllSliderGridConnections_chargers()
+{/*ALCODESTART::1758278620331*/
+List<GCPublicCharger> chargerGridConnections = new ArrayList<>();
+
+for(GridConnection GC : v_sliderGridConnections){
+	if(GC instanceof GCPublicCharger){
+		chargerGridConnections.add((GCPublicCharger)GC);		
+	}
+}
+if(v_pausedSliderGridConnections != null){
+	for(GridConnection GC : v_pausedSliderGridConnections){
+		if(GC instanceof GCPublicCharger){
+			chargerGridConnections.add((GCPublicCharger)GC);		
+		}
+	}
+}
+
+return chargerGridConnections;
+/*ALCODEEND*/}
+
