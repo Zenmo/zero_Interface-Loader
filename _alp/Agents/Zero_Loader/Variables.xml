@@ -4,7 +4,7 @@
 		<Id>1726584205883</Id>
 		<Name><![CDATA[v_timeOfModelStart_ms]]></Name>
 		<X>1560</X>
-		<Y>130</Y>
+		<Y>140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -23,7 +23,7 @@
 		<Id>1726584205885</Id>
 		<Name><![CDATA[v_modelStartUpDuration_s]]></Name>
 		<X>1560</X>
-		<Y>150</Y>
+		<Y>160</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -43,8 +43,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1726584205887</Id>
-		<Name><![CDATA[v_hourOfYearStart]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<Name><![CDATA[v_simStartYear]]></Name>
 		<X>1560</X>
 		<Y>70</Y>
 		<Label>
@@ -68,7 +67,7 @@
 		<Id>1726584205889</Id>
 		<Name><![CDATA[v_remainingNumberOfTrucks_Companies]]></Name>
 		<X>1560</X>
-		<Y>380</Y>
+		<Y>390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -89,7 +88,7 @@
 		<Description><![CDATA[variable that tracks how much floor area remains for the average companies. (this will be used to determine the average m3 and kwh per m2 floor area to be used by the unkown companies (that have not filled in the survey). 
 Calculated by: initial value (total floor area of the area) - total floor area of the survey companies]]></Description>
 		<X>1561</X>
-		<Y>271</Y>
+		<Y>281</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -108,7 +107,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205893</Id>
 		<Name><![CDATA[v_numberOfCompaniesNoSurvey]]></Name>
 		<X>1561</X>
-		<Y>251</Y>
+		<Y>261</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -127,7 +126,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205895</Id>
 		<Name><![CDATA[v_remainingGasConsumption_m3]]></Name>
 		<X>1561</X>
-		<Y>311</Y>
+		<Y>321</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -147,7 +146,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Name><![CDATA[v_remainingElectricityDelivery_kWh]]></Name>
 		<Description><![CDATA[This variable indicates an annual maximum consumption for all the created consumption profiles combined. Setting it produces warnings if this is exceeded.]]></Description>
 		<X>1561</X>
-		<Y>291</Y>
+		<Y>301</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -166,7 +165,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205899</Id>
 		<Name><![CDATA[v_remainingNumberOfVans_Companies]]></Name>
 		<X>1561</X>
-		<Y>361</Y>
+		<Y>371</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -185,7 +184,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1733235094633</Id>
 		<Name><![CDATA[v_numberOfSurveyCompanies]]></Name>
 		<X>1560</X>
-		<Y>230</Y>
+		<Y>240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -205,7 +204,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Name><![CDATA[v_simStartHour_h]]></Name>
 		<Description><![CDATA[The hour 0 is defined as january 1st, 00:00h in the year energyModel.p_year]]></Description>
 		<X>1560</X>
-		<Y>89</Y>
+		<Y>90</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -227,7 +226,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1733390702422</Id>
 		<Name><![CDATA[v_simDuration_h]]></Name>
 		<X>1560</X>
-		<Y>108</Y>
+		<Y>110</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -249,7 +248,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1736255870137</Id>
 		<Name><![CDATA[v_remainingNumberOfCars_Companies]]></Name>
 		<X>1560</X>
-		<Y>340</Y>
+		<Y>350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -306,7 +305,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1755876520422</Id>
 		<Name><![CDATA[v_probabilityForAdditionalCar_privateParking]]></Name>
 		<X>1560</X>
-		<Y>180</Y>
+		<Y>190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -325,7 +324,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1755876547633</Id>
 		<Name><![CDATA[v_probabilityForAdditionalCar_publicParking]]></Name>
 		<X>1560</X>
-		<Y>200</Y>
+		<Y>210</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -471,7 +470,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		<Id>1726584205737</Id>
 		<Name><![CDATA[c_gridNodeIDsInScope]]></Name>
 		<X>1560</X>
-		<Y>410</Y>
+		<Y>420</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

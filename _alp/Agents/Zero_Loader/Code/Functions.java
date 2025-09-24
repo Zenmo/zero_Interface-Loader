@@ -1886,7 +1886,9 @@ traceln("");
 
 double startTime = System.currentTimeMillis();
 v_timeOfModelStart_ms = startTime;
-//v_hourOfYearStart= avgc_data.hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
+
+//Get simulation start time
+f_getSimulationTimeVariables();
 
 //Send avgc data to engine
 avgc_data.f_setAVGC_data();
@@ -1914,8 +1916,6 @@ zero_Interface.f_projectSpecificStyling();
 
 // Populate the model
 f_configureEngine_default();
-
-// here used to be the update to the map coordinates in interface, now is done via project_data
 
 //Start up of the User Interface (Needs to happen after configuring the engine)
 zero_Interface.f_UIStartup();
@@ -2127,8 +2127,6 @@ double f_iEASurveyCompanies_Zorm(GridConnection companyGC,com.zenmo.zummon.compa
 {/*ALCODESTART::1732112244908*/
 //Initialize boolean that sets the creation of currently existing electric (demand) EA
 boolean createElectricEA = true;
-final int targetYear = 2023;
-
 
 //Create current scenario parameter list
 J_scenario_Current current_scenario_list = new J_scenario_Current();
@@ -2305,7 +2303,7 @@ if (gridConnection.getSupply().getHasSupply() != null && gridConnection.getSuppl
 	
 	var quarterHourlyProduction_kWh = gridConnection.getElectricity().getQuarterHourlyProduction_kWh();
 	if (quarterHourlyProduction_kWh != null && quarterHourlyProduction_kWh.hasNumberOfValuesForOneYear()) {
-		yearlyElectricityProduction_kWh_array = f_convertFloatArrayToDoubleArray(quarterHourlyProduction_kWh.convertToQuarterHourly().getFullYearOrFudgeIt(targetYear));
+		yearlyElectricityProduction_kWh_array = f_timeSeriesToQuarterHourlyDoubleArray(quarterHourlyProduction_kWh);
 	}
 	
 	if(yearlyElectricityProduction_kWh_array == null && gridConnection.getSupply().getPvInstalledKwp() != null && gridConnection.getSupply().getPvInstalledKwp() > 0){
@@ -2713,7 +2711,7 @@ return true;
 
 double[] f_timeSeriesToQuarterHourlyDoubleArray(com.zenmo.zummon.companysurvey.TimeSeries timeSeries)
 {/*ALCODESTART::1738572338816*/
-int targetYear = 2024;
+int targetYear = v_simStartYear;
 if (timeSeries == null) {
 	return null;
 }
@@ -4398,5 +4396,31 @@ zero_Interface.c_orderedV2GChargers = saveObject.c_orderedV2GChargers;
 zero_Interface.c_orderedPublicChargers = saveObject.c_orderedPublicChargers;
 //zero_Interface.c_mappingOfVehiclesPerCharger = saveObject.c_mappingOfVehiclesPerCharger;
 
+/*ALCODEEND*/}
+
+double f_getSimulationTimeVariables()
+{/*ALCODESTART::1758714675284*/
+//Sim start year
+v_simStartYear = getExperiment().getEngine().getStartDate().getYear() + 1900;  // 1900 jaar Compenseren door anylogic bug
+
+// Create date at start of simulation year to use to calculate v_simStartHour_h
+Date d = new Date();
+d.setYear(v_simStartYear - 1900); // 1900 jaar Compenseren door anylogic bug
+d.setMonth(0);
+d.setHours(0);
+d.setSeconds(0);
+d.setMinutes(0);
+d.setDate(1);
+
+//Calculate sim start hour
+v_simStartHour_h = (getExperiment().getEngine().getStartDate().getTime() - d.getTime())/1000/60/60; //Get time is in ms -> converted into hours
+
+//Set sim duration if it is set
+if(getExperiment().getEngine().getStopDate() != null){ //If experiment has set time, it gets bias
+	v_simDuration_h = ((double)getExperiment().getEngine().getStopDate().getTime() - getExperiment().getEngine().getStartDate().getTime())/1000/60/60; //Get time is in ms -> converted into hours
+}
+else if(settings.simDuration_h() != null){//Else if manual set, use that instead
+	v_simDuration_h = settings.simDuration_h();
+}
 /*ALCODEEND*/}
 

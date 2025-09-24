@@ -186,7 +186,7 @@
 		<Id>1726584205923</Id>
 		<Name><![CDATA[rect_defaultStartup]]></Name>
 		<X>20</X>
-		<Y>60</Y>
+		<Y>50</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -203,7 +203,7 @@
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>340</Width>
-		<Height>220</Height>
+		<Height>240</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -265,7 +265,7 @@
 		<Id>1726584205929</Id>
 		<Name><![CDATA[txt_loaderStartupDefault]]></Name>
 		<X>40</X>
-		<Y>70</Y>
+		<Y>60</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -850,7 +850,7 @@
 		<Id>1730217549237</Id>
 		<Name><![CDATA[rect_supportFunctions]]></Name>
 		<X>1520</X>
-		<Y>850</Y>
+		<Y>830</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -867,7 +867,7 @@
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>380</Width>
-		<Height>120</Height>
+		<Height>140</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -876,7 +876,7 @@
 		<Id>1730217578770</Id>
 		<Name><![CDATA[txt_supportFunctions]]></Name>
 		<X>1540</X>
-		<Y>870</Y>
+		<Y>840</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -901,7 +901,7 @@
 		<Id>1742919550888</Id>
 		<Name><![CDATA[rect_connectToFunctions]]></Name>
 		<X>1520</X>
-		<Y>740</Y>
+		<Y>730</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -918,7 +918,7 @@
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>380</Width>
-		<Height>90</Height>
+		<Height>80</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -927,7 +927,7 @@
 		<Id>1742919565761</Id>
 		<Name><![CDATA[txt_connectToFunctions]]></Name>
 		<X>1540</X>
-		<Y>760</Y>
+		<Y>750</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>

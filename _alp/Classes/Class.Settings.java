@@ -19,5 +19,5 @@ public class Settings {
 								// Connection owners where dataSharingAgreed = false, cant be clicked. Just like low level gridnodes.
 		List<OL_MapOverlayTypes> activeMapOverlayTypes; //If defined it will override the default map overlay setup as defined in the generic interface/loader.
 														//Add all map overlays to this list that you want to be usable in the simulation
-
+		Double simDuration_h; // If filled in it will be set as the (rapid) sim duration instead of the default setting (8760 - p_timeStep_h) IF experiment end time is not set!.
 }

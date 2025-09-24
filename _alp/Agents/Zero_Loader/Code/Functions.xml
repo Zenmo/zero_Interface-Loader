@@ -23,7 +23,7 @@
 		<Id>1726584205771</Id>
 		<Name><![CDATA[f_createGridConnections]]></Name>
 		<X>90</X>
-		<Y>240</Y>
+		<Y>250</Y>
 		<Label>
 			<X>11</X>
 			<Y>1</Y>
@@ -45,7 +45,7 @@
 @since: Sprint 6
 @author: Jorrit]]></Description>
 		<X>79</X>
-		<Y>181</Y>
+		<Y>191</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -422,7 +422,7 @@
 		<Id>1726584205821</Id>
 		<Name><![CDATA[f_createActors]]></Name>
 		<X>90</X>
-		<Y>221</Y>
+		<Y>231</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -774,7 +774,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1726584205865</Id>
 		<Name><![CDATA[f_startUpLoader_default]]></Name>
 		<X>60</X>
-		<Y>100</Y>
+		<Y>90</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -854,7 +854,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1726584205881</Id>
 		<Name><![CDATA[f_createAdditionalGISObjects]]></Name>
 		<X>90</X>
-		<Y>260</Y>
+		<Y>270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -886,7 +886,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1728035809860</Id>
 		<Name><![CDATA[f_convertFloatArrayToDoubleArray]]></Name>
 		<X>1550</X>
-		<Y>910</Y>
+		<Y>880</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1066,7 +1066,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1738572338816</Id>
 		<Name><![CDATA[f_timeSeriesToQuarterHourlyDoubleArray]]></Name>
 		<X>1550</X>
-		<Y>940</Y>
+		<Y>910</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1086,7 +1086,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1742915722586</Id>
 		<Name><![CDATA[f_connectGCToExistingBuilding]]></Name>
 		<X>1550</X>
-		<Y>800</Y>
+		<Y>790</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1230,7 +1230,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1747830228830</Id>
 		<Name><![CDATA[f_initializeSpecificSliderGC]]></Name>
 		<X>90</X>
-		<Y>202</Y>
+		<Y>212</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1247,7 +1247,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Name><![CDATA[f_createEngineProfile]]></Name>
 		<Description><![CDATA[Functie van gillis voor inladen weer data!]]></Description>
 		<X>99</X>
-		<Y>140</Y>
+		<Y>150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1276,7 +1276,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Name><![CDATA[f_setEngineProfiles]]></Name>
 		<Description><![CDATA[Functie van gillis voor inladen weer data!]]></Description>
 		<X>80</X>
-		<Y>120</Y>
+		<Y>130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2263,7 +2263,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753968816374</Id>
 		<Name><![CDATA[f_setDefaultHeatingStrategies]]></Name>
 		<X>80</X>
-		<Y>160</Y>
+		<Y>170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2479,6 +2479,22 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Name><![CDATA[saveObject]]></Name>
 			<Type><![CDATA[J_ModelSave]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1758714675284</Id>
+		<Name><![CDATA[f_getSimulationTimeVariables]]></Name>
+		<X>80</X>
+		<Y>110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>
