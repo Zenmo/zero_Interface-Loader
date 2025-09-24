@@ -4401,7 +4401,7 @@ zero_Interface.c_orderedPublicChargers = saveObject.c_orderedPublicChargers;
 double f_getSimulationTimeVariables()
 {/*ALCODESTART::1758714675284*/
 //Sim start year
-v_simStartYear = getExperiment().getEngine().getStartDate().getYear() + 1900;  // 1900 jaar Compenseren door anylogic bug
+v_simStartYear = getExperiment().getEngine().getStartDate().getYear() + 1900;  // 1900 years because of Java convention
 
 // Create date at start of simulation year to use to calculate v_simStartHour_h
 Date d = new Date();
@@ -4421,6 +4421,13 @@ if(getExperiment().getEngine().getStopDate() != null){ //If experiment has set t
 }
 else if(settings.simDuration_h() != null){//Else if manual set, use that instead
 	v_simDuration_h = settings.simDuration_h();
+}
+
+if (v_simStartHour_h % 24 != 0) {
+	throw new RuntimeException("Impossible to run a model that does not start at midnight. Please check the start in the simulation settings.");
+}
+if (v_simDuration_h % 24 != 0) {
+	throw new RuntimeException("Impossible to run a model that does not have a runtime that is an exact multiple of a day. Please check the start and endtime in the simulation settings.");
 }
 /*ALCODEEND*/}
 
