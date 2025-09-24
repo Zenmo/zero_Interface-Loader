@@ -1994,7 +1994,7 @@ switch(cb_chargingAttitudePrivateParkedCars.getValue()){
 		gr_activateV2GPrivateParkedCars.setVisible(true);
 		break;
 	case "Slim laden: Netbewust":
-		selectedChargingAttitude = OL_ChargingAttitude.BALANCE_GRID;
+		selectedChargingAttitude = OL_ChargingAttitude.BALANCE_LOCAL;
 		gr_activateV2GPrivateParkedCars.setVisible(true);
 		break;
 	case "Slim laden: Zelfconsumptie":
@@ -2020,7 +2020,6 @@ else{
 					<Button>Niet slim laden</Button>
 					<Button>Slim laden: Prijs gestuurd</Button>
 					<Button>Slim laden: Netbewust</Button>
-					<Button>Slim laden: Zelfconsumptie</Button>
 					<Button>Gevarieerd</Button>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
