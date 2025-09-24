@@ -2002,7 +2002,7 @@ switch(cb_chargingAttitudePrivateParkedCars.getValue()){
 		gr_activateV2GPrivateParkedCars.setVisible(true);
 		break;
 	case "Gevarieerd":
-		zero_Interface.f_setErrorScreen("De geselecteerde laad strategie is er alleen ter visualisatie in het geval niet elk huis dezelfde laad strategie heeft. Dit is dus niet een strategie die je handmatig aan kunt zetten. Voor nu is 'Niet slim laden' weer geselecteerd.");
+		zero_Interface.f_setErrorScreen("De geselecteerde laad strategie is er alleen ter visualisatie in het geval niet elk huis dezelfde laad strategie heeft. Dit is dus niet een strategie die je handmatig aan kunt zetten. Voor nu is 'Niet slim laden' weer geselecteerd.", 0, 0);
 		selectedChargingAttitude = null;
 		break;
 }
@@ -2119,7 +2119,7 @@ switch(cb_chargingAttitudePrivatePublicChargers.getValue()){
 		gr_settingsV1G_publicChargers.setVisible(true);
 		break;
 	case "Gevarieerd":
-		zero_Interface.f_setErrorScreen("De geselecteerde laad strategie is er alleen ter visualisatie in het geval niet elk huis dezelfde laad strategie heeft. Dit is dus niet een strategie die je handmatig aan kunt zetten. Voor nu is 'Niet slim laden' weer geselecteerd.");
+		zero_Interface.f_setErrorScreen("De geselecteerde laad strategie is er alleen ter visualisatie in het geval niet elk huis dezelfde laad strategie heeft. Dit is dus niet een strategie die je handmatig aan kunt zetten. Voor nu is 'Niet slim laden' weer geselecteerd.", 0, 0);
 		selectedChargingAttitude = null;
 		break;
 }
