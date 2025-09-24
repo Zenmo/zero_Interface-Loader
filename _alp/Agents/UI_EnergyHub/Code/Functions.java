@@ -363,7 +363,7 @@ if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToke
 	zero_Interface.f_setErrorScreen("Niet mogelijk om scenario's in te laden. Er is geen gebruiker ingelogd.", zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
 	return;
 }
-
+traceln("Loading modelSave...");
 //pauseSimulation();
 
 // Collect GIS_Objects into hashmap, to link to new EnergyModel.
@@ -476,7 +476,7 @@ try {
 	gr_loadIconYearSimulationEnergyHub.setVisible(true);
 	zero_Interface.f_simulateYearFromMainInterface();	
 	
-	
+	traceln("ModelSave loaded succesfully!");
 	pauseSimulation();
 	//zero_Interface.b_inEnergyHubSelectionMode = true;
 	//zero_Interface.f_finalizeEnergyHubConfiguration();
@@ -567,13 +567,16 @@ try {
 double f_addMixins()
 {/*ALCODESTART::1756806431955*/
 v_objectMapper.addMixIn(Agent.class, AgentMixin.class);
+//v_objectMapper.addMixIn(EnergyModel.class, EnergyModelMixin.class);
+
+//v_objectMapper.addMixIn(Actor.class, ActorMixin.class);
+//v_objectMapper.addMixIn(DataSet.class, DataSetMixin.class);
+
+//Ignore classes
 v_objectMapper.addMixIn(AgentArrayList.class, IgnoreClassMixin.class);
-v_objectMapper.addMixIn(EnergyModel.class, EnergyModelMixin.class);
-v_objectMapper.addMixIn(Actor.class, ActorMixin.class);
-v_objectMapper.addMixIn(DataSet.class, DataSetMixin.class);
 v_objectMapper.addMixIn(TextFile.class, IgnoreClassMixin.class);
 v_objectMapper.addMixIn(EnergyDataViewer.class, IgnoreClassMixin.class);
-
+v_objectMapper.addMixIn(DataSet.class, IgnoreClassMixin.class);
 v_objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, IgnoreClassMixin.class);
 //objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, TableFunctionMixin.class);
 v_objectMapper.addMixIn(com.anylogic.engine.markup.GISRegion.class, IgnoreClassMixin.class);

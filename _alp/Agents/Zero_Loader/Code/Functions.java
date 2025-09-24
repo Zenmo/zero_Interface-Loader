@@ -4142,9 +4142,9 @@ double f_addMixins()
 {/*ALCODESTART::1753451091785*/
 v_objectMapper.addMixIn(Agent.class, AgentMixin.class);
 v_objectMapper.addMixIn(AgentArrayList.class, IgnoreClassMixin.class);
-v_objectMapper.addMixIn(EnergyModel.class, EnergyModelMixin.class);
-v_objectMapper.addMixIn(Actor.class, ActorMixin.class);
-v_objectMapper.addMixIn(DataSet.class, DataSetMixin.class);
+//v_objectMapper.addMixIn(EnergyModel.class, EnergyModelMixin.class);
+//v_objectMapper.addMixIn(Actor.class, ActorMixin.class);
+//v_objectMapper.addMixIn(DataSet.class, DataSetMixin.class);
 v_objectMapper.addMixIn(TextFile.class, IgnoreClassMixin.class);
 v_objectMapper.addMixIn(EnergyDataViewer.class, IgnoreClassMixin.class);
 
