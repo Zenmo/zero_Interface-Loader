@@ -1275,7 +1275,7 @@ if(selectedChargingAttitude != null){
 			<Y>0</Y>
 		</Label>
 		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
+		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<XCode>0</XCode>
