@@ -448,7 +448,10 @@ try {
 	
 	///zero_Interface.f_simulateYearFromMainInterface();
 	
-	v_energyHubCoop = zero_Interface.energyModel.pop_energyCoops.get(0);
+	v_energyHubCoop = findFirst(zero_Interface.energyModel.pop_energyCoops,x->x.p_actorID.equals("eHubConfiguratorCoop"));
+	if (v_energyHubCoop == null){
+		throw new RuntimeException("No energyCoop found with p_actorID = eHubConfiguratorCoop");
+	}
 	
 	// Update the E-Hub Dashboard with the loaded E-Hub from savefile
 	f_initializeEnergyHubMemberNames();
