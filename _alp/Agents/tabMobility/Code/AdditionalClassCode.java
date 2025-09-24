@@ -1,6 +1,11 @@
 // Default Sliders
-public ShapeGroup getGroupMobilityDemandSliders() {
+public ShapeGroup getGr_mobilitySliders_default() {
 	return this.gr_mobilitySliders_default;
+}
+
+//Residential sliders
+public ShapeGroup getGr_mobilitySliders_residential() {
+	return this.gr_mobilitySliders_residential;
 }
 
 public ShapeSlider getSliderMobilityDemandReduction_pct () {

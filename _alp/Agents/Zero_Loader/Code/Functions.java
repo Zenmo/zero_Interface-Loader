@@ -3106,6 +3106,16 @@ double batteryCap_kWh = Double.parseDouble(chargingSessionInfo[3]);
 double chargingPower_kW = Double.parseDouble(chargingSessionInfo[5]);
 int socket = Integer.parseInt(chargingSessionInfo[6]);
 
+/*
+if(chargingDemand_kWh > (chargingPower_kW * (endIndex - startIndex)*0.25)){
+	chargingDemand_kWh = (chargingPower_kW * (endIndex - startIndex)*0.25); //Cap this to prevent errors with data
+}*/
+chargingDemand_kWh = min(chargingPower_kW * (endIndex - startIndex) * 0.25, chargingDemand_kWh);
+double avgPower_kW = chargingDemand_kWh / ((endIndex - startIndex)*0.25);
+if (avgPower_kW > 20.0) {
+	traceln("Session charging power (data): %s kW, session average charging power: %s kW, duration %s h", chargingPower_kW, avgPower_kW, (endIndex - startIndex)*0.25);
+}
+
 return new J_ChargingSession(startIndex, endIndex, chargingDemand_kWh, batteryCap_kWh, chargingPower_kW, socket, 0.25);
 /*ALCODEEND*/}
 

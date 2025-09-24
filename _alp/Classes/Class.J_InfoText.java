@@ -22,14 +22,8 @@ public class J_InfoText implements Serializable {
 	public String landPV = "Met deze slider kun je instellen hoeveel zonneparken er in het model zitten. 1 hectare zonnepark heeft een piek opwek van 1 MW. De minimum waarde van de slider is gezet op de hoveelheid die al in het huidige scenario aanwezig is.";
 	public String landWind = "Met deze slider kun je instellen hoeveel windmolens er in het model zitten. De minimum waarde van de slider is gezet op de hoveelheid die al in het huidige scenario aanwezig is.";
 	public String householdBatteries = "Met deze slider kun je instellen welk aandeel van de huizen die zonnepanelen op hun dak hebben liggen een batterij hebben. De minimum waarde van de slider is gezet op de hoveelheid die al in het huidige scenario aanwezig is.";
-	public String householdPrivateParking = "Met deze slider kun je instellen welk aandeel huizen met een eigen oprit een EV heeft.";
-	public String householdPublicParking = "Met deze slider kun je instellen hoe veel publieke laadpalen er in het model zitten. Door meer publieke laadpalen toe te voegen verdwijnen er auto's die op fossiele brandstoffen rijden.";
-	public String householdGridAwareCharging = "?";
 	public String householdElectricCooking = "Met deze slider kun je instellen welk aandeel van de huizen elektrisch koken.";
 	public String householdElectricityConsumptionGrowth = "Met deze slider kun je het basisverbruik van stroom voor huizen aanpassen. Een positief percentage betekent dat ze meer verbruiken dan in het basis scenario. Een negatief percentage betekent dat het verbruik is afgenomen. Dit past niet de hoeveelheid stroombehoefte aan voor specifieke apparaten die apart in het model zitten zoals warmtepompen en elektrische auto's. Zie hiervoor de besparingsslider in de tabjes warmte of transport.";
-	public String householdPublicChargersBehaviour = "Met deze knoppen kun je instellen wat het laadgedrag is van de publieke laadpalen. Met V1G wordt uitgesteld laden of 'slim' laden bedoeld. Met V2G kunnen de voertuigen ook terugleveren aan het net.";
-	public String householdPublicParkingV1G = "Met deze slider kun je instellen welk aandeel van de publieke laadpalen, die V1G ondersteunen, dit ook doen.";
-	public String householdPublicParkingV2G = "Met deze slider kun je instellen welk aandeel van de publieke laadpalen, die V2G ondersteunen, dit ook doen.";
 	public String curtailment = "Met deze knop kun je curtailment van stroom productie door huizen en bedrijven aan of uit zetten. Zet je hem aan, dan wordt alle energie productie die niet in de gecontracteerde teruglevercapaciteit past gecurtailt (oftewel: 'weggegooit')";
 	public String gridBattery_default = "Met deze slider kun je instellen hoe groot de buurtbatterij is. Deze batterij probeert het profiel van het gehele model vlak te trekken.";
 	public String gridBattery_residential = "Met deze slider kun je instellen hoe groot de buurtbatterijen zijn. Stel je hem bijvoorbeeld in op 1 MWh, dan heeft elke trafo in het model een buurtbatterij van 1 MWh. Deze batterijen proberen vervolgens het profiel van hun eigen trafo vlak te trekken.";	
@@ -65,6 +59,7 @@ public class J_InfoText implements Serializable {
 	public String companyCustomHeating = "Deze slider is puur visueel. In deze slider is weergegeven welk aandeel van de bedrijven verwarmen met een Custom warmte systeem. Een Custom systeem betekent hier een systeem dat bestaat uit meerdere verschillende warmte producerende apparaten of andere complexe situaties. Omdat deze systemen zo complex zijn, zijn ze niet simpelweg te vervangen door een enkel ander systeem. Daarom kan je deze slider ook niet aanpassen.";
 			
 	//// Mobility Tab
+	//DEFAULT
 	public String mobilityDemandReduction = "Met deze slider kun je de hoeveelheid transportbewegingen van wagens aanpassen. Een positief percentage betekent dat ze minder kilometers per jaar rijden dan in het basis scenario. Een negatief percentage betekent dat ze meer kilometers gaan rijden. Deze slider verandert niet het aantal voertuigen.";
 	public String chargingBehaviour = "Hier kun je verschillende laadstrategieën selecteren. Standaard wordt er dom geladen, dat wil zeggen dat de wagen op moment van aankomst inprikt en op vol vermogen laad tot de batterij vol is. Bij Max Spread kijkt de wagen op moment van aankomst wanneer hij weer moet vertrekken en verdeelt hij zijn laadbehoefte gelijk over deze tijd. Bij Max Power probeert hij te laden op het maximale vermogen wat nog binnen de aansluiting past, echter als de accu daardoor niet vol zou zijn voordat de wagen vertrekt wordt aan het einde alsnog op vol vermogen geladen. Hierdoor kan de aansluitingscapaciteit alsnog worden overschreden.";
 	public String mobilitySmartCharging = "Standaard laden autos gewoon met een standaard vermogen. Vink je deze knop aan, dan gaan de autos slim laden: Voertuigen laden op met een zo vlak mogelijk profiel, waardoor ze vervolgens wel hun geplande rit kunnen maken, zonder voor grote pieken te zorgen."; 
@@ -79,7 +74,20 @@ public class J_InfoText implements Serializable {
 	// cars
 	public String electricCars = "Met deze slider kun je instellen welk aandeel van alle auto's elektrisch is. Als je deze slider verhoogt dan worden auto's die rijden op fossiele brandstof vervangen door elektrische auto's. Als je deze slider verlaagt dan worden elektrische auto's omgezet naar auto's die rijden op fossiele brandstof. De minimum waarde van de slider is gezet op de hoveelheid die al in het huidige scenario aanwezig is.";
 	public String fossilCars = "Met deze slider kun je instellen welk aandeel van alle auto's op fossiele brandstof rijdt. Als je deze slider verhoogt dan worden elektrische auto's vervangen door auto's die rijden op fossiele brandstof. Als je deze slider verlaagt dan worden auto's die rijden op fossiele brandstof omgezet naar elektrische auto's. De minimum waarde van de slider is gezet op de hoveelheid die al in het huidige scenario aanwezig is.";
+	
+	//RESIDENTIAL	
+	public String householdPublicChargersBehaviour = "Met deze knoppen kun je instellen wat het laadgedrag is van de publieke laadpalen. Met V1G wordt uitgesteld laden of 'slim' laden bedoeld. Met V2G kunnen de voertuigen ook terugleveren aan het net.";
+	public String householdPublicParkingV1G = "Met deze slider kun je instellen welk aandeel van de publieke laadpalen V1G ondersteunen.";
+	public String householdPublicParkingV2G = "Met deze slider kun je instellen welk aandeel van de publieke laadpalen V2G ondersteunen.";
+	public String householdPrivateParking = "Met deze slider kun je instellen welk aandeel huizen met een eigen oprit een EV heeft.";
+	public String householdPublicParking = "Met deze slider kun je instellen hoe veel publieke laadpalen er in het model zitten. Door meer publieke laadpalen toe te voegen verdwijnen er auto's die op fossiele brandstoffen rijden.";
 
+	public String EVsThatSupportV2G = "Met deze slider kun je instellen welk aandeel van EVs de mogelijkheid hebben om te ontladen (V2G)";
+	public String activateV2GPrivatePublicChargers = "Met deze knop kun je V2G activeren voor publieke laadpalen. Hierbij zullen alle laadpalen die het ondersteunen V2G toepassen wanneer het volgens de geselecteerde laadstrategie gewenst is.";
+	public String activateV2GPrivateParkedCars = "Met deze knop kun je V2G activeren voor privé geparkeerde EVs . Hierbij zullen alle EVs die het ondersteunen V2G toepassen wanneer het volgens de geselecteerde laadstrategie gewenst is.";
+	public String chargingStrategyPublicChargers = "Met dit drop down menu kun je uitkiezen welke laad strategie je wilt toepassen op alle actieve publieke laadpalen.";
+	public String chargingAttitudePrivateParkedCars = "Met dit drop down menu kun je uitkiezen welke laad strategie je wilt toepassen op alle prive geladen EVs";
+	
 	//// E-Hub Tab
 	//TODO
 	
