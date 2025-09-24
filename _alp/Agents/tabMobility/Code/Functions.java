@@ -1635,7 +1635,7 @@ while ( currentNbChargers > nbChargersGoal ) {
 		zero_Interface.c_orderedPublicChargers.add(0, gc);
 		currentNbChargers--;
 		
-		for (J_EADieselVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc)) {
+		for (J_EADieselVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc.p_uid)) {
 			car.reRegisterEnergyAsset();
 		}
 	}
@@ -1651,7 +1651,7 @@ while ( currentNbChargers < nbChargersGoal){
 		zero_Interface.c_orderedPublicChargers.add(0, gc);
 		currentNbChargers++;
 		
-		for (J_EADieselVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc)) {
+		for (J_EADieselVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc.p_uid)) {
 			J_ActivityTrackerTrips tripTracker = car.getTripTracker(); //Needed, as triptracker is removed when removeEnergyAsset is called.
 			car.removeEnergyAsset();
 			car.setTripTracker(tripTracker);//Re-set the triptracker again, for storing.
