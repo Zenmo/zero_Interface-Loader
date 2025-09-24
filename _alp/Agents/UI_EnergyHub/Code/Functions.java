@@ -573,7 +573,9 @@ v_objectMapper.addMixIn(Agent.class, AgentMixin.class);
 //v_objectMapper.addMixIn(DataSet.class, DataSetMixin.class);
 
 //Ignore classes
+
 v_objectMapper.addMixIn(AgentArrayList.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(ViewArea.class, IgnoreClassMixin.class);
 v_objectMapper.addMixIn(TextFile.class, IgnoreClassMixin.class);
 v_objectMapper.addMixIn(EnergyDataViewer.class, IgnoreClassMixin.class);
 v_objectMapper.addMixIn(DataSet.class, IgnoreClassMixin.class);
