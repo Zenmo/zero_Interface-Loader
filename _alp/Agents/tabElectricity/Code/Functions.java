@@ -227,7 +227,7 @@ else {
 			f_removePVSystem( company );		
 			double PVAtStartup_kWp = 0;
 			if (zero_Interface.c_companyUIs.size() > 0) {
-				PVAtStartup_kWp = zero_Interface.c_scenarioMap_Current.get(company).getCurrentPV_kW();
+				PVAtStartup_kWp = zero_Interface.c_scenarioMap_Current.get(company.p_uid).getCurrentPV_kW();
 			}
 			if (PVAtStartup_kWp != 0) {
 				f_addPVSystem( company, PVAtStartup_kWp );
@@ -289,6 +289,9 @@ else if ( gc instanceof GCUtility ) {
 			companyUI.b_runningMainInterfaceSlider = true;
 			if(companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) != gc){
 				int i = indexOf(companyUI.c_ownedGridConnections.stream().toArray(), gc);
+				if (i == -1) {
+					throw new RuntimeException("Error: Unable to find gc: " + gc.p_ownerID + " in companyUI number " + gc.p_owner.p_connectionOwnerIndexNr);
+				}
 				companyUI.GCnr_selection.setValue(i, true);
 			}
 			companyUI.b_runningMainInterfaceSlider = false;	
@@ -440,6 +443,116 @@ while ( nbHousesWithElectricCooking < nbHousesWithElectricCookingGoal) {
 }
 
 //Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+double f_setPublicChargingStations(double publicChargers_pct)
+{/*ALCODESTART::1750063382330*/
+int totalNbChargers = zero_Interface.c_orderedPublicChargers.size();
+int currentNbChargers = count(zero_Interface.c_orderedPublicChargers, x -> x.v_isActive);
+int nbChargersGoal = roundToInt(publicChargers_pct / 100 * totalNbChargers) ;
+
+while ( currentNbChargers > nbChargersGoal ) {
+	GCPublicCharger gc = findFirst(zero_Interface.c_orderedPublicChargers, x -> x.v_isActive);
+	if (gc != null) {
+		gc.f_setActive(false);
+		zero_Interface.c_orderedPublicChargers.remove(gc);
+		zero_Interface.c_orderedPublicChargers.add(0, gc);
+		currentNbChargers--;
+		
+		for (J_EADieselVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc.p_uid)) {
+			car.reRegisterEnergyAsset();
+		}
+	}
+	else {
+		throw new RuntimeException("Charger slider error: there are not sufficient chargers to remove");
+	}
+}
+while ( currentNbChargers < nbChargersGoal){
+	GCPublicCharger gc = findFirst(zero_Interface.c_orderedPublicChargers, x -> !x.v_isActive);
+	if (gc != null) {
+		gc.f_setActive(true);
+		zero_Interface.c_orderedPublicChargers.remove(gc);
+		zero_Interface.c_orderedPublicChargers.add(0, gc);
+		currentNbChargers++;
+		
+		for (J_EADieselVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc.p_uid)) {
+			J_ActivityTrackerTrips tripTracker = car.getTripTracker(); //Needed, as triptracker is removed when removeEnergyAsset is called.
+			car.removeEnergyAsset();
+			car.setTripTracker(tripTracker);//Re-set the triptracker again, for storing.
+		}
+	}
+	else {
+		throw new RuntimeException("Charger slider error: there are no more chargers to add");
+	}
+}
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
+
+/*ALCODEEND*/}
+
+double f_setV1GChargerCapabilities(double goal_pct)
+{/*ALCODESTART::1750259219309*/
+int totalNbChargers = zero_Interface.c_orderedV1GChargers.size();
+int currentNbChargers = count(zero_Interface.c_orderedV1GChargers, x -> x.V1GCapable);
+int nbChargersGoal = roundToInt(goal_pct / 100.0 * totalNbChargers);
+
+while (currentNbChargers < nbChargersGoal) {
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> !x.V1GCapable);
+	j_ea.V1GCapable = true;
+	currentNbChargers++;
+	zero_Interface.c_orderedV1GChargers.remove(j_ea);
+	zero_Interface.c_orderedV1GChargers.add(0, j_ea);
+	
+}
+while (currentNbChargers > nbChargersGoal) {
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> x.V1GCapable);
+	j_ea.V1GCapable = false;
+	currentNbChargers--;
+	zero_Interface.c_orderedV1GChargers.remove(j_ea);
+	zero_Interface.c_orderedV1GChargers.add(0, j_ea);
+}
+
+// Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+double f_setV2GChargerCapabilities(double goal_pct)
+{/*ALCODESTART::1750259468109*/
+int totalNbChargers = zero_Interface.c_orderedV2GChargers.size();
+int currentNbChargers = count(zero_Interface.c_orderedV2GChargers, x -> x.V2GCapable);
+int nbChargersGoal = roundToInt(goal_pct / 100.0 * totalNbChargers);
+
+while (currentNbChargers < nbChargersGoal) {
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> !x.V2GCapable);
+	j_ea.V2GCapable = true;
+	currentNbChargers++;
+	zero_Interface.c_orderedV2GChargers.remove(j_ea);
+	zero_Interface.c_orderedV2GChargers.add(0, j_ea);
+	
+}
+while (currentNbChargers > nbChargersGoal) {
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> x.V2GCapable);
+	j_ea.V2GCapable = false;
+	currentNbChargers--;
+	zero_Interface.c_orderedV2GChargers.remove(j_ea);
+	zero_Interface.c_orderedV2GChargers.add(0, j_ea);
+}
+
+// Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
 	zero_Interface.b_changeToCustomScenario = true;
 }

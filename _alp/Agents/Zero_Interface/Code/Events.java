@@ -2,7 +2,6 @@ void e_calculateEnergyBalance()
 {/*ALCODESTART::1658497469833*/
 // Trigger timestep in energymodel for continuous simulation ('interactive mode')
 energyModel.f_runTimestep();
-v_timeStepsElapsed ++;
 
 // This function colors the trafos according to the amount of congestion. (maybe move this function call somewhere else?)
 if ( b_updateLiveCongestionColors ){

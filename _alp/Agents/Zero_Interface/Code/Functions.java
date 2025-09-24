@@ -184,7 +184,7 @@ switch(selectedMapOverlayType){
 		gis_area.f_style(null, null, null, null);
 		break;
 	case ELECTRICITY_CONSUMPTION:
-		if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
+		if (project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
 			f_setColorsBasedOnConsumptionProfileHouseholds(gis_area);
 		}
 		else {
@@ -322,6 +322,7 @@ uI_Tabs.f_initializeUI_Tabs(energyModel.f_getGridConnectionsCollectionPointer(),
 
 //Initialize sliders with certain presets
 f_setSliderPresets();
+
 /*ALCODEEND*/}
 
 double f_selectGridNode(GridNode GN)
@@ -389,7 +390,7 @@ if ( v_nbGridConnectionsInSelectedBuilding > 1 ){
 }
 else {
 	String text = "";
-	if (p_selectedProjectType == OL_ProjectType.BUSINESSPARK) {
+	if (project_data.project_type() == OL_ProjectType.BUSINESSPARK) {
 		if (b instanceof GIS_Building) {
 			if(b.c_containedGridConnections.get(0).p_owner.p_detailedCompany){
 				text = b.c_containedGridConnections.get(0).p_owner.p_actorID + ", ";
@@ -497,6 +498,7 @@ while (i < c_COCompanies.size()){
 while (v_connectionOwnerIndexNr < c_COCompanies.size()){
 	
 	UI_company companyUI = add_ui_companies();
+	c_UIResultsInstances.add(companyUI.uI_Results);
 	ConnectionOwner COC = findFirst(c_COCompanies, p -> p.p_connectionOwnerIndexNr == v_connectionOwnerIndexNr );	
 	
 	////Set unique parameters for every company_ui
@@ -517,11 +519,11 @@ while (v_connectionOwnerIndexNr < c_COCompanies.size()){
 		companyUI.c_connectedTrafos.add(GC.p_parentNodeElectricID);
 	
 		//Add scenario settings for each GC
-		companyUI.c_scenarioSettings_Current.add(c_scenarioMap_Current.get(GC));
-		companyUI.c_scenarioSettings_Future.add(c_scenarioMap_Future.get(GC));
+		companyUI.c_scenarioSettings_Current.add(c_scenarioMap_Current.get(GC.p_uid));
+		companyUI.c_scenarioSettings_Future.add(c_scenarioMap_Future.get(GC.p_uid));
 		
 		//Initialize additional vehicles collection for each GC
-		companyUI.c_additionalVehicles.put(GC, new ArrayList<J_EAVehicle>());
+		companyUI.c_additionalVehicles.put(GC.p_uid, new ArrayList<J_EAVehicle>());
 	}
 	
 	companyUI.p_amountOfBuildings = companyUI.c_ownedBuildings.size();
@@ -569,32 +571,27 @@ if(settings.showKPISummary() == null || !settings.showKPISummary()){
 //Connect resultsUI
 uI_Results.f_initializeResultsUI();
 
+c_UIResultsInstances.add(uI_Results);
 /*ALCODEEND*/}
 
 double f_resetSettings()
 {/*ALCODESTART::1709718252272*/
 if(!b_runningMainInterfaceScenarios){
 	b_resultsUpToDate = false;
-	gr_simulateYear.setVisible(true);
-	
-	// Switch to the live plots and do not allow the user to switch away from the live plot when the year is not yet simulated
+
+	// Update asset flow categories of all agents
 	energyModel.f_updateActiveAssetsMetaData();
-	f_enableLivePlotsOnly(uI_Results);
-	if (uI_EnergyHub.uI_Results.v_selectedObjectInterface != null) {
-		f_enableLivePlotsOnly(uI_EnergyHub.uI_Results);
-	}
-	uI_EnergyHub.gr_simulateYearEnergyHub.setVisible(true);
 	
-	
-	//Set simulation and live graph for companyUIs as well!
-	for(UI_company companyUI : c_companyUIs){
-		companyUI.gr_simulateYearScreen.setVisible(true);
-		if(companyUI.uI_Results.f_getSelectedObjectData() != null){
-			f_enableLivePlotsOnly(companyUI.uI_Results);
-			
+	// Switch to the live plots and do not allow the user to switch away from the live plot when the year is not yet simulated	
+	for (UI_Results ui_results : c_UIResultsInstances) {
+		if (ui_results.f_getSelectedObjectData() != null) {	
+			f_enableLivePlotsOnly(ui_results);
 		}
 	}
-
+	
+	// On all screens cover the resultsUI Buttons with the simulate year button
+	f_setAllSimulateYearScreens();
+	
 	runSimulation();
 }
 /*ALCODEEND*/}
@@ -702,7 +699,7 @@ if (gis_area.c_containedGridConnections.size() > 0) {
 	
 	//Define medium PV Value
 	double mediumPVValue_kWp = 100;
-	if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL){
+	if (project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 		mediumPVValue_kWp = 5;
 	}
 	
@@ -905,7 +902,7 @@ double f_setGridTopologyColors()
 //Find all MV substations
 List<GridNode> MVsubstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.SUBMV);
 
-if(MVsubstations != null || p_selectedProjectType == OL_ProjectType.RESIDENTIAL){
+if(MVsubstations != null || project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 	b_gridLoopsAreDefined = true;
 }
 
@@ -925,7 +922,7 @@ if(MVsubstations != null){
 		v_amountOfDefinedGridLoops++;
 	}
 }
-else if(p_selectedProjectType == OL_ProjectType.RESIDENTIAL){
+else if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 	int totalNotToplevelGridNodes = energyModel.f_getGridNodesNotTopLevel().size();
 	//Set all unique grid topology colors for each substation and its children if the gridloops are defined
 	for (GridNode node : energyModel.f_getGridNodesNotTopLevel()){
@@ -986,7 +983,7 @@ double f_createAdditionalUIs()
 //Create the additional dashboards, control panels and private UIs
 
 //Create PrivateUIs
-if (p_selectedProjectType == BUSINESSPARK){
+if (project_data.project_type() == BUSINESSPARK){
 	f_createPrivateCompanyUI();
 }
 
@@ -1317,7 +1314,7 @@ if(c_selectedGridConnections.size() == 0 && !filterCanReturnZero){ // Not allowe
 	f_removeFilter(selectedFilter, selectedFilterName);
 	
 	//Notify filter has not been applied, cause no results are given
-	f_setErrorScreen("Geselecteerde filter geeft geen resultaten. De filter is gedeactiveerd.");
+	f_setErrorScreen("Geselecteerde filter geeft geen resultaten. De filter is gedeactiveerd.", 0, 0);
 }
 else if(c_selectedGridConnections.size() == 0 && filterCanReturnZero){//Allowed to return zero filtered gc, while returning zero
 	//Do nothing
@@ -1595,13 +1592,15 @@ for(GridNode GridLoop : c_filterSelectedGridLoops)
 c_selectedGridConnections = new ArrayList<>(gridConnectionsOnLoop);
 /*ALCODEEND*/}
 
-double f_setErrorScreen(String errorMessage)
+double f_setErrorScreen(String errorMessage,double xOffset,double yOffset)
 {/*ALCODESTART::1736344958050*/
+gr_errorScreen.setPos(xOffset, yOffset);
+
 //Reset location and height
-button_errorOK.setY(50);
-rect_errorMessage.setY(-120);
+button_errorOK.setY(550);
+rect_errorMessage.setY(380);
 rect_errorMessage.setHeight(200);
-t_errorMessage.setY(-70);
+t_errorMessage.setY(430);
 
 //Set position above all other things
 f_setShapePresentationOnTop(gr_errorScreen);
@@ -1682,8 +1681,12 @@ c_selectedGridConnections = new ArrayList<>(gridConnectionsInNeighborhood);
 
 double f_enableLivePlotsOnly(UI_Results resultsUI)
 {/*ALCODESTART::1740043548084*/
-if(resultsUI.getGr_resultsUIHeader().isVisible()){
-	resultsUI.getRadioButtons().setValue(0, true);
+if (resultsUI.f_getSelectedObjectData() != null) {
+	if(resultsUI.getGr_resultsUIHeader().isVisible()){
+		resultsUI.getRadioButtons().setValue(0, true);
+	}
+	resultsUI.chartProfielen.getPeriodRadioButton().setValue(0, true);
+	resultsUI.f_enableNonLivePlotRadioButtons(false);
 }
 for (ShapeRadioButtonGroup rb :resultsUI.chartProfielen.getAllPeriodRadioButtons()) {
 	rb.setValue(0, false);
@@ -1852,9 +1855,9 @@ double f_setStartView()
 {/*ALCODESTART::1743518032245*/
 //traceln("f_setStartView() reached!");
 
-if(map_centre_latitude != null && map_centre_longitude != null && map_centre_latitude != 0 && map_centre_longitude != 0){
-	map.setCenterLatitude(map_centre_latitude);
-	map.setCenterLongitude(map_centre_longitude);
+if(project_data.map_centre_latitude() != null && project_data.map_centre_longitude() != null && project_data.map_centre_latitude() != 0 && project_data.map_centre_longitude() != 0){
+	map.setCenterLatitude(project_data.map_centre_latitude());
+	map.setCenterLongitude(project_data.map_centre_longitude());
 }
 else{
 	ArrayList<GIS_Object> gisObjects_for_mapViewBounds = new ArrayList<GIS_Object>();
@@ -1871,8 +1874,8 @@ else{
 	f_setMapViewBounds(gisObjects_for_mapViewBounds);
 }
 
-if(map_scale != null){
-	map.setMapScale(map_scale);
+if(project_data.map_scale() != null){
+	map.setMapScale(project_data.map_scale());
 }
 
 va_Interface.navigateTo();
@@ -2682,7 +2685,7 @@ if (gis_area.c_containedGridConnections.size() > 0) {
 	}
 	
 	//Set colour based on found parameters
-	if(!capacityKnown && p_selectedProjectType != RESIDENTIAL){
+	if(!capacityKnown && project_data.project_type() != RESIDENTIAL){
 		gis_area.gisRegion.setFillColor(v_gridNodeColorCapacityUnknown);
 		gis_area.gisRegion.setLineColor(v_gridNodeLineColorCapacityUnknown);
 	} else if (maxLoad_fr_gis_object > 1) {
@@ -2723,7 +2726,7 @@ if (gn!=null && gn.gisRegion != null){
 		}
 	}
 	
-	if(!isLiveSim && !gn.p_realCapacityAvailable && p_selectedProjectType != RESIDENTIAL){
+	if(!isLiveSim && !gn.p_realCapacityAvailable && project_data.project_type() != RESIDENTIAL){
 		gn.gisRegion.setFillColor(v_gridNodeColorCapacityUnknown);
 		gn.gisRegion.setLineColor(v_gridNodeLineColorCapacityUnknown);
 	} else if (maxLoad_fr > 1) {
@@ -2784,7 +2787,7 @@ else{//Take the default
 	c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.PV_PRODUCTION);
 	c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.GRID_NEIGHBOURS);
 	c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.CONGESTION);
-	if(p_selectedProjectType == OL_ProjectType.RESIDENTIAL){
+	if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 		c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.PARKING_TYPE);
 	}
 }
@@ -2900,14 +2903,14 @@ b_updateLiveCongestionColors = true;
 gr_mapOverlayLegend_ElectricityConsumption.setVisible(true);
 
 //Colour gis objects
-if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL){
+if (project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 	for (GIS_Building building : energyModel.pop_GIS_Buildings){
 		f_setColorsBasedOnConsumptionProfileHouseholds(building);
 	}
 }
 else {
 	if(energyModel.v_rapidRunData == null){
-		f_setErrorScreen("Dit overzicht wordt pas beschikbaar na het uitvoeren van een jaarsimulatie. In plaats daarvan is de standaard kaart geselecteerd.");
+		f_setErrorScreen("Dit overzicht wordt pas beschikbaar na het uitvoeren van een jaarsimulatie. In plaats daarvan is de standaard kaart geselecteerd.", 0, 0);
 		rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT),true);
 		return;			
 	}
@@ -2959,7 +2962,7 @@ for (GridNode GN : energyModel.pop_gridNodes){
 double f_setMapOverlay_Congestion()
 {/*ALCODESTART::1753097518541*/
 if(energyModel.v_rapidRunData == null){
-	f_setErrorScreen("Dit overzicht wordt pas beschikbaar na het uitvoeren van een jaarsimulatie. In plaats daarvan is de standaard kaart geselecteerd.");
+	f_setErrorScreen("Dit overzicht wordt pas beschikbaar na het uitvoeren van een jaarsimulatie. In plaats daarvan is de standaard kaart geselecteerd.", 0, 0);
 	rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT),true);
 	return;			
 }
@@ -3099,10 +3102,16 @@ if(b_inEnergyHubSelectionMode){
 
 
 	//Move scenario radiobuttons over
-	f_getScenarioButtons().setPos( gr_energyHubPresentation.getX() + 50, gr_energyHubPresentation.getY() + 200);
+	f_getScenarioButtons().setPos( 
+		gr_energyHubPresentation.getX() + uI_EnergyHub.rect_scenarios.getX() + 25.0,
+		gr_energyHubPresentation.getY() + uI_EnergyHub.rect_scenarios.getY() + 50.0
+	);
 	
 	//Set map in correct pos and navigate to e-hub view
-	map.setPos( gr_energyHubPresentation.getX() + uI_EnergyHub.rect_map.getX() + 10.0, gr_energyHubPresentation.getY() + uI_EnergyHub.rect_map.getY() + 10.0 );
+	map.setPos( 
+		gr_energyHubPresentation.getX() + uI_EnergyHub.rect_map.getX() + 10.0,
+		gr_energyHubPresentation.getY() + uI_EnergyHub.rect_map.getY() + 10.0
+	);
 	map.setScale( 0.85, 0.85 );
 	va_EHubDashboard.navigateTo();
 	v_currentViewArea = va_EHubDashboard;
@@ -3156,7 +3165,7 @@ uI_Tabs.add_pop_tabMobility();
 
 // Group visibilities
 // When using an extension of a generic tab don't forget to typecast it!
-if (p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
+if (project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
 	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_ResidentialArea().setVisible(true);
 	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersResidentialArea().setVisible(true);
 	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGr_mobilitySliders_residential().setVisible(true);
@@ -3203,7 +3212,7 @@ if(totalChargers > 0){
 	    int numberOfCars = numberOfCarsPerCharger.get(i);
 	
 	    List<J_EADieselVehicle> assignedCars = new ArrayList<>(allPublicParkedCars.subList(index, index + numberOfCars));
-	    c_mappingOfVehiclesPerCharger.put(charger, assignedCars);
+	    c_mappingOfVehiclesPerCharger.put(charger.p_uid, assignedCars);
 	
 	    // Place vehicles depending on whether the charger is active
 	    if (charger.v_isActive) {
@@ -3244,8 +3253,7 @@ new Thread( () -> {
 	else if(c_selectedGridConnections.size() > 1){//Update COOP area collection
 		uI_Results.f_updateResultsUI(v_customEnergyCoop);
 	}
-	
-	if (uI_EnergyHub.uI_Results.f_getSelectedObjectData() != null){
+	if (uI_EnergyHub.v_energyHubCoop != null) {
 		uI_EnergyHub.uI_Results.f_updateResultsUI(uI_EnergyHub.v_energyHubCoop);
 	}
 	//Update and show kpi summary chart after run
@@ -3355,5 +3363,34 @@ return numberOfCarsPerCharger;
 ShapeRadioButtonGroup f_getScenarioButtons()
 {/*ALCODESTART::1756369604291*/
 return rb_scenarios;
+/*ALCODEEND*/}
+
+double f_enableAllPlots(UI_Results resultsUI,I_EnergyData selectedObjectInterface)
+{/*ALCODESTART::1756994047356*/
+if (resultsUI.f_getSelectedObjectData() != null) {	
+	uI_Results.f_updateResultsUI(selectedObjectInterface);
+	uI_Results.f_enableNonLivePlotRadioButtons(true);
+}
+/*ALCODEEND*/}
+
+double f_setAllSimulateYearScreens()
+{/*ALCODESTART::1756995218301*/
+gr_simulateYear.setVisible(true);
+uI_EnergyHub.gr_simulateYearEnergyHub.setVisible(true);
+for(UI_company companyUI : c_companyUIs){
+	companyUI.gr_simulateYearScreen.setVisible(true);
+}
+/*ALCODEEND*/}
+
+double f_removeAllSimulateYearScreens()
+{/*ALCODESTART::1756997038652*/
+gr_simulateYear.setVisible(false);
+gr_loadIconYearSimulation.setVisible(false);
+uI_EnergyHub.gr_simulateYearEnergyHub.setVisible(false);
+uI_EnergyHub.gr_loadIconYearSimulationEnergyHub.setVisible(false);
+for(UI_company companyUI : c_companyUIs){
+	companyUI.gr_simulateYearScreen.setVisible(false);
+	companyUI.gr_loadIcon.setVisible(false);
+}
 /*ALCODEEND*/}
 

@@ -756,7 +756,7 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 	if(companyGC == null){
 		//Create new companyGC
 		companyGC = energyModel.add_UtilityConnections();
-		
+
 		//Update counter and collections
 		v_numberOfCompaniesNoSurvey++;
 		generic_company_GCs.add(companyGC);
@@ -1062,7 +1062,7 @@ try{
 	map_buildingData_Vallum = com.zenmo.vallum.PandKt.fetchBagPanden(surveys);
 }
 catch (Exception e){ //if api of bag is down, leave bag buildings empty and display error message
-	zero_Interface.f_setErrorScreen("BAG API is offline, het is mogelijk dat bepaalde panden niet zijn ingeladen!");
+	zero_Interface.f_setErrorScreen("BAG API is offline, het is mogelijk dat bepaalde panden niet zijn ingeladen!", 0, 0);
 }
 
 
@@ -1421,10 +1421,10 @@ double f_iEAGenericCompanies(GridConnection companyGC,Double pv_installed_kwp)
 {/*ALCODESTART::1726584205833*/
 //Create current & future scenario parameter list
 J_scenario_Current current_scenario_list = new J_scenario_Current();
-zero_Interface.c_scenarioMap_Current.put(companyGC, current_scenario_list);
+zero_Interface.c_scenarioMap_Current.put(companyGC.p_uid, current_scenario_list);
 
 J_scenario_Future future_scenario_list = new J_scenario_Future();
-zero_Interface.c_scenarioMap_Future.put(companyGC, future_scenario_list);
+zero_Interface.c_scenarioMap_Future.put(companyGC.p_uid, future_scenario_list);
 
 //Set parent
 current_scenario_list.setParentAgent(companyGC);
@@ -1915,10 +1915,7 @@ zero_Interface.f_projectSpecificStyling();
 // Populate the model
 f_configureEngine_default();
 
-//send the GIS map centre location to the Interface 
-zero_Interface.map_centre_latitude = project_data.map_centre_latitude();
-zero_Interface.map_centre_longitude = project_data.map_centre_longitude();
-zero_Interface.map_scale = project_data.map_scale();
+// here used to be the update to the map coordinates in interface, now is done via project_data
 
 //Start up of the User Interface (Needs to happen after configuring the engine)
 zero_Interface.f_UIStartup();
@@ -1943,8 +1940,10 @@ if( settings.runHeadlessAtStartup() ){
 	zero_Interface.uI_Results.f_enableNonLivePlotRadioButtons(true);
 }
 else {
-		zero_Interface.f_resetSettings();
+	zero_Interface.f_resetSettings();
 }
+
+zero_Interface.uI_Results.f_updateResultsUI(energyModel);
 
 //Clear all data record collections after loader is done
 f_clearDataRecords();
@@ -2133,11 +2132,11 @@ final int targetYear = 2023;
 
 //Create current scenario parameter list
 J_scenario_Current current_scenario_list = new J_scenario_Current();
-zero_Interface.c_scenarioMap_Current.put(companyGC, current_scenario_list);
+zero_Interface.c_scenarioMap_Current.put(companyGC.p_uid, current_scenario_list);
 
 //Create future scenario parameter list
 J_scenario_Future future_scenario_list = new J_scenario_Future();
-zero_Interface.c_scenarioMap_Future.put(companyGC, future_scenario_list);
+zero_Interface.c_scenarioMap_Future.put(companyGC.p_uid, future_scenario_list);
 
 
 
@@ -3533,6 +3532,7 @@ for (ParkingSpace_data dataParkingSpace : f_getParkingSpacesInSubScope(c_parking
 	
 	if(carportGC == null){ // If non existend -> Create one.
 		carportGC = energyModel.add_EnergyProductionSites();
+		
 		carportGC.p_gridConnectionID = "Parking space gridconnection: " + dataParkingSpace.parking_id();
 		carportGC.v_liveConnectionMetaData.physicalCapacity_kW = dataParkingSpace.pv_potential_kwp();
 		carportGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = 0.0;
@@ -3921,7 +3921,7 @@ for(GridConnection GC : allConnections){
 	} else if (GC instanceof GCUtility) {
 		f_reconstructAgent(GC, deserializedEnergyModel.UtilityConnections, deserializedEnergyModel);
 	}
-	GC.f_startAfterDeserialisation();
+	//GC.f_startAfterDeserialisation();
 }
 
 
@@ -3970,7 +3970,7 @@ try{ // Reflection trick to get to Agent.owner private field
 */
 
 Agent root = this.getRootAgent();
-energyModel.restoreOwner(root);
+energyModel.restoreOwner(this);
 
 energyModel.setEngine(getEngine());	
 energyModel.instantiateBaseStructure_xjal();
@@ -3979,7 +3979,6 @@ energyModel.setEnvironment(this.getEnvironment());
 traceln("EnergyModel owner: %s", energyModel.getOwner());
 
 energyModel.create();
-energyModel.f_startAfterDeserialisation();
 //energyModel.start(); // Why is this needed?
 /*ALCODEEND*/}
 
@@ -4261,7 +4260,7 @@ for(Actor AC : deserializedEnergyModel.c_actors){
 		} else if (AC instanceof EnergyCoop) {
 			((EnergyCoop)AC).energyModel = deserializedEnergyModel;
 			f_reconstructAgent(AC, deserializedEnergyModel.pop_energyCoops, deserializedEnergyModel);
-			((EnergyCoop)AC).f_startAfterDeserialisation();
+			//((EnergyCoop)AC).f_startAfterDeserialisation();
 		} else if (AC instanceof GridOperator) {
 			((GridOperator)AC).energyModel = deserializedEnergyModel;
 			f_reconstructAgent(AC, deserializedEnergyModel.pop_gridOperators, deserializedEnergyModel);
@@ -4379,8 +4378,25 @@ double f_initializeInterfacePointers()
 //Set parameters/pointers in the interface
 zero_Interface.energyModel = energyModel;
 zero_Interface.uI_Results.energyModel = energyModel;
-zero_Interface.p_selectedProjectType = project_data.project_type();
+zero_Interface.project_data = project_data;
 zero_Interface.settings = settings;
 zero_Interface.user = user;
+
+/*ALCODEEND*/}
+
+double f_reconstructOrderedCollections(J_ModelSave saveObject)
+{/*ALCODESTART::1756735137677*/
+zero_Interface.c_orderedPVSystemsCompanies = saveObject.c_orderedPVSystemsCompanies;
+zero_Interface.c_orderedPVSystemsHouses = saveObject.c_orderedPVSystemsHouses;
+zero_Interface.c_orderedVehicles = saveObject.c_orderedVehicles;
+zero_Interface.c_orderedHeatingSystemsCompanies = saveObject.c_orderedHeatingSystemsCompanies;
+zero_Interface.c_orderedHeatingSystemsHouses = saveObject.c_orderedHeatingSystemsHouses;
+zero_Interface.c_orderedVehiclesPrivateParking = saveObject.c_orderedVehiclesPrivateParking;
+zero_Interface.c_orderedParkingSpaces = saveObject.c_orderedParkingSpaces;
+zero_Interface.c_orderedV1GChargers = saveObject.c_orderedV1GChargers;
+zero_Interface.c_orderedV2GChargers = saveObject.c_orderedV2GChargers;
+zero_Interface.c_orderedPublicChargers = saveObject.c_orderedPublicChargers;
+//zero_Interface.c_mappingOfVehiclesPerCharger = saveObject.c_mappingOfVehiclesPerCharger;
+
 /*ALCODEEND*/}
 

@@ -60,7 +60,7 @@ uI_Tabs.gr_energyDemandSettings.setX(zero_Interface.uI_Tabs.gr_energyDemandSetti
 
 // Group visibilities
 // When using an extension of a generic tab don't forget to typecast it!
-if (zero_Interface.p_selectedProjectType == OL_ProjectType.RESIDENTIAL) {
+if (zero_Interface.project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
 	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_ResidentialArea().setVisible(true);
 	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersResidentialArea().setVisible(true);
 	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGr_mobilitySliders_residential().setVisible(true);
@@ -338,10 +338,432 @@ catch (Exception exception) {
 
 double f_initializeUserSavedScenarios()
 {/*ALCODESTART::1756395572049*/
-String userIdToken = zero_Interface.user.userIdToken();
-
-if(userIdToken != null){
-	
+if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToken() == "") {
+	return;
 }
+
+var repository = UserScenarioRepository.builder()
+    .userId(UUID.fromString(zero_Interface.user.userIdToken()))
+    .modelName(zero_Interface.project_data.project_name())
+    .build();
+
+var scenarioList = repository.listUserScenarios();
+int nbScenarios = scenarioList.size();
+String[] scenarioNames = new String[nbScenarios];
+for (int i = 0; i < nbScenarios; i++) {
+	scenarioNames[i] = scenarioList.get(i).getName();
+}
+
+combobox_selectScenario.setItems(scenarioNames);
+/*ALCODEEND*/}
+
+double f_loadScenario(int index)
+{/*ALCODESTART::1756805429105*/
+if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToken() == "") {
+	zero_Interface.f_setErrorScreen("Niet mogelijk om scenario's in te laden. Er is geen gebruiker ingelogd.", zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
+	return;
+}
+
+//pauseSimulation();
+
+// Collect GIS_Objects into hashmap, to link to new EnergyModel.
+zero_Interface.energyModel.pop_GIS_Buildings.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
+zero_Interface.energyModel.pop_GIS_Objects.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
+zero_Interface.energyModel.pop_GIS_Parcels.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
+
+try {
+	v_objectMapper = new ObjectMapper();
+	f_addMixins();
+	
+	var repository = UserScenarioRepository.builder()
+	    .userId(UUID.fromString(zero_Interface.user.userIdToken()))
+	    .modelName(zero_Interface.project_data.project_name())
+        .build();
+      
+    var scenarioList = repository.listUserScenarios();   
+
+	// Deserialize the JSON into a new EnergyModel instance:
+    var jsonStream = repository.fetchUserScenarioContent(scenarioList.get(index).getId());
+	J_ModelSave saveObject = v_objectMapper.readValue(jsonStream, J_ModelSave.class);
+	//J_ModelSave saveObject = v_objectMapper.readValue(new File("ModelSave.json"), J_ModelSave.class);
+	
+	EnergyModel deserializedEnergyModel = saveObject.energyModel;
+		
+	// Reconstruct all Agents
+	f_reconstructEnergyModel(deserializedEnergyModel);	
+	
+	
+	f_reconstructGridConnections(deserializedEnergyModel);
+	f_reconstructActors(deserializedEnergyModel);
+	f_reconstructGridNodes(deserializedEnergyModel, saveObject.c_gridNodes);
+	
+	f_reconstructGIS_Objects(deserializedEnergyModel, saveObject.c_GISObjects);
+	
+	// Get profilePointer tableFunctions from 'original' energyModel
+	deserializedEnergyModel.c_profiles.forEach(x->{
+		J_ProfilePointer origProfile = zero_Interface.energyModel.f_findProfile(x.name);
+		x.setTableFunction(origProfile.getTableFunction());
+	});
+	
+	deserializedEnergyModel.f_startAfterDeserialisation();
+	
+	f_setEngineInputDataAfterDeserialisation(deserializedEnergyModel);
+	
+	zero_Interface.energyModel = deserializedEnergyModel;
+	zero_Interface.uI_Results.energyModel = deserializedEnergyModel;
+	uI_Results.energyModel = deserializedEnergyModel;
+
+	//Date startDate = getExperiment().getEngine().getStartDate();
+	//traceln("startDate# " + startDate);
+	//Date currentDate = date();
+	//traceln("currentDate# " + currentDate);
+	//startDate.setYear(startDate.getYear() - currentDate.getYear());
+	//startDate.setMonth(startDate.getMonth() - currentDate.getMonth());
+	//startDate.setDate(startDate.getDate() - currentDate.getDate());
+	//getExperiment().getEngine().setStartDate(startDate);
+	//traceln("Reduced anylogic date by one year, looping all data");
+	
+	// Reinitialize energy model
+	deserializedEnergyModel.b_isInitialized = false;
+	deserializedEnergyModel.f_initializeEngine();	
+		
+	// Putting back the ordered collections in the interface
+	f_reconstructOrderedCollections(saveObject);
+	
+	//zero_Interface.f_clearSelectionAndSelectEnergyModel();
+	
+	/*
+	zero_Interface.uI_Tabs.f_initializeUI_Tabs(zero_Interface.energyModel.f_getGridConnectionsCollectionPointer(), zero_Interface.energyModel.f_getPausedGridConnectionsCollectionPointer());
+	uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null);
+	zero_Interface.f_updateMainInterfaceSliders();
+	
+	zero_Interface.f_resetSettings();
+	*/
+	
+	///button_exit.action();
+	
+	///zero_Interface.uI_Tabs.f_initializeUI_Tabs(zero_Interface.energyModel.f_getGridConnectionsCollectionPointer(), zero_Interface.energyModel.f_getPausedGridConnectionsCollectionPointer());
+	// v_energyHubCoop not updated to point to 'new' coop
+	//uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null);
+	
+	///zero_Interface.f_simulateYearFromMainInterface();
+	
+	v_energyHubCoop = zero_Interface.energyModel.pop_energyCoops.get(0);
+	
+	// Update the E-Hub Dashboard with the loaded E-Hub from savefile
+	f_initializeEnergyHubMemberNames();
+	uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null);
+	uI_Results.f_updateResultsUI(v_energyHubCoop);
+	
+	// Update the main interface with the loaded E-Hub from savefile
+	zero_Interface.c_selectedGridConnections = new ArrayList<>(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer());
+	
+	// Reset all colors on the GIS map
+	zero_Interface.energyModel.pop_GIS_Buildings.forEach(x -> zero_Interface.f_styleAreas(x));
+	zero_Interface.energyModel.pop_GIS_Objects.forEach(x -> zero_Interface.f_styleAreas(x));
+	zero_Interface.energyModel.pop_GIS_Parcels.forEach(x -> zero_Interface.f_styleAreas(x));
+	
+	// Color all selected GC 
+	for (GridConnection gc : zero_Interface.c_selectedGridConnections) {
+		gc.c_connectedGISObjects.forEach(x -> x.gisRegion.setFillColor(zero_Interface.v_selectionColor));		
+	}
+	
+	// Simulate a year
+	gr_simulateYearEnergyHub.setVisible(false);		
+	gr_loadIconYearSimulationEnergyHub.setVisible(true);
+	zero_Interface.f_simulateYearFromMainInterface();	
+	
+	
+	pauseSimulation();
+	//zero_Interface.b_inEnergyHubSelectionMode = true;
+	//zero_Interface.f_finalizeEnergyHubConfiguration();
+	
+	//zero_Interface.f_updateOrderedListsAfterDeserialising(deserializedEnergyModel);
+	
+	/*
+	Date startDate = getExperiment().getEngine().getStartDate();
+	int day = getExperiment().getEngine().getDayOfMonth();
+	int month = getExperiment().getEngine().getMonth();
+	traceln("day: " + day);
+	traceln("month: " + month);
+	startDate.setMonth(startDate.getMonth() - month);
+	startDate.setDate(startDate.getDate() - day);
+	getExperiment().getEngine().setStartDate(startDate);
+	*/
+	
+} catch (IOException e) {
+	e.printStackTrace();
+}
+
+
+/*ALCODEEND*/}
+
+double f_saveScenario(String scenarioName)
+{/*ALCODESTART::1756805443177*/
+if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToken() == "") {
+	zero_Interface.f_setErrorScreen("Niet mogelijk om scenario's op te slaan. Er is geen gebruiker ingelogd.", zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
+	return;
+}
+
+traceln("Starting model serialisation...");
+J_ModelSave saveObject = new J_ModelSave();
+saveObject.energyModel = zero_Interface.energyModel;
+
+zero_Interface.energyModel.pop_gridNodes.forEach(x->saveObject.c_gridNodes.add(x));
+zero_Interface.energyModel.pop_GIS_Buildings.forEach(x->{saveObject.c_GISObjects.add(x); c_GISregions.put(x.p_id, x.gisRegion);x.f_writeStyleStrings();});
+zero_Interface.energyModel.pop_GIS_Objects.forEach(x->{saveObject.c_GISObjects.add(x); c_GISregions.put(x.p_id, x.gisRegion);x.f_writeStyleStrings();});
+zero_Interface.energyModel.pop_GIS_Parcels.forEach(x->{saveObject.c_GISObjects.add(x); c_GISregions.put(x.p_id, x.gisRegion);x.f_writeStyleStrings();});
+
+saveObject.c_orderedPVSystemsCompanies = zero_Interface.c_orderedPVSystemsCompanies;
+saveObject.c_orderedPVSystemsHouses = zero_Interface.c_orderedPVSystemsHouses;
+saveObject.c_orderedVehicles = zero_Interface.c_orderedVehicles;
+saveObject.c_orderedHeatingSystemsCompanies = zero_Interface.c_orderedHeatingSystemsCompanies;
+saveObject.c_orderedHeatingSystemsHouses = zero_Interface.c_orderedHeatingSystemsHouses;
+saveObject.c_orderedVehiclesPrivateParking = zero_Interface.c_orderedVehiclesPrivateParking;
+saveObject.c_orderedParkingSpaces = zero_Interface.c_orderedParkingSpaces;
+saveObject.c_orderedV1GChargers = zero_Interface.c_orderedV1GChargers;
+saveObject.c_orderedV2GChargers = zero_Interface.c_orderedV2GChargers;
+saveObject.c_orderedPublicChargers = zero_Interface.c_orderedPublicChargers;
+saveObject.c_mappingOfVehiclesPerCharger = zero_Interface.c_mappingOfVehiclesPerCharger;
+saveObject.c_scenarioMap_Current = zero_Interface.c_scenarioMap_Current;
+saveObject.c_scenarioMap_Future = zero_Interface.c_scenarioMap_Future;
+
+List<LinkedHashMap<String, List<J_EAVehicle>>> c_additionalVehicleHashMaps = new ArrayList<LinkedHashMap<String, List<J_EAVehicle>>>();
+for (UI_company companyUI : zero_Interface.c_companyUIs) {
+	c_additionalVehicleHashMaps.add(companyUI.c_additionalVehicles);
+}
+saveObject.c_additionalVehicleHashMaps = c_additionalVehicleHashMaps;
+
+v_objectMapper = new ObjectMapper();
+f_addMixins();
+v_objectMapper.setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
+
+try {
+	traceln("Trying to save to file");
+	//v_objectMapper.writeValue(new File("energyModel.json"), energyModel);
+
+	//v_objectMapper.writeValue(new File("ModelSave.json"), saveObject);
+
+	var repository = UserScenarioRepository.builder()
+	    .userId(UUID.fromString(zero_Interface.user.userIdToken()))
+	    .modelName(zero_Interface.project_data.project_name())
+        .build();
+    
+	repository.saveUserScenario(
+        scenarioName,
+        v_objectMapper.writeValueAsBytes(saveObject)
+	);
+	
+	
+} catch (IOException e) {
+	e.printStackTrace();
+}
+
+/*ALCODEEND*/}
+
+double f_addMixins()
+{/*ALCODESTART::1756806431955*/
+v_objectMapper.addMixIn(Agent.class, AgentMixin.class);
+v_objectMapper.addMixIn(AgentArrayList.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(EnergyModel.class, EnergyModelMixin.class);
+v_objectMapper.addMixIn(Actor.class, ActorMixin.class);
+v_objectMapper.addMixIn(DataSet.class, DataSetMixin.class);
+v_objectMapper.addMixIn(TextFile.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(EnergyDataViewer.class, IgnoreClassMixin.class);
+
+v_objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, IgnoreClassMixin.class);
+//objectMapper.addMixIn(com.anylogic.engine.TableFunction.class, TableFunctionMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.GISRegion.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.presentation.ViewArea.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.AgentSpacePosition.class, IgnoreClassMixin.class);
+
+// Weirdness regarding material handling toolbox	
+v_objectMapper.addMixIn(com.anylogic.engine.AgentSpacePosition.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.AbstractWall.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.RailwayTrack.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.PalletRack.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.RoadNetwork.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.AreaNode.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.AbstractFluidMarkup.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.Lift.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.ConveyorNode.class, IgnoreClassMixin.class);
+v_objectMapper.addMixIn(com.anylogic.engine.markup.Node.class, IgnoreClassMixin.class);
+
+/*ALCODEEND*/}
+
+double f_setEngineInputDataAfterDeserialisation(EnergyModel deserializedEnergyModel)
+{/*ALCODESTART::1756806501010*/
+deserializedEnergyModel.p_truckTripsCsv = zero_Interface.energyModel.p_truckTripsCsv;
+deserializedEnergyModel.p_householdTripsCsv = zero_Interface.energyModel.p_householdTripsCsv;
+deserializedEnergyModel.p_cookingPatternCsv = zero_Interface.energyModel.p_cookingPatternCsv;
+
+//deserializedEnergyModel.avgc_data = zero_Interface.energyModel.avgc_data;
+deserializedEnergyModel.c_defaultHeatingStrategies = zero_Interface.energyModel.c_defaultHeatingStrategies;
+/*ALCODEEND*/}
+
+double f_reconstructGridConnections(EnergyModel deserializedEnergyModel)
+{/*ALCODESTART::1756806501019*/
+ArrayList<GridConnection> allConnections = new ArrayList<>();
+allConnections.addAll(deserializedEnergyModel.c_gridConnections);
+allConnections.addAll(deserializedEnergyModel.c_pausedGridConnections);
+
+for(GridConnection GC : allConnections){
+	GC.energyModel = deserializedEnergyModel;
+	if (GC instanceof GCHouse){
+		//toMove.add(GC);
+		f_reconstructAgent(GC, deserializedEnergyModel.Houses, deserializedEnergyModel);
+	} else if (GC instanceof GCEnergyProduction) {
+		f_reconstructAgent(GC, deserializedEnergyModel.EnergyProductionSites, deserializedEnergyModel);
+	} else if (GC instanceof GCEnergyConversion) {
+		f_reconstructAgent(GC, deserializedEnergyModel.EnergyConversionSites, deserializedEnergyModel);
+	} else if (GC instanceof GCGridBattery) {
+		f_reconstructAgent(GC, deserializedEnergyModel.GridBatteries, deserializedEnergyModel);
+	} else if (GC instanceof GCNeighborhood) {
+		f_reconstructAgent(GC, deserializedEnergyModel.Neighborhoods, deserializedEnergyModel);
+	} else if (GC instanceof GCPublicCharger) {
+		f_reconstructAgent(GC, deserializedEnergyModel.PublicChargers, deserializedEnergyModel);
+	} else if (GC instanceof GCUtility) {
+		f_reconstructAgent(GC, deserializedEnergyModel.UtilityConnections, deserializedEnergyModel);
+	}
+	//GC.f_startAfterDeserialisation();
+}
+
+
+/*ALCODEEND*/}
+
+double f_reconstructEnergyModel(EnergyModel energyModel)
+{/*ALCODESTART::1756806501029*/
+// Code Instead of Agent.goToPopulation() (which resets all parameters to default!)	
+/*
+try{ // Reflection trick to get to Agent.owner private field
+	energyModel.forceSetOwner(energyModel, pop_energyModels);
+} catch (Exception e) {
+	e.printStackTrace();
+}
+*/
+
+Agent root = zero_Interface.getRootAgent();
+traceln("root: " + root);
+energyModel.restoreOwner(root);
+
+energyModel.setEngine(getEngine());	
+energyModel.instantiateBaseStructure_xjal();
+energyModel.setEnvironment(this.getEnvironment());
+
+traceln("EnergyModel owner: %s", energyModel.getOwner());
+
+energyModel.create();
+//energyModel.start(); // Why is this needed?
+/*ALCODEEND*/}
+
+double f_reconstructAgent(Agent agent,AgentArrayList pop,EnergyModel energyModel)
+{/*ALCODESTART::1756806501040*/
+/* // Code Instead of Agent.goToPopulation() (which resets many variables to default!)	
+try{ // Reflection trick to get to Agent.owner private field
+	if (agent instanceof GridNode) {
+		((GridNode)agent).forceSetOwner(agent,pop);
+	} else if (agent instanceof GridConnection) {
+		((GridConnection)agent).forceSetOwner(agent,pop);
+	} else if (agent instanceof Actor) {
+		((Actor)agent).forceSetOwner(agent,pop);
+	} else if (agent instanceof GIS_Object) {
+		((GIS_Object)agent).forceSetOwner(agent,pop);
+	}
+} catch (Exception e) {
+	e.printStackTrace();
+}*/ 
+
+agent.restoreOwner(energyModel); // simply sets agent.d = root, should replace reflection hack
+agent.restoreCollection_xjal(pop); // simple sets agent.j = pop, should replace reflection hack
+
+agent.setEngine(getEngine());	
+agent.instantiateBaseStructure_xjal();
+agent.setEnvironment(pop.getEnvironment());
+
+pop._add(agent); // Add to the population	
+//int popSize = pop.size(); 
+//pop.callCreate(agent, popSize); // Update population object
+agent.create();
+/*ALCODEEND*/}
+
+double f_reconstructActors(EnergyModel deserializedEnergyModel)
+{/*ALCODESTART::1756806501050*/
+for(Actor AC : deserializedEnergyModel.c_actors){
+		
+		if (AC instanceof ConnectionOwner) {
+			((ConnectionOwner)AC).energyModel = deserializedEnergyModel;
+			f_reconstructAgent(AC, deserializedEnergyModel.pop_connectionOwners, deserializedEnergyModel);
+		} else if (AC instanceof EnergySupplier) {
+			((EnergySupplier)AC).energyModel = deserializedEnergyModel;
+			f_reconstructAgent(AC, deserializedEnergyModel.pop_energySuppliers, deserializedEnergyModel);
+		} else if (AC instanceof EnergyCoop) {
+			((EnergyCoop)AC).energyModel = deserializedEnergyModel;
+			f_reconstructAgent(AC, deserializedEnergyModel.pop_energyCoops, deserializedEnergyModel);
+			//((EnergyCoop)AC).f_startAfterDeserialisation();
+		} else if (AC instanceof GridOperator) {
+			((GridOperator)AC).energyModel = deserializedEnergyModel;
+			f_reconstructAgent(AC, deserializedEnergyModel.pop_gridOperators, deserializedEnergyModel);
+		}
+	}
+
+/*ALCODEEND*/}
+
+double f_reconstructGIS_Objects(EnergyModel deserializedEnergyModel,ArrayList<GIS_Object> c_GISObjects)
+{/*ALCODESTART::1756806501060*/
+for(GIS_Object GO : c_GISObjects){
+	GO.gisRegion = c_GISregions.get(GO.p_id);
+	
+	if (GO instanceof GIS_Building) {
+		((GIS_Building)GO).energyModel = deserializedEnergyModel;
+		f_reconstructAgent(GO, deserializedEnergyModel.pop_GIS_Buildings, deserializedEnergyModel);
+	} else if (GO instanceof GIS_Parcel) {
+		((GIS_Parcel)GO).energyModel = deserializedEnergyModel;
+		f_reconstructAgent(GO, deserializedEnergyModel.pop_GIS_Parcels, deserializedEnergyModel);
+	} else {
+		GO.energyModel = deserializedEnergyModel;
+		f_reconstructAgent(GO, deserializedEnergyModel.pop_GIS_Objects, deserializedEnergyModel);
+		//GO.f_startAfterDeserialisation();
+	}
+	GO.f_resetStyle();
+}
+/*ALCODEEND*/}
+
+double f_reconstructGridNodes(EnergyModel deserializedEnergyModel,ArrayList<GridNode> c_gridNodes)
+{/*ALCODESTART::1756806501070*/
+for(GridNode GN : c_gridNodes){
+	GN.energyModel = deserializedEnergyModel;
+	f_reconstructAgent(GN, deserializedEnergyModel.pop_gridNodes, deserializedEnergyModel);
+}
+
+/*ALCODEEND*/}
+
+double f_reconstructOrderedCollections(J_ModelSave saveObject)
+{/*ALCODESTART::1756806501080*/
+zero_Interface.c_orderedPVSystemsCompanies = saveObject.c_orderedPVSystemsCompanies;
+zero_Interface.c_orderedPVSystemsHouses = saveObject.c_orderedPVSystemsHouses;
+zero_Interface.c_orderedVehicles = saveObject.c_orderedVehicles;
+zero_Interface.c_orderedHeatingSystemsCompanies = saveObject.c_orderedHeatingSystemsCompanies;
+zero_Interface.c_orderedHeatingSystemsHouses = saveObject.c_orderedHeatingSystemsHouses;
+zero_Interface.c_orderedVehiclesPrivateParking = saveObject.c_orderedVehiclesPrivateParking;
+zero_Interface.c_orderedParkingSpaces = saveObject.c_orderedParkingSpaces;
+zero_Interface.c_orderedV1GChargers = saveObject.c_orderedV1GChargers;
+zero_Interface.c_orderedV2GChargers = saveObject.c_orderedV2GChargers;
+zero_Interface.c_orderedPublicChargers = saveObject.c_orderedPublicChargers;
+zero_Interface.c_mappingOfVehiclesPerCharger = saveObject.c_mappingOfVehiclesPerCharger;
+zero_Interface.c_scenarioMap_Current = saveObject.c_scenarioMap_Current;
+zero_Interface.c_scenarioMap_Future = saveObject.c_scenarioMap_Future;
+
+List<ConnectionOwner> c_COCompanies = findAll(zero_Interface.energyModel.pop_connectionOwners, p -> p.p_connectionOwnerType == OL_ConnectionOwnerType.COMPANY); 
+
+int i = 0;
+for (ConnectionOwner CO : c_COCompanies) {
+	UI_company companyUI = zero_Interface.c_companyUIs.get(CO.p_connectionOwnerIndexNr);
+	companyUI.p_company = CO;
+	companyUI.c_ownedGridConnections = companyUI.p_company.f_getOwnedGridConnections();
+	companyUI.c_additionalVehicles = saveObject.c_additionalVehicleHashMaps.get(i);
+	companyUI.f_setSelectedGCSliders();
+	i++;
+}
+
 /*ALCODEEND*/}
 

@@ -1651,7 +1651,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_collectiveBattery_MWh_default.getIntValue() + " MWh"</TextCode>
+				<TextCode>sl_collectiveBattery_MWh_businesspark.getIntValue() + " MWh"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>

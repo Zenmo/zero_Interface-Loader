@@ -1,28 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Variables>
 	<Variable Class="PlainVariable">
-		<Id>1663238634515</Id>
-		<Name><![CDATA[v_timeStepsElapsed]]></Name>
-		<X>-240</X>
-		<Y>855</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[int]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[0]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1696837759932</Id>
 		<Name><![CDATA[v_LVGridColor]]></Name>
 		<X>395</X>
@@ -1692,7 +1670,7 @@
 		<Id>1731425176471</Id>
 		<Name><![CDATA[b_changeToCustomScenario]]></Name>
 		<X>-670</X>
-		<Y>756</Y>
+		<Y>706</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1714,7 +1692,7 @@
 		<Id>1732027307811</Id>
 		<Name><![CDATA[b_runningMainInterfaceScenarios]]></Name>
 		<X>-670</X>
-		<Y>736</Y>
+		<Y>686</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1736,7 +1714,7 @@
 		<Id>1734617425109</Id>
 		<Name><![CDATA[b_gridLoopsAreDefined]]></Name>
 		<X>-630</X>
-		<Y>560</Y>
+		<Y>510</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2165,7 +2143,7 @@
 		<Id>1753110308594</Id>
 		<Name><![CDATA[v_amountOfDefinedGridLoops]]></Name>
 		<X>-630</X>
-		<Y>580</Y>
+		<Y>530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2323,7 +2301,7 @@
 		</Label>
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
+		<ShowLabel>false</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
 			<Type><![CDATA[EnergyModel]]></Type>
 			<UnitType>NONE</UnitType>
@@ -2338,85 +2316,10 @@
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
-		<Id>1715867611441</Id>
-		<Name><![CDATA[map_centre_latitude]]></Name>
-		<X>-670</X>
-		<Y>100</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[Double]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1715867611439</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1715867648777</Id>
-		<Name><![CDATA[map_centre_longitude]]></Name>
-		<X>-670</X>
-		<Y>120</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[Double]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1715867648775</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1724757837316</Id>
-		<Name><![CDATA[p_selectedProjectType]]></Name>
-		<X>-670</X>
-		<Y>80</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[OL_ProjectType]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1724757837314</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
 		<Id>1727251571552</Id>
 		<Name><![CDATA[settings]]></Name>
 		<X>-670</X>
-		<Y>160</Y>
+		<Y>110</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2431,31 +2334,6 @@
 			<ParameterEditor>
 				<Id>1727251571550</Id>
 				<Label><![CDATA[settings]]></Label>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1728030131094</Id>
-		<Name><![CDATA[map_scale]]></Name>
-		<X>-670</X>
-		<Y>140</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[Double]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1728030131092</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
@@ -2524,7 +2402,7 @@
 		<Id>1745937830300</Id>
 		<Name><![CDATA[p_minSelectedGCForPublicAggregation]]></Name>
 		<X>-670</X>
-		<Y>925</Y>
+		<Y>895</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2552,7 +2430,7 @@
 		<Id>1753446312779</Id>
 		<Name><![CDATA[b_inEnergyHubSelectionMode]]></Name>
 		<X>2240</X>
-		<Y>-2070</Y>
+		<Y>-2130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2580,7 +2458,7 @@
 		<Id>1753446312783</Id>
 		<Name><![CDATA[b_inEnergyHubMode]]></Name>
 		<X>2240</X>
-		<Y>-2090</Y>
+		<Y>-2150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2608,7 +2486,7 @@
 		<Id>1756395079958</Id>
 		<Name><![CDATA[user]]></Name>
 		<X>-670</X>
-		<Y>180</Y>
+		<Y>130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2622,6 +2500,32 @@
 			<SdArray>false</SdArray>
 			<ParameterEditor>
 				<Id>1756395079956</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1758028435828</Id>
+		<Name><![CDATA[project_data]]></Name>
+		<Description><![CDATA[Should be filled with the Project_data record created in the startup of the project model]]></Description>
+		<X>-670</X>
+		<Y>90</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Project_data]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1758028435826</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
@@ -2679,7 +2583,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>GridConnection</ElementClass>
+			<ElementClass>String</ElementClass>
 			<ValueElementClass>J_scenario_Future</ValueElementClass>
 		</Properties>
 	</Variable>
@@ -2697,7 +2601,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>GridConnection</ElementClass>
+			<ElementClass>String</ElementClass>
 			<ValueElementClass>J_scenario_Current</ValueElementClass>
 		</Properties>
 	</Variable>
@@ -3204,8 +3108,26 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>GCPublicCharger</ElementClass>
+			<ElementClass>String</ElementClass>
 			<ValueElementClass>List&lt;J_EADieselVehicle&gt;</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1756993771846</Id>
+		<Name><![CDATA[c_UIResultsInstances]]></Name>
+		<X>-290</X>
+		<Y>650</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>UI_Results</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>
 </Variables>

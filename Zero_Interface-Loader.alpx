@@ -368,6 +368,14 @@
 			<Imported>true</Imported>
 			<Folder>false</Folder>
 		</ClassPathEntry>
+		<ClassPathEntry>
+			<ResourceReference>
+				<PackageName>zerointerfaceloader</PackageName>
+				<ClassName>uplux.jar</ClassName>
+			</ResourceReference>
+			<Imported>true</Imported>
+			<Folder>false</Folder>
+		</ClassPathEntry>
 		<CloudModelUuid>ebade042-5518-4162-8eb5-f55439c67c64</CloudModelUuid>
 	</Model>
 	<ConvertersApplied>

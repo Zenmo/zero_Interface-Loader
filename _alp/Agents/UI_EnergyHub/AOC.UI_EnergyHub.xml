@@ -3,6 +3,15 @@
 	<Id>1709049506453</Id>
 	<Name><![CDATA[UI_EnergyHub]]></Name>
 	<Folder>1754045666929</Folder>
+	<Import><![CDATA[import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
+import java.io.IOException;
+
+import energy.lux.uplux.*;
+import java.util.UUID;]]></Import>
+	<StartupCode><![CDATA[zero_Interface.c_UIResultsInstances.add(uI_Results);]]></StartupCode>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1709049506460</Id>
