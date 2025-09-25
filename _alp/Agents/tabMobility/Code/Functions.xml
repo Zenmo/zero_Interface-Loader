@@ -777,6 +777,10 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
+			<Name><![CDATA[gcListChargers]]></Name>
+			<Type><![CDATA[List<GCPublicCharger>]]></Type>
+		</Parameter>
+		<Parameter>
 			<Name><![CDATA[goal_pct]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
@@ -796,6 +800,10 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gcListChargers]]></Name>
+			<Type><![CDATA[List<GCPublicCharger>]]></Type>
+		</Parameter>
 		<Parameter>
 			<Name><![CDATA[goal_pct]]></Name>
 			<Type><![CDATA[double]]></Type>
