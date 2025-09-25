@@ -1641,7 +1641,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 			<X>0</X>
 			<Y>-10</Y>
 		</Label>
-		<PublicFlag>true</PublicFlag>
+		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>

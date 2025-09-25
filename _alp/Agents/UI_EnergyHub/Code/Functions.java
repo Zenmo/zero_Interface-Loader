@@ -415,6 +415,8 @@ try {
 		J_ProfilePointer origProfile = zero_Interface.energyModel.f_findProfile(x.name);
 		x.setTableFunction(origProfile.getTableFunction());
 	});
+	// get heatingTypeHashmap from 'old' energyModel.
+	deserializedEnergyModel.c_defaultHeatingStrategies = zero_Interface.energyModel.c_defaultHeatingStrategies;
 	
 	zero_Interface.zero_loader.energyModel = deserializedEnergyModel;
 	zero_Interface.energyModel = deserializedEnergyModel;
@@ -425,21 +427,7 @@ try {
 	
 	f_setEngineInputDataAfterDeserialisation(deserializedEnergyModel);
 	
-
-	//Date startDate = getExperiment().getEngine().getStartDate();
-	//traceln("startDate# " + startDate);
-	//Date currentDate = date();
-	//traceln("currentDate# " + currentDate);
-	//startDate.setYear(startDate.getYear() - currentDate.getYear());
-	//startDate.setMonth(startDate.getMonth() - currentDate.getMonth());
-	//startDate.setDate(startDate.getDate() - currentDate.getDate());
-	//getExperiment().getEngine().setStartDate(startDate);
-	//traceln("Reduced anylogic date by one year, looping all data");
 	
-	// Reinitialize energy model
-	
-	//deserializedEnergyModel.f_initializeEngineAfterLoad();	
-		
 	// Putting back the ordered collections in the interface
 	f_reconstructOrderedCollections(saveObject);
 	
