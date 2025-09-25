@@ -484,6 +484,112 @@ zero_Interface.uI_Results.f_showCorrectChart();
 				</Font>
 				<Alignment>CENTER</Alignment>
 			</Text>
+			<Group>
+				<Id>1758793427662</Id>
+				<Name><![CDATA[gr_loadScenario]]></Name>
+				<X>40</X>
+				<Y>190</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<YCode>610</YCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Image>
+						<Id>1758793427664</Id>
+						<Name><![CDATA[image_loadScenario]]></Name>
+						<X>225</X>
+						<Y>-5</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<OnClickCode>//gr_forceSaveLoadScenario.setVisible(false);
+gr_loadScenario.setVisible(false);
+zero_Interface.f_startEnergyHubConfiguration();
+zero_Interface.uI_EnergyHub.f_loadScenario(combobox_selectScenario.getValueIndex());
+zero_Interface.f_finalizeEnergyHubConfiguration();
+
+
+</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>32</Width>
+						<Height>32</Height>
+						<Rotation>0.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>load_icon.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
+					<Control Type="ComboBox">
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Id>1758793427666</Id>
+						<Name><![CDATA[combobox_selectScenario]]></Name>
+						<X>0</X>
+						<Y>0</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<BasicProperties Width="220" Height="25">
+							<EmbeddedIcon>false</EmbeddedIcon>
+							<FillColor>-1</FillColor>
+							<TextColor>-16777216</TextColor>
+							<Enabled>true</Enabled>
+						</BasicProperties>
+						<ExtendedProperties>
+							<Font Name="Dialog" Size="11" Style="0"/>
+							<Editable>false</Editable>
+							<Button>Geen Saves Beschikbaar</Button>
+							<LinkTo>false</LinkTo>
+						</ExtendedProperties>
+					</Control>
+					<Text>
+						<Id>1758793427668</Id>
+						<Name><![CDATA[t_loadScenarioInstructions]]></Name>
+						<X>5</X>
+						<Y>-20</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Selecteer een scenario in de keuzelijst en klik op het icoontje]]></Text>
+						<Font>
+							<Name><![CDATA[SansSerif]]></Name>
+							<Size>10</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+				</Presentation>
+			</Group>
 		</Presentation>
 	</Group>
 	<Group>
@@ -1525,4 +1631,32 @@ zero_Interface.f_resetSettings();</ActionCode>
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
+	<Control Type="Button">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1758793485249</Id>
+		<Name><![CDATA[button_loadScenario]]></Name>
+		<X>100</X>
+		<Y>140</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<BasicProperties Width="140" Height="30">
+			<EmbeddedIcon>false</EmbeddedIcon>
+			<TextColor>-16777216</TextColor>
+			<Enabled>true</Enabled>
+			<ActionCode>zero_Interface.uI_EnergyHub.f_initializeUserSavedScenarios(combobox_selectScenario);
+//gr_saveScenario.setVisible(false);
+//gr_forceSaveLoadScenario.setVisible(true);
+gr_loadScenario.setVisible(true);</ActionCode>
+		</BasicProperties>
+		<ExtendedProperties>
+			<Font Name="Dialog" Size="11" Style="0"/>
+			<LabelText>Laad een scenario in</LabelText>
+		</ExtendedProperties>
+	</Control>
 </Presentation>

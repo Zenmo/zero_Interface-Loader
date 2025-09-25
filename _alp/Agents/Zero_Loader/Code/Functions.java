@@ -4374,6 +4374,7 @@ v_remainingGasConsumption_m3 = project_data.total_gas_consumption_companies_m3_p
 double f_initializeInterfacePointers()
 {/*ALCODESTART::1756395236522*/
 //Set parameters/pointers in the interface
+zero_Interface.zero_loader = this;
 zero_Interface.energyModel = energyModel;
 zero_Interface.uI_Results.energyModel = energyModel;
 zero_Interface.project_data = project_data;

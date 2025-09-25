@@ -192,6 +192,10 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[combo]]></Name>
+			<Type><![CDATA[ShapeComboBox]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
