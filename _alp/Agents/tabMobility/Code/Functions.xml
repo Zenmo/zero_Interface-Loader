@@ -757,8 +757,20 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
+			<Name><![CDATA[gcListChargers]]></Name>
+			<Type><![CDATA[List<GCPublicCharger>]]></Type>
+		</Parameter>
+		<Parameter>
 			<Name><![CDATA[publicChargers_pct]]></Name>
 			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[V1GCapableChargerSlider]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[V2GCapableChargerSlider]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -831,6 +843,10 @@
 		<Parameter>
 			<Name><![CDATA[privateParkingEV_pct]]></Name>
 			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[V2GCapableVehicleSlider]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

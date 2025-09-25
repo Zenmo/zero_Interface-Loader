@@ -1731,11 +1731,10 @@ else{
 }
 /*ALCODEEND*/}
 
-double f_setPublicChargingStations(double publicChargers_pct)
+double f_setPublicChargingStations(List<GCPublicCharger> gcListChargers,double publicChargers_pct,ShapeSlider V1GCapableChargerSlider,ShapeSlider V2GCapableChargerSlider)
 {/*ALCODESTART::1758183975214*/
-//MAAK WERKEND VOOR EEN GCLIST ALS INPUT
-int totalNbChargers = zero_Interface.c_orderedPublicChargers.size();
-int currentNbChargers = count(zero_Interface.c_orderedPublicChargers, x -> x.v_isActive);
+int totalNbChargers = gcListChargers.size();
+int currentNbChargers = count(gcListChargers, x -> x.v_isActive);
 int nbChargersGoal = roundToInt(publicChargers_pct / 100 * totalNbChargers) ;
 
 while ( currentNbChargers > nbChargersGoal ) {
@@ -1772,6 +1771,29 @@ while ( currentNbChargers < nbChargersGoal){
 		throw new RuntimeException("Charger slider error: there are no more chargers to add");
 	}
 }
+
+//Update the V1G and V2G capable vehicle slider accordingly to the change in vehicle dynamics
+int totalActiveChargers = 0;
+int totalCapableV1GChargers = 0;
+int totalCapableV2GChargers = 0;
+
+for(GCPublicCharger GC : gcListChargers){
+	if(GC.v_isActive){
+		for(J_EAChargePoint charger : GC.c_chargers){
+			totalActiveChargers++;
+			if(charger.getV1GCapable()){
+				totalCapableV1GChargers++;
+			}
+			if(charger.getV2GCapable()){
+				totalCapableV2GChargers++;			
+			}
+		}	
+	
+	}
+}
+V1GCapableChargerSlider.setValue(roundToInt(100.0 * totalCapableV1GChargers/totalActiveChargers));
+V2GCapableChargerSlider.setValue(roundToInt(100.0 * totalCapableV2GChargers/totalActiveChargers));
+
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
@@ -1848,7 +1870,7 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-double f_setVehiclesPrivateParking(List<GCHouse> gcListHouses,double privateParkingEV_pct)
+double f_setVehiclesPrivateParking(List<GCHouse> gcListHouses,double privateParkingEV_pct,ShapeSlider V2GCapableVehicleSlider)
 {/*ALCODESTART::1758183975234*/
 //Voor nu zo opgelost, echter gaat dit niet goed werken met de volgorde. BEDENK EEN BETER MANIER!?
 List<J_EAVehicle> gcListOrderedVehiclesPrivateParking = findAll( zero_Interface.c_orderedVehiclesPrivateParking, h -> gcListHouses.contains(h.getParentAgent()));
@@ -1892,6 +1914,11 @@ while ( nbOfPrivateParkedEV < desiredNbOfPrivateParkedEV){
 	zero_Interface.c_orderedVehiclesPrivateParking.add(ev);
 	nbOfPrivateParkedEV++;
 }
+
+
+//Update the V2G capable vehicle slider accordingly to the change in vehicle dynamics
+int totalCapableV2GEVs = count(gcListOrderedVehiclesPrivateParking, vehicle -> vehicle instanceof J_EAEV && ((J_EAEV)vehicle).getV2GCapable());
+V2GCapableVehicleSlider.setValue(roundToInt(100.0*totalCapableV2GEVs/nbOfPrivateParkedEV));
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){

@@ -1377,7 +1377,7 @@ if(selectedChargingAttitude != null){
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPublicChargingStations(sl_publicChargersResidentialArea_pct.getIntValue());</ActionCode>
+					<ActionCode>f_setPublicChargingStations(uI_Tabs.f_getAllSliderGridConnections_chargers(), sl_publicChargersResidentialArea_pct.getIntValue(), sl_chargersThatSupportV1G_pct, sl_chargersThatSupportV2G_pct);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1484,7 +1484,7 @@ if(selectedChargingAttitude != null){
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_privateEVsResidentialArea_pct.getValue());</ActionCode>
+					<ActionCode>f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_privateEVsResidentialArea_pct.getValue(), sl_EVsThatSupportV2G_pct);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
