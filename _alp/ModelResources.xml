@@ -49,12 +49,6 @@
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Id>1756975183273</Id>
-		<Path>logo_zenmo.png</Path>
-		<ReferencedFromUserCode>false</ReferencedFromUserCode>
-		<Location>FILE_SYSTEM</Location>
-	</Resource>
-	<Resource>
 		<Id>1756975183274</Id>
 		<Path>lombok.jar</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
@@ -111,6 +105,12 @@
 	<Resource>
 		<Id>1756980508238</Id>
 		<Path>data_Generic/inputTruckTripPatterns.csv</Path>
+		<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		<Location>FILE_SYSTEM</Location>
+	</Resource>
+	<Resource>
+		<Id>1758877552432</Id>
+		<Path>Zenmo mogelijk nieuw logo.png</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
