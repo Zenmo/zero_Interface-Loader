@@ -261,7 +261,7 @@ else{
 	J_EAProfile heatDemandAsset_Profile = findFirst(GC.c_profileAssets, j_ea->j_ea.energyCarrier == OL_EnergyCarriers.HEAT);
 	
 	if(heatDemandAsset_Profile != null){
-	capacityThermal_kW = max(heatDemandAsset_Profile.a_energyProfile_kWh)*4;
+	capacityThermal_kW = heatDemandAsset_Profile.getProfileScaling_fr() * max(heatDemandAsset_Profile.a_energyProfile_kWh)*4;
 	}
 	else{
 		traceln("No heating demand asset found for GC:" + GC.p_gridConnectionID);
