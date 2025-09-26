@@ -643,8 +643,7 @@ for (J_EA j_ea : c_ownedGridConnections.get(v_currentSelectedGCnr).c_energyAsset
 	}
 	if (j_ea instanceof J_EAProfile) {
 		if (((J_EAProfile) j_ea).energyCarrier== OL_EnergyCarriers.HEAT) {
-			((J_EAProfile) j_ea).resetEnergyProfile();
-			((J_EAProfile) j_ea).scaleEnergyProfile(consumptionScaling_fr);
+			((J_EAProfile) j_ea).setProfileScaling_fr( consumptionScaling_fr );
 		}
 	}
 }
@@ -822,8 +821,7 @@ for (J_EA j_ea : c_ownedGridConnections.get(v_currentSelectedGCnr).c_energyAsset
 	}
 	if (j_ea instanceof J_EAProfile) {
 		if (((J_EAProfile) j_ea).energyCarrier  == OL_EnergyCarriers.ELECTRICITY) {
-			((J_EAProfile) j_ea).resetEnergyProfile();
-			((J_EAProfile) j_ea).scaleEnergyProfile(consumptionScaling_fr);
+			((J_EAProfile) j_ea).setProfileScaling_fr( consumptionScaling_fr );
 		}
 	}
 }

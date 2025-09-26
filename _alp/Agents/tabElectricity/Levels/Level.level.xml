@@ -1546,7 +1546,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setCurtailment(cb_curtailment_businesspark.isSelected(), uI_Tabs.f_getSliderGridConnections_consumption());</ActionCode>
+					<ActionCode>f_setCurtailment(cb_curtailment_businesspark.isSelected(), new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getSliderGridConnections_utilities()));</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
