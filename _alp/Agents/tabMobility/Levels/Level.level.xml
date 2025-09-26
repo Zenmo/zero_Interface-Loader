@@ -1377,7 +1377,7 @@ if(selectedChargingAttitude != null){
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPublicChargingStations(sl_publicChargersResidentialArea_pct.getIntValue());</ActionCode>
+					<ActionCode>f_setPublicChargingStations(uI_Tabs.f_getAllSliderGridConnections_chargers(), sl_publicChargersResidentialArea_pct.getIntValue(), sl_chargersThatSupportV1G_pct, sl_chargersThatSupportV2G_pct);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1484,7 +1484,7 @@ if(selectedChargingAttitude != null){
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_privateEVsResidentialArea_pct.getValue());</ActionCode>
+					<ActionCode>f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_privateEVsResidentialArea_pct.getValue(), sl_EVsThatSupportV2G_pct);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1556,7 +1556,7 @@ if(selectedChargingAttitude != null){
 						<BasicProperties Width="100" Height="30">
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
-							<ActionCode>f_setV2GChargerCapabilities( sl_chargersThatSupportV2G_pct.getValue() );</ActionCode>
+							<ActionCode>f_setV2GChargerCapabilities( uI_Tabs.f_getSliderGridConnections_chargers(), sl_chargersThatSupportV2G_pct.getValue() );</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
 							<DefaultValueCode>0</DefaultValueCode>
@@ -1740,7 +1740,7 @@ if(selectedChargingAttitude != null){
 						<BasicProperties Width="100" Height="30">
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
-							<ActionCode>f_setV1GChargerCapabilities( sl_chargersThatSupportV1G_pct.getValue() );</ActionCode>
+							<ActionCode>f_setV1GChargerCapabilities( uI_Tabs.f_getSliderGridConnections_chargers(), sl_chargersThatSupportV1G_pct.getValue() );</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
 							<DefaultValueCode>0</DefaultValueCode>
@@ -1994,13 +1994,15 @@ switch(cb_chargingAttitudePrivateParkedCars.getValue()){
 		gr_activateV2GPrivateParkedCars.setVisible(true);
 		break;
 	case "Slim laden: Netbewust":
+		selectedChargingAttitude = OL_ChargingAttitude.BALANCE_LOCAL; // For now Balance_Local
+		gr_activateV2GPrivateParkedCars.setVisible(true);
+		break;
+	/*
+	case "Slim laden: Locale balans":
 		selectedChargingAttitude = OL_ChargingAttitude.BALANCE_LOCAL;
 		gr_activateV2GPrivateParkedCars.setVisible(true);
 		break;
-	case "Slim laden: Zelfconsumptie":
-		selectedChargingAttitude = OL_ChargingAttitude.BALANCE_LOCAL;
-		gr_activateV2GPrivateParkedCars.setVisible(true);
-		break;
+	*/
 	case "Gevarieerd":
 		zero_Interface.f_setErrorScreen("De geselecteerde laad strategie is er alleen ter visualisatie in het geval niet elk huis dezelfde laad strategie heeft. Dit is dus niet een strategie die je handmatig aan kunt zetten. Voor nu is 'Niet slim laden' weer geselecteerd.", 0, 0);
 		selectedChargingAttitude = null;
@@ -2100,7 +2102,7 @@ else{
 					<EnableExpression>sl_publicChargersResidentialArea_pct.isEnabled()</EnableExpression>
 					<ActionCode>OL_ChargingAttitude selectedChargingAttitude = null;
 gr_activateV2GPublicChargers.setVisible(false);
-cb_activateV2GPrivatePublicChargers.setSelected(false, true); // True call for now needed for chargepoints only
+cb_activateV2GPublicChargers.setSelected(false, true); // True call for now needed for chargepoints only
 gr_settingsV1G_publicChargers.setVisible(false);
 gr_settingsV2G_publicChargers.setVisible(false);
 
@@ -2191,7 +2193,7 @@ else{
 					<Control Type="CheckBox">
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1758192011389</Id>
-						<Name><![CDATA[cb_activateV2GPrivatePublicChargers]]></Name>
+						<Name><![CDATA[cb_activateV2GPublicChargers]]></Name>
 						<X>135</X>
 						<Y>-16</Y>
 						<Label>
@@ -2206,8 +2208,8 @@ else{
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<TextColor>-16777216</TextColor>
 							<Enabled>true</Enabled>
-							<ActionCode>f_activateV2G(new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getAllSliderGridConnections_chargers()), cb_activateV2GPrivatePublicChargers.isSelected());
-gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPrivatePublicChargers.isSelected());</ActionCode>
+							<ActionCode>f_activateV2G(new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getAllSliderGridConnections_chargers()), cb_activateV2GPublicChargers.isSelected());
+gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected());</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
 							<Font Name="Dialog" Size="11" Style="0"/>
@@ -2228,7 +2230,7 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPrivatePublicChargers.isS
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<VisibleCode>cb_activateV2GPrivatePublicChargers.isVisible()</VisibleCode>
+						<VisibleCode>cb_activateV2GPublicChargers.isVisible()</VisibleCode>
 						<OnClickCode>zero_Interface.f_setInfoText(i_activateV2GPrivatePublicChargers, zero_Interface.v_infoText.activateV2GPrivatePublicChargers, i_activateV2GPrivatePublicChargers.getX() + gr_activateV2GPublicChargers.getX() + uI_Tabs.v_presentationXOffset, i_activateV2GPrivatePublicChargers.getY() + gr_activateV2GPublicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
@@ -2256,7 +2258,7 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPrivatePublicChargers.isS
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>cb_activateV2GPrivatePublicChargers.isVisible()</VisibleCode>
+						<VisibleCode>cb_activateV2GPublicChargers.isVisible()</VisibleCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
