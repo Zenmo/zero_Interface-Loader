@@ -1625,7 +1625,8 @@ gr_errorScreen.setVisible(true);
 
 double f_styleResultsUI()
 {/*ALCODESTART::1736442051389*/
-uI_Results.f_styleAllCharts(v_backgroundColor, lavender, 1.0, LINE_STYLE_SOLID);
+uI_Results.f_styleResultsUIHeader(zenmocolor_blue3.getFillColor(), zenmocolor_blue3.getFillColor(), 1.0, LINE_STYLE_SOLID);
+uI_Results.f_styleAllCharts(v_backgroundColor, zenmocolor_blue3.getFillColor(), 1.0, LINE_STYLE_SOLID);
 /*ALCODEEND*/}
 
 double f_selectNeighborhood(double clickx,double clicky)

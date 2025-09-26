@@ -49,12 +49,6 @@
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Id>1756975183273</Id>
-		<Path>logo_zenmo.png</Path>
-		<ReferencedFromUserCode>false</ReferencedFromUserCode>
-		<Location>FILE_SYSTEM</Location>
-	</Resource>
-	<Resource>
 		<Id>1756975183274</Id>
 		<Path>lombok.jar</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>

@@ -868,28 +868,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1706990909665</Id>
-		<Name><![CDATA[v_themeColor]]></Name>
-		<X>1312</X>
-		<Y>1080</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[Color]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new Color(208, 208, 245)]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1706990958029</Id>
 		<Name><![CDATA[v_backgroundColor]]></Name>
 		<X>1312</X>
@@ -2247,25 +2225,6 @@
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[gray]]></Code>
 			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1755771109351</Id>
-		<Name><![CDATA[v_themeColor2]]></Name>
-		<X>1312</X>
-		<Y>1100</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[Color]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
