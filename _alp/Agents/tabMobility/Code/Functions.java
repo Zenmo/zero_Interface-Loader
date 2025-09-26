@@ -1450,6 +1450,17 @@ double mobilitySavings_pct = totalBaseTravelDistance_km > 0 ? (totalSavedTravelD
 sl_mobilityDemandReduction_pct.setValue(roundToInt(mobilitySavings_pct), false);
 
 
+//Smart charging
+boolean smartCharging = true;
+for(GridConnection GC : allConsumerGridConnections){
+	if(GC.p_chargingManagement != null && GC.c_electricVehicles.size() > 0 && GC.p_chargingManagement instanceof J_ChargingManagementSimple){
+		smartCharging = false;
+		break;
+	}
+}
+cb_spreadChargingEVs.setSelected(smartCharging, false);
+
+
 ////Vehicles
 // Initialize the vehicle counters
 int DieselCars = 0;
@@ -1577,54 +1588,153 @@ zero_Interface.f_resetSettings();
 
 double f_updateMobilitySliders_residential()
 {/*ALCODESTART::1758183013077*/
-List<GCPublicCharger> chargerGridConnections = uI_Tabs.f_getAllSliderGridConnections_chargers();
-List<J_EAChargePoint> chargersEA = new ArrayList<J_EAChargePoint>();
-chargerGridConnections.forEach(gc -> chargersEA.addAll(gc.c_chargers));
+////Private EV
+gr_activateV2GPrivateParkedCars.setVisible(false);
+cb_activateV2GPrivateParkedCars.setSelected(false, false);
+gr_settingsV2G_privateParkedCars.setVisible(false);
 
+List<GCHouse> houseGridConnectionsWithPrivateParking = findAll(uI_Tabs.f_getSliderGridConnections_houses(), house -> house.p_eigenOprit);
+List<J_EAVehicle> privateParkedCars = new ArrayList<J_EAVehicle>();
+houseGridConnectionsWithPrivateParking.forEach(gc -> privateParkedCars.addAll(gc.c_vehicleAssets));
 
-//Private EV
-if (zero_Interface.c_orderedVehiclesPrivateParking.size() > 0) {
-	int nbPrivateEVs = count(zero_Interface.c_orderedVehiclesPrivateParking, x -> x instanceof J_EAEV);
-	int nbPrivateEVsThatSupportV2G = count(zero_Interface.c_orderedVehiclesPrivateParking, x -> x instanceof J_EAEV && ((J_EAEV)x).getV2GCapable());
-	double privateEVs_pct = 100.0 * nbPrivateEVs / zero_Interface.c_orderedVehiclesPrivateParking.size();
+if (privateParkedCars.size() > 0) {
+	int nbPrivateEVs = count(privateParkedCars, x -> x instanceof J_EAEV);
+	int nbPrivateEVsThatSupportV2G = count(privateParkedCars, x -> x instanceof J_EAEV && ((J_EAEV)x).getV2GCapable());
+	double privateEVs_pct = 100.0 * nbPrivateEVs / privateParkedCars.size();
 	double privateEVsThatSupportV2G_pct = 100.0 * nbPrivateEVsThatSupportV2G / nbPrivateEVs;
 	sl_privateEVsResidentialArea_pct.setValue(roundToInt(privateEVs_pct), false);
 	sl_EVsThatSupportV2G_pct.setValue(roundToInt(privateEVsThatSupportV2G_pct), false);
+	
+	//Selected charging mode
+	GCHouse GCWithPrivateParkedEV = findFirst(houseGridConnectionsWithPrivateParking, gc -> gc.p_chargingManagement != null && gc.c_electricVehicles.size() > 0);
+	OL_ChargingAttitude currentChargingAttitude = (GCWithPrivateParkedEV != null) ? GCWithPrivateParkedEV.p_chargingManagement.getCurrentChargingType() : OL_ChargingAttitude.SIMPLE;
+	boolean V2GActive = (GCWithPrivateParkedEV != null) ? GCWithPrivateParkedEV.p_chargingManagement.getV2GActive() : false;
+	for(GridConnection GC : houseGridConnectionsWithPrivateParking){
+		if(GC.p_chargingManagement != null && GC.c_electricVehicles.size() > 0 ){
+			if(currentChargingAttitude != OL_ChargingAttitude.CUSTOM && GC.p_chargingManagement.getCurrentChargingType() != currentChargingAttitude){
+				currentChargingAttitude = OL_ChargingAttitude.CUSTOM; // Here used as varied: in other words: custom setting
+			}
+			if(V2GActive && !GC.p_chargingManagement.getV2GActive()){
+				V2GActive = false;
+			}
+		}
+		
+		if(currentChargingAttitude == OL_ChargingAttitude.CUSTOM && !V2GActive){
+			break;
+		}
+		
+	}
+	
+	String selectedChargingAttitudeString = "";
+	switch(currentChargingAttitude){
+		case SIMPLE:
+			selectedChargingAttitudeString = "Niet slim laden";
+			break;
+		case PRICE:
+			selectedChargingAttitudeString = "Slim laden: Prijs gestuurd";
+			gr_activateV2GPrivateParkedCars.setVisible(true);
+			break;
+		case BALANCE_LOCAL:
+			selectedChargingAttitudeString = "Slim laden: Netbewust";
+			gr_activateV2GPrivateParkedCars.setVisible(true);
+			break;
+		case CUSTOM:
+			selectedChargingAttitudeString = "Gevarieerd";
+			break;
+	}
+	
+	cb_chargingAttitudePrivateParkedCars.setValue(selectedChargingAttitudeString, false);
+	cb_activateV2GPrivateParkedCars.setSelected(V2GActive, false);
+	
+	if(gr_activateV2GPrivateParkedCars.isVisible() && V2GActive){
+		gr_settingsV2G_privateParkedCars.setVisible(true);
+	}
 }
 else{
 	sl_privateEVsResidentialArea_pct.setEnabled(false);
 }
 
+////Chargers
+OL_ChargingAttitude selectedChargingAttitude = null;
+gr_activateV2GPublicChargers.setVisible(false);
+cb_activateV2GPublicChargers.setSelected(false, false);
+gr_settingsV1G_publicChargers.setVisible(false);
+gr_settingsV2G_publicChargers.setVisible(false);
 
-//Chargers
-int nbPublicChargerGC = chargerGridConnections.size();
+List<GCPublicCharger> activeChargerGridConnections = uI_Tabs.f_getSliderGridConnections_chargers();
+List<GCPublicCharger> pausedChargerGridConnections = uI_Tabs.f_getPausedSliderGridConnections_chargers();
+List<J_EAChargePoint> activeChargersEA = new ArrayList<J_EAChargePoint>();
+activeChargerGridConnections.forEach(gc -> activeChargersEA.addAll(gc.c_chargers));
+
+
+int nbPublicChargerGC = activeChargerGridConnections.size() + pausedChargerGridConnections.size();
 
 if(nbPublicChargerGC > 0 ){
-	int nbActivePublicChargersGC = count(chargerGridConnections, x -> x.v_isActive);
+	int nbActivePublicChargersGC = activeChargerGridConnections.size();
 	double activePublicChargers_pct = 100.0 * nbActivePublicChargersGC / nbPublicChargerGC;
-	sl_publicChargersResidentialArea_pct.setValue(activePublicChargers_pct, false);
+	sl_publicChargersResidentialArea_pct.setValue(roundToInt(activePublicChargers_pct), false);
 	
-	int nbV1GChargers = count(zero_Interface.c_orderedV1GChargers, x -> chargersEA.contains(x) && x.getV1GCapable());
-	int nbV2GChargers =count(zero_Interface.c_orderedV2GChargers, x -> chargersEA.contains(x) && x.getV2GCapable());
-	int nbPublicChargers = chargersEA.size();
+	int nbV1GChargers = count(activeChargersEA, x -> x.getV1GCapable());
+	int nbV2GChargers =count(activeChargersEA, x -> x.getV2GCapable());
+	int nbPublicChargers = activeChargersEA.size();
 		
 	double V1G_pct = 100.0 * nbV1GChargers / nbPublicChargers;
 	double V2G_pct = 100.0 * nbV2GChargers / nbPublicChargers;
-	sl_chargersThatSupportV1G_pct.setValue(V1G_pct, false);
-	sl_chargersThatSupportV2G_pct.setValue(V2G_pct, false);
+	sl_chargersThatSupportV1G_pct.setValue(roundToInt(V1G_pct), false);
+	sl_chargersThatSupportV2G_pct.setValue(roundToInt(V2G_pct), false);
+	
+	//Selected charging mode
+	OL_ChargingAttitude currentChargingAttitude = activeChargersEA.size() > 0 ? activeChargersEA.get(0).getChargingAttitude(): OL_ChargingAttitude.SIMPLE;
+	boolean V2GActive = activeChargersEA.size() > 0 ? activeChargersEA.get(0).getV2GActive(): false;
+	for(J_EAChargePoint charger : activeChargersEA){
+		if(currentChargingAttitude != OL_ChargingAttitude.CUSTOM && charger.getChargingAttitude() != currentChargingAttitude){
+			currentChargingAttitude = OL_ChargingAttitude.CUSTOM; // Here used as varied: in other words: custom setting
+		}
+		if(V2GActive && !charger.getV2GActive()){
+			V2GActive = false;
+		}
+		
+		if(currentChargingAttitude == OL_ChargingAttitude.CUSTOM && !V2GActive){
+			break;
+		}
+	}
+	
+	String selectedChargingAttitudeString = "";
+	switch(currentChargingAttitude){
+		case SIMPLE:
+			selectedChargingAttitudeString = "Niet slim laden";
+			break;
+		case PRICE:
+			selectedChargingAttitudeString = "Slim laden: Prijs gestuurd";
+			gr_settingsV1G_publicChargers.setVisible(true);
+			gr_activateV2GPublicChargers.setVisible(true);
+			break;
+		case BALANCE_GRID:
+			selectedChargingAttitudeString = "Slim laden: Netbewust";
+			gr_settingsV1G_publicChargers.setVisible(true);
+			gr_activateV2GPublicChargers.setVisible(true);
+			break;
+		case CUSTOM:
+			selectedChargingAttitudeString = "Gevarieerd";
+			break;
+	}
+	
+	cb_chargingAttitudePrivatePublicChargers.setValue(selectedChargingAttitudeString, false);
+	cb_activateV2GPublicChargers.setSelected(V2GActive, false);
+	
+	if(gr_activateV2GPublicChargers.isVisible() && V2GActive){
+		gr_settingsV2G_publicChargers.setVisible(true);
+	}
 }
 else{
 	sl_publicChargersResidentialArea_pct.setEnabled(false);
-	sl_chargersThatSupportV1G_pct.setEnabled(false);
-	sl_chargersThatSupportV2G_pct.setEnabled(false);
 }
 /*ALCODEEND*/}
 
-double f_setPublicChargingStations(double publicChargers_pct)
+double f_setPublicChargingStations(List<GCPublicCharger> gcListChargers,double publicChargers_pct,ShapeSlider V1GCapableChargerSlider,ShapeSlider V2GCapableChargerSlider)
 {/*ALCODESTART::1758183975214*/
-//MAAK WERKEND VOOR EEN GCLIST ALS INPUT
-int totalNbChargers = zero_Interface.c_orderedPublicChargers.size();
-int currentNbChargers = count(zero_Interface.c_orderedPublicChargers, x -> x.v_isActive);
+int totalNbChargers = gcListChargers.size();
+int currentNbChargers = count(gcListChargers, x -> x.v_isActive);
 int nbChargersGoal = roundToInt(publicChargers_pct / 100 * totalNbChargers) ;
 
 while ( currentNbChargers > nbChargersGoal ) {
@@ -1662,6 +1772,29 @@ while ( currentNbChargers < nbChargersGoal){
 	}
 }
 
+//Update the V1G and V2G capable vehicle slider accordingly to the change in vehicle dynamics
+int totalActiveChargers = 0;
+int totalCapableV1GChargers = 0;
+int totalCapableV2GChargers = 0;
+
+for(GCPublicCharger GC : gcListChargers){
+	if(GC.v_isActive){
+		for(J_EAChargePoint charger : GC.c_chargers){
+			totalActiveChargers++;
+			if(charger.getV1GCapable()){
+				totalCapableV1GChargers++;
+			}
+			if(charger.getV2GCapable()){
+				totalCapableV2GChargers++;			
+			}
+		}	
+	
+	}
+}
+V1GCapableChargerSlider.setValue(roundToInt(100.0 * totalCapableV1GChargers/totalActiveChargers));
+V2GCapableChargerSlider.setValue(roundToInt(100.0 * totalCapableV2GChargers/totalActiveChargers));
+
+
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
 	zero_Interface.b_changeToCustomScenario = true;
@@ -1671,15 +1804,17 @@ zero_Interface.f_resetSettings();
 
 /*ALCODEEND*/}
 
-double f_setV1GChargerCapabilities(double goal_pct)
+double f_setV1GChargerCapabilities(List<GCPublicCharger> gcListChargers,double goal_pct)
 {/*ALCODESTART::1758183975221*/
-//MAAK WERKEND VOOR EEN GCLIST ALS INPUT
-int totalNbChargers = zero_Interface.c_orderedV1GChargers.size();
-int currentNbChargers = count(zero_Interface.c_orderedV1GChargers, x -> x.getV1GCapable());
+List<J_EAChargePoint> activeChargersEA = new ArrayList<J_EAChargePoint>();
+gcListChargers.forEach(gc -> activeChargersEA.addAll(gc.c_chargers));
+
+int totalNbChargers = activeChargersEA.size();
+int currentNbChargers = count(activeChargersEA, x -> x.getV1GCapable());
 int nbChargersGoal = roundToInt(goal_pct / 100.0 * totalNbChargers);
 
 while (currentNbChargers < nbChargersGoal) {
-	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> !x.getV1GCapable());
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> activeChargersEA.contains(x) && !x.getV1GCapable());
 	j_ea.setV1GCapability(true);
 	currentNbChargers++;
 	zero_Interface.c_orderedV1GChargers.remove(j_ea);
@@ -1687,7 +1822,7 @@ while (currentNbChargers < nbChargersGoal) {
 	
 }
 while (currentNbChargers > nbChargersGoal) {
-	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> x.getV1GCapable());
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> activeChargersEA.contains(x) && x.getV1GCapable());
 	j_ea.setV1GCapability(false);
 	currentNbChargers--;
 	zero_Interface.c_orderedV1GChargers.remove(j_ea);
@@ -1702,15 +1837,17 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-double f_setV2GChargerCapabilities(double goal_pct)
+double f_setV2GChargerCapabilities(List<GCPublicCharger> gcListChargers,double goal_pct)
 {/*ALCODESTART::1758183975227*/
-//MAAK WERKEND VOOR EEN GCLIST ALS INPUT
-int totalNbChargers = zero_Interface.c_orderedV2GChargers.size();
-int currentNbChargers = count(zero_Interface.c_orderedV2GChargers, x -> x.getV2GCapable());
+List<J_EAChargePoint> activeChargersEA = new ArrayList<J_EAChargePoint>();
+gcListChargers.forEach(gc -> activeChargersEA.addAll(gc.c_chargers));
+
+int totalNbChargers = activeChargersEA.size();
+int currentNbChargers = count(activeChargersEA, x -> x.getV2GCapable());
 int nbChargersGoal = roundToInt(goal_pct / 100.0 * totalNbChargers);
 
 while (currentNbChargers < nbChargersGoal) {
-	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> !x.getV2GCapable());
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> activeChargersEA.contains(x) && !x.getV2GCapable());
 	j_ea.setV2GCapability(true);
 	currentNbChargers++;
 	zero_Interface.c_orderedV2GChargers.remove(j_ea);
@@ -1718,7 +1855,7 @@ while (currentNbChargers < nbChargersGoal) {
 	
 }
 while (currentNbChargers > nbChargersGoal) {
-	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> x.getV2GCapable());
+	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> activeChargersEA.contains(x) && x.getV2GCapable());
 	j_ea.setV2GCapability(false);
 	currentNbChargers--;
 	zero_Interface.c_orderedV2GChargers.remove(j_ea);
@@ -1733,7 +1870,7 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-double f_setVehiclesPrivateParking(List<GCHouse> gcListHouses,double privateParkingEV_pct)
+double f_setVehiclesPrivateParking(List<GCHouse> gcListHouses,double privateParkingEV_pct,ShapeSlider V2GCapableVehicleSlider)
 {/*ALCODESTART::1758183975234*/
 //Voor nu zo opgelost, echter gaat dit niet goed werken met de volgorde. BEDENK EEN BETER MANIER!?
 List<J_EAVehicle> gcListOrderedVehiclesPrivateParking = findAll( zero_Interface.c_orderedVehiclesPrivateParking, h -> gcListHouses.contains(h.getParentAgent()));
@@ -1778,6 +1915,11 @@ while ( nbOfPrivateParkedEV < desiredNbOfPrivateParkedEV){
 	nbOfPrivateParkedEV++;
 }
 
+
+//Update the V2G capable vehicle slider accordingly to the change in vehicle dynamics
+int totalCapableV2GEVs = count(gcListOrderedVehiclesPrivateParking, vehicle -> vehicle instanceof J_EAEV && ((J_EAEV)vehicle).getV2GCapable());
+V2GCapableVehicleSlider.setValue(roundToInt(100.0*totalCapableV2GEVs/nbOfPrivateParkedEV));
+
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
 	zero_Interface.b_changeToCustomScenario = true;
@@ -1788,7 +1930,8 @@ zero_Interface.f_resetSettings();
 
 double f_setV2GEVCapabilities(List<GCHouse> gcListHouses,double goal_pct)
 {/*ALCODESTART::1758275653317*/
-//Voor nu zo werkend gemaakt met gclist als input, echter gaat dit niet goed werken en gaat de volgorde veranderen. BEDENK EEN BETER MANIER!?
+//Voor nu zo werkend gemaakt met gclist als input, echter gaat dit niet goed werken mochten er minder gcs tussen zitten dan in de zero_interface ordered collectie staat en gaat de volgorde veranderen. 
+// -> BEDENK EEN BETER MANIER!? --> Bestaat er uberhaupt een manier voor? 
 
 List<J_EAVehicle> gcListOrderedVehiclesPrivateParking_all = findAll( zero_Interface.c_orderedVehiclesPrivateParking, vehicle -> gcListHouses.contains(vehicle.getParentAgent()) && vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE);
 
