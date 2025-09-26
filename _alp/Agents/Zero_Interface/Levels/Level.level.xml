@@ -7886,29 +7886,4 @@ else{
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
-	<Control Type="Button">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1758796383744</Id>
-		<Name><![CDATA[button]]></Name>
-		<X>-220</X>
-		<Y>1030</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="100" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor>-16777216</TextColor>
-			<Enabled>true</Enabled>
-			<ActionCode>f_updateMainInterfaceSliders();</ActionCode>
-		</BasicProperties>
-		<ExtendedProperties>
-			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText>button</LabelText>
-		</ExtendedProperties>
-	</Control>
 </Presentation>
