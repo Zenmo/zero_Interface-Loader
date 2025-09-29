@@ -443,7 +443,6 @@ try {
 	
 	///button_exit.action();
 	
-	///zero_Interface.uI_Tabs.f_initializeUI_Tabs(zero_Interface.energyModel.f_getGridConnectionsCollectionPointer(), zero_Interface.energyModel.f_getPausedGridConnectionsCollectionPointer());
 	// v_energyHubCoop not updated to point to 'new' coop
 	//uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null);
 	
@@ -461,6 +460,9 @@ try {
 	
 	// Update the main interface with the loaded E-Hub from savefile
 	zero_Interface.c_selectedGridConnections = new ArrayList<>(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer());
+	
+	// Update the main interface tabs with the GCs from the new engine
+	zero_Interface.uI_Tabs.f_initializeUI_Tabs(zero_Interface.energyModel.f_getGridConnectionsCollectionPointer(), zero_Interface.energyModel.f_getPausedGridConnectionsCollectionPointer());
 	
 	// Reset all colors on the GIS map
 	zero_Interface.energyModel.pop_GIS_Buildings.forEach(x -> zero_Interface.f_styleAreas(x));
