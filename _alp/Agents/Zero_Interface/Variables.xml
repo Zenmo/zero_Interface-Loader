@@ -2320,7 +2320,7 @@
 		</Label>
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
+		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
 			<Type><![CDATA[EnergyModel]]></Type>
 			<UnitType>NONE</UnitType>

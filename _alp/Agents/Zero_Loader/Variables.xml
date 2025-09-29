@@ -809,10 +809,10 @@ Calculated by: initial value (total floor area of the area) - total floor area o
 		</Properties>
 	</Variable>
 	<Variable Class="CollectionVariable">
-		<Id>1753449467886</Id>
+		<Id>1759135072429</Id>
 		<Name><![CDATA[c_GISregions]]></Name>
-		<X>2135.333</X>
-		<Y>153</Y>
+		<X>2140</X>
+		<Y>149</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
