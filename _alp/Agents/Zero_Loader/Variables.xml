@@ -240,7 +240,7 @@ Calculated by: initial value (total floor area of the area) - total floor area o
               StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[8760-energyModel.p_timeStep_h]]></Code>
+				<Code><![CDATA[8760]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>

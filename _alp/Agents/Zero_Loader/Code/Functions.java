@@ -1169,6 +1169,13 @@ for (var survey : surveys) {
 						}
 					}
 				}
+				
+				//In Subscope check
+				if(companyGC.p_parentNodeElectricID != null && !c_gridNodeIDsInScope.contains(companyGC.p_parentNodeElectricID)){
+					//--> Company not in subscope -> PAUSE AND REMOVE FROM ASSIGNED GRIDNODE
+					companyGC.p_parentNodeElectricID = null;
+					companyGC.v_isActive = false;
+				}
 			}
 			else{
 				traceln("Gridconnection %s with owner %s has no buildings!!!", companyGC.p_gridConnectionID, companyGC.p_ownerID);
@@ -3104,15 +3111,8 @@ double batteryCap_kWh = Double.parseDouble(chargingSessionInfo[3]);
 double chargingPower_kW = Double.parseDouble(chargingSessionInfo[5]);
 int socket = Integer.parseInt(chargingSessionInfo[6]);
 
-/*
-if(chargingDemand_kWh > (chargingPower_kW * (endIndex - startIndex)*0.25)){
-	chargingDemand_kWh = (chargingPower_kW * (endIndex - startIndex)*0.25); //Cap this to prevent errors with data
-}*/
+//Cap charging demand to what is actual possible according to chargetime interval * charge power
 chargingDemand_kWh = min(chargingPower_kW * (endIndex - startIndex) * 0.25, chargingDemand_kWh);
-double avgPower_kW = chargingDemand_kWh / ((endIndex - startIndex)*0.25);
-if (avgPower_kW > 20.0) {
-	traceln("Session charging power (data): %s kW, session average charging power: %s kW, duration %s h", chargingPower_kW, avgPower_kW, (endIndex - startIndex)*0.25);
-}
 
 return new J_ChargingSession(startIndex, endIndex, chargingDemand_kWh, batteryCap_kWh, chargingPower_kW, socket, 0.25);
 /*ALCODEEND*/}
@@ -4417,7 +4417,7 @@ for (ConnectionOwner CO : c_COCompanies) {
 double f_getSimulationTimeVariables()
 {/*ALCODESTART::1758714675284*/
 //Sim start year
-v_simStartYear = getExperiment().getEngine().getStartDate().getYear() + 1900;  // 1900 jaar Compenseren door anylogic bug
+v_simStartYear = getExperiment().getEngine().getStartDate().getYear() + 1900;  // 1900 years because of Java convention
 
 // Create date at start of simulation year to use to calculate v_simStartHour_h
 Date d = new Date();
@@ -4437,6 +4437,13 @@ if(getExperiment().getEngine().getStopDate() != null){ //If experiment has set t
 }
 else if(settings.simDuration_h() != null){//Else if manual set, use that instead
 	v_simDuration_h = settings.simDuration_h();
+}
+
+if (v_simStartHour_h % 24 != 0) {
+	throw new RuntimeException("Impossible to run a model that does not start at midnight. Please check the start in the simulation settings.");
+}
+if (v_simDuration_h % 24 != 0) {
+	throw new RuntimeException("Impossible to run a model that does not have a runtime that is an exact multiple of a day. Please check the start and endtime in the simulation settings.");
 }
 /*ALCODEEND*/}
 

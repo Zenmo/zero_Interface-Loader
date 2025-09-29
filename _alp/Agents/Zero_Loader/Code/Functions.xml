@@ -880,7 +880,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>double[]</ReturnType>
 		<Id>1728035809860</Id>
@@ -900,7 +900,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1728039545686</Id>
@@ -1012,7 +1012,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1737712184349</Id>
