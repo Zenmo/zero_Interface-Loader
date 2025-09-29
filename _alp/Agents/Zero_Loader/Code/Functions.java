@@ -1941,6 +1941,14 @@ traceln(" ");
 //Simulate full year simulation for initial KPIs
 if( settings.runHeadlessAtStartup() ){
 	energyModel.f_runRapidSimulation(); // Do a full year run to have KPIs right away!
+	
+	if(project_data.project_type() == BUSINESSPARK){
+		for(GCUtility GC : energyModel.UtilityConnections){
+			if(GC.p_owner.p_detailedCompany){ // For now only detailed companies
+				GC.v_originalRapidRunData = GC.v_rapidRunData;
+			}
+		}
+	}
 	zero_Interface.gr_simulateYear.setVisible(false);
 	zero_Interface.gr_loadIconYearSimulation.setVisible(false);
 	zero_Interface.b_resultsUpToDate = true;
