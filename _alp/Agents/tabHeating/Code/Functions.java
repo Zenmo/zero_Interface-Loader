@@ -120,6 +120,10 @@ for (GridConnection gc : gcList) {
 		}
 	}
 	
+	if(gc.p_BuildingThermalAsset != null){
+		gc.p_BuildingThermalAsset.setLossScalingFactor_fr(scalingFactor);
+	}
+	
 	// Update Company UI
 	if (zero_Interface.c_companyUIs.size()>0){
 		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
@@ -451,8 +455,7 @@ while (nbHousesWithImprovedInsulation < targetNbHousesWithImprovedInsulation) {
 	GCHouse house = findFirst(zero_Interface.energyModel.Houses, x -> !x.p_hasAdditionalInsulation && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
 	if (house != null) {
 		house.p_hasAdditionalInsulation = true;
-		double lossFactor_WpK = house.p_BuildingThermalAsset.getLossFactor_WpK();
-		house.p_BuildingThermalAsset.setLossFactor_WpK( 0.7 * lossFactor_WpK );
+		house.p_BuildingThermalAsset.setLossScalingFactor_fr( 0.7 );
 		nbHousesWithImprovedInsulation++;
 	}
 	else {
@@ -463,8 +466,7 @@ while (nbHousesWithImprovedInsulation > targetNbHousesWithImprovedInsulation) {
 	GCHouse house = findFirst(zero_Interface.energyModel.Houses, x -> x.p_hasAdditionalInsulation && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
 	if (house != null) {
 		house.p_hasAdditionalInsulation = false;
-		double lossFactor_WpK = house.p_BuildingThermalAsset.getLossFactor_WpK();
-		house.p_BuildingThermalAsset.setLossFactor_WpK( lossFactor_WpK / 0.7 );
+		house.p_BuildingThermalAsset.setLossScalingFactor_fr( 0 );
 		nbHousesWithImprovedInsulation--;
 	}
 	else {
@@ -722,7 +724,36 @@ double f_updateHeatingSliders_residential()
 List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
 
 //Savings
-traceln("WARNING: SLIDER WITH BETTER INSULATION UPDATE FUNCTION IS NOT FUNCTIONAL YET FOR HOUSES");
+double averageScalingFactor = 0;
+double totalScalingFactors = 0;
+for(GCHouse GC : houseGridConnections){
+	if(GC.v_isActive){
+		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
+		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.getActiveEnergyCarriers().contains(OL_EnergyCarriers.HEAT));
+		for(J_EAProfile profileEA : profileEAs){
+			double totalScalingFactorValue = averageScalingFactor*totalScalingFactors;
+			double newTotalScalingFactorValue = totalScalingFactorValue + profileEA.getProfileScaling_fr();
+			totalScalingFactors++;
+			averageScalingFactor = newTotalScalingFactorValue/totalScalingFactors;
+		}
+		for(J_EAConsumption consumptionEA : consumptionEAs){
+			double totalScalingFactorValue = averageScalingFactor*totalScalingFactors;
+			double newTotalScalingFactorValue = totalScalingFactorValue + consumptionEA.getConsumptionScaling_fr();
+			totalScalingFactors++;
+			averageScalingFactor = newTotalScalingFactorValue/totalScalingFactors;
+		}
+		
+		if(GC.p_BuildingThermalAsset != null){
+			double totalScalingFactorValue = averageScalingFactor*totalScalingFactors;
+			double newTotalScalingFactorValue = totalScalingFactorValue + GC.p_BuildingThermalAsset.getLossScalingFactor_fr();
+			totalScalingFactors++;
+			averageScalingFactor = newTotalScalingFactorValue/totalScalingFactors;
+		}
+	}
+}
+double averageSavingsFactor_pct = (1-averageScalingFactor)*100.0;
+sl_householdHeatDemandReductionResidentialArea_pct.setValue(roundToInt(averageSavingsFactor_pct), false);
+
 
 //Heating type
 int GasBurners = count(houseGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
