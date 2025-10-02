@@ -2197,9 +2197,9 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1753451091785</Id>
-		<Name><![CDATA[f_addMixins]]></Name>
-		<X>2140</X>
-		<Y>69</Y>
+		<Name><![CDATA[f_addMixins_old]]></Name>
+		<X>2430</X>
+		<Y>70</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2495,6 +2495,43 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1759128970777</Id>
+		<Name><![CDATA[f_addMixins]]></Name>
+		<X>2140</X>
+		<Y>70</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1759133710571</Id>
+		<Name><![CDATA[f_loadScenario]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2120</X>
+		<Y>230</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[index]]></Name>
+			<Type><![CDATA[int]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

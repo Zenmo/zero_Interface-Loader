@@ -1946,7 +1946,7 @@ gr_saveScenario.setVisible(true);</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<ActionCode>f_initializeUserSavedScenarios();
+					<ActionCode>f_initializeUserSavedScenarios(combobox_selectScenario);
 gr_saveScenario.setVisible(false);
 gr_forceSaveLoadScenario.setVisible(true);
 gr_loadScenario.setVisible(true);</ActionCode>
