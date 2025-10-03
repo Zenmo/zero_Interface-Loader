@@ -469,7 +469,7 @@ zero_Interface.uI_Results.f_showCorrectChart();
 					<Y>-10</Y>
 				</Label>
 				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>false</PresentationFlag>
+				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
 				<EmbeddedIcon>false</EmbeddedIcon>
