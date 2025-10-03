@@ -39,9 +39,8 @@ uI_Results.v_interfaceViewAreaYOffset = zero_Interface.va_EHubDashboard.getY();
 f_styleEnergyHubResultsUI();
 
 //Set ResultsUI radiobutton setup
-if(zero_Interface.settings.resultsUIRadioButtonSetup() != null){
-	uI_Results.v_selectedRadioButtonSetup = zero_Interface.settings.resultsUIRadioButtonSetup();
-}
+uI_Results.v_selectedRadioButtonSetup = OL_RadioButtonSetup.DEFAULT_AND_GESPREKSLEIDRAADBEDRIJVEN_AND_GTO;
+
 
 //Connect resultsUI
 uI_Results.f_initializeResultsUI();
