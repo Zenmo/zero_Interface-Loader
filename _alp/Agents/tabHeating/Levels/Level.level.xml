@@ -2419,7 +2419,7 @@ f_setHeatingSystemsHouseholds( uI_Tabs.f_getSliderGridConnections_houses(), sl_h
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_householdInsulation( sl_householdHeatDemandReductionResidentialArea_pct.getValue() );</ActionCode>
+					<ActionCode>f_householdInsulation( uI_Tabs.f_getSliderGridConnections_houses(), sl_householdHeatDemandReductionResidentialArea_pct.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>

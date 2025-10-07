@@ -445,16 +445,15 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-double f_householdInsulation(double houses_pct)
+double f_householdInsulation(List<GCHouse> housesGCList,double houses_pct)
 {/*ALCODESTART::1752227724432*/
-int nbHouses = count(zero_Interface.energyModel.Houses, x -> x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
-int nbHousesWithImprovedInsulation = count(zero_Interface.energyModel.Houses, x -> x.p_hasAdditionalInsulation && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
+int nbHouses = count(housesGCList, x -> x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
+int nbHousesWithImprovedInsulation = count(housesGCList, x -> x.p_BuildingThermalAsset.getLossScalingFactor_fr() < 1 && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
 int targetNbHousesWithImprovedInsulation = roundToInt(houses_pct / 100.0 * nbHouses);
 
 while (nbHousesWithImprovedInsulation < targetNbHousesWithImprovedInsulation) {
-	GCHouse house = findFirst(zero_Interface.energyModel.Houses, x -> !x.p_hasAdditionalInsulation && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
+	GCHouse house = findFirst(housesGCList, x -> !x.p_hasAdditionalInsulation && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
 	if (house != null) {
-		house.p_hasAdditionalInsulation = true;
 		house.p_BuildingThermalAsset.setLossScalingFactor_fr( 0.7 );
 		nbHousesWithImprovedInsulation++;
 	}
@@ -463,9 +462,8 @@ while (nbHousesWithImprovedInsulation < targetNbHousesWithImprovedInsulation) {
 	}
 }
 while (nbHousesWithImprovedInsulation > targetNbHousesWithImprovedInsulation) {
-	GCHouse house = findFirst(zero_Interface.energyModel.Houses, x -> x.p_hasAdditionalInsulation && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
+	GCHouse house = findFirst(housesGCList, x -> x.p_hasAdditionalInsulation && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
 	if (house != null) {
-		house.p_hasAdditionalInsulation = false;
 		house.p_BuildingThermalAsset.setLossScalingFactor_fr( 0 );
 		nbHousesWithImprovedInsulation--;
 	}
@@ -707,23 +705,6 @@ f_setHeatingSliders( 0, sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_
 List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
 
 //Savings
-traceln("WARNING: SLIDER SAVINGS UPDATE FUNCTION IS NOT FUNCTIONAL YET FOR HOUSES");
-
-
-//Assets
-GasBurners = count(houseGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
-GasBurners_pct = roundToInt(100.0 * GasBurners / (count(houseGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE)));
-
-sl_gasBurnerHouseholds_pct.setValue(GasBurners_pct, false);
-f_setHeatingSliders( 0, sl_gasBurnerHouseholds_pct, sl_electricHeatPumpHouseholds_pct, null, null, null );
-
-/*ALCODEEND*/}
-
-double f_updateHeatingSliders_residential()
-{/*ALCODESTART::1754924542535*/
-List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
-
-//Savings
 double averageScalingFactor = 0;
 double totalScalingFactors = 0;
 for(GCHouse GC : houseGridConnections){
@@ -752,19 +733,60 @@ for(GCHouse GC : houseGridConnections){
 	}
 }
 double averageSavingsFactor_pct = (1-averageScalingFactor)*100.0;
-sl_householdHeatDemandReductionResidentialArea_pct.setValue(roundToInt(averageSavingsFactor_pct), false);
+sl_heatDemandReductionHouseholds_pct.setValue(roundToInt(averageSavingsFactor_pct), false);
+
+
+//Assets
+GasBurners = count(houseGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
+GasBurners_pct = roundToInt(100.0 * GasBurners / (count(houseGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE)));
+
+sl_gasBurnerHouseholds_pct.setValue(GasBurners_pct, false);
+f_setHeatingSliders( 0, sl_gasBurnerHouseholds_pct, sl_electricHeatPumpHouseholds_pct, null, null, null );
+
+/*ALCODEEND*/}
+
+double f_updateHeatingSliders_residential()
+{/*ALCODESTART::1754924542535*/
+List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
 
 
 //Heating type
 int GasBurners = count(houseGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
 int GasBurners_pct = roundToInt(100.0 * GasBurners / (count(houseGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE)));
+int numberOfHousesOnHTHeatGrid = count(houseGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.DISTRICTHEAT && gc.v_isActive);
+int numberOfHousesOnLTHeatGrid = count(houseGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.LT_DISTRICTHEAT && gc.v_isActive);
+cb_householdHTDistrictHeatingResidentialArea.setSelected(false, false);
+cb_householdLTDistrictHeatingResidentialArea.setSelected(false, false);
 
-sl_householdGasBurnerResidentialArea_pct.setValue(GasBurners_pct, false);
-f_setHeatingSliders( 0, sl_householdGasBurnerResidentialArea_pct, sl_householdElectricHeatPumpResidentialArea_pct, null, null, null );
+if(numberOfHousesOnHTHeatGrid > 0 || numberOfHousesOnLTHeatGrid > 0){
+	sl_householdElectricHeatPumpResidentialArea_pct.setValue(0, false);
+	sl_householdGasBurnerResidentialArea_pct.setValue(0, false);
+	if(numberOfHousesOnHTHeatGrid > 0){
+		cb_householdHTDistrictHeatingResidentialArea.setSelected(true, false);
+	}
+	else{
+		cb_householdLTDistrictHeatingResidentialArea.setSelected(true, false);		
+	}
+}
+else{
+	sl_householdGasBurnerResidentialArea_pct.setValue(GasBurners_pct, false);
+	f_setHeatingSliders( 0, sl_householdGasBurnerResidentialArea_pct, sl_householdElectricHeatPumpResidentialArea_pct, null, null, null );
+}
+//Houses with Airco
+double nbHouses = houseGridConnections.size();
+double nbHousesWithAirco = count(houseGridConnections, x -> x.p_airco != null);
+double pctOfHousesWithAirco = (nbHousesWithAirco*100.0)/nbHouses;
+sl_householdAircoResidentialArea_pct.setValue(pctOfHousesWithAirco, false);
+
+
+//Houses with better isolation
+int nbHousesThatCanGetImprovedIsolation = count(houseGridConnections, x -> x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
+int nbHousesWithImprovedInsulation = count(houseGridConnections, x -> x.p_BuildingThermalAsset.getLossScalingFactor_fr() < 1 && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
+double pctOfHousesWithImprovedInsulation = 100.0 * ((double)nbHousesWithImprovedInsulation)/nbHousesThatCanGetImprovedIsolation;
+sl_householdHeatDemandReductionResidentialArea_pct.setValue(roundToInt(pctOfHousesWithImprovedInsulation), false);
 
 
 //PT
-int nbHouses = houseGridConnections.size();
 int nbHousesWithPT = count(houseGridConnections, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW));
 
 sl_rooftopPTHouses_pct.setValue((nbHousesWithPT*100.0)/nbHouses, false);

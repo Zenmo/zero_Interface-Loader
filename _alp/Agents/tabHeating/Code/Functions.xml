@@ -258,6 +258,10 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
+			<Name><![CDATA[housesGCList]]></Name>
+			<Type><![CDATA[List<GCHouse>]]></Type>
+		</Parameter>
+		<Parameter>
 			<Name><![CDATA[houses_pct]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
