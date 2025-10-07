@@ -1862,7 +1862,7 @@ if(project_data.map_centre_latitude() != null && project_data.map_centre_longitu
 }
 else{
 	ArrayList<GIS_Object> gisObjects_for_mapViewBounds = new ArrayList<GIS_Object>();
-	if(settings.subscopesToSimulate() == null || settings.subscopesToSimulate().size() == 0){
+	if((settings.subscopesToSimulate() == null || settings.subscopesToSimulate().size() == 0) && findAll(energyModel.pop_GIS_Objects, gisObject -> gisObject.p_GISObjectType == OL_GISObjectType.REGION).size() > 0){
 		gisObjects_for_mapViewBounds.addAll(findAll(energyModel.pop_GIS_Objects, gisObject -> gisObject.p_GISObjectType == OL_GISObjectType.REGION));
 	}
 	else{

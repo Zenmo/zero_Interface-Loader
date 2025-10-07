@@ -277,7 +277,7 @@ getExperimentHost().openWebSite("https://lux.energy/");
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>680</Width>
-		<Height>970</Height>
+		<Height>1060</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -286,7 +286,7 @@ getExperimentHost().openWebSite("https://lux.energy/");
 		<Id>1705481955546</Id>
 		<Name><![CDATA[rect_simulationEngine]]></Name>
 		<X>-270</X>
-		<Y>800</Y>
+		<Y>860</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -304,7 +304,7 @@ getExperimentHost().openWebSite("https://lux.energy/");
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>250</Width>
-		<Height>170</Height>
+		<Height>200</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -364,7 +364,7 @@ getExperimentHost().openWebSite("https://lux.energy/");
 		<Id>1690205003572</Id>
 		<Name><![CDATA[line_simulationEngine]]></Name>
 		<X>-230</X>
-		<Y>830</Y>
+		<Y>890</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -392,7 +392,7 @@ getExperimentHost().openWebSite("https://lux.energy/");
 		<Id>1690205003577</Id>
 		<Name><![CDATA[t_simulationEngine]]></Name>
 		<X>-151</X>
-		<Y>810</Y>
+		<Y>870</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1351,8 +1351,8 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1716988295617</Id>
 		<Name><![CDATA[button_gotoEngine]]></Name>
-		<X>-250</X>
-		<Y>920</Y>
+		<X>-260</X>
+		<Y>960</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>

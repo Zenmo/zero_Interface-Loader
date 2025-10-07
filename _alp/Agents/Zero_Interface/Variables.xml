@@ -290,7 +290,7 @@
 		<Id>1701164360663</Id>
 		<Name><![CDATA[b_resultsUpToDate]]></Name>
 		<X>-240</X>
-		<Y>880</Y>
+		<Y>940</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2249,18 +2249,37 @@
 			</InitialValue>
 		</Properties>
 	</Variable>
-	<Variable Class="Parameter">
-		<Id>1715858732720</Id>
-		<Name><![CDATA[energyModel]]></Name>
-		<X>-240</X>
-		<Y>905</Y>
+	<Variable Class="PlainVariable">
+		<Id>1758795129963</Id>
+		<Name><![CDATA[zero_loader]]></Name>
+		<X>70</X>
+		<Y>-130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
 		</Label>
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[Zero_Loader]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1715858732720</Id>
+		<Name><![CDATA[energyModel]]></Name>
+		<X>-200</X>
+		<Y>1020</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
 			<Type><![CDATA[EnergyModel]]></Type>
 			<UnitType>NONE</UnitType>

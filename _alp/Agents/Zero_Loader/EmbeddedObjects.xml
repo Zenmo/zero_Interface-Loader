@@ -75,6 +75,9 @@
 			<Parameter>
 				<Name><![CDATA[p_cookingPatternCsv]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[b_isDeserialised]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">
