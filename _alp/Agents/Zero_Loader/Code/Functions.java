@@ -140,10 +140,10 @@ for (GridNode_data GN_data : c_gridNode_data) {
 			if (GN_data.service_area_polygon() != null){
 				//Create service area gis object
 				//GIS_Object serviceArea = f_createGISObject(GN.p_gridNodeID + ": service area", GN.p_latitude, GN.p_longitude, GN_data.service_area_polygon());
-				GISRegion serviceArea = zero_Interface.f_createGISObject(f_createGISObjectsTokens(GN_data.service_area_polygon(), OL_GISObjectType.GN_SERVICE_AREA));
+				GN.p_serviceAreaGisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(GN_data.service_area_polygon(), OL_GISObjectType.GN_SERVICE_AREA));
 				
 				//Add to hashmap
-				zero_Interface.c_GISNetplanes.add( serviceArea );
+				zero_Interface.c_GISNetplanes.add( GN.p_serviceAreaGisRegion );
 			}
 			
 			//Gridnode profile
@@ -3423,7 +3423,7 @@ for(GCHouse GCH : energyModel.Houses){
 double f_addEnergyAssetsToHouses(GCHouse house,double jaarlijksElectriciteitsVerbruik)
 {/*ALCODESTART::1749728889986*/
 //Add generic electricity demand profile 
-GridNode gn = randomWhere(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals( house.p_parentNodeElectricID)); // Why random??
+GridNode gn = findFirst(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals( house.p_parentNodeElectricID));
 if ( ! gn.p_hasProfileData ){
 	f_addElectricityDemandProfile(house, jaarlijksElectriciteitsVerbruik, null, false, "default_house_electricity_demand_fr");
 }
