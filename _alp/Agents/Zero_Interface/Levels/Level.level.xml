@@ -1001,45 +1001,50 @@ v_clickedObjectText</TextCode>
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
-			<ActionCode>switch(v_clickedObjectType){
-
-	case BUILDING:
-		UI_company companyUI = c_companyUIs.get(v_connectionOwnerIndexNr);
-		
-		//Connect resultsUI of the main with resultsUI of CompanyUI
-		companyUI.f_updateUIResultsCompanyUI();	
-
-		//Set sliders to the correct GC if there are more than 1 GC
-		if(companyUI.c_ownedGridConnections.size()&gt;1){
-			GridConnection selectedGC = findFirst(companyUI.c_ownedGridConnections, GC -&gt; GC == c_selectedGridConnections.get(0));  
-			companyUI.GCnr_selection.setValue(companyUI.c_ownedGridConnections.indexOf(selectedGC), true);
-		}
-		else{
-			companyUI.uI_Results.f_setAllCharts();
-			companyUI.f_getNFATOValues();
-		}
-		
-		//Go to the companyUI view
-		c_companyUIs.get(v_connectionOwnerIndexNr).va_companyUI.navigateTo();
-		v_currentViewArea = c_companyUIs.get(v_connectionOwnerIndexNr).va_companyUI;
-		
-		break;
+			<ActionCode>if(energyModel.v_rapidRunData != null){
+	switch(v_clickedObjectType){
 	
-	case ELECTROLYSER:
-		ui_Hydrogen.get(0).va_hydrogenUI.navigateTo();
-		v_currentViewArea = ui_Hydrogen.get(0).va_hydrogenUI;
-		break;
+		case BUILDING:
+			UI_company companyUI = c_companyUIs.get(v_connectionOwnerIndexNr);
+			
+			//Connect resultsUI of the main with resultsUI of CompanyUI
+			companyUI.f_updateUIResultsCompanyUI();	
 	
-	case BATTERY:
-		ui_Battery.get(0).va_batteryUI.navigateTo();
-		v_currentViewArea = ui_Battery.get(0).va_batteryUI;
+			//Set sliders to the correct GC if there are more than 1 GC
+			if(companyUI.c_ownedGridConnections.size()&gt;1){
+				GridConnection selectedGC = findFirst(companyUI.c_ownedGridConnections, GC -&gt; GC == c_selectedGridConnections.get(0));  
+				companyUI.GCnr_selection.setValue(companyUI.c_ownedGridConnections.indexOf(selectedGC), true);
+			}
+			else{
+				companyUI.uI_Results.f_setAllCharts();
+				companyUI.f_getNFATOValues();
+			}
+			
+			//Go to the companyUI view
+			c_companyUIs.get(v_connectionOwnerIndexNr).va_companyUI.navigateTo();
+			v_currentViewArea = c_companyUIs.get(v_connectionOwnerIndexNr).va_companyUI;
+			
+			break;
+		
+		case ELECTROLYSER:
+			ui_Hydrogen.get(0).va_hydrogenUI.navigateTo();
+			v_currentViewArea = ui_Hydrogen.get(0).va_hydrogenUI;
+			break;
+		
+		case BATTERY:
+			ui_Battery.get(0).va_batteryUI.navigateTo();
+			v_currentViewArea = ui_Battery.get(0).va_batteryUI;
+			break;
+		
+		case SOLARFARM:
+		case WINDFARM:
+		case CHARGER:
+		default:
 		break;
-	
-	case SOLARFARM:
-	case WINDFARM:
-	case CHARGER:
-	default:
-	break;
+	}
+}
+else{
+	f_setErrorScreen("Je kan alleen naar de companyUI gaan als er een jaar simulatie is voltooid.", 0, 0);
 }
 </ActionCode>
 		</BasicProperties>

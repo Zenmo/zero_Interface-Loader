@@ -983,9 +983,8 @@ double f_createAdditionalUIs()
 //Create the additional dashboards, control panels and private UIs
 
 //Create PrivateUIs
-if (project_data.project_type() == BUSINESSPARK){
-	f_createPrivateCompanyUI();
-}
+f_createPrivateCompanyUI();
+
 
 //Create Hydrogen UI
 //f_createHydrogenUI();
