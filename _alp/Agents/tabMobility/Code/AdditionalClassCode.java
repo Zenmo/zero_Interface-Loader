@@ -40,3 +40,6 @@ public ShapeSlider getSliderFossilFuelCars_pct() {
 	return this.sl_fossilFuelCars_pct;
 }
 
+public ShapeSlider getSl_privateEVsResidentialArea_pct(){
+	return this.sl_privateEVsResidentialArea_pct;
+}
