@@ -2265,6 +2265,7 @@ if(!cb_showFilterInterface.isSelected()){
 }
 else{
 	gr_sliderClickBlocker.setVisible(true);
+	gr_filterInterface.setPos(170, 710);
 }</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
@@ -2277,7 +2278,7 @@ else{
 		<Id>1734444441402</Id>
 		<Name><![CDATA[gr_filterInterface]]></Name>
 		<X>-1350</X>
-		<Y>740</Y>
+		<Y>750</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2286,8 +2287,6 @@ else{
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>170</XCode>
-		<YCode>710</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -3950,10 +3949,81 @@ officia deserunt mollit anim id est laborum."]]></Text>
 				<Rotation>0.0</Rotation>
 				<Presentation>
 					<Group>
+						<Id>1760020289242</Id>
+						<Name><![CDATA[gr_completeEnergyHubSelection_grayedOut]]></Name>
+						<X>-770</X>
+						<Y>550</Y>
+						<Label>
+							<X>10</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Presentation>
+							<RoundedRectangle>
+								<Id>1760020289244</Id>
+								<Name><![CDATA[button_completeSelection_grayedOut]]></Name>
+								<X>-140</X>
+								<Y>-40</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>3</LineWidth>
+								<LineColor>-8355712</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>275</Width>
+								<Height>75</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-2302756</FillColor>
+								<FillMaterial>null</FillMaterial>
+								<ArcRadius>10</ArcRadius>
+							</RoundedRectangle>
+							<Text>
+								<Id>1760020289246</Id>
+								<Name><![CDATA[txt_completeEnergyHubSelection_grayedOut]]></Name>
+								<X>0</X>
+								<Y>-20</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-8355712</Color>
+								<Text><![CDATA[Voltooien]]></Text>
+								<Font>
+									<Name><![CDATA[SansSerif]]></Name>
+									<Size>28</Size>
+									<Style>1</Style>
+								</Font>
+								<Alignment>CENTER</Alignment>
+							</Text>
+						</Presentation>
+					</Group>
+					<Group>
 						<Id>1760015470892</Id>
 						<Name><![CDATA[gr_completeEnergyHubSelection]]></Name>
-						<X>700</X>
-						<Y>180</Y>
+						<X>-770</X>
+						<Y>550</Y>
 						<Label>
 							<X>10</X>
 							<Y>0</Y>
@@ -3971,7 +4041,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							<RoundedRectangle>
 								<Id>1760015470894</Id>
 								<Name><![CDATA[button_completeSelection]]></Name>
-								<X>-200</X>
+								<X>-140</X>
 								<Y>-40</Y>
 								<Label>
 									<X>10</X>
@@ -3984,16 +4054,14 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<EmbeddedIcon>false</EmbeddedIcon>
 								<Z>0</Z>
 								<ZHeight>10</ZHeight>
-								<LineWidth>1</LineWidth>
+								<LineWidth>3</LineWidth>
 								<LineColor>-16777216</LineColor>
-								<LineColorCode>uI_EnergyHub.p_energyHubLineColor</LineColorCode>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
-								<Width>400</Width>
+								<Width>275</Width>
 								<Height>75</Height>
 								<Rotation>0.0</Rotation>
-								<FillColor>-1</FillColor>
-								<FillColorCode>uI_EnergyHub.p_energyHubBackGroundColor</FillColorCode>
+								<FillColor>-4144960</FillColor>
 								<FillMaterial>null</FillMaterial>
 								<ArcRadius>10</ArcRadius>
 							</RoundedRectangle>
@@ -4014,7 +4082,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<Z>0</Z>
 								<Rotation>0.0</Rotation>
 								<Color>-16777216</Color>
-								<Text><![CDATA[Voltooi Energie hub selectie]]></Text>
+								<Text><![CDATA[Voltooien]]></Text>
 								<Font>
 									<Name><![CDATA[SansSerif]]></Name>
 									<Size>28</Size>
@@ -4100,8 +4168,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 					<Group>
 						<Id>1760015470904</Id>
 						<Name><![CDATA[gr_cancelEnergyHubConfiguration]]></Name>
-						<X>700</X>
-						<Y>270</Y>
+						<X>-820</X>
+						<Y>630</Y>
 						<Label>
 							<X>10</X>
 							<Y>0</Y>
@@ -4118,7 +4186,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							<RoundedRectangle>
 								<Id>1760015470906</Id>
 								<Name><![CDATA[button_cancelEnergyHubConfiguration]]></Name>
-								<X>-93.333</X>
+								<X>-90</X>
 								<Y>-30</Y>
 								<Label>
 									<X>10</X>
@@ -4135,8 +4203,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<LineColor>-2345659</LineColor>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
-								<Width>183.333</Width>
-								<Height>60</Height>
+								<Width>275</Width>
+								<Height>75</Height>
 								<Rotation>0.0</Rotation>
 								<FillColor>-4144960</FillColor>
 								<FillMaterial>null</FillMaterial>
@@ -4145,8 +4213,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							<Text>
 								<Id>1760015470908</Id>
 								<Name><![CDATA[txt_cancelEnergyHubConfiguration]]></Name>
-								<X>0</X>
-								<Y>-20</Y>
+								<X>48</X>
+								<Y>-10</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>

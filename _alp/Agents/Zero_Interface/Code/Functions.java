@@ -3091,6 +3091,7 @@ f_setForcedClickScreenText("");
 f_setForcedClickScreenVisibility(true);
 
 cb_showFilterInterface.setSelected(true, true);
+gr_filterInterface.setPos(170, 580);
 /*ALCODEEND*/}
 
 double f_finalizeEnergyHubConfiguration()
