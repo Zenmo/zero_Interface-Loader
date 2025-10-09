@@ -4432,7 +4432,7 @@ d.setDate(1);
 //Calculate sim start hour
 v_simStartHour_h = roundToInt((getExperiment().getEngine().getStartDate().getTime() - d.getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
 
-//Temp fix: else, if start is within summer time, the v_simStartHour_h is not correct anymore
+//Fix for if start is within summer time, the v_simStartHour_h is not correct anymore
 double summerTimeStart_h = avgc_data.map_yearlySummerWinterTimeStartHour.get(v_simStartYear).getFirst();
 double winterTimeStart_h = avgc_data.map_yearlySummerWinterTimeStartHour.get(v_simStartYear).getSecond();
 if(v_simStartHour_h > summerTimeStart_h && v_simStartHour_h < winterTimeStart_h){
@@ -4444,10 +4444,10 @@ if(v_simStartHour_h > summerTimeStart_h && v_simStartHour_h < winterTimeStart_h)
 //Set sim duration if it is set
 if(getExperiment().getEngine().getStopDate() != null){ //If experiment has set time, it gets bias
 	v_simDuration_h = roundToInt(((double)getExperiment().getEngine().getStopDate().getTime() - getExperiment().getEngine().getStartDate().getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
-	if(v_simStartHour_h > summerTimeStart_h && v_simStartHour_h + v_simDuration_h > winterTimeStart_h){
+	if(v_simStartHour_h > summerTimeStart_h && v_simStartHour_h + v_simDuration_h > winterTimeStart_h){//Compensate if start time is in summer time, and end time is in winter time -> simulation would otherwise have 1 hour too much
 		v_simDuration_h -= 1;
 	}
-	if(v_simStartHour_h < summerTimeStart_h && v_simStartHour_h + v_simDuration_h < winterTimeStart_h){
+	if(v_simStartHour_h < summerTimeStart_h && v_simStartHour_h + v_simDuration_h < winterTimeStart_h){//Compensate if start time is in winter time, and end time is in summer time -> simulation would otherwise have 1 hour too less
 		v_simDuration_h += 1;
 	}
 }
@@ -4456,11 +4456,9 @@ else if(settings.simDuration_h() != null){//Else if manual set, use that instead
 }
 
 if (v_simStartHour_h % 24 != 0) {
-	traceln("v_simStartHour_h: " + v_simStartHour_h);
 	throw new RuntimeException("Impossible to run a model that does not start at midnight. Please check the start in the simulation settings.");
 }
 if (v_simDuration_h % 24 != 0) {
-	traceln("v_simDuration_h: " + v_simDuration_h);
 	throw new RuntimeException("Impossible to run a model that does not have a runtime that is an exact multiple of a day. Please check the start and endtime in the simulation settings.");
 }
 /*ALCODEEND*/}
