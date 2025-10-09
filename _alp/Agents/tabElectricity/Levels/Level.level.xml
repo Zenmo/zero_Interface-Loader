@@ -2197,7 +2197,9 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), 
 				<BasicProperties Width="130" Height="25">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
+					<VisibleCode>false; // DOESNT WORK PROPERLY</VisibleCode>
 					<Enabled>true</Enabled>
+					<EnableExpression>zero_Interface.v_clickedGridNode != null</EnableExpression>
 					<ActionCode>//gr_electricityDemandSlidersResidentialAreaScale.setVisible(false);
 gr_trafoReinforcement.setVisible(true);
 </ActionCode>

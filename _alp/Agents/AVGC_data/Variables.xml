@@ -2409,4 +2409,36 @@ Voor nu gekozen voor 4185.
 			</ParameterEditor>
 		</Properties>
 	</Variable>
+	<Variable Class="Parameter">
+		<Id>1759233211509</Id>
+		<Name><![CDATA[map_yearlySummerWinterTimeStartHour]]></Name>
+		<X>1070</X>
+		<Y>400</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<Integer, Pair<Double, Double>>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[Map.of(
+2023, new Pair<>(2018.0, 7247.0), 
+2024, new Pair<>(2162.0, 7203.0),
+2025, new Pair<>(2114.0, 7131.0)
+)]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1759233211507</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
 </Variables>

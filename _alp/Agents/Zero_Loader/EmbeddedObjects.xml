@@ -373,6 +373,9 @@
 			<Parameter>
 				<Name><![CDATA[p_avgAnnualTravelDistanceSecondVSFirstCar_fr]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_yearlySummerWinterTimeStartHour]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">
