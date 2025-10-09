@@ -2353,7 +2353,11 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<Enabled>true</Enabled>
 					<ActionCode>if (cb_householdHTDistrictHeatingResidentialArea.isSelected()) {
 	cb_householdHTDistrictHeatingResidentialArea.setSelected(false, false);
-	f_removeDistrictHeatingFromAllHouses();
+	f_removeDistrictHeatingFromAllHouses(uI_Tabs.f_getSliderGridConnections_houses());
+}
+if (cb_householdLTDistrictHeatingResidentialArea.isSelected()) {
+	cb_householdLTDistrictHeatingResidentialArea.setSelected(false, false);
+	f_removeLTDH(uI_Tabs.f_getSliderGridConnections_houses());
 }
 f_setHeatingSliders( 0, sl_householdGasBurnerResidentialArea_pct, sl_householdElectricHeatPumpResidentialArea_pct, null, null, null );
 f_setHeatingSystemsHouseholds( uI_Tabs.f_getSliderGridConnections_houses(), sl_householdElectricHeatPumpResidentialArea_pct.getValue() );
@@ -2387,7 +2391,11 @@ f_setHeatingSystemsHouseholds( uI_Tabs.f_getSliderGridConnections_houses(), sl_h
 					<Enabled>true</Enabled>
 					<ActionCode>if (cb_householdHTDistrictHeatingResidentialArea.isSelected()) {
 	cb_householdHTDistrictHeatingResidentialArea.setSelected(false, false);
-	f_removeDistrictHeatingFromAllHouses();
+	f_removeDistrictHeatingFromAllHouses(uI_Tabs.f_getSliderGridConnections_houses());
+}
+if (cb_householdLTDistrictHeatingResidentialArea.isSelected()) {
+	cb_householdLTDistrictHeatingResidentialArea.setSelected(false, false);
+	f_removeLTDH(uI_Tabs.f_getSliderGridConnections_houses());
 }
 f_setHeatingSliders( 1, sl_householdGasBurnerResidentialArea_pct, sl_householdElectricHeatPumpResidentialArea_pct, null, null, null );
 f_setHeatingSystemsHouseholds( uI_Tabs.f_getSliderGridConnections_houses(), sl_householdElectricHeatPumpResidentialArea_pct.getValue() );
@@ -2398,7 +2406,7 @@ f_setHeatingSystemsHouseholds( uI_Tabs.f_getSliderGridConnections_houses(), sl_h
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
 					<MaxValue>100</MaxValue>
-					<Step>5</Step>
+					<Step>1</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -2611,13 +2619,13 @@ f_setHeatingSystemsHouseholds( uI_Tabs.f_getSliderGridConnections_houses(), sl_h
 	sl_householdGasBurnerResidentialArea_pct.setValue(0, false);
 	sl_householdElectricHeatPumpResidentialArea_pct.setValue(0, false);
 	cb_householdLTDistrictHeatingResidentialArea.setSelected(false, false);
-	f_addDistrictHeatingToAllHouses();
+	f_addDistrictHeatingToAllHouses(uI_Tabs.f_getSliderGridConnections_houses());
 }
 else{
 	sl_householdGasBurnerResidentialArea_pct.setValue(100, false);
 	sl_householdElectricHeatPumpResidentialArea_pct.setValue(0, false);
 	cb_householdLTDistrictHeatingResidentialArea.setSelected(false, false);
-	f_removeDistrictHeatingFromAllHouses();
+	f_removeDistrictHeatingFromAllHouses(uI_Tabs.f_getSliderGridConnections_houses());
 }</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -2648,13 +2656,13 @@ else{
 	sl_householdElectricHeatPumpResidentialArea_pct.setValue(0, false);
 	sl_householdGasBurnerResidentialArea_pct.setValue(0, false);
 	cb_householdHTDistrictHeatingResidentialArea.setSelected(false, false);
-	f_addLTDH();
+	f_addLTDH(uI_Tabs.f_getSliderGridConnections_houses());
 }
 else{
 	sl_householdElectricHeatPumpResidentialArea_pct.setValue(0, false);
 	sl_householdGasBurnerResidentialArea_pct.setValue(100, false);
 	cb_householdHTDistrictHeatingResidentialArea.setSelected(false, false);
-	f_removeLTDH();
+	f_removeLTDH(uI_Tabs.f_getSliderGridConnections_houses());
 }</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>

@@ -580,18 +580,18 @@ for (GridConnection GC : findAll(uI_Tabs.f_getSliderGridConnections_all(), gc ->
 int nbHouses = houseGridConnections.size();
 int nbHousesWithPV = count(houseGridConnections, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW));
 double pv_pct = 100.0 * nbHousesWithPV / nbHouses;
-sl_householdPVResidentialArea_pct.setValue(pv_pct, false);
+sl_householdPVResidentialArea_pct.setValue(roundToInt(pv_pct), false);
 
 if ( nbHousesWithPV != 0 ) {
 	int nbHousesWithHomeBattery = count(houseGridConnections, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) && x.p_batteryAsset != null);
 	double battery_pct = 100.0 * nbHousesWithHomeBattery / nbHousesWithPV;
-	sl_householdBatteriesResidentialArea_pct.setValue(battery_pct, false);
+	sl_householdBatteriesResidentialArea_pct.setValue(roundToInt(battery_pct), false);
 }
 
 //Electric cooking
 int nbHousesWithElectricCooking = count(houseGridConnections, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.ELECTRIC);
 double cooking_pct = 100.0 * nbHousesWithElectricCooking / nbHouses;
-sl_householdElectricCookingResidentialArea_pct.setValue(cooking_pct, false);
+sl_householdElectricCookingResidentialArea_pct.setValue(roundToInt(cooking_pct), false);
 
 //Consumption growth
 double totalBaseConsumption_kWh = 0;
@@ -620,7 +620,6 @@ sl_electricityDemandIncreaseResidentialArea_pct.setValue(roundToInt(electricityD
 double averageNeighbourhoodBatterySize_kWh = 0;
 for (GCGridBattery gc : gridBatteryGridConnections) {
 	averageNeighbourhoodBatterySize_kWh += gc.p_batteryAsset.getStorageCapacity_kWh()/gridBatteryGridConnections.size();
-	traceln("gc.p_batteryAsset.getStorageCapacity_kWh(): " + gc.p_batteryAsset.getStorageCapacity_kWh());
 }
 sl_gridBatteriesResidentialArea_kWh.setValue(averageNeighbourhoodBatterySize_kWh, false);
 

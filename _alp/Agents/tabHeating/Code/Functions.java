@@ -240,9 +240,9 @@ if (gc.p_BuildingThermalAsset != null) {
 return peakHeatDemand_kW;
 /*ALCODEEND*/}
 
-double f_addDistrictHeatingToAllHouses()
+double f_addDistrictHeatingToAllHouses(List<GCHouse> housesGCList)
 {/*ALCODESTART::1749739532180*/
-for (GCHouse house: zero_Interface.energyModel.Houses ) {
+for (GCHouse house: housesGCList ) {
 	// Remove the existing heating assets
 	house.f_removeAllHeatingAssets();
 	
@@ -295,9 +295,9 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-double f_removeDistrictHeatingFromAllHouses()
+double f_removeDistrictHeatingFromAllHouses(List<GCHouse> housesGCList)
 {/*ALCODESTART::1749739532202*/
-for (GCHouse house: zero_Interface.energyModel.Houses ) {
+for (GCHouse house: housesGCList ) {
 	house.f_removeAllHeatingAssets();
 	house.p_parentNodeHeat = null;
 	house.p_parentNodeHeatID = null;
@@ -335,7 +335,7 @@ double f_setAircos(List<GCHouse> gcListHouses,double desiredShare)
 {/*ALCODESTART::1749739532217*/
 double nbHousesWithAirco = count(gcListHouses, x -> x.p_airco != null);
 double nbHouses = gcListHouses.size();
-traceln("Previous nb households with airco: " + nbHousesWithAirco);
+
 while ( roundToInt(nbHouses * desiredShare) > nbHousesWithAirco ) {
 	GCHouse house = randomWhere(gcListHouses, x -> x.p_airco == null);
 	double aircoPower_kW = roundToDecimal(uniform(3,6),1);
@@ -348,8 +348,6 @@ while ( roundToInt(nbHouses * desiredShare) < nbHousesWithAirco ) {
 	nbHousesWithAirco --;
 }
 
-traceln("New nb households with airco: " + nbHousesWithAirco);
-
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
 	zero_Interface.b_changeToCustomScenario = true;
@@ -359,9 +357,9 @@ zero_Interface.f_resetSettings();
 
 /*ALCODEEND*/}
 
-double f_addLTDH()
+double f_addLTDH(List<GCHouse> housesGCList)
 {/*ALCODESTART::1749739532231*/
-for (GCHouse house: zero_Interface.energyModel.Houses ) {
+for (GCHouse house: housesGCList ) {
 	house.f_removeAllHeatingAssets();
 
 	// Add a heat node
@@ -424,12 +422,13 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-double f_removeLTDH()
+double f_removeLTDH(List<GCHouse> housesGCList)
 {/*ALCODESTART::1749739532244*/
-for (GCHouse house: zero_Interface.energyModel.Houses ) {
+for (GCHouse house: housesGCList ) {
 	// Disconnect from GridNode Heat
 	house.p_parentNodeHeat = null;
-	
+	house.p_parentNodeHeatID = null;
+		
 	// Remove Heatpump and replace with gasburner
 	house.f_removeAllHeatingAssets();
 	double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
@@ -605,31 +604,6 @@ if (sliderIndex == 0) { // Gas moved
     pctArray[0] = pctAdjustable - pctArray[1];     // Gas gets the remaining
 }
 
-
-
-/*
-double pctExcess = Arrays.stream(pctArray).sum() - 100;
-
-for (int i = 0; i < pctArray.length; i++) {
-    if (i != sliderIndex && (i== 1 || i ==0)){// Skip moved slider & custom slider
-    	pctExcess = Arrays.stream(pctArray).sum() - 100; // recalc each time
-        
-        if(pctExcess == 0){
-       	 	break;
-        }
-        
-        double newValue = pctArray[i] - pctExcess;
-        pctArray[i] = Math.max(0, newValue);
-	}
-}
-
-
-if (pctExcess != 0) { //If still excess, reduce moved slider
-	double newSliderValue = pctArray[sliderIndex] - pctExcess;
-    pctArray[sliderIndex] = Math.max(0, newSliderValue);
-}
-*/
-
 // Set Sliders
 gasBurnerSlider.setValue(roundToInt(pctArray[0]), false);
 heatPumpSlider.setValue(roundToInt(pctArray[1]), false);
@@ -642,8 +616,6 @@ if(districtHeatingSlider != null){
 if(customHeatingSlider != null){
 	customHeatingSlider.setValue(roundToInt(pctArray[4]), false);
 }
-
-
 /*ALCODEEND*/}
 
 double f_updateSliders_Heating()
@@ -789,7 +761,7 @@ sl_householdHeatDemandReductionResidentialArea_pct.setValue(roundToInt(pctOfHous
 //PT
 int nbHousesWithPT = count(houseGridConnections, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW));
 
-sl_rooftopPTHouses_pct.setValue((nbHousesWithPT*100.0)/nbHouses, false);
+sl_rooftopPTHouses_pct.setValue(roundToInt((nbHousesWithPT*100.0)/nbHouses), false);
 /*ALCODEEND*/}
 
 double f_updateHeatingSliders_businesspark()
