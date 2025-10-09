@@ -3395,3 +3395,16 @@ for(UI_company companyUI : c_companyUIs){
 }
 /*ALCODEEND*/}
 
+double f_cancelEnergyHubConfiguration()
+{/*ALCODESTART::1760014973975*/
+button_clearFilters.action();
+
+b_inEnergyHubMode = false;
+b_inEnergyHubSelectionMode = false;
+
+f_setForcedClickScreenText("");
+f_setForcedClickScreenVisibility(false);
+
+cb_showFilterInterface.setSelected(false, true);
+/*ALCODEEND*/}
+
