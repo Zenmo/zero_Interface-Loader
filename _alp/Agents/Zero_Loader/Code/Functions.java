@@ -2270,6 +2270,9 @@ if (gridConnection.getElectricity().getHasConnection()){
 				}
 				 
 			}
+			else if(!settings.createCurrentElectricityEA()){//input boolean: Dont create current electric energy assets if electricity profile or total is known.
+					createElectricEA = false;
+			}
 			
 			//Update total Yearly electricity consumption (only when no timestep data available, cause when thats avaiable, it happens in the preprocessing function)
 			if (yearlyElectricityDelivery_kWh != 0){
