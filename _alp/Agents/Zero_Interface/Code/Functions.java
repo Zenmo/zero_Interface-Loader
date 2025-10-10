@@ -3091,6 +3091,7 @@ f_setForcedClickScreenText("");
 f_setForcedClickScreenVisibility(true);
 
 cb_showFilterInterface.setSelected(true, true);
+gr_filterInterface.setPos(170, 580);
 /*ALCODEEND*/}
 
 double f_finalizeEnergyHubConfiguration()
@@ -3393,5 +3394,18 @@ for(UI_company companyUI : c_companyUIs){
 	companyUI.gr_simulateYearScreen.setVisible(false);
 	companyUI.gr_loadIcon.setVisible(false);
 }
+/*ALCODEEND*/}
+
+double f_cancelEnergyHubConfiguration()
+{/*ALCODESTART::1760014973975*/
+button_clearFilters.action();
+
+b_inEnergyHubMode = false;
+b_inEnergyHubSelectionMode = false;
+
+f_setForcedClickScreenText("");
+f_setForcedClickScreenVisibility(false);
+
+cb_showFilterInterface.setSelected(false, true);
 /*ALCODEEND*/}
 
