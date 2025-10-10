@@ -2182,7 +2182,7 @@ else{
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>360</Width>
-		<Height>540</Height>
+		<Height>560</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -2376,8 +2376,9 @@ cb_filterOptions.setValueIndex(0);</ActionCode>
 					<Button>Met geschatte data</Button>
 					<Button>Met zonnepanelen</Button>
 					<Button>Met voertuigen</Button>
-					<Button>In de aangewezen 'lus'</Button>
+					<Button>Met EV</Button>
 					<Button>In de aangwezen 'buurt'</Button>
+					<Button>In de aangewezen 'lus'</Button>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>

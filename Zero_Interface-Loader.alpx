@@ -31,11 +31,15 @@
 				</Option>
 				<Option>
 					<Id>1734442372415</Id>
-					<Name><![CDATA[HASPV]]></Name>
+					<Name><![CDATA[HAS_PV]]></Name>
 				</Option>
 				<Option>
 					<Id>1734442386815</Id>
-					<Name><![CDATA[HASTRANSPORT]]></Name>
+					<Name><![CDATA[HAS_TRANSPORT]]></Name>
+				</Option>
+				<Option>
+					<Id>1760086039728</Id>
+					<Name><![CDATA[HAS_EV]]></Name>
 				</Option>
 				<Option>
 					<Id>1734444382736</Id>

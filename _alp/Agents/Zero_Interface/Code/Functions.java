@@ -1227,28 +1227,32 @@ boolean filterCanReturnZero = false;
 
 switch(selectedFilter){
 	case COMPANIES:
-			f_filterCompanies(toBeFilteredGC);
+		f_filterCompanies(toBeFilteredGC);
 		break;
 		
 	case HOUSES:
-			f_filterHouses(toBeFilteredGC);
+		f_filterHouses(toBeFilteredGC);
 		break;
 		
 	case DETAILED:
-			f_filterDetailed(toBeFilteredGC);
+		f_filterDetailed(toBeFilteredGC);
 		break;
 		
 	case NONDETAILED:
-			f_filterEstimated(toBeFilteredGC);
+		f_filterEstimated(toBeFilteredGC);
 		break;
 		
-	case HASPV:
-			f_filterHasPV(toBeFilteredGC);
+	case HAS_PV:
+		f_filterHasPV(toBeFilteredGC);
 		break;
 		
-	case HASTRANSPORT:
-			f_filterHasTransport(toBeFilteredGC);
+	case HAS_TRANSPORT:
+		f_filterHasTransport(toBeFilteredGC);
 		break;
+		
+	case HAS_EV:
+		f_filterHasTransport(toBeFilteredGC);
+		break;	
 		
 	case GRIDTOPOLOGY_SELECTEDLOOP:
 		if(!c_filterSelectedGridLoops.isEmpty()){
@@ -1361,10 +1365,13 @@ switch(selectedFilterName){
 		selectedFilter_OL = OL_FilterOptionsGC.NONDETAILED;
 		break;
 	case "Met zonnepanelen":
-		selectedFilter_OL = OL_FilterOptionsGC.HASPV;
+		selectedFilter_OL = OL_FilterOptionsGC.HAS_PV;
 		break;
 	case "Met voertuigen":
-		selectedFilter_OL = OL_FilterOptionsGC.HASTRANSPORT;
+		selectedFilter_OL = OL_FilterOptionsGC.HAS_TRANSPORT;
+		break;
+	case "Met EV":
+		selectedFilter_OL = OL_FilterOptionsGC.HAS_EV;
 		break;
 	case "In de aangewezen 'lus'":
 		selectedFilter_OL = OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP;
@@ -3407,5 +3414,13 @@ f_setForcedClickScreenText("");
 f_setForcedClickScreenVisibility(false);
 
 cb_showFilterInterface.setSelected(false, true);
+/*ALCODEEND*/}
+
+double f_filterHasEV(ArrayList<GridConnection> toBeFilteredGC)
+{/*ALCODESTART::1760085891920*/
+c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC.c_electricVehicles.size() > 0));
+//Werkt nog niet helemaal naar behoren, want ghost assets worden nog niet aangemaakt, 
+//en dus hebben bedrijven met ghost ev geen c_electricVehicles en dus komen niet door deze filter.
+// --> Als ghost vehicles ook worden aangemaakt, werkt het wel.
 /*ALCODEEND*/}
 

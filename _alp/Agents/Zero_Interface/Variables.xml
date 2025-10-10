@@ -1755,7 +1755,7 @@
 		<Id>1743092928263</Id>
 		<Name><![CDATA[b_inManualFilterSelectionMode]]></Name>
 		<X>-1410</X>
-		<Y>480</Y>
+		<Y>500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2785,7 +2785,7 @@
 		<Id>1742226708562</Id>
 		<Name><![CDATA[c_manualFilterDeselectedGC]]></Name>
 		<X>-1410</X>
-		<Y>455</Y>
+		<Y>475</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2803,7 +2803,7 @@
 		<Id>1742226748068</Id>
 		<Name><![CDATA[c_manualFilterSelectedGC]]></Name>
 		<X>-1410</X>
-		<Y>435</Y>
+		<Y>455</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2821,7 +2821,7 @@
 		<Id>1742376749972</Id>
 		<Name><![CDATA[c_filterSelectedGridLoops]]></Name>
 		<X>-1410</X>
-		<Y>310</Y>
+		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2839,7 +2839,7 @@
 		<Id>1742376765347</Id>
 		<Name><![CDATA[c_filterSelectedNeighborhoods]]></Name>
 		<X>-1410</X>
-		<Y>370</Y>
+		<Y>390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
