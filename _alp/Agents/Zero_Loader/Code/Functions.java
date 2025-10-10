@@ -2775,7 +2775,8 @@ double outputTemperature_degC;
 OL_AmbientTempType ambientTempType;
 double sourceAssetHeatPower_kW;
 double belowZeroHeatpumpEtaReductionFactor;
-
+maxHeatOutputPower_kW = maxHeatOutputPower_kW*2; // Make the asset capacity twice as high, to make sure it can handle the load in other scenarios with more heat consumption.
+	
 switch (heatAssetType){ // There is always only one heatingType, If there are many assets the type is CUSTOM
 
 	case GAS_BURNER:
@@ -3160,7 +3161,6 @@ switch(CookingType){
 	case ELECTRIC_HOB:
 		new J_EAConsumption(gc, OL_EnergyAssetType.ELECTRIC_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeStep_h, null);
 		gc.p_cookingMethod = OL_HouseholdCookingMethod.ELECTRIC;
-		traceln("Initial conditions of cooking has Electric cooking. TODO make sure the v_nbHousesWIthECooking is set correctly in electricity tab");
 		break;
 		
 	case GAS_PIT:
@@ -3433,13 +3433,15 @@ if ( ! gn.p_hasProfileData ){
 
 //Add building heat model and asset
 f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2);
-		
-//house.p_heatingType = OL_GridConnectionHeatingType.GASBURNER;
-double gasBurnerCapacity_kW = 50000;//40;//uniform_discr(3,5); 
+
+//Determine required heating capacity for the heating asset	
+double maximalTemperatureDifference_K = 30.0; // Approximation
+double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000;
+
 
 //Add heat demand profile
 OL_GridConnectionHeatingType heatingType = avgc_data.p_avgHouseHeatingMethod;
-f_addHeatAsset(house, heatingType, gasBurnerCapacity_kW);
+f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
 f_addHeatManagement(house, heatingType, false);
 f_setHouseHeatingPreferences(house);
 

@@ -121,7 +121,6 @@ switch (scenario_nr){
 	break;
 	
 	case 2: // Custom
-
 		if(rb_scenariosPrivateUI.getValue() == 2){
 			return;
 		}
@@ -133,7 +132,6 @@ switch (scenario_nr){
 	break;
 	
 	default:
-
 }
 
 //Set 'results up to date' to false
@@ -261,7 +259,7 @@ else{
 	J_EAProfile heatDemandAsset_Profile = findFirst(GC.c_profileAssets, j_ea->j_ea.energyCarrier == OL_EnergyCarriers.HEAT);
 	
 	if(heatDemandAsset_Profile != null){
-	capacityThermal_kW = heatDemandAsset_Profile.getProfileScaling_fr() * max(heatDemandAsset_Profile.a_energyProfile_kWh)*4;
+		capacityThermal_kW = heatDemandAsset_Profile.getProfileScaling_fr() * max(heatDemandAsset_Profile.a_energyProfile_kWh)*4;
 	}
 	else{
 		traceln("No heating demand asset found for GC:" + GC.p_gridConnectionID);
@@ -271,6 +269,7 @@ else{
 		
 }
 
+capacityThermal_kW = capacityThermal_kW * 2;//For now just make it always twice as high, to be able to support savings/additional consumption slider settings.
 
 //Algemeen
 double timestep_h = zero_Interface.energyModel.p_timeStep_h;

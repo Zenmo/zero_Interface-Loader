@@ -68,7 +68,7 @@ while ( nbHeatPumps > targetHeatPumpAmount) { // remove excess heatpumps, replac
 		houses.remove(house);
 		zero_Interface.c_orderedHeatingSystemsHouses.remove(house);
 		zero_Interface.c_orderedHeatingSystemsHouses.add(0, house);
-		double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
+		double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house) * 2;//Just make it always twice as high, to be able to support savings/additional consumption slider settings.
 		new J_EAConversionGasBurner(house, peakHeatDemand_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC);
 		house.f_addHeatManagementToGC(house, OL_GridConnectionHeatingType.GAS_BURNER, false);
 	}
@@ -85,7 +85,7 @@ while ( nbHeatPumps < targetHeatPumpAmount) { // remove gasburners, add heatpump
 		houses.remove(house);
 		zero_Interface.c_orderedHeatingSystemsHouses.remove(house);
 		zero_Interface.c_orderedHeatingSystemsHouses.add(0, house);		
-		double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
+		double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house) * 2;//Just make it always twice as high, to be able to support savings/additional consumption slider settings.
 		new J_EAConversionHeatPump(house, peakHeatDemand_kW/3, 0.5, zero_Interface.energyModel.p_timeStep_h, 60,  zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue(), 0, 1, OL_AmbientTempType.AMBIENT_AIR);				
 		house.f_addHeatManagementToGC(house, OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, false);
 	} 
