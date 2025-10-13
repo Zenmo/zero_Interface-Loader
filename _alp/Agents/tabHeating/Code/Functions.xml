@@ -47,6 +47,7 @@
 		<Id>1722256221655</Id>
 		<Name><![CDATA[f_setHeatingSystemsHouseholds]]></Name>
 		<Description><![CDATA[Function that adds or removes heatpumps to houses. Takes a percentage as a parameter and runs untill that percentage of all the houses has a heatpump. If a new heatpump is created it determines its heat demand on a heat_demand consumption asset if it exists, else it looks for a heat profile asset.]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>70</X>
 		<Y>760</Y>
 		<Label>
@@ -353,11 +354,11 @@
 			<Type><![CDATA[ShapeSlider]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[heatPumpSlider]]></Name>
+			<Name><![CDATA[hybridHeatPumpSlider]]></Name>
 			<Type><![CDATA[ShapeSlider]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[hybridHeatPumpSlider]]></Name>
+			<Name><![CDATA[heatPumpSlider]]></Name>
 			<Type><![CDATA[ShapeSlider]]></Type>
 		</Parameter>
 		<Parameter>
@@ -441,6 +442,82 @@
 		<Name><![CDATA[f_updateHeatingSliders_custom]]></Name>
 		<X>-360</X>
 		<Y>110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1760350664957</Id>
+		<Name><![CDATA[f_setHeatingSystems]]></Name>
+		<X>500</X>
+		<Y>700</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gcList]]></Name>
+			<Type><![CDATA[List<GridConnection>]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[orderedHeatingSystemGCList]]></Name>
+			<Type><![CDATA[List<GridConnection>]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[changedSliderHeatingType]]></Name>
+			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[sliderGoal_pct]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1760368810352</Id>
+		<Name><![CDATA[f_addHeatAsset]]></Name>
+		<X>520</X>
+		<Y>720</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[parentGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[heatAssetType]]></Name>
+			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[maxHeatOutputPower_kW]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>GridNode</ReturnType>
+		<Id>1760370085949</Id>
+		<Name><![CDATA[f_createNewHeatGrid]]></Name>
+		<X>540</X>
+		<Y>740</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
