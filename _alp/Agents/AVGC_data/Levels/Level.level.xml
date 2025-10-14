@@ -3,7 +3,7 @@
 	<Rectangle>
 		<Id>1726584205536</Id>
 		<Name><![CDATA[rect_constants]]></Name>
-		<X>958.816</X>
+		<X>1020</X>
 		<Y>0</Y>
 		<Label>
 			<X>10</X>
@@ -21,8 +21,8 @@
 		<LineColor>-16777216</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>958.0782918149466</Width>
-		<Height>1100</Height>
+		<Width>896.894</Width>
+		<Height>1400</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -48,8 +48,8 @@
 		<LineColor>-16777216</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>958.0782918149466</Width>
-		<Height>1100</Height>
+		<Width>1019.263</Width>
+		<Height>1400</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -311,7 +311,7 @@
 		<Id>1726584205560</Id>
 		<Name><![CDATA[txt_avgPV]]></Name>
 		<X>40</X>
-		<Y>880</Y>
+		<Y>990</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -336,7 +336,7 @@
 		<Id>1726584205562</Id>
 		<Name><![CDATA[txt_avgBat]]></Name>
 		<X>40</X>
-		<Y>985</Y>
+		<Y>1095</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -411,7 +411,7 @@
 		<Id>1726584205568</Id>
 		<Name><![CDATA[txt_gasburners]]></Name>
 		<X>60</X>
-		<Y>580</Y>
+		<Y>600</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -436,7 +436,7 @@
 		<Id>1726584205570</Id>
 		<Name><![CDATA[txt_hydrogenburners]]></Name>
 		<X>60</X>
-		<Y>650</Y>
+		<Y>690</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -539,7 +539,7 @@
 		<Id>1726743791200</Id>
 		<Name><![CDATA[text]]></Name>
 		<X>40</X>
-		<Y>1050</Y>
+		<Y>1160</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -589,7 +589,7 @@
 		<Id>1745316061345</Id>
 		<Name><![CDATA[txt_CHP]]></Name>
 		<X>60</X>
-		<Y>720</Y>
+		<Y>780</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -614,7 +614,7 @@
 		<Id>1747314897311</Id>
 		<Name><![CDATA[txt_districtHeatingDeliverySet]]></Name>
 		<X>60</X>
-		<Y>810</Y>
+		<Y>890</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -638,7 +638,7 @@
 	<Text>
 		<Id>1751906160194</Id>
 		<Name><![CDATA[txt_avgHeatBuffer]]></Name>
-		<X>520</X>
+		<X>560</X>
 		<Y>980</Y>
 		<Label>
 			<X>0</X>
@@ -663,7 +663,7 @@
 	<Text>
 		<Id>1751906173848</Id>
 		<Name><![CDATA[txt_avgPT]]></Name>
-		<X>520</X>
+		<X>560</X>
 		<Y>900</Y>
 		<Label>
 			<X>0</X>
