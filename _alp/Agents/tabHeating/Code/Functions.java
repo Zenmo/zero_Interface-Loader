@@ -573,7 +573,7 @@ for (GridConnection gc : gcList) {
 return numberOfCustomHeatingSystems;
 /*ALCODEEND*/}
 
-double f_setHeatingSliders(int sliderIndex,ShapeSlider gasBurnerSlider,ShapeSlider hybridHeatPumpSlider,ShapeSlider heatPumpSlider,ShapeSlider districtHeatingSlider,ShapeSlider customHeatingSlider)
+double f_setHeatingSliders(int changedSliderIndex,ShapeSlider gasBurnerSlider,ShapeSlider hybridHeatPumpSlider,ShapeSlider heatPumpSlider,ShapeSlider districtHeatingSlider,ShapeSlider customHeatingSlider)
 {/*ALCODESTART::1754391096443*/
 double pct_naturalGasBurner = gasBurnerSlider.getValue();
 double pct_hybridHeatPump = hybridHeatPumpSlider != null ? hybridHeatPumpSlider.getValue() : 0;
@@ -591,17 +591,20 @@ double pctArray[] = {
 };
 
 
+int customSliderIndex = 4;
+double pctFixed = pctArray[customSliderIndex]; // For now: Custom is fixed.
+double pctExcess = Arrays.stream(pctArray).sum() - 100;
 
-double pctFixed = pctArray[1] + pctArray[3] + pctArray[4]; // For now: hybrid heatpump, district heating and custom are fixed.
-double pctAdjustable = 100 - pctFixed;
+for (int i = 0; i < pctArray.length && pctExcess != 0; i++) {
+    if (i != changedSliderIndex && i != customSliderIndex) {
+        double delta = min(abs(pctArray[i]), abs(pctExcess));
+        pctArray[i] += (pctExcess < 0 ? delta : -delta);
+        pctExcess = Arrays.stream(pctArray).sum() - 100;
+    }
+}
 
-//Only adjust between gas and heat pump for now
-if (sliderIndex == 0) { // Gas moved
-    pctArray[0] = min(pctArray[0], pctAdjustable); // Limit gas to the available room
-    pctArray[1] = pctAdjustable - pctArray[0];     // HP gets the remaining
-} else if (sliderIndex == 2) { // Heat pump moved
-    pctArray[1] = min(pctArray[2], pctAdjustable); // Limit HP to the available room
-    pctArray[0] = pctAdjustable - pctArray[1];     // Gas gets the remaining
+if (pctExcess != 0){//If still not 0, then adjust the changedSlider to solve it.
+	pctArray[changedSliderIndex] = max(0, pctArray[changedSliderIndex] - pctExcess);
 }
 
 // Set Sliders

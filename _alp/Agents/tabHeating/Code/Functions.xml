@@ -346,7 +346,7 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[sliderIndex]]></Name>
+			<Name><![CDATA[changedSliderIndex]]></Name>
 			<Type><![CDATA[int]]></Type>
 		</Parameter>
 		<Parameter>
