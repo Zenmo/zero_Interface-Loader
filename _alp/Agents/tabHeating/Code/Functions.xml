@@ -346,8 +346,16 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[changedSliderIndex]]></Name>
-			<Type><![CDATA[int]]></Type>
+			<Name><![CDATA[gcList]]></Name>
+			<Type><![CDATA[List<GridConnection>]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[orderedHeatingSystemGCList]]></Name>
+			<Type><![CDATA[List<GridConnection>]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[changedSliderHeatingType]]></Name>
+			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[gasBurnerSlider]]></Name>
@@ -362,7 +370,11 @@
 			<Type><![CDATA[ShapeSlider]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[districtHeatingSlider]]></Name>
+			<Name><![CDATA[HTdistrictHeatingSlider]]></Name>
+			<Type><![CDATA[ShapeSlider]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[LTdistrictHeatingSlider]]></Name>
 			<Type><![CDATA[ShapeSlider]]></Type>
 		</Parameter>
 		<Parameter>

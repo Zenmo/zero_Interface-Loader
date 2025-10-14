@@ -2851,7 +2851,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		
 	default:
 		traceln("HEATING TYPE NOT FOUND FOR GC: " + parentGC);
-}								
+}											
 /*ALCODEEND*/}
 
 GridNode f_createHeatGridNode()
