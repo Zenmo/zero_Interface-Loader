@@ -2768,6 +2768,7 @@ existingBuilding.p_floorSurfaceArea_m2 += connectingBuildingData.address_floor_s
 double f_addHeatAsset(GridConnection parentGC,OL_GridConnectionHeatingType heatAssetType,double maxHeatOutputPower_kW)
 {/*ALCODESTART::1745336570663*/
 //Initialize parameters
+double heatOutputCapacityGasBurner_kW;
 double inputCapacityElectric_kW;
 double efficiency;
 double baseTemperature_degC;
@@ -2780,14 +2781,15 @@ maxHeatOutputPower_kW = maxHeatOutputPower_kW*2; // Make the asset capacity twic
 switch (heatAssetType){ // There is always only one heatingType, If there are many assets the type is CUSTOM
 
 	case GAS_BURNER:
-		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, maxHeatOutputPower_kW , avgc_data.p_avgEfficiencyGasBurner_fr, energyModel.p_timeStep_h, 90);
+		heatOutputCapacityGasBurner_kW = max(avgc_data.p_minGasBurnerOutputCapacity_kW, maxHeatOutputPower_kW);
+		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, heatOutputCapacityGasBurner_kW , avgc_data.p_avgEfficiencyGasBurner_fr, energyModel.p_timeStep_h, 90);
 		break;
 	
 	case HYBRID_HEATPUMP:
 	
 		//Add primary heating asset (heatpump) (if its not part of the basic profile already
-		inputCapacityElectric_kW = maxHeatOutputPower_kW / 3; //-- /3, kan nog kleiner want is hybride zodat gasbrander ook bij springt, dus kleiner MOETEN aanname voor hoe klein onderzoeken
-		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
+		inputCapacityElectric_kW = max(avgc_data.p_minHeatpumpElectricCapacity_kW, maxHeatOutputPower_kW / 3); //-- /3, kan nog kleiner want is hybride zodat gasbrander ook bij springt, dus kleiner MOETEN aanname voor hoe klein onderzoeken
+		efficiency = avgc_data.p_avgEfficiencyHeatpump_fr;
 		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
@@ -2799,18 +2801,19 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		zero_Interface.energyModel.c_ambientDependentAssets.add(heatPumpHybrid);
 		
 		//Add secondary heating asset (gasburner)
-		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner;
-		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC;
+		heatOutputCapacityGasBurner_kW = max(avgc_data.p_minGasBurnerOutputCapacity_kW, maxHeatOutputPower_kW);
+		efficiency = avgc_data.p_avgEfficiencyGasBurner_fr;
+		outputTemperature_degC = avgc_data.p_avgOutputTemperatureGasBurner_degC;
 		
-		J_EAConversionGasBurner gasBurnerHybrid = new J_EAConversionGasBurner(parentGC, maxHeatOutputPower_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC);		
+		J_EAConversionGasBurner gasBurnerHybrid = new J_EAConversionGasBurner(parentGC, heatOutputCapacityGasBurner_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC);		
 		break;
 	
 	case ELECTRIC_HEATPUMP:
 		//Add primary heating asset (heatpump)
-		inputCapacityElectric_kW = maxHeatOutputPower_kW; // Could be a lot smaller due to high cop
-		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
+		inputCapacityElectric_kW = max(avgc_data.p_minHeatpumpElectricCapacity_kW, maxHeatOutputPower_kW); // Could be a lot smaller due to high cop
+		efficiency = avgc_data.p_avgEfficiencyHeatpump_fr;
 		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
-		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
+		outputTemperature_degC = avgc_data.p_avgOutputTemperatureHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
@@ -2828,11 +2831,11 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		break;
 
 	case DISTRICTHEAT:
-		
+		double heatOutputCapacityDeliverySet_kW = max(avgc_data.p_minDistrictHeatingDeliverySetOutputCapacity_kW, maxHeatOutputPower_kW);
 		outputTemperature_degC = avgc_data.p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
 		efficiency = avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr;
 		
-		new J_EAConversionHeatDeliverySet(parentGC, maxHeatOutputPower_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC);
+		new J_EAConversionHeatDeliverySet(parentGC, heatOutputCapacityDeliverySet_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC);
 		
 		//Add GC to heat grid
 		GridNode heatgrid = findFirst(energyModel.pop_gridNodes, node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
@@ -2848,8 +2851,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		
 	default:
 		traceln("HEATING TYPE NOT FOUND FOR GC: " + parentGC);
-}
-
+}								
 /*ALCODEEND*/}
 
 GridNode f_createHeatGridNode()
@@ -4215,9 +4217,9 @@ energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.cl
 triple = Triple.of(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, false, false);
 energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
 triple = Triple.of(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, true, false);
-energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementPIcontrol.class );
 triple = Triple.of(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, true, true);
-energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementPIcontrol.class );
 
 triple = Triple.of(OL_GridConnectionHeatingType.HYBRID_HEATPUMP, false, false);
 energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileHybridHeatPump.class );

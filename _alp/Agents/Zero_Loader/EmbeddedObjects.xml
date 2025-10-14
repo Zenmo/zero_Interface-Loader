@@ -376,6 +376,18 @@
 			<Parameter>
 				<Name><![CDATA[map_yearlySummerWinterTimeStartHour]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_minHeatpumpElectricCapacity_kW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_minGasBurnerOutputCapacity_kW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_minHydrogenBurnerOutputCapacity_kW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_minDistrictHeatingDeliverySetOutputCapacity_kW]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">
