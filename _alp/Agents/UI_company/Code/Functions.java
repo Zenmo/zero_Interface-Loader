@@ -290,7 +290,7 @@ switch (selectedHeatingType){
 	case GAS_BURNER:
 		
 		//Add primary heating asset (gasburner)
-		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner;
+		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner_fr;
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC;
 		
 		new J_EAConversionGasBurner(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
@@ -301,7 +301,7 @@ switch (selectedHeatingType){
 		
 		//Add primary heating asset (heatpump)
 		capacityElectric_kW = capacityThermal_kW / 3; //-- /3, want is hybride, dus kleiner
-		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
+		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump_fr;
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
@@ -311,7 +311,7 @@ switch (selectedHeatingType){
 		zero_Interface.energyModel.c_ambientDependentAssets.add(heatPumpHybrid);
 		
 		//Add secondary heating asset (gasburner)
-		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner;
+		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner_fr;
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC;
 		
 		J_EAConversionGasBurner gasBurnerHybrid = new J_EAConversionGasBurner(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
@@ -323,7 +323,7 @@ switch (selectedHeatingType){
 
 		//Add primary heating asset (heatpump)
 		capacityElectric_kW = capacityThermal_kW;
-		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump;
+		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump_fr;
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
@@ -336,7 +336,7 @@ switch (selectedHeatingType){
 	
 	case HYDROGENBURNER:
 		
-		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHydrogenBurner;
+		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHydrogenBurner_fr;
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHydrogenBurner_degC;
 	    
 		//Add primary heating asset (hydrogenburner)

@@ -1184,7 +1184,7 @@ https://nos.nl/artikel/2483604-elektrische-vrachtwagens-blijven-achter-door-comp
 https://www.zonneplan.nl/kenniscentrum/zonnepanelen/vermogen --> 212 W/m2
 https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Description>
 		<X>50</X>
-		<Y>910</Y>
+		<Y>1020</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1214,7 +1214,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Description><![CDATA[Average ratio of battery capacity over battery power.
 --> If battery capacity (in kWh) is twice the battery power (in kW) --> ratio = 2.]]></Description>
 		<X>50</X>
-		<Y>1010</Y>
+		<Y>1120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1337,7 +1337,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Name><![CDATA[p_avgRatioRoofPotentialPV]]></Name>
 		<Description><![CDATA[value for the ratio of the avg Usable Roof Area For PV fr]]></Description>
 		<X>50</X>
-		<Y>930</Y>
+		<Y>1040</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1428,7 +1428,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 
 --> SOURCE?]]></Description>
 		<X>70</X>
-		<Y>610</Y>
+		<Y>630</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1459,7 +1459,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 
 --> Source?]]></Description>
 		<X>70</X>
-		<Y>630</Y>
+		<Y>650</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1492,7 +1492,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 
 - https://www.csrf.ac.uk/blog/hydrogen-for-heating/]]></Description>
 		<X>70</X>
-		<Y>680</Y>
+		<Y>720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1523,7 +1523,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 
 --> Source?]]></Description>
 		<X>70</X>
-		<Y>700</Y>
+		<Y>740</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1551,7 +1551,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Id>1726746753360</Id>
 		<Name><![CDATA[p_avgVehiclesPerChargePoint]]></Name>
 		<X>50</X>
-		<Y>1080</Y>
+		<Y>1190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1668,7 +1668,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Description><![CDATA[Parameter used to estimate the total solar production in a year in a function like:
 p_avgFullLoadHoursPV_hr * kWp_of_PV_panels = XXX kWh pv production in a year.]]></Description>
 		<X>50</X>
-		<Y>950</Y>
+		<Y>1060</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1794,7 +1794,7 @@ to 18 m3 p m2 for label G
 		<Name><![CDATA[p_avgSolarFieldPower_kWppha]]></Name>
 		<Description><![CDATA[1000]]></Description>
 		<X>50</X>
-		<Y>970</Y>
+		<Y>1080</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1824,7 +1824,7 @@ to 18 m3 p m2 for label G
 		<Description><![CDATA[50% -> blijkt uit aangeleverde data door "kas als energiebron". (https://www.kasalsenergiebron.nl/)
 Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_Rapport_WKK_Barometer_2023.pdf]]></Description>
 		<X>70</X>
-		<Y>750</Y>
+		<Y>810</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1854,7 +1854,7 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 		<Description><![CDATA[42% -> blijkt uit aangeleverde data door "kas als energiebron". (https://www.kasalsenergiebron.nl/)
 Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_Rapport_WKK_Barometer_2023.pdf]]></Description>
 		<X>70</X>
-		<Y>770</Y>
+		<Y>830</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1885,7 +1885,7 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 
 --> Source?]]></Description>
 		<X>70</X>
-		<Y>790</Y>
+		<Y>850</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1915,7 +1915,7 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 		<Description><![CDATA[Average heating efficiency of a district heating delivery set
 ]]></Description>
 		<X>70</X>
-		<Y>840</Y>
+		<Y>920</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1946,7 +1946,7 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 
 70 -> https://www.nplw.nl/warmtenet/warmtetechnieken/middentemperatuur-warmtenet]]></Description>
 		<X>70</X>
-		<Y>860</Y>
+		<Y>940</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2060,7 +2060,7 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 	<Variable Class="Parameter">
 		<Id>1751893521012</Id>
 		<Name><![CDATA[p_avgPTPower_kWpm2]]></Name>
-		<X>530</X>
+		<X>570</X>
 		<Y>930</Y>
 		<Label>
 			<X>10</X>
@@ -2089,7 +2089,7 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 		<Id>1751893540583</Id>
 		<Name><![CDATA[p_avgHeatBufferWaterVolumePerHPPower_m3pkW]]></Name>
 		<Description><![CDATA[https://www.kachelplaats.nl/buffervaten-cv-houtkachels/ -> 25 liter per kW warmtepomp vermogen = 0.025 m3/kW]]></Description>
-		<X>530</X>
+		<X>570</X>
 		<Y>1080</Y>
 		<Label>
 			<X>10</X>
@@ -2118,7 +2118,7 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 		<Id>1751893810778</Id>
 		<Name><![CDATA[p_avgHeatBufferWaterVolumePerPTSurface_m3pm2]]></Name>
 		<Description><![CDATA[https://www.kachelplaats.nl/buffervaten-cv-houtkachels/ -> 50 liter per m2 zonnecollector = 0.050 m3/m2]]></Description>
-		<X>530</X>
+		<X>570</X>
 		<Y>1060</Y>
 		<Label>
 			<X>10</X>
@@ -2210,7 +2210,7 @@ Voor nu gekozen voor 4185.
 		<Id>1751906112800</Id>
 		<Name><![CDATA[p_avgMaxHeatBufferTemperature_degC]]></Name>
 		<Description><![CDATA[???]]></Description>
-		<X>530</X>
+		<X>570</X>
 		<Y>1010</Y>
 		<Label>
 			<X>10</X>
@@ -2238,7 +2238,7 @@ Voor nu gekozen voor 4185.
 	<Variable Class="Parameter">
 		<Id>1751906126857</Id>
 		<Name><![CDATA[p_avgMinHeatBufferTemperature_degC]]></Name>
-		<X>530</X>
+		<X>570</X>
 		<Y>1030</Y>
 		<Label>
 			<X>10</X>
@@ -2267,7 +2267,7 @@ Voor nu gekozen voor 4185.
 		<Id>1753950741783</Id>
 		<Name><![CDATA[p_avgPTPanelSize_m2]]></Name>
 		<Description><![CDATA[https://www.econo.nl/m24hpcpc-400-h2-heatpipe-zonnecollector-prisma-pro-24-cpc -> +- 4 m2]]></Description>
-		<X>530</X>
+		<X>570</X>
 		<Y>950</Y>
 		<Label>
 			<X>10</X>
@@ -2297,7 +2297,7 @@ Voor nu gekozen voor 4185.
 		<Name><![CDATA[p_avgRatioHouseBatteryStorageCapacity_v_PVPower]]></Name>
 		<Description><![CDATA[https://www.essent.nl/thuisbatterij/capaciteit-thuisbatterij : Essent: "Over het algemeen kun je ervan uitgaan dat een thuisbatterij zo'n 1 à 1,5 kWh capaciteit nodig heeft per kWp zonnepanelen vermogen. " ]]></Description>
 		<X>50</X>
-		<Y>1030</Y>
+		<Y>1140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2412,6 +2412,7 @@ Voor nu gekozen voor 4185.
 	<Variable Class="Parameter">
 		<Id>1759233211509</Id>
 		<Name><![CDATA[map_yearlySummerWinterTimeStartHour]]></Name>
+		<Description><![CDATA[Map that contains data, with key per year, and value a pair where pair.getFirst() == summertimeStartHour and pair.getSecond() == winterTimeStartHour.]]></Description>
 		<X>1070</X>
 		<Y>400</Y>
 		<Label>
@@ -2434,6 +2435,126 @@ Voor nu gekozen voor 4185.
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1759233211507</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1760435457613</Id>
+		<Name><![CDATA[p_minHeatpumpElectricCapacity_kW]]></Name>
+		<Description><![CDATA[https://comfortklimaat.nl/collectie/warmtepompen -> Thermisch vermogen is minimaal 4.
+https://www.bluesolid.nl/warmtepomp-monoblock-9-kw-1ph.html -> Thermisch vermogen van minimaal 5.
+https://www.dewarmte.nl/all-electric-warmtepomp/ -> thermisch vermogen van 2-8 kW. 
+
+-> (4+5+2)/3 -> Gemiddeld ongeveer 3.6 thermisch-> 3.6/3  = 1.2 elektrisch]]></Description>
+		<X>70</X>
+		<Y>580</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[1.2]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1760435457611</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1760435475991</Id>
+		<Name><![CDATA[p_minGasBurnerOutputCapacity_kW]]></Name>
+		<Description><![CDATA[https://www.warmteservice.nl/Verwarming/CV-ketel/HR-Combiketel/c/163 -> Minimum ranged van 4 - 7.8 -> gekozen voor 6 ]]></Description>
+		<X>70</X>
+		<Y>670</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[6]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1760435475989</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1760435486680</Id>
+		<Name><![CDATA[p_minHydrogenBurnerOutputCapacity_kW]]></Name>
+		<Description><![CDATA[Zelfde gekozen als gasbrander.]]></Description>
+		<X>70</X>
+		<Y>760</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[6]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1760435486678</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1760435497667</Id>
+		<Name><![CDATA[p_minDistrictHeatingDeliverySetOutputCapacity_kW]]></Name>
+		<Description><![CDATA[25 kw is a default set: https://www.acm.nl/nl/energie/warmte-en-koude/warmtetarieven/tarieven-warmte-en-koude]]></Description>
+		<X>70</X>
+		<Y>960</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[25]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1760435497665</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>

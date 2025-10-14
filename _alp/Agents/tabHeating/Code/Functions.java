@@ -20,7 +20,8 @@ else{
 			zero_Interface.c_orderedHeatingSystemsCompanies.remove(company);
 			zero_Interface.c_orderedHeatingSystemsCompanies.add(0, company);
 			double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(company);
-			new J_EAConversionGasBurner(company, peakHeatDemand_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC);
+			double heatOutputPower_kW = max(zero_Interface.energyModel.avgc_data.p_minGasBurnerOutputCapacity_kW, peakHeatDemand_kW);
+			new J_EAConversionGasBurner(company, heatOutputPower_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner_fr, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC);
 			company.f_addHeatManagementToGC(company, OL_GridConnectionHeatingType.GAS_BURNER, false);
 		}
 		else {
@@ -37,7 +38,8 @@ else{
 			zero_Interface.c_orderedHeatingSystemsCompanies.remove(company);
 			zero_Interface.c_orderedHeatingSystemsCompanies.add(0, company);	
 			double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(company);
-			new J_EAConversionHeatPump(company, peakHeatDemand_kW, 0.5, zero_Interface.energyModel.p_timeStep_h, 60,  zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue(), 0, 1, OL_AmbientTempType.AMBIENT_AIR);				
+			double electricInputPower_kW = max(zero_Interface.energyModel.avgc_data.p_minHeatpumpElectricCapacity_kW, peakHeatDemand_kW);
+			new J_EAConversionHeatPump(company, electricInputPower_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump_fr, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC,  zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue(), 0, 1, OL_AmbientTempType.AMBIENT_AIR);				
 			company.f_addHeatManagementToGC(company, OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, false);
 		} 
 		else {
@@ -69,7 +71,8 @@ while ( nbHeatPumps > targetHeatPumpAmount) { // remove excess heatpumps, replac
 		zero_Interface.c_orderedHeatingSystemsHouses.remove(house);
 		zero_Interface.c_orderedHeatingSystemsHouses.add(0, house);
 		double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house) * 2;//Just make it always twice as high, to be able to support savings/additional consumption slider settings.
-		new J_EAConversionGasBurner(house, peakHeatDemand_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC);
+		double heatOutputPower_kW = max(zero_Interface.energyModel.avgc_data.p_minGasBurnerOutputCapacity_kW, peakHeatDemand_kW);
+		new J_EAConversionGasBurner(house, heatOutputPower_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner_fr, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC);
 		house.f_addHeatManagementToGC(house, OL_GridConnectionHeatingType.GAS_BURNER, false);
 	}
 	else {
@@ -86,7 +89,8 @@ while ( nbHeatPumps < targetHeatPumpAmount) { // remove gasburners, add heatpump
 		zero_Interface.c_orderedHeatingSystemsHouses.remove(house);
 		zero_Interface.c_orderedHeatingSystemsHouses.add(0, house);		
 		double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house) * 2;//Just make it always twice as high, to be able to support savings/additional consumption slider settings.
-		new J_EAConversionHeatPump(house, peakHeatDemand_kW/3, 0.5, zero_Interface.energyModel.p_timeStep_h, 60,  zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue(), 0, 1, OL_AmbientTempType.AMBIENT_AIR);				
+		double electricInputPower_kW = max(zero_Interface.energyModel.avgc_data.p_minHeatpumpElectricCapacity_kW, peakHeatDemand_kW);
+		new J_EAConversionHeatPump(house, electricInputPower_kW, 0.5, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC,  zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue(), 0, 1, OL_AmbientTempType.AMBIENT_AIR);				
 		house.f_addHeatManagementToGC(house, OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, false);
 	} 
 	else {
@@ -432,7 +436,7 @@ for (GCHouse house: housesGCList ) {
 	// Remove Heatpump and replace with gasburner
 	house.f_removeAllHeatingAssets();
 	double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
-	new J_EAConversionGasBurner(house, peakHeatDemand_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC);	
+	new J_EAConversionGasBurner(house, peakHeatDemand_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner_fr, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC);	
 	house.f_addHeatManagementToGC(house, OL_GridConnectionHeatingType.GAS_BURNER, false);
 }
 
