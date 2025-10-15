@@ -1395,7 +1395,10 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 	<Variable Class="Parameter">
 		<Id>1726584205714</Id>
 		<Name><![CDATA[p_avgOutputTemperatureHeatpump_degC]]></Name>
-		<Description><![CDATA[The avg output temperature of a heatpump in degC. Can be set manually, as an average 60 has been taken. ]]></Description>
+		<Description><![CDATA[https://www.milieucentraal.nl/energie-besparen/duurzaam-verwarmen-en-koelen/volledige-warmtepomp/?utm_source=chatgpt.com - max 45-55
+https://warmtepomp-panel.nl/afgiftesysteem.html?utm_source=chatgpt.com -> 35 graden afgifte bij -10 graden.
+
+-> Voor nu gemiddeld 40 genomen.]]></Description>
 		<X>70</X>
 		<Y>560</Y>
 		<Label>
@@ -1410,7 +1413,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[60]]></Code>
+				<Code><![CDATA[40]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1726584205712</Id>
