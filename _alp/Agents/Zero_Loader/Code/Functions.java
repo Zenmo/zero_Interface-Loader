@@ -3445,7 +3445,7 @@ double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() 
 OL_GridConnectionHeatingType heatingType = avgc_data.p_avgHouseHeatingMethod;
 f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
 f_addHeatManagement(house, heatingType, false);
-f_setHouseHeatingPreferences(house);
+house.p_heatingManagement.setHeatingPreferences(f_getHouseHeatingPreferences());
 
 //Add hot water and cooking demand
 f_addHotWaterDemand(house, house.p_floorSurfaceArea_m2);
@@ -3468,31 +3468,42 @@ f_addCarsToHouses(house);
 
 /*ALCODEEND*/}
 
-double f_setHouseHeatingPreferences(GCHouse house)
+J_HeatingPreferences f_getHouseHeatingPreferences()
 {/*ALCODESTART::1749728889988*/
-if (house.p_heatingManagement instanceof J_HeatingManagementSimple heatingManagement) {
-	if( randomTrue(0.5) ){ //50% kans op ochtend ritme
-		heatingManagement.nightTimeSetPoint_degC = uniform_discr(12,18);
-		heatingManagement.dayTimeSetPoint_degC = uniform_discr(18, 24);
-		heatingManagement.startOfDay_h = uniform_discr(5,10) + uniform_discr(0,4) / 4.0;
-		heatingManagement.startOfNight_h = uniform_discr(21,23);
-		// house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0,1),1);
-	}
-	else if (randomTrue(0.5) ){ // 25% kans op hele dag aan
-		heatingManagement.nightTimeSetPoint_degC = uniform_discr(18,21);
-		heatingManagement.dayTimeSetPoint_degC = heatingManagement.nightTimeSetPoint_degC;
-		heatingManagement.startOfDay_h= -1;
-		heatingManagement.startOfNight_h = 25;
-		//house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0, 1),1);
-	}
-	else { // 25% kans op smiddags/savonds aan
-		heatingManagement.nightTimeSetPoint_degC = uniform_discr(12,18);
-		heatingManagement.dayTimeSetPoint_degC = uniform_discr(18, 24);
-		heatingManagement.startOfDay_h = uniform_discr(14, 16) + uniform_discr(0,4) / 4.0;
-		heatingManagement.startOfNight_h = uniform_discr(21,23);
-		//house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0, 1),1);
-	}
+double nightTimeSetPoint_degC = 18;
+double dayTimeSetPoint_degC = 20;
+double startOfDayTime_h = 8;
+double startOfNightTime_h = 23;
+
+if( randomTrue(0.5) ){ //50% kans op ochtend ritme
+	nightTimeSetPoint_degC = uniform_discr(12,18);
+	dayTimeSetPoint_degC = uniform_discr(18, 24);
+	startOfDayTime_h = uniform_discr(5,10) + uniform_discr(0,4) / 4.0;
+	startOfNightTime_h = uniform_discr(21,23);
+
 }
+else if (randomTrue(0.5) ){ // 25% kans op hele dag aan
+	nightTimeSetPoint_degC = uniform_discr(18,21);
+	dayTimeSetPoint_degC = nightTimeSetPoint_degC;
+	startOfDayTime_h = -1;
+	startOfNightTime_h = 25;
+
+}
+else { // 25% kans op smiddags/savonds aan
+	nightTimeSetPoint_degC = uniform_discr(12,18);
+	dayTimeSetPoint_degC = uniform_discr(18, 24);
+	startOfDayTime_h = uniform_discr(14, 16) + uniform_discr(0,4) / 4.0;
+	startOfNightTime_h = uniform_discr(21,23);
+
+}
+
+double maxComfortTemperature_degC = dayTimeSetPoint_degC + 2;
+double minComfortTemperature_degC = dayTimeSetPoint_degC - 2;
+
+//Create heating preferences class
+J_HeatingPreferences heatingPreferences = new J_HeatingPreferences(startOfDayTime_h, startOfNightTime_h, dayTimeSetPoint_degC, nightTimeSetPoint_degC, maxComfortTemperature_degC, minComfortTemperature_degC);
+
+return heatingPreferences;
 /*ALCODEEND*/}
 
 double f_createParkingSpots()
