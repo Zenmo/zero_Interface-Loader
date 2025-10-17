@@ -1005,25 +1005,8 @@ v_clickedObjectText</TextCode>
 	switch(v_clickedObjectType){
 	
 		case BUILDING:
-			UI_company companyUI = c_companyUIs.get(v_connectionOwnerIndexNr);
-			
-			//Connect resultsUI of the main with resultsUI of CompanyUI
-			companyUI.f_updateUIResultsCompanyUI();	
-	
-			//Set sliders to the correct GC if there are more than 1 GC
-			if(companyUI.c_ownedGridConnections.size()&gt;1){
-				GridConnection selectedGC = findFirst(companyUI.c_ownedGridConnections, GC -&gt; GC == c_selectedGridConnections.get(0));  
-				companyUI.GCnr_selection.setValue(companyUI.c_ownedGridConnections.indexOf(selectedGC), true);
-			}
-			else{
-				companyUI.uI_Results.f_setAllCharts();
-				companyUI.f_getNFATOValues();
-			}
-			
-			//Go to the companyUI view
-			c_companyUIs.get(v_connectionOwnerIndexNr).va_companyUI.navigateTo();
-			v_currentViewArea = c_companyUIs.get(v_connectionOwnerIndexNr).va_companyUI;
-			
+			//ui_company.f_setCompanyUI(c_selectedGridConnections.get(0));
+			ui_Company.va_companyUI.navigateTo();
 			break;
 		
 		case ELECTROLYSER:

@@ -4417,7 +4417,10 @@ zero_Interface.c_mappingOfVehiclesPerCharger = saveObject.c_mappingOfVehiclesPer
 zero_Interface.c_scenarioMap_Current = saveObject.c_scenarioMap_Current;
 zero_Interface.c_scenarioMap_Future = saveObject.c_scenarioMap_Future;
 
+
+/*
 List<ConnectionOwner> c_COCompanies = findAll(zero_Interface.energyModel.pop_connectionOwners, p -> p.p_connectionOwnerType == OL_ConnectionOwnerType.COMPANY); 
+
 
 int i = 0;
 for (ConnectionOwner CO : c_COCompanies) {
@@ -4428,7 +4431,7 @@ for (ConnectionOwner CO : c_COCompanies) {
 	companyUI.f_setSelectedGCSliders();
 	i++;
 }
-
+*/
 
 /*ALCODEEND*/}
 

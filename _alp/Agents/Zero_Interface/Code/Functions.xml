@@ -227,6 +227,7 @@
 		<Id>1708595258540</Id>
 		<Name><![CDATA[f_createPrivateCompanyUI]]></Name>
 		<Description><![CDATA[function used to create the private ui for each company]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-260</X>
 		<Y>420</Y>
 		<Label>

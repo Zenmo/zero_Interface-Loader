@@ -139,14 +139,6 @@ for (GridConnection gc : gcList) {
 			j_ea.setProfileScaling_fr( scalingFactor );
 		}
 	}
-	
-	// Update Company UI
-	if (zero_Interface.c_companyUIs.size()>0){
-		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc) { // should also check the setting of selected GC
-			companyUI.sl_electricityDemandCompanyReduction.setValue(demandReduction_pct, false);
-		}
-	}
 }
 
 // Update variable to change to custom scenario
@@ -281,24 +273,6 @@ if ( gc instanceof GCHouse ) {
 else if ( gc instanceof GCUtility ) {
 	zero_Interface.c_orderedPVSystemsCompanies.remove(gc);
 	zero_Interface.c_orderedPVSystemsCompanies.add(0, (GCUtility)gc);
-	// update company UI
-	if ( zero_Interface.c_companyUIs.size() > 0 ) {
-		if ( gc.p_owner != null ) {
-			UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-			companyUI.b_runningMainInterfaceSlider = true;
-			if(companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) != gc){
-				int i = indexOf(companyUI.c_ownedGridConnections.stream().toArray(), gc);
-				if (i == -1) {
-					throw new RuntimeException("Error: Unable to find gc: " + gc.p_ownerID + " in companyUI number " + gc.p_owner.p_connectionOwnerIndexNr);
-				}
-				companyUI.GCnr_selection.setValue(i, true);
-			}
-			companyUI.b_runningMainInterfaceSlider = false;	
-			
-			companyUI.sl_rooftopPVCompany.setValue(roundToInt(capacity_kWp), false);
-			companyUI.v_defaultPVSlider = roundToInt(capacity_kWp);
-		}
-	}
 }
 else {
 	throw new RuntimeException("Unknown GridConnection type passed to f_addPVSystem.");
@@ -318,20 +292,6 @@ if ( pvAsset != null ) {
 	else if ( gc instanceof GCUtility ) {
 		zero_Interface.c_orderedPVSystemsCompanies.remove(gc);
 		zero_Interface.c_orderedPVSystemsCompanies.add(0, (GCUtility)gc);
-		if ( zero_Interface.c_companyUIs.size() > 0 ) {
-			if ( gc.p_owner != null ) {
-				UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-				companyUI.b_runningMainInterfaceSlider = true;
-				if(companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) != gc){
-					int i = indexOf(companyUI.c_ownedGridConnections.stream().toArray(), gc);
-					companyUI.GCnr_selection.setValue(i, true);
-				}
-				companyUI.b_runningMainInterfaceSlider = false;	
-				
-				companyUI.sl_rooftopPVCompany.setValue(0, false);
-				companyUI.v_defaultPVSlider = roundToInt(0);
-			}
-		}
 	}
 }
 /*ALCODEEND*/}
@@ -745,13 +705,6 @@ double f_setCurtailment(boolean activateCurtailment,List<GridConnection> gcList)
 {/*ALCODESTART::1754986167346*/
 for (GridConnection GC : gcList) {
 	GC.v_enableCurtailment = activateCurtailment;
-	
-	if (zero_Interface.c_companyUIs.size()>0 && GC instanceof GCUtility){
-		UI_company companyUI = zero_Interface.c_companyUIs.get(GC.p_owner.p_connectionOwnerIndexNr);
-		if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == GC) { // should also check the setting of selected GC
-			companyUI.cb_curtailmentCompany.setSelected(activateCurtailment, false);
-		}
-	}
 }
 
 

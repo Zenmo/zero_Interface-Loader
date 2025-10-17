@@ -127,14 +127,6 @@ for (GridConnection gc : gcList) {
 	if(gc.p_BuildingThermalAsset != null){
 		gc.p_BuildingThermalAsset.setLossScalingFactor_fr(scalingFactor);
 	}
-	
-	// Update Company UI
-	if (zero_Interface.c_companyUIs.size()>0){
-		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc) { // should also check the setting of selected GC
-			companyUI.sl_heatDemandCompanyReduction.setValue(demandReduction_pct, false);
-		}
-	}
 }
 
 //Update variable to change to custom scenario

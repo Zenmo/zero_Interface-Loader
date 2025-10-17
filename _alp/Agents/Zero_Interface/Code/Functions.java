@@ -519,8 +519,8 @@ while (v_connectionOwnerIndexNr < c_COCompanies.size()){
 		companyUI.c_connectedTrafos.add(GC.p_parentNodeElectricID);
 	
 		//Add scenario settings for each GC
-		companyUI.c_scenarioSettings_Current.add(c_scenarioMap_Current.get(GC.p_uid));
-		companyUI.c_scenarioSettings_Future.add(c_scenarioMap_Future.get(GC.p_uid));
+		companyUI.p_scenarioSettings_Current.add(c_scenarioMap_Current.get(GC.p_uid));
+		companyUI.p_scenarioSettings_Future.add(c_scenarioMap_Future.get(GC.p_uid));
 		
 		//Initialize additional vehicles collection for each GC
 		companyUI.c_additionalVehicles.put(GC.p_uid, new ArrayList<J_EAVehicle>());
@@ -983,7 +983,7 @@ double f_createAdditionalUIs()
 //Create the additional dashboards, control panels and private UIs
 
 //Create PrivateUIs
-f_createPrivateCompanyUI();
+//f_createPrivateCompanyUI();
 
 
 //Create Hydrogen UI

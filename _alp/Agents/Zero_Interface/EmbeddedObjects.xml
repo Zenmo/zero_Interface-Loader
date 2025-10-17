@@ -2,7 +2,7 @@
 <EmbeddedObjects>
 	<EmbeddedObject>
 		<Id>1708522361909</Id>
-		<Name><![CDATA[ui_companies]]></Name>
+		<Name><![CDATA[ui_Company]]></Name>
 		<X>-240</X>
 		<Y>440</Y>
 		<Label>
@@ -28,19 +28,19 @@
 				<Name><![CDATA[p_companyName]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_amountOfGC]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_amountOfBuildings]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_company]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_maxAddedVehicles]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_scenarioSettings_Current]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_scenarioSettings_Future]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_gridConnection]]></Name>
+			</Parameter>
 		</Parameters>
-		<ReplicationFlag>true</ReplicationFlag>
+		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">
 			<Code><![CDATA[0]]></Code>
 		</Replication>

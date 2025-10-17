@@ -1,4 +1,4 @@
-double f_setScenarioFuture(GridConnection GC)
+double f_setScenarioFuture()
 {/*ALCODESTART::1713445281785*/
 //Set button to custom early on, so traceln will get ignored.
 rb_scenariosPrivateUI.setValue(2, false);
@@ -7,11 +7,11 @@ rb_scenariosPrivateUI.setValue(2, false);
 ////Heating
 
 //Heating savings
-sl_heatDemandCompanyReduction.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHeatSavings(), true);
+sl_heatDemandCompanyReduction.setValue(p_scenarioSettings_Future.getPlannedHeatSavings(), true);
 
 //Heating type (aangenomen dat het hetzelfde blijft, want hebben geen vraag die dat stelt in het formulier)
 int nr_currentHeatingType = 0;
-switch (c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHeatingType()){
+switch (p_scenarioSettings_Future.getPlannedHeatingType()){
 	case GAS_BURNER:
 		nr_currentHeatingType = 0;
 		break;
@@ -41,49 +41,49 @@ rb_heatingTypePrivateUI.setValue(nr_currentHeatingType, true);
 ////Electricity
 
 //Electricity savings
-sl_electricityDemandCompanyReduction.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedElectricitySavings(), true);
+sl_electricityDemandCompanyReduction.setValue(p_scenarioSettings_Future.getPlannedElectricitySavings(), true);
 
 //Connection capacity (Delivery)
-sl_GCCapacityCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getRequestedContractDeliveryCapacity_kW(), true);
+sl_GCCapacityCompany.setValue(p_scenarioSettings_Future.getRequestedContractDeliveryCapacity_kW(), true);
 
 //Connection capacity (Feedin)
-sl_GCCapacityCompany_Feedin.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getRequestedContractFeedinCapacity_kW(), true);
+sl_GCCapacityCompany_Feedin.setValue(p_scenarioSettings_Future.getRequestedContractFeedinCapacity_kW(), true);
 
 //Connection capacity (Physical)
-v_physicalConnectionCapacity_kW = c_scenarioSettings_Future.get(v_currentSelectedGCnr).getRequestedPhysicalConnectionCapacity_kW();
-c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.physicalCapacity_kW = v_physicalConnectionCapacity_kW;
+v_physicalConnectionCapacity_kW = p_scenarioSettings_Future.getRequestedPhysicalConnectionCapacity_kW();
+p_gridConnection.v_liveConnectionMetaData.physicalCapacity_kW = v_physicalConnectionCapacity_kW;
 
 //Solar panel power
-sl_rooftopPVCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedPV_kW(), true);
+sl_rooftopPVCompany.setValue(p_scenarioSettings_Future.getPlannedPV_kW(), true);
 
 //Battery capacity
-sl_batteryCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedBatteryCapacity_kWh(), true);
+sl_batteryCompany.setValue(p_scenarioSettings_Future.getPlannedBatteryCapacity_kWh(), true);
 
 //Curtailment setting
-cb_curtailmentCompany.setSelected(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedCurtailment(), true);
+cb_curtailmentCompany.setSelected(p_scenarioSettings_Future.getPlannedCurtailment(), true);
 
 ////Mobility
 
 //Mobility savings
-sl_mobilityDemandCompanyReduction.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedTransportSavings(), true);
+sl_mobilityDemandCompanyReduction.setValue(p_scenarioSettings_Future.getPlannedTransportSavings(), true);
 
 //Cars (VOLGORDE BELANGRIJK)
-sl_hydrogenCarsCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHydrogenCars(), true);
-sl_electricCarsCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVCars(), true);
-//sl_dieselCarsCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedDieselCars(), true);
+sl_hydrogenCarsCompany.setValue(p_scenarioSettings_Future.getPlannedHydrogenCars(), true);
+sl_electricCarsCompany.setValue(p_scenarioSettings_Future.getPlannedEVCars(), true);
+//sl_dieselCarsCompany.setValue(c_scenarioSettings_Future.getPlannedDieselCars(), true);
 
 //Vans (VOLGORDE BELANGRIJK)
-sl_hydrogenVansCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHydrogenVans(), true);
-sl_electricVansCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVVans(), true);
-//sl_dieselVansCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedDieselVans(), true);
+sl_hydrogenVansCompany.setValue(p_scenarioSettings_Future.getPlannedHydrogenVans(), true);
+sl_electricVansCompany.setValue(p_scenarioSettings_Future.getPlannedEVVans(), true);
+//sl_dieselVansCompany.setValue(c_scenarioSettings_Future.getPlannedDieselVans(), true);
 
 //Trucks (VOLGORDE BELANGRIJK)
-sl_hydrogenTrucksCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedHydrogenTrucks(), true);
-sl_electricTrucksCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedEVTrucks(), true);
-//sl_dieselTrucksCompany.setValue(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getPlannedDieselTrucks(), true);
+sl_hydrogenTrucksCompany.setValue(p_scenarioSettings_Future.getPlannedHydrogenTrucks(), true);
+sl_electricTrucksCompany.setValue(p_scenarioSettings_Future.getPlannedEVTrucks(), true);
+//sl_dieselTrucksCompany.setValue(c_scenarioSettings_Future.getPlannedDieselTrucks(), true);
 
 //set active if active in future
-c_ownedGridConnections.get(v_currentSelectedGCnr).f_setActive(c_scenarioSettings_Future.get(v_currentSelectedGCnr).getIsActiveInFuture());
+p_gridConnection.f_setActive(p_scenarioSettings_Future.getIsActiveInFuture());
 
 
 //Reset button to future, due to sliders putting it on custom
@@ -92,29 +92,20 @@ rb_scenariosPrivateUI.setValue(1, false);
 
 double f_setScenario(int scenario_nr)
 {/*ALCODESTART::1713447383903*/
-int currentSelectedGCnr_local = v_currentSelectedGCnr; //Save current selected GCnr to go back there after scenarios are set for both
-
 switch (scenario_nr){
 
 	case 0: // Current
-		for (int i = c_ownedGridConnections.size(); i > 0; i-- ){
-			GCnr_selection.setValue(i-1, true);
-			f_setScenarioCurrent(c_ownedGridConnections.get(v_currentSelectedGCnr));
-		}
-		GCnr_selection.setValue(currentSelectedGCnr_local, true);
-		
+		f_setScenarioCurrent();
+
 		if(!b_runningMainInterfaceScenarioSettings){
 			traceln("Selected scenario: Current");
 		}
+		
 	break;
 	
 	case 1: // Future
-		for (int i = c_ownedGridConnections.size(); i > 0; i-- ){
-			GCnr_selection.setValue(i-1, true);
-			f_setScenarioFuture(c_ownedGridConnections.get(v_currentSelectedGCnr));
-		}
-		GCnr_selection.setValue(currentSelectedGCnr_local, true);
-		
+		f_setScenarioFuture();
+
 		if(!b_runningMainInterfaceScenarioSettings){
 			traceln("Selected scenario: Future");
 		}
@@ -138,7 +129,7 @@ switch (scenario_nr){
 zero_Interface.b_resultsUpToDate = false;
 /*ALCODEEND*/}
 
-double f_setScenarioCurrent(GridConnection GC)
+double f_setScenarioCurrent()
 {/*ALCODESTART::1713447428490*/
 //Set button to custom early on, so traceln will get ignored.
 rb_scenariosPrivateUI.setValue(2, false);
@@ -151,7 +142,7 @@ sl_heatDemandCompanyReduction.setValue(0, true);
 
 //Heating type
 int nr_currentHeatingType = 0;
-switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingType()){
+switch (p_scenarioSettings_Current.getCurrentHeatingType()){
 	case GAS_BURNER:
 		nr_currentHeatingType = 0;
 		break;
@@ -184,14 +175,14 @@ rb_heatingTypePrivateUI.setValue(nr_currentHeatingType, true);
 sl_electricityDemandCompanyReduction.setValue(0, true);
 
 //Connection capacity (Delivery)
-sl_GCCapacityCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractDeliveryCapacity_kW(), true);
+sl_GCCapacityCompany.setValue(p_scenarioSettings_Current.getCurrentContractDeliveryCapacity_kW(), true);
 
 //Connection capacity (Feedin)
-sl_GCCapacityCompany_Feedin.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractFeedinCapacity_kW(), true);
+sl_GCCapacityCompany_Feedin.setValue(p_scenarioSettings_Current.getCurrentContractFeedinCapacity_kW(), true);
 
 //Connection capacity (Physical)
-v_physicalConnectionCapacity_kW = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentPhysicalConnectionCapacity_kW();
-c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.physicalCapacity_kW = v_physicalConnectionCapacity_kW;
+v_physicalConnectionCapacity_kW = p_scenarioSettings_Current.getCurrentPhysicalConnectionCapacity_kW();
+p_gridConnection.v_liveConnectionMetaData.physicalCapacity_kW = v_physicalConnectionCapacity_kW;
 
 //Solar panel power
 sl_rooftopPVCompany.setValue(v_minPVSlider, true);
@@ -208,22 +199,22 @@ cb_curtailmentCompany.setSelected(false, false);
 sl_mobilityDemandCompanyReduction.setValue(0, true);
 
 //Cars (VOLGORDE BELANGRIJK)
-sl_hydrogenCarsCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenCars(), true);
-sl_electricCarsCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVCars(), true);
-//sl_dieselCarsCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentDieselCars(), true);
+sl_hydrogenCarsCompany.setValue(p_scenarioSettings_Current.getCurrentHydrogenCars(), true);
+sl_electricCarsCompany.setValue(p_scenarioSettings_Current.getCurrentEVCars(), true);
+//sl_dieselCarsCompany.setValue(c_scenarioSettings_Current.getCurrentDieselCars(), true);
 
 //Vans (VOLGORDE BELANGRIJK)
-sl_hydrogenVansCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenVans(), true);
-sl_electricVansCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVVans(), true);
-//sl_dieselVansCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentDieselVans(), true);
+sl_hydrogenVansCompany.setValue(p_scenarioSettings_Current.getCurrentHydrogenVans(), true);
+sl_electricVansCompany.setValue(p_scenarioSettings_Current.getCurrentEVVans(), true);
+//sl_dieselVansCompany.setValue(c_scenarioSettings_Current.getCurrentDieselVans(), true);
 
 //Trucks (VOLGORDE BELANGRIJK)
-sl_hydrogenTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenTrucks(), true);
-sl_electricTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVTrucks(), true);
-//sl_dieselTrucksCompany.setValue(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentDieselTrucks(), true);
+sl_hydrogenTrucksCompany.setValue(p_scenarioSettings_Current.getCurrentHydrogenTrucks(), true);
+sl_electricTrucksCompany.setValue(p_scenarioSettings_Current.getCurrentEVTrucks(), true);
+//sl_dieselTrucksCompany.setValue(c_scenarioSettings_Current.getCurrentDieselTrucks(), true);
 
 //set active if active in present
-c_ownedGridConnections.get(v_currentSelectedGCnr).f_setActive(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getIsCurrentlyActive());
+p_gridConnection.f_setActive(p_scenarioSettings_Current.getIsCurrentlyActive());
 
 //Reset button to current, due to sliders putting it on custom
 rb_scenariosPrivateUI.setValue(0, false);
@@ -426,8 +417,7 @@ if (batteryAsset == null && setBatteryCapacity_kWh == 0) {
 	return;
 }
 else if (batteryAsset == null) {
-	GridConnection gc = p_company.f_getOwnedGridConnections().get(v_currentSelectedGCnr);
-	batteryAsset = new J_EAStorageElectric(gc, 0, 0, 0, zero_Interface.energyModel.p_timeStep_h);
+	batteryAsset = new J_EAStorageElectric(p_gridConnection, 0, 0, 0, zero_Interface.energyModel.p_timeStep_h);
 }
 double existing_batterypower_capacity_ratio = zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power;
 
@@ -489,9 +479,7 @@ f_setDemandReductionSliderPresets();
 
 double f_setComboBoxGC()
 {/*ALCODESTART::1713961813474*/
-if(c_ownedGridConnections.size() <= 1){
-	gr_selectedGC.setVisible(false);
-}
+
 /*ALCODEEND*/}
 
 double f_setPVSliderPresets()
@@ -500,8 +488,8 @@ double f_setPVSliderPresets()
 sl_rooftopPVCompany.setRange(0, 2000000);
 
 //Set range specific for each company
-v_minPVSlider = roundToInt(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentPV_kW());
-v_maxPVSlider = roundToInt(zero_Interface.energyModel.avgc_data.p_avgRatioRoofPotentialPV* c_ownedGridConnections.get(v_currentSelectedGCnr).p_roofSurfaceArea_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2);
+v_minPVSlider = roundToInt(p_scenarioSettings_Current.getCurrentPV_kW());
+v_maxPVSlider = roundToInt(zero_Interface.energyModel.avgc_data.p_avgRatioRoofPotentialPV* p_gridConnection.p_roofSurfaceArea_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2);
 if(v_maxPVSlider <= v_minPVSlider){
 	v_maxPVSlider = v_minPVSlider + 1000;
 }
@@ -513,8 +501,8 @@ double f_setBatSliderPresets()
 //Set back end range (to prevent anylogic errors)
 sl_batteryCompany.setRange(0, 10000);
 
-double upperLimit = 1000 + 1000 * Math.ceil(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentPV_kW()/1000.0);
-v_minBatSlider = roundToInt(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentBatteryCapacity_kWh());
+double upperLimit = 1000 + 1000 * Math.ceil(p_scenarioSettings_Current.getCurrentPV_kW()/1000.0);
+v_minBatSlider = roundToInt(p_scenarioSettings_Current.getCurrentBatteryCapacity_kWh());
 v_maxBatSlider = Math.max(v_minBatSlider*2, upperLimit);
 v_defaultBatSlider = v_minBatSlider;
 /*ALCODEEND*/}
@@ -540,9 +528,9 @@ sl_hydrogenCarsCompany.setRange(0, 500);
 
 
 //Get default values
-int default_nbEVCars = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVCars();
-int default_nbDieselCars = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentDieselCars();
-int default_nbHydrogenCars = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenCars();
+int default_nbEVCars = p_scenarioSettings_Current.getCurrentEVCars();
+int default_nbDieselCars = p_scenarioSettings_Current.getCurrentDieselCars();
+int default_nbHydrogenCars = p_scenarioSettings_Current.getCurrentHydrogenCars();
 
 //Set minimum value
 v_minEVCarSlider = default_nbEVCars;
@@ -577,9 +565,9 @@ sl_dieselVansCompany.setRange(0, 500);
 sl_hydrogenVansCompany.setRange(0, 500);
 
 //Get default values
-int default_nbEVVans = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVVans();
-int default_nbDieselVans = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentDieselVans();
-int default_nbHydrogenVans = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenVans();
+int default_nbEVVans = p_scenarioSettings_Current.getCurrentEVVans();
+int default_nbDieselVans = p_scenarioSettings_Current.getCurrentDieselVans();
+int default_nbHydrogenVans = p_scenarioSettings_Current.getCurrentHydrogenVans();
 
 //Set minimum value
 v_minEVVanSlider = default_nbEVVans;
@@ -614,9 +602,9 @@ sl_dieselTrucksCompany.setRange(0, 500);
 sl_hydrogenTrucksCompany.setRange(0, 500);
 
 //Get default values
-int default_nbEVTrucks = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVTrucks();
-int default_nbDieselTrucks = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentDieselTrucks();
-int default_nbHydrogenTrucks = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHydrogenTrucks();
+int default_nbEVTrucks = p_scenarioSettings_Current.getCurrentEVTrucks();
+int default_nbDieselTrucks = p_scenarioSettings_Current.getCurrentDieselTrucks();
+int default_nbHydrogenTrucks = p_scenarioSettings_Current.getCurrentHydrogenTrucks();
 
 //Set minimum value
 v_minEVTruckSlider = default_nbEVTrucks;
@@ -656,17 +644,17 @@ if (vehicleType == OL_EnergyAssetType.ELECTRIC_VEHICLE || vehicleType == OL_Ener
 
 	switch(vehicleType){
 		case ELECTRIC_VEHICLE:
-			capacityElectricity_kW	= (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVCarChargePower_kW() != 0) ? c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVCarChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerCar_kW;
+			capacityElectricity_kW	= (p_scenarioSettings_Current.getCurrentEVCarChargePower_kW() != 0) ? p_scenarioSettings_Current.getCurrentEVCarChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerCar_kW;
 			storageCapacity_kWh		= zero_Interface.energyModel.avgc_data.p_avgEVStorageCar_kWh;
 			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionCar_kWhpkm;
 		break;
 		case ELECTRIC_VAN:
-			capacityElectricity_kW	= (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVVanChargePower_kW() != 0) ? c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVVanChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerVan_kW;
+			capacityElectricity_kW	= (p_scenarioSettings_Current.getCurrentEVVanChargePower_kW() != 0) ? p_scenarioSettings_Current.getCurrentEVVanChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerVan_kW;
 			storageCapacity_kWh		= zero_Interface.energyModel.avgc_data.p_avgEVStorageVan_kWh;
 			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionVan_kWhpkm;
 		break;
 		case ELECTRIC_TRUCK:
-			capacityElectricity_kW	= (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVTruckChargePower_kW() != 0) ? c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentEVTruckChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerTruck_kW;
+			capacityElectricity_kW	= (p_scenarioSettings_Current.getCurrentEVTruckChargePower_kW() != 0) ? p_scenarioSettings_Current.getCurrentEVTruckChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerTruck_kW;
 			storageCapacity_kWh		= zero_Interface.energyModel.avgc_data.p_avgEVStorageTruck_kWh;
 			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionTruck_kWhpkm;
 		break;
@@ -680,7 +668,7 @@ if (vehicleType == OL_EnergyAssetType.ELECTRIC_VEHICLE || vehicleType == OL_Ener
 	
 	
 	if (isAdditionalVehicle){
-		c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid).add(electricVehicle);
+		c_additionalVehicles.add(electricVehicle);
 	}
 	else{
 		zero_Interface.c_orderedVehicles.add(0, electricVehicle);
@@ -710,7 +698,7 @@ else if (vehicleType == OL_EnergyAssetType.DIESEL_VEHICLE || vehicleType == OL_E
 	
 	
 	if (isAdditionalVehicle){
-		c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid).add(dieselVehicle);
+		c_additionalVehicles.add(dieselVehicle);
 	}
 	else{
 		zero_Interface.c_orderedVehicles.add(0, dieselVehicle);
@@ -738,7 +726,7 @@ else{ // (Hydrogen vehicles)
 	
 	
 	if (isAdditionalVehicle){
-		c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid).add(hydrogenVehicle);
+		c_additionalVehicles.add(hydrogenVehicle);
 	}
 	else{
 		zero_Interface.c_orderedVehicles.add(0, hydrogenVehicle);
@@ -808,11 +796,11 @@ switch (vehicleType){
 if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of selected vehicles
 	
 	//First convert all other existing additional vehicles
-	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(c_additionalVehicles.get(GC.p_uid), p -> p.energyAssetType == vehicleType_diesel || p.energyAssetType == vehicleType_hydrogen).size();
+	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(c_additionalVehicles, p -> p.energyAssetType == vehicleType_diesel || p.energyAssetType == vehicleType_hydrogen).size();
 	while(setAmountOfVehicles > local_EV_nb && nbOfOtherAdditionalVehiclesOfThisClass > 0 ){
 		
 		// Find an additional Diesel vehicle
-		J_EAVehicle dieselVehicle = findFirst(c_additionalVehicles.get(GC.p_uid), p -> p.energyAssetType == vehicleType_diesel);
+		J_EAVehicle dieselVehicle = findFirst(c_additionalVehicles, p -> p.energyAssetType == vehicleType_diesel);
 		
 		if(dieselVehicle != null){
 			J_ActivityTrackerTrips tripTracker = dieselVehicle.tripTracker;
@@ -820,7 +808,7 @@ if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of se
 			// Remove Diesel vehicle		
 			boolean available = dieselVehicle.getAvailability();
 			dieselVehicle.removeEnergyAsset();
-			c_additionalVehicles.get(GC.p_uid).remove(dieselVehicle);
+			c_additionalVehicles.remove(dieselVehicle);
 			zero_Interface.c_orderedVehicles.remove(dieselVehicle);
 			
 			//Create new additional EV
@@ -833,13 +821,13 @@ if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of se
 		}
 		else{
 			// Find an additional Hydrogen vehicle
-			J_EAVehicle hydrogenVehicle = findFirst(c_additionalVehicles.get(GC.p_uid), p -> p.energyAssetType == vehicleType_hydrogen);
+			J_EAVehicle hydrogenVehicle = findFirst(c_additionalVehicles, p -> p.energyAssetType == vehicleType_hydrogen);
 			J_ActivityTrackerTrips tripTracker = hydrogenVehicle.tripTracker;
 			
 			// Remove Hydrogen vehicle		
 			boolean available = hydrogenVehicle.getAvailability();
 			hydrogenVehicle.removeEnergyAsset();
-			c_additionalVehicles.get(GC.p_uid).remove(hydrogenVehicle);
+			c_additionalVehicles.remove(hydrogenVehicle);
 			zero_Interface.c_orderedVehicles.remove(hydrogenVehicle);
 			
 			//Create new additional EV
@@ -900,7 +888,7 @@ if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of se
 }
 else if(setAmountOfVehicles < local_EV_nb){ // Slider has decreased the amount of selected vehicles
 	
-	ArrayList<J_EAVehicle> additionalVehicles = new ArrayList<J_EAVehicle>(findAll(c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid), vehicle -> vehicle.energyAssetType == vehicleType ));
+	ArrayList<J_EAVehicle> additionalVehicles = new ArrayList<J_EAVehicle>(findAll(c_additionalVehicles, vehicle -> vehicle.energyAssetType == vehicleType ));
 	while(setAmountOfVehicles < local_EV_nb && additionalVehicles.size() > 0){ //If there are additional EV, remove them first
 
 		//Find additional created vehicle
@@ -908,7 +896,7 @@ else if(setAmountOfVehicles < local_EV_nb){ // Slider has decreased the amount o
 		
 		// Remove electric vehicle
 		additionalVehicles.remove(ev);
-		c_additionalVehicles.get(GC.p_uid).remove(ev);
+		c_additionalVehicles.remove(ev);
 		zero_Interface.c_orderedVehicles.remove(ev);
 		ev.removeEnergyAsset();
 			
@@ -918,7 +906,7 @@ else if(setAmountOfVehicles < local_EV_nb){ // Slider has decreased the amount o
 	while ( setAmountOfVehicles < local_EV_nb && local_DieselV_nb < max_amount_diesel_vehicles) {
 
 		//Find a to be removed EV
-		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType && !c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid).contains(p)  && ((GridConnection)p.getParentAgent()) == GC);
+		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType && !c_additionalVehicles.contains(p)  && ((GridConnection)p.getParentAgent()) == GC);
 		J_ActivityTrackerTrips tripTracker = ev.tripTracker;
 
 		//Remove EV
@@ -1029,11 +1017,11 @@ switch (vehicleType){
 
 if (setAmountOfVehicles > local_DieselV_nb){ // Slider has increased the amount of selected vehicles
 	//First convert all other existing additional vehicles
-	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(c_additionalVehicles.get(GC.p_uid), p -> p.energyAssetType == vehicleType_hydrogen || p.energyAssetType == vehicleType_electric).size();
+	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(c_additionalVehicles, p -> p.energyAssetType == vehicleType_hydrogen || p.energyAssetType == vehicleType_electric).size();
 	while(setAmountOfVehicles > local_DieselV_nb && nbOfOtherAdditionalVehiclesOfThisClass > 0 ){
 
 		// Find an additional EV vehicle
-		J_EAVehicle ev = findFirst(c_additionalVehicles.get(GC.p_uid), p -> p.energyAssetType == vehicleType_electric);
+		J_EAVehicle ev = findFirst(c_additionalVehicles, p -> p.energyAssetType == vehicleType_electric);
 			
 		if(ev != null){
 			J_ActivityTrackerTrips tripTracker = ev.tripTracker;
@@ -1041,7 +1029,7 @@ if (setAmountOfVehicles > local_DieselV_nb){ // Slider has increased the amount 
 			// Remove EV
 			boolean available = ev.getAvailability();
 			ev.removeEnergyAsset();
-			c_additionalVehicles.get(GC.p_uid).remove(ev);
+			c_additionalVehicles.remove(ev);
 			zero_Interface.c_orderedVehicles.remove(ev);
 			
 			//Create new additional Diesel vehicle
@@ -1054,13 +1042,13 @@ if (setAmountOfVehicles > local_DieselV_nb){ // Slider has increased the amount 
 		}
 		else{
 			// Find an additional Hydrogen vehicle
-			J_EAVehicle hydrogenVehicle = findFirst(c_additionalVehicles.get(GC.p_uid), p -> p.energyAssetType == vehicleType_hydrogen);
+			J_EAVehicle hydrogenVehicle = findFirst(c_additionalVehicles, p -> p.energyAssetType == vehicleType_hydrogen);
 			J_ActivityTrackerTrips tripTracker = hydrogenVehicle.tripTracker;
 			
 			// Remove Hydrogen vehicle		
 			boolean available = hydrogenVehicle.getAvailability();
 			hydrogenVehicle.removeEnergyAsset();
-			c_additionalVehicles.get(GC.p_uid).remove(hydrogenVehicle);
+			c_additionalVehicles.remove(hydrogenVehicle);
 			zero_Interface.c_orderedVehicles.remove(hydrogenVehicle);
 			
 			//Create new additional Diesel vehicle
@@ -1117,7 +1105,7 @@ if (setAmountOfVehicles > local_DieselV_nb){ // Slider has increased the amount 
 }
 else if(setAmountOfVehicles < local_DieselV_nb){ // Slider has decreased the amount of selected vehicles
 	
-	ArrayList<J_EAVehicle> additionalVehicles = new ArrayList<J_EAVehicle>(findAll(c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid), vehicle -> vehicle.energyAssetType == vehicleType ));
+	ArrayList<J_EAVehicle> additionalVehicles = new ArrayList<J_EAVehicle>(findAll(c_additionalVehicles, vehicle -> vehicle.energyAssetType == vehicleType ));
 	while(setAmountOfVehicles < local_DieselV_nb && additionalVehicles.size() > 0){ //Remove additional Diesel vehicles first
 	
 	//Find additional created vehicle
@@ -1125,7 +1113,7 @@ else if(setAmountOfVehicles < local_DieselV_nb){ // Slider has decreased the amo
 	
 	// Remove diesel vehicle
 	additionalVehicles.remove(dieselVehicle);
-	c_additionalVehicles.get(GC.p_uid).remove(dieselVehicle);
+	c_additionalVehicles.remove(dieselVehicle);
 	dieselVehicle.removeEnergyAsset();
 	zero_Interface.c_orderedVehicles.remove(dieselVehicle);
 	
@@ -1135,7 +1123,7 @@ else if(setAmountOfVehicles < local_DieselV_nb){ // Slider has decreased the amo
 	while ( setAmountOfVehicles < local_DieselV_nb && local_EV_nb < max_amount_EV) {
 	
 	// Find a to be removed Diesel vehicle
-		J_EADieselVehicle dieselVehicle = (J_EADieselVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType && !c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid).contains(p)  && ((GridConnection)p.getParentAgent()) == GC);
+		J_EADieselVehicle dieselVehicle = (J_EADieselVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType && !c_additionalVehicles.contains(p)  && ((GridConnection)p.getParentAgent()) == GC);
 		J_ActivityTrackerTrips tripTracker = dieselVehicle.tripTracker;
 		
 		// Remove diesel vehicle		
@@ -1241,11 +1229,11 @@ switch (vehicleType){
 if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amount of selected vehicles
 	
 	//First convert all other existing additional vehicles
-	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(c_additionalVehicles.get(GC.p_uid), p -> p.energyAssetType == vehicleType_diesel || p.energyAssetType == vehicleType_electric).size();
+	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(c_additionalVehicles, p -> p.energyAssetType == vehicleType_diesel || p.energyAssetType == vehicleType_electric).size();
 	while(setAmountOfVehicles > local_HydrogenV_nb && nbOfOtherAdditionalVehiclesOfThisClass > 0 ){
 		
 		// Find an additional Diesel vehicle
-		J_EAVehicle dieselVehicle = findFirst(c_additionalVehicles.get(GC.p_uid), p -> p.energyAssetType == vehicleType_diesel);
+		J_EAVehicle dieselVehicle = findFirst(c_additionalVehicles, p -> p.energyAssetType == vehicleType_diesel);
 		
 		if(dieselVehicle != null){
 			J_ActivityTrackerTrips tripTracker = dieselVehicle.tripTracker;
@@ -1253,7 +1241,7 @@ if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amoun
 			// Remove Diesel vehicle		
 			boolean available = dieselVehicle.getAvailability();
 			dieselVehicle.removeEnergyAsset();
-			c_additionalVehicles.get(GC.p_uid).remove(dieselVehicle);
+			c_additionalVehicles.remove(dieselVehicle);
 			zero_Interface.c_orderedVehicles.remove(dieselVehicle);
 			
 			//Create new additional Hydrogen vehicle
@@ -1266,13 +1254,13 @@ if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amoun
 		}
 		else{
 			// Find an additional EV vehicle
-			J_EAVehicle ev = findFirst(c_additionalVehicles.get(GC.p_uid), p -> p.energyAssetType == vehicleType_electric);
+			J_EAVehicle ev = findFirst(c_additionalVehicles, p -> p.energyAssetType == vehicleType_electric);
 			J_ActivityTrackerTrips tripTracker = ev.tripTracker;
 		
 			// Remove EV
 			boolean available = ev.getAvailability();
 			ev.removeEnergyAsset();
-			c_additionalVehicles.get(GC.p_uid).remove(ev);
+			c_additionalVehicles.remove(ev);
 			zero_Interface.c_orderedVehicles.remove(ev);
 			
 			//Create new additional Hydrogen vehicle
@@ -1331,7 +1319,7 @@ if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amoun
 }
 else if(setAmountOfVehicles < local_HydrogenV_nb){ // Slider has decreased the amount of selected vehicles
 	
-	ArrayList<J_EAVehicle> additionalVehicles = new ArrayList<J_EAVehicle>(findAll(c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid), vehicle -> vehicle.energyAssetType == vehicleType ));
+	ArrayList<J_EAVehicle> additionalVehicles = new ArrayList<J_EAVehicle>(findAll(c_additionalVehicles, vehicle -> vehicle.energyAssetType == vehicleType ));
 	while(setAmountOfVehicles < local_HydrogenV_nb && additionalVehicles.size() > 0){//Remove additional Hydrogen vehicles first
 
 	//Find additional created vehicle
@@ -1339,7 +1327,7 @@ else if(setAmountOfVehicles < local_HydrogenV_nb){ // Slider has decreased the a
 	
 	// Remove hydrogen vehicle
 	additionalVehicles.remove(hydrogenVehicle);
-	c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid).remove(hydrogenVehicle);
+	c_additionalVehicles.remove(hydrogenVehicle);
 	hydrogenVehicle.removeEnergyAsset();
 	zero_Interface.c_orderedVehicles.remove(hydrogenVehicle);
 	
@@ -1349,7 +1337,7 @@ else if(setAmountOfVehicles < local_HydrogenV_nb){ // Slider has decreased the a
 	while ( setAmountOfVehicles < local_HydrogenV_nb && local_EV_nb < max_amount_EV) {
 	
 		// Find a to be removed Hydrogen vehicle
-		J_EAHydrogenVehicle hydrogenVehicle = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType && !c_additionalVehicles.get(c_ownedGridConnections.get(v_currentSelectedGCnr).p_uid).contains(p)  && ((GridConnection)p.getParentAgent()) == GC);
+		J_EAHydrogenVehicle hydrogenVehicle = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType && !c_additionalVehicles.contains(p)  && ((GridConnection)p.getParentAgent()) == GC);
 		J_ActivityTrackerTrips tripTracker = hydrogenVehicle.tripTracker;
 		
 		// Remove hydrogen vehicle			
@@ -1445,14 +1433,14 @@ f_setNameTextSize();
 
 
 //Enable/disable all sliders (based on paused)
-if(!c_ownedGridConnections.get(v_currentSelectedGCnr).v_isActive){
+if(!p_gridConnection.v_isActive){
 	f_enableAllSliders(false);
 }
 /*ALCODEEND*/}
 
 double f_updateUIResultsCompanyUI()
 {/*ALCODESTART::1714656835269*/
-uI_Results.f_updateResultsUI(c_ownedGridConnections.get(v_currentSelectedGCnr));
+uI_Results.f_updateResultsUI(p_gridConnection);
 uI_Results.f_setChartProfiles_Presentation(null, null, true);
 uI_Results.f_setChartBalance_Presentation(null, null, true);
 
@@ -1468,7 +1456,7 @@ double f_setHeatingRB()
 int nr_currentHeatingType = 0;
 String rbHeating_acces = "enabled";
 
-switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingType()){
+switch (p_scenarioSettings_Current.getCurrentHeatingType()){
 	case GAS_BURNER:
 		nr_currentHeatingType = 0;
 		break;
@@ -1500,7 +1488,7 @@ switch (c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentHeatingT
 if (rbHeating_acces.equals("disabled") || rbHeating_acces.equals("invisible")){
 	rb_heatingTypePrivateUI.setEnabled(false);
 	
-	if(c_ownedGridConnections.get(v_currentSelectedGCnr).v_hasQuarterHourlyValues){
+	if(p_gridConnection.v_hasQuarterHourlyValues){
 		sl_heatDemandCompanyReduction.setEnabled(false);
 	}
 	
@@ -1537,13 +1525,13 @@ parentGC.v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<GridConnection
 double f_setSelectedGC()
 {/*ALCODESTART::1717576974529*/
 //Set the Adress to selected GC
-v_adressGC = c_ownedGridConnections.get(v_currentSelectedGCnr).p_address.getAddress();
+v_adressGC = p_gridConnection.p_address.getAddress();
 
 //Set the sliders
 f_setSelectedGCSliders();
 
 //Set the new graphs/building selection
-if(!b_runningMainInterfaceScenarioSettings && !b_runningMainInterfaceSlider && c_ownedGridConnections.get(v_currentSelectedGCnr).v_isActive){
+if(!b_runningMainInterfaceScenarioSettings && !b_runningMainInterfaceSlider && p_gridConnection.v_isActive){
 	f_setSelectedGCGraphs();
 }
 /*ALCODEEND*/}
@@ -1551,17 +1539,17 @@ if(!b_runningMainInterfaceScenarioSettings && !b_runningMainInterfaceSlider && c
 double f_setSelectedGCSliders()
 {/*ALCODESTART::1725439625846*/
 //Reset GC capacities to without NFATO values
-c_ownedGridConnections.get(v_currentSelectedGCnr).f_nfatoSetConnectionCapacity(true);
+p_gridConnection.f_nfatoSetConnectionCapacity(true);
 	
 //Initialize slider presets to selected GC (min, max, etc.)
 f_setSliderPresets();
 
 //If GC not active in current situation, disable scenario rb
-rb_scenariosPrivateUI.setEnabled(c_scenarioSettings_Current.get(v_currentSelectedGCnr).getIsCurrentlyActive());
+rb_scenariosPrivateUI.setEnabled(p_scenarioSettings_Current.getIsCurrentlyActive());
 
 //Find the current heating type
 int nr_currentHeatingType = 0;
-switch (c_ownedGridConnections.get(v_currentSelectedGCnr).f_getCurrentHeatingType()){
+switch (p_gridConnection.f_getCurrentHeatingType()){
 	case GAS_BURNER:
 		nr_currentHeatingType = 0;
 	break;
@@ -1584,12 +1572,12 @@ switch (c_ownedGridConnections.get(v_currentSelectedGCnr).f_getCurrentHeatingTyp
 //Find the current heat saving percentage
 int currentHeatSavings = 0;
 
-J_EAConsumption consumptionEAHEAT = findFirst(c_ownedGridConnections.get(v_currentSelectedGCnr).c_consumptionAssets, consumptionAsset -> consumptionAsset.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
+J_EAConsumption consumptionEAHEAT = findFirst(p_gridConnection.c_consumptionAssets, consumptionAsset -> consumptionAsset.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
 if (consumptionEAHEAT != null){
 	currentHeatSavings = roundToInt((consumptionEAHEAT.getConsumptionScaling_fr() - 1)*-100);
 }
 else{   
-	J_EAProfile profileEAHEAT = findFirst(c_ownedGridConnections.get(v_currentSelectedGCnr).c_profileAssets, profileAsset -> profileAsset.energyCarrier == OL_EnergyCarriers.HEAT);
+	J_EAProfile profileEAHEAT = findFirst(p_gridConnection.c_profileAssets, profileAsset -> profileAsset.energyCarrier == OL_EnergyCarriers.HEAT);
 	if (profileEAHEAT != null){
 		currentHeatSavings = roundToInt((profileEAHEAT.getProfileScaling_fr() - 1)*-100);
 	}
@@ -1598,65 +1586,65 @@ else{
 //Find the current electricity savings percentage
 int currentElectricitySavings = 0;
 
-J_EAConsumption consumptionEAELECTRIC = findFirst(c_ownedGridConnections.get(v_currentSelectedGCnr).c_consumptionAssets, consumptionAsset -> consumptionAsset.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND);
+J_EAConsumption consumptionEAELECTRIC = findFirst(p_gridConnection.c_consumptionAssets, consumptionAsset -> consumptionAsset.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND);
 if (consumptionEAELECTRIC != null){
 	currentElectricitySavings = roundToInt((consumptionEAELECTRIC.getConsumptionScaling_fr() - 1)*-100);
 }
 else{
-	J_EAProfile profileEAELECTRIC = findFirst(c_ownedGridConnections.get(v_currentSelectedGCnr).c_profileAssets, profileAsset -> profileAsset.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
+	J_EAProfile profileEAELECTRIC = findFirst(p_gridConnection.c_profileAssets, profileAsset -> profileAsset.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 	if (profileEAELECTRIC != null){
 		currentElectricitySavings = roundToInt((profileEAELECTRIC.getProfileScaling_fr() - 1)*-100);
 	}
 }
 
 //Find the current Connection capacity (delivery)
-int GCContractCapacityCurrent_Delivery = roundToInt(c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+int GCContractCapacityCurrent_Delivery = roundToInt(p_gridConnection.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
 
 //Find the current Connection capacity (feedin)
-int GCContractCapacityCurrent_Feedin = roundToInt(c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+int GCContractCapacityCurrent_Feedin = roundToInt(p_gridConnection.v_liveConnectionMetaData.contractedFeedinCapacity_kW);
 
 //Set the nfato values
 f_getNFATOValues();
 
 //Find the current battery capacity
 int BatteryCapacityCurrent = 0;
-J_EAStorage batteryAsset = findFirst(c_ownedGridConnections.get(v_currentSelectedGCnr).c_storageAssets, p -> p.energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC );
+J_EAStorage batteryAsset = findFirst(p_gridConnection.c_storageAssets, p -> p.energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC );
 if (batteryAsset != null){
 	BatteryCapacityCurrent = roundToInt(((J_EAStorageElectric)batteryAsset).getStorageCapacity_kWh());
 }
 
 //Find the current PV capacity
 int PVCapacityCurrent = 0;
-if (c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
-	J_EAProduction pvAsset = findFirst(c_ownedGridConnections.get(v_currentSelectedGCnr).c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
+if (p_gridConnection.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
+	J_EAProduction pvAsset = findFirst(p_gridConnection.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
 	PVCapacityCurrent = roundToInt(pvAsset.getCapacityElectric_kW());
 }
 
 //Find the current curtailment setting
-boolean currentCurtailmentSetting = c_ownedGridConnections.get(v_currentSelectedGCnr).v_enableCurtailment;
+boolean currentCurtailmentSetting = p_gridConnection.v_enableCurtailment;
 
 //Find the current transport savings
 int currentTransportSavings = 0;
-if (c_ownedGridConnections.get(v_currentSelectedGCnr).c_tripTrackers.size() > 0){
-	currentTransportSavings = - roundToInt(c_ownedGridConnections.get(v_currentSelectedGCnr).c_tripTrackers.get(0).getDistanceScaling_fr()*100) + 100;
+if (p_gridConnection.c_tripTrackers.size() > 0){
+	currentTransportSavings = - roundToInt(p_gridConnection.c_tripTrackers.get(0).getDistanceScaling_fr()*100) + 100;
 }
 
 
 //Find the current number of vehicles for each type
-int nbEcarsCurrent = count(c_ownedGridConnections.get(v_currentSelectedGCnr).c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE);
-int nbHydrogencarsCurrent = count(c_ownedGridConnections.get(v_currentSelectedGCnr).c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_VEHICLE);
-int nbDieselcarsCurrent = count(c_ownedGridConnections.get(v_currentSelectedGCnr).c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.DIESEL_VEHICLE);
+int nbEcarsCurrent = count(p_gridConnection.c_electricVehicles, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE);
+int nbHydrogencarsCurrent = count(p_gridConnection.c_hydrogenVehicles, p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_VEHICLE);
+int nbDieselcarsCurrent = count(p_gridConnection.c_dieselVehicles, p->p.energyAssetType == OL_EnergyAssetType.DIESEL_VEHICLE);
 
-int nbEvansCurrent = count(c_ownedGridConnections.get(v_currentSelectedGCnr).c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN);
-int nbHydrogenvansCurrent = count(c_ownedGridConnections.get(v_currentSelectedGCnr).c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN);
-int nbDieselvansCurrent = count(c_ownedGridConnections.get(v_currentSelectedGCnr).c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.DIESEL_VAN);
+int nbEvansCurrent = count(p_gridConnection.c_electricVehicles, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN);
+int nbHydrogenvansCurrent = count(p_gridConnection.c_hydrogenVehicles, p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN);
+int nbDieselvansCurrent = count(p_gridConnection.c_dieselVehicles, p->p.energyAssetType == OL_EnergyAssetType.DIESEL_VAN);
 
-int nbEtrucksCurrent = count(c_ownedGridConnections.get(v_currentSelectedGCnr).c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK);
-int nbHydrogentrucksCurrent = count(c_ownedGridConnections.get(v_currentSelectedGCnr).c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK);
-int nbDieseltrucksCurrent = count(c_ownedGridConnections.get(v_currentSelectedGCnr).c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK);
+int nbEtrucksCurrent = count(p_gridConnection.c_electricVehicles, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK);
+int nbHydrogentrucksCurrent = count(p_gridConnection.c_hydrogenVehicles, p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK);
+int nbDieseltrucksCurrent = count(p_gridConnection.c_dieselVehicles, p->p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK);
 
 //Check on electric cars, cause for companies that have quarterlyhour electricity data, the initial ea for EV (and other electric appliances) are not made.
-if (c_ownedGridConnections.get(v_currentSelectedGCnr).v_hasQuarterHourlyValues){
+if (p_gridConnection.v_hasQuarterHourlyValues){
 	
 	nbEcarsCurrent += v_minEVCarSlider;
 	nbEvansCurrent += v_minEVVanSlider;
@@ -1728,7 +1716,7 @@ v_nbHydrogenTrucks = nbHydrogentrucksCurrent;
 v_nbDieselTrucks = nbDieseltrucksCurrent;
 
 //Add nfato again
-c_ownedGridConnections.get(v_currentSelectedGCnr).f_nfatoSetConnectionCapacity(false);
+p_gridConnection.f_nfatoSetConnectionCapacity(false);
 
 
 /*ALCODEEND*/}
@@ -1739,9 +1727,9 @@ double f_setSelectedGCGraphs()
 zero_Interface.v_previousClickedObjectType = OL_GISObjectType.BUILDING;
 zero_Interface.c_selectedGridConnections.clear();
 zero_Interface.f_deselectPreviousSelect( );
-zero_Interface.f_selectBuilding(c_ownedGridConnections.get(v_currentSelectedGCnr).c_connectedGISObjects.get(0), c_ownedGridConnections.get(v_currentSelectedGCnr).c_connectedGISObjects);
+zero_Interface.f_selectBuilding(p_gridConnection.c_connectedGISObjects.get(0), p_gridConnection.c_connectedGISObjects);
 f_updateUIResultsCompanyUI();
-if(c_ownedGridConnections.get(v_currentSelectedGCnr).v_rapidRunData != null){
+if(p_gridConnection.v_rapidRunData != null){
 	uI_Results.f_setAllCharts();
 }
 /*ALCODEEND*/}
@@ -1770,13 +1758,13 @@ double f_setGCCapacitySliderPresets()
 sl_GCCapacityCompany.setRange(0, 100000);
 
 //Get current grid capacity
-double defaultGCCapacitySlider = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractDeliveryCapacity_kW();
+double defaultGCCapacitySlider = p_scenarioSettings_Current.getCurrentContractDeliveryCapacity_kW();
 
 //Get future grid capacity
-double futureGCCapacity_delivery_kW = c_scenarioSettings_Future.get(v_currentSelectedGCnr).getRequestedContractDeliveryCapacity_kW();
+double futureGCCapacity_delivery_kW = p_scenarioSettings_Future.getRequestedContractDeliveryCapacity_kW();
 
 //Get current physical capacity
-v_physicalConnectionCapacity_kW = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentPhysicalConnectionCapacity_kW();
+v_physicalConnectionCapacity_kW = p_scenarioSettings_Current.getCurrentPhysicalConnectionCapacity_kW();
 
 //Set range specific for specific intervals of capacity
 v_minGCCapacitySlider = 0;
@@ -1829,7 +1817,7 @@ double f_setGCCapacitySliderPresets_Feedin()
 sl_GCCapacityCompany_Feedin.setRange(0, 100000);
 
 //Get current grid capacity
-double defaultGCCapacitySlider_Feedin = c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractFeedinCapacity_kW();
+double defaultGCCapacitySlider_Feedin = p_scenarioSettings_Current.getCurrentContractFeedinCapacity_kW();
 
 //Set range specific for specific intervals of capacity
 v_minGCCapacitySlider_Feedin = 0;
@@ -1858,9 +1846,9 @@ sl_GCCapacityCompany_Feedin.setValue(v_defaultGCCapacitySlider_Feedin, false);
 
 double f_getNFATOValues()
 {/*ALCODESTART::1727884380899*/
-v_NFATO_active = c_ownedGridConnections.get(v_currentSelectedGCnr).v_enableNFato;
-v_NFATO_kW_delivery = c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contractedDeliveryCapacity_kW - v_defaultGCCapacitySlider;
-v_NFATO_kW_feedin = c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contractedFeedinCapacity_kW- v_defaultGCCapacitySlider_Feedin;
+v_NFATO_active = p_gridConnection.v_enableNFato;
+v_NFATO_kW_delivery = p_gridConnection.v_liveConnectionMetaData.contractedDeliveryCapacity_kW - v_defaultGCCapacitySlider;
+v_NFATO_kW_feedin = p_gridConnection.v_liveConnectionMetaData.contractedFeedinCapacity_kW- v_defaultGCCapacitySlider_Feedin;
 
 if(v_NFATO_kW_delivery > 0){
 	t_GCCapacityCompany_delivery_nfato.setColor(green);

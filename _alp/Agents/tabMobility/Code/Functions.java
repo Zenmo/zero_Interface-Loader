@@ -913,7 +913,7 @@ if ( electricVan != null ) {
 			
 		}
 		if(foundAdditionalVehicle){
-			companyUI.c_additionalVehicles.get(gc.p_uid).remove(electricVan);
+			companyUI.c_additionalVehicles.remove(electricVan);
 		}
 	}
 	
