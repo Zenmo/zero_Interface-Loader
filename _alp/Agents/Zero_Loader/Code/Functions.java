@@ -3208,7 +3208,7 @@ double lossfactor_WpK; 						//Dit is wat bepaalt hoeveel warmte het huis verlie
 double initialTemp = uniform_discr(15,22); 	//starttemperatuur
 double heatCapacity_JpK; 					//hoeveel lucht zit er in je huis dat je moet verwarmen?
 double solarAbsorptionFactor_m2; 	//hoeveel m2 effectieve dak en muur oppervlakte er is dat opwarmt door zonneinstraling
- 
+
 switch (parentGC.p_energyLabel){
 	case A:
 		lossfactor_WpK = 0.35 * floorArea_m2;
@@ -3223,30 +3223,29 @@ switch (parentGC.p_energyLabel){
 		lossfactor_WpK = 0.85 * floorArea_m2;
 	break;
 	case E:
-		lossfactor_WpK = 0.105 * floorArea_m2;
+		lossfactor_WpK = 1.05 * floorArea_m2;
 	break;
 	case F:
-		lossfactor_WpK = 0.125 * floorArea_m2;
+		lossfactor_WpK = 1.25 * floorArea_m2;
 	break;
 	case G:
-		lossfactor_WpK = 0.145 * floorArea_m2;
+		lossfactor_WpK = 1.45 * floorArea_m2;
 	break;
 	case NONE:
-		lossfactor_WpK = uniform (0.85, 1.2) * floorArea_m2;
-	break;
 	default:
 		lossfactor_WpK = uniform (0.85, 1.2) * floorArea_m2;
 }
 
 lossfactor_WpK = roundToDecimal(lossfactor_WpK,2);
-solarAbsorptionFactor_m2 = floorArea_m2 * 0.1; //solar irradiance [W/m2]
+solarAbsorptionFactor_m2 = floorArea_m2 * 0.01; //solar irradiance [W/m2]
  
 heatCapacity_JpK = floorArea_m2 * 50000;
- 
- 
+
 parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossfactor_WpK, energyModel.p_timeStep_h, initialTemp, heatCapacity_JpK, solarAbsorptionFactor_m2 );
 energyModel.c_ambientDependentAssets.add( parentGC.p_BuildingThermalAsset );
- 
+
+//FOR NOW DEFAULT NO INTERIOR/EXTERIOR HEAT BUFFERS -> NOT NECESSARY
+/*
 double delayHeatReleaseInteriorHeatsink_hr = 0;
 double lossToExteriorFromInteriorHeatSink_fr;
 if(randomTrue(0.2)){
@@ -3260,7 +3259,7 @@ parentGC.p_BuildingThermalAsset.addInteriorHeatBuffer(delayHeatReleaseInteriorHe
 
 double delayHeatReleaseRoofAndWall_hr = 8.0;
 parentGC.p_BuildingThermalAsset.addExteriorHeatBuffer(delayHeatReleaseRoofAndWall_hr);
-
+*/
 /*ALCODEEND*/}
 
 List<Building_data> f_getBuildingsInSubScope(List<Building_data> initialBuildingList)
@@ -3490,7 +3489,7 @@ else if (randomTrue(0.5) ){ // 25% kans op hele dag aan
 
 }
 else { // 25% kans op smiddags/savonds aan
-	nightTimeSetPoint_degC = uniform_discr(12,18);
+	nightTimeSetPoint_degC = uniform_discr(14,18);
 	dayTimeSetPoint_degC = uniform_discr(18, 24);
 	startOfDayTime_h = uniform_discr(14, 16) + uniform_discr(0,4) / 4.0;
 	startOfNightTime_h = uniform_discr(21,23);
