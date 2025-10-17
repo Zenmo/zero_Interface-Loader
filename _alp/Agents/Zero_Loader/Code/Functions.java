@@ -3208,7 +3208,7 @@ double lossfactor_WpK; 						//Dit is wat bepaalt hoeveel warmte het huis verlie
 double initialTemp = uniform_discr(15,22); 	//starttemperatuur
 double heatCapacity_JpK; 					//hoeveel lucht zit er in je huis dat je moet verwarmen?
 double solarAbsorptionFactor_m2; 	//hoeveel m2 effectieve dak en muur oppervlakte er is dat opwarmt door zonneinstraling
- 
+
 switch (parentGC.p_energyLabel){
 	case A:
 		lossfactor_WpK = 0.35 * floorArea_m2;
@@ -3223,30 +3223,29 @@ switch (parentGC.p_energyLabel){
 		lossfactor_WpK = 0.85 * floorArea_m2;
 	break;
 	case E:
-		lossfactor_WpK = 0.105 * floorArea_m2;
+		lossfactor_WpK = 1.05 * floorArea_m2;
 	break;
 	case F:
-		lossfactor_WpK = 0.125 * floorArea_m2;
+		lossfactor_WpK = 1.25 * floorArea_m2;
 	break;
 	case G:
-		lossfactor_WpK = 0.145 * floorArea_m2;
+		lossfactor_WpK = 1.45 * floorArea_m2;
 	break;
 	case NONE:
-		lossfactor_WpK = uniform (0.85, 1.2) * floorArea_m2;
-	break;
 	default:
 		lossfactor_WpK = uniform (0.85, 1.2) * floorArea_m2;
 }
 
 lossfactor_WpK = roundToDecimal(lossfactor_WpK,2);
-solarAbsorptionFactor_m2 = floorArea_m2 * 0.1; //solar irradiance [W/m2]
+solarAbsorptionFactor_m2 = floorArea_m2 * 0.01; //solar irradiance [W/m2]
  
 heatCapacity_JpK = floorArea_m2 * 50000;
- 
- 
+
 parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossfactor_WpK, energyModel.p_timeStep_h, initialTemp, heatCapacity_JpK, solarAbsorptionFactor_m2 );
 energyModel.c_ambientDependentAssets.add( parentGC.p_BuildingThermalAsset );
- 
+
+//FOR NOW DEFAULT NO INTERIOR/EXTERIOR HEAT BUFFERS -> NOT NECESSARY
+/*
 double delayHeatReleaseInteriorHeatsink_hr = 0;
 double lossToExteriorFromInteriorHeatSink_fr;
 if(randomTrue(0.2)){
@@ -3260,7 +3259,7 @@ parentGC.p_BuildingThermalAsset.addInteriorHeatBuffer(delayHeatReleaseInteriorHe
 
 double delayHeatReleaseRoofAndWall_hr = 8.0;
 parentGC.p_BuildingThermalAsset.addExteriorHeatBuffer(delayHeatReleaseRoofAndWall_hr);
-
+*/
 /*ALCODEEND*/}
 
 List<Building_data> f_getBuildingsInSubScope(List<Building_data> initialBuildingList)
@@ -3445,7 +3444,7 @@ double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() 
 OL_GridConnectionHeatingType heatingType = avgc_data.p_avgHouseHeatingMethod;
 f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
 f_addHeatManagement(house, heatingType, false);
-f_setHouseHeatingPreferences(house);
+house.p_heatingManagement.setHeatingPreferences(f_getHouseHeatingPreferences());
 
 //Add hot water and cooking demand
 f_addHotWaterDemand(house, house.p_floorSurfaceArea_m2);
@@ -3468,31 +3467,42 @@ f_addCarsToHouses(house);
 
 /*ALCODEEND*/}
 
-double f_setHouseHeatingPreferences(GCHouse house)
+J_HeatingPreferences f_getHouseHeatingPreferences()
 {/*ALCODESTART::1749728889988*/
-if (house.p_heatingManagement instanceof J_HeatingManagementSimple heatingManagement) {
-	if( randomTrue(0.5) ){ //50% kans op ochtend ritme
-		heatingManagement.nightTimeSetPoint_degC = uniform_discr(12,18);
-		heatingManagement.dayTimeSetPoint_degC = uniform_discr(18, 24);
-		heatingManagement.startOfDay_h = uniform_discr(5,10) + uniform_discr(0,4) / 4.0;
-		heatingManagement.startOfNight_h = uniform_discr(21,23);
-		// house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0,1),1);
-	}
-	else if (randomTrue(0.5) ){ // 25% kans op hele dag aan
-		heatingManagement.nightTimeSetPoint_degC = uniform_discr(18,21);
-		heatingManagement.dayTimeSetPoint_degC = heatingManagement.nightTimeSetPoint_degC;
-		heatingManagement.startOfDay_h= -1;
-		heatingManagement.startOfNight_h = 25;
-		//house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0, 1),1);
-	}
-	else { // 25% kans op smiddags/savonds aan
-		heatingManagement.nightTimeSetPoint_degC = uniform_discr(12,18);
-		heatingManagement.dayTimeSetPoint_degC = uniform_discr(18, 24);
-		heatingManagement.startOfDay_h = uniform_discr(14, 16) + uniform_discr(0,4) / 4.0;
-		heatingManagement.startOfNight_h = uniform_discr(21,23);
-		//house.p_heatingKickinTreshold_degC = roundToDecimal(uniform(0, 1),1);
-	}
+double nightTimeSetPoint_degC = 18;
+double dayTimeSetPoint_degC = 20;
+double startOfDayTime_h = 8;
+double startOfNightTime_h = 23;
+
+if( randomTrue(0.5) ){ //50% kans op ochtend ritme
+	nightTimeSetPoint_degC = uniform_discr(12,18);
+	dayTimeSetPoint_degC = uniform_discr(18, 24);
+	startOfDayTime_h = uniform_discr(5,10) + uniform_discr(0,4) / 4.0;
+	startOfNightTime_h = uniform_discr(21,23);
+
 }
+else if (randomTrue(0.5) ){ // 25% kans op hele dag aan
+	nightTimeSetPoint_degC = uniform_discr(18,21);
+	dayTimeSetPoint_degC = nightTimeSetPoint_degC;
+	startOfDayTime_h = -1;
+	startOfNightTime_h = 25;
+
+}
+else { // 25% kans op smiddags/savonds aan
+	nightTimeSetPoint_degC = uniform_discr(14,18);
+	dayTimeSetPoint_degC = uniform_discr(18, 24);
+	startOfDayTime_h = uniform_discr(14, 16) + uniform_discr(0,4) / 4.0;
+	startOfNightTime_h = uniform_discr(21,23);
+
+}
+
+double maxComfortTemperature_degC = dayTimeSetPoint_degC + 2;
+double minComfortTemperature_degC = dayTimeSetPoint_degC - 2;
+
+//Create heating preferences class
+J_HeatingPreferences heatingPreferences = new J_HeatingPreferences(startOfDayTime_h, startOfNightTime_h, dayTimeSetPoint_degC, nightTimeSetPoint_degC, maxComfortTemperature_degC, minComfortTemperature_degC);
+
+return heatingPreferences;
 /*ALCODEEND*/}
 
 double f_createParkingSpots()

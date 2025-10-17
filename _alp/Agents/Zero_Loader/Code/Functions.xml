@@ -1505,10 +1505,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>J_HeatingPreferences</ReturnType>
 		<Id>1749728889988</Id>
-		<Name><![CDATA[f_setHouseHeatingPreferences]]></Name>
+		<Name><![CDATA[f_getHouseHeatingPreferences]]></Name>
 		<X>460</X>
 		<Y>700</Y>
 		<Label>
@@ -1518,10 +1518,6 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[house]]></Name>
-			<Type><![CDATA[GCHouse]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
