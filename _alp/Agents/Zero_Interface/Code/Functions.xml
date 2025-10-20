@@ -633,54 +633,6 @@
 	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1724857887019</Id>
-		<Name><![CDATA[f_createAdditionalUIs]]></Name>
-		<X>-280</X>
-		<Y>400</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1724857983890</Id>
-		<Name><![CDATA[f_createHydrogenUI]]></Name>
-		<X>-260</X>
-		<Y>450</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1724858039724</Id>
-		<Name><![CDATA[f_createBatteryUI]]></Name>
-		<X>-260</X>
-		<Y>500</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1725006890451</Id>
 		<Name><![CDATA[f_setUIButton]]></Name>
 		<X>80</X>
@@ -1517,7 +1469,7 @@
 		<Id>1750261221085</Id>
 		<Name><![CDATA[f_setTrafoText]]></Name>
 		<X>50</X>
-		<Y>1660</Y>
+		<Y>1620</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2333,6 +2285,22 @@
 		<Name><![CDATA[f_initializeAdditionalVehicles]]></Name>
 		<X>85</X>
 		<Y>-520</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1760978860758</Id>
+		<Name><![CDATA[f_createAdditionalUIs]]></Name>
+		<X>-270</X>
+		<Y>400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

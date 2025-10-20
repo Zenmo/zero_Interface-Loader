@@ -268,7 +268,7 @@
 		<Id>1696863329269</Id>
 		<Name><![CDATA[v_gridConnectionInBuildingIndex]]></Name>
 		<X>50</X>
-		<Y>1520</Y>
+		<Y>1480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -309,7 +309,7 @@
 		<Id>1701879001472</Id>
 		<Name><![CDATA[v_clickedObjectText]]></Name>
 		<X>50</X>
-		<Y>1540</Y>
+		<Y>1500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -331,7 +331,7 @@
 		<Id>1701879014361</Id>
 		<Name><![CDATA[v_clickedObjectAdress]]></Name>
 		<X>50</X>
-		<Y>1560</Y>
+		<Y>1520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -463,7 +463,7 @@
 		<Id>1702046920293</Id>
 		<Name><![CDATA[v_clickedObjectDetails]]></Name>
 		<X>50</X>
-		<Y>1580</Y>
+		<Y>1540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -727,7 +727,7 @@
 		<Id>1705673181898</Id>
 		<Name><![CDATA[v_clickedGridNode]]></Name>
 		<X>50</X>
-		<Y>1420</Y>
+		<Y>1380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -746,7 +746,7 @@
 		<Id>1705673647104</Id>
 		<Name><![CDATA[v_previousClickedObjectType]]></Name>
 		<X>50</X>
-		<Y>1390</Y>
+		<Y>1350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -765,7 +765,7 @@
 		<Id>1705673714784</Id>
 		<Name><![CDATA[v_previousClickedGridNode]]></Name>
 		<X>50</X>
-		<Y>1440</Y>
+		<Y>1400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -893,7 +893,7 @@
 		<Id>1707918668189</Id>
 		<Name><![CDATA[v_clickedObjectType]]></Name>
 		<X>50</X>
-		<Y>1370</Y>
+		<Y>1330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -906,28 +906,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[OL_GISObjectType]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1708597346305</Id>
-		<Name><![CDATA[v_connectionOwnerIndexNr]]></Name>
-		<X>50</X>
-		<Y>1340</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[int]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[0]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -1604,7 +1582,7 @@
 		<Id>1725018118872</Id>
 		<Name><![CDATA[b_showCables]]></Name>
 		<X>50</X>
-		<Y>1620</Y>
+		<Y>1580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2511,6 +2489,106 @@
 			</ParameterEditor>
 		</Properties>
 	</Variable>
+	<Variable Class="Parameter">
+		<Id>1760978961206</Id>
+		<Name><![CDATA[uI_Company]]></Name>
+		<X>-250</X>
+		<Y>440</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[UI_company]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1760978961204</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1760978964017</Id>
+		<Name><![CDATA[uI_Hydrogen]]></Name>
+		<X>-250</X>
+		<Y>460</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[UI_Hydrogen]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1760978964015</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1760978968830</Id>
+		<Name><![CDATA[uI_Battery]]></Name>
+		<X>-250</X>
+		<Y>480</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[UI_Battery]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1760978968828</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1760979190278</Id>
+		<Name><![CDATA[uI_EnergyHub]]></Name>
+		<X>-250</X>
+		<Y>420</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[UI_EnergyHub]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1760979190276</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
 	<Variable Class="CollectionVariable">
 		<Id>1707918668148</Id>
 		<Name><![CDATA[c_GISNeighborhoods]]></Name>
@@ -2731,7 +2809,7 @@
 		<Id>1734512815255</Id>
 		<Name><![CDATA[c_previousSelectedObjects]]></Name>
 		<X>50</X>
-		<Y>1490</Y>
+		<Y>1450</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2749,7 +2827,7 @@
 		<Id>1734513139372</Id>
 		<Name><![CDATA[c_selectedObjects]]></Name>
 		<X>50</X>
-		<Y>1470</Y>
+		<Y>1430</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

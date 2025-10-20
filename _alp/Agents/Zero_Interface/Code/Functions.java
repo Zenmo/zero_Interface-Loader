@@ -675,7 +675,7 @@ f_initializeLegend();
 //Initialize map overlay buttons
 f_initializeMapOverlayRadioButton();
 
-// Create the Private UI for companies
+//Set ui button visibility false at startup
 f_createAdditionalUIs();
 button_goToUI.setVisible(false);
 
@@ -903,119 +903,6 @@ if(c_selectedObjects.get(0).c_containedGridConnections.size() > 1){
 }
 /*ALCODEEND*/}
 
-double f_createAdditionalUIs()
-{/*ALCODESTART::1724857887019*/
-//Create the additional dashboards, control panels and private UIs
-
-//Create PrivateUIs
-//f_createPrivateCompanyUI();
-
-
-//Create Hydrogen UI
-//f_createHydrogenUI();
-
-
-//Create Battery UI
-//f_createBatteryUI();
-/*ALCODEEND*/}
-
-double f_createHydrogenUI()
-{/*ALCODESTART::1724857983890*/
-//Create the hydrogen ui
-UI_Hydrogen hydrogenUI = add_ui_Hydrogen();
-
-//Fill list of connection owners companies 
-hydrogenUI.c_connectionOwners_Hydrogen.addAll(findAll(energyModel.pop_connectionOwners, co -> co.p_connectionOwnerType == OL_ConnectionOwnerType.ELECTROLYSER_OP)); 
-
-//Fill the hydrogen GC collection (For now only searched for Electrolyser_OP, what about (the non existing) Fuelcell_OP 
-for(ConnectionOwner COHydrogen : hydrogenUI.c_connectionOwners_Hydrogen){
-	hydrogenUI.c_gridConnections_Hydrogen.addAll(findAll(
-    COHydrogen.f_getOwnedGridConnections(), gc -> gc instanceof GCEnergyConversion && (
-    gc.c_energyAssets.stream().anyMatch(asset -> asset instanceof J_EAConversionElectrolyser) ||
-    gc.c_energyAssets.stream().anyMatch(asset -> asset instanceof J_EAConversionFuelCell) ||
-    gc.c_energyAssets.stream().anyMatch(asset -> asset instanceof J_EAStorageGas)    )));
-}
-
-
-for (GridConnection GC : hydrogenUI.c_gridConnections_Hydrogen) {
-
-	//Add all GIS objects
-	hydrogenUI.c_GISObjects_Hydrogen.addAll(GC.c_connectedGISObjects);
-	
-	//Add connected gridnodes for each GC
-	hydrogenUI.c_connectedGridNodes.add(GC.p_parentNodeElectricID);
-	
-	//Find all energy assets and add them to the correct collection
-	List<J_EAConversion> electrolysers = findAll(GC.c_conversionAssets, asset -> asset instanceof J_EAConversionElectrolyser);
-	List<J_EAStorage> storages = findAll(GC.c_storageAssets, asset -> asset instanceof J_EAStorageGas);
-	List<J_EAConversion> fuelcells = findAll(GC.c_conversionAssets, asset -> asset instanceof J_EAConversionFuelCell);
-	
-	electrolysers.forEach(asset -> hydrogenUI.c_hydrogenElectrolysers.add((J_EAConversionElectrolyser)asset));
-	storages.forEach(asset -> hydrogenUI.c_hydrogenStorages.add((J_EAStorageGas)asset));
-	fuelcells.forEach(asset -> hydrogenUI.c_hydrogenFuelCells.add((J_EAConversionFuelCell)asset));
-}
-
-
-//Totals
-hydrogenUI.p_amountOfGC = hydrogenUI.c_gridConnections_Hydrogen.size();
-hydrogenUI.p_amountOfGISObjects = hydrogenUI.c_GISObjects_Hydrogen.size();
-
-
-//Initialize the UI
-
-
-
-
-//Add to the collection of UIs ???
-
-
-
-/*ALCODEEND*/}
-
-double f_createBatteryUI()
-{/*ALCODESTART::1724858039724*/
-//Create the hydrogen ui
-UI_Battery batteryUI = add_ui_Battery();
-
-//Fill list of connection owners companies 
-batteryUI.c_connectionOwners_Battery.addAll(findAll(energyModel.pop_connectionOwners, co -> co.p_connectionOwnerType == OL_ConnectionOwnerType.BATTERY_OP)); 
-
-//Fill the hydrogen GC collection (For now only searched for Electrolyser_OP, what about (the non existing) Fuelcell_OP 
-for(ConnectionOwner COBattery : batteryUI.c_connectionOwners_Battery){
-	batteryUI.c_gridConnections_Battery.addAll(findAll(
-    COBattery.f_getOwnedGridConnections(), gc -> gc instanceof GCGridBattery &&
-    gc.c_storageAssets.stream().anyMatch(asset -> asset instanceof J_EAStorageElectric)    ));
-}
-
-
-for (GridConnection GC : batteryUI.c_gridConnections_Battery) {
-
-	//Add all GIS objects
-	batteryUI.c_GISObjects_Battery.addAll(GC.c_connectedGISObjects);
-	
-	//Add connected gridnodes for each GC
-	batteryUI.c_connectedGridNodes.add(GC.p_parentNodeElectricID);
-	
-	//Find all energy assets and add them to the correct collection
-	List<J_EAStorage> batteries = findAll(GC.c_storageAssets, asset -> asset instanceof J_EAStorageElectric);
-
-	batteries.forEach(asset -> batteryUI.c_gridBatteries.add((J_EAStorageElectric)asset));
-}
-
-
-//Totals
-batteryUI.p_amountOfGC = batteryUI.c_gridConnections_Battery.size();
-batteryUI.p_amountOfGISObjects = batteryUI.c_GISObjects_Battery.size();
-
-
-//Initialize the UI
-
-
-
-
-//Add to the collection of UIs ???
-/*ALCODEEND*/}
-
 double f_setUIButton()
 {/*ALCODESTART::1725006890451*/
 switch(v_clickedObjectType){
@@ -1031,17 +918,13 @@ case BUILDING:
 	break;
 	
 case ELECTROLYSER:
-	if(ui_Hydrogen.size() > 0){
-		button_goToUI.setText("Ga naar het Waterstof Dashboard");
-		button_goToUI.setVisible(true);
-	}
+	button_goToUI.setText("Ga naar het Waterstof Dashboard");
+	button_goToUI.setVisible(true);
 	break;
 	
 case BATTERY:
-	if(ui_Battery.size() > 0){
-		button_goToUI.setText("Ga naar het Batterijen Dashboard");
-		button_goToUI.setVisible(true);
-	}
+	button_goToUI.setText("Ga naar het Batterijen Dashboard");
+	button_goToUI.setVisible(true);
 	break;	
 
 case CHARGER:
@@ -3353,5 +3236,38 @@ double f_initializeAdditionalVehicles()
 for(GridConnection GC : energyModel.UtilityConnections){
 	c_additionalVehicles.put(GC.p_uid, new ArrayList<J_EAVehicle>());
 }
+/*ALCODEEND*/}
+
+double f_createAdditionalUIs()
+{/*ALCODESTART::1760978860758*/
+//Energy hub dashboard
+if(project_data.project_type() == OL_ProjectType.BUSINESSPARK){
+	uI_EnergyHub = add_pop_UI_EnergyHub();
+}
+
+//Private companyUI dashboard
+if(energyModel.UtilityConnections.size() > 0){
+	uI_Company = add_pop_UI_Company();
+}
+
+/* 
+//Hydrogen dashboard NOT FINISHED
+for(GCEnergyConversion conversionGC : energyModel.EnergyConversionSites){
+	for(J_EAConversion conversionEA : conversionGC.c_conversionAssets){
+		if(conversionEA instanceof J_EAConversionElectrolyser){	
+			uI_Hydrogen = add_pop_UI_Hydrogen();
+			break;
+		}
+	}
+}
+
+//Battery dashboard NOT FINISHED
+for(GCGridBattery batteryGC : energyModel.GridBatteries){
+	if(batteryGC.c_connectedGISObjects.size()>0){	
+		uI_Battery = add_pop_UI_Battery();
+		break;
+	}
+}
+*/
 /*ALCODEEND*/}
 

@@ -477,9 +477,21 @@ f_setVehicleSliderPresets();
 f_setDemandReductionSliderPresets();
 /*ALCODEEND*/}
 
-double f_setComboBoxGC()
+double f_setComboBoxOwnedGC()
 {/*ALCODESTART::1713961813474*/
+int i = 1;
+List<String> ownedGCs = new ArrayList<String>();
+for(GridConnection GC : p_gridConnection.p_owner.f_getOwnedGridConnections()){
+	if(GC instanceof GCUtility){
+		ownedGCs.add("Aansluiting " + i + ": " + GC.p_address.getAddress());
+	}
+}
+String[] ownedGCsArray = new String[ownedGCs.size()];
+for(int j = 0; j < ownedGCsArray.length; j++){
+	ownedGCsArray[j] = ownedGCs.get(j);
+}
 
+cb_selectGC.setItems(ownedGCsArray, false);
 /*ALCODEEND*/}
 
 double f_setPVSliderPresets()
@@ -1417,20 +1429,31 @@ uI_Results.b_isCompanyUIResultsUI = true;
 uI_Results.f_styleAllCharts(v_chartBackgroundColor, v_companyUILineColor, v_chartLineWidth, LINE_STYLE_SOLID);
 /*ALCODEEND*/}
 
-double f_initializeCompanyUI()
+double f_setCompanyUI(GridConnection GC)
 {/*ALCODESTART::1714655282643*/
-//Set GC combobox 
-f_setComboBoxGC();
-
-//Initialize graph locations and visibility
-f_setResultsUIPresets();
-
-//Initialize the sliders
-f_setSliderPresets();
+//Initialize parameters
+p_gridConnection = GC;
+p_companyName = GC.p_ownerID;
+v_adressGC = GC.p_address.getAddress();
+p_scenarioSettings_Current = zero_Interface.c_scenarioMap_Current.get(GC.p_uid);
+p_scenarioSettings_Future = zero_Interface.c_scenarioMap_Future.get(GC.p_uid);
 
 //Scale companyName to the box size
 f_setNameTextSize();
 
+//Set the sliders to the correct settings
+f_setSelectedGCSliders();
+
+//Set the new graphs/building selection
+if(!b_runningMainInterfaceScenarioSettings && !b_runningMainInterfaceSlider && p_gridConnection.v_isActive){
+	f_updateUIResultsCompanyUI();
+	if(p_gridConnection.v_rapidRunData != null){
+		uI_Results.f_setAllCharts();
+	}
+}
+
+//Set connected GC combobox 
+f_setComboBoxOwnedGC();
 
 //Enable/disable all sliders (based on paused)
 if(!p_gridConnection.v_isActive){
@@ -1520,20 +1543,6 @@ double outputTemperature_degC 		= 0;
 J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, OL_EnergyCarriers.ELECTRICITY, capacityElectric_kW, timestep_h, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr);
 parentGC.v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<GridConnection>(List.of(parentGC)));
 
-/*ALCODEEND*/}
-
-double f_setSelectedGC()
-{/*ALCODESTART::1717576974529*/
-//Set the Adress to selected GC
-v_adressGC = p_gridConnection.p_address.getAddress();
-
-//Set the sliders
-f_setSelectedGCSliders();
-
-//Set the new graphs/building selection
-if(!b_runningMainInterfaceScenarioSettings && !b_runningMainInterfaceSlider && p_gridConnection.v_isActive){
-	f_setSelectedGCGraphs();
-}
 /*ALCODEEND*/}
 
 double f_setSelectedGCSliders()
@@ -1721,25 +1730,17 @@ p_gridConnection.f_nfatoSetConnectionCapacity(false);
 
 /*ALCODEEND*/}
 
-double f_setSelectedGCGraphs()
+double f_selectGCOnMainInterface()
 {/*ALCODESTART::1725439635605*/
-//Set the graphs to the correct GC
+//Select the newly selected GC also on the main interface
 zero_Interface.v_previousClickedObjectType = OL_GISObjectType.BUILDING;
 zero_Interface.c_selectedGridConnections.clear();
 zero_Interface.f_deselectPreviousSelect( );
 zero_Interface.f_selectBuilding(p_gridConnection.c_connectedGISObjects.get(0), p_gridConnection.c_connectedGISObjects);
-f_updateUIResultsCompanyUI();
-if(p_gridConnection.v_rapidRunData != null){
-	uI_Results.f_setAllCharts();
-}
 /*ALCODEEND*/}
 
 double f_setSimulateYearScreen()
 {/*ALCODESTART::1725607045331*/
-gr_simulateYearScreen.setVisible(true);
-
-
-
 if(!b_runningMainInterfaceScenarioSettings && !b_runningMainInterfaceSlider){
 	//Update main interface sliders according to the companyUI changes 
 	zero_Interface.f_updateMainInterfaceSliders();
@@ -1937,5 +1938,15 @@ double f_setDemandReductionSliderPresets()
 sl_heatDemandCompanyReduction.setRange(v_minSavingsSliders, v_maxSavingsSliders);
 sl_electricityDemandCompanyReduction.setRange(v_minSavingsSliders, v_maxSavingsSliders);
 sl_mobilityDemandCompanyReduction.setRange(v_minSavingsSliders, v_maxSavingsSliders);
+/*ALCODEEND*/}
+
+double f_selectDifferentOwnedGC(int selectedOwnedGCIndex)
+{/*ALCODESTART::1760976810989*/
+//Set companyUI to the new GC
+f_setCompanyUI(p_gridConnection.p_owner.f_getOwnedGridConnections().get(selectedOwnedGCIndex));
+
+//Select the gc on the main interface (map) aswell
+f_selectGCOnMainInterface();
+
 /*ALCODEEND*/}
 

@@ -171,7 +171,7 @@
 		<Id>1709571615104</Id>
 		<Name><![CDATA[txt_storedScenarios]]></Name>
 		<X>-750</X>
-		<Y>180</Y>
+		<Y>110</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -325,7 +325,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 		<Id>1713957149840</Id>
 		<Name><![CDATA[txt_sliderPresetsAndLimits]]></Name>
 		<X>-1100</X>
-		<Y>140</Y>
+		<Y>160</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -423,7 +423,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 	</Control>
 	<Text>
 		<Id>1714655090415</Id>
-		<Name><![CDATA[txt_onStartup]]></Name>
+		<Name><![CDATA[txt_initialization]]></Name>
 		<X>-1100</X>
 		<Y>10</Y>
 		<Label>
@@ -438,7 +438,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
-		<Text><![CDATA[On Startup settings]]></Text>
+		<Text><![CDATA[Initialization]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>12</Size>
@@ -1885,7 +1885,7 @@ f_setSimulateYearScreen();</ActionCode>
 					<Control Type="ComboBox">
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1713544148158</Id>
-						<Name><![CDATA[GCnr_selection]]></Name>
+						<Name><![CDATA[cb_selectGC]]></Name>
 						<X>50</X>
 						<Y>-10</Y>
 						<Label>
@@ -1901,14 +1901,14 @@ f_setSimulateYearScreen();</ActionCode>
 							<FillColor>-1</FillColor>
 							<TextColor>-16777216</TextColor>
 							<Enabled>true</Enabled>
+							<ActionCode>f_selectDifferentOwnedGC(cb_selectGC.getIntValue());</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
 							<Font Name="Dialog" Size="11" Style="0"/>
 							<Editable>false</Editable>
 							<Button>0</Button>
 							<Button>1</Button>
-							<LinkTo>true</LinkTo>
-							<Link>v_currentSelectedGCnr</Link>
+							<LinkTo>false</LinkTo>
 						</ExtendedProperties>
 					</Control>
 					<Text>
@@ -2524,31 +2524,6 @@ zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
 			<LabelText>Terug naar hoofdscherm</LabelText>
 		</ExtendedProperties>
 	</Control>
-	<Text>
-		<Id>1717514421993</Id>
-		<Name><![CDATA[txt_setSlidersToSelectedGC]]></Name>
-		<X>-440</X>
-		<Y>230</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Set Sliders to selected GC]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>12</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
 	<Group>
 		<Id>1725365029204</Id>
 		<Name><![CDATA[gr_companyDetails]]></Name>
@@ -3045,7 +3020,7 @@ gr_loadIcon.setVisible(true);
 new Thread( () -&gt; {	
 	zero_Interface.energyModel.f_runRapidSimulation();
 	zero_Interface.uI_Results.f_updateResultsUI(zero_Interface.energyModel);
-	f_setSelectedGCGraphs();
+	f_updateUIResultsCompanyUI();
 	gr_loadIcon.setVisible(false);
 	
 	//Update and show kpi summary chart after run
@@ -3368,8 +3343,8 @@ f_setSimulateYearScreen();</ActionCode>
 	<Text>
 		<Id>1727883464770</Id>
 		<Name><![CDATA[txt_nfatoValues]]></Name>
-		<X>-450</X>
-		<Y>740</Y>
+		<X>-440</X>
+		<Y>680</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -4037,7 +4012,7 @@ p_gridConnection.v_liveConnectionMetaData.physicalCapacityKnown ? "Bekend" : "Ge
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<XCode>1375</XCode>
 		<YCode>540</YCode>
-		<VisibleCode>!c_ownedGridConnections.get(v_currentSelectedGCnr).v_isActive</VisibleCode>
+		<VisibleCode>!p_gridConnection.v_isActive</VisibleCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -4118,10 +4093,10 @@ gr_simulateYearScreen.setVisible(false);
 gr_loadIcon.setVisible(true);
 
 //Unpause gc
-c_ownedGridConnections.get(v_currentSelectedGCnr).f_setActive(true);
+p_gridConnection.f_setActive(true);
 
 //Select unpaused GC
-zero_Interface.f_selectBuilding(c_ownedGridConnections.get(v_currentSelectedGCnr).c_connectedGISObjects.get(0), c_ownedGridConnections.get(v_currentSelectedGCnr).c_connectedGISObjects);
+zero_Interface.f_selectBuilding(p_gridConnection.c_connectedGISObjects.get(0), p_gridConnection.c_connectedGISObjects);
 f_copyResultsUI();
 uI_Results.f_setAllCharts();
 		
@@ -4545,4 +4520,54 @@ else{
 			</Group>
 		</Presentation>
 	</Group>
+	<Text>
+		<Id>1760974606250</Id>
+		<Name><![CDATA[txt_setSimYearScreen]]></Name>
+		<X>-440</X>
+		<Y>800</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Simulate year screen]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>12</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Text>
+		<Id>1760976852165</Id>
+		<Name><![CDATA[txt_selectDifferentOwnedGC]]></Name>
+		<X>-440</X>
+		<Y>250</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Select different owned GC]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>12</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
 </Presentation>
