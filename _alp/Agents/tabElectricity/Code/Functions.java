@@ -215,11 +215,8 @@ else {
 		if ( company.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW) ) {
 			// find companyUI to check if the company already has PV on model startup			
 			remaining_kWp += company.v_liveAssetsMetaData.totalInstalledPVPower_kW;
-			f_removePVSystem( company );		
-			double PVAtStartup_kWp = 0;
-			if (zero_Interface.c_companyUIs.size() > 0) {
-				PVAtStartup_kWp = zero_Interface.c_scenarioMap_Current.get(company.p_uid).getCurrentPV_kW();
-			}
+			f_removePVSystem( company );
+			double PVAtStartup_kWp = zero_Interface.c_scenarioMap_Current.get(company.p_uid).getCurrentPV_kW();
 			if (PVAtStartup_kWp != 0) {
 				f_addPVSystem( company, PVAtStartup_kWp );
 				remaining_kWp -= PVAtStartup_kWp;

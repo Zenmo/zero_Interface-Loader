@@ -1006,7 +1006,7 @@ v_clickedObjectText</TextCode>
 	
 		case BUILDING:
 			//ui_company.f_setCompanyUI(c_selectedGridConnections.get(0));
-			ui_Company.va_companyUI.navigateTo();
+			uI_Company.va_companyUI.navigateTo();
 			break;
 		
 		case ELECTROLYSER:

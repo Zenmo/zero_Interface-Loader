@@ -221,24 +221,6 @@
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1708595258540</Id>
-		<Name><![CDATA[f_createPrivateCompanyUI]]></Name>
-		<Description><![CDATA[function used to create the private ui for each company]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-260</X>
-		<Y>420</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
@@ -670,7 +652,7 @@
 		<Id>1724857983890</Id>
 		<Name><![CDATA[f_createHydrogenUI]]></Name>
 		<X>-260</X>
-		<Y>490</Y>
+		<Y>450</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -686,7 +668,7 @@
 		<Id>1724858039724</Id>
 		<Name><![CDATA[f_createBatteryUI]]></Name>
 		<X>-260</X>
-		<Y>540</Y>
+		<Y>500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2342,6 +2324,22 @@
 			<Name><![CDATA[toBeFilteredGC]]></Name>
 			<Type><![CDATA[ArrayList<GridConnection>]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1760955904715</Id>
+		<Name><![CDATA[f_initializeAdditionalVehicles]]></Name>
+		<X>85</X>
+		<Y>-520</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

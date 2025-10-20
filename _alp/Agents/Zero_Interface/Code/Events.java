@@ -14,8 +14,8 @@ if ( b_updateLiveCongestionColors ){
 
 // Update the NFATO values in the selected companyUI
 if(c_selectedGridConnections.size() > 0 && c_selectedGridConnections.get(0).v_enableNFato){
-	if(c_companyUIs.get(v_connectionOwnerIndexNr).v_NFATO_active){
-		c_companyUIs.get(v_connectionOwnerIndexNr).f_getNFATOValues();
+	if(uI_Company.v_NFATO_active){
+		uI_Company.f_getNFATOValues();
 	}
 }
 

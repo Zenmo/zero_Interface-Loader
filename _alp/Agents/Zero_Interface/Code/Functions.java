@@ -478,81 +478,6 @@ if(v_customEnergyCoop != null){
 }
 /*ALCODEEND*/}
 
-double f_createPrivateCompanyUI()
-{/*ALCODESTART::1708595258540*/
-int i = 0;
-
-//Create list of connection owners companies
-List<ConnectionOwner> c_COCompanies = findAll(energyModel.pop_connectionOwners, p -> p.p_connectionOwnerType == OL_ConnectionOwnerType.COMPANY); 
-
-// Give every connection owner an index nr, used to navigate to the correct private ui using the button.
-while (i < c_COCompanies.size()){
-
-	ConnectionOwner CO = c_COCompanies.get(i);
-		
-	CO.p_connectionOwnerIndexNr = i;
-	i++;
-}
-
-//Create the private ui for every connection owner
-while (v_connectionOwnerIndexNr < c_COCompanies.size()){
-	
-	UI_company companyUI = add_ui_companies();
-	c_UIResultsInstances.add(companyUI.uI_Results);
-	ConnectionOwner COC = findFirst(c_COCompanies, p -> p.p_connectionOwnerIndexNr == v_connectionOwnerIndexNr );	
-	
-	////Set unique parameters for every company_ui
-	companyUI.p_company = COC;
-	companyUI.p_companyName = COC.p_actorID;
-	companyUI.p_amountOfGC = COC.f_getOwnedGridConnections().size();
-
-	
-	//Links with engine
-	companyUI.c_ownedGridConnections = COC.f_getOwnedGridConnections();
-	
-	for (GridConnection GC : companyUI.c_ownedGridConnections) {
-		
-		//Get all buildings
-		companyUI.c_ownedBuildings.addAll(GC.c_connectedGISObjects);
-		
-		//Add connected trafos for each GC
-		companyUI.c_connectedTrafos.add(GC.p_parentNodeElectricID);
-	
-		//Add scenario settings for each GC
-		companyUI.p_scenarioSettings_Current.add(c_scenarioMap_Current.get(GC.p_uid));
-		companyUI.p_scenarioSettings_Future.add(c_scenarioMap_Future.get(GC.p_uid));
-		
-		//Initialize additional vehicles collection for each GC
-		companyUI.c_additionalVehicles.put(GC.p_uid, new ArrayList<J_EAVehicle>());
-	}
-	
-	companyUI.p_amountOfBuildings = companyUI.c_ownedBuildings.size();
-	
-	//Initialize adress variable (changes with selected GC)
-	companyUI.v_adressGC = companyUI.c_ownedGridConnections.get(0).p_address.getAddress();
-	
-	//Set annotation as company name, if its a generic company (otherwise potentially the addres_id name)
-	if(!COC.p_detailedCompany){
-		if(companyUI.c_ownedBuildings.get(0).p_annotation != null){
-			companyUI.p_companyName = companyUI.c_ownedBuildings.get(0).p_annotation;
-		}
-	}
-
-	//Initialize the companyUI
-	companyUI.f_initializeCompanyUI();
-
-	//Add to the collection of companyUIs
-	c_companyUIs.add( companyUI );
-	
-	//set boolean for has privateUI in owner: True
-	COC.b_hasPrivateUI = true;
-	
-	v_connectionOwnerIndexNr++;
-}
-
-v_connectionOwnerIndexNr = 0;
-/*ALCODEEND*/}
-
 double f_connectResultsUI()
 {/*ALCODESTART::1709716821854*/
 //Style resultsUI
@@ -630,12 +555,11 @@ EAs = EAs.stream().filter(ea -> ea instanceof J_EAVehicle).collect(Collectors.to
 ArrayList<J_EA> otherEAs = EAs.stream().filter(ea -> !(ea instanceof J_EAEV)).collect(Collectors.toCollection(ArrayList::new));
 // We make sure that the EVs at the start of the simulation are the last in the list
 
-//traceln("amount of EVs at start: " + EAEVs.size());
-//traceln("amount of other EAs at start: " + otherEAs.size());
 
-if(c_companyUIs.size() == 0){ // Dont add the ev to the pool if there are companyUIs
-	ArrayList<J_EA> EAEVs = EAs.stream().filter(ea -> (ea instanceof J_EAEV)).collect(Collectors.toCollection(ArrayList::new));
-	otherEAs.addAll(EAEVs);
+for(J_EA vehicle : EAs){
+	if(vehicle instanceof J_EAEV && !(vehicle.getParentAgent() instanceof GCUtility)){ // Companies can not get lower EV then current situation
+		otherEAs.add((J_EAEV) vehicle);	
+	}
 }
 
 c_orderedVehicles = otherEAs;
@@ -674,6 +598,7 @@ f_initialHeatingSystemsOrder();
 f_initialParkingSpacesOrder();
 f_initialChargerOrder();
 f_initializePrivateAndPublicParkingCarsOrder();
+f_initializeAdditionalVehicles();
 f_projectSpecificOrderedCollectionAdjustments();
 
 
@@ -1096,12 +1021,10 @@ double f_setUIButton()
 switch(v_clickedObjectType){
 
 case BUILDING:
-	if (c_selectedGridConnections.size() > 1 || !c_selectedGridConnections.get(0).p_owner.b_hasPrivateUI || !c_selectedGridConnections.get(0).v_isActive){
+	if (c_selectedGridConnections.size() > 1 || !(c_selectedGridConnections.get(0) instanceof GCUtility) || !c_selectedGridConnections.get(0).v_isActive){
 		button_goToUI.setVisible(false);
 	}
 	else{
-		// Index number of the connection owner used to change the button '
-		v_connectionOwnerIndexNr = c_selectedGridConnections.get(0).p_owner.p_connectionOwnerIndexNr;
 		button_goToUI.setText("Ga naar het Bedrijfsportaal");
 		button_goToUI.setVisible(true);
 	}
@@ -3250,9 +3173,11 @@ new Thread( () -> {
 	energyModel.f_runRapidSimulation();
 	
 	//After rapid run: remove loading screen
+	f_removeAllSimulateYearScreens();
 	gr_loadIconYearSimulation.setVisible(false);
 	uI_EnergyHub.gr_loadIconYearSimulationEnergyHub.setVisible(false);
-			
+	uI_Company.gr_simulateYearScreen.setVisible(false);	
+	
 	if (c_selectedGridConnections.size() == 0){//Update main area collection
 		uI_Results.f_updateResultsUI(energyModel);
 	}
@@ -3273,7 +3198,8 @@ new Thread( () -> {
 	//Enable radio buttons again
 	uI_Results.f_enableNonLivePlotRadioButtons(true);
 	uI_EnergyHub.uI_Results.f_enableNonLivePlotRadioButtons(true);
-	c_companyUIs.forEach(companyUI -> {companyUI.uI_Results.f_enableNonLivePlotRadioButtons(true); companyUI.gr_simulateYearScreen.setVisible(false);});
+	uI_Company.uI_Results.f_enableNonLivePlotRadioButtons(true); 
+	
 	
 	b_resultsUpToDate = true;
 }).start();
@@ -3386,9 +3312,8 @@ double f_setAllSimulateYearScreens()
 {/*ALCODESTART::1756995218301*/
 gr_simulateYear.setVisible(true);
 uI_EnergyHub.gr_simulateYearEnergyHub.setVisible(true);
-for(UI_company companyUI : c_companyUIs){
-	companyUI.gr_simulateYearScreen.setVisible(true);
-}
+uI_Company.gr_simulateYearScreen.setVisible(true);
+
 /*ALCODEEND*/}
 
 double f_removeAllSimulateYearScreens()
@@ -3397,10 +3322,9 @@ gr_simulateYear.setVisible(false);
 gr_loadIconYearSimulation.setVisible(false);
 uI_EnergyHub.gr_simulateYearEnergyHub.setVisible(false);
 uI_EnergyHub.gr_loadIconYearSimulationEnergyHub.setVisible(false);
-for(UI_company companyUI : c_companyUIs){
-	companyUI.gr_simulateYearScreen.setVisible(false);
-	companyUI.gr_loadIcon.setVisible(false);
-}
+uI_Company.gr_simulateYearScreen.setVisible(false);
+uI_Company.gr_loadIcon.setVisible(false);
+
 /*ALCODEEND*/}
 
 double f_cancelEnergyHubConfiguration()
@@ -3422,5 +3346,12 @@ c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC.c_e
 //Werkt nog niet helemaal naar behoren, want ghost assets worden nog niet aangemaakt, 
 //en dus hebben bedrijven met ghost ev geen c_electricVehicles en dus komen niet door deze filter.
 // --> Als ghost vehicles ook worden aangemaakt, werkt het wel.
+/*ALCODEEND*/}
+
+double f_initializeAdditionalVehicles()
+{/*ALCODESTART::1760955904715*/
+for(GridConnection GC : energyModel.UtilityConnections){
+	c_additionalVehicles.put(GC.p_uid, new ArrayList<J_EAVehicle>());
+}
 /*ALCODEEND*/}
 
