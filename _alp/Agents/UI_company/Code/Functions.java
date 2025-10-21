@@ -479,11 +479,18 @@ f_setDemandReductionSliderPresets();
 
 double f_setComboBoxOwnedGC()
 {/*ALCODESTART::1713961813474*/
+String currentSelectedGCString = "";
 int i = 1;
 List<String> ownedGCs = new ArrayList<String>();
 for(GridConnection GC : p_gridConnection.p_owner.f_getOwnedGridConnections()){
 	if(GC instanceof GCUtility){
-		ownedGCs.add("Aansluiting " + i + ": " + GC.p_address.getAddress());
+		String GCDisplayName = "Aansluiting " + i + ": " + GC.p_address.getAddress();
+		ownedGCs.add(GCDisplayName);
+		i++;
+		
+		if(GC == p_gridConnection){
+			currentSelectedGCString = GCDisplayName;
+		}
 	}
 }
 String[] ownedGCsArray = new String[ownedGCs.size()];
@@ -492,6 +499,9 @@ for(int j = 0; j < ownedGCsArray.length; j++){
 }
 
 cb_selectGC.setItems(ownedGCsArray, false);
+
+//Set cb to correct gc
+cb_selectGC.setValue(currentSelectedGCString, false);
 /*ALCODEEND*/}
 
 double f_setPVSliderPresets()
@@ -1404,6 +1414,8 @@ presentation.remove(gr_loadIcon);
 presentation.insert(presentation.size()-1, gr_loadIcon);
 presentation.remove(gr_simulateYearScreen);
 presentation.insert(presentation.size()-1, gr_simulateYearScreen);
+presentation.remove(gr_GCisPausedScreen);
+presentation.insert(presentation.size()-1, gr_GCisPausedScreen);
 
 
 
@@ -1456,9 +1468,8 @@ if(!b_runningMainInterfaceScenarioSettings && !b_runningMainInterfaceSlider && p
 f_setComboBoxOwnedGC();
 
 //Enable/disable all sliders (based on paused)
-if(!p_gridConnection.v_isActive){
-	f_enableAllSliders(false);
-}
+f_enableAllSliders(p_gridConnection.v_isActive);
+
 /*ALCODEEND*/}
 
 double f_updateUIResultsCompanyUI()
@@ -1732,11 +1743,12 @@ p_gridConnection.f_nfatoSetConnectionCapacity(false);
 
 double f_selectGCOnMainInterface()
 {/*ALCODESTART::1725439635605*/
-//Select the newly selected GC also on the main interface
-zero_Interface.v_previousClickedObjectType = OL_GISObjectType.BUILDING;
-zero_Interface.c_selectedGridConnections.clear();
-zero_Interface.f_deselectPreviousSelect( );
-zero_Interface.f_selectBuilding(p_gridConnection.c_connectedGISObjects.get(0), p_gridConnection.c_connectedGISObjects);
+//Select the newly selected GC also on the main interface (if not paused)
+zero_Interface.f_clearSelectionAndSelectEnergyModel();
+
+if(p_gridConnection.v_isActive){
+	zero_Interface.f_selectBuilding(p_gridConnection.c_connectedGISObjects.get(0), p_gridConnection.c_connectedGISObjects);
+}
 /*ALCODEEND*/}
 
 double f_setSimulateYearScreen()
@@ -1947,6 +1959,7 @@ f_setCompanyUI(p_gridConnection.p_owner.f_getOwnedGridConnections().get(selected
 
 //Select the gc on the main interface (map) aswell
 f_selectGCOnMainInterface();
+
 
 /*ALCODEEND*/}
 

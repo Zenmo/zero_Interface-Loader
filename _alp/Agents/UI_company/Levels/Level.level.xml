@@ -1886,8 +1886,8 @@ f_setSimulateYearScreen();</ActionCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1713544148158</Id>
 						<Name><![CDATA[cb_selectGC]]></Name>
-						<X>50</X>
-						<Y>-10</Y>
+						<X>-84</X>
+						<Y>-13</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1896,12 +1896,12 @@ f_setSimulateYearScreen();</ActionCode>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<BasicProperties Width="50" Height="20">
+						<BasicProperties Width="190" Height="20">
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<FillColor>-1</FillColor>
 							<TextColor>-16777216</TextColor>
 							<Enabled>true</Enabled>
-							<ActionCode>f_selectDifferentOwnedGC(cb_selectGC.getIntValue());</ActionCode>
+							<ActionCode>f_selectDifferentOwnedGC(cb_selectGC.getValueIndex());</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
 							<Font Name="Dialog" Size="11" Style="0"/>
@@ -1914,8 +1914,8 @@ f_setSimulateYearScreen();</ActionCode>
 					<Text>
 						<Id>1713547027389</Id>
 						<Name><![CDATA[text9]]></Name>
-						<X>-119</X>
-						<Y>-8</Y>
+						<X>-240</X>
+						<Y>-10</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -2939,37 +2939,6 @@ zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
 		<Rotation>0.0</Rotation>
 		<Presentation>
 			<Rectangle>
-				<Id>1725608394737</Id>
-				<Name><![CDATA[rect_simulateYearScreen1]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<X>-995</X>
-				<Y>-320</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>!uI_Results.b_showKPISummary</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>2</LineWidth>
-				<LineWidthCode>v_chartLineWidth+0.5</LineWidthCode>
-				<LineColor>-369756683</LineColor>
-				<LineColorCode>v_loadScreenColor</LineColorCode>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>530</Width>
-				<Height>45</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-369756683</FillColor>
-				<FillColorCode>v_loadScreenColor</FillColorCode>
-				<FillMaterial>null</FillMaterial>
-			</Rectangle>
-			<Rectangle>
 				<Id>1725606178085</Id>
 				<Name><![CDATA[rect_simulateYearScreen2]]></Name>
 				<X>-535</X>
@@ -3117,37 +3086,6 @@ new Thread( () -&gt; {
 		<Rotation>0.0</Rotation>
 		<Presentation>
 			<Rectangle>
-				<Id>1725606813428</Id>
-				<Name><![CDATA[rect_loadIcon2]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<X>-1980</X>
-				<Y>-60</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>!uI_Results.b_showKPISummary</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>2</LineWidth>
-				<LineWidthCode>v_chartLineWidth+0.5</LineWidthCode>
-				<LineColor>-369756683</LineColor>
-				<LineColorCode>v_loadScreenColor</LineColorCode>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>530</Width>
-				<Height>45</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-369756683</FillColor>
-				<FillColorCode>v_loadScreenColor</FillColorCode>
-				<FillMaterial>null</FillMaterial>
-			</Rectangle>
-			<Rectangle>
 				<Id>1725606178113</Id>
 				<Name><![CDATA[rect_loadIcon]]></Name>
 				<X>-1520</X>
@@ -3169,8 +3107,8 @@ new Thread( () -&gt; {
 				<LineColorCode>v_loadScreenColor</LineColorCode>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>1060</Width>
-				<Height>750.969</Height>
+				<Width>1065</Width>
+				<Height>755.969</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-369756683</FillColor>
 				<FillColorCode>v_loadScreenColor</FillColorCode>
@@ -3179,31 +3117,30 @@ new Thread( () -&gt; {
 			<Rectangle>
 				<Id>1729516584700</Id>
 				<Name><![CDATA[rect_GCisPausedScreen3]]></Name>
-				<X>-1980</X>
+				<X>-1990</X>
 				<Y>-60</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
 				</Label>
 				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
+				<PresentationFlag>false</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>!p_gridConnection.v_isActive</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<ZHeight>10</ZHeight>
 				<LineWidth>2</LineWidth>
 				<LineWidthCode>v_chartLineWidth+0.5</LineWidthCode>
 				<LineColor>-6943</LineColor>
-				<LineColorCode>v_companyUIBackgroundColor</LineColorCode>
+				<LineColorCode>v_loadScreenColor</LineColorCode>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>460</Width>
-				<Height>750</Height>
+				<Width>480</Width>
+				<Height>755</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
-				<FillColorCode>v_companyUIBackgroundColor</FillColorCode>
+				<FillColorCode>v_loadScreenColor</FillColorCode>
 				<FillMaterial>null</FillMaterial>
 			</Rectangle>
 			<Group>
@@ -3998,7 +3935,6 @@ p_gridConnection.v_liveConnectionMetaData.physicalCapacityKnown ? "Bekend" : "Ge
 	<Group>
 		<Id>1729511748859</Id>
 		<Name><![CDATA[gr_GCisPausedScreen]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>4480</X>
 		<Y>920</Y>
 		<Label>
@@ -4020,7 +3956,7 @@ p_gridConnection.v_liveConnectionMetaData.physicalCapacityKnown ? "Bekend" : "Ge
 			<Rectangle>
 				<Id>1729511748861</Id>
 				<Name><![CDATA[rect_GCisPausedScreen]]></Name>
-				<X>-995</X>
+				<X>-1010</X>
 				<Y>-320</Y>
 				<Label>
 					<X>10</X>
@@ -4039,8 +3975,8 @@ p_gridConnection.v_liveConnectionMetaData.physicalCapacityKnown ? "Bekend" : "Ge
 				<LineColorCode>v_loadScreenColor</LineColorCode>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>530</Width>
-				<Height>740</Height>
+				<Width>545</Width>
+				<Height>760</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-369756683</FillColor>
 				<FillColorCode>v_loadScreenColor</FillColorCode>
@@ -4068,8 +4004,8 @@ p_gridConnection.v_liveConnectionMetaData.physicalCapacityKnown ? "Bekend" : "Ge
 				<LineColorCode>v_companyUIBackgroundColor</LineColorCode>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>1060</Width>
-				<Height>740</Height>
+				<Width>1075</Width>
+				<Height>760</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
 				<FillColorCode>v_companyUIBackgroundColor</FillColorCode>
@@ -4091,34 +4027,33 @@ p_gridConnection.v_liveConnectionMetaData.physicalCapacityKnown ? "Bekend" : "Ge
 				<OnClickCode>//Set correct overlay
 gr_simulateYearScreen.setVisible(false);		
 gr_loadIcon.setVisible(true);
+rect_GCisPausedScreen3.setVisible(true);
 
 //Unpause gc
 p_gridConnection.f_setActive(true);
+zero_Interface.b_resultsUpToDate = false;
+zero_Interface.b_changeToCustomScenario = true;
+f_enableAllSliders(true);
 
-//Select unpaused GC
-zero_Interface.f_selectBuilding(p_gridConnection.c_connectedGISObjects.get(0), p_gridConnection.c_connectedGISObjects);
-f_copyResultsUI();
-uI_Results.f_setAllCharts();
-		
 
 //Run simulation
 new Thread( () -&gt; {	
-	//Save previous totals
-	zero_Interface.f_updatePreviousTotalsGC();
-
-	zero_Interface.energyModel.f_runRapidSimulation();
-	zero_Interface.f_updateUIresultsMainArea();
-	f_setSelectedGCGraphs();
-	gr_loadIcon.setVisible(false);
 	
-	//Update and show kpi summary chart after run
-	//uI_Results.chartKPISummary.f_setKPISummaryChart();
+	//Run rapid run in engine
+	zero_Interface.energyModel.f_runRapidSimulation();
+	
+	//Update map selection and resultsUIs
+	f_selectGCOnMainInterface();
+	f_updateUIResultsCompanyUI();
 	
 	//Update and show kpi summary chart after run
 	if(zero_Interface.settings.showKPISummary() != null &amp;&amp; zero_Interface.settings.showKPISummary()){
 		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
 	}
 	
+	//Remove all simulation screens
+	zero_Interface.f_removeAllSimulateYearScreens();
+	rect_GCisPausedScreen3.setVisible(false);
 }).start();
 
 

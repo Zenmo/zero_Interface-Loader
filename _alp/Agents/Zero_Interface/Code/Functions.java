@@ -3271,3 +3271,24 @@ for(GCGridBattery batteryGC : energyModel.GridBatteries){
 */
 /*ALCODEEND*/}
 
+double f_setCompaniesScenario(LinkedHashMap scenarioMap)
+{/*ALCODESTART::1761060882101*/
+//For now
+int companyUIScenarioRBIndex = 0;
+if(scenarioMap == c_scenarioMap_Current){
+	companyUIScenarioRBIndex = 0;
+}
+else if(scenarioMap == c_scenarioMap_Future){
+	companyUIScenarioRBIndex = 1;
+}
+else{
+	throw new RuntimeException("Tried to call the setCompaniesScenario function with a non existing companyUI scenario");
+}
+for (GCUtility  GC : energyModel.UtilityConnections){
+	uI_Company.f_setCompanyUI(GC);
+	uI_Company.b_runningMainInterfaceScenarioSettings = true;
+	uI_Company.getRb_scenariosPrivateUI().setValue(companyUIScenarioRBIndex, true);
+	uI_Company.b_runningMainInterfaceScenarioSettings = false;
+}
+/*ALCODEEND*/}
+
