@@ -323,6 +323,10 @@ uI_Tabs.f_initializeUI_Tabs(energyModel.f_getGridConnectionsCollectionPointer(),
 //Initialize sliders with certain presets
 f_setSliderPresets();
 
+//Store the initial slider state for Residential areas for the scenario current button
+if (project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
+	f_storeResidentialScenario_Current();
+}
 /*ALCODEEND*/}
 
 double f_selectGridNode(GridNode GN)
@@ -668,6 +672,9 @@ f_connectResultsUI();
 
 //Initialize the UITabs
 f_setUITabs();
+
+//Initialize scenario radio button
+f_initializeScenarioRadioButton();
 
 //Initialize the legend
 f_initializeLegend();
@@ -3303,7 +3310,7 @@ double width = rb_scenarios_template.getWidth();
 double height = 0;//Not needed, automatically adjust by adding options
 Color textColor = Color.BLACK;
 boolean enabled = true;
-Font font = new Font("Dialog", Font.PLAIN, 11);
+Font font = new Font("Dialog", Font.PLAIN, 14);
 boolean vertical = true;
 
 //Set words for the radiobutton options
@@ -3332,7 +3339,7 @@ rb_scenarios = new ShapeRadioButtonGroup(presentable, ispublic, x ,y, width, hei
 	}
 };
 
-presentation.add(rb_mapOverlay);
+presentation.add(rb_scenarios);
 
 //For now: Adjust location of radiobutton title if 6 buttons
 if(c_loadedMapOverlayTypes.size() > 5){
@@ -3392,7 +3399,7 @@ double f_setScenario_Future()
 f_setCompaniesScenario(c_scenarioMap_Future);
 
 //Set specifc assets active/non-active
-f_pojectSpecificScenarioSettings("Future");
+f_projectSpecificScenarioSettings("Future");
 
 //Set the scenario text
 t_scenarioDescription.setText(t_scenario_future);
@@ -3403,11 +3410,13 @@ double f_setScenario_Current()
 f_setCompaniesScenario(c_scenarioMap_Current);
 
 //Reset sliders for households
-
+if(project_data.project_type() == OL_ProjectType.RESIDENTIAL && p_residentialScenario_Current != null){
+	f_setResidentialScenario_Current();
+}
 
 
 //Set specifc assets active/non-active
-f_pojectSpecificScenarioSettings("Current");
+f_projectSpecificScenarioSettings("Current");
 
 //Set the scenario text
 t_scenarioDescription.setText(t_scenario_current);
@@ -3444,6 +3453,8 @@ b_runningMainInterfaceScenarios = false;
 if(!selected_scenario.equals("Custom")){
 	f_resetSettings();
 	
+	f_updateMainInterfaceSliders();
+	
 	//Colour recolor pv map again if it is active
 	if(c_loadedMapOverlayTypes.get(rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
 		rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
@@ -3457,8 +3468,223 @@ double f_resetProjectSpecificSlidersAndButtons()
 //AND BUTTONS THAT ARE NOT IN THE GENERIC LOADERFACE
 /*ALCODEEND*/}
 
-double f_pojectSpecificScenarioSettings(String selectedScenario)
+double f_projectSpecificScenarioSettings(String selectedScenario)
 {/*ALCODESTART::1761122139097*/
+//OVERRIDE IF THIS IS NEEDED FOR YOUR SPECIFIC PROJECT
 
+//Example code:
+/*
+//Find specific scenario assets
+GridConnection testGC_new = findFirst(energyModel.UtilityConnections, GC -> GC.p_gridConnectionID.equals("testGC_nieuwBouw"));
+GIS_Building testBuilding_additionalBuilding = findFirst(energyModel.pop_GIS_Buildings, B -> B.p_id.equals("testBuilding_additionalBuilding"));
+
+switch(selectedScenario){
+	case "Current":
+		//Pause assets
+		testGC_new.f_setActive(false);			
+		testBuilding_additionalBuilding.gisRegion.setVisible(false);
+		break;
+	
+	case "Future":
+		//Unpause assets
+		testGC_new.f_setActive(true);			
+		testBuilding_additionalBuilding.gisRegion.setVisible(true);
+		break;
+}
+*/
+
+/*ALCODEEND*/}
+
+double f_setResidentialScenario_Current()
+{/*ALCODESTART::1761132028131*/
+////Electricity
+tabElectricity tabElec = uI_Tabs.pop_tabElectricity.get(0);
+
+double pv_pct = p_residentialScenario_Current.getHousesWithPV_pct();
+tabElec.sl_householdPVResidentialArea_pct.setValue(roundToInt(pv_pct), true);
+
+double battery_pct = p_residentialScenario_Current.getPvHousesWithBattery_pct();
+tabElec.sl_householdBatteriesResidentialArea_pct.setValue(roundToInt(battery_pct), true);
+
+//Electric cooking
+double cooking_pct = p_residentialScenario_Current.getCooking_pct();
+tabElec.sl_householdElectricCookingResidentialArea_pct.setValue(roundToInt(cooking_pct), true);
+
+//Consumption growth
+double electricityDemandIncrease_pct = p_residentialScenario_Current.getElectricityDemandIncrease_pct();
+tabElec.sl_electricityDemandIncreaseResidentialArea_pct.setValue(roundToInt(electricityDemandIncrease_pct), true);
+
+//Gridbatteries
+double averageNeighbourhoodBatterySize_kWh = p_residentialScenario_Current.getAverageNeighbourhoodBatterySize_kWh();
+tabElec.sl_gridBatteriesResidentialArea_kWh.setValue(averageNeighbourhoodBatterySize_kWh, true);
+
+////Heating
+tabHeating tabHeat = uI_Tabs.pop_tabHeating.get(0);
+
+double housesWithGasBurners_pct = p_residentialScenario_Current.getHousesWithGasBurners_pct();
+double housesWithHybridHeatpump_pct = p_residentialScenario_Current.getHousesWithHybridHeatpump_pct();
+double housesWithElectricHeatpump_pct = p_residentialScenario_Current.getHousesWithElectricHeatpump_pct();
+boolean cb_householdHTDistrictHeatingActive = p_residentialScenario_Current.getCb_householdHTDistrictHeatingActive();
+boolean cb_householdLTDistrictHeatingActive = p_residentialScenario_Current.getCb_householdLTDistrictHeatingActive();
+
+if(cb_householdHTDistrictHeatingActive || cb_householdLTDistrictHeatingActive){
+	tabHeat.sl_householdGasBurnerResidentialArea_pct.setValue(housesWithGasBurners_pct, false);
+	tabHeat.sl_householdHybridHeatpumpResidentialArea.setValue(housesWithHybridHeatpump_pct, false);
+	tabHeat.sl_householdElectricHeatPumpResidentialArea_pct.setValue(housesWithElectricHeatpump_pct, false);
+	if(cb_householdHTDistrictHeatingActive){
+		tabHeat.cb_householdHTDistrictHeatingResidentialArea.setSelected(cb_householdHTDistrictHeatingActive, false);
+		tabHeat.cb_householdLTDistrictHeatingResidentialArea.setSelected(cb_householdLTDistrictHeatingActive, true);
+	}
+	else if(cb_householdLTDistrictHeatingActive){
+		tabHeat.cb_householdHTDistrictHeatingResidentialArea.setSelected(cb_householdHTDistrictHeatingActive, false);
+		tabHeat.cb_householdLTDistrictHeatingResidentialArea.setSelected(cb_householdLTDistrictHeatingActive, true);
+	}
+}
+else{
+	tabHeat.sl_householdGasBurnerResidentialArea_pct.setValue(housesWithGasBurners_pct, true);
+	tabHeat.sl_householdHybridHeatpumpResidentialArea.setValue(housesWithHybridHeatpump_pct, true);
+	tabHeat.sl_householdElectricHeatPumpResidentialArea_pct.setValue(housesWithElectricHeatpump_pct, true);
+	tabHeat.cb_householdHTDistrictHeatingResidentialArea.setSelected(cb_householdHTDistrictHeatingActive, false);
+	tabHeat.cb_householdLTDistrictHeatingResidentialArea.setSelected(cb_householdLTDistrictHeatingActive, false);
+}
+
+
+//Houses with Airco
+double pctOfHousesWithAirco = p_residentialScenario_Current.getHousesWithAirco_pct();
+tabHeat.sl_householdAircoResidentialArea_pct.setValue(pctOfHousesWithAirco, true);
+
+//Houses with better isolation
+double pctOfHousesWithImprovedInsulation = p_residentialScenario_Current.getHousesWithImprovedInsulation_pct();
+tabHeat.sl_householdHeatDemandReductionResidentialArea_pct.setValue(roundToInt(pctOfHousesWithImprovedInsulation), true);
+
+//PT
+double nbHousesWithPT_pct = p_residentialScenario_Current.getNbHousesWithPT_pct();
+tabHeat.sl_rooftopPTHouses_pct.setValue(roundToInt(nbHousesWithPT_pct), true);
+
+
+
+////Mobility
+tabMobility tabMob = uI_Tabs.pop_tabMobility.get(0);
+
+//Private EV
+double privateEVs_pct = p_residentialScenario_Current.getPrivateEVs_pct();
+double privateEVsThatSupportV2G_pct = p_residentialScenario_Current.getPrivateEVsThatSupportV2G_pct();
+tabMob.sl_privateEVsResidentialArea_pct.setValue(roundToInt(privateEVs_pct), true);
+tabMob.sl_EVsThatSupportV2G_pct.setValue(roundToInt(privateEVsThatSupportV2G_pct), true);
+
+//Selected charging mode
+String selectedChargingAttitudeStringPrivateEV = p_residentialScenario_Current.getSelectedChargingAttitudeStringPrivateEVs();
+boolean V2GActivePrivateEV = p_residentialScenario_Current.getV2GActivePrivateEVs();
+
+tabMob.cb_chargingAttitudePrivateParkedCars.setValue(selectedChargingAttitudeStringPrivateEV, true);
+tabMob.cb_activateV2GPrivateParkedCars.setSelected(V2GActivePrivateEV, true);
+
+//Chargers
+double activePublicChargers_pct = p_residentialScenario_Current.getActivePublicChargers_pct();
+tabMob.sl_publicChargersResidentialArea_pct.setValue(roundToInt(activePublicChargers_pct), true);
+
+double V1G_pct = p_residentialScenario_Current.getChargersV1G_pct();
+double V2G_pct = p_residentialScenario_Current.getChargersV2G_pct();
+tabMob.sl_chargersThatSupportV1G_pct.setValue(roundToInt(V1G_pct), true);
+tabMob.sl_chargersThatSupportV2G_pct.setValue(roundToInt(V2G_pct), true);
+
+//Selected charging mode
+String selectedChargingAttitudeStringChargers = p_residentialScenario_Current.getSelectedChargingAttitudeStringChargers();
+boolean V2GActiveChargers = p_residentialScenario_Current.getV2GActiveChargers();
+
+tabMob.cb_chargingAttitudePrivatePublicChargers.setValue(selectedChargingAttitudeStringChargers, true);
+tabMob.cb_activateV2GPublicChargers.setSelected(V2GActiveChargers, true);
+/*ALCODEEND*/}
+
+double f_storeResidentialScenario_Current()
+{/*ALCODESTART::1761134737334*/
+//Create the class that will store the initial slider settings of a residential model
+p_residentialScenario_Current = new J_SliderSettings_Residential();
+
+////Electricity
+if(uI_Tabs.pop_tabElectricity.size() > 0){
+	tabElectricity tabElec = uI_Tabs.pop_tabElectricity.get(0);
+	
+	double housesWithPV_pct = tabElec.sl_householdPVResidentialArea_pct.getValue();
+	p_residentialScenario_Current.setHousesWithPV_pct(housesWithPV_pct);
+	
+	double pvHousesWithBattery_pct = tabElec.sl_householdBatteriesResidentialArea_pct.getValue();
+	p_residentialScenario_Current.setPvHousesWithBattery_pct(pvHousesWithBattery_pct);
+	
+	
+	//Electric cooking
+	double cooking_pct = tabElec.sl_householdElectricCookingResidentialArea_pct.getValue();
+	p_residentialScenario_Current.setCooking_pct(cooking_pct);
+	
+	//Consumption growth
+	double electricityDemandIncrease_pct = tabElec.sl_electricityDemandIncreaseResidentialArea_pct.getValue();
+	p_residentialScenario_Current.setElectricityDemandIncrease_pct(electricityDemandIncrease_pct);
+	
+	//Gridbatteries
+	double averageNeighbourhoodBatterySize_kWh = tabElec.sl_gridBatteriesResidentialArea_kWh.getValue();
+	p_residentialScenario_Current.setAverageNeighbourhoodBatterySize_kWh(averageNeighbourhoodBatterySize_kWh);
+}
+
+////Heating
+if(uI_Tabs.pop_tabHeating.size() > 0){
+	tabHeating tabHeat = uI_Tabs.pop_tabHeating.get(0);
+	
+	double housesWithGasBurners_pct = tabHeat.sl_householdGasBurnerResidentialArea_pct.getValue();
+	double housesWithHybridHeatpump_pct = tabHeat.sl_householdHybridHeatpumpResidentialArea.getValue();
+	double housesWithElectricHeatpump_pct = tabHeat.sl_householdElectricHeatPumpResidentialArea_pct.getValue();
+	boolean cb_householdHTDistrictHeatingActive = tabHeat.cb_householdHTDistrictHeatingResidentialArea.isSelected();
+	boolean cb_householdLTDistrictHeatingActive = tabHeat.cb_householdLTDistrictHeatingResidentialArea.isSelected();
+	
+	p_residentialScenario_Current.setHousesWithGasBurners_pct(housesWithGasBurners_pct);
+	p_residentialScenario_Current.setHousesWithHybridHeatpump_pct(housesWithHybridHeatpump_pct);
+	p_residentialScenario_Current.setHousesWithElectricHeatpump_pct(housesWithElectricHeatpump_pct);
+	p_residentialScenario_Current.setCb_householdHTDistrictHeatingActive(cb_householdHTDistrictHeatingActive);
+	p_residentialScenario_Current.setCb_householdLTDistrictHeatingActive(cb_householdLTDistrictHeatingActive);
+	
+	
+	//Houses with Airco
+	double housesWithAirco_pct = tabHeat.sl_householdAircoResidentialArea_pct.getValue();
+	p_residentialScenario_Current.setHousesWithAirco_pct(housesWithAirco_pct);
+	
+	//Houses with better isolation
+	double housesWithImprovedInsulation_pct = tabHeat.sl_householdHeatDemandReductionResidentialArea_pct.getValue();
+	p_residentialScenario_Current.setHousesWithImprovedInsulation_pct(housesWithImprovedInsulation_pct);
+	
+	//PT
+	double nbHousesWithPT_pct = tabHeat.sl_rooftopPTHouses_pct.getValue();
+	p_residentialScenario_Current.setNbHousesWithPT_pct(nbHousesWithPT_pct);
+}
+
+////Mobility
+if(uI_Tabs.pop_tabMobility.size() > 0){
+	tabMobility tabMob = uI_Tabs.pop_tabMobility.get(0);
+	
+	//Private EV
+	double privateEVs_pct = tabMob.sl_privateEVsResidentialArea_pct.getValue();
+	double privateEVsThatSupportV2G_pct = tabMob.sl_EVsThatSupportV2G_pct.getValue();
+	p_residentialScenario_Current.setPrivateEVs_pct(privateEVs_pct);
+	p_residentialScenario_Current.setPrivateEVsThatSupportV2G_pct(privateEVsThatSupportV2G_pct);
+	
+	//Selected charging mode
+	String selectedChargingAttitudeStringPrivateEVs = tabMob.cb_chargingAttitudePrivateParkedCars.getValue();
+	boolean V2GActivePrivateEVs = tabMob.cb_activateV2GPrivateParkedCars.isSelected();
+	p_residentialScenario_Current.setSelectedChargingAttitudeStringPrivateEVs(selectedChargingAttitudeStringPrivateEVs);
+	p_residentialScenario_Current.setV2GActivePrivateEVs(V2GActivePrivateEVs);
+	
+	//Chargers
+	double activePublicChargers_pct = tabMob.sl_publicChargersResidentialArea_pct.getValue();
+	double chargersV1G_pct = tabMob.sl_chargersThatSupportV1G_pct.getValue();
+	double chargersV2G_pct = tabMob.sl_chargersThatSupportV2G_pct.getValue();
+	
+	p_residentialScenario_Current.setActivePublicChargers_pct(activePublicChargers_pct);
+	p_residentialScenario_Current.setChargersV1G_pct(chargersV1G_pct);
+	p_residentialScenario_Current.setChargersV2G_pct(chargersV2G_pct);
+	
+	//Selected charging mode
+	String selectedChargingAttitudeStringChargers = tabMob.cb_chargingAttitudePrivatePublicChargers.getValue();
+	boolean V2GActiveChargers = tabMob.cb_activateV2GPublicChargers.isSelected();
+	p_residentialScenario_Current.setSelectedChargingAttitudeStringChargers(selectedChargingAttitudeStringChargers);
+	p_residentialScenario_Current.setV2GActiveChargers(V2GActiveChargers);
+}
 /*ALCODEEND*/}
 

@@ -2175,7 +2175,7 @@
 		<ReturnType>ShapeRadioButtonGroup</ReturnType>
 		<Id>1756369604291</Id>
 		<Name><![CDATA[f_getScenarioButtons]]></Name>
-		<X>-980</X>
+		<X>-1020</X>
 		<Y>100</Y>
 		<Label>
 			<X>10</X>
@@ -2316,7 +2316,7 @@
 		<Id>1761060882101</Id>
 		<Name><![CDATA[f_setCompaniesScenario]]></Name>
 		<X>-1180</X>
-		<Y>530</Y>
+		<Y>445</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2351,8 +2351,8 @@
 		<ReturnType>String</ReturnType>
 		<Id>1761119066060</Id>
 		<Name><![CDATA[f_setSelectedScenario]]></Name>
-		<X>-1150</X>
-		<Y>120</Y>
+		<X>-1180</X>
+		<Y>180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2384,7 +2384,7 @@
 		<Id>1761119479231</Id>
 		<Name><![CDATA[f_setScenario_Future]]></Name>
 		<X>-1180</X>
-		<Y>230</Y>
+		<Y>270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2400,7 +2400,7 @@
 		<Id>1761119479233</Id>
 		<Name><![CDATA[f_setScenario_Current]]></Name>
 		<X>-1180</X>
-		<Y>175</Y>
+		<Y>225</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2416,7 +2416,7 @@
 		<Id>1761119842140</Id>
 		<Name><![CDATA[f_resetSpecialSlidersAndButtons]]></Name>
 		<X>-1180</X>
-		<Y>440</Y>
+		<Y>365</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2431,8 +2431,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1761120167723</Id>
 		<Name><![CDATA[f_finalizeSettingOfScenario]]></Name>
-		<X>-1150</X>
-		<Y>140</Y>
+		<X>-1180</X>
+		<Y>200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2452,7 +2452,7 @@
 		<Id>1761121949197</Id>
 		<Name><![CDATA[f_resetProjectSpecificSlidersAndButtons]]></Name>
 		<X>-1160</X>
-		<Y>460</Y>
+		<Y>385</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2466,9 +2466,9 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1761122139097</Id>
-		<Name><![CDATA[f_pojectSpecificScenarioSettings]]></Name>
+		<Name><![CDATA[f_projectSpecificScenarioSettings]]></Name>
 		<X>-1180</X>
-		<Y>500</Y>
+		<Y>415</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2480,5 +2480,38 @@
 			<Name><![CDATA[selectedScenario]]></Name>
 			<Type><![CDATA[String]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1761132028131</Id>
+		<Name><![CDATA[f_setResidentialScenario_Current]]></Name>
+		<X>-1180</X>
+		<Y>465</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1761134737334</Id>
+		<Name><![CDATA[f_storeResidentialScenario_Current]]></Name>
+		<X>-1180</X>
+		<Y>130</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

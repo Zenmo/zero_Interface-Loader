@@ -35,8 +35,9 @@ String[] scenarioOptions = f_getScenarioOptions();
 int customOptionIndex = 0;
 for(String scenarioOption : scenarioOptions){
 	if(scenarioOption.equals("Custom")){
-	
+		break;
 	}
+	customOptionIndex++;
 }
 
 rb_scenarios.setValue(customOptionIndex, true);

@@ -1324,22 +1324,4 @@
 			</ParameterEditor>
 		</Properties>
 	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1727953980115</Id>
-		<Name><![CDATA[c_additionalVehicles]]></Name>
-		<X>-1060</X>
-		<Y>1210</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>J_EAVehicle</ElementClass>
-			<ValueElementClass>List&lt;J_EAVehicle&gt;</ValueElementClass>
-		</Properties>
-	</Variable>
 </Variables>
