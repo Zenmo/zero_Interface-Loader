@@ -2283,20 +2283,21 @@ OL_GridConnectionHeatingType selectedHeatingType;
 switch (rb_heatingTypePrivateUI.getValue()){
 	case 0:
 		selectedHeatingType = OL_GridConnectionHeatingType.GAS_BURNER;
-	break;
+		break;
 	case 1:
 		selectedHeatingType = OL_GridConnectionHeatingType.HYBRID_HEATPUMP;
-	break;
+		break;
 	case 2:
 		selectedHeatingType = OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP;
-	break;
+		break;
 	case 3:
 		selectedHeatingType = OL_GridConnectionHeatingType.DISTRICTHEAT;
-		//selectedHeatingType = OL_GridConnectionHeatingType.HYDROGENBURNER;
-	break;
+		break;
 	case 4:
-		selectedHeatingType = OL_GridConnectionHeatingType.GAS_CHP;
-	break;
+		selectedHeatingType = OL_GridConnectionHeatingType.CUSTOM;
+		f_setErrorScreen("De 'custom' verwarming optie wordt alleen gebruikt ter visualisatie voor bedrijven die starten met een 'custom' warmte systeem. In plaats van 'custom' is de knop nu gezet op 'HR ketel aardgas'.");
+		rb_heatingTypePrivateUI.setValue(0);
+		return;
 	default:
 		selectedHeatingType = OL_GridConnectionHeatingType.NONE;
 }
@@ -2319,7 +2320,7 @@ f_setSimulateYearScreen();</ActionCode>
 					<Button>Hybride warmtepomp</Button>
 					<Button>Elek. warmtepomp</Button>
 					<Button>Warmtenet</Button>
-					<Button>Gas WKK</Button>
+					<Button>Custom</Button>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -4183,8 +4184,9 @@ else{
 	<Group>
 		<Id>1747234551900</Id>
 		<Name><![CDATA[gr_heatingOptionBlockerCHP]]></Name>
-		<X>150</X>
-		<Y>350</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>140</X>
+		<Y>1500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4194,6 +4196,8 @@ else{
 		<ShowLabel>false</ShowLabel>
 		<Lock>true</Lock>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>150</XCode>
+		<YCode>350</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -4249,7 +4253,7 @@ else{
 				<Width>280</Width>
 				<Height>30</Height>
 				<Rotation>0.0</Rotation>
-				<FillColor>-1</FillColor>
+				<FillColor>-65536</FillColor>
 				<FillColorCode>v_companyUIBackgroundColorSliders</FillColorCode>
 				<FillMaterial>null</FillMaterial>
 			</Rectangle>

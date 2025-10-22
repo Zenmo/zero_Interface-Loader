@@ -1494,27 +1494,25 @@ switch (p_scenarioSettings_Current.getCurrentHeatingType()){
 	case GAS_BURNER:
 		nr_currentHeatingType = 0;
 		break;
-
 	case HYBRID_HEATPUMP:
 		nr_currentHeatingType = 1;
 		rbHeating_acces = "disabled";
 		break;
-
 	case ELECTRIC_HEATPUMP:
 		nr_currentHeatingType = 2;
 		rbHeating_acces = "disabled";
 		break;
-		
-	//case HYDROGENBURNER:
 	case DISTRICTHEAT:
 		nr_currentHeatingType = 3;
 		break;
-	
-	case GAS_CHP:
-		nr_currentHeatingType = 4;
-		gr_heatingOptionBlockerCHP.setVisible(false);
+	case LT_DISTRICTHEAT:
+		nr_currentHeatingType = 3;
+		rbHeating_acces = "disabled";
 		break;
-		
+	case CUSTOM:
+		nr_currentHeatingType = 4;
+		rbHeating_acces = "disabled";
+		break;
 	default:
 		rbHeating_acces = "invisible";
 }
@@ -1582,12 +1580,15 @@ switch (p_gridConnection.f_getCurrentHeatingType()){
 		nr_currentHeatingType = 2;
 	break;
 		
-	case HYDROGENBURNER:
+	case DISTRICTHEAT:
+	case LT_DISTRICTHEAT:
 		nr_currentHeatingType = 3;
-	break;		
+	break;
+	case CUSTOM:
+		nr_currentHeatingType = 4;
+	break;	
 	default:
 }
-
 
 //Find the current heat saving percentage
 int currentHeatSavings = 0;
@@ -1737,8 +1738,6 @@ v_nbDieselTrucks = nbDieseltrucksCurrent;
 
 //Add nfato again
 p_gridConnection.f_nfatoSetConnectionCapacity(false);
-
-
 /*ALCODEEND*/}
 
 double f_selectGCOnMainInterface()
@@ -1912,7 +1911,11 @@ sl_hydrogenTrucksCompany.setEnabled(enable);
 sl_dieselTrucksCompany.setEnabled(enable);
 
 //Set heating rb to correct setting (no matter what input of this function is)
-f_setHeatingRB();
+if(p_scenarioSettings_Current.getCurrentHeatingType() == OL_GridConnectionHeatingType.NONE){
+	rb_heatingTypePrivateUI.setVisible(false);
+	gr_heatDemandReductionSlider.setVisible(false);
+}
+
 /*ALCODEEND*/}
 
 double f_setErrorScreen(String errorMessage)
