@@ -3292,3 +3292,173 @@ for (GCUtility  GC : energyModel.UtilityConnections){
 }
 /*ALCODEEND*/}
 
+double f_initializeScenarioRadioButton()
+{/*ALCODESTART::1761117997540*/
+//Set the default visualisation of the radiobuttons
+Presentable presentable = this.presentation.getPresentable();
+boolean ispublic = true;
+double x = rb_scenarios_template.getX();
+double y = rb_scenarios_template.getY();
+double width = rb_scenarios_template.getWidth();
+double height = 0;//Not needed, automatically adjust by adding options
+Color textColor = Color.BLACK;
+boolean enabled = true;
+Font font = new Font("Dialog", Font.PLAIN, 11);
+boolean vertical = true;
+
+//Set words for the radiobutton options
+String[] RadioButtonOptions = f_getScenarioOptions();
+
+//Check if it contains the custom option
+boolean containsCustomOption = false;
+for(String scenarioOption : RadioButtonOptions){
+	if(scenarioOption.equals("Custom")){
+		containsCustomOption = true;
+	}
+}
+
+if(!containsCustomOption){
+	traceln("WARNING: Scenario radiobutton option 'Custom' was not included in the custom scenario options, it has automatically been added!");
+    RadioButtonOptions = Arrays.copyOf(RadioButtonOptions, RadioButtonOptions.length + 1);
+    RadioButtonOptions[RadioButtonOptions.length - 1] = "Custom";										
+}
+
+//Create the radiobutton and set the correct action.
+rb_scenarios = new ShapeRadioButtonGroup(presentable, ispublic, x ,y, width, height, textColor, enabled, font, vertical, RadioButtonOptions){
+	@Override
+	public void action() {
+		b_runningMainInterfaceScenarios = true;
+		f_finalizeSettingOfScenario(f_setSelectedScenario());
+	}
+};
+
+presentation.add(rb_mapOverlay);
+
+//For now: Adjust location of radiobutton title if 6 buttons
+if(c_loadedMapOverlayTypes.size() > 5){
+	gr_colorings.setY(-17);
+}
+/*ALCODEEND*/}
+
+String f_setSelectedScenario()
+{/*ALCODESTART::1761119066060*/
+//Default scenario switch statement, override this function if you want to add/change scenario options!
+String selected_scenario = "";
+
+switch(rb_scenarios.getValue()){
+	case 0:
+		selected_scenario = "Huidige situatie";
+		f_setScenario_Current();
+
+	break;
+	case 1:
+		if(project_data.project_type() == OL_ProjectType.BUSINESSPARK){
+			selected_scenario = "Toekomstplannen";
+			f_setScenario_Future();
+		}
+		else if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
+			selected_scenario = "Custom";
+			t_scenarioDescription.setText(t_scenario_custom);
+		}
+	break;
+	case 2:
+		selected_scenario = "Custom";
+		t_scenarioDescription.setText(t_scenario_custom);
+	break;
+	
+	default:
+		traceln("Unsupported scenario selected");
+}
+
+return selected_scenario;
+/*ALCODEEND*/}
+
+String[] f_getScenarioOptions()
+{/*ALCODESTART::1761119264046*/
+//OVERRIDE THIS FUNCTION IF YOU WANT TO ADJUST THE SCENARIO OPTIONS.
+// -> MAKE SURE TO ALWAYS INCLUDE A CUSTOM
+String[] scenarioOptions = null;
+if(project_data.project_type() == OL_ProjectType.BUSINESSPARK){
+	scenarioOptions = new String[]{"Huidige situatie", "Toekomstplannen", "Custom"};
+}
+else if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
+	scenarioOptions = new String[]{"Huidige situatie", "Custom"};
+}
+return scenarioOptions;
+/*ALCODEEND*/}
+
+double f_setScenario_Future()
+{/*ALCODESTART::1761119479231*/
+f_setCompaniesScenario(c_scenarioMap_Future);
+
+//Set specifc assets active/non-active
+f_pojectSpecificScenarioSettings("Future");
+
+//Set the scenario text
+t_scenarioDescription.setText(t_scenario_future);
+/*ALCODEEND*/}
+
+double f_setScenario_Current()
+{/*ALCODESTART::1761119479233*/
+f_setCompaniesScenario(c_scenarioMap_Current);
+
+//Reset sliders for households
+
+
+
+//Set specifc assets active/non-active
+f_pojectSpecificScenarioSettings("Current");
+
+//Set the scenario text
+t_scenarioDescription.setText(t_scenario_current);
+/*ALCODEEND*/}
+
+double f_resetSpecialSlidersAndButtons()
+{/*ALCODESTART::1761119842140*/
+uI_Tabs.pop_tabEHub.get(0).getButton_remove_nfato().action();
+
+
+
+
+
+
+
+//Project specific sliders and buttons reset
+f_resetProjectSpecificSlidersAndButtons();
+/*ALCODEEND*/}
+
+double f_finalizeSettingOfScenario(String selected_scenario)
+{/*ALCODESTART::1761120167723*/
+//Set scenario name text to the correct scenario
+t_scenarioName.setText("Scenario: " + selected_scenario);
+traceln("Selected scenario: \"" + selected_scenario + "\"");
+
+//Deselect the selected building, if selected GC is now paused
+if(c_selectedGridConnections.size()>0 && !c_selectedGridConnections.get(0).v_isActive){
+	f_clearSelectionAndSelectEnergyModel();
+}
+
+//Set boolean of running main interface scenario true
+b_runningMainInterfaceScenarios = false;
+
+if(!selected_scenario.equals("Custom")){
+	f_resetSettings();
+	
+	//Colour recolor pv map again if it is active
+	if(c_loadedMapOverlayTypes.get(rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
+		rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
+	}
+}
+/*ALCODEEND*/}
+
+double f_resetProjectSpecificSlidersAndButtons()
+{/*ALCODESTART::1761121949197*/
+//OVERRIDE THIS FUNCTION IF YOU WANT RESET CUSTOM SLIDERS 
+//AND BUTTONS THAT ARE NOT IN THE GENERIC LOADERFACE
+/*ALCODEEND*/}
+
+double f_pojectSpecificScenarioSettings(String selectedScenario)
+{/*ALCODESTART::1761122139097*/
+
+/*ALCODEEND*/}
+

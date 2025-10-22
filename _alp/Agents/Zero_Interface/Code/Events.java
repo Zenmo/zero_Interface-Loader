@@ -28,3 +28,21 @@ void e_setStartView()
 f_setStartView();
 /*ALCODEEND*/}
 
+void e_setScenarioToCustom()
+{/*ALCODESTART::1761119827697*/
+String[] scenarioOptions = f_getScenarioOptions();
+
+int customOptionIndex = 0;
+for(String scenarioOption : scenarioOptions){
+	if(scenarioOption.equals("Custom")){
+	
+	}
+}
+
+rb_scenarios.setValue(customOptionIndex, true);
+
+b_changeToCustomScenario = false;
+e_setScenarioToCustom.restart();
+
+/*ALCODEEND*/}
+
