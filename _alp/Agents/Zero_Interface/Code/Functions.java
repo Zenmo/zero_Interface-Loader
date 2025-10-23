@@ -3064,10 +3064,7 @@ new Thread( () -> {
 	
 	//After rapid run: remove loading screen
 	f_removeAllSimulateYearScreens();
-	gr_loadIconYearSimulation.setVisible(false);
-	uI_EnergyHub.gr_loadIconYearSimulationEnergyHub.setVisible(false);
-	uI_Company.gr_simulateYearScreen.setVisible(false);	
-	
+
 	if (c_selectedGridConnections.size() == 0){//Update main area collection
 		uI_Results.f_updateResultsUI(energyModel);
 	}
@@ -3077,9 +3074,10 @@ new Thread( () -> {
 	else if(c_selectedGridConnections.size() > 1){//Update COOP area collection
 		uI_Results.f_updateResultsUI(v_customEnergyCoop);
 	}
-	if (uI_EnergyHub.v_energyHubCoop != null) {
+	if (uI_EnergyHub != null && uI_EnergyHub.v_energyHubCoop != null) {
 		uI_EnergyHub.uI_Results.f_updateResultsUI(uI_EnergyHub.v_energyHubCoop);
 	}
+	
 	//Update and show kpi summary chart after run
 	if(settings.showKPISummary() != null && settings.showKPISummary() && v_clickedObjectType != OL_GISObjectType.GRIDNODE){
 		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
@@ -3087,9 +3085,12 @@ new Thread( () -> {
 	
 	//Enable radio buttons again
 	uI_Results.f_enableNonLivePlotRadioButtons(true);
-	uI_EnergyHub.uI_Results.f_enableNonLivePlotRadioButtons(true);
-	uI_Company.uI_Results.f_enableNonLivePlotRadioButtons(true); 
-	
+	if(uI_EnergyHub != null){
+		uI_EnergyHub.uI_Results.f_enableNonLivePlotRadioButtons(true);
+	}
+	if(uI_Company != null){
+		uI_Company.uI_Results.f_enableNonLivePlotRadioButtons(true); 
+	}
 	
 	b_resultsUpToDate = true;
 }).start();
