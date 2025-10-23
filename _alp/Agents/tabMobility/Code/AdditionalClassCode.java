@@ -43,3 +43,7 @@ public ShapeSlider getSliderFossilFuelCars_pct() {
 public ShapeSlider getSl_privateEVsResidentialArea_pct(){
 	return this.sl_privateEVsResidentialArea_pct;
 }
+
+public ShapeSlider getSl_publicChargersResidentialArea_pct(){
+	return this.sl_publicChargersResidentialArea_pct;
+}
