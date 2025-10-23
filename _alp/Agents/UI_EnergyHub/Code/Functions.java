@@ -536,9 +536,7 @@ saveObject.c_scenarioMap_Current = zero_Interface.c_scenarioMap_Current;
 saveObject.c_scenarioMap_Future = zero_Interface.c_scenarioMap_Future;
 
 List<LinkedHashMap<String, List<J_EAVehicle>>> c_additionalVehicleHashMaps = new ArrayList<LinkedHashMap<String, List<J_EAVehicle>>>();
-for (UI_company companyUI : zero_Interface.c_companyUIs) {
-	c_additionalVehicleHashMaps.add(companyUI.c_additionalVehicles);
-}
+
 saveObject.c_additionalVehicleHashMaps = c_additionalVehicleHashMaps;
 
 v_objectMapper = new ObjectMapper();
@@ -775,6 +773,7 @@ zero_Interface.c_mappingOfVehiclesPerCharger = saveObject.c_mappingOfVehiclesPer
 zero_Interface.c_scenarioMap_Current = saveObject.c_scenarioMap_Current;
 zero_Interface.c_scenarioMap_Future = saveObject.c_scenarioMap_Future;
 
+/*
 List<ConnectionOwner> c_COCompanies = findAll(zero_Interface.energyModel.pop_connectionOwners, p -> p.p_connectionOwnerType == OL_ConnectionOwnerType.COMPANY); 
 
 int i = 0;
@@ -786,6 +785,7 @@ for (ConnectionOwner CO : c_COCompanies) {
 	companyUI.f_setSelectedGCSliders();
 	i++;
 }
+*/
 
 /*ALCODEEND*/}
 

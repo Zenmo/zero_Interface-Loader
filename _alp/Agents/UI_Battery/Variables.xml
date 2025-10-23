@@ -105,9 +105,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[-zero_Interface.energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW/1000]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -127,9 +124,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[zero_Interface.energyModel.f_getGridNodesTopLevel().get(0).p_capacity_kW/1000]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">

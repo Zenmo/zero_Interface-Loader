@@ -127,14 +127,6 @@ for (GridConnection gc : gcList) {
 	if(gc.p_BuildingThermalAsset != null){
 		gc.p_BuildingThermalAsset.setLossScalingFactor_fr(scalingFactor);
 	}
-	
-	// Update Company UI
-	if (zero_Interface.c_companyUIs.size()>0){
-		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc) { // should also check the setting of selected GC
-			companyUI.sl_heatDemandCompanyReduction.setValue(demandReduction_pct, false);
-		}
-	}
 }
 
 //Update variable to change to custom scenario
@@ -565,61 +557,128 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-int f_calculateNumberOfCustomHeatingSystems(List<GridConnection> gcList)
-{/*ALCODESTART::1754385214478*/
-int numberOfCustomHeatingSystems = 0;
-
-for (GridConnection gc : gcList) {
-	if ( gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.CUSTOM && gc.v_isActive ) {
-		numberOfCustomHeatingSystems++;
-	}
-}
-return numberOfCustomHeatingSystems;
-/*ALCODEEND*/}
-
-double f_setHeatingSliders(int sliderIndex,ShapeSlider gasBurnerSlider,ShapeSlider heatPumpSlider,ShapeSlider hybridHeatPumpSlider,ShapeSlider districtHeatingSlider,ShapeSlider customHeatingSlider)
+double f_setHeatingSliders(List<GridConnection> gcList,List<GridConnection> orderedHeatingSystemGCList,OL_GridConnectionHeatingType changedSliderHeatingType,ShapeSlider gasBurnerSlider,ShapeSlider hybridHeatPumpSlider,ShapeSlider heatPumpSlider,ShapeSlider HTdistrictHeatingSlider,ShapeSlider LTdistrictHeatingSlider,ShapeSlider customHeatingSlider)
 {/*ALCODESTART::1754391096443*/
+////Determine the changed slider index used in the distribution for loop
+int changedSliderIndex = 0;
+switch(changedSliderHeatingType){
+	case GAS_BURNER:
+		changedSliderIndex = 0;
+		break;
+	case HYBRID_HEATPUMP:
+		changedSliderIndex = 1;
+		break;
+	case ELECTRIC_HEATPUMP:
+		changedSliderIndex = 2;
+		break;
+	case DISTRICTHEAT:
+		changedSliderIndex = 3;
+		break;
+	case LT_DISTRICTHEAT:
+	case CUSTOM:
+		throw new RuntimeException("Changed a heating type slider with a currently unsupported type!");
+}
+
+//// Get current pct values (after slider change, but before correction; In other words total_pct != 100)
 double pct_naturalGasBurner = gasBurnerSlider.getValue();
-double pct_electricHeatPump = heatPumpSlider.getValue();
 double pct_hybridHeatPump = hybridHeatPumpSlider != null ? hybridHeatPumpSlider.getValue() : 0;
-double pct_districtHeating = districtHeatingSlider != null ? districtHeatingSlider.getValue() : 0;
+double pct_electricHeatPump = heatPumpSlider != null ? heatPumpSlider.getValue() : 0;
+double pct_HTdistrictHeating = HTdistrictHeatingSlider != null ? HTdistrictHeatingSlider.getValue() : 0;
+double pct_LTdistrictHeating = LTdistrictHeatingSlider != null ? LTdistrictHeatingSlider.getValue() : 0;
 double pct_customHeatingSlider = customHeatingSlider != null ? customHeatingSlider.getValue() : 0;
 
 //Set array with pct values
 double pctArray[] = {
     pct_naturalGasBurner,
-    pct_electricHeatPump,
     pct_hybridHeatPump,
-    pct_districtHeating,
+    pct_electricHeatPump,
+    pct_HTdistrictHeating,
+    pct_LTdistrictHeating,    
     pct_customHeatingSlider
 };
 
-
-
-double pctFixed = pctArray[2] + pctArray[3] + pctArray[4]; // For now: hybrid heatpump, district heating and custom are fixed.
-double pctAdjustable = 100 - pctFixed;
-
-//Only adjust between gas and heat pump for now
-if (sliderIndex == 0) { // Gas moved
-    pctArray[0] = min(pctArray[0], pctAdjustable); // Limit gas to the available room
-    pctArray[1] = pctAdjustable - pctArray[0];     // HP gets the remaining
-} else if (sliderIndex == 1) { // Heat pump moved
-    pctArray[1] = min(pctArray[1], pctAdjustable); // Limit HP to the available room
-    pctArray[0] = pctAdjustable - pctArray[1];     // Gas gets the remaining
+//// Create a ghost asset array, and fill it. This is used to find minimums of certain sliders. Also get the total amount of GC with heating systems.
+int ghostAssetTotalArray[] = new int[pctArray.length];
+int totalGCWithHeating = 0;
+for(GridConnection GC : gcList){
+	if(GC.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE && GC.v_isActive){
+		totalGCWithHeating++;
+		
+		if(GC.p_heatingManagement instanceof J_HeatingManagementGhost){
+			switch(GC.f_getCurrentHeatingType()){
+				case GAS_BURNER:
+					ghostAssetTotalArray[0]++;
+					break;
+				case HYBRID_HEATPUMP:
+					ghostAssetTotalArray[1]++;
+					break;
+				case ELECTRIC_HEATPUMP:
+					ghostAssetTotalArray[2]++;
+					break;
+				case DISTRICTHEAT:
+					ghostAssetTotalArray[3]++;
+					break;
+				case LT_DISTRICTHEAT:
+					ghostAssetTotalArray[4]++;
+					break;
+				case CUSTOM:
+					ghostAssetTotalArray[5]++;
+					break;
+			}
+		}
+	}
 }
 
-// Set Sliders
+//// Correct the slider change trough to the other sliders. But don't move the custom slider or set sliders lower than their unchangable ghost assets.
+int customSliderIndex = 5;
+double pctExcess = Arrays.stream(pctArray).sum() - 100;
+
+for (int i = 0; i < pctArray.length && pctExcess != 0 ; i++) {
+    if (i != changedSliderIndex && i != customSliderIndex) {
+        double ghostMin_pct = ((double) 100.0 * ghostAssetTotalArray[i]) / totalGCWithHeating;
+        double maxDown_pct = pctArray[i] - ghostMin_pct;
+        double maxUp_pct = 100 - pctArray[i];
+
+        // Determine the slider delta, positive delta -> slider increases, negative -> slider decreases
+        double deltaSlider_pct = 0;
+        if(pctExcess > 0){
+        	deltaSlider_pct = -min(maxDown_pct, pctExcess);
+        }
+        else{
+        	deltaSlider_pct = min(maxUp_pct, -pctExcess);
+        }
+
+        pctArray[i] += deltaSlider_pct;
+        pctExcess = Arrays.stream(pctArray).sum() - 100;
+    }
+}
+
+//If still not 0, then adjust the changedSlider back to solve it.
+if (pctExcess != 0){
+	pctArray[changedSliderIndex] = max(0, pctArray[changedSliderIndex] - pctExcess);
+}
+
+//// Set refound values to the sliders again
 gasBurnerSlider.setValue(roundToInt(pctArray[0]), false);
-heatPumpSlider.setValue(roundToInt(pctArray[1]), false);
 if(hybridHeatPumpSlider != null){
-	hybridHeatPumpSlider.setValue(roundToInt(pctArray[2]), false);
+	hybridHeatPumpSlider.setValue(roundToInt(pctArray[1]), false);
 }
-if(districtHeatingSlider != null){
-	districtHeatingSlider.setValue(roundToInt(pctArray[3]), false);
+if(heatPumpSlider != null){
+	heatPumpSlider.setValue(roundToInt(pctArray[2]), false);
+}
+if(HTdistrictHeatingSlider != null){
+	HTdistrictHeatingSlider.setValue(roundToInt(pctArray[3]), false);
+}
+if(LTdistrictHeatingSlider != null){
+	LTdistrictHeatingSlider.setValue(roundToInt(pctArray[4]), false);
 }
 if(customHeatingSlider != null){
-	customHeatingSlider.setValue(roundToInt(pctArray[4]), false);
+	customHeatingSlider.setValue(roundToInt(pctArray[5]), false);
 }
+
+
+//Set the heating systems in the engine to the correct setting
+f_setHeatingSystems(gcList, orderedHeatingSystemGCList, changedSliderHeatingType, pctArray[changedSliderIndex]);
 /*ALCODEEND*/}
 
 double f_updateSliders_Heating()
@@ -641,7 +700,7 @@ else{
 double f_updateHeatingSliders_default()
 {/*ALCODESTART::1754924509667*/
 ////Companies
-List<GCUtility> utilityGridConnections = uI_Tabs.f_getSliderGridConnections_utilities();
+List<GCUtility> utilityGridConnections = uI_Tabs.f_getActiveSliderGridConnections_utilities();
 
 //Savings (IN PROGRESS, WHAT ABOUT THERMAL BUILDINGS?????)
 double totalBaseConsumption_kWh = 0;
@@ -671,14 +730,50 @@ sl_heatDemandReductionCompanies_pct.setValue(roundToInt(heatSavings_pct), false)
 
 
 //Heating assets
-int GasBurners = count(utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
-int GasBurners_pct = roundToInt(100.0 * GasBurners / count(utilityGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE));
+//Heating type
+int totalCompaniesWithHeating = 0;
+int nbOfCompaniesWithGasBurners = 0;
+int nbOfCompaniesWithHybridHeatpumps = 0;
+int nbOfCompaniesWithElectricHeatpumps = 0;
+int nbOfCompaniesOnHTHeatGrid = 0;
+int nbOfCompaniesOnLTHeatGrid = 0;
 
-sl_gasBurnerCompanies_pct.setValue(GasBurners_pct, false);
-f_setHeatingSliders( 0, sl_gasBurnerCompanies_pct, sl_electricHeatPumpCompanies_pct, null, null, null );
+for(GCUtility GC : utilityGridConnections){
+	if(GC.v_isActive && GC.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE){
+		totalCompaniesWithHeating++;
+		switch(GC.f_getCurrentHeatingType()){
+			case GAS_BURNER:
+				nbOfCompaniesWithGasBurners++;
+				break;
+			case HYBRID_HEATPUMP:
+				nbOfCompaniesWithHybridHeatpumps++;
+				break;
+			case ELECTRIC_HEATPUMP:
+				nbOfCompaniesWithElectricHeatpumps++;
+				break;
+			case DISTRICTHEAT:
+				nbOfCompaniesOnHTHeatGrid++;
+				break;
+			case LT_DISTRICTHEAT:
+				nbOfCompaniesOnLTHeatGrid++;
+				break;
+		}
+	}
+}
+
+int companiesWithGasBurners_pct = roundToInt(100.0 * nbOfCompaniesWithGasBurners / totalCompaniesWithHeating);
+int companiesWithHybridHeatpump_pct = roundToInt(100.0 * nbOfCompaniesWithHybridHeatpumps / totalCompaniesWithHeating);
+int companiesWithElectricHeatpump_pct = roundToInt(100.0 * nbOfCompaniesWithElectricHeatpumps / totalCompaniesWithHeating);
+int companiesWithHTDistrictHeat_pct = roundToInt(100.0 * nbOfCompaniesOnHTHeatGrid / totalCompaniesWithHeating);
+
+sl_gasBurnerCompanies_pct.setValue(companiesWithGasBurners_pct, false);
+sl_hybridHeatPumpCompanies_pct.setValue(companiesWithHybridHeatpump_pct, false);
+sl_electricHeatPumpCompanies_pct.setValue(companiesWithElectricHeatpump_pct, false);
+sl_districtHeatingCompanies_pct.setValue(companiesWithHTDistrictHeat_pct, false);
+
 
 ////Houses
-List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
+List<GCHouse> houseGridConnections = uI_Tabs.f_getActiveSliderGridConnections_houses();
 
 //Savings
 double averageScalingFactor = 0;
@@ -712,42 +807,102 @@ double averageSavingsFactor_pct = (1-averageScalingFactor)*100.0;
 sl_heatDemandReductionHouseholds_pct.setValue(roundToInt(averageSavingsFactor_pct), false);
 
 
-//Assets
-GasBurners = count(houseGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
-GasBurners_pct = roundToInt(100.0 * GasBurners / (count(houseGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE)));
+//Heating type
+int totalHousesWithHeating = 0;
+int nbOfHousesWithGasBurners = 0;
+int nbOfHousesWithHybridHeatpumps = 0;
+int nbOfHousesWithElectricHeatpumps = 0;
+int nbOfHousesOnHTHeatGrid = 0;
+int nbOfHousesOnLTHeatGrid = 0;
 
-sl_gasBurnerHouseholds_pct.setValue(GasBurners_pct, false);
-f_setHeatingSliders( 0, sl_gasBurnerHouseholds_pct, sl_electricHeatPumpHouseholds_pct, null, null, null );
+for(GCHouse GC : houseGridConnections){
+	if(GC.v_isActive && GC.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE){
+		totalHousesWithHeating++;
+		switch(GC.f_getCurrentHeatingType()){
+			case GAS_BURNER:
+				nbOfHousesWithGasBurners++;
+				break;
+			case HYBRID_HEATPUMP:
+				nbOfHousesWithHybridHeatpumps++;
+				break;
+			case ELECTRIC_HEATPUMP:
+				nbOfHousesWithElectricHeatpumps++;
+				break;
+			case DISTRICTHEAT:
+				nbOfHousesOnHTHeatGrid++;
+				break;
+			case LT_DISTRICTHEAT:
+				nbOfHousesOnLTHeatGrid++;
+				break;
+		}
+	}
+}
+
+int housesWithGasBurners_pct = roundToInt(100.0 * nbOfHousesWithGasBurners / totalHousesWithHeating);
+int housesWithHybridHeatpump_pct = roundToInt(100.0 * nbOfHousesWithHybridHeatpumps / totalHousesWithHeating);
+int housesWithElectricHeatpump_pct = roundToInt(100.0 * nbOfHousesWithElectricHeatpumps / totalHousesWithHeating);
+int housesWithHTDistrictHeat_pct = roundToInt(100.0 * nbOfHousesOnHTHeatGrid / totalHousesWithHeating);
+
+sl_gasBurnerHouseholds_pct.setValue(housesWithGasBurners_pct, false);
+sl_hybridHeatPumpHouseholds_pct.setValue(housesWithHybridHeatpump_pct, false);
+sl_electricHeatPumpHouseholds_pct.setValue(housesWithElectricHeatpump_pct, false);
+sl_districtHeatingHouseholds_pct.setValue(housesWithHTDistrictHeat_pct, false);
 
 /*ALCODEEND*/}
 
 double f_updateHeatingSliders_residential()
 {/*ALCODESTART::1754924542535*/
-List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
+List<GCHouse> houseGridConnections = uI_Tabs.f_getActiveSliderGridConnections_houses();
 
 
 //Heating type
-int GasBurners = count(houseGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
-int GasBurners_pct = roundToInt(100.0 * GasBurners / (count(houseGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE)));
-int numberOfHousesOnHTHeatGrid = count(houseGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.DISTRICTHEAT && gc.v_isActive);
-int numberOfHousesOnLTHeatGrid = count(houseGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.LT_DISTRICTHEAT && gc.v_isActive);
+int totalHousesWithHeating = 0;
+int nbOfHousesWithGasBurners = 0;
+int nbOfHousesWithHybridHeatpumps = 0;
+int nbOfHousesWithElectricHeatpumps = 0;
+int nbOfHousesOnHTHeatGrid = 0;
+int nbOfHousesOnLTHeatGrid = 0;
+
+for(GCHouse GC : houseGridConnections){
+	if(GC.v_isActive && GC.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE){
+		totalHousesWithHeating++;
+		switch(GC.f_getCurrentHeatingType()){
+			case GAS_BURNER:
+				nbOfHousesWithGasBurners++;
+				break;
+			case HYBRID_HEATPUMP:
+				nbOfHousesWithHybridHeatpumps++;
+				break;
+			case ELECTRIC_HEATPUMP:
+				nbOfHousesWithElectricHeatpumps++;
+				break;
+			case DISTRICTHEAT:
+				nbOfHousesOnHTHeatGrid++;
+				break;
+			case LT_DISTRICTHEAT:
+				nbOfHousesOnLTHeatGrid++;
+				break;
+		}
+	}
+}
+
+int housesWithGasBurners_pct = roundToInt(100.0 * nbOfHousesWithGasBurners / totalHousesWithHeating);
+int housesWithHybridHeatpump_pct = roundToInt(100.0 * nbOfHousesWithHybridHeatpumps / totalHousesWithHeating);
+int housesWithElectricHeatpump_pct = roundToInt(100.0 * nbOfHousesWithElectricHeatpumps / totalHousesWithHeating);
+
+sl_householdGasBurnerResidentialArea_pct.setValue(housesWithGasBurners_pct, false);
+sl_householdHybridHeatpumpResidentialArea.setValue(housesWithHybridHeatpump_pct, false);
+sl_householdElectricHeatPumpResidentialArea_pct.setValue(housesWithElectricHeatpump_pct, false);
 cb_householdHTDistrictHeatingResidentialArea.setSelected(false, false);
 cb_householdLTDistrictHeatingResidentialArea.setSelected(false, false);
 
-if(numberOfHousesOnHTHeatGrid > 0 || numberOfHousesOnLTHeatGrid > 0){
-	sl_householdElectricHeatPumpResidentialArea_pct.setValue(0, false);
-	sl_householdGasBurnerResidentialArea_pct.setValue(0, false);
-	if(numberOfHousesOnHTHeatGrid > 0){
-		cb_householdHTDistrictHeatingResidentialArea.setSelected(true, false);
-	}
-	else{
-		cb_householdLTDistrictHeatingResidentialArea.setSelected(true, false);		
-	}
+if(nbOfHousesOnHTHeatGrid == totalHousesWithHeating){
+	cb_householdHTDistrictHeatingResidentialArea.setSelected(true, false);
 }
-else{
-	sl_householdGasBurnerResidentialArea_pct.setValue(GasBurners_pct, false);
-	f_setHeatingSliders( 0, sl_householdGasBurnerResidentialArea_pct, sl_householdElectricHeatPumpResidentialArea_pct, null, null, null );
+if(nbOfHousesOnLTHeatGrid == totalHousesWithHeating){
+	cb_householdLTDistrictHeatingResidentialArea.setSelected(true, false);
 }
+
 //Houses with Airco
 double nbHouses = houseGridConnections.size();
 double nbHousesWithAirco = count(houseGridConnections, x -> x.p_airco != null);
@@ -770,7 +925,7 @@ sl_rooftopPTHouses_pct.setValue(roundToInt((nbHousesWithPT*100.0)/nbHouses), fal
 
 double f_updateHeatingSliders_businesspark()
 {/*ALCODESTART::1754924544023*/
-List<GCUtility> utilityGridConnections = uI_Tabs.f_getSliderGridConnections_utilities();
+List<GCUtility> utilityGridConnections = uI_Tabs.f_getActiveSliderGridConnections_utilities();
 
 //Savings (IN PROGRESS, WHAT ABOUT THERMAL BUILDINGS?????)
 double totalBaseConsumption_kWh = 0;
@@ -799,31 +954,55 @@ double heatSavings_pct = totalBaseConsumption_kWh > 0 ? (totalSavedConsumption_k
 sl_heatDemandSlidersCompaniesHeatDemandReductionCompanies_pct.setValue(roundToInt(heatSavings_pct), false);
 
 
+//Heating type
+int totalCompaniesWithHeating = 0;
+int nbOfCompaniesWithGasBurners = 0;
+int nbOfCompaniesWithHybridHeatpumps = 0;
+int nbOfCompaniesWithElectricHeatpumps = 0;
+int nbOfCompaniesOnHTHeatGrid = 0;
+int nbOfCompaniesOnLTHeatGrid = 0;
+int nbOfCompaniesWithCustomHeating = 0;
 
-//For now custom only for businessparks, future it should be made functional for other models as well!
-v_totalNumberOfCustomHeatingSystems = f_calculateNumberOfCustomHeatingSystems(new ArrayList<GridConnection>(utilityGridConnections));
+for(GCUtility GC : utilityGridConnections){
+	if(GC.v_isActive && GC.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE){
+		totalCompaniesWithHeating++;
+		switch(GC.f_getCurrentHeatingType()){
+			case GAS_BURNER:
+				nbOfCompaniesWithGasBurners++;
+				break;
+			case HYBRID_HEATPUMP:
+				nbOfCompaniesWithHybridHeatpumps++;
+				break;
+			case ELECTRIC_HEATPUMP:
+				nbOfCompaniesWithElectricHeatpumps++;
+				break;
+			case DISTRICTHEAT:
+				nbOfCompaniesOnHTHeatGrid++;
+				break;
+			case LT_DISTRICTHEAT:
+				nbOfCompaniesOnLTHeatGrid++;
+				break;
+			case CUSTOM:
+				nbOfCompaniesWithCustomHeating++;
+				break;
+		}
+	}
+}
 
-int totalCompaniesWithHeating = count(utilityGridConnections, x -> x.v_isActive && x.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE);
+int companiesWithGasBurners_pct = roundToInt(100.0 * nbOfCompaniesWithGasBurners / totalCompaniesWithHeating);
+int companiesWithHybridHeatpump_pct = roundToInt(100.0 * nbOfCompaniesWithHybridHeatpumps / totalCompaniesWithHeating);
+int companiesWithElectricHeatpump_pct = roundToInt(100.0 * nbOfCompaniesWithElectricHeatpumps / totalCompaniesWithHeating);
+int companiesWithHTDistrictHeat_pct = roundToInt(100.0 * nbOfCompaniesOnHTHeatGrid / totalCompaniesWithHeating);
+int companiesWithLTDistrictHeat_pct = roundToInt(100.0 * nbOfCompaniesOnLTHeatGrid / totalCompaniesWithHeating);
+int companiesWithCustomHeating_pct = roundToInt(100.0 * nbOfCompaniesWithCustomHeating / totalCompaniesWithHeating);
 
-int gasBurners = count(utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.GAS_BURNER && gc.v_isActive);
-int hybridHeatpump = count(utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.HYBRID_HEATPUMP && gc.v_isActive);
-int electricHeatpump = count(utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP && gc.v_isActive);
-int districtHeating = count(utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.DISTRICTHEAT && gc.v_isActive);
-int LTDistrictHeating = count(utilityGridConnections, gc-> gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.LT_DISTRICTHEAT && gc.v_isActive);
 
-int gasBurners_pct = roundToInt(100.0 * gasBurners / totalCompaniesWithHeating);
-int hybridHeatpump_pct = roundToInt(100.0 * hybridHeatpump / totalCompaniesWithHeating);
-int electricHeatpump_pct = roundToInt(100.0 * electricHeatpump / totalCompaniesWithHeating);
-int districtHeating_pct = roundToInt(100.0 * districtHeating / totalCompaniesWithHeating);
-int LTDistrictHeating_pct = roundToInt(100.0 * LTDistrictHeating / totalCompaniesWithHeating);
-int customHeating_pct = roundToInt(100.0 * v_totalNumberOfCustomHeatingSystems/totalCompaniesWithHeating);
-
-sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct.setValue(gasBurners_pct, false);
-sl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct.setValue(hybridHeatpump_pct, false);
-sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct.setValue(electricHeatpump_pct, false);
-sl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct.setValue(districtHeating_pct, false);
-//sl_heatDemandSlidersCompaniesLTDistrictHeatingCompanies_pct.setValue(LTDistrictHeating_pct, false); Doesnt exist (yet) for companies
-sl_heatingTypeSlidersCompaniesCustom_pct.setValue(customHeating_pct, false);
+sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct.setValue(companiesWithGasBurners_pct, false);
+sl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct.setValue(companiesWithHybridHeatpump_pct, false);
+sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct.setValue(companiesWithElectricHeatpump_pct, false);
+sl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct.setValue(companiesWithHTDistrictHeat_pct, false);
+//sl_heatDemandSlidersCompaniesLTDistrictHeatingCompanies_pct.setValue(companiesWithLTDistrictHeat_pct, false); Doesnt exist (yet) for companies
+sl_heatingTypeSlidersCompaniesCustom_pct.setValue(companiesWithCustomHeating_pct, false);
 
 /*ALCODEEND*/}
 
@@ -832,5 +1011,285 @@ double f_updateHeatingSliders_custom()
 //If you have a custom tab, 
 //override this function to make it update automatically
 traceln("Forgot to override the update custom heating sliders functionality");
+/*ALCODEEND*/}
+
+double f_setHeatingSystems(List<GridConnection> gcList,List<GridConnection> orderedHeatingSystemGCList,OL_GridConnectionHeatingType changedSliderHeatingType,double sliderGoal_pct)
+{/*ALCODESTART::1760350664957*/
+int totalNrOfHeatingSystems = 0;
+int nbGasBurners = 0;
+int nbHybridHeatpumps = 0;
+int nbElectricHeatpumps = 0;
+int nbHTHeatGrid = 0;
+int nbLTHeatGrid = 0;
+int nbCustomHeating = 0;
+List<GridConnection> gasBurnerGCs = new ArrayList<>();
+List<GridConnection> hybridHeatpumpGCs = new ArrayList<>();
+List<GridConnection> electricHeatpumpGCs = new ArrayList<>();
+List<GridConnection> HTHeatGridGCs = new ArrayList<>();
+List<GridConnection> LTHeatGridGCs = new ArrayList<>();
+
+for(GridConnection GC : gcList){
+	if(GC.v_isActive && GC.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE){
+		totalNrOfHeatingSystems++; 		
+		switch(GC.f_getCurrentHeatingType()){
+			case GAS_BURNER:
+				nbGasBurners++;
+				if(!(GC.p_heatingManagement instanceof J_HeatingManagementGhost)){
+					gasBurnerGCs.add(GC);
+				}
+				break;
+			case HYBRID_HEATPUMP:
+				nbHybridHeatpumps++;
+				if(!(GC.p_heatingManagement instanceof J_HeatingManagementGhost)){
+					hybridHeatpumpGCs.add(GC);
+				}
+				break;
+			case ELECTRIC_HEATPUMP:
+				nbElectricHeatpumps++;
+				if(!(GC.p_heatingManagement instanceof J_HeatingManagementGhost)){
+					electricHeatpumpGCs.add(GC);
+				}
+				break;
+			case DISTRICTHEAT:
+				nbHTHeatGrid++;
+				if(!(GC.p_heatingManagement instanceof J_HeatingManagementGhost)){
+					HTHeatGridGCs.add(GC);
+				}
+				break;
+			case LT_DISTRICTHEAT:
+				nbLTHeatGrid++;
+				if(!(GC.p_heatingManagement instanceof J_HeatingManagementGhost)){
+					LTHeatGridGCs.add(GC);
+				}
+				break;
+			case CUSTOM:
+					nbCustomHeating++;
+				if(!(GC.p_heatingManagement instanceof J_HeatingManagementGhost)){
+					//No collection, as ghost cant be changed anyway
+				}
+				break;
+		}
+	}
+}
+
+int nbChangedHeatingTypeGoal = roundToInt(totalNrOfHeatingSystems*sliderGoal_pct/100.0);
+
+int currentNumberOfChangedHeatingType = 0;
+
+switch(changedSliderHeatingType){
+	case GAS_BURNER:
+		currentNumberOfChangedHeatingType = nbGasBurners;
+		break;
+	case HYBRID_HEATPUMP:
+		currentNumberOfChangedHeatingType = nbHybridHeatpumps;
+		break;
+	case ELECTRIC_HEATPUMP:
+		currentNumberOfChangedHeatingType = nbElectricHeatpumps;
+		break;
+	case DISTRICTHEAT:
+		currentNumberOfChangedHeatingType = nbHTHeatGrid;
+		break;
+	case LT_DISTRICTHEAT:
+		currentNumberOfChangedHeatingType = nbLTHeatGrid;
+		break;
+}
+
+
+
+if (currentNumberOfChangedHeatingType < nbChangedHeatingTypeGoal) {
+	while ( currentNumberOfChangedHeatingType < nbChangedHeatingTypeGoal ) {
+	
+		GridConnection changingGC = null;
+		if(changedSliderHeatingType != OL_GridConnectionHeatingType.GAS_BURNER && gasBurnerGCs.size() > 0){
+			changingGC = findFirst(orderedHeatingSystemGCList, gc -> gasBurnerGCs.contains(gc));
+			gasBurnerGCs.remove(changingGC);		
+		}
+		else if(changedSliderHeatingType != OL_GridConnectionHeatingType.HYBRID_HEATPUMP && hybridHeatpumpGCs.size() > 0){
+			changingGC = findFirst(orderedHeatingSystemGCList, gc -> hybridHeatpumpGCs.contains(gc));
+			hybridHeatpumpGCs.remove(changingGC);
+		}
+		else if (changedSliderHeatingType != OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP && electricHeatpumpGCs.size() > 0 ) {
+			changingGC = findFirst(orderedHeatingSystemGCList, gc -> electricHeatpumpGCs.contains(gc));
+			electricHeatpumpGCs.remove(changingGC);
+		}
+		else if (changedSliderHeatingType != OL_GridConnectionHeatingType.DISTRICTHEAT && HTHeatGridGCs.size() > 0 ) {
+			changingGC = findFirst(orderedHeatingSystemGCList, gc -> HTHeatGridGCs.contains(gc));
+			HTHeatGridGCs.remove(changingGC);
+		}
+		else if (changedSliderHeatingType != OL_GridConnectionHeatingType.LT_DISTRICTHEAT && LTHeatGridGCs.size() > 0 ) {
+			changingGC = findFirst(orderedHeatingSystemGCList, gc -> LTHeatGridGCs.contains(gc));
+			LTHeatGridGCs.remove(changingGC);
+		}
+		else{
+			throw new RuntimeException("No more GC left to change into raised slider type!" );
+		}
+		
+		if(changingGC == null){
+			throw new RuntimeException("orderedHeatingSystemGClist does not contain a GC found by this function! This should not be possible!" );
+		}
+		
+		//Change the current heating type to the new one
+		changingGC.f_removeAllHeatingAssets();
+		f_addHeatAsset(changingGC, changedSliderHeatingType, f_calculatePeakHeatDemand_kW(changingGC));
+		changingGC.f_addHeatManagementToGC(changingGC, changedSliderHeatingType, false);
+		currentNumberOfChangedHeatingType ++;
+	}
+}
+else {
+	// Remove Gas burners Trucks
+	while ( currentNumberOfChangedHeatingType > nbChangedHeatingTypeGoal ) {
+		// replace a gasburner with a hybrid heatpump
+		GridConnection changingGC = null;
+		OL_GridConnectionHeatingType newHeatingType = OL_GridConnectionHeatingType.GAS_BURNER; // Always change into gasburner system.
+		if(changedSliderHeatingType == OL_GridConnectionHeatingType.GAS_BURNER){
+			changingGC = findFirst(orderedHeatingSystemGCList, gc -> gasBurnerGCs.contains(gc));
+			gasBurnerGCs.remove(changingGC);
+			newHeatingType = OL_GridConnectionHeatingType.HYBRID_HEATPUMP; // If removing gasburner, change into hybrid system.
+		}
+		else if(changedSliderHeatingType == OL_GridConnectionHeatingType.HYBRID_HEATPUMP){
+			changingGC = findFirst(orderedHeatingSystemGCList, gc -> hybridHeatpumpGCs.contains(gc));
+			hybridHeatpumpGCs.remove(changingGC);
+		}
+		else if(changedSliderHeatingType == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP){
+			changingGC = findFirst(orderedHeatingSystemGCList, gc -> electricHeatpumpGCs.contains(gc));
+			electricHeatpumpGCs.remove(changingGC);
+		}
+		else if(changedSliderHeatingType == OL_GridConnectionHeatingType.DISTRICTHEAT){
+			changingGC = findFirst(orderedHeatingSystemGCList, gc -> HTHeatGridGCs.contains(gc));
+			HTHeatGridGCs.remove(changingGC);
+		}
+		else if(changedSliderHeatingType == OL_GridConnectionHeatingType.LT_DISTRICTHEAT){
+			changingGC = findFirst(orderedHeatingSystemGCList, gc -> LTHeatGridGCs.contains(gc));
+			LTHeatGridGCs.remove(changingGC);
+		}
+		changingGC.f_removeAllHeatingAssets();
+		f_addHeatAsset(changingGC, newHeatingType, f_calculatePeakHeatDemand_kW(changingGC));
+		changingGC.f_addHeatManagementToGC(changingGC, newHeatingType, false);
+		currentNumberOfChangedHeatingType--;
+	}
+}
+
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.b_changeToCustomScenario = true;
+}
+zero_Interface.f_resetSettings();
+/*ALCODEEND*/}
+
+double f_addHeatAsset(GridConnection parentGC,OL_GridConnectionHeatingType heatAssetType,double maxHeatOutputPower_kW)
+{/*ALCODESTART::1760368810352*/
+//Initialize parameters
+double heatOutputCapacityGasBurner_kW;
+double inputCapacityElectric_kW;
+double efficiency;
+double baseTemperature_degC;
+double outputTemperature_degC;
+OL_AmbientTempType ambientTempType;
+double sourceAssetHeatPower_kW;
+double belowZeroHeatpumpEtaReductionFactor;
+maxHeatOutputPower_kW = maxHeatOutputPower_kW*2; // Make the asset capacity twice as high, to make sure it can handle the load in other scenarios with more heat consumption.
+J_AVGC_data avgc_data = zero_Interface.energyModel.avgc_data;
+double timeStep_h = zero_Interface.energyModel.p_timeStep_h;
+
+switch (heatAssetType){ // There is always only one heatingType, If there are many assets the type is CUSTOM
+
+	case GAS_BURNER:
+		heatOutputCapacityGasBurner_kW = max(avgc_data.p_minGasBurnerOutputCapacity_kW, maxHeatOutputPower_kW);			
+		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, heatOutputCapacityGasBurner_kW , avgc_data.p_avgEfficiencyGasBurner_fr, timeStep_h, 90);
+		break;
+	
+	case HYBRID_HEATPUMP:
+	
+		//Add primary heating asset (heatpump) (if its not part of the basic profile already
+		inputCapacityElectric_kW = max(avgc_data.p_minHeatpumpElectricCapacity_kW, maxHeatOutputPower_kW / 3); //-- /3, kan nog kleiner want is hybride zodat gasbrander ook bij springt, dus kleiner MOETEN aanname voor hoe klein onderzoeken
+		
+		efficiency = avgc_data.p_avgEfficiencyHeatpump_fr;
+		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
+		outputTemperature_degC = avgc_data.p_avgOutputTemperatureHeatpump_degC;
+		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
+		sourceAssetHeatPower_kW = 0;
+		belowZeroHeatpumpEtaReductionFactor = 1;
+		
+		J_EAConversionHeatPump heatPumpHybrid = new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType);
+
+		zero_Interface.energyModel.c_ambientDependentAssets.add(heatPumpHybrid);
+		
+		//Add secondary heating asset (gasburner)
+		heatOutputCapacityGasBurner_kW = max(avgc_data.p_minGasBurnerOutputCapacity_kW, maxHeatOutputPower_kW);	
+		efficiency = avgc_data.p_avgEfficiencyGasBurner_fr;
+		outputTemperature_degC = avgc_data.p_avgOutputTemperatureGasBurner_degC;
+	
+		J_EAConversionGasBurner gasBurnerHybrid = new J_EAConversionGasBurner(parentGC, heatOutputCapacityGasBurner_kW, efficiency, timeStep_h, outputTemperature_degC);		
+		break;
+	
+	case ELECTRIC_HEATPUMP:
+		//Add primary heating asset (heatpump)
+		inputCapacityElectric_kW = max(avgc_data.p_minHeatpumpElectricCapacity_kW, maxHeatOutputPower_kW); // Could be smaller due to high cop	
+		efficiency = avgc_data.p_avgEfficiencyHeatpump_fr;
+		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
+		outputTemperature_degC = avgc_data.p_avgOutputTemperatureHeatpump_degC;
+		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
+		sourceAssetHeatPower_kW = 0;
+		belowZeroHeatpumpEtaReductionFactor = 1;
+		
+		new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType );		
+		break;
+
+	case GAS_CHP:
+		
+		double outputCapacityElectric_kW = (maxHeatOutputPower_kW/avgc_data.p_avgEfficiencyCHP_thermal_fr) * avgc_data.p_avgEfficiencyCHP_electric_fr;
+		outputTemperature_degC = avgc_data.p_avgOutputTemperatureCHP_degC;
+		efficiency = avgc_data.p_avgEfficiencyCHP_thermal_fr + avgc_data.p_avgEfficiencyCHP_electric_fr;
+		
+		new J_EAConversionGasCHP(parentGC, outputCapacityElectric_kW, maxHeatOutputPower_kW, efficiency, timeStep_h, outputTemperature_degC );
+		break;
+
+	case DISTRICTHEAT:
+		double heatOutputCapacityDeliverySet_kW = max(avgc_data.p_minDistrictHeatingDeliverySetOutputCapacity_kW, maxHeatOutputPower_kW);		
+		outputTemperature_degC = avgc_data.p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
+		efficiency = avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr;
+		
+		new J_EAConversionHeatDeliverySet(parentGC, heatOutputCapacityDeliverySet_kW, efficiency, timeStep_h, outputTemperature_degC);
+		
+		//Add GC to heat grid
+		GridNode heatgrid = findFirst(zero_Interface.energyModel.pop_gridNodes, node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
+		if(heatgrid == null){
+			heatgrid = f_createNewHeatGrid();
+		}
+		//Connect
+		parentGC.p_parentNodeHeatID = heatgrid.p_gridNodeID;
+		parentGC.p_parentNodeHeat = heatgrid;
+		break;
+}
+
+/*ALCODEEND*/}
+
+GridNode f_createNewHeatGrid()
+{/*ALCODESTART::1760370085949*/
+GridNode GN_heat = zero_Interface.energyModel.add_pop_gridNodes();
+zero_Interface.energyModel.f_getGridNodesTopLevel().add(GN_heat);
+GN_heat.p_gridNodeID = "Heatgrid";
+
+// Check wether transformer capacity is known or estimated
+GN_heat.p_capacity_kW = 1000000;	
+GN_heat.p_realCapacityAvailable = false;
+
+// Basic GN information
+GN_heat.p_description = "Custom toegevoegde Warmtenet";
+
+//Define node type
+GN_heat.p_nodeType = OL_GridNodeType.HT;
+GN_heat.p_energyCarrier = OL_EnergyCarriers.HEAT;
+
+//Define GN location
+GN_heat.p_latitude = 0;
+GN_heat.p_longitude = 0;
+GN_heat.setLatLon(GN_heat.p_latitude, GN_heat.p_longitude);
+
+//Show warning that heat grid is not a simple solution
+zero_Interface.f_setErrorScreen("LET OP: Er is nu een 'warmtenet' gecreëerd. Maar er is geen warmtebron aanwezig in het model. Daarom zal de benodigde warmte voor het warmtenet in de resultaten te zien zijn als warmte import.", 0, 0);
+
+return GN_heat;
 /*ALCODEEND*/}
 

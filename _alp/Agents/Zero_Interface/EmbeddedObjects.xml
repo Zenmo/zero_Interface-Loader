@@ -2,9 +2,9 @@
 <EmbeddedObjects>
 	<EmbeddedObject>
 		<Id>1708522361909</Id>
-		<Name><![CDATA[ui_companies]]></Name>
-		<X>-240</X>
-		<Y>440</Y>
+		<Name><![CDATA[pop_UI_Company]]></Name>
+		<X>-260</X>
+		<Y>460</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -28,16 +28,16 @@
 				<Name><![CDATA[p_companyName]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_amountOfGC]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_amountOfBuildings]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_company]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_maxAddedVehicles]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_scenarioSettings_Current]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_scenarioSettings_Future]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_gridConnection]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -64,7 +64,7 @@
 		<LocationNameCode Class="CodeValue">
 			<Code><![CDATA[""]]></Code>
 		</LocationNameCode>
-		<InitializationType>SPECIFIED_NUMBER</InitializationType>
+		<InitializationType>EMPTY</InitializationType>
 		<InitializationDatabaseTableQuery>
 			<Id>1658477089963</Id>
 			<TableReference/>
@@ -74,9 +74,9 @@
 	</EmbeddedObject>
 	<EmbeddedObject>
 		<Id>1709049456144</Id>
-		<Name><![CDATA[ui_Battery]]></Name>
-		<X>-240</X>
-		<Y>560</Y>
+		<Name><![CDATA[pop_UI_Battery]]></Name>
+		<X>-260</X>
+		<Y>540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -234,11 +234,11 @@
 	</EmbeddedObject>
 	<EmbeddedObject>
 		<Id>1717506326727</Id>
-		<Name><![CDATA[ui_Hydrogen]]></Name>
-		<X>-240</X>
-		<Y>510</Y>
+		<Name><![CDATA[pop_UI_Hydrogen]]></Name>
+		<X>-260</X>
+		<Y>500</Y>
 		<Label>
-			<X>15</X>
+			<X>10</X>
 			<Y>0</Y>
 		</Label>
 		<PublicFlag>false</PublicFlag>
@@ -345,11 +345,11 @@
 	</EmbeddedObject>
 	<EmbeddedObject>
 		<Id>1722252541830</Id>
-		<Name><![CDATA[uI_EnergyHub]]></Name>
-		<X>2240</X>
-		<Y>-2220</Y>
+		<Name><![CDATA[pop_UI_EnergyHub]]></Name>
+		<X>-260</X>
+		<Y>420</Y>
 		<Label>
-			<X>20</X>
+			<X>10</X>
 			<Y>0</Y>
 		</Label>
 		<PublicFlag>false</PublicFlag>
@@ -381,9 +381,9 @@
 				<Name><![CDATA[p_energyHubLineStyle]]></Name>
 			</Parameter>
 		</Parameters>
-		<ReplicationFlag>false</ReplicationFlag>
+		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
-			<Code><![CDATA[100]]></Code>
+			<Code><![CDATA[0]]></Code>
 		</Replication>
 		<CollectionType>ARRAY_LIST_BASED</CollectionType>
 		<InitialLocationType>XYZ</InitialLocationType>
@@ -396,7 +396,7 @@
 		<LocationNameCode Class="CodeValue">
 			<Code><![CDATA[""]]></Code>
 		</LocationNameCode>
-		<InitializationType>SPECIFIED_NUMBER</InitializationType>
+		<InitializationType>EMPTY</InitializationType>
 		<InitializationDatabaseTableQuery>
 			<Id>0</Id>
 			<TableReference/>

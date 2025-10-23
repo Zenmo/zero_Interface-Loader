@@ -68,7 +68,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1754908036761</Id>
-		<Name><![CDATA[v_sliderGridConnections]]></Name>
+		<Name><![CDATA[v_activeSliderGridConnections]]></Name>
 		<X>530</X>
 		<Y>50</Y>
 		<Label>

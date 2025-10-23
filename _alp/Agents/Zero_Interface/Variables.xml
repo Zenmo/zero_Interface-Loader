@@ -268,7 +268,7 @@
 		<Id>1696863329269</Id>
 		<Name><![CDATA[v_gridConnectionInBuildingIndex]]></Name>
 		<X>50</X>
-		<Y>1520</Y>
+		<Y>1480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -309,7 +309,7 @@
 		<Id>1701879001472</Id>
 		<Name><![CDATA[v_clickedObjectText]]></Name>
 		<X>50</X>
-		<Y>1540</Y>
+		<Y>1500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -331,7 +331,7 @@
 		<Id>1701879014361</Id>
 		<Name><![CDATA[v_clickedObjectAdress]]></Name>
 		<X>50</X>
-		<Y>1560</Y>
+		<Y>1520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -463,7 +463,7 @@
 		<Id>1702046920293</Id>
 		<Name><![CDATA[v_clickedObjectDetails]]></Name>
 		<X>50</X>
-		<Y>1580</Y>
+		<Y>1540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -727,7 +727,7 @@
 		<Id>1705673181898</Id>
 		<Name><![CDATA[v_clickedGridNode]]></Name>
 		<X>50</X>
-		<Y>1420</Y>
+		<Y>1380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -746,7 +746,7 @@
 		<Id>1705673647104</Id>
 		<Name><![CDATA[v_previousClickedObjectType]]></Name>
 		<X>50</X>
-		<Y>1390</Y>
+		<Y>1350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -765,7 +765,7 @@
 		<Id>1705673714784</Id>
 		<Name><![CDATA[v_previousClickedGridNode]]></Name>
 		<X>50</X>
-		<Y>1440</Y>
+		<Y>1400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -893,7 +893,7 @@
 		<Id>1707918668189</Id>
 		<Name><![CDATA[v_clickedObjectType]]></Name>
 		<X>50</X>
-		<Y>1370</Y>
+		<Y>1330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -906,28 +906,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[OL_GISObjectType]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1708597346305</Id>
-		<Name><![CDATA[v_connectionOwnerIndexNr]]></Name>
-		<X>50</X>
-		<Y>1340</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[int]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[0]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -1604,7 +1582,7 @@
 		<Id>1725018118872</Id>
 		<Name><![CDATA[b_showCables]]></Name>
 		<X>50</X>
-		<Y>1620</Y>
+		<Y>1580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1754,7 +1732,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1743092928263</Id>
 		<Name><![CDATA[b_inManualFilterSelectionMode]]></Name>
-		<X>-1410</X>
+		<X>-1530</X>
 		<Y>500</Y>
 		<Label>
 			<X>10</X>
@@ -1777,7 +1755,7 @@
 		<Id>1743666440153</Id>
 		<Name><![CDATA[v_currentActiveInfoBubble]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-1880</X>
+		<X>-1990</X>
 		<Y>150</Y>
 		<Label>
 			<X>10</X>
@@ -1796,7 +1774,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1744205147072</Id>
 		<Name><![CDATA[v_infoText]]></Name>
-		<X>-1900</X>
+		<X>-2010</X>
 		<Y>80</Y>
 		<Label>
 			<X>10</X>
@@ -2230,7 +2208,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1756375264408</Id>
 		<Name><![CDATA[v_currentViewArea]]></Name>
-		<X>-1900</X>
+		<X>-2010</X>
 		<Y>100</Y>
 		<Label>
 			<X>10</X>
@@ -2322,7 +2300,7 @@
 	<Variable Class="Parameter">
 		<Id>1746106585457</Id>
 		<Name><![CDATA[p_currentActiveInfoBubble]]></Name>
-		<X>-1880</X>
+		<X>-1990</X>
 		<Y>170</Y>
 		<Label>
 			<X>10</X>
@@ -2511,6 +2489,247 @@
 			</ParameterEditor>
 		</Properties>
 	</Variable>
+	<Variable Class="Parameter">
+		<Id>1760978961206</Id>
+		<Name><![CDATA[uI_Company]]></Name>
+		<X>-250</X>
+		<Y>480</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[UI_company]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1760978961204</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1760978964017</Id>
+		<Name><![CDATA[uI_Hydrogen]]></Name>
+		<X>-250</X>
+		<Y>520</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[UI_Hydrogen]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1760978964015</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1760978968830</Id>
+		<Name><![CDATA[uI_Battery]]></Name>
+		<X>-250</X>
+		<Y>560</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[UI_Battery]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1760978968828</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1760979190278</Id>
+		<Name><![CDATA[uI_EnergyHub]]></Name>
+		<X>-250</X>
+		<Y>440</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[UI_EnergyHub]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1760979190276</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1761118903683</Id>
+		<Name><![CDATA[rb_scenarios]]></Name>
+		<X>-1150</X>
+		<Y>100</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[ShapeRadioButtonGroup]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1761118903681</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1761119479237</Id>
+		<Name><![CDATA[t_scenario_current]]></Name>
+		<X>-1165</X>
+		<Y>245</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA["Het huidige scenario bevat de energie dynamieken van dit moment. \n" +
+"Dit omvat o.a. de huidige zonnepanelen, het aantal elektrische \n" +
+"voertuigen in per buurt, de energie consumptie profielen van bedrijven \n" + 
+"en de huidige gasconsumptie voor verwarming."]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1761119479235</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1761119479242</Id>
+		<Name><![CDATA[t_scenario_future]]></Name>
+		<X>-1160</X>
+		<Y>290</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA["Het toekomstige scenario bevat de energie dynamieken van dit moment, \n" +
+"plus de toekomst plannen van alle bedrijven die de enquete hebben \n" +
+"ingevuld. Deze plannen kunnen bevatten: het instaleren van extra \n" +
+"zonnepanelen, aangevraagde net uitbereiding, maar ook plannen voor \n" + 
+"het electrificeren van het transport."]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1761119479240</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1761119827711</Id>
+		<Name><![CDATA[t_scenario_custom]]></Name>
+		<X>-1160</X>
+		<Y>335</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[""]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1761119827709</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1761134798639</Id>
+		<Name><![CDATA[p_residentialScenario_Current]]></Name>
+		<X>-1160</X>
+		<Y>150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[J_SliderSettings_Residential]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1761134798637</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
 	<Variable Class="CollectionVariable">
 		<Id>1707918668148</Id>
 		<Name><![CDATA[c_GISNeighborhoods]]></Name>
@@ -2526,24 +2745,6 @@
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>GIS_Object</ElementClass>
-			<ValueElementClass>String</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1709552799968</Id>
-		<Name><![CDATA[c_companyUIs]]></Name>
-		<X>-240</X>
-		<Y>460</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>UI_company</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>
@@ -2730,7 +2931,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1734442668540</Id>
 		<Name><![CDATA[c_selectedFilterOptions]]></Name>
-		<X>-1430</X>
+		<X>-1550</X>
 		<Y>80</Y>
 		<Label>
 			<X>10</X>
@@ -2749,7 +2950,7 @@
 		<Id>1734512815255</Id>
 		<Name><![CDATA[c_previousSelectedObjects]]></Name>
 		<X>50</X>
-		<Y>1490</Y>
+		<Y>1450</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2767,7 +2968,7 @@
 		<Id>1734513139372</Id>
 		<Name><![CDATA[c_selectedObjects]]></Name>
 		<X>50</X>
-		<Y>1470</Y>
+		<Y>1430</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2784,7 +2985,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1742226708562</Id>
 		<Name><![CDATA[c_manualFilterDeselectedGC]]></Name>
-		<X>-1410</X>
+		<X>-1530</X>
 		<Y>475</Y>
 		<Label>
 			<X>10</X>
@@ -2802,7 +3003,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1742226748068</Id>
 		<Name><![CDATA[c_manualFilterSelectedGC]]></Name>
-		<X>-1410</X>
+		<X>-1530</X>
 		<Y>455</Y>
 		<Label>
 			<X>10</X>
@@ -2820,7 +3021,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1742376749972</Id>
 		<Name><![CDATA[c_filterSelectedGridLoops]]></Name>
-		<X>-1410</X>
+		<X>-1530</X>
 		<Y>330</Y>
 		<Label>
 			<X>10</X>
@@ -2838,7 +3039,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1742376765347</Id>
 		<Name><![CDATA[c_filterSelectedNeighborhoods]]></Name>
-		<X>-1410</X>
+		<X>-1530</X>
 		<Y>390</Y>
 		<Label>
 			<X>10</X>
@@ -2858,7 +3059,7 @@
 		<Name><![CDATA[c_presentations]]></Name>
 		<Description><![CDATA[Would have to be filled by hand with all presentations that are (indirectly) on the interface canvas. eg: c_presentations.add(uI_Tabs_presentation)]]></Description>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-1910</X>
+		<X>-2020</X>
 		<Y>210</Y>
 		<Label>
 			<X>10</X>
@@ -3106,6 +3307,24 @@
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>UI_Results</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1760715323344</Id>
+		<Name><![CDATA[c_additionalVehicles]]></Name>
+		<X>510</X>
+		<Y>-500</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>LinkedHashMap</CollectionClass>
+			<ElementClass>String</ElementClass>
+			<ValueElementClass>List&lt;J_EAVehicle&gt;</ValueElementClass>
 		</Properties>
 	</Variable>
 </Variables>

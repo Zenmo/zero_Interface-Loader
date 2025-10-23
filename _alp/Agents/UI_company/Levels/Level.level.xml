@@ -169,9 +169,9 @@
 	</Text>
 	<Text>
 		<Id>1709571615104</Id>
-		<Name><![CDATA[text5]]></Name>
+		<Name><![CDATA[txt_storedScenarios]]></Name>
 		<X>-750</X>
-		<Y>180</Y>
+		<Y>110</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -184,7 +184,7 @@
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
-		<Text><![CDATA[Connections]]></Text>
+		<Text><![CDATA[Scenarios]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>12</Size>
@@ -210,7 +210,7 @@
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
-			<ActionCode>c_ownedGridConnections.get(v_currentSelectedGCnr).va_gridConnection.navigateTo();</ActionCode>
+			<ActionCode>p_gridConnection.va_gridConnection.navigateTo();</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
 			<Font Name="Dialog" Size="11" Style="0"/>
@@ -252,7 +252,7 @@
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<ActionCode>if (c_scenarioSettings_Current.size() &gt; 0 &amp;&amp; c_scenarioSettings_Future.size() &gt; 0){
+					<ActionCode>if (p_scenarioSettings_Current != null &amp;&amp; p_scenarioSettings_Future != null){
 	f_setScenario(rb_scenariosPrivateUI.getValue());
 }
 
@@ -325,7 +325,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 		<Id>1713957149840</Id>
 		<Name><![CDATA[txt_sliderPresetsAndLimits]]></Name>
 		<X>-1100</X>
-		<Y>140</Y>
+		<Y>160</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -389,7 +389,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
-			<ActionCode>((GIS_Building)c_ownedBuildings.get(0)).va_building.navigateTo();</ActionCode>
+			<ActionCode>((GIS_Building)p_gridConnection.c_connectedGISObjects.get(0)).va_building.navigateTo();</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
 			<Font Name="Dialog" Size="11" Style="0"/>
@@ -414,7 +414,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
-			<ActionCode>p_company.va_ConnectionOwner.navigateTo();</ActionCode>
+			<ActionCode>p_gridConnection.p_owner.va_ConnectionOwner.navigateTo();</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
 			<Font Name="Dialog" Size="11" Style="0"/>
@@ -423,7 +423,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 	</Control>
 	<Text>
 		<Id>1714655090415</Id>
-		<Name><![CDATA[txt_onStartup]]></Name>
+		<Name><![CDATA[txt_initialization]]></Name>
 		<X>-1100</X>
 		<Y>10</Y>
 		<Label>
@@ -438,7 +438,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
-		<Text><![CDATA[On Startup settings]]></Text>
+		<Text><![CDATA[Initialization]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>12</Size>
@@ -556,7 +556,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setGCCapacity(c_ownedGridConnections.get(v_currentSelectedGCnr), sl_GCCapacityCompany.getValue(), "DELIVERY");
+					<ActionCode>f_setGCCapacity(p_gridConnection, sl_GCCapacityCompany.getValue(), "DELIVERY");
 
 //Set scenario to custom
 f_setScenario(2);
@@ -635,7 +635,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<ActionCode>double newHeatDemandReduction_pct = sl_heatDemandCompanyReduction.getValue();
 double consumptionScaling_fr = 1  - newHeatDemandReduction_pct/100;
 
-for (J_EA j_ea : c_ownedGridConnections.get(v_currentSelectedGCnr).c_energyAssets){
+for (J_EA j_ea : p_gridConnection.c_energyAssets){
 	if (j_ea instanceof J_EAConsumption) {
 		if (j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND) {
 			((J_EAConsumption)j_ea).setConsumptionScaling_fr(consumptionScaling_fr);
@@ -813,7 +813,7 @@ f_setSimulateYearScreen();</ActionCode>
 					<ActionCode>double newElectricityDemandReduction_pct = sl_electricityDemandCompanyReduction.getValue();
 double consumptionScaling_fr = 1  - newElectricityDemandReduction_pct/100;
 
-for (J_EA j_ea : c_ownedGridConnections.get(v_currentSelectedGCnr).c_energyAssets) {
+for (J_EA j_ea : p_gridConnection.c_energyAssets) {
 	if (j_ea instanceof J_EAConsumption) {
 		if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND) {
 			((J_EAConsumption)j_ea).setConsumptionScaling_fr(consumptionScaling_fr);
@@ -902,7 +902,7 @@ f_setSimulateYearScreen();
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setElectricVehicleSliders(c_ownedGridConnections.get(v_currentSelectedGCnr), OL_EnergyAssetType.ELECTRIC_VAN, (int)sl_electricVansCompany.getValue());
+f_setElectricVehicleSliders(p_gridConnection, OL_EnergyAssetType.ELECTRIC_VAN, (int)sl_electricVansCompany.getValue());
 
 //Update the other two sliders aswell
 sl_hydrogenVansCompany.setValue(v_nbHydrogenVans, false);
@@ -993,7 +993,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setHydrogenVehicleSliders(c_ownedGridConnections.get(v_currentSelectedGCnr), OL_EnergyAssetType.HYDROGEN_VAN, (int)sl_hydrogenVansCompany.getValue());
+f_setHydrogenVehicleSliders(p_gridConnection, OL_EnergyAssetType.HYDROGEN_VAN, (int)sl_hydrogenVansCompany.getValue());
 
 //Update the other two sliders aswell
 sl_electricVansCompany.setValue(v_nbEVVans, false);
@@ -1084,7 +1084,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setDieselVehicleSliders(c_ownedGridConnections.get(v_currentSelectedGCnr), OL_EnergyAssetType.DIESEL_VAN, (int)sl_dieselVansCompany.getValue());
+f_setDieselVehicleSliders(p_gridConnection, OL_EnergyAssetType.DIESEL_VAN, (int)sl_dieselVansCompany.getValue());
 
 //Update the other two sliders aswell
 sl_electricVansCompany.setValue(v_nbEVVans, false);
@@ -1352,7 +1352,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setHydrogenVehicleSliders(c_ownedGridConnections.get(v_currentSelectedGCnr), OL_EnergyAssetType.HYDROGEN_TRUCK, (int)sl_hydrogenTrucksCompany.getValue());
+f_setHydrogenVehicleSliders(p_gridConnection, OL_EnergyAssetType.HYDROGEN_TRUCK, (int)sl_hydrogenTrucksCompany.getValue());
 
 //Update the other two sliders aswell
 sl_electricTrucksCompany.setValue(v_nbEVTrucks, false);
@@ -1418,7 +1418,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setElectricVehicleSliders(c_ownedGridConnections.get(v_currentSelectedGCnr), OL_EnergyAssetType.ELECTRIC_TRUCK, (int)sl_electricTrucksCompany.getValue());
+f_setElectricVehicleSliders(p_gridConnection, OL_EnergyAssetType.ELECTRIC_TRUCK, (int)sl_electricTrucksCompany.getValue());
 
 //Update the other two sliders aswell
 sl_hydrogenTrucksCompany.setValue(v_nbHydrogenTrucks, false);
@@ -1458,7 +1458,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setDieselVehicleSliders(c_ownedGridConnections.get(v_currentSelectedGCnr), OL_EnergyAssetType.DIESEL_TRUCK, (int)sl_dieselTrucksCompany.getValue());
+f_setDieselVehicleSliders(p_gridConnection, OL_EnergyAssetType.DIESEL_TRUCK, (int)sl_dieselTrucksCompany.getValue());
 
 //Update the other two sliders aswell
 sl_electricTrucksCompany.setValue(v_nbEVTrucks, false);
@@ -1498,7 +1498,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setElectricVehicleSliders(c_ownedGridConnections.get(v_currentSelectedGCnr), OL_EnergyAssetType.ELECTRIC_VEHICLE, (int)sl_electricCarsCompany.getValue());
+f_setElectricVehicleSliders(p_gridConnection, OL_EnergyAssetType.ELECTRIC_VEHICLE, (int)sl_electricCarsCompany.getValue());
 
 //Update the other two sliders aswell
 sl_hydrogenCarsCompany.setValue(v_nbHydrogenCars, false);
@@ -1613,7 +1613,7 @@ f_setSimulateYearScreen();</ActionCode>
 						<BasicProperties Width="100" Height="30">
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
-							<ActionCode>c_ownedGridConnections.get(v_currentSelectedGCnr).c_tripTrackers.forEach(tt -&gt; tt.distanceScaling_fr = 1-sl_mobilityDemandCompanyReduction.getValue()/100);
+							<ActionCode>p_gridConnection.c_tripTrackers.forEach(tt -&gt; tt.distanceScaling_fr = 1-sl_mobilityDemandCompanyReduction.getValue()/100);
 
 //Set scenario to custom
 f_setScenario(2);
@@ -1674,7 +1674,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setHydrogenVehicleSliders(c_ownedGridConnections.get(v_currentSelectedGCnr), OL_EnergyAssetType.HYDROGEN_VEHICLE, (int)sl_hydrogenCarsCompany.getValue());
+f_setHydrogenVehicleSliders(p_gridConnection, OL_EnergyAssetType.HYDROGEN_VEHICLE, (int)sl_hydrogenCarsCompany.getValue());
 
 //Update the other two sliders aswell
 sl_electricCarsCompany.setValue(v_nbEVCars, false);
@@ -1765,7 +1765,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setDieselVehicleSliders(c_ownedGridConnections.get(v_currentSelectedGCnr), OL_EnergyAssetType.DIESEL_VEHICLE, (int)sl_dieselCarsCompany.getValue());
+f_setDieselVehicleSliders(p_gridConnection, OL_EnergyAssetType.DIESEL_VEHICLE, (int)sl_dieselCarsCompany.getValue());
 
 //Update the other two sliders aswell
 sl_electricCarsCompany.setValue(v_nbEVCars, false);
@@ -1878,7 +1878,6 @@ f_setSimulateYearScreen();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>c_ownedGridConnections.size()&gt;1 &amp;&amp; c_ownedGridConnections.get(0).v_isActive &amp;&amp; c_ownedGridConnections.get(1).v_isActive</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -1886,9 +1885,9 @@ f_setSimulateYearScreen();</ActionCode>
 					<Control Type="ComboBox">
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1713544148158</Id>
-						<Name><![CDATA[GCnr_selection]]></Name>
-						<X>50</X>
-						<Y>-10</Y>
+						<Name><![CDATA[cb_selectGC]]></Name>
+						<X>-84</X>
+						<Y>-13</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1897,29 +1896,26 @@ f_setSimulateYearScreen();</ActionCode>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<BasicProperties Width="50" Height="20">
+						<BasicProperties Width="190" Height="20">
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<FillColor>-1</FillColor>
 							<TextColor>-16777216</TextColor>
 							<Enabled>true</Enabled>
-							<ActionCode>if(c_ownedGridConnections.size()&gt;1){
-	f_setSelectedGC();
-}</ActionCode>
+							<ActionCode>f_selectDifferentOwnedGC(cb_selectGC.getValueIndex());</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
 							<Font Name="Dialog" Size="11" Style="0"/>
 							<Editable>false</Editable>
 							<Button>0</Button>
 							<Button>1</Button>
-							<LinkTo>true</LinkTo>
-							<Link>v_currentSelectedGCnr</Link>
+							<LinkTo>false</LinkTo>
 						</ExtendedProperties>
 					</Control>
 					<Text>
 						<Id>1713547027389</Id>
 						<Name><![CDATA[text9]]></Name>
-						<X>-119</X>
-						<Y>-8</Y>
+						<X>-240</X>
+						<Y>-10</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1960,7 +1956,7 @@ f_setSimulateYearScreen();</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>//traceln("Slider werkt nog niet volledig!!, batterij sturing werkt nog niet goed");
-f_setBattery(c_ownedGridConnections.get(v_currentSelectedGCnr), sl_batteryCompany.getValue());
+f_setBattery(p_gridConnection, sl_batteryCompany.getValue());
 
 //Set scenario to custom
 f_setScenario(2);
@@ -2287,27 +2283,28 @@ OL_GridConnectionHeatingType selectedHeatingType;
 switch (rb_heatingTypePrivateUI.getValue()){
 	case 0:
 		selectedHeatingType = OL_GridConnectionHeatingType.GAS_BURNER;
-	break;
+		break;
 	case 1:
 		selectedHeatingType = OL_GridConnectionHeatingType.HYBRID_HEATPUMP;
-	break;
+		break;
 	case 2:
 		selectedHeatingType = OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP;
-	break;
+		break;
 	case 3:
 		selectedHeatingType = OL_GridConnectionHeatingType.DISTRICTHEAT;
-		//selectedHeatingType = OL_GridConnectionHeatingType.HYDROGENBURNER;
-	break;
+		break;
 	case 4:
-		selectedHeatingType = OL_GridConnectionHeatingType.GAS_CHP;
-	break;
+		selectedHeatingType = OL_GridConnectionHeatingType.CUSTOM;
+		f_setErrorScreen("De 'custom' verwarming optie wordt alleen gebruikt ter visualisatie voor bedrijven die starten met een 'custom' warmte systeem. In plaats van 'custom' is de knop nu gezet op 'HR ketel aardgas'.");
+		rb_heatingTypePrivateUI.setValue(0);
+		return;
 	default:
 		selectedHeatingType = OL_GridConnectionHeatingType.NONE;
 }
 
 
 //Radio button function
-f_setHeatingType(c_ownedGridConnections.get(v_currentSelectedGCnr), selectedHeatingType);
+f_setHeatingType(p_gridConnection, selectedHeatingType);
 
 //Set scenario to custom
 f_setScenario(2);
@@ -2323,7 +2320,7 @@ f_setSimulateYearScreen();</ActionCode>
 					<Button>Hybride warmtepomp</Button>
 					<Button>Elek. warmtepomp</Button>
 					<Button>Warmtenet</Button>
-					<Button>Gas WKK</Button>
+					<Button>Custom</Button>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -2370,7 +2367,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystem(c_ownedGridConnections.get(v_currentSelectedGCnr), sl_rooftopPVCompany.getValue());
+					<ActionCode>f_setPVSystem(p_gridConnection, sl_rooftopPVCompany.getValue());
 
 //Set scenario to custom
 f_setScenario(2);
@@ -2455,7 +2452,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setGCCapacity(c_ownedGridConnections.get(v_currentSelectedGCnr), sl_GCCapacityCompany_Feedin.getValue(), "FEEDIN");
+					<ActionCode>f_setGCCapacity(p_gridConnection, sl_GCCapacityCompany_Feedin.getValue(), "FEEDIN");
 
 //Set scenario to custom
 f_setScenario(2);
@@ -2528,31 +2525,6 @@ zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
 			<LabelText>Terug naar hoofdscherm</LabelText>
 		</ExtendedProperties>
 	</Control>
-	<Text>
-		<Id>1717514421993</Id>
-		<Name><![CDATA[txt_setSlidersToSelectedGC]]></Name>
-		<X>-440</X>
-		<Y>230</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Set Sliders to selected GC]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>12</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
 	<Group>
 		<Id>1725365029204</Id>
 		<Name><![CDATA[gr_companyDetails]]></Name>
@@ -2968,37 +2940,6 @@ zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
 		<Rotation>0.0</Rotation>
 		<Presentation>
 			<Rectangle>
-				<Id>1725608394737</Id>
-				<Name><![CDATA[rect_simulateYearScreen1]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<X>-995</X>
-				<Y>-320</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>!uI_Results.b_showKPISummary</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>2</LineWidth>
-				<LineWidthCode>v_chartLineWidth+0.5</LineWidthCode>
-				<LineColor>-369756683</LineColor>
-				<LineColorCode>v_loadScreenColor</LineColorCode>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>530</Width>
-				<Height>45</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-369756683</FillColor>
-				<FillColorCode>v_loadScreenColor</FillColorCode>
-				<FillMaterial>null</FillMaterial>
-			</Rectangle>
-			<Rectangle>
 				<Id>1725606178085</Id>
 				<Name><![CDATA[rect_simulateYearScreen2]]></Name>
 				<X>-535</X>
@@ -3049,7 +2990,7 @@ gr_loadIcon.setVisible(true);
 new Thread( () -&gt; {	
 	zero_Interface.energyModel.f_runRapidSimulation();
 	zero_Interface.uI_Results.f_updateResultsUI(zero_Interface.energyModel);
-	f_setSelectedGCGraphs();
+	f_updateUIResultsCompanyUI();
 	gr_loadIcon.setVisible(false);
 	
 	//Update and show kpi summary chart after run
@@ -3146,37 +3087,6 @@ new Thread( () -&gt; {
 		<Rotation>0.0</Rotation>
 		<Presentation>
 			<Rectangle>
-				<Id>1725606813428</Id>
-				<Name><![CDATA[rect_loadIcon2]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<X>-1980</X>
-				<Y>-60</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>!uI_Results.b_showKPISummary</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>2</LineWidth>
-				<LineWidthCode>v_chartLineWidth+0.5</LineWidthCode>
-				<LineColor>-369756683</LineColor>
-				<LineColorCode>v_loadScreenColor</LineColorCode>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>530</Width>
-				<Height>45</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-369756683</FillColor>
-				<FillColorCode>v_loadScreenColor</FillColorCode>
-				<FillMaterial>null</FillMaterial>
-			</Rectangle>
-			<Rectangle>
 				<Id>1725606178113</Id>
 				<Name><![CDATA[rect_loadIcon]]></Name>
 				<X>-1520</X>
@@ -3198,8 +3108,8 @@ new Thread( () -&gt; {
 				<LineColorCode>v_loadScreenColor</LineColorCode>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>1060</Width>
-				<Height>750.969</Height>
+				<Width>1065</Width>
+				<Height>755.969</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-369756683</FillColor>
 				<FillColorCode>v_loadScreenColor</FillColorCode>
@@ -3208,31 +3118,30 @@ new Thread( () -&gt; {
 			<Rectangle>
 				<Id>1729516584700</Id>
 				<Name><![CDATA[rect_GCisPausedScreen3]]></Name>
-				<X>-1980</X>
+				<X>-1990</X>
 				<Y>-60</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
 				</Label>
 				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
+				<PresentationFlag>false</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>!c_ownedGridConnections.get(v_currentSelectedGCnr).v_isActive</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<ZHeight>10</ZHeight>
 				<LineWidth>2</LineWidth>
 				<LineWidthCode>v_chartLineWidth+0.5</LineWidthCode>
 				<LineColor>-6943</LineColor>
-				<LineColorCode>v_companyUIBackgroundColor</LineColorCode>
+				<LineColorCode>v_loadScreenColor</LineColorCode>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>460</Width>
-				<Height>750</Height>
+				<Width>480</Width>
+				<Height>755</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
-				<FillColorCode>v_companyUIBackgroundColor</FillColorCode>
+				<FillColorCode>v_loadScreenColor</FillColorCode>
 				<FillMaterial>null</FillMaterial>
 			</Rectangle>
 			<Group>
@@ -3351,10 +3260,10 @@ new Thread( () -&gt; {
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>if (cb_curtailmentCompany.isSelected()) {
-	c_ownedGridConnections.get(v_currentSelectedGCnr).v_enableCurtailment = true;
+	p_gridConnection.v_enableCurtailment = true;
 }
 else {
-	c_ownedGridConnections.get(v_currentSelectedGCnr).v_enableCurtailment = false;
+	p_gridConnection.v_enableCurtailment = false;
 }
 
 //Set scenario to custom
@@ -3372,8 +3281,8 @@ f_setSimulateYearScreen();</ActionCode>
 	<Text>
 		<Id>1727883464770</Id>
 		<Name><![CDATA[txt_nfatoValues]]></Name>
-		<X>-450</X>
-		<Y>740</Y>
+		<X>-440</X>
+		<Y>680</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -3959,8 +3868,8 @@ f_setSimulateYearScreen();</ActionCode>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[Custom]]></Text>
-				<TextCode>c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractDeliveryCapacity_kW() != sl_GCCapacityCompany.getValue() ? "Custom" :
-c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contractedDeliveryCapacityKnown ? "Bekend" : "Geschat"</TextCode>
+				<TextCode>p_scenarioSettings_Current.getCurrentContractDeliveryCapacity_kW() != sl_GCCapacityCompany.getValue() ? "Custom" :
+p_gridConnection.v_liveConnectionMetaData.contractedDeliveryCapacityKnown ? "Bekend" : "Geschat"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
@@ -3986,8 +3895,8 @@ c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contr
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[Geschat]]></Text>
-				<TextCode>c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentContractFeedinCapacity_kW() != sl_GCCapacityCompany_Feedin.getValue() ? "Custom" :
-c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contractedFeedinCapacityKnown ? "Bekend" : "Geschat"</TextCode>
+				<TextCode>p_scenarioSettings_Current.getCurrentContractFeedinCapacity_kW() != sl_GCCapacityCompany_Feedin.getValue() ? "Custom" :
+p_gridConnection.v_liveConnectionMetaData.contractedFeedinCapacityKnown ? "Bekend" : "Geschat"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
@@ -4013,8 +3922,8 @@ c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.contr
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[Bekend]]></Text>
-				<TextCode>c_scenarioSettings_Current.get(v_currentSelectedGCnr).getCurrentPhysicalConnectionCapacity_kW() != v_physicalConnectionCapacity_kW ? "Custom" :
-c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.physicalCapacityKnown ? "Bekend" : "Geschat"</TextCode>
+				<TextCode>p_scenarioSettings_Current.getCurrentPhysicalConnectionCapacity_kW() != v_physicalConnectionCapacity_kW ? "Custom" :
+p_gridConnection.v_liveConnectionMetaData.physicalCapacityKnown ? "Bekend" : "Geschat"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
@@ -4027,7 +3936,6 @@ c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.physi
 	<Group>
 		<Id>1729511748859</Id>
 		<Name><![CDATA[gr_GCisPausedScreen]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>4480</X>
 		<Y>920</Y>
 		<Label>
@@ -4041,7 +3949,7 @@ c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.physi
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<XCode>1375</XCode>
 		<YCode>540</YCode>
-		<VisibleCode>!c_ownedGridConnections.get(v_currentSelectedGCnr).v_isActive</VisibleCode>
+		<VisibleCode>!p_gridConnection.v_isActive</VisibleCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -4049,7 +3957,7 @@ c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.physi
 			<Rectangle>
 				<Id>1729511748861</Id>
 				<Name><![CDATA[rect_GCisPausedScreen]]></Name>
-				<X>-995</X>
+				<X>-1010</X>
 				<Y>-320</Y>
 				<Label>
 					<X>10</X>
@@ -4068,8 +3976,8 @@ c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.physi
 				<LineColorCode>v_loadScreenColor</LineColorCode>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>530</Width>
-				<Height>740</Height>
+				<Width>545</Width>
+				<Height>760</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-369756683</FillColor>
 				<FillColorCode>v_loadScreenColor</FillColorCode>
@@ -4097,8 +4005,8 @@ c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.physi
 				<LineColorCode>v_companyUIBackgroundColor</LineColorCode>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>1060</Width>
-				<Height>740</Height>
+				<Width>1075</Width>
+				<Height>760</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
 				<FillColorCode>v_companyUIBackgroundColor</FillColorCode>
@@ -4120,34 +4028,33 @@ c_ownedGridConnections.get(v_currentSelectedGCnr).v_liveConnectionMetaData.physi
 				<OnClickCode>//Set correct overlay
 gr_simulateYearScreen.setVisible(false);		
 gr_loadIcon.setVisible(true);
+rect_GCisPausedScreen3.setVisible(true);
 
 //Unpause gc
-c_ownedGridConnections.get(v_currentSelectedGCnr).f_setActive(true);
+p_gridConnection.f_setActive(true);
+zero_Interface.b_resultsUpToDate = false;
+zero_Interface.b_changeToCustomScenario = true;
+f_enableAllSliders(true);
 
-//Select unpaused GC
-zero_Interface.f_selectBuilding(c_ownedGridConnections.get(v_currentSelectedGCnr).c_connectedGISObjects.get(0), c_ownedGridConnections.get(v_currentSelectedGCnr).c_connectedGISObjects);
-f_copyResultsUI();
-uI_Results.f_setAllCharts();
-		
 
 //Run simulation
 new Thread( () -&gt; {	
-	//Save previous totals
-	zero_Interface.f_updatePreviousTotalsGC();
-
-	zero_Interface.energyModel.f_runRapidSimulation();
-	zero_Interface.f_updateUIresultsMainArea();
-	f_setSelectedGCGraphs();
-	gr_loadIcon.setVisible(false);
 	
-	//Update and show kpi summary chart after run
-	//uI_Results.chartKPISummary.f_setKPISummaryChart();
+	//Run rapid run in engine
+	zero_Interface.energyModel.f_runRapidSimulation();
+	
+	//Update map selection and resultsUIs
+	f_selectGCOnMainInterface();
+	f_updateUIResultsCompanyUI();
 	
 	//Update and show kpi summary chart after run
 	if(zero_Interface.settings.showKPISummary() != null &amp;&amp; zero_Interface.settings.showKPISummary()){
 		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
 	}
 	
+	//Remove all simulation screens
+	zero_Interface.f_removeAllSimulateYearScreens();
+	rect_GCisPausedScreen3.setVisible(false);
 }).start();
 
 
@@ -4277,8 +4184,9 @@ else{
 	<Group>
 		<Id>1747234551900</Id>
 		<Name><![CDATA[gr_heatingOptionBlockerCHP]]></Name>
-		<X>150</X>
-		<Y>350</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>140</X>
+		<Y>1500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4288,6 +4196,8 @@ else{
 		<ShowLabel>false</ShowLabel>
 		<Lock>true</Lock>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>150</XCode>
+		<YCode>350</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -4343,7 +4253,7 @@ else{
 				<Width>280</Width>
 				<Height>30</Height>
 				<Rotation>0.0</Rotation>
-				<FillColor>-1</FillColor>
+				<FillColor>-65536</FillColor>
 				<FillColorCode>v_companyUIBackgroundColorSliders</FillColorCode>
 				<FillMaterial>null</FillMaterial>
 			</Rectangle>
@@ -4549,4 +4459,54 @@ else{
 			</Group>
 		</Presentation>
 	</Group>
+	<Text>
+		<Id>1760974606250</Id>
+		<Name><![CDATA[txt_setSimYearScreen]]></Name>
+		<X>-440</X>
+		<Y>800</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Simulate year screen]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>12</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Text>
+		<Id>1760976852165</Id>
+		<Name><![CDATA[txt_selectDifferentOwnedGC]]></Name>
+		<X>-440</X>
+		<Y>250</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Select different owned GC]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>12</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
 </Presentation>

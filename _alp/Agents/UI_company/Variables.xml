@@ -45,32 +45,10 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1713543883957</Id>
-		<Name><![CDATA[v_currentSelectedGCnr]]></Name>
-		<X>-430</X>
-		<Y>260</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[int]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[0]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1713957213075</Id>
 		<Name><![CDATA[v_minPVSlider]]></Name>
 		<X>-1060</X>
-		<Y>410</Y>
+		<Y>430</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -92,7 +70,7 @@
 		<Id>1713957229701</Id>
 		<Name><![CDATA[v_maxPVSlider]]></Name>
 		<X>-1060</X>
-		<Y>430</Y>
+		<Y>450</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -114,7 +92,7 @@
 		<Id>1713957233827</Id>
 		<Name><![CDATA[v_defaultPVSlider]]></Name>
 		<X>-1060</X>
-		<Y>450</Y>
+		<Y>470</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -136,7 +114,7 @@
 		<Id>1713971707023</Id>
 		<Name><![CDATA[v_minBatSlider]]></Name>
 		<X>-1060</X>
-		<Y>490</Y>
+		<Y>510</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -158,7 +136,7 @@
 		<Id>1713971707027</Id>
 		<Name><![CDATA[v_maxBatSlider]]></Name>
 		<X>-1060</X>
-		<Y>510</Y>
+		<Y>530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -180,7 +158,7 @@
 		<Id>1713971707029</Id>
 		<Name><![CDATA[v_defaultBatSlider]]></Name>
 		<X>-1060</X>
-		<Y>530</Y>
+		<Y>550</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -202,7 +180,7 @@
 		<Id>1714139274247</Id>
 		<Name><![CDATA[v_nbEVCars]]></Name>
 		<X>-1050</X>
-		<Y>710</Y>
+		<Y>730</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -224,7 +202,7 @@
 		<Id>1714139294087</Id>
 		<Name><![CDATA[v_nbHydrogenCars]]></Name>
 		<X>-1050</X>
-		<Y>750</Y>
+		<Y>770</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -246,7 +224,7 @@
 		<Id>1714139299844</Id>
 		<Name><![CDATA[v_nbDieselCars]]></Name>
 		<X>-1050</X>
-		<Y>730</Y>
+		<Y>750</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -268,7 +246,7 @@
 		<Id>1714139304156</Id>
 		<Name><![CDATA[v_nbEVVans]]></Name>
 		<X>-1050</X>
-		<Y>910</Y>
+		<Y>930</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -290,7 +268,7 @@
 		<Id>1714139320416</Id>
 		<Name><![CDATA[v_nbEVTrucks]]></Name>
 		<X>-1050</X>
-		<Y>1110</Y>
+		<Y>1130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -312,7 +290,7 @@
 		<Id>1714139381294</Id>
 		<Name><![CDATA[v_nbDieselVans]]></Name>
 		<X>-1050</X>
-		<Y>930</Y>
+		<Y>950</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -334,7 +312,7 @@
 		<Id>1714139385293</Id>
 		<Name><![CDATA[v_nbDieselTrucks]]></Name>
 		<X>-1050</X>
-		<Y>1130</Y>
+		<Y>1150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -356,7 +334,7 @@
 		<Id>1714139405729</Id>
 		<Name><![CDATA[v_nbHydrogenVans]]></Name>
 		<X>-1050</X>
-		<Y>950</Y>
+		<Y>970</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -378,7 +356,7 @@
 		<Id>1714139413565</Id>
 		<Name><![CDATA[v_nbHydrogenTrucks]]></Name>
 		<X>-1050</X>
-		<Y>1150</Y>
+		<Y>1170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -400,7 +378,7 @@
 		<Id>1714139966993</Id>
 		<Name><![CDATA[v_minEVCarSlider]]></Name>
 		<X>-1050</X>
-		<Y>590</Y>
+		<Y>610</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -422,7 +400,7 @@
 		<Id>1714139997786</Id>
 		<Name><![CDATA[v_minHydrogenCarSlider]]></Name>
 		<X>-1050</X>
-		<Y>630</Y>
+		<Y>650</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -444,7 +422,7 @@
 		<Id>1714140003906</Id>
 		<Name><![CDATA[v_maxEVCarSlider]]></Name>
 		<X>-1050</X>
-		<Y>650</Y>
+		<Y>670</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -466,7 +444,7 @@
 		<Id>1714140007855</Id>
 		<Name><![CDATA[v_minDieselCarSlider]]></Name>
 		<X>-1050</X>
-		<Y>610</Y>
+		<Y>630</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -488,7 +466,7 @@
 		<Id>1714140012482</Id>
 		<Name><![CDATA[v_maxHydrogenCarSlider]]></Name>
 		<X>-1050</X>
-		<Y>690</Y>
+		<Y>710</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -510,7 +488,7 @@
 		<Id>1714140056511</Id>
 		<Name><![CDATA[v_maxDieselCarSlider]]></Name>
 		<X>-1050</X>
-		<Y>670</Y>
+		<Y>690</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -532,7 +510,7 @@
 		<Id>1714141906262</Id>
 		<Name><![CDATA[v_minEVVanSlider]]></Name>
 		<X>-1050</X>
-		<Y>790</Y>
+		<Y>810</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -554,7 +532,7 @@
 		<Id>1714141906264</Id>
 		<Name><![CDATA[v_minHydrogenVanSlider]]></Name>
 		<X>-1050</X>
-		<Y>830</Y>
+		<Y>850</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -576,7 +554,7 @@
 		<Id>1714141906266</Id>
 		<Name><![CDATA[v_maxEVVanSlider]]></Name>
 		<X>-1050</X>
-		<Y>850</Y>
+		<Y>870</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -598,7 +576,7 @@
 		<Id>1714141906268</Id>
 		<Name><![CDATA[v_minDieselVanSlider]]></Name>
 		<X>-1050</X>
-		<Y>810</Y>
+		<Y>830</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -620,7 +598,7 @@
 		<Id>1714141906270</Id>
 		<Name><![CDATA[v_maxHydrogenVanSlider]]></Name>
 		<X>-1050</X>
-		<Y>890</Y>
+		<Y>910</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -642,7 +620,7 @@
 		<Id>1714141906272</Id>
 		<Name><![CDATA[v_maxDieselVanSlider]]></Name>
 		<X>-1050</X>
-		<Y>870</Y>
+		<Y>890</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -664,7 +642,7 @@
 		<Id>1714142030261</Id>
 		<Name><![CDATA[v_minEVTruckSlider]]></Name>
 		<X>-1050</X>
-		<Y>990</Y>
+		<Y>1010</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -686,7 +664,7 @@
 		<Id>1714142030263</Id>
 		<Name><![CDATA[v_minHydrogenTruckSlider]]></Name>
 		<X>-1050</X>
-		<Y>1030</Y>
+		<Y>1050</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -708,7 +686,7 @@
 		<Id>1714142030265</Id>
 		<Name><![CDATA[v_maxEVTruckSlider]]></Name>
 		<X>-1050</X>
-		<Y>1050</Y>
+		<Y>1070</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -730,7 +708,7 @@
 		<Id>1714142030267</Id>
 		<Name><![CDATA[v_minDieselTruckSlider]]></Name>
 		<X>-1050</X>
-		<Y>1010</Y>
+		<Y>1030</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -752,7 +730,7 @@
 		<Id>1714142030269</Id>
 		<Name><![CDATA[v_maxDieselTruckSlider]]></Name>
 		<X>-1050</X>
-		<Y>1070</Y>
+		<Y>1090</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -774,7 +752,7 @@
 		<Id>1714142035660</Id>
 		<Name><![CDATA[v_maxHydrogenTruckSlider]]></Name>
 		<X>-1050</X>
-		<Y>1090</Y>
+		<Y>1110</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -796,7 +774,7 @@
 		<Id>1725364840518</Id>
 		<Name><![CDATA[v_adressGC]]></Name>
 		<X>-740</X>
-		<Y>130</Y>
+		<Y>90</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -925,7 +903,7 @@
 		<Id>1725614630564</Id>
 		<Name><![CDATA[v_minGCCapacitySlider]]></Name>
 		<X>-1060</X>
-		<Y>250</Y>
+		<Y>270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -947,7 +925,7 @@
 		<Id>1725614630566</Id>
 		<Name><![CDATA[v_maxGCCapacitySlider]]></Name>
 		<X>-1060</X>
-		<Y>270</Y>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -969,7 +947,7 @@
 		<Id>1725614630568</Id>
 		<Name><![CDATA[v_defaultGCCapacitySlider]]></Name>
 		<X>-1060</X>
-		<Y>290</Y>
+		<Y>310</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -991,7 +969,7 @@
 		<Id>1725625091022</Id>
 		<Name><![CDATA[b_runningMainInterfaceScenarioSettings]]></Name>
 		<X>-410</X>
-		<Y>700</Y>
+		<Y>850</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1013,7 +991,7 @@
 		<Id>1727798399505</Id>
 		<Name><![CDATA[v_minGCCapacitySlider_Feedin]]></Name>
 		<X>-1060</X>
-		<Y>330</Y>
+		<Y>350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1035,7 +1013,7 @@
 		<Id>1727798399507</Id>
 		<Name><![CDATA[v_maxGCCapacitySlider_Feedin]]></Name>
 		<X>-1060</X>
-		<Y>350</Y>
+		<Y>370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1057,7 +1035,7 @@
 		<Id>1727798399509</Id>
 		<Name><![CDATA[v_defaultGCCapacitySlider_Feedin]]></Name>
 		<X>-1060</X>
-		<Y>370</Y>
+		<Y>390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1079,7 +1057,7 @@
 		<Id>1727872520826</Id>
 		<Name><![CDATA[v_physicalConnectionCapacity_kW]]></Name>
 		<X>-1060</X>
-		<Y>230</Y>
+		<Y>250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1097,8 +1075,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1727883544535</Id>
 		<Name><![CDATA[v_NFATO_kW_delivery]]></Name>
-		<X>-440</X>
-		<Y>805</Y>
+		<X>-430</X>
+		<Y>745</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1116,8 +1094,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1727883574908</Id>
 		<Name><![CDATA[v_NFATO_kW_feedin]]></Name>
-		<X>-440</X>
-		<Y>825</Y>
+		<X>-430</X>
+		<Y>765</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1135,8 +1113,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1727941212434</Id>
 		<Name><![CDATA[v_NFATO_active]]></Name>
-		<X>-440</X>
-		<Y>785</Y>
+		<X>-430</X>
+		<Y>725</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1155,7 +1133,7 @@
 		<Id>1729686904963</Id>
 		<Name><![CDATA[b_runningMainInterfaceSlider]]></Name>
 		<X>-410</X>
-		<Y>720</Y>
+		<Y>870</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1177,7 +1155,7 @@
 		<Id>1756376301806</Id>
 		<Name><![CDATA[v_minSavingsSliders]]></Name>
 		<X>-1050</X>
-		<Y>1240</Y>
+		<Y>1260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1199,7 +1177,7 @@
 		<Id>1756376314706</Id>
 		<Name><![CDATA[v_maxSavingsSliders]]></Name>
 		<X>-1050</X>
-		<Y>1260</Y>
+		<Y>1280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1243,86 +1221,11 @@
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
-		<Id>1708522412931</Id>
-		<Name><![CDATA[p_amountOfGC]]></Name>
-		<X>-740</X>
-		<Y>90</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[int]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1708522412929</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1708522430401</Id>
-		<Name><![CDATA[p_amountOfBuildings]]></Name>
-		<X>-740</X>
-		<Y>110</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[int]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1708522430399</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1714641936747</Id>
-		<Name><![CDATA[p_company]]></Name>
-		<X>-740</X>
-		<Y>50</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[ConnectionOwner]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1714641936745</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
 		<Id>1715181661645</Id>
 		<Name><![CDATA[p_maxAddedVehicles]]></Name>
 		<Description><![CDATA[Amount of vehicles that can additionally be added on the already existing ones]]></Description>
 		<X>-1060</X>
-		<Y>1170</Y>
+		<Y>1190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1346,11 +1249,11 @@
 			</ParameterEditor>
 		</Properties>
 	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1709571634348</Id>
-		<Name><![CDATA[c_ownedBuildings]]></Name>
+	<Variable Class="Parameter">
+		<Id>1760715449229</Id>
+		<Name><![CDATA[p_scenarioSettings_Current]]></Name>
 		<X>-740</X>
-		<Y>210</Y>
+		<Y>140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1358,17 +1261,24 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>GIS_Object</ElementClass>
-			<ValueElementClass>String</ValueElementClass>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[J_scenario_Current]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1760715449227</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
 		</Properties>
 	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1709571643590</Id>
-		<Name><![CDATA[c_ownedGridConnections]]></Name>
+	<Variable Class="Parameter">
+		<Id>1760715453384</Id>
+		<Name><![CDATA[p_scenarioSettings_Future]]></Name>
 		<X>-740</X>
-		<Y>230</Y>
+		<Y>160</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1376,17 +1286,24 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>GridConnection</ElementClass>
-			<ValueElementClass>String</ValueElementClass>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[J_scenario_Future]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1760715453382</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
 		</Properties>
 	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1711722238158</Id>
-		<Name><![CDATA[c_connectedTrafos]]></Name>
+	<Variable Class="Parameter">
+		<Id>1760715588549</Id>
+		<Name><![CDATA[p_gridConnection]]></Name>
 		<X>-740</X>
-		<Y>250</Y>
+		<Y>50</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1394,64 +1311,17 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>Object</ElementClass>
-			<ValueElementClass>String</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1713945394048</Id>
-		<Name><![CDATA[c_scenarioSettings_Current]]></Name>
-		<X>-740</X>
-		<Y>310</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>J_scenario_Current</ElementClass>
-			<ValueElementClass>String</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1713947318059</Id>
-		<Name><![CDATA[c_scenarioSettings_Future]]></Name>
-		<X>-740</X>
-		<Y>330</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>J_scenario_Future</ElementClass>
-			<ValueElementClass>String</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1727953980115</Id>
-		<Name><![CDATA[c_additionalVehicles]]></Name>
-		<X>-1060</X>
-		<Y>1190</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>String</ElementClass>
-			<ValueElementClass>List&lt;J_EAVehicle&gt;</ValueElementClass>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[GridConnection]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1760715588547</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
 		</Properties>
 	</Variable>
 </Variables>

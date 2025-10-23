@@ -1311,9 +1311,6 @@ saveObject.c_scenarioMap_Current = zero_Interface.c_scenarioMap_Current;
 saveObject.c_scenarioMap_Future = zero_Interface.c_scenarioMap_Future;
 
 List&lt;LinkedHashMap&lt;String, List&lt;J_EAVehicle&gt;&gt;&gt; c_additionalVehicleHashMaps = new ArrayList&lt;LinkedHashMap&lt;String, List&lt;J_EAVehicle&gt;&gt;&gt;();
-for (UI_company companyUI : zero_Interface.c_companyUIs) {
-	c_additionalVehicleHashMaps.add(companyUI.c_additionalVehicles);
-}
 saveObject.c_additionalVehicleHashMaps = c_additionalVehicleHashMaps;
 
 

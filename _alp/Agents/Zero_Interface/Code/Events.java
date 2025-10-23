@@ -14,8 +14,8 @@ if ( b_updateLiveCongestionColors ){
 
 // Update the NFATO values in the selected companyUI
 if(c_selectedGridConnections.size() > 0 && c_selectedGridConnections.get(0).v_enableNFato){
-	if(c_companyUIs.get(v_connectionOwnerIndexNr).v_NFATO_active){
-		c_companyUIs.get(v_connectionOwnerIndexNr).f_getNFATOValues();
+	if(uI_Company.v_NFATO_active){
+		uI_Company.f_getNFATOValues();
 	}
 }
 
@@ -26,5 +26,24 @@ f_getWeatherInfo();
 void e_setStartView()
 {/*ALCODESTART::1743509682728*/
 f_setStartView();
+/*ALCODEEND*/}
+
+void e_setScenarioToCustom()
+{/*ALCODESTART::1761119827697*/
+String[] scenarioOptions = f_getScenarioOptions();
+
+int customOptionIndex = 0;
+for(String scenarioOption : scenarioOptions){
+	if(scenarioOption.equals("Custom")){
+		break;
+	}
+	customOptionIndex++;
+}
+
+rb_scenarios.setValue(customOptionIndex, true);
+
+b_changeToCustomScenario = false;
+e_setScenarioToCustom.restart();
+
 /*ALCODEEND*/}
 

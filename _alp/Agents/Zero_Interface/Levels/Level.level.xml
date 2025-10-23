@@ -101,7 +101,7 @@
 		<Presentation>
 			<EmbeddedObjectPresentation>
 				<Id>1747229957336</Id>
-				<Name><![CDATA[uI_EnergyHub_presentation]]></Name>
+				<Name><![CDATA[pop_UI_EnergyHub_presentation]]></Name>
 				<X>0</X>
 				<Y>0</Y>
 				<Label>
@@ -1005,35 +1005,21 @@ v_clickedObjectText</TextCode>
 	switch(v_clickedObjectType){
 	
 		case BUILDING:
-			UI_company companyUI = c_companyUIs.get(v_connectionOwnerIndexNr);
-			
-			//Connect resultsUI of the main with resultsUI of CompanyUI
-			companyUI.f_updateUIResultsCompanyUI();	
-	
-			//Set sliders to the correct GC if there are more than 1 GC
-			if(companyUI.c_ownedGridConnections.size()&gt;1){
-				GridConnection selectedGC = findFirst(companyUI.c_ownedGridConnections, GC -&gt; GC == c_selectedGridConnections.get(0));  
-				companyUI.GCnr_selection.setValue(companyUI.c_ownedGridConnections.indexOf(selectedGC), true);
-			}
-			else{
-				companyUI.uI_Results.f_setAllCharts();
-				companyUI.f_getNFATOValues();
-			}
-			
-			//Go to the companyUI view
-			c_companyUIs.get(v_connectionOwnerIndexNr).va_companyUI.navigateTo();
-			v_currentViewArea = c_companyUIs.get(v_connectionOwnerIndexNr).va_companyUI;
-			
+			uI_Company.f_setCompanyUI(c_selectedGridConnections.get(0));
+			uI_Company.va_companyUI.navigateTo();
+			v_currentViewArea = uI_Company.va_companyUI;
 			break;
 		
 		case ELECTROLYSER:
-			ui_Hydrogen.get(0).va_hydrogenUI.navigateTo();
-			v_currentViewArea = ui_Hydrogen.get(0).va_hydrogenUI;
+			//uI_Hydrogen.f_setHydrogenUI(c_selectedGridConnections.get(0));
+			uI_Hydrogen.va_hydrogenUI.navigateTo();
+			v_currentViewArea = uI_Hydrogen.va_hydrogenUI;
 			break;
 		
 		case BATTERY:
-			ui_Battery.get(0).va_batteryUI.navigateTo();
-			v_currentViewArea = ui_Battery.get(0).va_batteryUI;
+			//uI_Battery.f_setBatteryUI(c_selectedGridConnections.get(0));
+			uI_Battery.va_batteryUI.navigateTo();
+			v_currentViewArea = uI_Battery.va_batteryUI;
 			break;
 		
 		case SOLARFARM:
@@ -1055,7 +1041,7 @@ else{
 	</Control>
 	<Text>
 		<Id>1708595212229</Id>
-		<Name><![CDATA[t_privateUI]]></Name>
+		<Name><![CDATA[txt_additionalUIs]]></Name>
 		<X>-290</X>
 		<Y>370</Y>
 		<Label>
@@ -1070,7 +1056,7 @@ else{
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
-		<Text><![CDATA[Private UI creation:]]></Text>
+		<Text><![CDATA[Additional UIs:]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>14</Size>
@@ -1081,7 +1067,7 @@ else{
 	<Control Type="RadioButtons">
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1709718299889</Id>
-		<Name><![CDATA[rb_scenarios]]></Name>
+		<Name><![CDATA[rb_scenarios_template]]></Name>
 		<X>19.333</X>
 		<Y>144.667</Y>
 		<Label>
@@ -1095,60 +1081,21 @@ else{
 		<BasicProperties Width="380" Height="135">
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
+			<VisibleCode>false</VisibleCode>
 			<Enabled>true</Enabled>
-			<ActionCode>//Set selected scenario string
-String selected_scenario = "";
+			<ActionCode>//Set boolean of running main interface scenario true
+b_runningMainInterfaceScenarios = true;
 
-//Disable traceln
-PrintStream originalPrintStream = f_disableTraceln();
-
-//YOUR CODE FOR SCENARIO SWITCHING HERE!!!!
-switch(rb_scenarios.getValue()){
-	
-	case 0:
-		selected_scenario = "1";
-		//f_setScenario_1();
-	break;
-	
-	case 1:
-		selected_scenario = "2";
-		//f_setScenario_2();
-	break;
-	
-	case 2:
-		selected_scenario = "3";
-		//f_setScenario_3();
-	break;
-	
-	case 3:
-		selected_scenario = "4";
-		//f_setScenario_4();
-	break;
-	
-	case 4:
-		selected_scenario = "Custom";
-		t_scenarioDescription.setText("");
-	break;
-	
-	default:
-		traceln("Unsupported scenario selected");
-}
-
-//Enable traceln
-f_enableTraceln(originalPrintStream);
-
-//Set scenario name text to the correct scenario
-t_scenarioName.setText("Scenario: " + selected_scenario);
-traceln("Selected scenario: \"" + selected_scenario + "\"");</ActionCode>
+//Set selected scenario
+f_finalizeSettingOfScenario(f_setSelectedScenario());
+</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
 			<Font Name="Dialog" Size="14" Style="0"/>
 			<DefaultValueCode>0</DefaultValueCode>
 			<Orientation>VERTICAL</Orientation>
-			<Button>S1</Button>
-			<Button>S2</Button>
-			<Button>S3</Button>
-			<Button>S4</Button>
+			<Button>Huidige situatie</Button>
+			<Button>Toekomstplannen</Button>
 			<Button>Custom</Button>
 			<LinkTo>false</LinkTo>
 		</ExtendedProperties>
@@ -1889,7 +1836,7 @@ v_selectedGridConnectionIndex &gt; 0 ?
 	<Rectangle>
 		<Id>1724419174775</Id>
 		<Name><![CDATA[rect_scenarioText]]></Name>
-		<X>-1060</X>
+		<X>-1210</X>
 		<Y>0</Y>
 		<Label>
 			<X>10</X>
@@ -1906,8 +1853,8 @@ v_selectedGridConnectionIndex &gt; 0 ?
 		<LineColor>-16777216</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>299.107</Width>
-		<Height>330</Height>
+		<Width>460</Width>
+		<Height>700</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -1915,7 +1862,7 @@ v_selectedGridConnectionIndex &gt; 0 ?
 	<Text>
 		<Id>1724419379552</Id>
 		<Name><![CDATA[txt_scenarioFunctions]]></Name>
-		<X>-1040</X>
+		<X>-1190</X>
 		<Y>20</Y>
 		<Label>
 			<X>0</X>
@@ -1933,7 +1880,7 @@ v_selectedGridConnectionIndex &gt; 0 ?
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>14</Size>
-			<Style>0</Style>
+			<Style>1</Style>
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
@@ -2164,7 +2111,7 @@ else{
 	<Rectangle>
 		<Id>1734442437753</Id>
 		<Name><![CDATA[rect_filterFunctions]]></Name>
-		<X>-1500</X>
+		<X>-1620</X>
 		<Y>0</Y>
 		<Label>
 			<X>10</X>
@@ -2215,7 +2162,7 @@ else{
 	<Text>
 		<Id>1734443865835</Id>
 		<Name><![CDATA[txt_filterFunctions]]></Name>
-		<X>-1460</X>
+		<X>-1580</X>
 		<Y>20</Y>
 		<Label>
 			<X>0</X>
@@ -2277,7 +2224,7 @@ else{
 	<Group>
 		<Id>1734444441402</Id>
 		<Name><![CDATA[gr_filterInterface]]></Name>
-		<X>-1350</X>
+		<X>-1470</X>
 		<Y>750</Y>
 		<Label>
 			<X>10</X>
@@ -3194,7 +3141,7 @@ fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(true);</ActionCode>
 	<Rectangle>
 		<Id>1746110300955</Id>
 		<Name><![CDATA[rect_ìnfoBubbleFunctions]]></Name>
-		<X>-1960</X>
+		<X>-2070</X>
 		<Y>0</Y>
 		<Label>
 			<X>10</X>
@@ -3220,7 +3167,7 @@ fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(true);</ActionCode>
 	<Text>
 		<Id>1746110305368</Id>
 		<Name><![CDATA[txt_infoBubbleFunctions]]></Name>
-		<X>-1930</X>
+		<X>-2040</X>
 		<Y>30</Y>
 		<Label>
 			<X>0</X>
@@ -3395,7 +3342,7 @@ fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(true);</ActionCode>
 	<Group>
 		<Id>1746110287596</Id>
 		<Name><![CDATA[gr_infoText]]></Name>
-		<X>-2150</X>
+		<X>-2260</X>
 		<Y>360</Y>
 		<Label>
 			<X>10</X>
@@ -7219,7 +7166,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 					<Group>
 						<Id>1750093126455</Id>
 						<Name><![CDATA[gr_extendedLegend]]></Name>
-						<X>140</X>
+						<X>170</X>
 						<Y>960</Y>
 						<Label>
 							<X>10</X>
@@ -7229,8 +7176,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						<PresentationFlag>false</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<XCode>140</XCode>
-						<YCode>0</YCode>
+						<XCode>120</XCode>
+						<YCode>-5</YCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
@@ -7238,6 +7185,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							<Rectangle>
 								<Id>1750093048056</Id>
 								<Name><![CDATA[rect_extendedLegend_line]]></Name>
+								<ExcludeFromBuild>true</ExcludeFromBuild>
 								<X>-100</X>
 								<Y>-100</Y>
 								<Label>
@@ -7251,22 +7199,49 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<EmbeddedIcon>false</EmbeddedIcon>
 								<Z>0</Z>
 								<ZHeight>10</ZHeight>
-								<LineWidth>0</LineWidth>
+								<LineWidth>1</LineWidth>
 								<LineColor/>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
 								<Width>200</Width>
-								<Height>200</Height>
+								<Height>205</Height>
 								<Rotation>0.0</Rotation>
-								<FillColor>-1644806</FillColor>
-								<FillColorCode>zenmocolor_blue1.getFillColor()</FillColorCode>
+								<FillColor>-542254</FillColor>
+								<FillColorCode>rect_legendaBackground.getFillColor()</FillColorCode>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Rectangle>
+								<Id>1760980017754</Id>
+								<Name><![CDATA[rect_extendedLegendLine]]></Name>
+								<X>-114</X>
+								<Y>-85</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-6632142</LineColor>
+								<LineColorCode>rect_legenda.getLineColor()</LineColorCode>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>204</Width>
+								<Height>183</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-1</FillColor>
 								<FillMaterial>null</FillMaterial>
 							</Rectangle>
 							<Rectangle>
 								<Id>1750092986493</Id>
 								<Name><![CDATA[rect_extendedLegend]]></Name>
 								<X>-115</X>
-								<Y>-84</Y>
+								<Y>-84.5</Y>
 								<Label>
 									<X>10</X>
 									<Y>10</Y>
@@ -7282,8 +7257,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<LineColor/>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
-								<Width>205</Width>
-								<Height>172</Height>
+								<Width>204</Width>
+								<Height>182</Height>
 								<Rotation>0.0</Rotation>
 								<FillColor>-1</FillColor>
 								<FillMaterial>null</FillMaterial>
@@ -7291,8 +7266,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							<Rectangle>
 								<Id>1750093291589</Id>
 								<Name><![CDATA[rect_specialGISObjectLegend7]]></Name>
-								<X>-110</X>
-								<Y>-40</Y>
+								<X>-90</X>
+								<Y>-35</Y>
 								<Label>
 									<X>10</X>
 									<Y>10</Y>
@@ -7317,8 +7292,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							<Text>
 								<Id>1750093291591</Id>
 								<Name><![CDATA[t_specialGISObjectLegend7]]></Name>
-								<X>-80</X>
-								<Y>-40</Y>
+								<X>-60</X>
+								<Y>-35</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -7342,8 +7317,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							<Rectangle>
 								<Id>1750093292693</Id>
 								<Name><![CDATA[rect_specialGISObjectLegend8]]></Name>
-								<X>-110</X>
-								<Y>-20</Y>
+								<X>-90</X>
+								<Y>-15</Y>
 								<Label>
 									<X>10</X>
 									<Y>10</Y>
@@ -7368,8 +7343,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							<Text>
 								<Id>1750093292695</Id>
 								<Name><![CDATA[t_specialGISObjectLegend8]]></Name>
-								<X>-80</X>
-								<Y>-20</Y>
+								<X>-60</X>
+								<Y>-15</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -7393,8 +7368,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							<Rectangle>
 								<Id>1750093293851</Id>
 								<Name><![CDATA[rect_specialGISObjectLegend9]]></Name>
-								<X>-110</X>
-								<Y>0</Y>
+								<X>-90</X>
+								<Y>5</Y>
 								<Label>
 									<X>10</X>
 									<Y>10</Y>
@@ -7419,8 +7394,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							<Text>
 								<Id>1750093293853</Id>
 								<Name><![CDATA[t_specialGISObjectLegend9]]></Name>
-								<X>-80</X>
-								<Y>0</Y>
+								<X>-60</X>
+								<Y>5</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -7444,8 +7419,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							<Rectangle>
 								<Id>1750093295400</Id>
 								<Name><![CDATA[rect_specialGISObjectLegend10]]></Name>
-								<X>-110</X>
-								<Y>20</Y>
+								<X>-90</X>
+								<Y>25</Y>
 								<Label>
 									<X>10</X>
 									<Y>10</Y>
@@ -7470,8 +7445,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							<Text>
 								<Id>1750093295402</Id>
 								<Name><![CDATA[t_specialGISObjectLegend10]]></Name>
-								<X>-80</X>
-								<Y>20</Y>
+								<X>-60</X>
+								<Y>25</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -7495,8 +7470,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							<Rectangle>
 								<Id>1750093296550</Id>
 								<Name><![CDATA[rect_specialGISObjectLegend11]]></Name>
-								<X>-110</X>
-								<Y>40</Y>
+								<X>-90</X>
+								<Y>45</Y>
 								<Label>
 									<X>10</X>
 									<Y>10</Y>
@@ -7521,8 +7496,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							<Text>
 								<Id>1750093296552</Id>
 								<Name><![CDATA[t_specialGISObjectLegend11]]></Name>
-								<X>-80</X>
-								<Y>40</Y>
+								<X>-60</X>
+								<Y>45</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -7546,8 +7521,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							<Rectangle>
 								<Id>1750093324907</Id>
 								<Name><![CDATA[rect_specialGISObjectLegend12]]></Name>
-								<X>-110</X>
-								<Y>60</Y>
+								<X>-90</X>
+								<Y>65</Y>
 								<Label>
 									<X>10</X>
 									<Y>10</Y>
@@ -7572,8 +7547,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							<Text>
 								<Id>1750093324909</Id>
 								<Name><![CDATA[t_specialGISObjectLegend12]]></Name>
-								<X>-80</X>
-								<Y>60</Y>
+								<X>-60</X>
+								<Y>65</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -7598,7 +7573,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<Id>1750093436378</Id>
 								<Name><![CDATA[line]]></Name>
 								<X>-115</X>
-								<Y>-54</Y>
+								<Y>-49</Y>
 								<Label>
 									<X>10</X>
 									<Y>0</Y>
@@ -7638,7 +7613,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
 						<VisibleCode>t_specialGISObjectLegend7.isVisible();</VisibleCode>
-						<OnClickCode>if(gr_extendedLegend.isVisible()){
+						<OnClickCode>if(!gr_extendedLegend.isVisible()){
 	gr_extendedLegend.setVisible(true);
 	t_seeMoreLegend.setText("Zie minder...");
 }
@@ -8343,4 +8318,29 @@ else{
 		<Dy>0</Dy>
 		<Dz>0</Dz>
 	</Line>
+	<Text>
+		<Id>1761138344359</Id>
+		<Name><![CDATA[txt_projectSpecificScenarios]]></Name>
+		<X>-1190</X>
+		<Y>500</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Project specific scenarios]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>14</Size>
+			<Style>1</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
 </Presentation>

@@ -221,23 +221,6 @@
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1708595258540</Id>
-		<Name><![CDATA[f_createPrivateCompanyUI]]></Name>
-		<Description><![CDATA[function used to create the private ui for each company]]></Description>
-		<X>-260</X>
-		<Y>420</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
@@ -650,54 +633,6 @@
 	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1724857887019</Id>
-		<Name><![CDATA[f_createAdditionalUIs]]></Name>
-		<X>-280</X>
-		<Y>400</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1724857983890</Id>
-		<Name><![CDATA[f_createHydrogenUI]]></Name>
-		<X>-260</X>
-		<Y>490</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1724858039724</Id>
-		<Name><![CDATA[f_createBatteryUI]]></Name>
-		<X>-260</X>
-		<Y>540</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1725006890451</Id>
 		<Name><![CDATA[f_setUIButton]]></Name>
 		<X>80</X>
@@ -808,7 +743,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1734442458629</Id>
 		<Name><![CDATA[f_applyFilter]]></Name>
-		<X>-1455</X>
+		<X>-1575</X>
 		<Y>130</Y>
 		<Label>
 			<X>10</X>
@@ -832,7 +767,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1734442462084</Id>
 		<Name><![CDATA[f_setFilter]]></Name>
-		<X>-1455</X>
+		<X>-1575</X>
 		<Y>60</Y>
 		<Label>
 			<X>10</X>
@@ -852,7 +787,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1734445008646</Id>
 		<Name><![CDATA[f_removeAllFilters]]></Name>
-		<X>-1450</X>
+		<X>-1570</X>
 		<Y>525</Y>
 		<Label>
 			<X>10</X>
@@ -868,7 +803,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1734447122780</Id>
 		<Name><![CDATA[f_selectGridLoop]]></Name>
-		<X>-1410</X>
+		<X>-1530</X>
 		<Y>310</Y>
 		<Label>
 			<X>10</X>
@@ -892,7 +827,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1734448628428</Id>
 		<Name><![CDATA[f_filterCompanies]]></Name>
-		<X>-1430</X>
+		<X>-1550</X>
 		<Y>150</Y>
 		<Label>
 			<X>10</X>
@@ -912,7 +847,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1734448687355</Id>
 		<Name><![CDATA[f_filterHouses]]></Name>
-		<X>-1430</X>
+		<X>-1550</X>
 		<Y>170</Y>
 		<Label>
 			<X>10</X>
@@ -932,7 +867,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1734448688472</Id>
 		<Name><![CDATA[f_filterDetailed]]></Name>
-		<X>-1430</X>
+		<X>-1550</X>
 		<Y>190</Y>
 		<Label>
 			<X>10</X>
@@ -952,7 +887,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1734448689519</Id>
 		<Name><![CDATA[f_filterEstimated]]></Name>
-		<X>-1430</X>
+		<X>-1550</X>
 		<Y>210</Y>
 		<Label>
 			<X>10</X>
@@ -972,7 +907,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1734448690487</Id>
 		<Name><![CDATA[f_filterHasPV]]></Name>
-		<X>-1430</X>
+		<X>-1550</X>
 		<Y>230</Y>
 		<Label>
 			<X>10</X>
@@ -992,7 +927,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1734448691508</Id>
 		<Name><![CDATA[f_filterHasTransport]]></Name>
-		<X>-1430</X>
+		<X>-1550</X>
 		<Y>250</Y>
 		<Label>
 			<X>10</X>
@@ -1012,7 +947,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1734451505770</Id>
 		<Name><![CDATA[f_removeFilter]]></Name>
-		<X>-1455</X>
+		<X>-1575</X>
 		<Y>105</Y>
 		<Label>
 			<X>10</X>
@@ -1036,7 +971,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1734517589341</Id>
 		<Name><![CDATA[f_filterGridLoops]]></Name>
-		<X>-1430</X>
+		<X>-1550</X>
 		<Y>290</Y>
 		<Label>
 			<X>10</X>
@@ -1100,7 +1035,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1737653178011</Id>
 		<Name><![CDATA[f_selectNeighborhood]]></Name>
-		<X>-1410</X>
+		<X>-1530</X>
 		<Y>370</Y>
 		<Label>
 			<X>10</X>
@@ -1124,7 +1059,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1737653178013</Id>
 		<Name><![CDATA[f_filterNeighborhoods]]></Name>
-		<X>-1430</X>
+		<X>-1550</X>
 		<Y>350</Y>
 		<Label>
 			<X>10</X>
@@ -1164,7 +1099,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1742226689515</Id>
 		<Name><![CDATA[f_filterManualSelection]]></Name>
-		<X>-1430</X>
+		<X>-1550</X>
 		<Y>415</Y>
 		<Label>
 			<X>10</X>
@@ -1184,7 +1119,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1742226787560</Id>
 		<Name><![CDATA[f_selectManualFilteredGC]]></Name>
-		<X>-1410</X>
+		<X>-1530</X>
 		<Y>435</Y>
 		<Label>
 			<X>10</X>
@@ -1264,7 +1199,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1743665953113</Id>
 		<Name><![CDATA[f_setInfoText]]></Name>
-		<X>-1900</X>
+		<X>-2010</X>
 		<Y>120</Y>
 		<Label>
 			<X>10</X>
@@ -1297,7 +1232,7 @@
 		<Id>1744894817569</Id>
 		<Name><![CDATA[f_getGroupPositionIteration]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-1870</X>
+		<X>-1980</X>
 		<Y>265</Y>
 		<Label>
 			<X>10</X>
@@ -1318,7 +1253,7 @@
 		<Id>1744894817571</Id>
 		<Name><![CDATA[f_getAbsolutePosition]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-1890</X>
+		<X>-2000</X>
 		<Y>240</Y>
 		<Label>
 			<X>10</X>
@@ -1339,7 +1274,7 @@
 		<Id>1744894817573</Id>
 		<Name><![CDATA[f_getPresentationPositionIteration]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-1870</X>
+		<X>-1980</X>
 		<Y>285</Y>
 		<Label>
 			<X>10</X>
@@ -1534,7 +1469,7 @@
 		<Id>1750261221085</Id>
 		<Name><![CDATA[f_setTrafoText]]></Name>
 		<X>50</X>
-		<Y>1660</Y>
+		<Y>1620</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2240,8 +2175,8 @@
 		<ReturnType>ShapeRadioButtonGroup</ReturnType>
 		<Id>1756369604291</Id>
 		<Name><![CDATA[f_getScenarioButtons]]></Name>
-		<X>-1010</X>
-		<Y>-70</Y>
+		<X>-1020</X>
+		<Y>100</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2328,7 +2263,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1760085891920</Id>
 		<Name><![CDATA[f_filterHasEV]]></Name>
-		<X>-1430</X>
+		<X>-1550</X>
 		<Y>270</Y>
 		<Label>
 			<X>10</X>
@@ -2341,6 +2276,242 @@
 			<Name><![CDATA[toBeFilteredGC]]></Name>
 			<Type><![CDATA[ArrayList<GridConnection>]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1760955904715</Id>
+		<Name><![CDATA[f_initializeAdditionalVehicles]]></Name>
+		<X>85</X>
+		<Y>-520</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1760978860758</Id>
+		<Name><![CDATA[f_createAdditionalUIs]]></Name>
+		<X>-280</X>
+		<Y>400</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1761060882101</Id>
+		<Name><![CDATA[f_setCompaniesScenario]]></Name>
+		<X>-1180</X>
+		<Y>445</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[scenarioMap]]></Name>
+			<Type><![CDATA[LinkedHashMap]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1761117997540</Id>
+		<Name><![CDATA[f_initializeScenarioRadioButton]]></Name>
+		<X>-1180</X>
+		<Y>60</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>String</ReturnType>
+		<Id>1761119066060</Id>
+		<Name><![CDATA[f_setSelectedScenario]]></Name>
+		<X>-1180</X>
+		<Y>180</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>String[]</ReturnType>
+		<Id>1761119264046</Id>
+		<Name><![CDATA[f_getScenarioOptions]]></Name>
+		<X>-1150</X>
+		<Y>80</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1761119479231</Id>
+		<Name><![CDATA[f_setScenario_Future]]></Name>
+		<X>-1180</X>
+		<Y>270</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1761119479233</Id>
+		<Name><![CDATA[f_setScenario_Current]]></Name>
+		<X>-1180</X>
+		<Y>225</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1761119842140</Id>
+		<Name><![CDATA[f_resetSpecialSlidersAndButtons]]></Name>
+		<X>-1180</X>
+		<Y>365</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1761120167723</Id>
+		<Name><![CDATA[f_finalizeSettingOfScenario]]></Name>
+		<X>-1180</X>
+		<Y>200</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[selected_scenario]]></Name>
+			<Type><![CDATA[String]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1761121949197</Id>
+		<Name><![CDATA[f_resetProjectSpecificSlidersAndButtons]]></Name>
+		<X>-1160</X>
+		<Y>385</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1761122139097</Id>
+		<Name><![CDATA[f_projectSpecificScenarioSettings]]></Name>
+		<X>-1180</X>
+		<Y>415</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[selectedScenario]]></Name>
+			<Type><![CDATA[String]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1761132028131</Id>
+		<Name><![CDATA[f_setResidentialScenario_Current]]></Name>
+		<X>-1180</X>
+		<Y>465</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1761134737334</Id>
+		<Name><![CDATA[f_storeResidentialScenario_Current]]></Name>
+		<X>-1180</X>
+		<Y>130</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

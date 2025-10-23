@@ -343,6 +343,10 @@
 				<Id>1753884053162</Id>
 				<Name><![CDATA[J_ModelSave]]></Name>
 			</JavaClass>
+			<JavaClass>
+				<Id>1761122454908</Id>
+				<Name><![CDATA[J_SliderSettings_Residential]]></Name>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>zero_engine</LibraryName>

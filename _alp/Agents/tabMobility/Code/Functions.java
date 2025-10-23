@@ -70,16 +70,6 @@ for (GridConnection gc : gcList) {
 	for (J_EAVehicle j_ea : gc.c_vehicleAssets) {
 		j_ea.getTripTracker().distanceScaling_fr = scalingFactor;
 	}
-	if (zero_Interface.c_companyUIs.size() > 0) {
-		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		if (companyUI != null) {
-			//if(companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) != gc){
-				//int i = indexOf(companyUI.c_ownedGridConnections.stream().toArray(), gc);
-				//companyUI.GCnr_selection.setValue(i, true);
-			//}
-			companyUI.sl_mobilityDemandCompanyReduction.setValue(demandReduction_pct, false);			
-		}
-	}
 }
 
 //Update variable to change to custom scenario
@@ -96,18 +86,14 @@ Integer numberOfGhostVehicle_Cars = 0;
 Integer numberOfGhostVehicle_Vans = 0;
 Integer numberOfGhostVehicle_Trucks = 0;
 
-if (zero_Interface.c_companyUIs.size() > 0) {
-	for (GridConnection gc : gcList ) {
-		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		for(int i = 0; i < companyUI.c_ownedGridConnections.size(); i++){
-			if(companyUI.c_ownedGridConnections.get(i).v_hasQuarterHourlyValues && companyUI.c_ownedGridConnections.get(i).v_isActive){
-				numberOfGhostVehicle_Cars += companyUI.v_minEVCarSlider;
-				numberOfGhostVehicle_Vans += companyUI.v_minEVVanSlider;
-				numberOfGhostVehicle_Trucks += companyUI.v_minEVTruckSlider;
-			}
-		}
+for (GridConnection gc : gcList ) {
+	if(gc.v_hasQuarterHourlyValues && gc.v_isActive){
+		numberOfGhostVehicle_Cars += zero_Interface.c_scenarioMap_Current.get(gc.p_uid).getCurrentEVCars();
+		numberOfGhostVehicle_Vans += zero_Interface.c_scenarioMap_Current.get(gc.p_uid).getCurrentEVVans();
+		numberOfGhostVehicle_Trucks += zero_Interface.c_scenarioMap_Current.get(gc.p_uid).getCurrentEVTrucks();
 	}
 }
+
 
 return Triple.of(numberOfGhostVehicle_Cars, numberOfGhostVehicle_Vans, numberOfGhostVehicle_Trucks);
 /*ALCODEEND*/}
@@ -309,42 +295,22 @@ J_EADieselVehicle dieselTruck = null;
 boolean foundAdditionalVehicle = false;
 
 // find the diesel truck to remove, search through additional vehicles first
-if (zero_Interface.c_companyUIs.size() > 0 ) {
-	for (GridConnection gc : gcList ) {
-		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		List<J_EAVehicle> totalList = new ArrayList<J_EAVehicle>();
-		for (List<J_EAVehicle> list : companyUI.c_additionalVehicles.values() ) {
-			totalList.addAll(list);
-		}
-		dieselTruck = (J_EADieselVehicle)findFirst(totalList, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK && gc.v_isActive);
+for (GridConnection gc : gcList ) {
+	if(gc instanceof GCUtility && gc.v_isActive){
+		dieselTruck = (J_EADieselVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK);
 		if ( dieselTruck != null ) {
 			foundAdditionalVehicle = true;
 			break;
 		}
 	}
 }
+
 // if no additional vehicle was found, search through the regular ordering of vehicles
 if (!foundAdditionalVehicle) {	
 	dieselTruck = (J_EADieselVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
 }
 if (dieselTruck!=null) {
 	GridConnection gc = (GridConnection)dieselTruck.getParentAgent();
-	
-	// update UI company
-	UI_company companyUI = null;
-	if (zero_Interface.c_companyUIs.size() > 0){
-		companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc) { // should also check the setting of selected GC						
-			companyUI.v_nbDieselTrucks--;
-			companyUI.sl_dieselTrucksCompany.setValue(companyUI.v_nbDieselTrucks, false);
-			companyUI.v_nbEVTrucks++;
-			companyUI.sl_electricTrucksCompany.setValue(companyUI.v_nbEVTrucks, false);
-			companyUI.rb_scenariosPrivateUI.setValue(2, false);
-			if (foundAdditionalVehicle) {
-				companyUI.c_additionalVehicles.get(gc.p_uid).remove(dieselTruck);
-			}
-		}
-	}
 		
 	J_ActivityTrackerTrips tripTracker = dieselTruck.tripTracker;
 	boolean available = dieselTruck.getAvailability();
@@ -363,8 +329,8 @@ if (dieselTruck!=null) {
 	zero_Interface.c_orderedVehicles.add(0, electricTruck);
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
-	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc.p_uid).add(electricTruck);
+	if(foundAdditionalVehicle){
+		zero_Interface.c_additionalVehicles.get(gc.p_uid).add(electricTruck);
 	}
 }
 
@@ -382,42 +348,22 @@ J_EAHydrogenVehicle hydrogenTruck = null;
 boolean foundAdditionalVehicle = false;
 
 // find the hydrogen truck to remove, search through additional vehicles first
-if (zero_Interface.c_companyUIs.size() > 0 ) {
-	for (GridConnection gc : gcList ) {
-		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		List<J_EAVehicle> totalList = new ArrayList<J_EAVehicle>();
-		for (List<J_EAVehicle> list : companyUI.c_additionalVehicles.values() ) {
-			totalList.addAll(list);
-		}
-		hydrogenTruck = (J_EAHydrogenVehicle)findFirst(totalList, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
+for (GridConnection gc : gcList ) {
+	if(gc instanceof GCUtility && gc.v_isActive){
+		hydrogenTruck = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK);
 		if ( hydrogenTruck != null ) {
 			foundAdditionalVehicle = true;
 			break;
 		}
 	}
 }
+
 // if no additional vehicle was found, search through the regular ordering of vehicles
 if (!foundAdditionalVehicle) {
 	hydrogenTruck = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
 }
 if (hydrogenTruck!=null) {
 	GridConnection gc = (GridConnection)hydrogenTruck.getParentAgent();
-	
-	// update UI company
-	UI_company companyUI = null;
-	if (zero_Interface.c_companyUIs.size() > 0){
-		companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc) { // should also check the setting of selected GC
-			companyUI.v_nbHydrogenTrucks--;
-			companyUI.sl_hydrogenTrucksCompany.setValue(companyUI.v_nbHydrogenTrucks, false);
-			companyUI.v_nbEVTrucks++;
-			companyUI.sl_electricTrucksCompany.setValue(companyUI.v_nbEVTrucks, false);
-			companyUI.rb_scenariosPrivateUI.setValue(2, false);	
-		}
-		if(foundAdditionalVehicle){
-			companyUI.c_additionalVehicles.get(gc.p_uid).remove(hydrogenTruck);
-		}
-	}
 	
 	J_ActivityTrackerTrips tripTracker = hydrogenTruck.tripTracker;
 	boolean available = true;
@@ -438,8 +384,8 @@ if (hydrogenTruck!=null) {
 	zero_Interface.c_orderedVehicles.add(0, electricTruck);
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
-	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc.p_uid).add(electricTruck);
+	if(foundAdditionalVehicle){
+		zero_Interface.c_additionalVehicles.get(gc.p_uid).add(electricTruck);
 	}
 }
 else {
@@ -456,43 +402,22 @@ J_EAEV electricTruck = null;
 boolean foundAdditionalVehicle = false;
 
 // find the electric truck to remove, search through additional vehicles first
-if (zero_Interface.c_companyUIs.size() > 0 ) {
-	for (GridConnection gc : gcList ) {
-		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		List<J_EAVehicle> totalList = new ArrayList<J_EAVehicle>();
-		for (List<J_EAVehicle> list : companyUI.c_additionalVehicles.values() ) {
-			totalList.addAll(list);
-		}
-		electricTruck = (J_EAEV)findFirst(totalList, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
+for (GridConnection gc : gcList ) {
+	if(gc instanceof GCUtility && gc.v_isActive){
+		electricTruck = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK);
 		if ( electricTruck != null ) {
 			foundAdditionalVehicle = true;
 			break;
 		}
 	}
 }
+
 // if no additional vehicle was found, search through the regular ordering of vehicle
 if (!foundAdditionalVehicle) {
 	electricTruck = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
 }
 if (electricTruck!=null) {
 	GridConnection gc = (GridConnection)electricTruck.getParentAgent();
-	
-	// update UI company
-	UI_company companyUI = null;
-	if (zero_Interface.c_companyUIs.size() > 0){
-		companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc) { // should also check the setting of selected GC						
-			companyUI.v_nbEVTrucks--;
-			companyUI.sl_electricTrucksCompany.setValue(companyUI.v_nbEVTrucks, false);
-			companyUI.v_nbHydrogenTrucks++;
-			companyUI.sl_hydrogenTrucksCompany.setValue(companyUI.v_nbHydrogenTrucks, false);
-			companyUI.rb_scenariosPrivateUI.setValue(2, false);
-			
-		}
-		if(foundAdditionalVehicle){
-			companyUI.c_additionalVehicles.get(gc.p_uid).remove(electricTruck);
-		}
-	}
 	
 	J_ActivityTrackerTrips tripTracker = electricTruck.tripTracker;
 	boolean available = true;
@@ -509,8 +434,8 @@ if (electricTruck!=null) {
 	zero_Interface.c_orderedVehicles.add(0, hydrogenVehicle);
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
-	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc.p_uid).add(hydrogenVehicle);
+	if(foundAdditionalVehicle){
+		zero_Interface.c_additionalVehicles.get(gc.p_uid).add(hydrogenVehicle);
 	}
 }				
 else {
@@ -527,43 +452,22 @@ J_EADieselVehicle dieselTruck = null;
 boolean foundAdditionalVehicle = false;
 
 // find the diesel truck to remove, search through additional vehicles first
-if (zero_Interface.c_companyUIs.size() > 0 ) {
-	for (GridConnection gc : gcList ) {
-		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		List<J_EAVehicle> totalList = new ArrayList<J_EAVehicle>();
-		for (List<J_EAVehicle> list : companyUI.c_additionalVehicles.values() ) {
-			totalList.addAll(list);
-		}
-		dieselTruck = (J_EADieselVehicle)findFirst(totalList, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
+for (GridConnection gc : gcList ) {
+	if(gc instanceof GCUtility && gc.v_isActive){
+		dieselTruck = (J_EADieselVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK);
 		if ( dieselTruck != null ) {
 			foundAdditionalVehicle = true;
 			break;
 		}
 	}
 }
+
 // if no additional vehicle was found, search through the regular ordering of vehicles
 if (!foundAdditionalVehicle) {
 	dieselTruck = (J_EADieselVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
 }
 if (dieselTruck!=null) {
 	GridConnection gc = (GridConnection)dieselTruck.getParentAgent();
-	
-	// update UI company
-	UI_company companyUI = null;
-	if (zero_Interface.c_companyUIs.size() > 0){
-		companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc) { // should also check the setting of selected GC						
-			companyUI.v_nbDieselTrucks--;
-			companyUI.sl_dieselTrucksCompany.setValue(companyUI.v_nbDieselTrucks, false);
-			companyUI.v_nbHydrogenTrucks++;
-			companyUI.sl_hydrogenTrucksCompany.setValue(companyUI.v_nbHydrogenTrucks, false);
-			companyUI.rb_scenariosPrivateUI.setValue(2, false);
-			
-		}
-		if(foundAdditionalVehicle){
-			companyUI.c_additionalVehicles.get(gc.p_uid).remove(dieselTruck);
-		}
-	}
 	
 	J_ActivityTrackerTrips tripTracker = dieselTruck.tripTracker;
 	boolean available = true;
@@ -580,8 +484,8 @@ if (dieselTruck!=null) {
 	zero_Interface.c_orderedVehicles.add(0, hydrogenVehicle);
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
-	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc.p_uid).add(hydrogenVehicle);
+	if(foundAdditionalVehicle){
+		zero_Interface.c_additionalVehicles.get(gc.p_uid).add(hydrogenVehicle);
 	}
 }
 else {
@@ -598,48 +502,22 @@ J_EAEV electricTruck = null;
 boolean foundAdditionalVehicle = false;
 
 // find the electric truck to remove, search through additional vehicles first
-if (zero_Interface.c_companyUIs.size() > 0 ) {
-	for (GridConnection gc : gcList ) {
-		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		List<J_EAVehicle> totalList = new ArrayList<J_EAVehicle>();
-		for (List<J_EAVehicle> list : companyUI.c_additionalVehicles.values() ) {
-			totalList.addAll(list);
-		}
-		electricTruck = (J_EAEV)findFirst(totalList, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
+for (GridConnection gc : gcList ) {
+	if(gc instanceof GCUtility && gc.v_isActive){
+		electricTruck = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK);
 		if ( electricTruck != null ) {
 			foundAdditionalVehicle = true;
 			break;
 		}
 	}
 }
+
 // if no additional vehicle was found, search through the regular ordering of vehicles
 if (!foundAdditionalVehicle) {
 	electricTruck = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
 }
 if ( electricTruck != null ) {
 	GridConnection gc = (GridConnection)electricTruck.getParentAgent();
-	
-	// update UI company
-	UI_company companyUI = null;
-	if (zero_Interface.c_companyUIs.size() > 0){
-		companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc) { // should also check the setting of selected GC
-			if (companyUI.v_minEVTruckSlider >= companyUI.v_nbEVTrucks) {
-				traceln("Removed already existing Electric Truck from GC: " + companyUI.p_companyName);
-			}
-			else {
-				companyUI.v_nbEVTrucks--;
-				companyUI.sl_electricTrucksCompany.setValue(companyUI.v_nbEVTrucks, false);
-				companyUI.v_nbDieselTrucks++;
-				companyUI.sl_dieselTrucksCompany.setValue(companyUI.v_nbDieselTrucks, false);
-			}
-			companyUI.rb_scenariosPrivateUI.setValue(2, false);
-			
-		}
-		if(foundAdditionalVehicle){
-			companyUI.c_additionalVehicles.get(gc.p_uid).remove(electricTruck);
-		}
-	}
 	
 	J_ActivityTrackerTrips tripTracker = electricTruck.tripTracker;
 	boolean available = true;
@@ -656,8 +534,8 @@ if ( electricTruck != null ) {
 	zero_Interface.c_orderedVehicles.add(0, dieselVehicle);
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
-	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc.p_uid).add(dieselVehicle);
+	if(foundAdditionalVehicle){
+		zero_Interface.c_additionalVehicles.get(gc.p_uid).add(dieselVehicle);
 	}
 }
 else {
@@ -674,42 +552,22 @@ J_EAHydrogenVehicle hydrogenTruck = null;
 boolean foundAdditionalVehicle = false;
 
 // find the hydrogen truck to remove, search through additional vehicles first
-if (zero_Interface.c_companyUIs.size() > 0 ) {
-	for (GridConnection gc : gcList ) {
-		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		List<J_EAVehicle> totalList = new ArrayList<J_EAVehicle>();
-		for (List<J_EAVehicle> list : companyUI.c_additionalVehicles.values() ) {
-			totalList.addAll(list);
-		}
-		hydrogenTruck = (J_EAHydrogenVehicle)findFirst(totalList, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive);
+for (GridConnection gc : gcList ) {
+	if(gc instanceof GCUtility && gc.v_isActive){
+		hydrogenTruck = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK);
 		if ( hydrogenTruck != null ) {
 			foundAdditionalVehicle = true;
 			break;
 		}
 	}
 }
+
 // if no additional vehicle was found, search through the regular ordering of vehicles
 if (!foundAdditionalVehicle) {
 	hydrogenTruck = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
 }
 if ( hydrogenTruck != null ) {
 	GridConnection gc = (GridConnection)hydrogenTruck.getParentAgent();
-	
-	// update UI company
-	UI_company companyUI = null;
-	if (zero_Interface.c_companyUIs.size() > 0){
-		companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc) { // should also check the setting of selected GC
-			companyUI.v_nbHydrogenTrucks--;
-			companyUI.sl_hydrogenTrucksCompany.setValue(companyUI.v_nbHydrogenTrucks, false);
-			companyUI.v_nbDieselTrucks++;
-			companyUI.sl_dieselTrucksCompany.setValue(companyUI.v_nbDieselTrucks, false);
-			companyUI.rb_scenariosPrivateUI.setValue(2, false);
-		}
-		if(foundAdditionalVehicle){
-			companyUI.c_additionalVehicles.get(gc.p_uid).remove(hydrogenTruck);
-		}
-	}
 	
 	J_ActivityTrackerTrips tripTracker = hydrogenTruck.tripTracker;
 	boolean available = true;
@@ -726,8 +584,8 @@ if ( hydrogenTruck != null ) {
 	zero_Interface.c_orderedVehicles.add(0, dieselVehicle);
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
-	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc.p_uid).add(dieselVehicle);
+	if(foundAdditionalVehicle){
+		zero_Interface.c_additionalVehicles.get(gc.p_uid).add(dieselVehicle);
 	}
 }
 else {
@@ -801,42 +659,22 @@ J_EADieselVehicle dieselVan = null;
 boolean foundAdditionalVehicle = false;
 
 // find the diesel van to remove, search through additional vehicles first
-if (zero_Interface.c_companyUIs.size() > 0 ) {
-	for (GridConnection gc : gcList ) {
-		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		List<J_EAVehicle> totalList = new ArrayList<J_EAVehicle>();
-		for (List<J_EAVehicle> list : companyUI.c_additionalVehicles.values() ) {
-			totalList.addAll(list);
-		}
-		dieselVan = (J_EADieselVehicle)findFirst(totalList, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_VAN && gc.v_isActive);
+for (GridConnection gc : gcList ) {
+	if(gc instanceof GCUtility && gc.v_isActive){
+		dieselVan = (J_EADieselVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_VAN);
 		if ( dieselVan != null ) {
 			foundAdditionalVehicle = true;
 			break;
 		}
 	}
 }
+
 // if no additional vehicle was found, search through the regular ordering of vehicles
 if (!foundAdditionalVehicle) {	
 	dieselVan = (J_EADieselVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_VAN && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
 }
 if (dieselVan!=null) {
 	GridConnection gc = (GridConnection)dieselVan.getParentAgent();
-	
-	// update UI company
-	UI_company companyUI = null;
-	if (zero_Interface.c_companyUIs.size() > 0){
-		companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc) { // should also check the setting of selected GC						
-			companyUI.v_nbDieselVans--;
-			companyUI.sl_dieselVansCompany.setValue(companyUI.v_nbDieselVans, false);
-			companyUI.v_nbEVVans++;
-			companyUI.sl_electricVansCompany.setValue(companyUI.v_nbEVVans, false);
-			companyUI.rb_scenariosPrivateUI.setValue(2, false);
-			if (foundAdditionalVehicle) {
-				companyUI.c_additionalVehicles.get(gc.p_uid).remove(dieselVan);
-			}
-		}
-	}
 		
 	J_ActivityTrackerTrips tripTracker = dieselVan.tripTracker;
 	boolean available = dieselVan.getAvailability();
@@ -855,8 +693,8 @@ if (dieselVan!=null) {
 	zero_Interface.c_orderedVehicles.add(0, electricVan);
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
-	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc.p_uid).add(electricVan);
+	if(foundAdditionalVehicle){
+		zero_Interface.c_additionalVehicles.get(gc.p_uid).add(electricVan);
 	}
 }
 
@@ -874,48 +712,22 @@ J_EAEV electricVan = null;
 boolean foundAdditionalVehicle = false;
 
 // find the electric van to remove, search through additional vehicles first
-if (zero_Interface.c_companyUIs.size() > 0 ) {
-	for (GridConnection gc : gcList ) {
-		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		List<J_EAVehicle> totalList = new ArrayList<J_EAVehicle>();
-		for (List<J_EAVehicle> list : companyUI.c_additionalVehicles.values() ) {
-			totalList.addAll(list);
-		}
-		electricVan = (J_EAEV)findFirst(totalList, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN && ((GridConnection)p.getParentAgent()).v_isActive);
+for (GridConnection gc : gcList ) {
+	if(gc instanceof GCUtility && gc.v_isActive){
+		electricVan = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN);
 		if ( electricVan != null ) {
 			foundAdditionalVehicle = true;
 			break;
 		}
 	}
 }
+
 // if no additional vehicle was found, search through the regular ordering of vehicles
 if (!foundAdditionalVehicle) {
 	electricVan = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
 }
 if ( electricVan != null ) {
 	GridConnection gc = (GridConnection)electricVan.getParentAgent();
-	
-	// update UI company
-	UI_company companyUI = null;
-	if (zero_Interface.c_companyUIs.size() > 0){
-		companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc) { // should also check the setting of selected GC
-			if (companyUI.v_minEVVanSlider >= companyUI.v_nbEVVans) {
-				traceln("Removed already existing Electric Van from GC: " + companyUI.p_companyName);
-			}
-			else {
-				companyUI.v_nbEVVans--;
-				companyUI.sl_electricVansCompany.setValue(companyUI.v_nbEVVans, false);
-				companyUI.v_nbDieselVans++;
-				companyUI.sl_dieselVansCompany.setValue(companyUI.v_nbDieselVans, false);
-			}
-			companyUI.rb_scenariosPrivateUI.setValue(2, false);
-			
-		}
-		if(foundAdditionalVehicle){
-			companyUI.c_additionalVehicles.get(gc.p_uid).remove(electricVan);
-		}
-	}
 	
 	J_ActivityTrackerTrips tripTracker = electricVan.tripTracker;
 	boolean available = true;
@@ -932,8 +744,8 @@ if ( electricVan != null ) {
 	zero_Interface.c_orderedVehicles.add(0, dieselVehicle);
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
-	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc.p_uid).add(dieselVehicle);
+	if(foundAdditionalVehicle){
+		zero_Interface.c_additionalVehicles.get(gc.p_uid).add(dieselVehicle);
 	}
 }
 else {
@@ -950,42 +762,22 @@ J_EADieselVehicle dieselCar = null;
 boolean foundAdditionalVehicle = false;
 
 // find the diesel car to remove, search through additional vehicles first
-if (zero_Interface.c_companyUIs.size() > 0 ) {
-	for (GridConnection gc : gcList ) {
-		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		List<J_EAVehicle> totalList = new ArrayList<J_EAVehicle>();
-		for (List<J_EAVehicle> list : companyUI.c_additionalVehicles.values() ) {
-			totalList.addAll(list);
-		}
-		dieselCar = (J_EADieselVehicle)findFirst(totalList, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_VEHICLE && gc.v_isActive);
+for (GridConnection gc : gcList ) {
+	if(gc instanceof GCUtility && gc.v_isActive){
+		dieselCar = (J_EADieselVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_VEHICLE);
 		if ( dieselCar != null ) {
 			foundAdditionalVehicle = true;
 			break;
 		}
 	}
 }
+
 // if no additional vehicle was found, search through the regular ordering of vehicles
 if (!foundAdditionalVehicle) {	
 	dieselCar = (J_EADieselVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_VEHICLE && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
 }
 if (dieselCar!=null) {
 	GridConnection gc = (GridConnection)dieselCar.getParentAgent();
-	
-	// update UI company
-	UI_company companyUI = null;
-	if (zero_Interface.c_companyUIs.size() > 0){
-		companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc) { // should also check the setting of selected GC						
-			companyUI.v_nbDieselCars--;
-			companyUI.sl_dieselCarsCompany.setValue(companyUI.v_nbDieselCars, false);
-			companyUI.v_nbEVCars++;
-			companyUI.sl_electricCarsCompany.setValue(companyUI.v_nbEVCars, false);
-			companyUI.rb_scenariosPrivateUI.setValue(2, false);
-			if (foundAdditionalVehicle) {
-				companyUI.c_additionalVehicles.get(gc.p_uid).remove(dieselCar);
-			}
-		}
-	}
 		
 	J_ActivityTrackerTrips tripTracker = dieselCar.tripTracker;
 	boolean available = dieselCar.getAvailability();
@@ -1004,8 +796,8 @@ if (dieselCar!=null) {
 	zero_Interface.c_orderedVehicles.add(0, electricCar);
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
-	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc.p_uid).add(electricCar);
+	if(foundAdditionalVehicle){
+		zero_Interface.c_additionalVehicles.get(gc.p_uid).add(electricCar);
 	}
 }
 
@@ -1023,48 +815,22 @@ J_EAEV electricCar = null;
 boolean foundAdditionalVehicle = false;
 
 // find the electric car to remove, search through additional vehicles first
-if (zero_Interface.c_companyUIs.size() > 0 ) {
-	for (GridConnection gc : gcList ) {
-		UI_company companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		List<J_EAVehicle> totalList = new ArrayList<J_EAVehicle>();
-		for (List<J_EAVehicle> list : companyUI.c_additionalVehicles.values() ) {
-			totalList.addAll(list);
-		}
-		electricCar = (J_EAEV)findFirst(totalList, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && ((GridConnection)p.getParentAgent()).v_isActive);
+for (GridConnection gc : gcList ) {
+	if(gc instanceof GCUtility && gc.v_isActive){
+		electricCar = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE);
 		if ( electricCar != null ) {
 			foundAdditionalVehicle = true;
 			break;
 		}
 	}
 }
+
 // if no additional vehicle was found, search through the regular ordering of vehicles
 if (!foundAdditionalVehicle) {
 	electricCar = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
 }
 if ( electricCar != null ) {
 	GridConnection gc = (GridConnection)electricCar.getParentAgent();
-	
-	// update UI company
-	UI_company companyUI = null;
-	if (zero_Interface.c_companyUIs.size() > 0){
-		companyUI = zero_Interface.c_companyUIs.get(gc.p_owner.p_connectionOwnerIndexNr);
-		if (companyUI != null && companyUI.c_ownedGridConnections.get(companyUI.v_currentSelectedGCnr) == gc) { // should also check the setting of selected GC
-			if (companyUI.v_minEVCarSlider >= companyUI.v_nbEVCars) {
-				traceln("Removed already existing Electric Car from GC: " + companyUI.p_companyName);
-			}
-			else {
-				companyUI.v_nbEVCars--;
-				companyUI.sl_electricCarsCompany.setValue(companyUI.v_nbEVCars, false);
-				companyUI.v_nbDieselCars++;
-				companyUI.sl_dieselCarsCompany.setValue(companyUI.v_nbDieselCars, false);
-			}
-			companyUI.rb_scenariosPrivateUI.setValue(2, false);
-			
-		}
-		if(foundAdditionalVehicle){
-			companyUI.c_additionalVehicles.get(gc.p_uid).remove(electricCar);
-		}
-	}
 	
 	J_ActivityTrackerTrips tripTracker = electricCar.tripTracker;
 	boolean available = true;
@@ -1081,8 +847,8 @@ if ( electricCar != null ) {
 	zero_Interface.c_orderedVehicles.add(0, dieselVehicle);
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
-	if(companyUI != null && foundAdditionalVehicle){
-		companyUI.c_additionalVehicles.get(gc.p_uid).add(dieselVehicle);
+	if(foundAdditionalVehicle){
+		zero_Interface.c_additionalVehicles.get(gc.p_uid).add(dieselVehicle);
 	}
 }
 else {
@@ -1413,7 +1179,7 @@ zero_Interface.f_resetSettings();
 
 double f_updateSliders_Mobility()
 {/*ALCODESTART::1754928402690*/
-Triple<Integer, Integer, Integer> triple = f_calculateNumberOfGhostVehicles( new ArrayList<GridConnection>(uI_Tabs.f_getSliderGridConnections_utilities()) );
+Triple<Integer, Integer, Integer> triple = f_calculateNumberOfGhostVehicles( new ArrayList<GridConnection>(uI_Tabs.f_getActiveSliderGridConnections_utilities()) );
 v_totalNumberOfGhostVehicle_Cars = triple.getLeft();
 v_totalNumberOfGhostVehicle_Vans = triple.getMiddle();
 v_totalNumberOfGhostVehicle_Trucks = triple.getRight();
@@ -1432,7 +1198,7 @@ else{
 
 double f_updateMobilitySliders_default()
 {/*ALCODESTART::1754928402694*/
-List<GridConnection> allConsumerGridConnections = uI_Tabs.f_getSliderGridConnections_consumption();
+List<GridConnection> allConsumerGridConnections = uI_Tabs.f_getActiveSliderGridConnections_consumption();
 
 ////Savings
 double totalBaseTravelDistance_km = 0;
@@ -1441,7 +1207,7 @@ for(GridConnection GC : allConsumerGridConnections){
 	if(GC.v_isActive){
 		for(J_ActivityTrackerTrips tripTracker : GC.c_tripTrackers){
 			totalBaseTravelDistance_km += tripTracker.getAnnualDistance_km();
-			totalSavedTravelDistance_km += (1-tripTracker.getDistanceScaling_fr())*totalBaseTravelDistance_km;
+			totalSavedTravelDistance_km += (1-tripTracker.getDistanceScaling_fr())*tripTracker.getAnnualDistance_km();
 		}
 	}
 }
@@ -1593,7 +1359,7 @@ gr_activateV2GPrivateParkedCars.setVisible(false);
 cb_activateV2GPrivateParkedCars.setSelected(false, false);
 gr_settingsV2G_privateParkedCars.setVisible(false);
 
-List<GCHouse> houseGridConnectionsWithPrivateParking = findAll(uI_Tabs.f_getSliderGridConnections_houses(), house -> house.p_eigenOprit);
+List<GCHouse> houseGridConnectionsWithPrivateParking = findAll(uI_Tabs.f_getActiveSliderGridConnections_houses(), house -> house.p_eigenOprit);
 List<J_EAVehicle> privateParkedCars = new ArrayList<J_EAVehicle>();
 houseGridConnectionsWithPrivateParking.forEach(gc -> privateParkedCars.addAll(gc.c_vehicleAssets));
 
