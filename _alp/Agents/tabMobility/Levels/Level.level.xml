@@ -112,7 +112,7 @@
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>sl_electricCars_pct.setValue(100 - sl_fossilFuelCars_pct.getIntValue(), false);
-f_setDieselCars( zero_Interface.energyModel.f_getActiveGridConnections(), sl_electricCars_pct, sl_fossilFuelCars_pct );</ActionCode>
+f_setDieselCars( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricCars_pct, sl_fossilFuelCars_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -141,7 +141,7 @@ f_setDieselCars( zero_Interface.energyModel.f_getActiveGridConnections(), sl_ele
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setVehicleSliders( 0, sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );
-f_setElectricTrucks( zero_Interface.energyModel.f_getActiveGridConnections(), sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );</ActionCode>
+f_setElectricTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -296,7 +296,7 @@ f_setElectricTrucks( zero_Interface.energyModel.f_getActiveGridConnections(), sl
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReduction( zero_Interface.energyModel.f_getActiveGridConnections(), sl_mobilityDemandReduction_pct.getValue() );
+					<ActionCode>f_setDemandReduction( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_mobilityDemandReduction_pct.getValue() );
 </ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -352,7 +352,7 @@ f_setElectricTrucks( zero_Interface.energyModel.f_getActiveGridConnections(), sl
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setVehicleSliders( 1, sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );
-f_setHydrogenTrucks( zero_Interface.energyModel.f_getActiveGridConnections(), sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );</ActionCode>
+f_setHydrogenTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -432,7 +432,7 @@ f_setHydrogenTrucks( zero_Interface.energyModel.f_getActiveGridConnections(), sl
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setVehicleSliders( 2, sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );
-f_setDieselTrucks( zero_Interface.energyModel.f_getActiveGridConnections(), sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );</ActionCode>
+f_setDieselTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -537,7 +537,7 @@ f_setDieselTrucks( zero_Interface.energyModel.f_getActiveGridConnections(), sl_e
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>sl_fossilFuelCars_pct.setValue(100 - sl_electricCars_pct.getIntValue(), false);
-f_setElectricCars( zero_Interface.energyModel.f_getActiveGridConnections(), sl_electricCars_pct, sl_fossilFuelCars_pct );</ActionCode>
+f_setElectricCars( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricCars_pct, sl_fossilFuelCars_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -642,7 +642,7 @@ f_setElectricCars( zero_Interface.energyModel.f_getActiveGridConnections(), sl_e
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>sl_electricVans_pct.setValue(100 - sl_fossilFuelVans_pct.getIntValue(), false);
-f_setDieselVans( zero_Interface.energyModel.f_getActiveGridConnections(), sl_electricVans_pct, sl_fossilFuelVans_pct );</ActionCode>
+f_setDieselVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricVans_pct, sl_fossilFuelVans_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -722,7 +722,7 @@ f_setDieselVans( zero_Interface.energyModel.f_getActiveGridConnections(), sl_ele
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>sl_fossilFuelVans_pct.setValue(100 - sl_electricVans_pct.getIntValue(), false);
-f_setElectricVans( zero_Interface.energyModel.f_getActiveGridConnections(), sl_electricVans_pct, sl_fossilFuelVans_pct );</ActionCode>
+f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricVans_pct, sl_fossilFuelVans_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1048,7 +1048,7 @@ if(cb_spreadChargingEVs.isSelected()){
 	selectedChargingAttitude = OL_ChargingAttitude.MAX_POWER; 
 }
 
-f_setChargingAttitude(selectedChargingAttitude, uI_Tabs.f_getSliderGridConnections_all());</ActionCode>
+f_setChargingAttitude(selectedChargingAttitude, uI_Tabs.f_getAllSliderGridConnections_all());</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -1225,7 +1225,7 @@ switch(cb_setChargingAttitude.getValue()){
 }
 
 if(selectedChargingAttitude != null){
-	f_setChargingAttitude(selectedChargingAttitude, uI_Tabs.f_getSliderGridConnections_all());
+	f_setChargingAttitude(selectedChargingAttitude, uI_Tabs.f_getAllSliderGridConnections_all());
 }</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
@@ -1484,7 +1484,7 @@ if(selectedChargingAttitude != null){
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setVehiclesPrivateParking(uI_Tabs.f_getSliderGridConnections_houses(), sl_privateEVsResidentialArea_pct.getValue(), sl_EVsThatSupportV2G_pct);</ActionCode>
+					<ActionCode>f_setVehiclesPrivateParking(uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_privateEVsResidentialArea_pct.getValue(), sl_EVsThatSupportV2G_pct);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1869,7 +1869,7 @@ if(selectedChargingAttitude != null){
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<TextColor>-16777216</TextColor>
 							<Enabled>true</Enabled>
-							<ActionCode>f_activateV2G(new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getSliderGridConnections_houses()), cb_activateV2GPrivateParkedCars.isSelected());
+							<ActionCode>f_activateV2G(new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_houses()), cb_activateV2GPrivateParkedCars.isSelected());
 gr_settingsV2G_privateParkedCars.setVisible(cb_activateV2GPrivateParkedCars.isSelected());</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
@@ -2010,7 +2010,7 @@ switch(cb_chargingAttitudePrivateParkedCars.getValue()){
 }
 
 if(selectedChargingAttitude != null){
-	f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getSliderGridConnections_houses()));
+	f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_houses()));
 }
 else{
 	cb_chargingAttitudePrivateParkedCars.setValue("Niet slim laden", true);
@@ -2307,7 +2307,7 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected
 						<BasicProperties Width="100" Height="30">
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
-							<ActionCode>f_setV2GEVCapabilities( uI_Tabs.f_getSliderGridConnections_houses(), sl_EVsThatSupportV2G_pct.getValue() );</ActionCode>
+							<ActionCode>f_setV2GEVCapabilities( uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_EVsThatSupportV2G_pct.getValue() );</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
 							<DefaultValueCode>0</DefaultValueCode>

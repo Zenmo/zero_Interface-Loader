@@ -151,7 +151,7 @@ zero_Interface.f_resetSettings();
 
 double f_getCurrentPVOnLandAndWindturbineValues()
 {/*ALCODESTART::1745483988251*/
-for(GCEnergyProduction GCProd : uI_Tabs.f_getSliderGridConnections_production()){
+for(GCEnergyProduction GCProd : uI_Tabs.f_getAllSliderGridConnections_production()){
 	if(!GCProd.p_isSliderGC && GCProd.v_isActive){
 		for(J_EAProduction ea : GCProd.c_productionAssets){
 			if(ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC){
@@ -429,7 +429,7 @@ else{
 
 double f_updateElectricitySliders_default()
 {/*ALCODESTART::1754926103685*/
-List<GridConnection> allConsumerGridConnections = uI_Tabs.f_getSliderGridConnections_consumption();
+List<GridConnection> allConsumerGridConnections = uI_Tabs.f_getActiveSliderGridConnections_consumption();
 
 
 //Savings
@@ -456,7 +456,7 @@ sl_electricityDemandReduction_pct.setValue(roundToInt(electricitySavings_pct), f
 
 
 //Companies rooftop PV
-List<GCUtility> utilityGridConnections = uI_Tabs.f_getSliderGridConnections_utilities();
+List<GCUtility> utilityGridConnections = uI_Tabs.f_getActiveSliderGridConnections_utilities();
 
 List<GridConnection> utilityGridConnections_GC = new ArrayList<>(utilityGridConnections);
 Pair<Double, Double> pair = f_getPVSystemPercentage( utilityGridConnections_GC );
@@ -464,7 +464,7 @@ int PV_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());
 sl_rooftopPVCompanies_pct.setValue(PV_pct, false);
 
 //Houses rooftop PV
-List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
+List<GCHouse> houseGridConnections = uI_Tabs.f_getActiveSliderGridConnections_houses();
 
 List<GridConnection> houseGridConnections_GC = new ArrayList<>(utilityGridConnections);
 pair = f_getPVSystemPercentage( houseGridConnections_GC );
@@ -475,7 +475,7 @@ sl_rooftopPVHouses_pct.setValue(PV_pct, false);
 double totalPVOnLand_kW = 0;
 double totalWind_kW = 0;
 
-for(GCEnergyProduction productionGC : uI_Tabs.f_getSliderGridConnections_production()){
+for(GCEnergyProduction productionGC : uI_Tabs.f_getAllSliderGridConnections_production()){
 	if(productionGC.v_isActive && productionGC.p_isSliderGC){
 		if(productionGC.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
 			for(J_EAProduction productionEA : productionGC.c_productionAssets){
@@ -510,7 +510,7 @@ cb_curtailment_default.setSelected(curtailment, false);
 
 //Large scale battery systems
 double totalBatteryStorage_kWh = 0;
-for(GCGridBattery batteryGC : uI_Tabs.f_getSliderGridConnections_gridBatteries()){
+for(GCGridBattery batteryGC : uI_Tabs.f_getAllSliderGridConnections_gridBatteries()){
 	if(batteryGC.v_isActive && batteryGC.p_isSliderGC){
 		totalBatteryStorage_kWh += batteryGC.p_batteryAsset.getStorageCapacity_kWh();
 	}
@@ -525,7 +525,7 @@ double f_updateElectricitySliders_residential()
 List<GCHouse> houseGridConnections = new ArrayList<>();
 List<GCGridBattery> gridBatteryGridConnections = new ArrayList<>();
 
-for (GridConnection GC : findAll(uI_Tabs.f_getSliderGridConnections_all(), gc -> gc.v_isActive)) {
+for (GridConnection GC : uI_Tabs.f_getActiveSliderGridConnections_all()) {
    	if(GC instanceof GCHouse){
 		houseGridConnections.add((GCHouse)GC);		
 	}
@@ -585,7 +585,7 @@ sl_gridBatteriesResidentialArea_kWh.setValue(averageNeighbourhoodBatterySize_kWh
 double f_updateElectricitySliders_businesspark()
 {/*ALCODESTART::1754926103689*/
 //Get the utility connections
-List<GridConnection> utilityGridConnections = new ArrayList<>(uI_Tabs.f_getSliderGridConnections_utilities());
+List<GridConnection> utilityGridConnections = new ArrayList<>(uI_Tabs.f_getActiveSliderGridConnections_utilities());
 
 
 //Savings
@@ -619,7 +619,7 @@ sl_rooftopPVCompanies_pct_Businesspark.setValue(PV_pct, false);
 double totalPVOnLand_kW = 0;
 double totalWind_kW = 0;
 
-for(GCEnergyProduction productionGC : uI_Tabs.f_getSliderGridConnections_production()){
+for(GCEnergyProduction productionGC : uI_Tabs.f_getAllSliderGridConnections_production()){
 	if(productionGC.v_isActive && productionGC.p_isSliderGC){
 		if(productionGC.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
 			for(J_EAProduction productionEA : productionGC.c_productionAssets){
@@ -654,7 +654,7 @@ cb_curtailment_businesspark.setSelected(curtailment, false);
 
 //Large scale battery systems
 double totalBatteryStorage_kWh = 0;
-for(GCGridBattery batteryGC : uI_Tabs.f_getSliderGridConnections_gridBatteries()){
+for(GCGridBattery batteryGC : uI_Tabs.f_getAllSliderGridConnections_gridBatteries()){
 	if(batteryGC.v_isActive && batteryGC.p_isSliderGC){
 		totalBatteryStorage_kWh += batteryGC.p_batteryAsset.getStorageCapacity_kWh();
 	}

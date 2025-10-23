@@ -700,7 +700,7 @@ else{
 double f_updateHeatingSliders_default()
 {/*ALCODESTART::1754924509667*/
 ////Companies
-List<GCUtility> utilityGridConnections = uI_Tabs.f_getSliderGridConnections_utilities();
+List<GCUtility> utilityGridConnections = uI_Tabs.f_getActiveSliderGridConnections_utilities();
 
 //Savings (IN PROGRESS, WHAT ABOUT THERMAL BUILDINGS?????)
 double totalBaseConsumption_kWh = 0;
@@ -773,7 +773,7 @@ sl_districtHeatingCompanies_pct.setValue(companiesWithHTDistrictHeat_pct, false)
 
 
 ////Houses
-List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
+List<GCHouse> houseGridConnections = uI_Tabs.f_getActiveSliderGridConnections_houses();
 
 //Savings
 double averageScalingFactor = 0;
@@ -852,7 +852,7 @@ sl_districtHeatingHouseholds_pct.setValue(housesWithHTDistrictHeat_pct, false);
 
 double f_updateHeatingSliders_residential()
 {/*ALCODESTART::1754924542535*/
-List<GCHouse> houseGridConnections = uI_Tabs.f_getSliderGridConnections_houses();
+List<GCHouse> houseGridConnections = uI_Tabs.f_getActiveSliderGridConnections_houses();
 
 
 //Heating type
@@ -925,7 +925,7 @@ sl_rooftopPTHouses_pct.setValue(roundToInt((nbHousesWithPT*100.0)/nbHouses), fal
 
 double f_updateHeatingSliders_businesspark()
 {/*ALCODESTART::1754924544023*/
-List<GCUtility> utilityGridConnections = uI_Tabs.f_getSliderGridConnections_utilities();
+List<GCUtility> utilityGridConnections = uI_Tabs.f_getActiveSliderGridConnections_utilities();
 
 //Savings (IN PROGRESS, WHAT ABOUT THERMAL BUILDINGS?????)
 double totalBaseConsumption_kWh = 0;

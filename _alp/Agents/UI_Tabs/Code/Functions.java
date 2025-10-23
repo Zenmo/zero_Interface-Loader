@@ -66,7 +66,7 @@ for(GridConnection GC : gridConnections){
 
 double f_initializeSliderGCPointers(List<GridConnection> activeGridConnections,List<GridConnection> pausedGridConnections)
 {/*ALCODESTART::1754908006859*/
-v_sliderGridConnections = activeGridConnections;
+v_activeSliderGridConnections = activeGridConnections;
 
 if(pausedGridConnections != null){
 	v_pausedSliderGridConnections = pausedGridConnections;
@@ -88,11 +88,11 @@ f_updateSliders();
 f_showCorrectTab();
 /*ALCODEEND*/}
 
-List<GCHouse> f_getSliderGridConnections_houses()
+List<GCHouse> f_getActiveSliderGridConnections_houses()
 {/*ALCODESTART::1754919017244*/
 List<GCHouse> houseGridConnections = new ArrayList<>();
 
-for(GridConnection GC : v_sliderGridConnections){
+for(GridConnection GC : v_activeSliderGridConnections){
 	if(GC instanceof GCHouse){
 		houseGridConnections.add((GCHouse)GC);		
 	}
@@ -101,11 +101,11 @@ for(GridConnection GC : v_sliderGridConnections){
 return houseGridConnections;
 /*ALCODEEND*/}
 
-List<GCUtility> f_getSliderGridConnections_utilities()
+List<GCUtility> f_getActiveSliderGridConnections_utilities()
 {/*ALCODESTART::1754922545766*/
 List<GCUtility> utilityGridConnections = new ArrayList<>();
 
-for(GridConnection GC : v_sliderGridConnections){
+for(GridConnection GC : v_activeSliderGridConnections){
 	if(GC instanceof GCUtility){
 		utilityGridConnections.add((GCUtility)GC);
 	}
@@ -114,11 +114,11 @@ for(GridConnection GC : v_sliderGridConnections){
 return utilityGridConnections;
 /*ALCODEEND*/}
 
-List<GCGridBattery> f_getSliderGridConnections_gridBatteries()
+List<GCGridBattery> f_getAllSliderGridConnections_gridBatteries()
 {/*ALCODESTART::1754922546986*/
 List<GCGridBattery> gridBatteryGridConnections = new ArrayList<>();
 
-for(GridConnection GC : v_sliderGridConnections){
+for(GridConnection GC : v_activeSliderGridConnections){
 	if(GC instanceof GCGridBattery){
 		gridBatteryGridConnections.add((GCGridBattery)GC);		
 	}
@@ -137,7 +137,7 @@ List<GCPublicCharger> f_getSliderGridConnections_chargers()
 {/*ALCODESTART::1754922547989*/
 List<GCPublicCharger> chargerGridConnections = new ArrayList<>();
 
-for(GridConnection GC : v_sliderGridConnections){
+for(GridConnection GC : v_activeSliderGridConnections){
 	if(GC instanceof GCPublicCharger){
 		chargerGridConnections.add((GCPublicCharger)GC);		
 	}
@@ -146,11 +146,11 @@ for(GridConnection GC : v_sliderGridConnections){
 return chargerGridConnections;
 /*ALCODEEND*/}
 
-List<GCEnergyProduction> f_getSliderGridConnections_production()
+List<GCEnergyProduction> f_getAllSliderGridConnections_production()
 {/*ALCODESTART::1754922591622*/
 List<GCEnergyProduction> productionGridConnections = new ArrayList<>();
 
-for(GridConnection GC : v_sliderGridConnections){
+for(GridConnection GC : v_activeSliderGridConnections){
 	if(GC instanceof GCEnergyProduction){
 		productionGridConnections.add((GCEnergyProduction)GC);
 	}
@@ -181,11 +181,11 @@ if(!pop_tabEHub.isEmpty()){
 }
 /*ALCODEEND*/}
 
-List<GridConnection> f_getSliderGridConnections_consumption()
+List<GridConnection> f_getActiveSliderGridConnections_consumption()
 {/*ALCODESTART::1754986474226*/
 List<GridConnection> consumptionGridConnections = new ArrayList<>();
 
-for(GridConnection GC : v_sliderGridConnections){
+for(GridConnection GC : v_activeSliderGridConnections){
 	if(GC instanceof GCUtility){
 		consumptionGridConnections.add(GC);
 	}
@@ -197,9 +197,9 @@ for(GridConnection GC : v_sliderGridConnections){
 return consumptionGridConnections;
 /*ALCODEEND*/}
 
-List<GridConnection> f_getSliderGridConnections_all()
+List<GridConnection> f_getActiveSliderGridConnections_all()
 {/*ALCODESTART::1754991155553*/
-List<GridConnection> gridConnections = new ArrayList<>(v_sliderGridConnections);
+List<GridConnection> gridConnections = new ArrayList<>(v_activeSliderGridConnections);
 
 return gridConnections;
 /*ALCODEEND*/}
@@ -239,7 +239,7 @@ List<GCPublicCharger> f_getAllSliderGridConnections_chargers()
 {/*ALCODESTART::1758278620331*/
 List<GCPublicCharger> chargerGridConnections = new ArrayList<>();
 
-for(GridConnection GC : v_sliderGridConnections){
+for(GridConnection GC : v_activeSliderGridConnections){
 	if(GC instanceof GCPublicCharger){
 		chargerGridConnections.add((GCPublicCharger)GC);		
 	}
@@ -253,5 +253,45 @@ if(v_pausedSliderGridConnections != null){
 }
 
 return chargerGridConnections;
+/*ALCODEEND*/}
+
+List<GridConnection> f_getAllSliderGridConnections_consumption()
+{/*ALCODESTART::1761208715194*/
+List<GridConnection> consumptionGridConnections = new ArrayList<>();
+
+for(GridConnection GC : v_activeSliderGridConnections){
+	if(GC instanceof GCUtility){
+		consumptionGridConnections.add(GC);
+	}
+	else if(GC instanceof GCHouse){
+		consumptionGridConnections.add(GC);
+	}
+}
+
+for(GridConnection GC : v_pausedSliderGridConnections){
+	if(GC instanceof GCUtility){
+		consumptionGridConnections.add(GC);
+	}
+	else if(GC instanceof GCHouse){
+		consumptionGridConnections.add(GC);
+	}
+}
+
+return consumptionGridConnections;
+/*ALCODEEND*/}
+
+List<GridConnection> f_getPausedSliderGridConnections_all()
+{/*ALCODESTART::1761208797812*/
+List<GridConnection> gridConnections = new ArrayList<>(v_activeSliderGridConnections);
+
+return gridConnections;
+/*ALCODEEND*/}
+
+List<GridConnection> f_getAllSliderGridConnections_all()
+{/*ALCODESTART::1761208826669*/
+List<GridConnection> gridConnections = new ArrayList<>(v_activeSliderGridConnections);
+gridConnections.addAll(v_pausedSliderGridConnections);
+
+return gridConnections;
 /*ALCODEEND*/}
 

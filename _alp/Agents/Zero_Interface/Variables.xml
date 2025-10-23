@@ -2493,7 +2493,7 @@
 		<Id>1760978961206</Id>
 		<Name><![CDATA[uI_Company]]></Name>
 		<X>-250</X>
-		<Y>440</Y>
+		<Y>480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2518,7 +2518,7 @@
 		<Id>1760978964017</Id>
 		<Name><![CDATA[uI_Hydrogen]]></Name>
 		<X>-250</X>
-		<Y>460</Y>
+		<Y>520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2543,7 +2543,7 @@
 		<Id>1760978968830</Id>
 		<Name><![CDATA[uI_Battery]]></Name>
 		<X>-250</X>
-		<Y>480</Y>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2568,7 +2568,7 @@
 		<Id>1760979190278</Id>
 		<Name><![CDATA[uI_EnergyHub]]></Name>
 		<X>-250</X>
-		<Y>420</Y>
+		<Y>440</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

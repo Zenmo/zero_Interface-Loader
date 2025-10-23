@@ -3201,20 +3201,26 @@ if (resultsUI.f_getSelectedObjectData() != null) {
 double f_setAllSimulateYearScreens()
 {/*ALCODESTART::1756995218301*/
 gr_simulateYear.setVisible(true);
-uI_EnergyHub.gr_simulateYearEnergyHub.setVisible(true);
-uI_Company.gr_simulateYearScreen.setVisible(true);
-
+if(uI_EnergyHub != null){
+	uI_EnergyHub.gr_simulateYearEnergyHub.setVisible(true);
+}
+if(uI_Company != null){
+	uI_Company.gr_simulateYearScreen.setVisible(true);
+}
 /*ALCODEEND*/}
 
 double f_removeAllSimulateYearScreens()
 {/*ALCODESTART::1756997038652*/
 gr_simulateYear.setVisible(false);
 gr_loadIconYearSimulation.setVisible(false);
-uI_EnergyHub.gr_simulateYearEnergyHub.setVisible(false);
-uI_EnergyHub.gr_loadIconYearSimulationEnergyHub.setVisible(false);
-uI_Company.gr_simulateYearScreen.setVisible(false);
-uI_Company.gr_loadIcon.setVisible(false);
-
+if(uI_EnergyHub != null){
+	uI_EnergyHub.gr_simulateYearEnergyHub.setVisible(false);
+	uI_EnergyHub.gr_loadIconYearSimulationEnergyHub.setVisible(false);
+}
+if(uI_Company != null){
+	uI_Company.gr_simulateYearScreen.setVisible(false);
+	uI_Company.gr_loadIcon.setVisible(false);
+}
 /*ALCODEEND*/}
 
 double f_cancelEnergyHubConfiguration()
@@ -3464,7 +3470,7 @@ if(!selected_scenario.equals("Custom")){
 
 double f_resetProjectSpecificSlidersAndButtons()
 {/*ALCODESTART::1761121949197*/
-//OVERRIDE THIS FUNCTION IF YOU WANT RESET CUSTOM SLIDERS 
+//OVERRIDE THIS FUNCTION IF YOU WANT TO RESET CERTAIN CUSTOM SLIDERS 
 //AND BUTTONS THAT ARE NOT IN THE GENERIC LOADERFACE
 /*ALCODEEND*/}
 

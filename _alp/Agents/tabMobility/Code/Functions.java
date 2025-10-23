@@ -296,7 +296,7 @@ boolean foundAdditionalVehicle = false;
 
 // find the diesel truck to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
-	if(gc.v_isActive){
+	if(gc instanceof GCUtility && gc.v_isActive){
 		dieselTruck = (J_EADieselVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK);
 		if ( dieselTruck != null ) {
 			foundAdditionalVehicle = true;
@@ -349,7 +349,7 @@ boolean foundAdditionalVehicle = false;
 
 // find the hydrogen truck to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
-	if(gc.v_isActive){
+	if(gc instanceof GCUtility && gc.v_isActive){
 		hydrogenTruck = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK);
 		if ( hydrogenTruck != null ) {
 			foundAdditionalVehicle = true;
@@ -403,7 +403,7 @@ boolean foundAdditionalVehicle = false;
 
 // find the electric truck to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
-	if(gc.v_isActive){
+	if(gc instanceof GCUtility && gc.v_isActive){
 		electricTruck = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK);
 		if ( electricTruck != null ) {
 			foundAdditionalVehicle = true;
@@ -453,7 +453,7 @@ boolean foundAdditionalVehicle = false;
 
 // find the diesel truck to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
-	if(gc.v_isActive){
+	if(gc instanceof GCUtility && gc.v_isActive){
 		dieselTruck = (J_EADieselVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK);
 		if ( dieselTruck != null ) {
 			foundAdditionalVehicle = true;
@@ -503,7 +503,7 @@ boolean foundAdditionalVehicle = false;
 
 // find the electric truck to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
-	if(gc.v_isActive){
+	if(gc instanceof GCUtility && gc.v_isActive){
 		electricTruck = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK);
 		if ( electricTruck != null ) {
 			foundAdditionalVehicle = true;
@@ -553,7 +553,7 @@ boolean foundAdditionalVehicle = false;
 
 // find the hydrogen truck to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
-	if(gc.v_isActive){
+	if(gc instanceof GCUtility && gc.v_isActive){
 		hydrogenTruck = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK);
 		if ( hydrogenTruck != null ) {
 			foundAdditionalVehicle = true;
@@ -660,7 +660,7 @@ boolean foundAdditionalVehicle = false;
 
 // find the diesel van to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
-	if(gc.v_isActive){
+	if(gc instanceof GCUtility && gc.v_isActive){
 		dieselVan = (J_EADieselVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_VAN);
 		if ( dieselVan != null ) {
 			foundAdditionalVehicle = true;
@@ -713,7 +713,7 @@ boolean foundAdditionalVehicle = false;
 
 // find the electric van to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
-	if(gc.v_isActive){
+	if(gc instanceof GCUtility && gc.v_isActive){
 		electricVan = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN);
 		if ( electricVan != null ) {
 			foundAdditionalVehicle = true;
@@ -763,7 +763,7 @@ boolean foundAdditionalVehicle = false;
 
 // find the diesel car to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
-	if(gc.v_isActive){
+	if(gc instanceof GCUtility && gc.v_isActive){
 		dieselCar = (J_EADieselVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_VEHICLE);
 		if ( dieselCar != null ) {
 			foundAdditionalVehicle = true;
@@ -816,7 +816,7 @@ boolean foundAdditionalVehicle = false;
 
 // find the electric car to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
-	if(gc.v_isActive){
+	if(gc instanceof GCUtility && gc.v_isActive){
 		electricCar = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE);
 		if ( electricCar != null ) {
 			foundAdditionalVehicle = true;
@@ -1179,7 +1179,7 @@ zero_Interface.f_resetSettings();
 
 double f_updateSliders_Mobility()
 {/*ALCODESTART::1754928402690*/
-Triple<Integer, Integer, Integer> triple = f_calculateNumberOfGhostVehicles( new ArrayList<GridConnection>(uI_Tabs.f_getSliderGridConnections_utilities()) );
+Triple<Integer, Integer, Integer> triple = f_calculateNumberOfGhostVehicles( new ArrayList<GridConnection>(uI_Tabs.f_getActiveSliderGridConnections_utilities()) );
 v_totalNumberOfGhostVehicle_Cars = triple.getLeft();
 v_totalNumberOfGhostVehicle_Vans = triple.getMiddle();
 v_totalNumberOfGhostVehicle_Trucks = triple.getRight();
@@ -1198,7 +1198,7 @@ else{
 
 double f_updateMobilitySliders_default()
 {/*ALCODESTART::1754928402694*/
-List<GridConnection> allConsumerGridConnections = uI_Tabs.f_getSliderGridConnections_consumption();
+List<GridConnection> allConsumerGridConnections = uI_Tabs.f_getActiveSliderGridConnections_consumption();
 
 ////Savings
 double totalBaseTravelDistance_km = 0;
@@ -1359,7 +1359,7 @@ gr_activateV2GPrivateParkedCars.setVisible(false);
 cb_activateV2GPrivateParkedCars.setSelected(false, false);
 gr_settingsV2G_privateParkedCars.setVisible(false);
 
-List<GCHouse> houseGridConnectionsWithPrivateParking = findAll(uI_Tabs.f_getSliderGridConnections_houses(), house -> house.p_eigenOprit);
+List<GCHouse> houseGridConnectionsWithPrivateParking = findAll(uI_Tabs.f_getActiveSliderGridConnections_houses(), house -> house.p_eigenOprit);
 List<J_EAVehicle> privateParkedCars = new ArrayList<J_EAVehicle>();
 houseGridConnectionsWithPrivateParking.forEach(gc -> privateParkedCars.addAll(gc.c_vehicleAssets));
 

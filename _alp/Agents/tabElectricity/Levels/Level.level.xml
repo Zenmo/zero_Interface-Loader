@@ -112,7 +112,7 @@
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReduction( uI_Tabs.f_getSliderGridConnections_consumption(), sl_electricityDemandReduction_pct.getValue() );</ActionCode>
+					<ActionCode>f_setDemandReduction( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricityDemandReduction_pct.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -216,7 +216,7 @@
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemCompanies( uI_Tabs.f_getSliderGridConnections_utilities(), sl_rooftopPVCompanies_pct.getValue(), sl_rooftopPVCompanies_pct );
+					<ActionCode>f_setPVSystemCompanies( uI_Tabs.f_getActiveSliderGridConnections_utilities(), sl_rooftopPVCompanies_pct.getValue(), sl_rooftopPVCompanies_pct );
 
 if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
 	zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
@@ -299,7 +299,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_currentPVOnLand_ha, uI_Tabs.f_getSliderGridConnections_production());</ActionCode>
+					<ActionCode>f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_currentPVOnLand_ha, uI_Tabs.f_getAllSliderGridConnections_production());</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -377,7 +377,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, uI_Tabs.f_getSliderGridConnections_production());</ActionCode>
+					<ActionCode>f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, uI_Tabs.f_getAllSliderGridConnections_production());</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -483,7 +483,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemHouses( uI_Tabs.f_getSliderGridConnections_houses(), sl_rooftopPVHouses_pct.getValue() );
+					<ActionCode>f_setPVSystemHouses( uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_rooftopPVHouses_pct.getValue() );
 
 if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
 	zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
@@ -703,7 +703,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setGridBatteries(sl_collectiveBattery_MWh_default.getValue(), uI_Tabs.f_getSliderGridConnections_gridBatteries());
+					<ActionCode>f_setGridBatteries(sl_collectiveBattery_MWh_default.getValue(), uI_Tabs.f_getAllSliderGridConnections_gridBatteries());
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
@@ -789,7 +789,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setCurtailment(cb_curtailment_default.isSelected(), uI_Tabs.f_getSliderGridConnections_consumption());</ActionCode>
+					<ActionCode>f_setCurtailment(cb_curtailment_default.isSelected(), uI_Tabs.f_getActiveSliderGridConnections_consumption());</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -1067,7 +1067,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReduction( uI_Tabs.f_getSliderGridConnections_consumption(), sl_electricityDemandReduction_pct_Businesspark.getValue() );</ActionCode>
+					<ActionCode>f_setDemandReduction( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricityDemandReduction_pct_Businesspark.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1171,7 +1171,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemCompanies( uI_Tabs.f_getSliderGridConnections_utilities(), sl_rooftopPVCompanies_pct_Businesspark.getValue(), sl_rooftopPVCompanies_pct_Businesspark );
+					<ActionCode>f_setPVSystemCompanies( uI_Tabs.f_getActiveSliderGridConnections_utilities(), sl_rooftopPVCompanies_pct_Businesspark.getValue(), sl_rooftopPVCompanies_pct_Businesspark );
 
 //If on pv map overlay, adjust colouring
 if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
@@ -1255,7 +1255,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVOnLand(sl_largeScalePV_ha_Businesspark.getValue()- p_currentPVOnLand_ha, uI_Tabs.f_getSliderGridConnections_production());</ActionCode>
+					<ActionCode>f_setPVOnLand(sl_largeScalePV_ha_Businesspark.getValue()- p_currentPVOnLand_ha, uI_Tabs.f_getAllSliderGridConnections_production());</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1333,7 +1333,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setWindTurbines( sl_largeScaleWind_MW_Businesspark.getValue() - p_currentWindTurbines_MW, uI_Tabs.f_getSliderGridConnections_production());</ActionCode>
+					<ActionCode>f_setWindTurbines( sl_largeScaleWind_MW_Businesspark.getValue() - p_currentWindTurbines_MW, uI_Tabs.f_getAllSliderGridConnections_production());</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1546,7 +1546,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setCurtailment(cb_curtailment_businesspark.isSelected(), new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getSliderGridConnections_utilities()));</ActionCode>
+					<ActionCode>f_setCurtailment(cb_curtailment_businesspark.isSelected(), new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()));</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -1676,7 +1676,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setGridBatteries(sl_collectiveBattery_MWh_businesspark.getValue(), uI_Tabs.f_getSliderGridConnections_gridBatteries());
+					<ActionCode>f_setGridBatteries(sl_collectiveBattery_MWh_businesspark.getValue(), uI_Tabs.f_getAllSliderGridConnections_gridBatteries());
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
@@ -1811,7 +1811,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVSystemHouses( uI_Tabs.f_getSliderGridConnections_houses(), sl_householdPVResidentialArea_pct.getValue() );
+					<ActionCode>f_setPVSystemHouses( uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_householdPVResidentialArea_pct.getValue() );
 
 //If on pv map overlay, adjust colouring
 if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
@@ -1819,7 +1819,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 }
 
 // Also updates the home batteries
-f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), uI_Tabs.f_getSliderGridConnections_houses() );</ActionCode>
+f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), uI_Tabs.f_getActiveSliderGridConnections_houses() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1924,7 +1924,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), 
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), uI_Tabs.f_getSliderGridConnections_houses() );</ActionCode>
+					<ActionCode>f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), uI_Tabs.f_getActiveSliderGridConnections_houses() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1979,7 +1979,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), 
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setGridBatteries_residential( sl_gridBatteriesResidentialArea_kWh.getValue(), uI_Tabs.f_getSliderGridConnections_gridBatteries() );
+					<ActionCode>f_setGridBatteries_residential( sl_gridBatteriesResidentialArea_kWh.getValue(), uI_Tabs.f_getAllSliderGridConnections_gridBatteries() );
 </ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -2142,7 +2142,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), 
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setElectricCooking(uI_Tabs.f_getSliderGridConnections_houses(), sl_householdElectricCookingResidentialArea_pct.getValue() );</ActionCode>
+					<ActionCode>f_setElectricCooking(uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_householdElectricCookingResidentialArea_pct.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
