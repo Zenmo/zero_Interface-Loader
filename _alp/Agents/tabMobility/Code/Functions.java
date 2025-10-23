@@ -1207,7 +1207,7 @@ for(GridConnection GC : allConsumerGridConnections){
 	if(GC.v_isActive){
 		for(J_ActivityTrackerTrips tripTracker : GC.c_tripTrackers){
 			totalBaseTravelDistance_km += tripTracker.getAnnualDistance_km();
-			totalSavedTravelDistance_km += (1-tripTracker.getDistanceScaling_fr())*totalBaseTravelDistance_km;
+			totalSavedTravelDistance_km += (1-tripTracker.getDistanceScaling_fr())*tripTracker.getAnnualDistance_km();
 		}
 	}
 }

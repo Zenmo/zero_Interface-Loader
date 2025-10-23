@@ -410,23 +410,26 @@ GC.f_nfatoSetConnectionCapacity(false);
 
 double f_setBattery(GridConnection GC,double setBatteryCapacity_kWh)
 {/*ALCODESTART::1713537591121*/
-//If every detail company has battery EA (even if capacity = 0)
 J_EAStorage batteryAsset = findFirst(GC.c_storageAssets, p -> p.energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC );
 
-if (batteryAsset == null && setBatteryCapacity_kWh == 0) {
-	return;
+if (setBatteryCapacity_kWh == 0) {	
+	if (batteryAsset != null) {
+		batteryAsset.removeEnergyAsset();
+	}
 }
-else if (batteryAsset == null) {
-	batteryAsset = new J_EAStorageElectric(p_gridConnection, 0, 0, 0, zero_Interface.energyModel.p_timeStep_h);
+else {
+	double c_rate = 1.0 / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power;
+	if (batteryAsset == null) {
+		batteryAsset = new J_EAStorageElectric(GC, setBatteryCapacity_kWh * c_rate, setBatteryCapacity_kWh, 0.5, zero_Interface.energyModel.p_timeStep_h);	
+	}
+	else {		
+		if (batteryAsset.getStorageCapacity_kWh() != 0) {
+			c_rate = ((J_EAStorageElectric)batteryAsset).getCapacityElectric_kW()/((J_EAStorageElectric)batteryAsset).getStorageCapacity_kWh();
+		}
+		((J_EAStorageElectric)batteryAsset).setStorageCapacity_kWh(setBatteryCapacity_kWh);
+		((J_EAStorageElectric)batteryAsset).setCapacityElectric_kW(c_rate * setBatteryCapacity_kWh);
+	}
 }
-double existing_batterypower_capacity_ratio = zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power;
-
-if(((J_EAStorageElectric)batteryAsset).getCapacityElectric_kW() != 0){
-	existing_batterypower_capacity_ratio = ((J_EAStorageElectric)batteryAsset).getCapacityElectric_kW()/((J_EAStorageElectric)batteryAsset).getStorageCapacity_kWh();	
-}
-
-((J_EAStorageElectric)batteryAsset).setCapacityElectric_kW(setBatteryCapacity_kWh*existing_batterypower_capacity_ratio); //Set Power
-((J_EAStorageElectric)batteryAsset).setStorageCapacity_kWh(setBatteryCapacity_kWh);										 //Set storage capacity
 
 //Add battery algorithm if it is not present
 if(GC.p_batteryAlgorithm == null){
@@ -1528,15 +1531,17 @@ if (rbHeating_acces.equals("disabled") || rbHeating_acces.equals("invisible")){
 		rb_heatingTypePrivateUI.setVisible(false);
 		gr_heatDemandReductionSlider.setVisible(false);
 	}
+	else {
+		gr_heatDemandReductionSlider.setVisible(true);
+	}
 }
 else{ // if(rbHeating_acces.equals("enabled"){
 	rb_heatingTypePrivateUI.setEnabled(true);
 	rb_heatingTypePrivateUI.setVisible(true);
 	sl_heatDemandCompanyReduction.setEnabled(true);
-	sl_heatDemandCompanyReduction.setVisible(true);
+	gr_heatDemandReductionSlider.setVisible(true);
 }
 
-rb_heatingTypePrivateUI.setValue(nr_currentHeatingType, false);
 /*ALCODEEND*/}
 
 double f_addPVAsset(GridConnection parentGC,OL_EnergyAssetType asset_type,double installedPower_kW)
@@ -1588,6 +1593,7 @@ switch (p_gridConnection.f_getCurrentHeatingType()){
 		nr_currentHeatingType = 4;
 	break;	
 	default:
+		nr_currentHeatingType = 4;
 }
 
 //Find the current heat saving percentage
@@ -1910,12 +1916,10 @@ sl_electricTrucksCompany.setEnabled(enable);
 sl_hydrogenTrucksCompany.setEnabled(enable);
 sl_dieselTrucksCompany.setEnabled(enable);
 
-//Set heating rb to correct setting (no matter what input of this function is)
-if(p_scenarioSettings_Current.getCurrentHeatingType() == OL_GridConnectionHeatingType.NONE){
-	rb_heatingTypePrivateUI.setVisible(false);
-	gr_heatDemandReductionSlider.setVisible(false);
+// Disabled / Invisible heating based on current scenario settings
+if (enable) {
+	f_setHeatingRB();
 }
-
 /*ALCODEEND*/}
 
 double f_setErrorScreen(String errorMessage)
