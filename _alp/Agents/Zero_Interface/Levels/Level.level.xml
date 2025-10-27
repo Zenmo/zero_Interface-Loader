@@ -240,6 +240,7 @@ getExperimentHost().openWebSite("https://lux.energy/");
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>getExperimentHost().openWebSite("https://zenmo.com/");</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>170</Width>

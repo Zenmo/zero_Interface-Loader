@@ -1954,6 +1954,8 @@ gr_errorScreen.setVisible(true);
 
 double f_setDemandReductionSliderPresets()
 {/*ALCODESTART::1756898097088*/
+v_minSavingsSliders = -50;
+v_maxSavingsSliders = 50;
 sl_heatDemandCompanyReduction.setRange(v_minSavingsSliders, v_maxSavingsSliders);
 sl_electricityDemandCompanyReduction.setRange(v_minSavingsSliders, v_maxSavingsSliders);
 sl_mobilityDemandCompanyReduction.setRange(v_minSavingsSliders, v_maxSavingsSliders);

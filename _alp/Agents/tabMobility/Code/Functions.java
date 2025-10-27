@@ -1291,7 +1291,7 @@ for (GridConnection gc : allConsumerGridConnections) {
 
 //Set CAR sliders
 int totalCars = DieselCars + ElectricCars + HydrogenCars;
-int DieselCars_pct = 100;
+int DieselCars_pct = 0;
 int ElectricCars_pct = 0;
 int HydrogenCars_pct = 0;
 if (totalCars != 0) {
@@ -1299,13 +1299,17 @@ if (totalCars != 0) {
 	ElectricCars_pct = roundToInt((100.0 * ElectricCars) / totalCars);
 	HydrogenCars_pct = roundToInt((100.0 * HydrogenCars) / totalCars);
 }
+else{
+	sl_fossilFuelCars_pct.setEnabled(false);
+	sl_electricCars_pct.setEnabled(false);
+}
 sl_fossilFuelCars_pct.setValue(DieselCars_pct, false);
 sl_electricCars_pct.setValue(ElectricCars_pct, false);
 
 
 //Set VAN sliders
 int totalVans = DieselVans + ElectricVans + HydrogenVans;
-int DieselVans_pct = 100;
+int DieselVans_pct = 0;
 int ElectricVans_pct = 0;
 int HydrogenVans_pct = 0;
 if (totalVans != 0) {
@@ -1313,19 +1317,28 @@ if (totalVans != 0) {
 	ElectricVans_pct = roundToInt(100.0 * ElectricVans / totalVans);
 	HydrogenVans_pct = roundToInt(100.0 * HydrogenVans / totalVans);
 }
+else{
+	sl_fossilFuelVans_pct.setEnabled(false);
+	sl_electricVans_pct.setEnabled(false);
+}
 sl_fossilFuelVans_pct.setValue(DieselVans_pct, false);
 sl_electricVans_pct.setValue(ElectricVans_pct, false);
 
 
 //Set TRUCK sliders
 int totalTrucks = DieselTrucks + ElectricTrucks + HydrogenTrucks;
-int DieselTrucks_pct = 100;
+int DieselTrucks_pct = 0;
 int ElectricTrucks_pct = 0;
 int HydrogenTrucks_pct = 0;
 if (totalTrucks != 0) {
 	DieselTrucks_pct = roundToInt(100.0 * DieselTrucks / totalTrucks);
 	ElectricTrucks_pct = roundToInt(100.0 * ElectricTrucks / totalTrucks);
 	HydrogenTrucks_pct = roundToInt(100.0 * HydrogenTrucks / totalTrucks);
+}
+else{
+	sl_fossilFuelTrucks_pct.setEnabled(false);
+	sl_electricTrucks_pct.setEnabled(false);
+	sl_hydrogenTrucks_pct.setEnabled(false);
 }
 sl_fossilFuelTrucks_pct.setValue(DieselTrucks_pct, false);
 sl_electricTrucks_pct.setValue(ElectricTrucks_pct, false);
