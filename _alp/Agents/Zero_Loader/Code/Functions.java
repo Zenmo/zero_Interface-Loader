@@ -883,13 +883,6 @@ b.p_useType = buildingData.purpose();
 // Adres data
 b.p_annotation = buildingData.annotation();
 
-
-//If building is the first building in a cluster (means it has a pancluster_nr), add it to the list of buidling clusters
-if(buildingData.pandcluster_nr() != null && buildingData.pandcluster_nr() > 0) { // && 
-	energyModel.c_GISBuildingClusters.add(b);
-	b.p_pandcluster_nr = buildingData.pandcluster_nr();
-}
-
 //Create gisregion
 b.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(buildingData.polygon(), b.p_GISObjectType));
 

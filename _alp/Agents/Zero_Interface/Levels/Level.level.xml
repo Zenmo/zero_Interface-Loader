@@ -248,7 +248,7 @@ getExperimentHost().openWebSite("https://lux.energy/");
 				<ImageFiles>
 					<ImageResourceReference>
 						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>Zenmo mogelijk nieuw logo.png</ClassName>
+						<ClassName>logo_zenmo.png</ClassName>
 					</ImageResourceReference>
 				</ImageFiles>
 				<OriginalSize>false</OriginalSize>

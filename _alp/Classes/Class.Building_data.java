@@ -8,8 +8,6 @@ public class Building_data {
 	//Database column name
 	String address_id;
 	String building_id;	
-	Integer pand_nr;
-	Integer pandcluster_nr;
 	String streetname;
 	Integer house_number;
 	String house_letter;

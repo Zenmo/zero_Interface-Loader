@@ -109,8 +109,8 @@
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Id>1758877552432</Id>
-		<Path>Zenmo mogelijk nieuw logo.png</Path>
+		<Id>1761557538487</Id>
+		<Path>logo_zenmo.png</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
