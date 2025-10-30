@@ -903,6 +903,34 @@ if(nbOfHousesOnLTHeatGrid == totalHousesWithHeating){
 	cb_householdLTDistrictHeatingResidentialArea.setSelected(true, false);
 }
 
+
+//Electric heatpump heating management
+Triple<OL_GridConnectionHeatingType, Boolean, Boolean> triple = Triple.of( OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, true, false );
+Class<? extends I_HeatingManagement> managementClass = zero_Interface.energyModel.c_defaultHeatingStrategies.get(triple);
+if(J_HeatingManagementPIcontrol.class.isAssignableFrom(managementClass) || J_HeatingManagementSimple.class.isAssignableFrom(managementClass)){
+	cb_householdFullElectricHeatpumpManagement.setValue("Standaard");
+	cb_householdFullElectricHeatpumpManagement.setEnabled(true);
+}
+else if(J_HeatingManagementHeatpumpOffPeak.class.isAssignableFrom(managementClass)){
+	cb_householdFullElectricHeatpumpManagement.setValue("Piekmijden (Interval)");
+	cb_householdFullElectricHeatpumpManagement.setEnabled(true);
+}
+/*
+else if(J_HeatingManagementGridAware.class.isAssignableFrom(managementClass)){
+	cb_householdFullElectricHeatpumpManagement.setValue("Netbewust");
+	cb_householdFullElectricHeatpumpManagement.setEnabled(true);
+}
+*/
+else{
+	cb_householdFullElectricHeatpumpManagement.setValue("Standaard");
+	cb_householdFullElectricHeatpumpManagement.setEnabled(false);
+}
+
+//Initialize Off peak interval
+J_HeatingManagementHeatpumpOffPeak heatpumpOffPeakManagementClass = new J_HeatingManagementHeatpumpOffPeak();
+eb_reducedHeatingIntervalStart.setText(heatpumpOffPeakManagementClass.getStartTimeOfReducedHeatingInterval_hr());
+eb_reducedHeatingIntervalEnd.setText(heatpumpOffPeakManagementClass.getEndTimeOfReducedHeatingInterval_hr());
+
 //Houses with Airco
 double nbHouses = houseGridConnections.size();
 double nbHousesWithAirco = count(houseGridConnections, x -> x.p_airco != null);
@@ -1132,6 +1160,10 @@ if (currentNumberOfChangedHeatingType < nbChangedHeatingTypeGoal) {
 		changingGC.f_removeAllHeatingAssets();
 		f_addHeatAsset(changingGC, changedSliderHeatingType, f_calculatePeakHeatDemand_kW(changingGC));
 		changingGC.f_addHeatManagementToGC(changingGC, changedSliderHeatingType, false);
+		
+		//Set reduced heating interval to correct settings (Only if correct heating management is assigned)
+		f_setReducedHeatingInterval(changingGC, eb_reducedHeatingIntervalStart.getDoubleValue(), eb_reducedHeatingIntervalEnd.getDoubleValue());
+		
 		currentNumberOfChangedHeatingType ++;
 	}
 }
@@ -1165,6 +1197,10 @@ else {
 		changingGC.f_removeAllHeatingAssets();
 		f_addHeatAsset(changingGC, newHeatingType, f_calculatePeakHeatDemand_kW(changingGC));
 		changingGC.f_addHeatManagementToGC(changingGC, newHeatingType, false);
+		
+		//Set reduced heating interval to correct settings (Only if correct heating management is assigned)
+		f_setReducedHeatingInterval(changingGC, eb_reducedHeatingIntervalStart.getDoubleValue(), eb_reducedHeatingIntervalEnd.getDoubleValue());
+		
 		currentNumberOfChangedHeatingType--;
 	}
 }
@@ -1291,5 +1327,60 @@ GN_heat.setLatLon(GN_heat.p_latitude, GN_heat.p_longitude);
 zero_Interface.f_setErrorScreen("LET OP: Er is nu een 'warmtenet' gecreëerd. Maar er is geen warmtebron aanwezig in het model. Daarom zal de benodigde warmte voor het warmtenet in de resultaten te zien zijn als warmte import.", 0, 0);
 
 return GN_heat;
+/*ALCODEEND*/}
+
+double f_setHeatpumpManagementType(List<GCHouse> gcListHouses,String aansturingsModus)
+{/*ALCODESTART::1761582021205*/
+//Set interface objects false by default
+button_setHeatpumpHeatingManagementOffPeakInterval.setEnabled(false);
+
+//Initialize class type
+Class<? extends I_HeatingManagement> heatingManagementClassType;
+
+switch(aansturingsModus){
+	case "Standaard":
+		heatingManagementClassType = J_HeatingManagementPIcontrol.class;
+		break;
+	case "Piekmijden (Interval)":
+		button_setHeatpumpHeatingManagementOffPeakInterval.setEnabled(true);
+		heatingManagementClassType = J_HeatingManagementHeatpumpOffPeak.class;
+		break;
+	/*
+	case "Netbewust":
+		heatingManagementClassType = J_HeatingManagementGridAware.class;
+		break;
+	*/
+	default:
+		heatingManagementClassType = J_HeatingManagementPIcontrol.class;
+}
+
+
+Triple<OL_GridConnectionHeatingType, Boolean, Boolean> triple = null;
+
+triple = Triple.of(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, true, false);
+zero_Interface.energyModel.c_defaultHeatingStrategies.put( triple, heatingManagementClassType );
+triple = Triple.of(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, true, true);
+zero_Interface.energyModel.c_defaultHeatingStrategies.put( triple, heatingManagementClassType );
+
+for(GCHouse GC : gcListHouses){
+	if(GC.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP && !(GC.p_heatingManagement instanceof J_HeatingManagementGhost)){
+		GC.f_addHeatManagementToGC(GC, OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, false);
+	}
+}
+/*ALCODEEND*/}
+
+double f_setReducedHeatingInterval(GridConnection GC,double startTimeOfReducedHeatingInterval_hr,double endTimeOfReducedHeatingInterval_hr)
+{/*ALCODESTART::1761645149965*/
+if(GC.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP && GC.p_heatingManagement instanceof J_HeatingManagementHeatpumpOffPeak ){
+	((J_HeatingManagementHeatpumpOffPeak)GC.p_heatingManagement).setStartTimeOfReducedHeatingInterval_hr(startTimeOfReducedHeatingInterval_hr);
+	((J_HeatingManagementHeatpumpOffPeak)GC.p_heatingManagement).setEndTimeOfReducedHeatingInterval_hr(endTimeOfReducedHeatingInterval_hr);
+}
+/*ALCODEEND*/}
+
+double f_setAllReducedHeatingIntervals(List<GridConnection> gcList,double startTimeOfReducedHeatingInterval_hr,double endTimeOfReducedHeatingInterval_hr)
+{/*ALCODESTART::1761645229479*/
+for(GridConnection GC : gcList){
+	f_setReducedHeatingInterval(GC, startTimeOfReducedHeatingInterval_hr, endTimeOfReducedHeatingInterval_hr);
+}
 /*ALCODEEND*/}
 

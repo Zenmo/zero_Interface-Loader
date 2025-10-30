@@ -30,6 +30,10 @@ public ShapeSlider getSliderRooftopPVHouses_pct(){
 	return this.sl_rooftopPVHouses_pct;
 }
 
+public ShapeSlider getSl_householdElectricCookingResidentialArea_pct(){
+	return this.sl_householdElectricCookingResidentialArea_pct;
+}
+
 public ShapeSlider getWindSlider(){
 	return this.sl_largeScaleWind_MW;
 }

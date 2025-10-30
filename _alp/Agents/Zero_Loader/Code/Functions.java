@@ -3467,6 +3467,7 @@ double dayTimeSetPoint_degC = 20;
 double startOfDayTime_h = 8;
 double startOfNightTime_h = 23;
 
+
 if( randomTrue(0.5) ){ //50% kans op ochtend ritme
 	nightTimeSetPoint_degC = uniform_discr(12,18);
 	dayTimeSetPoint_degC = uniform_discr(18, 24);

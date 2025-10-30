@@ -2382,7 +2382,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1749738869835</Id>
 				<Name><![CDATA[sl_householdHeatDemandReductionResidentialArea_pct]]></Name>
 				<X>260</X>
-				<Y>245</Y>
+				<Y>275</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2409,7 +2409,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1749738869837</Id>
 				<Name><![CDATA[t_householdHeatDemandReductionResidentialArea_pct]]></Name>
 				<X>227</X>
-				<Y>250</Y>
+				<Y>280</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2436,7 +2436,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1749738869839</Id>
 				<Name><![CDATA[t_householdHeatDemandReductionDescriptionResidentialArea]]></Name>
 				<X>20</X>
-				<Y>250</Y>
+				<Y>280</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2488,7 +2488,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1749738869843</Id>
 				<Name><![CDATA[sl_householdAircoResidentialArea_pct]]></Name>
 				<X>260</X>
-				<Y>216</Y>
+				<Y>246</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2515,7 +2515,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1749738869845</Id>
 				<Name><![CDATA[t_householdAircoDescriptionResidentialArea]]></Name>
 				<X>20</X>
-				<Y>220</Y>
+				<Y>250</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2541,7 +2541,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1749738869847</Id>
 				<Name><![CDATA[t_householdAircoResidentialArea_pct]]></Name>
 				<X>223</X>
-				<Y>220</Y>
+				<Y>250</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2569,7 +2569,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1749738869849</Id>
 				<Name><![CDATA[cb_householdHTDistrictHeatingResidentialArea]]></Name>
 				<X>20</X>
-				<Y>130</Y>
+				<Y>160</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2606,7 +2606,7 @@ else{
 				<Id>1749738869851</Id>
 				<Name><![CDATA[cb_householdLTDistrictHeatingResidentialArea]]></Name>
 				<X>20</X>
-				<Y>165</Y>
+				<Y>195</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2698,7 +2698,7 @@ else{
 				<Id>1752231560000</Id>
 				<Name><![CDATA[i_householdHTDistrictHeating]]></Name>
 				<X>220</X>
-				<Y>135</Y>
+				<Y>165</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2726,7 +2726,7 @@ else{
 				<Id>1752231560019</Id>
 				<Name><![CDATA[i_householdLTDistrictHeating]]></Name>
 				<X>220</X>
-				<Y>170</Y>
+				<Y>200</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2754,7 +2754,7 @@ else{
 				<Id>1752231560038</Id>
 				<Name><![CDATA[i_householdAirconditioning]]></Name>
 				<X>180</X>
-				<Y>220</Y>
+				<Y>250</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2782,7 +2782,7 @@ else{
 				<Id>1752231560056</Id>
 				<Name><![CDATA[i_householdAdditionalInsulation]]></Name>
 				<X>180</X>
-				<Y>250</Y>
+				<Y>280</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2810,7 +2810,7 @@ else{
 				<Id>1753951517102</Id>
 				<Name><![CDATA[gr_ptSlidersHouses]]></Name>
 				<X>200</X>
-				<Y>320</Y>
+				<Y>340</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -2827,7 +2827,7 @@ else{
 				<Id>1753949405477</Id>
 				<Name><![CDATA[t_rooftopPTHouses_pct]]></Name>
 				<X>230</X>
-				<Y>299</Y>
+				<Y>319</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2855,7 +2855,7 @@ else{
 				<Id>1753949405484</Id>
 				<Name><![CDATA[sl_rooftopPTHouses_pct]]></Name>
 				<X>260</X>
-				<Y>294</Y>
+				<Y>314</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2882,7 +2882,7 @@ else{
 				<Id>1753949405489</Id>
 				<Name><![CDATA[txt_rooftopPTHousesDescription]]></Name>
 				<X>20</X>
-				<Y>300</Y>
+				<Y>320</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2908,7 +2908,7 @@ else{
 				<Id>1753949405492</Id>
 				<Name><![CDATA[i_householdPT]]></Name>
 				<X>180</X>
-				<Y>298</Y>
+				<Y>318</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -3051,6 +3051,293 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				</Font>
 				<Alignment>CENTER</Alignment>
 			</Text>
+			<Control Type="ComboBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1761581854467</Id>
+				<Name><![CDATA[cb_householdFullElectricHeatpumpManagement]]></Name>
+				<X>230</X>
+				<Y>130</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="130" Height="20">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<FillColor>-1</FillColor>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setHeatpumpManagementType(uI_Tabs.f_getActiveSliderGridConnections_houses(), cb_householdFullElectricHeatpumpManagement.getValue());</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<Editable>false</Editable>
+					<Button>Standaard</Button>
+					<Button>Piekmijden (Interval)</Button>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Image>
+				<Id>1761581886297</Id>
+				<Name><![CDATA[i_householdfullElectricHeatpumpManagement]]></Name>
+				<X>195</X>
+				<Y>130</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>cb_householdLTDistrictHeatingResidentialArea.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdLTDistrictHeating, zero_Interface.v_infoText.householdElectricHeatpump, i_householdLTDistrictHeating.getX() + uI_Tabs.v_presentationXOffset, i_householdLTDistrictHeating.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1761581904277</Id>
+				<Name><![CDATA[txt_fullElectricHeatpumpManagementDescription]]></Name>
+				<X>20</X>
+				<Y>132</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_householdAircoResidentialArea_pct.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Elec. Warmtepomp aansturing]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1761582207056</Id>
+				<Name><![CDATA[button_setHeatpumpHeatingManagementOffPeakInterval]]></Name>
+				<X>360</X>
+				<Y>130</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="10" Height="20">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>false</Enabled>
+					<ActionCode>if(gr_reducedHeatingIntervalParameters.isVisible()){
+	gr_reducedHeatingIntervalParameters.setVisible(false);
+}
+else{
+	gr_reducedHeatingIntervalParameters.setVisible(true);
+}</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText/>
+				</ExtendedProperties>
+			</Control>
+			<Group>
+				<Id>1761645088209</Id>
+				<Name><![CDATA[gr_reducedHeatingIntervalParameters]]></Name>
+				<X>240</X>
+				<Y>590</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<XCode>520</XCode>
+				<YCode>150</YCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Rectangle>
+						<Id>1761643523547</Id>
+						<Name><![CDATA[rectangle]]></Name>
+						<X>-150</X>
+						<Y>-30</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor/>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>305</Width>
+						<Height>50</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-6943</FillColor>
+						<FillMaterial>null</FillMaterial>
+					</Rectangle>
+					<Control Type="EditBox">
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Id>1761644737916</Id>
+						<Name><![CDATA[eb_reducedHeatingIntervalStart]]></Name>
+						<X>20</X>
+						<Y>-20</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<BasicProperties Width="35" Height="30">
+							<EmbeddedIcon>false</EmbeddedIcon>
+							<FillColor>-1</FillColor>
+							<TextColor>-16777216</TextColor>
+							<Enabled>true</Enabled>
+							<ActionCode>f_setAllReducedHeatingIntervals(new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_houses()), eb_reducedHeatingIntervalStart.getDoubleValue(), eb_reducedHeatingIntervalEnd.getDoubleValue());</ActionCode>
+						</BasicProperties>
+						<ExtendedProperties>
+							<Font Name="Dialog" Size="11" Style="0"/>
+							<LinkTo>false</LinkTo>
+						</ExtendedProperties>
+					</Control>
+					<Control Type="EditBox">
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Id>1761644775328</Id>
+						<Name><![CDATA[eb_reducedHeatingIntervalEnd]]></Name>
+						<X>80</X>
+						<Y>-20</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<BasicProperties Width="35" Height="30">
+							<EmbeddedIcon>false</EmbeddedIcon>
+							<FillColor>-1</FillColor>
+							<TextColor>-16777216</TextColor>
+							<Enabled>true</Enabled>
+							<ActionCode>f_setAllReducedHeatingIntervals(new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_houses()), eb_reducedHeatingIntervalStart.getDoubleValue(), eb_reducedHeatingIntervalEnd.getDoubleValue());</ActionCode>
+						</BasicProperties>
+						<ExtendedProperties>
+							<Font Name="Dialog" Size="11" Style="0"/>
+							<LinkTo>false</LinkTo>
+						</ExtendedProperties>
+					</Control>
+					<Text>
+						<Id>1761644895585</Id>
+						<Name><![CDATA[txt_reducedHeatingInterval_]]></Name>
+						<X>65</X>
+						<Y>-20</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[-]]></Text>
+						<Font>
+							<Name><![CDATA[SansSerif]]></Name>
+							<Size>22</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1761644924405</Id>
+						<Name><![CDATA[txt_reducedHeatingInterval_hr]]></Name>
+						<X>125</X>
+						<Y>-15</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Uur]]></Text>
+						<Font>
+							<Name><![CDATA[SansSerif]]></Name>
+							<Size>16</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1761644961465</Id>
+						<Name><![CDATA[txt_reducedHeatingInterval_desc]]></Name>
+						<X>-145</X>
+						<Y>-15</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Verminderd elec. interval]]></Text>
+						<Font>
+							<Name><![CDATA[SansSerif]]></Name>
+							<Size>14</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+				</Presentation>
+			</Group>
 		</Presentation>
 	</Group>
 	<Rectangle>

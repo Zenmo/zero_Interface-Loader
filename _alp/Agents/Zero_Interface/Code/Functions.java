@@ -2870,6 +2870,7 @@ double f_initializePresentationOrder()
 {/*ALCODESTART::1753440184174*/
 //Set order of certain layovers and submenus
 f_setShapePresentationOnTop(map);
+f_setShapePresentationOnTop(uI_Tabs_presentation);
 f_setShapePresentationOnTop(gr_zoomButton);
 f_setShapePresentationOnTop(gr_sliderClickBlocker);
 f_setShapePresentationOnTop(gr_forceMapSelection);
