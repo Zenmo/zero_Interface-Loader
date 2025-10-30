@@ -1,4 +1,4 @@
-double f_createGISRegionOutline()
+double f_createGISRegions()
 {/*ALCODESTART::1726584205769*/
 // Create neighborhoods and draw them
 for (Neighbourhood_data NBH : c_neighbourhood_data) {	
@@ -13,6 +13,27 @@ for (Neighbourhood_data NBH : c_neighbourhood_data) {
 	//Style area 
 	zero_Interface.f_styleSimulationAreas(area);
 	zero_Interface.c_GISNeighborhoods.add(area);
+	
+	
+	//Energy totals
+	if(NBH.total_electricity_consumption_companies_kWh_p_yr() != null && NBH.total_electricity_consumption_companies_kWh_p_yr() > 0){
+		c_remainingElectricityDelivery_kWh_Companies.put(area.p_id, NBH.total_electricity_consumption_companies_kWh_p_yr());
+	}
+	if(NBH.total_gas_consumption_companies_m3_p_yr() != null && NBH.total_gas_consumption_companies_m3_p_yr() > 0){	
+		c_remainingGasConsumption_m3_Companies.put(area.p_id, NBH.total_gas_consumption_companies_m3_p_yr());
+	}
+	if(NBH.total_cars_companies() != null && NBH.total_cars_companies() > 0){	
+		c_remainingNumberOfCars_Companies.put(area.p_id, NBH.total_cars_companies());
+	}
+	if(NBH.total_vans_companies() != null && NBH.total_vans_companies() > 0){	
+		c_remainingNumberOfVans_Companies.put(area.p_id, NBH.total_vans_companies());
+	}
+	if(NBH.total_trucks_companies() != null && NBH.total_trucks_companies() > 0){	
+		c_remainingNumberOfTrucks_Companies.put(area.p_id, NBH.total_trucks_companies());
+	}
+	if(NBH.total_electricity_consumption_companies_kWh_p_yr() != null && NBH.total_electricity_consumption_companies_kWh_p_yr() > 0){	
+		c_totalFloorAreaAnonymousCompanies_m2.put(area.p_id, NBH.total_electricity_consumption_companies_kWh_p_yr());
+	}
 }
 
 
@@ -49,6 +70,9 @@ f_createActors();
 
 //Grid nodes
 f_createGridNodes();
+
+//Create regions and initialize energy totals
+f_createGISRegions();
 
 //Grid connections
 f_createGridConnections();
@@ -855,8 +879,7 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 	}
 	
 	companyGC.p_floorSurfaceArea_m2 += genericCompany.address_floor_surface_m2();
-	v_totalFloorAreaAnonymousCompanies_m2 += genericCompany.address_floor_surface_m2();
-	
+	c_totalFloorAreaAnonymousCompanies_m2.put(f_getNBHIdOfGC(companyGC), c_totalFloorAreaAnonymousCompanies_m2.get(f_getNBHIdOfGC(companyGC)) + genericCompany.address_floor_surface_m2());
 }
 
 //Amount of generic companies created
@@ -1441,18 +1464,18 @@ future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(companyGC.v_liveC
 //Basic heating and electricity demand profiles
 if (companyGC.p_floorSurfaceArea_m2 > 0){
 	
-	if(v_remainingElectricityDelivery_kWh > 0){
+	if(c_remainingElectricityDelivery_kWh_Companies.get(f_getNBHIdOfGC(companyGC)) != null && c_remainingElectricityDelivery_kWh_Companies.get(f_getNBHIdOfGC(companyGC)) > 0){
 		//Buidling Base electricity load
-		double Remaining_electricity_demand_kWh_p_m2_yr = v_remainingElectricityDelivery_kWh / v_totalFloorAreaAnonymousCompanies_m2;
+		double Remaining_electricity_demand_kWh_p_m2_yr = c_remainingElectricityDelivery_kWh_Companies.get(f_getNBHIdOfGC(companyGC)) / c_totalFloorAreaAnonymousCompanies_m2.get(f_getNBHIdOfGC(companyGC));
 		double yearlyElectricityDemand_kWh = Remaining_electricity_demand_kWh_p_m2_yr * companyGC.p_floorSurfaceArea_m2;
 		
 		//Add base load profile
 		f_addElectricityDemandProfile(companyGC, yearlyElectricityDemand_kWh, null, false, "default_office_electricity_demand_fr");
 	}
 	
-	if(v_remainingGasConsumption_m3 > 0){
+	if(c_remainingGasConsumption_m3_Companies.get(f_getNBHIdOfGC(companyGC)) != null && c_remainingGasConsumption_m3_Companies.get(f_getNBHIdOfGC(companyGC)) > 0){
 		//Building Gas demand profile (purely heating)
-		double Remaining_gas_demand_m3_p_m2_yr = v_remainingGasConsumption_m3/v_totalFloorAreaAnonymousCompanies_m2;
+		double Remaining_gas_demand_m3_p_m2_yr = c_remainingGasConsumption_m3_Companies.get(f_getNBHIdOfGC(companyGC))/c_totalFloorAreaAnonymousCompanies_m2.get(f_getNBHIdOfGC(companyGC));
 		double yearlyGasDemand_m3 = Remaining_gas_demand_m3_p_m2_yr*companyGC.p_floorSurfaceArea_m2;
 		double ratioGasUsedForHeating = 1;
 		
@@ -1484,12 +1507,12 @@ future_scenario_list.setPlannedBatteryCapacity_kWh(0f);
 	
 //Transport (total remaining cars, vans and trucks (total as defined in project selection - survey company usage)
 
-//Vans
-if(v_remainingNumberOfCars_Companies > 0){
+//Cars
+if(c_remainingNumberOfCars_Companies.get(f_getNBHIdOfGC(companyGC)) != null && c_remainingNumberOfCars_Companies.get(f_getNBHIdOfGC(companyGC)) > 0){
 	int nbCars = 0;
-	for (int k = 0; k< ceil((double)v_remainingNumberOfCars_Companies/(double)v_numberOfCompaniesNoSurvey); k++){
+	for (int k = 0; k< ceil((double)c_remainingNumberOfCars_Companies.get(f_getNBHIdOfGC(companyGC))/(double)v_numberOfCompaniesNoSurvey); k++){
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
-		v_remainingNumberOfCars_Companies--;
+		c_remainingNumberOfCars_Companies.put(f_getNBHIdOfGC(companyGC), c_remainingNumberOfCars_Companies.get(f_getNBHIdOfGC(companyGC)) - 1);
 		nbCars++;
 	}
 	
@@ -1500,11 +1523,11 @@ if(v_remainingNumberOfCars_Companies > 0){
 }
 
 //Vans
-if(v_remainingNumberOfVans_Companies > 0){
+if(c_remainingNumberOfVans_Companies.get(f_getNBHIdOfGC(companyGC)) != null && c_remainingNumberOfVans_Companies.get(f_getNBHIdOfGC(companyGC)) > 0){
 	int nbVans = 0;
-	for (int k = 0; k< ceil((double)v_remainingNumberOfVans_Companies/(double)v_numberOfCompaniesNoSurvey); k++){
+	for (int k = 0; k< ceil((double)c_remainingNumberOfVans_Companies.get(f_getNBHIdOfGC(companyGC))/(double)v_numberOfCompaniesNoSurvey); k++){
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VAN, true, 0);
-		v_remainingNumberOfVans_Companies--;
+		c_remainingNumberOfVans_Companies.put(f_getNBHIdOfGC(companyGC), c_remainingNumberOfVans_Companies.get(f_getNBHIdOfGC(companyGC)) - 1);
 		nbVans++;
 	}
 	
@@ -1515,11 +1538,11 @@ if(v_remainingNumberOfVans_Companies > 0){
 }
 
 //Trucks
-if (v_remainingNumberOfTrucks_Companies > 0){
+if (c_remainingNumberOfTrucks_Companies.get(f_getNBHIdOfGC(companyGC)) != null && c_remainingNumberOfTrucks_Companies.get(f_getNBHIdOfGC(companyGC)) > 0){
 	int nbTrucks=0;
-	for (int k = 0; k< ceil((double)v_remainingNumberOfTrucks_Companies/(double)v_numberOfCompaniesNoSurvey); k++){
+	for (int k = 0; k< ceil((double)c_remainingNumberOfTrucks_Companies.get(f_getNBHIdOfGC(companyGC))/(double)v_numberOfCompaniesNoSurvey); k++){
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_TRUCK, true, 0);
-		v_remainingNumberOfTrucks_Companies--;
+		c_remainingNumberOfTrucks_Companies.put(f_getNBHIdOfGC(companyGC), c_remainingNumberOfTrucks_Companies.get(f_getNBHIdOfGC(companyGC)) - 1);
 		nbTrucks++;
 	}
 	
@@ -1854,8 +1877,8 @@ if (yearlyElectricityProduction_kWh != null && yearlyElectricityFeedin_kWh != nu
 	nettDelivery_kWh = Arrays.stream(yearlyElectricityDelivery_kWh).sum();
 }
 //traceln(Arrays.stream(profile.a_energyProfile_kWh).sum() + " kWh per jaar at grid connection " + parentGC.p_ownerID + " " + profileName);
-v_remainingElectricityDelivery_kWh -= nettDelivery_kWh;
-
+c_remainingElectricityDelivery_kWh_Companies.put(f_getNBHIdOfGC(parentGC), c_remainingElectricityDelivery_kWh_Companies.get(f_getNBHIdOfGC(parentGC)) - nettDelivery_kWh);
+			
 if (extraConsumption_kWh > 1) {
 	traceln("Preprocessing of delivery and production data led to negative consumption of: %s kWh", extraConsumption_kWh);
 	traceln("Consumption profile was capped to 0kW");
@@ -1996,7 +2019,7 @@ traceln("Survey companies excel should be overridden with your own code");
 double f_createCompanies()
 {/*ALCODESTART::1726584205873*/
 //Initialize company totals
-f_initializeCompanyTotals();
+f_initializeCompanyTotalsBackup();
 
 //Create survey companies based on survey inload structure
 switch(project_data.survey_type()){
@@ -2020,9 +2043,6 @@ f_createGenericCompanies();
 
 double f_createAdditionalGISObjects()
 {/*ALCODESTART::1726584205881*/
-//Area outlines
-f_createGISRegionOutline();
-
 //Parking spaces
 f_createParkingSpots();
 
@@ -2269,10 +2289,10 @@ if (gridConnection.getElectricity().getHasConnection()){
 			
 			//Update total Yearly electricity consumption (only when no timestep data available, cause when thats avaiable, it happens in the preprocessing function)
 			if (yearlyElectricityDelivery_kWh != 0){
-				v_remainingElectricityDelivery_kWh -= yearlyElectricityDelivery_kWh;
+				c_remainingElectricityDelivery_kWh_Companies.put(f_getNBHIdOfGC(companyGC), c_remainingElectricityDelivery_kWh_Companies.get(f_getNBHIdOfGC(companyGC)) - yearlyElectricityDelivery_kWh);
 			}
 			else{
-				v_remainingElectricityDelivery_kWh -= yearlyElectricityConsumption_kWh;
+				c_remainingElectricityDelivery_kWh_Companies.put(f_getNBHIdOfGC(companyGC), c_remainingElectricityDelivery_kWh_Companies.get(f_getNBHIdOfGC(companyGC)) - yearlyElectricityConsumption_kWh);
 			}
 		}
 		
@@ -2458,8 +2478,8 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		
 		
 		//Update v_remaningAmount of cars (company owned only)
-		v_remainingNumberOfCars_Companies -= gridConnection.getTransport().getCars().getNumCars();
-		
+		c_remainingNumberOfCars_Companies.put(f_getNBHIdOfGC(companyGC), c_remainingNumberOfCars_Companies.get(f_getNBHIdOfGC(companyGC)) - gridConnection.getTransport().getCars().getNumCars());
+	
 		//gridConnection.getTransport().getCars().getNumChargePoints(); // Wat doen we hier mee????????
 		
 		Integer nbEVCars = gridConnection.getTransport().getCars().getNumElectricCars();
@@ -2513,8 +2533,8 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 	if (gridConnection.getTransport().getVans().getNumVans() != null && gridConnection.getTransport().getVans().getNumVans() != 0){
 		
 		//Update v_remaningAmount of vans
-		v_remainingNumberOfVans_Companies -= gridConnection.getTransport().getVans().getNumVans();
-		
+		c_remainingNumberOfVans_Companies.put(f_getNBHIdOfGC(companyGC), c_remainingNumberOfVans_Companies.get(f_getNBHIdOfGC(companyGC)) - gridConnection.getTransport().getVans().getNumVans());
+	
 		
 		//gridConnection.getTransport().getVans().getNumChargePoints(); // Wat doen we hier mee????????
 		
@@ -2568,8 +2588,8 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 	if (gridConnection.getTransport().getTrucks().getNumTrucks() != null && gridConnection.getTransport().getTrucks().getNumTrucks() != 0){
 		
 		//Update v_remaningAmount of trucks
-		v_remainingNumberOfTrucks_Companies -= gridConnection.getTransport().getTrucks().getNumTrucks();
-
+		c_remainingNumberOfTrucks_Companies.put(f_getNBHIdOfGC(companyGC), c_remainingNumberOfTrucks_Companies.get(f_getNBHIdOfGC(companyGC)) - gridConnection.getTransport().getTrucks().getNumTrucks());
+	
 
 		//gridConnection.getTransport().getTrucks().getNumChargePoints(); // Wat doen we hier mee????????
 		
@@ -3902,7 +3922,7 @@ J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.METHANE, profile_
 j_ea.energyAssetName = engineGC.p_ownerID + " custom gas profile";
 
 if(engineGC.p_owner.p_detailedCompany){
-	v_remainingGasConsumption_m3 -= yearlyGasDelivery_m3;
+	c_remainingGasConsumption_m3_Companies.put(f_getNBHIdOfGC(engineGC), c_remainingGasConsumption_m3_Companies.get(f_getNBHIdOfGC(engineGC)) - yearlyGasDelivery_m3);
 }
 /*ALCODEEND*/}
 
@@ -3948,7 +3968,7 @@ J_ProfilePointer profilePointer = energyModel.f_findProfile(profileName);
 new J_EAConsumption(engineGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, yearlyConsumptionHeat_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, profilePointer);
 
 if(engineGC.p_owner.p_detailedCompany){
-	v_remainingGasConsumption_m3 -= yearlyGasDelivery_m3;
+	c_remainingGasConsumption_m3_Companies.put(f_getNBHIdOfGC(engineGC), c_remainingGasConsumption_m3_Companies.get(f_getNBHIdOfGC(engineGC)) - yearlyGasDelivery_m3);
 }
 
 return yearlyConsumptionHeat_kWh * max(profilePointer.getAllValues())/energyModel.p_timeStep_h;
@@ -3963,7 +3983,7 @@ String profileName = "default_building_heat_demand_fr";
 new J_EAConsumption(engineGC, OL_EnergyAssetType.METHANE_DEMAND, profileName, yearlyGasConsumption_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeStep_h, null);	 
 
 if(engineGC.p_owner.p_detailedCompany){
-	v_remainingGasConsumption_m3 -= yearlyGasDelivery_m3;
+	c_remainingGasConsumption_m3_Companies.put(f_getNBHIdOfGC(engineGC), c_remainingGasConsumption_m3_Companies.get(f_getNBHIdOfGC(engineGC)) - yearlyGasDelivery_m3);
 }
 /*ALCODEEND*/}
 
@@ -4038,7 +4058,7 @@ J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile_kWh
 j_ea.energyAssetName = engineGC.p_ownerID + " custom building heat profile";
 
 if(engineGC.p_owner.p_detailedCompany){
-	v_remainingGasConsumption_m3 -= yearlyGasDelivery_m3;
+	c_remainingGasConsumption_m3_Companies.put(f_getNBHIdOfGC(engineGC), c_remainingGasConsumption_m3_Companies.get(f_getNBHIdOfGC(engineGC)) - yearlyGasDelivery_m3);
 }
 
 return max(profile_m3)/energyModel.p_timeStep_h;
@@ -4103,7 +4123,7 @@ double yearlyGasDelivery_m3 = engineGC.p_floorSurfaceArea_m2 * avgc_data.p_avgCo
 f_createGasProfileFromAnnualGasTotal(engineGC, yearlyGasDelivery_m3);
 
 if(engineGC.p_owner.p_detailedCompany){
-	v_remainingGasConsumption_m3 -= yearlyGasDelivery_m3;
+	c_remainingGasConsumption_m3_Companies.put(f_getNBHIdOfGC(engineGC), c_remainingGasConsumption_m3_Companies.get(f_getNBHIdOfGC(engineGC)) - yearlyGasDelivery_m3);
 }
 /*ALCODEEND*/}
 
@@ -4372,14 +4392,45 @@ v_probabilityForAdditionalCar_publicParking = ((double) leftOverForPublicParking
 
 /*ALCODEEND*/}
 
-double f_initializeCompanyTotals()
+double f_initializeCompanyTotalsBackup()
 {/*ALCODESTART::1756132258795*/
-//Initialize remaining totals of the area
-v_remainingNumberOfCars_Companies = project_data.total_cars_companies() != null ? max(0, project_data.total_cars_companies()) : 0;
-v_remainingNumberOfVans_Companies = project_data.total_vans_companies() != null ? max(0, project_data.total_vans_companies()) : 0;
-v_remainingNumberOfTrucks_Companies = project_data.total_trucks_companies() != null ? max(0, project_data.total_trucks_companies()) : 0;
-v_remainingElectricityDelivery_kWh = project_data.total_electricity_consumption_companies_kWh_p_yr() != null ? max(0, project_data.total_electricity_consumption_companies_kWh_p_yr()) : 0;
-v_remainingGasConsumption_m3 = project_data.total_gas_consumption_companies_m3_p_yr() != null ? max(0, project_data.total_gas_consumption_companies_m3_p_yr()) : 0;
+//Initialize backup for remaining totals of the area
+if(c_remainingElectricityDelivery_kWh_Companies.size() == 0 && project_data.total_electricity_consumption_companies_kWh_p_yr() != null){
+	c_remainingElectricityDelivery_kWh_Companies.put("", project_data.total_electricity_consumption_companies_kWh_p_yr());
+}
+else{
+	c_remainingElectricityDelivery_kWh_Companies.put("", 0.0);
+}
+
+if(c_remainingGasConsumption_m3_Companies.size() == 0 && project_data.total_gas_consumption_companies_m3_p_yr() != null){
+	c_remainingGasConsumption_m3_Companies.put("", project_data.total_gas_consumption_companies_m3_p_yr());
+}
+else{
+	c_remainingGasConsumption_m3_Companies.put("", 0.0);
+}
+
+if(c_remainingNumberOfCars_Companies.size() == 0 && project_data.total_cars_companies() != null){
+	c_remainingNumberOfCars_Companies.put("", project_data.total_cars_companies());
+}
+else{
+	c_remainingNumberOfCars_Companies.put("", 0);
+}
+
+if(c_remainingNumberOfVans_Companies.size() == 0 && project_data.total_vans_companies() != null){
+	c_remainingNumberOfVans_Companies.put("", project_data.total_vans_companies());
+}
+else{
+	c_remainingNumberOfVans_Companies.put("", 0);
+}
+
+if(c_remainingNumberOfTrucks_Companies.size() == 0 && project_data.total_trucks_companies() != null){
+	c_remainingNumberOfTrucks_Companies.put("", project_data.total_trucks_companies());
+}
+else{
+	c_remainingNumberOfTrucks_Companies.put("", 0);
+}
+
+c_totalFloorAreaAnonymousCompanies_m2.put("", 0.0);
 /*ALCODEEND*/}
 
 double f_initializeInterfacePointers()
@@ -4666,5 +4717,25 @@ try {
 }
 
 
+/*ALCODEEND*/}
+
+String f_getNBHIdOfGC(GridConnection GC)
+{/*ALCODESTART::1761846780683*/
+GIS_Object area = findFirst(energyModel.pop_GIS_Objects, nbh -> nbh.p_GISObjectType == OL_GISObjectType.REGION && nbh.gisRegion.contains(GC.p_latitude, GC.p_longitude));
+
+boolean remainingValuesOnlyContainsTheBackup = true;
+if(c_remainingElectricityDelivery_kWh_Companies.size()>1){
+	remainingValuesOnlyContainsTheBackup = false;
+	throw new RuntimeException("FIX THIS FIRST!!");
+}
+
+
+if(area != null && !remainingValuesOnlyContainsTheBackup){
+		throw new RuntimeException("FIX THIS FIRST!!");
+	//return area.p_id;
+}
+else{
+	return "";
+}
 /*ALCODEEND*/}
 
