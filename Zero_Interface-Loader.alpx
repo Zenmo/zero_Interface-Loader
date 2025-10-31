@@ -192,7 +192,11 @@
 			</Folder>
 			<Folder>
 				<Id>1754045711603</Id>
-				<Name><![CDATA[DataPackages]]></Name>
+				<Name><![CDATA[DatabasePackages]]></Name>
+			</Folder>
+			<Folder>
+				<Id>1761915047244</Id>
+				<Name><![CDATA[DataClasses]]></Name>
 			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
@@ -243,10 +247,12 @@
 			<JavaClass>
 				<Id>1715862317301</Id>
 				<Name><![CDATA[J_scenario_Current]]></Name>
+				<Folder>1761915047244</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1715862317307</Id>
 				<Name><![CDATA[J_scenario_Future]]></Name>
+				<Folder>1761915047244</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1726584206084</Id>
@@ -342,10 +348,17 @@
 			<JavaClass>
 				<Id>1753884053162</Id>
 				<Name><![CDATA[J_ModelSave]]></Name>
+				<Folder>1761915047244</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1761122454908</Id>
 				<Name><![CDATA[J_SliderSettings_Residential]]></Name>
+				<Folder>1761915047244</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1761914526110</Id>
+				<Name><![CDATA[J_RemainingTotals]]></Name>
+				<Folder>1761915047244</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

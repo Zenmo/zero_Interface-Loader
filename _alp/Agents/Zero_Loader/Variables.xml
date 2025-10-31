@@ -64,25 +64,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1726584205893</Id>
-		<Name><![CDATA[v_numberOfCompaniesNoSurvey]]></Name>
-		<X>1561</X>
-		<Y>261</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[int]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1733235094633</Id>
 		<Name><![CDATA[v_numberOfSurveyCompanies]]></Name>
 		<X>1560</X>
@@ -168,7 +149,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1753450969530</Id>
 		<Name><![CDATA[v_objectMapper]]></Name>
-		<X>2140</X>
+		<X>2100</X>
 		<Y>49</Y>
 		<Label>
 			<X>10</X>
@@ -349,11 +330,39 @@
 			</ParameterEditor>
 		</Properties>
 	</Variable>
+	<Variable Class="Parameter">
+		<Id>1761907535651</Id>
+		<Name><![CDATA[p_remainingTotals]]></Name>
+		<X>1560</X>
+		<Y>290</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[J_RemainingTotals]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[new J_RemainingTotals()]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1761907535649</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
 	<Variable Class="CollectionVariable">
 		<Id>1726584205737</Id>
 		<Name><![CDATA[c_gridNodeIDsInScope]]></Name>
 		<X>1560</X>
-		<Y>420</Y>
+		<Y>320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -641,7 +650,7 @@
 		<Id>1749631164240</Id>
 		<Name><![CDATA[c_gridNodeIDsWithProfiles]]></Name>
 		<X>1560</X>
-		<Y>450</Y>
+		<Y>350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -694,7 +703,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1759135072429</Id>
 		<Name><![CDATA[c_GISregions]]></Name>
-		<X>2140</X>
+		<X>2100</X>
 		<Y>149</Y>
 		<Label>
 			<X>10</X>
@@ -707,114 +716,6 @@
 			<CollectionClass>LinkedHashMap</CollectionClass>
 			<ElementClass>String</ElementClass>
 			<ValueElementClass>GISRegion</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1761846182663</Id>
-		<Name><![CDATA[c_remainingElectricityDelivery_kWh_Companies]]></Name>
-		<X>1560</X>
-		<Y>290</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>String</ElementClass>
-			<ValueElementClass>Double</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1761846334549</Id>
-		<Name><![CDATA[c_remainingGasConsumption_m3_Companies]]></Name>
-		<X>1560</X>
-		<Y>310</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>String</ElementClass>
-			<ValueElementClass>Double</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1761846335359</Id>
-		<Name><![CDATA[c_remainingNumberOfCars_Companies]]></Name>
-		<X>1560</X>
-		<Y>330</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>String</ElementClass>
-			<ValueElementClass>Integer</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1761846337900</Id>
-		<Name><![CDATA[c_remainingNumberOfVans_Companies]]></Name>
-		<X>1560</X>
-		<Y>350</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>String</ElementClass>
-			<ValueElementClass>Integer</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1761846338774</Id>
-		<Name><![CDATA[c_remainingNumberOfTrucks_Companies]]></Name>
-		<X>1560</X>
-		<Y>370</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>String</ElementClass>
-			<ValueElementClass>Integer</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1761846340657</Id>
-		<Name><![CDATA[c_totalFloorAreaAnonymousCompanies_m2]]></Name>
-		<X>1560</X>
-		<Y>390</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>String</ElementClass>
-			<ValueElementClass>Double</ValueElementClass>
 		</Properties>
 	</Variable>
 </Variables>
