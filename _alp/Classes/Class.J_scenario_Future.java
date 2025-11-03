@@ -33,9 +33,9 @@ public class J_scenario_Future implements Serializable {
 	private Double requestedContractDeliveryCapacity_kW = 0.0;
 	private Double requestedContractFeedinCapacity_kW = 0.0;
 	private Double requestedPhysicalConnectionCapacity_kW = 0.0;
-	private double plannedHeatSavings = 0;
+	private double plannedHeatSavings_pct = 0;
 	private OL_GridConnectionHeatingType plannedHeatingType = OL_GridConnectionHeatingType.NONE;
-	private double plannedElectricitySavings = 0;
+	private double plannedElectricitySavings_pct = 0;
 	private boolean plannedCurtailment = false;
 	private Integer plannedPV_kW = 0;
 	private Integer plannedPV_year;
@@ -43,7 +43,7 @@ public class J_scenario_Future implements Serializable {
 	private Float plannedBatteryPower_kW = 0f;
 	private Float plannedBatteryCapacity_kWh = 0f;
 	//Integer plannedWind_year;
-	private double plannedTransportSavings = 0;
+	private double plannedTransportSavings_pct = 0;
 	private Integer plannedEVCars = 0;
 	private Integer plannedEVVans = 0;
 	private Integer plannedEVTrucks = 0;
@@ -51,8 +51,6 @@ public class J_scenario_Future implements Serializable {
 	private Integer plannedHydrogenVans = 0;
 	private Integer plannedHydrogenTrucks = 0; 
 
-	
-		
     /**
      * Default constructor
      */
@@ -90,16 +88,16 @@ public class J_scenario_Future implements Serializable {
         this.requestedPhysicalConnectionCapacity_kW = requestedPhysicalConnectionCapacity_kW;
     }
     
-    public void setPlannedHeatSavings(double plannedHeatSavings) {
-    	this.plannedHeatSavings = plannedHeatSavings;
+    public void setPlannedHeatSavings_pct(double plannedHeatSavings_pct) {
+    	this.plannedHeatSavings_pct = plannedHeatSavings_pct;
     }
     
     public void setPlannedHeatingType(OL_GridConnectionHeatingType plannedHeatingType) {
     	this.plannedHeatingType = plannedHeatingType;
     }
     
-    public void setPlannedElectricitySavings(double plannedElectricitySavings) {
-    	this.plannedElectricitySavings = plannedElectricitySavings;
+    public void setPlannedElectricitySavings_pct(double plannedElectricitySavings_pct) {
+    	this.plannedElectricitySavings_pct = plannedElectricitySavings_pct;
     }
     
     public void setPlannedCurtailment(boolean plannedCurtailment) {
@@ -126,8 +124,8 @@ public class J_scenario_Future implements Serializable {
         this.plannedBatteryCapacity_kWh = plannedBatteryCapacity_kWh;
     }
     
-    public void setPlannedTransportSavings(double plannedTransportSavings) {
-    	this.plannedTransportSavings = plannedTransportSavings;
+    public void setPlannedTransportSavings_pct(double plannedTransportSavings_pct) {
+    	this.plannedTransportSavings_pct = plannedTransportSavings_pct;
     }
     
     public void setPlannedEVCars(Integer plannedEVCars) {
@@ -153,8 +151,7 @@ public class J_scenario_Future implements Serializable {
     public void setPlannedHydrogenTrucks(Integer plannedHydrogenTrucks) {
         this.plannedHydrogenTrucks = plannedHydrogenTrucks;
     }
-    
-    
+   
     // Getters
     public Agent getParentAgent() {
         return parentAgent;
@@ -176,16 +173,16 @@ public class J_scenario_Future implements Serializable {
     	return requestedPhysicalConnectionCapacity_kW;
     }
     
-    public double getPlannedHeatSavings() {
-    	return plannedHeatSavings;
+    public double getPlannedHeatSavings_pct() {
+    	return plannedHeatSavings_pct;
     }
     
     public OL_GridConnectionHeatingType getPlannedHeatingType() {
     	return plannedHeatingType;
     }
     
-    public double getPlannedElectricitySavings() {
-    	return plannedElectricitySavings;
+    public double getPlannedElectricitySavings_pct() {
+    	return plannedElectricitySavings_pct;
     } 
     
     public boolean getPlannedCurtailment() {
@@ -221,8 +218,8 @@ public class J_scenario_Future implements Serializable {
         return plannedBatteryCapacity_kWh;
     }
     
-    public double getPlannedTransportSavings() {
-    	return plannedTransportSavings;
+    public double getPlannedTransportSavings_pct() {
+    	return plannedTransportSavings_pct;
     }
     
     public Integer getPlannedEVCars() {
@@ -249,8 +246,6 @@ public class J_scenario_Future implements Serializable {
         return plannedHydrogenTrucks;
     }
     
-    
-       
 	@Override
 	public String toString() {
 		return super.toString();

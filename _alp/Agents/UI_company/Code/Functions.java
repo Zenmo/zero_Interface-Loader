@@ -7,7 +7,7 @@ rb_scenariosPrivateUI.setValue(2, false);
 ////Heating
 
 //Heating savings
-sl_heatDemandCompanyReduction.setValue(p_scenarioSettings_Future.getPlannedHeatSavings(), true);
+sl_heatDemandCompanyReduction.setValue(p_scenarioSettings_Future.getPlannedHeatSavings_pct(), true);
 
 //Heating type (aangenomen dat het hetzelfde blijft, want hebben geen vraag die dat stelt in het formulier)
 int nr_currentHeatingType = 0;
@@ -41,7 +41,7 @@ rb_heatingTypePrivateUI.setValue(nr_currentHeatingType, true);
 ////Electricity
 
 //Electricity savings
-sl_electricityDemandCompanyReduction.setValue(p_scenarioSettings_Future.getPlannedElectricitySavings(), true);
+sl_electricityDemandCompanyReduction.setValue(p_scenarioSettings_Future.getPlannedElectricitySavings_pct(), true);
 
 //Connection capacity (Delivery)
 sl_GCCapacityCompany.setValue(p_scenarioSettings_Future.getRequestedContractDeliveryCapacity_kW(), true);
@@ -65,7 +65,7 @@ cb_curtailmentCompany.setSelected(p_scenarioSettings_Future.getPlannedCurtailmen
 ////Mobility
 
 //Mobility savings
-sl_mobilityDemandCompanyReduction.setValue(p_scenarioSettings_Future.getPlannedTransportSavings(), true);
+sl_mobilityDemandCompanyReduction.setValue(p_scenarioSettings_Future.getPlannedTransportSavings_pct(), true);
 
 //Cars (VOLGORDE BELANGRIJK)
 sl_hydrogenCarsCompany.setValue(p_scenarioSettings_Future.getPlannedHydrogenCars(), true);
