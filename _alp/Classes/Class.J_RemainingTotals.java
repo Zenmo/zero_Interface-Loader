@@ -19,6 +19,12 @@ public class J_RemainingTotals {
 	private Map<String, Double> remainingElectricityDeliveryOfAnonymousCompanies_kWhpm2 = new HashMap<>(Map.of(totalModelName, 0.0));
 	private Map<String, Double> remainingGasDeliveryOfAnonymousCompanies_m3pm2 = new HashMap<>(Map.of(totalModelName, 0.0));
 	
+	//Total value is added total or manual input
+	private boolean totalElectricityConsumptionCompaniesIsManualInput = false;
+	private boolean totalGasConsumptionCompaniesIsManualInput = false;
+	private boolean totalCarsCompaniesIsManualInput = false;
+	private boolean totalVansCompaniesIsManualInput = false;
+	private boolean totalTrucksCompaniesIsManualInput = false;
 	
     /**
      * Default constructor
@@ -31,43 +37,64 @@ public class J_RemainingTotals {
     	//Energy totals
     	if(project_data.total_electricity_consumption_companies_kWh_p_yr() != null && project_data.total_electricity_consumption_companies_kWh_p_yr() > 0){
     		remainingElectricityDeliveryCompanies_kWh.put(totalModelName, project_data.total_electricity_consumption_companies_kWh_p_yr());
+    		this.totalElectricityConsumptionCompaniesIsManualInput = true;
     	}
     	if(project_data.total_gas_consumption_companies_m3_p_yr() != null && project_data.total_gas_consumption_companies_m3_p_yr() > 0){	
     		remainingGasDeliveryCompanies_m3.put(totalModelName, project_data.total_gas_consumption_companies_m3_p_yr());
+    		this.totalGasConsumptionCompaniesIsManualInput = true;
     	}
     	if(project_data.total_cars_companies() != null && project_data.total_cars_companies() > 0){	
     		remainingNumberOfCarsCompanies.put(totalModelName, project_data.total_cars_companies());
+    		this.totalCarsCompaniesIsManualInput = true;
     	}
     	if(project_data.total_vans_companies() != null && project_data.total_vans_companies() > 0){	
     		remainingNumberOfVansCompanies.put(totalModelName, project_data.total_vans_companies());
+    		this.totalVansCompaniesIsManualInput = true;
     	}
     	if(project_data.total_trucks_companies() != null && project_data.total_trucks_companies() > 0){	
     		remainingNumberOfTrucksCompanies.put(totalModelName, project_data.total_trucks_companies());
+    		this.totalTrucksCompaniesIsManualInput = true;
     	}
     }
     
     //Initialize remaining totals
     public void addNBH(Neighbourhood_data NBH) {
+    	if(totalFloorAreaAnonymousCompanies_m2.get(NBH.districtname()) != null) {
+    		throw new RuntimeException("Adding NBH: " + NBH.districtname() + " to J_RemainingTotals for the second time, This will cause energy total mismatches and therefor is not allowed!");
+    	}
+    	if(finalized) {
+    		throw new RuntimeException("Adding NBH: " + NBH.districtname() + " to J_RemainingTotals after the J_RemainingTotals has been finalized, This will cause energy total mismatches and therefor is not allowed!");
+    	}
     	
-    	if(NBH.total_electricity_delivery_companies_kWh_p_yr() != null && NBH.total_electricity_delivery_companies_kWh_p_yr() > 0){
-    		remainingElectricityDeliveryCompanies_kWh.put(NBH.districtname(), NBH.total_electricity_delivery_companies_kWh_p_yr());
-    		//adjustRemainingElectricityDeliveryCompanies_kWh(null, NBH.total_electricity_delivery_companies_kWh_p_yr());
+    	if(NBH.total_comp_elec_delivery_kwh_p_yr() != null && NBH.total_comp_elec_delivery_kwh_p_yr() >= 0){
+    		remainingElectricityDeliveryCompanies_kWh.put(NBH.districtname(), NBH.total_comp_elec_delivery_kwh_p_yr());
+    		if(!totalElectricityConsumptionCompaniesIsManualInput) {
+    			adjustRemainingElectricityDeliveryCompanies_kWh(null, NBH.total_comp_elec_delivery_kwh_p_yr());
+    		}
     	}
-    	if(NBH.total_gas_delivery_companies_m3_p_yr() != null && NBH.total_gas_delivery_companies_m3_p_yr() > 0){	
-    		remainingGasDeliveryCompanies_m3.put(NBH.districtname(), NBH.total_gas_delivery_companies_m3_p_yr());
-    		//adjustRemainingGasDeliveryCompanies_m3(null, NBH.total_gas_delivery_companies_m3_p_yr());
+    	if(NBH.total_comp_gas_delivery_m3_p_yr() != null && NBH.total_comp_gas_delivery_m3_p_yr() >= 0){	
+    		remainingGasDeliveryCompanies_m3.put(NBH.districtname(), NBH.total_comp_gas_delivery_m3_p_yr());
+    		if(!totalGasConsumptionCompaniesIsManualInput) {
+    			adjustRemainingGasDeliveryCompanies_m3(null, NBH.total_comp_gas_delivery_m3_p_yr());
+    		}
     	}
-    	if(NBH.total_cars_companies() != null && NBH.total_cars_companies() > 0){	
-    		remainingNumberOfCarsCompanies.put(NBH.districtname(), NBH.total_cars_companies());
-    		//adjustRemainingNumberOfCarsCompanies(null, NBH.total_cars_companies());
+    	if(NBH.total_nr_comp_cars() != null && NBH.total_nr_comp_cars() >= 0){	
+    		remainingNumberOfCarsCompanies.put(NBH.districtname(), NBH.total_nr_comp_cars());
+    		if(!totalCarsCompaniesIsManualInput) {
+    			adjustRemainingNumberOfCarsCompanies(null, NBH.total_nr_comp_cars());
+    		}
     	}
-    	if(NBH.total_vans_companies() != null && NBH.total_vans_companies() > 0){	
-    		remainingNumberOfVansCompanies.put(NBH.districtname(), NBH.total_vans_companies());
-    		//adjustRemainingNumberOfVansCompanies(null, NBH.total_vans_companies());
+    	if(NBH.total_nr_comp_vans() != null && NBH.total_nr_comp_vans() >= 0){	
+    		remainingNumberOfVansCompanies.put(NBH.districtname(), NBH.total_nr_comp_vans());
+    		if(!totalVansCompaniesIsManualInput) {
+    			adjustRemainingNumberOfVansCompanies(null, NBH.total_nr_comp_vans());
+    		}
     	}
-    	if(NBH.total_trucks_companies() != null && NBH.total_trucks_companies() > 0){	
-    		remainingNumberOfTrucksCompanies.put(NBH.districtname(), NBH.total_trucks_companies());
-    		//adjustRemainingNumberOfTrucksCompanies(null, NBH.total_trucks_companies());
+    	if(NBH.total_nr_comp_trucks() != null && NBH.total_nr_comp_trucks() >= 0){	
+    		remainingNumberOfTrucksCompanies.put(NBH.districtname(), NBH.total_nr_comp_trucks());
+    		if(!totalTrucksCompaniesIsManualInput) {
+    			adjustRemainingNumberOfTrucksCompanies(null, NBH.total_nr_comp_trucks());
+    		}
     	}
 
     	totalFloorAreaAnonymousCompanies_m2.put(NBH.districtname(), 0.0);
