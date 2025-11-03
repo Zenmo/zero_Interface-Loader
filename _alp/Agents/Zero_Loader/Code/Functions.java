@@ -2633,35 +2633,41 @@ Building_data f_createBuildingData_Vallum(GridConnection companyGC,String PandID
 {/*ALCODESTART::1737741603780*/
 com.zenmo.bag.Pand pand_data_vallum = map_buildingData_Vallum.get(PandID);
 
-//Calculate surface area
-GISRegion gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(pand_data_vallum.getGeometry().toString(), OL_GISObjectType.BUILDING));
-double surfaceArea_m2 = gisRegion.area();
-gisRegion.remove();
-
-
-//Create a building_data record
-Building_data building_data_record = Building_data.builder().
-
-address_id("verblijfsobject." + PandID).
-building_id(PandID).
-streetname(companyGC.p_address.getStreetName()).
-house_number(companyGC.p_address.getHouseNumber()).
-house_letter(companyGC.p_address.getHouseLetter()).
-house_addition(companyGC.p_address.getHouseAddition()).
-postalcode(companyGC.p_address.getPostalcode()).
-city(companyGC.p_address.getPostalcode()).
-build_year(pand_data_vallum.getBouwjaar()).	
-status(pand_data_vallum.getStatus()).
-//purpose(row.get( buildings.purpose )).
-address_floor_surface_m2(surfaceArea_m2).
-polygon_area_m2(surfaceArea_m2).
-annotation(companyGC.p_owner.p_actorID).
-//extra_info(row.get( buildings.extra_info )).
-//gridnode_id(row.get( buildings.gridnode_id )).
-//latitude(row.get( buildings.latitude )).
-//longitude(row.get( buildings.longitude )).
-polygon(pand_data_vallum.getGeometry().toString()).
-build();
+Building_data building_data_record = null;
+if(pand_data_vallum != null){ // Only happens if building has been selected in survey, that is no longer available in BAG (Destroyed for example).
+	//Calculate surface area
+	GISRegion gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(pand_data_vallum.getGeometry().toString(), OL_GISObjectType.BUILDING));
+	double surfaceArea_m2 = gisRegion.area();
+	gisRegion.remove();
+	
+	
+	//Create a building_data record
+	building_data_record = Building_data.builder().
+	
+	address_id("verblijfsobject." + PandID).
+	building_id(PandID).
+	streetname(companyGC.p_address.getStreetName()).
+	house_number(companyGC.p_address.getHouseNumber()).
+	house_letter(companyGC.p_address.getHouseLetter()).
+	house_addition(companyGC.p_address.getHouseAddition()).
+	postalcode(companyGC.p_address.getPostalcode()).
+	city(companyGC.p_address.getPostalcode()).
+	build_year(pand_data_vallum.getBouwjaar()).	
+	status(pand_data_vallum.getStatus()).
+	//purpose(row.get( buildings.purpose )).
+	address_floor_surface_m2(surfaceArea_m2).
+	polygon_area_m2(surfaceArea_m2).
+	annotation(companyGC.p_owner.p_actorID).
+	//extra_info(row.get( buildings.extra_info )).
+	//gridnode_id(row.get( buildings.gridnode_id )).
+	//latitude(row.get( buildings.latitude )).
+	//longitude(row.get( buildings.longitude )).
+	polygon(pand_data_vallum.getGeometry().toString()).
+	build();
+}
+else{
+	traceln("WARNING: SELECTED BUILDING IN SURVEY IS NO LONGER IN THE BAG DATABASE -> BUILDING CAN/HAS NOT BE(EN) CREATED!");
+}
 
 return building_data_record;
 /*ALCODEEND*/}
