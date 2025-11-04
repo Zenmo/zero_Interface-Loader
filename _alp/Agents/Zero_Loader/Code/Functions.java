@@ -765,7 +765,6 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		companyGC = energyModel.add_UtilityConnections();
 
 		//Update counter and collections
-		p_remainingTotals.adjustTotalNumberOfAnonymousCompanies(companyGC, 1);
 		generic_company_GCs.add(companyGC);
 		map_GC_to_installedBuildingPV.put(companyGC, 0.0);
 		
@@ -862,6 +861,9 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 	}
 	
 	companyGC.p_floorSurfaceArea_m2 += genericCompany.address_floor_surface_m2();
+	
+	//Update remaining totals (AFTER Lat/Lon has been defined!)
+	p_remainingTotals.adjustTotalNumberOfAnonymousCompanies(companyGC, 1);
 	p_remainingTotals.adjustTotalFloorAreaAnonymousCompanies_m2(companyGC, genericCompany.address_floor_surface_m2());
 }
 
@@ -1447,7 +1449,7 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 	
 	if(p_remainingTotals.getRemainingElectricityDeliveryCompanies_kWh(companyGC) > 0){
 		//Buidling Base electricity load
-		double Remaining_electricity_demand_kWh_p_m2_yr = p_remainingTotals.getRemainingElectricityDeliveryOfAnonymousCompanies_kWhpm2(companyGC);
+		double Remaining_electricity_demand_kWh_p_m2_yr = p_remainingTotals.getElectricityDeliveryOfAnonymousCompanies_kWhpm2(companyGC);
 		double yearlyElectricityDemand_kWh = Remaining_electricity_demand_kWh_p_m2_yr * companyGC.p_floorSurfaceArea_m2;
 		
 		//Add base load profile
@@ -1456,7 +1458,7 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 	
 	if(p_remainingTotals.getRemainingGasDeliveryCompanies_m3(companyGC) > 0){
 		//Building Gas demand profile (purely heating)
-		double Remaining_gas_demand_m3_p_m2_yr = p_remainingTotals.getRemainingGasDeliveryOfAnonymousCompanies_m3pm2(companyGC);
+		double Remaining_gas_demand_m3_p_m2_yr = p_remainingTotals.getGasDeliveryOfAnonymousCompanies_m3pm2(companyGC);
 		double yearlyGasDemand_m3 = Remaining_gas_demand_m3_p_m2_yr*companyGC.p_floorSurfaceArea_m2;
 		double ratioGasUsedForHeating = 1;
 		
@@ -1491,7 +1493,7 @@ future_scenario_list.setPlannedBatteryCapacity_kWh(0f);
 //Cars
 if(p_remainingTotals.getRemainingNumberOfCarsCompanies(companyGC) > 0){
 	int nbCars = 0;
-	for (int k = 0; k< ceil((double)p_remainingTotals.getRemainingNumberOfCarsCompanies(companyGC)/(double)p_remainingTotals.getTotalNumberOfAnonymousCompanies(companyGC)); k++){
+	for (int k = 0; k < p_remainingTotals.getCeiledRemainingNumberOfCarsPerCompany(companyGC); k++){
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
 		p_remainingTotals.adjustRemainingNumberOfCarsCompanies(companyGC,  - 1);
 		nbCars++;
@@ -1506,7 +1508,7 @@ if(p_remainingTotals.getRemainingNumberOfCarsCompanies(companyGC) > 0){
 //Vans
 if(p_remainingTotals.getRemainingNumberOfVansCompanies(companyGC) > 0){
 	int nbVans = 0;
-	for (int k = 0; k< ceil((double)p_remainingTotals.getRemainingNumberOfVansCompanies(companyGC)/(double)p_remainingTotals.getTotalNumberOfAnonymousCompanies(companyGC)); k++){
+	for (int k = 0; k< p_remainingTotals.getCeiledRemainingNumberOfVansPerCompany(companyGC); k++){
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VAN, true, 0);
 		p_remainingTotals.adjustRemainingNumberOfVansCompanies(companyGC,  - 1);
 		nbVans++;
@@ -1521,7 +1523,7 @@ if(p_remainingTotals.getRemainingNumberOfVansCompanies(companyGC) > 0){
 //Trucks
 if (p_remainingTotals.getRemainingNumberOfTrucksCompanies(companyGC) > 0){
 	int nbTrucks=0;
-	for (int k = 0; k< ceil((double)p_remainingTotals.getRemainingNumberOfTrucksCompanies(companyGC)/(double)p_remainingTotals.getTotalNumberOfAnonymousCompanies(companyGC)); k++){
+	for (int k = 0; k< p_remainingTotals.getCeiledRemainingNumberOfTrucksPerCompany(companyGC); k++){
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_TRUCK, true, 0);
 		p_remainingTotals.adjustRemainingNumberOfTrucksCompanies(companyGC,  - 1);
 		nbTrucks++;
