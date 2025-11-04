@@ -432,7 +432,7 @@ getExperimentHost().openWebSite("https://lux.energy/");
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
 		<Text><![CDATA[Datum]]></Text>
-		<TextCode>energyModel.f_getDate()</TextCode>
+		<TextCode>energyModel.v_isRapidRun ? f_getDateString() : f_getDateAndTimeString()</TextCode>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>16</Size>
@@ -4010,7 +4010,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<Width>275</Width>
 								<Height>75</Height>
 								<Rotation>0.0</Rotation>
-								<FillColor>-4144960</FillColor>
+								<FillColor>-1</FillColor>
 								<FillMaterial>null</FillMaterial>
 								<ArcRadius>10</ArcRadius>
 							</RoundedRectangle>
@@ -4155,7 +4155,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<Width>275</Width>
 								<Height>75</Height>
 								<Rotation>0.0</Rotation>
-								<FillColor>-4144960</FillColor>
+								<FillColor>-1</FillColor>
 								<FillMaterial>null</FillMaterial>
 								<ArcRadius>10</ArcRadius>
 							</RoundedRectangle>

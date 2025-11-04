@@ -4,11 +4,15 @@ double f_initializeEnergyHubDashboard()
 zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT),true);
 zero_Interface.b_updateLiveCongestionColors = false;
 
+List<GIS_Object> gisObjects = new ArrayList<>();
 for (GridConnection GC : v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer()) { //Buildings that are grouped, select as well.
 	for (GIS_Object object : GC.c_connectedGISObjects) { //Buildings that are grouped, select as well.
+		gisObjects.add(object);
 		object.gisRegion.setFillColor(zero_Interface.v_selectionColorAddBuildings);
 	}
 }
+zero_Interface.f_setMapViewBounds(gisObjects);
+
 
 // Sets the names of the members below the map (call before adding sliders)
 f_initializeEnergyHubMemberNames();
@@ -24,6 +28,7 @@ f_initializeEnergyHubTabs();
 
 //Initialize custom user saved scenarios
 f_initializeUserSavedScenarios(combobox_selectScenario);
+
 
 runSimulation();
 /*ALCODEEND*/}
@@ -288,35 +293,39 @@ t_energyHubMember6.setVisible(false);
 t_energyHubMember7.setVisible(false);
 t_energyHubMemberOthers.setVisible(false);
 
-int maxChars = 20;
+int maxChars = 25;
 String name = "";
 
+// Filter out GCs without building that are sliderGCs
+List<GridConnection> members = v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer();
+Predicate<GridConnection> isGenericSliderGC = gc -> (gc instanceof GCGridBattery && ((GCGridBattery)gc).p_isSliderGC && gc.c_connectedGISObjects.size() == 0) || (gc instanceof GCEnergyProduction && ((GCEnergyProduction)gc).p_isSliderGC && gc.c_connectedGISObjects.size() == 0);
+members.removeIf(isGenericSliderGC);
+
 try {
-	List<GridConnection> members = v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer();
 	name = members.get(0).p_ownerID;
-	t_energyHubMember1.setText(name.substring(0, min(maxChars, name.length()) ));
+	t_energyHubMember1.setText(f_formatName(name, maxChars));
 	t_energyHubMember1.setVisible(true);
 	name = members.get(1).p_ownerID;
-	t_energyHubMember2.setText(name.substring(0, min(maxChars, name.length()) ));
+	t_energyHubMember2.setText(f_formatName(name, maxChars));
 	t_energyHubMember2.setVisible(true);
 	name = members.get(2).p_ownerID;
-	t_energyHubMember3.setText(name.substring(0, min(maxChars, name.length()) ));
+	t_energyHubMember3.setText(f_formatName(name, maxChars));
 	t_energyHubMember3.setVisible(true);
 	name = members.get(3).p_ownerID;
-	t_energyHubMember4.setText(name.substring(0, min(maxChars, name.length()) ));
+	t_energyHubMember4.setText(f_formatName(name, maxChars));
 	t_energyHubMember4.setVisible(true);
 	name = members.get(4).p_ownerID;
-	t_energyHubMember5.setText(name.substring(0, min(maxChars, name.length()) ));
+	t_energyHubMember5.setText(f_formatName(name, maxChars));
 	t_energyHubMember5.setVisible(true);
 	name = members.get(5).p_ownerID;
-	t_energyHubMember6.setText(name.substring(0, min(maxChars, name.length()) ));
+	t_energyHubMember6.setText(f_formatName(name, maxChars));
 	t_energyHubMember6.setVisible(true);
 	name = members.get(6).p_ownerID;
-	t_energyHubMember7.setText(name.substring(0, min(maxChars, name.length()) ));
+	t_energyHubMember7.setText(f_formatName(name, maxChars));
 	t_energyHubMember7.setVisible(true);
 	if (members.size() == 8) {
 		name = members.get(7).p_ownerID;		
-		t_energyHubMemberOthers.setText(name.substring(0, min(maxChars, name.length()) ));
+		t_energyHubMemberOthers.setText(f_formatName(name, maxChars));
 		t_energyHubMemberOthers.setVisible(true);
 	}
 	else if (members.size() > 8) {
@@ -787,5 +796,28 @@ for (ConnectionOwner CO : c_COCompanies) {
 }
 */
 
+/*ALCODEEND*/}
+
+String f_formatName(String fullName,int maxChars)
+{/*ALCODESTART::1762259840876*/
+if (fullName.length() <= maxChars) {
+	return fullName;
+}
+StringBuilder output = new StringBuilder();
+String[] subNames = fullName.split(" ");
+int remainingChars = maxChars;
+for (String subName : subNames) {
+	remainingChars -= subName.length() + 1;
+	if (remainingChars >= 0) {
+		output.append(subName);
+		output.append(" ");
+	}
+}
+// If the output is empty (because the first word is longer than maxChars) cut the first word off at maxChars
+if (output.toString().length() == 0) {
+	output.append(fullName.substring(0, maxChars));
+}
+output.append("...");
+return output.toString();
 /*ALCODEEND*/}
 

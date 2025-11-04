@@ -1174,7 +1174,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
 			<Name><![CDATA[GISObjects]]></Name>
-			<Type><![CDATA[ArrayList<GIS_Object>]]></Type>
+			<Type><![CDATA[List<GIS_Object>]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -2505,6 +2505,38 @@
 		<Name><![CDATA[f_storeResidentialScenario_Current]]></Name>
 		<X>-1180</X>
 		<Y>130</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>String</ReturnType>
+		<Id>1762253228735</Id>
+		<Name><![CDATA[f_getDateAndTimeString]]></Name>
+		<X>-920</X>
+		<Y>-120</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>String</ReturnType>
+		<Id>1762253251373</Id>
+		<Name><![CDATA[f_getDateString]]></Name>
+		<X>-920</X>
+		<Y>-100</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

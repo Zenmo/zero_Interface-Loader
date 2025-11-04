@@ -1633,7 +1633,7 @@ else{
 }
 /*ALCODEEND*/}
 
-double f_setMapViewBounds(ArrayList<GIS_Object> GISObjects)
+double f_setMapViewBounds(List<GIS_Object> GISObjects)
 {/*ALCODESTART::1743509491686*/
 // Initialize min and max values
 double minLat = Double.MAX_VALUE;
@@ -3693,5 +3693,25 @@ if(uI_Tabs.pop_tabMobility.size() > 0){
 	p_residentialScenario_Current.setSelectedChargingAttitudeStringChargers(selectedChargingAttitudeStringChargers);
 	p_residentialScenario_Current.setV2GActiveChargers(V2GActiveChargers);
 }
+/*ALCODEEND*/}
+
+String f_getDateAndTimeString()
+{/*ALCODESTART::1762253228735*/
+Date date = energyModel.f_getDate();
+
+SimpleDateFormat formatter = new SimpleDateFormat();
+formatter.applyPattern("dd MMM yyyy, kk:mm");
+
+return formatter.format(date);
+/*ALCODEEND*/}
+
+String f_getDateString()
+{/*ALCODESTART::1762253251373*/
+Date date = energyModel.f_getDate();
+
+SimpleDateFormat formatter = new SimpleDateFormat();
+formatter.applyPattern("dd MMM yyyy");
+
+return formatter.format(date);
 /*ALCODEEND*/}
 
