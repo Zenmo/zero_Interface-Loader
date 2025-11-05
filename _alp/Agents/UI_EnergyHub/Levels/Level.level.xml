@@ -1698,7 +1698,7 @@ gr_forceSaveLoadScenario.setVisible(false);</ActionCode>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<OnClickCode>gr_forceSaveLoadScenario.setVisible(false);gr_saveScenario.setVisible(false);f_saveScenario(v_scenarioName);</OnClickCode>
+						<OnClickCode>f_saveScenarioButton();</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Width>32</Width>
@@ -1710,7 +1710,7 @@ gr_forceSaveLoadScenario.setVisible(false);</ActionCode>
 								<ClassName>save_icon.png</ClassName>
 							</ImageResourceReference>
 						</ImageFiles>
-						<OriginalSize>true</OriginalSize>
+						<OriginalSize>false</OriginalSize>
 					</Image>
 					<Control Type="EditBox">
 						<EmbeddedIcon>false</EmbeddedIcon>
@@ -1796,7 +1796,7 @@ gr_forceSaveLoadScenario.setVisible(false);</ActionCode>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<OnClickCode>gr_forceSaveLoadScenario.setVisible(false);gr_loadScenario.setVisible(false);f_loadScenario(combobox_selectScenario.getValueIndex());</OnClickCode>
+						<OnClickCode>f_loadScenarioButton();</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Width>32</Width>
@@ -1911,7 +1911,7 @@ gr_saveScenario.setVisible(true);</ActionCode>
 					<Enabled>true</Enabled>
 					<ActionCode>f_initializeUserSavedScenarios(combobox_selectScenario);
 if (combobox_selectScenario.getItems().length == 0) {
-	zero_Interface.f_setErrorScreen("Niet mogelijk om scenario's in te laden. Bewaar eerst een scenario.", zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
+	zero_Interface.f_setErrorScreen("Er zijn nog geen scenario's opgeslagen.", zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
 	return;
 }
 

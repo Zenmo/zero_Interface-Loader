@@ -502,20 +502,35 @@ zero_Interface.uI_Results.f_showCorrectChart();
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<ActionCode>// Opens the filter menu on the main interface
-zero_Interface.f_startEnergyHubConfiguration();
+					<ActionCode>// First check if there are any save files, if there are none we display an error screen
 
-// Add a manual select to the filter with all (active) gridconnections
-// We should follow the usual procedure of creating an E-Hub so that the user could cancel and reconfigure
-zero_Interface.f_setFilter("Handmatige selectie");
-zero_Interface.c_selectedGridConnections = zero_Interface.energyModel.f_getActiveGridConnections();
-zero_Interface.f_applyFilter(OL_FilterOptionsGC.MANUAL_SELECTION, "");
+zero_Interface.uI_EnergyHub.f_initializeUserSavedScenarios(zero_Interface.uI_EnergyHub.combobox_selectScenario);
+if (zero_Interface.uI_EnergyHub.combobox_selectScenario.getItems().length == 0) {
+	zero_Interface.f_setErrorScreen("Er zijn nog geen scenario's opgeslagen.", 0, 0);
+	return;
+}
 
-// Create a coop with the selection
-zero_Interface.f_finalizeEnergyHubConfiguration();
+zero_Interface.f_setLoadingScreen(true, 0, 0);
 
-// Select load scenario in the E-Hub configurator
-zero_Interface.uI_EnergyHub.button_loadScenario.action();
+new Thread( () -&gt; {	
+	// Opens the filter menu on the main interface
+	zero_Interface.f_startEnergyHubConfiguration();
+	
+	// Add a manual select to the filter with all (active) gridconnections
+	// We should follow the usual procedure of creating an E-Hub so that the user could cancel and reconfigure
+	zero_Interface.f_setFilter("Handmatige selectie");
+	zero_Interface.c_selectedGridConnections = zero_Interface.energyModel.f_getActiveGridConnections();
+	zero_Interface.f_applyFilter(OL_FilterOptionsGC.MANUAL_SELECTION, "");
+	
+	zero_Interface.f_setLoadingScreen(false, 0, 0);
+	
+	// Create a coop with the selection
+	zero_Interface.f_finalizeEnergyHubConfiguration();	
+	
+	// Select load scenario in the E-Hub configurator
+	zero_Interface.uI_EnergyHub.button_loadScenario.action();
+
+}).start();
 </ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>

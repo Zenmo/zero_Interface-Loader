@@ -4,15 +4,8 @@ double f_initializeEnergyHubDashboard()
 zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT),true);
 zero_Interface.b_updateLiveCongestionColors = false;
 
-List<GIS_Object> gisObjects = new ArrayList<>();
-for (GridConnection GC : v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer()) { //Buildings that are grouped, select as well.
-	for (GIS_Object object : GC.c_connectedGISObjects) { //Buildings that are grouped, select as well.
-		gisObjects.add(object);
-		object.gisRegion.setFillColor(zero_Interface.v_selectionColorAddBuildings);
-	}
-}
-zero_Interface.f_setMapViewBounds(gisObjects);
-
+// Zoom map to the selected EHub members
+f_zoomMapToBuildings();
 
 // Sets the names of the members below the map (call before adding sliders)
 f_initializeEnergyHubMemberNames();
@@ -482,6 +475,9 @@ try {
 		gc.c_connectedGISObjects.forEach(x -> x.gisRegion.setFillColor(zero_Interface.v_selectionColor));		
 	}
 	
+	// Zoom GIS Map to selected buildings
+	f_zoomMapToBuildings();
+			
 	// Simulate a year
 	gr_simulateYearEnergyHub.setVisible(false);		
 	gr_loadIconYearSimulationEnergyHub.setVisible(true);
@@ -819,5 +815,44 @@ if (output.toString().length() == 0) {
 }
 output.append("...");
 return output.toString();
+/*ALCODEEND*/}
+
+double f_zoomMapToBuildings()
+{/*ALCODESTART::1762352238220*/
+List<GIS_Object> gisObjects = new ArrayList<>();
+for (GridConnection GC : v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer()) { //Buildings that are grouped, select as well.
+	for (GIS_Object object : GC.c_connectedGISObjects) { //Buildings that are grouped, select as well.
+		gisObjects.add(object);
+		object.gisRegion.setFillColor(zero_Interface.v_selectionColorAddBuildings);
+	}
+}
+zero_Interface.f_setMapViewBounds(gisObjects);
+/*ALCODEEND*/}
+
+double f_loadScenarioButton()
+{/*ALCODESTART::1762356123802*/
+// The function creates a new thread, otherwise visibilities are only updated after the entire button action is finished, which is not enough feedback for the user
+gr_forceSaveLoadScenario.setVisible(false);
+gr_loadScenario.setVisible(false);
+zero_Interface.f_setLoadingScreen(true, zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
+
+new Thread( () -> {
+	f_loadScenario(combobox_selectScenario.getValueIndex());
+	zero_Interface.f_setLoadingScreen(false, 0, 0);
+}).start();
+/*ALCODEEND*/}
+
+double f_saveScenarioButton()
+{/*ALCODESTART::1762358078152*/
+// The function creates a new thread, otherwise visibilities are only updated after the entire button action is finished, which is not enough feedback for the user
+gr_forceSaveLoadScenario.setVisible(false);
+gr_saveScenario.setVisible(false);
+zero_Interface.f_setLoadingScreen(true, zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
+
+new Thread( () -> {
+	f_saveScenario(v_scenarioName);
+	zero_Interface.f_setLoadingScreen(false, 0, 0);
+}).start();
+
 /*ALCODEEND*/}
 

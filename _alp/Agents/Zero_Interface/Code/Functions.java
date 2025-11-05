@@ -3715,3 +3715,22 @@ formatter.applyPattern("dd MMM yyyy");
 return formatter.format(date);
 /*ALCODEEND*/}
 
+double f_setLoadingScreen(boolean visibility,double xOffset,double yOffset)
+{/*ALCODESTART::1762356801733*/
+if (visibility) {
+	// Screen Size / View Area is 1920 x 980, so centre at 960, 490
+	// Icon Size is 180 x 180, so top left at 960 - 90 = 870, 490 - 90 = 400
+	double xPos = 870 + xOffset;
+	double yPos = 400 + yOffset;
+	
+	image_loadingScreenIcon.setPos(xPos, yPos);
+	
+	// Make sure the image is at the top of the presentation level
+	f_setShapePresentationOnTop(image_loadingScreenIcon);
+	image_loadingScreenIcon.setVisible(true);
+}
+else {
+	image_loadingScreenIcon.setVisible(false);
+}
+/*ALCODEEND*/}
+
