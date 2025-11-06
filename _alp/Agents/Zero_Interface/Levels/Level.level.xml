@@ -432,7 +432,7 @@ getExperimentHost().openWebSite("https://lux.energy/");
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
 		<Text><![CDATA[Datum]]></Text>
-		<TextCode>energyModel.f_getDate()</TextCode>
+		<TextCode>energyModel.v_isRapidRun ? f_getDateString() : f_getDateAndTimeString()</TextCode>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>16</Size>
@@ -4010,7 +4010,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<Width>275</Width>
 								<Height>75</Height>
 								<Rotation>0.0</Rotation>
-								<FillColor>-4144960</FillColor>
+								<FillColor>-1</FillColor>
 								<FillMaterial>null</FillMaterial>
 								<ArcRadius>10</ArcRadius>
 							</RoundedRectangle>
@@ -4155,7 +4155,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<Width>275</Width>
 								<Height>75</Height>
 								<Rotation>0.0</Rotation>
-								<FillColor>-4144960</FillColor>
+								<FillColor>-1</FillColor>
 								<FillMaterial>null</FillMaterial>
 								<ArcRadius>10</ArcRadius>
 							</RoundedRectangle>
@@ -8344,4 +8344,31 @@ else{
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
+	<Image>
+		<Id>1762354401486</Id>
+		<Name><![CDATA[image_loadingScreenIcon]]></Name>
+		<Description><![CDATA[3470]]></Description>
+		<X>-960</X>
+		<Y>-450</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Width>180</Width>
+		<Height>180</Height>
+		<Rotation>0.0</Rotation>
+		<ImageFiles>
+			<ImageResourceReference>
+				<PackageName>zerointerfaceloader</PackageName>
+				<ClassName>icon_loading.gif</ClassName>
+			</ImageResourceReference>
+		</ImageFiles>
+		<OriginalSize>false</OriginalSize>
+	</Image>
 </Presentation>

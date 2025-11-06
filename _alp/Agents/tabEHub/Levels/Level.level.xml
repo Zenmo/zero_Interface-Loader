@@ -204,8 +204,8 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1736425642857</Id>
 				<Name><![CDATA[cb_EHubSelect]]></Name>
-				<X>25</X>
-				<Y>85</Y>
+				<X>420</X>
+				<Y>80</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -310,8 +310,8 @@ zero_Interface.uI_Results.f_showCorrectChart();
 			<Text>
 				<Id>1736425642864</Id>
 				<Name><![CDATA[t_baseGroepInfo]]></Name>
-				<X>35</X>
-				<Y>125</Y>
+				<X>430</X>
+				<Y>120</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -335,8 +335,8 @@ zero_Interface.uI_Results.f_showCorrectChart();
 			<Text>
 				<Id>1736425642870</Id>
 				<Name><![CDATA[t_cumulatiefGTV_kW]]></Name>
-				<X>35</X>
-				<Y>165</Y>
+				<X>430</X>
+				<Y>160</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -360,8 +360,8 @@ zero_Interface.uI_Results.f_showCorrectChart();
 			<Text>
 				<Id>1736425642875</Id>
 				<Name><![CDATA[t_warnings]]></Name>
-				<X>35</X>
-				<Y>185</Y>
+				<X>430</X>
+				<Y>180</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -386,8 +386,8 @@ zero_Interface.uI_Results.f_showCorrectChart();
 			<Text>
 				<Id>1736425642881</Id>
 				<Name><![CDATA[t_groepsGTV_kW]]></Name>
-				<X>35</X>
-				<Y>145</Y>
+				<X>430</X>
+				<Y>140</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -413,7 +413,7 @@ zero_Interface.uI_Results.f_showCorrectChart();
 				<Id>1753434467432</Id>
 				<Name><![CDATA[button_createEnergyHub]]></Name>
 				<X>40</X>
-				<Y>260</Y>
+				<Y>130</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -463,7 +463,7 @@ zero_Interface.uI_Results.f_showCorrectChart();
 				<Id>1754990563477</Id>
 				<Name><![CDATA[txt_energyHubOptions]]></Name>
 				<X>185</X>
-				<Y>235</Y>
+				<Y>105</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -484,112 +484,85 @@ zero_Interface.uI_Results.f_showCorrectChart();
 				</Font>
 				<Alignment>CENTER</Alignment>
 			</Text>
-			<Group>
-				<Id>1758793427662</Id>
-				<Name><![CDATA[gr_loadScenario]]></Name>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1762248467148</Id>
+				<Name><![CDATA[button_loadScenario]]></Name>
 				<X>40</X>
-				<Y>190</Y>
+				<Y>260</Y>
 				<Label>
-					<X>10</X>
-					<Y>0</Y>
+					<X>0</X>
+					<Y>-10</Y>
 				</Label>
 				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>false</PresentationFlag>
+				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<YCode>610</YCode>
+				<BasicProperties Width="290" Height="70">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>// First check if there are any save files, if there are none we display an error screen
+
+zero_Interface.uI_EnergyHub.f_initializeUserSavedScenarios(zero_Interface.uI_EnergyHub.combobox_selectScenario);
+if (zero_Interface.uI_EnergyHub.combobox_selectScenario.getItems().length == 0) {
+	zero_Interface.f_setErrorScreen("Er zijn nog geen scenario's opgeslagen.", 0, 0);
+	return;
+}
+
+zero_Interface.f_setLoadingScreen(true, 0, 0);
+
+new Thread( () -&gt; {	
+	// Opens the filter menu on the main interface
+	zero_Interface.f_startEnergyHubConfiguration();
+	
+	// Add a manual select to the filter with all (active) gridconnections
+	// We should follow the usual procedure of creating an E-Hub so that the user could cancel and reconfigure
+	zero_Interface.f_setFilter("Handmatige selectie");
+	zero_Interface.c_selectedGridConnections = zero_Interface.energyModel.f_getActiveGridConnections();
+	zero_Interface.f_applyFilter(OL_FilterOptionsGC.MANUAL_SELECTION, "");
+	
+	zero_Interface.f_setLoadingScreen(false, 0, 0);
+	
+	// Create a coop with the selection
+	zero_Interface.f_finalizeEnergyHubConfiguration();	
+	
+	// Select load scenario in the E-Hub configurator
+	zero_Interface.uI_EnergyHub.button_loadScenario.action();
+
+}).start();
+</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Laad een opgeslagen scenario in</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1762248467153</Id>
+				<Name><![CDATA[txt_loadScenario]]></Name>
+				<X>180</X>
+				<Y>230</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
-				<Presentation>
-					<Image>
-						<Id>1758793427664</Id>
-						<Name><![CDATA[image_loadScenario]]></Name>
-						<X>225</X>
-						<Y>-5</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<OnClickCode>//gr_forceSaveLoadScenario.setVisible(false);
-gr_loadScenario.setVisible(false);
-zero_Interface.f_startEnergyHubConfiguration();
-zero_Interface.uI_EnergyHub.f_loadScenario(combobox_selectScenario.getValueIndex());
-zero_Interface.f_finalizeEnergyHubConfiguration();
-
-
-</OnClickCode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Width>32</Width>
-						<Height>32</Height>
-						<Rotation>0.0</Rotation>
-						<ImageFiles>
-							<ImageResourceReference>
-								<PackageName>zerointerfaceloader</PackageName>
-								<ClassName>load_icon.png</ClassName>
-							</ImageResourceReference>
-						</ImageFiles>
-						<OriginalSize>false</OriginalSize>
-					</Image>
-					<Control Type="ComboBox">
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Id>1758793427666</Id>
-						<Name><![CDATA[combobox_selectScenario]]></Name>
-						<X>0</X>
-						<Y>0</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<BasicProperties Width="220" Height="25">
-							<EmbeddedIcon>false</EmbeddedIcon>
-							<FillColor>-1</FillColor>
-							<TextColor>-16777216</TextColor>
-							<Enabled>true</Enabled>
-						</BasicProperties>
-						<ExtendedProperties>
-							<Font Name="Dialog" Size="11" Style="0"/>
-							<Editable>false</Editable>
-							<Button>Geen Saves Beschikbaar</Button>
-							<LinkTo>false</LinkTo>
-						</ExtendedProperties>
-					</Control>
-					<Text>
-						<Id>1758793427668</Id>
-						<Name><![CDATA[t_loadScenarioInstructions]]></Name>
-						<X>5</X>
-						<Y>-20</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Color>-16777216</Color>
-						<Text><![CDATA[Selecteer een scenario in de keuzelijst en klik op het icoontje]]></Text>
-						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
-							<Size>10</Size>
-							<Style>0</Style>
-						</Font>
-						<Alignment>LEFT</Alignment>
-					</Text>
-				</Presentation>
-			</Group>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Opgeslagen Scenario's]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
 		</Presentation>
 	</Group>
 	<Group>
@@ -1631,32 +1604,4 @@ zero_Interface.f_resetSettings();</ActionCode>
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
-	<Control Type="Button">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1758793485249</Id>
-		<Name><![CDATA[button_loadScenario]]></Name>
-		<X>100</X>
-		<Y>140</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="140" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor>-16777216</TextColor>
-			<Enabled>true</Enabled>
-			<ActionCode>zero_Interface.uI_EnergyHub.f_initializeUserSavedScenarios(combobox_selectScenario);
-//gr_saveScenario.setVisible(false);
-//gr_forceSaveLoadScenario.setVisible(true);
-gr_loadScenario.setVisible(true);</ActionCode>
-		</BasicProperties>
-		<ExtendedProperties>
-			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText>Laad een scenario in</LabelText>
-		</ExtendedProperties>
-	</Control>
 </Presentation>
