@@ -203,6 +203,25 @@
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1762346103537</Id>
+		<Name><![CDATA[variable]]></Name>
+		<X>2090</X>
+		<Y>610</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
 	<Variable Class="Parameter">
 		<Id>1726584206064</Id>
 		<Name><![CDATA[zero_Interface]]></Name>
@@ -343,11 +362,11 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[J_RemainingTotals]]></Type>
+			<Type><![CDATA[J_RemainingTotalsManager]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[new J_RemainingTotals()]]></Code>
+				<Code><![CDATA[new J_RemainingTotalsManager(avgc_data)]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1761907535649</Id>

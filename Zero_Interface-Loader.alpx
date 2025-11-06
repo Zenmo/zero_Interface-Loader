@@ -360,6 +360,10 @@
 				<Name><![CDATA[J_RemainingTotals]]></Name>
 				<Folder>1761915047244</Folder>
 			</JavaClass>
+			<JavaClass>
+				<Id>1762351349700</Id>
+				<Name><![CDATA[J_RemainingTotalsManager]]></Name>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>zero_engine</LibraryName>

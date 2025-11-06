@@ -786,8 +786,6 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		companyGC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
 		companyGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
 
-		
-		
 		//set GC Adress
 		companyGC.p_address = new J_Address();
 		companyGC.p_address.setStreetName(genericCompany.streetname());
@@ -808,9 +806,13 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 	 	companyGC.p_longitude = genericCompany.longitude();
 	 	companyGC.setLatLon(companyGC.p_latitude, companyGC.p_longitude);  
 	 	
-	 	
+	 	//Update remaining totals (AFTER Lat/Lon has been defined!)
+		p_remainingTotals.adjustTotalNumberOfAnonymousCompanies(companyGC, 1);
+		p_remainingTotals.adjustTotalFloorSurfaceAnonymousCompanies_m2(companyGC, genericCompany.address_floor_surface_m2());
+		
 		//Connect GC to grid node
 		companyGC.p_parentNodeElectricID = genericCompany.gridnode_id ();
+		
 		
 		// Create new actor and assign GC to that
 		ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
@@ -861,14 +863,10 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 	}
 	
 	companyGC.p_floorSurfaceArea_m2 += genericCompany.address_floor_surface_m2();
-	
-	//Update remaining totals (AFTER Lat/Lon has been defined!)
-	p_remainingTotals.adjustTotalNumberOfAnonymousCompanies(companyGC, 1);
-	p_remainingTotals.adjustTotalFloorAreaAnonymousCompanies_m2(companyGC, genericCompany.address_floor_surface_m2());
 }
 
 //Finalize the remaining totals distribution
-p_remainingTotals.finalizeRemainingTotalsPerM2Calculation();
+p_remainingTotals.finalizeRemainingTotalsDistributionCompanies();
 
 //Add EA to all generic companies (Has to be after the remaining totals finalization, so cant happen at the same time as the creation of the GC and their buildings)
 for (GridConnection GCcompany : generic_company_GCs ) {
@@ -1491,13 +1489,17 @@ future_scenario_list.setPlannedBatteryCapacity_kWh(0f);
 //Transport (total remaining cars, vans and trucks (total as defined in project selection - survey company usage)
 
 //Cars
-if(p_remainingTotals.getRemainingNumberOfCarsCompanies(companyGC) > 0){
+if(p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.CAR) > 0){
 	int nbCars = 0;
-	for (int k = 0; k < p_remainingTotals.getCeiledRemainingNumberOfCarsPerCompany(companyGC); k++){
+	int ceiledRemainingNumberOfCarsPerCompany = p_remainingTotals.getCeiledRemainingNumberOfVehiclesPerCompany(companyGC, OL_VehicleType.CAR);
+	for (int k = 0; k < ceiledRemainingNumberOfCarsPerCompany; k++){
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
-		p_remainingTotals.adjustRemainingNumberOfCarsCompanies(companyGC,  - 1);
+		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.CAR, - 1);
 		nbCars++;
 	}
+	
+	//Reduce remaining number of anonymous companies that still can get vehicles
+	p_remainingTotals.adjustRemainingNumberOfAnonymousCompaniesForVehicleType(companyGC, OL_VehicleType.CAR, - 1);
 	
 	//Set current scenario cars
 	current_scenario_list.setCurrentDieselCars(nbCars);
@@ -1506,13 +1508,17 @@ if(p_remainingTotals.getRemainingNumberOfCarsCompanies(companyGC) > 0){
 }
 
 //Vans
-if(p_remainingTotals.getRemainingNumberOfVansCompanies(companyGC) > 0){
+if(p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.VAN) > 0){
 	int nbVans = 0;
-	for (int k = 0; k< p_remainingTotals.getCeiledRemainingNumberOfVansPerCompany(companyGC); k++){
+	int ceiledRemainingNumberOfVansPerCompany = p_remainingTotals.getCeiledRemainingNumberOfVehiclesPerCompany(companyGC, OL_VehicleType.VAN);
+	for (int k = 0; k< ceiledRemainingNumberOfVansPerCompany; k++){
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VAN, true, 0);
-		p_remainingTotals.adjustRemainingNumberOfVansCompanies(companyGC,  - 1);
+		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.VAN, - 1);
 		nbVans++;
 	}
+	
+	//Reduce remaining number of anonymous companies that still can get vehicles
+	p_remainingTotals.adjustRemainingNumberOfAnonymousCompaniesForVehicleType(companyGC, OL_VehicleType.VAN, - 1);
 	
 	//Set current scenario vans
 	current_scenario_list.setCurrentDieselVans(nbVans);
@@ -1521,14 +1527,18 @@ if(p_remainingTotals.getRemainingNumberOfVansCompanies(companyGC) > 0){
 }
 
 //Trucks
-if (p_remainingTotals.getRemainingNumberOfTrucksCompanies(companyGC) > 0){
-	int nbTrucks=0;
-	for (int k = 0; k< p_remainingTotals.getCeiledRemainingNumberOfTrucksPerCompany(companyGC); k++){
+if (p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.TRUCK) > 0){
+	int nbTrucks= 0;
+	int ceiledRemainingNumberOfTrucksPerCompany = p_remainingTotals.getCeiledRemainingNumberOfVehiclesPerCompany(companyGC, OL_VehicleType.TRUCK);
+	for (int k = 0; k< ceiledRemainingNumberOfTrucksPerCompany; k++){
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_TRUCK, true, 0);
-		p_remainingTotals.adjustRemainingNumberOfTrucksCompanies(companyGC,  - 1);
+		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.TRUCK, - 1);
 		nbTrucks++;
 	}
 	
+	//Reduce remaining number of anonymous companies that still can get vehicles
+	p_remainingTotals.adjustRemainingNumberOfAnonymousCompaniesForVehicleType(companyGC, OL_VehicleType.TRUCK, - 1);
+		
 	//Set current scenario trucks
 	current_scenario_list.setCurrentDieselTrucks(nbTrucks);
 	//Set planned scenario trucks
@@ -2461,8 +2471,8 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 	if (gridConnection.getTransport().getCars().getNumCars() != null && gridConnection.getTransport().getCars().getNumCars() != 0){
 		
 		
-		//Update v_remaningAmount of cars (company owned only)
-		p_remainingTotals.adjustRemainingNumberOfCarsCompanies(companyGC,  - gridConnection.getTransport().getCars().getNumCars());
+		//Update remaning amount of cars (company owned only)
+		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.VAN, - gridConnection.getTransport().getCars().getNumCars());
 		
 		//gridConnection.getTransport().getCars().getNumChargePoints(); // Wat doen we hier mee????????
 		
@@ -2517,7 +2527,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 	if (gridConnection.getTransport().getVans().getNumVans() != null && gridConnection.getTransport().getVans().getNumVans() != 0){
 		
 		//Update remaning amount of vans
-		p_remainingTotals.adjustRemainingNumberOfVansCompanies(companyGC,  - gridConnection.getTransport().getVans().getNumVans());
+		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.VAN, - gridConnection.getTransport().getVans().getNumVans());
 		
 		//gridConnection.getTransport().getVans().getNumChargePoints(); // Wat doen we hier mee????????
 		
@@ -2570,9 +2580,8 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 	//Trucks
 	if (gridConnection.getTransport().getTrucks().getNumTrucks() != null && gridConnection.getTransport().getTrucks().getNumTrucks() != 0){
 		
-		//Update v_remaningAmount of trucks
-		p_remainingTotals.adjustRemainingNumberOfTrucksCompanies(companyGC,  - gridConnection.getTransport().getTrucks().getNumTrucks());
-		
+		//Update remaning amount of trucks
+		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.TRUCK, - gridConnection.getTransport().getTrucks().getNumTrucks());
 
 		//gridConnection.getTransport().getTrucks().getNumChargePoints(); // Wat doen we hier mee????????
 		
