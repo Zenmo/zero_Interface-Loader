@@ -1,4 +1,4 @@
-double f_createGISRegionOutline()
+double f_createGISRegions()
 {/*ALCODESTART::1726584205769*/
 // Create neighborhoods and draw them
 for (Neighbourhood_data NBH : c_neighbourhood_data) {	
@@ -13,6 +13,10 @@ for (Neighbourhood_data NBH : c_neighbourhood_data) {
 	//Style area 
 	zero_Interface.f_styleSimulationAreas(area);
 	zero_Interface.c_GISNeighborhoods.add(area);
+	
+	
+	//Energy totals
+	p_remainingTotals.addNBH(NBH);
 }
 
 
@@ -49,6 +53,9 @@ f_createActors();
 
 //Grid nodes
 f_createGridNodes();
+
+//Create regions and initialize energy totals per region
+f_createGISRegions();
 
 //Grid connections
 f_createGridConnections();
@@ -758,7 +765,6 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		companyGC = energyModel.add_UtilityConnections();
 
 		//Update counter and collections
-		v_numberOfCompaniesNoSurvey++;
 		generic_company_GCs.add(companyGC);
 		map_GC_to_installedBuildingPV.put(companyGC, 0.0);
 		
@@ -780,8 +786,6 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		companyGC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
 		companyGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
 
-		
-		
 		//set GC Adress
 		companyGC.p_address = new J_Address();
 		companyGC.p_address.setStreetName(genericCompany.streetname());
@@ -802,9 +806,13 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 	 	companyGC.p_longitude = genericCompany.longitude();
 	 	companyGC.setLatLon(companyGC.p_latitude, companyGC.p_longitude);  
 	 	
-	 	
+	 	//Update remaining totals (AFTER Lat/Lon has been defined!)
+		p_remainingTotals.adjustTotalNumberOfAnonymousCompanies(companyGC, 1);
+		p_remainingTotals.adjustTotalFloorSurfaceAnonymousCompanies_m2(companyGC, genericCompany.address_floor_surface_m2());
+		
 		//Connect GC to grid node
 		companyGC.p_parentNodeElectricID = genericCompany.gridnode_id ();
+		
 		
 		// Create new actor and assign GC to that
 		ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
@@ -855,17 +863,13 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 	}
 	
 	companyGC.p_floorSurfaceArea_m2 += genericCompany.address_floor_surface_m2();
-	v_totalFloorAreaAnonymousCompanies_m2 += genericCompany.address_floor_surface_m2();
-	
 }
 
-//Amount of generic companies created
-traceln("Number of companies created without survey: " + v_numberOfCompaniesNoSurvey);
+//Finalize the remaining totals distribution
+p_remainingTotals.finalizeRemainingTotalsDistributionCompanies();
 
-//Create EA after all buildings and connections have been made -> needed because total surfaces are unkown before that
+//Add EA to all generic companies (Has to be after the remaining totals finalization, so cant happen at the same time as the creation of the GC and their buildings)
 for (GridConnection GCcompany : generic_company_GCs ) {
-	
-	//create the energy assets for each GC
 	f_iEAGenericCompanies(GCcompany, map_GC_to_installedBuildingPV.get(GCcompany));
 }
 /*ALCODEEND*/}
@@ -1441,18 +1445,18 @@ future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(companyGC.v_liveC
 //Basic heating and electricity demand profiles
 if (companyGC.p_floorSurfaceArea_m2 > 0){
 	
-	if(v_remainingElectricityDelivery_kWh > 0){
+	if(p_remainingTotals.getRemainingElectricityDeliveryCompanies_kWh(companyGC) > 0){
 		//Buidling Base electricity load
-		double Remaining_electricity_demand_kWh_p_m2_yr = v_remainingElectricityDelivery_kWh / v_totalFloorAreaAnonymousCompanies_m2;
+		double Remaining_electricity_demand_kWh_p_m2_yr = p_remainingTotals.getElectricityDeliveryOfAnonymousCompanies_kWhpm2(companyGC);
 		double yearlyElectricityDemand_kWh = Remaining_electricity_demand_kWh_p_m2_yr * companyGC.p_floorSurfaceArea_m2;
 		
 		//Add base load profile
 		f_addElectricityDemandProfile(companyGC, yearlyElectricityDemand_kWh, null, false, "default_office_electricity_demand_fr");
 	}
 	
-	if(v_remainingGasConsumption_m3 > 0){
+	if(p_remainingTotals.getRemainingGasDeliveryCompanies_m3(companyGC) > 0){
 		//Building Gas demand profile (purely heating)
-		double Remaining_gas_demand_m3_p_m2_yr = v_remainingGasConsumption_m3/v_totalFloorAreaAnonymousCompanies_m2;
+		double Remaining_gas_demand_m3_p_m2_yr = p_remainingTotals.getGasDeliveryOfAnonymousCompanies_m3pm2(companyGC);
 		double yearlyGasDemand_m3 = Remaining_gas_demand_m3_p_m2_yr*companyGC.p_floorSurfaceArea_m2;
 		double ratioGasUsedForHeating = 1;
 		
@@ -1484,14 +1488,18 @@ future_scenario_list.setPlannedBatteryCapacity_kWh(0f);
 	
 //Transport (total remaining cars, vans and trucks (total as defined in project selection - survey company usage)
 
-//Vans
-if(v_remainingNumberOfCars_Companies > 0){
+//Cars
+if(p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.CAR) > 0){
 	int nbCars = 0;
-	for (int k = 0; k< ceil((double)v_remainingNumberOfCars_Companies/(double)v_numberOfCompaniesNoSurvey); k++){
+	int ceiledRemainingNumberOfCarsPerCompany = p_remainingTotals.getCeiledRemainingNumberOfVehiclesPerCompany(companyGC, OL_VehicleType.CAR);
+	for (int k = 0; k < ceiledRemainingNumberOfCarsPerCompany; k++){
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
-		v_remainingNumberOfCars_Companies--;
+		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.CAR, - 1);
 		nbCars++;
 	}
+	
+	//Reduce remaining number of anonymous companies that still can get vehicles
+	p_remainingTotals.adjustRemainingNumberOfAnonymousCompaniesForVehicleType(companyGC, OL_VehicleType.CAR, - 1);
 	
 	//Set current scenario cars
 	current_scenario_list.setCurrentDieselCars(nbCars);
@@ -1500,13 +1508,17 @@ if(v_remainingNumberOfCars_Companies > 0){
 }
 
 //Vans
-if(v_remainingNumberOfVans_Companies > 0){
+if(p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.VAN) > 0){
 	int nbVans = 0;
-	for (int k = 0; k< ceil((double)v_remainingNumberOfVans_Companies/(double)v_numberOfCompaniesNoSurvey); k++){
+	int ceiledRemainingNumberOfVansPerCompany = p_remainingTotals.getCeiledRemainingNumberOfVehiclesPerCompany(companyGC, OL_VehicleType.VAN);
+	for (int k = 0; k< ceiledRemainingNumberOfVansPerCompany; k++){
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VAN, true, 0);
-		v_remainingNumberOfVans_Companies--;
+		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.VAN, - 1);
 		nbVans++;
 	}
+	
+	//Reduce remaining number of anonymous companies that still can get vehicles
+	p_remainingTotals.adjustRemainingNumberOfAnonymousCompaniesForVehicleType(companyGC, OL_VehicleType.VAN, - 1);
 	
 	//Set current scenario vans
 	current_scenario_list.setCurrentDieselVans(nbVans);
@@ -1515,14 +1527,18 @@ if(v_remainingNumberOfVans_Companies > 0){
 }
 
 //Trucks
-if (v_remainingNumberOfTrucks_Companies > 0){
-	int nbTrucks=0;
-	for (int k = 0; k< ceil((double)v_remainingNumberOfTrucks_Companies/(double)v_numberOfCompaniesNoSurvey); k++){
+if (p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.TRUCK) > 0){
+	int nbTrucks= 0;
+	int ceiledRemainingNumberOfTrucksPerCompany = p_remainingTotals.getCeiledRemainingNumberOfVehiclesPerCompany(companyGC, OL_VehicleType.TRUCK);
+	for (int k = 0; k< ceiledRemainingNumberOfTrucksPerCompany; k++){
 		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_TRUCK, true, 0);
-		v_remainingNumberOfTrucks_Companies--;
+		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.TRUCK, - 1);
 		nbTrucks++;
 	}
 	
+	//Reduce remaining number of anonymous companies that still can get vehicles
+	p_remainingTotals.adjustRemainingNumberOfAnonymousCompaniesForVehicleType(companyGC, OL_VehicleType.TRUCK, - 1);
+		
 	//Set current scenario trucks
 	current_scenario_list.setCurrentDieselTrucks(nbTrucks);
 	//Set planned scenario trucks
@@ -1853,9 +1869,10 @@ if (yearlyElectricityProduction_kWh != null && yearlyElectricityFeedin_kWh != nu
 	profile.a_energyProfile_kWh = yearlyElectricityDelivery_kWh;
 	nettDelivery_kWh = Arrays.stream(yearlyElectricityDelivery_kWh).sum();
 }
-//traceln(Arrays.stream(profile.a_energyProfile_kWh).sum() + " kWh per jaar at grid connection " + parentGC.p_ownerID + " " + profileName);
-v_remainingElectricityDelivery_kWh -= nettDelivery_kWh;
 
+//Adjust remaining totals
+p_remainingTotals.adjustRemainingElectricityDeliveryCompanies_kWh(parentGC,  - nettDelivery_kWh);
+			
 if (extraConsumption_kWh > 1) {
 	traceln("Preprocessing of delivery and production data led to negative consumption of: %s kWh", extraConsumption_kWh);
 	traceln("Consumption profile was capped to 0kW");
@@ -1901,6 +1918,9 @@ f_importExcelTablesToDB();
 
 //Fill the record collections
 f_readDatabase();
+
+//Initialize model totals
+p_remainingTotals.initializeModelTotals(project_data);
 
 //Weather market data
 f_setEngineProfiles();
@@ -1995,9 +2015,6 @@ traceln("Survey companies excel should be overridden with your own code");
 
 double f_createCompanies()
 {/*ALCODESTART::1726584205873*/
-//Initialize company totals
-f_initializeCompanyTotals();
-
 //Create survey companies based on survey inload structure
 switch(project_data.survey_type()){
 	
@@ -2020,9 +2037,6 @@ f_createGenericCompanies();
 
 double f_createAdditionalGISObjects()
 {/*ALCODESTART::1726584205881*/
-//Area outlines
-f_createGISRegionOutline();
-
 //Parking spaces
 f_createParkingSpots();
 
@@ -2269,10 +2283,10 @@ if (gridConnection.getElectricity().getHasConnection()){
 			
 			//Update total Yearly electricity consumption (only when no timestep data available, cause when thats avaiable, it happens in the preprocessing function)
 			if (yearlyElectricityDelivery_kWh != 0){
-				v_remainingElectricityDelivery_kWh -= yearlyElectricityDelivery_kWh;
+				p_remainingTotals.adjustRemainingElectricityDeliveryCompanies_kWh(companyGC,  - yearlyElectricityDelivery_kWh);
 			}
 			else{
-				v_remainingElectricityDelivery_kWh -= yearlyElectricityConsumption_kWh;
+				p_remainingTotals.adjustRemainingElectricityDeliveryCompanies_kWh(companyGC,  - yearlyElectricityConsumption_kWh);
 			}
 		}
 		
@@ -2457,8 +2471,8 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 	if (gridConnection.getTransport().getCars().getNumCars() != null && gridConnection.getTransport().getCars().getNumCars() != 0){
 		
 		
-		//Update v_remaningAmount of cars (company owned only)
-		v_remainingNumberOfCars_Companies -= gridConnection.getTransport().getCars().getNumCars();
+		//Update remaning amount of cars (company owned only)
+		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.VAN, - gridConnection.getTransport().getCars().getNumCars());
 		
 		//gridConnection.getTransport().getCars().getNumChargePoints(); // Wat doen we hier mee????????
 		
@@ -2512,9 +2526,8 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 	//Vans
 	if (gridConnection.getTransport().getVans().getNumVans() != null && gridConnection.getTransport().getVans().getNumVans() != 0){
 		
-		//Update v_remaningAmount of vans
-		v_remainingNumberOfVans_Companies -= gridConnection.getTransport().getVans().getNumVans();
-		
+		//Update remaning amount of vans
+		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.VAN, - gridConnection.getTransport().getVans().getNumVans());
 		
 		//gridConnection.getTransport().getVans().getNumChargePoints(); // Wat doen we hier mee????????
 		
@@ -2567,9 +2580,8 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 	//Trucks
 	if (gridConnection.getTransport().getTrucks().getNumTrucks() != null && gridConnection.getTransport().getTrucks().getNumTrucks() != 0){
 		
-		//Update v_remaningAmount of trucks
-		v_remainingNumberOfTrucks_Companies -= gridConnection.getTransport().getTrucks().getNumTrucks();
-
+		//Update remaning amount of trucks
+		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.TRUCK, - gridConnection.getTransport().getTrucks().getNumTrucks());
 
 		//gridConnection.getTransport().getTrucks().getNumChargePoints(); // Wat doen we hier mee????????
 		
@@ -2633,35 +2645,41 @@ Building_data f_createBuildingData_Vallum(GridConnection companyGC,String PandID
 {/*ALCODESTART::1737741603780*/
 com.zenmo.bag.Pand pand_data_vallum = map_buildingData_Vallum.get(PandID);
 
-//Calculate surface area
-GISRegion gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(pand_data_vallum.getGeometry().toString(), OL_GISObjectType.BUILDING));
-double surfaceArea_m2 = gisRegion.area();
-gisRegion.remove();
-
-
-//Create a building_data record
-Building_data building_data_record = Building_data.builder().
-
-address_id("verblijfsobject." + PandID).
-building_id(PandID).
-streetname(companyGC.p_address.getStreetName()).
-house_number(companyGC.p_address.getHouseNumber()).
-house_letter(companyGC.p_address.getHouseLetter()).
-house_addition(companyGC.p_address.getHouseAddition()).
-postalcode(companyGC.p_address.getPostalcode()).
-city(companyGC.p_address.getPostalcode()).
-build_year(pand_data_vallum.getBouwjaar()).	
-status(pand_data_vallum.getStatus()).
-//purpose(row.get( buildings.purpose )).
-address_floor_surface_m2(surfaceArea_m2).
-polygon_area_m2(surfaceArea_m2).
-annotation(companyGC.p_owner.p_actorID).
-//extra_info(row.get( buildings.extra_info )).
-//gridnode_id(row.get( buildings.gridnode_id )).
-//latitude(row.get( buildings.latitude )).
-//longitude(row.get( buildings.longitude )).
-polygon(pand_data_vallum.getGeometry().toString()).
-build();
+Building_data building_data_record = null;
+if(pand_data_vallum != null){ // Only happens if building has been selected in survey, that is no longer available in BAG (Destroyed for example).
+	//Calculate surface area
+	GISRegion gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(pand_data_vallum.getGeometry().toString(), OL_GISObjectType.BUILDING));
+	double surfaceArea_m2 = gisRegion.area();
+	gisRegion.remove();
+	
+	
+	//Create a building_data record
+	building_data_record = Building_data.builder().
+	
+	address_id("verblijfsobject." + PandID).
+	building_id(PandID).
+	streetname(companyGC.p_address.getStreetName()).
+	house_number(companyGC.p_address.getHouseNumber()).
+	house_letter(companyGC.p_address.getHouseLetter()).
+	house_addition(companyGC.p_address.getHouseAddition()).
+	postalcode(companyGC.p_address.getPostalcode()).
+	city(companyGC.p_address.getPostalcode()).
+	build_year(pand_data_vallum.getBouwjaar()).	
+	status(pand_data_vallum.getStatus()).
+	//purpose(row.get( buildings.purpose )).
+	address_floor_surface_m2(surfaceArea_m2).
+	polygon_area_m2(surfaceArea_m2).
+	annotation(companyGC.p_owner.p_actorID).
+	//extra_info(row.get( buildings.extra_info )).
+	//gridnode_id(row.get( buildings.gridnode_id )).
+	//latitude(row.get( buildings.latitude )).
+	//longitude(row.get( buildings.longitude )).
+	polygon(pand_data_vallum.getGeometry().toString()).
+	build();
+}
+else{
+	traceln("WARNING: SELECTED BUILDING IN SURVEY IS NO LONGER IN THE BAG DATABASE -> BUILDING CAN/HAS NOT BE(EN) CREATED!");
+}
 
 return building_data_record;
 /*ALCODEEND*/}
@@ -3903,7 +3921,7 @@ J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.METHANE, profile_
 j_ea.energyAssetName = engineGC.p_ownerID + " custom gas profile";
 
 if(engineGC.p_owner.p_detailedCompany){
-	v_remainingGasConsumption_m3 -= yearlyGasDelivery_m3;
+	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3);
 }
 /*ALCODEEND*/}
 
@@ -3949,7 +3967,7 @@ J_ProfilePointer profilePointer = energyModel.f_findProfile(profileName);
 new J_EAConsumption(engineGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, yearlyConsumptionHeat_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, profilePointer);
 
 if(engineGC.p_owner.p_detailedCompany){
-	v_remainingGasConsumption_m3 -= yearlyGasDelivery_m3;
+	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3);
 }
 
 return yearlyConsumptionHeat_kWh * max(profilePointer.getAllValues())/energyModel.p_timeStep_h;
@@ -3964,7 +3982,7 @@ String profileName = "default_building_heat_demand_fr";
 new J_EAConsumption(engineGC, OL_EnergyAssetType.METHANE_DEMAND, profileName, yearlyGasConsumption_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeStep_h, null);	 
 
 if(engineGC.p_owner.p_detailedCompany){
-	v_remainingGasConsumption_m3 -= yearlyGasDelivery_m3;
+	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3);
 }
 /*ALCODEEND*/}
 
@@ -4039,7 +4057,7 @@ J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile_kWh
 j_ea.energyAssetName = engineGC.p_ownerID + " custom building heat profile";
 
 if(engineGC.p_owner.p_detailedCompany){
-	v_remainingGasConsumption_m3 -= yearlyGasDelivery_m3;
+	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3);
 }
 
 return max(profile_m3)/energyModel.p_timeStep_h;
@@ -4104,7 +4122,7 @@ double yearlyGasDelivery_m3 = engineGC.p_floorSurfaceArea_m2 * avgc_data.p_avgCo
 f_createGasProfileFromAnnualGasTotal(engineGC, yearlyGasDelivery_m3);
 
 if(engineGC.p_owner.p_detailedCompany){
-	v_remainingGasConsumption_m3 -= yearlyGasDelivery_m3;
+	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3);
 }
 /*ALCODEEND*/}
 
@@ -4371,16 +4389,6 @@ int leftOverForPublicParking = max(0, leftOverCars - leftOverForPrivateParking);
 v_probabilityForAdditionalCar_privateParking = ((double) leftOverForPrivateParking) / numberOfHousesPrivateParking; // Calculate probability for leftover car for private parking
 v_probabilityForAdditionalCar_publicParking = ((double) leftOverForPublicParking) / numberOfHousesPublicParking; // Calculate probability for leftover car for public parking
 
-/*ALCODEEND*/}
-
-double f_initializeCompanyTotals()
-{/*ALCODESTART::1756132258795*/
-//Initialize remaining totals of the area
-v_remainingNumberOfCars_Companies = project_data.total_cars_companies() != null ? max(0, project_data.total_cars_companies()) : 0;
-v_remainingNumberOfVans_Companies = project_data.total_vans_companies() != null ? max(0, project_data.total_vans_companies()) : 0;
-v_remainingNumberOfTrucks_Companies = project_data.total_trucks_companies() != null ? max(0, project_data.total_trucks_companies()) : 0;
-v_remainingElectricityDelivery_kWh = project_data.total_electricity_consumption_companies_kWh_p_yr() != null ? max(0, project_data.total_electricity_consumption_companies_kWh_p_yr()) : 0;
-v_remainingGasConsumption_m3 = project_data.total_gas_consumption_companies_m3_p_yr() != null ? max(0, project_data.total_gas_consumption_companies_m3_p_yr()) : 0;
 /*ALCODEEND*/}
 
 double f_initializeInterfacePointers()
