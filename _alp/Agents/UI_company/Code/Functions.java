@@ -669,17 +669,17 @@ if (vehicleType == OL_EnergyAssetType.ELECTRIC_VEHICLE || vehicleType == OL_Ener
 
 	switch(vehicleType){
 		case ELECTRIC_VEHICLE:
-			capacityElectricity_kW	= (p_scenarioSettings_Current.getCurrentEVCarChargePower_kW() != 0) ? p_scenarioSettings_Current.getCurrentEVCarChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerCar_kW;
+			capacityElectricity_kW	= (p_scenarioSettings_Current.getCurrentEVCarChargePower_kW() > 0) ? p_scenarioSettings_Current.getCurrentEVCarChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerCar_kW;
 			storageCapacity_kWh		= zero_Interface.energyModel.avgc_data.p_avgEVStorageCar_kWh;
 			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionCar_kWhpkm;
 		break;
 		case ELECTRIC_VAN:
-			capacityElectricity_kW	= (p_scenarioSettings_Current.getCurrentEVVanChargePower_kW() != 0) ? p_scenarioSettings_Current.getCurrentEVVanChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerVan_kW;
+			capacityElectricity_kW	= (p_scenarioSettings_Current.getCurrentEVVanChargePower_kW() > 0) ? p_scenarioSettings_Current.getCurrentEVVanChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerVan_kW;
 			storageCapacity_kWh		= zero_Interface.energyModel.avgc_data.p_avgEVStorageVan_kWh;
 			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionVan_kWhpkm;
 		break;
 		case ELECTRIC_TRUCK:
-			capacityElectricity_kW	= (p_scenarioSettings_Current.getCurrentEVTruckChargePower_kW() != 0) ? p_scenarioSettings_Current.getCurrentEVTruckChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerTruck_kW;
+			capacityElectricity_kW	= (p_scenarioSettings_Current.getCurrentEVTruckChargePower_kW() > 0) ? p_scenarioSettings_Current.getCurrentEVTruckChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerTruck_kW;
 			storageCapacity_kWh		= zero_Interface.energyModel.avgc_data.p_avgEVStorageTruck_kWh;
 			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionTruck_kWhpkm;
 		break;
