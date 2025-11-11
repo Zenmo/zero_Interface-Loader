@@ -69,7 +69,7 @@ else {
 }
 
 //Initialize slider gcs and set sliders
-uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null);
+uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), new ArrayList<>());
 
 uI_Tabs.v_presentationXOffset += zero_Interface.va_EHubDashboard.getX();
 uI_Tabs.v_presentationYOffset += zero_Interface.va_EHubDashboard.getY();
