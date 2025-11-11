@@ -74,7 +74,7 @@ for (GridConnection gc : gcList) {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -158,7 +158,7 @@ else {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
@@ -220,7 +220,7 @@ else {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -284,7 +284,7 @@ else {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
@@ -630,7 +630,7 @@ else if ( sliderHydrogenTrucks == null && pct_hydrogenTruckSlider != 0 ) {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
@@ -941,7 +941,7 @@ else {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
@@ -991,7 +991,7 @@ else {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
@@ -1042,7 +1042,7 @@ else {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
@@ -1092,7 +1092,7 @@ else {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
@@ -1132,7 +1132,7 @@ sliderFossilFuelVans.setValue(pct_dieselVanSlider, false);
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
@@ -1172,7 +1172,7 @@ sliderFossilFuelCars.setValue(pct_dieselCarSlider, false);
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
@@ -1219,7 +1219,7 @@ sl_mobilityDemandReduction_pct.setValue(roundToInt(mobilitySavings_pct), false);
 //Smart charging
 boolean smartCharging = true;
 for(GridConnection GC : allConsumerGridConnections){
-	if(GC.p_chargingManagement != null && GC.c_electricVehicles.size() > 0 && GC.p_chargingManagement instanceof J_ChargingManagementSimple){
+	if(GC.c_electricVehicles.size() > 0 && GC.f_getCurrentChargingType() == OL_ChargingAttitude.SIMPLE){
 		smartCharging = false;
 		break;
 	}
@@ -1354,12 +1354,12 @@ traceln("Forgot to override the update custom electricity sliders functionality"
 
 double f_setChargingAttitude(OL_ChargingAttitude selectedChargingAttitude,List<GridConnection> gcList)
 {/*ALCODESTART::1754990674760*/
-gcList.forEach(x -> x.f_addChargingManagementToGC(selectedChargingAttitude));
+gcList.forEach(x -> x.f_addChargingManagement(selectedChargingAttitude));
 
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -1385,15 +1385,15 @@ if (privateParkedCars.size() > 0) {
 	sl_EVsThatSupportV2G_pct.setValue(roundToInt(privateEVsThatSupportV2G_pct), false);
 	
 	//Selected charging mode
-	GCHouse GCWithPrivateParkedEV = findFirst(houseGridConnectionsWithPrivateParking, gc -> gc.p_chargingManagement != null && gc.c_electricVehicles.size() > 0);
-	OL_ChargingAttitude currentChargingAttitude = (GCWithPrivateParkedEV != null) ? GCWithPrivateParkedEV.p_chargingManagement.getCurrentChargingType() : OL_ChargingAttitude.SIMPLE;
-	boolean V2GActive = (GCWithPrivateParkedEV != null) ? GCWithPrivateParkedEV.p_chargingManagement.getV2GActive() : false;
+	GCHouse GCWithPrivateParkedEV = findFirst(houseGridConnectionsWithPrivateParking, gc -> gc.c_electricVehicles.size() > 0);
+	OL_ChargingAttitude currentChargingAttitude = (GCWithPrivateParkedEV != null) ? GCWithPrivateParkedEV.f_getCurrentChargingType() : OL_ChargingAttitude.SIMPLE;
+	boolean V2GActive = (GCWithPrivateParkedEV != null) ? GCWithPrivateParkedEV.f_getV2GActive() : false;
 	for(GridConnection GC : houseGridConnectionsWithPrivateParking){
-		if(GC.p_chargingManagement != null && GC.c_electricVehicles.size() > 0 ){
-			if(currentChargingAttitude != OL_ChargingAttitude.CUSTOM && GC.p_chargingManagement.getCurrentChargingType() != currentChargingAttitude){
+		if(GC.c_electricVehicles.size() > 0 ){
+			if(currentChargingAttitude != OL_ChargingAttitude.CUSTOM && GC.f_getCurrentChargingType() != currentChargingAttitude){
 				currentChargingAttitude = OL_ChargingAttitude.CUSTOM; // Here used as varied: in other words: custom setting
 			}
-			if(V2GActive && !GC.p_chargingManagement.getV2GActive()){
+			if(V2GActive && !GC.f_getV2GActive()){
 				V2GActive = false;
 			}
 		}
@@ -1576,7 +1576,7 @@ V2GCapableChargerSlider.setValue(roundToInt(100.0 * totalCapableV2GChargers/tota
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -1610,7 +1610,7 @@ while (currentNbChargers > nbChargersGoal) {
 
 // Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -1643,7 +1643,7 @@ while (currentNbChargers > nbChargersGoal) {
 
 // Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -1701,7 +1701,7 @@ V2GCapableVehicleSlider.setValue(roundToInt(100.0*totalCapableV2GEVs/nbOfPrivate
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -1738,7 +1738,7 @@ while (currentNbEVsV2GCapable > nbEVsV2GCapableGoal) {
 
 // Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -1752,7 +1752,7 @@ for(GridConnection GC : gcList){
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();

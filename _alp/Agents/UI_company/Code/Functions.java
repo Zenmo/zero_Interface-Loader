@@ -386,7 +386,7 @@ switch (selectedHeatingType){
 }
 
 // Add a management for the chosen heating type
-GC.f_addHeatManagementToGC(GC, selectedHeatingType, false);
+GC.f_addHeatManagement(selectedHeatingType, false);		
 /*ALCODEEND*/}
 
 double f_setGCCapacity(GridConnection GC,double setGridConnectionCapacity_kW,String type)
@@ -432,8 +432,8 @@ else {
 }
 
 //Add battery algorithm if it is not present
-if(GC.p_batteryAlgorithm == null){
-	GC.p_batteryAlgorithm = new J_BatteryManagementSelfConsumption(GC);
+if(GC.f_getBatteryManagement() == null){
+	GC.f_setBatteryManagement(new J_BatteryManagementSelfConsumption(GC));
 }
 
 /*ALCODEEND*/}
@@ -1766,7 +1766,7 @@ if(!b_runningMainInterfaceScenarioSettings && !b_runningMainInterfaceSlider){
 	zero_Interface.f_resetSettings();
 	
 	//Update variable to change to custom scenario
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 /*ALCODEEND*/}
 

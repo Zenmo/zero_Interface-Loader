@@ -360,6 +360,15 @@ combo.setItems(scenarioNames);
 
 double f_loadScenario(int index)
 {/*ALCODESTART::1756805429105*/
+zero_Interface.f_setScenarioToCustom();
+
+for (UI_Results ui_results : zero_Interface.c_UIResultsInstances) {
+	if (ui_results.f_getSelectedObjectData() != null) {	
+		zero_Interface.f_enableLivePlotsOnly(ui_results);
+	}
+}
+
+
 if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToken() == "") {
 	zero_Interface.f_setErrorScreen("Niet mogelijk om scenario's in te laden. Er is geen gebruiker ingelogd.", zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
 	return;

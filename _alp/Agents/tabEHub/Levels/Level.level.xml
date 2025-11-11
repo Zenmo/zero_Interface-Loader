@@ -188,7 +188,7 @@ else {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 button_remove_nfato.setEnabled(false);
@@ -823,7 +823,7 @@ else {
 		
 		//Update variable to change to custom scenario
 		if(!zero_Interface.b_runningMainInterfaceScenarios){
-			zero_Interface.b_changeToCustomScenario = true;
+			zero_Interface.f_setScenarioToCustom();
 		}
 	}
 }
