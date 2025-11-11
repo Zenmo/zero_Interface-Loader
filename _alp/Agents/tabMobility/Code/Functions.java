@@ -1217,10 +1217,10 @@ sl_mobilityDemandReduction_pct.setValue(roundToInt(mobilitySavings_pct), false);
 
 
 //Smart charging
-boolean smartCharging = true;
+boolean smartCharging = false;
 for(GridConnection GC : allConsumerGridConnections){
-	if(GC.c_electricVehicles.size() > 0 && GC.f_getCurrentChargingType() == OL_ChargingAttitude.SIMPLE){
-		smartCharging = false;
+	if(GC.c_electricVehicles.size() > 0 && GC.f_getCurrentChargingType() != OL_ChargingAttitude.SIMPLE){
+		smartCharging = true;
 		break;
 	}
 }
