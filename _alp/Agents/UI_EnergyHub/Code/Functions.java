@@ -69,7 +69,7 @@ else {
 }
 
 //Initialize slider gcs and set sliders
-uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null);
+uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), new ArrayList<>());
 
 uI_Tabs.v_presentationXOffset += zero_Interface.va_EHubDashboard.getX();
 uI_Tabs.v_presentationYOffset += zero_Interface.va_EHubDashboard.getY();
@@ -129,150 +129,6 @@ if(sliderGC_gridBattery != null){
 }
 
 v_energyHubCoop.f_addMemberGCs(c_sliderEAGCs);
-/*ALCODEEND*/}
-
-double[] f_calculateGroupATOConnectionCapacity(ArrayList<GridConnection> gcList)
-{/*ALCODESTART::1756124281754*/
-// TODO: Add as an argument the grid operator when different calculations are available.
-// For now only Stedin is implemented, so this calculation is always chosen.
-
-double deliveryCapacity_kW = 0;
-double feedInCapacity_kW = 0;
-
-ArrayList<String> warnings = new ArrayList<>();
-
-//TODO: First we check if all the gridconnections are on a single ring in the grid topology. If not we add a warning
-HashSet<GridNode> parentNodes = new HashSet<>();
-
-for (GridConnection gc : gcList) {
-	
-	// GridTopology Check
-	GridNode gn = gc.l_parentNodeElectric.getConnectedAgent();
-	// TODO: Improve this so it uses an OptionList instead of string comparison
-	if ( gn.p_description.toLowerCase().contains("klantstation") ) {
-		GridNode parentNode = findFirst(energyModel.pop_gridNodes, p -> p.p_gridNodeID.equals(gn.p_parentNodeID));
-		if (parentNode == null) {
-			traceln("Warning! Could not find parentnode of klantstation of GC: " + gc.p_ownerID);			
-		}
-		else if (parentNode.p_nodeType != OL_GridNodeType.SUBMV) {
-			// add warning, gc has klantstation, but this one is not on a ring
-			traceln("Warning! GC: " + gc.p_ownerID + " is not connected to a ring in the grid topology.");
-			warnings.add(gc.p_ownerID + " is niet aangesloten op een ring");
-			parentNodes.add(parentNode);
-		}
-		else {
-			parentNodes.add(parentNode);
-		}
-	}
-	else if ( gn.p_nodeType != OL_GridNodeType.SUBMV ) {
-		// add warning, this one is not on a ring
-		traceln("Warning! GC: " + gc.p_ownerID + " is not connected to a ring in the grid topology.");
-		warnings.add(gc.p_ownerID + " is niet aangesloten op een ring");
-		parentNodes.add(gn);
-	}
-	else {
-		parentNodes.add(gn);	
-	}
-	
-	// Adding up the GTO Connection Capacity contributions
-	traceln("gto capacities: " + Arrays.toString( v_GCGTOConnectionCapacities.get(gc)));
-	deliveryCapacity_kW += v_GCGTOConnectionCapacities.get(gc)[0];
-	feedInCapacity_kW += v_GCGTOConnectionCapacities.get(gc)[1];
-}
-
-if ( parentNodes.size() > 1 ) {
-	// add warning
-	traceln("Warning! Selected GridConnections for E-Hub are not on a single ring.");
-	warnings.add("Let op! Er zijn bedrijven op verschillende ringen geselecteerd");
-}
-
-v_groupATODeliveryCapacity_kW = deliveryCapacity_kW;
-v_groupATOFeedInCapacity_kW = feedInCapacity_kW;
-
-
-f_EHubTabCapacityInformation(true, null);
-
-if (gcList.size() > 0) {
-	
-	// fix for the WKK
-	List<GridConnection> gcListWithoutWKK = new ArrayList<>(gcList);
-	GridConnection GCWKK = findFirst(energyModel.EnergyConversionSites, gc -> gc.p_name.toLowerCase().contains("wkk"));
-	//if (GCWKK != null) {
-	gcListWithoutWKK.remove(GCWKK);
-	//}
-	
-	f_EHubTabCapacityInformation(false, "De ring van " + gcList.get(0).p_ownerID + " is geselecteerd. \n");
-	
-	f_EHubTabCapacityInformation(false, 
-		"De bedrijven hebben samen een leveringscapaciteit van " +
-		(int) sum(gcListWithoutWKK, gc -> gc.p_contractedDeliveryCapacity_kW)  +
-		"  kW. \nDe E-Hub zou een groepscontract kunnen krijgen van " +
-		(int) deliveryCapacity_kW + " kW. \n"
-		);
-	if (warnings.size() > 0) {
-		f_EHubTabCapacityInformation(false, "Waarschuwingen: \n");
-		for (String str : warnings) {
-			f_EHubTabCapacityInformation(false, str);
-			f_EHubTabCapacityInformation(false, "\n");
-		}
-	}
-}
-else {
-	f_EHubTabCapacityInformation(false, "Nog geen E-Hub samengesteld");
-}
-/*ALCODEEND*/}
-
-double f_resetEHubConfigurationButton()
-{/*ALCODESTART::1756124281759*/
-v_clickedObjectText = "None";
-uI_Results.b_showGroupContractValues = false;
-uI_Tabs.pop_tabEHub.get(0).cb_EHubSelect.setSelected(false);
-uI_Tabs.pop_tabEHub.get(0).t_baseGroepInfo.setText("Selecteer minimaal twee panden");
-uI_Tabs.pop_tabEHub.get(0).t_groepsGTV_kW.setText("");
-uI_Tabs.pop_tabEHub.get(0).t_cumulatiefGTV_kW.setText("");
-uI_Tabs.pop_tabEHub.get(0).t_warnings.setText("");
-/*ALCODEEND*/}
-
-double f_EHubTabCapacityInformation(boolean reset,String textToAdd)
-{/*ALCODESTART::1756124281764*/
-if (reset) {
-	uI_Tabs.pop_tabEHub.get(0).t_baseGroepInfo.setText("");
-	uI_Tabs.pop_tabEHub.get(0).t_groepsGTV_kW.setText("");
-	uI_Tabs.pop_tabEHub.get(0).t_cumulatiefGTV_kW.setText("");
-	uI_Tabs.pop_tabEHub.get(0).t_warnings.setText("");
-}
-else {
-	String currentWarningString = uI_Tabs.pop_tabEHub.get(0).t_warnings.getText();
-	uI_Tabs.pop_tabEHub.get(0).t_warnings.setText(currentWarningString + textToAdd);
-}
-
-
-/*ALCODEEND*/}
-
-double f_calculateGTOConnectionCapacities()
-{/*ALCODESTART::1756124281769*/
-// Calculation
-// Stedin: remove the top 0.1% of peak loads of the past years quarterhourly values, then add the remaining maximum to the group capacity
-// First we find the quarterhourly values, or if they are not available the assigned base load and add a warning that not all data was available
-
-List<GridConnection> gcList = new ArrayList<>();
-gcList.addAll(energyModel.f_getGridConnections());
-//gcList.addAll(energyModel.f_getPausedGridConnections());
-
-for (GridConnection gc : gcList) {
-	int amountOfDataPoints = gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW().length;
-	double[] quarterHourlyValues = Arrays.copyOf(gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW(), amountOfDataPoints);
-	Arrays.sort(quarterHourlyValues);
-	double filteredMaximum_kW = min(gc.p_contractedDeliveryCapacity_kW , max(0, quarterHourlyValues[amountOfDataPoints - (int) (amountOfDataPoints*0.001) - 1]));
-	double filteredMinimum_kW = min(gc.p_contractedFeedinCapacity_kW, -min(0, quarterHourlyValues[(int)(amountOfDataPoints*0.001)]));
-	v_GCGTOConnectionCapacities.put(gc, new double[]{filteredMaximum_kW, filteredMinimum_kW});
-}
-
-// fix for the WKK
-GridConnection GCWKK = findFirst(energyModel.EnergyConversionSites, gc -> gc.p_name.toLowerCase().contains("wkk"));
-if (GCWKK != null) {
-	v_GCGTOConnectionCapacities.put(GCWKK, new double[]{0.0, 0.0});
-}
 /*ALCODEEND*/}
 
 double f_initializeEnergyHubMemberNames()
@@ -360,6 +216,15 @@ combo.setItems(scenarioNames);
 
 double f_loadScenario(int index)
 {/*ALCODESTART::1756805429105*/
+zero_Interface.f_setScenarioToCustom();
+
+for (UI_Results ui_results : zero_Interface.c_UIResultsInstances) {
+	if (ui_results.f_getSelectedObjectData() != null) {	
+		zero_Interface.f_enableLivePlotsOnly(ui_results);
+	}
+}
+
+
 if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToken() == "") {
 	zero_Interface.f_setErrorScreen("Niet mogelijk om scenario's in te laden. Er is geen gebruiker ingelogd.", zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
 	return;
@@ -547,9 +412,11 @@ saveObject.c_additionalVehicleHashMaps = c_additionalVehicleHashMaps;
 v_objectMapper = new ObjectMapper();
 f_addMixins();
 v_objectMapper.setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
+traceln("Model serialisation has been completed.");
 
+traceln("Trying to save to file...");
 try {
-	traceln("Trying to save to file");
+
 	//v_objectMapper.writeValue(new File("energyModel.json"), energyModel);
 
 	//v_objectMapper.writeValue(new File("ModelSave.json"), saveObject);
@@ -564,8 +431,10 @@ try {
         v_objectMapper.writeValueAsBytes(saveObject)
 	);
 	
+	traceln("Scenario saved to file.");
 	
 } catch (IOException e) {
+	traceln("Saving to file has failed.");
 	e.printStackTrace();
 }
 

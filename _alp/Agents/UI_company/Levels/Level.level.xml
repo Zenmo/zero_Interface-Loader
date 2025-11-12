@@ -4033,7 +4033,7 @@ rect_GCisPausedScreen3.setVisible(true);
 //Unpause gc
 p_gridConnection.f_setActive(true);
 zero_Interface.b_resultsUpToDate = false;
-zero_Interface.b_changeToCustomScenario = true;
+zero_Interface.f_setScenarioToCustom();
 f_enableAllSliders(true);
 
 

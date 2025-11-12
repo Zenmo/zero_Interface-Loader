@@ -66,10 +66,19 @@ for(GridConnection GC : gridConnections){
 
 double f_initializeSliderGCPointers(List<GridConnection> activeGridConnections,List<GridConnection> pausedGridConnections)
 {/*ALCODESTART::1754908006859*/
-v_activeSliderGridConnections = activeGridConnections;
+if(activeGridConnections != null){
+	v_activeSliderGridConnections = activeGridConnections;
+}
+else{
+	v_activeSliderGridConnections = new ArrayList<>();
+	traceln("WARNING: UITABS HAS BEEN INITIALIZED WITH NO ACTIVE GC");
+}
 
 if(pausedGridConnections != null){
 	v_pausedSliderGridConnections = pausedGridConnections;
+}
+else{
+	v_pausedSliderGridConnections = new ArrayList<>();
 }
 /*ALCODEEND*/}
 
