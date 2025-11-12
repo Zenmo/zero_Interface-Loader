@@ -758,6 +758,7 @@ else if ( yearlyEnergyConsumption > 6000){ gis_area.f_style( rect_mapOverlayLege
 double f_updateMainInterfaceSliders()
 {/*ALCODESTART::1718288402102*/
 uI_Tabs.f_updateSliders();
+uI_EnergyHub.uI_Tabs.f_updateSliders();
 /*ALCODEEND*/}
 
 double f_selectCharger(GCPublicCharger charger,GIS_Object objectGIS)
@@ -1064,7 +1065,7 @@ switch(selectedFilter){
 		break;
 		
 	case HAS_EV:
-		f_filterHasTransport(toBeFilteredGC);
+		f_filterHasEV(toBeFilteredGC);
 		break;	
 		
 	case GRIDTOPOLOGY_SELECTEDLOOP:
@@ -1201,14 +1202,7 @@ boolean manualSelectionFilterActive = false;
 
 //Remove manual filter first
 if(!selectedFilterName.equals("Handmatige selectie") && c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
-	/*
-	PrintStream originalPrintStream = f_disableTraceln();
-	manualSelectionFilterActive = true;
-	f_removeFilter(OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie");
-	f_enableTraceln(originalPrintStream);
-	*/
 	button_removeManualSelection.action();
-	
 }
 
 
@@ -1220,15 +1214,6 @@ if(!selectedFilterName.equals("-") && !c_selectedFilterOptions.contains(selected
 else if(c_selectedFilterOptions.contains(selectedFilter_OL)){ // Remove filter
 	f_removeFilter(selectedFilter_OL, selectedFilterName);
 }
-
-/*
-//Reactivate manual filter at the end always (if it was active before)
-if(manualSelectionFilterActive){
-	t_activeFilters.setText( t_activeFilters.getText() + "Handmatige selectie" + "\n");
-	f_applyFilter(OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie");
-}
-*/
-
 /*ALCODEEND*/}
 
 double f_removeAllFilters()
@@ -1496,6 +1481,11 @@ for(GridConnection GC : toBeFilteredGC){
 		}
 }
 
+//If NBH results in zero GC, remove last added nbh
+if(gridConnectionsInNeighborhood.isEmpty() && !c_filterSelectedNeighborhoods.isEmpty()){
+	c_filterSelectedNeighborhoods.remove(c_filterSelectedNeighborhoods.size() - 1);
+}
+
 c_selectedGridConnections = new ArrayList<>(gridConnectionsInNeighborhood);
 /*ALCODEEND*/}
 
@@ -1633,7 +1623,7 @@ else{
 }
 /*ALCODEEND*/}
 
-double f_setMapViewBounds(ArrayList<GIS_Object> GISObjects)
+double f_setMapViewBounds(List<GIS_Object> GISObjects)
 {/*ALCODESTART::1743509491686*/
 // Initialize min and max values
 double minLat = Double.MAX_VALUE;
@@ -3056,7 +3046,6 @@ double f_simulateYearFromMainInterface()
 
 gr_simulateYear.setVisible(false);		
 gr_loadIconYearSimulation.setVisible(true);
-		
 
 new Thread( () -> {
 	//Run rapid run
@@ -3287,7 +3276,7 @@ for(GCGridBattery batteryGC : energyModel.GridBatteries){
 
 double f_setCompaniesScenario(LinkedHashMap scenarioMap)
 {/*ALCODESTART::1761060882101*/
-//For now
+//Solution for now
 int companyUIScenarioRBIndex = 0;
 if(scenarioMap == c_scenarioMap_Current){
 	companyUIScenarioRBIndex = 0;
@@ -3298,12 +3287,14 @@ else if(scenarioMap == c_scenarioMap_Future){
 else{
 	throw new RuntimeException("Tried to call the setCompaniesScenario function with a non existing companyUI scenario");
 }
+
+//Set companyUI to correct radio button setting
+uI_Company.b_runningMainInterfaceScenarioSettings = true;
 for (GCUtility  GC : energyModel.UtilityConnections){
 	uI_Company.f_setCompanyUI(GC);
-	uI_Company.b_runningMainInterfaceScenarioSettings = true;
 	uI_Company.getRb_scenariosPrivateUI().setValue(companyUIScenarioRBIndex, true);
-	uI_Company.b_runningMainInterfaceScenarioSettings = false;
 }
+uI_Company.b_runningMainInterfaceScenarioSettings = false;
 /*ALCODEEND*/}
 
 double f_initializeScenarioRadioButton()
@@ -3341,8 +3332,7 @@ if(!containsCustomOption){
 rb_scenarios = new ShapeRadioButtonGroup(presentable, ispublic, x ,y, width, height, textColor, enabled, font, vertical, RadioButtonOptions){
 	@Override
 	public void action() {
-		b_runningMainInterfaceScenarios = true;
-		f_finalizeSettingOfScenario(f_setSelectedScenario());
+		f_scenarioRadioButtonAction();
 	}
 };
 
@@ -3441,32 +3431,6 @@ uI_Tabs.pop_tabEHub.get(0).getButton_remove_nfato().action();
 
 //Project specific sliders and buttons reset
 f_resetProjectSpecificSlidersAndButtons();
-/*ALCODEEND*/}
-
-double f_finalizeSettingOfScenario(String selected_scenario)
-{/*ALCODESTART::1761120167723*/
-//Set scenario name text to the correct scenario
-t_scenarioName.setText("Scenario: " + selected_scenario);
-traceln("Selected scenario: \"" + selected_scenario + "\"");
-
-//Deselect the selected building, if selected GC is now paused
-if(c_selectedGridConnections.size()>0 && !c_selectedGridConnections.get(0).v_isActive){
-	f_clearSelectionAndSelectEnergyModel();
-}
-
-//Set boolean of running main interface scenario true
-b_runningMainInterfaceScenarios = false;
-
-if(!selected_scenario.equals("Custom")){
-	f_resetSettings();
-	
-	f_updateMainInterfaceSliders();
-	
-	//Colour recolor pv map again if it is active
-	if(c_loadedMapOverlayTypes.get(rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
-		rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
-	}
-}
 /*ALCODEEND*/}
 
 double f_resetProjectSpecificSlidersAndButtons()
@@ -3693,5 +3657,133 @@ if(uI_Tabs.pop_tabMobility.size() > 0){
 	p_residentialScenario_Current.setSelectedChargingAttitudeStringChargers(selectedChargingAttitudeStringChargers);
 	p_residentialScenario_Current.setV2GActiveChargers(V2GActiveChargers);
 }
+/*ALCODEEND*/}
+
+String f_getDateAndTimeString()
+{/*ALCODESTART::1762253228735*/
+Date date = energyModel.f_getDate();
+
+SimpleDateFormat formatter = new SimpleDateFormat();
+formatter.applyPattern("dd MMM yyyy, kk:mm");
+
+return formatter.format(date);
+/*ALCODEEND*/}
+
+String f_getDateString()
+{/*ALCODESTART::1762253251373*/
+Date date = energyModel.f_getDate();
+
+SimpleDateFormat formatter = new SimpleDateFormat();
+formatter.applyPattern("dd MMM yyyy");
+
+return formatter.format(date);
+/*ALCODEEND*/}
+
+double f_setLoadingScreen(boolean visibility,double xOffset,double yOffset)
+{/*ALCODESTART::1762356801733*/
+if (visibility) {
+	// Screen Size / View Area is 1920 x 980, so centre at 960, 490
+	// Icon Size is 180 x 180, so top left at 960 - 90 = 870, 490 - 90 = 400
+	double xPos = 870 + xOffset;
+	double yPos = 400 + yOffset;
+	
+	image_loadingScreenIcon.setPos(xPos, yPos);
+	
+	// Make sure the image is at the top of the presentation level
+	f_setShapePresentationOnTop(image_loadingScreenIcon);
+	image_loadingScreenIcon.setVisible(true);
+}
+else {
+	image_loadingScreenIcon.setVisible(false);
+}
+/*ALCODEEND*/}
+
+double f_scenarioRadioButtonAction()
+{/*ALCODESTART::1762533624267*/
+//Set boolean of running main interface scenario true
+b_runningMainInterfaceScenarios = true;
+
+////Set selected scenario
+String selected_scenario = f_setSelectedScenario();	
+
+//Set scenario name text to the correct scenario
+t_scenarioName.setText("Scenario: " + selected_scenario);
+traceln("Selected scenario: \"" + selected_scenario + "\"");
+
+//Deselect the selected building, if selected GC is now paused
+if(c_selectedGridConnections.size()>0 && !c_selectedGridConnections.get(0).v_isActive){
+	f_clearSelectionAndSelectEnergyModel();
+}
+
+//Set boolean of running main interface scenario false
+b_runningMainInterfaceScenarios = false;
+
+if(!selected_scenario.equals("Custom")){
+	f_resetSettings();
+	
+	f_updateMainInterfaceSliders();
+	
+	//Colour recolor pv map again if it is active
+	if(c_loadedMapOverlayTypes.get(rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
+		rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
+	}
+}
+
+
+
+/*
+//Pause simulation and set loading screen
+pauseSimulation();
+f_setLoadingScreen(true, 0, 0);
+
+new Thread( () -> {
+	
+	//Set selected scenario
+	String selected_scenario = f_setSelectedScenario();		
+	
+	//Set scenario name text to the correct scenario
+	t_scenarioName.setText("Scenario: " + selected_scenario);
+	traceln("Selected scenario: \"" + selected_scenario + "\"");
+	
+	//Deselect the selected building, if selected GC is now paused
+	if(c_selectedGridConnections.size()>0 && !c_selectedGridConnections.get(0).v_isActive){
+		f_clearSelectionAndSelectEnergyModel();
+	}
+	
+	//Set boolean of running main interface scenario true
+	b_runningMainInterfaceScenarios = false;
+	
+	if(!selected_scenario.equals("Custom")){
+		f_resetSettings();
+		
+		f_updateMainInterfaceSliders();
+		
+		//Colour recolor pv map again if it is active
+		if(c_loadedMapOverlayTypes.get(rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
+			rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
+		}
+	}
+	
+	//Resume live simulation and remove loading screen
+	runSimulation();
+	f_setLoadingScreen(false, 0, 0);
+	
+}).start();
+*/
+/*ALCODEEND*/}
+
+double f_setScenarioToCustom()
+{/*ALCODESTART::1762775121080*/
+String[] scenarioOptions = f_getScenarioOptions();
+
+int customOptionIndex = 0;
+for(String scenarioOption : scenarioOptions){
+	if(scenarioOption.equals("Custom")){
+		break;
+	}
+	customOptionIndex++;
+}
+
+rb_scenarios.setValue(customOptionIndex, true);
 /*ALCODEEND*/}
 

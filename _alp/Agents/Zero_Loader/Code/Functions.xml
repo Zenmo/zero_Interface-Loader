@@ -4,10 +4,10 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1726584205769</Id>
-		<Name><![CDATA[f_createGISRegionOutline]]></Name>
+		<Name><![CDATA[f_createGISRegions]]></Name>
 		<Description><![CDATA[Creates the outline of the simulated area]]></Description>
 		<X>1546.739</X>
-		<Y>599</Y>
+		<Y>539</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -227,7 +227,7 @@
 		<Name><![CDATA[f_createGenericCompanies]]></Name>
 		<Description><![CDATA[Creating the companies (using a single GC) + owned buildings, that have not filled in the survey. If created, they will be simulated using average values, scaled with the totals (CBS data) of the area.]]></Description>
 		<X>430</X>
-		<Y>533</Y>
+		<Y>523</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -244,7 +244,7 @@
 		<Name><![CDATA[f_createGISBuilding]]></Name>
 		<Description><![CDATA[Creates the GIS object(s) building(s) for the companies and houses]]></Description>
 		<X>1547.621</X>
-		<Y>560</Y>
+		<Y>580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -305,7 +305,7 @@
 		<Name><![CDATA[f_createGISParcels]]></Name>
 		<Description><![CDATA[Creates "empty" parcels on the gismap, these parcels do not contain buildings or gridconnections. Currently no need for the function to return the GIS_Object.]]></Description>
 		<X>1547.621</X>
-		<Y>580</Y>
+		<Y>600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -354,7 +354,7 @@
 		<Name><![CDATA[f_createGISObject]]></Name>
 		<Description><![CDATA[Creates the GIS object for the area EA (windfarms, solarparks, electrolysers, batteries, etc.)]]></Description>
 		<X>1547.621</X>
-		<Y>540</Y>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -390,7 +390,7 @@
 		<Id>1726584205815</Id>
 		<Name><![CDATA[f_createSurveyCompanies_Zorm]]></Name>
 		<X>429.001</X>
-		<Y>159</Y>
+		<Y>129</Y>
 		<Label>
 			<X>10.999</X>
 			<Y>1</Y>
@@ -406,7 +406,7 @@
 		<Id>1726584205819</Id>
 		<Name><![CDATA[f_getSurveys]]></Name>
 		<X>449</X>
-		<Y>179</Y>
+		<Y>149</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -439,7 +439,7 @@
 		<Name><![CDATA[f_getHeatingTypeSurvey]]></Name>
 		<Description><![CDATA[This function determines the heatingType (OL_GridConnectionHeatingType) from the list of heating types (zummon.companysurvey.HeatingType)]]></Description>
 		<X>480</X>
-		<Y>300</Y>
+		<Y>270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -564,7 +564,7 @@
 		<Name><![CDATA[f_iEAGenericCompanies]]></Name>
 		<Description><![CDATA[Initialisation of the Energy assets using average values for companies that have not filled in the survey (yet) combined with totals (floor surface, electricity/yr, gas/yr and trucks)  of the simulated area.]]></Description>
 		<X>450</X>
-		<Y>553</Y>
+		<Y>543</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -822,7 +822,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1726584205871</Id>
 		<Name><![CDATA[f_createSurveyCompanies_Excel]]></Name>
 		<X>430</X>
-		<Y>508</Y>
+		<Y>498</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -970,7 +970,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1732112244908</Id>
 		<Name><![CDATA[f_iEASurveyCompanies_Zorm]]></Name>
 		<X>448</X>
-		<Y>240</Y>
+		<Y>210</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -994,7 +994,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1737741603780</Id>
 		<Name><![CDATA[f_createBuildingData_Vallum]]></Name>
 		<X>470</X>
-		<Y>220</Y>
+		<Y>190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1042,7 +1042,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1738248965949</Id>
 		<Name><![CDATA[f_createElectricityTimeSeriesAssets]]></Name>
 		<X>460</X>
-		<Y>260</Y>
+		<Y>230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1662,7 +1662,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1752239414416</Id>
 		<Name><![CDATA[f_getSurveyGCBuildingData]]></Name>
 		<X>450</X>
-		<Y>200</Y>
+		<Y>170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1680,35 +1680,6 @@ verbruik = levering + productie - teruglevering]]></Description>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1753784800216</Id>
-		<Name><![CDATA[f_addHeatManagement]]></Name>
-		<Description><![CDATA[This function takes heatingType as an argument and adds the default heating management class to the GridConnection]]></Description>
-		<X>900</X>
-		<Y>570</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[engineGC]]></Name>
-			<Type><![CDATA[GridConnection]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[heatingType]]></Name>
-			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[isGhost]]></Name>
-			<Type><![CDATA[boolean]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>J_ProfilePointer</ReturnType>
@@ -1716,7 +1687,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Name><![CDATA[f_createEngineProfile1]]></Name>
 		<Description><![CDATA[Functie van gillis voor inladen weer data!]]></Description>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2109</X>
+		<X>2069</X>
 		<Y>450</Y>
 		<Label>
 			<X>10</X>
@@ -1749,7 +1720,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753349205426</Id>
 		<Name><![CDATA[f_setEngineInputDataAfterDeserialisation]]></Name>
 		<Description><![CDATA[Functie van gillis voor inladen weer data!]]></Description>
-		<X>2123</X>
+		<X>2083</X>
 		<Y>260</Y>
 		<Label>
 			<X>10</X>
@@ -1770,7 +1741,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753799111185</Id>
 		<Name><![CDATA[f_heatingSurveyCompany]]></Name>
 		<X>460</X>
-		<Y>280</Y>
+		<Y>250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1794,7 +1765,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753801098736</Id>
 		<Name><![CDATA[f_createSurveyHeatProfiles]]></Name>
 		<X>480</X>
-		<Y>340</Y>
+		<Y>310</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1822,7 +1793,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753803212846</Id>
 		<Name><![CDATA[f_surveyHasGasData]]></Name>
 		<X>500</X>
-		<Y>360</Y>
+		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1842,7 +1813,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753804393557</Id>
 		<Name><![CDATA[f_createGasProfileFromGasTS]]></Name>
 		<X>520</X>
-		<Y>400</Y>
+		<Y>370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1865,7 +1836,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1753449467888</Id>
 		<Name><![CDATA[f_reconstructGridConnections]]></Name>
-		<X>2123.333</X>
+		<X>2083.333</X>
 		<Y>302</Y>
 		<Label>
 			<X>10</X>
@@ -1941,7 +1912,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1753449467890</Id>
 		<Name><![CDATA[f_reconstructEnergyModel]]></Name>
-		<X>2123.333</X>
+		<X>2083.333</X>
 		<Y>282</Y>
 		<Label>
 			<X>10</X>
@@ -1962,7 +1933,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753884183970</Id>
 		<Name><![CDATA[f_createGasProfileFromSurvey]]></Name>
 		<X>500</X>
-		<Y>380</Y>
+		<Y>350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1986,7 +1957,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753884186444</Id>
 		<Name><![CDATA[f_createHeatProfileFromGasSurvey]]></Name>
 		<X>500</X>
-		<Y>420</Y>
+		<Y>390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2014,7 +1985,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753949286953</Id>
 		<Name><![CDATA[f_createHeatProfileFromGasTS]]></Name>
 		<X>520</X>
-		<Y>440</Y>
+		<Y>410</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2041,7 +2012,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1753449467892</Id>
 		<Name><![CDATA[f_reconstructAgent]]></Name>
-		<X>2135</X>
+		<X>2095</X>
 		<Y>379</Y>
 		<Label>
 			<X>10</X>
@@ -2090,7 +2061,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753951039103</Id>
 		<Name><![CDATA[f_getRatioGasUsedForHeating]]></Name>
 		<X>540</X>
-		<Y>460</Y>
+		<Y>430</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2130,7 +2101,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753961830063</Id>
 		<Name><![CDATA[f_createHeatProfileFromEstimates]]></Name>
 		<X>900</X>
-		<Y>450</Y>
+		<Y>430</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2149,8 +2120,8 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1753964366889</Id>
 		<Name><![CDATA[f_createHeatProfileFromHeatTS]]></Name>
-		<X>900</X>
-		<Y>410</Y>
+		<X>520</X>
+		<Y>470</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2174,7 +2145,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753449467894</Id>
 		<Name><![CDATA[f_reconstructGridConnections1]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2110</X>
+		<X>2070</X>
 		<Y>480</Y>
 		<Label>
 			<X>10</X>
@@ -2194,7 +2165,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1753451091785</Id>
 		<Name><![CDATA[f_addMixins_old]]></Name>
-		<X>2430</X>
+		<X>2390</X>
 		<Y>70</Y>
 		<Label>
 			<X>10</X>
@@ -2211,7 +2182,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753964605708</Id>
 		<Name><![CDATA[f_createHeatProfileFromAnnualHeatTotal]]></Name>
 		<X>900</X>
-		<Y>430</Y>
+		<Y>410</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2235,7 +2206,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753964654729</Id>
 		<Name><![CDATA[f_createHeatProfileFromSurvey]]></Name>
 		<X>500</X>
-		<Y>480</Y>
+		<Y>450</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2275,7 +2246,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1754048849906</Id>
 		<Name><![CDATA[f_addCustomHeatingSetup]]></Name>
 		<X>480</X>
-		<Y>320</Y>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2298,7 +2269,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1753712630322</Id>
 		<Name><![CDATA[f_reconstructActors]]></Name>
-		<X>2123</X>
+		<X>2083</X>
 		<Y>322</Y>
 		<Label>
 			<X>10</X>
@@ -2342,7 +2313,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1753712697685</Id>
 		<Name><![CDATA[f_reconstructGIS_Objects]]></Name>
-		<X>2123</X>
+		<X>2083</X>
 		<Y>362</Y>
 		<Label>
 			<X>10</X>
@@ -2366,7 +2337,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1753712761420</Id>
 		<Name><![CDATA[f_reconstructGridNodes]]></Name>
-		<X>2123</X>
+		<X>2083</X>
 		<Y>342</Y>
 		<Label>
 			<X>10</X>
@@ -2428,22 +2399,6 @@ verbruik = levering + productie - teruglevering]]></Description>
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1756132258795</Id>
-		<Name><![CDATA[f_initializeCompanyTotals]]></Name>
-		<X>430</X>
-		<Y>135</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1756395236522</Id>
 		<Name><![CDATA[f_initializeInterfacePointers]]></Name>
 		<X>30</X>
@@ -2462,7 +2417,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1756735137677</Id>
 		<Name><![CDATA[f_reconstructOrderedCollections]]></Name>
-		<X>2120</X>
+		<X>2080</X>
 		<Y>400</Y>
 		<Label>
 			<X>10</X>
@@ -2498,7 +2453,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1759128970777</Id>
 		<Name><![CDATA[f_addMixins]]></Name>
-		<X>2140</X>
+		<X>2100</X>
 		<Y>70</Y>
 		<Label>
 			<X>10</X>
@@ -2515,7 +2470,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1759133710571</Id>
 		<Name><![CDATA[f_loadScenario]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2120</X>
+		<X>2080</X>
 		<Y>230</Y>
 		<Label>
 			<X>10</X>

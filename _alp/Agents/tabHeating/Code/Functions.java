@@ -131,7 +131,7 @@ for (GridConnection gc : gcList) {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -280,12 +280,12 @@ for (GCHouse house: housesGCList ) {
 	
 	new J_EAConversionHeatDeliverySet(house, peakHeatDemand_kW, efficiency, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC);
 	
-	house.f_addHeatManagementToGC(house, OL_GridConnectionHeatingType.DISTRICTHEAT, false);
+	house.f_addHeatManagement(OL_GridConnectionHeatingType.DISTRICTHEAT, false);
 }
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -316,12 +316,12 @@ for (GCHouse house: housesGCList ) {
 		double peakHeatDemand_kW = heatDemandProfile.getProfileScaling_fr() * Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException("Unable to find the maximum of the heat demand profile"));
 		gasBurner = new J_EAConversionGasBurner(house, peakHeatDemand_kW, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
 	}	
-	house.f_addHeatManagementToGC(house, OL_GridConnectionHeatingType.GAS_BURNER, false);
+	house.f_addHeatManagement(OL_GridConnectionHeatingType.GAS_BURNER, false);
 }
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -346,7 +346,7 @@ while ( roundToInt(nbHouses * desiredShare) < nbHousesWithAirco ) {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -406,13 +406,13 @@ for (GCHouse house: housesGCList ) {
 		belowZeroHeatpumpEtaReductionFactor,
 		OL_AmbientTempType.HEAT_GRID
 	);
-	heatpump.updateParameters(inputTemperature_degC, outputTemperature_degC);		
-	house.f_addHeatManagementToGC(house, OL_GridConnectionHeatingType.LT_DISTRICTHEAT, false);
+	heatpump.updateParameters(inputTemperature_degC, outputTemperature_degC);
+	house.f_addHeatManagement(OL_GridConnectionHeatingType.LT_DISTRICTHEAT, false);		
 }
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -429,12 +429,12 @@ for (GCHouse house: housesGCList ) {
 	house.f_removeAllHeatingAssets();
 	double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
 	new J_EAConversionGasBurner(house, peakHeatDemand_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner_fr, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC);	
-	house.f_addHeatManagementToGC(house, OL_GridConnectionHeatingType.GAS_BURNER, false);
+	house.f_addHeatManagement(OL_GridConnectionHeatingType.GAS_BURNER, false);
 }
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -470,7 +470,7 @@ while (nbHousesWithImprovedInsulation > targetNbHousesWithImprovedInsulation) {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -551,7 +551,7 @@ while ( nbHousesWithPTGoal > nbHousesWithPT ) {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -604,7 +604,7 @@ for(GridConnection GC : gcList){
 	if(GC.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE && GC.v_isActive){
 		totalGCWithHeating++;
 		
-		if(GC.p_heatingManagement instanceof J_HeatingManagementGhost){
+		if(GC.f_getHeatingTypeIsGhost()){
 			switch(GC.f_getCurrentHeatingType()){
 				case GAS_BURNER:
 					ghostAssetTotalArray[0]++;
@@ -1034,37 +1034,37 @@ for(GridConnection GC : gcList){
 		switch(GC.f_getCurrentHeatingType()){
 			case GAS_BURNER:
 				nbGasBurners++;
-				if(!(GC.p_heatingManagement instanceof J_HeatingManagementGhost)){
+				if(!GC.f_getHeatingTypeIsGhost()){
 					gasBurnerGCs.add(GC);
 				}
 				break;
 			case HYBRID_HEATPUMP:
 				nbHybridHeatpumps++;
-				if(!(GC.p_heatingManagement instanceof J_HeatingManagementGhost)){
+				if(!GC.f_getHeatingTypeIsGhost()){
 					hybridHeatpumpGCs.add(GC);
 				}
 				break;
 			case ELECTRIC_HEATPUMP:
 				nbElectricHeatpumps++;
-				if(!(GC.p_heatingManagement instanceof J_HeatingManagementGhost)){
+				if(!GC.f_getHeatingTypeIsGhost()){
 					electricHeatpumpGCs.add(GC);
 				}
 				break;
 			case DISTRICTHEAT:
 				nbHTHeatGrid++;
-				if(!(GC.p_heatingManagement instanceof J_HeatingManagementGhost)){
+				if(!GC.f_getHeatingTypeIsGhost()){
 					HTHeatGridGCs.add(GC);
 				}
 				break;
 			case LT_DISTRICTHEAT:
 				nbLTHeatGrid++;
-				if(!(GC.p_heatingManagement instanceof J_HeatingManagementGhost)){
+				if(!GC.f_getHeatingTypeIsGhost()){
 					LTHeatGridGCs.add(GC);
 				}
 				break;
 			case CUSTOM:
 					nbCustomHeating++;
-				if(!(GC.p_heatingManagement instanceof J_HeatingManagementGhost)){
+				if(!GC.f_getHeatingTypeIsGhost()){
 					//No collection, as ghost cant be changed anyway
 				}
 				break;
@@ -1131,7 +1131,7 @@ if (currentNumberOfChangedHeatingType < nbChangedHeatingTypeGoal) {
 		//Change the current heating type to the new one
 		changingGC.f_removeAllHeatingAssets();
 		f_addHeatAsset(changingGC, changedSliderHeatingType, f_calculatePeakHeatDemand_kW(changingGC));
-		changingGC.f_addHeatManagementToGC(changingGC, changedSliderHeatingType, false);
+		changingGC.f_addHeatManagement(changedSliderHeatingType, false);
 		currentNumberOfChangedHeatingType ++;
 	}
 }
@@ -1164,7 +1164,7 @@ else {
 		}
 		changingGC.f_removeAllHeatingAssets();
 		f_addHeatAsset(changingGC, newHeatingType, f_calculatePeakHeatDemand_kW(changingGC));
-		changingGC.f_addHeatManagementToGC(changingGC, newHeatingType, false);
+		changingGC.f_addHeatManagement(newHeatingType, false);
 		currentNumberOfChangedHeatingType--;
 	}
 }
@@ -1172,7 +1172,7 @@ else {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
