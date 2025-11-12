@@ -79,12 +79,6 @@
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Id>1756975183288</Id>
-		<Path>uplux.jar</Path>
-		<ReferencedFromUserCode>false</ReferencedFromUserCode>
-		<Location>FILE_SYSTEM</Location>
-	</Resource>
-	<Resource>
 		<Id>1756975183289</Id>
 		<Path>vallum-production-741-d257d2f-all.jar</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
@@ -111,6 +105,12 @@
 	<Resource>
 		<Id>1761557538487</Id>
 		<Path>logo_zenmo.png</Path>
+		<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		<Location>FILE_SYSTEM</Location>
+	</Resource>
+	<Resource>
+		<Id>1762182388058</Id>
+		<Path>uplux-3.jar</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>

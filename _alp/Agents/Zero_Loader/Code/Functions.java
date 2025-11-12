@@ -4674,3 +4674,10 @@ try {
 
 /*ALCODEEND*/}
 
+java.util.UUID f_getUserUUID(String p_userIdToken)
+{/*ALCODESTART::1762185034341*/
+java.util.UUID usedId = new JWTDecoder().jwtToUserId(p_userIdToken);
+return usedId;
+
+/*ALCODEEND*/}
+
