@@ -1363,17 +1363,17 @@ triple = Triple.of(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, true, true);
 zero_Interface.energyModel.c_defaultHeatingStrategies.put( triple, heatingManagementClassType );
 
 for(GCHouse GC : gcListHouses){
-	if(GC.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP && !(GC.p_heatingManagement instanceof J_HeatingManagementGhost)){
-		GC.f_addHeatManagementToGC(GC, OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, false);
+	if(GC.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP && !GC.f_getHeatingTypeIsGhost()){
+		GC.f_addHeatManagement(OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, false);
 	}
 }
 /*ALCODEEND*/}
 
 double f_setReducedHeatingInterval(GridConnection GC,double startTimeOfReducedHeatingInterval_hr,double endTimeOfReducedHeatingInterval_hr)
 {/*ALCODESTART::1761645149965*/
-if(GC.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP && GC.p_heatingManagement instanceof J_HeatingManagementHeatpumpOffPeak ){
-	((J_HeatingManagementHeatpumpOffPeak)GC.p_heatingManagement).setStartTimeOfReducedHeatingInterval_hr(startTimeOfReducedHeatingInterval_hr);
-	((J_HeatingManagementHeatpumpOffPeak)GC.p_heatingManagement).setEndTimeOfReducedHeatingInterval_hr(endTimeOfReducedHeatingInterval_hr);
+if(GC.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP && GC.f_getHeatingManagement() instanceof J_HeatingManagementHeatpumpOffPeak ){
+	((J_HeatingManagementHeatpumpOffPeak)GC.f_getHeatingManagement()).setStartTimeOfReducedHeatingInterval_hr(startTimeOfReducedHeatingInterval_hr);
+	((J_HeatingManagementHeatpumpOffPeak)GC.f_getHeatingManagement()).setEndTimeOfReducedHeatingInterval_hr(endTimeOfReducedHeatingInterval_hr);
 }
 /*ALCODEEND*/}
 
