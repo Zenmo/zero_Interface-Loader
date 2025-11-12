@@ -1623,28 +1623,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1731425176471</Id>
-		<Name><![CDATA[b_changeToCustomScenario]]></Name>
-		<X>-670</X>
-		<Y>706</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[boolean]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[false]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1732027307811</Id>
 		<Name><![CDATA[b_runningMainInterfaceScenarios]]></Name>
 		<X>-670</X>
@@ -2230,8 +2208,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1758795129963</Id>
 		<Name><![CDATA[zero_loader]]></Name>
-		<X>70</X>
-		<Y>-130</Y>
+		<X>50</X>
+		<Y>-250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2448,7 +2426,7 @@
 			<Y>0</Y>
 		</Label>
 		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
+		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
 			<Type><![CDATA[User]]></Type>
@@ -2474,8 +2452,8 @@
 			<Y>0</Y>
 		</Label>
 		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
 			<Type><![CDATA[Project_data]]></Type>
 			<UnitType>NONE</UnitType>
@@ -2617,7 +2595,7 @@
 	<Variable Class="Parameter">
 		<Id>1761119479237</Id>
 		<Name><![CDATA[t_scenario_current]]></Name>
-		<X>-1165</X>
+		<X>-1145</X>
 		<Y>245</Y>
 		<Label>
 			<X>10</X>
@@ -2648,7 +2626,7 @@
 	<Variable Class="Parameter">
 		<Id>1761119479242</Id>
 		<Name><![CDATA[t_scenario_future]]></Name>
-		<X>-1160</X>
+		<X>-1140</X>
 		<Y>290</Y>
 		<Label>
 			<X>10</X>
@@ -2680,7 +2658,7 @@
 	<Variable Class="Parameter">
 		<Id>1761119827711</Id>
 		<Name><![CDATA[t_scenario_custom]]></Name>
-		<X>-1160</X>
+		<X>-1140</X>
 		<Y>335</Y>
 		<Label>
 			<X>10</X>

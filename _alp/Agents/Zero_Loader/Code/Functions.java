@@ -403,7 +403,7 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) { // M
 	
 	switch (dataBattery.operation_mode()) {
 		case PRICE:
-			gridbattery.p_batteryAlgorithm = new J_BatteryManagementPrice(gridbattery);
+			gridbattery.f_setBatteryManagement(new J_BatteryManagementPrice(gridbattery));
 			break;
 		case PEAK_SHAVING_PARENT_NODE:
 			J_BatteryManagementPeakShaving batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery);
@@ -412,13 +412,13 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) { // M
 				throw new RuntimeException("Could not find GridNode with ID: " + gridbattery.p_parentNodeElectricID + " for GCGridBattery");
 			}
 			batteryAlgorithm.setTarget(gn);
-			gridbattery.p_batteryAlgorithm = batteryAlgorithm;
+			gridbattery.f_setBatteryManagement(batteryAlgorithm);
 			break;
 		case PEAK_SHAVING_COOP:
 			// target agent is still null, should be set at the moment of coop creation
 			batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery);
 			batteryAlgorithm.setTargetType( OL_ResultScope.ENERGYCOOP );
-			gridbattery.p_batteryAlgorithm = batteryAlgorithm;
+			gridbattery.f_setBatteryManagement(batteryAlgorithm);
 			break;
 		default:
 			throw new RuntimeException("Battery Operation Mode: " + dataBattery.operation_mode() + " is not supported for GCGridBattery.");
@@ -1328,8 +1328,8 @@ switch(vehicle_type){
 if (!isDefaultVehicle && maxChargingPower_kW > 0){
 	capacityElectricity_kW	= maxChargingPower_kW;
 }
-if (maxChargingPower_kW < 0) {
-	traceln("Survey data contains negative maxChargingPower_kW: %s", maxChargingPower_kW);
+if (maxChargingPower_kW <= 0) {
+	traceln("Trying to create an EV with no/negative maxChargingPower_kW: %s", maxChargingPower_kW);
 }
 
 //Create the EV vehicle energy asset with the set parameters + links
@@ -1464,7 +1464,7 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 		OL_GridConnectionHeatingType heatingType = avgc_data.p_avgCompanyHeatingMethod;
 		double maxHeatOutputPower_kW = f_createHeatProfileFromAnnualGasTotal(companyGC, heatingType, yearlyGasDemand_m3, ratioGasUsedForHeating);
 		f_addHeatAsset(companyGC, heatingType, maxHeatOutputPower_kW);
-		f_addHeatManagement(companyGC, heatingType, false);
+		companyGC.f_addHeatManagement(heatingType, false);
 		
 		//Set current scenario heating type
 		current_scenario_list.setCurrentHeatingType(heatingType);
@@ -2395,7 +2395,7 @@ if (gridConnection.getStorage().getHasBattery() != null && gridConnection.getSto
 	
 	if (battery_power_kW > 0 && battery_capacity_kWh > 0) {
 		f_addStorage(companyGC, battery_power_kW, battery_capacity_kWh, OL_EnergyAssetType.STORAGE_ELECTRIC);
-		companyGC.p_batteryAlgorithm = new J_BatteryManagementSelfConsumption(companyGC);
+		companyGC.f_setBatteryManagement(new J_BatteryManagementSelfConsumption(companyGC));
 	}	
 }
 
@@ -2443,9 +2443,14 @@ if (nbDailyCarCommuters_notNull + nbDailyCarVisitors_notNull > 0){
 	
 	
 	//check if charge power is filled in
-	if (gridConnection.getTransport().getCars().getPowerPerChargePointKw() != null){
-		maxChargingPower_kW 		= gridConnection.getTransport().getCars().getPowerPerChargePointKw();		
-		isDefaultVehicle			= false;
+	if (nbEVCarsComute > 0 && gridConnection.getTransport().getCars().getPowerPerChargePointKw() != null){
+		if (gridConnection.getTransport().getCars().getPowerPerChargePointKw() <= 0) {
+			traceln("Survey data contains no/negative Car maxChargingPower_kW: %s", gridConnection.getTransport().getCars().getPowerPerChargePointKw());
+		}
+		else{
+			maxChargingPower_kW 		= gridConnection.getTransport().getCars().getPowerPerChargePointKw();		
+			isDefaultVehicle			= false;
+		}
 	}
 	
 	if (createElectricEA){ // Check if electric demand EA should be created
@@ -2474,18 +2479,17 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		//Update remaning amount of cars (company owned only)
 		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.VAN, - gridConnection.getTransport().getCars().getNumCars());
 		
-		//gridConnection.getTransport().getCars().getNumChargePoints(); // Wat doen we hier mee????????
-		
+		//Get amount of EV and diesel cars
 		Integer nbEVCars = gridConnection.getTransport().getCars().getNumElectricCars();
 		if (nbEVCars == null) {
 		    nbEVCars = 0;
 		}
 		int nbDieselCars = gridConnection.getTransport().getCars().getNumCars() - nbEVCars;
-
 		
+		//Initialize parameters
 		boolean isDefaultVehicle		= true;
 		double annualTravelDistance_km 	= 0;
-		double maxChargingPower_kW 		= avgc_data.p_avgEVMaxChargePowerCar_kW;		
+		double maxChargingPower_kW 		= avgc_data.p_avgEVMaxChargePowerCar_kW;
 		
 		//check if annual travel distance is filled in
 		if (gridConnection.getTransport().getCars().getAnnualTravelDistancePerCarKm() != null){
@@ -2495,19 +2499,27 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		
 		//create diesel vehicle
 		for (int i = 0; i< nbDieselCars; i++){
-		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VEHICLE, isDefaultVehicle, annualTravelDistance_km);
+			f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VEHICLE, isDefaultVehicle, annualTravelDistance_km);
 		}
 		
+		//Get number of chargepoints if filled in
+		//int numberOfChargepointsBusinessCars = gridConnection.getTransport().getCars().getNumChargePoints() !=  null ? gridConnection.getTransport().getCars().getNumChargePoints() : 0;
+				
 		//check if charge power is filled in
-		if (gridConnection.getTransport().getCars().getPowerPerChargePointKw() != null){
-			maxChargingPower_kW 		= gridConnection.getTransport().getCars().getPowerPerChargePointKw();		
-			isDefaultVehicle			= false;		
+		if (nbEVCars > 0 && gridConnection.getTransport().getCars().getPowerPerChargePointKw() != null){
+			if (gridConnection.getTransport().getCars().getPowerPerChargePointKw() <= 0) {
+				traceln("Survey data contains no/negative Car maxChargingPower_kW: %s", gridConnection.getTransport().getCars().getPowerPerChargePointKw());
+			}
+			else{
+				maxChargingPower_kW 		= gridConnection.getTransport().getCars().getPowerPerChargePointKw();		
+				isDefaultVehicle			= false;
+			}		
 		}
 		
 		//create EV
 		if (createElectricEA){ // Check if electric demand EA should be created
 			for (int j = 0; j< nbEVCars; j++){
-			f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VEHICLE, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW);
+				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VEHICLE, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW);
 			}
 		}
 		
@@ -2528,8 +2540,6 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		
 		//Update remaning amount of vans
 		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.VAN, - gridConnection.getTransport().getVans().getNumVans());
-		
-		//gridConnection.getTransport().getVans().getNumChargePoints(); // Wat doen we hier mee????????
 		
 		Integer nbEVVans = gridConnection.getTransport().getVans().getNumElectricVans();	
 		if (nbEVVans == null) {
@@ -2552,10 +2562,19 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 			f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VAN, isDefaultVehicle, annualTravelDistance_km);
 		}
 		
+		//Get number of chargepoints if filled in
+		//int numberOfChargepointsVans = gridConnection.getTransport().getVans().getNumChargePoints() !=  null ? gridConnection.getTransport().getVans().getNumChargePoints() : 0;
+				
+				
 		//check if charge power is filled in
-		if (gridConnection.getTransport().getVans().getPowerPerChargePointKw() != null){
-			maxChargingPower_kW 		= gridConnection.getTransport().getVans().getPowerPerChargePointKw();	
-			isDefaultVehicle			= false;		
+		if (nbEVVans > 0 && gridConnection.getTransport().getVans().getPowerPerChargePointKw() != null){
+			if (gridConnection.getTransport().getVans().getPowerPerChargePointKw() < 0) {
+				traceln("Survey data contains no/negative Van maxChargingPower_kW: %s", gridConnection.getTransport().getVans().getPowerPerChargePointKw());
+			}
+			else{
+				maxChargingPower_kW 		= gridConnection.getTransport().getVans().getPowerPerChargePointKw();	
+				isDefaultVehicle			= false;
+			}		
 		}
 		
 		//create electric vehicles
@@ -2583,9 +2602,6 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		//Update remaning amount of trucks
 		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.TRUCK, - gridConnection.getTransport().getTrucks().getNumTrucks());
 
-		//gridConnection.getTransport().getTrucks().getNumChargePoints(); // Wat doen we hier mee????????
-		
-		
 		Integer nbEVTrucks = gridConnection.getTransport().getTrucks().getNumElectricTrucks();		
 		if (nbEVTrucks == null) {
 		    nbEVTrucks = 0;
@@ -2607,16 +2623,25 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 			f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_TRUCK, isDefaultVehicle, annualTravelDistance_km);
 		}
 		
+		//Get number of chargepoints if filled in
+		//int numberOfChargepointsVans = gridConnection.getTransport().getTrucks().getNumChargePoints() !=  null ? gridConnection.getTransport().getTrucks().getNumChargePoints() : 0;
+			
+			
 		//check if charge power is filled in
-		if (gridConnection.getTransport().getTrucks().getPowerPerChargePointKw() != null){
-			maxChargingPower_kW 		= gridConnection.getTransport().getTrucks().getPowerPerChargePointKw();
-			isDefaultVehicle			= false;		
+		if (nbEVTrucks > 0 && gridConnection.getTransport().getTrucks().getPowerPerChargePointKw() != null){
+			if (gridConnection.getTransport().getTrucks().getPowerPerChargePointKw() <= 0) {
+				traceln("Survey data contains no/negative Truck maxChargingPower_kW: %s", gridConnection.getTransport().getTrucks().getPowerPerChargePointKw());
+			}
+			else{
+				maxChargingPower_kW 		= gridConnection.getTransport().getTrucks().getPowerPerChargePointKw();
+				isDefaultVehicle			= false;
+			}		
 		}
 		
 		//create electric vehicles
 		if (createElectricEA){ // Check if electric demand EA should be created
 			for (int j = 0; j< nbEVTrucks; j++){
-			f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_TRUCK, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW);
+				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_TRUCK, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW);
 			}
 		}
 		
@@ -3003,9 +3028,11 @@ if ( topGridNode == null ) {
 String topGridNodeID = topGridNode.gridnode_id();
 
 //Create data package for e-hub dashboard slider gcs
-f_addSliderSolarfarm("EnergyHub solarfarm slider", topGridNodeID);
-f_addSliderWindfarm("EnergyHub windfarm slider", topGridNodeID);
-f_addSliderBattery("EnergyHub battery slider", topGridNodeID);
+if(project_data.project_type() == OL_ProjectType.BUSINESSPARK){
+	f_addSliderSolarfarm("EnergyHub solarfarm slider", topGridNodeID);
+	f_addSliderWindfarm("EnergyHub windfarm slider", topGridNodeID);
+	f_addSliderBattery("EnergyHub battery slider", topGridNodeID);
+}
 
 //If no slider data package is present yet for the main: add one as well.
 if(sliderSolarfarm_data == null){
@@ -3454,8 +3481,8 @@ double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() 
 //Add heat demand profile
 OL_GridConnectionHeatingType heatingType = avgc_data.p_avgHouseHeatingMethod;
 f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
-f_addHeatManagement(house, heatingType, false);
-house.p_heatingManagement.setHeatingPreferences(f_getHouseHeatingPreferences());
+house.f_addHeatManagement(heatingType, false);
+house.f_setHeatingPreferences(f_getHouseHeatingPreferences());
 
 //Add hot water and cooking demand
 f_addHotWaterDemand(house, house.p_floorSurfaceArea_m2);
@@ -3772,17 +3799,6 @@ else {// No building connected in zorm? -> check if it is manually connected in 
 return connectedBuildingsData;
 /*ALCODEEND*/}
 
-double f_addHeatManagement(GridConnection engineGC,OL_GridConnectionHeatingType heatingType,boolean isGhost)
-{/*ALCODESTART::1753784800216*/
-if (isGhost) {
-	engineGC.p_heatingManagement = new J_HeatingManagementGhost( engineGC, heatingType );
-	return;
-}
-else {
-	engineGC.f_addHeatManagementToGC(engineGC, heatingType, isGhost);
-}
-/*ALCODEEND*/}
-
 J_ProfilePointer f_createEngineProfile1(String profileID,double[] arguments,double[] values,EnergyModel energyModel)
 {/*ALCODESTART::1753349205424*/
 TableFunction tf_profile = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
@@ -3835,7 +3851,7 @@ else{
 	boolean isGhost = heatingType != OL_GridConnectionHeatingType.NONE && peakHeatConsumption_kW == null;
 	
 	//Add heating management
-	f_addHeatManagement(engineGC, heatingType, isGhost);
+	engineGC.f_addHeatManagement(heatingType, isGhost);
 }
 
 return heatingType;

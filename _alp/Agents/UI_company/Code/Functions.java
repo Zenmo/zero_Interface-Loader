@@ -386,7 +386,7 @@ switch (selectedHeatingType){
 }
 
 // Add a management for the chosen heating type
-GC.f_addHeatManagementToGC(GC, selectedHeatingType, false);
+GC.f_addHeatManagement(selectedHeatingType, false);		
 /*ALCODEEND*/}
 
 double f_setGCCapacity(GridConnection GC,double setGridConnectionCapacity_kW,String type)
@@ -432,8 +432,8 @@ else {
 }
 
 //Add battery algorithm if it is not present
-if(GC.p_batteryAlgorithm == null){
-	GC.p_batteryAlgorithm = new J_BatteryManagementSelfConsumption(GC);
+if(GC.f_getBatteryManagement() == null){
+	GC.f_setBatteryManagement(new J_BatteryManagementSelfConsumption(GC));
 }
 
 /*ALCODEEND*/}
@@ -669,17 +669,17 @@ if (vehicleType == OL_EnergyAssetType.ELECTRIC_VEHICLE || vehicleType == OL_Ener
 
 	switch(vehicleType){
 		case ELECTRIC_VEHICLE:
-			capacityElectricity_kW	= (p_scenarioSettings_Current.getCurrentEVCarChargePower_kW() != 0) ? p_scenarioSettings_Current.getCurrentEVCarChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerCar_kW;
+			capacityElectricity_kW	= (p_scenarioSettings_Current.getCurrentEVCarChargePower_kW() > 0) ? p_scenarioSettings_Current.getCurrentEVCarChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerCar_kW;
 			storageCapacity_kWh		= zero_Interface.energyModel.avgc_data.p_avgEVStorageCar_kWh;
 			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionCar_kWhpkm;
 		break;
 		case ELECTRIC_VAN:
-			capacityElectricity_kW	= (p_scenarioSettings_Current.getCurrentEVVanChargePower_kW() != 0) ? p_scenarioSettings_Current.getCurrentEVVanChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerVan_kW;
+			capacityElectricity_kW	= (p_scenarioSettings_Current.getCurrentEVVanChargePower_kW() > 0) ? p_scenarioSettings_Current.getCurrentEVVanChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerVan_kW;
 			storageCapacity_kWh		= zero_Interface.energyModel.avgc_data.p_avgEVStorageVan_kWh;
 			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionVan_kWhpkm;
 		break;
 		case ELECTRIC_TRUCK:
-			capacityElectricity_kW	= (p_scenarioSettings_Current.getCurrentEVTruckChargePower_kW() != 0) ? p_scenarioSettings_Current.getCurrentEVTruckChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerTruck_kW;
+			capacityElectricity_kW	= (p_scenarioSettings_Current.getCurrentEVTruckChargePower_kW() > 0) ? p_scenarioSettings_Current.getCurrentEVTruckChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerTruck_kW;
 			storageCapacity_kWh		= zero_Interface.energyModel.avgc_data.p_avgEVStorageTruck_kWh;
 			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionTruck_kWhpkm;
 		break;
@@ -1766,7 +1766,7 @@ if(!b_runningMainInterfaceScenarioSettings && !b_runningMainInterfaceSlider){
 	zero_Interface.f_resetSettings();
 	
 	//Update variable to change to custom scenario
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 /*ALCODEEND*/}
 

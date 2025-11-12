@@ -1084,12 +1084,7 @@ else{
 			<TextColor>-16777216</TextColor>
 			<VisibleCode>false</VisibleCode>
 			<Enabled>true</Enabled>
-			<ActionCode>//Set boolean of running main interface scenario true
-b_runningMainInterfaceScenarios = true;
-
-//Set selected scenario
-f_finalizeSettingOfScenario(f_setSelectedScenario());
-</ActionCode>
+			<ActionCode>f_scenarioRadioButtonAction();</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
 			<Font Name="Dialog" Size="14" Style="0"/>
@@ -8348,8 +8343,8 @@ else{
 		<Id>1762354401486</Id>
 		<Name><![CDATA[image_loadingScreenIcon]]></Name>
 		<Description><![CDATA[3470]]></Description>
-		<X>-960</X>
-		<Y>-450</Y>
+		<X>3040</X>
+		<Y>680</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
