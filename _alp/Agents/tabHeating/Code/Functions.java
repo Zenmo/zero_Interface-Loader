@@ -1345,11 +1345,11 @@ switch(aansturingsModus){
 		button_setHeatpumpHeatingManagementOffPeakInterval.setEnabled(true);
 		heatingManagementClassType = J_HeatingManagementHeatpumpOffPeak.class;
 		break;
-	/*
-	case "Netbewust":
-		heatingManagementClassType = J_HeatingManagementGridAware.class;
+	
+	case "Aggregator":
+		heatingManagementClassType = J_HeatingManagementExternalSetpoint.class;
 		break;
-	*/
+	
 	default:
 		heatingManagementClassType = J_HeatingManagementPIcontrol.class;
 }
