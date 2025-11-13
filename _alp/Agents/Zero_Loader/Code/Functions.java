@@ -1328,7 +1328,7 @@ switch(vehicle_type){
 if (!isDefaultVehicle && maxChargingPower_kW > 0){
 	capacityElectricity_kW	= maxChargingPower_kW;
 }
-if (maxChargingPower_kW <= 0) {
+if (!isDefaultVehicle && maxChargingPower_kW <= 0) {
 	traceln("Trying to create an EV with no/negative maxChargingPower_kW: %s", maxChargingPower_kW);
 }
 

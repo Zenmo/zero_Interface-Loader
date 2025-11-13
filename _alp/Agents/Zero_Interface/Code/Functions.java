@@ -731,26 +731,26 @@ return originalPrintStream;
 
 double f_setColorsBasedOnConsumptionProfileHouseholds(GIS_Object gis_area)
 {/*ALCODESTART::1718263685462*/
-double yearlyEnergyConsumption = 0;
+double yearlyElectricityConsumption_kWh = 0;
 for( GridConnection gc : gis_area.c_containedGridConnections){
 	if(gc.v_rapidRunData != null){
-		yearlyEnergyConsumption += gc.v_rapidRunData.getTotalElectricityConsumed_MWh();
+		yearlyElectricityConsumption_kWh += gc.v_rapidRunData.getTotalElectricityConsumed_MWh()*1000;
 	}
 	else{
 		for ( J_EAConsumption consumptionAsset : gc.c_consumptionAssets){
 			if( consumptionAsset.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ){
-				yearlyEnergyConsumption += consumptionAsset.yearlyDemand_kWh;
+				yearlyElectricityConsumption_kWh += consumptionAsset.yearlyDemand_kWh;
 			}
 		}
 	}
 }
 
-if ( yearlyEnergyConsumption == 0) { gis_area.f_style( v_unknownConsumptionColor, null, null, null );}
-else if ( yearlyEnergyConsumption < 1500){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption1.getFillColor(), null, null, null);}
-else if ( yearlyEnergyConsumption < 2500){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption2.getFillColor(), null, null, null);}
-else if ( yearlyEnergyConsumption < 4000){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption3.getFillColor(), null, null, null);}
-else if ( yearlyEnergyConsumption < 6000){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption4.getFillColor(), null, null, null);}
-else if ( yearlyEnergyConsumption > 6000){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption5.getFillColor(), null, null, null);}
+if ( yearlyElectricityConsumption_kWh == 0) { gis_area.f_style( v_unknownConsumptionColor, null, null, null );}
+else if ( yearlyElectricityConsumption_kWh < 1500){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption1.getFillColor(), null, null, null);}
+else if ( yearlyElectricityConsumption_kWh < 2500){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption2.getFillColor(), null, null, null);}
+else if ( yearlyElectricityConsumption_kWh < 4000){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption3.getFillColor(), null, null, null);}
+else if ( yearlyElectricityConsumption_kWh < 6000){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption4.getFillColor(), null, null, null);}
+else if ( yearlyElectricityConsumption_kWh > 6000){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption5.getFillColor(), null, null, null);}
 	
 
 /*ALCODEEND*/}
