@@ -2203,7 +2203,7 @@ else{
 			<ActionCode>gr_filterInterface.setVisible(cb_showFilterInterface.isSelected());
 
 if(!cb_showFilterInterface.isSelected()){
-	f_removeAllFilters();
+	button_clearFilters.action();
 	gr_sliderClickBlocker.setVisible(false);
 }
 else{
