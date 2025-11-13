@@ -2142,7 +2142,7 @@ for(GIS_Building building : energyModel.pop_GIS_Buildings){
 
 double f_initialParkingSpacesOrder()
 {/*ALCODESTART::1749741185117*/
-Collections.shuffle(c_orderedParkingSpaces);
+//Collections.shuffle(c_orderedParkingSpaces);
 /*ALCODEEND*/}
 
 double f_initialChargerOrder()
@@ -2197,7 +2197,7 @@ for (GCPublicCharger gc : energyModel.PublicChargers) {
 	}
 }
 
-Collections.shuffle(c_orderedPublicChargers);
+//Collections.shuffle(c_orderedPublicChargers);
 /*ALCODEEND*/}
 
 double f_initializeSpecialGISObjectsLegend()
@@ -3007,8 +3007,8 @@ for (GCHouse house : energyModel.Houses) {
 }
 
 //Shuffle the collections to not have skewed initialization
-Collections.shuffle(c_orderedVehiclesPrivateParking);
-Collections.shuffle(allPublicParkedCars);
+//Collections.shuffle(c_orderedVehiclesPrivateParking);
+//Collections.shuffle(allPublicParkedCars);
 
 //Get the total amount of public chargers
 int totalChargers = c_orderedPublicChargers.size();
