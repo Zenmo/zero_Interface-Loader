@@ -396,7 +396,7 @@
 		<ClassPathEntry>
 			<ResourceReference>
 				<PackageName>zerointerfaceloader</PackageName>
-				<ClassName>uplux.jar</ClassName>
+				<ClassName>uplux-3.jar</ClassName>
 			</ResourceReference>
 			<Imported>true</Imported>
 			<Folder>false</Folder>

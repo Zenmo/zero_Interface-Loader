@@ -25,7 +25,7 @@ for ( GCEnergyProduction GCEP : gcListProduction) {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -50,7 +50,7 @@ while ( nbHousesWithPVGoal < nbHousesWithPV ) { // remove excess PV systems
 		
 		if(house.p_batteryAsset != null ){
 			house.p_batteryAsset.removeEnergyAsset();
-			house.p_batteryAlgorithm = null;
+			house.f_setBatteryManagement(null);
 		}
 	}
 	else {
@@ -85,7 +85,7 @@ while ( nbHousesWithPVGoal > nbHousesWithPV ) {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -116,7 +116,7 @@ for ( GCEnergyProduction GCEP : gcListProduction) {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -143,7 +143,7 @@ for (GridConnection gc : gcList) {
 
 // Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -204,6 +204,10 @@ if ( remaining_kWp > 0 ) {
 		}
 		
 		if ( remaining_kWp <= 0 ) {
+			// Update variable to change to custom scenario
+			if(!zero_Interface.b_runningMainInterfaceScenarios){
+				zero_Interface.f_setScenarioToCustom();
+			}
 			zero_Interface.f_resetSettings();		
 			return;
 		}
@@ -225,6 +229,12 @@ else {
 		if ( remaining_kWp >= 0 ) {
 			// removed slightly too much pv
 			f_addPVSystem( company, remaining_kWp );
+			
+			// Update variable to change to custom scenario
+			if(!zero_Interface.b_runningMainInterfaceScenarios){
+				zero_Interface.f_setScenarioToCustom();
+			}
+			
 			zero_Interface.f_resetSettings();			
 			return;
 		}
@@ -237,7 +247,7 @@ else {
 
 // Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -304,7 +314,7 @@ if( nbHousesWithPV > 0 ){
 	while ( nbHouseBatteries > nbHousesWithBatteryGoal ) {
 		GCHouse house = findFirst(gcListHouses, p -> p.p_batteryAsset != null );
 		house.p_batteryAsset.removeEnergyAsset();
-		house.p_batteryAlgorithm = null;
+		house.f_setBatteryManagement(null);
 		nbHouseBatteries--;
 	}
 	while ( nbHouseBatteries < nbHousesWithBatteryGoal) {
@@ -315,14 +325,14 @@ if( nbHousesWithPV > 0 ){
 		double batteryStateOfCharge = 0.5;
 
 		new J_EAStorageElectric(house, batteryCapacity_kW, batteryStorageCapacity_kWh, batteryStateOfCharge, zero_Interface.energyModel.p_timeStep_h );
-		house.p_batteryAlgorithm = new J_BatteryManagementSelfConsumption( house );
+		house.f_setBatteryManagement(new J_BatteryManagementSelfConsumption( house ));
 		nbHouseBatteries++;
 	}
 }
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -349,7 +359,7 @@ for ( GCGridBattery battery : gcListGridBatteries) {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -400,7 +410,7 @@ while ( nbHousesWithElectricCooking < nbHousesWithElectricCookingGoal) {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();
@@ -707,7 +717,7 @@ for (GridConnection GC : gcList) {
 
 //Update variable to change to custom scenario
 if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.b_changeToCustomScenario = true;
+	zero_Interface.f_setScenarioToCustom();
 }
 
 zero_Interface.f_resetSettings();

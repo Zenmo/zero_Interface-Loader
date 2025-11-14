@@ -403,7 +403,7 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) { // M
 	
 	switch (dataBattery.operation_mode()) {
 		case PRICE:
-			gridbattery.p_batteryAlgorithm = new J_BatteryManagementPrice(gridbattery);
+			gridbattery.f_setBatteryManagement(new J_BatteryManagementPrice(gridbattery));
 			break;
 		case PEAK_SHAVING_PARENT_NODE:
 			J_BatteryManagementPeakShaving batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery);
@@ -412,13 +412,13 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) { // M
 				throw new RuntimeException("Could not find GridNode with ID: " + gridbattery.p_parentNodeElectricID + " for GCGridBattery");
 			}
 			batteryAlgorithm.setTarget(gn);
-			gridbattery.p_batteryAlgorithm = batteryAlgorithm;
+			gridbattery.f_setBatteryManagement(batteryAlgorithm);
 			break;
 		case PEAK_SHAVING_COOP:
 			// target agent is still null, should be set at the moment of coop creation
 			batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery);
 			batteryAlgorithm.setTargetType( OL_ResultScope.ENERGYCOOP );
-			gridbattery.p_batteryAlgorithm = batteryAlgorithm;
+			gridbattery.f_setBatteryManagement(batteryAlgorithm);
 			break;
 		default:
 			throw new RuntimeException("Battery Operation Mode: " + dataBattery.operation_mode() + " is not supported for GCGridBattery.");
@@ -1328,7 +1328,7 @@ switch(vehicle_type){
 if (!isDefaultVehicle && maxChargingPower_kW > 0){
 	capacityElectricity_kW	= maxChargingPower_kW;
 }
-if (maxChargingPower_kW <= 0) {
+if (!isDefaultVehicle && maxChargingPower_kW <= 0) {
 	traceln("Trying to create an EV with no/negative maxChargingPower_kW: %s", maxChargingPower_kW);
 }
 
@@ -1464,7 +1464,7 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 		OL_GridConnectionHeatingType heatingType = avgc_data.p_avgCompanyHeatingMethod;
 		double maxHeatOutputPower_kW = f_createHeatProfileFromAnnualGasTotal(companyGC, heatingType, yearlyGasDemand_m3, ratioGasUsedForHeating);
 		f_addHeatAsset(companyGC, heatingType, maxHeatOutputPower_kW);
-		f_addHeatManagement(companyGC, heatingType, false);
+		companyGC.f_addHeatManagement(heatingType, false);
 		
 		//Set current scenario heating type
 		current_scenario_list.setCurrentHeatingType(heatingType);
@@ -2395,7 +2395,7 @@ if (gridConnection.getStorage().getHasBattery() != null && gridConnection.getSto
 	
 	if (battery_power_kW > 0 && battery_capacity_kWh > 0) {
 		f_addStorage(companyGC, battery_power_kW, battery_capacity_kWh, OL_EnergyAssetType.STORAGE_ELECTRIC);
-		companyGC.p_batteryAlgorithm = new J_BatteryManagementSelfConsumption(companyGC);
+		companyGC.f_setBatteryManagement(new J_BatteryManagementSelfConsumption(companyGC));
 	}	
 }
 
@@ -3518,8 +3518,8 @@ double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() 
 //Add heat demand profile
 OL_GridConnectionHeatingType heatingType = avgc_data.p_avgHouseHeatingMethod;
 f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
-f_addHeatManagement(house, heatingType, false);
-house.p_heatingManagement.setHeatingPreferences(f_getHouseHeatingPreferences());
+house.f_addHeatManagement(heatingType, false);
+house.f_setHeatingPreferences(f_getHouseHeatingPreferences());
 
 //Add hot water and cooking demand
 f_addHotWaterDemand(house, house.p_floorSurfaceArea_m2, dhwDemand_kwhpa);
@@ -3834,17 +3834,6 @@ else {// No building connected in zorm? -> check if it is manually connected in 
 return connectedBuildingsData;
 /*ALCODEEND*/}
 
-double f_addHeatManagement(GridConnection engineGC,OL_GridConnectionHeatingType heatingType,boolean isGhost)
-{/*ALCODESTART::1753784800216*/
-if (isGhost) {
-	engineGC.p_heatingManagement = new J_HeatingManagementGhost( engineGC, heatingType );
-	return;
-}
-else {
-	engineGC.f_addHeatManagementToGC(engineGC, heatingType, isGhost);
-}
-/*ALCODEEND*/}
-
 J_ProfilePointer f_createEngineProfile1(String profileID,double[] arguments,double[] values,EnergyModel energyModel)
 {/*ALCODESTART::1753349205424*/
 TableFunction tf_profile = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
@@ -3897,7 +3886,7 @@ else{
 	boolean isGhost = heatingType != OL_GridConnectionHeatingType.NONE && peakHeatConsumption_kW == null;
 	
 	//Add heating management
-	f_addHeatManagement(engineGC, heatingType, isGhost);
+	engineGC.f_addHeatManagement(heatingType, isGhost);
 }
 
 return heatingType;
@@ -4736,6 +4725,13 @@ try {
 	e.printStackTrace();
 }
 
+
+/*ALCODEEND*/}
+
+java.util.UUID f_getUserUUID(String p_userIdToken)
+{/*ALCODESTART::1762185034341*/
+java.util.UUID usedId = new JWTDecoder().jwtToUserId(p_userIdToken);
+return usedId;
 
 /*ALCODEEND*/}
 

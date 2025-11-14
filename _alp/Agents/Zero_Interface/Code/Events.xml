@@ -76,40 +76,4 @@
 		</Properties>
 		<Action xmlns:al="http://anylogic.com"/>
 	</Event>
-	<Event>
-		<Id>1761119827697</Id>
-		<Name><![CDATA[e_setScenarioToCustom]]></Name>
-		<X>-1180</X>
-		<Y>315</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties TriggerType="condition" Mode="occuresOnce">
-			<Timeout Class="CodeUnitValue">
-				<Code><![CDATA[1]]></Code>
-				<Unit Class="TimeUnits">HOUR</Unit>
-			</Timeout>
-			<Rate Class="CodeUnitValue">
-				<Code><![CDATA[1]]></Code>
-				<Unit Class="RateUnits">PER_HOUR</Unit>
-			</Rate>
-			<Id>1761119827695</Id>
-			<OccurrenceAtTime>true</OccurrenceAtTime>
-			<OccurrenceDate>1729929600000</OccurrenceDate>
-			<OccurrenceTime Class="CodeUnitValue">
-				<Code><![CDATA[0]]></Code>
-				<Unit Class="TimeUnits">HOUR</Unit>
-			</OccurrenceTime>
-			<RecurrenceCode Class="CodeUnitValue">
-				<Code><![CDATA[1]]></Code>
-				<Unit Class="TimeUnits">HOUR</Unit>
-			</RecurrenceCode>
-			<Condition>!b_runningMainInterfaceScenarios &amp;&amp; b_changeToCustomScenario</Condition>
-		</Properties>
-		<Action xmlns:al="http://anylogic.com"/>
-	</Event>
 </Events>
