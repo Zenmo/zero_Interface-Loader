@@ -758,7 +758,10 @@ else if ( yearlyElectricityConsumption_kWh > 6000){ gis_area.f_style( rect_mapOv
 double f_updateMainInterfaceSliders()
 {/*ALCODESTART::1718288402102*/
 uI_Tabs.f_updateSliders();
-uI_EnergyHub.uI_Tabs.f_updateSliders();
+if (uI_EnergyHub != null && uI_EnergyHub.uI_Tabs != null) {
+    uI_EnergyHub.uI_Tabs.f_updateSliders();
+}
+
 /*ALCODEEND*/}
 
 double f_selectCharger(GCPublicCharger charger,GIS_Object objectGIS)
@@ -3393,8 +3396,9 @@ return scenarioOptions;
 
 double f_setScenario_Future()
 {/*ALCODESTART::1761119479231*/
-f_setCompaniesScenario(c_scenarioMap_Future);
-
+if(c_scenarioMap_Future != null){
+	f_setCompaniesScenario(c_scenarioMap_Future);
+}
 //Set specifc assets active/non-active
 f_projectSpecificScenarioSettings("Future");
 
@@ -3404,8 +3408,9 @@ t_scenarioDescription.setText(t_scenario_future);
 
 double f_setScenario_Current()
 {/*ALCODESTART::1761119479233*/
-f_setCompaniesScenario(c_scenarioMap_Current);
-
+if(c_scenarioMap_Current != null){
+	f_setCompaniesScenario(c_scenarioMap_Current);
+}
 //Reset sliders for households
 if(project_data.project_type() == OL_ProjectType.RESIDENTIAL && p_residentialScenario_Current != null){
 	f_setResidentialScenario_Current();
