@@ -272,7 +272,7 @@
 				<Name><![CDATA[p_avgEfficiencyHeatpump_fr]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgOutputTemperatureHeatpump_degC]]></Name>
+				<Name><![CDATA[p_avgOutputTemperatureElectricHeatpump_degC]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgEfficiencyGasBurner_fr]]></Name>
@@ -387,6 +387,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_minDistrictHeatingDeliverySetOutputCapacity_kW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_avgOutputTemperatureHybridHeatpump_degC]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
