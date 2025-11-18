@@ -2827,7 +2827,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		inputCapacityElectric_kW = max(avgc_data.p_minHeatpumpElectricCapacity_kW, maxHeatOutputPower_kW / 3); //-- /3, kan nog kleiner want is hybride zodat gasbrander ook bij springt, dus kleiner MOETEN aanname voor hoe klein onderzoeken
 		efficiency = avgc_data.p_avgEfficiencyHeatpump_fr;
 		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
-		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
+		outputTemperature_degC = avgc_data.p_avgOutputTemperatureHybridHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
@@ -2849,7 +2849,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		inputCapacityElectric_kW = max(avgc_data.p_minHeatpumpElectricCapacity_kW, maxHeatOutputPower_kW); // Could be a lot smaller due to high cop
 		efficiency = avgc_data.p_avgEfficiencyHeatpump_fr;
 		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
-		outputTemperature_degC = avgc_data.p_avgOutputTemperatureHeatpump_degC;
+		outputTemperature_degC = avgc_data.p_avgOutputTemperatureElectricHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
@@ -4261,7 +4261,9 @@ energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementPIcontrol
 triple = Triple.of(OL_GridConnectionHeatingType.HYBRID_HEATPUMP, false, false);
 energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileHybridHeatPump.class );
 triple = Triple.of(OL_GridConnectionHeatingType.HYBRID_HEATPUMP, true, false);
-energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementBuildingHybridHeatPump.class );
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementPIcontrolHybridHeatpump.class );
+triple = Triple.of(OL_GridConnectionHeatingType.HYBRID_HEATPUMP, true, true);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementPIcontrolHybridHeatpump.class );
 
 triple = Triple.of(OL_GridConnectionHeatingType.DISTRICTHEAT, false, false);
 energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );

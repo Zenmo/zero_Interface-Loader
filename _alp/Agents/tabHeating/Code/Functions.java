@@ -1206,7 +1206,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		
 		efficiency = avgc_data.p_avgEfficiencyHeatpump_fr;
 		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
-		outputTemperature_degC = avgc_data.p_avgOutputTemperatureHeatpump_degC;
+		outputTemperature_degC = avgc_data.p_avgOutputTemperatureHybridHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
@@ -1228,7 +1228,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		inputCapacityElectric_kW = max(avgc_data.p_minHeatpumpElectricCapacity_kW, maxHeatOutputPower_kW); // Could be smaller due to high cop	
 		efficiency = avgc_data.p_avgEfficiencyHeatpump_fr;
 		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
-		outputTemperature_degC = avgc_data.p_avgOutputTemperatureHeatpump_degC;
+		outputTemperature_degC = avgc_data.p_avgOutputTemperatureElectricHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;

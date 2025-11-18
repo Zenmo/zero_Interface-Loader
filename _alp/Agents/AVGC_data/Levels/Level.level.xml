@@ -411,7 +411,7 @@
 		<Id>1726584205568</Id>
 		<Name><![CDATA[txt_gasburners]]></Name>
 		<X>60</X>
-		<Y>600</Y>
+		<Y>620</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -436,7 +436,7 @@
 		<Id>1726584205570</Id>
 		<Name><![CDATA[txt_hydrogenburners]]></Name>
 		<X>60</X>
-		<Y>690</Y>
+		<Y>710</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -589,7 +589,7 @@
 		<Id>1745316061345</Id>
 		<Name><![CDATA[txt_CHP]]></Name>
 		<X>60</X>
-		<Y>780</Y>
+		<Y>800</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
