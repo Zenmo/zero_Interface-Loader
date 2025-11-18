@@ -3426,28 +3426,17 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	//Floor surface of GC
 	GCH.p_floorSurfaceArea_m2 = houseBuildingData.address_floor_surface_m2();
 	
-	//Instantiate energy assets
-	double jaarlijksElectriciteitsVerbruik;
-	double jaarlijksGasVerbruik;
-	try {
-		jaarlijksElectriciteitsVerbruik = houseBuildingData.electricity_consumption_kwhpa();
-	}
-	catch (NullPointerException e){
-		jaarlijksElectriciteitsVerbruik = Double.valueOf(uniform_discr(1200, 3800));
-	}
-	try {
-		jaarlijksGasVerbruik = houseBuildingData.gas_consumption_kwhpa();
-	}
-	catch (NullPointerException e){
-		jaarlijksGasVerbruik =  Double.valueOf(uniform_discr(600, 2000));
-	}
+	//Get energy totals
+	double yearlyElectricityConsumption_kWh = houseBuildingData.electricity_consumption_kwhpa() != null ? houseBuildingData.electricity_consumption_kwhpa() :  avgc_data.p_avgHouseElectricityConsumption_kWh_yr;//Double.valueOf(uniform_discr(1200, 3800));
+	double yearlyGasConsumption_m3 = houseBuildingData.gas_consumption_m3pa() != null ? houseBuildingData.gas_consumption_m3pa() :  avgc_data.p_avgHouseGasConsumption_m3_yr;//Double.valueOf(uniform_discr(600, 2000);
+
 	
 	//GCH.p_initialPVpanels = houseBuildingData.pv_default();
 	GCH.v_liveAssetsMetaData.initialPV_kW = houseBuildingData.pv_installed_kwp() != null ? houseBuildingData.pv_installed_kwp() : 0;
 	GCH.v_liveAssetsMetaData.PVPotential_kW = GCH.v_liveAssetsMetaData.initialPV_kW > 0 ? GCH.v_liveAssetsMetaData.initialPV_kW : houseBuildingData.pv_potential_kwp(); // To prevent sliders from changing outcomes
 
 	// TODO: Above we load in data of gas use, but the houses always have a thermal model??
-	f_addEnergyAssetsToHouses(GCH, jaarlijksElectriciteitsVerbruik );	
+	f_addEnergyAssetsToHouses(GCH, yearlyElectricityConsumption_kWh );	
 	
 	i ++;
 }
@@ -3531,7 +3520,6 @@ else { // 25% kans op smiddags/savonds aan
 	dayTimeSetPoint_degC = uniform_discr(18, 24);
 	startOfDayTime_h = uniform_discr(14, 16) + uniform_discr(0,4) / 4.0;
 	startOfNightTime_h = uniform_discr(21,23);
-
 }
 
 double maxComfortTemperature_degC = dayTimeSetPoint_degC + 2;

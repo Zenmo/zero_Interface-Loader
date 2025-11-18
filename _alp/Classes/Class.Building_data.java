@@ -24,7 +24,7 @@ public class Building_data {
 	String extra_info;
 	Double contracted_capacity_kw;
 	Double electricity_consumption_kwhpa;
-	Double gas_consumption_kwhpa;
+	Double gas_consumption_m3pa;
 	Double pv_installed_kwp;
 	Double pv_potential_kwp;
 	OL_GridConnectionIsolationLabel energy_label;
