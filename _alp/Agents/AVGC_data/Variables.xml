@@ -581,7 +581,7 @@ https://www.debedrijfswagenadviseurs.nl/praktijkverbruik-elektrische-bedrijfswag
 		<Id>1726584205633</Id>
 		<Name><![CDATA[p_gas_kWhpm3]]></Name>
 		<Description><![CDATA[- https://www.greenchoice.nl/stroom-en-gas/bosgecompenseerd-gas/hoeveel-is-1-kuub-gas/
-
+- https://econvice.nl/op-gas-of-elektra-verwarmen-wat-is-gunstig/
 - https://www.joostdevree.nl/shtmls/calorische_waarde.shtml]]></Description>
 		<X>1070</X>
 		<Y>230</Y>
@@ -597,7 +597,7 @@ https://www.debedrijfswagenadviseurs.nl/praktijkverbruik-elektrische-bedrijfswag
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[9.7]]></Code>
+				<Code><![CDATA[9.77]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1726584205631</Id>
@@ -1428,8 +1428,7 @@ https://warmtepomp-panel.nl/afgiftesysteem.html?utm_source=chatgpt.com -> 35 gra
 		<Id>1726584205717</Id>
 		<Name><![CDATA[p_avgEfficiencyGasBurner_fr]]></Name>
 		<Description><![CDATA[Average heating efficiency of a gas burner.
-
---> SOURCE?]]></Description>
+https://www.mdpi.com/1999-4893/18/7/416 -> 100-104 % efficiency, based on gas energy density of 8.8 kWh/m3 (lower heating value), we use higher heating value: 9.77 -> 8.8*1.04/9.77 = 0.94]]></Description>
 		<X>70</X>
 		<Y>650</Y>
 		<Label>
@@ -1444,7 +1443,7 @@ https://warmtepomp-panel.nl/afgiftesysteem.html?utm_source=chatgpt.com -> 35 gra
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[0.99]]></Code>
+				<Code><![CDATA[0.94]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1726584205715</Id>
