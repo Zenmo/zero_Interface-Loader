@@ -2408,7 +2408,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 			<Text>
 				<Id>1749738869837</Id>
 				<Name><![CDATA[t_householdHeatDemandReductionResidentialArea_pct]]></Name>
-				<X>227</X>
+				<X>230</X>
 				<Y>250</Y>
 				<Label>
 					<X>0</X>
@@ -2540,7 +2540,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 			<Text>
 				<Id>1749738869847</Id>
 				<Name><![CDATA[t_householdAircoResidentialArea_pct]]></Name>
-				<X>223</X>
+				<X>230</X>
 				<Y>220</Y>
 				<Label>
 					<X>0</X>
@@ -2562,7 +2562,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>LEFT</Alignment>
+				<Alignment>CENTER</Alignment>
 			</Text>
 			<Control Type="CheckBox">
 				<EmbeddedIcon>false</EmbeddedIcon>
@@ -2845,10 +2845,10 @@ else{
 				<TextCode>sl_rooftopPTHouses_pct.getIntValue() + "%"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>RIGHT</Alignment>
+				<Alignment>CENTER</Alignment>
 			</Text>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
