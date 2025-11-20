@@ -18,5 +18,12 @@ public class User {
     
     // User id token (Used for storing scenarios for example)
     String userIdToken;
-
+    
+    // User accessible NBH
+    OL_UserNBHAccessType NBHAccessType = OL_UserNBHAccessType.FULL;
+    List<String> accessibleNBH;
+    
+    //User GC acces type
+    OL_UserGCAccessType GCAccessType;
+    List<String> accessibleCompanyIDs;
 }

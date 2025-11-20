@@ -27,7 +27,7 @@ public class J_RemainingTotals {
 		//TEMPORARY
 		this.avgc_data = avgc_data;
 		
-		this.idNBH = dataNBH.districtname();
+		this.idNBH = dataNBH.neighbourhoodname();
 		
     	if(dataNBH.total_comp_elec_delivery_kwh_p_yr() != null && dataNBH.total_comp_elec_delivery_kwh_p_yr() >= 0){
     		this.remainingECDeliveryCompanies_kWh.put(OL_EnergyCarriers.ELECTRICITY, dataNBH.total_comp_elec_delivery_kwh_p_yr());

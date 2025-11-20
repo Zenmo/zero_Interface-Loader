@@ -705,6 +705,8 @@ if(settings.isPublicModel()){
 //Turn on update of live congestion colloring
 b_updateLiveCongestionColors = true;
 
+//Set filter combo box options
+f_setFilterComboBoxOptions();
 /*ALCODEEND*/}
 
 GISRegion f_createGISObject(double[] gisTokens)
@@ -3785,5 +3787,58 @@ for(String scenarioOption : scenarioOptions){
 }
 
 rb_scenarios.setValue(customOptionIndex, true);
+/*ALCODEEND*/}
+
+double f_setFilterComboBoxOptions()
+{/*ALCODESTART::1763657360843*/
+//Default options:
+c_cbFilterOptions.add(OL_FilterOptionsGC.NONDETAILED);
+
+if(energyModel.Houses.size() > 0){
+	c_cbFilterOptions.add(OL_FilterOptionsGC.HOUSES);
+}
+if(energyModel.UtilityConnections.size() > 0){
+	c_cbFilterOptions.add(OL_FilterOptionsGC.COMPANIES);
+	if(v_numberOfSurveyCompanies > 0){
+		c_cbFilterOptions.add(OL_FilterOptionsGC.DETAILED);
+	}
+}
+if(findAll(energyModel.pop_GIS_Objects, gisObject -> gisObject.p_GISObjectType == OL_GISObjectType.REGION).size() > 1){
+	c_cbFilterOptions.add(SELECTED_NEIGHBORHOOD);
+}
+if(b_gridLoopsAreDefined){
+	c_cbFilterOptions.add(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP);
+}
+
+//Default options only available if GC accestype is full
+if(user.GCAccessType == OL_UserGCAccessType.FULL){
+	if(energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW > 0){
+		c_cbFilterOptions.add(OL_FilterOptionsGC.HAS_PV);
+	}
+	for (J_EA ea : energyModel.c_energyAssets) {
+	    if (ea instanceof J_EAVehicle) {
+			c_cbFilterOptions.add(OL_FilterOptionsGC.HAS_TRANSPORT);
+			if(energyModel.c_EVs.size() > 0){
+				c_cbFilterOptions.add(OL_FilterOptionsGC.HAS_EV);
+			}
+	        break;
+	    }
+	}
+	
+}
+
+
+String[] filterOptionsNames = new String[1 + c_cbFilterOptions.size()];
+filterOptionsNames[0] = "-";
+for(int j = 1; j < c_cbFilterOptions.size() + 1; j++){
+	filterOptionsNames[j] = map_filterOptionUINames.get(c_cbFilterOptions.get(j-1));
+}
+
+cb_filterOptions.setItems(filterOptionsNames, false);
+
+//Set cb to correct gc
+cb_filterOptions.setValueIndex(0, false);
+
+throw new RuntimeException("HIER WAS JE GEBLEVEN, next on the list: -> Default of UserGC/NBH Acces Type should be Full not null");
 /*ALCODEEND*/}
 

@@ -4,12 +4,12 @@ double f_createGISRegions()
 for (Neighbourhood_data NBH : c_neighbourhood_data) {	
 	GIS_Object area = energyModel.add_pop_GIS_Objects();
 	
-	area.p_id = NBH.districtname();
-	area.p_GISObjectType = OL_GISObjectType.valueOf(NBH.neighbourhoodtype());
+	area.p_id = NBH.neighbourhoodname();
+	area.p_GISObjectType = f_getNBHGISObjectType(area, NBH.neighbourhoodcode(), NBH.neighbourhoodtype());
 
 	//Create gisregion
 	area.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(NBH.polygon(), area.p_GISObjectType));
-	
+
 	//Style area 
 	zero_Interface.f_styleSimulationAreas(area);
 	zero_Interface.c_GISNeighborhoods.add(area);
@@ -51,11 +51,15 @@ f_initializeSpecificSliderGC();
 //Actors
 f_createActors();
 
-//Grid nodes
-f_createGridNodes();
-
 //Create regions and initialize energy totals per region
 f_createGISRegions();
+
+if(user.NBHAccessType != null && user.NBHAccessType != OL_UserNBHAccessType.FULL){
+	f_removeObjectsNotInActiveNBH();
+}
+
+//Grid nodes
+f_createGridNodes();
 
 //Grid connections
 f_createGridConnections();
@@ -1071,11 +1075,11 @@ for (var survey : surveys) {
 	//Create connection owner
 	ConnectionOwner survey_owner = energyModel.add_pop_connectionOwners();
 	survey_owner.p_actorID = survey.getCompanyName();
-	//survey_owner.p_actorType = OL_ActorType.CONNECTIONOWNER;
 	survey_owner.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
 	survey_owner.p_detailedCompany = true;
 	survey_owner.b_dataSharingAgreed = survey.getDataSharingAgreed();
-		
+	survey_owner.b_dataIsAccessible = f_getAccessOfSurveyGC(survey.getDataSharingAgreed(), survey.getId());
+	
 	for (var address : survey.getAddresses()) {
 		
 		//Update number of survey companies (locations)
@@ -1180,6 +1184,13 @@ for (var survey : surveys) {
 			
 			//Set lat lon
 			companyGC.setLatLon(companyGC.p_latitude, companyGC.p_longitude); 
+			
+			if(user.NBHAccessType != null && user.NBHAccessType != OL_UserNBHAccessType.FULL){
+				if(!f_getLocatedInActiveNBH(companyGC.p_latitude, companyGC.p_longitude)){
+					companyGC.p_parentNodeElectricID = null;
+					companyGC.v_isActive = false;
+				}
+			}
 			
 			//Energy asset initialization
 			f_iEASurveyCompanies_Zorm(companyGC, gridConnection); 
@@ -1920,7 +1931,7 @@ f_importExcelTablesToDB();
 f_readDatabase();
 
 //Initialize model totals
-p_remainingTotals.initializeModelTotals(project_data);
+p_remainingTotals.initializeModelTotals(project_data, user);
 
 //Weather market data
 f_setEngineProfiles();
@@ -2664,6 +2675,9 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 	}
 }
 
+//Save if building is paused at start
+current_scenario_list.setIsCurrentlyActive(companyGC.v_isActive);
+future_scenario_list.setIsActiveInFuture(companyGC.v_isActive);
 /*ALCODEEND*/}
 
 Building_data f_createBuildingData_Vallum(GridConnection companyGC,String PandID)
@@ -4689,5 +4703,113 @@ java.util.UUID f_getUserUUID(String p_userIdToken)
 java.util.UUID usedId = new JWTDecoder().jwtToUserId(p_userIdToken);
 return usedId;
 
+/*ALCODEEND*/}
+
+boolean f_getAccessOfSurveyGC(boolean dataSharingAgreed,UUID GCUUID)
+{/*ALCODESTART::1763646792610*/
+if(user.GCAccessType == null || user.GCAccessType == OL_UserGCAccessType.FULL || dataSharingAgreed){
+	return true;
+}
+else if(user.accessibleCompanyIDs.contains(GCUUID.toString())){
+	return true;
+}
+else{
+	return false;
+}
+/*ALCODEEND*/}
+
+boolean f_getLocatedInActiveNBH(double lat,double lon)
+{/*ALCODESTART::1763648128875*/
+if(user.NBHAccessType == null || user.NBHAccessType == OL_UserNBHAccessType.FULL){
+	return true;
+}
+else{
+	for(GIS_Object activeNBH : c_activeNBH){
+		if(activeNBH.gisRegion.contains(lat, lon)){
+			return true;
+		}
+	}
+	return false;
+}
+/*ALCODEEND*/}
+
+double f_removeObjectsNotInActiveNBH()
+{/*ALCODESTART::1763648249772*/
+//GridNodes
+for(GridNode_data dataGN : new ArrayList<GridNode_data>(c_gridNode_data)){
+	if(!dataGN.gridnode_id().equals("T0") && !f_getLocatedInActiveNBH(dataGN.latitude(), dataGN.longitude())){
+		c_gridNode_data.remove(dataGN);
+	}
+}
+
+//Buildings
+for(Building_data dataCompanyBuilding : new ArrayList<Building_data>(c_companyBuilding_data)){
+	if(!f_getLocatedInActiveNBH(dataCompanyBuilding.latitude(), dataCompanyBuilding.longitude())){
+		c_companyBuilding_data.remove(dataCompanyBuilding);
+	}
+}
+for(Building_data dataCompanyBuilding : new ArrayList<Building_data>(c_houseBuilding_data)){
+	if(!f_getLocatedInActiveNBH(dataCompanyBuilding.latitude(), dataCompanyBuilding.longitude())){
+		c_houseBuilding_data.remove(dataCompanyBuilding);
+	}
+}
+for(Building_data dataCompanyBuilding : new ArrayList<Building_data>(c_remainingBuilding_data)){
+	if(!f_getLocatedInActiveNBH(dataCompanyBuilding.latitude(), dataCompanyBuilding.longitude())){
+		c_remainingBuilding_data.remove(dataCompanyBuilding);
+	}
+}
+
+//EA GCs
+for(Solarfarm_data dataSF : new ArrayList<Solarfarm_data>(c_solarfarm_data)){
+	if(!f_getLocatedInActiveNBH(dataSF.latitude(), dataSF.longitude())){
+		c_solarfarm_data.remove(dataSF);
+	}
+}
+for(Windfarm_data dataWF : new ArrayList<Windfarm_data>(c_windfarm_data)){
+	if(!f_getLocatedInActiveNBH(dataWF.latitude(), dataWF.longitude())){
+		c_windfarm_data.remove(dataWF);
+	}
+}
+for(Battery_data dataBattery : new ArrayList<Battery_data>(c_battery_data)){
+	if(!f_getLocatedInActiveNBH(dataBattery.latitude(), dataBattery.longitude())){
+		c_battery_data.remove(dataBattery);
+	}
+}
+for(Chargingstation_data dataCS : new ArrayList<Chargingstation_data>(c_chargingstation_data)){
+	if(!f_getLocatedInActiveNBH(dataCS.latitude(), dataCS.longitude())){
+		c_chargingstation_data.remove(dataCS);
+	}
+}
+
+//Additional GIS Objects
+for(ParkingSpace_data dataParking : new ArrayList<ParkingSpace_data>(c_parkingSpace_data)){
+	if(!f_getLocatedInActiveNBH(dataParking.latitude(), dataParking.longitude())){
+		c_parkingSpace_data.remove(dataParking);
+	}
+}
+for(Parcel_data dataParcel : new ArrayList<Parcel_data>(c_parcel_data)){
+	if(!f_getLocatedInActiveNBH(dataParcel.latitude(), dataParcel.longitude())){
+		c_parcel_data.remove(dataParcel);
+	}
+}
+for(Cable_data dataCable : new ArrayList<Cable_data>(c_cable_data)){
+	if(!f_getLocatedInActiveNBH(dataCable.latitude(), dataCable.longitude())){
+		c_cable_data.remove(dataCable);
+	}
+}
+
+/*ALCODEEND*/}
+
+OL_GISObjectType f_getNBHGISObjectType(GIS_Object NBH,String NBHCode,OL_GISObjectType defaultGISObjectType)
+{/*ALCODESTART::1763648931889*/
+if( defaultGISObjectType == OL_GISObjectType.ANTI_LAYER || 
+	(user.NBHAccessType == OL_UserNBHAccessType.SPECIFIED && !user.accessibleNBH.contains(NBHCode))
+	){
+	return OL_GISObjectType.ANTI_LAYER;	
+}
+else{
+	c_activeNBH.add(NBH);
+	return OL_GISObjectType.REGION;
+}
 /*ALCODEEND*/}
 

@@ -2199,7 +2199,7 @@ else{
 			<TextColor>-16777216</TextColor>
 			<VisibleCode>cb_showFilterInterface.isEnabled()</VisibleCode>
 			<Enabled>true</Enabled>
-			<EnableExpression>!settings.isPublicModel()</EnableExpression>
+			<EnableExpression>!settings.isPublicModel() &amp;&amp; c_cbFilterOptions.size() &gt; 0</EnableExpression>
 			<ActionCode>gr_filterInterface.setVisible(cb_showFilterInterface.isSelected());
 
 if(!cb_showFilterInterface.isSelected()){
@@ -2552,7 +2552,7 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<EnableExpression>!gr_ForceMapSelectionText.isVisible() || b_inManualFilterSelectionMode</EnableExpression>
+					<EnableExpression>user.GCAccessType == OL_UserGCAccessType.FULL &amp;&amp; (!gr_ForceMapSelectionText.isVisible() || b_inManualFilterSelectionMode)</EnableExpression>
 					<ActionCode>if(!b_inManualFilterSelectionMode){
 	b_inManualFilterSelectionMode = true;
 	
