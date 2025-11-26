@@ -22,6 +22,9 @@ f_initializeEnergyHubTabs();
 //Initialize custom user saved scenarios
 f_initializeUserSavedScenarios(combobox_selectScenario);
 
+//Set Holon fonts
+//f_setHolonFonts();
+
 
 runSimulation();
 /*ALCODEEND*/}
@@ -78,7 +81,7 @@ uI_Tabs.v_presentationYOffset += zero_Interface.va_EHubDashboard.getY();
 double f_styleEnergyHubResultsUI()
 {/*ALCODESTART::1753694556229*/
 uI_Results.f_styleAllCharts(white, p_energyHubLineColor, p_energyHubLineWidth, p_energyHubLineStyle);
-uI_Results.f_styleResultsUIHeader(p_energyHubLineColor, p_energyHubLineColor, p_energyHubLineWidth, p_energyHubLineStyle);
+uI_Results.f_styleResultsUIHeader(p_energyHubBackGroundColor, p_energyHubLineColor, p_energyHubLineWidth, p_energyHubLineStyle);
 /*ALCODEEND*/}
 
 double f_addSliderEAGridConnections()
@@ -723,5 +726,31 @@ new Thread( () -> {
 	zero_Interface.f_setLoadingScreen(false, 0, 0);
 }).start();
 
+/*ALCODEEND*/}
+
+double f_setHolonFonts()
+{/*ALCODESTART::1763556169696*/
+//File holonBlockFile = new File("resources/fonts/HOLONblock2.otf");
+//File holonLineFile = new File("resources/fonts/HOLONline.otf");
+//Font holonBlock = Font.createFont(Font.TRUETYPE_FONT, holonBlockFile);
+//Font holonLine = Font.createFont(Font.TRUETYPE_FONT, holonLineFile);
+
+Font holonBlock = new Font("resources/fonts/HOLONblock2.otf", Font.PLAIN, 12);
+Font holonLine = new Font("resources/fonts/HOLONline2.otf", Font.PLAIN, 12);
+
+
+t_scenario.setFont(holonBlock);
+txt_settings.setFont(holonBlock);
+txt_energyHubTitle.setFont(holonBlock);
+t_energyHubMembers.setFont(holonBlock);
+
+t_energyHubMember1.setFont(holonLine);
+t_energyHubMember2.setFont(holonLine);
+t_energyHubMember3.setFont(holonLine);
+t_energyHubMember4.setFont(holonLine);
+t_energyHubMember5.setFont(holonLine);
+t_energyHubMember6.setFont(holonLine);
+t_energyHubMember7.setFont(holonLine);
+t_energyHubMemberOthers.setFont(holonLine);
 /*ALCODEEND*/}
 

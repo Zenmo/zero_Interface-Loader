@@ -74,7 +74,7 @@
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[new Color(198, 251, 198)]]></Code>
+				<Code><![CDATA[new Color(168, 222, 224)]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1753436054973</Id>
@@ -102,7 +102,7 @@
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[new Color(118, 171, 118)]]></Code>
+				<Code><![CDATA[new Color(95, 188, 191)]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1753436082355</Id>
