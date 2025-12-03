@@ -1758,3 +1758,8 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
+double f_initializeTab_Mobility()
+{/*ALCODESTART::1764004906148*/
+//Use this function to initialize mobility tab settings at start of simulation
+/*ALCODEEND*/}
+

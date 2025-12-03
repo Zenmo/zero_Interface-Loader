@@ -3,6 +3,7 @@ void e_calculateEnergyBalance()
 // Trigger timestep in energymodel for continuous simulation ('interactive mode')
 energyModel.f_runTimestep();
 
+
 // This function colors the trafos according to the amount of congestion. (maybe move this function call somewhere else?)
 if ( b_updateLiveCongestionColors ){
 	for (GridNode gn : energyModel.pop_gridNodes) {
@@ -11,6 +12,7 @@ if ( b_updateLiveCongestionColors ){
 		}
 	}
 }
+
 
 // Update the NFATO values in the selected companyUI
 if(c_selectedGridConnections.size() > 0 && c_selectedGridConnections.get(0).v_enableNFato){

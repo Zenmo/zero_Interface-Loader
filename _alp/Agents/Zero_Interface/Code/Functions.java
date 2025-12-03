@@ -280,7 +280,7 @@ switch(selectedMapOverlayType){
 			}
 		}
 		else{
-			f_setColorsBasedOnCongestion_gridnodes(GN, false);
+			f_setColorsBasedOnCongestion_gridnodes(GN, true);
 		}
 		break;
 	case GRID_NEIGHBOURS:
@@ -2518,7 +2518,7 @@ double f_setColorsBasedOnCongestion_gridnodes(GridNode gn,boolean isLiveSim)
 if (gn!=null && gn.gisRegion != null){
 	double maxLoad_fr = 0;
 	if(isLiveSim){
-		maxLoad_fr = abs(gn.v_currentLoad_kW)/gn.p_capacity_kW;	
+		maxLoad_fr = abs(gn.v_currentLoad_kW)/gn.p_capacity_kW;
 	}
 	else{
 		J_LoadDurationCurves loadCurves = gn.f_getDuurkrommes();
