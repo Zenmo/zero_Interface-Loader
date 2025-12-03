@@ -928,8 +928,8 @@ else{
 
 //Initialize Off peak interval
 J_HeatingManagementHeatpumpOffPeak heatpumpOffPeakManagementClass = new J_HeatingManagementHeatpumpOffPeak();
-eb_reducedHeatingIntervalStart.setText(heatpumpOffPeakManagementClass.getStartTimeOfReducedHeatingInterval_hr());
-eb_reducedHeatingIntervalEnd.setText(heatpumpOffPeakManagementClass.getEndTimeOfReducedHeatingInterval_hr());
+eb_reducedHeatingIntervalStart.setText(heatpumpOffPeakManagementClass.getStartTimeOfReducedHeatingInterval_hr() != null ? heatpumpOffPeakManagementClass.getStartTimeOfReducedHeatingInterval_hr() : -1);
+eb_reducedHeatingIntervalEnd.setText(heatpumpOffPeakManagementClass.getEndTimeOfReducedHeatingInterval_hr() != null ? heatpumpOffPeakManagementClass.getEndTimeOfReducedHeatingInterval_hr() : -1);
 
 //Houses with Airco
 double nbHouses = houseGridConnections.size();

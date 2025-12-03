@@ -153,7 +153,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>List&lt;GCPublicCharger&gt;</ReturnType>
 		<Id>1754922547989</Id>
@@ -233,7 +233,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>List&lt;GCPublicCharger&gt;</ReturnType>
 		<Id>1755013777878</Id>
