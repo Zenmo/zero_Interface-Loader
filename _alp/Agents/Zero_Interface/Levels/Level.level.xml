@@ -2125,7 +2125,7 @@ else{
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>360</Width>
-		<Height>560</Height>
+		<Height>630</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -2221,7 +2221,7 @@ else{
 		<Id>1734444441402</Id>
 		<Name><![CDATA[gr_filterInterface]]></Name>
 		<X>-1470</X>
-		<Y>750</Y>
+		<Y>830</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2305,7 +2305,7 @@ else{
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<EnableExpression>!gr_ForceMapSelectionText.isVisible()</EnableExpression>
-					<ActionCode>f_setFilter(cb_filterOptions.getValue());
+					<ActionCode>f_setFilter(map_UINamesFilterOption.get(cb_filterOptions.getValue()));
 
 cb_filterOptions.setValueIndex(0);</ActionCode>
 				</BasicProperties>
@@ -2425,7 +2425,7 @@ c_manualFilterSelectedGC.clear();
 c_manualFilterDeselectedGC.clear();
 b_inManualFilterSelectionMode = false;
 if (c_manualFilterSelectedGC.isEmpty() &amp;&amp; c_manualFilterDeselectedGC.isEmpty() &amp;&amp; c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
-	f_setFilter("Handmatige selectie");
+	f_setFilter(OL_FilterOptionsGC.MANUAL_SELECTION);
 }
 
 f_setForcedClickScreenText("");
@@ -2525,7 +2525,7 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 	
 	b_inManualFilterSelectionMode = false;
 	if (c_manualFilterSelectedGC.isEmpty() &amp;&amp; c_manualFilterDeselectedGC.isEmpty() &amp;&amp; c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
-		f_setFilter("Handmatige selectie");
+		f_setFilter(OL_FilterOptionsGC.MANUAL_SELECTION);
 	}
 }</ActionCode>
 				</BasicProperties>
@@ -2562,7 +2562,7 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 	}
 	
 	if(!c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
-		f_setFilter("Handmatige selectie");
+		f_setFilter(OL_FilterOptionsGC.MANUAL_SELECTION);
 	}
 }
 else{ 
@@ -2574,7 +2574,7 @@ else{
 	}
 	
 	if (c_manualFilterSelectedGC.isEmpty() &amp;&amp; c_manualFilterDeselectedGC.isEmpty() &amp;&amp; c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
-		f_setFilter("Handmatige selectie");
+		f_setFilter(OL_FilterOptionsGC.MANUAL_SELECTION);
 	}
 }</ActionCode>
 				</BasicProperties>
@@ -3111,7 +3111,7 @@ fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(true);</ActionCode>
 	</Group>
 	<Text>
 		<Id>1745935981029</Id>
-		<Name><![CDATA[txt_publicModelFunctionalities]]></Name>
+		<Name><![CDATA[txt_dataAccesibilityFunctionalities]]></Name>
 		<X>-680</X>
 		<Y>845</Y>
 		<Label>
@@ -3126,7 +3126,7 @@ fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(true);</ActionCode>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
-		<Text><![CDATA[Public model functionalities]]></Text>
+		<Text><![CDATA[Data Accesibility Functionalities]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>12</Size>

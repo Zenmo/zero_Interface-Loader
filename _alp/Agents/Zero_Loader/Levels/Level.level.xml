@@ -632,7 +632,7 @@
 				<Id>1726584205959</Id>
 				<Name><![CDATA[rect_createCompanies]]></Name>
 				<X>-170</X>
-				<Y>-168.017</Y>
+				<Y>-180</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -649,7 +649,7 @@
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>400</Width>
-				<Height>508.017</Height>
+				<Height>520</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
 				<FillMaterial>null</FillMaterial>
@@ -658,7 +658,7 @@
 				<Id>1726584205961</Id>
 				<Name><![CDATA[txt_createCompanies]]></Name>
 				<X>-158.134</X>
-				<Y>-158.134</Y>
+				<Y>-168.134</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>

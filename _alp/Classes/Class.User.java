@@ -20,10 +20,12 @@ public class User {
     String userIdToken;
     
     // User accessible NBH
+    @Builder.Default
     OL_UserNBHAccessType NBHAccessType = OL_UserNBHAccessType.FULL;
     List<String> accessibleNBH;
     
-    //User GC acces type
-    OL_UserGCAccessType GCAccessType;
+    //User GC acces type (IN DEVELOPMENT -> NOT FULLY OPERATIONAL YET)
+    @Builder.Default
+    OL_UserGCAccessType GCAccessType = OL_UserGCAccessType.FULL;
     List<String> accessibleCompanyIDs;
 }

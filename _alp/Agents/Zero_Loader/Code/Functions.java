@@ -76,8 +76,6 @@ energyModel.f_initializeEngine();
 
 double f_createGridNodes()
 {/*ALCODESTART::1726584205775*/
-//double latitude_c;
-//double longitude_c;
 OL_GridNodeType nodeType;
 GISRegion gisregion;
 
@@ -119,7 +117,6 @@ for (GridNode_data GN_data : c_gridNode_data) {
 			    case "SUBMV":
 			        GN.p_nodeType = OL_GridNodeType.SUBMV;
 			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
-			        zero_Interface.b_gridLoopsAreDefined = true;
 			        break;
 			    case "MVMV":
 			        GN.p_nodeType = OL_GridNodeType.MVMV;
@@ -150,7 +147,6 @@ for (GridNode_data GN_data : c_gridNode_data) {
 			//Gridnode service area
 			if (GN_data.service_area_polygon() != null){
 				//Create service area gis object
-				//GIS_Object serviceArea = f_createGISObject(GN.p_gridNodeID + ": service area", GN.p_latitude, GN.p_longitude, GN_data.service_area_polygon());
 				GN.p_serviceAreaGisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(GN_data.service_area_polygon(), OL_GISObjectType.GN_SERVICE_AREA));
 				
 				//Add to hashmap
@@ -3241,12 +3237,8 @@ else {
  
 double yearlyHWD_kWh = aantalBewoners * 600;  //12 * surface_m2 * 3 ; Tamelijk willekeurige formule om HWD te schalen tussen 600 - 2400 kWh bij 50m2 tot 200m2, voor een quickfix
 
-//TEST
-yearlyHWD_kWh += 0;
-
 J_EAConsumption hotwaterDemand = new J_EAConsumption( houseGC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, null);
 
-//traceln("yearlyHWD_kWh "+ yearlyHWD_kWh);
 if( surface_m2 > 200){
 	//traceln("House created with " + surface_m2 + "m2 surace area, will have large hot water demand");
 }
@@ -4705,17 +4697,17 @@ return usedId;
 
 /*ALCODEEND*/}
 
-boolean f_getAccessOfSurveyGC(boolean dataSharingAgreed,UUID GCUUID)
+boolean f_getAccessOfSurveyGC(boolean dataSharingAgreed,UUID companyUUID)
 {/*ALCODESTART::1763646792610*/
-if(user.GCAccessType == null || user.GCAccessType == OL_UserGCAccessType.FULL || dataSharingAgreed){
-	return true;
+// If public model: only dataSharingAgreed matters
+if (settings.isPublicModel()) {
+    return dataSharingAgreed;
 }
-else if(user.accessibleCompanyIDs.contains(GCUUID.toString())){
-	return true;
-}
-else{
-	return false;
-}
+
+// If private model: several conditions allow access
+return 	user.GCAccessType == OL_UserGCAccessType.FULL ||
+        dataSharingAgreed ||
+        user.accessibleCompanyIDs.contains(companyUUID.toString());
 /*ALCODEEND*/}
 
 boolean f_getLocatedInActiveNBH(double lat,double lon)
