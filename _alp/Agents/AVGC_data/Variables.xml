@@ -1930,7 +1930,7 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[0.99]]></Code>
+				<Code><![CDATA[0.5]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1747314895124</Id>
