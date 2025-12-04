@@ -36,4 +36,10 @@ public class Building_data {
 	Double latitude;
 	Double longitude;
 	String polygon;
+	
+	Integer ownership_int;
+	Integer constructionPeriod_int;
+	Integer buildingType_int;
+	Double localFactor;
+	Double regionalClimateCorrectionFactor;
 }

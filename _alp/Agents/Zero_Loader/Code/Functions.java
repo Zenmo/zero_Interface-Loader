@@ -3369,6 +3369,15 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.p_bouwjaar = houseBuildingData.build_year();
 	GCH.p_eigenOprit = houseBuildingData.has_private_parking() != null ? houseBuildingData.has_private_parking() : false;
 	
+	//For PBL heating
+	GCH.p_constructionPeriod_heatingPBL = houseBuildingData.constructionPeriod_int();
+	GCH.p_buildingType_heatingPBL = houseBuildingData.buildingType_int();
+	GCH.p_ownership_heatingPBL = houseBuildingData.ownership_int();
+	GCH.p_localFactor_heatingPBL = houseBuildingData.localFactor();
+	GCH.p_regionalClimateCorrectionFactor_heatingPBL = houseBuildingData.regionalClimateCorrectionFactor();
+	
+	
+	
 	//Nageisoleerd
 	if (houseBuildingData.energy_label() != null){ // && houseBuildingData.energy_label() != OL_GridConnectionIsolationLabel.NONE) {
 		GCH.p_energyLabel = houseBuildingData.energy_label();
