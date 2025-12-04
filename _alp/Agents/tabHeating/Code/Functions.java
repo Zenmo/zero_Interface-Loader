@@ -276,7 +276,7 @@ for (GCHouse house: housesGCList ) {
 	
 	double outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
 	double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
-	double efficiency = 1.0;
+	double efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr;
 	
 	new J_EAConversionHeatDeliverySet(house, peakHeatDemand_kW, efficiency, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC);
 	
