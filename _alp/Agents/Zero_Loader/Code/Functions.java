@@ -4712,7 +4712,7 @@ return 	user.GCAccessType == OL_UserGCAccessType.FULL ||
 
 boolean f_getLocatedInActiveNBH(double lat,double lon)
 {/*ALCODESTART::1763648128875*/
-if(user.NBHAccessType == null || user.NBHAccessType == OL_UserNBHAccessType.FULL){
+if(user.NBHAccessType == OL_UserNBHAccessType.FULL){
 	return true;
 }
 else{

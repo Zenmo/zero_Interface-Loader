@@ -52,7 +52,7 @@ public class J_RemainingTotalsManager {
     	int total_nr_comp_trucks = 0;
     	
     	//Energy totals
-    	if(user.NBHAccessType == null || user.NBHAccessType == OL_UserNBHAccessType.FULL) { //Only allow total input if all NBH are loaded in, else you get a skewed distribution.
+    	if(user.NBHAccessType == OL_UserNBHAccessType.FULL) { //Only allow total input if all NBH are loaded in, else you get a skewed distribution.
 	    	if(project_data.total_electricity_consumption_companies_kWh_p_yr() != null && project_data.total_electricity_consumption_companies_kWh_p_yr() > 0){
 	    		total_comp_elec_delivery_kwh_p_yr = project_data.total_electricity_consumption_companies_kWh_p_yr();
 	    		this.totalElectricityConsumptionCompaniesTotalIsManualInput = true;
