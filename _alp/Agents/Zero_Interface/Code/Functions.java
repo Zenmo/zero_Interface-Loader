@@ -3654,23 +3654,18 @@ if(b_gridLoopsAreDefined){
 }
 
 
-//Default options only available if GC accestype is full
+//More specific default options only available if GC accestype is full
 if(user.GCAccessType == OL_UserGCAccessType.FULL){
+	c_cbFilterOptions.add(OL_FilterOptionsGC.HAS_PV);
 	if(c_cbFilterOptions.contains(OL_FilterOptionsGC.COMPANIES)){
-		c_cbFilterOptions.add(OL_FilterOptionsGC.HAS_PV);
 		c_cbFilterOptions.add(OL_FilterOptionsGC.HAS_TRANSPORT);
 		c_cbFilterOptions.add(OL_FilterOptionsGC.HAS_EV);
 	}
 	else{
-		if(energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW > 0){
-			c_cbFilterOptions.add(OL_FilterOptionsGC.HAS_PV);
-		}
 		for (J_EA ea : energyModel.c_energyAssets) {
 		    if (ea instanceof J_EAVehicle) {
 				c_cbFilterOptions.add(OL_FilterOptionsGC.HAS_TRANSPORT);
-				if(energyModel.c_EVs.size() > 0){
-					c_cbFilterOptions.add(OL_FilterOptionsGC.HAS_EV);
-				}
+				c_cbFilterOptions.add(OL_FilterOptionsGC.HAS_EV);
 		        break;
 		    }
 		}

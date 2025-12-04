@@ -1182,7 +1182,7 @@ for (var survey : surveys) {
 			companyGC.setLatLon(companyGC.p_latitude, companyGC.p_longitude); 
 			
 			if(user.NBHAccessType != null && user.NBHAccessType != OL_UserNBHAccessType.FULL){
-				if(!f_getLocatedInActiveNBH(companyGC.p_latitude, companyGC.p_longitude)){
+				if(!f_isLocatedInActiveNBH(companyGC.p_latitude, companyGC.p_longitude)){
 					companyGC.p_parentNodeElectricID = null;
 					companyGC.v_isActive = false;
 				}
@@ -4710,7 +4710,7 @@ return 	user.GCAccessType == OL_UserGCAccessType.FULL ||
         user.accessibleCompanyIDs.contains(companyUUID.toString());
 /*ALCODEEND*/}
 
-boolean f_getLocatedInActiveNBH(double lat,double lon)
+boolean f_isLocatedInActiveNBH(double lat,double lon)
 {/*ALCODESTART::1763648128875*/
 if(user.NBHAccessType == OL_UserNBHAccessType.FULL){
 	return true;
@@ -4729,63 +4729,63 @@ double f_removeObjectsNotInActiveNBH()
 {/*ALCODESTART::1763648249772*/
 //GridNodes
 for(GridNode_data dataGN : new ArrayList<GridNode_data>(c_gridNode_data)){
-	if(!dataGN.gridnode_id().equals("T0") && !f_getLocatedInActiveNBH(dataGN.latitude(), dataGN.longitude())){
+	if(!dataGN.gridnode_id().equals("T0") && !f_isLocatedInActiveNBH(dataGN.latitude(), dataGN.longitude())){
 		c_gridNode_data.remove(dataGN);
 	}
 }
 
 //Buildings
 for(Building_data dataCompanyBuilding : new ArrayList<Building_data>(c_companyBuilding_data)){
-	if(!f_getLocatedInActiveNBH(dataCompanyBuilding.latitude(), dataCompanyBuilding.longitude())){
+	if(!f_isLocatedInActiveNBH(dataCompanyBuilding.latitude(), dataCompanyBuilding.longitude())){
 		c_companyBuilding_data.remove(dataCompanyBuilding);
 	}
 }
 for(Building_data dataCompanyBuilding : new ArrayList<Building_data>(c_houseBuilding_data)){
-	if(!f_getLocatedInActiveNBH(dataCompanyBuilding.latitude(), dataCompanyBuilding.longitude())){
+	if(!f_isLocatedInActiveNBH(dataCompanyBuilding.latitude(), dataCompanyBuilding.longitude())){
 		c_houseBuilding_data.remove(dataCompanyBuilding);
 	}
 }
 for(Building_data dataCompanyBuilding : new ArrayList<Building_data>(c_remainingBuilding_data)){
-	if(!f_getLocatedInActiveNBH(dataCompanyBuilding.latitude(), dataCompanyBuilding.longitude())){
+	if(!f_isLocatedInActiveNBH(dataCompanyBuilding.latitude(), dataCompanyBuilding.longitude())){
 		c_remainingBuilding_data.remove(dataCompanyBuilding);
 	}
 }
 
 //EA GCs
 for(Solarfarm_data dataSF : new ArrayList<Solarfarm_data>(c_solarfarm_data)){
-	if(!f_getLocatedInActiveNBH(dataSF.latitude(), dataSF.longitude())){
+	if(!f_isLocatedInActiveNBH(dataSF.latitude(), dataSF.longitude())){
 		c_solarfarm_data.remove(dataSF);
 	}
 }
 for(Windfarm_data dataWF : new ArrayList<Windfarm_data>(c_windfarm_data)){
-	if(!f_getLocatedInActiveNBH(dataWF.latitude(), dataWF.longitude())){
+	if(!f_isLocatedInActiveNBH(dataWF.latitude(), dataWF.longitude())){
 		c_windfarm_data.remove(dataWF);
 	}
 }
 for(Battery_data dataBattery : new ArrayList<Battery_data>(c_battery_data)){
-	if(!f_getLocatedInActiveNBH(dataBattery.latitude(), dataBattery.longitude())){
+	if(!f_isLocatedInActiveNBH(dataBattery.latitude(), dataBattery.longitude())){
 		c_battery_data.remove(dataBattery);
 	}
 }
 for(Chargingstation_data dataCS : new ArrayList<Chargingstation_data>(c_chargingstation_data)){
-	if(!f_getLocatedInActiveNBH(dataCS.latitude(), dataCS.longitude())){
+	if(!f_isLocatedInActiveNBH(dataCS.latitude(), dataCS.longitude())){
 		c_chargingstation_data.remove(dataCS);
 	}
 }
 
 //Additional GIS Objects
 for(ParkingSpace_data dataParking : new ArrayList<ParkingSpace_data>(c_parkingSpace_data)){
-	if(!f_getLocatedInActiveNBH(dataParking.latitude(), dataParking.longitude())){
+	if(!f_isLocatedInActiveNBH(dataParking.latitude(), dataParking.longitude())){
 		c_parkingSpace_data.remove(dataParking);
 	}
 }
 for(Parcel_data dataParcel : new ArrayList<Parcel_data>(c_parcel_data)){
-	if(!f_getLocatedInActiveNBH(dataParcel.latitude(), dataParcel.longitude())){
+	if(!f_isLocatedInActiveNBH(dataParcel.latitude(), dataParcel.longitude())){
 		c_parcel_data.remove(dataParcel);
 	}
 }
 for(Cable_data dataCable : new ArrayList<Cable_data>(c_cable_data)){
-	if(!f_getLocatedInActiveNBH(dataCable.latitude(), dataCable.longitude())){
+	if(!f_isLocatedInActiveNBH(dataCable.latitude(), dataCable.longitude())){
 		c_cable_data.remove(dataCable);
 	}
 }

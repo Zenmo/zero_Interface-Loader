@@ -2533,7 +2533,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>boolean</ReturnType>
 		<Id>1763648128875</Id>
-		<Name><![CDATA[f_getLocatedInActiveNBH]]></Name>
+		<Name><![CDATA[f_isLocatedInActiveNBH]]></Name>
 		<X>1550</X>
 		<Y>440</Y>
 		<Label>
