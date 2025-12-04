@@ -1915,7 +1915,9 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 		<Id>1747314895126</Id>
 		<Name><![CDATA[p_avgEfficiencyDistrictHeatingDeliverySet_fr]]></Name>
 		<Description><![CDATA[Average heating efficiency of a district heating delivery set
-]]></Description>
+Set as 0.8 to account for the losses of the heatgrid, as they are not yet part of our model.
+https://www.grundfos.com/nl/learn/research-and-insights/pipe-heat-loss
+https://www.klimaat030.nl/warmteverlies-van-stadsverwarming-gigantisch/]]></Description>
 		<X>70</X>
 		<Y>920</Y>
 		<Label>
@@ -1930,7 +1932,7 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[0.5]]></Code>
+				<Code><![CDATA[0.8]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1747314895124</Id>
