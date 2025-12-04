@@ -2812,8 +2812,10 @@ double outputTemperature_degC;
 OL_AmbientTempType ambientTempType;
 double sourceAssetHeatPower_kW;
 double belowZeroHeatpumpEtaReductionFactor;
-maxHeatOutputPower_kW = maxHeatOutputPower_kW*2; // Make the asset capacity twice as high, to make sure it can handle the load in other scenarios with more heat consumption.
-	
+if(parentGC.p_BuildingThermalAsset == null){
+	maxHeatOutputPower_kW = maxHeatOutputPower_kW*2; // Make the asset capacity twice as high, to make sure it can handle the load in other scenarios with more heat consumption.
+}	
+
 switch (heatAssetType){ // There is always only one heatingType, If there are many assets the type is CUSTOM
 
 	case GAS_BURNER:
@@ -2827,7 +2829,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		inputCapacityElectric_kW = max(avgc_data.p_minHeatpumpElectricCapacity_kW, maxHeatOutputPower_kW / 3); //-- /3, kan nog kleiner want is hybride zodat gasbrander ook bij springt, dus kleiner MOETEN aanname voor hoe klein onderzoeken
 		efficiency = avgc_data.p_avgEfficiencyHeatpump_fr;
 		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
-		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
+		outputTemperature_degC = avgc_data.p_avgOutputTemperatureHybridHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
@@ -2849,7 +2851,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		inputCapacityElectric_kW = max(avgc_data.p_minHeatpumpElectricCapacity_kW, maxHeatOutputPower_kW); // Could be a lot smaller due to high cop
 		efficiency = avgc_data.p_avgEfficiencyHeatpump_fr;
 		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
-		outputTemperature_degC = avgc_data.p_avgOutputTemperatureHeatpump_degC;
+		outputTemperature_degC = avgc_data.p_avgOutputTemperatureElectricHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
@@ -3567,7 +3569,6 @@ else { // 25% kans op smiddags/savonds aan
 	dayTimeSetPoint_degC = uniform_discr(18, 24);
 	startOfDayTime_h = uniform_discr(14, 16) + uniform_discr(0,4) / 4.0;
 	startOfNightTime_h = uniform_discr(21,23);
-
 }
 
 double maxComfortTemperature_degC = dayTimeSetPoint_degC + 2;
@@ -4297,7 +4298,9 @@ energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementPIcontrol
 triple = Triple.of(OL_GridConnectionHeatingType.HYBRID_HEATPUMP, false, false);
 energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementProfileHybridHeatPump.class );
 triple = Triple.of(OL_GridConnectionHeatingType.HYBRID_HEATPUMP, true, false);
-energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementBuildingHybridHeatPump.class );
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementPIcontrolHybridHeatpump.class );
+triple = Triple.of(OL_GridConnectionHeatingType.HYBRID_HEATPUMP, true, true);
+energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementPIcontrolHybridHeatpump.class );
 
 triple = Triple.of(OL_GridConnectionHeatingType.DISTRICTHEAT, false, false);
 energyModel.c_defaultHeatingStrategies.put( triple, J_HeatingManagementSimple.class );

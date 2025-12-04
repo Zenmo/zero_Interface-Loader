@@ -293,7 +293,7 @@ switch (selectedHeatingType){
 		//Add primary heating asset (heatpump)
 		capacityElectric_kW = capacityThermal_kW / 3; //-- /3, want is hybride, dus kleiner
 		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump_fr;
-		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
+		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHybridHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
@@ -315,7 +315,7 @@ switch (selectedHeatingType){
 		//Add primary heating asset (heatpump)
 		capacityElectric_kW = capacityThermal_kW;
 		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyHeatpump_fr;
-		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
+		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureElectricHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
