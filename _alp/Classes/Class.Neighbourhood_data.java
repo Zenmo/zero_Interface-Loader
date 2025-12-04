@@ -5,10 +5,10 @@
 @lombok.Value
 @lombok.experimental.Accessors(fluent = true)
 public class Neighbourhood_data {
-	String districtcode;
-	String districtname;
 	String neighbourhoodcode;
-	String neighbourhoodtype; // OL van maken
+	String neighbourhoodname;
+	String districtcode;
+	OL_GISObjectType neighbourhoodtype; //REGION OR ANTILAYER (OR IN FUTURE GCNBH)
 	double latitude;
 	double longitude;
 	String polygon;

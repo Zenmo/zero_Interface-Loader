@@ -180,6 +180,34 @@
 					<Name><![CDATA[PARKING_TYPE]]></Name>
 				</Option>
 			</OptionList>
+			<OptionList>
+				<Id>1763646420469</Id>
+				<Name><![CDATA[OL_UserGCAccessType]]></Name>
+				<Option>
+					<Id>1763646670204</Id>
+					<Name><![CDATA[FULL]]></Name>
+				</Option>
+				<Option>
+					<Id>1763646670205</Id>
+					<Name><![CDATA[SPECIFIED]]></Name>
+				</Option>
+				<Option>
+					<Id>1763646670206</Id>
+					<Name><![CDATA[PUBLIC_ONLY]]></Name>
+				</Option>
+			</OptionList>
+			<OptionList>
+				<Id>1763648379983</Id>
+				<Name><![CDATA[OL_UserNBHAccessType]]></Name>
+				<Option>
+					<Id>1763648379984</Id>
+					<Name><![CDATA[FULL]]></Name>
+				</Option>
+				<Option>
+					<Id>1763648379985</Id>
+					<Name><![CDATA[SPECIFIED]]></Name>
+				</Option>
+			</OptionList>
 		</OptionLists>
 		<Folders>
 			<Folder>

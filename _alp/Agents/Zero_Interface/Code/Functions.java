@@ -78,27 +78,21 @@ if (b.gisRegion != null){
 
 double f_selectGISRegion(double clickx,double clicky)
 {/*ALCODESTART::1696863329251*/
-if(settings.isPublicModel()){
-	f_selectGISRegion_publicModel(clickx, clicky);
-	return;
-}
-
 //After a click, reset previous clicked building/gridNode colors and text
-v_previousClickedObjectType = v_clickedObjectType;
-c_previousSelectedObjects = new ArrayList<GIS_Object>(c_selectedObjects);
 ArrayList<GIS_Object> buildingsConnectedToSelectedBuildingsList = new ArrayList<>();
-c_selectedGridConnections.clear();
-c_selectedObjects.clear();
 
 //Deselect previous selection
-if( v_previousClickedObjectType != null){
-	f_deselectPreviousSelect();
-}
+f_deselectPreviousSelect();
 
 //Check if click was on Gridnode, if yes, select grid node
 for ( GridNode GN : energyModel.pop_gridNodes ){
 	if( GN.gisRegion != null && GN.gisRegion.contains(clickx, clicky) && GN.gisRegion.isVisible() ){
-		f_selectGridNode(GN);
+		if(f_checkIfGCsAreAccesible(GN.f_getAllLowerLVLConnectedGridConnections())){
+			f_selectGridNode(GN);
+		}
+		else{
+			f_selectEnergyModel();
+		}
 		return;
 	}
 }
@@ -108,8 +102,13 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 	if( b.gisRegion != null && b.gisRegion.contains(clickx, clicky) ){
 		if (b.gisRegion.isVisible()) { //only allow us to click on visible objects
 			if (b.c_containedGridConnections.size() > 0 ) { // only allow buildings with gridconnections
-				buildingsConnectedToSelectedBuildingsList = b.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
-				f_selectBuilding(b, buildingsConnectedToSelectedBuildingsList);
+				if(f_checkIfGCsAreAccesible(b.c_containedGridConnections)){
+					buildingsConnectedToSelectedBuildingsList = b.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
+					f_selectBuilding(b, buildingsConnectedToSelectedBuildingsList);
+				}
+				else{
+					f_selectEnergyModel();			
+				}
 				return;
 			}
 		}
@@ -121,28 +120,32 @@ for ( GIS_Object GISobject : energyModel.pop_GIS_Objects ){
 	if( GISobject.gisRegion != null && GISobject.gisRegion.contains(clickx, clicky) ) {
 		if (GISobject.gisRegion.isVisible()) { //only allow us to click on visible objects
 			if (GISobject.c_containedGridConnections.size() > 0 ) { // only allow objects with gridconnections
-				
-				// Find buildings powered by the same GC as the clicked object
-				buildingsConnectedToSelectedBuildingsList = GISobject.c_containedGridConnections.get(0).c_connectedGISObjects; 
-				
-				//Find the (first) connected GC in the object
-				GridConnection selectedGC = GISobject.c_containedGridConnections.get(0);
-				
-				//Set the selected GIS object type
-				v_clickedObjectType = GISobject.p_GISObjectType;
-				c_selectedObjects.add(GISobject);
-				
-				//Set the correct interface view for each object type
-				switch(v_clickedObjectType){
-				
-				case CHARGER:
-					f_selectCharger((GCPublicCharger)selectedGC, GISobject );
-					break;
-				
-				default:
-					buildingsConnectedToSelectedBuildingsList = GISobject.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
-					f_selectBuilding(GISobject, buildingsConnectedToSelectedBuildingsList);		
-					break;
+				if(f_checkIfGCsAreAccesible(GISobject.c_containedGridConnections)){
+					// Find buildings powered by the same GC as the clicked object
+					buildingsConnectedToSelectedBuildingsList = GISobject.c_containedGridConnections.get(0).c_connectedGISObjects; 
+					
+					//Find the (first) connected GC in the object
+					GridConnection selectedGC = GISobject.c_containedGridConnections.get(0);
+					
+					//Set the selected GIS object type
+					v_clickedObjectType = GISobject.p_GISObjectType;
+					c_selectedObjects.add(GISobject);
+					
+					//Set the correct interface view for each object type
+					switch(v_clickedObjectType){
+					
+					case CHARGER:
+						f_selectCharger((GCPublicCharger)selectedGC, GISobject );
+						break;
+					
+					default:
+						buildingsConnectedToSelectedBuildingsList = GISobject.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
+						f_selectBuilding(GISobject, buildingsConnectedToSelectedBuildingsList);		
+						break;
+					}
+				}
+				else{
+					f_selectEnergyModel();
 				}
 				return;
 			}
@@ -150,12 +153,8 @@ for ( GIS_Object GISobject : energyModel.pop_GIS_Objects ){
 	}
 }
 
-//Still no clicked object? :select basic region
-v_clickedObjectType = OL_GISObjectType.REGION;
-uI_Results.f_updateResultsUI(energyModel);
-
-//Enable kpi summary button
-uI_Results.getCheckbox_KPISummary().setEnabled(true);
+//Still no clicked object? : select energyModel
+f_selectEnergyModel();
 /*ALCODEEND*/}
 
 double f_styleAreas(GIS_Object gis_area)
@@ -320,8 +319,10 @@ f_createUITabs_default();
 //Initialize the uI_Tabs with the gridconnections
 uI_Tabs.f_initializeUI_Tabs(energyModel.f_getGridConnectionsCollectionPointer(), energyModel.f_getPausedGridConnectionsCollectionPointer());
 
-//Initialize sliders with certain presets
+//Initialize sliders and start scenario with certain presets
+b_runningMainInterfaceScenarios = true;
 f_setSliderPresets();
+b_runningMainInterfaceScenarios = false;
 
 //Store the initial slider state for Residential areas for the scenario current button
 if (project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
@@ -443,42 +444,49 @@ f_setUIButton();
 
 double f_deselectPreviousSelect()
 {/*ALCODESTART::1707918668165*/
-// Update for results_ui when deselecting objects to show entire area again as default option
-v_clickedObjectText = "None";
-v_clickedObjectAdress = "";
-v_clickedObjectDetails = "";
-v_clickedObjectType = null;
-button_goToUI.setVisible(false);
-gr_multipleBuildingInfo.setVisible(false);
+v_previousClickedObjectType = v_clickedObjectType;
+c_previousSelectedObjects = new ArrayList<GIS_Object>(c_selectedObjects);
+c_selectedGridConnections.clear();
+c_selectedObjects.clear();
 
-// We restore the colors of what we clicked on before
-if (v_previousClickedObjectType == OL_GISObjectType.GRIDNODE){
-	v_previousClickedGridNode = v_clickedGridNode;
-	f_styleGridNodes(v_clickedGridNode);
-	for ( Agent agent : v_previousClickedGridNode.f_getAllLowerLVLConnectedGridConnections()){	
-		if (agent instanceof GridConnection) {
-			GridConnection GC = (GridConnection)agent;
-			for (GIS_Object a : GC.c_connectedGISObjects) {
-				f_styleAreas(a);
+if(v_previousClickedObjectType != null){
+	// Update for results_ui when deselecting objects to show entire area again as default option
+	v_clickedObjectText = "None";
+	v_clickedObjectAdress = "";
+	v_clickedObjectDetails = "";
+	v_clickedObjectType = null;
+	button_goToUI.setVisible(false);
+	gr_multipleBuildingInfo.setVisible(false);
+	
+	// We restore the colors of what we clicked on before
+	if (v_previousClickedObjectType == OL_GISObjectType.GRIDNODE){
+		v_previousClickedGridNode = v_clickedGridNode;
+		f_styleGridNodes(v_clickedGridNode);
+		for ( Agent agent : v_previousClickedGridNode.f_getAllLowerLVLConnectedGridConnections()){	
+			if (agent instanceof GridConnection) {
+				GridConnection GC = (GridConnection)agent;
+				for (GIS_Object a : GC.c_connectedGISObjects) {
+					f_styleAreas(a);
+				}
 			}
 		}
 	}
-}
-else if (v_previousClickedObjectType == OL_GISObjectType.BUILDING ||
-		 v_previousClickedObjectType == OL_GISObjectType.SOLARFARM ||
-		 v_previousClickedObjectType == OL_GISObjectType.WINDFARM ||
-		 v_previousClickedObjectType == OL_GISObjectType.ELECTROLYSER ||
-		 v_previousClickedObjectType == OL_GISObjectType.BATTERY ||
-		 v_previousClickedObjectType == OL_GISObjectType.CHARGER ||
-		 v_previousClickedObjectType == OL_GISObjectType.PARKING){
-	for(GIS_Object previousClickedObject: c_previousSelectedObjects){
-		f_styleAreas(previousClickedObject);
+	else if (v_previousClickedObjectType == OL_GISObjectType.BUILDING ||
+			 v_previousClickedObjectType == OL_GISObjectType.SOLARFARM ||
+			 v_previousClickedObjectType == OL_GISObjectType.WINDFARM ||
+			 v_previousClickedObjectType == OL_GISObjectType.ELECTROLYSER ||
+			 v_previousClickedObjectType == OL_GISObjectType.BATTERY ||
+			 v_previousClickedObjectType == OL_GISObjectType.CHARGER ||
+			 v_previousClickedObjectType == OL_GISObjectType.PARKING){
+		for(GIS_Object previousClickedObject: c_previousSelectedObjects){
+			f_styleAreas(previousClickedObject);
+		}
 	}
-}
-
-if(v_customEnergyCoop != null){
-	energyModel.f_removeEnergyCoop(v_customEnergyCoop);
-	v_customEnergyCoop = null;
+	
+	if(v_customEnergyCoop != null){
+		energyModel.f_removeEnergyCoop(v_customEnergyCoop);
+		v_customEnergyCoop = null;
+	}
 }
 /*ALCODEEND*/}
 
@@ -698,13 +706,15 @@ if(c_LVCables.size() == 0 && c_MVCables.size() == 0){
 f_initializePresentationOrder();
 
 //Set to public model version styling if activated
-if(settings.isPublicModel()){
+if(settings.isPublicModel() || user.GCAccessType != OL_UserGCAccessType.FULL){
 	f_changeDefaultColorOfPrivateGC();
 }
 
 //Turn on update of live congestion colloring
 b_updateLiveCongestionColors = true;
 
+//Set filter combo box options
+f_setFilterComboBoxOptions();
 /*ALCODEEND*/}
 
 GISRegion f_createGISObject(double[] gisTokens)
@@ -835,7 +845,7 @@ double f_setGridTopologyColors()
 //Find all MV substations
 List<GridNode> MVsubstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.SUBMV);
 
-if(MVsubstations != null || project_data.project_type() == OL_ProjectType.RESIDENTIAL){
+if(MVsubstations.size() > 0 || project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 	b_gridLoopsAreDefined = true;
 }
 
@@ -1025,16 +1035,8 @@ else{ // First filter
 }
 
 //After a filter selecttion, reset previous clicked building/gridNode colors and text
-v_previousClickedObjectType = v_clickedObjectType;
-c_previousSelectedObjects = new ArrayList<GIS_Object>(c_selectedObjects);
-c_selectedGridConnections.clear();
-c_selectedObjects.clear();
+f_deselectPreviousSelect();
 
-
-//Deselect previous selection
-if( v_previousClickedObjectType != null){
-	f_deselectPreviousSelect();
-}
 
 //Can filter return 0? (Only allowed for filters who are not inmediately active (gridLoops, nbh, etc.)
 boolean filterCanReturnZero = false;
@@ -1159,60 +1161,22 @@ else{//Filtered GC returns GC
 }
 /*ALCODEEND*/}
 
-double f_setFilter(String selectedFilterName)
+double f_setFilter(OL_FilterOptionsGC selectedFilter)
 {/*ALCODESTART::1734442462084*/
-OL_FilterOptionsGC selectedFilter_OL = null;
-switch(selectedFilterName){
-	case "-":
-		//Do nothing
-		break;
-	case "Bedrijfspanden":
-		selectedFilter_OL = OL_FilterOptionsGC.COMPANIES;
-		break;
-	case "Woonhuizen":
-		selectedFilter_OL = OL_FilterOptionsGC.HOUSES;
-		break;
-	case "Met bekende data":
-		selectedFilter_OL = OL_FilterOptionsGC.DETAILED;
-		break;
-	case "Met geschatte data":
-		selectedFilter_OL = OL_FilterOptionsGC.NONDETAILED;
-		break;
-	case "Met zonnepanelen":
-		selectedFilter_OL = OL_FilterOptionsGC.HAS_PV;
-		break;
-	case "Met voertuigen":
-		selectedFilter_OL = OL_FilterOptionsGC.HAS_TRANSPORT;
-		break;
-	case "Met EV":
-		selectedFilter_OL = OL_FilterOptionsGC.HAS_EV;
-		break;
-	case "In de aangewezen 'lus'":
-		selectedFilter_OL = OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP;
-		break;
-	case "In de aangwezen 'buurt'":
-		selectedFilter_OL = OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD;
-		break;
-	case "Handmatige selectie":
-		selectedFilter_OL = OL_FilterOptionsGC.MANUAL_SELECTION;
-		break;
-}
-
-boolean manualSelectionFilterActive = false;
+String selectedFilterName = map_filterOptionUINames.get(selectedFilter);
 
 //Remove manual filter first
-if(!selectedFilterName.equals("Handmatige selectie") && c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
+if(selectedFilter != OL_FilterOptionsGC.MANUAL_SELECTION && c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
 	button_removeManualSelection.action();
 }
 
-
-if(!selectedFilterName.equals("-") && !c_selectedFilterOptions.contains(selectedFilter_OL)){ // Set filter
+if(!selectedFilterName.equals("-") && !c_selectedFilterOptions.contains(selectedFilter)){ // Set filter
 	traceln("Geselecteerde filter ( " + selectedFilterName + " ) toegevoegd.");
 	t_activeFilters.setText( t_activeFilters.getText() + selectedFilterName + "\n");
-	f_applyFilter(selectedFilter_OL, selectedFilterName);
+	f_applyFilter(selectedFilter, selectedFilterName);
 }
-else if(c_selectedFilterOptions.contains(selectedFilter_OL)){ // Remove filter
-	f_removeFilter(selectedFilter_OL, selectedFilterName);
+else if(c_selectedFilterOptions.contains(selectedFilter)){ // Remove filter
+	f_removeFilter(selectedFilter, selectedFilterName);
 }
 /*ALCODEEND*/}
 
@@ -1254,7 +1218,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 				}	
 				
 				//This deselect the previous selection of gridloops
-				f_setFilter("In de aangewezen 'lus'");
+				f_setFilter(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP);
 				
 				if(c_filterSelectedGridLoops.contains(clickedGridConnectionConnectedGridNode)){
 					c_filterSelectedGridLoops.remove(clickedGridConnectionConnectedGridNode);
@@ -1271,7 +1235,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 				}
 				
 				//This selects the new selection of gridloops
-				f_setFilter("In de aangewezen 'lus'");
+				f_setFilter(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP);
 				
 				return;
 				
@@ -1445,7 +1409,7 @@ for ( GIS_Object region : c_GISNeighborhoods ){
 			
 
 			//This deselects the previous selected neighborhood filter
-			f_setFilter("In de aangwezen 'buurt'");
+			f_setFilter(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD);
 			
 			if(c_filterSelectedNeighborhoods.contains(clickedNeighborhood)){
 				c_filterSelectedNeighborhoods.remove(clickedNeighborhood);
@@ -1461,7 +1425,7 @@ for ( GIS_Object region : c_GISNeighborhoods ){
 				}
 			}
 			//This sets the new selected neighborhoods filter
-			f_setFilter("In de aangwezen 'buurt'");
+			f_setFilter(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD);
 			
 			return;	
 		}
@@ -1599,10 +1563,10 @@ if(clickedObject != null){
 	PrintStream originalPrintStream = f_disableTraceln();
 	
 	//This deactivates the previous selection
-	f_setFilter("Handmatige selectie");
+	f_setFilter(OL_FilterOptionsGC.MANUAL_SELECTION);
 				
 	//This activates the new selection
-	f_setFilter("Handmatige selectie");
+	f_setFilter(OL_FilterOptionsGC.MANUAL_SELECTION);
 	
 	//Enable traceln
 	f_enableTraceln(originalPrintStream);
@@ -2008,118 +1972,11 @@ for (int row = 1; row <= 35137; row++) {
 }
 /*ALCODEEND*/}
 
-double f_selectGISRegion_publicModel(double clickx,double clicky)
-{/*ALCODESTART::1745936595905*/
-//After a click, reset previous clicked building/gridNode colors and text
-v_previousClickedObjectType = v_clickedObjectType;
-c_previousSelectedObjects = new ArrayList<GIS_Object>(c_selectedObjects);
-ArrayList<GIS_Object> buildingsConnectedToSelectedBuildingsList = new ArrayList<>();
-c_selectedGridConnections.clear();
-c_selectedObjects.clear();
-
-//Deselect previous selection
-if( v_previousClickedObjectType != null){
-	f_deselectPreviousSelect();
-}
-
-//Check if click was on Gridnode, if yes, select grid node
-for ( GridNode GN : energyModel.pop_gridNodes ){
-	if( GN.gisRegion != null && GN.gisRegion.contains(clickx, clicky) && GN.gisRegion.isVisible() ){
-		if(GN.f_getAllLowerLVLConnectedGridConnections().size() >= p_minSelectedGCForPublicAggregation){
-			f_selectGridNode(GN);
-		}
-		else{
-			//Data sharing not agreed?
-			v_clickedObjectType = OL_GISObjectType.REGION;
-			uI_Results.f_updateResultsUI(energyModel);
-			
-			//Enable kpi summary button
-			uI_Results.getCheckbox_KPISummary().setEnabled(true);
-		}
-		return;
-	}
-}
-
-//Check if click was on Building, if yes, select grid building
-for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
-	if( b.gisRegion != null && b.gisRegion.contains(clickx, clicky) ){
-		if (b.gisRegion.isVisible()) { //only allow us to click on visible objects
-			if (b.c_containedGridConnections.size() > 0 ) { // only allow buildings with gridconnections
-				if(b.c_containedGridConnections.get(0).p_owner.b_dataSharingAgreed){
-					buildingsConnectedToSelectedBuildingsList = b.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
-					f_selectBuilding(b, buildingsConnectedToSelectedBuildingsList);
-				}
-				else{
-					//Data sharing not agreed?
-					v_clickedObjectType = OL_GISObjectType.REGION;
-					uI_Results.f_updateResultsUI(energyModel);
-					
-					//Enable kpi summary button
-					uI_Results.getCheckbox_KPISummary().setEnabled(true);
-				}
-				return;
-			}
-		}
-	}
-}
-
-//Check if click was on remaining objects such as chargers, solarfields, parcels: if yes, select object
-for ( GIS_Object GISobject : energyModel.pop_GIS_Objects ){
-	if( GISobject.gisRegion != null && GISobject.gisRegion.contains(clickx, clicky) ) {
-		if (GISobject.gisRegion.isVisible()) { //only allow us to click on visible objects
-			if (GISobject.c_containedGridConnections.size() > 0 ) { // only allow objects with gridconnections
-				if(GISobject.c_containedGridConnections.get(0).p_owner.b_dataSharingAgreed){
-					// Find buildings powered by the same GC as the clicked object
-					buildingsConnectedToSelectedBuildingsList = GISobject.c_containedGridConnections.get(0).c_connectedGISObjects; 
-					
-					//Find the (first) connected GC in the object
-					GridConnection selectedGC = GISobject.c_containedGridConnections.get(0);
-	
-					//Set the selected GIS object type
-					v_clickedObjectType = GISobject.p_GISObjectType;
-					c_selectedObjects.add(GISobject);
-					
-					//Set the correct interface view for each object type
-					switch(v_clickedObjectType){
-					
-					case CHARGER:
-						f_selectCharger((GCPublicCharger)selectedGC, GISobject );
-						break;
-					
-						
-					default:
-						buildingsConnectedToSelectedBuildingsList = GISobject.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
-						f_selectBuilding(GISobject, buildingsConnectedToSelectedBuildingsList);		
-						break;
-					}
-				}
-				else{
-					//Data sharing not agreed?
-					v_clickedObjectType = OL_GISObjectType.REGION;
-					uI_Results.f_updateResultsUI(energyModel);
-					
-					//Enable kpi summary button
-					uI_Results.getCheckbox_KPISummary().setEnabled(true);
-				}
-				return;
-			}
-		}
-	}
-}
-
-//Still no clicked object? :select basic region
-v_clickedObjectType = OL_GISObjectType.REGION;
-uI_Results.f_updateResultsUI(energyModel);
-
-//Enable kpi summary button
-uI_Results.getCheckbox_KPISummary().setEnabled(true);
-/*ALCODEEND*/}
-
 double f_changeDefaultColorOfPrivateGC()
 {/*ALCODESTART::1746085650084*/
 for(GIS_Object object : energyModel.pop_GIS_Objects){
 	for(GridConnection GC : object.c_containedGridConnections){
-		if(!GC.p_owner.b_dataSharingAgreed){
+		if(!GC.p_owner.b_dataIsAccessible){
 			object.p_defaultFillColor = transparent(object.p_defaultFillColor, 0.6);//v_dataSharingDisagreedColor;
 			object.p_defaultLineStyle = LINE_STYLE_DOTTED;
 			object.f_style(null, null, null, null);
@@ -2130,7 +1987,7 @@ for(GIS_Object object : energyModel.pop_GIS_Objects){
 
 for(GIS_Building building : energyModel.pop_GIS_Buildings){
 	for(GridConnection GC : building.c_containedGridConnections){
-		if(!GC.p_owner.b_dataSharingAgreed){
+		if(!GC.p_owner.b_dataIsAccessible){
 			building.p_defaultFillColor = transparent(building.p_defaultFillColor, 0.6);//v_dataSharingDisagreedColor;
 			building.p_defaultLineStyle = LINE_STYLE_DOTTED;
 			building.f_style(null, null, null, null);
@@ -2559,19 +2416,8 @@ if (gn!=null && gn.gisRegion != null){
 
 double f_clearSelectionAndSelectEnergyModel()
 {/*ALCODESTART::1752836715726*/
-v_previousClickedObjectType = v_clickedObjectType;
-c_previousSelectedObjects = new ArrayList<GIS_Object>(c_selectedObjects);
-c_selectedGridConnections.clear();
-c_selectedObjects.clear();
-
-//Deselect previous selection
-if( v_previousClickedObjectType != null){
-	f_deselectPreviousSelect();
-}
-
-v_clickedObjectType = OL_GISObjectType.REGION;
-uI_Results.f_updateResultsUI(energyModel);
-
+f_deselectPreviousSelect();
+f_selectEnergyModel();
 /*ALCODEEND*/}
 
 double f_styleLVLV(GISRegion gisregion)
@@ -3785,5 +3631,92 @@ for(String scenarioOption : scenarioOptions){
 }
 
 rb_scenarios.setValue(customOptionIndex, true);
+/*ALCODEEND*/}
+
+double f_setFilterComboBoxOptions()
+{/*ALCODESTART::1763657360843*/
+//Check wheter a filter will result in anything. The order it is added here, is the order it will show up in the filter drop down menu.
+if(energyModel.Houses.size() > 0){
+	c_cbFilterOptions.add(OL_FilterOptionsGC.HOUSES);
+}
+if(energyModel.UtilityConnections.size() > 0){
+	c_cbFilterOptions.add(OL_FilterOptionsGC.COMPANIES);
+	if(v_numberOfSurveyCompanies > 0){
+		c_cbFilterOptions.add(OL_FilterOptionsGC.DETAILED);
+	}
+}
+
+if(findAll(energyModel.pop_GIS_Objects, gisObject -> gisObject.p_GISObjectType == OL_GISObjectType.REGION).size() > 1){
+	c_cbFilterOptions.add(SELECTED_NEIGHBORHOOD);
+}
+if(b_gridLoopsAreDefined){
+	c_cbFilterOptions.add(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP);
+}
+
+
+//More specific default options only available if GC accestype is full
+if(user.GCAccessType == OL_UserGCAccessType.FULL){
+	c_cbFilterOptions.add(OL_FilterOptionsGC.HAS_PV);
+	if(c_cbFilterOptions.contains(OL_FilterOptionsGC.COMPANIES)){
+		c_cbFilterOptions.add(OL_FilterOptionsGC.HAS_TRANSPORT);
+		c_cbFilterOptions.add(OL_FilterOptionsGC.HAS_EV);
+	}
+	else{
+		for (J_EA ea : energyModel.c_energyAssets) {
+		    if (ea instanceof J_EAVehicle) {
+				c_cbFilterOptions.add(OL_FilterOptionsGC.HAS_TRANSPORT);
+				c_cbFilterOptions.add(OL_FilterOptionsGC.HAS_EV);
+		        break;
+		    }
+		}
+	}
+}
+
+c_cbFilterOptions.add(OL_FilterOptionsGC.NONDETAILED);
+
+
+String[] filterOptionsNames = new String[1 + c_cbFilterOptions.size()];
+filterOptionsNames[0] = "-";
+for(int j = 1; j < c_cbFilterOptions.size() + 1; j++){
+	filterOptionsNames[j] = map_filterOptionUINames.get(c_cbFilterOptions.get(j-1));
+}
+
+cb_filterOptions.setItems(filterOptionsNames, false);
+
+//Set cb to correct option
+cb_filterOptions.setValueIndex(0, false);
+
+
+//Create the reverse of map_filterOptionUINames -> map_UINamesFilterOption
+map_UINamesFilterOption = new HashMap<>();
+for (Map.Entry<OL_FilterOptionsGC, String> entry : map_filterOptionUINames.entrySet()) {
+    map_UINamesFilterOption.put(entry.getValue(), entry.getKey());
+}
+
+/*ALCODEEND*/}
+
+double f_selectEnergyModel()
+{/*ALCODESTART::1764776636006*/
+v_clickedObjectType = OL_GISObjectType.REGION;
+uI_Results.f_updateResultsUI(energyModel);
+
+//Enable kpi summary button
+uI_Results.getCheckbox_KPISummary().setEnabled(true);
+/*ALCODEEND*/}
+
+boolean f_checkIfGCsAreAccesible(List<GridConnection> GCList)
+{/*ALCODESTART::1764777516393*/
+if(!settings.isPublicModel() && user.GCAccessType == OL_UserGCAccessType.FULL){
+	return true;
+}
+if(GCList.size() >= p_minSelectedGCForPublicAggregation){
+	return true;
+}
+for(GridConnection GC : GCList){
+	if(!GC.p_owner.b_dataIsAccessible){
+		return false;
+	}
+}
+return true;
 /*ALCODEEND*/}
 
