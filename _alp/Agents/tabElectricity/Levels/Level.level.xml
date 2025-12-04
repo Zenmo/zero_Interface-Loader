@@ -218,7 +218,7 @@
 					<Enabled>true</Enabled>
 					<ActionCode>f_setPVSystemCompanies( uI_Tabs.f_getActiveSliderGridConnections_utilities(), sl_rooftopPVCompanies_pct.getValue(), sl_rooftopPVCompanies_pct );
 
-if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
+if(zero_Interface.rb_mapOverlay != null &amp;&amp; zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
 	zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
 }</ActionCode>
 				</BasicProperties>
@@ -485,7 +485,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 					<Enabled>true</Enabled>
 					<ActionCode>f_setPVSystemHouses( uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_rooftopPVHouses_pct.getValue() );
 
-if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
+if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
 	zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
 }</ActionCode>
 				</BasicProperties>
@@ -1174,7 +1174,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<ActionCode>f_setPVSystemCompanies( uI_Tabs.f_getActiveSliderGridConnections_utilities(), sl_rooftopPVCompanies_pct_Businesspark.getValue(), sl_rooftopPVCompanies_pct_Businesspark );
 
 //If on pv map overlay, adjust colouring
-if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
+if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
 	zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
 }</ActionCode>
 				</BasicProperties>
@@ -1814,7 +1814,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<ActionCode>f_setPVSystemHouses( uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_householdPVResidentialArea_pct.getValue() );
 
 //If on pv map overlay, adjust colouring
-if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
+if(zero_Interface.rb_mapOverlay != null &amp;&amp; zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
 	zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
 }
 

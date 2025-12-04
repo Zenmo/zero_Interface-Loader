@@ -319,8 +319,10 @@ f_createUITabs_default();
 //Initialize the uI_Tabs with the gridconnections
 uI_Tabs.f_initializeUI_Tabs(energyModel.f_getGridConnectionsCollectionPointer(), energyModel.f_getPausedGridConnectionsCollectionPointer());
 
-//Initialize sliders with certain presets
+//Initialize sliders and start scenario with certain presets
+b_runningMainInterfaceScenarios = true;
 f_setSliderPresets();
+b_runningMainInterfaceScenarios = false;
 
 //Store the initial slider state for Residential areas for the scenario current button
 if (project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
