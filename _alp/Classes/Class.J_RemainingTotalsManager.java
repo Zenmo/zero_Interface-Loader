@@ -41,7 +41,7 @@ public class J_RemainingTotalsManager {
     }
     
     //Initialize model totals
-    public void initializeModelTotals(Project_data project_data) {
+    public void initializeModelTotals(Project_data project_data, User user) {
     	double avg_house_elec_delivery_kwh_p_yr = 0;
     	double avg_house_gas_delivery_m3_p_yr = 0;
     	double avg_number_of_cars_per_house = 0;
@@ -52,33 +52,35 @@ public class J_RemainingTotalsManager {
     	int total_nr_comp_trucks = 0;
     	
     	//Energy totals
-    	if(project_data.total_electricity_consumption_companies_kWh_p_yr() != null && project_data.total_electricity_consumption_companies_kWh_p_yr() > 0){
-    		total_comp_elec_delivery_kwh_p_yr = project_data.total_electricity_consumption_companies_kWh_p_yr();
-    		this.totalElectricityConsumptionCompaniesTotalIsManualInput = true;
+    	if(user.NBHAccessType == OL_UserNBHAccessType.FULL) { //Only allow total input if all NBH are loaded in, else you get a skewed distribution.
+	    	if(project_data.total_electricity_consumption_companies_kWh_p_yr() != null && project_data.total_electricity_consumption_companies_kWh_p_yr() > 0){
+	    		total_comp_elec_delivery_kwh_p_yr = project_data.total_electricity_consumption_companies_kWh_p_yr();
+	    		this.totalElectricityConsumptionCompaniesTotalIsManualInput = true;
+	    	}
+	    	if(project_data.total_gas_consumption_companies_m3_p_yr() != null && project_data.total_gas_consumption_companies_m3_p_yr() > 0){	
+	    		total_comp_gas_delivery_m3_p_yr = project_data.total_gas_consumption_companies_m3_p_yr();
+	    		this.totalGasConsumptionCompaniesTotalIsManualInput = true;
+	    	}
+	    	if(project_data.total_cars_companies() != null && project_data.total_cars_companies() > 0){	
+	    		total_nr_comp_cars = project_data.total_cars_companies();
+	    		this.totalCarsCompaniesTotalIsManualInput = true;
+	    	}
+	    	if(project_data.total_vans_companies() != null && project_data.total_vans_companies() > 0){	
+	    		total_nr_comp_vans = project_data.total_vans_companies();
+	    		this.totalVansCompaniesTotalIsManualInput = true;
+	    	}
+	    	if(project_data.total_trucks_companies() != null && project_data.total_trucks_companies() > 0){	
+	    		total_nr_comp_trucks = project_data.total_trucks_companies();
+	    		this.totalTrucksCompaniesTotalIsManualInput = true;
+	    	}
     	}
-    	if(project_data.total_gas_consumption_companies_m3_p_yr() != null && project_data.total_gas_consumption_companies_m3_p_yr() > 0){	
-    		total_comp_gas_delivery_m3_p_yr = project_data.total_gas_consumption_companies_m3_p_yr();
-    		this.totalGasConsumptionCompaniesTotalIsManualInput = true;
-    	}
-    	if(project_data.total_cars_companies() != null && project_data.total_cars_companies() > 0){	
-    		total_nr_comp_cars = project_data.total_cars_companies();
-    		this.totalCarsCompaniesTotalIsManualInput = true;
-    	}
-    	if(project_data.total_vans_companies() != null && project_data.total_vans_companies() > 0){	
-    		total_nr_comp_vans = project_data.total_vans_companies();
-    		this.totalVansCompaniesTotalIsManualInput = true;
-    	}
-    	if(project_data.total_trucks_companies() != null && project_data.total_trucks_companies() > 0){	
-    		total_nr_comp_trucks = project_data.total_trucks_companies();
-    		this.totalTrucksCompaniesTotalIsManualInput = true;
-    	}
-
+    	
     	//Initialize default remaining model total instances
     	List<String> defaultRemainingModelTotalNames = new ArrayList<>(List.of(this.originalModelTotalName, this.remainingModelTotalName));
     	for(String defaultModelTotalInstance : defaultRemainingModelTotalNames) {
         	remainingTotalsMap.put(defaultModelTotalInstance, new J_RemainingTotals(
 	    	Neighbourhood_data.builder()
-	    	.districtname(defaultModelTotalInstance)
+	    	.neighbourhoodname(defaultModelTotalInstance)
 	    	//Energy totals
 	    	.avg_house_elec_delivery_kwh_p_yr(avg_house_elec_delivery_kwh_p_yr)
 	    	.avg_house_gas_delivery_m3_p_yr(avg_house_gas_delivery_m3_p_yr)
@@ -101,15 +103,15 @@ public class J_RemainingTotalsManager {
     	if(!isInitialized) {
     		throw new RuntimeException("Adding NBH to J_RemainingTotalsManager, while the class has not been initialized, this will cause energy total mismatches and therefor is not allowed!");
     	}
-    	if(remainingTotalsMap.containsKey(dataNBH.districtname())) {
-    		throw new RuntimeException("Adding NBH: " + dataNBH.districtname() + " to J_RemainingTotalsManager for the second time, This will cause energy total mismatches and therefor is not allowed!");
+    	if(remainingTotalsMap.containsKey(dataNBH.neighbourhoodname())) {
+    		throw new RuntimeException("Adding NBH: " + dataNBH.neighbourhoodname() + " to J_RemainingTotalsManager for the second time, This will cause energy total mismatches and therefor is not allowed!");
     	}
     	if(isFinalized) {
-    		throw new RuntimeException("Adding NBH: " + dataNBH.districtname() + " to J_RemainingTotalsManager after the J_RemainingTotals has been finalized, This will cause energy total mismatches and therefor is not allowed!");
+    		throw new RuntimeException("Adding NBH: " + dataNBH.neighbourhoodname() + " to J_RemainingTotalsManager after the J_RemainingTotals has been finalized, This will cause energy total mismatches and therefor is not allowed!");
     	}
     	
     	//Create remaining totals instance for the NBH and add to Map
-    	remainingTotalsMap.put(dataNBH.districtname(), new J_RemainingTotals(dataNBH, this.avgc_data));
+    	remainingTotalsMap.put(dataNBH.neighbourhoodname(), new J_RemainingTotals(dataNBH, this.avgc_data));
     	
     	//Manage model totals and backup
     	if(dataNBH.total_comp_elec_delivery_kwh_p_yr() != null && dataNBH.total_comp_elec_delivery_kwh_p_yr() >= 0){
