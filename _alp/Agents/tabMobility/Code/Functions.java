@@ -1463,10 +1463,10 @@ if(nbPublicChargerGC > 0 ){
 	sl_chargersThatSupportV2G_pct.setValue(roundToInt(V2G_pct), false);
 	
 	//Selected charging mode
-	OL_ChargingAttitude currentChargingAttitude = activeChargersEA.size() > 0 ? activeChargersEA.get(0).getChargingAttitude(): OL_ChargingAttitude.SIMPLE;
+	OL_ChargingAttitude currentChargingAttitude = activeChargerGridConnections.size() > 0 ? activeChargerGridConnections.get(0).f_getCurrentChargingType(): OL_ChargingAttitude.SIMPLE;
 	boolean V2GActive = activeChargersEA.size() > 0 ? activeChargersEA.get(0).getV2GActive(): false;
 	for(J_EAChargePoint charger : activeChargersEA){
-		if(currentChargingAttitude != OL_ChargingAttitude.CUSTOM && charger.getChargingAttitude() != currentChargingAttitude){
+		if(currentChargingAttitude != OL_ChargingAttitude.CUSTOM && ((GridConnection)charger.getParentAgent()).f_getCurrentChargingType() != currentChargingAttitude){
 			currentChargingAttitude = OL_ChargingAttitude.CUSTOM; // Here used as varied: in other words: custom setting
 		}
 		if(V2GActive && !charger.getV2GActive()){
@@ -1663,7 +1663,7 @@ double ratioEVToDieselConsumption = zero_Interface.energyModel.avgc_data.p_avgEV
 
 while ( nbOfPrivateParkedEV > desiredNbOfPrivateParkedEV){
 	J_EAVehicle j_ea = findFirst( gcListOrderedVehiclesPrivateParking, h -> h instanceof J_EAEV);
-	if (j_ea.vehicleScaling != 1) {
+	if (j_ea.getVehicleScaling_fr() != 1) {
 		throw new RuntimeException("f_setVehiclesPrivateParking does not work with vehicles that have a vehicleScaling other than 1");
 	}
 	J_ActivityTrackerTrips triptracker = j_ea.tripTracker;
@@ -1678,7 +1678,7 @@ while ( nbOfPrivateParkedEV > desiredNbOfPrivateParkedEV){
 }
 while ( nbOfPrivateParkedEV < desiredNbOfPrivateParkedEV){
 	J_EAVehicle j_ea = findFirst( gcListOrderedVehiclesPrivateParking, h -> h instanceof J_EADieselVehicle);
-	if (j_ea.vehicleScaling != 1) {
+	if (j_ea.getVehicleScaling_fr() != 1) {
 		throw new RuntimeException("f_setVehiclesPrivateParking does not work with vehicles that have a vehicleScaling other than 1");
 	}
 	J_ActivityTrackerTrips triptracker = j_ea.tripTracker;

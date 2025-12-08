@@ -78,6 +78,12 @@
 			<Parameter>
 				<Name><![CDATA[b_isDeserialised]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_timeVariables]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_timeParameters]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">
