@@ -149,7 +149,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1753450969530</Id>
 		<Name><![CDATA[v_objectMapper]]></Name>
-		<X>2100</X>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2450</X>
 		<Y>49</Y>
 		<Label>
 			<X>10</X>
@@ -333,7 +334,8 @@
 	<Variable Class="Parameter">
 		<Id>1762184918471</Id>
 		<Name><![CDATA[p_userIdToken]]></Name>
-		<X>2280</X>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2630</X>
 		<Y>50</Y>
 		<Label>
 			<X>10</X>
@@ -728,7 +730,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1759135072429</Id>
 		<Name><![CDATA[c_GISregions]]></Name>
-		<X>2100</X>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2450</X>
 		<Y>149</Y>
 		<Label>
 			<X>10</X>

@@ -472,7 +472,7 @@
 		<Id>1718288402102</Id>
 		<Name><![CDATA[f_updateMainInterfaceSliders]]></Name>
 		<X>-670</X>
-		<Y>666</Y>
+		<Y>686</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -696,7 +696,7 @@
 		<Id>1725977409304</Id>
 		<Name><![CDATA[f_setSliderPresets]]></Name>
 		<X>-650</X>
-		<Y>641</Y>
+		<Y>661</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2611,6 +2611,22 @@
 			<Name><![CDATA[GCList]]></Name>
 			<Type><![CDATA[List<GridConnection>]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>List&lt;GridConnection&gt;</ReturnType>
+		<Id>1765207097247</Id>
+		<Name><![CDATA[f_getMainInterfaceSliderEAGCs]]></Name>
+		<X>-650</X>
+		<Y>640</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

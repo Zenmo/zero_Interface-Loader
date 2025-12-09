@@ -3042,26 +3042,26 @@ String topGridNodeID = topGridNode.gridnode_id();
 
 //Create data package for e-hub dashboard slider gcs
 if(project_data.project_type() == OL_ProjectType.BUSINESSPARK){
-	f_addSliderSolarfarm("EnergyHub solarfarm slider", topGridNodeID);
-	f_addSliderWindfarm("EnergyHub windfarm slider", topGridNodeID);
-	f_addSliderBattery("EnergyHub battery slider", topGridNodeID);
+	f_addSliderSolarfarm(zero_Interface.p_defaultEnergyHubSliderGCName_solarfarm, topGridNodeID);
+	f_addSliderWindfarm(zero_Interface.p_defaultEnergyHubSliderGCName_windfarm, topGridNodeID);
+	f_addSliderBattery(zero_Interface.p_defaultEnergyHubSliderGCName_battery, topGridNodeID);
 }
 
 //If no slider data package is present yet for the main: add one as well.
 if(sliderSolarfarm_data == null){
-	f_addSliderSolarfarm("Main solarfarm slider", topGridNodeID);
+	f_addSliderSolarfarm(zero_Interface.p_defaultMainSliderGCName_solarfarm, topGridNodeID);
 }
 if(sliderWindfarm_data == null){
-	f_addSliderWindfarm("Main windfarm slider", topGridNodeID);
+	f_addSliderWindfarm(zero_Interface.p_defaultMainSliderGCName_windfarm, topGridNodeID);
 }
 if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 	for(GridNode_data nodeData : c_gridNode_data){
-		f_addSliderBattery("Main battery slider", nodeData.gridnode_id());
+		f_addSliderBattery(zero_Interface.p_defaultMainSliderGCName_battery, nodeData.gridnode_id());
 	}
 }
 else{
 	if(sliderBattery_data == null){
-		f_addSliderBattery("Main battery slider", topGridNodeID);
+		f_addSliderBattery(zero_Interface.p_defaultMainSliderGCName_battery, topGridNodeID);
 	}
 }
 /*ALCODEEND*/}
