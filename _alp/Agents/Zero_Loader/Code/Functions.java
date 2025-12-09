@@ -1824,6 +1824,7 @@ profile.setStartTime_h(v_simStartHour_h);
 profile.energyAssetName = parentGC.p_ownerID + " custom profile";
 double extraConsumption_kWh = 0;
 
+
 //Initialize parameters		
 double nettDelivery_kWh;
 
@@ -3142,15 +3143,60 @@ GC_GridNode_profile.p_latitude = gridnode.p_latitude; // Get latitude of first b
 GC_GridNode_profile.p_longitude = gridnode.p_longitude; // Get longitude of first building (only used to get nearest trafo)
 
 if(project_data.gridnode_profile_timestep_hr() == null){
-	new RuntimeException("Trying to load in gridnode profiles, without specifying the timestep of the data in the project_data");
+	throw new RuntimeException("Trying to load in gridnode profiles, without specifying the timestep of the data in the project_data");
+}
+else if(project_data.gridnode_profile_timestep_hr() < energyModel.p_timeStep_h){
+	throw new RuntimeException("Trying to loadin gridnode profile timestep data with smaller resolution (" + project_data.gridnode_profile_timestep_hr() + ") than simulation model time steps (" + energyModel.p_timeStep_h + "): This is not supported by the preprocessing yet!");
 }
 
 double profileTimestep_hr = project_data.gridnode_profile_timestep_hr();
+double modelToProfileStepsRatio = profileTimestep_hr / energyModel.p_timeStep_h;
 
-//Add profile to the GC
-J_EAProfile profile = new J_EAProfile(GC_GridNode_profile, OL_EnergyCarriers.ELECTRICITY, profile_data_kWh, OL_AssetFlowCategories.fixedConsumptionElectric_kW, profileTimestep_hr);	
-profile.setStartTime_h(v_simStartHour_h);
-profile.energyAssetName = "GridNode " + gridnode.p_gridNodeID + " profile";
+int roundedModelToProfileStepsRatio = roundToInt(modelToProfileStepsRatio);
+
+// Check: ratio must be integer
+if (abs(modelToProfileStepsRatio - roundedModelToProfileStepsRatio) > 1e-9) {
+    throw new RuntimeException("Profile timestep (" + profileTimestep_hr + ") is not an integer multiple of model timestep (" + energyModel.p_timeStep_h + ")");
+}
+
+double[] a_yearlyElectricityDelivery_kWh = new double[profile_data_kWh.length * roundedModelToProfileStepsRatio];
+double[] a_yearlyElectricityFeedin_kWh = new double[profile_data_kWh.length * roundedModelToProfileStepsRatio];
+
+double maxFeedin_kWh = 0;
+int idx = 0;
+for (double dataStep_kWh : profile_data_kWh) {
+
+    // Energy per model timestep
+    double stepEnergy_kWh = dataStep_kWh * (energyModel.p_timeStep_h / profileTimestep_hr);
+
+    for (int i = 0; i < roundedModelToProfileStepsRatio; i++) {
+        double currentFeedin_kWh;
+        double currentDelivery_kWh;
+
+        if (stepEnergy_kWh >= 0) {
+            currentDelivery_kWh = stepEnergy_kWh;
+            currentFeedin_kWh = 0;
+        } else {
+            currentDelivery_kWh = 0;
+            currentFeedin_kWh = -stepEnergy_kWh;
+            if (currentFeedin_kWh > maxFeedin_kWh) {
+                maxFeedin_kWh = currentFeedin_kWh;
+            }
+        }
+
+        a_yearlyElectricityDelivery_kWh[idx] = currentDelivery_kWh;
+        a_yearlyElectricityFeedin_kWh[idx]   = currentFeedin_kWh;
+
+        idx++;
+    }
+}
+
+traceln("maxFeedin_kWh: " + maxFeedin_kWh);
+traceln("a_yearlyElectricityFeedin_kWh.length: " + a_yearlyElectricityFeedin_kWh.length);
+double pvPower_kW = 1.5 * (maxFeedin_kWh/energyModel.p_timeStep_h);
+
+f_createPreprocessedElectricityProfile_PV(GC_GridNode_profile, a_yearlyElectricityDelivery_kWh, a_yearlyElectricityFeedin_kWh, null, pvPower_kW, null);
+f_addEnergyProduction(GC_GridNode_profile, OL_EnergyAssetType.PHOTOVOLTAIC, "Total current Solar on GridNode", pvPower_kW);
 
 //Set boolean has profile data true
 gridnode.p_hasProfileData = true;
