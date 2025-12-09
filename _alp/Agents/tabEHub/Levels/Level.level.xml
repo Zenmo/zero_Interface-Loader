@@ -218,6 +218,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
+					<EnableExpression>!zero_Interface.settings.isPublicModel()</EnableExpression>
 					<ActionCode>zero_Interface.f_startEnergyHubConfiguration();</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -293,6 +294,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
+					<EnableExpression>!zero_Interface.settings.isPublicModel()</EnableExpression>
 					<ActionCode>// First check if there are any save files, if there are none we display an error screen
 
 zero_Interface.uI_EnergyHub.f_initializeUserSavedScenarios(zero_Interface.uI_EnergyHub.combobox_selectScenario);
@@ -309,7 +311,7 @@ new Thread( () -&gt; {
 	
 	// Add a manual select to the filter with all (active) gridconnections
 	// We should follow the usual procedure of creating an E-Hub so that the user could cancel and reconfigure
-	zero_Interface.f_setFilter("Handmatige selectie");
+	zero_Interface.f_setFilter(OL_FilterOptionsGC.MANUAL_SELECTION);
 	zero_Interface.c_selectedGridConnections = zero_Interface.energyModel.f_getActiveGridConnections();
 	zero_Interface.f_applyFilter(OL_FilterOptionsGC.MANUAL_SELECTION, "");
 	

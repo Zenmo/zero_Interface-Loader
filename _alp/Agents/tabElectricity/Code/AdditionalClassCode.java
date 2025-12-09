@@ -33,3 +33,7 @@ public ShapeSlider getSliderRooftopPVHouses_pct(){
 public ShapeSlider getWindSlider(){
 	return this.sl_largeScaleWind_MW;
 }
+
+public ShapeSlider getSl_rooftopPVCompanies_pct_Businesspark(){
+	return this.sl_rooftopPVCompanies_pct_Businesspark;
+}

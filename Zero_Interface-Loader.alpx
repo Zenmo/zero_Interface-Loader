@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.6.202509050524"
-                   AlpVersion="8.9.6">
+                   AnyLogicVersion="8.9.7.202512010504"
+                   AlpVersion="8.9.7">
 	<Model>
 		<Id>1658477103134</Id>
 		<Name><![CDATA[Zero_Interface-Loader]]></Name>
@@ -178,6 +178,34 @@
 				<Option>
 					<Id>1754312700674</Id>
 					<Name><![CDATA[PARKING_TYPE]]></Name>
+				</Option>
+			</OptionList>
+			<OptionList>
+				<Id>1763646420469</Id>
+				<Name><![CDATA[OL_UserGCAccessType]]></Name>
+				<Option>
+					<Id>1763646670204</Id>
+					<Name><![CDATA[FULL]]></Name>
+				</Option>
+				<Option>
+					<Id>1763646670205</Id>
+					<Name><![CDATA[SPECIFIED]]></Name>
+				</Option>
+				<Option>
+					<Id>1763646670206</Id>
+					<Name><![CDATA[PUBLIC_ONLY]]></Name>
+				</Option>
+			</OptionList>
+			<OptionList>
+				<Id>1763648379983</Id>
+				<Name><![CDATA[OL_UserNBHAccessType]]></Name>
+				<Option>
+					<Id>1763648379984</Id>
+					<Name><![CDATA[FULL]]></Name>
+				</Option>
+				<Option>
+					<Id>1763648379985</Id>
+					<Name><![CDATA[SPECIFIED]]></Name>
 				</Option>
 			</OptionList>
 		</OptionLists>
@@ -462,5 +490,6 @@
 		<Uuid>2216cdd0-177c-5678-9e88-dd8b95312234</Uuid>
 		<Uuid>1737c8c6-b526-4dd8-589e-ee4e205b06f4</Uuid>
 		<Uuid>6a43bef6-8b70-4253-a828-82c3ab399655</Uuid>
+		<Uuid>0a27038a-0f3a-48bb-b235-4a44066a1402</Uuid>
 	</ConvertersApplied>
 </AnyLogicWorkspace>
