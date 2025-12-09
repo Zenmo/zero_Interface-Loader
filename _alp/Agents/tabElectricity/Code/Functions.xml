@@ -314,7 +314,7 @@
 		<Id>1754926103683</Id>
 		<Name><![CDATA[f_updateSliders_Electricity]]></Name>
 		<X>-350</X>
-		<Y>70</Y>
+		<Y>90</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -330,7 +330,7 @@
 		<Id>1754926103685</Id>
 		<Name><![CDATA[f_updateElectricitySliders_default]]></Name>
 		<X>-330</X>
-		<Y>90</Y>
+		<Y>110</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -346,7 +346,7 @@
 		<Id>1754926103687</Id>
 		<Name><![CDATA[f_updateElectricitySliders_residential]]></Name>
 		<X>-330</X>
-		<Y>130</Y>
+		<Y>150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -362,7 +362,7 @@
 		<Id>1754926103689</Id>
 		<Name><![CDATA[f_updateElectricitySliders_businesspark]]></Name>
 		<X>-330</X>
-		<Y>110</Y>
+		<Y>130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -378,7 +378,7 @@
 		<Id>1754926103691</Id>
 		<Name><![CDATA[f_updateElectricitySliders_custom]]></Name>
 		<X>-330</X>
-		<Y>150</Y>
+		<Y>170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -444,6 +444,26 @@
 		<Name><![CDATA[f_initializeTab_Electricity]]></Name>
 		<X>-350</X>
 		<Y>30</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[electricityTabEASliderGCs]]></Name>
+			<Type><![CDATA[List<GridConnection>]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1765276703854</Id>
+		<Name><![CDATA[f_getCurrentGridBatterySize]]></Name>
+		<X>30</X>
+		<Y>1320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

@@ -71,7 +71,7 @@ if(activeGridConnections != null){
 }
 else{
 	v_activeSliderGridConnections = new ArrayList<>();
-	traceln("WARNING: UITABS HAS BEEN INITIALIZED WITH NO ACTIVE GC");
+	traceln("WARNING: UI_TABS HAS BEEN INITIALIZED WITH NO ACTIVE GC");
 }
 
 if(pausedGridConnections != null){
@@ -82,13 +82,13 @@ else{
 }
 /*ALCODEEND*/}
 
-double f_initializeUI_Tabs(List<GridConnection> activeGridConnections,List<GridConnection> pausedGridConnections)
+double f_initializeUI_Tabs(List<GridConnection> activeGridConnections,List<GridConnection> pausedGridConnections,List<GridConnection> electricityTabEASliderGCs)
 {/*ALCODESTART::1754908356478*/
 //Initialize the GridConnections
 f_initializeSliderGCPointers(activeGridConnections, pausedGridConnections);
 
 //Initialize the tabs
-f_initializeActiveTabs();
+f_initializeActiveTabs(electricityTabEASliderGCs);
 
 //Set sliders to engine state of the gridconnections
 f_updateSliders();
@@ -228,10 +228,10 @@ if(v_pausedSliderGridConnections != null){
 return pausedChargerGridConnections;
 /*ALCODEEND*/}
 
-double f_initializeActiveTabs()
+double f_initializeActiveTabs(List<GridConnection> electricityTabEASliderGCs)
 {/*ALCODESTART::1756302560139*/
 if(!pop_tabElectricity.isEmpty()){
-	pop_tabElectricity.get(0).f_initializeTab_Electricity();
+	pop_tabElectricity.get(0).f_initializeTab_Electricity(electricityTabEASliderGCs);
 }
 if(!pop_tabHeating.isEmpty()){
 	//pop_tabHeating.get(0).f_initializeTab_Heating();

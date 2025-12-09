@@ -72,7 +72,7 @@
 			<Text>
 				<Id>1722328776711</Id>
 				<Name><![CDATA[t_electricityDemandReduction_pct]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>20</Y>
 				<Label>
 					<X>0</X>
@@ -176,7 +176,7 @@
 			<Text>
 				<Id>1722328776719</Id>
 				<Name><![CDATA[t_rooftopPVCompanies_pct]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>80</Y>
 				<Label>
 					<X>0</X>
@@ -259,7 +259,7 @@ if(zero_Interface.rb_mapOverlay != null &amp;&amp; zero_Interface.c_loadedMapOve
 			<Text>
 				<Id>1722328776725</Id>
 				<Name><![CDATA[t_largeScalePV_ha]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>145</Y>
 				<Label>
 					<X>0</X>
@@ -416,7 +416,7 @@ if(zero_Interface.rb_mapOverlay != null &amp;&amp; zero_Interface.c_loadedMapOve
 			<Text>
 				<Id>1722328776741</Id>
 				<Name><![CDATA[t_largeScaleWind_MW]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>175</Y>
 				<Label>
 					<X>0</X>
@@ -442,7 +442,7 @@ if(zero_Interface.rb_mapOverlay != null &amp;&amp; zero_Interface.c_loadedMapOve
 			<Text>
 				<Id>1722329161559</Id>
 				<Name><![CDATA[t_rooftopPVHouses_pct]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>110</Y>
 				<Label>
 					<X>0</X>
@@ -663,7 +663,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 			<Text>
 				<Id>1754984198964</Id>
 				<Name><![CDATA[t_collectiveBatteries_default]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>275</Y>
 				<Label>
 					<X>0</X>
@@ -690,7 +690,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1754984198968</Id>
 				<Name><![CDATA[sl_collectiveBattery_MWh_default]]></Name>
-				<X>255</X>
+				<X>260</X>
 				<Y>270</Y>
 				<Label>
 					<X>0</X>
@@ -715,9 +715,9 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>50</MaxValue>
-					<Step>1</Step>
+					<MinValue>p_currentTotalGridBatteryCapacity_MWh</MinValue>
+					<MaxValue>p_currentTotalGridBatteryCapacity_MWh + 50</MaxValue>
+					<Step>0.1</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -1027,7 +1027,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 			<Text>
 				<Id>1728384392422</Id>
 				<Name><![CDATA[t_electricityDemandReduction_pct_Businesspark]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>20</Y>
 				<Label>
 					<X>0</X>
@@ -1048,7 +1048,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
@@ -1131,7 +1131,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 			<Text>
 				<Id>1728384392430</Id>
 				<Name><![CDATA[t_rooftopPVCompanies_pct_Businesspark]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>80</Y>
 				<Label>
 					<X>0</X>
@@ -1152,7 +1152,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
@@ -1215,7 +1215,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 			<Text>
 				<Id>1728384392436</Id>
 				<Name><![CDATA[t_largeScalePV_ha_Businesspark]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>115</Y>
 				<Label>
 					<X>0</X>
@@ -1236,7 +1236,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
@@ -1372,7 +1372,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 			<Text>
 				<Id>1728384392448</Id>
 				<Name><![CDATA[t_largeScaleWind_MW_Businesspark]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>150</Y>
 				<Label>
 					<X>0</X>
@@ -1393,7 +1393,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Image>
 				<Id>1746091438812</Id>
@@ -1636,7 +1636,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 			<Text>
 				<Id>1754985653996</Id>
 				<Name><![CDATA[t_collectiveBatteries_businesspark]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>260</Y>
 				<Label>
 					<X>0</X>
@@ -1663,7 +1663,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1754985653998</Id>
 				<Name><![CDATA[sl_collectiveBattery_MWh_businesspark]]></Name>
-				<X>255</X>
+				<X>260</X>
 				<Y>255</Y>
 				<Label>
 					<X>0</X>
@@ -1688,9 +1688,9 @@ zero_Interface.f_resetSettings();</ActionCode>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>50</MaxValue>
-					<Step>1</Step>
+					<MinValue>p_currentTotalGridBatteryCapacity_MWh</MinValue>
+					<MaxValue>p_currentTotalGridBatteryCapacity_MWh + 50</MaxValue>
+					<Step>0.1</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>

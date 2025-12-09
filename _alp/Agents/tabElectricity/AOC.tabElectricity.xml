@@ -9,6 +9,11 @@
 		<PackageName>zerointerfaceloader</PackageName>
 		<ClassName>tabArea</ClassName>
 	</ExtendsReference>
+	<Parameters>
+		<Parameter>
+			<Name><![CDATA[p_currentTotalGridBatteryCapacity_MWh]]></Name>
+		</Parameter>
+	</Parameters>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1722247653567</Id>

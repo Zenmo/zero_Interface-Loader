@@ -4,7 +4,7 @@ double f_setPVOnLand(double hectare,List<GCEnergyProduction> gcListProduction)
 // to do so it should probably first calculate the total installed pv in all solar fields
 for ( GCEnergyProduction GCEP : gcListProduction) {
 	for(J_EAProduction j_ea : GCEP.c_productionAssets) {
-		if (j_ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC && GCEP.p_isSliderGC) {
+		if (j_ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC && c_electricityTabEASliderGCs.contains(GCEP)) {
 			if (!GCEP.v_isActive) {
 				GCEP.f_setActive(true);
 			}
@@ -98,7 +98,7 @@ double f_setWindTurbines(double AllocatedWindPower_MW,List<GCEnergyProduction> g
 
 for ( GCEnergyProduction GCEP : gcListProduction) {
 	for(J_EAProduction j_ea : GCEP.c_productionAssets) {
-		if (j_ea.getEAType() == OL_EnergyAssetType.WINDMILL && GCEP.p_isSliderGC) {
+		if (j_ea.getEAType() == OL_EnergyAssetType.WINDMILL && c_electricityTabEASliderGCs.contains(GCEP)) {
 			if (!GCEP.v_isActive) {
 				GCEP.f_setActive(true);
 			}
@@ -151,8 +151,10 @@ zero_Interface.f_resetSettings();
 
 double f_getCurrentPVOnLandAndWindturbineValues()
 {/*ALCODESTART::1745483988251*/
+p_currentPVOnLand_ha = 0;
+p_currentWindTurbines_MW = 0;
 for(GCEnergyProduction GCProd : uI_Tabs.f_getAllSliderGridConnections_production()){
-	if(!GCProd.p_isSliderGC && GCProd.v_isActive){
+	if(!c_electricityTabEASliderGCs.contains(GCProd) && GCProd.v_isActive){
 		for(J_EAProduction ea : GCProd.c_productionAssets){
 			if(ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC){
 				p_currentPVOnLand_ha += ea.getCapacityElectric_kW()/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
@@ -341,7 +343,7 @@ zero_Interface.f_resetSettings();
 double f_setGridBatteries_residential(double storageCapacity_kWh,List<GCGridBattery> gcListGridBatteries)
 {/*ALCODESTART::1750063382312*/
 for ( GCGridBattery battery : gcListGridBatteries) {
-	if(battery.p_isSliderGC){
+	if(c_electricityTabEASliderGCs.contains(battery)){
 		for(J_EAStorage j_ea : battery.c_storageAssets) {
 			J_EAStorageElectric batteryAsset = ((J_EAStorageElectric)j_ea);
 			if (!battery.v_isActive) {
@@ -482,11 +484,13 @@ PV_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());
 sl_rooftopPVHouses_pct.setValue(PV_pct, false);
 
 //Large scale EA production systems (PV on land And Wind)
-double totalPVOnLand_kW = 0;
-double totalWind_kW = 0;
+f_getCurrentPVOnLandAndWindturbineValues(); // Used for slider minimum: non adjustable GCProductions
+
+double totalPVOnLand_kW = 0; // Of movable slider GC
+double totalWind_kW = 0; // Of movable slider GC
 
 for(GCEnergyProduction productionGC : uI_Tabs.f_getAllSliderGridConnections_production()){
-	if(productionGC.v_isActive && productionGC.p_isSliderGC){
+	if(productionGC.v_isActive && c_electricityTabEASliderGCs.contains(productionGC)){
 		if(productionGC.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
 			for(J_EAProduction productionEA : productionGC.c_productionAssets){
 				if(productionEA.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC){
@@ -503,8 +507,9 @@ for(GCEnergyProduction productionGC : uI_Tabs.f_getAllSliderGridConnections_prod
 		}
 	}
 }
-
+sl_largeScalePV_ha_Businesspark.setRange(0, 1000); // Needed to prevent anylogic range bug
 sl_largeScalePV_ha.setValue((totalPVOnLand_kW/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha) + p_currentPVOnLand_ha, false);
+sl_largeScaleWind_MW.setRange(0, 1000); // Needed to prevent anylogic range bug
 sl_largeScaleWind_MW.setValue((totalWind_kW/1000) + p_currentWindTurbines_MW, false);
 
 //Curtailment
@@ -519,14 +524,16 @@ cb_curtailment_default.setSelected(curtailment, false);
 
 
 //Large scale battery systems
+f_getCurrentGridBatterySize(); // Used for slider minimum: non adjustable GCGridBatteries
+
 double totalBatteryStorage_kWh = 0;
 for(GCGridBattery batteryGC : uI_Tabs.f_getAllSliderGridConnections_gridBatteries()){
-	if(batteryGC.v_isActive && batteryGC.p_isSliderGC){
+	if(batteryGC.v_isActive && c_electricityTabEASliderGCs.contains(batteryGC)){
 		totalBatteryStorage_kWh += batteryGC.p_batteryAsset.getStorageCapacity_kWh();
 	}
 }
-
-sl_collectiveBattery_MWh_default.setValue(totalBatteryStorage_kWh/1000, false);
+sl_collectiveBattery_MWh_default.setRange(0, 1000);
+sl_collectiveBattery_MWh_default.setValue((totalBatteryStorage_kWh/1000.0) + p_currentTotalGridBatteryCapacity_MWh, false);
 
 /*ALCODEEND*/}
 
@@ -626,11 +633,13 @@ int PV_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());
 sl_rooftopPVCompanies_pct_Businesspark.setValue(PV_pct, false);
 
 //Large scale EA production systems (PV on land And Wind)
-double totalPVOnLand_kW = 0;
-double totalWind_kW = 0;
+f_getCurrentPVOnLandAndWindturbineValues(); // Used for slider minimum: non adjustable GCProductions
+
+double totalPVOnLand_kW = 0; // Of movable slider GC
+double totalWind_kW = 0; // Of movable slider GC
 
 for(GCEnergyProduction productionGC : uI_Tabs.f_getAllSliderGridConnections_production()){
-	if(productionGC.v_isActive && productionGC.p_isSliderGC){
+	if(productionGC.v_isActive && c_electricityTabEASliderGCs.contains(productionGC)){
 		if(productionGC.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
 			for(J_EAProduction productionEA : productionGC.c_productionAssets){
 				if(productionEA.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC){
@@ -648,7 +657,9 @@ for(GCEnergyProduction productionGC : uI_Tabs.f_getAllSliderGridConnections_prod
 	}
 }
 
+sl_largeScalePV_ha_Businesspark.setRange(0, 1000); // Needed to prevent anylogic range bug
 sl_largeScalePV_ha_Businesspark.setValue((totalPVOnLand_kW/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha) + p_currentPVOnLand_ha, false);
+sl_largeScaleWind_MW_Businesspark.setRange(0, 1000); // Needed to prevent anylogic range bug
 sl_largeScaleWind_MW_Businesspark.setValue((totalWind_kW/1000) + p_currentWindTurbines_MW, false);
 
 //Curtailment
@@ -663,14 +674,16 @@ cb_curtailment_businesspark.setSelected(curtailment, false);
 
 
 //Large scale battery systems
+f_getCurrentGridBatterySize(); // Used for slider minimum: non adjustable GCGridBatteries
+
 double totalBatteryStorage_kWh = 0;
 for(GCGridBattery batteryGC : uI_Tabs.f_getAllSliderGridConnections_gridBatteries()){
-	if(batteryGC.v_isActive && batteryGC.p_isSliderGC){
+	if(batteryGC.v_isActive && c_electricityTabEASliderGCs.contains(batteryGC)){
 		totalBatteryStorage_kWh += batteryGC.p_batteryAsset.getStorageCapacity_kWh();
 	}
 }
-
-sl_collectiveBattery_MWh_businesspark.setValue(totalBatteryStorage_kWh/1000, false);
+sl_collectiveBattery_MWh_businesspark.setRange(0, 1000); // Needed to prevent anylogic range bug
+sl_collectiveBattery_MWh_businesspark.setValue((totalBatteryStorage_kWh/1000.0) + p_currentTotalGridBatteryCapacity_MWh, false);
 
 
 /*ALCODEEND*/}
@@ -687,7 +700,7 @@ double f_setGridBatteries(double capacity_MWh,List<GCGridBattery> gcListGridBatt
 // TODO: make this work nicer with the new pause function (when setting capacity to 0 pause again?)
 
 if ( gcListGridBatteries.size() > 0 ){	
-	GCGridBattery GC = findFirst(gcListGridBatteries, GB -> GB.p_isSliderGC);
+	GCGridBattery GC = findFirst(gcListGridBatteries, GB -> c_electricityTabEASliderGCs.contains(GB));
 	if(GC == null){
 		traceln("WARNING: no specified slider grid battery in the model: random grid battery selected");
 		GC = zero_Interface.energyModel.GridBatteries.get(0);
@@ -723,8 +736,21 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-double f_initializeTab_Electricity()
+double f_initializeTab_Electricity(List<GridConnection> electricityTabEASliderGCs)
 {/*ALCODESTART::1756302457919*/
+c_electricityTabEASliderGCs.addAll(electricityTabEASliderGCs);
+
 f_getCurrentPVOnLandAndWindturbineValues();
+f_getCurrentGridBatterySize();
+/*ALCODEEND*/}
+
+double f_getCurrentGridBatterySize()
+{/*ALCODESTART::1765276703854*/
+p_currentTotalGridBatteryCapacity_MWh = 0;
+for(GCGridBattery GCBat : uI_Tabs.f_getAllSliderGridConnections_gridBatteries()){
+	if(!c_electricityTabEASliderGCs.contains(GCBat) && GCBat.v_isActive){
+		p_currentTotalGridBatteryCapacity_MWh += (GCBat.p_batteryAsset.getStorageCapacity_kWh()/1000.0);
+	}
+}
 /*ALCODEEND*/}
 

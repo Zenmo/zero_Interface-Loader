@@ -317,7 +317,7 @@ double f_setUITabs()
 f_createUITabs_default();
 
 //Initialize the uI_Tabs with the gridconnections
-uI_Tabs.f_initializeUI_Tabs(energyModel.f_getGridConnectionsCollectionPointer(), energyModel.f_getPausedGridConnectionsCollectionPointer());
+uI_Tabs.f_initializeUI_Tabs(energyModel.f_getGridConnectionsCollectionPointer(), energyModel.f_getPausedGridConnectionsCollectionPointer(), f_getMainInterfaceSliderEAGCs());
 
 //Initialize sliders and start scenario with certain presets
 b_runningMainInterfaceScenarios = true;
@@ -1274,8 +1274,12 @@ c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> !GC.p_
 
 double f_filterHasPV(ArrayList<GridConnection> toBeFilteredGC)
 {/*ALCODESTART::1734448690487*/
-c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)));
-
+c_selectedGridConnections = new ArrayList<>();
+for(GridConnection GC : toBeFilteredGC){ //Find all GC with PV AND a gis region (to prevent selecting slider PVGC)
+	if(GC.c_connectedGISObjects.size() > 0 && GC.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
+		c_selectedGridConnections.add(GC);
+	}
+}
 /*ALCODEEND*/}
 
 double f_filterHasTransport(ArrayList<GridConnection> toBeFilteredGC)
@@ -3718,5 +3722,35 @@ for(GridConnection GC : GCList){
 	}
 }
 return true;
+/*ALCODEEND*/}
+
+List<GridConnection> f_getMainInterfaceSliderEAGCs()
+{/*ALCODESTART::1765207097247*/
+List<GridConnection> electricityTabEASliderGCs = new ArrayList<GridConnection>();
+
+//Find the energy production slider gcs that are not specificly for the EnergyHub
+List<GCEnergyProduction> electricityTabEASliderGCs_prod = findAll(energyModel.EnergyProductionSites, sliderProd -> 
+																									sliderProd.p_isSliderGC && 
+																									!sliderProd.p_gridConnectionID.equals(p_defaultEnergyHubSliderGCName_solarfarm) && 
+																									!sliderProd.p_gridConnectionID.equals(p_defaultEnergyHubSliderGCName_windfarm));
+if(electricityTabEASliderGCs_prod.size() == 2){
+	electricityTabEASliderGCs.addAll(electricityTabEASliderGCs_prod);
+}
+else{
+	throw new RuntimeException("electricityTabEASliderGCs_prod.size() != 2 -> Should be exactly 2, one solarfarm and one windfarm.");
+}
+
+//Find the GridBattery slider gcs that are not specificly for the EnergyHub
+List<GCGridBattery> electricityTabEASliderGCs_bat = findAll(energyModel.GridBatteries, sliderBat -> sliderBat.p_isSliderGC && 
+																									!sliderBat.p_gridConnectionID.equals("EnergyHub battery slider"));
+
+if(project_data.project_type() == OL_ProjectType.BUSINESSPARK && electricityTabEASliderGCs_bat.size() != 1){
+	throw new RuntimeException("electricityTabEASliderGCs_bat.size() != 1 -> Should be exactly 1 for businesspark models.");
+}
+else{
+	electricityTabEASliderGCs.addAll(electricityTabEASliderGCs_bat);
+}
+
+return electricityTabEASliderGCs;
 /*ALCODEEND*/}
 

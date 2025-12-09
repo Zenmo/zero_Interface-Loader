@@ -80,6 +80,9 @@
 			<Parameter>
 				<Name><![CDATA[p_currentWindTurbines_MW]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_currentTotalGridBatteryCapacity_MWh]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
