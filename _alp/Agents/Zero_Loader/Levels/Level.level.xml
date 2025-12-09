@@ -1078,7 +1078,8 @@
 	<Rectangle>
 		<Id>1753349205420</Id>
 		<Name><![CDATA[rect_defaultStartup1]]></Name>
-		<X>2010</X>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2360</X>
 		<Y>0</Y>
 		<Label>
 			<X>10</X>
@@ -1104,7 +1105,8 @@
 	<Text>
 		<Id>1753349205422</Id>
 		<Name><![CDATA[txt_loaderStartupDeserialisation]]></Name>
-		<X>2030</X>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2380</X>
 		<Y>9</Y>
 		<Label>
 			<X>0</X>
@@ -1118,7 +1120,7 @@
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
-		<Text><![CDATA[Loader after deserialisation (in Progress!)]]></Text>
+		<Text><![CDATA[Loader after deserialisation (OLD)]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>14</Size>
@@ -1130,7 +1132,8 @@
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1753449467882</Id>
 		<Name><![CDATA[deserialize2]]></Name>
-		<X>2063.333</X>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2413.333</X>
 		<Y>172</Y>
 		<Label>
 			<X>0</X>
@@ -1259,7 +1262,8 @@ try {
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1753449467884</Id>
 		<Name><![CDATA[serialize1]]></Name>
-		<X>2066.333</X>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2416.333</X>
 		<Y>99</Y>
 		<Label>
 			<X>0</X>
