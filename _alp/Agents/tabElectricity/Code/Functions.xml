@@ -5,7 +5,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1722256117103</Id>
 		<Name><![CDATA[f_setPVOnLand]]></Name>
-		<Description><![CDATA[Function that changes the electric capacity of the energy asset of the "Solar field". Takes an area size in hectares as a parameter and assumes that 1 MWp of solarpannels fits on 1 ha. The variables for amount of installed PV are updated automatically in the zero_engine. The function also modifies the connection capacity of the energy production site to match the new installed PV Power.]]></Description>
+		<Description><![CDATA[Function that changes the electric capacity of the energy asset of the "Solar field". Takes an area size in hectares as a parameter and assumes that 1 MWp of solarpannels fits on 1 ha. The variables for amount of installed PV are updated automatically in the zero_engine. The function also modifies the connection capacity of the energy production site to match the new installed PV Power. Passing a list of gcs sets all gcs to the same input value.]]></Description>
 		<X>70</X>
 		<Y>840</Y>
 		<Label>
@@ -56,7 +56,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1722256248965</Id>
 		<Name><![CDATA[f_setWindTurbines]]></Name>
-		<Description><![CDATA[Function that changes the electric capacity of the energy asset of the "Wind Farm". Takes an amount of MW as a parameter. The variables for amount of installed Wind are updated automatically in the zero_engine. The function also modifies the connection capacity of the energy production site to match the new installed Wind Power.]]></Description>
+		<Description><![CDATA[Function that changes the electric capacity of the energy asset of the "Wind Farm". Takes an amount of MW as a parameter. The variables for amount of installed Wind are updated automatically in the zero_engine. The function also modifies the connection capacity of the energy production site to match the new installed Wind Power. Passing a list of gcs sets all gcs to the same input value.]]></Description>
 		<X>70</X>
 		<Y>870</Y>
 		<Label>
@@ -218,7 +218,7 @@
 		<Id>1750063382310</Id>
 		<Name><![CDATA[f_setResidentialBatteries]]></Name>
 		<X>90</X>
-		<Y>1020</Y>
+		<Y>1000</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -240,9 +240,10 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1750063382312</Id>
-		<Name><![CDATA[f_setGridBatteries_residential]]></Name>
+		<Name><![CDATA[f_setGridBatteries]]></Name>
+		<Description><![CDATA[Passing a list of gcs sets all gcs to the same input value.]]></Description>
 		<X>90</X>
-		<Y>1000</Y>
+		<Y>980</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -386,31 +387,6 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1754985710087</Id>
-		<Name><![CDATA[f_setGridBatteries]]></Name>
-		<Description><![CDATA[Function that takes a capacity in MWh as a parameter and sets the first GCGridBattery to this capacity, with the default ratio of storage to electric capacity from the AVGC data.]]></Description>
-		<X>89</X>
-		<Y>981</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[capacity_MWh]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[gcListGridBatteries]]></Name>
-			<Type><![CDATA[List<GCGridBattery>]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">

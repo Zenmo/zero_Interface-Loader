@@ -768,7 +768,10 @@ else if ( yearlyElectricityConsumption_kWh > 6000){ gis_area.f_style( rect_mapOv
 double f_updateMainInterfaceSliders()
 {/*ALCODESTART::1718288402102*/
 uI_Tabs.f_updateSliders();
-uI_EnergyHub.uI_Tabs.f_updateSliders();
+
+if(uI_EnergyHub != null){
+	uI_EnergyHub.uI_Tabs.f_updateSliders();
+}
 /*ALCODEEND*/}
 
 double f_selectCharger(GCPublicCharger charger,GIS_Object objectGIS)

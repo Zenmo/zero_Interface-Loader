@@ -299,7 +299,24 @@ if(zero_Interface.rb_mapOverlay != null &amp;&amp; zero_Interface.c_loadedMapOve
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_currentPVOnLand_ha, uI_Tabs.f_getAllSliderGridConnections_production());</ActionCode>
+					<ActionCode>List&lt;GCEnergyProduction&gt; sliderPVFarmGCList = new ArrayList&lt;&gt;();
+for(GridConnection gc : c_electricityTabEASliderGCs){
+	if(gc instanceof GCEnergyProduction energyProductionSite){
+		for(J_EAProduction j_ea : energyProductionSite.c_productionAssets) {
+			if (j_ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC) {
+				sliderPVFarmGCList.add(energyProductionSite);
+				break;
+			}
+		}
+	}
+}
+
+if(sliderPVFarmGCList.size() == 0){
+	throw new IllegalStateException("Model does not contain any PVFarmSliderGC agent");
+}
+
+
+f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_currentPVOnLand_ha, sliderPVFarmGCList);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -377,7 +394,23 @@ if(zero_Interface.rb_mapOverlay != null &amp;&amp; zero_Interface.c_loadedMapOve
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, uI_Tabs.f_getAllSliderGridConnections_production());</ActionCode>
+					<ActionCode>List&lt;GCEnergyProduction&gt; sliderWindFarmGCList = new ArrayList&lt;&gt;();
+for(GridConnection gc : c_electricityTabEASliderGCs){
+	if(gc instanceof GCEnergyProduction energyProductionSite){
+		for(J_EAProduction j_ea : energyProductionSite.c_productionAssets) {
+			if (j_ea.getEAType() == OL_EnergyAssetType.WINDMILL) {
+				sliderWindFarmGCList.add(energyProductionSite);
+				break;
+			}
+		}
+	}
+}
+
+if(sliderWindFarmGCList.size() == 0){
+	throw new IllegalStateException("Model does not contain any sliderWindFarmGC agent");
+}
+
+f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, sliderWindFarmGCList);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -703,14 +736,18 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setGridBatteries(sl_collectiveBattery_MWh_default.getValue(), uI_Tabs.f_getAllSliderGridConnections_gridBatteries());
-
-//Update variable to change to custom scenario
-if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.f_setScenarioToCustom();
+					<ActionCode>List&lt;GCGridBattery&gt; gcListGridBatteries = new ArrayList&lt;&gt;();
+for(GridConnection gc : c_electricityTabEASliderGCs){
+	if(gc instanceof GCGridBattery gridbattery){
+		gcListGridBatteries.add(gridbattery);
+	}
 }
 
-zero_Interface.f_resetSettings();</ActionCode>
+if(gcListGridBatteries.size() == 0){
+	throw new IllegalStateException("Model does not contain any GCGridBattery agent");
+}
+
+f_setGridBatteries(sl_collectiveBattery_MWh_default.getValue() * 1000, gcListGridBatteries);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1255,7 +1292,24 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVOnLand(sl_largeScalePV_ha_Businesspark.getValue()- p_currentPVOnLand_ha, uI_Tabs.f_getAllSliderGridConnections_production());</ActionCode>
+					<ActionCode>List&lt;GCEnergyProduction&gt; sliderPVFarmGCList = new ArrayList&lt;&gt;();
+for(GridConnection gc : c_electricityTabEASliderGCs){
+	if(gc instanceof GCEnergyProduction energyProductionSite){
+		for(J_EAProduction j_ea : energyProductionSite.c_productionAssets) {
+			if (j_ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC) {
+				sliderPVFarmGCList.add(energyProductionSite);
+				break;
+			}
+		}
+	}
+}
+
+if(sliderPVFarmGCList.size() == 0){
+	throw new IllegalStateException("Model does not contain any PVFarmSliderGC agent");
+}
+
+
+f_setPVOnLand(sl_largeScalePV_ha_Businesspark.getValue() - p_currentPVOnLand_ha, sliderPVFarmGCList);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1333,7 +1387,23 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setWindTurbines( sl_largeScaleWind_MW_Businesspark.getValue() - p_currentWindTurbines_MW, uI_Tabs.f_getAllSliderGridConnections_production());</ActionCode>
+					<ActionCode>List&lt;GCEnergyProduction&gt; sliderWindFarmGCList = new ArrayList&lt;&gt;();
+for(GridConnection gc : c_electricityTabEASliderGCs){
+	if(gc instanceof GCEnergyProduction energyProductionSite){
+		for(J_EAProduction j_ea : energyProductionSite.c_productionAssets) {
+			if (j_ea.getEAType() == OL_EnergyAssetType.WINDMILL) {
+				sliderWindFarmGCList.add(energyProductionSite);
+				break;
+			}
+		}
+	}
+}
+
+if(sliderWindFarmGCList.size() == 0){
+	throw new IllegalStateException("Model does not contain any sliderWindFarmGC agent");
+}
+
+f_setWindTurbines( sl_largeScaleWind_MW_Businesspark.getValue() - p_currentWindTurbines_MW, sliderWindFarmGCList);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1676,14 +1746,18 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setGridBatteries(sl_collectiveBattery_MWh_businesspark.getValue(), uI_Tabs.f_getAllSliderGridConnections_gridBatteries());
-
-//Update variable to change to custom scenario
-if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.f_setScenarioToCustom();
+					<ActionCode>List&lt;GCGridBattery&gt; gcListGridBatteries = new ArrayList&lt;&gt;();
+for(GridConnection gc : c_electricityTabEASliderGCs){
+	if(gc instanceof GCGridBattery gridbattery){
+		gcListGridBatteries.add(gridbattery);
+	}
 }
 
-zero_Interface.f_resetSettings();</ActionCode>
+if(gcListGridBatteries.size() == 0){
+	throw new IllegalStateException("Model does not contain any GCGridBattery agent");
+}
+
+f_setGridBatteries(sl_collectiveBattery_MWh_businesspark.getValue() * 1000, gcListGridBatteries);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1979,8 +2053,18 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), 
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setGridBatteries_residential( sl_gridBatteriesResidentialArea_kWh.getValue(), uI_Tabs.f_getAllSliderGridConnections_gridBatteries() );
-</ActionCode>
+					<ActionCode>List&lt;GCGridBattery&gt; gcListGridBatteries = new ArrayList&lt;&gt;();
+for(GridConnection gc : c_electricityTabEASliderGCs){
+	if(gc instanceof GCGridBattery gridbattery){
+		gcListGridBatteries.add(gridbattery);
+	}
+}
+
+if(gcListGridBatteries.size() == 0){
+	throw new IllegalStateException("Model does not contain any GCGridBattery agent");
+}
+
+f_setGridBatteries(sl_gridBatteriesResidentialArea_kWh.getValue(), gcListGridBatteries);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
