@@ -1312,7 +1312,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>J_EAChargingSession</ReturnType>
+		<ReturnType>J_ChargingSession</ReturnType>
 		<Id>1749648772203</Id>
 		<Name><![CDATA[f_createChargingSession]]></Name>
 		<X>490</X>
@@ -1332,7 +1332,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>List&lt;J_EAChargingSession&gt; </ReturnType>
+		<ReturnType>List&lt;J_ChargingSession&gt; </ReturnType>
 		<Id>1749649169603</Id>
 		<Name><![CDATA[f_createNewChargerProfile]]></Name>
 		<X>470</X>
@@ -1352,7 +1352,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>List&lt;J_EAChargingSession&gt; </ReturnType>
+		<ReturnType>List&lt;J_ChargingSession&gt; </ReturnType>
 		<Id>1749649390125</Id>
 		<Name><![CDATA[f_getChargerProfile]]></Name>
 		<X>450</X>
