@@ -24,7 +24,10 @@ public class Building_data {
 	String extra_info;
 	Double contracted_capacity_kw;
 	Double electricity_consumption_kwhpa;
-	Double gas_consumption_m3pa;
+	Double gas_consumption_kwhpa;
+	Double space_heating_consumption_kwhpa;
+	Double dhw_consumption_kwhpa;
+	Double cooking_consumption_kwhpa;
 	Double pv_installed_kwp;
 	Double pv_potential_kwp;
 	OL_GridConnectionIsolationLabel energy_label;
@@ -33,4 +36,10 @@ public class Building_data {
 	Double latitude;
 	Double longitude;
 	String polygon;
+	
+	Integer ownership_int;
+	Integer constructionPeriod_int;
+	Integer buildingType_int;
+	Double localFactor;
+	Double regionalClimateCorrectionFactor;
 }
