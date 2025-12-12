@@ -1661,15 +1661,11 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 		chargingStation.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
 	}
 	
-	//chargingStation.set_p_heatingType( OL_GridConnectionHeatingType.NONE );
-	
 	//Set parent node
 	chargingStation.p_parentNodeElectricID = dataChargingStation.gridnode_id();
 	
 	//Is active at start?
 	chargingStation.v_isActive = dataChargingStation.initially_active();
-
-	//chargingStation.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
 			
 	//Create and connect owner
 	ConnectionOwner owner = energyModel.add_pop_connectionOwners();
@@ -1708,7 +1704,10 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 			List<J_ChargingSession> chargerProfile = f_getChargerProfile();
 			boolean V1GCapable = randomTrue(avgc_data.p_v1gProbability);
 			boolean V2GCapable = randomTrue(avgc_data.p_v2gProbability);
-			new J_EAChargePoint(chargingStation, OL_EnergyAssetType.CHARGER, chargerProfile, V1GCapable, V2GCapable);
+			chargingStation.f_setChargePoint( new J_ChargePoint(V1GCapable, V2GCapable));
+			chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation));
+			new J_EAChargingSession(chargingStation, chargerProfile, 1);
+			new J_EAChargingSession(chargingStation, chargerProfile, 2);
 		}
 		else{
 			for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerChargePoint; k++ ){
@@ -1756,8 +1755,10 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 			List<J_ChargingSession> chargerProfile = f_getChargerProfile();
 			boolean V1GCapable = true; //randomTrue(avgc_data.p_v1gProbability);
 			boolean V2GCapable = true; //randomTrue(avgc_data.p_v2gProbability);
-			new J_EAChargePoint(chargingStation, OL_EnergyAssetType.CHARGER, chargerProfile, V1GCapable, V2GCapable);
-		
+			chargingStation.f_setChargePoint(new J_ChargePoint(V1GCapable, V2GCapable));
+			chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation));
+			new J_EAChargingSession(chargingStation, chargerProfile, 1);
+			new J_EAChargingSession(chargingStation, chargerProfile, 2);
 		}
 		else{
 			for(int k = 0; k < avgc_data.p_avgVehiclesPerChargePoint; k++ ){
@@ -3169,11 +3170,12 @@ double batteryCap_kWh = Double.parseDouble(chargingSessionInfo[3]);
 double chargingPower_kW = Double.parseDouble(chargingSessionInfo[5]);
 int socket = Integer.parseInt(chargingSessionInfo[6]);
 boolean isV2GCapable = randomTrue(avgc_data.p_v2gProbability);
+double timeStep_h = 0.25;
 
 //Cap charging demand to what is actual possible according to chargetime interval * charge power
 chargingDemand_kWh = min(chargingPower_kW * (endIndex - startIndex) * 0.25, chargingDemand_kWh);
 
-return new J_ChargingSession(startIndex, endIndex, chargingDemand_kWh, batteryCap_kWh, chargingPower_kW, socket, 0.25);
+return new J_ChargingSession(startIndex, endIndex, chargingDemand_kWh, batteryCap_kWh, chargingPower_kW, socket, isV2GCapable, timeStep_h);
 /*ALCODEEND*/}
 
 List<J_ChargingSession>  f_createNewChargerProfile(ChargerProfile_data chargerProfileData)

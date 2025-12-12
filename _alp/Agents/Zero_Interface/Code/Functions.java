@@ -2011,55 +2011,49 @@ double f_initialParkingSpacesOrder()
 
 double f_initialChargerOrder()
 {/*ALCODESTART::1750247111856*/
-c_orderedV1GChargers = new ArrayList<J_EAChargePoint>();
-c_orderedV2GChargers = new ArrayList<J_EAChargePoint>();
-c_orderedPublicChargers = new ArrayList<GCPublicCharger>();
+c_orderedV1GChargers = new ArrayList<>();
+c_orderedV2GChargers = new ArrayList<>();
+c_orderedPublicChargers = new ArrayList<>();
 
-List<J_EAChargePoint> c_inactiveV1GChargers = new ArrayList<J_EAChargePoint>();
-List<J_EAChargePoint> c_inactiveV2GChargers = new ArrayList<J_EAChargePoint>();
+List<GCPublicCharger> c_inactiveV1GChargers = new ArrayList<>();
+List<GCPublicCharger> c_inactiveV2GChargers = new ArrayList<>();
 
-for (GridConnection gc : energyModel.f_getActiveGridConnections()) {
-	for (J_EAChargePoint charger : gc.c_chargers) {
-		if (charger.getV1GCapable()) {
-			c_orderedV1GChargers.add(0, charger);
-		}
-		else {
-			c_orderedV1GChargers.add(charger);
-		}
-		if (charger.getV2GCapable()) {
-			c_orderedV2GChargers.add(0, charger);
-		}
-		else {
-			c_orderedV2GChargers.add(charger);
-		}
+for (GCPublicCharger gc : energyModel.PublicChargers) {
+	if(gc.f_getChargingManagement() == null){
+		throw new RuntimeException("Public charger found without chargingmanagement!");
 	}
-}
-
-for (GridConnection gc : energyModel.f_getPausedGridConnections()) {
-	for (J_EAChargePoint charger : gc.c_chargers) {
-		if (charger.getV1GCapable()) {
-			c_inactiveV1GChargers.add(0, charger);
-		}
-		else {
-			c_inactiveV1GChargers.add(charger);
-		}
-		if (charger.getV2GCapable()) {
-			c_inactiveV2GChargers.add(0, charger);
-		}
-		else {
-			c_inactiveV2GChargers.add(charger);
-		}
+	J_ChargePoint chargePoint = gc.f_getChargePoint();
+	
+	//Get the correct list the public charger should be added to
+	List<GCPublicCharger> collectionPointerV1GChargers = c_orderedV1GChargers;
+	List<GCPublicCharger> collectionPointerV2GChargers = c_orderedV2GChargers;
+	if(!gc.v_isActive){
+		collectionPointerV1GChargers = c_inactiveV1GChargers;
+		collectionPointerV2GChargers = c_inactiveV2GChargers;	
+	}
+	
+	//Assign the gc to a certain location in the ordered list based on the capabilities
+	if (chargePoint.getV1GCapable()) {
+		collectionPointerV1GChargers.add(0, gc);
+	}
+	else {
+		collectionPointerV1GChargers.add(gc);
+	}
+	if (chargePoint.getV2GCapable()) {
+		collectionPointerV2GChargers.add(0, gc);
+	}
+	else {
+		collectionPointerV2GChargers.add(gc);
+	}
+	
+	if ( !gc.p_isChargingCentre ) { //Should maybe be a check for charger capabilities as well? 
+		c_orderedPublicChargers.add(gc);
 	}
 }
 
 c_orderedV1GChargers.addAll( c_inactiveV1GChargers );
 c_orderedV2GChargers.addAll( c_inactiveV2GChargers );
 
-for (GCPublicCharger gc : energyModel.PublicChargers) {
-	if ( !gc.p_isChargingCentre ) {
-		c_orderedPublicChargers.add(gc);
-	}
-}
 
 //Collections.shuffle(c_orderedPublicChargers);
 /*ALCODEEND*/}

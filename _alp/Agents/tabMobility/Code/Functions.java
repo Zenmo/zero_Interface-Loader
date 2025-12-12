@@ -1442,8 +1442,6 @@ gr_settingsV2G_publicChargers.setVisible(false);
 
 List<GCPublicCharger> activeChargerGridConnections = uI_Tabs.f_getSliderGridConnections_chargers();
 List<GCPublicCharger> pausedChargerGridConnections = uI_Tabs.f_getPausedSliderGridConnections_chargers();
-List<J_EAChargePoint> activeChargersEA = new ArrayList<J_EAChargePoint>();
-activeChargerGridConnections.forEach(gc -> activeChargersEA.addAll(gc.c_chargers));
 
 
 int nbPublicChargerGC = activeChargerGridConnections.size() + pausedChargerGridConnections.size();
@@ -1453,9 +1451,9 @@ if(nbPublicChargerGC > 0 ){
 	double activePublicChargers_pct = 100.0 * nbActivePublicChargersGC / nbPublicChargerGC;
 	sl_publicChargersResidentialArea_pct.setValue(roundToInt(activePublicChargers_pct), false);
 	
-	int nbV1GChargers = count(activeChargersEA, x -> x.getV1GCapable());
-	int nbV2GChargers =count(activeChargersEA, x -> x.getV2GCapable());
-	int nbPublicChargers = activeChargersEA.size();
+	int nbV1GChargers = count(activeChargerGridConnections, x -> x.f_getChargePoint().getV1GCapable());
+	int nbV2GChargers =count(activeChargerGridConnections, x -> x.f_getChargePoint().getV2GCapable());
+	int nbPublicChargers = activeChargerGridConnections.size();
 		
 	double V1G_pct = 100.0 * nbV1GChargers / nbPublicChargers;
 	double V2G_pct = 100.0 * nbV2GChargers / nbPublicChargers;
@@ -1464,12 +1462,12 @@ if(nbPublicChargerGC > 0 ){
 	
 	//Selected charging mode
 	OL_ChargingAttitude currentChargingAttitude = activeChargerGridConnections.size() > 0 ? activeChargerGridConnections.get(0).f_getCurrentChargingType(): OL_ChargingAttitude.SIMPLE;
-	boolean V2GActive = activeChargersEA.size() > 0 ? activeChargersEA.get(0).getV2GActive(): false;
-	for(J_EAChargePoint charger : activeChargersEA){
-		if(currentChargingAttitude != OL_ChargingAttitude.CUSTOM && ((GridConnection)charger.getParentAgent()).f_getCurrentChargingType() != currentChargingAttitude){
+	boolean V2GActive = activeChargerGridConnections.size() > 0 ? activeChargerGridConnections.get(0).f_getChargingManagement().getV2GActive(): false;
+	for(GCPublicCharger charger : activeChargerGridConnections){
+		if(currentChargingAttitude != OL_ChargingAttitude.CUSTOM && charger.f_getCurrentChargingType() != currentChargingAttitude){
 			currentChargingAttitude = OL_ChargingAttitude.CUSTOM; // Here used as varied: in other words: custom setting
 		}
-		if(V2GActive && !charger.getV2GActive()){
+		if(V2GActive && !charger.f_getChargingManagement().getV2GActive()){
 			V2GActive = false;
 		}
 		
@@ -1558,16 +1556,13 @@ int totalCapableV2GChargers = 0;
 
 for(GCPublicCharger GC : gcListChargers){
 	if(GC.v_isActive){
-		for(J_EAChargePoint charger : GC.c_chargers){
-			totalActiveChargers++;
-			if(charger.getV1GCapable()){
-				totalCapableV1GChargers++;
-			}
-			if(charger.getV2GCapable()){
-				totalCapableV2GChargers++;			
-			}
+		totalActiveChargers++;
+		if(GC.f_getChargePoint().getV1GCapable()){
+			totalCapableV1GChargers++;
+		}
+		if(GC.f_getChargePoint().getV2GCapable()){
+			totalCapableV2GChargers++;			
 		}	
-	
 	}
 }
 V1GCapableChargerSlider.setValue(roundToInt(100.0 * totalCapableV1GChargers/totalActiveChargers));
@@ -1585,27 +1580,24 @@ zero_Interface.f_resetSettings();
 
 double f_setV1GChargerCapabilities(List<GCPublicCharger> gcListChargers,double goal_pct)
 {/*ALCODESTART::1758183975221*/
-List<J_EAChargePoint> activeChargersEA = new ArrayList<J_EAChargePoint>();
-gcListChargers.forEach(gc -> activeChargersEA.addAll(gc.c_chargers));
-
-int totalNbChargers = activeChargersEA.size();
-int currentNbChargers = count(activeChargersEA, x -> x.getV1GCapable());
+int totalNbChargers = gcListChargers.size();
+int currentNbChargers = count(gcListChargers, x -> x.f_getChargePoint().getV1GCapable());
 int nbChargersGoal = roundToInt(goal_pct / 100.0 * totalNbChargers);
 
 while (currentNbChargers < nbChargersGoal) {
-	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> activeChargersEA.contains(x) && !x.getV1GCapable());
-	j_ea.setV1GCapability(true);
+	GCPublicCharger charger = findFirst(zero_Interface.c_orderedV1GChargers, x -> gcListChargers.contains(x) && !x.f_getChargePoint().getV1GCapable());
+	charger.f_getChargePoint().setV1GCapability(true);
 	currentNbChargers++;
-	zero_Interface.c_orderedV1GChargers.remove(j_ea);
-	zero_Interface.c_orderedV1GChargers.add(0, j_ea);
+	zero_Interface.c_orderedV1GChargers.remove(charger);
+	zero_Interface.c_orderedV1GChargers.add(0, charger);
 	
 }
 while (currentNbChargers > nbChargersGoal) {
-	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> activeChargersEA.contains(x) && x.getV1GCapable());
-	j_ea.setV1GCapability(false);
+	GCPublicCharger charger = findFirst(zero_Interface.c_orderedV1GChargers, x -> gcListChargers.contains(x) && x.f_getChargePoint().getV1GCapable());
+	charger.f_getChargePoint().setV1GCapability(false);
 	currentNbChargers--;
-	zero_Interface.c_orderedV1GChargers.remove(j_ea);
-	zero_Interface.c_orderedV1GChargers.add(0, j_ea);
+	zero_Interface.c_orderedV1GChargers.remove(charger);
+	zero_Interface.c_orderedV1GChargers.add(0, charger);
 }
 
 // Update variable to change to custom scenario
@@ -1618,27 +1610,24 @@ zero_Interface.f_resetSettings();
 
 double f_setV2GChargerCapabilities(List<GCPublicCharger> gcListChargers,double goal_pct)
 {/*ALCODESTART::1758183975227*/
-List<J_EAChargePoint> activeChargersEA = new ArrayList<J_EAChargePoint>();
-gcListChargers.forEach(gc -> activeChargersEA.addAll(gc.c_chargers));
-
-int totalNbChargers = activeChargersEA.size();
-int currentNbChargers = count(activeChargersEA, x -> x.getV2GCapable());
+int totalNbChargers = gcListChargers.size();
+int currentNbChargers = count(gcListChargers, x -> x.f_getChargePoint().getV2GCapable());
 int nbChargersGoal = roundToInt(goal_pct / 100.0 * totalNbChargers);
 
 while (currentNbChargers < nbChargersGoal) {
-	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> activeChargersEA.contains(x) && !x.getV2GCapable());
-	j_ea.setV2GCapability(true);
+	GCPublicCharger charger = findFirst(zero_Interface.c_orderedV2GChargers, x -> gcListChargers.contains(x) && !x.f_getChargePoint().getV2GCapable());
+	charger.f_getChargePoint().setV2GCapability(true);
 	currentNbChargers++;
-	zero_Interface.c_orderedV2GChargers.remove(j_ea);
-	zero_Interface.c_orderedV2GChargers.add(0, j_ea);
+	zero_Interface.c_orderedV2GChargers.remove(charger);
+	zero_Interface.c_orderedV2GChargers.add(0, charger);
 	
 }
 while (currentNbChargers > nbChargersGoal) {
-	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> activeChargersEA.contains(x) && x.getV2GCapable());
-	j_ea.setV2GCapability(false);
+	GCPublicCharger charger = findFirst(zero_Interface.c_orderedV2GChargers, x -> gcListChargers.contains(x) && x.f_getChargePoint().getV2GCapable());
+	charger.f_getChargePoint().setV2GCapability(false);
 	currentNbChargers--;
-	zero_Interface.c_orderedV2GChargers.remove(j_ea);
-	zero_Interface.c_orderedV2GChargers.add(0, j_ea);
+	zero_Interface.c_orderedV2GChargers.remove(charger);
+	zero_Interface.c_orderedV2GChargers.add(0, charger);
 }
 
 // Update variable to change to custom scenario
