@@ -3129,25 +3129,27 @@ for(GCGridBattery batteryGC : energyModel.GridBatteries){
 
 double f_setCompaniesScenario(LinkedHashMap scenarioMap)
 {/*ALCODESTART::1761060882101*/
-//Solution for now
-int companyUIScenarioRBIndex = 0;
-if(scenarioMap == c_scenarioMap_Current){
-	companyUIScenarioRBIndex = 0;
+if(!energyModel.UtilityConnections.isEmpty()){
+	//Solution for now
+	int companyUIScenarioRBIndex = 0;
+	if(scenarioMap == c_scenarioMap_Current){
+		companyUIScenarioRBIndex = 0;
+	}
+	else if(scenarioMap == c_scenarioMap_Future){
+		companyUIScenarioRBIndex = 1;
+	}
+	else{
+		throw new RuntimeException("Tried to call the setCompaniesScenario function with a non existing companyUI scenario");
+	}
+	
+	//Set companyUI to correct radio button setting
+	uI_Company.b_runningMainInterfaceScenarioSettings = true;
+	for (GCUtility  GC : energyModel.UtilityConnections){
+		uI_Company.f_setCompanyUI(GC);
+		uI_Company.getRb_scenariosPrivateUI().setValue(companyUIScenarioRBIndex, true);
+	}
+	uI_Company.b_runningMainInterfaceScenarioSettings = false;
 }
-else if(scenarioMap == c_scenarioMap_Future){
-	companyUIScenarioRBIndex = 1;
-}
-else{
-	throw new RuntimeException("Tried to call the setCompaniesScenario function with a non existing companyUI scenario");
-}
-
-//Set companyUI to correct radio button setting
-uI_Company.b_runningMainInterfaceScenarioSettings = true;
-for (GCUtility  GC : energyModel.UtilityConnections){
-	uI_Company.f_setCompanyUI(GC);
-	uI_Company.getRb_scenariosPrivateUI().setValue(companyUIScenarioRBIndex, true);
-}
-uI_Company.b_runningMainInterfaceScenarioSettings = false;
 /*ALCODEEND*/}
 
 double f_initializeScenarioRadioButton()
@@ -3258,6 +3260,7 @@ t_scenarioDescription.setText(t_scenario_future);
 
 double f_setScenario_Current()
 {/*ALCODESTART::1761119479233*/
+//if(project_data.project_type() == OL_ProjectType.BUSINESSPARK && c_scenarioMap_Current != null){
 if(c_scenarioMap_Current != null){
 	f_setCompaniesScenario(c_scenarioMap_Current);
 }

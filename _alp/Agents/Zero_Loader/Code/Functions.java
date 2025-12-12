@@ -3233,8 +3233,8 @@ switch(CookingType){
 double f_addHotWaterDemand(GCHouse houseGC,double surface_m2,double hotWaterDemand_kwhpa)
 {/*ALCODESTART::1749726279652*/
 double yearlyHWD_kWh = hotWaterDemand_kwhpa;
+int aantalBewoners;
 if(hotWaterDemand_kwhpa == 0){
-	int aantalBewoners;
 	if( surface_m2 > 150){
 		aantalBewoners = uniform_discr(2,6);
 	}
@@ -3254,7 +3254,7 @@ else {
 	aantalBewoners = uniform_discr(1,2);
 }
  
-double yearlyHWD_kWh = aantalBewoners * 600;  //12 * surface_m2 * 3 ; Tamelijk willekeurige formule om HWD te schalen tussen 600 - 2400 kWh bij 50m2 tot 200m2, voor een quickfix
+yearlyHWD_kWh = aantalBewoners * 600;  //12 * surface_m2 * 3 ; Tamelijk willekeurige formule om HWD te schalen tussen 600 - 2400 kWh bij 50m2 tot 200m2, voor een quickfix
 
 J_EAConsumption hotwaterDemand = new J_EAConsumption( houseGC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, null);
 
@@ -3276,7 +3276,7 @@ double solarAbsorptionFactor_m2; 	//hoeveel m2 effectieve dak en muur oppervlakt
 
 //Heat demand from PBL referentiewoningen used for HeatCapacity and lossFactor_WpK
 if(heatDemand_kwhpa > 0){ //Not missing in data
-	lossfactor_WpK = heatDemand_kwhpa / 63; // = manually calibrated value tested on 3 neighborhoods
+	lossfactor_WpK = heatDemand_kwhpa / 67; // = manually calibrated value tested on 3 neighborhoods
 }
 else{
 	switch (parentGC.p_energyLabel){
@@ -3309,7 +3309,8 @@ else{
 lossfactor_WpK = roundToDecimal(lossfactor_WpK,2);
 solarAbsorptionFactor_m2 = floorArea_m2 * 0.01; //solar irradiance [W/m2]
  
-heatCapacity_JpK = floorArea_m2 * 50000; //What is the 5000 based upon?
+heatCapacity_JpK = ((25000 * 100) + floorArea_m2 * 25000) * 5; //oud 50k was te groot verschil per floor area, 100 is avg floor area deel fixed, 2de deel o.b.v. floor area
+
 
 parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossfactor_WpK, energyModel.p_timeStep_h, initialTemp, heatCapacity_JpK, solarAbsorptionFactor_m2 );
 energyModel.c_ambientDependentAssets.add( parentGC.p_BuildingThermalAsset );
@@ -3386,6 +3387,7 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	
 	//For PBL heating
 	GCH.p_constructionPeriod_heatingPBL = houseBuildingData.constructionPeriod_int();
+	GCH.p_schillabel_heatingPBL = houseBuildingData.energy_label();
 	GCH.p_buildingType_heatingPBL = houseBuildingData.buildingType_int();
 	GCH.p_ownership_heatingPBL = houseBuildingData.ownership_int();
 	GCH.p_localFactor_heatingPBL = houseBuildingData.localFactor();
@@ -3489,8 +3491,7 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 		annualSpaceHeatingConsumption_kwhpa = houseBuildingData.space_heating_consumption_kwhpa();
 	}
 	catch (NullPointerException e){
-		annualSpaceHeatingConsumption_kwhpa =  annualNaturalGasConsumption_kwhpa * 0.85; //assumed share gas space heating
-		traceln("DOESTHISHAPPEN??");
+		annualSpaceHeatingConsumption_kwhpa = annualNaturalGasConsumption_kwhpa * 0.85; //assumed share gas space heating
 	}
 	try {
 		annualDHWConsumption_kwhpa = houseBuildingData.dhw_consumption_kwhpa();
@@ -3504,6 +3505,8 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	catch (NullPointerException e){
 		annualCookingConsumption_kwhpa =  annualNaturalGasConsumption_kwhpa * 0.05; //assumed share gas cooking
 	}
+	
+	
 	//GCH.p_initialPVpanels = houseBuildingData.pv_default();
 	GCH.v_liveAssetsMetaData.initialPV_kW = houseBuildingData.pv_installed_kwp() != null ? houseBuildingData.pv_installed_kwp() : 0;
 	GCH.v_liveAssetsMetaData.PVPotential_kW = GCH.v_liveAssetsMetaData.initialPV_kW > 0 ? GCH.v_liveAssetsMetaData.initialPV_kW : houseBuildingData.pv_potential_kwp(); // To prevent sliders from changing outcomes
@@ -3511,7 +3514,7 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	// TODO: Above we load in data of gas use, but the houses always have a thermal model??
 	f_addEnergyAssetsToHouses(GCH, annualElectricityConsumption_kwhpa, annualSpaceHeatingConsumption_kwhpa, annualDHWConsumption_kwhpa, annualCookingConsumption_kwhpa );	
 	
-	i ++;
+	i++;
 }
 
 //Backup for when pv_potential kWp is null, needs to be after all houses have been made, so rooftop surface is distributed correctly
