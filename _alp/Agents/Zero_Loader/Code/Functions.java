@@ -1361,15 +1361,15 @@ double vehicleScaling = 1.0;
 switch (vehicle_type){
 	
 	case PETROLEUM_FUEL_VEHICLE:
-		energyConsumption_kWhpkm = roundToDecimal(uniform(0.7, 1.3),2) * avgc_data.p_avgPetroleumFuelConsumptionCar_kWhpkm;
+		energyConsumption_kWhpkm = roundToDecimal(uniform(0.7, 1.3),2) * avgc_data.p_avgDieselConsumptionCar_kWhpkm;
 	break;
 	
 	case PETROLEUM_FUEL_VAN:
-		energyConsumption_kWhpkm = avgc_data.p_avgPetroleumFuelConsumptionVan_kWhpkm;
+		energyConsumption_kWhpkm = avgc_data.p_avgDieselConsumptionVan_kWhpkm;
 	break;
 	
 	case PETROLEUM_FUEL_TRUCK:
-		energyConsumption_kWhpkm = avgc_data.p_avgPetroleumFuelConsumptionTruck_kWhpkm;
+		energyConsumption_kWhpkm = avgc_data.p_avgDieselConsumptionTruck_kWhpkm;
 	break;
 }
 

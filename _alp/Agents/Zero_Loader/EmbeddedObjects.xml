@@ -212,7 +212,7 @@
 				<Name><![CDATA[p_petroleumFuel_kWhpl]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgPetroleumFuelConsumptionCar_kmpl]]></Name>
+				<Name><![CDATA[p_avgDieselConsumptionCar_kmpl]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgGasolineConsumptionCar_kmpl]]></Name>
@@ -221,22 +221,22 @@
 				<Name><![CDATA[p_gasoline_kWhpl]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgPetroleumFuelConsumptionCar_kWhpkm]]></Name>
+				<Name><![CDATA[p_avgDieselConsumptionCar_kWhpkm]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgGasolineConsumptionCar_kWhpkm]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgPetroleumFuelConsumptionVan_kmpl]]></Name>
+				<Name><![CDATA[p_avgDieselConsumptionVan_kmpl]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgPetroleumFuelConsumptionVan_kWhpkm]]></Name>
+				<Name><![CDATA[p_avgDieselConsumptionVan_kWhpkm]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgPetroleumFuelConsumptionTruck_kmpl]]></Name>
+				<Name><![CDATA[p_avgDieselConsumptionTruck_kmpl]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgPetroleumFuelConsumptionTruck_kWhpkm]]></Name>
+				<Name><![CDATA[p_avgDieselConsumptionTruck_kWhpkm]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgCOPHeatpump]]></Name>
