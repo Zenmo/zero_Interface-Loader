@@ -766,7 +766,7 @@ MM O = 16 g/mol
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1726584205651</Id>
-		<Name><![CDATA[p_diesel_kWhpl]]></Name>
+		<Name><![CDATA[p_petroleumFuel_kWhpl]]></Name>
 		<Description><![CDATA[https://www.joostdevree.nl/shtmls/calorische_waarde.shtml]]></Description>
 		<X>1070</X>
 		<Y>250</Y>
@@ -795,7 +795,7 @@ MM O = 16 g/mol
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1726584205654</Id>
-		<Name><![CDATA[p_avgDieselConsumptionCar_kmpl]]></Name>
+		<Name><![CDATA[p_avgPetroleumFuelConsumptionCar_kmpl]]></Name>
 		<Description><![CDATA[https://www.unitedconsumers.com/blog/auto/zuinig-rijden.jsp]]></Description>
 		<X>570</X>
 		<Y>400</Y>
@@ -882,7 +882,7 @@ MM O = 16 g/mol
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1726584205663</Id>
-		<Name><![CDATA[p_avgDieselConsumptionCar_kWhpkm]]></Name>
+		<Name><![CDATA[p_avgPetroleumFuelConsumptionCar_kWhpkm]]></Name>
 		<X>570</X>
 		<Y>450</Y>
 		<Label>
@@ -897,7 +897,7 @@ MM O = 16 g/mol
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[p_diesel_kWhpl/p_avgDieselConsumptionCar_kmpl]]></Code>
+				<Code><![CDATA[p_petroleumFuel_kWhpl/p_avgPetroleumFuelConsumptionCar_kmpl]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1726584205661</Id>
@@ -938,8 +938,8 @@ MM O = 16 g/mol
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1726584205669</Id>
-		<Name><![CDATA[p_avgDieselConsumptionVan_kmpl]]></Name>
-		<Description><![CDATA[https://www.webfleet.com/nl_nl/webfleet/blog/hoeveel-diesel-verbruikt-een-vrachtwagen-per-kilometer/
+		<Name><![CDATA[p_avgPetroleumFuelConsumptionVan_kmpl]]></Name>
+		<Description><![CDATA[https://www.webfleet.com/nl_nl/webfleet/blog/hoeveel-petroleumFuel-verbruikt-een-vrachtwagen-per-kilometer/
 
 11 liter per 100 km = 9.1 km per liter.
 ]]></Description>
@@ -970,7 +970,7 @@ MM O = 16 g/mol
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1726584205672</Id>
-		<Name><![CDATA[p_avgDieselConsumptionVan_kWhpkm]]></Name>
+		<Name><![CDATA[p_avgPetroleumFuelConsumptionVan_kWhpkm]]></Name>
 		<X>570</X>
 		<Y>530</Y>
 		<Label>
@@ -985,7 +985,7 @@ MM O = 16 g/mol
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[p_diesel_kWhpl/p_avgDieselConsumptionVan_kmpl]]></Code>
+				<Code><![CDATA[p_petroleumFuel_kWhpl/p_avgPetroleumFuelConsumptionVan_kmpl]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1726584205670</Id>
@@ -998,8 +998,8 @@ MM O = 16 g/mol
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1726584205675</Id>
-		<Name><![CDATA[p_avgDieselConsumptionTruck_kmpl]]></Name>
-		<Description><![CDATA[https://www.webfleet.com/nl_nl/webfleet/blog/hoeveel-diesel-verbruikt-een-vrachtwagen-per-kilometer/
+		<Name><![CDATA[p_avgPetroleumFuelConsumptionTruck_kmpl]]></Name>
+		<Description><![CDATA[https://www.webfleet.com/nl_nl/webfleet/blog/hoeveel-petroleumFuel-verbruikt-een-vrachtwagen-per-kilometer/
 
 --> 25 - 30 - 40 liter per 100 km. = 4 - 3.33 - 2.5 km per l
 Heavely dependend on load, city/highway, etc.
@@ -1031,7 +1031,7 @@ For now: Picking 3.33 km per l]]></Description>
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1726584205678</Id>
-		<Name><![CDATA[p_avgDieselConsumptionTruck_kWhpkm]]></Name>
+		<Name><![CDATA[p_avgPetroleumFuelConsumptionTruck_kWhpkm]]></Name>
 		<X>570</X>
 		<Y>580</Y>
 		<Label>
@@ -1046,7 +1046,7 @@ For now: Picking 3.33 km per l]]></Description>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[p_diesel_kWhpl/p_avgDieselConsumptionTruck_kmpl]]></Code>
+				<Code><![CDATA[p_petroleumFuel_kWhpl/p_avgPetroleumFuelConsumptionTruck_kmpl]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1726584205676</Id>
@@ -1120,7 +1120,7 @@ Gemiddelde COP is 4.]]></Description>
 	<Variable Class="Parameter">
 		<Id>1726584205687</Id>
 		<Name><![CDATA[p_ratioElectricTrucks]]></Name>
-		<Description><![CDATA[Ratio of how many trucks are electric vs diesel.
+		<Description><![CDATA[Ratio of how many trucks are electric vs petroleumFuel.
 ???
 https://nos.nl/artikel/2483604-elektrische-vrachtwagens-blijven-achter-door-complexe-serie-aan-uitdagingen --> 'volgens cbs nog geen half procent.']]></Description>
 		<X>50</X>

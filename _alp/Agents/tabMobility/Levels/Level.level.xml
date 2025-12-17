@@ -112,7 +112,7 @@
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>sl_electricCars_pct.setValue(100 - sl_fossilFuelCars_pct.getIntValue(), false);
-f_setDieselCars( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricCars_pct, sl_fossilFuelCars_pct );</ActionCode>
+f_setPetroleumFuelCars( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricCars_pct, sl_fossilFuelCars_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -432,7 +432,7 @@ f_setHydrogenTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setVehicleSliders( 2, sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );
-f_setDieselTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );</ActionCode>
+f_setPetroleumFuelTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -642,7 +642,7 @@ f_setElectricCars( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>sl_electricVans_pct.setValue(100 - sl_fossilFuelVans_pct.getIntValue(), false);
-f_setDieselVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricVans_pct, sl_fossilFuelVans_pct );</ActionCode>
+f_setPetroleumFuelVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricVans_pct, sl_fossilFuelVans_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>

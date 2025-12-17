@@ -39,9 +39,9 @@ public class J_scenario_Current implements Serializable {
 	private Float currentBatteryPower_kW = 0f;
 	private Float currentBatteryCapacity_kWh = 0f;
 	private OL_GridConnectionHeatingType currentHeatingType = OL_GridConnectionHeatingType.NONE;
-	private Integer currentDieselCars = 0;
-	private Integer currentDieselVans = 0;
-	private Integer currentDieselTrucks = 0;
+	private Integer currentPetroleumFuelCars = 0;
+	private Integer currentPetroleumFuelVans = 0;
+	private Integer currentPetroleumFuelTrucks = 0;
 	private Integer currentHydrogenCars = 0; 
 	private Integer currentHydrogenVans = 0;
 	private Integer currentHydrogenTrucks = 0;
@@ -113,16 +113,16 @@ public class J_scenario_Current implements Serializable {
         this.currentHeatingType = currentHeatingType;
     }
 
-    public void setCurrentDieselCars(Integer currentDieselCars) {
-        this.currentDieselCars = currentDieselCars;
+    public void setCurrentPetroleumFuelCars(Integer currentPetroleumFuelCars) {
+        this.currentPetroleumFuelCars = currentPetroleumFuelCars;
     }
 
-    public void setCurrentDieselVans(Integer currentDieselVans) {
-        this.currentDieselVans = currentDieselVans;
+    public void setCurrentPetroleumFuelVans(Integer currentPetroleumFuelVans) {
+        this.currentPetroleumFuelVans = currentPetroleumFuelVans;
     }
 
-    public void setCurrentDieselTrucks(Integer currentDieselTrucks) {
-        this.currentDieselTrucks = currentDieselTrucks;
+    public void setCurrentPetroleumFuelTrucks(Integer currentPetroleumFuelTrucks) {
+        this.currentPetroleumFuelTrucks = currentPetroleumFuelTrucks;
     }
   
     public void setCurrentHydrogenCars(Integer currentHydrogenCars) {
@@ -212,16 +212,16 @@ public class J_scenario_Current implements Serializable {
         return currentHeatingType;
     }
 	
-    public Integer getCurrentDieselCars() {
-        return currentDieselCars;
+    public Integer getCurrentPetroleumFuelCars() {
+        return currentPetroleumFuelCars;
     }
 
-    public Integer getCurrentDieselVans() {
-        return currentDieselVans;
+    public Integer getCurrentPetroleumFuelVans() {
+        return currentPetroleumFuelVans;
     }
 
-    public Integer getCurrentDieselTrucks() {
-        return currentDieselTrucks;
+    public Integer getCurrentPetroleumFuelTrucks() {
+        return currentPetroleumFuelTrucks;
     }
 
     public Integer getCurrentHydrogenCars() {

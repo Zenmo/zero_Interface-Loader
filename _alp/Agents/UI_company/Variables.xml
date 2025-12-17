@@ -222,7 +222,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1714139299844</Id>
-		<Name><![CDATA[v_nbDieselCars]]></Name>
+		<Name><![CDATA[v_nbPetroleumFuelCars]]></Name>
 		<X>-1050</X>
 		<Y>750</Y>
 		<Label>
@@ -288,7 +288,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1714139381294</Id>
-		<Name><![CDATA[v_nbDieselVans]]></Name>
+		<Name><![CDATA[v_nbPetroleumFuelVans]]></Name>
 		<X>-1050</X>
 		<Y>950</Y>
 		<Label>
@@ -310,7 +310,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1714139385293</Id>
-		<Name><![CDATA[v_nbDieselTrucks]]></Name>
+		<Name><![CDATA[v_nbPetroleumFuelTrucks]]></Name>
 		<X>-1050</X>
 		<Y>1150</Y>
 		<Label>
@@ -442,7 +442,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1714140007855</Id>
-		<Name><![CDATA[v_minDieselCarSlider]]></Name>
+		<Name><![CDATA[v_minPetroleumFuelCarSlider]]></Name>
 		<X>-1050</X>
 		<Y>630</Y>
 		<Label>
@@ -486,7 +486,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1714140056511</Id>
-		<Name><![CDATA[v_maxDieselCarSlider]]></Name>
+		<Name><![CDATA[v_maxPetroleumFuelCarSlider]]></Name>
 		<X>-1050</X>
 		<Y>690</Y>
 		<Label>
@@ -574,7 +574,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1714141906268</Id>
-		<Name><![CDATA[v_minDieselVanSlider]]></Name>
+		<Name><![CDATA[v_minPetroleumFuelVanSlider]]></Name>
 		<X>-1050</X>
 		<Y>830</Y>
 		<Label>
@@ -618,7 +618,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1714141906272</Id>
-		<Name><![CDATA[v_maxDieselVanSlider]]></Name>
+		<Name><![CDATA[v_maxPetroleumFuelVanSlider]]></Name>
 		<X>-1050</X>
 		<Y>890</Y>
 		<Label>
@@ -706,7 +706,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1714142030267</Id>
-		<Name><![CDATA[v_minDieselTruckSlider]]></Name>
+		<Name><![CDATA[v_minPetroleumFuelTruckSlider]]></Name>
 		<X>-1050</X>
 		<Y>1030</Y>
 		<Label>
@@ -728,7 +728,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1714142030269</Id>
-		<Name><![CDATA[v_maxDieselTruckSlider]]></Name>
+		<Name><![CDATA[v_maxPetroleumFuelTruckSlider]]></Name>
 		<X>-1050</X>
 		<Y>1090</Y>
 		<Label>

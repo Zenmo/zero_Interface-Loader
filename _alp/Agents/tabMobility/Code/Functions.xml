@@ -82,7 +82,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1746008458894</Id>
-		<Name><![CDATA[f_setDieselTrucks]]></Name>
+		<Name><![CDATA[f_setPetroleumFuelTrucks]]></Name>
 		<X>70</X>
 		<Y>770</Y>
 		<Label>
@@ -178,7 +178,7 @@
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>boolean</ReturnType>
 		<Id>1746008458938</Id>
-		<Name><![CDATA[f_dieselToElectricTruck]]></Name>
+		<Name><![CDATA[f_petroleumFuelToElectricTruck]]></Name>
 		<X>360</X>
 		<Y>720</Y>
 		<Label>
@@ -238,7 +238,7 @@
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>boolean</ReturnType>
 		<Id>1746008458968</Id>
-		<Name><![CDATA[f_dieselToHydrogenTruck]]></Name>
+		<Name><![CDATA[f_petroleumFuelToHydrogenTruck]]></Name>
 		<X>360</X>
 		<Y>800</Y>
 		<Label>
@@ -258,7 +258,7 @@
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>boolean</ReturnType>
 		<Id>1746008458977</Id>
-		<Name><![CDATA[f_electricToDieselTruck]]></Name>
+		<Name><![CDATA[f_electricToPetroleumFuelTruck]]></Name>
 		<X>360</X>
 		<Y>840</Y>
 		<Label>
@@ -278,7 +278,7 @@
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>boolean</ReturnType>
 		<Id>1746008458987</Id>
-		<Name><![CDATA[f_hydrogenToDieselTruck]]></Name>
+		<Name><![CDATA[f_hydrogenToPetroleumFuelTruck]]></Name>
 		<X>360</X>
 		<Y>860</Y>
 		<Label>
@@ -354,7 +354,7 @@
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>boolean</ReturnType>
 		<Id>1749645625091</Id>
-		<Name><![CDATA[f_dieselToElectricVan]]></Name>
+		<Name><![CDATA[f_petroleumFuelToElectricVan]]></Name>
 		<X>590</X>
 		<Y>720</Y>
 		<Label>
@@ -374,7 +374,7 @@
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>boolean</ReturnType>
 		<Id>1749645629101</Id>
-		<Name><![CDATA[f_electricToDieselVan]]></Name>
+		<Name><![CDATA[f_electricToPetroleumFuelVan]]></Name>
 		<X>590</X>
 		<Y>740</Y>
 		<Label>
@@ -394,7 +394,7 @@
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>boolean</ReturnType>
 		<Id>1749646233660</Id>
-		<Name><![CDATA[f_dieselToElectricCar]]></Name>
+		<Name><![CDATA[f_petroleumFuelToElectricCar]]></Name>
 		<X>590</X>
 		<Y>780</Y>
 		<Label>
@@ -414,7 +414,7 @@
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>boolean</ReturnType>
 		<Id>1749646235580</Id>
-		<Name><![CDATA[f_electricToDieselCar]]></Name>
+		<Name><![CDATA[f_electricToPetroleumFuelCar]]></Name>
 		<X>590</X>
 		<Y>800</Y>
 		<Label>
@@ -482,7 +482,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1749655752858</Id>
-		<Name><![CDATA[f_setDieselVans]]></Name>
+		<Name><![CDATA[f_setPetroleumFuelVans]]></Name>
 		<X>70</X>
 		<Y>840</Y>
 		<Label>
@@ -538,7 +538,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1749717776391</Id>
-		<Name><![CDATA[f_setDieselCars]]></Name>
+		<Name><![CDATA[f_setPetroleumFuelCars]]></Name>
 		<X>70</X>
 		<Y>890</Y>
 		<Label>

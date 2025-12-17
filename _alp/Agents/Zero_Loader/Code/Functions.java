@@ -1352,39 +1352,39 @@ else if (vehicle_type == OL_EnergyAssetType.ELECTRIC_VAN){
 return electricVehicle;
 /*ALCODEEND*/}
 
-J_EADieselVehicle f_addDieselVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_type,Boolean isDefaultVehicle,double annualTravelDistance_km)
+J_EAPetroleumFuelVehicle f_addPetroleumFuelVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_type,Boolean isDefaultVehicle,double annualTravelDistance_km)
 {/*ALCODESTART::1726584205829*/
 double energyConsumption_kWhpkm = 0;
 double vehicleScaling = 1.0;
 
-//Diesel car
+//PetroleumFuel car
 switch (vehicle_type){
 	
-	case DIESEL_VEHICLE:
-		energyConsumption_kWhpkm = roundToDecimal(uniform(0.7, 1.3),2) * avgc_data.p_avgDieselConsumptionCar_kWhpkm;
+	case PETROLEUM_FUEL_VEHICLE:
+		energyConsumption_kWhpkm = roundToDecimal(uniform(0.7, 1.3),2) * avgc_data.p_avgPetroleumFuelConsumptionCar_kWhpkm;
 	break;
 	
-	case DIESEL_VAN:
-		energyConsumption_kWhpkm = avgc_data.p_avgDieselConsumptionVan_kWhpkm;
+	case PETROLEUM_FUEL_VAN:
+		energyConsumption_kWhpkm = avgc_data.p_avgPetroleumFuelConsumptionVan_kWhpkm;
 	break;
 	
-	case DIESEL_TRUCK:
-		energyConsumption_kWhpkm = avgc_data.p_avgDieselConsumptionTruck_kWhpkm;
+	case PETROLEUM_FUEL_TRUCK:
+		energyConsumption_kWhpkm = avgc_data.p_avgPetroleumFuelConsumptionTruck_kWhpkm;
 	break;
 }
 
 //Create EA
-J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(parentGC, energyConsumption_kWhpkm, energyModel.p_timeStep_h, vehicleScaling, vehicle_type, null);
+J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(parentGC, energyConsumption_kWhpkm, energyModel.p_timeStep_h, vehicleScaling, vehicle_type, null);
 
 //Set annual travel distance
 if (!isDefaultVehicle && annualTravelDistance_km > 1000){
-		dieselVehicle.tripTracker.setAnnualDistance_km(annualTravelDistance_km);
+		petroleumFuelVehicle.tripTracker.setAnnualDistance_km(annualTravelDistance_km);
 }
-else if (vehicle_type == OL_EnergyAssetType.DIESEL_VAN){
-		dieselVehicle.tripTracker.setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
+else if (vehicle_type == OL_EnergyAssetType.PETROLEUM_FUEL_VAN){
+		petroleumFuelVehicle.tripTracker.setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
 }
 
-return dieselVehicle;
+return petroleumFuelVehicle;
 
 
 
@@ -1500,7 +1500,7 @@ if(p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_Vehicle
 	int nbCars = 0;
 	int ceiledRemainingNumberOfCarsPerCompany = p_remainingTotals.getCeiledRemainingNumberOfVehiclesPerCompany(companyGC, OL_VehicleType.CAR);
 	for (int k = 0; k < ceiledRemainingNumberOfCarsPerCompany; k++){
-		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
+		f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, true, 0);
 		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.CAR, - 1);
 		nbCars++;
 	}
@@ -1509,7 +1509,7 @@ if(p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_Vehicle
 	p_remainingTotals.adjustRemainingNumberOfAnonymousCompaniesForVehicleType(companyGC, OL_VehicleType.CAR, - 1);
 	
 	//Set current scenario cars
-	current_scenario_list.setCurrentDieselCars(nbCars);
+	current_scenario_list.setCurrentPetroleumFuelCars(nbCars);
 	//Set planned scenario cars
 	future_scenario_list.setPlannedEVCars(0);
 }
@@ -1519,7 +1519,7 @@ if(p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_Vehicle
 	int nbVans = 0;
 	int ceiledRemainingNumberOfVansPerCompany = p_remainingTotals.getCeiledRemainingNumberOfVehiclesPerCompany(companyGC, OL_VehicleType.VAN);
 	for (int k = 0; k< ceiledRemainingNumberOfVansPerCompany; k++){
-		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VAN, true, 0);
+		f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_VAN, true, 0);
 		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.VAN, - 1);
 		nbVans++;
 	}
@@ -1528,7 +1528,7 @@ if(p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_Vehicle
 	p_remainingTotals.adjustRemainingNumberOfAnonymousCompaniesForVehicleType(companyGC, OL_VehicleType.VAN, - 1);
 	
 	//Set current scenario vans
-	current_scenario_list.setCurrentDieselVans(nbVans);
+	current_scenario_list.setCurrentPetroleumFuelVans(nbVans);
 	//Set planned scenario vans
 	future_scenario_list.setPlannedEVVans(0);
 }
@@ -1538,7 +1538,7 @@ if (p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_Vehicl
 	int nbTrucks= 0;
 	int ceiledRemainingNumberOfTrucksPerCompany = p_remainingTotals.getCeiledRemainingNumberOfVehiclesPerCompany(companyGC, OL_VehicleType.TRUCK);
 	for (int k = 0; k< ceiledRemainingNumberOfTrucksPerCompany; k++){
-		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_TRUCK, true, 0);
+		f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, true, 0);
 		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.TRUCK, - 1);
 		nbTrucks++;
 	}
@@ -1547,7 +1547,7 @@ if (p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_Vehicl
 	p_remainingTotals.adjustRemainingNumberOfAnonymousCompaniesForVehicleType(companyGC, OL_VehicleType.TRUCK, - 1);
 		
 	//Set current scenario trucks
-	current_scenario_list.setCurrentDieselTrucks(nbTrucks);
+	current_scenario_list.setCurrentPetroleumFuelTrucks(nbTrucks);
 	//Set planned scenario trucks
 	future_scenario_list.setPlannedEVTrucks(0);
 }
@@ -2177,7 +2177,7 @@ companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = 0.0;
 companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = 0.0;
 companyGC.v_liveConnectionMetaData.physicalCapacity_kW = 0.0;
 
-f_createDieselTractors(companyGC, gridConnection.getTransport().getAgriculture());
+f_createPetroleumFuelTractors(companyGC, gridConnection.getTransport().getAgriculture());
 
 //Check for electricity connection and data
 if (gridConnection.getElectricity().getHasConnection()){
@@ -2439,13 +2439,13 @@ int nbDailyCarCommuters_notNull = (gridConnection.getTransport().getNumDailyCarA
 if (nbDailyCarCommuters_notNull + nbDailyCarVisitors_notNull > 0){	
 	
 	int nbEVCarsComute = (gridConnection.getTransport().getNumCommuterAndVisitorChargePoints() != null) ? gridConnection.getTransport().getNumCommuterAndVisitorChargePoints() : 0; // Wat doen we hier mee????
-	int nbDieselCarsComute = gridConnection.getTransport().getNumDailyCarAndVanCommuters() + nbDailyCarVisitors_notNull - nbEVCarsComute;
+	int nbPetroleumFuelCarsComute = gridConnection.getTransport().getNumDailyCarAndVanCommuters() + nbDailyCarVisitors_notNull - nbEVCarsComute;
 
 	boolean isDefaultVehicle = true;
 	double maxChargingPower_kW 		= avgc_data.p_avgEVMaxChargePowerCar_kW;	
 	
-	for (int i = 0; i< nbDieselCarsComute; i++){
-		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VEHICLE, isDefaultVehicle, 0);
+	for (int i = 0; i< nbPetroleumFuelCarsComute; i++){
+		f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, isDefaultVehicle, 0);
 	}
 	
 	
@@ -2468,7 +2468,7 @@ if (nbDailyCarCommuters_notNull + nbDailyCarVisitors_notNull > 0){
 	
 	//add to scenario: current
 	current_scenario_list.setCurrentEVCars(nbEVCarsComute);
-	current_scenario_list.setCurrentDieselCars(nbDieselCarsComute);
+	current_scenario_list.setCurrentPetroleumFuelCars(nbPetroleumFuelCarsComute);
 	
 	//Initialize future cars
 	future_scenario_list.setPlannedEVCars(current_scenario_list.getCurrentEVCars());
@@ -2486,12 +2486,12 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		//Update remaning amount of cars (company owned only)
 		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.VAN, - gridConnection.getTransport().getCars().getNumCars());
 		
-		//Get amount of EV and diesel cars
+		//Get amount of EV and petroleumFuel cars
 		Integer nbEVCars = gridConnection.getTransport().getCars().getNumElectricCars();
 		if (nbEVCars == null) {
 		    nbEVCars = 0;
 		}
-		int nbDieselCars = gridConnection.getTransport().getCars().getNumCars() - nbEVCars;
+		int nbPetroleumFuelCars = gridConnection.getTransport().getCars().getNumCars() - nbEVCars;
 		
 		//Initialize parameters
 		boolean isDefaultVehicle		= true;
@@ -2504,9 +2504,9 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 			isDefaultVehicle			= false;
 		}
 		
-		//create diesel vehicle
-		for (int i = 0; i< nbDieselCars; i++){
-			f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VEHICLE, isDefaultVehicle, annualTravelDistance_km);
+		//create petroleumFuel vehicle
+		for (int i = 0; i< nbPetroleumFuelCars; i++){
+			f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, isDefaultVehicle, annualTravelDistance_km);
 		}
 		
 		//Get number of chargepoints if filled in
@@ -2532,7 +2532,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		
 		//add to scenario: current
 		current_scenario_list.setCurrentEVCars(((current_scenario_list.getCurrentEVCars() != null) ? current_scenario_list.getCurrentEVCars() : 0) + nbEVCars);
-		current_scenario_list.setCurrentDieselCars(((current_scenario_list.getCurrentDieselCars() != null) ? current_scenario_list.getCurrentDieselCars() : 0) + nbDieselCars);
+		current_scenario_list.setCurrentPetroleumFuelCars(((current_scenario_list.getCurrentPetroleumFuelCars() != null) ? current_scenario_list.getCurrentPetroleumFuelCars() : 0) + nbPetroleumFuelCars);
 		current_scenario_list.setCurrentEVCarChargePower_kW(maxChargingPower_kW);
 		
 		//Update Planned cars
@@ -2552,7 +2552,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		if (nbEVVans == null) {
 		    nbEVVans = 0;
 		}	
-		int nbDieselVans = gridConnection.getTransport().getVans().getNumVans() - nbEVVans;
+		int nbPetroleumFuelVans = gridConnection.getTransport().getVans().getNumVans() - nbEVVans;
 
 		boolean isDefaultVehicle		= true;
 		double annualTravelDistance_km 	= 0;
@@ -2564,9 +2564,9 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 			isDefaultVehicle			= false;
 		}
 		
-		//create diesel vehicles
-		for (int i = 0; i< nbDieselVans; i++){
-			f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VAN, isDefaultVehicle, annualTravelDistance_km);
+		//create petroleumFuel vehicles
+		for (int i = 0; i< nbPetroleumFuelVans; i++){
+			f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_VAN, isDefaultVehicle, annualTravelDistance_km);
 		}
 		
 		//Get number of chargepoints if filled in
@@ -2593,7 +2593,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		
 		//add to scenario: current
 		current_scenario_list.setCurrentEVVans(nbEVVans);
-		current_scenario_list.setCurrentDieselVans(nbDieselVans);
+		current_scenario_list.setCurrentPetroleumFuelVans(nbPetroleumFuelVans);
 		current_scenario_list.setCurrentEVVanChargePower_kW(maxChargingPower_kW);
 		
 		//Planned
@@ -2613,7 +2613,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		if (nbEVTrucks == null) {
 		    nbEVTrucks = 0;
 		}
-		int nbDieselTrucks = gridConnection.getTransport().getTrucks().getNumTrucks() - nbEVTrucks;
+		int nbPetroleumFuelTrucks = gridConnection.getTransport().getTrucks().getNumTrucks() - nbEVTrucks;
 	
 		boolean isDefaultVehicle		= true;
 		double annualTravelDistance_km = 0;
@@ -2625,9 +2625,9 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 			isDefaultVehicle			= false;
 		}
 		
-		//create diesel vehicles
-		for (int i = 0; i< nbDieselTrucks; i++){
-			f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_TRUCK, isDefaultVehicle, annualTravelDistance_km);
+		//create petroleumFuel vehicles
+		for (int i = 0; i< nbPetroleumFuelTrucks; i++){
+			f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, isDefaultVehicle, annualTravelDistance_km);
 		}
 		
 		//Get number of chargepoints if filled in
@@ -2654,7 +2654,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		
 		//add to scenario: current
 		current_scenario_list.setCurrentEVTrucks(nbEVTrucks);
-		current_scenario_list.setCurrentDieselTrucks(nbDieselTrucks);
+		current_scenario_list.setCurrentPetroleumFuelTrucks(nbPetroleumFuelTrucks);
 		current_scenario_list.setCurrentEVTruckChargePower_kW(maxChargingPower_kW);
 		
 		//Planned
@@ -2719,14 +2719,14 @@ else{
 return building_data_record;
 /*ALCODEEND*/}
 
-double f_createDieselTractors(GridConnection companyGridConnection,com.zenmo.zummon.companysurvey.Agriculture agricultureSurveyData)
+double f_createPetroleumFuelTractors(GridConnection companyGridConnection,com.zenmo.zummon.companysurvey.Agriculture agricultureSurveyData)
 {/*ALCODESTART::1737712184349*/
-final double annualDiesel_L = Optional.ofNullable(agricultureSurveyData.getAnnualDieselUsage_L()).orElse(0.0);
-final int numTractors = Optional.ofNullable(agricultureSurveyData.getNumTractors()).orElse(annualDiesel_L > 0.0 ? 1 : 0);
+final double annualPetroleumFuel_L = Optional.ofNullable(agricultureSurveyData.getAnnualPetroleumFuelUsage_L()).orElse(0.0);
+final int numTractors = Optional.ofNullable(agricultureSurveyData.getNumTractors()).orElse(annualPetroleumFuel_L > 0.0 ? 1 : 0);
 
-if (numTractors > 0 && annualDiesel_L <= 0.0) {
+if (numTractors > 0 && annualPetroleumFuel_L <= 0.0) {
     // TODO: this should be in Tractor constructor
-    throw new RuntimeException("Tractor diesel usage missing for " + companyGridConnection.p_gridConnectionID);
+    throw new RuntimeException("Tractor petroleumFuel usage missing for " + companyGridConnection.p_gridConnectionID);
 }
 
 CustomProfile_data tractorProfile = findFirst(c_customProfiles_data, profile -> profile.customProfileID().equals("TractorProfile")); ///????
@@ -2735,7 +2735,7 @@ for (int i = 0; i < numTractors; i++) {
 	if(tractorProfile == null){
 		throw new RuntimeException("Trying to make a tractor, without having loaded in a tractor profile for GC: " + companyGridConnection.p_gridConnectionID);
 	}
-    new J_EADieselTractor(companyGridConnection, annualDiesel_L / numTractors, tractorProfile.getValuesArray(), energyModel.p_timeStep_h);
+    new J_EAPetroleumFuelTractor(companyGridConnection, annualPetroleumFuel_L / numTractors, tractorProfile.getValuesArray(), energyModel.p_timeStep_h);
 }
 /*ALCODEEND*/}
 
@@ -4363,13 +4363,13 @@ for(int i = 0; i < amountOfOwnedCars ; i++){
 			ev.tripTracker.setAnnualDistance_km(ev.tripTracker.getAnnualDistance_km()*tripTrackerScaling);
 		}
 		else{
-			J_EADieselVehicle dieselVehicle = f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
-			dieselVehicle.tripTracker.setAnnualDistance_km(dieselVehicle.tripTracker.getAnnualDistance_km()*tripTrackerScaling);
+			J_EAPetroleumFuelVehicle petroleumFuelVehicle = f_addPetroleumFuelVehicle(house, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, true, 0);
+			petroleumFuelVehicle.tripTracker.setAnnualDistance_km(petroleumFuelVehicle.tripTracker.getAnnualDistance_km()*tripTrackerScaling);
 		}
 	}
 	else {
-		J_EADieselVehicle dieselVehicle = f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
-		dieselVehicle.tripTracker.setAnnualDistance_km(dieselVehicle.tripTracker.getAnnualDistance_km()*tripTrackerScaling);
+		J_EAPetroleumFuelVehicle petroleumFuelVehicle = f_addPetroleumFuelVehicle(house, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, true, 0);
+		petroleumFuelVehicle.tripTracker.setAnnualDistance_km(petroleumFuelVehicle.tripTracker.getAnnualDistance_km()*tripTrackerScaling);
 	}
 }
 /*ALCODEEND*/}

@@ -349,7 +349,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>int</ReturnType>
 		<Id>1714471183392</Id>
-		<Name><![CDATA[f_setDieselVehicleSliders]]></Name>
+		<Name><![CDATA[f_setPetroleumFuelVehicleSliders]]></Name>
 		<X>-430</X>
 		<Y>630</Y>
 		<Label>
