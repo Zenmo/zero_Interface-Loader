@@ -114,4 +114,16 @@
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
+	<Resource>
+		<Id>1765975351869</Id>
+		<Path>resources/fonts/HOLONblock2.otf</Path>
+		<ReferencedFromUserCode>true</ReferencedFromUserCode>
+		<Location>FILE_SYSTEM</Location>
+	</Resource>
+	<Resource>
+		<Id>1765975351870</Id>
+		<Path>resources/fonts/HOLONline2.otf</Path>
+		<ReferencedFromUserCode>true</ReferencedFromUserCode>
+		<Location>FILE_SYSTEM</Location>
+	</Resource>
 </ModelResources>

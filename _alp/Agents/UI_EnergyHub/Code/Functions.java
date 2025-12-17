@@ -23,7 +23,7 @@ f_initializeEnergyHubTabs();
 f_initializeUserSavedScenarios(combobox_selectScenario);
 
 //Set Holon fonts
-//f_setHolonFonts();
+f_setHolonFonts();
 
 
 runSimulation();
@@ -691,28 +691,24 @@ new Thread( () -> {
 
 double f_setHolonFonts()
 {/*ALCODESTART::1763556169696*/
-//File holonBlockFile = new File("resources/fonts/HOLONblock2.otf");
-//File holonLineFile = new File("resources/fonts/HOLONline.otf");
-//Font holonBlock = Font.createFont(Font.TRUETYPE_FONT, holonBlockFile);
-//Font holonLine = Font.createFont(Font.TRUETYPE_FONT, holonLineFile);
+p_blockFont = new java.awt.Font("HolonBLOCK2CAPS", java.awt.Font.PLAIN, 12);
+p_lineFont = new java.awt.Font("HOLONline2", java.awt.Font.PLAIN, 12);
 
-Font holonBlock = new Font("resources/fonts/HOLONblock2.otf", Font.PLAIN, 12);
-Font holonLine = new Font("resources/fonts/HOLONline2.otf", Font.PLAIN, 12);
+t_scenario.setFont(p_blockFont.deriveFont(Font.TRUETYPE_FONT, t_scenario.getFont().getSize()));
+txt_settings.setFont(p_blockFont.deriveFont(Font.TRUETYPE_FONT, txt_settings.getFont().getSize()));
+txt_energyHubTitle.setFont(p_blockFont.deriveFont(Font.TRUETYPE_FONT, txt_energyHubTitle.getFont().getSize()));
+t_energyHubMembers.setFont(p_blockFont.deriveFont(Font.TRUETYPE_FONT, t_energyHubMembers.getFont().getSize()));
 
 
-t_scenario.setFont(holonBlock);
-txt_settings.setFont(holonBlock);
-txt_energyHubTitle.setFont(holonBlock);
-t_energyHubMembers.setFont(holonBlock);
 
-t_energyHubMember1.setFont(holonLine);
-t_energyHubMember2.setFont(holonLine);
-t_energyHubMember3.setFont(holonLine);
-t_energyHubMember4.setFont(holonLine);
-t_energyHubMember5.setFont(holonLine);
-t_energyHubMember6.setFont(holonLine);
-t_energyHubMember7.setFont(holonLine);
-t_energyHubMemberOthers.setFont(holonLine);
+t_energyHubMember1.setFont(p_lineFont.deriveFont(Font.TRUETYPE_FONT, t_energyHubMember1.getFont().getSize()));
+t_energyHubMember2.setFont(p_lineFont.deriveFont(Font.TRUETYPE_FONT, t_energyHubMember2.getFont().getSize()));
+t_energyHubMember3.setFont(p_lineFont.deriveFont(Font.TRUETYPE_FONT, t_energyHubMember3.getFont().getSize()));
+t_energyHubMember4.setFont(p_lineFont.deriveFont(Font.TRUETYPE_FONT, t_energyHubMember4.getFont().getSize()));
+t_energyHubMember5.setFont(p_lineFont.deriveFont(Font.TRUETYPE_FONT, t_energyHubMember5.getFont().getSize()));
+t_energyHubMember6.setFont(p_lineFont.deriveFont(Font.TRUETYPE_FONT, t_energyHubMember6.getFont().getSize()));
+t_energyHubMember7.setFont(p_lineFont.deriveFont(Font.TRUETYPE_FONT, t_energyHubMember7.getFont().getSize()));
+t_energyHubMemberOthers.setFont(p_lineFont.deriveFont(Font.TRUETYPE_FONT, t_energyHubMemberOthers.getFont().getSize()));
 /*ALCODEEND*/}
 
 ArrayList<GridConnection> f_getEnergyHubsliderEAGCsLoadedScenario(EnergyCoop energyHubCoop)

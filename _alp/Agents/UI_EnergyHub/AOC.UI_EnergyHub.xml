@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import java.io.IOException;
+import java.io.File;
 
 import energy.lux.uplux.*;
 import java.util.UUID;

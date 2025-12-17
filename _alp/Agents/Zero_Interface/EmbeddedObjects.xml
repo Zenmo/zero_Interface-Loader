@@ -380,6 +380,15 @@
 			<Parameter>
 				<Name><![CDATA[p_energyHubLineStyle]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_blockFont]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_blockFont1]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_lineFont]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
