@@ -3187,7 +3187,7 @@ for (double dataStep_kWh : profile_data_kWh) {
     }
 }
 
-double pvPower_kW = 1.5 * (maxFeedin_kWh/energyModel.p_timeStep_h); // Estimation needed for pv power (only really influential for option 2, but a power estimate is still needed for option 1. Important that the factor >=1).
+double pvPower_kW = 2.5 * (maxFeedin_kWh/energyModel.p_timeStep_h); // Estimation needed for pv power (only really influential for option 2, but a power estimate is still needed for option 1. Important that the factor >=1).
 
 //Option 1: use the feedin profile as production profile to create the exact same netto load, but consumption/production doesnt look natural (Only production when consumption == 0 and vice versa)
 f_createPreprocessedElectricityProfile_PV(GC_GridNode_profile, a_yearlyElectricityDelivery_kWh, a_yearlyElectricityFeedin_kWh, a_yearlyElectricityFeedin_kWh, pvPower_kW, null);
