@@ -2721,7 +2721,7 @@ return building_data_record;
 
 double f_createPetroleumFuelTractors(GridConnection companyGridConnection,com.zenmo.zummon.companysurvey.Agriculture agricultureSurveyData)
 {/*ALCODESTART::1737712184349*/
-final double annualPetroleumFuel_L = Optional.ofNullable(agricultureSurveyData.getAnnualPetroleumFuelUsage_L()).orElse(0.0);
+final double annualPetroleumFuel_L = Optional.ofNullable(agricultureSurveyData.getAnnualDieselUsage_L()).orElse(0.0);
 final int numTractors = Optional.ofNullable(agricultureSurveyData.getNumTractors()).orElse(annualPetroleumFuel_L > 0.0 ? 1 : 0);
 
 if (numTractors > 0 && annualPetroleumFuel_L <= 0.0) {
