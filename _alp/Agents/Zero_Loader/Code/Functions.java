@@ -1701,13 +1701,13 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 		
 		//Create vehicles that charge at the charging centre
 		if(chargingStation.p_chargingVehicleType == OL_EnergyAssetType.CHARGER){
-			List<J_ChargingSession> chargerProfile = f_getChargerProfile();
+			List<J_ChargingSessionData> chargerProfile = f_getChargerProfile();
 			boolean V1GCapable = randomTrue(avgc_data.p_v1gProbability);
 			boolean V2GCapable = randomTrue(avgc_data.p_v2gProbability);
 			chargingStation.f_setChargePoint( new J_ChargePoint(V1GCapable, V2GCapable));
 			chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation));
+			new J_EAChargingSession(chargingStation, chargerProfile, 0);
 			new J_EAChargingSession(chargingStation, chargerProfile, 1);
-			new J_EAChargingSession(chargingStation, chargerProfile, 2);
 		}
 		else{
 			for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerChargePoint; k++ ){
@@ -1752,13 +1752,13 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 		
 		//Create vehicles that charge at the charging station
 		if(chargingStation.p_chargingVehicleType == OL_EnergyAssetType.CHARGER){
-			List<J_ChargingSession> chargerProfile = f_getChargerProfile();
+			List<J_ChargingSessionData> chargerProfile = f_getChargerProfile();
 			boolean V1GCapable = true; //randomTrue(avgc_data.p_v1gProbability);
 			boolean V2GCapable = true; //randomTrue(avgc_data.p_v2gProbability);
 			chargingStation.f_setChargePoint(new J_ChargePoint(V1GCapable, V2GCapable));
 			chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation));
+			new J_EAChargingSession(chargingStation, chargerProfile, 0);
 			new J_EAChargingSession(chargingStation, chargerProfile, 1);
-			new J_EAChargingSession(chargingStation, chargerProfile, 2);
 		}
 		else{
 			for(int k = 0; k < avgc_data.p_avgVehiclesPerChargePoint; k++ ){
@@ -3159,7 +3159,7 @@ gridnode.p_hasProfileData = true;
 c_gridNodeIDsWithProfiles.add(gridnode.p_gridNodeID);
 /*ALCODEEND*/}
 
-J_ChargingSession f_createChargingSession(String chargingSessionData)
+J_ChargingSessionData f_createChargingSession(String chargingSessionData)
 {/*ALCODESTART::1749648772203*/
 String[] chargingSessionInfo = chargingSessionData.split("/"); 
 
@@ -3175,14 +3175,14 @@ double timeStep_h = 0.25;
 //Cap charging demand to what is actual possible according to chargetime interval * charge power
 chargingDemand_kWh = min(chargingPower_kW * (endIndex - startIndex) * 0.25, chargingDemand_kWh);
 
-return new J_ChargingSession(startIndex, endIndex, chargingDemand_kWh, batteryCap_kWh, chargingPower_kW, socket, isV2GCapable, timeStep_h);
+return new J_ChargingSessionData(startIndex, endIndex, chargingDemand_kWh, batteryCap_kWh, chargingPower_kW, socket, isV2GCapable, timeStep_h);
 /*ALCODEEND*/}
 
-List<J_ChargingSession>  f_createNewChargerProfile(ChargerProfile_data chargerProfileData)
+List<J_ChargingSessionData>  f_createNewChargerProfile(ChargerProfile_data chargerProfileData)
 {/*ALCODESTART::1749649169603*/
 // example: 2/54/50.3/72.1/21.8/10.8/2
 List<String> chargerProfileDataValues = chargerProfileData.valuesList();
-List<J_ChargingSession> chargerProfile = new ArrayList<J_ChargingSession>();		
+List<J_ChargingSessionData> chargerProfile = new ArrayList<J_ChargingSessionData>();		
 
 for(int i = 0; i < chargerProfileDataValues.size(); i++){
 	chargerProfile.add(f_createChargingSession(chargerProfileDataValues.get(i)));
@@ -3191,9 +3191,9 @@ for(int i = 0; i < chargerProfileDataValues.size(); i++){
 return chargerProfile;
 /*ALCODEEND*/}
 
-List<J_ChargingSession>  f_getChargerProfile()
+List<J_ChargingSessionData>  f_getChargerProfile()
 {/*ALCODESTART::1749649390125*/
-List<J_ChargingSession> chargerProfile;
+List<J_ChargingSessionData> chargerProfile;
 int randomIndex;
 
 if(c_chargerProfiles_data.size()>0){
