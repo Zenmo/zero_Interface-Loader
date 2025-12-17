@@ -72,7 +72,7 @@ else {
 }
 
 //Initialize slider gcs and set sliders
-uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), new ArrayList<>());
+uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), new ArrayList<>(), c_sliderEAGCs);
 
 uI_Tabs.v_presentationXOffset += zero_Interface.va_EHubDashboard.getX();
 uI_Tabs.v_presentationYOffset += zero_Interface.va_EHubDashboard.getY();
@@ -111,13 +111,13 @@ GridConnection sliderGC_solarFarm = null;
 GridConnection sliderGC_windFarm = null;
 GridConnection sliderGC_gridBattery = null;
 if(manualSelectedSliderGC_solarFarm == null){
-	sliderGC_solarFarm = findFirst(zero_Interface.energyModel.EnergyProductionSites, gc -> gc.p_gridConnectionID.equals("EnergyHub solarfarm slider"));
+	sliderGC_solarFarm = findFirst(zero_Interface.energyModel.EnergyProductionSites, gc -> gc.p_gridConnectionID.equals(zero_Interface.p_defaultEnergyHubSliderGCName_solarfarm));
 }
 if(manualSelectedSliderGC_windFarm == null){
-	sliderGC_windFarm = findFirst(zero_Interface.energyModel.EnergyProductionSites, gc -> gc.p_gridConnectionID.equals("EnergyHub windfarm slider"));
+	sliderGC_windFarm = findFirst(zero_Interface.energyModel.EnergyProductionSites, gc -> gc.p_gridConnectionID.equals(zero_Interface.p_defaultEnergyHubSliderGCName_windfarm));
 }
 if(manualSelectedSliderGC_gridBattery == null){
-	sliderGC_gridBattery = findFirst(zero_Interface.energyModel.GridBatteries, gc -> gc.p_gridConnectionID.equals("EnergyHub battery slider"));
+	sliderGC_gridBattery = findFirst(zero_Interface.energyModel.GridBatteries, gc -> gc.p_gridConnectionID.equals(zero_Interface.p_defaultEnergyHubSliderGCName_battery));
 }
 
 //Add to coop and other collections
@@ -254,21 +254,7 @@ try {
 	// Deserialize the JSON into a new EnergyModel instance:
     var jsonStream = repository.fetchUserScenarioContent(scenarioList.get(index).getId());
     
- 	/*int n = 200; // how many characters you want
-    byte[] buffer = new byte[n];
-    int read = jsonStream.read(buffer, 0, n);
-
-    if (read > 0) {
-        String preview = new String(buffer, 0, read, "UTF-8");
-        System.out.println(preview);
-    }*/
-	
-    //jsonStream.close();
-    
-    //traceln("jsonStream: %s", jsonStream.toString().substring(0,30));
 	J_ModelSave saveObject = v_objectMapper.readValue(jsonStream, J_ModelSave.class);
-	//J_ModelSave saveObject = v_objectMapper.readValue(new File("ModelSave.json"), J_ModelSave.class);
-	
 	EnergyModel deserializedEnergyModel = saveObject.energyModel;
 		
 	// Reconstruct all Agents
@@ -300,38 +286,29 @@ try {
 	// Putting back the ordered collections in the interface
 	f_reconstructOrderedCollections(saveObject);
 	
-	//zero_Interface.f_clearSelectionAndSelectEnergyModel();
 	
-	/*
-	zero_Interface.uI_Tabs.f_initializeUI_Tabs(zero_Interface.energyModel.f_getGridConnectionsCollectionPointer(), zero_Interface.energyModel.f_getPausedGridConnectionsCollectionPointer());
-	uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null);
-	zero_Interface.f_updateMainInterfaceSliders();
-	
-	zero_Interface.f_resetSettings();
-	*/
-	
-	///button_exit.action();
-	
-	// v_energyHubCoop not updated to point to 'new' coop
-	//uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null);
-	
-	///zero_Interface.f_simulateYearFromMainInterface();
-	
+	//Get the correct coop for the E-Hub Dashboard
 	v_energyHubCoop = findFirst(zero_Interface.energyModel.pop_energyCoops,x->x.p_actorID.equals("eHubConfiguratorCoop"));
 	if (v_energyHubCoop == null){
 		throw new RuntimeException("No energyCoop found with p_actorID = eHubConfiguratorCoop");
 	}
 	zero_Interface.v_customEnergyCoop = v_energyHubCoop;
+	
+	//Get the slider gcs of the reloaded EnergyHub
+	c_sliderEAGCs = f_getEnergyHubsliderEAGCsLoadedScenario(v_energyHubCoop);
+	
 	// Update the E-Hub Dashboard with the loaded E-Hub from savefile
 	f_initializeEnergyHubMemberNames();
-	uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null);
+	uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null, c_sliderEAGCs);
+	gr_uI_Tabs_presentation.setVisible(false);
+	gr_uI_Tabs_presentation.setVisible(true);
 	uI_Results.f_updateResultsUI(v_energyHubCoop);
 	
 	// Update the main interface with the loaded E-Hub from savefile
 	zero_Interface.c_selectedGridConnections = new ArrayList<>(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer());
 	
 	// Update the main interface tabs with the GCs from the new engine
-	zero_Interface.uI_Tabs.f_initializeUI_Tabs(zero_Interface.energyModel.f_getGridConnectionsCollectionPointer(), zero_Interface.energyModel.f_getPausedGridConnectionsCollectionPointer());
+	zero_Interface.uI_Tabs.f_initializeUI_Tabs(zero_Interface.energyModel.f_getGridConnectionsCollectionPointer(), zero_Interface.energyModel.f_getPausedGridConnectionsCollectionPointer(), zero_Interface.f_getMainInterfaceSliderEAGCs());
 	
 	// Reset all colors on the GIS map
 	zero_Interface.energyModel.pop_GIS_Buildings.forEach(x -> zero_Interface.f_styleAreas(x));
@@ -354,22 +331,6 @@ try {
 	zero_Interface.f_simulateYearFromMainInterface();	
 	
 	traceln("ModelSave loaded succesfully!");
-	
-	//zero_Interface.b_inEnergyHubSelectionMode = true;
-	//zero_Interface.f_finalizeEnergyHubConfiguration();
-	
-	//zero_Interface.f_updateOrderedListsAfterDeserialising(deserializedEnergyModel);
-	
-	/*
-	Date startDate = getExperiment().getEngine().getStartDate();
-	int day = getExperiment().getEngine().getDayOfMonth();
-	int month = getExperiment().getEngine().getMonth();
-	traceln("day: " + day);
-	traceln("month: " + month);
-	startDate.setMonth(startDate.getMonth() - month);
-	startDate.setDate(startDate.getDate() - day);
-	getExperiment().getEngine().setStartDate(startDate);
-	*/
 	
 } catch (IOException e) {
 	e.printStackTrace();
@@ -752,5 +713,28 @@ t_energyHubMember5.setFont(holonLine);
 t_energyHubMember6.setFont(holonLine);
 t_energyHubMember7.setFont(holonLine);
 t_energyHubMemberOthers.setFont(holonLine);
+/*ALCODEEND*/}
+
+ArrayList<GridConnection> f_getEnergyHubsliderEAGCsLoadedScenario(EnergyCoop energyHubCoop)
+{/*ALCODESTART::1765208842919*/
+ArrayList<GridConnection> energyHubSliderEAGCs = new ArrayList<GridConnection>();
+for(GridConnection gc : energyHubCoop.f_getMemberGridConnectionsCollectionPointer()){
+	if(gc instanceof GCGridBattery battery){
+		if(battery.p_isSliderGC){
+			energyHubSliderEAGCs.add(battery);
+		}
+	}
+	if(gc instanceof GCEnergyProduction productionSite){
+		if(productionSite.p_isSliderGC){
+			energyHubSliderEAGCs.add(productionSite);
+		}
+	}
+}
+
+if(energyHubSliderEAGCs.size() != 3){
+	throw new RuntimeException("energyHubsliderEAGCs.size() != 3 -> Should be exactly 3: 1 solarfarm, 1 windfarm and 1 battery");
+}
+
+return energyHubSliderEAGCs;
 /*ALCODEEND*/}
 

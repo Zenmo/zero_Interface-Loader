@@ -4,12 +4,12 @@ double f_createGISRegions()
 for (Neighbourhood_data NBH : c_neighbourhood_data) {	
 	GIS_Object area = energyModel.add_pop_GIS_Objects();
 	
-	area.p_id = NBH.districtname();
-	area.p_GISObjectType = OL_GISObjectType.valueOf(NBH.neighbourhoodtype());
+	area.p_id = NBH.neighbourhoodname();
+	area.p_GISObjectType = f_getNBHGISObjectType(area, NBH.neighbourhoodcode(), NBH.neighbourhoodtype());
 
 	//Create gisregion
 	area.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(NBH.polygon(), area.p_GISObjectType));
-	
+
 	//Style area 
 	zero_Interface.f_styleSimulationAreas(area);
 	zero_Interface.c_GISNeighborhoods.add(area);
@@ -51,11 +51,15 @@ f_initializeSpecificSliderGC();
 //Actors
 f_createActors();
 
-//Grid nodes
-f_createGridNodes();
-
 //Create regions and initialize energy totals per region
 f_createGISRegions();
+
+if(user.NBHAccessType != null && user.NBHAccessType != OL_UserNBHAccessType.FULL){
+	f_removeObjectsNotInActiveNBH();
+}
+
+//Grid nodes
+f_createGridNodes();
 
 //Grid connections
 f_createGridConnections();
@@ -72,8 +76,6 @@ energyModel.f_initializeEngine();
 
 double f_createGridNodes()
 {/*ALCODESTART::1726584205775*/
-//double latitude_c;
-//double longitude_c;
 OL_GridNodeType nodeType;
 GISRegion gisregion;
 
@@ -115,7 +117,6 @@ for (GridNode_data GN_data : c_gridNode_data) {
 			    case "SUBMV":
 			        GN.p_nodeType = OL_GridNodeType.SUBMV;
 			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
-			        zero_Interface.b_gridLoopsAreDefined = true;
 			        break;
 			    case "MVMV":
 			        GN.p_nodeType = OL_GridNodeType.MVMV;
@@ -146,7 +147,6 @@ for (GridNode_data GN_data : c_gridNode_data) {
 			//Gridnode service area
 			if (GN_data.service_area_polygon() != null){
 				//Create service area gis object
-				//GIS_Object serviceArea = f_createGISObject(GN.p_gridNodeID + ": service area", GN.p_latitude, GN.p_longitude, GN_data.service_area_polygon());
 				GN.p_serviceAreaGisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(GN_data.service_area_polygon(), OL_GISObjectType.GN_SERVICE_AREA));
 				
 				//Add to hashmap
@@ -1071,11 +1071,11 @@ for (var survey : surveys) {
 	//Create connection owner
 	ConnectionOwner survey_owner = energyModel.add_pop_connectionOwners();
 	survey_owner.p_actorID = survey.getCompanyName();
-	//survey_owner.p_actorType = OL_ActorType.CONNECTIONOWNER;
 	survey_owner.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
 	survey_owner.p_detailedCompany = true;
 	survey_owner.b_dataSharingAgreed = survey.getDataSharingAgreed();
-		
+	survey_owner.b_dataIsAccessible = f_getAccessOfSurveyGC(survey.getDataSharingAgreed(), survey.getId());
+	
 	for (var address : survey.getAddresses()) {
 		
 		//Update number of survey companies (locations)
@@ -1180,6 +1180,13 @@ for (var survey : surveys) {
 			
 			//Set lat lon
 			companyGC.setLatLon(companyGC.p_latitude, companyGC.p_longitude); 
+			
+			if(user.NBHAccessType != null && user.NBHAccessType != OL_UserNBHAccessType.FULL){
+				if(!f_isLocatedInActiveNBH(companyGC.p_latitude, companyGC.p_longitude)){
+					companyGC.p_parentNodeElectricID = null;
+					companyGC.v_isActive = false;
+				}
+			}
 			
 			//Energy asset initialization
 			f_iEASurveyCompanies_Zorm(companyGC, gridConnection); 
@@ -1920,7 +1927,7 @@ f_importExcelTablesToDB();
 f_readDatabase();
 
 //Initialize model totals
-p_remainingTotals.initializeModelTotals(project_data);
+p_remainingTotals.initializeModelTotals(project_data, user);
 
 //Weather market data
 f_setEngineProfiles();
@@ -2664,6 +2671,9 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 	}
 }
 
+//Save if building is paused at start
+current_scenario_list.setIsCurrentlyActive(companyGC.v_isActive);
+future_scenario_list.setIsActiveInFuture(companyGC.v_isActive);
 /*ALCODEEND*/}
 
 Building_data f_createBuildingData_Vallum(GridConnection companyGC,String PandID)
@@ -3031,26 +3041,26 @@ String topGridNodeID = topGridNode.gridnode_id();
 
 //Create data package for e-hub dashboard slider gcs
 if(project_data.project_type() == OL_ProjectType.BUSINESSPARK){
-	f_addSliderSolarfarm("EnergyHub solarfarm slider", topGridNodeID);
-	f_addSliderWindfarm("EnergyHub windfarm slider", topGridNodeID);
-	f_addSliderBattery("EnergyHub battery slider", topGridNodeID);
+	f_addSliderSolarfarm(zero_Interface.p_defaultEnergyHubSliderGCName_solarfarm, topGridNodeID);
+	f_addSliderWindfarm(zero_Interface.p_defaultEnergyHubSliderGCName_windfarm, topGridNodeID);
+	f_addSliderBattery(zero_Interface.p_defaultEnergyHubSliderGCName_battery, topGridNodeID);
 }
 
 //If no slider data package is present yet for the main: add one as well.
 if(sliderSolarfarm_data == null){
-	f_addSliderSolarfarm("Main solarfarm slider", topGridNodeID);
+	f_addSliderSolarfarm(zero_Interface.p_defaultMainSliderGCName_solarfarm, topGridNodeID);
 }
 if(sliderWindfarm_data == null){
-	f_addSliderWindfarm("Main windfarm slider", topGridNodeID);
+	f_addSliderWindfarm(zero_Interface.p_defaultMainSliderGCName_windfarm, topGridNodeID);
 }
 if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 	for(GridNode_data nodeData : c_gridNode_data){
-		f_addSliderBattery("Main battery slider", nodeData.gridnode_id());
+		f_addSliderBattery(zero_Interface.p_defaultMainSliderGCName_battery, nodeData.gridnode_id());
 	}
 }
 else{
 	if(sliderBattery_data == null){
-		f_addSliderBattery("Main battery slider", topGridNodeID);
+		f_addSliderBattery(zero_Interface.p_defaultMainSliderGCName_battery, topGridNodeID);
 	}
 }
 /*ALCODEEND*/}
@@ -3227,12 +3237,8 @@ else {
  
 double yearlyHWD_kWh = aantalBewoners * 600;  //12 * surface_m2 * 3 ; Tamelijk willekeurige formule om HWD te schalen tussen 600 - 2400 kWh bij 50m2 tot 200m2, voor een quickfix
 
-//TEST
-yearlyHWD_kWh += 0;
-
 J_EAConsumption hotwaterDemand = new J_EAConsumption( houseGC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, null);
 
-//traceln("yearlyHWD_kWh "+ yearlyHWD_kWh);
 if( surface_m2 > 200){
 	//traceln("House created with " + surface_m2 + "m2 surace area, will have large hot water demand");
 }
@@ -4689,5 +4695,113 @@ java.util.UUID f_getUserUUID(String p_userIdToken)
 java.util.UUID usedId = new JWTDecoder().jwtToUserId(p_userIdToken);
 return usedId;
 
+/*ALCODEEND*/}
+
+boolean f_getAccessOfSurveyGC(boolean dataSharingAgreed,UUID companyUUID)
+{/*ALCODESTART::1763646792610*/
+// If public model: only dataSharingAgreed matters
+if (settings.isPublicModel()) {
+    return dataSharingAgreed;
+}
+
+// If private model: several conditions allow access
+return 	user.GCAccessType == OL_UserGCAccessType.FULL ||
+        dataSharingAgreed ||
+        user.accessibleCompanyIDs.contains(companyUUID.toString());
+/*ALCODEEND*/}
+
+boolean f_isLocatedInActiveNBH(double lat,double lon)
+{/*ALCODESTART::1763648128875*/
+if(user.NBHAccessType == OL_UserNBHAccessType.FULL){
+	return true;
+}
+else{
+	for(GIS_Object activeNBH : c_activeNBH){
+		if(activeNBH.gisRegion.contains(lat, lon)){
+			return true;
+		}
+	}
+	return false;
+}
+/*ALCODEEND*/}
+
+double f_removeObjectsNotInActiveNBH()
+{/*ALCODESTART::1763648249772*/
+//GridNodes
+for(GridNode_data dataGN : new ArrayList<GridNode_data>(c_gridNode_data)){
+	if(!dataGN.gridnode_id().equals("T0") && !f_isLocatedInActiveNBH(dataGN.latitude(), dataGN.longitude())){
+		c_gridNode_data.remove(dataGN);
+	}
+}
+
+//Buildings
+for(Building_data dataCompanyBuilding : new ArrayList<Building_data>(c_companyBuilding_data)){
+	if(!f_isLocatedInActiveNBH(dataCompanyBuilding.latitude(), dataCompanyBuilding.longitude())){
+		c_companyBuilding_data.remove(dataCompanyBuilding);
+	}
+}
+for(Building_data dataCompanyBuilding : new ArrayList<Building_data>(c_houseBuilding_data)){
+	if(!f_isLocatedInActiveNBH(dataCompanyBuilding.latitude(), dataCompanyBuilding.longitude())){
+		c_houseBuilding_data.remove(dataCompanyBuilding);
+	}
+}
+for(Building_data dataCompanyBuilding : new ArrayList<Building_data>(c_remainingBuilding_data)){
+	if(!f_isLocatedInActiveNBH(dataCompanyBuilding.latitude(), dataCompanyBuilding.longitude())){
+		c_remainingBuilding_data.remove(dataCompanyBuilding);
+	}
+}
+
+//EA GCs
+for(Solarfarm_data dataSF : new ArrayList<Solarfarm_data>(c_solarfarm_data)){
+	if(!f_isLocatedInActiveNBH(dataSF.latitude(), dataSF.longitude())){
+		c_solarfarm_data.remove(dataSF);
+	}
+}
+for(Windfarm_data dataWF : new ArrayList<Windfarm_data>(c_windfarm_data)){
+	if(!f_isLocatedInActiveNBH(dataWF.latitude(), dataWF.longitude())){
+		c_windfarm_data.remove(dataWF);
+	}
+}
+for(Battery_data dataBattery : new ArrayList<Battery_data>(c_battery_data)){
+	if(!f_isLocatedInActiveNBH(dataBattery.latitude(), dataBattery.longitude())){
+		c_battery_data.remove(dataBattery);
+	}
+}
+for(Chargingstation_data dataCS : new ArrayList<Chargingstation_data>(c_chargingstation_data)){
+	if(!f_isLocatedInActiveNBH(dataCS.latitude(), dataCS.longitude())){
+		c_chargingstation_data.remove(dataCS);
+	}
+}
+
+//Additional GIS Objects
+for(ParkingSpace_data dataParking : new ArrayList<ParkingSpace_data>(c_parkingSpace_data)){
+	if(!f_isLocatedInActiveNBH(dataParking.latitude(), dataParking.longitude())){
+		c_parkingSpace_data.remove(dataParking);
+	}
+}
+for(Parcel_data dataParcel : new ArrayList<Parcel_data>(c_parcel_data)){
+	if(!f_isLocatedInActiveNBH(dataParcel.latitude(), dataParcel.longitude())){
+		c_parcel_data.remove(dataParcel);
+	}
+}
+for(Cable_data dataCable : new ArrayList<Cable_data>(c_cable_data)){
+	if(!f_isLocatedInActiveNBH(dataCable.latitude(), dataCable.longitude())){
+		c_cable_data.remove(dataCable);
+	}
+}
+
+/*ALCODEEND*/}
+
+OL_GISObjectType f_getNBHGISObjectType(GIS_Object NBH,String NBHCode,OL_GISObjectType defaultGISObjectType)
+{/*ALCODESTART::1763648931889*/
+if( defaultGISObjectType == OL_GISObjectType.ANTI_LAYER || 
+	(user.NBHAccessType == OL_UserNBHAccessType.SPECIFIED && !user.accessibleNBH.contains(NBHCode))
+	){
+	return OL_GISObjectType.ANTI_LAYER;	
+}
+else{
+	c_activeNBH.add(NBH);
+	return OL_GISObjectType.REGION;
+}
 /*ALCODEEND*/}
 

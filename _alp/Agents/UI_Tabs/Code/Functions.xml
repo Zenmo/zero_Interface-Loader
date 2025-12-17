@@ -103,6 +103,10 @@
 			<Name><![CDATA[pausedGridConnections]]></Name>
 			<Type><![CDATA[List<GridConnection>]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[electricityTabEASliderGCs]]></Name>
+			<Type><![CDATA[List<GridConnection>]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
@@ -111,7 +115,7 @@
 		<Id>1754919017244</Id>
 		<Name><![CDATA[f_getActiveSliderGridConnections_houses]]></Name>
 		<X>560</X>
-		<Y>240</Y>
+		<Y>260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -127,7 +131,7 @@
 		<Id>1754922545766</Id>
 		<Name><![CDATA[f_getActiveSliderGridConnections_utilities]]></Name>
 		<X>560</X>
-		<Y>220</Y>
+		<Y>240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -143,7 +147,7 @@
 		<Id>1754922546986</Id>
 		<Name><![CDATA[f_getAllSliderGridConnections_gridBatteries]]></Name>
 		<X>540</X>
-		<Y>300</Y>
+		<Y>320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -159,7 +163,7 @@
 		<Id>1754922547989</Id>
 		<Name><![CDATA[f_getSliderGridConnections_chargers]]></Name>
 		<X>550</X>
-		<Y>380</Y>
+		<Y>400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -175,7 +179,7 @@
 		<Id>1754922591622</Id>
 		<Name><![CDATA[f_getAllSliderGridConnections_production]]></Name>
 		<X>540</X>
-		<Y>330</Y>
+		<Y>350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -207,7 +211,7 @@
 		<Id>1754986474226</Id>
 		<Name><![CDATA[f_getActiveSliderGridConnections_consumption]]></Name>
 		<X>550</X>
-		<Y>200</Y>
+		<Y>220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -223,7 +227,7 @@
 		<Id>1754991155553</Id>
 		<Name><![CDATA[f_getActiveSliderGridConnections_all]]></Name>
 		<X>550</X>
-		<Y>130</Y>
+		<Y>150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -239,7 +243,7 @@
 		<Id>1755013777878</Id>
 		<Name><![CDATA[f_getPausedSliderGridConnections_chargers]]></Name>
 		<X>550</X>
-		<Y>400</Y>
+		<Y>420</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -263,6 +267,10 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[electricityTabEASliderGCs]]></Name>
+			<Type><![CDATA[List<GridConnection>]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
@@ -271,7 +279,7 @@
 		<Id>1758278620331</Id>
 		<Name><![CDATA[f_getAllSliderGridConnections_chargers]]></Name>
 		<X>540</X>
-		<Y>360</Y>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -287,7 +295,7 @@
 		<Id>1761208715194</Id>
 		<Name><![CDATA[f_getAllSliderGridConnections_consumption]]></Name>
 		<X>540</X>
-		<Y>180</Y>
+		<Y>200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -303,7 +311,7 @@
 		<Id>1761208797812</Id>
 		<Name><![CDATA[f_getPausedSliderGridConnections_all]]></Name>
 		<X>550</X>
-		<Y>150</Y>
+		<Y>170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -319,7 +327,7 @@
 		<Id>1761208826669</Id>
 		<Name><![CDATA[f_getAllSliderGridConnections_all]]></Name>
 		<X>530</X>
-		<Y>110</Y>
+		<Y>130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

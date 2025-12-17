@@ -72,7 +72,7 @@
 			<Text>
 				<Id>1722328776711</Id>
 				<Name><![CDATA[t_electricityDemandReduction_pct]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>20</Y>
 				<Label>
 					<X>0</X>
@@ -176,7 +176,7 @@
 			<Text>
 				<Id>1722328776719</Id>
 				<Name><![CDATA[t_rooftopPVCompanies_pct]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>80</Y>
 				<Label>
 					<X>0</X>
@@ -218,7 +218,7 @@
 					<Enabled>true</Enabled>
 					<ActionCode>f_setPVSystemCompanies( uI_Tabs.f_getActiveSliderGridConnections_utilities(), sl_rooftopPVCompanies_pct.getValue(), sl_rooftopPVCompanies_pct );
 
-if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
+if(zero_Interface.rb_mapOverlay != null &amp;&amp; zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
 	zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
 }</ActionCode>
 				</BasicProperties>
@@ -259,7 +259,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 			<Text>
 				<Id>1722328776725</Id>
 				<Name><![CDATA[t_largeScalePV_ha]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>145</Y>
 				<Label>
 					<X>0</X>
@@ -299,7 +299,24 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_currentPVOnLand_ha, uI_Tabs.f_getAllSliderGridConnections_production());</ActionCode>
+					<ActionCode>List&lt;GCEnergyProduction&gt; sliderPVFarmGCList = new ArrayList&lt;&gt;();
+for(GridConnection gc : c_electricityTabEASliderGCs){
+	if(gc instanceof GCEnergyProduction energyProductionSite){
+		for(J_EAProduction j_ea : energyProductionSite.c_productionAssets) {
+			if (j_ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC) {
+				sliderPVFarmGCList.add(energyProductionSite);
+				break;
+			}
+		}
+	}
+}
+
+if(sliderPVFarmGCList.size() == 0){
+	throw new IllegalStateException("Model does not contain any PVFarmSliderGC agent");
+}
+
+
+f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_currentPVOnLand_ha, sliderPVFarmGCList);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -377,7 +394,23 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, uI_Tabs.f_getAllSliderGridConnections_production());</ActionCode>
+					<ActionCode>List&lt;GCEnergyProduction&gt; sliderWindFarmGCList = new ArrayList&lt;&gt;();
+for(GridConnection gc : c_electricityTabEASliderGCs){
+	if(gc instanceof GCEnergyProduction energyProductionSite){
+		for(J_EAProduction j_ea : energyProductionSite.c_productionAssets) {
+			if (j_ea.getEAType() == OL_EnergyAssetType.WINDMILL) {
+				sliderWindFarmGCList.add(energyProductionSite);
+				break;
+			}
+		}
+	}
+}
+
+if(sliderWindFarmGCList.size() == 0){
+	throw new IllegalStateException("Model does not contain any sliderWindFarmGC agent");
+}
+
+f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, sliderWindFarmGCList);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -416,7 +449,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 			<Text>
 				<Id>1722328776741</Id>
 				<Name><![CDATA[t_largeScaleWind_MW]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>175</Y>
 				<Label>
 					<X>0</X>
@@ -442,7 +475,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 			<Text>
 				<Id>1722329161559</Id>
 				<Name><![CDATA[t_rooftopPVHouses_pct]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>110</Y>
 				<Label>
 					<X>0</X>
@@ -485,7 +518,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 					<Enabled>true</Enabled>
 					<ActionCode>f_setPVSystemHouses( uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_rooftopPVHouses_pct.getValue() );
 
-if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
+if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
 	zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
 }</ActionCode>
 				</BasicProperties>
@@ -663,7 +696,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 			<Text>
 				<Id>1754984198964</Id>
 				<Name><![CDATA[t_collectiveBatteries_default]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>275</Y>
 				<Label>
 					<X>0</X>
@@ -690,7 +723,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1754984198968</Id>
 				<Name><![CDATA[sl_collectiveBattery_MWh_default]]></Name>
-				<X>255</X>
+				<X>260</X>
 				<Y>270</Y>
 				<Label>
 					<X>0</X>
@@ -703,21 +736,25 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setGridBatteries(sl_collectiveBattery_MWh_default.getValue(), uI_Tabs.f_getAllSliderGridConnections_gridBatteries());
-
-//Update variable to change to custom scenario
-if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.f_setScenarioToCustom();
+					<ActionCode>List&lt;GCGridBattery&gt; gcListGridBatteries = new ArrayList&lt;&gt;();
+for(GridConnection gc : c_electricityTabEASliderGCs){
+	if(gc instanceof GCGridBattery gridbattery){
+		gcListGridBatteries.add(gridbattery);
+	}
 }
 
-zero_Interface.f_resetSettings();</ActionCode>
+if(gcListGridBatteries.size() == 0){
+	throw new IllegalStateException("Model does not contain any GCGridBattery agent");
+}
+
+f_setGridBatteries(sl_collectiveBattery_MWh_default.getValue() * 1000, gcListGridBatteries);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>50</MaxValue>
-					<Step>1</Step>
+					<MinValue>p_currentTotalGridBatteryCapacity_MWh</MinValue>
+					<MaxValue>p_currentTotalGridBatteryCapacity_MWh + 50</MaxValue>
+					<Step>0.1</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -1027,7 +1064,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 			<Text>
 				<Id>1728384392422</Id>
 				<Name><![CDATA[t_electricityDemandReduction_pct_Businesspark]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>20</Y>
 				<Label>
 					<X>0</X>
@@ -1048,7 +1085,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
@@ -1131,7 +1168,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 			<Text>
 				<Id>1728384392430</Id>
 				<Name><![CDATA[t_rooftopPVCompanies_pct_Businesspark]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>80</Y>
 				<Label>
 					<X>0</X>
@@ -1152,7 +1189,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
@@ -1174,7 +1211,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<ActionCode>f_setPVSystemCompanies( uI_Tabs.f_getActiveSliderGridConnections_utilities(), sl_rooftopPVCompanies_pct_Businesspark.getValue(), sl_rooftopPVCompanies_pct_Businesspark );
 
 //If on pv map overlay, adjust colouring
-if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
+if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
 	zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
 }</ActionCode>
 				</BasicProperties>
@@ -1215,7 +1252,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 			<Text>
 				<Id>1728384392436</Id>
 				<Name><![CDATA[t_largeScalePV_ha_Businesspark]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>115</Y>
 				<Label>
 					<X>0</X>
@@ -1236,7 +1273,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
@@ -1255,7 +1292,24 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPVOnLand(sl_largeScalePV_ha_Businesspark.getValue()- p_currentPVOnLand_ha, uI_Tabs.f_getAllSliderGridConnections_production());</ActionCode>
+					<ActionCode>List&lt;GCEnergyProduction&gt; sliderPVFarmGCList = new ArrayList&lt;&gt;();
+for(GridConnection gc : c_electricityTabEASliderGCs){
+	if(gc instanceof GCEnergyProduction energyProductionSite){
+		for(J_EAProduction j_ea : energyProductionSite.c_productionAssets) {
+			if (j_ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC) {
+				sliderPVFarmGCList.add(energyProductionSite);
+				break;
+			}
+		}
+	}
+}
+
+if(sliderPVFarmGCList.size() == 0){
+	throw new IllegalStateException("Model does not contain any PVFarmSliderGC agent");
+}
+
+
+f_setPVOnLand(sl_largeScalePV_ha_Businesspark.getValue() - p_currentPVOnLand_ha, sliderPVFarmGCList);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1333,7 +1387,23 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setWindTurbines( sl_largeScaleWind_MW_Businesspark.getValue() - p_currentWindTurbines_MW, uI_Tabs.f_getAllSliderGridConnections_production());</ActionCode>
+					<ActionCode>List&lt;GCEnergyProduction&gt; sliderWindFarmGCList = new ArrayList&lt;&gt;();
+for(GridConnection gc : c_electricityTabEASliderGCs){
+	if(gc instanceof GCEnergyProduction energyProductionSite){
+		for(J_EAProduction j_ea : energyProductionSite.c_productionAssets) {
+			if (j_ea.getEAType() == OL_EnergyAssetType.WINDMILL) {
+				sliderWindFarmGCList.add(energyProductionSite);
+				break;
+			}
+		}
+	}
+}
+
+if(sliderWindFarmGCList.size() == 0){
+	throw new IllegalStateException("Model does not contain any sliderWindFarmGC agent");
+}
+
+f_setWindTurbines( sl_largeScaleWind_MW_Businesspark.getValue() - p_currentWindTurbines_MW, sliderWindFarmGCList);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1372,7 +1442,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 			<Text>
 				<Id>1728384392448</Id>
 				<Name><![CDATA[t_largeScaleWind_MW_Businesspark]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>150</Y>
 				<Label>
 					<X>0</X>
@@ -1393,7 +1463,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Image>
 				<Id>1746091438812</Id>
@@ -1636,7 +1706,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 			<Text>
 				<Id>1754985653996</Id>
 				<Name><![CDATA[t_collectiveBatteries_businesspark]]></Name>
-				<X>230</X>
+				<X>240</X>
 				<Y>260</Y>
 				<Label>
 					<X>0</X>
@@ -1663,7 +1733,7 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1754985653998</Id>
 				<Name><![CDATA[sl_collectiveBattery_MWh_businesspark]]></Name>
-				<X>255</X>
+				<X>260</X>
 				<Y>255</Y>
 				<Label>
 					<X>0</X>
@@ -1676,21 +1746,25 @@ if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getVa
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setGridBatteries(sl_collectiveBattery_MWh_businesspark.getValue(), uI_Tabs.f_getAllSliderGridConnections_gridBatteries());
-
-//Update variable to change to custom scenario
-if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.f_setScenarioToCustom();
+					<ActionCode>List&lt;GCGridBattery&gt; gcListGridBatteries = new ArrayList&lt;&gt;();
+for(GridConnection gc : c_electricityTabEASliderGCs){
+	if(gc instanceof GCGridBattery gridbattery){
+		gcListGridBatteries.add(gridbattery);
+	}
 }
 
-zero_Interface.f_resetSettings();</ActionCode>
+if(gcListGridBatteries.size() == 0){
+	throw new IllegalStateException("Model does not contain any GCGridBattery agent");
+}
+
+f_setGridBatteries(sl_collectiveBattery_MWh_businesspark.getValue() * 1000, gcListGridBatteries);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>50</MaxValue>
-					<Step>1</Step>
+					<MinValue>p_currentTotalGridBatteryCapacity_MWh</MinValue>
+					<MaxValue>p_currentTotalGridBatteryCapacity_MWh + 50</MaxValue>
+					<Step>0.1</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -1814,7 +1888,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<ActionCode>f_setPVSystemHouses( uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_householdPVResidentialArea_pct.getValue() );
 
 //If on pv map overlay, adjust colouring
-if(zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
+if(zero_Interface.rb_mapOverlay != null &amp;&amp; zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
 	zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
 }
 
@@ -1979,8 +2053,18 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), 
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setGridBatteries_residential( sl_gridBatteriesResidentialArea_kWh.getValue(), uI_Tabs.f_getAllSliderGridConnections_gridBatteries() );
-</ActionCode>
+					<ActionCode>List&lt;GCGridBattery&gt; gcListGridBatteries = new ArrayList&lt;&gt;();
+for(GridConnection gc : c_electricityTabEASliderGCs){
+	if(gc instanceof GCGridBattery gridbattery){
+		gcListGridBatteries.add(gridbattery);
+	}
+}
+
+if(gcListGridBatteries.size() == 0){
+	throw new IllegalStateException("Model does not contain any GCGridBattery agent");
+}
+
+f_setGridBatteries(sl_gridBatteriesResidentialArea_kWh.getValue(), gcListGridBatteries);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>

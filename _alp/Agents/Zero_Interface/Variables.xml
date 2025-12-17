@@ -268,7 +268,7 @@
 		<Id>1696863329269</Id>
 		<Name><![CDATA[v_gridConnectionInBuildingIndex]]></Name>
 		<X>50</X>
-		<Y>1480</Y>
+		<Y>1560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -309,7 +309,7 @@
 		<Id>1701879001472</Id>
 		<Name><![CDATA[v_clickedObjectText]]></Name>
 		<X>50</X>
-		<Y>1500</Y>
+		<Y>1580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -331,7 +331,7 @@
 		<Id>1701879014361</Id>
 		<Name><![CDATA[v_clickedObjectAdress]]></Name>
 		<X>50</X>
-		<Y>1520</Y>
+		<Y>1600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -463,7 +463,7 @@
 		<Id>1702046920293</Id>
 		<Name><![CDATA[v_clickedObjectDetails]]></Name>
 		<X>50</X>
-		<Y>1540</Y>
+		<Y>1620</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -727,7 +727,7 @@
 		<Id>1705673181898</Id>
 		<Name><![CDATA[v_clickedGridNode]]></Name>
 		<X>50</X>
-		<Y>1380</Y>
+		<Y>1460</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -746,7 +746,7 @@
 		<Id>1705673647104</Id>
 		<Name><![CDATA[v_previousClickedObjectType]]></Name>
 		<X>50</X>
-		<Y>1350</Y>
+		<Y>1430</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -765,7 +765,7 @@
 		<Id>1705673714784</Id>
 		<Name><![CDATA[v_previousClickedGridNode]]></Name>
 		<X>50</X>
-		<Y>1400</Y>
+		<Y>1480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -893,7 +893,7 @@
 		<Id>1707918668189</Id>
 		<Name><![CDATA[v_clickedObjectType]]></Name>
 		<X>50</X>
-		<Y>1330</Y>
+		<Y>1410</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1582,7 +1582,7 @@
 		<Id>1725018118872</Id>
 		<Name><![CDATA[b_showCables]]></Name>
 		<X>50</X>
-		<Y>1580</Y>
+		<Y>1660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1626,7 +1626,7 @@
 		<Id>1732027307811</Id>
 		<Name><![CDATA[b_runningMainInterfaceScenarios]]></Name>
 		<X>-670</X>
-		<Y>686</Y>
+		<Y>706</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1670,7 +1670,7 @@
 		<Id>1739980192808</Id>
 		<Name><![CDATA[v_customEnergyCoop]]></Name>
 		<X>50</X>
-		<Y>1290</Y>
+		<Y>1370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1711,7 +1711,7 @@
 		<Id>1743092928263</Id>
 		<Name><![CDATA[b_inManualFilterSelectionMode]]></Name>
 		<X>-1530</X>
-		<Y>500</Y>
+		<Y>580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2335,7 +2335,7 @@
 	<Variable Class="Parameter">
 		<Id>1745937830300</Id>
 		<Name><![CDATA[p_minSelectedGCForPublicAggregation]]></Name>
-		<X>-670</X>
+		<X>-655</X>
 		<Y>895</Y>
 		<Label>
 			<X>10</X>
@@ -2708,6 +2708,241 @@
 			</ParameterEditor>
 		</Properties>
 	</Variable>
+	<Variable Class="Parameter">
+		<Id>1763657709730</Id>
+		<Name><![CDATA[map_filterOptionUINames]]></Name>
+		<Description><![CDATA[Map that matches OL_FilterOptionsGC option with a user friendly name]]></Description>
+		<X>-1560</X>
+		<Y>90</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_FilterOptionsGC, String>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[Map.of(
+OL_FilterOptionsGC.COMPANIES, "Bedrijfspanden",
+OL_FilterOptionsGC.HOUSES,"Woonhuizen",
+OL_FilterOptionsGC.DETAILED,"Met bekende data",
+OL_FilterOptionsGC.NONDETAILED,"Met geschatte data",
+OL_FilterOptionsGC.HAS_PV,"Met zonnepanelen",
+OL_FilterOptionsGC.HAS_TRANSPORT,"Met voertuigen",
+OL_FilterOptionsGC.HAS_EV,"Met EV",
+OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP,"In de aangewezen 'lus'",
+OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD,"In de aangewezen 'buurt'",
+OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
+)]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1763657709728</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1764772112998</Id>
+		<Name><![CDATA[map_UINamesFilterOption]]></Name>
+		<Description><![CDATA[Map that matches the user friendly name with the OL_FilterOptionsGC option
+-> This is created dynamically and a direct reverse copy of map_filterOptionUINames]]></Description>
+		<X>-1560</X>
+		<Y>110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<String, OL_FilterOptionsGC>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1764772112996</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1765213300991</Id>
+		<Name><![CDATA[p_defaultMainSliderGCName_solarfarm]]></Name>
+		<X>420</X>
+		<Y>2050</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA["Main solarfarm slider"]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1765213300989</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1765213382483</Id>
+		<Name><![CDATA[p_defaultMainSliderGCName_windfarm]]></Name>
+		<X>420</X>
+		<Y>2070</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA["Main windfarm slider"]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1765213382481</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1765213390361</Id>
+		<Name><![CDATA[p_defaultMainSliderGCName_battery]]></Name>
+		<X>420</X>
+		<Y>2090</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA["Main battery slider"]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1765213390359</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1765213400597</Id>
+		<Name><![CDATA[p_defaultEnergyHubSliderGCName_solarfarm]]></Name>
+		<X>420</X>
+		<Y>2110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA["EnergyHub solarfarm slider"]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1765213400595</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1765213400601</Id>
+		<Name><![CDATA[p_defaultEnergyHubSliderGCName_windfarm]]></Name>
+		<X>420</X>
+		<Y>2130</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA["EnergyHub windfarm slider"]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1765213400599</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1765213400605</Id>
+		<Name><![CDATA[p_defaultEnergyHubSliderGCName_battery]]></Name>
+		<X>420</X>
+		<Y>2150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA["EnergyHub battery slider"]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1765213400603</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
 	<Variable Class="CollectionVariable">
 		<Id>1707918668148</Id>
 		<Name><![CDATA[c_GISNeighborhoods]]></Name>
@@ -2856,7 +3091,7 @@
 		<Id>1721302080638</Id>
 		<Name><![CDATA[c_selectedGridConnections]]></Name>
 		<X>50</X>
-		<Y>1260</Y>
+		<Y>1340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2910,7 +3145,7 @@
 		<Id>1734442668540</Id>
 		<Name><![CDATA[c_selectedFilterOptions]]></Name>
 		<X>-1550</X>
-		<Y>80</Y>
+		<Y>160</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2928,7 +3163,7 @@
 		<Id>1734512815255</Id>
 		<Name><![CDATA[c_previousSelectedObjects]]></Name>
 		<X>50</X>
-		<Y>1450</Y>
+		<Y>1530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2946,7 +3181,7 @@
 		<Id>1734513139372</Id>
 		<Name><![CDATA[c_selectedObjects]]></Name>
 		<X>50</X>
-		<Y>1430</Y>
+		<Y>1510</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2964,7 +3199,7 @@
 		<Id>1742226708562</Id>
 		<Name><![CDATA[c_manualFilterDeselectedGC]]></Name>
 		<X>-1530</X>
-		<Y>475</Y>
+		<Y>555</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2982,7 +3217,7 @@
 		<Id>1742226748068</Id>
 		<Name><![CDATA[c_manualFilterSelectedGC]]></Name>
 		<X>-1530</X>
-		<Y>455</Y>
+		<Y>535</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3000,7 +3235,7 @@
 		<Id>1742376749972</Id>
 		<Name><![CDATA[c_filterSelectedGridLoops]]></Name>
 		<X>-1530</X>
-		<Y>330</Y>
+		<Y>410</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3018,7 +3253,7 @@
 		<Id>1742376765347</Id>
 		<Name><![CDATA[c_filterSelectedNeighborhoods]]></Name>
 		<X>-1530</X>
-		<Y>390</Y>
+		<Y>470</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3303,6 +3538,24 @@
 			<CollectionClass>LinkedHashMap</CollectionClass>
 			<ElementClass>String</ElementClass>
 			<ValueElementClass>List&lt;J_EAVehicle&gt;</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1763657607448</Id>
+		<Name><![CDATA[c_cbFilterOptions]]></Name>
+		<X>-1560</X>
+		<Y>70</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>OL_FilterOptionsGC</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>
 </Variables>
