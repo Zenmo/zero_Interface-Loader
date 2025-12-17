@@ -687,9 +687,7 @@ if (vehicleType == OL_EnergyAssetType.ELECTRIC_VEHICLE || vehicleType == OL_Ener
 	}
 	
 	//Create EV and connect to GC and selected trip tracker
-	J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timestep_h, energyConsumption_kWhpkm, vehicleScaling, vehicleType, tripTracker);	
-	electricVehicle.available = available;
-
+	J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timestep_h, energyConsumption_kWhpkm, vehicleScaling, vehicleType, tripTracker, available);	
 	
 	
 	if (isAdditionalVehicle){
