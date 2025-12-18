@@ -495,9 +495,9 @@
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>J_EADieselVehicle</ReturnType>
+		<ReturnType>J_EAPetroleumFuelVehicle</ReturnType>
 		<Id>1726584205829</Id>
-		<Name><![CDATA[f_addDieselVehicle]]></Name>
+		<Name><![CDATA[f_addPetroleumFuelVehicle]]></Name>
 		<X>900</X>
 		<Y>760</Y>
 		<Label>
@@ -1016,7 +1016,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1737712184349</Id>
-		<Name><![CDATA[f_createDieselTractors]]></Name>
+		<Name><![CDATA[f_createPetroleumFuelTractors]]></Name>
 		<X>900</X>
 		<Y>800</Y>
 		<Label>

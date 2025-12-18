@@ -1120,7 +1120,7 @@ Gemiddelde COP is 4.]]></Description>
 	<Variable Class="Parameter">
 		<Id>1726584205687</Id>
 		<Name><![CDATA[p_ratioElectricTrucks]]></Name>
-		<Description><![CDATA[Ratio of how many trucks are electric vs diesel.
+		<Description><![CDATA[Ratio of how many trucks are electric vs petroleumFuel.
 ???
 https://nos.nl/artikel/2483604-elektrische-vrachtwagens-blijven-achter-door-complexe-serie-aan-uitdagingen --> 'volgens cbs nog geen half procent.']]></Description>
 		<X>50</X>

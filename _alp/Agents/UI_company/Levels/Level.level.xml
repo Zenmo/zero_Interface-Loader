@@ -906,7 +906,7 @@ f_setElectricVehicleSliders(p_gridConnection, OL_EnergyAssetType.ELECTRIC_VAN, (
 
 //Update the other two sliders aswell
 sl_hydrogenVansCompany.setValue(v_nbHydrogenVans, false);
-sl_dieselVansCompany.setValue(v_nbDieselVans, false);
+sl_petroleumFuelVansCompany.setValue(v_nbPetroleumFuelVans, false);
 
 //Set scenario to custom
 f_setScenario(2);
@@ -997,7 +997,7 @@ f_setHydrogenVehicleSliders(p_gridConnection, OL_EnergyAssetType.HYDROGEN_VAN, (
 
 //Update the other two sliders aswell
 sl_electricVansCompany.setValue(v_nbEVVans, false);
-sl_dieselVansCompany.setValue(v_nbDieselVans, false);
+sl_petroleumFuelVansCompany.setValue(v_nbPetroleumFuelVans, false);
 
 //Set scenario to custom
 f_setScenario(2);
@@ -1069,7 +1069,7 @@ f_setSimulateYearScreen();</ActionCode>
 					<Control Type="Slider">
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1713446839201</Id>
-						<Name><![CDATA[sl_dieselVansCompany]]></Name>
+						<Name><![CDATA[sl_petroleumFuelVansCompany]]></Name>
 						<X>62</X>
 						<Y>47</Y>
 						<Label>
@@ -1084,7 +1084,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setDieselVehicleSliders(p_gridConnection, OL_EnergyAssetType.DIESEL_VAN, (int)sl_dieselVansCompany.getValue());
+f_setPetroleumFuelVehicleSliders(p_gridConnection, OL_EnergyAssetType.PETROLEUM_FUEL_VAN, (int)sl_petroleumFuelVansCompany.getValue());
 
 //Update the other two sliders aswell
 sl_electricVansCompany.setValue(v_nbEVVans, false);
@@ -1097,13 +1097,13 @@ f_setScenario(2);
 f_setSimulateYearScreen();</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
-							<DefaultValueCode>v_nbDieselVans</DefaultValueCode>
+							<DefaultValueCode>v_nbPetroleumFuelVans</DefaultValueCode>
 							<Orientation>HORIZONTAL</Orientation>
-							<MinValue>v_minDieselVanSlider</MinValue>
-							<MaxValue>v_maxDieselVanSlider</MaxValue>
+							<MinValue>v_minPetroleumFuelVanSlider</MinValue>
+							<MaxValue>v_maxPetroleumFuelVanSlider</MaxValue>
 							<Step>1</Step>
 							<LinkTo>false</LinkTo>
-							<Link>v_nbDieselVans</Link>
+							<Link>v_nbPetroleumFuelVans</Link>
 						</ExtendedProperties>
 					</Control>
 					<Text>
@@ -1133,7 +1133,7 @@ f_setSimulateYearScreen();</ActionCode>
 					</Text>
 					<Text>
 						<Id>1713446839205</Id>
-						<Name><![CDATA[t_numberOfDieselVansCompany]]></Name>
+						<Name><![CDATA[t_numberOfPetroleumFuelVansCompany]]></Name>
 						<X>35</X>
 						<Y>50</Y>
 						<Label>
@@ -1149,7 +1149,7 @@ f_setSimulateYearScreen();</ActionCode>
 						<Rotation>0.0</Rotation>
 						<Color>-16777216</Color>
 						<Text><![CDATA[0]]></Text>
-						<TextCode>sl_dieselVansCompany.getIntValue()</TextCode>
+						<TextCode>sl_petroleumFuelVansCompany.getIntValue()</TextCode>
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
@@ -1184,7 +1184,7 @@ f_setSimulateYearScreen();</ActionCode>
 					</Text>
 					<Text>
 						<Id>1713446857516</Id>
-						<Name><![CDATA[t_numberOfDieselTrucksCompany]]></Name>
+						<Name><![CDATA[t_numberOfPetroleumFuelTrucksCompany]]></Name>
 						<X>35</X>
 						<Y>145</Y>
 						<Label>
@@ -1200,7 +1200,7 @@ f_setSimulateYearScreen();</ActionCode>
 						<Rotation>0.0</Rotation>
 						<Color>-16777216</Color>
 						<Text><![CDATA[0]]></Text>
-						<TextCode>sl_dieselTrucksCompany.getIntValue()</TextCode>
+						<TextCode>sl_petroleumFuelTrucksCompany.getIntValue()</TextCode>
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
@@ -1356,7 +1356,7 @@ f_setHydrogenVehicleSliders(p_gridConnection, OL_EnergyAssetType.HYDROGEN_TRUCK,
 
 //Update the other two sliders aswell
 sl_electricTrucksCompany.setValue(v_nbEVTrucks, false);
-sl_dieselTrucksCompany.setValue(v_nbDieselTrucks, false);
+sl_petroleumFuelTrucksCompany.setValue(v_nbPetroleumFuelTrucks, false);
 
 //Set scenario to custom
 f_setScenario(2);
@@ -1422,7 +1422,7 @@ f_setElectricVehicleSliders(p_gridConnection, OL_EnergyAssetType.ELECTRIC_TRUCK,
 
 //Update the other two sliders aswell
 sl_hydrogenTrucksCompany.setValue(v_nbHydrogenTrucks, false);
-sl_dieselTrucksCompany.setValue(v_nbDieselTrucks, false);
+sl_petroleumFuelTrucksCompany.setValue(v_nbPetroleumFuelTrucks, false);
 
 //Set scenario to custom
 f_setScenario(2);
@@ -1443,7 +1443,7 @@ f_setSimulateYearScreen();</ActionCode>
 					<Control Type="Slider">
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1713446857526</Id>
-						<Name><![CDATA[sl_dieselTrucksCompany]]></Name>
+						<Name><![CDATA[sl_petroleumFuelTrucksCompany]]></Name>
 						<X>62</X>
 						<Y>142</Y>
 						<Label>
@@ -1458,7 +1458,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setDieselVehicleSliders(p_gridConnection, OL_EnergyAssetType.DIESEL_TRUCK, (int)sl_dieselTrucksCompany.getValue());
+f_setPetroleumFuelVehicleSliders(p_gridConnection, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, (int)sl_petroleumFuelTrucksCompany.getValue());
 
 //Update the other two sliders aswell
 sl_electricTrucksCompany.setValue(v_nbEVTrucks, false);
@@ -1471,13 +1471,13 @@ f_setScenario(2);
 f_setSimulateYearScreen();</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
-							<DefaultValueCode>v_nbDieselTrucks</DefaultValueCode>
+							<DefaultValueCode>v_nbPetroleumFuelTrucks</DefaultValueCode>
 							<Orientation>HORIZONTAL</Orientation>
-							<MinValue>v_minDieselTruckSlider</MinValue>
-							<MaxValue>v_maxDieselTruckSlider</MaxValue>
+							<MinValue>v_minPetroleumFuelTruckSlider</MinValue>
+							<MaxValue>v_maxPetroleumFuelTruckSlider</MaxValue>
 							<Step>1</Step>
 							<LinkTo>false</LinkTo>
-							<Link>v_nbDieselTrucks</Link>
+							<Link>v_nbPetroleumFuelTrucks</Link>
 						</ExtendedProperties>
 					</Control>
 					<Control Type="Slider">
@@ -1502,7 +1502,7 @@ f_setElectricVehicleSliders(p_gridConnection, OL_EnergyAssetType.ELECTRIC_VEHICL
 
 //Update the other two sliders aswell
 sl_hydrogenCarsCompany.setValue(v_nbHydrogenCars, false);
-sl_dieselCarsCompany.setValue(v_nbDieselCars, false);
+sl_petroleumFuelCarsCompany.setValue(v_nbPetroleumFuelCars, false);
 
 //Set scenario to custom
 f_setScenario(2);
@@ -1678,7 +1678,7 @@ f_setHydrogenVehicleSliders(p_gridConnection, OL_EnergyAssetType.HYDROGEN_VEHICL
 
 //Update the other two sliders aswell
 sl_electricCarsCompany.setValue(v_nbEVCars, false);
-sl_dieselCarsCompany.setValue(v_nbDieselCars, false);
+sl_petroleumFuelCarsCompany.setValue(v_nbPetroleumFuelCars, false);
 
 //Set scenario to custom
 f_setScenario(2);
@@ -1750,7 +1750,7 @@ f_setSimulateYearScreen();</ActionCode>
 					<Control Type="Slider">
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1713446065933</Id>
-						<Name><![CDATA[sl_dieselCarsCompany]]></Name>
+						<Name><![CDATA[sl_petroleumFuelCarsCompany]]></Name>
 						<X>62</X>
 						<Y>-54</Y>
 						<Label>
@@ -1765,7 +1765,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setDieselVehicleSliders(p_gridConnection, OL_EnergyAssetType.DIESEL_VEHICLE, (int)sl_dieselCarsCompany.getValue());
+f_setPetroleumFuelVehicleSliders(p_gridConnection, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, (int)sl_petroleumFuelCarsCompany.getValue());
 
 //Update the other two sliders aswell
 sl_electricCarsCompany.setValue(v_nbEVCars, false);
@@ -1778,13 +1778,13 @@ f_setScenario(2);
 f_setSimulateYearScreen();</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
-							<DefaultValueCode>v_nbDieselCars</DefaultValueCode>
+							<DefaultValueCode>v_nbPetroleumFuelCars</DefaultValueCode>
 							<Orientation>HORIZONTAL</Orientation>
-							<MinValue>v_minDieselCarSlider</MinValue>
-							<MaxValue>v_maxDieselCarSlider</MaxValue>
+							<MinValue>v_minPetroleumFuelCarSlider</MinValue>
+							<MaxValue>v_maxPetroleumFuelCarSlider</MaxValue>
 							<Step>1</Step>
 							<LinkTo>false</LinkTo>
-							<Link>v_nbDieselCars</Link>
+							<Link>v_nbPetroleumFuelCars</Link>
 						</ExtendedProperties>
 					</Control>
 					<Text>
@@ -1814,7 +1814,7 @@ f_setSimulateYearScreen();</ActionCode>
 					</Text>
 					<Text>
 						<Id>1713446065937</Id>
-						<Name><![CDATA[t_numberOfDieselCarsCompany]]></Name>
+						<Name><![CDATA[t_numberOfPetroleumFuelCarsCompany]]></Name>
 						<X>35</X>
 						<Y>-50</Y>
 						<Label>
@@ -1830,7 +1830,7 @@ f_setSimulateYearScreen();</ActionCode>
 						<Rotation>0.0</Rotation>
 						<Color>-16777216</Color>
 						<Text><![CDATA[0]]></Text>
-						<TextCode>sl_dieselCarsCompany.getIntValue()</TextCode>
+						<TextCode>sl_petroleumFuelCarsCompany.getIntValue()</TextCode>
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>

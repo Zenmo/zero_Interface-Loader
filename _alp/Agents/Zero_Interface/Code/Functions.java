@@ -2842,13 +2842,13 @@ double f_initializePrivateAndPublicParkingCarsOrder()
 {/*ALCODESTART::1753882411689*/
 //Get all public and private parked cars
 c_orderedVehiclesPrivateParking = new ArrayList<J_EAVehicle>();
-List<J_EADieselVehicle> allPublicParkedCars = new ArrayList<J_EADieselVehicle>();
+List<J_EAPetroleumFuelVehicle> allPublicParkedCars = new ArrayList<J_EAPetroleumFuelVehicle>();
 for (GCHouse house : energyModel.Houses) {
 	if (house.p_eigenOprit) {
 		c_orderedVehiclesPrivateParking.addAll(house.c_vehicleAssets);
 	}
 	else{
-		allPublicParkedCars.addAll(house.c_dieselVehicles);	
+		allPublicParkedCars.addAll(house.c_petroleumFuelVehicles);	
 	}
 }
 
@@ -2870,12 +2870,12 @@ if(totalChargers > 0){
 	    GCPublicCharger charger = c_orderedPublicChargers.get(i);
 	    int numberOfCars = numberOfCarsPerCharger.get(i);
 	
-	    List<J_EADieselVehicle> assignedCars = new ArrayList<>(allPublicParkedCars.subList(index, index + numberOfCars));
+	    List<J_EAPetroleumFuelVehicle> assignedCars = new ArrayList<>(allPublicParkedCars.subList(index, index + numberOfCars));
 	    c_mappingOfVehiclesPerCharger.put(charger.p_uid, assignedCars);
 	
 	    // Place vehicles depending on whether the charger is active
 	    if (charger.v_isActive) {
-	        for (J_EADieselVehicle car : assignedCars) {
+	        for (J_EAPetroleumFuelVehicle car : assignedCars) {
 	           	J_ActivityTrackerTrips tripTracker = car.getTripTracker(); //Needed, as triptracker is removed when removeEnergyAsset is called.
 				car.removeEnergyAsset();
 				car.setTripTracker(tripTracker);//Re-set the triptracker again, for storing.
