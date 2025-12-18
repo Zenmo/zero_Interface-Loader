@@ -17,8 +17,8 @@ public class J_ModelSave implements Serializable {
 	public ArrayList<J_EAVehicle> c_orderedVehiclesPrivateParking;
 	public ArrayList<GIS_Object> c_orderedParkingSpaces;
 	
-	public ArrayList<J_EAChargePoint> c_orderedV1GChargers;
-	public ArrayList<J_EAChargePoint> c_orderedV2GChargers;
+	public ArrayList<GCPublicCharger> c_orderedV1GChargers;
+	public ArrayList<GCPublicCharger> c_orderedV2GChargers;
 	public ArrayList<GCPublicCharger> c_orderedPublicChargers;
 
 	public LinkedHashMap<String, List<J_EADieselVehicle>> c_mappingOfVehiclesPerCharger;
