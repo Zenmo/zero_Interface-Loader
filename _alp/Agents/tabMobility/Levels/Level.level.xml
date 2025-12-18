@@ -20,7 +20,7 @@
 		<LineColor>-4144960</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>800</Width>
+		<Width>960</Width>
 		<Height>470</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
@@ -1154,7 +1154,7 @@ f_setChargingAttitude(selectedChargingAttitude, uI_Tabs.f_getAllSliderGridConnec
 		<LineColor>-5952982</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>720</Width>
+		<Width>900</Width>
 		<Height>230</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>

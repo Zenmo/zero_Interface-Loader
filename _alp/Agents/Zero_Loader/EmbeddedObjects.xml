@@ -215,7 +215,7 @@
 				<Name><![CDATA[p_hydrogenSpecificEnergy_kWh_kg]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_petroleumFuel_kWhpl]]></Name>
+				<Name><![CDATA[p_diesel_kWhpl]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgDieselConsumptionCar_kmpl]]></Name>

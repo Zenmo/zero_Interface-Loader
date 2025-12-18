@@ -522,7 +522,7 @@ if ( electricTruck != null ) {
 	electricTruck.removeEnergyAsset();
 
 	// Re-add petroleumFuel vehicle
-	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgPetroleumFuelConsumptionTruck_kWhpkm;
+	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionTruck_kWhpkm;
 	double vehicleScaling = 1.0;
 	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, tripTracker, available);
 	
@@ -571,9 +571,9 @@ if ( hydrogenTruck != null ) {
 	hydrogenTruck.removeEnergyAsset();
 
 	// Re-add petroleumFuel vehicle
-	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgPetroleumFuelConsumptionTruck_kWhpkm;
+	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionTruck_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.DIESEL_TRUCK, tripTracker, available);
+	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, tripTracker, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, petroleumFuelVehicle);
 	
@@ -729,9 +729,9 @@ if ( electricVan != null ) {
 	electricVan.removeEnergyAsset();
 
 	// Re-add petroleumFuel vehicle
-	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgPetroleumFuelConsumptionTruck_kWhpkm;
+	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionVan_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.DIESEL_VAN, tripTracker, available);
+	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_VAN, tripTracker, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, petroleumFuelVehicle);
 	
@@ -830,9 +830,9 @@ if ( electricCar != null ) {
 	electricCar.removeEnergyAsset();
 
 	// Re-add petroleumFuel vehicle
-	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgPetroleumFuelConsumptionTruck_kWhpkm;
+	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgGasolineConsumptionCar_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.DIESEL_VEHICLE, tripTracker, available);
+	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, tripTracker, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, petroleumFuelVehicle);
 	
@@ -1638,7 +1638,7 @@ int desiredNbOfPrivateParkedEV = roundToInt(privateParkingEV_pct / 100 * gcListO
 
 
 // we scale the consumption instead of getting the petroleumFuel/EV parameter from avgc data to represent the 'size' of the car
-double ratioEVToPetroleumFuelConsumption = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionCar_kWhpkm / zero_Interface.energyModel.avgc_data.p_avgPetroleumFuelConsumptionCar_kWhpkm;
+double ratioEVToPetroleumFuelConsumption = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionCar_kWhpkm / zero_Interface.energyModel.avgc_data.p_avgGasolineConsumptionCar_kWhpkm;
 
 while ( nbOfPrivateParkedEV > desiredNbOfPrivateParkedEV){
 	J_EAVehicle j_ea = findFirst( gcListOrderedVehiclesPrivateParking, h -> h instanceof J_EAEV);
@@ -1658,7 +1658,7 @@ while ( nbOfPrivateParkedEV > desiredNbOfPrivateParkedEV){
 }
 while ( nbOfPrivateParkedEV < desiredNbOfPrivateParkedEV){
 	J_EAVehicle j_ea = findFirst( gcListOrderedVehiclesPrivateParking, h -> h instanceof J_EAPetroleumFuelVehicle);
-	if (j_ea.vehicleScaling != 1) {
+	if (j_ea.getVehicleScaling_fr() != 1) {
 		throw new RuntimeException("f_setVehiclesPrivateParking does not work with vehicles that have a vehicleScaling other than 1");
 	}
 	J_ActivityTrackerTrips triptracker = j_ea.tripTracker;

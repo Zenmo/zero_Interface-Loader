@@ -702,15 +702,15 @@ else if (vehicleType == OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE || vehicleType
 	switch (vehicleType){
 		
 		case PETROLEUM_FUEL_VEHICLE:
-			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgPetroleumFuelConsumptionCar_kWhpkm;
+			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgGasolineConsumptionCar_kWhpkm;
 		break;
 		
 		case PETROLEUM_FUEL_VAN:
-			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgPetroleumFuelConsumptionVan_kWhpkm;
+			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionVan_kWhpkm;
 		break;
 		
 		case PETROLEUM_FUEL_TRUCK:
-			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgPetroleumFuelConsumptionTruck_kWhpkm;
+			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionTruck_kWhpkm;
 		break;
 	}
 	
