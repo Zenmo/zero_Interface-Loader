@@ -3355,7 +3355,7 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>J_EAChargePoint</ElementClass>
+			<ElementClass>GCPublicCharger</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>
@@ -3391,7 +3391,7 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>J_EAChargePoint</ElementClass>
+			<ElementClass>GCPublicCharger</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>

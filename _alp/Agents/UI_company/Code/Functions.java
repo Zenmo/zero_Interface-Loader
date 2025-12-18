@@ -687,9 +687,7 @@ if (vehicleType == OL_EnergyAssetType.ELECTRIC_VEHICLE || vehicleType == OL_Ener
 	}
 	
 	//Create EV and connect to GC and selected trip tracker
-	J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timestep_h, energyConsumption_kWhpkm, vehicleScaling, vehicleType, tripTracker);	
-	electricVehicle.available = available;
-
+	J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timestep_h, energyConsumption_kWhpkm, vehicleScaling, vehicleType, tripTracker, available);	
 	
 	
 	if (isAdditionalVehicle){
@@ -717,8 +715,7 @@ else if (vehicleType == OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE || vehicleType
 	}
 	
 	//Create PetroleumFuel vehicle and connect to GC and selected trip tracker
-	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(parentGC, energyConsumption_kWhpkm, timestep_h, vehicleScaling, vehicleType, tripTracker);
-	petroleumFuelVehicle.available = available;
+	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(parentGC, energyConsumption_kWhpkm, timestep_h, vehicleScaling, vehicleType, tripTracker, available);
 	
 	
 	
@@ -745,8 +742,7 @@ else{ // (Hydrogen vehicles)
 	}
 	
 	//Create Hydrogen vehicle and connect to GC and selected trip tracker
-	J_EAHydrogenVehicle hydrogenVehicle = new J_EAHydrogenVehicle(parentGC, energyConsumption_kWhpkm, timestep_h, vehicleScaling, vehicleType, tripTracker);
-	hydrogenVehicle.available = available;
+	J_EAHydrogenVehicle hydrogenVehicle = new J_EAHydrogenVehicle(parentGC, energyConsumption_kWhpkm, timestep_h, vehicleScaling, vehicleType, tripTracker, available);
 	
 	
 	

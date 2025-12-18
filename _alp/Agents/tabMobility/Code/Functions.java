@@ -323,8 +323,7 @@ if (petroleumFuelTruck!=null) {
 	double initialStateOfCharge_fr = 1.0;
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionTruck_kWhpkm;
 	double vehicleScalingElectric = 1.0;
-	J_EAEV electricTruck = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeStep_h, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_TRUCK, tripTracker);  
-	electricTruck.available = available;
+	J_EAEV electricTruck = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeStep_h, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_TRUCK, tripTracker, available);  
 	
 	zero_Interface.c_orderedVehicles.add(0, electricTruck);
 	
@@ -378,9 +377,8 @@ if (hydrogenTruck!=null) {
 	double initialStateOfCharge_fr = 1.0;
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionTruck_kWhpkm;
 	double vehicleScalingElectric = 1.0;
-	J_EAEV electricTruck = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeStep_h, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_TRUCK, tripTracker);  
-	electricTruck.available = available;
-	
+	J_EAEV electricTruck = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeStep_h, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_TRUCK, tripTracker, available);  
+
 	zero_Interface.c_orderedVehicles.add(0, electricTruck);
 	
 	//check if was additional vehicle in companyUI, if so: add to collection
@@ -428,8 +426,7 @@ if (electricTruck!=null) {
 	// Re-add hydrogen vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgHydrogenConsumptionTruck_kWhpkm;			
 	double vehicleScaling = 1.0;
-	J_EAHydrogenVehicle hydrogenVehicle = new J_EAHydrogenVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.HYDROGEN_TRUCK, tripTracker);				
-	hydrogenVehicle.available = available;
+	J_EAHydrogenVehicle hydrogenVehicle = new J_EAHydrogenVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.HYDROGEN_TRUCK, tripTracker, available);				
 	
 	zero_Interface.c_orderedVehicles.add(0, hydrogenVehicle);
 	
@@ -478,8 +475,7 @@ if (petroleumFuelTruck!=null) {
 	// Re-add hydrogen vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgHydrogenConsumptionTruck_kWhpkm;			
 	double vehicleScaling = 1.0;
-	J_EAHydrogenVehicle hydrogenVehicle = new J_EAHydrogenVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.HYDROGEN_TRUCK, tripTracker);				
-	hydrogenVehicle.available = available;
+	J_EAHydrogenVehicle hydrogenVehicle = new J_EAHydrogenVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.HYDROGEN_TRUCK, tripTracker, available);				
 	
 	zero_Interface.c_orderedVehicles.add(0, hydrogenVehicle);
 	
@@ -528,8 +524,7 @@ if ( electricTruck != null ) {
 	// Re-add petroleumFuel vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgPetroleumFuelConsumptionTruck_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, tripTracker);
-	petroleumFuelVehicle.available = available;
+	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, tripTracker, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, petroleumFuelVehicle);
 	
@@ -578,8 +573,7 @@ if ( hydrogenTruck != null ) {
 	// Re-add petroleumFuel vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgPetroleumFuelConsumptionTruck_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, tripTracker);
-	petroleumFuelVehicle.available = available;
+	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.DIESEL_TRUCK, tripTracker, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, petroleumFuelVehicle);
 	
@@ -687,8 +681,7 @@ if (petroleumFuelVan!=null) {
 	double initialStateOfCharge_fr = 1.0;
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionVan_kWhpkm;
 	double vehicleScalingElectric = 1.0;
-	J_EAEV electricVan = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeStep_h, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_VAN, tripTracker);  
-	electricVan.available = available;
+	J_EAEV electricVan = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeStep_h, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_VAN, tripTracker, available);  
 	
 	zero_Interface.c_orderedVehicles.add(0, electricVan);
 	
@@ -738,8 +731,7 @@ if ( electricVan != null ) {
 	// Re-add petroleumFuel vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgPetroleumFuelConsumptionTruck_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_VAN, tripTracker);
-	petroleumFuelVehicle.available = available;
+	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.DIESEL_VAN, tripTracker, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, petroleumFuelVehicle);
 	
@@ -790,8 +782,7 @@ if (petroleumFuelCar!=null) {
 	double initialStateOfCharge_fr = 1.0;
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionCar_kWhpkm;
 	double vehicleScalingElectric = 1.0;
-	J_EAEV electricCar = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeStep_h, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_VEHICLE, tripTracker);  
-	electricCar.available = available;
+	J_EAEV electricCar = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeStep_h, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_VEHICLE, tripTracker, available);  
 	
 	zero_Interface.c_orderedVehicles.add(0, electricCar);
 	
@@ -841,8 +832,7 @@ if ( electricCar != null ) {
 	// Re-add petroleumFuel vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgPetroleumFuelConsumptionTruck_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, tripTracker);
-	petroleumFuelVehicle.available = available;
+	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.DIESEL_VEHICLE, tripTracker, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, petroleumFuelVehicle);
 	
@@ -1442,8 +1432,6 @@ gr_settingsV2G_publicChargers.setVisible(false);
 
 List<GCPublicCharger> activeChargerGridConnections = uI_Tabs.f_getSliderGridConnections_chargers();
 List<GCPublicCharger> pausedChargerGridConnections = uI_Tabs.f_getPausedSliderGridConnections_chargers();
-List<J_EAChargePoint> activeChargersEA = new ArrayList<J_EAChargePoint>();
-activeChargerGridConnections.forEach(gc -> activeChargersEA.addAll(gc.c_chargers));
 
 
 int nbPublicChargerGC = activeChargerGridConnections.size() + pausedChargerGridConnections.size();
@@ -1453,9 +1441,9 @@ if(nbPublicChargerGC > 0 ){
 	double activePublicChargers_pct = 100.0 * nbActivePublicChargersGC / nbPublicChargerGC;
 	sl_publicChargersResidentialArea_pct.setValue(roundToInt(activePublicChargers_pct), false);
 	
-	int nbV1GChargers = count(activeChargersEA, x -> x.getV1GCapable());
-	int nbV2GChargers =count(activeChargersEA, x -> x.getV2GCapable());
-	int nbPublicChargers = activeChargersEA.size();
+	int nbV1GChargers = count(activeChargerGridConnections, x -> x.f_getChargePoint().getV1GCapable());
+	int nbV2GChargers =count(activeChargerGridConnections, x -> x.f_getChargePoint().getV2GCapable());
+	int nbPublicChargers = activeChargerGridConnections.size();
 		
 	double V1G_pct = 100.0 * nbV1GChargers / nbPublicChargers;
 	double V2G_pct = 100.0 * nbV2GChargers / nbPublicChargers;
@@ -1463,13 +1451,13 @@ if(nbPublicChargerGC > 0 ){
 	sl_chargersThatSupportV2G_pct.setValue(roundToInt(V2G_pct), false);
 	
 	//Selected charging mode
-	OL_ChargingAttitude currentChargingAttitude = activeChargersEA.size() > 0 ? activeChargersEA.get(0).getChargingAttitude(): OL_ChargingAttitude.SIMPLE;
-	boolean V2GActive = activeChargersEA.size() > 0 ? activeChargersEA.get(0).getV2GActive(): false;
-	for(J_EAChargePoint charger : activeChargersEA){
-		if(currentChargingAttitude != OL_ChargingAttitude.CUSTOM && charger.getChargingAttitude() != currentChargingAttitude){
+	OL_ChargingAttitude currentChargingAttitude = activeChargerGridConnections.size() > 0 ? activeChargerGridConnections.get(0).f_getCurrentChargingType(): OL_ChargingAttitude.SIMPLE;
+	boolean V2GActive = activeChargerGridConnections.size() > 0 ? activeChargerGridConnections.get(0).f_getChargingManagement().getV2GActive(): false;
+	for(GCPublicCharger charger : activeChargerGridConnections){
+		if(currentChargingAttitude != OL_ChargingAttitude.CUSTOM && charger.f_getCurrentChargingType() != currentChargingAttitude){
 			currentChargingAttitude = OL_ChargingAttitude.CUSTOM; // Here used as varied: in other words: custom setting
 		}
-		if(V2GActive && !charger.getV2GActive()){
+		if(V2GActive && !charger.f_getChargingManagement().getV2GActive()){
 			V2GActive = false;
 		}
 		
@@ -1558,16 +1546,13 @@ int totalCapableV2GChargers = 0;
 
 for(GCPublicCharger GC : gcListChargers){
 	if(GC.v_isActive){
-		for(J_EAChargePoint charger : GC.c_chargers){
-			totalActiveChargers++;
-			if(charger.getV1GCapable()){
-				totalCapableV1GChargers++;
-			}
-			if(charger.getV2GCapable()){
-				totalCapableV2GChargers++;			
-			}
+		totalActiveChargers++;
+		if(GC.f_getChargePoint().getV1GCapable()){
+			totalCapableV1GChargers++;
+		}
+		if(GC.f_getChargePoint().getV2GCapable()){
+			totalCapableV2GChargers++;			
 		}	
-	
 	}
 }
 V1GCapableChargerSlider.setValue(roundToInt(100.0 * totalCapableV1GChargers/totalActiveChargers));
@@ -1585,27 +1570,24 @@ zero_Interface.f_resetSettings();
 
 double f_setV1GChargerCapabilities(List<GCPublicCharger> gcListChargers,double goal_pct)
 {/*ALCODESTART::1758183975221*/
-List<J_EAChargePoint> activeChargersEA = new ArrayList<J_EAChargePoint>();
-gcListChargers.forEach(gc -> activeChargersEA.addAll(gc.c_chargers));
-
-int totalNbChargers = activeChargersEA.size();
-int currentNbChargers = count(activeChargersEA, x -> x.getV1GCapable());
+int totalNbChargers = gcListChargers.size();
+int currentNbChargers = count(gcListChargers, x -> x.f_getChargePoint().getV1GCapable());
 int nbChargersGoal = roundToInt(goal_pct / 100.0 * totalNbChargers);
 
 while (currentNbChargers < nbChargersGoal) {
-	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> activeChargersEA.contains(x) && !x.getV1GCapable());
-	j_ea.setV1GCapability(true);
+	GCPublicCharger charger = findFirst(zero_Interface.c_orderedV1GChargers, x -> gcListChargers.contains(x) && !x.f_getChargePoint().getV1GCapable());
+	charger.f_getChargePoint().setV1GCapability(true);
 	currentNbChargers++;
-	zero_Interface.c_orderedV1GChargers.remove(j_ea);
-	zero_Interface.c_orderedV1GChargers.add(0, j_ea);
+	zero_Interface.c_orderedV1GChargers.remove(charger);
+	zero_Interface.c_orderedV1GChargers.add(0, charger);
 	
 }
 while (currentNbChargers > nbChargersGoal) {
-	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV1GChargers, x -> activeChargersEA.contains(x) && x.getV1GCapable());
-	j_ea.setV1GCapability(false);
+	GCPublicCharger charger = findFirst(zero_Interface.c_orderedV1GChargers, x -> gcListChargers.contains(x) && x.f_getChargePoint().getV1GCapable());
+	charger.f_getChargePoint().setV1GCapability(false);
 	currentNbChargers--;
-	zero_Interface.c_orderedV1GChargers.remove(j_ea);
-	zero_Interface.c_orderedV1GChargers.add(0, j_ea);
+	zero_Interface.c_orderedV1GChargers.remove(charger);
+	zero_Interface.c_orderedV1GChargers.add(0, charger);
 }
 
 // Update variable to change to custom scenario
@@ -1618,27 +1600,24 @@ zero_Interface.f_resetSettings();
 
 double f_setV2GChargerCapabilities(List<GCPublicCharger> gcListChargers,double goal_pct)
 {/*ALCODESTART::1758183975227*/
-List<J_EAChargePoint> activeChargersEA = new ArrayList<J_EAChargePoint>();
-gcListChargers.forEach(gc -> activeChargersEA.addAll(gc.c_chargers));
-
-int totalNbChargers = activeChargersEA.size();
-int currentNbChargers = count(activeChargersEA, x -> x.getV2GCapable());
+int totalNbChargers = gcListChargers.size();
+int currentNbChargers = count(gcListChargers, x -> x.f_getChargePoint().getV2GCapable());
 int nbChargersGoal = roundToInt(goal_pct / 100.0 * totalNbChargers);
 
 while (currentNbChargers < nbChargersGoal) {
-	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> activeChargersEA.contains(x) && !x.getV2GCapable());
-	j_ea.setV2GCapability(true);
+	GCPublicCharger charger = findFirst(zero_Interface.c_orderedV2GChargers, x -> gcListChargers.contains(x) && !x.f_getChargePoint().getV2GCapable());
+	charger.f_getChargePoint().setV2GCapability(true);
 	currentNbChargers++;
-	zero_Interface.c_orderedV2GChargers.remove(j_ea);
-	zero_Interface.c_orderedV2GChargers.add(0, j_ea);
+	zero_Interface.c_orderedV2GChargers.remove(charger);
+	zero_Interface.c_orderedV2GChargers.add(0, charger);
 	
 }
 while (currentNbChargers > nbChargersGoal) {
-	J_EAChargePoint j_ea = findFirst(zero_Interface.c_orderedV2GChargers, x -> activeChargersEA.contains(x) && x.getV2GCapable());
-	j_ea.setV2GCapability(false);
+	GCPublicCharger charger = findFirst(zero_Interface.c_orderedV2GChargers, x -> gcListChargers.contains(x) && x.f_getChargePoint().getV2GCapable());
+	charger.f_getChargePoint().setV2GCapability(false);
 	currentNbChargers--;
-	zero_Interface.c_orderedV2GChargers.remove(j_ea);
-	zero_Interface.c_orderedV2GChargers.add(0, j_ea);
+	zero_Interface.c_orderedV2GChargers.remove(charger);
+	zero_Interface.c_orderedV2GChargers.add(0, charger);
 }
 
 // Update variable to change to custom scenario
@@ -1663,15 +1642,16 @@ double ratioEVToPetroleumFuelConsumption = zero_Interface.energyModel.avgc_data.
 
 while ( nbOfPrivateParkedEV > desiredNbOfPrivateParkedEV){
 	J_EAVehicle j_ea = findFirst( gcListOrderedVehiclesPrivateParking, h -> h instanceof J_EAEV);
-	if (j_ea.vehicleScaling != 1) {
+	if (j_ea.getVehicleScaling_fr() != 1) {
 		throw new RuntimeException("f_setVehiclesPrivateParking does not work with vehicles that have a vehicleScaling other than 1");
 	}
 	J_ActivityTrackerTrips triptracker = j_ea.tripTracker;
+	boolean availability = j_ea.getAvailability();
 	double energyConsumption_kWhpkm = j_ea.getEnergyConsumption_kWhpkm() / ratioEVToPetroleumFuelConsumption; 
 	j_ea.removeEnergyAsset();
 	gcListOrderedVehiclesPrivateParking.remove(j_ea);
 	zero_Interface.c_orderedVehiclesPrivateParking.remove(j_ea);
-	J_EAPetroleumFuelVehicle petroleumFuelCar = new J_EAPetroleumFuelVehicle(j_ea.getParentAgent(), energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, 1, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, triptracker);
+	J_EAPetroleumFuelVehicle petroleumFuelCar = new J_EAPetroleumFuelVehicle(j_ea.getParentAgent(), energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, 1, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, triptracker, availability);
 	gcListOrderedVehiclesPrivateParking.add(petroleumFuelCar);
 	zero_Interface.c_orderedVehiclesPrivateParking.add(petroleumFuelCar);
 	nbOfPrivateParkedEV --;
@@ -1682,13 +1662,14 @@ while ( nbOfPrivateParkedEV < desiredNbOfPrivateParkedEV){
 		throw new RuntimeException("f_setVehiclesPrivateParking does not work with vehicles that have a vehicleScaling other than 1");
 	}
 	J_ActivityTrackerTrips triptracker = j_ea.tripTracker;
+	boolean availability = j_ea.getAvailability();
 	double energyConsumption_kWhpkm = j_ea.getEnergyConsumption_kWhpkm() * ratioEVToPetroleumFuelConsumption;
 	j_ea.removeEnergyAsset();
 	gcListOrderedVehiclesPrivateParking.remove(j_ea);
 	zero_Interface.c_orderedVehiclesPrivateParking.remove(j_ea);
 	double capacityElectricity_kW = randomTrue(0.6) ? randomTrue(0.4) ? 3.2 : 5.6 : 11.0;
 	double storageCapacity_kWh = uniform_discr(65,90);
-	J_EAEV ev = new J_EAEV(j_ea.getParentAgent(), capacityElectricity_kW, storageCapacity_kWh, 1, zero_Interface.energyModel.p_timeStep_h, energyConsumption_kWhpkm, 1, OL_EnergyAssetType.ELECTRIC_VEHICLE, triptracker);	
+	J_EAEV ev = new J_EAEV(j_ea.getParentAgent(), capacityElectricity_kW, storageCapacity_kWh, 1, zero_Interface.energyModel.p_timeStep_h, energyConsumption_kWhpkm, 1, OL_EnergyAssetType.ELECTRIC_VEHICLE, triptracker, availability);	
 	gcListOrderedVehiclesPrivateParking.add(ev);
 	zero_Interface.c_orderedVehiclesPrivateParking.add(ev);
 	nbOfPrivateParkedEV++;
