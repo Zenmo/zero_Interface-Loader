@@ -1352,39 +1352,39 @@ else if (vehicle_type == OL_EnergyAssetType.ELECTRIC_VAN){
 return electricVehicle;
 /*ALCODEEND*/}
 
-J_EADieselVehicle f_addDieselVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_type,Boolean isDefaultVehicle,double annualTravelDistance_km)
+J_EAPetroleumFuelVehicle f_addPetroleumFuelVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_type,Boolean isDefaultVehicle,double annualTravelDistance_km)
 {/*ALCODESTART::1726584205829*/
 double energyConsumption_kWhpkm = 0;
 double vehicleScaling = 1.0;
 
-//Diesel car
+//PetroleumFuel car
 switch (vehicle_type){
 	
-	case DIESEL_VEHICLE:
-		energyConsumption_kWhpkm = roundToDecimal(uniform(0.7, 1.3),2) * avgc_data.p_avgDieselConsumptionCar_kWhpkm;
+	case PETROLEUM_FUEL_VEHICLE:
+		energyConsumption_kWhpkm = roundToDecimal(uniform(0.7, 1.3),2) * avgc_data.p_avgGasolineConsumptionCar_kWhpkm;
 	break;
 	
-	case DIESEL_VAN:
+	case PETROLEUM_FUEL_VAN:
 		energyConsumption_kWhpkm = avgc_data.p_avgDieselConsumptionVan_kWhpkm;
 	break;
 	
-	case DIESEL_TRUCK:
+	case PETROLEUM_FUEL_TRUCK:
 		energyConsumption_kWhpkm = avgc_data.p_avgDieselConsumptionTruck_kWhpkm;
 	break;
 }
 
 //Create EA
-J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(parentGC, energyConsumption_kWhpkm, energyModel.p_timeStep_h, vehicleScaling, vehicle_type, null);
+J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(parentGC, energyConsumption_kWhpkm, energyModel.p_timeStep_h, vehicleScaling, vehicle_type, null);
 
 //Set annual travel distance
 if (!isDefaultVehicle && annualTravelDistance_km > 1000){
-		dieselVehicle.tripTracker.setAnnualDistance_km(annualTravelDistance_km);
+		petroleumFuelVehicle.tripTracker.setAnnualDistance_km(annualTravelDistance_km);
 }
-else if (vehicle_type == OL_EnergyAssetType.DIESEL_VAN){
-		dieselVehicle.tripTracker.setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
+else if (vehicle_type == OL_EnergyAssetType.PETROLEUM_FUEL_VAN){
+		petroleumFuelVehicle.tripTracker.setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
 }
 
-return dieselVehicle;
+return petroleumFuelVehicle;
 
 
 
@@ -1500,7 +1500,7 @@ if(p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_Vehicle
 	int nbCars = 0;
 	int ceiledRemainingNumberOfCarsPerCompany = p_remainingTotals.getCeiledRemainingNumberOfVehiclesPerCompany(companyGC, OL_VehicleType.CAR);
 	for (int k = 0; k < ceiledRemainingNumberOfCarsPerCompany; k++){
-		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
+		f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, true, 0);
 		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.CAR, - 1);
 		nbCars++;
 	}
@@ -1509,7 +1509,7 @@ if(p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_Vehicle
 	p_remainingTotals.adjustRemainingNumberOfAnonymousCompaniesForVehicleType(companyGC, OL_VehicleType.CAR, - 1);
 	
 	//Set current scenario cars
-	current_scenario_list.setCurrentDieselCars(nbCars);
+	current_scenario_list.setCurrentPetroleumFuelCars(nbCars);
 	//Set planned scenario cars
 	future_scenario_list.setPlannedEVCars(0);
 }
@@ -1519,7 +1519,7 @@ if(p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_Vehicle
 	int nbVans = 0;
 	int ceiledRemainingNumberOfVansPerCompany = p_remainingTotals.getCeiledRemainingNumberOfVehiclesPerCompany(companyGC, OL_VehicleType.VAN);
 	for (int k = 0; k< ceiledRemainingNumberOfVansPerCompany; k++){
-		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VAN, true, 0);
+		f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_VAN, true, 0);
 		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.VAN, - 1);
 		nbVans++;
 	}
@@ -1528,7 +1528,7 @@ if(p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_Vehicle
 	p_remainingTotals.adjustRemainingNumberOfAnonymousCompaniesForVehicleType(companyGC, OL_VehicleType.VAN, - 1);
 	
 	//Set current scenario vans
-	current_scenario_list.setCurrentDieselVans(nbVans);
+	current_scenario_list.setCurrentPetroleumFuelVans(nbVans);
 	//Set planned scenario vans
 	future_scenario_list.setPlannedEVVans(0);
 }
@@ -1538,7 +1538,7 @@ if (p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_Vehicl
 	int nbTrucks= 0;
 	int ceiledRemainingNumberOfTrucksPerCompany = p_remainingTotals.getCeiledRemainingNumberOfVehiclesPerCompany(companyGC, OL_VehicleType.TRUCK);
 	for (int k = 0; k< ceiledRemainingNumberOfTrucksPerCompany; k++){
-		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_TRUCK, true, 0);
+		f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, true, 0);
 		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.TRUCK, - 1);
 		nbTrucks++;
 	}
@@ -1547,7 +1547,7 @@ if (p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_Vehicl
 	p_remainingTotals.adjustRemainingNumberOfAnonymousCompaniesForVehicleType(companyGC, OL_VehicleType.TRUCK, - 1);
 		
 	//Set current scenario trucks
-	current_scenario_list.setCurrentDieselTrucks(nbTrucks);
+	current_scenario_list.setCurrentPetroleumFuelTrucks(nbTrucks);
 	//Set planned scenario trucks
 	future_scenario_list.setPlannedEVTrucks(0);
 }
@@ -1661,15 +1661,11 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 		chargingStation.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
 	}
 	
-	//chargingStation.set_p_heatingType( OL_GridConnectionHeatingType.NONE );
-	
 	//Set parent node
 	chargingStation.p_parentNodeElectricID = dataChargingStation.gridnode_id();
 	
 	//Is active at start?
 	chargingStation.v_isActive = dataChargingStation.initially_active();
-
-	//chargingStation.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.SIMPLE);
 			
 	//Create and connect owner
 	ConnectionOwner owner = energyModel.add_pop_connectionOwners();
@@ -1705,10 +1701,13 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 		
 		//Create vehicles that charge at the charging centre
 		if(chargingStation.p_chargingVehicleType == OL_EnergyAssetType.CHARGER){
-			List<J_ChargingSession> chargerProfile = f_getChargerProfile();
+			List<J_ChargingSessionData> chargerProfile = f_getChargerProfile();
 			boolean V1GCapable = randomTrue(avgc_data.p_v1gProbability);
 			boolean V2GCapable = randomTrue(avgc_data.p_v2gProbability);
-			new J_EAChargePoint(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile, V1GCapable, V2GCapable, 2);
+			chargingStation.f_setChargePoint( new J_ChargePoint(V1GCapable, V2GCapable));
+			chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation));
+			new J_EAChargingSession(chargingStation, chargerProfile, 0);
+			new J_EAChargingSession(chargingStation, chargerProfile, 1);
 		}
 		else{
 			for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerChargePoint; k++ ){
@@ -1753,10 +1752,13 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 		
 		//Create vehicles that charge at the charging station
 		if(chargingStation.p_chargingVehicleType == OL_EnergyAssetType.CHARGER){
-			List<J_ChargingSession> chargerProfile = f_getChargerProfile();
+			List<J_ChargingSessionData> chargerProfile = f_getChargerProfile();
 			boolean V1GCapable = true; //randomTrue(avgc_data.p_v1gProbability);
 			boolean V2GCapable = true; //randomTrue(avgc_data.p_v2gProbability);
-			new J_EAChargePoint(chargingStation, chargingStation.p_maxChargingPower_kW, energyModel.p_timeStep_h, chargerProfile, V1GCapable, V2GCapable, 2);
+			chargingStation.f_setChargePoint(new J_ChargePoint(V1GCapable, V2GCapable));
+			chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation));
+			new J_EAChargingSession(chargingStation, chargerProfile, 0);
+			new J_EAChargingSession(chargingStation, chargerProfile, 1);
 		}
 		else{
 			for(int k = 0; k < avgc_data.p_avgVehiclesPerChargePoint; k++ ){
@@ -1823,6 +1825,7 @@ J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, n
 profile.setStartTime_h(v_simStartHour_h);
 profile.energyAssetName = parentGC.p_ownerID + " custom profile";
 double extraConsumption_kWh = 0;
+
 
 //Initialize parameters		
 double nettDelivery_kWh;
@@ -2126,11 +2129,13 @@ return annualElectricityConsumption_kWh;
 
 double f_createCustomPVAsset(GridConnection parentGC,double[] yearlyElectricityProduction_kWh,Double pvPower_kW)
 {/*ALCODESTART::1732112209863*/
-if (yearlyElectricityProduction_kWh.length != 35040) {
+if (yearlyElectricityProduction_kWh.length < 35040) {
 	traceln("Skipping creation of PV asset: need 35040 data points, got %d", yearlyElectricityProduction_kWh.length);
 	return;
 }
 
+yearlyElectricityProduction_kWh = Arrays.copyOfRange(yearlyElectricityProduction_kWh, 0, 35040);
+        
 // Generate custom PV production asset using production data!
 double[] a_arguments = IntStream.range(0, 35040).mapToDouble(i -> v_simStartHour_h + i*0.25).toArray(); // time axis
 
@@ -2139,17 +2144,12 @@ double totalProduction_kWh = Arrays.stream(yearlyElectricityProduction_kWh).sum(
 double fullLoadHours_h = totalProduction_kWh / pvPower_kW;
 double[] a_normalizedPower_fr = Arrays.stream(yearlyElectricityProduction_kWh).map(i -> 4 * i / totalProduction_kWh * fullLoadHours_h ).toArray();
 
-//traceln("Full load hours of a_normalizedPower_fr %s: ", Arrays.stream(a_normalizedPower_fr).sum()/4);
-//traceln("Max of a_normalizedPower_fr %s: ", Arrays.stream(a_normalizedPower_fr).max());
-
 TableFunction tf_customPVproduction_fr = new TableFunction(a_arguments, a_normalizedPower_fr, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
 J_ProfilePointer profilePointer = new J_ProfilePointer((parentGC.p_ownerID + "_PVproduction") , tf_customPVproduction_fr);
 energyModel.f_addProfile(profilePointer);
 J_EAProduction production_asset = new J_EAProduction(parentGC, OL_EnergyAssetType.PHOTOVOLTAIC, (parentGC.p_ownerID + "_rooftopPV"), OL_EnergyCarriers.ELECTRICITY, (double)pvPower_kW, energyModel.p_timeStep_h, profilePointer);
 
 traceln("Custom PV asset added to GC: " + parentGC.p_ownerID);
-//traceln("Custom PV asset added to %s with installed power %s kW and %s full load hours!", parentGC.p_ownerID, pvPower_kW, fullLoadHours_h);
-
 /*ALCODEEND*/}
 
 double f_iEASurveyCompanies_Zorm(GridConnection companyGC,com.zenmo.zummon.companysurvey.GridConnection gridConnection)
@@ -2177,7 +2177,7 @@ companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = 0.0;
 companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = 0.0;
 companyGC.v_liveConnectionMetaData.physicalCapacity_kW = 0.0;
 
-f_createDieselTractors(companyGC, gridConnection.getTransport().getAgriculture());
+f_createPetroleumFuelTractors(companyGC, gridConnection.getTransport().getAgriculture());
 
 //Check for electricity connection and data
 if (gridConnection.getElectricity().getHasConnection()){
@@ -2439,13 +2439,13 @@ int nbDailyCarCommuters_notNull = (gridConnection.getTransport().getNumDailyCarA
 if (nbDailyCarCommuters_notNull + nbDailyCarVisitors_notNull > 0){	
 	
 	int nbEVCarsComute = (gridConnection.getTransport().getNumCommuterAndVisitorChargePoints() != null) ? gridConnection.getTransport().getNumCommuterAndVisitorChargePoints() : 0; // Wat doen we hier mee????
-	int nbDieselCarsComute = gridConnection.getTransport().getNumDailyCarAndVanCommuters() + nbDailyCarVisitors_notNull - nbEVCarsComute;
+	int nbPetroleumFuelCarsComute = gridConnection.getTransport().getNumDailyCarAndVanCommuters() + nbDailyCarVisitors_notNull - nbEVCarsComute;
 
 	boolean isDefaultVehicle = true;
 	double maxChargingPower_kW 		= avgc_data.p_avgEVMaxChargePowerCar_kW;	
 	
-	for (int i = 0; i< nbDieselCarsComute; i++){
-		f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VEHICLE, isDefaultVehicle, 0);
+	for (int i = 0; i< nbPetroleumFuelCarsComute; i++){
+		f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, isDefaultVehicle, 0);
 	}
 	
 	
@@ -2468,7 +2468,7 @@ if (nbDailyCarCommuters_notNull + nbDailyCarVisitors_notNull > 0){
 	
 	//add to scenario: current
 	current_scenario_list.setCurrentEVCars(nbEVCarsComute);
-	current_scenario_list.setCurrentDieselCars(nbDieselCarsComute);
+	current_scenario_list.setCurrentPetroleumFuelCars(nbPetroleumFuelCarsComute);
 	
 	//Initialize future cars
 	future_scenario_list.setPlannedEVCars(current_scenario_list.getCurrentEVCars());
@@ -2486,12 +2486,12 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		//Update remaning amount of cars (company owned only)
 		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.VAN, - gridConnection.getTransport().getCars().getNumCars());
 		
-		//Get amount of EV and diesel cars
+		//Get amount of EV and petroleumFuel cars
 		Integer nbEVCars = gridConnection.getTransport().getCars().getNumElectricCars();
 		if (nbEVCars == null) {
 		    nbEVCars = 0;
 		}
-		int nbDieselCars = gridConnection.getTransport().getCars().getNumCars() - nbEVCars;
+		int nbPetroleumFuelCars = gridConnection.getTransport().getCars().getNumCars() - nbEVCars;
 		
 		//Initialize parameters
 		boolean isDefaultVehicle		= true;
@@ -2504,9 +2504,9 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 			isDefaultVehicle			= false;
 		}
 		
-		//create diesel vehicle
-		for (int i = 0; i< nbDieselCars; i++){
-			f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VEHICLE, isDefaultVehicle, annualTravelDistance_km);
+		//create petroleumFuel vehicle
+		for (int i = 0; i< nbPetroleumFuelCars; i++){
+			f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, isDefaultVehicle, annualTravelDistance_km);
 		}
 		
 		//Get number of chargepoints if filled in
@@ -2532,7 +2532,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		
 		//add to scenario: current
 		current_scenario_list.setCurrentEVCars(((current_scenario_list.getCurrentEVCars() != null) ? current_scenario_list.getCurrentEVCars() : 0) + nbEVCars);
-		current_scenario_list.setCurrentDieselCars(((current_scenario_list.getCurrentDieselCars() != null) ? current_scenario_list.getCurrentDieselCars() : 0) + nbDieselCars);
+		current_scenario_list.setCurrentPetroleumFuelCars(((current_scenario_list.getCurrentPetroleumFuelCars() != null) ? current_scenario_list.getCurrentPetroleumFuelCars() : 0) + nbPetroleumFuelCars);
 		current_scenario_list.setCurrentEVCarChargePower_kW(maxChargingPower_kW);
 		
 		//Update Planned cars
@@ -2552,7 +2552,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		if (nbEVVans == null) {
 		    nbEVVans = 0;
 		}	
-		int nbDieselVans = gridConnection.getTransport().getVans().getNumVans() - nbEVVans;
+		int nbPetroleumFuelVans = gridConnection.getTransport().getVans().getNumVans() - nbEVVans;
 
 		boolean isDefaultVehicle		= true;
 		double annualTravelDistance_km 	= 0;
@@ -2564,9 +2564,9 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 			isDefaultVehicle			= false;
 		}
 		
-		//create diesel vehicles
-		for (int i = 0; i< nbDieselVans; i++){
-			f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_VAN, isDefaultVehicle, annualTravelDistance_km);
+		//create petroleumFuel vehicles
+		for (int i = 0; i< nbPetroleumFuelVans; i++){
+			f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_VAN, isDefaultVehicle, annualTravelDistance_km);
 		}
 		
 		//Get number of chargepoints if filled in
@@ -2593,7 +2593,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		
 		//add to scenario: current
 		current_scenario_list.setCurrentEVVans(nbEVVans);
-		current_scenario_list.setCurrentDieselVans(nbDieselVans);
+		current_scenario_list.setCurrentPetroleumFuelVans(nbPetroleumFuelVans);
 		current_scenario_list.setCurrentEVVanChargePower_kW(maxChargingPower_kW);
 		
 		//Planned
@@ -2613,7 +2613,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		if (nbEVTrucks == null) {
 		    nbEVTrucks = 0;
 		}
-		int nbDieselTrucks = gridConnection.getTransport().getTrucks().getNumTrucks() - nbEVTrucks;
+		int nbPetroleumFuelTrucks = gridConnection.getTransport().getTrucks().getNumTrucks() - nbEVTrucks;
 	
 		boolean isDefaultVehicle		= true;
 		double annualTravelDistance_km = 0;
@@ -2625,9 +2625,9 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 			isDefaultVehicle			= false;
 		}
 		
-		//create diesel vehicles
-		for (int i = 0; i< nbDieselTrucks; i++){
-			f_addDieselVehicle(companyGC, OL_EnergyAssetType.DIESEL_TRUCK, isDefaultVehicle, annualTravelDistance_km);
+		//create petroleumFuel vehicles
+		for (int i = 0; i< nbPetroleumFuelTrucks; i++){
+			f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, isDefaultVehicle, annualTravelDistance_km);
 		}
 		
 		//Get number of chargepoints if filled in
@@ -2654,7 +2654,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		
 		//add to scenario: current
 		current_scenario_list.setCurrentEVTrucks(nbEVTrucks);
-		current_scenario_list.setCurrentDieselTrucks(nbDieselTrucks);
+		current_scenario_list.setCurrentPetroleumFuelTrucks(nbPetroleumFuelTrucks);
 		current_scenario_list.setCurrentEVTruckChargePower_kW(maxChargingPower_kW);
 		
 		//Planned
@@ -2719,14 +2719,14 @@ else{
 return building_data_record;
 /*ALCODEEND*/}
 
-double f_createDieselTractors(GridConnection companyGridConnection,com.zenmo.zummon.companysurvey.Agriculture agricultureSurveyData)
+double f_createPetroleumFuelTractors(GridConnection companyGridConnection,com.zenmo.zummon.companysurvey.Agriculture agricultureSurveyData)
 {/*ALCODESTART::1737712184349*/
-final double annualDiesel_L = Optional.ofNullable(agricultureSurveyData.getAnnualDieselUsage_L()).orElse(0.0);
-final int numTractors = Optional.ofNullable(agricultureSurveyData.getNumTractors()).orElse(annualDiesel_L > 0.0 ? 1 : 0);
+final double annualPetroleumFuel_L = Optional.ofNullable(agricultureSurveyData.getAnnualDieselUsage_L()).orElse(0.0);
+final int numTractors = Optional.ofNullable(agricultureSurveyData.getNumTractors()).orElse(annualPetroleumFuel_L > 0.0 ? 1 : 0);
 
-if (numTractors > 0 && annualDiesel_L <= 0.0) {
+if (numTractors > 0 && annualPetroleumFuel_L <= 0.0) {
     // TODO: this should be in Tractor constructor
-    throw new RuntimeException("Tractor diesel usage missing for " + companyGridConnection.p_gridConnectionID);
+    throw new RuntimeException("Tractor petroleumFuel usage missing for " + companyGridConnection.p_gridConnectionID);
 }
 
 CustomProfile_data tractorProfile = findFirst(c_customProfiles_data, profile -> profile.customProfileID().equals("TractorProfile")); ///????
@@ -2735,7 +2735,7 @@ for (int i = 0; i < numTractors; i++) {
 	if(tractorProfile == null){
 		throw new RuntimeException("Trying to make a tractor, without having loaded in a tractor profile for GC: " + companyGridConnection.p_gridConnectionID);
 	}
-    new J_EADieselTractor(companyGridConnection, annualDiesel_L / numTractors, tractorProfile.getValuesArray(), energyModel.p_timeStep_h);
+    new J_EAPetroleumFuelTractor(companyGridConnection, annualPetroleumFuel_L / numTractors, tractorProfile.getValuesArray(), energyModel.p_timeStep_h);
 }
 /*ALCODEEND*/}
 
@@ -3142,22 +3142,75 @@ GC_GridNode_profile.p_latitude = gridnode.p_latitude; // Get latitude of first b
 GC_GridNode_profile.p_longitude = gridnode.p_longitude; // Get longitude of first building (only used to get nearest trafo)
 
 if(project_data.gridnode_profile_timestep_hr() == null){
-	new RuntimeException("Trying to load in gridnode profiles, without specifying the timestep of the data in the project_data");
+	throw new RuntimeException("Trying to load in gridnode profiles, without specifying the timestep of the data in the project_data");
+}
+else if(project_data.gridnode_profile_timestep_hr() < energyModel.p_timeStep_h){
+	throw new RuntimeException("Trying to loadin gridnode profile timestep data with smaller resolution (" + project_data.gridnode_profile_timestep_hr() + ") than simulation model time steps (" + energyModel.p_timeStep_h + "): This is not supported by the preprocessing yet!");
 }
 
 double profileTimestep_hr = project_data.gridnode_profile_timestep_hr();
+double modelToProfileStepsRatio = profileTimestep_hr / energyModel.p_timeStep_h;
 
-//Add profile to the GC
-J_EAProfile profile = new J_EAProfile(GC_GridNode_profile, OL_EnergyCarriers.ELECTRICITY, profile_data_kWh, OL_AssetFlowCategories.fixedConsumptionElectric_kW, profileTimestep_hr);	
-profile.setStartTime_h(v_simStartHour_h);
-profile.energyAssetName = "GridNode " + gridnode.p_gridNodeID + " profile";
+int roundedModelToProfileStepsRatio = roundToInt(modelToProfileStepsRatio);
+
+// Check: ratio must be integer
+if (abs(modelToProfileStepsRatio - roundedModelToProfileStepsRatio) > 1e-9) {
+    throw new RuntimeException("Profile timestep (" + profileTimestep_hr + ") is not an integer multiple of model timestep (" + energyModel.p_timeStep_h + ")");
+}
+
+double[] a_yearlyElectricityDelivery_kWh = new double[profile_data_kWh.length * roundedModelToProfileStepsRatio];
+double[] a_yearlyElectricityFeedin_kWh = new double[profile_data_kWh.length * roundedModelToProfileStepsRatio];
+
+double maxFeedin_kWh = 0;
+int idx = 0;
+for (double dataStep_kWh : profile_data_kWh) {
+
+    // Energy per model timestep
+    double stepEnergy_kWh = dataStep_kWh * (energyModel.p_timeStep_h / profileTimestep_hr);
+
+    for (int i = 0; i < roundedModelToProfileStepsRatio; i++) {
+        double currentFeedin_kWh;
+        double currentDelivery_kWh;
+
+        if (stepEnergy_kWh >= 0) {
+            currentDelivery_kWh = stepEnergy_kWh;
+            currentFeedin_kWh = 0;
+        } else {
+            currentDelivery_kWh = 0;
+            currentFeedin_kWh = -stepEnergy_kWh;
+            if (currentFeedin_kWh > maxFeedin_kWh) {
+                maxFeedin_kWh = currentFeedin_kWh;
+            }
+        }
+        a_yearlyElectricityDelivery_kWh[idx] = currentDelivery_kWh;
+        a_yearlyElectricityFeedin_kWh[idx]   = currentFeedin_kWh;
+
+        idx++;
+    }
+}
+
+double pvPower_kW = 2.5 * (maxFeedin_kWh/energyModel.p_timeStep_h); // Estimation needed for pv power (only really influential for option 2, but a power estimate is still needed for option 1. Important that the factor >=1).
+
+//Option 1: use the feedin profile as production profile to create the exact same netto load, but consumption/production doesnt look natural (Only production when consumption == 0 and vice versa)
+f_createPreprocessedElectricityProfile_PV(GC_GridNode_profile, a_yearlyElectricityDelivery_kWh, a_yearlyElectricityFeedin_kWh, a_yearlyElectricityFeedin_kWh, pvPower_kW, null);
+if(maxFeedin_kWh > 0){
+	f_createCustomPVAsset(GC_GridNode_profile, a_yearlyElectricityFeedin_kWh, pvPower_kW);
+}
+
+/* 
+//Option 2: use our own pv profile to create a more natural consumption/production pattern -> Netto wont be exact.
+f_createPreprocessedElectricityProfile_PV(GC_GridNode_profile, a_yearlyElectricityDelivery_kWh, a_yearlyElectricityFeedin_kWh, null, pvPower_kW, null);
+if(maxFeedin_kWh > 0){
+	f_addEnergyProduction(GC_GridNode_profile, OL_EnergyAssetType.PHOTOVOLTAIC, "Total current Solar on GridNode", pvPower_kW);
+}
+*/
 
 //Set boolean has profile data true
 gridnode.p_hasProfileData = true;
 c_gridNodeIDsWithProfiles.add(gridnode.p_gridNodeID);
 /*ALCODEEND*/}
 
-J_ChargingSession f_createChargingSession(String chargingSessionData)
+J_ChargingSessionData f_createChargingSession(String chargingSessionData)
 {/*ALCODESTART::1749648772203*/
 String[] chargingSessionInfo = chargingSessionData.split("/"); 
 
@@ -3167,18 +3220,20 @@ double chargingDemand_kWh = Double.parseDouble(chargingSessionInfo[2]);
 double batteryCap_kWh = Double.parseDouble(chargingSessionInfo[3]);
 double chargingPower_kW = Double.parseDouble(chargingSessionInfo[5]);
 int socket = Integer.parseInt(chargingSessionInfo[6]);
+boolean isV2GCapable = randomTrue(avgc_data.p_v2gProbability);
+double timeStep_h = 0.25;
 
 //Cap charging demand to what is actual possible according to chargetime interval * charge power
 chargingDemand_kWh = min(chargingPower_kW * (endIndex - startIndex) * 0.25, chargingDemand_kWh);
 
-return new J_ChargingSession(startIndex, endIndex, chargingDemand_kWh, batteryCap_kWh, chargingPower_kW, socket, 0.25);
+return new J_ChargingSessionData(startIndex, endIndex, chargingDemand_kWh, batteryCap_kWh, chargingPower_kW, socket, isV2GCapable, timeStep_h);
 /*ALCODEEND*/}
 
-List<J_ChargingSession>  f_createNewChargerProfile(ChargerProfile_data chargerProfileData)
+List<J_ChargingSessionData>  f_createNewChargerProfile(ChargerProfile_data chargerProfileData)
 {/*ALCODESTART::1749649169603*/
 // example: 2/54/50.3/72.1/21.8/10.8/2
 List<String> chargerProfileDataValues = chargerProfileData.valuesList();
-List<J_ChargingSession> chargerProfile = new ArrayList<J_ChargingSession>();		
+List<J_ChargingSessionData> chargerProfile = new ArrayList<J_ChargingSessionData>();		
 
 for(int i = 0; i < chargerProfileDataValues.size(); i++){
 	chargerProfile.add(f_createChargingSession(chargerProfileDataValues.get(i)));
@@ -3187,9 +3242,9 @@ for(int i = 0; i < chargerProfileDataValues.size(); i++){
 return chargerProfile;
 /*ALCODEEND*/}
 
-List<J_ChargingSession>  f_getChargerProfile()
+List<J_ChargingSessionData>  f_getChargerProfile()
 {/*ALCODESTART::1749649390125*/
-List<J_ChargingSession> chargerProfile;
+List<J_ChargingSessionData> chargerProfile;
 int randomIndex;
 
 if(c_chargerProfiles_data.size()>0){
@@ -4431,13 +4486,13 @@ for(int i = 0; i < amountOfOwnedCars ; i++){
 			ev.tripTracker.setAnnualDistance_km(ev.tripTracker.getAnnualDistance_km()*tripTrackerScaling);
 		}
 		else{
-			J_EADieselVehicle dieselVehicle = f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
-			dieselVehicle.tripTracker.setAnnualDistance_km(dieselVehicle.tripTracker.getAnnualDistance_km()*tripTrackerScaling);
+			J_EAPetroleumFuelVehicle petroleumFuelVehicle = f_addPetroleumFuelVehicle(house, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, true, 0);
+			petroleumFuelVehicle.tripTracker.setAnnualDistance_km(petroleumFuelVehicle.tripTracker.getAnnualDistance_km()*tripTrackerScaling);
 		}
 	}
 	else {
-		J_EADieselVehicle dieselVehicle = f_addDieselVehicle(house, OL_EnergyAssetType.DIESEL_VEHICLE, true, 0);
-		dieselVehicle.tripTracker.setAnnualDistance_km(dieselVehicle.tripTracker.getAnnualDistance_km()*tripTrackerScaling);
+		J_EAPetroleumFuelVehicle petroleumFuelVehicle = f_addPetroleumFuelVehicle(house, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, true, 0);
+		petroleumFuelVehicle.tripTracker.setAnnualDistance_km(petroleumFuelVehicle.tripTracker.getAnnualDistance_km()*tripTrackerScaling);
 	}
 }
 /*ALCODEEND*/}

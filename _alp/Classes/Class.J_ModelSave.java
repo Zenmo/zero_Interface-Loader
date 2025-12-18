@@ -12,16 +12,16 @@ public class J_ModelSave implements Serializable {
 	public ArrayList<J_EA> c_orderedVehicles;
 	public ArrayList<GCUtility> c_orderedHeatingSystemsCompanies;
 	public ArrayList<GCHouse> c_orderedHeatingSystemsHouses;
-	public ArrayList<J_EADieselVehicle> c_orderedActiveVehiclesPublicParking;
-	public ArrayList<J_EADieselVehicle> c_orderedNonActiveVehiclesPublicParking;
+	public ArrayList<J_EAPetroleumFuelVehicle> c_orderedActiveVehiclesPublicParking;
+	public ArrayList<J_EAPetroleumFuelVehicle> c_orderedNonActiveVehiclesPublicParking;
 	public ArrayList<J_EAVehicle> c_orderedVehiclesPrivateParking;
 	public ArrayList<GIS_Object> c_orderedParkingSpaces;
 	
-	public ArrayList<J_EAChargePoint> c_orderedV1GChargers;
-	public ArrayList<J_EAChargePoint> c_orderedV2GChargers;
+	public ArrayList<GCPublicCharger> c_orderedV1GChargers;
+	public ArrayList<GCPublicCharger> c_orderedV2GChargers;
 	public ArrayList<GCPublicCharger> c_orderedPublicChargers;
 
-	public LinkedHashMap<String, List<J_EADieselVehicle>> c_mappingOfVehiclesPerCharger;
+	public LinkedHashMap<String, List<J_EAPetroleumFuelVehicle>> c_mappingOfVehiclesPerCharger;
 	public LinkedHashMap<String, J_scenario_Current> c_scenarioMap_Current;
 	public LinkedHashMap<String, J_scenario_Future> c_scenarioMap_Future;
 	

@@ -3355,7 +3355,7 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>J_EAChargePoint</ElementClass>
+			<ElementClass>GCPublicCharger</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>
@@ -3391,7 +3391,7 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>J_EAChargePoint</ElementClass>
+			<ElementClass>GCPublicCharger</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>
@@ -3501,7 +3501,7 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>LinkedHashMap</CollectionClass>
 			<ElementClass>String</ElementClass>
-			<ValueElementClass>List&lt;J_EADieselVehicle&gt;</ValueElementClass>
+			<ValueElementClass>List&lt;J_EAPetroleumFuelVehicle&gt;</ValueElementClass>
 		</Properties>
 	</Variable>
 	<Variable Class="CollectionVariable">

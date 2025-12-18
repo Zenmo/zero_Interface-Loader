@@ -495,9 +495,9 @@
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>J_EADieselVehicle</ReturnType>
+		<ReturnType>J_EAPetroleumFuelVehicle</ReturnType>
 		<Id>1726584205829</Id>
-		<Name><![CDATA[f_addDieselVehicle]]></Name>
+		<Name><![CDATA[f_addPetroleumFuelVehicle]]></Name>
 		<X>900</X>
 		<Y>760</Y>
 		<Label>
@@ -1016,7 +1016,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1737712184349</Id>
-		<Name><![CDATA[f_createDieselTractors]]></Name>
+		<Name><![CDATA[f_createPetroleumFuelTractors]]></Name>
 		<X>900</X>
 		<Y>800</Y>
 		<Label>
@@ -1312,7 +1312,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>J_ChargingSession</ReturnType>
+		<ReturnType>J_ChargingSessionData</ReturnType>
 		<Id>1749648772203</Id>
 		<Name><![CDATA[f_createChargingSession]]></Name>
 		<X>490</X>
@@ -1332,7 +1332,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>List&lt;J_ChargingSession&gt; </ReturnType>
+		<ReturnType>List&lt;J_ChargingSessionData&gt; </ReturnType>
 		<Id>1749649169603</Id>
 		<Name><![CDATA[f_createNewChargerProfile]]></Name>
 		<X>470</X>
@@ -1352,7 +1352,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>List&lt;J_ChargingSession&gt; </ReturnType>
+		<ReturnType>List&lt;J_ChargingSessionData&gt; </ReturnType>
 		<Id>1749649390125</Id>
 		<Name><![CDATA[f_getChargerProfile]]></Name>
 		<X>450</X>
