@@ -426,8 +426,7 @@ if (electricTruck!=null) {
 	// Re-add hydrogen vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgHydrogenConsumptionTruck_kWhpkm;			
 	double vehicleScaling = 1.0;
-	J_EAHydrogenVehicle hydrogenVehicle = new J_EAHydrogenVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.HYDROGEN_TRUCK, tripTracker);				
-	hydrogenVehicle.available = available;
+	J_EAHydrogenVehicle hydrogenVehicle = new J_EAHydrogenVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.HYDROGEN_TRUCK, tripTracker, available);				
 	
 	zero_Interface.c_orderedVehicles.add(0, hydrogenVehicle);
 	
@@ -476,8 +475,7 @@ if (dieselTruck!=null) {
 	// Re-add hydrogen vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgHydrogenConsumptionTruck_kWhpkm;			
 	double vehicleScaling = 1.0;
-	J_EAHydrogenVehicle hydrogenVehicle = new J_EAHydrogenVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.HYDROGEN_TRUCK, tripTracker);				
-	hydrogenVehicle.available = available;
+	J_EAHydrogenVehicle hydrogenVehicle = new J_EAHydrogenVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.HYDROGEN_TRUCK, tripTracker, available);				
 	
 	zero_Interface.c_orderedVehicles.add(0, hydrogenVehicle);
 	
@@ -526,8 +524,7 @@ if ( electricTruck != null ) {
 	// Re-add diesel vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionTruck_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.DIESEL_TRUCK, tripTracker);
-	dieselVehicle.available = available;
+	J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.DIESEL_TRUCK, tripTracker, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, dieselVehicle);
 	
@@ -576,8 +573,7 @@ if ( hydrogenTruck != null ) {
 	// Re-add diesel vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionTruck_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.DIESEL_TRUCK, tripTracker);
-	dieselVehicle.available = available;
+	J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.DIESEL_TRUCK, tripTracker, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, dieselVehicle);
 	
@@ -735,8 +731,7 @@ if ( electricVan != null ) {
 	// Re-add diesel vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionTruck_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.DIESEL_VAN, tripTracker);
-	dieselVehicle.available = available;
+	J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.DIESEL_VAN, tripTracker, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, dieselVehicle);
 	
@@ -837,8 +832,7 @@ if ( electricCar != null ) {
 	// Re-add diesel vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionTruck_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.DIESEL_VEHICLE, tripTracker);
-	dieselVehicle.available = available;
+	J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.DIESEL_VEHICLE, tripTracker, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, dieselVehicle);
 	
@@ -1657,8 +1651,7 @@ while ( nbOfPrivateParkedEV > desiredNbOfPrivateParkedEV){
 	j_ea.removeEnergyAsset();
 	gcListOrderedVehiclesPrivateParking.remove(j_ea);
 	zero_Interface.c_orderedVehiclesPrivateParking.remove(j_ea);
-	J_EADieselVehicle dieselCar = new J_EADieselVehicle(j_ea.getParentAgent(), energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, 1, OL_EnergyAssetType.DIESEL_VEHICLE, triptracker);
-	dieselCar.available = availability;
+	J_EADieselVehicle dieselCar = new J_EADieselVehicle(j_ea.getParentAgent(), energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, 1, OL_EnergyAssetType.DIESEL_VEHICLE, triptracker, availability);
 	gcListOrderedVehiclesPrivateParking.add(dieselCar);
 	zero_Interface.c_orderedVehiclesPrivateParking.add(dieselCar);
 	nbOfPrivateParkedEV --;
