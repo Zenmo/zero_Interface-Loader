@@ -1389,7 +1389,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Type><![CDATA[OL_EnergyAssetType]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[yearlyCookingDemand_kWh]]></Name>
+			<Name><![CDATA[cookingDemand_kwhpa]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
@@ -1416,6 +1416,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Name><![CDATA[surface_m2]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[hotWaterDemand_kwhpa]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -1438,6 +1442,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[floorArea_m2]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[heatDemand_kwhpa]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
@@ -1499,7 +1507,19 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Type><![CDATA[GCHouse]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[jaarlijksElectriciteitsVerbruik]]></Name>
+			<Name><![CDATA[electricityDemand_kwhpa]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[spaceHeatingDemand_kwhpa]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[dhwDemand_kwhpa]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[cookingDemand_kwhpa]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
