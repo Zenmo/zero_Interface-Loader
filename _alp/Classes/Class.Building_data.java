@@ -24,7 +24,7 @@ public class Building_data {
 	String extra_info;
 	Double contracted_capacity_kw;
 	Double electricity_consumption_kwhpa;
-	Double gas_consumption_kwhpa;
+	Double gas_consumption_m3pa;
 	Double space_heating_consumption_kwhpa;
 	Double dhw_consumption_kwhpa;
 	Double cooking_consumption_kwhpa;
@@ -37,6 +37,8 @@ public class Building_data {
 	Double longitude;
 	String polygon;
 	
+	//PBL data
+	boolean pbl_data_available;
 	Integer ownership_int;
 	Integer constructionPeriod_int;
 	Integer buildingType_int;

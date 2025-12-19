@@ -3441,13 +3441,14 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.p_eigenOprit = houseBuildingData.has_private_parking() != null ? houseBuildingData.has_private_parking() : false;
 	
 	//For PBL heating
-	GCH.p_constructionPeriod_heatingPBL = houseBuildingData.constructionPeriod_int();
-	GCH.p_schillabel_heatingPBL = houseBuildingData.energy_label();
-	GCH.p_buildingType_heatingPBL = houseBuildingData.buildingType_int();
-	GCH.p_ownership_heatingPBL = houseBuildingData.ownership_int();
-	GCH.p_localFactor_heatingPBL = houseBuildingData.localFactor();
-	GCH.p_regionalClimateCorrectionFactor_heatingPBL = houseBuildingData.regionalClimateCorrectionFactor();
-	
+	if(houseBuildingData.pbl_data_available()){
+		GCH.p_constructionPeriod_heatingPBL = houseBuildingData.constructionPeriod_int();
+		GCH.p_schillabel_heatingPBL = houseBuildingData.energy_label();
+		GCH.p_buildingType_heatingPBL = houseBuildingData.buildingType_int();
+		GCH.p_ownership_heatingPBL = houseBuildingData.ownership_int();
+		GCH.p_localFactor_heatingPBL = houseBuildingData.localFactor();
+		GCH.p_regionalClimateCorrectionFactor_heatingPBL = houseBuildingData.regionalClimateCorrectionFactor();
+	}
 	
 	
 	//Nageisoleerd
@@ -3537,10 +3538,10 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 		annualElectricityConsumption_kwhpa = Double.valueOf(uniform_discr(1200, 3800));
 	}
 	try {
-		annualNaturalGasConsumption_kwhpa = houseBuildingData.gas_consumption_kwhpa();
+		annualNaturalGasConsumption_kwhpa = houseBuildingData.gas_consumption_m3pa() * avgc_data.p_gas_kWhpm3;
 	}
 	catch (NullPointerException e){
-		annualNaturalGasConsumption_kwhpa =  Double.valueOf(uniform_discr(600, 2000));
+		annualNaturalGasConsumption_kwhpa =  Double.valueOf(uniform_discr(600, 2000)) * avgc_data.p_gas_kWhpm3;
 	}
 	try {
 		annualSpaceHeatingConsumption_kwhpa = houseBuildingData.space_heating_consumption_kwhpa();
