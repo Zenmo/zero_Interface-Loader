@@ -2613,7 +2613,7 @@
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>List&lt;GridConnection&gt;</ReturnType>
 		<Id>1765207097247</Id>
