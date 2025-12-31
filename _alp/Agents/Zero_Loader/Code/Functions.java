@@ -40,6 +40,11 @@ f_createHouses();
 
 double f_configureEngine_default()
 {/*ALCODESTART::1726584205773*/
+//Engine time-date variables
+energyModel.p_runStartTime_h = v_simStartHour_h;
+energyModel.p_runEndTime_h = v_simStartHour_h + v_simDuration_h;
+energyModel.f_initializeTimeDates();
+
 //Set basic input files
 energyModel.p_truckTripsCsv = inputCSVtruckTrips;
 energyModel.p_householdTripsCsv = inputCSVhouseholdTrips;
@@ -68,8 +73,7 @@ f_createGridConnections();
 f_createAdditionalGISObjects();
 
 //Initialize the engine
-energyModel.p_runStartTime_h = v_simStartHour_h;
-energyModel.p_runEndTime_h = v_simStartHour_h + v_simDuration_h;
+
 energyModel.f_initializeEngine();
 
 /*ALCODEEND*/}
