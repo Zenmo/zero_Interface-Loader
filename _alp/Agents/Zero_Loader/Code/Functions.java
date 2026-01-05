@@ -50,9 +50,6 @@ energyModel.p_truckTripsCsv = inputCSVtruckTrips;
 energyModel.p_householdTripsCsv = inputCSVhouseholdTrips;
 energyModel.p_cookingPatternCsv = inputCSVcookingActivities;
 
-//Initialize specific slider GC
-f_initializeSpecificSliderGC();
-
 //Actors
 f_createActors();
 
@@ -62,6 +59,9 @@ f_createGISRegions();
 if(user.NBHAccessType != null && user.NBHAccessType != OL_UserNBHAccessType.FULL){
 	f_removeObjectsNotInActiveNBH();
 }
+
+//Initialize specific slider GC
+f_initializeSpecificSliderGC();
 
 //Grid nodes
 f_createGridNodes();
