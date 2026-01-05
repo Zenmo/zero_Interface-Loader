@@ -83,7 +83,7 @@ sl_electricTrucksCompany.setValue(p_scenarioSettings_Future.getPlannedEVTrucks()
 //sl_petroleumFuelTrucksCompany.setValue(c_scenarioSettings_Future.getPlannedPetroleumFuelTrucks(), true);
 
 //set active if active in future
-p_gridConnection.f_setActive(p_scenarioSettings_Future.getIsActiveInFuture());
+p_gridConnection.f_setActive(p_scenarioSettings_Future.getIsActiveInFuture(), zero_Interface.energyModel.p_timeVariables);
 
 
 //Reset button to future, due to sliders putting it on custom
@@ -214,7 +214,7 @@ sl_electricTrucksCompany.setValue(p_scenarioSettings_Current.getCurrentEVTrucks(
 //sl_petroleumFuelTrucksCompany.setValue(c_scenarioSettings_Current.getCurrentPetroleumFuelTrucks(), true);
 
 //set active if active in present
-p_gridConnection.f_setActive(p_scenarioSettings_Current.getIsCurrentlyActive());
+p_gridConnection.f_setActive(p_scenarioSettings_Current.getIsCurrentlyActive(), zero_Interface.energyModel.p_timeVariables);
 
 //Reset button to current, due to sliders putting it on custom
 rb_scenariosPrivateUI.setValue(0, false);
@@ -391,7 +391,7 @@ GC.f_addHeatManagement(selectedHeatingType, false);
 
 double f_setGCCapacity(GridConnection GC,double setGridConnectionCapacity_kW,String type)
 {/*ALCODESTART::1713537591117*/
-GC.f_nfatoSetConnectionCapacity(true);
+GC.f_nfatoSetConnectionCapacity(true, zero_Interface.energyModel.p_timeVariables);
 
 switch(type){
 	case "DELIVERY":
@@ -405,7 +405,7 @@ switch(type){
 		break;
 }
 
-GC.f_nfatoSetConnectionCapacity(false);
+GC.f_nfatoSetConnectionCapacity(false, zero_Interface.energyModel.p_timeVariables);
 /*ALCODEEND*/}
 
 double f_setBattery(GridConnection GC,double setBatteryCapacity_kWh)
@@ -1558,7 +1558,7 @@ parentGC.v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<GridConnection
 double f_setSelectedGCSliders()
 {/*ALCODESTART::1725439625846*/
 //Reset GC capacities to without NFATO values
-p_gridConnection.f_nfatoSetConnectionCapacity(true);
+p_gridConnection.f_nfatoSetConnectionCapacity(true, zero_Interface.energyModel.p_timeVariables);
 	
 //Initialize slider presets to selected GC (min, max, etc.)
 f_setSliderPresets();
@@ -1739,7 +1739,7 @@ v_nbHydrogenTrucks = nbHydrogentrucksCurrent;
 v_nbPetroleumFuelTrucks = nbPetroleumFueltrucksCurrent;
 
 //Add nfato again
-p_gridConnection.f_nfatoSetConnectionCapacity(false);
+p_gridConnection.f_nfatoSetConnectionCapacity(false, zero_Interface.energyModel.p_timeVariables);
 /*ALCODEEND*/}
 
 double f_selectGCOnMainInterface()

@@ -1507,7 +1507,7 @@ int nbChargersGoal = roundToInt(publicChargers_pct / 100 * totalNbChargers) ;
 while ( currentNbChargers > nbChargersGoal ) {
 	GCPublicCharger gc = findFirst(zero_Interface.c_orderedPublicChargers, x -> x.v_isActive);
 	if (gc != null) {
-		gc.f_setActive(false);
+		gc.f_setActive(false, zero_Interface.energyModel.p_timeVariables);
 		zero_Interface.c_orderedPublicChargers.remove(gc);
 		zero_Interface.c_orderedPublicChargers.add(0, gc);
 		currentNbChargers--;
@@ -1523,7 +1523,7 @@ while ( currentNbChargers > nbChargersGoal ) {
 while ( currentNbChargers < nbChargersGoal){
 	GCPublicCharger gc = findFirst(zero_Interface.c_orderedPublicChargers, x -> !x.v_isActive);
 	if (gc != null) {
-		gc.f_setActive(true);
+		gc.f_setActive(true, zero_Interface.energyModel.p_timeVariables);
 		zero_Interface.c_orderedPublicChargers.remove(gc);
 		zero_Interface.c_orderedPublicChargers.add(0, gc);
 		currentNbChargers++;

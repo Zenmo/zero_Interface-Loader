@@ -68,8 +68,8 @@ f_createGridConnections();
 f_createAdditionalGISObjects();
 
 //Initialize the engine
-energyModel.p_runStartTime_h = v_simStartHour_h;
-energyModel.p_runEndTime_h = v_simStartHour_h + v_simDuration_h;
+//energyModel.p_runStartTime_h = v_simStartHour_h;
+//energyModel.p_runEndTime_h = v_simStartHour_h + v_simDuration_h;
 energyModel.f_initializeEngine();
 
 /*ALCODEEND*/}
@@ -1822,7 +1822,7 @@ double f_createPreprocessedElectricityProfile_PV(GridConnection parentGC,double[
 {/*ALCODESTART::1726584205861*/
 //Create the profile 
 J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, null, OL_AssetFlowCategories.fixedConsumptionElectric_kW, energyModel.p_timeStep_h);		
-profile.setStartTime_h(v_simStartHour_h);
+profile.setStartTime_h(energyModel.p_timeParameters.getRunStartTime_h());
 profile.energyAssetName = parentGC.p_ownerID + " custom profile";
 double extraConsumption_kWh = 0;
 
@@ -1847,7 +1847,7 @@ if (yearlyElectricityProduction_kWh != null && yearlyElectricityFeedin_kWh != nu
 		//traceln("Estimating electricity consumption based on delivery and feedin profiles with pv power estimate for company %s with %s kWp PV", parentGC.p_gridConnectionID, pvPower_kW);
 		double addedConsumption_kWh = 0;
 		for (int i = 0; i < yearlyElectricityDelivery_kWh.length; i++) {
-			double pvPowerEstimate_kW = pvPower_kW * energyModel.pp_PVProduction35DegSouth_fr.getValue(v_simStartHour_h+i*0.25);
+			double pvPowerEstimate_kW = pvPower_kW * energyModel.pp_PVProduction35DegSouth_fr.getValue(energyModel.p_timeParameters.getRunStartTime_h()+i*0.25);
 			double estimatedConsumption_kWh = yearlyElectricityDelivery_kWh[i] + max(0, pvPowerEstimate_kW*0.25 - yearlyElectricityFeedin_kWh[i]);
 			addedConsumption_kWh += max(0, pvPowerEstimate_kW*0.25 - yearlyElectricityFeedin_kWh[i]);
 			yearlyElectricityConsumption_kWh[i] = max(0,estimatedConsumption_kWh);
@@ -1859,7 +1859,7 @@ if (yearlyElectricityProduction_kWh != null && yearlyElectricityFeedin_kWh != nu
 		double estimatedConsumption_kWh = 0;
 		double addedConsumption_kWh = 0;
 		for (int i = 0; i < yearlyElectricityDelivery_kWh.length; i++) {
-			pvPowerEstimate_kW = pvPower_kW * energyModel.pp_PVProduction35DegSouth_fr.getValue(v_simStartHour_h+i*0.25);
+			pvPowerEstimate_kW = pvPower_kW * energyModel.pp_PVProduction35DegSouth_fr.getValue(energyModel.p_timeParameters.getRunStartTime_h()+i*0.25);
 			
 			if (yearlyElectricityDelivery_kWh[i] != 0) { // Only update consumption if delivery is non-zero, otherwise hold previously estimated consumption constant
 				estimatedConsumption_kWh = yearlyElectricityDelivery_kWh[i] + pvPowerEstimate_kW*0.25;
@@ -1899,7 +1899,7 @@ if(yearlyHeatPumpElectricityConsumption_kWh != null){
 	profile.a_energyProfile_kWh = preProcessedDefaultConsumptionProfile;
 	
 	J_EAProfile profileHeatPumpElectricityConsumption = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, yearlyHeatPumpElectricityConsumption_kWh, OL_AssetFlowCategories.heatPumpElectricityConsumption_kW, energyModel.p_timeStep_h);		
-	profileHeatPumpElectricityConsumption.setStartTime_h(v_simStartHour_h);
+	profileHeatPumpElectricityConsumption.setStartTime_h(energyModel.p_timeParameters.getRunStartTime_h());
 	profileHeatPumpElectricityConsumption.energyAssetName = parentGC.p_ownerID + " custom heat pump electricity consumption profile";
 }
 /*ALCODEEND*/}
@@ -2137,7 +2137,7 @@ if (yearlyElectricityProduction_kWh.length < 35040) {
 yearlyElectricityProduction_kWh = Arrays.copyOfRange(yearlyElectricityProduction_kWh, 0, 35040);
         
 // Generate custom PV production asset using production data!
-double[] a_arguments = IntStream.range(0, 35040).mapToDouble(i -> v_simStartHour_h + i*0.25).toArray(); // time axis
+double[] a_arguments = IntStream.range(0, 35040).mapToDouble(i -> energyModel.p_timeParameters.getRunStartTime_h() + i*0.25).toArray(); // time axis
 
 // From kWh/quarter to normalized power
 double totalProduction_kWh = Arrays.stream(yearlyElectricityProduction_kWh).sum();
@@ -2768,7 +2768,7 @@ return true;
 
 double[] f_timeSeriesToQuarterHourlyDoubleArray(com.zenmo.zummon.companysurvey.TimeSeries timeSeries)
 {/*ALCODESTART::1738572338816*/
-int targetYear = v_simStartYear;
+int targetYear = energyModel.p_timeParameters.getStartYear();
 if (timeSeries == null) {
 	return null;
 }
@@ -4508,11 +4508,11 @@ for (ConnectionOwner CO : c_COCompanies) {
 double f_getSimulationTimeVariables()
 {/*ALCODESTART::1758714675284*/
 //Sim start year
-v_simStartYear = getExperiment().getEngine().getStartDate().getYear() + 1900;  // 1900 years because of Java convention
+int simStartYear = getExperiment().getEngine().getStartDate().getYear() + 1900;  // 1900 years offset because of Java/AnyLogic convention
 
 // Create date at start of simulation year to use to calculate v_simStartHour_h
 Date d = new Date();
-d.setYear(v_simStartYear - 1900); // 1900 jaar Compenseren door anylogic bug
+d.setYear(simStartYear - 1900);
 d.setMonth(0);
 d.setHours(0);
 d.setSeconds(0);
@@ -4520,37 +4520,40 @@ d.setMinutes(0);
 d.setDate(1);
 
 //Calculate sim start hour
-v_simStartHour_h = roundToInt((getExperiment().getEngine().getStartDate().getTime() - d.getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
+double simStartHour_h = roundToInt((getExperiment().getEngine().getStartDate().getTime() - d.getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
 
 //Fix for if start is within summer time, the v_simStartHour_h is not correct anymore
-double summerTimeStart_h = avgc_data.map_yearlySummerWinterTimeStartHour.get(v_simStartYear).getFirst();
-double winterTimeStart_h = avgc_data.map_yearlySummerWinterTimeStartHour.get(v_simStartYear).getSecond();
-if(v_simStartHour_h > summerTimeStart_h && v_simStartHour_h < winterTimeStart_h){
-	v_simStartHour_h += 1;
+double summerTimeStart_h = avgc_data.map_yearlySummerWinterTimeStartHour.get(simStartYear).getFirst();
+double winterTimeStart_h = avgc_data.map_yearlySummerWinterTimeStartHour.get(simStartYear).getSecond();
+if(simStartHour_h > summerTimeStart_h && simStartHour_h < winterTimeStart_h){
+	simStartHour_h += 1;
 }
 
 
 
 //Set sim duration if it is set
+double simDuration_h = 0;
 if(getExperiment().getEngine().getStopDate() != null){ //If experiment has set time, it gets bias
-	v_simDuration_h = roundToInt(((double)getExperiment().getEngine().getStopDate().getTime() - getExperiment().getEngine().getStartDate().getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
-	if(v_simStartHour_h > summerTimeStart_h && v_simStartHour_h + v_simDuration_h > winterTimeStart_h){//Compensate if start time is in summer time, and end time is in winter time -> simulation would otherwise have 1 hour too much
-		v_simDuration_h -= 1;
+	simDuration_h = roundToInt(((double)getExperiment().getEngine().getStopDate().getTime() - getExperiment().getEngine().getStartDate().getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
+	if(simStartHour_h > summerTimeStart_h && simStartHour_h + simDuration_h > winterTimeStart_h){//Compensate if start time is in summer time, and end time is in winter time -> simulation would otherwise have 1 hour too much
+		simDuration_h -= 1;
 	}
-	if(v_simStartHour_h < summerTimeStart_h && v_simStartHour_h + v_simDuration_h < winterTimeStart_h){//Compensate if start time is in winter time, and end time is in summer time -> simulation would otherwise have 1 hour too less
-		v_simDuration_h += 1;
+	if(simStartHour_h < summerTimeStart_h && simStartHour_h + simDuration_h < winterTimeStart_h){//Compensate if start time is in winter time, and end time is in summer time -> simulation would otherwise have 1 hour too less
+		simDuration_h += 1;
 	}
 }
 else if(settings.simDuration_h() != null){//Else if manual set, use that instead
-	v_simDuration_h = settings.simDuration_h();
+	simDuration_h = settings.simDuration_h();
 }
 
-if (v_simStartHour_h % 24 != 0) {
+if (simStartHour_h % 24 != 0) {
 	throw new RuntimeException("Impossible to run a model that does not start at midnight. Please check the start in the simulation settings.");
 }
-if (v_simDuration_h % 24 != 0) {
+if (simDuration_h % 24 != 0) {
 	throw new RuntimeException("Impossible to run a model that does not have a runtime that is an exact multiple of a day. Please check the start and endtime in the simulation settings.");
 }
+
+f_setEngineTimeVariables(simStartYear, simStartHour_h, simStartHour_h + simDuration_h);
 /*ALCODEEND*/}
 
 double f_addMixins()
@@ -4858,5 +4861,28 @@ else{
 	c_activeNBH.add(NBH);
 	return OL_GISObjectType.REGION;
 }
+/*ALCODEEND*/}
+
+double f_setEngineTimeVariables(int simStartYear,double simStartTime_h,double simEndTime_h)
+{/*ALCODESTART::1767606140975*/
+LocalDate localDate = LocalDate.of(simStartYear, 1, 1);
+int dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
+double startOfSummerWeek_h = roundToInt(24 * (p_summerWeekNumber * 7 + (8-dayOfWeek1jan)%7)); // Week 18 is summerweek.
+double startOfWinterWeek_h = roundToInt(24 * (p_winterWeekNumber * 7 + (8-dayOfWeek1jan)%7)); // Week 49 is winterweek.
+
+// TODO: Remove the hourOfYearPerMonth array from AVGC and calculate it based on the Simulation Year
+
+energyModel.p_timeParameters = new J_TimeParameters(
+	p_timeStep_h,
+	simStartYear,
+	avgc_data.hourOfYearPerMonth,
+	dayOfWeek1jan,
+	simStartTime_h,
+	simEndTime_h,
+	p_summerWeekNumber,
+	p_winterWeekNumber,
+	startOfSummerWeek_h,
+	startOfWinterWeek_h
+);
 /*ALCODEEND*/}
 

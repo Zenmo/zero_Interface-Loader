@@ -4,8 +4,8 @@ GridConnection gc1 = v_nfatoFirstGC;
 GridConnection gc2 = v_nfatoSecondGC;
 
 // Reset the GC Capacities if they already had a NF-ATO
-gc1.f_nfatoSetConnectionCapacity(true);
-gc2.f_nfatoSetConnectionCapacity(true);
+gc1.f_nfatoSetConnectionCapacity(true, zero_Interface.energyModel.p_timeVariables);
+gc2.f_nfatoSetConnectionCapacity(true, zero_Interface.energyModel.p_timeVariables);
 
 switch (rb_deliveryOrFeedin.getValue()) {
 	case 0: // Delivery
@@ -48,8 +48,8 @@ switch (rb_deliveryOrFeedin.getValue()) {
 }
 
 // Update the Connection Capacity if it is needed at the current time
-gc1.f_nfatoSetConnectionCapacity(false);
-gc2.f_nfatoSetConnectionCapacity(false);
+gc1.f_nfatoSetConnectionCapacity(false, zero_Interface.energyModel.p_timeVariables);
+gc2.f_nfatoSetConnectionCapacity(false, zero_Interface.energyModel.p_timeVariables);
 
 gc1.v_enableNFato = true;
 gc2.v_enableNFato = true;
@@ -113,16 +113,16 @@ switch (rb_deliveryOrFeedin.getValue()) {
 		}
 		maxDeliveryCapacity_kW = max(max(weekTestDelivery), max(weekendTestDelivery));
 		// Reset the GC Capacity in case they already had a NF-ATO
-		gc2.f_nfatoSetConnectionCapacity(true);
+		gc2.f_nfatoSetConnectionCapacity(true, zero_Interface.energyModel.p_timeVariables);
 		// Check if gc2 has enough capacity with the original connection capacity
 		if ( maxDeliveryCapacity_kW > gc2.v_liveConnectionMetaData.contractedDeliveryCapacity_kW ) {
 			// Restore previous NF-ATO
-			gc2.f_nfatoSetConnectionCapacity(false);
+			gc2.f_nfatoSetConnectionCapacity(false, zero_Interface.energyModel.p_timeVariables);
 			throw new IllegalStateException("Invalid Non-Firm ATO Settings, " + gc2.p_ownerID + " does not have a delivery capacity of " + maxDeliveryCapacity_kW + " kW available");
 		}
 		else {
 			// Restore previous NF-ATO
-			gc2.f_nfatoSetConnectionCapacity(false);
+			gc2.f_nfatoSetConnectionCapacity(false, zero_Interface.energyModel.p_timeVariables);
 			return true;
 		}
 		
@@ -133,16 +133,16 @@ switch (rb_deliveryOrFeedin.getValue()) {
 		}
 		maxFeedinCapacity_kW = max(max(weekTestFeedin), max(weekendTestFeedin));
 		// Reset the GC Capacity in case they already had a NF-ATO
-		gc2.f_nfatoSetConnectionCapacity(true);
+		gc2.f_nfatoSetConnectionCapacity(true, zero_Interface.energyModel.p_timeVariables);
 		// Check if gc2 has enough capacity with the original connection capacity
 		if ( maxFeedinCapacity_kW > gc2.v_liveConnectionMetaData.contractedFeedinCapacity_kW ) {
 			// Restore previous NF-ATO
-			gc2.f_nfatoSetConnectionCapacity(false);
+			gc2.f_nfatoSetConnectionCapacity(false, zero_Interface.energyModel.p_timeVariables);
 			throw new IllegalStateException("Invalid Non-Firm ATO Settings, " + gc2.p_ownerID + " does not have a feed in capacity of " + maxFeedinCapacity_kW + " kW available");
 		}
 		else {
 			// Restore previous NF-ATO
-			gc2.f_nfatoSetConnectionCapacity(false);
+			gc2.f_nfatoSetConnectionCapacity(false, zero_Interface.energyModel.p_timeVariables);
 			return true;
 		}
 		
@@ -159,21 +159,21 @@ switch (rb_deliveryOrFeedin.getValue()) {
 		maxDeliveryCapacity_kW = max(max(weekTestDelivery), max(weekendTestDelivery));
 		maxFeedinCapacity_kW = max(max(weekTestFeedin), max(weekendTestFeedin));
 		// Reset the GC Capacity in case they already had a NF-ATO
-		gc2.f_nfatoSetConnectionCapacity(true);
+		gc2.f_nfatoSetConnectionCapacity(true, zero_Interface.energyModel.p_timeVariables);
 		// Check if gc2 has enough capacity with the original connection capacity
 		if ( maxDeliveryCapacity_kW > gc2.v_liveConnectionMetaData.contractedDeliveryCapacity_kW ) {
 			// Restore previous NF-ATO
-			gc2.f_nfatoSetConnectionCapacity(false);
+			gc2.f_nfatoSetConnectionCapacity(false, zero_Interface.energyModel.p_timeVariables);
 			throw new IllegalStateException("Invalid Non-Firm ATO Settings, " + gc2.p_ownerID + " does not have a delivery capacity of " + maxDeliveryCapacity_kW + " kW available");
 		}
 		else if ( maxFeedinCapacity_kW > gc2.v_liveConnectionMetaData.contractedFeedinCapacity_kW ) {
 			// Restore previous NF-ATO
-			gc2.f_nfatoSetConnectionCapacity(false);
+			gc2.f_nfatoSetConnectionCapacity(false, zero_Interface.energyModel.p_timeVariables);
 			throw new IllegalStateException("Invalid Non-Firm ATO Settings, " + gc2.p_ownerID + " does not have a feed in capacity of " + maxFeedinCapacity_kW + " kW available");
 		}
 		else {
 			// Restore previous NF-ATO
-			gc2.f_nfatoSetConnectionCapacity(false);
+			gc2.f_nfatoSetConnectionCapacity(false, zero_Interface.energyModel.p_timeVariables);
 			return true;
 		}
 		

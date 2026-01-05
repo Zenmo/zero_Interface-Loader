@@ -128,7 +128,7 @@ if(sliderGC_gridBattery != null){
 	c_sliderEAGCs.add(sliderGC_gridBattery);
 }
 
-v_energyHubCoop.f_addMemberGCs(c_sliderEAGCs);
+v_energyHubCoop.f_addMemberGCs(c_sliderEAGCs, zero_Interface.energyModel.p_timeParameters);
 /*ALCODEEND*/}
 
 double f_initializeEnergyHubMemberNames()

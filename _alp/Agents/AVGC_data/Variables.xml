@@ -17,9 +17,9 @@
               Constant="false"
               AccessType="public"
               StaticVariable="false">
-			<Type><![CDATA[int[]]]></Type>
+			<Type><![CDATA[double[]]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new int[] {0, 744, 1392, 2136, 2856, 3600, 4320, 5064, 5808, 6528, 7272, 7992}]]></Code>
+				<Code><![CDATA[new double[] {0, 744, 1392, 2136, 2856, 3600, 4320, 5064, 5808, 6528, 7272, 7992}]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>

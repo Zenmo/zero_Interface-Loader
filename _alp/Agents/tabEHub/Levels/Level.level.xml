@@ -178,7 +178,7 @@ else {
 					<VisibleCode>!zero_Interface.settings.isPublicModel()</VisibleCode>
 					<Enabled>true</Enabled>
 					<ActionCode>for (GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()) {
-	GC.f_nfatoSetConnectionCapacity(true);
+	GC.f_nfatoSetConnectionCapacity(true, zero_Interface.energyModel.p_timeVariables);
 	GC.v_enableNFato = false;
 	GC.v_nfatoWeekDeliveryCapacity_kW = new double[24];
 	GC.v_nfatoWeekendDeliveryCapacity_kW = new double[24];

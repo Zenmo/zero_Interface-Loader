@@ -4031,7 +4031,7 @@ gr_loadIcon.setVisible(true);
 rect_GCisPausedScreen3.setVisible(true);
 
 //Unpause gc
-p_gridConnection.f_setActive(true);
+p_gridConnection.f_setActive(true, zero_Interface.energyModel.p_timeVariables);
 zero_Interface.b_resultsUpToDate = false;
 zero_Interface.f_setScenarioToCustom();
 f_enableAllSliders(true);

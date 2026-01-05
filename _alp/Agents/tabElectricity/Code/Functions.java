@@ -6,7 +6,7 @@ for ( GCEnergyProduction GCEP : gcListProduction) {
 	for(J_EAProduction j_ea : GCEP.c_productionAssets) {
 		if (j_ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC) {
 			if (!GCEP.v_isActive) {
-				GCEP.f_setActive(true);
+				GCEP.f_setActive(true, zero_Interface.energyModel.p_timeVariables);
 			}
 			
 			double solarFieldPower = (double)roundToInt(hectare * zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha);
@@ -15,7 +15,7 @@ for ( GCEnergyProduction GCEP : gcListProduction) {
 			GCEP.v_liveConnectionMetaData.contractedFeedinCapacity_kW = solarFieldPower;
 			
 			if(hectare == 0){
-				GCEP.f_setActive(false);
+				GCEP.f_setActive(false, zero_Interface.energyModel.p_timeVariables);
 			}
 			
 			break;
@@ -100,14 +100,14 @@ for ( GCEnergyProduction GCEP : gcListProduction) {
 	for(J_EAProduction j_ea : GCEP.c_productionAssets) {
 		if (j_ea.getEAType() == OL_EnergyAssetType.WINDMILL) {
 			if (!GCEP.v_isActive) {
-				GCEP.f_setActive(true);
+				GCEP.f_setActive(true, zero_Interface.energyModel.p_timeVariables);
 			}
 			j_ea.setCapacityElectric_kW(roundToInt(1000*AllocatedWindPower_MW));
 			GCEP.v_liveConnectionMetaData.physicalCapacity_kW = (double)roundToInt(1000*AllocatedWindPower_MW);
 			GCEP.v_liveConnectionMetaData.contractedFeedinCapacity_kW = (double)roundToInt(1000*AllocatedWindPower_MW);
 			
 			if(AllocatedWindPower_MW == 0){
-				GCEP.f_setActive(false);
+				GCEP.f_setActive(false, zero_Interface.energyModel.p_timeVariables);
 			}
 			break;
 		}
@@ -349,7 +349,7 @@ for ( GCGridBattery battery : gcListGridBatteries) {
 	
 	J_EAStorageElectric batteryAsset = battery.p_batteryAsset;
 	if (!battery.v_isActive) {
-		battery.f_setActive(true);
+		battery.f_setActive(true, zero_Interface.energyModel.p_timeVariables);
 	}
 	
 	
@@ -364,7 +364,7 @@ for ( GCGridBattery battery : gcListGridBatteries) {
 	battery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = capacity_kW;
 	
 	if(storageCapacity_kWh == storageCapacity_kWh){
-		battery.f_setActive(false);
+		battery.f_setActive(false, zero_Interface.energyModel.p_timeVariables);
 	}
 }
 

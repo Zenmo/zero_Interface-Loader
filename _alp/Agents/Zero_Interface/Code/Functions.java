@@ -484,7 +484,7 @@ if(v_previousClickedObjectType != null){
 	}
 	
 	if(v_customEnergyCoop != null){
-		energyModel.f_removeEnergyCoop(v_customEnergyCoop);
+		energyModel.f_removeEnergyCoop(v_customEnergyCoop, energyModel.p_timeVariables);
 		v_customEnergyCoop = null;
 	}
 }
@@ -834,7 +834,7 @@ for (GridConnection gc : c_selectedObjects.get(0).c_containedGridConnections) {
 }
 
 if(c_selectedGridConnections.size()>1){
-	v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections);
+	v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections, energyModel.p_timeParameters);
 	uI_Results.f_updateResultsUI(v_customEnergyCoop);
 }
 else{
@@ -1155,7 +1155,7 @@ else{//Filtered GC returns GC
 	
 	//Set graphs	
 	if(c_selectedGridConnections.size()>1){
-		v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections);
+		v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections, energyModel.p_timeParameters);
 		uI_Results.f_updateResultsUI(v_customEnergyCoop);
 	}
 	else{
@@ -2377,7 +2377,7 @@ if (gn!=null && gn.gisRegion != null){
 		maxLoad_fr = abs(gn.v_currentLoad_kW)/gn.p_capacity_kW;
 	}
 	else{
-		J_LoadDurationCurves loadCurves = gn.f_getDuurkrommes();
+		J_LoadDurationCurves loadCurves = gn.f_getDuurkrommes(energyModel.p_timeParameters);
 		double maxLoad_fr_delivery = gn.p_capacity_kW > 0 ? abs(loadCurves.ds_loadDurationCurveTotal_kW.getY(0))/gn.p_capacity_kW : 0;
 		double maxLoad_fr_feedin = gn.p_capacity_kW > 0 ? abs(loadCurves.ds_loadDurationCurveTotal_kW.getY(loadCurves.ds_loadDurationCurveTotal_kW.size()-1))/gn.p_capacity_kW : 0;
 

@@ -1641,7 +1641,7 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 	c_selectedGridConnections = new ArrayList&lt;&gt;();
 	
 	if(v_customEnergyCoop != null){
-		energyModel.f_removeEnergyCoop(v_customEnergyCoop);
+		energyModel.f_removeEnergyCoop(v_customEnergyCoop, energyModel.p_timeVariables);
 		v_customEnergyCoop = null;
 	}
 
@@ -1700,7 +1700,7 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 	else {
 		c_selectedGridConnections.addAll(c_selectedObjects.get(0).c_containedGridConnections);
 		
-		v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections);
+		v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections, energyModel.p_timeParameters);
 		uI_Results.f_updateResultsUI(v_customEnergyCoop);
 	}
 	
