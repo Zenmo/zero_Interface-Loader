@@ -3333,6 +3333,7 @@ switch (parentGC.p_energyLabel){
 		lossfactor_WpK = 1.45 * floorArea_m2;
 	break;
 	case NONE:
+	case UNKNOWN:
 	default:
 		lossfactor_WpK = uniform (0.85, 1.2) * floorArea_m2;
 }
