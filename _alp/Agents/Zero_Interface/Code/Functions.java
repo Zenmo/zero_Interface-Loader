@@ -3727,9 +3727,12 @@ List<GridConnection> electricityTabEASliderGCs = new ArrayList<GridConnection>()
 
 //Find the energy production slider gcs that are not specificly for the EnergyHub
 List<GCEnergyProduction> electricityTabEASliderGCs_prod = findAll(energyModel.EnergyProductionSites, sliderProd -> 
-																									sliderProd.p_isSliderGC && 
-																									!sliderProd.p_gridConnectionID.equals(p_defaultEnergyHubSliderGCName_solarfarm) && 
-																									!sliderProd.p_gridConnectionID.equals(p_defaultEnergyHubSliderGCName_windfarm));
+	sliderProd.p_isSliderGC && 
+	!sliderProd.p_gridConnectionID.equals(p_defaultEnergyHubSliderGCName_solarfarm) && 
+	!sliderProd.p_gridConnectionID.equals(p_defaultEnergyHubSliderGCName_windfarm));
+
+//traceln("electricityTabEASliderGCs_prod.size(): %s", electricityTabEASliderGCs_prod.size());																								
+
 if(electricityTabEASliderGCs_prod.size() == 2){
 	electricityTabEASliderGCs.addAll(electricityTabEASliderGCs_prod);
 }
