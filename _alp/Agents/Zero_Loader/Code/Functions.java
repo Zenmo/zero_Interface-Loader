@@ -356,76 +356,105 @@ for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data))
 
 double f_createBatteries()
 {/*ALCODESTART::1726584205787*/
+ConnectionOwner owner;
+GCGridBattery gridbattery;
+
+List<String> existing_actors = new ArrayList();
+List<String> existing_gridbatteries = new ArrayList();
+
 for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) { // MOET NOG CHECK OF battery ACTOR AL BESTAAT OP, zo ja --> battery koppelen aan elkaar en niet 2 GC en 2 actoren maken.
+	if (!existing_gridbatteries.contains(dataBattery.gc_id())) { // Check if windfarm exists already, if not, create new windfarm GC + turbine
+		
+		//Add gridbattery gc
+		gridbattery = energyModel.add_GridBatteries();
+		
+		//GC parameters
+		gridbattery.set_p_gridConnectionID( dataBattery.gc_id () );
+		gridbattery.set_p_name( dataBattery.gc_name() );
+		gridbattery.set_p_ownerID( dataBattery.owner_id() );
+		gridbattery.v_liveConnectionMetaData.physicalCapacity_kW = dataBattery.connection_capacity_kw();
+		
+		//Check wether it can be changed using sliders
+		gridbattery.p_isSliderGC = dataBattery.isSliderGC();
+		
+		//Grid Capacity
+		gridbattery.v_liveConnectionMetaData.physicalCapacity_kW = dataBattery.connection_capacity_kw();
+		if ( dataBattery.connection_capacity_kw() > 0 ) {
+			gridbattery.v_liveConnectionMetaData.physicalCapacityKnown = true;
+		}
+		if ( dataBattery.contracted_delivery_capacity_kw() != null ) {
+			gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = dataBattery.contracted_delivery_capacity_kw();
+			gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
+		}
+		else {
+			gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = dataBattery.connection_capacity_kw();
+			gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
+		}
+		if ( dataBattery.contracted_feed_in_capacity_kw() != null ) {
+			gridbattery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataBattery.contracted_feed_in_capacity_kw();
+			gridbattery.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
+		}
+		else {
+			gridbattery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataBattery.connection_capacity_kw();
+			gridbattery.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;	
+		}
+		
+		//Set parent node electric
+		gridbattery.set_p_parentNodeElectricID( dataBattery.gridnode_id() );
 	
-	ConnectionOwner owner = energyModel.add_pop_connectionOwners();
-	GCGridBattery gridbattery = energyModel.add_GridBatteries();
 	
-	//Owner parameters
-	owner.set_p_actorID( dataBattery.owner_id() );
-	owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.BATTERY_OP );
-	owner.b_dataSharingAgreed = true;
-	
-	//GC parameters
-	gridbattery.set_p_gridConnectionID( dataBattery.gc_id () );
-	gridbattery.set_p_name( dataBattery.gc_name() );
-	gridbattery.set_p_ownerID( dataBattery.owner_id() );
-	gridbattery.set_p_owner( owner );	
-	gridbattery.v_liveConnectionMetaData.physicalCapacity_kW = dataBattery.connection_capacity_kw();
-	
-	//Check wether it can be changed using sliders
-	gridbattery.p_isSliderGC = dataBattery.isSliderGC();
-	
-	//Grid Capacity
-	gridbattery.v_liveConnectionMetaData.physicalCapacity_kW = dataBattery.connection_capacity_kw();
-	if ( dataBattery.connection_capacity_kw() > 0 ) {
-		gridbattery.v_liveConnectionMetaData.physicalCapacityKnown = true;
+		//Set default (initial) operation mode
+		switch (dataBattery.operation_mode()) {
+			case PRICE:
+				gridbattery.f_setBatteryManagement(new J_BatteryManagementPrice(gridbattery));
+				break;
+			case PEAK_SHAVING_PARENT_NODE:
+				J_BatteryManagementPeakShaving batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery);
+				GridNode gn = findFirst(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals(dataBattery.gridnode_id()));
+				if (gn == null) {
+					throw new RuntimeException("Could not find GridNode with ID: " + gridbattery.p_parentNodeElectricID + " for GCGridBattery");
+				}
+				batteryAlgorithm.setTarget(gn);
+				gridbattery.f_setBatteryManagement(batteryAlgorithm);
+				break;
+			case PEAK_SHAVING_COOP:
+				// target agent is still null, should be set at the moment of coop creation
+				batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery);
+				batteryAlgorithm.setTargetType( OL_ResultScope.ENERGYCOOP );
+				gridbattery.f_setBatteryManagement(batteryAlgorithm);
+				break;
+			default:
+				throw new RuntimeException("Battery Operation Mode: " + dataBattery.operation_mode() + " is not supported for GCGridBattery.");
+		}
+		
+		//Get initial state
+		gridbattery.v_isActive = dataBattery.initially_active();
+		
+		//Create energy asset for the battery
+		f_addStorage(gridbattery, dataBattery.capacity_electric_kw(), dataBattery.storage_capacity_kwh(), OL_EnergyAssetType.STORAGE_ELECTRIC );	
+		
+		
+		//Set owner
+		if (!existing_actors.contains(gridbattery.p_ownerID)){ // check if owner exists already, if not, create new owner.
+			owner = energyModel.add_pop_connectionOwners();
+			owner.set_p_actorID( gridbattery.p_ownerID );
+			owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.BATTERY_OP );
+			owner.b_dataSharingAgreed = true;
+			existing_actors.add(gridbattery.p_ownerID);
+		}
+		else { // Owner exists already: add new GC to existing owner
+			owner = findFirst(energyModel.f_getConnectionOwners(), p -> p.p_actorID.equals(dataBattery.owner_id()));
+		}
+		
+		gridbattery.set_p_owner( owner );
+		
+		existing_gridbatteries.add(gridbattery.p_gridConnectionID);
+		
 	}
-	if ( dataBattery.contracted_delivery_capacity_kw() != null ) {
-		gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = dataBattery.contracted_delivery_capacity_kw();
-		gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
+	else{
+		gridbattery = findFirst(energyModel.GridBatteries, p -> p.p_gridConnectionID.equals(dataBattery.gc_id()) );
+		owner = gridbattery.p_owner;	
 	}
-	else {
-		gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = dataBattery.connection_capacity_kw();
-		gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
-	}
-	if ( dataBattery.contracted_feed_in_capacity_kw() != null ) {
-		gridbattery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataBattery.contracted_feed_in_capacity_kw();
-		gridbattery.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
-	}
-	else {
-		gridbattery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataBattery.connection_capacity_kw();
-		gridbattery.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;	
-	}
-	
-	gridbattery.set_p_parentNodeElectricID( dataBattery.gridnode_id() );
-	//gridbattery.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
-	
-	switch (dataBattery.operation_mode()) {
-		case PRICE:
-			gridbattery.f_setBatteryManagement(new J_BatteryManagementPrice(gridbattery));
-			break;
-		case PEAK_SHAVING_PARENT_NODE:
-			J_BatteryManagementPeakShaving batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery);
-			GridNode gn = findFirst(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals(gridbattery.p_parentNodeElectricID));
-			if (gn == null) {
-				throw new RuntimeException("Could not find GridNode with ID: " + gridbattery.p_parentNodeElectricID + " for GCGridBattery");
-			}
-			batteryAlgorithm.setTarget(gn);
-			gridbattery.f_setBatteryManagement(batteryAlgorithm);
-			break;
-		case PEAK_SHAVING_COOP:
-			// target agent is still null, should be set at the moment of coop creation
-			batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery);
-			batteryAlgorithm.setTargetType( OL_ResultScope.ENERGYCOOP );
-			gridbattery.f_setBatteryManagement(batteryAlgorithm);
-			break;
-		default:
-			throw new RuntimeException("Battery Operation Mode: " + dataBattery.operation_mode() + " is not supported for GCGridBattery.");
-	}
-	
-	//Get initial state
-	gridbattery.v_isActive = dataBattery.initially_active();
 	
 	if (dataBattery.polygon() != null) {
 		//Create gis object for the battery
@@ -441,9 +470,7 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) { // M
 		area.set_p_defaultLineWidth( zero_Interface.v_energyAssetLineWidth);
 		zero_Interface.f_styleAreas(area);
 	}
-	//Create energy asset for the battery
-	f_addStorage(gridbattery, dataBattery.capacity_electric_kw(), dataBattery.storage_capacity_kwh(), OL_EnergyAssetType.STORAGE_ELECTRIC );	
-	
+
 }
 /*ALCODEEND*/}
 
@@ -501,6 +528,7 @@ for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electro
 		owner.set_p_actorID( H2Electrolyser.p_ownerID );
 		owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.ELECTROLYSER_OP );
 		owner.b_dataSharingAgreed = true;
+		existing_actors.add(H2Electrolyser.p_ownerID);
 	}
 	else { // Owner exists already: add new GC to existing owner
 		owner = findFirst(energyModel.f_getConnectionOwners(), p -> p.p_actorID.equals(dataElectrolyser.owner_id()));
@@ -572,9 +600,9 @@ for (Windfarm_data dataWindfarm : f_getWindfarmsInSubScope(c_windfarm_data)) {
 			owner = energyModel.add_pop_connectionOwners();
 			
 			owner.set_p_actorID( windfarm.p_ownerID );
-			//owner.set_p_actorType( OL_ActorType.CONNECTIONOWNER );
 			owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.WINDFARM_OP );
 			owner.b_dataSharingAgreed = true;
+			existing_actors.add(windfarm.p_ownerID);
 		}
 		else { // Owner exists already: add new GC to existing owner
 			owner = findFirst(energyModel.f_getConnectionOwners(), p -> p.p_actorID.equals(dataWindfarm.owner_id()));
@@ -587,7 +615,6 @@ for (Windfarm_data dataWindfarm : f_getWindfarmsInSubScope(c_windfarm_data)) {
 	else { // winfarm and its owner exist already, only create new gis building which is added to the farm
 		windfarm = findFirst(energyModel.EnergyProductionSites, p -> p.p_gridConnectionID.equals(dataWindfarm.gc_id()) );
 		owner = windfarm.p_owner;		
-
 	}
 	
 	//Create GIS object for the windfarm
