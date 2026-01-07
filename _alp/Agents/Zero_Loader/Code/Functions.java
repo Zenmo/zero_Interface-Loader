@@ -276,14 +276,12 @@ if(settings.reloadDatabase()){
 
 double f_createSolarParks()
 {/*ALCODESTART::1726584205785*/
-ConnectionOwner owner;
 GCEnergyProduction solarpark;
 
 List<String> existing_actors = new ArrayList();
 List<String> existing_solarFields = new ArrayList();
 
-for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data)) { // MOET NOG CHECK OF ZONNEVELD ACTOR AL BESTAAT OP, zo ja --> Zonneveld koppelen aan elkaar en niet 2 GC en 2 actoren maken.
-	
+for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data)) {
 	if (!existing_solarFields.contains( dataSolarfarm.gc_id() )) {
 		solarpark = energyModel.add_EnergyProductionSites();
 		
@@ -317,7 +315,8 @@ for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data))
 		//Add EA
 		f_addEnergyProduction(solarpark, OL_EnergyAssetType.PHOTOVOLTAIC, "Solar farm" , dataSolarfarm.capacity_electric_kw());
 		
-		
+		//Set owner
+		ConnectionOwner owner;
 		if (!existing_actors.contains(solarpark.p_ownerID)){ // check if owner exists already, if not, create new owner.
 			owner = energyModel.add_pop_connectionOwners();
 			
@@ -336,8 +335,6 @@ for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data))
 	}
 	else { // solarpark and its owner exist already, only create new gis building which is added to the park
 		solarpark = findFirst(energyModel.EnergyProductionSites, p -> p.p_gridConnectionID.equals(dataSolarfarm.gc_id()) );
-		owner = solarpark.p_owner;		
-
 	}
 	
 	if (dataSolarfarm.polygon() != null) {
@@ -360,14 +357,13 @@ for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data))
 
 double f_createBatteries()
 {/*ALCODESTART::1726584205787*/
-ConnectionOwner owner;
 GCGridBattery gridbattery;
 
 List<String> existing_actors = new ArrayList();
 List<String> existing_gridbatteries = new ArrayList();
 
-for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) { // MOET NOG CHECK OF battery ACTOR AL BESTAAT OP, zo ja --> battery koppelen aan elkaar en niet 2 GC en 2 actoren maken.
-	if (!existing_gridbatteries.contains(dataBattery.gc_id())) { // Check if windfarm exists already, if not, create new windfarm GC + turbine
+for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) {
+	if (!existing_gridbatteries.contains(dataBattery.gc_id())) { // Check if batteryGC exists already, if not, create new batter GC + EA
 		
 		//Add gridbattery gc
 		gridbattery = energyModel.add_GridBatteries();
@@ -439,6 +435,7 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) { // M
 		
 		
 		//Set owner
+		ConnectionOwner owner;
 		if (!existing_actors.contains(gridbattery.p_ownerID)){ // check if owner exists already, if not, create new owner.
 			owner = energyModel.add_pop_connectionOwners();
 			owner.set_p_actorID( gridbattery.p_ownerID );
@@ -457,7 +454,6 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) { // M
 	}
 	else{
 		gridbattery = findFirst(energyModel.GridBatteries, p -> p.p_gridConnectionID.equals(dataBattery.gc_id()) );
-		owner = gridbattery.p_owner;	
 	}
 	
 	if (dataBattery.polygon() != null) {
@@ -480,16 +476,13 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) { // M
 
 double f_createElectrolysers()
 {/*ALCODESTART::1726584205789*/
-ConnectionOwner owner;
 List<String> existing_actors = new ArrayList();
-
 
 for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electrolyser_data)) {
 	GCEnergyConversion H2Electrolyser = energyModel.add_EnergyConversionSites();
 
 	H2Electrolyser.set_p_gridConnectionID( dataElectrolyser.gc_id() );
 	H2Electrolyser.set_p_name( dataElectrolyser.gc_name() );
-	//H2Electrolyser.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
 	H2Electrolyser.set_p_ownerID( dataElectrolyser.owner_id() );	
 	H2Electrolyser.set_p_parentNodeElectricID( dataElectrolyser.gridnode_id() );
 	
@@ -526,6 +519,8 @@ for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electro
 	//Create EA for the electrolyser GC
 	J_EAConversionElectrolyser h2ElectrolyserEA = new J_EAConversionElectrolyser(H2Electrolyser, dataElectrolyser.capacity_electric_kw(), dataElectrolyser.conversion_efficiency(), energyModel.p_timeStep_h, OL_ElectrolyserState.STANDBY, dataElectrolyser.load_change_time_s(), dataElectrolyser.start_up_time_shutdown_s(), dataElectrolyser.start_up_time_standby_s(), dataElectrolyser.start_up_time_idle_s());
 	
+	//Set owner
+	ConnectionOwner owner;
 	if (!existing_actors.contains(H2Electrolyser.p_ownerID)){ // check if owner exists already, if not, create new owner.
 		owner = energyModel.add_pop_connectionOwners();
 		
@@ -560,7 +555,6 @@ for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electro
 
 double f_createWindFarms()
 {/*ALCODESTART::1726584205791*/
-ConnectionOwner owner;
 GCEnergyProduction windfarm;
 
 List<String> existing_actors = new ArrayList();
@@ -600,6 +594,8 @@ for (Windfarm_data dataWindfarm : f_getWindfarmsInSubScope(c_windfarm_data)) {
 		//Create EA for the windturbine GC
 		f_addEnergyProduction(windfarm, OL_EnergyAssetType.WINDMILL, "Windmill onshore", dataWindfarm.capacity_electric_kw());
 		
+		//Set owner
+		ConnectionOwner owner;
 		if (!existing_actors.contains(windfarm.p_ownerID)){ // check if owner exists already, if not, create new owner.
 			owner = energyModel.add_pop_connectionOwners();
 			
@@ -617,8 +613,7 @@ for (Windfarm_data dataWindfarm : f_getWindfarmsInSubScope(c_windfarm_data)) {
 		existing_windFarms.add(windfarm.p_gridConnectionID);	
 	}
 	else { // winfarm and its owner exist already, only create new gis building which is added to the farm
-		windfarm = findFirst(energyModel.EnergyProductionSites, p -> p.p_gridConnectionID.equals(dataWindfarm.gc_id()) );
-		owner = windfarm.p_owner;		
+		windfarm = findFirst(energyModel.EnergyProductionSites, p -> p.p_gridConnectionID.equals(dataWindfarm.gc_id()) );		
 	}
 	
 	//Create GIS object for the windfarm
