@@ -97,52 +97,23 @@ for ( GridNode GN : energyModel.pop_gridNodes ){
 	}
 }
 
-//Check if click was on Building, if yes, select grid building
-for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
-	if( b.gisRegion != null && b.gisRegion.contains(clickx, clicky) ){
-		if (b.gisRegion.isVisible()) { //only allow us to click on visible objects
-			if (b.c_containedGridConnections.size() > 0 ) { // only allow buildings with gridconnections
-				if(f_checkIfGCsAreAccesible(b.c_containedGridConnections)){
-					buildingsConnectedToSelectedBuildingsList = b.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
-					f_selectBuilding(b, buildingsConnectedToSelectedBuildingsList);
-				}
-				else{
-					f_selectEnergyModel();			
-				}
-				return;
-			}
-		}
-	}
+//Group all buildings with gisobjects in one array for a single loop (Fastest way to convert pop to list is writing out the loop)
+List<GIS_Object> allGISObjects = new ArrayList<>();
+for(GIS_Building b : energyModel.pop_GIS_Buildings) {
+    allGISObjects.add(b);
+}
+for(GIS_Object object : energyModel.pop_GIS_Objects) {
+    allGISObjects.add(object);
 }
 
-//Check if click was on remaining objects such as chargers, solarfields, parcels: if yes, select object
-for ( GIS_Object GISobject : energyModel.pop_GIS_Objects ){
-	if( GISobject.gisRegion != null && GISobject.gisRegion.contains(clickx, clicky) ) {
-		if (GISobject.gisRegion.isVisible()) { //only allow us to click on visible objects
-			if (GISobject.c_containedGridConnections.size() > 0 ) { // only allow objects with gridconnections
-				if(f_checkIfGCsAreAccesible(GISobject.c_containedGridConnections)){
-					// Find buildings powered by the same GC as the clicked object
-					buildingsConnectedToSelectedBuildingsList = GISobject.c_containedGridConnections.get(0).c_connectedGISObjects; 
-					
-					//Find the (first) connected GC in the object
-					GridConnection selectedGC = GISobject.c_containedGridConnections.get(0);
-					
-					//Set the selected GIS object type
-					v_clickedObjectType = GISobject.p_GISObjectType;
-					c_selectedObjects.add(GISobject);
-					
-					//Set the correct interface view for each object type
-					switch(v_clickedObjectType){
-					
-					case CHARGER:
-						f_selectCharger((GCPublicCharger)selectedGC, GISobject );
-						break;
-					
-					default:
-						buildingsConnectedToSelectedBuildingsList = GISobject.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
-						f_selectBuilding(GISobject, buildingsConnectedToSelectedBuildingsList);		
-						break;
-					}
+//Check if click was on Building or GISObject such as chargers, solarfields, windfarm, if yes: Select.
+for ( GIS_Object GISObject : allGISObjects ){
+	if( GISObject.gisRegion != null && GISObject.gisRegion.contains(clickx, clicky) ) {
+		if (GISObject.gisRegion.isVisible()) { //only allow us to click on visible objects
+			if (GISObject.c_containedGridConnections.size() > 0 ) { // only allow objects with gridconnections
+				if(f_checkIfGCsAreAccesible(GISObject.c_containedGridConnections)){
+					buildingsConnectedToSelectedBuildingsList = GISObject.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked object 
+					f_selectBuilding(GISObject, buildingsConnectedToSelectedBuildingsList);		
 				}
 				else{
 					f_selectEnergyModel();
@@ -348,10 +319,6 @@ else {
 	v_clickedObjectText =  GN.p_nodeType + "-station, " + Integer.toString( ((int)GN.p_capacity_kW) ) + " kW (ingeschat), ID: " + GN.p_gridNodeID + ", aansluitingen: " + GN.f_getConnectedGridConnections().size() + ", Type station: " + GN.p_description;
 }
 
-v_clickedObjectAdress = "";
-v_clickedObjectDetails = "Type station:\t" + GN.p_description;
-
-
 // Color the GridNode
 GN.gisRegion.setFillColor( v_selectionColor );
 GN.gisRegion.setLineColor( orange );
@@ -452,8 +419,6 @@ c_selectedObjects.clear();
 if(v_previousClickedObjectType != null){
 	// Update for results_ui when deselecting objects to show entire area again as default option
 	v_clickedObjectText = "None";
-	v_clickedObjectAdress = "";
-	v_clickedObjectDetails = "";
 	v_clickedObjectType = null;
 	button_goToUI.setVisible(false);
 	gr_multipleBuildingInfo.setVisible(false);
@@ -772,29 +737,6 @@ uI_Tabs.f_updateSliders();
 if(uI_EnergyHub != null){
 	uI_EnergyHub.uI_Tabs.f_updateSliders();
 }
-/*ALCODEEND*/}
-
-double f_selectCharger(GCPublicCharger charger,GIS_Object objectGIS)
-{/*ALCODESTART::1718552624959*/
-objectGIS.gisRegion.setFillColor( v_selectionColor );
-objectGIS.gisRegion.setLineColor( orange );
-
-//set info text
-v_clickedObjectText = ""; //charger.p_CPOName + " laadpunt, ";
-if (charger.p_address == null || charger.p_address.getAddress() == null) {
-	v_clickedObjectAdress = "Onbekend adres";
-}
-else{
-	v_clickedObjectAdress = charger.p_address.getStreetName();
-}
-v_clickedObjectDetails = "No detaild info of charger available";
-
-//v_clickedGridConnection = charger;
-c_selectedGridConnections = new ArrayList<GridConnection>(Arrays.asList(charger));
-uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
-
-//Set the UI button
-f_setUIButton();
 /*ALCODEEND*/}
 
 double f_setColorsBasedOnGridTopology_objects(GIS_Object gis_area)

@@ -75,9 +75,9 @@
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>double[]</ReturnType>
 		<Id>1726584205777</Id>
-		<Name><![CDATA[f_createGISObjectsTokens]]></Name>
+		<Name><![CDATA[f_createGISObjectTokens]]></Name>
 		<X>1565.241</X>
-		<Y>700</Y>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -588,7 +588,7 @@
 		<Id>1726584205835</Id>
 		<Name><![CDATA[f_createRemainingBuildings]]></Name>
 		<X>1546.739</X>
-		<Y>659</Y>
+		<Y>639</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -656,11 +656,11 @@
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>GISRegion</ReturnType>
+		<ReturnType>String</ReturnType>
 		<Id>1726584205847</Id>
-		<Name><![CDATA[f_createGISRegionChargingStation]]></Name>
-		<X>1547.621</X>
-		<Y>640</Y>
+		<Name><![CDATA[f_createChargerPolygon]]></Name>
+		<X>1565</X>
+		<Y>700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -716,7 +716,7 @@
 		<Id>1726584205859</Id>
 		<Name><![CDATA[f_createGISCables]]></Name>
 		<X>1547.621</X>
-		<Y>680</Y>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
