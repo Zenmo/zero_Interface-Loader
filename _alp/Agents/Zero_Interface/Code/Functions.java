@@ -2006,7 +2006,7 @@ for(GIS_Building building : energyModel.pop_GIS_Buildings){
 
 double f_initialParkingSpacesOrder()
 {/*ALCODESTART::1749741185117*/
-//Collections.shuffle(c_orderedParkingSpaces);
+f_shuffleListWithFixedSeed(c_orderedParkingSpaces);
 /*ALCODEEND*/}
 
 double f_initialChargerOrder()
@@ -2055,7 +2055,7 @@ c_orderedV1GChargers.addAll( c_inactiveV1GChargers );
 c_orderedV2GChargers.addAll( c_inactiveV2GChargers );
 
 
-//Collections.shuffle(c_orderedPublicChargers);
+f_shuffleListWithFixedSeed(c_orderedPublicChargers);
 /*ALCODEEND*/}
 
 double f_initializeSpecialGISObjectsLegend()
@@ -2853,8 +2853,8 @@ for (GCHouse house : energyModel.Houses) {
 }
 
 //Shuffle the collections to not have skewed initialization
-//Collections.shuffle(c_orderedVehiclesPrivateParking);
-//Collections.shuffle(allPublicParkedCars);
+f_shuffleListWithFixedSeed(c_orderedVehiclesPrivateParking);
+f_shuffleListWithFixedSeed(allPublicParkedCars);
 
 //Get the total amount of public chargers
 int totalChargers = c_orderedPublicChargers.size();
@@ -3732,9 +3732,12 @@ List<GridConnection> electricityTabEASliderGCs = new ArrayList<GridConnection>()
 
 //Find the energy production slider gcs that are not specificly for the EnergyHub
 List<GCEnergyProduction> electricityTabEASliderGCs_prod = findAll(energyModel.EnergyProductionSites, sliderProd -> 
-																									sliderProd.p_isSliderGC && 
-																									!sliderProd.p_gridConnectionID.equals(p_defaultEnergyHubSliderGCName_solarfarm) && 
-																									!sliderProd.p_gridConnectionID.equals(p_defaultEnergyHubSliderGCName_windfarm));
+	sliderProd.p_isSliderGC && 
+	!sliderProd.p_gridConnectionID.equals(p_defaultEnergyHubSliderGCName_solarfarm) && 
+	!sliderProd.p_gridConnectionID.equals(p_defaultEnergyHubSliderGCName_windfarm));
+
+//traceln("electricityTabEASliderGCs_prod.size(): %s", electricityTabEASliderGCs_prod.size());																								
+
 if(electricityTabEASliderGCs_prod.size() == 2){
 	electricityTabEASliderGCs.addAll(electricityTabEASliderGCs_prod);
 }
@@ -3754,5 +3757,21 @@ else{
 }
 
 return electricityTabEASliderGCs;
+/*ALCODEEND*/}
+
+double f_shuffleListWithFixedSeed(List<?> list)
+{/*ALCODESTART::1767626360938*/
+for (int i = list.size() - 1; i > 0; i--) {
+    int j = 0;
+    // Go through all possible positions 0..i
+    for (int k = 0; k <= i; k++) {
+        // With probability 1/(remaining slots), pick this position
+        if (randomTrue(1.0 / (i - k + 1))) {
+            j = k;
+            break; // stop after choosing
+        }
+    }
+    Collections.swap(list, i, j);
+}
 /*ALCODEEND*/}
 

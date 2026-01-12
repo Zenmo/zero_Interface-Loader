@@ -416,7 +416,7 @@
 		<Id>1716419446045</Id>
 		<Name><![CDATA[f_enableTraceln]]></Name>
 		<X>-640</X>
-		<Y>-120</Y>
+		<Y>-150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -436,7 +436,7 @@
 		<Id>1716419448047</Id>
 		<Name><![CDATA[f_disableTraceln]]></Name>
 		<X>-640</X>
-		<Y>-140</Y>
+		<Y>-170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1164,7 +1164,7 @@
 		<Id>1743509491686</Id>
 		<Name><![CDATA[f_setMapViewBounds]]></Name>
 		<X>-640</X>
-		<Y>-90</Y>
+		<Y>-120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2613,7 +2613,7 @@
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>List&lt;GridConnection&gt;</ReturnType>
 		<Id>1765207097247</Id>
@@ -2627,6 +2627,27 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1767626360938</Id>
+		<Name><![CDATA[f_shuffleListWithFixedSeed]]></Name>
+		<Description><![CDATA[Function used to shuffle whatever list, but instead of a fully random shuffle, it is using randomTrue (random but with fixed seed of anylogic). -> For multiple simulations, the outcome will be the same.]]></Description>
+		<X>-640</X>
+		<Y>-90</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[list]]></Name>
+			<Type><![CDATA[List<?>]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>
