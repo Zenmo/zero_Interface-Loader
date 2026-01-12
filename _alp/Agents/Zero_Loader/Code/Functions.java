@@ -8,7 +8,7 @@ for (Neighbourhood_data NBH : c_neighbourhood_data) {
 	area.p_GISObjectType = f_getNBHGISObjectType(area, NBH.neighbourhoodcode(), NBH.neighbourhoodtype());
 
 	//Create gisregion
-	area.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(NBH.polygon(), area.p_GISObjectType));
+	area.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectTokens(NBH.polygon(), area.p_GISObjectType));
 
 	//Style area 
 	zero_Interface.f_styleSimulationAreas(area);
@@ -151,7 +151,7 @@ for (GridNode_data GN_data : c_gridNode_data) {
 			//Gridnode service area
 			if (GN_data.service_area_polygon() != null){
 				//Create service area gis object
-				GN.p_serviceAreaGisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(GN_data.service_area_polygon(), OL_GISObjectType.GN_SERVICE_AREA));
+				GN.p_serviceAreaGisRegion = zero_Interface.f_createGISObject(f_createGISObjectTokens(GN_data.service_area_polygon(), OL_GISObjectType.GN_SERVICE_AREA));
 				
 				//Add to hashmap
 				zero_Interface.c_GISNetplanes.add( GN.p_serviceAreaGisRegion );
@@ -168,7 +168,7 @@ for (GridNode_data GN_data : c_gridNode_data) {
 
 /*ALCODEEND*/}
 
-double[] f_createGISObjectsTokens(String RegionCoords,OL_GISObjectType GISObjectType)
+double[] f_createGISObjectTokens(String RegionCoords,OL_GISObjectType GISObjectType)
 {/*ALCODESTART::1726584205777*/
 if (RegionCoords.startsWith("MultiPolygon")){
 	RegionCoords = RegionCoords.replace("MultiPolygon (((","");
@@ -286,8 +286,16 @@ for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data))
 		solarpark = energyModel.add_EnergyProductionSites();
 		
 		solarpark.set_p_gridConnectionID( dataSolarfarm.gc_id() );
-		solarpark.set_p_name( dataSolarfarm.gc_name() );
 		
+		//Set Address
+		solarpark.p_address = new J_Address(dataSolarfarm.streetname(), 
+											dataSolarfarm.house_number(), 
+											dataSolarfarm.house_letter(), 
+											dataSolarfarm.house_addition(), 
+											dataSolarfarm.postalcode(), 
+											dataSolarfarm.city());
+    	
+
 		//Check wether it can be changed using sliders
 		solarpark.p_isSliderGC = dataSolarfarm.isSliderGC();
 		
@@ -370,10 +378,18 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) {
 		
 		//GC parameters
 		gridbattery.set_p_gridConnectionID( dataBattery.gc_id () );
-		gridbattery.set_p_name( dataBattery.gc_name() );
 		gridbattery.set_p_ownerID( dataBattery.owner_id() );
 		gridbattery.v_liveConnectionMetaData.physicalCapacity_kW = dataBattery.connection_capacity_kw();
 		
+		
+		//Set Address
+		gridbattery.p_address = new J_Address(dataBattery.streetname(), 
+										      dataBattery.house_number(), 
+										      dataBattery.house_letter(), 
+										      dataBattery.house_addition(), 
+										      dataBattery.postalcode(), 
+										      dataBattery.city());
+										     
 		//Check wether it can be changed using sliders
 		gridbattery.p_isSliderGC = dataBattery.isSliderGC();
 		
@@ -482,10 +498,17 @@ for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electro
 	GCEnergyConversion H2Electrolyser = energyModel.add_EnergyConversionSites();
 
 	H2Electrolyser.set_p_gridConnectionID( dataElectrolyser.gc_id() );
-	H2Electrolyser.set_p_name( dataElectrolyser.gc_name() );
 	H2Electrolyser.set_p_ownerID( dataElectrolyser.owner_id() );	
 	H2Electrolyser.set_p_parentNodeElectricID( dataElectrolyser.gridnode_id() );
 	
+	//Set Address
+	H2Electrolyser.p_address = new J_Address(dataElectrolyser.streetname(), 
+										     dataElectrolyser.house_number(), 
+										     dataElectrolyser.house_letter(), 
+										     dataElectrolyser.house_addition(), 
+										     dataElectrolyser.postalcode(), 
+										     dataElectrolyser.city());
+
 	//Grid Capacity
 	H2Electrolyser.v_liveConnectionMetaData.physicalCapacity_kW = dataElectrolyser.connection_capacity_kw();
 	if ( dataElectrolyser.connection_capacity_kw() > 0 ) {
@@ -565,7 +588,14 @@ for (Windfarm_data dataWindfarm : f_getWindfarmsInSubScope(c_windfarm_data)) {
 		windfarm = energyModel.add_EnergyProductionSites();
 
 		windfarm.set_p_gridConnectionID( dataWindfarm.gc_id() );
-		windfarm.set_p_name( dataWindfarm.gc_name() );
+		
+		//Set Address
+		windfarm.p_address = new J_Address(dataWindfarm.streetname(), 
+										   dataWindfarm.house_number(), 
+										   dataWindfarm.house_letter(), 
+										   dataWindfarm.house_addition(), 
+										   dataWindfarm.postalcode(), 
+										   dataWindfarm.city());
 
 		//Check wether it can be changed using sliders
 		windfarm.p_isSliderGC = dataWindfarm.isSliderGC();
@@ -813,18 +843,12 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		companyGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
 
 		//set GC Adress
-		companyGC.p_address = new J_Address();
-		companyGC.p_address.setStreetName(genericCompany.streetname());
-		if (genericCompany.house_number() == null) {
-			companyGC.p_address.setHouseNumber(0);
-		}
-		else {
-			companyGC.p_address.setHouseNumber(genericCompany.house_number());
-		}
-		companyGC.p_address.setHouseLetter(genericCompany.house_letter());
-		companyGC.p_address.setHouseAddition(genericCompany.house_addition());
-		companyGC.p_address.setPostalcode(genericCompany.postalcode());
-		companyGC.p_address.setCity(genericCompany.city());
+		companyGC.p_address = new J_Address(genericCompany.streetname(), 
+										    genericCompany.house_number(), 
+										    genericCompany.house_letter(), 
+										    genericCompany.house_addition(), 
+										    genericCompany.postalcode(), 
+										    genericCompany.city());
 		
 		
 		//Set location of GC
@@ -914,7 +938,7 @@ b.p_useType = buildingData.purpose();
 b.p_annotation = buildingData.annotation();
 
 //Create gisregion
-b.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(buildingData.polygon(), b.p_GISObjectType));
+b.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectTokens(buildingData.polygon(), b.p_GISObjectType));
 
 //Use the first point of the polygon as lat lon
 double[] gisregion_points = b.gisRegion.getPoints(); // get all points of the gisArea of the building in the format lat1,lon1,lat2,lon2, etc.
@@ -1010,7 +1034,7 @@ for (Parcel_data dataParcel : c_parcel_data) {
 	parcel.set_p_GISObjectType(OL_GISObjectType.PARCEL);
 	
 	//Building + styling the gisregion and putting it on the map
-	GISRegion gisregion = zero_Interface.f_createGISObject(f_createGISObjectsTokens( dataParcel.polygon(), parcel.p_GISObjectType));
+	GISRegion gisregion = zero_Interface.f_createGISObject(f_createGISObjectTokens( dataParcel.polygon(), parcel.p_GISObjectType));
 	parcel.gisRegion = gisregion;
 	
 	parcel.set_p_defaultFillColor( zero_Interface.v_parcelColor );
@@ -1057,6 +1081,7 @@ GIS_Object f_createGISObject(String name,double latitude,double longitude,String
 GIS_Object area = energyModel.add_pop_GIS_Objects();
 
 area.p_id = name;
+area.p_annotation = area.p_id;
 area.p_GISObjectType = GISObjectType;
 
 //position and coordinates
@@ -1065,7 +1090,7 @@ area.p_longitude = longitude;
 area.setLatLon(area.p_latitude, area.p_longitude);		
 
 //Create gisregion
-area.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(polygon, area.p_GISObjectType));
+area.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectTokens(polygon, area.p_GISObjectType));
 
 //Add GISObject type to the legenda
 zero_Interface.c_modelActiveSpecialGISObjects.add(area.p_GISObjectType);
@@ -1129,13 +1154,12 @@ for (var survey : surveys) {
 			companyGC.p_owner = survey_owner;	
 			
 			//Adress data
-			companyGC.p_address = new J_Address();
-			companyGC.p_address.setStreetName(address.getStreet().substring(0,1).toUpperCase() + address.getStreet().substring(1).toLowerCase());
-		 	companyGC.p_address.setHouseNumber(address.getHouseNumber());
-		 	companyGC.p_address.setHouseLetter(address.getHouseLetter().equals("") ? null : address.getHouseLetter());
-		 	companyGC.p_address.setHouseAddition(address.getHouseNumberSuffix().equals("") ? null : address.getHouseNumberSuffix());
-		 	companyGC.p_address.setPostalcode(address.getPostalCode().equals("") ? null : address.getPostalCode().toUpperCase().replaceAll("\\s",""));
-		 	companyGC.p_address.setCity(address.getCity().substring(0,1).toUpperCase() + address.getCity().substring(1).toLowerCase());
+			companyGC.p_address = new J_Address(address.getStreet(), 
+								    address.getHouseNumber(), 
+								    address.getHouseLetter(), 
+								    address.getHouseNumberSuffix(), 
+								    address.getPostalCode(), 
+								    address.getCity());
 
 			//Get attached building info
 			List<Building_data> buildings = f_getSurveyGCBuildingData(companyGC, gridConnection);
@@ -1596,7 +1620,7 @@ for (Building_data remainingBuilding_data : c_remainingBuilding_data) {
 	building.p_GISObjectType = OL_GISObjectType.REMAINING_BUILDING;
 	
 	//Building + styling the gisregion and putting it on the map		
-	building.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(remainingBuilding_data.polygon(), building.p_GISObjectType));
+	building.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectTokens(remainingBuilding_data.polygon(), building.p_GISObjectType));
 	
 	building.p_defaultFillColor = zero_Interface.v_restBuildingColor;
 	building.p_defaultLineColor = zero_Interface.v_restBuildingLineColor;
@@ -1645,22 +1669,23 @@ List<Double> quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + 
 profile.a_energyProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> max(0,d)).map( d -> d / 4).toArray();
 /*ALCODEEND*/}
 
-GISRegion f_createGISRegionChargingStation(double lat,double lon)
+String f_createChargerPolygon(double lat,double lon)
 {/*ALCODESTART::1726584205847*/
-//create shape Coords
+//Create shape coords and polygon string, that matches output of QGIS: Polygon(lon,lat,lon,lat, etc.)
 int nb_points = 6;
-double[] GISCoords = new double[nb_points * 2];
+String chargerPolygon = "POLYGON ((";
 
 for (int i=0; i < nb_points ; i++){
+	if(i > 0){
+		chargerPolygon += ",";
+	}
 	double size = 0.00004;
-	GISCoords[i * 2] = size * cos( i * ( 2 * Math.PI ) / nb_points) + lat;
-	GISCoords[i * 2 + 1] = 1.64 * size * sin( i * ( 2 * Math.PI ) / nb_points) + lon;
+	chargerPolygon += 1.64 * size * sin( i * ( 2 * Math.PI ) / nb_points) + lon;
+	chargerPolygon += ",";
+	chargerPolygon += size * cos( i * ( 2 * Math.PI ) / nb_points) + lat;
 }
 
-//Create the region
-GISRegion gisregion = zero_Interface.f_createGISObject( GISCoords );
-
-return gisregion;
+return chargerPolygon;
 
 /*ALCODEEND*/}
 
@@ -1674,10 +1699,16 @@ int laadstation_nr = 1;
 for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(c_chargingstation_data)){
 
 	GCPublicCharger chargingStation = energyModel.add_PublicChargers();
-
 	chargingStation.set_p_gridConnectionID( dataChargingStation.gc_id());
-	chargingStation.set_p_name( dataChargingStation.gc_name() );
 	
+	//Set Address
+	chargingStation.p_address = new J_Address(dataChargingStation.streetname(), 
+											  dataChargingStation.house_number(), 
+											  dataChargingStation.house_letter(), 
+											  dataChargingStation.house_addition(), 
+											  dataChargingStation.postalcode(), 
+											  dataChargingStation.city());
+											
 	//Electric Capacity
 	if (dataChargingStation.connection_capacity_kw() != null) {
 		// Assume the connection capacity is both physical and contracted.
@@ -1760,7 +1791,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 			zero_Interface.f_styleAreas(area);
 		}
 		else{
-			traceln("No gisobject created for charge centre: " + chargingStation.p_name);
+			traceln("No gisobject created for charge centre: " + chargingStation.p_gridConnectionID);
 		}
 	}
 	else {
@@ -1793,33 +1824,23 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 		}
 		
 		
-		//Create GIS object for the chargingStation			
-		GIS_Object area = energyModel.add_pop_GIS_Objects();
-
-		//position and coordinates
-		area.p_latitude = dataChargingStation.latitude();
-		area.p_longitude = dataChargingStation.longitude();
-		area.setLatLon(area.p_latitude, area.p_longitude);		
+		//Create GIS object for the chargingStation	
+		String polygonString = f_createChargerPolygon(dataChargingStation.latitude(), dataChargingStation.longitude());
+		GIS_Object gisregion = f_createGISObject(dataChargingStation.gc_name(), dataChargingStation.latitude(), dataChargingStation.longitude(), polygonString, OL_GISObjectType.CHARGER);		
 		
-		//Create gisregion
-		area.gisRegion = f_createGISRegionChargingStation( area.p_latitude, area.p_longitude );	
+		//Add to collections
+		chargingStation.c_connectedGISObjects.add(gisregion);
+		gisregion.c_containedGridConnections.add(chargingStation);
 		
-		//Set area type
-		area.p_GISObjectType = OL_GISObjectType.CHARGER;
-	
-		chargingStation.c_connectedGISObjects.add(area);
-		area.c_containedGridConnections.add(chargingStation);
 		if(chargingStation.v_isActive){
-			area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
-			area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
+			gisregion.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
+			gisregion.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
 		}
 		else{
-			area.set_p_defaultFillColor( zero_Interface.v_newChargingStationColor );
-			area.set_p_defaultLineColor( zero_Interface.v_newChargingStationLineColor );
+			gisregion.set_p_defaultFillColor( zero_Interface.v_newChargingStationColor );
+			gisregion.set_p_defaultLineColor( zero_Interface.v_newChargingStationLineColor );
 		}
-		zero_Interface.f_styleAreas(area);
-	
-		zero_Interface.c_modelActiveSpecialGISObjects.add(area.p_GISObjectType);
+		zero_Interface.f_styleAreas(gisregion);
 	}	
 }
 
@@ -1840,7 +1861,7 @@ for (Cable_data dataCable : c_cable_data) {
 	if(dataCable.line().contains("Multi")){
 		continue;
 	}
-	zero_Interface.f_createGISLine(f_createGISObjectsTokens(dataCable.line(), dataCable.type()), dataCable.type());
+	zero_Interface.f_createGISLine(f_createGISObjectTokens(dataCable.line(), dataCable.type()), dataCable.type());
 }
 /*ALCODEEND*/}
 
@@ -2709,7 +2730,7 @@ com.zenmo.bag.Pand pand_data_vallum = map_buildingData_Vallum.get(PandID);
 Building_data building_data_record = null;
 if(pand_data_vallum != null){ // Only happens if building has been selected in survey, that is no longer available in BAG (Destroyed for example).
 	//Calculate surface area
-	GISRegion gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(pand_data_vallum.getGeometry().toString(), OL_GISObjectType.BUILDING));
+	GISRegion gisRegion = zero_Interface.f_createGISObject(f_createGISObjectTokens(pand_data_vallum.getGeometry().toString(), OL_GISObjectType.BUILDING));
 	double surfaceArea_m2 = gisRegion.area();
 	gisRegion.remove();
 	
@@ -3506,17 +3527,12 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
 	
 	// Address data
-	GCH.p_address = new J_Address();
- 	GCH.p_address.setStreetName( houseBuildingData.streetname());						 	
- 	if (houseBuildingData.house_number() == null) {
- 		GCH.p_address.setHouseNumber( 0 );
- 	} else {
- 		GCH.p_address.setHouseNumber( houseBuildingData.house_number()); 
- 	}
- 	GCH.p_address.setHouseLetter( houseBuildingData.house_letter());
- 	GCH.p_address.setHouseAddition( houseBuildingData.house_addition());
- 	GCH.p_address.setPostalcode( houseBuildingData.postalcode());					 	
- 	GCH.p_address.setCity( houseBuildingData.city());
+	GCH.p_address = new J_Address(houseBuildingData.streetname(), 
+							      houseBuildingData.house_number(), 
+							      houseBuildingData.house_letter(), 
+							      houseBuildingData.house_addition(), 
+							      houseBuildingData.postalcode(), 
+							      houseBuildingData.city());
 
 	//locatie
 	GCH.p_longitude = houseBuildingData.longitude();
