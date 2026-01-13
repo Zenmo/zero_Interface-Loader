@@ -83,7 +83,7 @@
 		<Id>1726584205542</Id>
 		<Name><![CDATA[txt_avgCompanies]]></Name>
 		<X>40</X>
-		<Y>280</Y>
+		<Y>440</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -286,7 +286,7 @@
 		<Id>1726584205558</Id>
 		<Name><![CDATA[txt_Heatassets]]></Name>
 		<X>40</X>
-		<Y>470</Y>
+		<Y>630</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -311,7 +311,7 @@
 		<Id>1726584205560</Id>
 		<Name><![CDATA[txt_avgPV]]></Name>
 		<X>40</X>
-		<Y>990</Y>
+		<Y>1150</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -336,7 +336,7 @@
 		<Id>1726584205562</Id>
 		<Name><![CDATA[txt_avgBat]]></Name>
 		<X>40</X>
-		<Y>1095</Y>
+		<Y>1255</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -386,7 +386,7 @@
 		<Id>1726584205566</Id>
 		<Name><![CDATA[txt_heatpumps]]></Name>
 		<X>60</X>
-		<Y>490</Y>
+		<Y>650</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -411,7 +411,7 @@
 		<Id>1726584205568</Id>
 		<Name><![CDATA[txt_gasburners]]></Name>
 		<X>60</X>
-		<Y>620</Y>
+		<Y>780</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -436,7 +436,7 @@
 		<Id>1726584205570</Id>
 		<Name><![CDATA[txt_hydrogenburners]]></Name>
 		<X>60</X>
-		<Y>710</Y>
+		<Y>870</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -539,7 +539,7 @@
 		<Id>1726743791200</Id>
 		<Name><![CDATA[text]]></Name>
 		<X>40</X>
-		<Y>1160</Y>
+		<Y>1320</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -589,7 +589,7 @@
 		<Id>1745316061345</Id>
 		<Name><![CDATA[txt_CHP]]></Name>
 		<X>60</X>
-		<Y>800</Y>
+		<Y>960</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -614,7 +614,7 @@
 		<Id>1747314897311</Id>
 		<Name><![CDATA[txt_districtHeatingDeliverySet]]></Name>
 		<X>60</X>
-		<Y>890</Y>
+		<Y>1050</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -639,7 +639,7 @@
 		<Id>1751906160194</Id>
 		<Name><![CDATA[txt_avgHeatBuffer]]></Name>
 		<X>560</X>
-		<Y>980</Y>
+		<Y>1020</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -664,7 +664,7 @@
 		<Id>1751906173848</Id>
 		<Name><![CDATA[txt_avgPT]]></Name>
 		<X>560</X>
-		<Y>900</Y>
+		<Y>940</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -703,6 +703,31 @@
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
 		<Text><![CDATA[Time constants]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>12</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Text>
+		<Id>1768315329120</Id>
+		<Name><![CDATA[txt_thermalModelParameters]]></Name>
+		<X>40</X>
+		<Y>280</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Thermal model parameters]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>12</Size>

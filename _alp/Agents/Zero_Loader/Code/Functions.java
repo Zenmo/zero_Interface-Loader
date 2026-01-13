@@ -236,13 +236,6 @@ return GISCoords;
 
 double f_importExcelTablesToDB()
 {/*ALCODESTART::1726584205779*/
-//inputHouseholdTrips.readFile();
-//inputCookingActivities.readFile();
-//inputTruckTrips.readFile();
-
-//inputCSVcookingActivities.readFile();
-//inputCSVcookingActivities.
-
 if(settings.reloadDatabase()){
 	
 	//Get the database names that are selected for reloading
@@ -1392,7 +1385,7 @@ if (!isDefaultVehicle && maxChargingPower_kW <= 0) {
 //Create the EV vehicle energy asset with the set parameters + links
 J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timestep_h, energyConsumption_kWhpkm, vehicleScaling, vehicle_type, null);	
 
-if (!isDefaultVehicle && annualTravelDistance_km > 1000){
+if (!isDefaultVehicle && annualTravelDistance_km > avgc_data.p_minAnnualTravelDistanceSurveyVehicle_km){
 		electricVehicle.tripTracker.setAnnualDistance_km(annualTravelDistance_km);
 }
 else if (vehicle_type == OL_EnergyAssetType.ELECTRIC_VAN){
@@ -1427,7 +1420,7 @@ switch (vehicle_type){
 J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(parentGC, energyConsumption_kWhpkm, energyModel.p_timeStep_h, vehicleScaling, vehicle_type, null);
 
 //Set annual travel distance
-if (!isDefaultVehicle && annualTravelDistance_km > 1000){
+if (!isDefaultVehicle && annualTravelDistance_km > avgc_data.p_minAnnualTravelDistanceSurveyVehicle_km){
 		petroleumFuelVehicle.tripTracker.setAnnualDistance_km(annualTravelDistance_km);
 }
 else if (vehicle_type == OL_EnergyAssetType.PETROLEUM_FUEL_VAN){
@@ -1653,7 +1646,7 @@ switch (vehicle_type){
 J_EAHydrogenVehicle hydrogenVehicle = new J_EAHydrogenVehicle(parentGC, energyConsumption_kWhpkm, energyModel.p_timeStep_h, vehicleScaling, vehicle_type, null);
 
 //Set annual travel distance
-if (!isDefaultVehicle && annualTravelDistance_km > 1000){
+if (!isDefaultVehicle && annualTravelDistance_km > avgc_data.p_minAnnualTravelDistanceSurveyVehicle_km){
 		hydrogenVehicle.tripTracker.setAnnualDistance_km(annualTravelDistance_km);
 }
 else if (vehicle_type == OL_EnergyAssetType.HYDROGEN_VAN){
@@ -2047,20 +2040,19 @@ double f_clearDataRecords()
 
 /*
 genericProfiles_data = null;
-c_GridNode_data.clear();
-c_SurveyCompanyBuilding_data.clear();
-c_GenericCompanyBuilding_data.clear();
-c_HouseBuilding_data.clear();
+c_gridNode_data.clear();
+c_companyBuilding_data.clear();
+c_houseBuilding_data.clear();
 c_remainingBuilding_data.clear();
-c_Solarfarm_data.clear();
-c_Windfarm_data.clear();
-c_Electrolyser_data.clear();
-c_Battery_data.clear();
-c_Chargingstation_data.clear();
-c_Neighbourhood_data.clear();
-c_Parcel_data.clear();
-c_Cable_data_LV.clear();
-c_Cable_data_MV.clear();
+c_solarfarm_data.clear();
+c_windfarm_data.clear();
+c_electrolyser_data.clear();
+c_battery_data.clear();
+c_chargingstation_data.clear();
+c_neighbourhood_data.clear();
+c_parkingSpace_data.clear();
+c_parcel_data.clear();
+c_cable_data.clear();
 */
 
 /*ALCODEEND*/}
@@ -3376,47 +3368,33 @@ double initialTemp = uniform_discr(15,22); 	//starttemperatuur
 double heatCapacity_JpK; 					//hoeveel lucht zit er in je huis dat je moet verwarmen?
 double solarAbsorptionFactor_m2; 	//hoeveel m2 effectieve dak en muur oppervlakte er is dat opwarmt door zonneinstraling
 
-//Heat demand from PBL referentiewoningen used for HeatCapacity and lossFactor_WpK
-if(heatDemand_kwhpa > 0){ //Not missing in data
-	lossfactor_WpK = heatDemand_kwhpa / 67; // = manually calibrated value tested on 3 neighborhoods
+//Determine the heat loss factor based on yearly energy energy consumption for heating or energyLabel
+if(heatDemand_kwhpa > 0){
+	lossfactor_WpK = roundToDecimal(heatDemand_kwhpa / avgc_data.p_PBL_HeatingLossFactor , 2);
 }
 else{
 	switch (parentGC.p_energyLabel){
-		case A:
-			lossfactor_WpK = 0.35 * floorArea_m2;
-		break;
-		case B:
-			lossfactor_WpK = 0.45 * floorArea_m2;
-		break;
-		case C:
-			lossfactor_WpK = 0.65 * floorArea_m2;
-		break;
-		case D:
-			lossfactor_WpK = 0.85 * floorArea_m2;
-		break;
-		case E:
-			lossfactor_WpK = 1.05 * floorArea_m2;
-		break;
-		case F:
-			lossfactor_WpK = 1.25 * floorArea_m2;
-		break;
-		case G:
-			lossfactor_WpK = 1.45 * floorArea_m2;
-		break;
 		case NONE:
 		case UNKNOWN:
+			lossfactor_WpK = uniform (avgc_data.map_energyLabel_lossfactorPerFloorSurface_WpKm2.get(OL_GridConnectionIsolationLabel.D), avgc_data.map_energyLabel_lossfactorPerFloorSurface_WpKm2.get(OL_GridConnectionIsolationLabel.G)) * floorArea_m2;
+			break;
 		default:
-			lossfactor_WpK = uniform (0.85, 1.2) * floorArea_m2;
+			lossfactor_WpK = avgc_data.map_energyLabel_lossfactorPerFloorSurface_WpKm2.get(parentGC.p_energyLabel);
 	}
 }
-lossfactor_WpK = roundToDecimal(lossfactor_WpK,2);
-solarAbsorptionFactor_m2 = floorArea_m2 * 0.01; //solar irradiance [W/m2]
- 
+
+//Determine the solar absortion factor_m2 based on floor surface.
+solarAbsorptionFactor_m2 = floorArea_m2 * avgc_data.p_solarAbsorptionFloorSurfaceScalingFactor_fr; //solar irradiance [W/m2]
+
+//Determine the heat capacity of the building based on the floor surface 
 heatCapacity_JpK = ((25000 * 100) + floorArea_m2 * 25000) * 5; //oud 50k was te groot verschil per floor area, 100 is avg floor area deel fixed, 2de deel o.b.v. floor area
 
-
+//Create the thermal building asset
 parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossfactor_WpK, energyModel.p_timeStep_h, initialTemp, heatCapacity_JpK, solarAbsorptionFactor_m2 );
 energyModel.c_ambientDependentAssets.add( parentGC.p_BuildingThermalAsset );
+
+
+
 
 //FOR NOW DEFAULT NO INTERIOR/EXTERIOR HEAT BUFFERS -> NOT NECESSARY
 /*
@@ -3490,6 +3468,7 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	
 	//For PBL heating
 	if(houseBuildingData.pbl_data_available()){
+		GCH.p_PBLParameters = new J_PBLParameters()
 		GCH.p_constructionPeriod_heatingPBL = houseBuildingData.constructionPeriod_int();
 		GCH.p_schillabel_heatingPBL = houseBuildingData.energy_label();
 		GCH.p_buildingType_heatingPBL = houseBuildingData.buildingType_int();
@@ -3643,14 +3622,20 @@ double maximalTemperatureDifference_K = 30.0; // Approximation
 double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000;
 
 
-//Add heat demand profile
+//Add heating asset and management
 OL_GridConnectionHeatingType heatingType = avgc_data.p_avgHouseHeatingMethod;
 f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
 house.f_addHeatManagement(heatingType, false);
 house.f_setHeatingPreferences(f_getHouseHeatingPreferences());
 
 //Add hot water and cooking demand
-f_addHotWaterDemand(house, house.p_floorSurfaceArea_m2, dhwDemand_kwhpa);
+//Get
+if(house.p)
+PBL_DHWAndCooking_data DHWAndCookingDataObject = f_getPBLObject_DHWAndCooking(constructionPeriod, floorSurfaceArea_m2, householdSize);
+double hotWaterDemand_kWhpa = DHWAndCookingDataObject.dhw_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
+double cookingDemand_kWhpa = DHWAndCookingDataObject.cooking_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
+
+f_addHotWaterDemand(house, house.p_floorSurfaceArea_m2, hotWaterDemand_kWhpa);
 f_addCookingAsset(house, OL_EnergyAssetType.GAS_PIT, cookingDemand_kwhpa);
 
 
@@ -4970,5 +4955,154 @@ else{
 	c_activeNBH.add(NBH);
 	return OL_GISObjectType.REGION;
 }
+/*ALCODEEND*/}
+
+double f_getSpaceHeatingDemand_PBL_kWh(double floorSurfaceArea_m2,PBL_SpaceHeating_data spaceHeatingObjectPBL,double localFactor,double regionalClimateCorrectionFactor)
+{/*ALCODESTART::1768308906995*/
+double slope_GJpm2pa = spaceHeatingObjectPBL.slope_space_heating_gjpm2a();
+double constant_GJpa = spaceHeatingObjectPBL.constant_space_heating_gjpa();
+
+// space heating demand
+double functionalSpaceHeatingDemand_GJpa = floorSurfaceArea_m2 * slope_GJpm2pa + constant_GJpa;
+
+// Multiply final factors:
+double GJtokWh = 1e9 / 3.6e6; // GJ is 1e9J, kWh is 3.6e6J
+double functionalSpaceHeatingDemand_kWh = functionalSpaceHeatingDemand_GJpa * GJtokWh * localFactor * regionalClimateCorrectionFactor ;
+return functionalSpaceHeatingDemand_kWh;
+/*ALCODEEND*/}
+
+double f_getHeatDemand_PBL1(OL_PBL_BuildingType buildingType,OL_PBL_ConstructionPeriod constructionPeriod,OL_PBL_OwnershipType ownership,OL_GridConnectionIsolationLabel energyLabel,double surfaceArea_m2,double localFactor,double regionalClimateCorrectionFactor)
+{/*ALCODESTART::1768317546933*/
+String schillabel;
+
+int population;
+if (energyLabel == null || energyLabel == OL_GridConnectionIsolationLabel.NONE){ // || schillabel.isEmpty() || schillabel.equals("x")) { // If label unknown - this is based on PBL
+    schillabel = "x";
+    population = 3;
+} else {
+	schillabel = energyLabel.toString();
+	if( buildingType == 1){ //If vrijstaand huis
+		population = 2;
+	} else {
+		population = 1;
+	}
+}
+
+List<Tuple> rows = selectFrom(reg_coef_space_heating_demand)
+	.where(reg_coef_space_heating_demand.woningtype.eq(buildingType))
+	.where(reg_coef_space_heating_demand.bouwperiode.eq(constructionPeriod))
+	.where(reg_coef_space_heating_demand.eigendomstype.eq(ownership))
+	.where(reg_coef_space_heating_demand.schillabel.eq(schillabel))
+	.where(reg_coef_space_heating_demand.population.eq(population))
+	.list();
+
+// Check for no rows
+if (rows.isEmpty() || rows.size() > 1) {
+    System.out.println("Error: no matching row found with conditions:");
+    System.out.println("  woningtype = " + buildingType);
+    System.out.println("  bouwperiode = " + constructionPeriod);
+    System.out.println("  eigendom = " + ownership);
+    System.out.println("  schillabel = " + schillabel);
+    System.out.println("  population = " + population);
+    throw new RuntimeException("No matching row found!");
+}
+
+Tuple row = rows.get(0);
+double slope_GJpm2pa = row.get(reg_coef_space_heating_demand.helling);
+double constant_GJpa = row.get(reg_coef_space_heating_demand.constante);
+double inhabitants = row.get(reg_coef_space_heating_demand.)
+// space heating demand
+double functionalSpaceHeatingDemand_GJpa = surfaceArea_m2 * slope_GJpm2pa + constant_GJpa;
+
+// Multiply final factors:
+double GJtokWh = 1e9 / 3.6e6; // GJ is 1e9J, kWh is 3.6e6J
+double functionalSpaceHeatingDemand_kWh = functionalSpaceHeatingDemand_GJpa * GJtokWh * localFactor * regionalClimateCorrectionFactor ;
+return functionalSpaceHeatingDemand_kWh;
+
+/*ALCODEEND*/}
+
+PBL_SpaceHeating_data f_getPBLObject_spaceHeating(OL_PBL_BuildingType buildingType,OL_PBL_ConstructionPeriod constructionPeriod,OL_PBL_OwnershipType ownershipType,OL_GridConnectionIsolationLabel insulationLabel)
+{/*ALCODESTART::1768319865034*/
+String schillabel;
+
+PBL_SpaceHeating_data PBLObject_spaceHeating = findFirst(c_lookupTablePBL_spaceHeating, pbl -> pbl.building_type() == buildingType &&
+																							   pbl.construction_period() == constructionPeriod &&
+																							   pbl.ownership_type() == ownershipType &&
+																							   pbl.insulation_label() == insulationLabel
+																							   );
+
+// Check for no rows
+if (PBLObject_spaceHeating == null) {
+    System.out.println("Error: no matching pbl object found for spaceheating with conditions:");
+    System.out.println("  buildingType = " + buildingType);
+    System.out.println("  constructionPeriod = " + constructionPeriod);
+    System.out.println("  ownershipType = " + ownershipType);
+    System.out.println("  insulationLabel = " + insulationLabel);
+    throw new RuntimeException("No matching PBL object found!");
+}
+
+return PBLObject_spaceHeating;
+/*ALCODEEND*/}
+
+PBL_DHWAndCooking_data f_getPBLObject_DHWAndCooking(OL_PBL_ConstructionPeriod constructionPeriod,double floorSurfaceArea_m2,int householdSize)
+{/*ALCODESTART::1768319890191*/
+int surfaceCode = f_getTNOSurfaceCode(floorSurfaceArea_m2);
+
+PBL_DHWAndCooking_data PBLObject_DHWAndCooking = findFirst(c_lookupTablePBL_DHWAndCooking, pbl -> pbl.construction_period() == constructionPeriod &&
+																								  pbl.surface_code() == surfaceCode &&
+																								  pbl.household_size() == householdSize);
+																								  
+// Check for no matches
+if (PBLObject_DHWAndCooking == null) {
+    System.out.println("Error: no matching PBL object found for PBL DHW and Cooking demand with conditions:");
+    System.out.println("  constructionPeriod = " + constructionPeriod);
+    System.out.println("  floorSurfaceArea_m2 = " + floorSurfaceArea_m2);
+    System.out.println("  surfaceCode = " + surfaceCode);
+    System.out.println("  householdSize = " + householdSize);
+    throw new RuntimeException("No matching PBL object found!"); // Misschien wat een te harde error? 
+    													  // Hij kan altijd nog terug vallen op de backup toch?
+}
+
+return PBLObject_DHWAndCooking;
+/*ALCODEEND*/}
+
+int f_getTNOSurfaceCode(double surfaceArea_m2)
+{/*ALCODESTART::1768321972904*/
+if(surfaceArea_m2 < 75){
+	return 1;
+}
+else if(75 <= surfaceArea_m2 && surfaceArea_m2 < 100){
+	return 2;
+}
+else if(100 <= surfaceArea_m2 && surfaceArea_m2 < 125){
+	return 3;
+}
+else if(125 <= surfaceArea_m2 && surfaceArea_m2 < 150){
+	return 4;
+}
+else{// if(surfaceArea_m2 > 150){
+	return 5;
+}
+/*ALCODEEND*/}
+
+double f_modelPopBackup()
+{/*ALCODESTART::1768322522139*/
+int population;
+if (energyLabel == null || energyLabel == OL_GridConnectionIsolationLabel.NONE){ // || schillabel.isEmpty() || schillabel.equals("x")) { // If label unknown - this is based on PBL
+    schillabel = "x";
+    population = 3;
+} else {
+	schillabel = energyLabel.toString();
+	if( buildingType == 1){ //If vrijstaand huis
+		population = 2;
+	} else {
+		population = 1;
+	}
+}
+/*ALCODEEND*/}
+
+double f_addHeatingToHouses()
+{/*ALCODESTART::1768324153032*/
+
 /*ALCODEEND*/}
 

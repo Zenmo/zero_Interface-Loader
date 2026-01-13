@@ -122,7 +122,7 @@
 		<Id>1726584829907</Id>
 		<Name><![CDATA[avgc_data]]></Name>
 		<X>-370</X>
-		<Y>830</Y>
+		<Y>850</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -396,6 +396,18 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgOutputTemperatureHybridHeatpump_degC]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_minAnnualTravelDistanceSurveyVehicle_km]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_PBL_HeatingLossFactor]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_energyLabel_lossfactorPerFloorSurface_WpKm2]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_solarAbsorptionFloorSurfaceScalingFactor_fr]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>

@@ -392,6 +392,16 @@
 				<Id>1762351349700</Id>
 				<Name><![CDATA[J_RemainingTotalsManager]]></Name>
 			</JavaClass>
+			<JavaClass>
+				<Id>1768318918209</Id>
+				<Name><![CDATA[PBL_SpaceHeating_data]]></Name>
+				<Folder>1754045711603</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1768318961854</Id>
+				<Name><![CDATA[PBL_DHWAndCooking_data]]></Name>
+				<Folder>1754045711603</Folder>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>zero_engine</LibraryName>

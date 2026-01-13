@@ -81,5 +81,6 @@ dataAVGC.p_avgAnnualTravelDistancePrivateCar_km = p_avgAnnualTravelDistancePriva
 dataAVGC.p_avgAnnualTravelDistanceCompanyCar_km = p_avgAnnualTravelDistanceCompanyCar_km;
 dataAVGC.p_avgAnnualTravelDistanceVan_km = p_avgAnnualTravelDistanceVan_km;
 dataAVGC.p_avgAnnualTravelDistanceTruck_km = p_avgAnnualTravelDistanceTruck_km;
+dataAVGC.p_minAnnualTravelDistanceSurveyVehicle_km = p_minAnnualTravelDistanceSurveyVehicle_km;
 /*ALCODEEND*/}
 
