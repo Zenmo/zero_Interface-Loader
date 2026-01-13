@@ -2821,7 +2821,8 @@ if (timeSeries == null) {
 }
 
 if (!timeSeries.hasNumberOfValuesForOneYear()) {
-	traceln("Time series has too few values for one year");
+	String errorString = "Time series has too few values for one year";
+	System.err.println(errorString);
 	return null;
 }
 
