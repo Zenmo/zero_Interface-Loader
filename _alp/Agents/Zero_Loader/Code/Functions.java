@@ -1760,7 +1760,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 			new J_EAChargingSession(chargingStation, chargerProfile, 1);
 		}
 		else{
-			for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerChargePoint; k++ ){
+			for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerCharger_Centre; k++ ){
 				f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
 			}
 		}
@@ -1811,7 +1811,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 			new J_EAChargingSession(chargingStation, chargerProfile, 1);
 		}
 		else{
-			for(int k = 0; k < avgc_data.p_avgVehiclesPerChargePoint; k++ ){
+			for(int k = 0; k < avgc_data.p_avgVehiclesPerCharger_Chargepoint; k++ ){
 				f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
 			}
 		}
@@ -3360,37 +3360,52 @@ if (surface_m2 < 25){
 }
 /*ALCODEEND*/}
 
-double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,double heatDemand_kwhpa)
+double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,double heatDemand_kwhpa,J_HeatingPreferences heatingPreferences)
 {/*ALCODESTART::1749727623536*/
 double maxPowerHeat_kW = 1000; 				//Dit is hoeveel vermogen het huis kan afgeven/opnemen, mag willekeurige waarden hebben. Wordt alleen gebruikt in rekenstap van ratio of capacity
-double lossfactor_WpK; 						//Dit is wat bepaalt hoeveel warmte het huis verliest/opneemt per tijdstap per delta_T
-double initialTemp = uniform_discr(15,22); 	//starttemperatuur
+double lossFactor_WpK; 						//Dit is wat bepaalt hoeveel warmte het huis verliest/opneemt per tijdstap per delta_T
+double initialTemp_degC = heatingPreferences.getCurrentPreferedTemperatureSetpoint_degC(0);
+double buildingCooldownPeriod_hr;
 double heatCapacity_JpK; 					//hoeveel lucht zit er in je huis dat je moet verwarmen?
 double solarAbsorptionFactor_m2; 	//hoeveel m2 effectieve dak en muur oppervlakte er is dat opwarmt door zonneinstraling
 
 //Determine the heat loss factor based on yearly energy energy consumption for heating or energyLabel
 if(heatDemand_kwhpa > 0){
-	lossfactor_WpK = roundToDecimal(heatDemand_kwhpa / avgc_data.p_PBL_HeatingLossFactor , 2);
+	lossFactor_WpK = heatDemand_kwhpa / avgc_data.p_PBL_HeatingLossFactor_fr;
 }
 else{
-	switch (parentGC.p_energyLabel){
+	switch (parentGC.p_insulationLabel){
 		case NONE:
 		case UNKNOWN:
-			lossfactor_WpK = uniform (avgc_data.map_energyLabel_lossfactorPerFloorSurface_WpKm2.get(OL_GridConnectionIsolationLabel.D), avgc_data.map_energyLabel_lossfactorPerFloorSurface_WpKm2.get(OL_GridConnectionIsolationLabel.G)) * floorArea_m2;
+			lossFactor_WpK = uniform (avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(OL_GridConnectionInsulationLabel.D), avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(OL_GridConnectionInsulationLabel.G)) * floorArea_m2;
 			break;
 		default:
-			lossfactor_WpK = avgc_data.map_energyLabel_lossfactorPerFloorSurface_WpKm2.get(parentGC.p_energyLabel);
+			lossFactor_WpK = avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(parentGC.p_insulationLabel);
 	}
 }
 
 //Determine the solar absortion factor_m2 based on floor surface.
 solarAbsorptionFactor_m2 = floorArea_m2 * avgc_data.p_solarAbsorptionFloorSurfaceScalingFactor_fr; //solar irradiance [W/m2]
 
-//Determine the heat capacity of the building based on the floor surface 
-heatCapacity_JpK = ((25000 * 100) + floorArea_m2 * 25000) * 5; //oud 50k was te groot verschil per floor area, 100 is avg floor area deel fixed, 2de deel o.b.v. floor area
+//Determine the heat capacity of the building based on a cooldown period
+/*
+switch (parentGC.p_insulationLabel){
+		case NONE:
+		case UNKNOWN:
+			buildingCooldownPeriod_hr = uniform (avgc_data.map_insulationLabel_cooldownPeriod_hr.get(OL_GridConnectionInsulationLabel.D), avgc_data.map_insulationLabel_cooldownPeriod_hr.get(OL_GridConnectionInsulationLabel.G));
+			break;
+		default:
+			buildingCooldownPeriod_hr = avgc_data.map_insulationLabel_cooldownPeriod_hr.get(parentGC.p_insulationLabel);
+}
+heatCapacity_JpK = buildingCooldownPeriod_hr * lossFactor_WpK * 3600;
+*/
+
+//Determine the heat capacity of the building based on the floor surface and some factors
+heatCapacity_JpK = (avgc_data.p_heatCapacitySizingSlope_JpKm2 * floorArea_m2 + avgc_data.p_heatCapacitySizingConstant_JpK) * avgc_data.p_heatCapacitySizingFactor_fr;
+
 
 //Create the thermal building asset
-parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossfactor_WpK, energyModel.p_timeStep_h, initialTemp, heatCapacity_JpK, solarAbsorptionFactor_m2 );
+parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossFactor_WpK, energyModel.p_timeStep_h, initialTemp_degC, heatCapacity_JpK, solarAbsorptionFactor_m2 );
 energyModel.c_ambientDependentAssets.add( parentGC.p_BuildingThermalAsset );
 
 
@@ -3463,49 +3478,54 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.p_purposeBAG = houseBuildingData.purpose();
 	
 	//pand gegevens
-	GCH.p_bouwjaar = houseBuildingData.build_year();
+	GCH.p_buildYear = houseBuildingData.build_year();
 	GCH.p_eigenOprit = houseBuildingData.has_private_parking() != null ? houseBuildingData.has_private_parking() : false;
 	
-	//For PBL heating
+	//PBL heating
 	if(houseBuildingData.pbl_data_available()){
-		GCH.p_PBLParameters = new J_PBLParameters()
-		GCH.p_constructionPeriod_heatingPBL = houseBuildingData.constructionPeriod_int();
-		GCH.p_schillabel_heatingPBL = houseBuildingData.energy_label();
-		GCH.p_buildingType_heatingPBL = houseBuildingData.buildingType_int();
-		GCH.p_ownership_heatingPBL = houseBuildingData.ownership_int();
-		GCH.p_localFactor_heatingPBL = houseBuildingData.localFactor();
-		GCH.p_regionalClimateCorrectionFactor_heatingPBL = houseBuildingData.regionalClimateCorrectionFactor();
+		GCH.p_PBLParameters = new J_PBLParameters(houseBuildingData.building_type(), 
+												  houseBuildingData.ownership_type(), 
+												  houseBuildingData.construction_period(), 
+												  houseBuildingData.insulation_label(), 
+												  houseBuildingData.local_factor(), 
+												  houseBuildingData.regional_climate_correction_factor());
 	}
 	
 	
-	//Nageisoleerd
-	if (houseBuildingData.energy_label() != null){ // && houseBuildingData.energy_label() != OL_GridConnectionIsolationLabel.NONE) {
-		GCH.p_energyLabel = houseBuildingData.energy_label();
-	}
+	//Energylabel and InsulationLabel
+	if (houseBuildingData.energy_label() != null) {
+	    GCH.p_energyLabel = houseBuildingData.energy_label();
+	    GCH.p_insulationLabel = houseBuildingData.insulation_label() != null ? houseBuildingData.insulation_label() : OL_GridConnectionInsulationLabel.valueOf(GCH.p_energyLabel.toString());
+	} 
+	else if (houseBuildingData.insulation_label() != null) {
+	    GCH.p_insulationLabel = houseBuildingData.insulation_label();
+	    GCH.p_energyLabel = OL_GridConnectionEnergyLabel.valueOf(GCH.p_insulationLabel.toString());
+	} 
 	else {
-		if (GCH.p_bouwjaar < 1980) {
-			GCH.p_energyLabel = OL_GridConnectionIsolationLabel.D;
-		}
-		else if (GCH.p_bouwjaar < 1996) {
-			GCH.p_energyLabel = OL_GridConnectionIsolationLabel.C;
-		}
-		else if (GCH.p_bouwjaar < 2008) {
-			GCH.p_energyLabel = OL_GridConnectionIsolationLabel.B;
-		}
-		else {
-			GCH.p_energyLabel = OL_GridConnectionIsolationLabel.A;
-		}
+	    GCH.p_energyLabel = f_estimateEnergyLabel(GCH.p_buildYear);
+	    GCH.p_insulationLabel = OL_GridConnectionInsulationLabel.valueOf(GCH.p_energyLabel.toString());
 	}
-	//aansluiting gegevens
-	GCH.v_liveConnectionMetaData.physicalCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
-	GCH.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
-	GCH.v_liveConnectionMetaData.contractedFeedinCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
 	
-	GCH.v_liveConnectionMetaData.physicalCapacityKnown = false;
-	GCH.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
-	GCH.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
+	//Connection data
+	if(houseBuildingData.contracted_capacity_kw() != null && houseBuildingData.contracted_capacity_kw() > 0){
+		GCH.v_liveConnectionMetaData.physicalCapacity_kW = houseBuildingData.contracted_capacity_kw();
+		GCH.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = houseBuildingData.contracted_capacity_kw();
+		GCH.v_liveConnectionMetaData.contractedFeedinCapacity_kW = houseBuildingData.contracted_capacity_kw();
+		GCH.v_liveConnectionMetaData.physicalCapacityKnown = true;
+		GCH.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
+		GCH.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
+	}
+	else{
+		GCH.v_liveConnectionMetaData.physicalCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
+		GCH.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
+		GCH.v_liveConnectionMetaData.contractedFeedinCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
+		GCH.v_liveConnectionMetaData.physicalCapacityKnown = false;
+		GCH.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
+		GCH.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
+	}
+
 	
-	// Address data
+	//Address data
 	GCH.p_address = new J_Address(houseBuildingData.streetname(), 
 							      houseBuildingData.house_number(), 
 							      houseBuildingData.house_letter(), 
@@ -3513,7 +3533,7 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 							      houseBuildingData.postalcode(), 
 							      houseBuildingData.city());
 
-	//locatie
+	//Location
 	GCH.p_longitude = houseBuildingData.longitude();
 	GCH.p_latitude = houseBuildingData.latitude();
 	GCH.setLatLon(GCH.p_latitude, GCH.p_longitude);
@@ -3547,50 +3567,12 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	//Floor surface of GC
 	GCH.p_floorSurfaceArea_m2 = houseBuildingData.address_floor_surface_m2();
 	
-	//Instantiate energy assets
-	double annualElectricityConsumption_kwhpa;
-	double annualNaturalGasConsumption_kwhpa;
-	double annualSpaceHeatingConsumption_kwhpa; 
-	double annualDHWConsumption_kwhpa;
-	double annualCookingConsumption_kwhpa;
-	try {
-		annualElectricityConsumption_kwhpa = houseBuildingData.electricity_consumption_kwhpa();
-	}
-	catch (NullPointerException e){
-		annualElectricityConsumption_kwhpa = Double.valueOf(uniform_discr(1200, 3800));
-	}
-	try {
-		annualNaturalGasConsumption_kwhpa = houseBuildingData.gas_consumption_m3pa() * avgc_data.p_gas_kWhpm3;
-	}
-	catch (NullPointerException e){
-		annualNaturalGasConsumption_kwhpa =  Double.valueOf(uniform_discr(600, 2000)) * avgc_data.p_gas_kWhpm3;
-	}
-	try {
-		annualSpaceHeatingConsumption_kwhpa = houseBuildingData.space_heating_consumption_kwhpa();
-	}
-	catch (NullPointerException e){
-		annualSpaceHeatingConsumption_kwhpa = annualNaturalGasConsumption_kwhpa * 0.85; //assumed share gas space heating
-	}
-	try {
-		annualDHWConsumption_kwhpa = houseBuildingData.dhw_consumption_kwhpa();
-	}
-	catch (NullPointerException e){
-		annualDHWConsumption_kwhpa =  annualNaturalGasConsumption_kwhpa * 0.1; //assumed share gas dhw heating
-	}
-	try {
-		annualCookingConsumption_kwhpa = houseBuildingData.cooking_consumption_kwhpa();
-	}
-	catch (NullPointerException e){
-		annualCookingConsumption_kwhpa =  annualNaturalGasConsumption_kwhpa * 0.05; //assumed share gas cooking
-	}
-	
-	
-	//GCH.p_initialPVpanels = houseBuildingData.pv_default();
+	//Set PV information
 	GCH.v_liveAssetsMetaData.initialPV_kW = houseBuildingData.pv_installed_kwp() != null ? houseBuildingData.pv_installed_kwp() : 0;
 	GCH.v_liveAssetsMetaData.PVPotential_kW = GCH.v_liveAssetsMetaData.initialPV_kW > 0 ? GCH.v_liveAssetsMetaData.initialPV_kW : houseBuildingData.pv_potential_kwp(); // To prevent sliders from changing outcomes
 
-	// TODO: Above we load in data of gas use, but the houses always have a thermal model??
-	f_addEnergyAssetsToHouses(GCH, annualElectricityConsumption_kwhpa, annualSpaceHeatingConsumption_kwhpa, annualDHWConsumption_kwhpa, annualCookingConsumption_kwhpa );	
+	//Create and add EnergyAssets
+	f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa());	
 	
 	i++;
 }
@@ -3605,38 +3587,22 @@ for(GCHouse GCH : energyModel.Houses){
 
 /*ALCODEEND*/}
 
-double f_addEnergyAssetsToHouses(GCHouse house,double electricityDemand_kwhpa,double spaceHeatingDemand_kwhpa,double dhwDemand_kwhpa,double cookingDemand_kwhpa)
+double f_addEnergyAssetsToHouses(GCHouse house,Double electricityDemand_kwhpa,Double gasDemand_m3pa)
 {/*ALCODESTART::1749728889986*/
 //Add generic electricity demand profile 
 GridNode gn = findFirst(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals( house.p_parentNodeElectricID));
 
 if ( ! gn.p_hasProfileData ){
+	if(electricityDemand_kwhpa == null){
+		electricityDemand_kwhpa = uniform(avgc_data.p_avgHouseElectricityConsumption_kWh_yr - avgc_data.p_maxAvgHouseElectricityConsumptionOffset_kWhpa, 
+										  avgc_data.p_avgHouseElectricityConsumption_kWh_yr + avgc_data.p_maxAvgHouseElectricityConsumptionOffset_kWhpa);
+	}
 	f_addElectricityDemandProfile(house, electricityDemand_kwhpa, null, false, "default_house_electricity_demand_fr");
 }
 
-//Add building heat model and asset
-f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2, spaceHeatingDemand_kwhpa);
 
-//Determine required heating capacity for the heating asset	
-double maximalTemperatureDifference_K = 30.0; // Approximation
-double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000;
-
-
-//Add heating asset and management
-OL_GridConnectionHeatingType heatingType = avgc_data.p_avgHouseHeatingMethod;
-f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
-house.f_addHeatManagement(heatingType, false);
-house.f_setHeatingPreferences(f_getHouseHeatingPreferences());
-
-//Add hot water and cooking demand
-//Get
-if(house.p)
-PBL_DHWAndCooking_data DHWAndCookingDataObject = f_getPBLObject_DHWAndCooking(constructionPeriod, floorSurfaceArea_m2, householdSize);
-double hotWaterDemand_kWhpa = DHWAndCookingDataObject.dhw_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
-double cookingDemand_kWhpa = DHWAndCookingDataObject.cooking_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
-
-f_addHotWaterDemand(house, house.p_floorSurfaceArea_m2, hotWaterDemand_kWhpa);
-f_addCookingAsset(house, OL_EnergyAssetType.GAS_PIT, cookingDemand_kwhpa);
+//Add Heating assets: Spaceheating, DHW and cooking
+f_addHeatAssetsToHouses(house, gasDemand_m3pa);
 
 
 //Add pv
@@ -4957,7 +4923,7 @@ else{
 }
 /*ALCODEEND*/}
 
-double f_getSpaceHeatingDemand_PBL_kWh(double floorSurfaceArea_m2,PBL_SpaceHeating_data spaceHeatingObjectPBL,double localFactor,double regionalClimateCorrectionFactor)
+double f_getSpaceHeatingDemand_PBL_kWh(double floorSurfaceArea_m2,PBL_SpaceHeatingAndResidents_data spaceHeatingObjectPBL,double localFactor,double regionalClimateCorrectionFactor)
 {/*ALCODESTART::1768308906995*/
 double slope_GJpm2pa = spaceHeatingObjectPBL.slope_space_heating_gjpm2a();
 double constant_GJpa = spaceHeatingObjectPBL.constant_space_heating_gjpa();
@@ -4971,82 +4937,32 @@ double functionalSpaceHeatingDemand_kWh = functionalSpaceHeatingDemand_GJpa * GJ
 return functionalSpaceHeatingDemand_kWh;
 /*ALCODEEND*/}
 
-double f_getHeatDemand_PBL1(OL_PBL_BuildingType buildingType,OL_PBL_ConstructionPeriod constructionPeriod,OL_PBL_OwnershipType ownership,OL_GridConnectionIsolationLabel energyLabel,double surfaceArea_m2,double localFactor,double regionalClimateCorrectionFactor)
-{/*ALCODESTART::1768317546933*/
-String schillabel;
-
-int population;
-if (energyLabel == null || energyLabel == OL_GridConnectionIsolationLabel.NONE){ // || schillabel.isEmpty() || schillabel.equals("x")) { // If label unknown - this is based on PBL
-    schillabel = "x";
-    population = 3;
-} else {
-	schillabel = energyLabel.toString();
-	if( buildingType == 1){ //If vrijstaand huis
-		population = 2;
-	} else {
-		population = 1;
-	}
-}
-
-List<Tuple> rows = selectFrom(reg_coef_space_heating_demand)
-	.where(reg_coef_space_heating_demand.woningtype.eq(buildingType))
-	.where(reg_coef_space_heating_demand.bouwperiode.eq(constructionPeriod))
-	.where(reg_coef_space_heating_demand.eigendomstype.eq(ownership))
-	.where(reg_coef_space_heating_demand.schillabel.eq(schillabel))
-	.where(reg_coef_space_heating_demand.population.eq(population))
-	.list();
-
-// Check for no rows
-if (rows.isEmpty() || rows.size() > 1) {
-    System.out.println("Error: no matching row found with conditions:");
-    System.out.println("  woningtype = " + buildingType);
-    System.out.println("  bouwperiode = " + constructionPeriod);
-    System.out.println("  eigendom = " + ownership);
-    System.out.println("  schillabel = " + schillabel);
-    System.out.println("  population = " + population);
-    throw new RuntimeException("No matching row found!");
-}
-
-Tuple row = rows.get(0);
-double slope_GJpm2pa = row.get(reg_coef_space_heating_demand.helling);
-double constant_GJpa = row.get(reg_coef_space_heating_demand.constante);
-double inhabitants = row.get(reg_coef_space_heating_demand.)
-// space heating demand
-double functionalSpaceHeatingDemand_GJpa = surfaceArea_m2 * slope_GJpm2pa + constant_GJpa;
-
-// Multiply final factors:
-double GJtokWh = 1e9 / 3.6e6; // GJ is 1e9J, kWh is 3.6e6J
-double functionalSpaceHeatingDemand_kWh = functionalSpaceHeatingDemand_GJpa * GJtokWh * localFactor * regionalClimateCorrectionFactor ;
-return functionalSpaceHeatingDemand_kWh;
-
-/*ALCODEEND*/}
-
-PBL_SpaceHeating_data f_getPBLObject_spaceHeating(OL_PBL_BuildingType buildingType,OL_PBL_ConstructionPeriod constructionPeriod,OL_PBL_OwnershipType ownershipType,OL_GridConnectionIsolationLabel insulationLabel)
+PBL_SpaceHeatingAndResidents_data f_getPBLObject_spaceHeatingAndResidents(OL_PBL_BuildingType buildingType,OL_PBL_ConstructionPeriod constructionPeriod,OL_PBL_OwnershipType ownershipType,OL_GridConnectionInsulationLabel insulationLabel)
 {/*ALCODESTART::1768319865034*/
-String schillabel;
-
-PBL_SpaceHeating_data PBLObject_spaceHeating = findFirst(c_lookupTablePBL_spaceHeating, pbl -> pbl.building_type() == buildingType &&
+PBL_SpaceHeatingAndResidents_data PBLObject_spaceHeatingAndResidents = findFirst(c_lookupTablePBL_spaceHeatingAndResidents, pbl -> pbl.building_type() == buildingType &&
 																							   pbl.construction_period() == constructionPeriod &&
 																							   pbl.ownership_type() == ownershipType &&
-																							   pbl.insulation_label() == insulationLabel
+																							   pbl.insulation_label() == insulationLabel &&
+																							   pbl.regression_population() == f_getPBLRegressionPopulation(pbl.insulation_label(), pbl.building_type())
 																							   );
 
-// Check for no rows
-if (PBLObject_spaceHeating == null) {
+// Check for no matching pbl object found
+if (PBLObject_spaceHeatingAndResidents == null) {
     System.out.println("Error: no matching pbl object found for spaceheating with conditions:");
-    System.out.println("  buildingType = " + buildingType);
-    System.out.println("  constructionPeriod = " + constructionPeriod);
-    System.out.println("  ownershipType = " + ownershipType);
-    System.out.println("  insulationLabel = " + insulationLabel);
+    System.out.println(" buildingType = " + buildingType);
+    System.out.println(" constructionPeriod = " + constructionPeriod);
+    System.out.println(" ownershipType = " + ownershipType);
+    System.out.println(" insulationLabel = " + insulationLabel);
+    System.out.println(" regressionPopulation = " + f_getPBLRegressionPopulation(insulationLabel, buildingType));
     throw new RuntimeException("No matching PBL object found!");
 }
 
-return PBLObject_spaceHeating;
+return PBLObject_spaceHeatingAndResidents;
 /*ALCODEEND*/}
 
 PBL_DHWAndCooking_data f_getPBLObject_DHWAndCooking(OL_PBL_ConstructionPeriod constructionPeriod,double floorSurfaceArea_m2,int householdSize)
 {/*ALCODESTART::1768319890191*/
-int surfaceCode = f_getTNOSurfaceCode(floorSurfaceArea_m2);
+int surfaceCode = J_PBLUtil.getTNOFloorSurfaceCode(floorSurfaceArea_m2);
 
 PBL_DHWAndCooking_data PBLObject_DHWAndCooking = findFirst(c_lookupTablePBL_DHWAndCooking, pbl -> pbl.construction_period() == constructionPeriod &&
 																								  pbl.surface_code() == surfaceCode &&
@@ -5066,43 +4982,102 @@ if (PBLObject_DHWAndCooking == null) {
 return PBLObject_DHWAndCooking;
 /*ALCODEEND*/}
 
-int f_getTNOSurfaceCode(double surfaceArea_m2)
-{/*ALCODESTART::1768321972904*/
-if(surfaceArea_m2 < 75){
-	return 1;
-}
-else if(75 <= surfaceArea_m2 && surfaceArea_m2 < 100){
+int f_getPBLRegressionPopulation(OL_GridConnectionInsulationLabel insulationLabel,OL_PBL_BuildingType buildingType)
+{/*ALCODESTART::1768322522139*/
+if (insulationLabel == null || insulationLabel == OL_GridConnectionInsulationLabel.NONE || insulationLabel == OL_GridConnectionInsulationLabel.UNKNOWN){ 
+    return 3;
+} 
+else if(buildingType == OL_PBL_BuildingType.TYPE_1){//If vrijstaand huis
 	return 2;
 }
-else if(100 <= surfaceArea_m2 && surfaceArea_m2 < 125){
-	return 3;
-}
-else if(125 <= surfaceArea_m2 && surfaceArea_m2 < 150){
-	return 4;
-}
-else{// if(surfaceArea_m2 > 150){
-	return 5;
+else {
+	return 1;
 }
 /*ALCODEEND*/}
 
-double f_modelPopBackup()
-{/*ALCODESTART::1768322522139*/
-int population;
-if (energyLabel == null || energyLabel == OL_GridConnectionIsolationLabel.NONE){ // || schillabel.isEmpty() || schillabel.equals("x")) { // If label unknown - this is based on PBL
-    schillabel = "x";
-    population = 3;
-} else {
-	schillabel = energyLabel.toString();
-	if( buildingType == 1){ //If vrijstaand huis
-		population = 2;
-	} else {
-		population = 1;
-	}
+OL_GridConnectionEnergyLabel f_estimateEnergyLabel(int constructionYear)
+{/*ALCODESTART::1768385335525*/
+if (constructionYear < 1980) {
+	return OL_GridConnectionEnergyLabel.D;
+}
+else if (constructionYear < 1996) {
+	return OL_GridConnectionEnergyLabel.C;
+}
+else if (constructionYear < 2008) {
+	return OL_GridConnectionEnergyLabel.B;
+}
+else {
+	return OL_GridConnectionEnergyLabel.A;
 }
 /*ALCODEEND*/}
 
-double f_addHeatingToHouses()
-{/*ALCODESTART::1768324153032*/
+int f_getNumberOfResidents_PBL(PBL_SpaceHeatingAndResidents_data spaceHeatingObjectPBL,double floorSurfaceArea_m2)
+{/*ALCODESTART::1768387542917*/
+// Determine the number of residents
+int numberOfResidents = roundToInt(floorSurfaceArea_m2 * spaceHeatingObjectPBL.slope_residents() + spaceHeatingObjectPBL.constant_residents());
+if(numberOfResidents < 1){
+	numberOfResidents = 1;
+}
+else if(numberOfResidents > 5){
+	traceln("House found with more than 5 residents -> number of residents is capped to 5! Number of residents found: " + numberOfResidents);
+	numberOfResidents = 5;
+}
+return numberOfResidents;
+/*ALCODEEND*/}
+
+double f_addHeatAssetsToHouses(GCHouse house,Double gasDemand_m3pa)
+{/*ALCODESTART::1768486498278*/
+//Add building heat model and asset
+double annualNaturalGasConsumption_kwhpa;
+if(gasDemand_m3pa != null) {
+	annualNaturalGasConsumption_kwhpa = gasDemand_m3pa * avgc_data.p_gas_kWhpm3;
+}
+else{
+	annualNaturalGasConsumption_kwhpa =  uniform(avgc_data.p_avgHouseGasConsumption_m3_yr - avgc_data.p_maxAvgHouseGasConsumptionOffset_m3pa, 
+										         avgc_data.p_avgHouseGasConsumption_m3_yr + avgc_data.p_maxAvgHouseGasConsumptionOffset_m3pa)
+	 											 * avgc_data.p_gas_kWhpm3;
+}
+
+
+double spaceHeatingDemand_kwhpa;
+double hotWaterDemand_kWhpa;
+double cookingDemand_kWhpa;
+if(house.p_PBLParameters != null){
+	PBL_SpaceHeatingAndResidents_data spaceHeatingDataObject = f_getPBLObject_spaceHeatingAndResidents(house.p_PBLParameters.getBuildingType(), house.p_PBLParameters.getConstructionPeriod(), house.p_PBLParameters.getOwnershipType(), house.p_insulationLabel);
+	spaceHeatingDemand_kwhpa = f_getSpaceHeatingDemand_PBL_kWh(house.p_floorSurfaceArea_m2, spaceHeatingDataObject, house.p_PBLParameters.getLocalFactor(), house.p_PBLParameters.getRegionalClimateCorrectionFactor());
+	
+	int numberOfResidents = f_getNumberOfResidents_PBL(spaceHeatingDataObject, house.p_floorSurfaceArea_m2);
+	
+	PBL_DHWAndCooking_data DHWAndCookingDataObject = f_getPBLObject_DHWAndCooking(house.p_PBLParameters.getConstructionPeriod(), house.p_floorSurfaceArea_m2, numberOfResidents);
+	hotWaterDemand_kWhpa = DHWAndCookingDataObject.dhw_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
+	cookingDemand_kWhpa = DHWAndCookingDataObject.cooking_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
+}
+else{
+	spaceHeatingDemand_kwhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgSpaceHeatingTotalGasConsumptionShare_fr; //Assumed share gas space heating
+	hotWaterDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgDHWTotalGasConsumptionShare_fr; //assumed share gas dhw heating
+	cookingDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgCookingTotalGasConsumptionShare_fr; //assumed share gas cooking;
+}
+
+//Get the house heating preferences
+J_HeatingPreferences heatingPreferences = f_getHouseHeatingPreferences();
+
+f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2, spaceHeatingDemand_kwhpa, heatingPreferences);
+
+//Determine required heating capacity for the heating asset	
+double maximalTemperatureDifference_K = 30.0; // Approximation
+double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000;
+
+//Add heating asset
+OL_GridConnectionHeatingType heatingType = avgc_data.p_avgHouseHeatingMethod;
+f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
+
+//Add heating management and set the heating preferences
+house.f_addHeatManagement(heatingType, false);
+house.f_setHeatingPreferences(heatingPreferences);
+
+//Add hot water and cooking demand
+f_addHotWaterDemand(house, house.p_floorSurfaceArea_m2, hotWaterDemand_kWhpa);
+f_addCookingAsset(house, OL_EnergyAssetType.GAS_PIT, cookingDemand_kWhpa);
 
 /*ALCODEEND*/}
 

@@ -148,7 +148,7 @@ import java.util.UUID;]]></Import>
 		<TextFile>
 			<Id>1756980503493</Id>
 			<Name><![CDATA[inputCSVcookingActivities]]></Name>
-			<X>-369</X>
+			<X>-389</X>
 			<Y>784</Y>
 			<Label>
 				<X>10</X>
@@ -170,7 +170,7 @@ import java.util.UUID;]]></Import>
 		<TextFile>
 			<Id>1756980506290</Id>
 			<Name><![CDATA[inputCSVhouseholdTrips]]></Name>
-			<X>-369</X>
+			<X>-389</X>
 			<Y>824</Y>
 			<Label>
 				<X>10</X>
@@ -192,7 +192,7 @@ import java.util.UUID;]]></Import>
 		<TextFile>
 			<Id>1756980507645</Id>
 			<Name><![CDATA[inputCSVtruckTrips]]></Name>
-			<X>-369</X>
+			<X>-389</X>
 			<Y>804</Y>
 			<Label>
 				<X>10</X>

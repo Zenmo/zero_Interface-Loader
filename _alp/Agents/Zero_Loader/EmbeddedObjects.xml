@@ -121,7 +121,7 @@
 	<EmbeddedObject>
 		<Id>1726584829907</Id>
 		<Name><![CDATA[avgc_data]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>850</Y>
 		<Label>
 			<X>10</X>
@@ -293,7 +293,7 @@
 				<Name><![CDATA[p_avgOutputTemperatureHydrogenBurner_degC]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgVehiclesPerChargePoint]]></Name>
+				<Name><![CDATA[p_avgVehiclesPerCharger_Centre]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgAnnualTravelDistanceVan_km]]></Name>
@@ -341,7 +341,7 @@
 				<Name><![CDATA[p_v1gProbability]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgEVsPerPublicCharger]]></Name>
+				<Name><![CDATA[p_avgVehiclesPerCharger_Chargepoint]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgPTPower_kWpm2]]></Name>
@@ -401,13 +401,40 @@
 				<Name><![CDATA[p_minAnnualTravelDistanceSurveyVehicle_km]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_PBL_HeatingLossFactor]]></Name>
+				<Name><![CDATA[p_PBL_HeatingLossFactor_fr]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[map_energyLabel_lossfactorPerFloorSurface_WpKm2]]></Name>
+				<Name><![CDATA[map_insulationLabel_lossfactorPerFloorSurface_WpKm2]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_solarAbsorptionFloorSurfaceScalingFactor_fr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_avgSpaceHeatingTotalGasConsumptionShare_fr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_avgCookingTotalGasConsumptionShare_fr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_avgDHWTotalGasConsumptionShare_fr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatCapacitySizingConstant_JpK]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatCapacitySizingSlope_JpKm2]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatCapacitySizingFactor_fr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_maxAvgHouseElectricityConsumptionOffset_kWhpa]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_maxAvgHouseGasConsumptionOffset_m3pa]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_insulationLabel_cooldownPeriod_hr]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>

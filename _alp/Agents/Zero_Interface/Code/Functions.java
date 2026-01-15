@@ -2,45 +2,45 @@ double f_setColorsBasedOnEnergyLabels(GIS_Object b)
 {/*ALCODESTART::1696837759924*/
 if (b.gisRegion != null){
 
-	OL_GridConnectionIsolationLabel buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.NONE;
+	OL_GridConnectionInsulationLabel buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.NONE;
 	
 	//Find the lowest energy label in the building
 	for(GridConnection GC : b.c_containedGridConnections){
-		switch(GC.p_energyLabel){
+		switch(GC.p_insulationLabel){
 			case A:
-				if(buildingLowestEnergyLabel == OL_GridConnectionIsolationLabel.NONE){
-					buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.A;
+				if(buildingLowestEnergyLabel == OL_GridConnectionInsulationLabel.NONE){
+					buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.A;
 				}
 			break;
 			case B:
-				if(buildingLowestEnergyLabel == OL_GridConnectionIsolationLabel.NONE || buildingLowestEnergyLabel == OL_GridConnectionIsolationLabel.A){
-					buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.B;
+				if(buildingLowestEnergyLabel == OL_GridConnectionInsulationLabel.NONE || buildingLowestEnergyLabel == OL_GridConnectionInsulationLabel.A){
+					buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.B;
 				}
 			break;
 			case C:
-				if(buildingLowestEnergyLabel == OL_GridConnectionIsolationLabel.NONE || buildingLowestEnergyLabel == OL_GridConnectionIsolationLabel.B
-				   || buildingLowestEnergyLabel == OL_GridConnectionIsolationLabel.C){
-					buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.C;
+				if(buildingLowestEnergyLabel == OL_GridConnectionInsulationLabel.NONE || buildingLowestEnergyLabel == OL_GridConnectionInsulationLabel.B
+				   || buildingLowestEnergyLabel == OL_GridConnectionInsulationLabel.C){
+					buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.C;
 				}
 			break;
 			case D:
-				if(buildingLowestEnergyLabel != OL_GridConnectionIsolationLabel.E || buildingLowestEnergyLabel != OL_GridConnectionIsolationLabel.F
-				   || buildingLowestEnergyLabel != OL_GridConnectionIsolationLabel.G){
-					buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.D;
+				if(buildingLowestEnergyLabel != OL_GridConnectionInsulationLabel.E || buildingLowestEnergyLabel != OL_GridConnectionInsulationLabel.F
+				   || buildingLowestEnergyLabel != OL_GridConnectionInsulationLabel.G){
+					buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.D;
 				}
 			break;
 			case E:
-				if(buildingLowestEnergyLabel != OL_GridConnectionIsolationLabel.F || buildingLowestEnergyLabel != OL_GridConnectionIsolationLabel.G){
-					buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.E;
+				if(buildingLowestEnergyLabel != OL_GridConnectionInsulationLabel.F || buildingLowestEnergyLabel != OL_GridConnectionInsulationLabel.G){
+					buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.E;
 				}
 			break;
 			case F:
-				if(buildingLowestEnergyLabel != OL_GridConnectionIsolationLabel.G){
-					buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.F;
+				if(buildingLowestEnergyLabel != OL_GridConnectionInsulationLabel.G){
+					buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.F;
 				}
 			break;
 			case G:
-				buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.G;
+				buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.G;
 			break;								
 		}
 	}

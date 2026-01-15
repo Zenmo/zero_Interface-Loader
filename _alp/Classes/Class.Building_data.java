@@ -25,12 +25,9 @@ public class Building_data {
 	Double contracted_capacity_kw;
 	Double electricity_consumption_kwhpa;
 	Double gas_consumption_m3pa;
-	Double space_heating_consumption_kwhpa;
-	Double dhw_consumption_kwhpa;
-	Double cooking_consumption_kwhpa;
 	Double pv_installed_kwp;
 	Double pv_potential_kwp;
-	OL_GridConnectionIsolationLabel energy_label;
+	OL_GridConnectionEnergyLabel energy_label;
 	Boolean has_private_parking;
 	String gridnode_id;
 	Double latitude;
@@ -39,9 +36,10 @@ public class Building_data {
 	
 	//PBL data
 	boolean pbl_data_available;
-	Integer ownership_int;
-	Integer constructionPeriod_int;
-	Integer buildingType_int;
-	Double localFactor;
-	Double regionalClimateCorrectionFactor;
+	OL_PBL_BuildingType building_type;	
+	OL_PBL_ConstructionPeriod construction_period;	
+	OL_PBL_OwnershipType ownership_type;
+	OL_GridConnectionInsulationLabel insulation_label;
+	Double local_factor;
+	Double regional_climate_correction_factor;
 }
