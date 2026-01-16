@@ -1381,7 +1381,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[gc]]></Name>
+			<Name><![CDATA[GC]]></Name>
 			<Type><![CDATA[GCHouse]]></Type>
 		</Parameter>
 		<Parameter>
@@ -1389,7 +1389,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Type><![CDATA[OL_EnergyAssetType]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[cookingDemand_kwhpa]]></Name>
+			<Name><![CDATA[yearlyCookingDemand_kWh]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
@@ -1409,15 +1409,11 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[houseGC]]></Name>
-			<Type><![CDATA[GCHouse]]></Type>
+			<Name><![CDATA[GC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[surface_m2]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[hotWaterDemand_kwhpa]]></Name>
+			<Name><![CDATA[yearlyHWD_kWh]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
@@ -2782,6 +2778,44 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Name><![CDATA[gasDemand_m3pa]]></Name>
 			<Type><![CDATA[Double]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1768570811946</Id>
+		<Name><![CDATA[f_estimateHouseDHWDemand_kWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>890</X>
+		<Y>430</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[floorSurface_m2]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1768571246858</Id>
+		<Name><![CDATA[f_estimateHouseCookingDemand_kWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>890</X>
+		<Y>450</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

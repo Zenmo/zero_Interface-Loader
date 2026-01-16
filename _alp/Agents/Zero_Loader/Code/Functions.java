@@ -3300,64 +3300,32 @@ else{
 return chargerProfile;
 /*ALCODEEND*/}
 
-double f_addCookingAsset(GCHouse gc,OL_EnergyAssetType CookingType,double cookingDemand_kwhpa)
+double f_addCookingAsset(GCHouse GC,OL_EnergyAssetType CookingType,double yearlyCookingDemand_kWh)
 {/*ALCODESTART::1749726189312*/
-double yearlyCookingDemand_kWh = cookingDemand_kwhpa;
-
-if(cookingDemand_kwhpa == 0){
-	//yearlyCookingDemand_kWh = uniform_discr(200,600); //way to high compared to referentiewoningen
-	yearlyCookingDemand_kWh = uniform_discr(70,130);
-	//  traceln("Cooking demand unknown");
+if(yearlyCookingDemand_kWh <= 0){
+	throw new RuntimeException("Trying to create a cooking asset, without specifying the yearly energy consumption");
 }
 
 switch(CookingType){
-
 	case ELECTRIC_HOB:
-		new J_EAConsumption(gc, OL_EnergyAssetType.ELECTRIC_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeStep_h, null);
-		gc.p_cookingMethod = OL_HouseholdCookingMethod.ELECTRIC;
+		new J_EAConsumption(GC, OL_EnergyAssetType.ELECTRIC_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeStep_h, null);
+		GC.p_cookingMethod = OL_HouseholdCookingMethod.ELECTRIC;
 		break;
 		
 	case GAS_PIT:
-		new J_EAConsumption(gc, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeStep_h, null);
-		gc.p_cookingMethod = OL_HouseholdCookingMethod.GAS;
+		new J_EAConsumption(GC, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeStep_h, null);
+		GC.p_cookingMethod = OL_HouseholdCookingMethod.GAS;
 		break;
 }
 /*ALCODEEND*/}
 
-double f_addHotWaterDemand(GCHouse houseGC,double surface_m2,double hotWaterDemand_kwhpa)
+double f_addHotWaterDemand(GridConnection GC,double yearlyHWD_kWh)
 {/*ALCODESTART::1749726279652*/
-double yearlyHWD_kWh = hotWaterDemand_kwhpa;
-int aantalBewoners;
-if(hotWaterDemand_kwhpa == 0){
-	if( surface_m2 > 150){
-		aantalBewoners = uniform_discr(2,6);
-	}
-	else if (surface_m2 > 50){
-		aantalBewoners = uniform_discr(1,4);
-	}
-	else {
-		aantalBewoners = uniform_discr(1,2);
-	}
-	 
-	yearlyHWD_kWh = 1000 + aantalBewoners * 150; //Aangepast Naud 13-11-2025 omdat waardes van PBL totaal niet aansloten bij oude aantal bewoners * 600 //12 * surface_m2 * 3 ; Tamelijk willekeurige formule om HWD te schalen tussen 600 - 2400 kWh bij 50m2 tot 200m2, voor een quickfix
+if(yearlyHWD_kWh <= 0){
+	throw new RuntimeException("Trying to create a DHW asset, without specifying the yearly energy consumption");
 }
-else if (surface_m2 > 50){
-	aantalBewoners = uniform_discr(1,4);
-}
-else {
-	aantalBewoners = uniform_discr(1,2);
-}
- 
-yearlyHWD_kWh = aantalBewoners * 600;  //12 * surface_m2 * 3 ; Tamelijk willekeurige formule om HWD te schalen tussen 600 - 2400 kWh bij 50m2 tot 200m2, voor een quickfix
 
-J_EAConsumption hotwaterDemand = new J_EAConsumption( houseGC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, null);
-
-if( surface_m2 > 200){
-	//traceln("House created with " + surface_m2 + "m2 surace area, will have large hot water demand");
-}
-if (surface_m2 < 25){
-	//traceln("House created with " + surface_m2 + "m2 surace area, will have low hot water demand");
-}
+J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, null);
 /*ALCODEEND*/}
 
 double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,Double heatDemand_kwhpa,J_HeatingPreferences heatingPreferences)
@@ -5043,9 +5011,12 @@ if(house.p_PBLParameters != null){
 	cookingDemand_kWhpa = DHWAndCookingDataObject.cooking_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
 }
 else{
-	spaceHeatingDemand_kwhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgSpaceHeatingTotalGasConsumptionShare_fr; //Assumed share gas space heating
-	hotWaterDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgDHWTotalGasConsumptionShare_fr; //assumed share gas dhw heating
-	cookingDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgCookingTotalGasConsumptionShare_fr; //assumed share gas cooking;
+	spaceHeatingDemand_kwhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgSpaceHeatingTotalGasConsumptionShare_fr;
+	hotWaterDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgDHWTotalGasConsumptionShare_fr;
+	cookingDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgCookingTotalGasConsumptionShare_fr;
+	
+	//hotWaterDemand_kWhpa = f_estimateHouseDHWDemand_kWh(house.p_floorSurfaceArea_m2);
+	//cookingDemand_kWhpa = f_estimateHouseCookingDemand_kWh();
 }
 
 //Get the house heating preferences
@@ -5066,8 +5037,33 @@ house.f_addHeatManagement(heatingType, false);
 house.f_setHeatingPreferences(heatingPreferences);
 
 //Add hot water and cooking demand
-f_addHotWaterDemand(house, house.p_floorSurfaceArea_m2, hotWaterDemand_kWhpa);
+f_addHotWaterDemand(house, hotWaterDemand_kWhpa);
 f_addCookingAsset(house, OL_EnergyAssetType.GAS_PIT, cookingDemand_kWhpa);
+
+/*ALCODEEND*/}
+
+double f_estimateHouseDHWDemand_kWh(double floorSurface_m2)
+{/*ALCODESTART::1768570811946*/
+int numberOfResidents;
+if( floorSurface_m2 > 150){
+	numberOfResidents = uniform_discr(2,6);
+}
+else if (floorSurface_m2 > 50){
+	numberOfResidents = uniform_discr(1,4);
+}
+else {
+	numberOfResidents = uniform_discr(1,2);
+}
+
+double yearlyHWD_kWh = 1000 + numberOfResidents * 150; //SOURCE!? Put in AVGC!!
+return yearlyHWD_kWh;
+
+/*ALCODEEND*/}
+
+double f_estimateHouseCookingDemand_kWh()
+{/*ALCODESTART::1768571246858*/
+double yearlyCookingDemand_kWh = uniform_discr(70,130); //SOURCE? -> Put in AVGC!
+return yearlyCookingDemand_kWh;
 
 /*ALCODEEND*/}
 
