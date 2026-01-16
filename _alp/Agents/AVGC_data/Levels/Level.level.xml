@@ -3,7 +3,7 @@
 	<Rectangle>
 		<Id>1726584205536</Id>
 		<Name><![CDATA[rect_constants]]></Name>
-		<X>1020</X>
+		<X>1500</X>
 		<Y>0</Y>
 		<Label>
 			<X>10</X>
@@ -21,7 +21,7 @@
 		<LineColor>-16777216</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>896.894</Width>
+		<Width>416.894</Width>
 		<Height>1400</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
@@ -30,7 +30,7 @@
 	<Rectangle>
 		<Id>1726584205538</Id>
 		<Name><![CDATA[rect_avg]]></Name>
-		<X>0.737</X>
+		<X>0</X>
 		<Y>0</Y>
 		<Label>
 			<X>10</X>
@@ -48,7 +48,7 @@
 		<LineColor>-16777216</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>1019.263</Width>
+		<Width>1500</Width>
 		<Height>1400</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
@@ -58,7 +58,7 @@
 		<Id>1726584205540</Id>
 		<Name><![CDATA[txt_houses]]></Name>
 		<X>40</X>
-		<Y>80</Y>
+		<Y>120</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -83,7 +83,7 @@
 		<Id>1726584205542</Id>
 		<Name><![CDATA[txt_avgCompanies]]></Name>
 		<X>40</X>
-		<Y>280</Y>
+		<Y>480</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -107,8 +107,8 @@
 	<Text>
 		<Id>1726584205544</Id>
 		<Name><![CDATA[txt_avgEV]]></Name>
-		<X>560</X>
-		<Y>75</Y>
+		<X>1000</X>
+		<Y>115</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -132,7 +132,7 @@
 	<Text>
 		<Id>1726584205546</Id>
 		<Name><![CDATA[text3]]></Name>
-		<X>1440</X>
+		<X>1680</X>
 		<Y>40</Y>
 		<Label>
 			<X>0</X>
@@ -158,8 +158,8 @@
 	<Text>
 		<Id>1726584205548</Id>
 		<Name><![CDATA[text4]]></Name>
-		<X>1060</X>
-		<Y>200</Y>
+		<X>1540</X>
+		<Y>220</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -183,7 +183,7 @@
 	<Text>
 		<Id>1726584205550</Id>
 		<Name><![CDATA[text5]]></Name>
-		<X>480</X>
+		<X>750</X>
 		<Y>40</Y>
 		<Label>
 			<X>0</X>
@@ -209,8 +209,8 @@
 	<Rectangle>
 		<Id>1726584205552</Id>
 		<Name><![CDATA[rect_hydrogenC]]></Name>
-		<X>1560</X>
-		<Y>100</Y>
+		<X>1540</X>
+		<Y>420</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -226,7 +226,7 @@
 		<LineColor>-16711681</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>340</Width>
+		<Width>360</Width>
 		<Height>200</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
@@ -235,8 +235,8 @@
 	<Text>
 		<Id>1726584205554</Id>
 		<Name><![CDATA[txt_hydrogenC]]></Name>
-		<X>1580</X>
-		<Y>120</Y>
+		<X>1560</X>
+		<Y>440</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -260,8 +260,8 @@
 	<Text>
 		<Id>1726584205556</Id>
 		<Name><![CDATA[txt_avgFossil]]></Name>
-		<X>560</X>
-		<Y>360</Y>
+		<X>1000</X>
+		<Y>400</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -285,8 +285,8 @@
 	<Text>
 		<Id>1726584205558</Id>
 		<Name><![CDATA[txt_Heatassets]]></Name>
-		<X>40</X>
-		<Y>470</Y>
+		<X>500</X>
+		<Y>115</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -310,8 +310,8 @@
 	<Text>
 		<Id>1726584205560</Id>
 		<Name><![CDATA[txt_avgPV]]></Name>
-		<X>40</X>
-		<Y>990</Y>
+		<X>510</X>
+		<Y>825</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -335,8 +335,8 @@
 	<Text>
 		<Id>1726584205562</Id>
 		<Name><![CDATA[txt_avgBat]]></Name>
-		<X>40</X>
-		<Y>1095</Y>
+		<X>510</X>
+		<Y>930</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -360,8 +360,8 @@
 	<Text>
 		<Id>1726584205564</Id>
 		<Name><![CDATA[txt_avgFCV]]></Name>
-		<X>560</X>
-		<Y>610</Y>
+		<X>1000</X>
+		<Y>650</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -385,8 +385,8 @@
 	<Text>
 		<Id>1726584205566</Id>
 		<Name><![CDATA[txt_heatpumps]]></Name>
-		<X>60</X>
-		<Y>490</Y>
+		<X>520</X>
+		<Y>135</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -410,8 +410,8 @@
 	<Text>
 		<Id>1726584205568</Id>
 		<Name><![CDATA[txt_gasburners]]></Name>
-		<X>60</X>
-		<Y>620</Y>
+		<X>520</X>
+		<Y>265</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -435,8 +435,8 @@
 	<Text>
 		<Id>1726584205570</Id>
 		<Name><![CDATA[txt_hydrogenburners]]></Name>
-		<X>60</X>
-		<Y>710</Y>
+		<X>520</X>
+		<Y>355</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -478,8 +478,8 @@
 		<LineColor>-65536</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>170</Width>
-		<Height>60</Height>
+		<Width>260</Width>
+		<Height>80</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -513,8 +513,8 @@
 	<Text>
 		<Id>1726584205576</Id>
 		<Name><![CDATA[txt_timeC]]></Name>
-		<X>1060</X>
-		<Y>120</Y>
+		<X>1540</X>
+		<Y>140</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -538,8 +538,8 @@
 	<Text>
 		<Id>1726743791200</Id>
 		<Name><![CDATA[text]]></Name>
-		<X>40</X>
-		<Y>1160</Y>
+		<X>1000</X>
+		<Y>940</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -552,7 +552,7 @@
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
-		<Text><![CDATA[Chargingcentres]]></Text>
+		<Text><![CDATA[Chargingcentres and chargepoints]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>12</Size>
@@ -563,8 +563,8 @@
 	<Text>
 		<Id>1728032240347</Id>
 		<Name><![CDATA[txt_avgTravelDistances]]></Name>
-		<X>560</X>
-		<Y>700</Y>
+		<X>1000</X>
+		<Y>740</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -588,8 +588,8 @@
 	<Text>
 		<Id>1745316061345</Id>
 		<Name><![CDATA[txt_CHP]]></Name>
-		<X>60</X>
-		<Y>800</Y>
+		<X>520</X>
+		<Y>445</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -613,8 +613,8 @@
 	<Text>
 		<Id>1747314897311</Id>
 		<Name><![CDATA[txt_districtHeatingDeliverySet]]></Name>
-		<X>60</X>
-		<Y>890</Y>
+		<X>520</X>
+		<Y>535</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -638,8 +638,8 @@
 	<Text>
 		<Id>1751906160194</Id>
 		<Name><![CDATA[txt_avgHeatBuffer]]></Name>
-		<X>560</X>
-		<Y>980</Y>
+		<X>520</X>
+		<Y>690</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -663,8 +663,8 @@
 	<Text>
 		<Id>1751906173848</Id>
 		<Name><![CDATA[txt_avgPT]]></Name>
-		<X>560</X>
-		<Y>900</Y>
+		<X>520</X>
+		<Y>620</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -686,10 +686,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1759233222368</Id>
-		<Name><![CDATA[txt_timeConstants]]></Name>
-		<X>1060</X>
-		<Y>370</Y>
+		<Id>1768315329120</Id>
+		<Name><![CDATA[txt_thermalModelParameters]]></Name>
+		<X>510</X>
+		<Y>1000</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -702,7 +702,7 @@
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
-		<Text><![CDATA[Time constants]]></Text>
+		<Text><![CDATA[Thermal model parameters]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>12</Size>

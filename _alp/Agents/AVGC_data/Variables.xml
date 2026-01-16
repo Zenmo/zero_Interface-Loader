@@ -4,8 +4,8 @@
 		<Id>1726584205532</Id>
 		<Name><![CDATA[hourOfYearPerMonth]]></Name>
 		<Description><![CDATA[Hour of year per month (not leap year) --> Houdt dit rekening met zomer/winter tijd?]]></Description>
-		<X>1070</X>
-		<Y>150</Y>
+		<X>1550</X>
+		<Y>170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -29,7 +29,7 @@
 		<Description><![CDATA[https://www.enexis.nl/aansluitingen/welke-aansluiting-heb-ik-nodig
 3*25 A --> 3*25*230 = 17.25 kW]]></Description>
 		<X>50</X>
-		<Y>150</Y>
+		<Y>230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -57,7 +57,7 @@
 		<Id>1726584205582</Id>
 		<Name><![CDATA[p_avgHouseHeatingMethod]]></Name>
 		<X>50</X>
-		<Y>168.976</Y>
+		<Y>248.976</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -89,7 +89,7 @@
 
 --> 17.25 is way to small -> 3x80 is taken : 55 kW]]></Description>
 		<X>50</X>
-		<Y>330</Y>
+		<Y>530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -117,7 +117,7 @@
 		<Id>1726584205588</Id>
 		<Name><![CDATA[p_avgUtilityHeatingMethod]]></Name>
 		<X>50</X>
-		<Y>310</Y>
+		<Y>510</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -150,7 +150,7 @@
 --> Overwrite if numbers are available in the project selection agent
 ]]></Description>
 		<X>50</X>
-		<Y>128.976</Y>
+		<Y>188.976</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -183,7 +183,7 @@
 --> Overwrite if numbers are available in the project selection agent
 ]]></Description>
 		<X>50</X>
-		<Y>108.976</Y>
+		<Y>148.976</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -214,7 +214,7 @@
 
 https://www.rvo.nl/onderwerpen/elektrisch-vervoer/stand-van-zaken ]]></Description>
 		<X>50</X>
-		<Y>188.976</Y>
+		<Y>268.976</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -244,7 +244,7 @@ https://www.rvo.nl/onderwerpen/elektrisch-vervoer/stand-van-zaken ]]></Descripti
 		<Description><![CDATA[How many houses have installed PV in The Netherlands: 25% (end of 2022)
 https://solarmagazine.nl/nieuws-zonne-energie/i34591/de-harde-cijfers-drenthe-verstevigt-koppositie-38-procent-woningen-heeft-zonnepanelen]]></Description>
 		<X>50</X>
-		<Y>210</Y>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -273,7 +273,7 @@ https://solarmagazine.nl/nieuws-zonne-energie/i34591/de-harde-cijfers-drenthe-ve
 		<Name><![CDATA[p_avgHousePVInstallationPower_kWp]]></Name>
 		<Description><![CDATA[volgens gegevens van het CBS (Centraal Bureau voor de Statistiek) en RVO (Rijksdienst voor Ondernemend Nederland), was het gemiddelde geïnstalleerde piekvermogen van residentiële zonnepanelen in Nederland in 2020 ongeveer 4 kilowatt piek (kWp) per huishouden. --> 4kWp]]></Description>
 		<X>50</X>
-		<Y>230</Y>
+		<Y>310</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -311,8 +311,8 @@ https://solarmagazine.nl/nieuws-zonne-energie/i34591/de-harde-cijfers-drenthe-ve
 80-100 kWh (grote autos)
 
 Minimaal: 116 kWh minimum nodig, anders soms negatieve SOC.]]></Description>
-		<X>570</X>
-		<Y>220</Y>
+		<X>1010</X>
+		<Y>260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -340,8 +340,8 @@ Minimaal: 116 kWh minimum nodig, anders soms negatieve SOC.]]></Description>
 		<Id>1726584205609</Id>
 		<Name><![CDATA[p_avgEVMaxChargePowerCar_kW]]></Name>
 		<Description><![CDATA[Bron???]]></Description>
-		<X>570</X>
-		<Y>150</Y>
+		<X>1010</X>
+		<Y>190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -369,8 +369,8 @@ Minimaal: 116 kWh minimum nodig, anders soms negatieve SOC.]]></Description>
 		<Id>1726584205612</Id>
 		<Name><![CDATA[p_avgEVStorageVan_kWh]]></Name>
 		<Description><![CDATA[????]]></Description>
-		<X>570</X>
-		<Y>240</Y>
+		<X>1010</X>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -398,8 +398,8 @@ Minimaal: 116 kWh minimum nodig, anders soms negatieve SOC.]]></Description>
 		<Id>1726584205615</Id>
 		<Name><![CDATA[p_avgEVStorageTruck_kWh]]></Name>
 		<Description><![CDATA[??]]></Description>
-		<X>570</X>
-		<Y>260</Y>
+		<X>1010</X>
+		<Y>300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -427,8 +427,8 @@ Minimaal: 116 kWh minimum nodig, anders soms negatieve SOC.]]></Description>
 		<Id>1726584205618</Id>
 		<Name><![CDATA[p_avgEVMaxChargePowerVan_kW]]></Name>
 		<Description><![CDATA[Bron???]]></Description>
-		<X>570</X>
-		<Y>170</Y>
+		<X>1010</X>
+		<Y>210</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -456,8 +456,8 @@ Minimaal: 116 kWh minimum nodig, anders soms negatieve SOC.]]></Description>
 		<Id>1726584205621</Id>
 		<Name><![CDATA[p_avgEVMaxChargePowerTruck_kW]]></Name>
 		<Description><![CDATA[Bron???]]></Description>
-		<X>570</X>
-		<Y>190</Y>
+		<X>1010</X>
+		<Y>230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -491,8 +491,8 @@ https://www.vattenfall.nl/elektrische-auto/verbruik/
 --> Tesla model 3: 15.1 kWh per 100 km --> 0.151 kWh/km
 --> Kia niro: 17.1 kWh per 100 km --> 0.171 kWh/km
 --> taking 0.16 kWh/km as the average]]></Description>
-		<X>570</X>
-		<Y>290</Y>
+		<X>1010</X>
+		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -521,8 +521,8 @@ https://www.vattenfall.nl/elektrische-auto/verbruik/
 		<Name><![CDATA[p_avgEVEnergyConsumptionVan_kWhpkm]]></Name>
 		<Description><![CDATA[praktijkverbruik van 26,9 kWh per 100 kilometer:
 https://www.debedrijfswagenadviseurs.nl/praktijkverbruik-elektrische-bedrijfswagen/ ]]></Description>
-		<X>570</X>
-		<Y>310</Y>
+		<X>1010</X>
+		<Y>350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -552,8 +552,8 @@ https://www.debedrijfswagenadviseurs.nl/praktijkverbruik-elektrische-bedrijfswag
 		<Description><![CDATA[https://www.elektrischevrachtwagen.nl/post/hoe-ver-kan-een-elektrische-vrachtwagen-rijden, https://topsectorlogistiek.nl/wp-content/uploads/2024/06/20240126_Stappenplan-ZE-vrachtwagens.pdf
 0.9 - 1.7 kWh/km
 --> pak gemiddelde: 1.3]]></Description>
-		<X>570</X>
-		<Y>330</Y>
+		<X>1010</X>
+		<Y>370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -583,8 +583,8 @@ https://www.debedrijfswagenadviseurs.nl/praktijkverbruik-elektrische-bedrijfswag
 		<Description><![CDATA[- https://www.greenchoice.nl/stroom-en-gas/bosgecompenseerd-gas/hoeveel-is-1-kuub-gas/
 - https://econvice.nl/op-gas-of-elektra-verwarmen-wat-is-gunstig/
 - https://www.joostdevree.nl/shtmls/calorische_waarde.shtml]]></Description>
-		<X>1070</X>
-		<Y>230</Y>
+		<X>1550</X>
+		<Y>250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -616,8 +616,8 @@ https://www.debedrijfswagenadviseurs.nl/praktijkverbruik-elektrische-bedrijfswag
 
 LHV = 3.00 kWh/Nm3
 HHV = 3.54 kWh/Nm3]]></Description>
-		<X>1590</X>
-		<Y>160</Y>
+		<X>1570</X>
+		<Y>480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -645,8 +645,8 @@ HHV = 3.54 kWh/Nm3]]></Description>
 		<Id>1726584205639</Id>
 		<Name><![CDATA[p_hydrogenDensity_kg_Nm3]]></Name>
 		<Description><![CDATA[https://keengas.com/gases/hydrogen/]]></Description>
-		<X>1590</X>
-		<Y>210</Y>
+		<X>1570</X>
+		<Y>530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -674,8 +674,8 @@ HHV = 3.54 kWh/Nm3]]></Description>
 		<Id>1726584205642</Id>
 		<Name><![CDATA[p_oxygenDensity_kg_Nm3]]></Name>
 		<Description><![CDATA[http://www.uigi.com/o2_conv.html]]></Description>
-		<X>1590</X>
-		<Y>230</Y>
+		<X>1570</X>
+		<Y>550</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -710,8 +710,8 @@ MM O = 16 g/mol
 1-0.126 = 0.874 g zuurstof per gram water conversie.
 
 --> 1/0.126 =7.9365 gram zuurstof productie per gram waterstof productie.]]></Description>
-		<X>1590</X>
-		<Y>260</Y>
+		<X>1570</X>
+		<Y>580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -739,8 +739,8 @@ MM O = 16 g/mol
 		<Id>1726584205648</Id>
 		<Name><![CDATA[p_hydrogenSpecificEnergy_kWh_kg]]></Name>
 		<Description><![CDATA[https://www.cenex.co.uk/app/uploads/2021/05/Intro-to-hydrogen-1.pdf --> 33.6]]></Description>
-		<X>1590</X>
-		<Y>180</Y>
+		<X>1570</X>
+		<Y>500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -768,8 +768,8 @@ MM O = 16 g/mol
 		<Id>1726584205651</Id>
 		<Name><![CDATA[p_diesel_kWhpl]]></Name>
 		<Description><![CDATA[https://www.joostdevree.nl/shtmls/calorische_waarde.shtml]]></Description>
-		<X>1070</X>
-		<Y>250</Y>
+		<X>1550</X>
+		<Y>270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -797,8 +797,8 @@ MM O = 16 g/mol
 		<Id>1726584205654</Id>
 		<Name><![CDATA[p_avgDieselConsumptionCar_kmpl]]></Name>
 		<Description><![CDATA[https://www.unitedconsumers.com/blog/auto/zuinig-rijden.jsp]]></Description>
-		<X>570</X>
-		<Y>400</Y>
+		<X>1010</X>
+		<Y>440</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -826,8 +826,8 @@ MM O = 16 g/mol
 		<Id>1726584205657</Id>
 		<Name><![CDATA[p_avgGasolineConsumptionCar_kmpl]]></Name>
 		<Description><![CDATA[https://www.unitedconsumers.com/blog/auto/zuinig-rijden.jsp]]></Description>
-		<X>570</X>
-		<Y>420</Y>
+		<X>1010</X>
+		<Y>460</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -855,8 +855,8 @@ MM O = 16 g/mol
 		<Id>1726584205660</Id>
 		<Name><![CDATA[p_gasoline_kWhpl]]></Name>
 		<Description><![CDATA[https://www.joostdevree.nl/shtmls/calorische_waarde.shtml]]></Description>
-		<X>1070</X>
-		<Y>270</Y>
+		<X>1550</X>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -883,8 +883,8 @@ MM O = 16 g/mol
 	<Variable Class="Parameter">
 		<Id>1726584205663</Id>
 		<Name><![CDATA[p_avgDieselConsumptionCar_kWhpkm]]></Name>
-		<X>570</X>
-		<Y>450</Y>
+		<X>1010</X>
+		<Y>490</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -911,8 +911,8 @@ MM O = 16 g/mol
 	<Variable Class="Parameter">
 		<Id>1726584205666</Id>
 		<Name><![CDATA[p_avgGasolineConsumptionCar_kWhpkm]]></Name>
-		<X>570</X>
-		<Y>470</Y>
+		<X>1010</X>
+		<Y>510</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -943,8 +943,8 @@ MM O = 16 g/mol
 
 11 liter per 100 km = 9.1 km per liter.
 ]]></Description>
-		<X>570</X>
-		<Y>510</Y>
+		<X>1010</X>
+		<Y>550</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -971,8 +971,8 @@ MM O = 16 g/mol
 	<Variable Class="Parameter">
 		<Id>1726584205672</Id>
 		<Name><![CDATA[p_avgDieselConsumptionVan_kWhpkm]]></Name>
-		<X>570</X>
-		<Y>530</Y>
+		<X>1010</X>
+		<Y>570</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1004,8 +1004,8 @@ MM O = 16 g/mol
 --> 25 - 30 - 40 liter per 100 km. = 4 - 3.33 - 2.5 km per l
 Heavely dependend on load, city/highway, etc.
 For now: Picking 3.33 km per l]]></Description>
-		<X>570</X>
-		<Y>560</Y>
+		<X>1010</X>
+		<Y>600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1032,8 +1032,8 @@ For now: Picking 3.33 km per l]]></Description>
 	<Variable Class="Parameter">
 		<Id>1726584205678</Id>
 		<Name><![CDATA[p_avgDieselConsumptionTruck_kWhpkm]]></Name>
-		<X>570</X>
-		<Y>580</Y>
+		<X>1010</X>
+		<Y>620</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1063,8 +1063,8 @@ For now: Picking 3.33 km per l]]></Description>
 		<Description><![CDATA[https://www.vaillant.be/consumenten/ons-advies/blog/het-rendement-van-een-warmtepomp/
 
 Gemiddelde COP is 4.]]></Description>
-		<X>70</X>
-		<Y>520</Y>
+		<X>530</X>
+		<Y>165</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1093,7 +1093,7 @@ Gemiddelde COP is 4.]]></Description>
 		<Name><![CDATA[p_avgUtilityPVPower_kWp]]></Name>
 		<Description><![CDATA[FIND SOURCE!!! ????????]]></Description>
 		<X>50</X>
-		<Y>350</Y>
+		<Y>550</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1124,7 +1124,7 @@ Gemiddelde COP is 4.]]></Description>
 ???
 https://nos.nl/artikel/2483604-elektrische-vrachtwagens-blijven-achter-door-complexe-serie-aan-uitdagingen --> 'volgens cbs nog geen half procent.']]></Description>
 		<X>50</X>
-		<Y>370</Y>
+		<Y>570</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1153,7 +1153,7 @@ https://nos.nl/artikel/2483604-elektrische-vrachtwagens-blijven-achter-door-comp
 		<Name><![CDATA[p_avgCompanyHeatingMethod]]></Name>
 		<Description><![CDATA[Source?? --> Should definatly be still the case in 2024]]></Description>
 		<X>50</X>
-		<Y>390</Y>
+		<Y>590</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1183,8 +1183,8 @@ https://nos.nl/artikel/2483604-elektrische-vrachtwagens-blijven-achter-door-comp
 		<Description><![CDATA[https://hallostroom.nl/zonnepanelen/opbrengst/per-m2/ --> 177 W/m2
 https://www.zonneplan.nl/kenniscentrum/zonnepanelen/vermogen --> 212 W/m2
 https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Description>
-		<X>50</X>
-		<Y>1020</Y>
+		<X>520</X>
+		<Y>855</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1213,8 +1213,8 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Name><![CDATA[p_avgRatioBatteryCapacity_v_Power]]></Name>
 		<Description><![CDATA[Average ratio of battery capacity over battery power.
 --> If battery capacity (in kWh) is twice the battery power (in kW) --> ratio = 2.]]></Description>
-		<X>50</X>
-		<Y>1120</Y>
+		<X>520</X>
+		<Y>955</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1245,8 +1245,8 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 
 --> avg: 29 kWh per 100 km --> 0.29 kWh/km
 ]]></Description>
-		<X>570</X>
-		<Y>640</Y>
+		<X>1010</X>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1276,8 +1276,8 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Description><![CDATA[https://www.huiskes-kokkeler.nl/bedrijfswagens/volkswagen-bedrijfswagens/modellen/crafter-hymotion-concept
 --> 1.4 kg Waterstof per 100 km = 0.014 kg/km
 -->  0.014 * 33.6 (p_hydrogenSpecificEnergy_kWh_kg = 0.47 kWh/kg]]></Description>
-		<X>570</X>
-		<Y>660</Y>
+		<X>1010</X>
+		<Y>700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1307,8 +1307,8 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Description><![CDATA[https://transportenmilieu.nl/nieuwsarchief/item/hyundai-op-waterstof-voor-havi-zwitserland
 --> 6.6 kg Waterstof per 100 km = 0.066 kg/km
 --> 0.066 * 33.6 (p_hydrogenSpecificEnergy_kWh_kg = 2.22 kWh/kg]]></Description>
-		<X>570</X>
-		<Y>680</Y>
+		<X>1010</X>
+		<Y>720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1336,8 +1336,8 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Id>1726584205708</Id>
 		<Name><![CDATA[p_avgRatioRoofPotentialPV]]></Name>
 		<Description><![CDATA[value for the ratio of the avg Usable Roof Area For PV fr]]></Description>
-		<X>50</X>
-		<Y>1040</Y>
+		<X>520</X>
+		<Y>875</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1367,8 +1367,8 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Description><![CDATA[Efficiency (eta_r) used to calculate the COP in the energy asset based on temperature differences. 
 
 '0.5' comes from old code, no source found for it yet.]]></Description>
-		<X>70</X>
-		<Y>540</Y>
+		<X>530</X>
+		<Y>185</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1399,8 +1399,8 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 https://warmtepomp-panel.nl/afgiftesysteem.html?utm_source=chatgpt.com -> 35 graden afgifte bij -10 graden.
 
 -> Voor nu gemiddeld 40 genomen.]]></Description>
-		<X>70</X>
-		<Y>580</Y>
+		<X>530</X>
+		<Y>225</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1429,8 +1429,8 @@ https://warmtepomp-panel.nl/afgiftesysteem.html?utm_source=chatgpt.com -> 35 gra
 		<Name><![CDATA[p_avgEfficiencyGasBurner_fr]]></Name>
 		<Description><![CDATA[Average heating efficiency of a gas burner.
 https://www.mdpi.com/1999-4893/18/7/416 -> 100-104 % efficiency, based on gas energy density of 8.8 kWh/m3 (lower heating value), we use higher heating value: 9.77 -> 8.8*1.04/9.77 = 0.94]]></Description>
-		<X>70</X>
-		<Y>650</Y>
+		<X>530</X>
+		<Y>295</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1460,8 +1460,8 @@ https://www.mdpi.com/1999-4893/18/7/416 -> 100-104 % efficiency, based on gas en
 		<Description><![CDATA[Average output temperature of a gas burner unit in degC.
 
 --> Source?]]></Description>
-		<X>70</X>
-		<Y>670</Y>
+		<X>530</X>
+		<Y>315</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1493,8 +1493,8 @@ https://www.mdpi.com/1999-4893/18/7/416 -> 100-104 % efficiency, based on gas en
 - https://h2sciencecoalition.com/blog/hydrogen-for-heating-a-comparison-with-heat-pumps-part-1/
 
 - https://www.csrf.ac.uk/blog/hydrogen-for-heating/]]></Description>
-		<X>70</X>
-		<Y>740</Y>
+		<X>530</X>
+		<Y>385</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1524,8 +1524,8 @@ https://www.mdpi.com/1999-4893/18/7/416 -> 100-104 % efficiency, based on gas en
 		<Description><![CDATA[Average output temperature of a hydrogen burner unit in degC.
 
 --> Source?]]></Description>
-		<X>70</X>
-		<Y>760</Y>
+		<X>530</X>
+		<Y>405</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1551,9 +1551,9 @@ https://www.mdpi.com/1999-4893/18/7/416 -> 100-104 % efficiency, based on gas en
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1726746753360</Id>
-		<Name><![CDATA[p_avgVehiclesPerChargePoint]]></Name>
-		<X>50</X>
-		<Y>1190</Y>
+		<Name><![CDATA[p_avgVehiclesPerCharger_Centre]]></Name>
+		<X>1010</X>
+		<Y>970</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1581,8 +1581,8 @@ https://www.mdpi.com/1999-4893/18/7/416 -> 100-104 % efficiency, based on gas en
 		<Id>1728032263201</Id>
 		<Name><![CDATA[p_avgAnnualTravelDistanceVan_km]]></Name>
 		<Description><![CDATA[https://www.cbs.nl/nl-nl/visualisaties/verkeer-en-vervoer/verkeer/verkeersprestaties-bestelautos -> 4 jaar oude bestlbussen gemiddeld 22.2 duizend km in een jaar.]]></Description>
-		<X>570</X>
-		<Y>790</Y>
+		<X>1010</X>
+		<Y>830</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1610,8 +1610,8 @@ https://www.mdpi.com/1999-4893/18/7/416 -> 100-104 % efficiency, based on gas en
 		<Id>1728032304301</Id>
 		<Name><![CDATA[p_avgAnnualTravelDistanceCompanyCar_km]]></Name>
 		<Description><![CDATA[https://www.cbs.nl/nl-nl/visualisaties/verkeer-en-vervoer/verkeer/verkeersprestaties-personenautos]]></Description>
-		<X>570</X>
-		<Y>770</Y>
+		<X>1010</X>
+		<Y>810</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1639,8 +1639,8 @@ https://www.mdpi.com/1999-4893/18/7/416 -> 100-104 % efficiency, based on gas en
 		<Id>1728032305440</Id>
 		<Name><![CDATA[p_avgAnnualTravelDistanceTruck_km]]></Name>
 		<Description><![CDATA[https://www.cbs.nl/nl-nl/cijfers/detail/84651NED]]></Description>
-		<X>570</X>
-		<Y>810</Y>
+		<X>1010</X>
+		<Y>850</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1669,8 +1669,8 @@ https://www.mdpi.com/1999-4893/18/7/416 -> 100-104 % efficiency, based on gas en
 		<Name><![CDATA[p_avgFullLoadHoursPV_hr]]></Name>
 		<Description><![CDATA[Parameter used to estimate the total solar production in a year in a function like:
 p_avgFullLoadHoursPV_hr * kWp_of_PV_panels = XXX kWh pv production in a year.]]></Description>
-		<X>50</X>
-		<Y>1060</Y>
+		<X>520</X>
+		<Y>895</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1701,7 +1701,7 @@ p_avgFullLoadHoursPV_hr * kWp_of_PV_panels = XXX kWh pv production in a year.]]>
 
 --> 188 kWh/m2 for offices in NL]]></Description>
 		<X>50</X>
-		<Y>410</Y>
+		<Y>610</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1736,7 +1736,7 @@ to 18 m3 p m2 for label G
 
 --> take 7 for now.]]></Description>
 		<X>50</X>
-		<Y>430</Y>
+		<Y>630</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1767,7 +1767,7 @@ to 18 m3 p m2 for label G
 
 --> estimated benchmark 100 kWh/m2]]></Description>
 		<X>50</X>
-		<Y>450</Y>
+		<Y>650</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1795,8 +1795,8 @@ to 18 m3 p m2 for label G
 		<Id>1733155392379</Id>
 		<Name><![CDATA[p_avgSolarFieldPower_kWppha]]></Name>
 		<Description><![CDATA[1000]]></Description>
-		<X>50</X>
-		<Y>1080</Y>
+		<X>520</X>
+		<Y>915</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1825,8 +1825,8 @@ to 18 m3 p m2 for label G
 		<Name><![CDATA[p_avgEfficiencyCHP_thermal_fr]]></Name>
 		<Description><![CDATA[50% -> blijkt uit aangeleverde data door "kas als energiebron". (https://www.kasalsenergiebron.nl/)
 Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_Rapport_WKK_Barometer_2023.pdf]]></Description>
-		<X>70</X>
-		<Y>830</Y>
+		<X>530</X>
+		<Y>475</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1855,8 +1855,8 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 		<Name><![CDATA[p_avgEfficiencyCHP_electric_fr]]></Name>
 		<Description><![CDATA[42% -> blijkt uit aangeleverde data door "kas als energiebron". (https://www.kasalsenergiebron.nl/)
 Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_Rapport_WKK_Barometer_2023.pdf]]></Description>
-		<X>70</X>
-		<Y>850</Y>
+		<X>530</X>
+		<Y>495</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1886,8 +1886,8 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 		<Description><![CDATA[Average output temperature of a hydrogen burner unit in degC.
 
 --> Source?]]></Description>
-		<X>70</X>
-		<Y>870</Y>
+		<X>530</X>
+		<Y>515</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1918,8 +1918,8 @@ Ook te vinden hier: https://www.kasalsenergiebron.nl/content/nieuws/2023/E22001_
 Set as 0.8 to account for the losses of the heatgrid, as they are not yet part of our model.
 https://www.grundfos.com/nl/learn/research-and-insights/pipe-heat-loss
 https://www.klimaat030.nl/warmteverlies-van-stadsverwarming-gigantisch/]]></Description>
-		<X>70</X>
-		<Y>920</Y>
+		<X>530</X>
+		<Y>565</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1949,8 +1949,8 @@ https://www.klimaat030.nl/warmteverlies-van-stadsverwarming-gigantisch/]]></Desc
 		<Description><![CDATA[Average output temperature of a districtheating delivery set in degC.
 
 70 -> https://www.nplw.nl/warmtenet/warmtetechnieken/middentemperatuur-warmtenet]]></Description>
-		<X>70</X>
-		<Y>940</Y>
+		<X>530</X>
+		<Y>585</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1978,8 +1978,8 @@ https://www.klimaat030.nl/warmteverlies-van-stadsverwarming-gigantisch/]]></Desc
 		<Id>1749653366667</Id>
 		<Name><![CDATA[p_v2gProbability]]></Name>
 		<Description><![CDATA[SOURCE!?!?!?!]]></Description>
-		<X>570</X>
-		<Y>125</Y>
+		<X>1010</X>
+		<Y>165</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2007,8 +2007,8 @@ https://www.klimaat030.nl/warmteverlies-van-stadsverwarming-gigantisch/]]></Desc
 		<Id>1750246849611</Id>
 		<Name><![CDATA[p_v1gProbability]]></Name>
 		<Description><![CDATA[SOURCE!?!?!?!]]></Description>
-		<X>570</X>
-		<Y>105</Y>
+		<X>1010</X>
+		<Y>145</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2034,10 +2034,10 @@ https://www.klimaat030.nl/warmteverlies-van-stadsverwarming-gigantisch/]]></Desc
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1750341289733</Id>
-		<Name><![CDATA[p_avgEVsPerPublicCharger]]></Name>
+		<Name><![CDATA[p_avgVehiclesPerCharger_Chargepoint]]></Name>
 		<Description><![CDATA[TODO: Determine this value]]></Description>
-		<X>570</X>
-		<Y>860</Y>
+		<X>1010</X>
+		<Y>990</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2064,8 +2064,8 @@ https://www.klimaat030.nl/warmteverlies-van-stadsverwarming-gigantisch/]]></Desc
 	<Variable Class="Parameter">
 		<Id>1751893521012</Id>
 		<Name><![CDATA[p_avgPTPower_kWpm2]]></Name>
-		<X>570</X>
-		<Y>930</Y>
+		<X>530</X>
+		<Y>650</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2093,8 +2093,8 @@ https://www.klimaat030.nl/warmteverlies-van-stadsverwarming-gigantisch/]]></Desc
 		<Id>1751893540583</Id>
 		<Name><![CDATA[p_avgHeatBufferWaterVolumePerHPPower_m3pkW]]></Name>
 		<Description><![CDATA[https://www.kachelplaats.nl/buffervaten-cv-houtkachels/ -> 25 liter per kW warmtepomp vermogen = 0.025 m3/kW]]></Description>
-		<X>570</X>
-		<Y>1080</Y>
+		<X>530</X>
+		<Y>790</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2122,8 +2122,8 @@ https://www.klimaat030.nl/warmteverlies-van-stadsverwarming-gigantisch/]]></Desc
 		<Id>1751893810778</Id>
 		<Name><![CDATA[p_avgHeatBufferWaterVolumePerPTSurface_m3pm2]]></Name>
 		<Description><![CDATA[https://www.kachelplaats.nl/buffervaten-cv-houtkachels/ -> 50 liter per m2 zonnecollector = 0.050 m3/m2]]></Description>
-		<X>570</X>
-		<Y>1060</Y>
+		<X>530</X>
+		<Y>770</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2156,8 +2156,8 @@ https://www.klimaat030.nl/warmteverlies-van-stadsverwarming-gigantisch/]]></Desc
 
 Voor nu gekozen voor 4185.
 ]]></Description>
-		<X>1070</X>
-		<Y>290</Y>
+		<X>1550</X>
+		<Y>310</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2185,8 +2185,8 @@ Voor nu gekozen voor 4185.
 		<Id>1751905820546</Id>
 		<Name><![CDATA[p_waterDensity_kgpm3]]></Name>
 		<Description><![CDATA[https://www.sigmaaldrich.com/NL/en/substance/densitystandard998kgm318027732185 --> 998 kg/m3]]></Description>
-		<X>1070</X>
-		<Y>310</Y>
+		<X>1550</X>
+		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2214,8 +2214,8 @@ Voor nu gekozen voor 4185.
 		<Id>1751906112800</Id>
 		<Name><![CDATA[p_avgMaxHeatBufferTemperature_degC]]></Name>
 		<Description><![CDATA[???]]></Description>
-		<X>570</X>
-		<Y>1010</Y>
+		<X>530</X>
+		<Y>720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2242,8 +2242,8 @@ Voor nu gekozen voor 4185.
 	<Variable Class="Parameter">
 		<Id>1751906126857</Id>
 		<Name><![CDATA[p_avgMinHeatBufferTemperature_degC]]></Name>
-		<X>570</X>
-		<Y>1030</Y>
+		<X>530</X>
+		<Y>740</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2271,8 +2271,8 @@ Voor nu gekozen voor 4185.
 		<Id>1753950741783</Id>
 		<Name><![CDATA[p_avgPTPanelSize_m2]]></Name>
 		<Description><![CDATA[https://www.econo.nl/m24hpcpc-400-h2-heatpipe-zonnecollector-prisma-pro-24-cpc -> +- 4 m2]]></Description>
-		<X>570</X>
-		<Y>950</Y>
+		<X>530</X>
+		<Y>670</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2300,8 +2300,8 @@ Voor nu gekozen voor 4185.
 		<Id>1754309475986</Id>
 		<Name><![CDATA[p_avgRatioHouseBatteryStorageCapacity_v_PVPower]]></Name>
 		<Description><![CDATA[https://www.essent.nl/thuisbatterij/capaciteit-thuisbatterij : Essent: "Over het algemeen kun je ervan uitgaan dat een thuisbatterij zo'n 1 à 1,5 kWh capaciteit nodig heeft per kWp zonnepanelen vermogen. " ]]></Description>
-		<X>50</X>
-		<Y>1140</Y>
+		<X>520</X>
+		<Y>975</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2330,7 +2330,7 @@ Voor nu gekozen voor 4185.
 		<Name><![CDATA[p_avgNrOfCarsPerHouse]]></Name>
 		<Description><![CDATA[https://opendata.cbs.nl/#/CBS/nl/dataset/85039NED/table?searchKeywords=motorvoertuigen -> 1.1]]></Description>
 		<X>50</X>
-		<Y>250</Y>
+		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2359,8 +2359,8 @@ Voor nu gekozen voor 4185.
 		<Id>1755873729807</Id>
 		<Name><![CDATA[p_avgAnnualTravelDistancePrivateCar_km]]></Name>
 		<Description><![CDATA[https://www.cbs.nl/nl-nl/visualisaties/verkeer-en-vervoer/verkeer/verkeersprestaties-personenautos]]></Description>
-		<X>570</X>
-		<Y>730</Y>
+		<X>1010</X>
+		<Y>770</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2388,8 +2388,8 @@ Voor nu gekozen voor 4185.
 		<Id>1755874747343</Id>
 		<Name><![CDATA[p_avgAnnualTravelDistanceSecondVSFirstCar_fr]]></Name>
 		<Description><![CDATA[Scaling factor used to scale down the average annual travel distance of the additional cars for households that have multiple cars. SOURCE!???]]></Description>
-		<X>570</X>
-		<Y>750</Y>
+		<X>1010</X>
+		<Y>790</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2417,8 +2417,8 @@ Voor nu gekozen voor 4185.
 		<Id>1759233211509</Id>
 		<Name><![CDATA[map_yearlySummerWinterTimeStartHour]]></Name>
 		<Description><![CDATA[Map that contains data, with key per year, and value a pair where pair.getFirst() == summertimeStartHour and pair.getSecond() == winterTimeStartHour.]]></Description>
-		<X>1070</X>
-		<Y>400</Y>
+		<X>1550</X>
+		<Y>200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2454,8 +2454,8 @@ https://www.bluesolid.nl/warmtepomp-monoblock-9-kw-1ph.html -> Thermisch vermoge
 https://www.dewarmte.nl/all-electric-warmtepomp/ -> thermisch vermogen van 2-8 kW. 
 
 -> (4+5+2)/3 -> Gemiddeld ongeveer 3.6 thermisch-> 3.6/3  = 1.2 elektrisch]]></Description>
-		<X>70</X>
-		<Y>600</Y>
+		<X>530</X>
+		<Y>245</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2483,8 +2483,8 @@ https://www.dewarmte.nl/all-electric-warmtepomp/ -> thermisch vermogen van 2-8 k
 		<Id>1760435475991</Id>
 		<Name><![CDATA[p_minGasBurnerOutputCapacity_kW]]></Name>
 		<Description><![CDATA[https://www.warmteservice.nl/Verwarming/CV-ketel/HR-Combiketel/c/163 -> Minimum ranged van 4 - 7.8 -> gekozen voor 6 ]]></Description>
-		<X>70</X>
-		<Y>690</Y>
+		<X>530</X>
+		<Y>335</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2512,8 +2512,8 @@ https://www.dewarmte.nl/all-electric-warmtepomp/ -> thermisch vermogen van 2-8 k
 		<Id>1760435486680</Id>
 		<Name><![CDATA[p_minHydrogenBurnerOutputCapacity_kW]]></Name>
 		<Description><![CDATA[Zelfde gekozen als gasbrander.]]></Description>
-		<X>70</X>
-		<Y>780</Y>
+		<X>530</X>
+		<Y>425</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2541,8 +2541,8 @@ https://www.dewarmte.nl/all-electric-warmtepomp/ -> thermisch vermogen van 2-8 k
 		<Id>1760435497667</Id>
 		<Name><![CDATA[p_minDistrictHeatingDeliverySetOutputCapacity_kW]]></Name>
 		<Description><![CDATA[25 kw is a default set: https://www.acm.nl/nl/energie/warmte-en-koude/warmtetarieven/tarieven-warmte-en-koude]]></Description>
-		<X>70</X>
-		<Y>960</Y>
+		<X>530</X>
+		<Y>605</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2569,12 +2569,12 @@ https://www.dewarmte.nl/all-electric-warmtepomp/ -> thermisch vermogen van 2-8 k
 	<Variable Class="Parameter">
 		<Id>1763396237774</Id>
 		<Name><![CDATA[p_avgOutputTemperatureHybridHeatpump_degC]]></Name>
-		<Description><![CDATA[https://www.milieucentraal.nl/energie-besparen/duurzaam-verwarmen-en-koelen/volledige-warmtepomp/?utm_source=chatgpt.com - max 45-55
-https://warmtepomp-panel.nl/afgiftesysteem.html?utm_source=chatgpt.com -> 35 graden afgifte bij -10 graden.
+		<Description><![CDATA[https://www.milieucentraal.nl/energie-besparen/duurzaam-verwarmen-en-koelen/volledige-warmtepomp/? -> max 45-55
+https://warmtepomp-panel.nl/afgiftesysteem.html? -> 35 graden afgifte bij -10 graden.
 
--> Voor nu gemiddeld 40 genomen.]]></Description>
-		<X>70</X>
-		<Y>560</Y>
+-> Voor nu gemiddeld 45 genomen.]]></Description>
+		<X>530</X>
+		<Y>205</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2587,10 +2587,400 @@ https://warmtepomp-panel.nl/afgiftesysteem.html?utm_source=chatgpt.com -> 35 gra
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[40]]></Code>
+				<Code><![CDATA[45]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1763396237772</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1768313557052</Id>
+		<Name><![CDATA[p_minAnnualTravelDistanceSurveyVehicle_km]]></Name>
+		<X>1010</X>
+		<Y>880</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[1000]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1768313557050</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1768313716401</Id>
+		<Name><![CDATA[p_PBL_HeatingLossFactor_fr]]></Name>
+		<Description><![CDATA[Manually calibrated value tested on 3 neighborhoods to get the total nbh yearly total to match with the expected outcome.]]></Description>
+		<X>520</X>
+		<Y>1030</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[67.0]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1768313716399</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1768314112512</Id>
+		<Name><![CDATA[map_insulationLabel_lossfactorPerFloorSurface_WpKm2]]></Name>
+		<X>520</X>
+		<Y>1050</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_GridConnectionInsulationLabel, Double>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[Map.of(
+OL_GridConnectionInsulationLabel.A, 0.35, 
+OL_GridConnectionInsulationLabel.B, 0.45,
+OL_GridConnectionInsulationLabel.C, 0.65,
+OL_GridConnectionInsulationLabel.D, 0.85, 
+OL_GridConnectionInsulationLabel.E, 1.05,
+OL_GridConnectionInsulationLabel.F, 1.25,
+OL_GridConnectionInsulationLabel.G, 1.45
+)
+]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1768314112510</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1768314894157</Id>
+		<Name><![CDATA[p_solarAbsorptionFloorSurfaceScalingFactor_fr]]></Name>
+		<X>520</X>
+		<Y>1070</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.01]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1768314894155</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1768486639507</Id>
+		<Name><![CDATA[p_avgSpaceHeatingTotalGasConsumptionShare_fr]]></Name>
+		<X>50</X>
+		<Y>360</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.85]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1768486639505</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1768486762811</Id>
+		<Name><![CDATA[p_avgCookingTotalGasConsumptionShare_fr]]></Name>
+		<X>50</X>
+		<Y>400</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.05]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1768486762809</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1768486764436</Id>
+		<Name><![CDATA[p_avgDHWTotalGasConsumptionShare_fr]]></Name>
+		<X>50</X>
+		<Y>380</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.1]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1768486764434</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1768497744964</Id>
+		<Name><![CDATA[p_heatCapacitySizingConstant_JpK]]></Name>
+		<X>520</X>
+		<Y>1120</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1768497744962</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1768497744970</Id>
+		<Name><![CDATA[p_heatCapacitySizingSlope_JpKm2]]></Name>
+		<X>520</X>
+		<Y>1140</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[50000
+]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1768497744968</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1768497744974</Id>
+		<Name><![CDATA[p_heatCapacitySizingFactor_fr]]></Name>
+		<X>520</X>
+		<Y>1160</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[1]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1768497744972</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1768497935675</Id>
+		<Name><![CDATA[p_maxAvgHouseElectricityConsumptionOffset_kWhpa]]></Name>
+		<X>60</X>
+		<Y>209</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[1000]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1768497935673</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1768498151397</Id>
+		<Name><![CDATA[p_maxAvgHouseGasConsumptionOffset_m3pa]]></Name>
+		<X>60</X>
+		<Y>169</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[500]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1768498151395</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1768499901666</Id>
+		<Name><![CDATA[map_insulationLabel_cooldownPeriod_hr]]></Name>
+		<Description><![CDATA[Map that contains average values for the cooldown period in hours per insulation label.
+The cooldown period is defined as the duration of time before a building  is cooled down to the outside temperature (when there is no internal heat source).
+
+FIND SOURCE AND CORRECT THE NUMBERS BEFORE USE!]]></Description>
+		<X>520</X>
+		<Y>1100</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_GridConnectionInsulationLabel, Double>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[/*
+Map.of(
+OL_GridConnectionInsulationLabel.A, 48.0, 
+OL_GridConnectionInsulationLabel.B, 24.0,
+OL_GridConnectionInsulationLabel.C, 16.0,
+OL_GridConnectionInsulationLabel.D, 10.0, 
+OL_GridConnectionInsulationLabel.E, 6.0,
+OL_GridConnectionInsulationLabel.F, 4.0,
+OL_GridConnectionInsulationLabel.G, 2.0
+)
+*/
+]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1768499901664</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
