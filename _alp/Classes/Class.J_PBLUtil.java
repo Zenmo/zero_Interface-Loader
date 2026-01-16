@@ -11,29 +11,28 @@ public class J_PBLUtil {
 		return OL_PBL_BuildingType.valueOf(J_PBLUtil.getOLTypeString(value));
 	}
 	
-	//Convert input constructionPeriod int or string into OL_PBL_ConstructionPeriod option
-	public static OL_PBL_ConstructionPeriod getPBLConstructionPeriodOption(int value) {
-		return getPBLConstructionPeriodOption(String.valueOf(value));
+	//Convert input buildYear into ConstructionPeriod option (spaceHeating)
+	public static int getConstructionPeriodOption_spaceHeatingAndResidents(int buildYear) {
+		if (buildYear <= 1929){ return 0;}
+		if (buildYear <= 1945){ return 1;}
+		if (buildYear <= 1964){ return 2;}
+		if (buildYear <= 1974){ return 3;}
+		if (buildYear <= 1991){ return 4;}
+		if (buildYear <= 1995){ return 5;}
+		if (buildYear <= 1999){ return 6;}
+		if (buildYear <= 2005){ return 7;}
+		if (buildYear <= 2010){ return 8;}
+		if (buildYear <= 2014){ return 9;}
+		return 10; //Anything above 2014 = 10
 	}
-	public static OL_PBL_ConstructionPeriod getPBLConstructionPeriodOption(String value) {
-		return OL_PBL_ConstructionPeriod.valueOf(J_PBLUtil.getOLTypeString(value));
+	//Convert input buildYear into ConstructionPeriod option (dhw and cooking)
+	public static int getConstructionPeriodOption_DHWAndCooking(int buildYear) {
+		if (buildYear <= 1930){ return 0;}
+		if (buildYear <= 1959){ return 1;}
+		if (buildYear <= 1980){ return 2;}
+		if (buildYear <= 1995){ return 3;}
+		return 4; //Anything above 1995 = 4
 	}
-	
-	//Convert input buildYear into OL_PBL_ConstructionPeriod option
-	public static OL_PBL_ConstructionPeriod convertBuildYearIntoConstructionPeriodOption(int buildYear) {
-		if (buildYear <= 1929){ return OL_PBL_ConstructionPeriod.TYPE_0;}
-		if (buildYear <= 1945){ return OL_PBL_ConstructionPeriod.TYPE_1;}
-		if (buildYear <= 1964){ return OL_PBL_ConstructionPeriod.TYPE_2;}
-		if (buildYear <= 1974){ return OL_PBL_ConstructionPeriod.TYPE_3;}
-		if (buildYear <= 1991){ return OL_PBL_ConstructionPeriod.TYPE_4;}
-		if (buildYear <= 1995){ return OL_PBL_ConstructionPeriod.TYPE_5;}
-		if (buildYear <= 1999){ return OL_PBL_ConstructionPeriod.TYPE_6;}
-		if (buildYear <= 2005){ return OL_PBL_ConstructionPeriod.TYPE_7;}
-		if (buildYear <= 2010){ return OL_PBL_ConstructionPeriod.TYPE_8;}
-		if (buildYear <= 2014){ return OL_PBL_ConstructionPeriod.TYPE_9;}
-		return OL_PBL_ConstructionPeriod.TYPE_10; // 2021 and later -- Anything abouve 2014 = 10
-	}
-	
 	
 	//Convert input int or string into OL_PBL_OwnershipType option
 	public static OL_PBL_OwnershipType getPBLOwnershipTypeOption(int value) {
@@ -61,23 +60,26 @@ public class J_PBLUtil {
 		return convertEnergyToInsulationLabel(getEnergyLabelOption(insulationLabel));
 	}
 	
-	
-	public static int getTNOFloorSurfaceCode(double floorSurfaceArea_m2) {
-		if(floorSurfaceArea_m2 < 75){
-			return 1;
-		}
-		else if(75 <= floorSurfaceArea_m2 && floorSurfaceArea_m2 < 100){
+	//Get the most suited regression population
+	public static int getPBLRegressionPopulation(OL_GridConnectionInsulationLabel insulationLabel, OL_PBL_BuildingType buildingType) {
+		if (insulationLabel == null || insulationLabel == OL_GridConnectionInsulationLabel.NONE || insulationLabel == OL_GridConnectionInsulationLabel.UNKNOWN){ 
+		    return 3;
+		} 
+		else if(buildingType == OL_PBL_BuildingType.TYPE_1){//If detached house
 			return 2;
 		}
-		else if(100 <= floorSurfaceArea_m2 && floorSurfaceArea_m2 < 125){
-			return 3;
+		else {
+			return 1;
 		}
-		else if(125 <= floorSurfaceArea_m2 && floorSurfaceArea_m2 < 150){
-			return 4;
-		}
-		else{// if(floorSurfaceArea_m2 > 150){
-			return 5;
-		}
+	}
+	
+	//Get the TNO surface code based on floor surface
+	public static int getTNOFloorSurfaceCode(double floorSurfaceArea_m2) {
+		if (floorSurfaceArea_m2 < 75){ return 1;}
+		if (floorSurfaceArea_m2 < 100){ return 2;}
+		if (floorSurfaceArea_m2 < 125){ return 3;}
+		if (floorSurfaceArea_m2 < 150){ return 4;}
+		return 5; // floorSurfaceArea_m2 >= 150 -> 5
 	}
 	
 	private static String getOLTypeString(String number) {

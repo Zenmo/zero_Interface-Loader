@@ -3360,7 +3360,7 @@ if (surface_m2 < 25){
 }
 /*ALCODEEND*/}
 
-double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,double heatDemand_kwhpa,J_HeatingPreferences heatingPreferences)
+double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,Double heatDemand_kwhpa,J_HeatingPreferences heatingPreferences)
 {/*ALCODESTART::1749727623536*/
 double maxPowerHeat_kW = 1000; 				//Dit is hoeveel vermogen het huis kan afgeven/opnemen, mag willekeurige waarden hebben. Wordt alleen gebruikt in rekenstap van ratio of capacity
 double lossFactor_WpK; 						//Dit is wat bepaalt hoeveel warmte het huis verliest/opneemt per tijdstap per delta_T
@@ -3370,7 +3370,7 @@ double heatCapacity_JpK; 					//hoeveel lucht zit er in je huis dat je moet verw
 double solarAbsorptionFactor_m2; 	//hoeveel m2 effectieve dak en muur oppervlakte er is dat opwarmt door zonneinstraling
 
 //Determine the heat loss factor based on yearly energy energy consumption for heating or energyLabel
-if(heatDemand_kwhpa > 0){
+if(heatDemand_kwhpa != null && heatDemand_kwhpa > 0){
 	lossFactor_WpK = heatDemand_kwhpa / avgc_data.p_PBL_HeatingLossFactor_fr;
 }
 else{
@@ -3484,8 +3484,7 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	//PBL heating
 	if(houseBuildingData.pbl_data_available()){
 		GCH.p_PBLParameters = new J_PBLParameters(houseBuildingData.building_type(), 
-												  houseBuildingData.ownership_type(), 
-												  houseBuildingData.construction_period(), 
+												  houseBuildingData.ownership_type(),  
 												  houseBuildingData.insulation_label(), 
 												  houseBuildingData.local_factor(), 
 												  houseBuildingData.regional_climate_correction_factor());
@@ -4925,25 +4924,28 @@ else{
 
 double f_getSpaceHeatingDemand_PBL_kWh(double floorSurfaceArea_m2,PBL_SpaceHeatingAndResidents_data spaceHeatingObjectPBL,double localFactor,double regionalClimateCorrectionFactor)
 {/*ALCODESTART::1768308906995*/
-double slope_GJpm2pa = spaceHeatingObjectPBL.slope_space_heating_gjpm2a();
-double constant_GJpa = spaceHeatingObjectPBL.constant_space_heating_gjpa();
+//Get the slope and constant from the PBL data
+double slope_m3pm2pa = spaceHeatingObjectPBL.slope_space_heating_gas_m3pm2a();
+double constant_m3pa = spaceHeatingObjectPBL.constant_space_heating_gas_m3pa();
 
-// space heating demand
-double functionalSpaceHeatingDemand_GJpa = floorSurfaceArea_m2 * slope_GJpm2pa + constant_GJpa;
+//Determine the space heating gas demand based on the floor surface
+double functionalSpaceHeatingDemand_m3pa = floorSurfaceArea_m2 * slope_m3pm2pa + constant_m3pa;
 
-// Multiply final factors:
-double GJtokWh = 1e9 / 3.6e6; // GJ is 1e9J, kWh is 3.6e6J
-double functionalSpaceHeatingDemand_kWh = functionalSpaceHeatingDemand_GJpa * GJtokWh * localFactor * regionalClimateCorrectionFactor ;
+//Convert to kwh and multiply by the local and climate factors
+double functionalSpaceHeatingDemand_kWh = functionalSpaceHeatingDemand_m3pa * avgc_data.p_gas_kWhpm3 * localFactor * regionalClimateCorrectionFactor ;
 return functionalSpaceHeatingDemand_kWh;
 /*ALCODEEND*/}
 
-PBL_SpaceHeatingAndResidents_data f_getPBLObject_spaceHeatingAndResidents(OL_PBL_BuildingType buildingType,OL_PBL_ConstructionPeriod constructionPeriod,OL_PBL_OwnershipType ownershipType,OL_GridConnectionInsulationLabel insulationLabel)
+PBL_SpaceHeatingAndResidents_data f_getPBLObject_spaceHeatingAndResidents(OL_PBL_BuildingType buildingType,int buildYear,OL_PBL_OwnershipType ownershipType,OL_GridConnectionInsulationLabel insulationLabel)
 {/*ALCODESTART::1768319865034*/
+int constructionPeriod = J_PBLUtil.getConstructionPeriodOption_spaceHeatingAndResidents(buildYear);
+int regressionPopulation = J_PBLUtil.getPBLRegressionPopulation(insulationLabel, buildingType);
+
 PBL_SpaceHeatingAndResidents_data PBLObject_spaceHeatingAndResidents = findFirst(c_lookupTablePBL_spaceHeatingAndResidents, pbl -> pbl.building_type() == buildingType &&
 																							   pbl.construction_period() == constructionPeriod &&
 																							   pbl.ownership_type() == ownershipType &&
 																							   pbl.insulation_label() == insulationLabel &&
-																							   pbl.regression_population() == f_getPBLRegressionPopulation(pbl.insulation_label(), pbl.building_type())
+																							   pbl.regression_population() == regressionPopulation
 																							   );
 
 // Check for no matching pbl object found
@@ -4953,15 +4955,16 @@ if (PBLObject_spaceHeatingAndResidents == null) {
     System.out.println(" constructionPeriod = " + constructionPeriod);
     System.out.println(" ownershipType = " + ownershipType);
     System.out.println(" insulationLabel = " + insulationLabel);
-    System.out.println(" regressionPopulation = " + f_getPBLRegressionPopulation(insulationLabel, buildingType));
+    System.out.println(" regressionPopulation = " + regressionPopulation);
     throw new RuntimeException("No matching PBL object found!");
 }
 
 return PBLObject_spaceHeatingAndResidents;
 /*ALCODEEND*/}
 
-PBL_DHWAndCooking_data f_getPBLObject_DHWAndCooking(OL_PBL_ConstructionPeriod constructionPeriod,double floorSurfaceArea_m2,int householdSize)
+PBL_DHWAndCooking_data f_getPBLObject_DHWAndCooking(int buildYear,double floorSurfaceArea_m2,int householdSize)
 {/*ALCODESTART::1768319890191*/
+int constructionPeriod = J_PBLUtil.getConstructionPeriodOption_DHWAndCooking(buildYear);
 int surfaceCode = J_PBLUtil.getTNOFloorSurfaceCode(floorSurfaceArea_m2);
 
 PBL_DHWAndCooking_data PBLObject_DHWAndCooking = findFirst(c_lookupTablePBL_DHWAndCooking, pbl -> pbl.construction_period() == constructionPeriod &&
@@ -4980,19 +4983,6 @@ if (PBLObject_DHWAndCooking == null) {
 }
 
 return PBLObject_DHWAndCooking;
-/*ALCODEEND*/}
-
-int f_getPBLRegressionPopulation(OL_GridConnectionInsulationLabel insulationLabel,OL_PBL_BuildingType buildingType)
-{/*ALCODESTART::1768322522139*/
-if (insulationLabel == null || insulationLabel == OL_GridConnectionInsulationLabel.NONE || insulationLabel == OL_GridConnectionInsulationLabel.UNKNOWN){ 
-    return 3;
-} 
-else if(buildingType == OL_PBL_BuildingType.TYPE_1){//If vrijstaand huis
-	return 2;
-}
-else {
-	return 1;
-}
 /*ALCODEEND*/}
 
 OL_GridConnectionEnergyLabel f_estimateEnergyLabel(int constructionYear)
@@ -5018,8 +5008,8 @@ int numberOfResidents = roundToInt(floorSurfaceArea_m2 * spaceHeatingObjectPBL.s
 if(numberOfResidents < 1){
 	numberOfResidents = 1;
 }
-else if(numberOfResidents > 5){
-	traceln("House found with more than 5 residents -> number of residents is capped to 5! Number of residents found: " + numberOfResidents);
+else if(numberOfResidents > 5){	
+	traceln("House found with more than 5 residents -> number of residents is capped to 5! Number of residents found: " + numberOfResidents + ", floorSurfaceArea_m2: " + floorSurfaceArea_m2);
 	numberOfResidents = 5;
 }
 return numberOfResidents;
@@ -5043,12 +5033,12 @@ double spaceHeatingDemand_kwhpa;
 double hotWaterDemand_kWhpa;
 double cookingDemand_kWhpa;
 if(house.p_PBLParameters != null){
-	PBL_SpaceHeatingAndResidents_data spaceHeatingDataObject = f_getPBLObject_spaceHeatingAndResidents(house.p_PBLParameters.getBuildingType(), house.p_PBLParameters.getConstructionPeriod(), house.p_PBLParameters.getOwnershipType(), house.p_insulationLabel);
+	PBL_SpaceHeatingAndResidents_data spaceHeatingDataObject = f_getPBLObject_spaceHeatingAndResidents(house.p_PBLParameters.getBuildingType(), house.p_buildYear, house.p_PBLParameters.getOwnershipType(), house.p_insulationLabel);
 	spaceHeatingDemand_kwhpa = f_getSpaceHeatingDemand_PBL_kWh(house.p_floorSurfaceArea_m2, spaceHeatingDataObject, house.p_PBLParameters.getLocalFactor(), house.p_PBLParameters.getRegionalClimateCorrectionFactor());
 	
 	int numberOfResidents = f_getNumberOfResidents_PBL(spaceHeatingDataObject, house.p_floorSurfaceArea_m2);
 	
-	PBL_DHWAndCooking_data DHWAndCookingDataObject = f_getPBLObject_DHWAndCooking(house.p_PBLParameters.getConstructionPeriod(), house.p_floorSurfaceArea_m2, numberOfResidents);
+	PBL_DHWAndCooking_data DHWAndCookingDataObject = f_getPBLObject_DHWAndCooking(house.p_buildYear, house.p_floorSurfaceArea_m2, numberOfResidents);
 	hotWaterDemand_kWhpa = DHWAndCookingDataObject.dhw_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
 	cookingDemand_kWhpa = DHWAndCookingDataObject.cooking_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
 }
