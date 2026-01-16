@@ -3371,12 +3371,8 @@ heatCapacity_JpK = buildingCooldownPeriod_hr * lossFactor_WpK * 3600;
 //Determine the heat capacity of the building based on the floor surface and some factors
 heatCapacity_JpK = (avgc_data.p_heatCapacitySizingSlope_JpKm2 * floorArea_m2 + avgc_data.p_heatCapacitySizingConstant_JpK) * avgc_data.p_heatCapacitySizingFactor_fr;
 
-
 //Create the thermal building asset
 parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossFactor_WpK, energyModel.p_timeStep_h, initialTemp_degC, heatCapacity_JpK, solarAbsorptionFactor_m2 );
-energyModel.c_ambientDependentAssets.add( parentGC.p_BuildingThermalAsset );
-
-
 
 
 //FOR NOW DEFAULT NO INTERIOR/EXTERIOR HEAT BUFFERS -> NOT NECESSARY
