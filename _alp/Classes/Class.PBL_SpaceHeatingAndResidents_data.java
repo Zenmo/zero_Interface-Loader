@@ -5,7 +5,7 @@
 @lombok.Value
 @lombok.experimental.Accessors(fluent = true)
 public class PBL_SpaceHeatingAndResidents_data {	
-	OL_PBL_BuildingType building_type;	
+	OL_PBL_DwellingType dwelling_type;	
 	Integer construction_period;	
 	OL_PBL_OwnershipType ownership_type;	
 	OL_GridConnectionInsulationLabel insulation_label;	

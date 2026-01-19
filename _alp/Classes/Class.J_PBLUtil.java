@@ -3,12 +3,12 @@
  */	
 public class J_PBLUtil {
 	
-	//Convert input int or string into OL_PBL_BuildingType option
-	public static OL_PBL_BuildingType getPBLBuildingTypeOption(int value) {
-		return getPBLBuildingTypeOption(String.valueOf(value));
+	//Convert input int or string into OL_PBL_DwellingType option
+	public static OL_PBL_DwellingType getPBLDwellingTypeOption(int value) {
+		return getPBLDwellingTypeOption(String.valueOf(value));
 	}
-	public static OL_PBL_BuildingType getPBLBuildingTypeOption(String value) {
-		return OL_PBL_BuildingType.valueOf(J_PBLUtil.getOLTypeString(value));
+	public static OL_PBL_DwellingType getPBLDwellingTypeOption(String value) {
+		return OL_PBL_DwellingType.valueOf(J_PBLUtil.getOLTypeString(value));
 	}
 	
 	//Convert input buildYear into ConstructionPeriod option (spaceHeating)
@@ -61,11 +61,11 @@ public class J_PBLUtil {
 	}
 	
 	//Get the most suited regression population
-	public static int getPBLRegressionPopulation(OL_GridConnectionInsulationLabel insulationLabel, OL_PBL_BuildingType buildingType) {
+	public static int getPBLRegressionPopulation(OL_GridConnectionInsulationLabel insulationLabel, OL_PBL_DwellingType dwellingType) {
 		if (insulationLabel == null || insulationLabel == OL_GridConnectionInsulationLabel.NONE || insulationLabel == OL_GridConnectionInsulationLabel.UNKNOWN){ 
 		    return 3;
 		} 
-		else if(buildingType == OL_PBL_BuildingType.TYPE_1){//If detached house
+		else if(dwellingType == OL_PBL_DwellingType.TYPE_1){//If detached house
 			return 2;
 		}
 		else {

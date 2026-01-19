@@ -3448,7 +3448,7 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	
 	//PBL heating
 	if(houseBuildingData.pbl_data_available()){
-		GCH.p_PBLParameters = new J_PBLParameters(houseBuildingData.building_type(), 
+		GCH.p_PBLParameters = new J_PBLParameters(houseBuildingData.dwelling_type(), 
 												  houseBuildingData.ownership_type(),  
 												  houseBuildingData.insulation_label(), 
 												  houseBuildingData.local_factor(), 
@@ -4901,12 +4901,12 @@ double functionalSpaceHeatingDemand_kWh = functionalSpaceHeatingDemand_m3pa * av
 return functionalSpaceHeatingDemand_kWh;
 /*ALCODEEND*/}
 
-PBL_SpaceHeatingAndResidents_data f_getPBLObject_spaceHeatingAndResidents(OL_PBL_BuildingType buildingType,int buildYear,OL_PBL_OwnershipType ownershipType,OL_GridConnectionInsulationLabel insulationLabel)
+PBL_SpaceHeatingAndResidents_data f_getPBLObject_spaceHeatingAndResidents(OL_PBL_DwellingType dwellingType,int buildYear,OL_PBL_OwnershipType ownershipType,OL_GridConnectionInsulationLabel insulationLabel)
 {/*ALCODESTART::1768319865034*/
 int constructionPeriod = J_PBLUtil.getConstructionPeriodOption_spaceHeatingAndResidents(buildYear);
-int regressionPopulation = J_PBLUtil.getPBLRegressionPopulation(insulationLabel, buildingType);
+int regressionPopulation = J_PBLUtil.getPBLRegressionPopulation(insulationLabel, dwellingType);
 
-PBL_SpaceHeatingAndResidents_data PBLObject_spaceHeatingAndResidents = findFirst(c_lookupTablePBL_spaceHeatingAndResidents, pbl -> pbl.building_type() == buildingType &&
+PBL_SpaceHeatingAndResidents_data PBLObject_spaceHeatingAndResidents = findFirst(c_lookupTablePBL_spaceHeatingAndResidents, pbl -> pbl.dwelling_type() == dwellingType &&
 																							   pbl.construction_period() == constructionPeriod &&
 																							   pbl.ownership_type() == ownershipType &&
 																							   pbl.insulation_label() == insulationLabel &&
@@ -4916,7 +4916,7 @@ PBL_SpaceHeatingAndResidents_data PBLObject_spaceHeatingAndResidents = findFirst
 // Check for no matching pbl object found
 if (PBLObject_spaceHeatingAndResidents == null) {
     System.out.println("Error: no matching pbl object found for spaceheating with conditions:");
-    System.out.println(" buildingType = " + buildingType);
+    System.out.println(" dwellingType = " + dwellingType);
     System.out.println(" constructionPeriod = " + constructionPeriod);
     System.out.println(" ownershipType = " + ownershipType);
     System.out.println(" insulationLabel = " + insulationLabel);
@@ -4998,7 +4998,7 @@ double spaceHeatingDemand_kwhpa;
 double hotWaterDemand_kWhpa;
 double cookingDemand_kWhpa;
 if(house.p_PBLParameters != null){
-	PBL_SpaceHeatingAndResidents_data spaceHeatingDataObject = f_getPBLObject_spaceHeatingAndResidents(house.p_PBLParameters.getBuildingType(), house.p_buildYear, house.p_PBLParameters.getOwnershipType(), house.p_insulationLabel);
+	PBL_SpaceHeatingAndResidents_data spaceHeatingDataObject = f_getPBLObject_spaceHeatingAndResidents(house.p_PBLParameters.getDwellingType(), house.p_buildYear, house.p_PBLParameters.getOwnershipType(), house.p_insulationLabel);
 	spaceHeatingDemand_kwhpa = f_getSpaceHeatingDemand_PBL_kWh(house.p_floorSurfaceArea_m2, spaceHeatingDataObject, house.p_PBLParameters.getLocalFactor(), house.p_PBLParameters.getRegionalClimateCorrectionFactor());
 	
 	int numberOfResidents = f_getNumberOfResidents_PBL(spaceHeatingDataObject, house.p_floorSurfaceArea_m2);

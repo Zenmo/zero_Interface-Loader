@@ -2667,8 +2667,8 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[buildingType]]></Name>
-			<Type><![CDATA[OL_PBL_BuildingType]]></Type>
+			<Name><![CDATA[dwellingType]]></Name>
+			<Type><![CDATA[OL_PBL_DwellingType]]></Type>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[buildYear]]></Name>

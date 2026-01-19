@@ -36,7 +36,7 @@ public class Building_data {
 	
 	//PBL data
 	boolean pbl_data_available;
-	OL_PBL_BuildingType building_type;		
+	OL_PBL_DwellingType dwelling_type;		
 	OL_PBL_OwnershipType ownership_type;
 	OL_GridConnectionInsulationLabel insulation_label;
 	Double local_factor;
