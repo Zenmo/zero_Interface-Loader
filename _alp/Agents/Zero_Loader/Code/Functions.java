@@ -3095,7 +3095,7 @@ if(sliderWindfarm_data == null){
 }
 if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 	for(GridNode_data nodeData : c_gridNode_data){
-		f_addSliderBattery(zero_Interface.p_defaultMainSliderGCName_battery, nodeData.gridnode_id());
+		f_addSliderBattery(zero_Interface.p_defaultMainSliderGCName_battery + " " + nodeData.gridnode_id(), nodeData.gridnode_id());
 	}
 }
 else{
