@@ -1776,7 +1776,7 @@ v_selectedGridConnectionIndex &gt; 0 ?
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>630</Width>
-		<Height>610</Height>
+		<Height>640</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>

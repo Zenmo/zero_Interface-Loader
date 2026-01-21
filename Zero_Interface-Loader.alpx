@@ -179,6 +179,10 @@
 					<Id>1754312700674</Id>
 					<Name><![CDATA[PARKING_TYPE]]></Name>
 				</Option>
+				<Option>
+					<Id>1769001724664</Id>
+					<Name><![CDATA[CUSTOM]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1763646420469</Id>
