@@ -176,6 +176,9 @@ switch(selectedMapOverlayType){
 	case PARKING_TYPE:
 		f_setColorsBasedOnParkingType_objects(gis_area);
 		break;
+	case CUSTOM:
+		f_setColorsBasedOnCustom_objects(gis_area);
+		break;
 }
 /*ALCODEEND*/}
 
@@ -261,6 +264,9 @@ switch(selectedMapOverlayType){
 		break;
 	case PARKING_TYPE:
 		f_setColorsBasedOnParkingType_gridnodes(GN);
+		break;
+	case CUSTOM:
+		f_setColorsBasedOnCustom_gridnodes(GN);
 		break;
 }
 /*ALCODEEND*/}
@@ -2430,6 +2436,9 @@ for(OL_MapOverlayTypes mapOverlayType : c_loadedMapOverlayTypes){
 		case PARKING_TYPE:
 			RadioButtonOptions_list.add("Parkeer type");
 			break;
+		case CUSTOM:
+			RadioButtonOptions_list.add(p_customMapOverlayName);
+			break;
 	}
 } 
 
@@ -2460,6 +2469,9 @@ gr_mapOverlayLegend_PVProduction.setVisible(false);
 gr_mapOverlayLegend_gridNeighbours.setVisible(false);
 gr_mapOverlayLegend_congestion.setVisible(false);
 gr_mapOverlayLegend_EnergyLabel.setVisible(false);
+if (p_customMapOverlayLegend != null) {
+	p_customMapOverlayLegend.setVisible(false);
+}
 b_updateLiveCongestionColors = false;
 
 if(!b_inEnergyHubMode){
@@ -2491,6 +2503,9 @@ switch(selectedMapOverlayType){
 		break;
 	case PARKING_TYPE:
 		f_setMapOverlay_ParkingType();
+		break;
+	case CUSTOM:
+		f_setMapOverlay_Custom();
 		break;
 }
 /*ALCODEEND*/}
@@ -3715,5 +3730,20 @@ for (int i = list.size() - 1; i > 0; i--) {
     }
     Collections.swap(list, i, j);
 }
+/*ALCODEEND*/}
+
+double f_setMapOverlay_Custom()
+{/*ALCODESTART::1769001821281*/
+//Override function to replace map overlay with custom colors
+/*ALCODEEND*/}
+
+double f_setColorsBasedOnCustom_objects(GIS_Object gis_area)
+{/*ALCODESTART::1769007351261*/
+//Override function to replace map overlay with custom colors
+/*ALCODEEND*/}
+
+double f_setColorsBasedOnCustom_gridnodes(GridNode GN)
+{/*ALCODESTART::1769007434081*/
+//Override function to replace map overlay with custom colors
 /*ALCODEEND*/}
 
