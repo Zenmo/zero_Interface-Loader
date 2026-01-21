@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.7.202512010500"
+                   AnyLogicVersion="8.9.7.202512010504"
                    AlpVersion="8.9.7">
 	<Model>
 		<Id>1658477103134</Id>
@@ -178,6 +178,10 @@
 				<Option>
 					<Id>1754312700674</Id>
 					<Name><![CDATA[PARKING_TYPE]]></Name>
+				</Option>
+				<Option>
+					<Id>1769001724664</Id>
+					<Name><![CDATA[CUSTOM]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
