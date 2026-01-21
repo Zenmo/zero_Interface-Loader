@@ -16,9 +16,9 @@
               Constant="false"
               AccessType="public"
               StaticVariable="false">
-			<Type><![CDATA[EnergyDemandTab]]></Type>
+			<Type><![CDATA[OL_CustomScenarioTabs]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[ELECTRICITY]]></Code>
+				<Code><![CDATA[OL_CustomScenarioTabs.ELECTRICITY]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>

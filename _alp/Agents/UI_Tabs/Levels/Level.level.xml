@@ -31,8 +31,7 @@
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<VisibleCode>!pop_tabElectricity.isEmpty()</VisibleCode>
-				<OnClickCode>v_selectedTabType = EnergyDemandTab.ELECTRICITY;
-f_showCorrectTab();</OnClickCode>
+				<OnClickCode>f_setTab(OL_CustomScenarioTabs.ELECTRICITY);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -105,8 +104,7 @@ f_showCorrectTab();</OnClickCode>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<VisibleCode>!pop_tabHeating.isEmpty()</VisibleCode>
-				<OnClickCode>v_selectedTabType = EnergyDemandTab.HEAT;
-f_showCorrectTab();</OnClickCode>
+				<OnClickCode>f_setTab(OL_CustomScenarioTabs.HEAT);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -179,8 +177,7 @@ f_showCorrectTab();</OnClickCode>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<VisibleCode>!pop_tabMobility.isEmpty()</VisibleCode>
-				<OnClickCode>v_selectedTabType = EnergyDemandTab.MOBILITY;
-f_showCorrectTab();</OnClickCode>
+				<OnClickCode>f_setTab(OL_CustomScenarioTabs.MOBILITY);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -253,8 +250,7 @@ f_showCorrectTab();</OnClickCode>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<VisibleCode>!pop_tabEHub.isEmpty()</VisibleCode>
-				<OnClickCode>v_selectedTabType = EnergyDemandTab.HUB;
-f_showCorrectTab();</OnClickCode>
+				<OnClickCode>f_setTab(OL_CustomScenarioTabs.HUB);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
