@@ -39,6 +39,12 @@
 			<Parameter>
 				<Name><![CDATA[p_gridConnection]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_maxSavingsSliders_default]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_minSavingsSliders_default]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">

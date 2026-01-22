@@ -23,7 +23,7 @@ switch (v_selectedTabType) {
 
 /*ALCODEEND*/}
 
-double f_setTab(EnergyDemandTab tab)
+double f_setTab(OL_CustomScenarioTabs tab)
 {/*ALCODESTART::1722259092945*/
 v_selectedTabType = tab;
 f_showCorrectTab();

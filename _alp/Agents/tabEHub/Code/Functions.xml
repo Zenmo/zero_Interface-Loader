@@ -126,7 +126,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
 			<Name><![CDATA[selectedTabType]]></Name>
-			<Type><![CDATA[EnergyDemandTab]]></Type>
+			<Type><![CDATA[OL_CustomScenarioTabs]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

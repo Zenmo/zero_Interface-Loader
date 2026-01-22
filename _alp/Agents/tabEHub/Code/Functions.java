@@ -264,9 +264,9 @@ v_nfatoSecondGC = null;
 b_NFATOListener = false;
 /*ALCODEEND*/}
 
-double f_setTab(EnergyDemandTab selectedTabType)
+double f_setTab(OL_CustomScenarioTabs selectedTabType)
 {/*ALCODESTART::1722256998182*/
-if (selectedTabType == EnergyDemandTab.NFATO) {
+if (selectedTabType == OL_CustomScenarioTabs.NFATO) {
 	gr_nfatoSettings.setVisible(true);
 	gr_hubSliders.setVisible(false);
 }

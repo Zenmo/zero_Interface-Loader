@@ -110,7 +110,7 @@
 			</OptionList>
 			<OptionList>
 				<Id>1709718356700</Id>
-				<Name><![CDATA[EnergyDemandTab]]></Name>
+				<Name><![CDATA[OL_CustomScenarioTabs]]></Name>
 				<Option>
 					<Id>1709718356702</Id>
 					<Name><![CDATA[MOBILITY]]></Name>
