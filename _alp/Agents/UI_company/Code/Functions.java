@@ -239,7 +239,7 @@ GC.f_removeAllHeatingAssets();
 double capacityThermal_kW;
 
 //Select heat demand consumption asset 
-J_EAConsumption heatDemandAsset = findFirst(GC.c_consumptionAssets, j_ea->j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
+J_EAConsumption heatDemandAsset = findFirst(GC.c_consumptionAssets, j_ea->j_ea.getEAType() == OL_EnergyAssetType.HEAT_DEMAND);
 
 //Check heating demand asset is null (shouldnt be possible)
 if (heatDemandAsset != null){
@@ -263,7 +263,7 @@ else{
 capacityThermal_kW = capacityThermal_kW * 2;//For now just make it always twice as high, to be able to support savings/additional consumption slider settings.
 
 //Algemeen
-double timestep_h = zero_Interface.energyModel.p_timeStep_h;
+J_TimeParameters timeParameters = zero_Interface.energyModel.p_timeParameters;
 double efficiency;
 double outputTemperature_degC;
 
@@ -284,7 +284,7 @@ switch (selectedHeatingType){
 		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner_fr;
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC;
 		
-		new J_EAConversionGasBurner(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
+		new J_EAConversionGasBurner(GC, capacityThermal_kW, efficiency, timeParameters, outputTemperature_degC);
 		
 		break;
 	
@@ -298,14 +298,14 @@ switch (selectedHeatingType){
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
 		
-		J_EAConversionHeatPump heatPumpHybrid = new J_EAConversionHeatPump(GC, capacityElectric_kW, efficiency, timestep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType );
+		J_EAConversionHeatPump heatPumpHybrid = new J_EAConversionHeatPump(GC, capacityElectric_kW, efficiency, timeParameters, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType );
 		zero_Interface.energyModel.c_ambientDependentAssets.add(heatPumpHybrid);
 		
 		//Add secondary heating asset (gasburner)
 		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner_fr;
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC;
 		
-		J_EAConversionGasBurner gasBurnerHybrid = new J_EAConversionGasBurner(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
+		J_EAConversionGasBurner gasBurnerHybrid = new J_EAConversionGasBurner(GC, capacityThermal_kW, efficiency, timeParameters, outputTemperature_degC);
 		//GC.p_secondaryHeatingAsset = gasBurnerHybrid;
 		
 		break;
@@ -320,7 +320,7 @@ switch (selectedHeatingType){
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
 		
-		new J_EAConversionHeatPump(GC, capacityElectric_kW, efficiency, timestep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType );	
+		new J_EAConversionHeatPump(GC, capacityElectric_kW, efficiency, timeParameters, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType );	
 		
 		//Add secondary heating asset (if needed??)		//E-boiler!!??		
 		break;
@@ -331,7 +331,7 @@ switch (selectedHeatingType){
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureHydrogenBurner_degC;
 	    
 		//Add primary heating asset (hydrogenburner)
-		new J_EAConversionHydrogenBurner(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
+		new J_EAConversionHydrogenBurner(GC, capacityThermal_kW, efficiency, timeParameters, outputTemperature_degC);
 		
 		break;
 	
@@ -340,7 +340,7 @@ switch (selectedHeatingType){
 		efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr;
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
 				
-		new J_EAConversionHeatDeliverySet(GC, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC);
+		new J_EAConversionHeatDeliverySet(GC, capacityThermal_kW, efficiency, timeParameters, outputTemperature_degC);
 		
 		//Add GC to heat grid if it exists, else create new one
 		GC.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getGridNodesTopLevel(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
@@ -380,7 +380,7 @@ switch (selectedHeatingType){
 		outputTemperature_degC = zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureCHP_degC;
 		double outputCapacityElectric_kW = (capacityThermal_kW/zero_Interface.energyModel.avgc_data.p_avgEfficiencyCHP_thermal_fr) * zero_Interface.energyModel.avgc_data.p_avgEfficiencyCHP_electric_fr;
 		
-		new J_EAConversionGasCHP(GC, outputCapacityElectric_kW, capacityThermal_kW, efficiency, timestep_h, outputTemperature_degC );
+		new J_EAConversionGasCHP(GC, outputCapacityElectric_kW, capacityThermal_kW, efficiency, timeParameters, outputTemperature_degC );
 			
 		break;
 }
@@ -410,7 +410,7 @@ GC.f_nfatoSetConnectionCapacity(false, zero_Interface.energyModel.p_timeVariable
 
 double f_setBattery(GridConnection GC,double setBatteryCapacity_kWh)
 {/*ALCODESTART::1713537591121*/
-J_EAStorage batteryAsset = findFirst(GC.c_storageAssets, p -> p.energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC );
+J_EAStorage batteryAsset = findFirst(GC.c_storageAssets, p -> p.getEAType() == OL_EnergyAssetType.STORAGE_ELECTRIC );
 
 if (setBatteryCapacity_kWh == 0) {	
 	if (batteryAsset != null) {
@@ -426,7 +426,7 @@ else {
 		if (batteryAsset.getStorageCapacity_kWh() != 0) {
 			c_rate = ((J_EAStorageElectric)batteryAsset).getCapacityElectric_kW()/((J_EAStorageElectric)batteryAsset).getStorageCapacity_kWh();
 		}
-		((J_EAStorageElectric)batteryAsset).setStorageCapacity_kWh(setBatteryCapacity_kWh);
+		((J_EAStorageElectric)batteryAsset).setStorageCapacity_kWh(setBatteryCapacity_kWh, GC);
 		((J_EAStorageElectric)batteryAsset).setCapacityElectric_kW(c_rate * setBatteryCapacity_kWh);
 	}
 }
@@ -441,12 +441,12 @@ if(GC.f_getBatteryManagement() == null){
 double f_setPVSystem(GridConnection GC,double v_rooftopPV_kWp)
 {/*ALCODESTART::1713954180112*/
 if (GC.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
-	J_EAProduction pvAsset = findFirst(GC.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
+	J_EAProduction pvAsset = findFirst(GC.c_productionAssets, p -> p.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC );
 	if (v_rooftopPV_kWp == 0) {
 		pvAsset.removeEnergyAsset();
 	}
 	else {
-		pvAsset.setCapacityElectric_kW(v_rooftopPV_kWp);
+		pvAsset.setCapacityElectric_kW(v_rooftopPV_kWp, GC);
 	}
 }
 else{
@@ -660,7 +660,7 @@ double f_createVehicle(GridConnection parentGC,OL_EnergyAssetType vehicleType,J_
 {/*ALCODESTART::1714410040303*/
 double energyConsumption_kWhpkm = 0;
 double vehicleScaling 			= 1.0;
-double timestep_h				= zero_Interface.energyModel.p_timeStep_h;
+J_TimeParameters timeParameters	= zero_Interface.energyModel.p_timeParameters;
 
 if (vehicleType == OL_EnergyAssetType.ELECTRIC_VEHICLE || vehicleType == OL_EnergyAssetType.ELECTRIC_VAN || vehicleType == OL_EnergyAssetType.ELECTRIC_TRUCK ){ // Create EVS
 	double storageCapacity_kWh 		= 0;
@@ -687,7 +687,7 @@ if (vehicleType == OL_EnergyAssetType.ELECTRIC_VEHICLE || vehicleType == OL_Ener
 	}
 	
 	//Create EV and connect to GC and selected trip tracker
-	J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timestep_h, energyConsumption_kWhpkm, vehicleScaling, vehicleType, tripTracker, available);	
+	J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timeParameters, energyConsumption_kWhpkm, vehicleScaling, vehicleType, tripTracker, available);	
 	
 	
 	if (isAdditionalVehicle){
@@ -715,7 +715,7 @@ else if (vehicleType == OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE || vehicleType
 	}
 	
 	//Create PetroleumFuel vehicle and connect to GC and selected trip tracker
-	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(parentGC, energyConsumption_kWhpkm, timestep_h, vehicleScaling, vehicleType, tripTracker, available);
+	J_EAFuelVehicle petroleumFuelVehicle = new J_EAFuelVehicle(parentGC, energyConsumption_kWhpkm, timeParameters, vehicleScaling, vehicleType, tripTracker, OL_EnergyCarriers.PETROLEUM_FUEL, available);
 	
 	
 	
@@ -742,7 +742,7 @@ else{ // (Hydrogen vehicles)
 	}
 	
 	//Create Hydrogen vehicle and connect to GC and selected trip tracker
-	J_EAHydrogenVehicle hydrogenVehicle = new J_EAHydrogenVehicle(parentGC, energyConsumption_kWhpkm, timestep_h, vehicleScaling, vehicleType, tripTracker, available);
+	J_EAFuelVehicle hydrogenVehicle = new J_EAFuelVehicle(parentGC, energyConsumption_kWhpkm, timeParameters, vehicleScaling, vehicleType, tripTracker, OL_EnergyCarriers.HYDROGEN, available);
 	
 	
 	
@@ -817,14 +817,14 @@ switch (vehicleType){
 if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of selected vehicles
 	
 	//First convert all other existing additional vehicles
-	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.energyAssetType == vehicleType_petroleumFuel || p.energyAssetType == vehicleType_hydrogen).size();
+	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.getEAType() == vehicleType_petroleumFuel || p.getEAType() == vehicleType_hydrogen).size();
 	while(setAmountOfVehicles > local_EV_nb && nbOfOtherAdditionalVehiclesOfThisClass > 0 ){
 		
 		// Find an additional PetroleumFuel vehicle
-		J_EAVehicle petroleumFuelVehicle = findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.energyAssetType == vehicleType_petroleumFuel);
+		J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.getEAType() == vehicleType_petroleumFuel);
 		
 		if(petroleumFuelVehicle != null){
-			J_ActivityTrackerTrips tripTracker = petroleumFuelVehicle.tripTracker;
+			J_ActivityTrackerTrips tripTracker = petroleumFuelVehicle.getTripTracker();
 			
 			// Remove PetroleumFuel vehicle		
 			boolean available = petroleumFuelVehicle.getAvailability();
@@ -842,8 +842,8 @@ if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of se
 		}
 		else{
 			// Find an additional Hydrogen vehicle
-			J_EAVehicle hydrogenVehicle = findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.energyAssetType == vehicleType_hydrogen);
-			J_ActivityTrackerTrips tripTracker = hydrogenVehicle.tripTracker;
+			J_EAFuelVehicle hydrogenVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.getEAType() == vehicleType_hydrogen);
+			J_ActivityTrackerTrips tripTracker = hydrogenVehicle.getTripTracker();
 			
 			// Remove Hydrogen vehicle		
 			boolean available = hydrogenVehicle.getAvailability();
@@ -864,8 +864,8 @@ if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of se
 	while ( setAmountOfVehicles > local_EV_nb && local_PetroleumFuelV_nb > 0) {
 		
 		// Find a PetroleumFuel vehicle
-		J_EAPetroleumFuelVehicle petroleumFuelVehicle = (J_EAPetroleumFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType_petroleumFuel && ((GridConnection)p.getParentAgent()) == GC);
-		J_ActivityTrackerTrips tripTracker = petroleumFuelVehicle.tripTracker; 
+		J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == vehicleType_petroleumFuel && ((GridConnection)p.getOwner()) == GC);
+		J_ActivityTrackerTrips tripTracker = petroleumFuelVehicle.getTripTracker(); 
 		
 		// Remove PetroleumFuel vehicle		
 		boolean available = petroleumFuelVehicle.getAvailability();
@@ -882,8 +882,8 @@ if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of se
 	while (setAmountOfVehicles > local_EV_nb && local_HydrogenV_nb > 0){
 	
 		// Find a Hydrogen vehicle
-		J_EAHydrogenVehicle hydrogenVehicle = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType_hydrogen  && ((GridConnection)p.getParentAgent()) == GC);
-		J_ActivityTrackerTrips tripTracker = hydrogenVehicle.tripTracker;
+		J_EAFuelVehicle hydrogenVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == vehicleType_hydrogen  && ((GridConnection)p.getOwner()) == GC);
+		J_ActivityTrackerTrips tripTracker = hydrogenVehicle.getTripTracker();
 		
 		// Remove Hydrogen vehicle		
 		boolean available = hydrogenVehicle.getAvailability();
@@ -909,7 +909,7 @@ if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of se
 }
 else if(setAmountOfVehicles < local_EV_nb){ // Slider has decreased the amount of selected vehicles
 	
-	ArrayList<J_EAVehicle> additionalVehicles = new ArrayList<J_EAVehicle>(findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.energyAssetType == vehicleType ));
+	ArrayList<I_Vehicle> additionalVehicles = new ArrayList<>(findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.getEAType() == vehicleType ));
 	while(setAmountOfVehicles < local_EV_nb && additionalVehicles.size() > 0){ //If there are additional EV, remove them first
 
 		//Find additional created vehicle
@@ -927,8 +927,8 @@ else if(setAmountOfVehicles < local_EV_nb){ // Slider has decreased the amount o
 	while ( setAmountOfVehicles < local_EV_nb && local_PetroleumFuelV_nb < max_amount_petroleumFuel_vehicles) {
 
 		//Find a to be removed EV
-		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType && !zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).contains(p)  && ((GridConnection)p.getParentAgent()) == GC);
-		J_ActivityTrackerTrips tripTracker = ev.tripTracker;
+		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == vehicleType && !zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).contains(p)  && ((GridConnection)p.getOwner()) == GC);
+		J_ActivityTrackerTrips tripTracker = ev.getTripTracker();
 
 		//Remove EV
 		boolean available = ev.getAvailability();
@@ -1038,14 +1038,14 @@ switch (vehicleType){
 
 if (setAmountOfVehicles > local_PetroleumFuelV_nb){ // Slider has increased the amount of selected vehicles
 	//First convert all other existing additional vehicles
-	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.energyAssetType == vehicleType_hydrogen || p.energyAssetType == vehicleType_electric).size();
+	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.getEAType() == vehicleType_hydrogen || p.getEAType() == vehicleType_electric).size();
 	while(setAmountOfVehicles > local_PetroleumFuelV_nb && nbOfOtherAdditionalVehiclesOfThisClass > 0 ){
 
 		// Find an additional EV vehicle
-		J_EAVehicle ev = findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.energyAssetType == vehicleType_electric);
+		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.getEAType() == vehicleType_electric);
 			
 		if(ev != null){
-			J_ActivityTrackerTrips tripTracker = ev.tripTracker;
+			J_ActivityTrackerTrips tripTracker = ev.getTripTracker();
 		
 			// Remove EV
 			boolean available = ev.getAvailability();
@@ -1063,8 +1063,8 @@ if (setAmountOfVehicles > local_PetroleumFuelV_nb){ // Slider has increased the 
 		}
 		else{
 			// Find an additional Hydrogen vehicle
-			J_EAVehicle hydrogenVehicle = findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.energyAssetType == vehicleType_hydrogen);
-			J_ActivityTrackerTrips tripTracker = hydrogenVehicle.tripTracker;
+			J_EAFuelVehicle hydrogenVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.getEAType() == vehicleType_hydrogen);
+			J_ActivityTrackerTrips tripTracker = hydrogenVehicle.getTripTracker();
 			
 			// Remove Hydrogen vehicle		
 			boolean available = hydrogenVehicle.getAvailability();
@@ -1084,8 +1084,8 @@ if (setAmountOfVehicles > local_PetroleumFuelV_nb){ // Slider has increased the 
 	while ( setAmountOfVehicles > local_PetroleumFuelV_nb && local_EV_nb > min_amount_EV) {
 
 		// Find an EV
-		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType_electric  && ((GridConnection)p.getParentAgent()) == GC);
-		J_ActivityTrackerTrips tripTracker = ev.tripTracker;
+		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == vehicleType_electric  && ((GridConnection)p.getOwner()) == GC);
+		J_ActivityTrackerTrips tripTracker = ev.getTripTracker();
 		
 		//Remove one EV
 		boolean available = ev.getAvailability();
@@ -1102,8 +1102,8 @@ if (setAmountOfVehicles > local_PetroleumFuelV_nb){ // Slider has increased the 
 	while (setAmountOfVehicles > local_PetroleumFuelV_nb && local_HydrogenV_nb > 0){
 	
 		// Find a Hydrogen vehicle
-		J_EAHydrogenVehicle hydrogenVehicle = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType_hydrogen  && ((GridConnection)p.getParentAgent()) == GC);
-		J_ActivityTrackerTrips tripTracker = hydrogenVehicle.tripTracker;
+		J_EAFuelVehicle hydrogenVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == vehicleType_hydrogen  && ((GridConnection)p.getOwner()) == GC);
+		J_ActivityTrackerTrips tripTracker = hydrogenVehicle.getTripTracker();
 		
 		// Remove hydrogen vehicle			
 		boolean available = hydrogenVehicle.getAvailability();
@@ -1126,11 +1126,11 @@ if (setAmountOfVehicles > local_PetroleumFuelV_nb){ // Slider has increased the 
 }
 else if(setAmountOfVehicles < local_PetroleumFuelV_nb){ // Slider has decreased the amount of selected vehicles
 	
-	ArrayList<J_EAVehicle> additionalVehicles = new ArrayList<J_EAVehicle>(findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.energyAssetType == vehicleType ));
+	ArrayList<I_Vehicle> additionalVehicles = new ArrayList<>(findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.getEAType() == vehicleType ));
 	while(setAmountOfVehicles < local_PetroleumFuelV_nb && additionalVehicles.size() > 0){ //Remove additional PetroleumFuel vehicles first
 	
 	//Find additional created vehicle
-	J_EAPetroleumFuelVehicle petroleumFuelVehicle = (J_EAPetroleumFuelVehicle)additionalVehicles.get(additionalVehicles.size()-1); // Get latest added
+	J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle)additionalVehicles.get(additionalVehicles.size()-1); // Get latest added
 	
 	// Remove petroleumFuel vehicle
 	additionalVehicles.remove(petroleumFuelVehicle);
@@ -1144,8 +1144,8 @@ else if(setAmountOfVehicles < local_PetroleumFuelV_nb){ // Slider has decreased 
 	while ( setAmountOfVehicles < local_PetroleumFuelV_nb && local_EV_nb < max_amount_EV) {
 	
 	// Find a to be removed PetroleumFuel vehicle
-		J_EAPetroleumFuelVehicle petroleumFuelVehicle = (J_EAPetroleumFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType && !zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).contains(p)  && ((GridConnection)p.getParentAgent()) == GC);
-		J_ActivityTrackerTrips tripTracker = petroleumFuelVehicle.tripTracker;
+		J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == vehicleType && !zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).contains(p)  && ((GridConnection)p.getOwner()) == GC);
+		J_ActivityTrackerTrips tripTracker = petroleumFuelVehicle.getTripTracker();
 		
 		// Remove petroleumFuel vehicle		
 		boolean available = petroleumFuelVehicle.getAvailability();
@@ -1250,14 +1250,14 @@ switch (vehicleType){
 if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amount of selected vehicles
 	
 	//First convert all other existing additional vehicles
-	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.energyAssetType == vehicleType_petroleumFuel || p.energyAssetType == vehicleType_electric).size();
+	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.getEAType() == vehicleType_petroleumFuel || p.getEAType() == vehicleType_electric).size();
 	while(setAmountOfVehicles > local_HydrogenV_nb && nbOfOtherAdditionalVehiclesOfThisClass > 0 ){
 		
 		// Find an additional PetroleumFuel vehicle
-		J_EAVehicle petroleumFuelVehicle = findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.energyAssetType == vehicleType_petroleumFuel);
+		J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.getEAType() == vehicleType_petroleumFuel);
 		
 		if(petroleumFuelVehicle != null){
-			J_ActivityTrackerTrips tripTracker = petroleumFuelVehicle.tripTracker;
+			J_ActivityTrackerTrips tripTracker = petroleumFuelVehicle.getTripTracker();
 			
 			// Remove PetroleumFuel vehicle		
 			boolean available = petroleumFuelVehicle.getAvailability();
@@ -1275,8 +1275,8 @@ if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amoun
 		}
 		else{
 			// Find an additional EV vehicle
-			J_EAVehicle ev = findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.energyAssetType == vehicleType_electric);
-			J_ActivityTrackerTrips tripTracker = ev.tripTracker;
+			J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.getEAType() == vehicleType_electric);
+			J_ActivityTrackerTrips tripTracker = ev.getTripTracker();
 		
 			// Remove EV
 			boolean available = ev.getAvailability();
@@ -1296,8 +1296,8 @@ if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amoun
 	while ( setAmountOfVehicles > local_HydrogenV_nb && local_PetroleumFuelV_nb > 0) {
 
 		// Find a to be removed PetroleumFuel vehicle
-		J_EAPetroleumFuelVehicle petroleumFuelVehicle = (J_EAPetroleumFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType_petroleumFuel  && ((GridConnection)p.getParentAgent()) == GC);
-		J_ActivityTrackerTrips tripTracker = petroleumFuelVehicle.tripTracker;
+		J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == vehicleType_petroleumFuel  && ((GridConnection)p.getOwner()) == GC);
+		J_ActivityTrackerTrips tripTracker = petroleumFuelVehicle.getTripTracker();
 
 		//Remove petroleumFuel vehicle
 		boolean available = petroleumFuelVehicle.getAvailability();
@@ -1315,8 +1315,8 @@ if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amoun
 	while (setAmountOfVehicles > local_HydrogenV_nb && local_EV_nb > min_amount_EV){
 		
 		// Find a to be removed EV
-		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType_electric  && ((GridConnection)p.getParentAgent()) == GC);
-		J_ActivityTrackerTrips tripTracker = ev.tripTracker;
+		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == vehicleType_electric  && ((GridConnection)p.getOwner()) == GC);
+		J_ActivityTrackerTrips tripTracker = ev.getTripTracker();
 		
 		// Remove EV
 		boolean available = ev.getAvailability();
@@ -1340,11 +1340,11 @@ if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amoun
 }
 else if(setAmountOfVehicles < local_HydrogenV_nb){ // Slider has decreased the amount of selected vehicles
 	
-	ArrayList<J_EAVehicle> additionalVehicles = new ArrayList<J_EAVehicle>(findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.energyAssetType == vehicleType ));
+	ArrayList<I_Vehicle> additionalVehicles = new ArrayList<>(findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.getEAType() == vehicleType ));
 	while(setAmountOfVehicles < local_HydrogenV_nb && additionalVehicles.size() > 0){//Remove additional Hydrogen vehicles first
 
 	//Find additional created vehicle
-	J_EAHydrogenVehicle hydrogenVehicle = (J_EAHydrogenVehicle)additionalVehicles.get(additionalVehicles.size()-1); // Get latest added
+	J_EAFuelVehicle hydrogenVehicle = (J_EAFuelVehicle)additionalVehicles.get(additionalVehicles.size()-1); // Get latest added
 	
 	// Remove hydrogen vehicle
 	additionalVehicles.remove(hydrogenVehicle);
@@ -1358,8 +1358,8 @@ else if(setAmountOfVehicles < local_HydrogenV_nb){ // Slider has decreased the a
 	while ( setAmountOfVehicles < local_HydrogenV_nb && local_EV_nb < max_amount_EV) {
 	
 		// Find a to be removed Hydrogen vehicle
-		J_EAHydrogenVehicle hydrogenVehicle = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == vehicleType && !zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).contains(p)  && ((GridConnection)p.getParentAgent()) == GC);
-		J_ActivityTrackerTrips tripTracker = hydrogenVehicle.tripTracker;
+		J_EAFuelVehicle hydrogenVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == vehicleType && !zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).contains(p)  && ((GridConnection)p.getOwner()) == GC);
+		J_ActivityTrackerTrips tripTracker = hydrogenVehicle.getTripTracker();
 		
 		// Remove hydrogen vehicle			
 		boolean available = hydrogenVehicle.getAvailability();
@@ -1547,10 +1547,10 @@ double capacityElectric_kW			= installedPower_kW;
 double capacityHeat_kW				= 0;
 double yearlyProductionMethane_kWh 	= 0;
 double yearlyProductionHydrogen_kWh = 0;
-double timestep_h 					= zero_Interface.energyModel.p_timeStep_h;
+J_TimeParameters timeParameters 					= zero_Interface.energyModel.p_timeParameters;
 double outputTemperature_degC 		= 0;
 
-J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, OL_EnergyCarriers.ELECTRICITY, capacityElectric_kW, timestep_h, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr);
+J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, OL_EnergyCarriers.ELECTRICITY, capacityElectric_kW, timeParameters, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr);
 parentGC.v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<GridConnection>(List.of(parentGC)));
 
 /*ALCODEEND*/}
@@ -1595,7 +1595,7 @@ switch (p_gridConnection.f_getCurrentHeatingType()){
 //Find the current heat saving percentage
 int currentHeatSavings = 0;
 
-J_EAConsumption consumptionEAHEAT = findFirst(p_gridConnection.c_consumptionAssets, consumptionAsset -> consumptionAsset.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
+J_EAConsumption consumptionEAHEAT = findFirst(p_gridConnection.c_consumptionAssets, consumptionAsset -> consumptionAsset.getEAType() == OL_EnergyAssetType.HEAT_DEMAND);
 if (consumptionEAHEAT != null){
 	currentHeatSavings = roundToInt((consumptionEAHEAT.getConsumptionScaling_fr() - 1)*-100);
 }
@@ -1609,12 +1609,12 @@ else{
 //Find the current electricity savings percentage
 int currentElectricitySavings = 0;
 
-J_EAConsumption consumptionEAELECTRIC = findFirst(p_gridConnection.c_consumptionAssets, consumptionAsset -> consumptionAsset.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND);
+J_EAConsumption consumptionEAELECTRIC = findFirst(p_gridConnection.c_consumptionAssets, consumptionAsset -> consumptionAsset.getEAType() == OL_EnergyAssetType.ELECTRICITY_DEMAND);
 if (consumptionEAELECTRIC != null){
 	currentElectricitySavings = roundToInt((consumptionEAELECTRIC.getConsumptionScaling_fr() - 1)*-100);
 }
 else{
-	J_EAProfile profileEAELECTRIC = findFirst(p_gridConnection.c_profileAssets, profileAsset -> profileAsset.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
+	J_EAProfile profileEAELECTRIC = findFirst(p_gridConnection.c_profileAssets, profileAsset -> profileAsset.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 	if (profileEAELECTRIC != null){
 		currentElectricitySavings = roundToInt((profileEAELECTRIC.getProfileScaling_fr() - 1)*-100);
 	}
@@ -1631,7 +1631,7 @@ f_getNFATOValues();
 
 //Find the current battery capacity
 int BatteryCapacityCurrent = 0;
-J_EAStorage batteryAsset = findFirst(p_gridConnection.c_storageAssets, p -> p.energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC );
+J_EAStorage batteryAsset = findFirst(p_gridConnection.c_storageAssets, p -> p.getEAType() == OL_EnergyAssetType.STORAGE_ELECTRIC );
 if (batteryAsset != null){
 	BatteryCapacityCurrent = roundToInt(((J_EAStorageElectric)batteryAsset).getStorageCapacity_kWh());
 }
@@ -1639,7 +1639,7 @@ if (batteryAsset != null){
 //Find the current PV capacity
 int PVCapacityCurrent = 0;
 if (p_gridConnection.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
-	J_EAProduction pvAsset = findFirst(p_gridConnection.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
+	J_EAProduction pvAsset = findFirst(p_gridConnection.c_productionAssets, p -> p.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC );
 	PVCapacityCurrent = roundToInt(pvAsset.getCapacityElectric_kW());
 }
 
@@ -1654,17 +1654,17 @@ if (p_gridConnection.c_tripTrackers.size() > 0){
 
 
 //Find the current number of vehicles for each type
-int nbEcarsCurrent = count(p_gridConnection.c_electricVehicles, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE);
-int nbHydrogencarsCurrent = count(p_gridConnection.c_hydrogenVehicles, p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_VEHICLE);
-int nbPetroleumFuelcarsCurrent = count(p_gridConnection.c_petroleumFuelVehicles, p->p.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE);
+int nbEcarsCurrent = count(p_gridConnection.c_electricVehicles, p->p.getEAType() == OL_EnergyAssetType.ELECTRIC_VEHICLE);
+int nbHydrogencarsCurrent = count(p_gridConnection.c_hydrogenVehicles, p->p.getEAType() == OL_EnergyAssetType.HYDROGEN_VEHICLE);
+int nbPetroleumFuelcarsCurrent = count(p_gridConnection.c_petroleumFuelVehicles, p->p.getEAType() == OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE);
 
-int nbEvansCurrent = count(p_gridConnection.c_electricVehicles, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN);
-int nbHydrogenvansCurrent = count(p_gridConnection.c_hydrogenVehicles, p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN);
-int nbPetroleumFuelvansCurrent = count(p_gridConnection.c_petroleumFuelVehicles, p->p.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN);
+int nbEvansCurrent = count(p_gridConnection.c_electricVehicles, p->p.getEAType() == OL_EnergyAssetType.ELECTRIC_VAN);
+int nbHydrogenvansCurrent = count(p_gridConnection.c_hydrogenVehicles, p->p.getEAType() == OL_EnergyAssetType.HYDROGEN_VAN);
+int nbPetroleumFuelvansCurrent = count(p_gridConnection.c_petroleumFuelVehicles, p->p.getEAType() == OL_EnergyAssetType.PETROLEUM_FUEL_VAN);
 
-int nbEtrucksCurrent = count(p_gridConnection.c_electricVehicles, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK);
-int nbHydrogentrucksCurrent = count(p_gridConnection.c_hydrogenVehicles, p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK);
-int nbPetroleumFueltrucksCurrent = count(p_gridConnection.c_petroleumFuelVehicles, p->p.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK);
+int nbEtrucksCurrent = count(p_gridConnection.c_electricVehicles, p->p.getEAType() == OL_EnergyAssetType.ELECTRIC_TRUCK);
+int nbHydrogentrucksCurrent = count(p_gridConnection.c_hydrogenVehicles, p->p.getEAType() == OL_EnergyAssetType.HYDROGEN_TRUCK);
+int nbPetroleumFueltrucksCurrent = count(p_gridConnection.c_petroleumFuelVehicles, p->p.getEAType() == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK);
 
 //Check on electric cars, cause for companies that have quarterlyhour electricity data, the initial ea for EV (and other electric appliances) are not made.
 if (p_gridConnection.v_hasQuarterHourlyValues){

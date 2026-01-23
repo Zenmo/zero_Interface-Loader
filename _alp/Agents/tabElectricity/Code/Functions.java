@@ -10,7 +10,7 @@ for ( GCEnergyProduction GCEP : gcListProduction) {
 			}
 			
 			double solarFieldPower = (double)roundToInt(hectare * zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha);
-			j_ea.setCapacityElectric_kW(solarFieldPower);
+			j_ea.setCapacityElectric_kW(solarFieldPower, GCEP);
 			GCEP.v_liveConnectionMetaData.physicalCapacity_kW = solarFieldPower;
 			GCEP.v_liveConnectionMetaData.contractedFeedinCapacity_kW = solarFieldPower;
 			
@@ -40,7 +40,7 @@ int nbHousesWithPVGoal = roundToInt(PV_pct / 100.0 * nbHouses);
 
 while ( nbHousesWithPVGoal < nbHousesWithPV ) { // remove excess PV systems
 	GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW));	
-	J_EA pvAsset = findFirst(house.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
+	J_EA pvAsset = findFirst(house.c_productionAssets, p -> p.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC );
 	if (pvAsset != null) {
 		pvAsset.removeEnergyAsset();
 		houses.remove(house);
@@ -75,7 +75,7 @@ while ( nbHousesWithPVGoal > nbHousesWithPV ) {
 		if(house.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW)){
 			installedPVCapacity_kW = max(0, installedPVCapacity_kW-zero_Interface.energyModel.avgc_data.p_avgPTPanelSize_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2); //For now just 1 panel
 		}
-		J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, OL_EnergyCarriers.ELECTRICITY, installedPVCapacity_kW, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
+		J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, OL_EnergyCarriers.ELECTRICITY, installedPVCapacity_kW, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
 		houses.remove(house);
 		zero_Interface.c_orderedPVSystemsHouses.remove(house);
 		zero_Interface.c_orderedPVSystemsHouses.add(0, house);
@@ -102,7 +102,7 @@ for ( GCEnergyProduction GCEP : gcListProduction) {
 			if (!GCEP.v_isActive) {
 				GCEP.f_setActive(true, zero_Interface.energyModel.p_timeVariables);
 			}
-			j_ea.setCapacityElectric_kW(roundToInt(1000*AllocatedWindPower_MW));
+			j_ea.setCapacityElectric_kW(roundToInt(1000*AllocatedWindPower_MW), GCEP);
 			GCEP.v_liveConnectionMetaData.physicalCapacity_kW = (double)roundToInt(1000*AllocatedWindPower_MW);
 			GCEP.v_liveConnectionMetaData.contractedFeedinCapacity_kW = (double)roundToInt(1000*AllocatedWindPower_MW);
 			
@@ -156,10 +156,10 @@ p_currentWindTurbines_MW = 0;
 for(GCEnergyProduction GCProd : uI_Tabs.f_getAllSliderGridConnections_production()){
 	if(!c_electricityTabEASliderGCs.contains(GCProd) && GCProd.v_isActive){
 		for(J_EAProduction ea : GCProd.c_productionAssets){
-			if(ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC){
+			if(ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC){
 				p_currentPVOnLand_ha += ea.getCapacityElectric_kW()/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
 			}
-			else if(ea.energyAssetType == OL_EnergyAssetType.WINDMILL){
+			else if(ea.getEAType() == OL_EnergyAssetType.WINDMILL){
 				p_currentWindTurbines_MW += ea.getCapacityElectric_kW()/1000;
 			}
 		}
@@ -257,10 +257,10 @@ zero_Interface.f_resetSettings();
 
 double f_addPVSystem(GridConnection gc,double capacity_kWp)
 {/*ALCODESTART::1747306690517*/
-J_EAProduction pvAsset = findFirst(gc.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
+J_EAProduction pvAsset = findFirst(gc.c_productionAssets, p -> p.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC);
 if (pvAsset != null) {
 	capacity_kWp += pvAsset.getCapacityElectric_kW();
-	pvAsset.setCapacityElectric_kW( capacity_kWp );
+	pvAsset.setCapacityElectric_kW( capacity_kWp, gc );
 }
 else {
 	// Create a new asset
@@ -271,7 +271,7 @@ else {
 	double yearlyProductionHydrogen_kWh = 0.0;
 	double outputTemperature_degC = 0.0;
 	
-	J_EAProduction productionAsset = new J_EAProduction ( gc, assetType, assetName, OL_EnergyCarriers.ELECTRICITY, capacity_kWp, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
+	J_EAProduction productionAsset = new J_EAProduction ( gc, assetType, assetName, OL_EnergyCarriers.ELECTRICITY, capacity_kWp, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
 }
 
 // Update the ordered collection
@@ -290,7 +290,7 @@ else {
 
 double f_removePVSystem(GridConnection gc)
 {/*ALCODESTART::1747306699629*/
-J_EAProduction pvAsset = findFirst(gc.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
+J_EAProduction pvAsset = findFirst(gc.c_productionAssets, p -> p.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC);
 if ( pvAsset != null ) {
 	pvAsset.removeEnergyAsset();
 
@@ -358,7 +358,7 @@ for ( GCGridBattery battery : gcListGridBatteries) {
 		capacity_kW = storageCapacity_kWh * ( batteryAsset.getStorageCapacity_kWh() / batteryAsset.getCapacityElectric_kW());
 	}
 	batteryAsset.setCapacityElectric_kW( capacity_kW );
-	batteryAsset.setStorageCapacity_kWh( storageCapacity_kWh );
+	batteryAsset.setStorageCapacity_kWh( storageCapacity_kWh, battery );
 	battery.v_liveConnectionMetaData.physicalCapacity_kW = capacity_kW;
 	battery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = capacity_kW;
 	battery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = capacity_kW;
@@ -384,12 +384,12 @@ int nbHousesWithElectricCookingGoal = roundToInt(electricCookingGoal_pct / 100 *
 
 while ( nbHousesWithElectricCooking > nbHousesWithElectricCookingGoal ) { // remove excess cooking systems
 	GCHouse house = randomWhere(gcListHouses, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.ELECTRIC);		
-	J_EAConsumption cookingAsset = findFirst(house.c_consumptionAssets, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB );
+	J_EAConsumption cookingAsset = findFirst(house.c_consumptionAssets, p -> p.getEAType() == OL_EnergyAssetType.ELECTRIC_HOB );
 	if (cookingAsset != null) {
 		double yearlyCookingDemand_kWh = cookingAsset.yearlyDemand_kWh;
 		cookingAsset.removeEnergyAsset();
    		
-		new J_EAConsumption(house, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, zero_Interface.energyModel.p_timeStep_h, null);
+		new J_EAConsumption(house, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, zero_Interface.energyModel.p_timeParameters, null);
 		house.p_cookingMethod = OL_HouseholdCookingMethod.GAS;
 		nbHousesWithElectricCooking --; 
 	}
@@ -404,12 +404,12 @@ while ( nbHousesWithElectricCooking < nbHousesWithElectricCookingGoal) {
 		throw new RuntimeException("No gridconnection without GAS cooking asset found! Current electric cooking count: " + nbHousesWithElectricCooking);
 	}
 	else {
-		J_EAConsumption cookingAsset = findFirst(house.c_consumptionAssets, p -> p.energyAssetType == OL_EnergyAssetType.GAS_PIT );
+		J_EAConsumption cookingAsset = findFirst(house.c_consumptionAssets, p -> p.getEAType() == OL_EnergyAssetType.GAS_PIT );
 		if (cookingAsset != null) {
 			double yearlyCookingDemand_kWh = cookingAsset.yearlyDemand_kWh;
 			cookingAsset.removeEnergyAsset();
 	
-			new J_EAConsumption(house, OL_EnergyAssetType.ELECTRIC_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, zero_Interface.energyModel.p_timeStep_h, null);
+			new J_EAConsumption(house, OL_EnergyAssetType.ELECTRIC_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, zero_Interface.energyModel.p_timeParameters, null);
 			house.p_cookingMethod = OL_HouseholdCookingMethod.ELECTRIC;
 			nbHousesWithElectricCooking ++; 
 		}
@@ -458,8 +458,8 @@ double totalBaseConsumption_kWh = 0;
 double totalSavedConsumption_kWh = 0;
 for(GridConnection GC : allConsumerGridConnections){
 	if(GC.v_isActive){
-		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
-		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
+		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
+		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 		for(J_EAProfile profileEA : profileEAs){
 			double baseConsumption_kWh = ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
 			totalBaseConsumption_kWh += baseConsumption_kWh;
@@ -567,8 +567,8 @@ double totalBaseConsumption_kWh = 0;
 double totalSavedConsumption_kWh = 0;
 for(GCHouse GC : houseGridConnections){
 	if(GC.v_isActive){
-		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
-		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
+		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
+		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 		for(J_EAProfile profileEA : profileEAs){
 			double baseConsumption_kWh = ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
 			totalBaseConsumption_kWh += baseConsumption_kWh;
@@ -612,8 +612,8 @@ double totalBaseConsumption_kWh = 0;
 double totalSavedConsumption_kWh = 0;
 for(GridConnection GC : utilityGridConnections){
 	if(GC.v_isActive){
-		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
-		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
+		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
+		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 		for(J_EAProfile profileEA : profileEAs){
 			double baseConsumption_kWh = ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
 			totalBaseConsumption_kWh += baseConsumption_kWh;

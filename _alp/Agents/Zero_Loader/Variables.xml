@@ -321,6 +321,7 @@
 	<Variable Class="Parameter">
 		<Id>1767606647057</Id>
 		<Name><![CDATA[p_timeStep_h]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1560</X>
 		<Y>-250</Y>
 		<Label>
@@ -349,6 +350,7 @@
 	<Variable Class="Parameter">
 		<Id>1767607024897</Id>
 		<Name><![CDATA[p_summerWeekNumber]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1560</X>
 		<Y>-230</Y>
 		<Label>
@@ -377,6 +379,7 @@
 	<Variable Class="Parameter">
 		<Id>1767607034441</Id>
 		<Name><![CDATA[p_winterWeekNumber]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1560</X>
 		<Y>-210</Y>
 		<Label>

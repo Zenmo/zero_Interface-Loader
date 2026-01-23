@@ -1013,14 +1013,14 @@ v_clickedObjectText</TextCode>
 		
 		case ELECTROLYSER:
 			//uI_Hydrogen.f_setHydrogenUI(c_selectedGridConnections.get(0));
-			uI_Hydrogen.va_hydrogenUI.navigateTo();
-			v_currentViewArea = uI_Hydrogen.va_hydrogenUI;
+			//uI_Hydrogen.va_hydrogenUI.navigateTo();
+			//v_currentViewArea = uI_Hydrogen.va_hydrogenUI;
 			break;
 		
 		case BATTERY:
 			//uI_Battery.f_setBatteryUI(c_selectedGridConnections.get(0));
-			uI_Battery.va_batteryUI.navigateTo();
-			v_currentViewArea = uI_Battery.va_batteryUI;
+			//uI_Battery.va_batteryUI.navigateTo();
+			//v_currentViewArea = uI_Battery.va_batteryUI;
 			break;
 		
 		case SOLARFARM:
