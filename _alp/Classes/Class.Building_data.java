@@ -27,10 +27,18 @@ public class Building_data {
 	Double gas_consumption_m3pa;
 	Double pv_installed_kwp;
 	Double pv_potential_kwp;
-	OL_GridConnectionIsolationLabel energy_label;
+	OL_GridConnectionEnergyLabel energy_label;
 	Boolean has_private_parking;
 	String gridnode_id;
 	Double latitude;
 	Double longitude;
 	String polygon;
+	
+	//PBL data
+	boolean pbl_data_available;
+	OL_PBL_DwellingType dwelling_type;		
+	OL_PBL_OwnershipType ownership_type;
+	OL_GridConnectionInsulationLabel insulation_label;
+	Double local_factor;
+	Double regional_climate_correction_factor;
 }

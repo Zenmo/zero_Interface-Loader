@@ -8,7 +8,7 @@ for (Neighbourhood_data NBH : c_neighbourhood_data) {
 	area.p_GISObjectType = f_getNBHGISObjectType(area, NBH.neighbourhoodcode(), NBH.neighbourhoodtype());
 
 	//Create gisregion
-	area.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(NBH.polygon(), area.p_GISObjectType));
+	area.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectTokens(NBH.polygon(), area.p_GISObjectType));
 
 	//Style area 
 	zero_Interface.f_styleSimulationAreas(area);
@@ -40,13 +40,15 @@ f_createHouses();
 
 double f_configureEngine_default()
 {/*ALCODESTART::1726584205773*/
+//Engine time-date variables
+energyModel.p_runStartTime_h = v_simStartHour_h;
+energyModel.p_runEndTime_h = v_simStartHour_h + v_simDuration_h;
+energyModel.f_initializeTimeDates();
+
 //Set basic input files
 energyModel.p_truckTripsCsv = inputCSVtruckTrips;
 energyModel.p_householdTripsCsv = inputCSVhouseholdTrips;
 energyModel.p_cookingPatternCsv = inputCSVcookingActivities;
-
-//Initialize specific slider GC
-f_initializeSpecificSliderGC();
 
 //Actors
 f_createActors();
@@ -57,6 +59,9 @@ f_createGISRegions();
 if(user.NBHAccessType != null && user.NBHAccessType != OL_UserNBHAccessType.FULL){
 	f_removeObjectsNotInActiveNBH();
 }
+
+//Initialize specific slider GC
+f_initializeSpecificSliderGC();
 
 //Grid nodes
 f_createGridNodes();
@@ -147,7 +152,7 @@ for (GridNode_data GN_data : c_gridNode_data) {
 			//Gridnode service area
 			if (GN_data.service_area_polygon() != null){
 				//Create service area gis object
-				GN.p_serviceAreaGisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(GN_data.service_area_polygon(), OL_GISObjectType.GN_SERVICE_AREA));
+				GN.p_serviceAreaGisRegion = zero_Interface.f_createGISObject(f_createGISObjectTokens(GN_data.service_area_polygon(), OL_GISObjectType.GN_SERVICE_AREA));
 				
 				//Add to hashmap
 				zero_Interface.c_GISNetplanes.add( GN.p_serviceAreaGisRegion );
@@ -164,7 +169,7 @@ for (GridNode_data GN_data : c_gridNode_data) {
 
 /*ALCODEEND*/}
 
-double[] f_createGISObjectsTokens(String RegionCoords,OL_GISObjectType GISObjectType)
+double[] f_createGISObjectTokens(String RegionCoords,OL_GISObjectType GISObjectType)
 {/*ALCODESTART::1726584205777*/
 if (RegionCoords.startsWith("MultiPolygon")){
 	RegionCoords = RegionCoords.replace("MultiPolygon (((","");
@@ -232,13 +237,6 @@ return GISCoords;
 
 double f_importExcelTablesToDB()
 {/*ALCODESTART::1726584205779*/
-//inputHouseholdTrips.readFile();
-//inputCookingActivities.readFile();
-//inputTruckTrips.readFile();
-
-//inputCSVcookingActivities.readFile();
-//inputCSVcookingActivities.
-
 if(settings.reloadDatabase()){
 	
 	//Get the database names that are selected for reloading
@@ -272,20 +270,26 @@ if(settings.reloadDatabase()){
 
 double f_createSolarParks()
 {/*ALCODESTART::1726584205785*/
-ConnectionOwner owner;
 GCEnergyProduction solarpark;
 
 List<String> existing_actors = new ArrayList();
 List<String> existing_solarFields = new ArrayList();
 
-for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data)) { // MOET NOG CHECK OF ZONNEVELD ACTOR AL BESTAAT OP, zo ja --> Zonneveld koppelen aan elkaar en niet 2 GC en 2 actoren maken.
-	
+for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data)) {
 	if (!existing_solarFields.contains( dataSolarfarm.gc_id() )) {
 		solarpark = energyModel.add_EnergyProductionSites();
 		
 		solarpark.set_p_gridConnectionID( dataSolarfarm.gc_id() );
-		solarpark.set_p_name( dataSolarfarm.gc_name() );
 		
+		//Set Address
+		solarpark.p_address = new J_Address(dataSolarfarm.streetname(), 
+											dataSolarfarm.house_number(), 
+											dataSolarfarm.house_letter(), 
+											dataSolarfarm.house_addition(), 
+											dataSolarfarm.postalcode(), 
+											dataSolarfarm.city());
+    	
+
 		//Check wether it can be changed using sliders
 		solarpark.p_isSliderGC = dataSolarfarm.isSliderGC();
 		
@@ -313,7 +317,8 @@ for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data))
 		//Add EA
 		f_addEnergyProduction(solarpark, OL_EnergyAssetType.PHOTOVOLTAIC, "Solar farm" , dataSolarfarm.capacity_electric_kw());
 		
-		
+		//Set owner
+		ConnectionOwner owner;
 		if (!existing_actors.contains(solarpark.p_ownerID)){ // check if owner exists already, if not, create new owner.
 			owner = energyModel.add_pop_connectionOwners();
 			
@@ -332,8 +337,6 @@ for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data))
 	}
 	else { // solarpark and its owner exist already, only create new gis building which is added to the park
 		solarpark = findFirst(energyModel.EnergyProductionSites, p -> p.p_gridConnectionID.equals(dataSolarfarm.gc_id()) );
-		owner = solarpark.p_owner;		
-
 	}
 	
 	if (dataSolarfarm.polygon() != null) {
@@ -356,76 +359,112 @@ for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data))
 
 double f_createBatteries()
 {/*ALCODESTART::1726584205787*/
-for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) { // MOET NOG CHECK OF battery ACTOR AL BESTAAT OP, zo ja --> battery koppelen aan elkaar en niet 2 GC en 2 actoren maken.
+GCGridBattery gridbattery;
+
+List<String> existing_actors = new ArrayList();
+List<String> existing_gridbatteries = new ArrayList();
+
+for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) {
+	if (!existing_gridbatteries.contains(dataBattery.gc_id())) { // Check if batteryGC exists already, if not, create new batter GC + EA
+		
+		//Add gridbattery gc
+		gridbattery = energyModel.add_GridBatteries();
+		
+		//GC parameters
+		gridbattery.set_p_gridConnectionID( dataBattery.gc_id () );
+		gridbattery.set_p_ownerID( dataBattery.owner_id() );
+		gridbattery.v_liveConnectionMetaData.physicalCapacity_kW = dataBattery.connection_capacity_kw();
+		
+		
+		//Set Address
+		gridbattery.p_address = new J_Address(dataBattery.streetname(), 
+										      dataBattery.house_number(), 
+										      dataBattery.house_letter(), 
+										      dataBattery.house_addition(), 
+										      dataBattery.postalcode(), 
+										      dataBattery.city());
+										     
+		//Check wether it can be changed using sliders
+		gridbattery.p_isSliderGC = dataBattery.isSliderGC();
+		
+		//Grid Capacity
+		gridbattery.v_liveConnectionMetaData.physicalCapacity_kW = dataBattery.connection_capacity_kw();
+		if ( dataBattery.connection_capacity_kw() > 0 ) {
+			gridbattery.v_liveConnectionMetaData.physicalCapacityKnown = true;
+		}
+		if ( dataBattery.contracted_delivery_capacity_kw() != null ) {
+			gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = dataBattery.contracted_delivery_capacity_kw();
+			gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
+		}
+		else {
+			gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = dataBattery.connection_capacity_kw();
+			gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
+		}
+		if ( dataBattery.contracted_feed_in_capacity_kw() != null ) {
+			gridbattery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataBattery.contracted_feed_in_capacity_kw();
+			gridbattery.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
+		}
+		else {
+			gridbattery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataBattery.connection_capacity_kw();
+			gridbattery.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;	
+		}
+		
+		//Set parent node electric
+		gridbattery.set_p_parentNodeElectricID( dataBattery.gridnode_id() );
 	
-	ConnectionOwner owner = energyModel.add_pop_connectionOwners();
-	GCGridBattery gridbattery = energyModel.add_GridBatteries();
 	
-	//Owner parameters
-	owner.set_p_actorID( dataBattery.owner_id() );
-	owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.BATTERY_OP );
-	owner.b_dataSharingAgreed = true;
-	
-	//GC parameters
-	gridbattery.set_p_gridConnectionID( dataBattery.gc_id () );
-	gridbattery.set_p_name( dataBattery.gc_name() );
-	gridbattery.set_p_ownerID( dataBattery.owner_id() );
-	gridbattery.set_p_owner( owner );	
-	gridbattery.v_liveConnectionMetaData.physicalCapacity_kW = dataBattery.connection_capacity_kw();
-	
-	//Check wether it can be changed using sliders
-	gridbattery.p_isSliderGC = dataBattery.isSliderGC();
-	
-	//Grid Capacity
-	gridbattery.v_liveConnectionMetaData.physicalCapacity_kW = dataBattery.connection_capacity_kw();
-	if ( dataBattery.connection_capacity_kw() > 0 ) {
-		gridbattery.v_liveConnectionMetaData.physicalCapacityKnown = true;
+		//Set default (initial) operation mode
+		switch (dataBattery.operation_mode()) {
+			case PRICE:
+				gridbattery.f_setBatteryManagement(new J_BatteryManagementPrice(gridbattery));
+				break;
+			case PEAK_SHAVING_PARENT_NODE:
+				J_BatteryManagementPeakShaving batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery);
+				GridNode gn = findFirst(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals(dataBattery.gridnode_id()));
+				if (gn == null) {
+					throw new RuntimeException("Could not find GridNode with ID: " + gridbattery.p_parentNodeElectricID + " for GCGridBattery");
+				}
+				batteryAlgorithm.setTarget(gn);
+				gridbattery.f_setBatteryManagement(batteryAlgorithm);
+				break;
+			case PEAK_SHAVING_COOP:
+				// target agent is still null, should be set at the moment of coop creation
+				batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery);
+				batteryAlgorithm.setTargetType( OL_ResultScope.ENERGYCOOP );
+				gridbattery.f_setBatteryManagement(batteryAlgorithm);
+				break;
+			default:
+				throw new RuntimeException("Battery Operation Mode: " + dataBattery.operation_mode() + " is not supported for GCGridBattery.");
+		}
+		
+		//Get initial state
+		gridbattery.v_isActive = dataBattery.initially_active();
+		
+		//Create energy asset for the battery
+		f_addStorage(gridbattery, dataBattery.capacity_electric_kw(), dataBattery.storage_capacity_kwh(), OL_EnergyAssetType.STORAGE_ELECTRIC );	
+		
+		
+		//Set owner
+		ConnectionOwner owner;
+		if (!existing_actors.contains(gridbattery.p_ownerID)){ // check if owner exists already, if not, create new owner.
+			owner = energyModel.add_pop_connectionOwners();
+			owner.set_p_actorID( gridbattery.p_ownerID );
+			owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.BATTERY_OP );
+			owner.b_dataSharingAgreed = true;
+			existing_actors.add(gridbattery.p_ownerID);
+		}
+		else { // Owner exists already: add new GC to existing owner
+			owner = findFirst(energyModel.f_getConnectionOwners(), p -> p.p_actorID.equals(dataBattery.owner_id()));
+		}
+		
+		gridbattery.set_p_owner( owner );
+		
+		existing_gridbatteries.add(gridbattery.p_gridConnectionID);
+		
 	}
-	if ( dataBattery.contracted_delivery_capacity_kw() != null ) {
-		gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = dataBattery.contracted_delivery_capacity_kw();
-		gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
+	else{
+		gridbattery = findFirst(energyModel.GridBatteries, p -> p.p_gridConnectionID.equals(dataBattery.gc_id()) );
 	}
-	else {
-		gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = dataBattery.connection_capacity_kw();
-		gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
-	}
-	if ( dataBattery.contracted_feed_in_capacity_kw() != null ) {
-		gridbattery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataBattery.contracted_feed_in_capacity_kw();
-		gridbattery.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
-	}
-	else {
-		gridbattery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataBattery.connection_capacity_kw();
-		gridbattery.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;	
-	}
-	
-	gridbattery.set_p_parentNodeElectricID( dataBattery.gridnode_id() );
-	//gridbattery.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
-	
-	switch (dataBattery.operation_mode()) {
-		case PRICE:
-			gridbattery.f_setBatteryManagement(new J_BatteryManagementPrice(gridbattery));
-			break;
-		case PEAK_SHAVING_PARENT_NODE:
-			J_BatteryManagementPeakShaving batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery);
-			GridNode gn = findFirst(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals(gridbattery.p_parentNodeElectricID));
-			if (gn == null) {
-				throw new RuntimeException("Could not find GridNode with ID: " + gridbattery.p_parentNodeElectricID + " for GCGridBattery");
-			}
-			batteryAlgorithm.setTarget(gn);
-			gridbattery.f_setBatteryManagement(batteryAlgorithm);
-			break;
-		case PEAK_SHAVING_COOP:
-			// target agent is still null, should be set at the moment of coop creation
-			batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery);
-			batteryAlgorithm.setTargetType( OL_ResultScope.ENERGYCOOP );
-			gridbattery.f_setBatteryManagement(batteryAlgorithm);
-			break;
-		default:
-			throw new RuntimeException("Battery Operation Mode: " + dataBattery.operation_mode() + " is not supported for GCGridBattery.");
-	}
-	
-	//Get initial state
-	gridbattery.v_isActive = dataBattery.initially_active();
 	
 	if (dataBattery.polygon() != null) {
 		//Create gis object for the battery
@@ -441,27 +480,29 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) { // M
 		area.set_p_defaultLineWidth( zero_Interface.v_energyAssetLineWidth);
 		zero_Interface.f_styleAreas(area);
 	}
-	//Create energy asset for the battery
-	f_addStorage(gridbattery, dataBattery.capacity_electric_kw(), dataBattery.storage_capacity_kwh(), OL_EnergyAssetType.STORAGE_ELECTRIC );	
-	
+
 }
 /*ALCODEEND*/}
 
 double f_createElectrolysers()
 {/*ALCODESTART::1726584205789*/
-ConnectionOwner owner;
 List<String> existing_actors = new ArrayList();
-
 
 for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electrolyser_data)) {
 	GCEnergyConversion H2Electrolyser = energyModel.add_EnergyConversionSites();
 
 	H2Electrolyser.set_p_gridConnectionID( dataElectrolyser.gc_id() );
-	H2Electrolyser.set_p_name( dataElectrolyser.gc_name() );
-	//H2Electrolyser.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
 	H2Electrolyser.set_p_ownerID( dataElectrolyser.owner_id() );	
 	H2Electrolyser.set_p_parentNodeElectricID( dataElectrolyser.gridnode_id() );
 	
+	//Set Address
+	H2Electrolyser.p_address = new J_Address(dataElectrolyser.streetname(), 
+										     dataElectrolyser.house_number(), 
+										     dataElectrolyser.house_letter(), 
+										     dataElectrolyser.house_addition(), 
+										     dataElectrolyser.postalcode(), 
+										     dataElectrolyser.city());
+
 	//Grid Capacity
 	H2Electrolyser.v_liveConnectionMetaData.physicalCapacity_kW = dataElectrolyser.connection_capacity_kw();
 	if ( dataElectrolyser.connection_capacity_kw() > 0 ) {
@@ -495,12 +536,15 @@ for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electro
 	//Create EA for the electrolyser GC
 	J_EAConversionElectrolyser h2ElectrolyserEA = new J_EAConversionElectrolyser(H2Electrolyser, dataElectrolyser.capacity_electric_kw(), dataElectrolyser.conversion_efficiency(), energyModel.p_timeStep_h, OL_ElectrolyserState.STANDBY, dataElectrolyser.load_change_time_s(), dataElectrolyser.start_up_time_shutdown_s(), dataElectrolyser.start_up_time_standby_s(), dataElectrolyser.start_up_time_idle_s());
 	
+	//Set owner
+	ConnectionOwner owner;
 	if (!existing_actors.contains(H2Electrolyser.p_ownerID)){ // check if owner exists already, if not, create new owner.
 		owner = energyModel.add_pop_connectionOwners();
 		
 		owner.set_p_actorID( H2Electrolyser.p_ownerID );
 		owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.ELECTROLYSER_OP );
 		owner.b_dataSharingAgreed = true;
+		existing_actors.add(H2Electrolyser.p_ownerID);
 	}
 	else { // Owner exists already: add new GC to existing owner
 		owner = findFirst(energyModel.f_getConnectionOwners(), p -> p.p_actorID.equals(dataElectrolyser.owner_id()));
@@ -528,7 +572,6 @@ for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electro
 
 double f_createWindFarms()
 {/*ALCODESTART::1726584205791*/
-ConnectionOwner owner;
 GCEnergyProduction windfarm;
 
 List<String> existing_actors = new ArrayList();
@@ -539,7 +582,14 @@ for (Windfarm_data dataWindfarm : f_getWindfarmsInSubScope(c_windfarm_data)) {
 		windfarm = energyModel.add_EnergyProductionSites();
 
 		windfarm.set_p_gridConnectionID( dataWindfarm.gc_id() );
-		windfarm.set_p_name( dataWindfarm.gc_name() );
+		
+		//Set Address
+		windfarm.p_address = new J_Address(dataWindfarm.streetname(), 
+										   dataWindfarm.house_number(), 
+										   dataWindfarm.house_letter(), 
+										   dataWindfarm.house_addition(), 
+										   dataWindfarm.postalcode(), 
+										   dataWindfarm.city());
 
 		//Check wether it can be changed using sliders
 		windfarm.p_isSliderGC = dataWindfarm.isSliderGC();
@@ -568,13 +618,15 @@ for (Windfarm_data dataWindfarm : f_getWindfarmsInSubScope(c_windfarm_data)) {
 		//Create EA for the windturbine GC
 		f_addEnergyProduction(windfarm, OL_EnergyAssetType.WINDMILL, "Windmill onshore", dataWindfarm.capacity_electric_kw());
 		
+		//Set owner
+		ConnectionOwner owner;
 		if (!existing_actors.contains(windfarm.p_ownerID)){ // check if owner exists already, if not, create new owner.
 			owner = energyModel.add_pop_connectionOwners();
 			
 			owner.set_p_actorID( windfarm.p_ownerID );
-			//owner.set_p_actorType( OL_ActorType.CONNECTIONOWNER );
 			owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.WINDFARM_OP );
 			owner.b_dataSharingAgreed = true;
+			existing_actors.add(windfarm.p_ownerID);
 		}
 		else { // Owner exists already: add new GC to existing owner
 			owner = findFirst(energyModel.f_getConnectionOwners(), p -> p.p_actorID.equals(dataWindfarm.owner_id()));
@@ -585,9 +637,7 @@ for (Windfarm_data dataWindfarm : f_getWindfarmsInSubScope(c_windfarm_data)) {
 		existing_windFarms.add(windfarm.p_gridConnectionID);	
 	}
 	else { // winfarm and its owner exist already, only create new gis building which is added to the farm
-		windfarm = findFirst(energyModel.EnergyProductionSites, p -> p.p_gridConnectionID.equals(dataWindfarm.gc_id()) );
-		owner = windfarm.p_owner;		
-
+		windfarm = findFirst(energyModel.EnergyProductionSites, p -> p.p_gridConnectionID.equals(dataWindfarm.gc_id()) );		
 	}
 	
 	//Create GIS object for the windfarm
@@ -787,18 +837,12 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		companyGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
 
 		//set GC Adress
-		companyGC.p_address = new J_Address();
-		companyGC.p_address.setStreetName(genericCompany.streetname());
-		if (genericCompany.house_number() == null) {
-			companyGC.p_address.setHouseNumber(0);
-		}
-		else {
-			companyGC.p_address.setHouseNumber(genericCompany.house_number());
-		}
-		companyGC.p_address.setHouseLetter(genericCompany.house_letter());
-		companyGC.p_address.setHouseAddition(genericCompany.house_addition());
-		companyGC.p_address.setPostalcode(genericCompany.postalcode());
-		companyGC.p_address.setCity(genericCompany.city());
+		companyGC.p_address = new J_Address(genericCompany.streetname(), 
+										    genericCompany.house_number(), 
+										    genericCompany.house_letter(), 
+										    genericCompany.house_addition(), 
+										    genericCompany.postalcode(), 
+										    genericCompany.city());
 		
 		
 		//Set location of GC
@@ -888,7 +932,7 @@ b.p_useType = buildingData.purpose();
 b.p_annotation = buildingData.annotation();
 
 //Create gisregion
-b.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(buildingData.polygon(), b.p_GISObjectType));
+b.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectTokens(buildingData.polygon(), b.p_GISObjectType));
 
 //Use the first point of the polygon as lat lon
 double[] gisregion_points = b.gisRegion.getPoints(); // get all points of the gisArea of the building in the format lat1,lon1,lat2,lon2, etc.
@@ -984,7 +1028,7 @@ for (Parcel_data dataParcel : c_parcel_data) {
 	parcel.set_p_GISObjectType(OL_GISObjectType.PARCEL);
 	
 	//Building + styling the gisregion and putting it on the map
-	GISRegion gisregion = zero_Interface.f_createGISObject(f_createGISObjectsTokens( dataParcel.polygon(), parcel.p_GISObjectType));
+	GISRegion gisregion = zero_Interface.f_createGISObject(f_createGISObjectTokens( dataParcel.polygon(), parcel.p_GISObjectType));
 	parcel.gisRegion = gisregion;
 	
 	parcel.set_p_defaultFillColor( zero_Interface.v_parcelColor );
@@ -1031,6 +1075,7 @@ GIS_Object f_createGISObject(String name,double latitude,double longitude,String
 GIS_Object area = energyModel.add_pop_GIS_Objects();
 
 area.p_id = name;
+area.p_annotation = area.p_id;
 area.p_GISObjectType = GISObjectType;
 
 //position and coordinates
@@ -1039,7 +1084,7 @@ area.p_longitude = longitude;
 area.setLatLon(area.p_latitude, area.p_longitude);		
 
 //Create gisregion
-area.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(polygon, area.p_GISObjectType));
+area.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectTokens(polygon, area.p_GISObjectType));
 
 //Add GISObject type to the legenda
 zero_Interface.c_modelActiveSpecialGISObjects.add(area.p_GISObjectType);
@@ -1103,13 +1148,12 @@ for (var survey : surveys) {
 			companyGC.p_owner = survey_owner;	
 			
 			//Adress data
-			companyGC.p_address = new J_Address();
-			companyGC.p_address.setStreetName(address.getStreet().substring(0,1).toUpperCase() + address.getStreet().substring(1).toLowerCase());
-		 	companyGC.p_address.setHouseNumber(address.getHouseNumber());
-		 	companyGC.p_address.setHouseLetter(address.getHouseLetter().equals("") ? null : address.getHouseLetter());
-		 	companyGC.p_address.setHouseAddition(address.getHouseNumberSuffix().equals("") ? null : address.getHouseNumberSuffix());
-		 	companyGC.p_address.setPostalcode(address.getPostalCode().equals("") ? null : address.getPostalCode().toUpperCase().replaceAll("\\s",""));
-		 	companyGC.p_address.setCity(address.getCity().substring(0,1).toUpperCase() + address.getCity().substring(1).toLowerCase());
+			companyGC.p_address = new J_Address(address.getStreet(), 
+								    address.getHouseNumber(), 
+								    address.getHouseLetter(), 
+								    address.getHouseNumberSuffix(), 
+								    address.getPostalCode(), 
+								    address.getCity());
 
 			//Get attached building info
 			List<Building_data> buildings = f_getSurveyGCBuildingData(companyGC, gridConnection);
@@ -1342,7 +1386,7 @@ if (!isDefaultVehicle && maxChargingPower_kW <= 0) {
 //Create the EV vehicle energy asset with the set parameters + links
 J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timestep_h, energyConsumption_kWhpkm, vehicleScaling, vehicle_type, null);	
 
-if (!isDefaultVehicle && annualTravelDistance_km > 1000){
+if (!isDefaultVehicle && annualTravelDistance_km > avgc_data.p_minAnnualTravelDistanceSurveyVehicle_km){
 		electricVehicle.tripTracker.setAnnualDistance_km(annualTravelDistance_km);
 }
 else if (vehicle_type == OL_EnergyAssetType.ELECTRIC_VAN){
@@ -1377,7 +1421,7 @@ switch (vehicle_type){
 J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(parentGC, energyConsumption_kWhpkm, energyModel.p_timeStep_h, vehicleScaling, vehicle_type, null);
 
 //Set annual travel distance
-if (!isDefaultVehicle && annualTravelDistance_km > 1000){
+if (!isDefaultVehicle && annualTravelDistance_km > avgc_data.p_minAnnualTravelDistanceSurveyVehicle_km){
 		petroleumFuelVehicle.tripTracker.setAnnualDistance_km(annualTravelDistance_km);
 }
 else if (vehicle_type == OL_EnergyAssetType.PETROLEUM_FUEL_VAN){
@@ -1570,7 +1614,7 @@ for (Building_data remainingBuilding_data : c_remainingBuilding_data) {
 	building.p_GISObjectType = OL_GISObjectType.REMAINING_BUILDING;
 	
 	//Building + styling the gisregion and putting it on the map		
-	building.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(remainingBuilding_data.polygon(), building.p_GISObjectType));
+	building.gisRegion = zero_Interface.f_createGISObject(f_createGISObjectTokens(remainingBuilding_data.polygon(), building.p_GISObjectType));
 	
 	building.p_defaultFillColor = zero_Interface.v_restBuildingColor;
 	building.p_defaultLineColor = zero_Interface.v_restBuildingLineColor;
@@ -1603,7 +1647,7 @@ switch (vehicle_type){
 J_EAHydrogenVehicle hydrogenVehicle = new J_EAHydrogenVehicle(parentGC, energyConsumption_kWhpkm, energyModel.p_timeStep_h, vehicleScaling, vehicle_type, null);
 
 //Set annual travel distance
-if (!isDefaultVehicle && annualTravelDistance_km > 1000){
+if (!isDefaultVehicle && annualTravelDistance_km > avgc_data.p_minAnnualTravelDistanceSurveyVehicle_km){
 		hydrogenVehicle.tripTracker.setAnnualDistance_km(annualTravelDistance_km);
 }
 else if (vehicle_type == OL_EnergyAssetType.HYDROGEN_VAN){
@@ -1619,22 +1663,23 @@ List<Double> quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + 
 profile.a_energyProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> max(0,d)).map( d -> d / 4).toArray();
 /*ALCODEEND*/}
 
-GISRegion f_createGISRegionChargingStation(double lat,double lon)
+String f_createChargerPolygon(double lat,double lon)
 {/*ALCODESTART::1726584205847*/
-//create shape Coords
+//Create shape coords and polygon string, that matches output of QGIS: Polygon(lon,lat,lon,lat, etc.)
 int nb_points = 6;
-double[] GISCoords = new double[nb_points * 2];
+String chargerPolygon = "POLYGON ((";
 
 for (int i=0; i < nb_points ; i++){
+	if(i > 0){
+		chargerPolygon += ",";
+	}
 	double size = 0.00004;
-	GISCoords[i * 2] = size * cos( i * ( 2 * Math.PI ) / nb_points) + lat;
-	GISCoords[i * 2 + 1] = 1.64 * size * sin( i * ( 2 * Math.PI ) / nb_points) + lon;
+	chargerPolygon += 1.64 * size * sin( i * ( 2 * Math.PI ) / nb_points) + lon;
+	chargerPolygon += ",";
+	chargerPolygon += size * cos( i * ( 2 * Math.PI ) / nb_points) + lat;
 }
 
-//Create the region
-GISRegion gisregion = zero_Interface.f_createGISObject( GISCoords );
-
-return gisregion;
+return chargerPolygon;
 
 /*ALCODEEND*/}
 
@@ -1648,10 +1693,16 @@ int laadstation_nr = 1;
 for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(c_chargingstation_data)){
 
 	GCPublicCharger chargingStation = energyModel.add_PublicChargers();
-
 	chargingStation.set_p_gridConnectionID( dataChargingStation.gc_id());
-	chargingStation.set_p_name( dataChargingStation.gc_name() );
 	
+	//Set Address
+	chargingStation.p_address = new J_Address(dataChargingStation.streetname(), 
+											  dataChargingStation.house_number(), 
+											  dataChargingStation.house_letter(), 
+											  dataChargingStation.house_addition(), 
+											  dataChargingStation.postalcode(), 
+											  dataChargingStation.city());
+											
 	//Electric Capacity
 	if (dataChargingStation.connection_capacity_kw() != null) {
 		// Assume the connection capacity is both physical and contracted.
@@ -1710,7 +1761,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 			new J_EAChargingSession(chargingStation, chargerProfile, 1);
 		}
 		else{
-			for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerChargePoint; k++ ){
+			for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerCharger_Centre; k++ ){
 				f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
 			}
 		}
@@ -1734,7 +1785,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 			zero_Interface.f_styleAreas(area);
 		}
 		else{
-			traceln("No gisobject created for charge centre: " + chargingStation.p_name);
+			traceln("No gisobject created for charge centre: " + chargingStation.p_gridConnectionID);
 		}
 	}
 	else {
@@ -1761,39 +1812,29 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 			new J_EAChargingSession(chargingStation, chargerProfile, 1);
 		}
 		else{
-			for(int k = 0; k < avgc_data.p_avgVehiclesPerChargePoint; k++ ){
+			for(int k = 0; k < avgc_data.p_avgVehiclesPerCharger_Chargepoint; k++ ){
 				f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
 			}
 		}
 		
 		
-		//Create GIS object for the chargingStation			
-		GIS_Object area = energyModel.add_pop_GIS_Objects();
-
-		//position and coordinates
-		area.p_latitude = dataChargingStation.latitude();
-		area.p_longitude = dataChargingStation.longitude();
-		area.setLatLon(area.p_latitude, area.p_longitude);		
+		//Create GIS object for the chargingStation	
+		String polygonString = f_createChargerPolygon(dataChargingStation.latitude(), dataChargingStation.longitude());
+		GIS_Object gisregion = f_createGISObject(dataChargingStation.gc_name(), dataChargingStation.latitude(), dataChargingStation.longitude(), polygonString, OL_GISObjectType.CHARGER);		
 		
-		//Create gisregion
-		area.gisRegion = f_createGISRegionChargingStation( area.p_latitude, area.p_longitude );	
+		//Add to collections
+		chargingStation.c_connectedGISObjects.add(gisregion);
+		gisregion.c_containedGridConnections.add(chargingStation);
 		
-		//Set area type
-		area.p_GISObjectType = OL_GISObjectType.CHARGER;
-	
-		chargingStation.c_connectedGISObjects.add(area);
-		area.c_containedGridConnections.add(chargingStation);
 		if(chargingStation.v_isActive){
-			area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
-			area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
+			gisregion.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
+			gisregion.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
 		}
 		else{
-			area.set_p_defaultFillColor( zero_Interface.v_newChargingStationColor );
-			area.set_p_defaultLineColor( zero_Interface.v_newChargingStationLineColor );
+			gisregion.set_p_defaultFillColor( zero_Interface.v_newChargingStationColor );
+			gisregion.set_p_defaultLineColor( zero_Interface.v_newChargingStationLineColor );
 		}
-		zero_Interface.f_styleAreas(area);
-	
-		zero_Interface.c_modelActiveSpecialGISObjects.add(area.p_GISObjectType);
+		zero_Interface.f_styleAreas(gisregion);
 	}	
 }
 
@@ -1814,7 +1855,7 @@ for (Cable_data dataCable : c_cable_data) {
 	if(dataCable.line().contains("Multi")){
 		continue;
 	}
-	zero_Interface.f_createGISLine(f_createGISObjectsTokens(dataCable.line(), dataCable.type()), dataCable.type());
+	zero_Interface.f_createGISLine(f_createGISObjectTokens(dataCable.line(), dataCable.type()), dataCable.type());
 }
 /*ALCODEEND*/}
 
@@ -2000,20 +2041,19 @@ double f_clearDataRecords()
 
 /*
 genericProfiles_data = null;
-c_GridNode_data.clear();
-c_SurveyCompanyBuilding_data.clear();
-c_GenericCompanyBuilding_data.clear();
-c_HouseBuilding_data.clear();
+c_gridNode_data.clear();
+c_companyBuilding_data.clear();
+c_houseBuilding_data.clear();
 c_remainingBuilding_data.clear();
-c_Solarfarm_data.clear();
-c_Windfarm_data.clear();
-c_Electrolyser_data.clear();
-c_Battery_data.clear();
-c_Chargingstation_data.clear();
-c_Neighbourhood_data.clear();
-c_Parcel_data.clear();
-c_Cable_data_LV.clear();
-c_Cable_data_MV.clear();
+c_solarfarm_data.clear();
+c_windfarm_data.clear();
+c_electrolyser_data.clear();
+c_battery_data.clear();
+c_chargingstation_data.clear();
+c_neighbourhood_data.clear();
+c_parkingSpace_data.clear();
+c_parcel_data.clear();
+c_cable_data.clear();
 */
 
 /*ALCODEEND*/}
@@ -2683,7 +2723,7 @@ com.zenmo.bag.Pand pand_data_vallum = map_buildingData_Vallum.get(PandID);
 Building_data building_data_record = null;
 if(pand_data_vallum != null){ // Only happens if building has been selected in survey, that is no longer available in BAG (Destroyed for example).
 	//Calculate surface area
-	GISRegion gisRegion = zero_Interface.f_createGISObject(f_createGISObjectsTokens(pand_data_vallum.getGeometry().toString(), OL_GISObjectType.BUILDING));
+	GISRegion gisRegion = zero_Interface.f_createGISObject(f_createGISObjectTokens(pand_data_vallum.getGeometry().toString(), OL_GISObjectType.BUILDING));
 	double surfaceArea_m2 = gisRegion.area();
 	gisRegion.remove();
 	
@@ -2774,7 +2814,8 @@ if (timeSeries == null) {
 }
 
 if (!timeSeries.hasNumberOfValuesForOneYear()) {
-	traceln("Time series has too few values for one year");
+	String errorString = "Time series has too few values for one year";
+	System.err.println(errorString);
 	return null;
 }
 
@@ -3055,7 +3096,7 @@ if(sliderWindfarm_data == null){
 }
 if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 	for(GridNode_data nodeData : c_gridNode_data){
-		f_addSliderBattery(zero_Interface.p_defaultMainSliderGCName_battery, nodeData.gridnode_id());
+		f_addSliderBattery(zero_Interface.p_defaultMainSliderGCName_battery + " " + nodeData.gridnode_id(), nodeData.gridnode_id());
 	}
 }
 else{
@@ -3261,89 +3302,80 @@ else{
 return chargerProfile;
 /*ALCODEEND*/}
 
-double f_addCookingAsset(GCHouse gc,OL_EnergyAssetType CookingType,double yearlyCookingDemand_kWh)
+double f_addCookingAsset(GCHouse GC,OL_EnergyAssetType CookingType,double yearlyCookingDemand_kWh)
 {/*ALCODESTART::1749726189312*/
-switch(CookingType){
+if(yearlyCookingDemand_kWh <= 0){
+	throw new RuntimeException("Trying to create a cooking asset, without specifying the yearly energy consumption");
+}
 
+switch(CookingType){
 	case ELECTRIC_HOB:
-		new J_EAConsumption(gc, OL_EnergyAssetType.ELECTRIC_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeStep_h, null);
-		gc.p_cookingMethod = OL_HouseholdCookingMethod.ELECTRIC;
+		new J_EAConsumption(GC, OL_EnergyAssetType.ELECTRIC_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeStep_h, null);
+		GC.p_cookingMethod = OL_HouseholdCookingMethod.ELECTRIC;
 		break;
 		
 	case GAS_PIT:
-		new J_EAConsumption(gc, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeStep_h, null);
-		gc.p_cookingMethod = OL_HouseholdCookingMethod.GAS;
+		new J_EAConsumption(GC, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeStep_h, null);
+		GC.p_cookingMethod = OL_HouseholdCookingMethod.GAS;
 		break;
 }
 /*ALCODEEND*/}
 
-double f_addHotWaterDemand(GCHouse houseGC,double surface_m2)
+double f_addHotWaterDemand(GridConnection GC,double yearlyHWD_kWh)
 {/*ALCODESTART::1749726279652*/
-int aantalBewoners;
-if( surface_m2 > 150){
-	aantalBewoners = uniform_discr(2,6);
+if(yearlyHWD_kWh <= 0){
+	throw new RuntimeException("Trying to create a DHW asset, without specifying the yearly energy consumption");
 }
-else if (surface_m2 > 50){
-	aantalBewoners = uniform_discr(1,4);
-}
-else {
-	aantalBewoners = uniform_discr(1,2);
-}
- 
-double yearlyHWD_kWh = aantalBewoners * 600;  //12 * surface_m2 * 3 ; Tamelijk willekeurige formule om HWD te schalen tussen 600 - 2400 kWh bij 50m2 tot 200m2, voor een quickfix
 
-J_EAConsumption hotwaterDemand = new J_EAConsumption( houseGC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, null);
-
-if( surface_m2 > 200){
-	//traceln("House created with " + surface_m2 + "m2 surace area, will have large hot water demand");
-}
-if (surface_m2 < 25){
-	//traceln("House created with " + surface_m2 + "m2 surace area, will have low hot water demand");
-}
+J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, null);
 /*ALCODEEND*/}
 
-double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2)
+double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,Double heatDemand_kwhpa,J_HeatingPreferences heatingPreferences)
 {/*ALCODESTART::1749727623536*/
 double maxPowerHeat_kW = 1000; 				//Dit is hoeveel vermogen het huis kan afgeven/opnemen, mag willekeurige waarden hebben. Wordt alleen gebruikt in rekenstap van ratio of capacity
-double lossfactor_WpK; 						//Dit is wat bepaalt hoeveel warmte het huis verliest/opneemt per tijdstap per delta_T
-double initialTemp = uniform_discr(15,22); 	//starttemperatuur
+double lossFactor_WpK; 						//Dit is wat bepaalt hoeveel warmte het huis verliest/opneemt per tijdstap per delta_T
+double initialTemp_degC = heatingPreferences.getCurrentPreferedTemperatureSetpoint_degC(0);
+double buildingCooldownPeriod_hr;
 double heatCapacity_JpK; 					//hoeveel lucht zit er in je huis dat je moet verwarmen?
 double solarAbsorptionFactor_m2; 	//hoeveel m2 effectieve dak en muur oppervlakte er is dat opwarmt door zonneinstraling
 
-switch (parentGC.p_energyLabel){
-	case A:
-		lossfactor_WpK = 0.35 * floorArea_m2;
-	break;
-	case B:
-		lossfactor_WpK = 0.45 * floorArea_m2;
-	break;
-	case C:
-		lossfactor_WpK = 0.65 * floorArea_m2;
-	break;
-	case D:
-		lossfactor_WpK = 0.85 * floorArea_m2;
-	break;
-	case E:
-		lossfactor_WpK = 1.05 * floorArea_m2;
-	break;
-	case F:
-		lossfactor_WpK = 1.25 * floorArea_m2;
-	break;
-	case G:
-		lossfactor_WpK = 1.45 * floorArea_m2;
-	break;
-	case NONE:
-	default:
-		lossfactor_WpK = uniform (0.85, 1.2) * floorArea_m2;
+//Determine the heat loss factor based on yearly energy energy consumption for heating or energyLabel
+if(heatDemand_kwhpa != null && heatDemand_kwhpa > 0){
+	lossFactor_WpK = heatDemand_kwhpa / avgc_data.p_PBL_HeatingLossFactor_fr;
+}
+else{
+	switch (parentGC.p_insulationLabel){
+		case NONE:
+		case UNKNOWN:
+			lossFactor_WpK = uniform (avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(OL_GridConnectionInsulationLabel.D), avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(OL_GridConnectionInsulationLabel.G)) * floorArea_m2;
+			break;
+		default:
+			lossFactor_WpK = avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(parentGC.p_insulationLabel);
+	}
 }
 
-lossfactor_WpK = roundToDecimal(lossfactor_WpK,2);
-solarAbsorptionFactor_m2 = floorArea_m2 * 0.01; //solar irradiance [W/m2]
- 
-heatCapacity_JpK = floorArea_m2 * 50000;
+//Determine the solar absortion factor_m2 based on floor surface.
+solarAbsorptionFactor_m2 = floorArea_m2 * avgc_data.p_solarAbsorptionFloorSurfaceScalingFactor_fr; //solar irradiance [W/m2]
 
-parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossfactor_WpK, energyModel.p_timeStep_h, initialTemp, heatCapacity_JpK, solarAbsorptionFactor_m2 );
-energyModel.c_ambientDependentAssets.add( parentGC.p_BuildingThermalAsset );
+//Determine the heat capacity of the building based on a cooldown period
+/*
+switch (parentGC.p_insulationLabel){
+		case NONE:
+		case UNKNOWN:
+			buildingCooldownPeriod_hr = uniform (avgc_data.map_insulationLabel_cooldownPeriod_hr.get(OL_GridConnectionInsulationLabel.D), avgc_data.map_insulationLabel_cooldownPeriod_hr.get(OL_GridConnectionInsulationLabel.G));
+			break;
+		default:
+			buildingCooldownPeriod_hr = avgc_data.map_insulationLabel_cooldownPeriod_hr.get(parentGC.p_insulationLabel);
+}
+heatCapacity_JpK = buildingCooldownPeriod_hr * lossFactor_WpK * 3600;
+*/
+
+//Determine the heat capacity of the building based on the floor surface and some factors
+heatCapacity_JpK = (avgc_data.p_heatCapacitySizingSlope_JpKm2 * floorArea_m2 + avgc_data.p_heatCapacitySizingConstant_JpK) * avgc_data.p_heatCapacitySizingFactor_fr;
+
+//Create the thermal building asset
+parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossFactor_WpK, energyModel.p_timeStep_h, initialTemp_degC, heatCapacity_JpK, solarAbsorptionFactor_m2 );
+
 
 //FOR NOW DEFAULT NO INTERIOR/EXTERIOR HEAT BUFFERS -> NOT NECESSARY
 /*
@@ -3412,50 +3444,61 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.p_purposeBAG = houseBuildingData.purpose();
 	
 	//pand gegevens
-	GCH.p_bouwjaar = houseBuildingData.build_year();
+	GCH.p_buildYear = houseBuildingData.build_year();
 	GCH.p_eigenOprit = houseBuildingData.has_private_parking() != null ? houseBuildingData.has_private_parking() : false;
 	
-	//Nageisoleerd
+	//PBL heating
+	if(houseBuildingData.pbl_data_available()){
+		GCH.p_PBLParameters = new J_PBLParameters(houseBuildingData.dwelling_type(), 
+												  houseBuildingData.ownership_type(),  
+												  houseBuildingData.insulation_label(), 
+												  houseBuildingData.local_factor(), 
+												  houseBuildingData.regional_climate_correction_factor());
+	}
+	
+	
+	//Energylabel and InsulationLabel
 	if (houseBuildingData.energy_label() != null) {
-		GCH.p_energyLabel = houseBuildingData.energy_label();
-	}
+	    GCH.p_energyLabel = houseBuildingData.energy_label();
+	    GCH.p_insulationLabel = houseBuildingData.insulation_label() != null ? houseBuildingData.insulation_label() : OL_GridConnectionInsulationLabel.valueOf(GCH.p_energyLabel.toString());
+	} 
+	else if (houseBuildingData.insulation_label() != null) {
+	    GCH.p_insulationLabel = houseBuildingData.insulation_label();
+	    GCH.p_energyLabel = OL_GridConnectionEnergyLabel.valueOf(GCH.p_insulationLabel.toString());
+	} 
 	else {
-		if (GCH.p_bouwjaar < 1980) {
-			GCH.p_energyLabel = OL_GridConnectionIsolationLabel.D;
-		}
-		else if (GCH.p_bouwjaar < 2000) {
-			GCH.p_energyLabel = OL_GridConnectionIsolationLabel.C;
-		}
-		else if (GCH.p_bouwjaar < 2015) {
-			GCH.p_energyLabel = OL_GridConnectionIsolationLabel.B;
-		}
-		else {
-			GCH.p_energyLabel = OL_GridConnectionIsolationLabel.A;
-		}
+	    GCH.p_energyLabel = f_estimateEnergyLabel(GCH.p_buildYear);
+	    GCH.p_insulationLabel = OL_GridConnectionInsulationLabel.valueOf(GCH.p_energyLabel.toString());
 	}
-	//aansluiting gegevens
-	GCH.v_liveConnectionMetaData.physicalCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
-	GCH.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
-	GCH.v_liveConnectionMetaData.contractedFeedinCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
 	
-	GCH.v_liveConnectionMetaData.physicalCapacityKnown = false;
-	GCH.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
-	GCH.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
-	
-	// Address data
-	GCH.p_address = new J_Address();
- 	GCH.p_address.setStreetName( houseBuildingData.streetname());						 	
- 	if (houseBuildingData.house_number() == null) {
- 		GCH.p_address.setHouseNumber( 0 );
- 	} else {
- 		GCH.p_address.setHouseNumber( houseBuildingData.house_number()); 
- 	}
- 	GCH.p_address.setHouseLetter( houseBuildingData.house_letter());
- 	GCH.p_address.setHouseAddition( houseBuildingData.house_addition());
- 	GCH.p_address.setPostalcode( houseBuildingData.postalcode());					 	
- 	GCH.p_address.setCity( houseBuildingData.city());
+	//Connection data
+	if(houseBuildingData.contracted_capacity_kw() != null && houseBuildingData.contracted_capacity_kw() > 0){
+		GCH.v_liveConnectionMetaData.physicalCapacity_kW = houseBuildingData.contracted_capacity_kw();
+		GCH.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = houseBuildingData.contracted_capacity_kw();
+		GCH.v_liveConnectionMetaData.contractedFeedinCapacity_kW = houseBuildingData.contracted_capacity_kw();
+		GCH.v_liveConnectionMetaData.physicalCapacityKnown = true;
+		GCH.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
+		GCH.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
+	}
+	else{
+		GCH.v_liveConnectionMetaData.physicalCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
+		GCH.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
+		GCH.v_liveConnectionMetaData.contractedFeedinCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
+		GCH.v_liveConnectionMetaData.physicalCapacityKnown = false;
+		GCH.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
+		GCH.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
+	}
 
-	//locatie
+	
+	//Address data
+	GCH.p_address = new J_Address(houseBuildingData.streetname(), 
+							      houseBuildingData.house_number(), 
+							      houseBuildingData.house_letter(), 
+							      houseBuildingData.house_addition(), 
+							      houseBuildingData.postalcode(), 
+							      houseBuildingData.city());
+
+	//Location
 	GCH.p_longitude = houseBuildingData.longitude();
 	GCH.p_latitude = houseBuildingData.latitude();
 	GCH.setLatLon(GCH.p_latitude, GCH.p_longitude);
@@ -3489,19 +3532,14 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	//Floor surface of GC
 	GCH.p_floorSurfaceArea_m2 = houseBuildingData.address_floor_surface_m2();
 	
-	//Get energy totals
-	double yearlyElectricityConsumption_kWh = houseBuildingData.electricity_consumption_kwhpa() != null ? houseBuildingData.electricity_consumption_kwhpa() :  avgc_data.p_avgHouseElectricityConsumption_kWh_yr;//Double.valueOf(uniform_discr(1200, 3800));
-	double yearlyGasConsumption_m3 = houseBuildingData.gas_consumption_m3pa() != null ? houseBuildingData.gas_consumption_m3pa() :  avgc_data.p_avgHouseGasConsumption_m3_yr;//Double.valueOf(uniform_discr(600, 2000);
-
-	
-	//GCH.p_initialPVpanels = houseBuildingData.pv_default();
+	//Set PV information
 	GCH.v_liveAssetsMetaData.initialPV_kW = houseBuildingData.pv_installed_kwp() != null ? houseBuildingData.pv_installed_kwp() : 0;
 	GCH.v_liveAssetsMetaData.PVPotential_kW = GCH.v_liveAssetsMetaData.initialPV_kW > 0 ? GCH.v_liveAssetsMetaData.initialPV_kW : houseBuildingData.pv_potential_kwp(); // To prevent sliders from changing outcomes
 
-	// TODO: Above we load in data of gas use, but the houses always have a thermal model??
-	f_addEnergyAssetsToHouses(GCH, yearlyElectricityConsumption_kWh );	
+	//Create and add EnergyAssets
+	f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa());	
 	
-	i ++;
+	i++;
 }
 
 //Backup for when pv_potential kWp is null, needs to be after all houses have been made, so rooftop surface is distributed correctly
@@ -3514,32 +3552,22 @@ for(GCHouse GCH : energyModel.Houses){
 
 /*ALCODEEND*/}
 
-double f_addEnergyAssetsToHouses(GCHouse house,double jaarlijksElectriciteitsVerbruik)
+double f_addEnergyAssetsToHouses(GCHouse house,Double electricityDemand_kwhpa,Double gasDemand_m3pa)
 {/*ALCODESTART::1749728889986*/
 //Add generic electricity demand profile 
 GridNode gn = findFirst(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals( house.p_parentNodeElectricID));
+
 if ( ! gn.p_hasProfileData ){
-	f_addElectricityDemandProfile(house, jaarlijksElectriciteitsVerbruik, null, false, "default_house_electricity_demand_fr");
+	if(electricityDemand_kwhpa == null){
+		electricityDemand_kwhpa = uniform(avgc_data.p_avgHouseElectricityConsumption_kWh_yr - avgc_data.p_maxAvgHouseElectricityConsumptionOffset_kWhpa, 
+										  avgc_data.p_avgHouseElectricityConsumption_kWh_yr + avgc_data.p_maxAvgHouseElectricityConsumptionOffset_kWhpa);
+	}
+	f_addElectricityDemandProfile(house, electricityDemand_kwhpa, null, false, "default_house_electricity_demand_fr");
 }
 
-//Add building heat model and asset
-f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2);
 
-//Determine required heating capacity for the heating asset	
-double maximalTemperatureDifference_K = 30.0; // Approximation
-double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000;
-
-
-//Add heat demand profile
-OL_GridConnectionHeatingType heatingType = avgc_data.p_avgHouseHeatingMethod;
-f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
-house.f_addHeatManagement(heatingType, false);
-house.f_setHeatingPreferences(f_getHouseHeatingPreferences());
-
-//Add hot water and cooking demand
-f_addHotWaterDemand(house, house.p_floorSurfaceArea_m2);
-double yearlyCookingDemand_kWh = uniform_discr(200,600);
-f_addCookingAsset(house, OL_EnergyAssetType.GAS_PIT, yearlyCookingDemand_kWh);
+//Add Heating assets: Spaceheating, DHW and cooking
+f_addHeatAssetsToHouses(house, gasDemand_m3pa);
 
 
 //Add pv
@@ -4884,5 +4912,182 @@ energyModel.p_timeParameters = new J_TimeParameters(
 	startOfSummerWeek_h,
 	startOfWinterWeek_h
 );
+/*ALCODEEND*/}
+
+double f_getSpaceHeatingDemand_PBL_kWh(double floorSurfaceArea_m2,PBL_SpaceHeatingAndResidents_data spaceHeatingObjectPBL,double localFactor,double regionalClimateCorrectionFactor)
+{/*ALCODESTART::1768308906995*/
+//Get the slope and constant from the PBL data
+double slope_m3pm2pa = spaceHeatingObjectPBL.slope_space_heating_gas_m3pm2a();
+double constant_m3pa = spaceHeatingObjectPBL.constant_space_heating_gas_m3pa();
+
+//Determine the space heating gas demand based on the floor surface
+double functionalSpaceHeatingDemand_m3pa = floorSurfaceArea_m2 * slope_m3pm2pa + constant_m3pa;
+
+//Convert to kwh and multiply by the local and climate factors
+double functionalSpaceHeatingDemand_kWh = functionalSpaceHeatingDemand_m3pa * avgc_data.p_gas_kWhpm3 * localFactor * regionalClimateCorrectionFactor ;
+return functionalSpaceHeatingDemand_kWh;
+/*ALCODEEND*/}
+
+PBL_SpaceHeatingAndResidents_data f_getPBLObject_spaceHeatingAndResidents(OL_PBL_DwellingType dwellingType,int buildYear,OL_PBL_OwnershipType ownershipType,OL_GridConnectionInsulationLabel insulationLabel)
+{/*ALCODESTART::1768319865034*/
+int constructionPeriod = J_PBLUtil.getConstructionPeriodOption_spaceHeatingAndResidents(buildYear);
+int regressionPopulation = J_PBLUtil.getPBLRegressionPopulation(insulationLabel, dwellingType);
+
+PBL_SpaceHeatingAndResidents_data PBLObject_spaceHeatingAndResidents = findFirst(c_lookupTablePBL_spaceHeatingAndResidents, pbl -> pbl.dwelling_type() == dwellingType &&
+																							   pbl.construction_period() == constructionPeriod &&
+																							   pbl.ownership_type() == ownershipType &&
+																							   pbl.insulation_label() == insulationLabel &&
+																							   pbl.regression_population() == regressionPopulation
+																							   );
+
+// Check for no matching pbl object found
+if (PBLObject_spaceHeatingAndResidents == null) {
+    System.out.println("Error: no matching pbl object found for spaceheating with conditions:");
+    System.out.println(" dwellingType = " + dwellingType);
+    System.out.println(" constructionPeriod = " + constructionPeriod);
+    System.out.println(" ownershipType = " + ownershipType);
+    System.out.println(" insulationLabel = " + insulationLabel);
+    System.out.println(" regressionPopulation = " + regressionPopulation);
+    throw new RuntimeException("No matching PBL object found!");
+}
+
+return PBLObject_spaceHeatingAndResidents;
+/*ALCODEEND*/}
+
+PBL_DHWAndCooking_data f_getPBLObject_DHWAndCooking(int buildYear,double floorSurfaceArea_m2,int householdSize)
+{/*ALCODESTART::1768319890191*/
+int constructionPeriod = J_PBLUtil.getConstructionPeriodOption_DHWAndCooking(buildYear);
+int surfaceCode = J_PBLUtil.getTNOFloorSurfaceCode(floorSurfaceArea_m2);
+
+PBL_DHWAndCooking_data PBLObject_DHWAndCooking = findFirst(c_lookupTablePBL_DHWAndCooking, pbl -> pbl.construction_period() == constructionPeriod &&
+																								  pbl.surface_code() == surfaceCode &&
+																								  pbl.household_size() == householdSize);
+																								  
+// Check for no matches
+if (PBLObject_DHWAndCooking == null) {
+    System.out.println("Error: no matching PBL object found for PBL DHW and Cooking demand with conditions:");
+    System.out.println("  constructionPeriod = " + constructionPeriod);
+    System.out.println("  floorSurfaceArea_m2 = " + floorSurfaceArea_m2);
+    System.out.println("  surfaceCode = " + surfaceCode);
+    System.out.println("  householdSize = " + householdSize);
+    throw new RuntimeException("No matching PBL object found!"); // Misschien wat een te harde error? 
+    													  // Hij kan altijd nog terug vallen op de backup toch?
+}
+
+return PBLObject_DHWAndCooking;
+/*ALCODEEND*/}
+
+OL_GridConnectionEnergyLabel f_estimateEnergyLabel(int constructionYear)
+{/*ALCODESTART::1768385335525*/
+if (constructionYear < 1980) {
+	return OL_GridConnectionEnergyLabel.D;
+}
+else if (constructionYear < 1996) {
+	return OL_GridConnectionEnergyLabel.C;
+}
+else if (constructionYear < 2008) {
+	return OL_GridConnectionEnergyLabel.B;
+}
+else {
+	return OL_GridConnectionEnergyLabel.A;
+}
+/*ALCODEEND*/}
+
+int f_getNumberOfResidents_PBL(PBL_SpaceHeatingAndResidents_data spaceHeatingObjectPBL,double floorSurfaceArea_m2)
+{/*ALCODESTART::1768387542917*/
+// Determine the number of residents
+int numberOfResidents = roundToInt(floorSurfaceArea_m2 * spaceHeatingObjectPBL.slope_residents() + spaceHeatingObjectPBL.constant_residents());
+if(numberOfResidents < 1){
+	numberOfResidents = 1;
+}
+else if(numberOfResidents > 5){	
+	traceln("House found with more than 5 residents -> number of residents is capped to 5! Number of residents found: " + numberOfResidents + ", floorSurfaceArea_m2: " + floorSurfaceArea_m2);
+	numberOfResidents = 5;
+}
+return numberOfResidents;
+/*ALCODEEND*/}
+
+double f_addHeatAssetsToHouses(GCHouse house,Double gasDemand_m3pa)
+{/*ALCODESTART::1768486498278*/
+//Add building heat model and asset
+double annualNaturalGasConsumption_kwhpa;
+if(gasDemand_m3pa != null) {
+	annualNaturalGasConsumption_kwhpa = gasDemand_m3pa * avgc_data.p_gas_kWhpm3;
+}
+else{
+	annualNaturalGasConsumption_kwhpa =  uniform(avgc_data.p_avgHouseGasConsumption_m3_yr - avgc_data.p_maxAvgHouseGasConsumptionOffset_m3pa, 
+										         avgc_data.p_avgHouseGasConsumption_m3_yr + avgc_data.p_maxAvgHouseGasConsumptionOffset_m3pa)
+	 											 * avgc_data.p_gas_kWhpm3;
+}
+
+
+double spaceHeatingDemand_kwhpa;
+double hotWaterDemand_kWhpa;
+double cookingDemand_kWhpa;
+if(house.p_PBLParameters != null){
+	PBL_SpaceHeatingAndResidents_data spaceHeatingDataObject = f_getPBLObject_spaceHeatingAndResidents(house.p_PBLParameters.getDwellingType(), house.p_buildYear, house.p_PBLParameters.getOwnershipType(), house.p_insulationLabel);
+	spaceHeatingDemand_kwhpa = f_getSpaceHeatingDemand_PBL_kWh(house.p_floorSurfaceArea_m2, spaceHeatingDataObject, house.p_PBLParameters.getLocalFactor(), house.p_PBLParameters.getRegionalClimateCorrectionFactor());
+	
+	int numberOfResidents = f_getNumberOfResidents_PBL(spaceHeatingDataObject, house.p_floorSurfaceArea_m2);
+	
+	PBL_DHWAndCooking_data DHWAndCookingDataObject = f_getPBLObject_DHWAndCooking(house.p_buildYear, house.p_floorSurfaceArea_m2, numberOfResidents);
+	hotWaterDemand_kWhpa = DHWAndCookingDataObject.dhw_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
+	cookingDemand_kWhpa = DHWAndCookingDataObject.cooking_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
+}
+else{
+	spaceHeatingDemand_kwhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgSpaceHeatingTotalGasConsumptionShare_fr;
+	hotWaterDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgDHWTotalGasConsumptionShare_fr;
+	cookingDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgCookingTotalGasConsumptionShare_fr;
+	
+	//hotWaterDemand_kWhpa = f_estimateHouseDHWDemand_kWh(house.p_floorSurfaceArea_m2);
+	//cookingDemand_kWhpa = f_estimateHouseCookingDemand_kWh();
+}
+
+//Get the house heating preferences
+J_HeatingPreferences heatingPreferences = f_getHouseHeatingPreferences();
+
+f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2, spaceHeatingDemand_kwhpa, heatingPreferences);
+
+//Determine required heating capacity for the heating asset	
+double maximalTemperatureDifference_K = 30.0; // Approximation
+double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000;
+
+//Add heating asset
+OL_GridConnectionHeatingType heatingType = avgc_data.p_avgHouseHeatingMethod;
+f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
+
+//Add heating management and set the heating preferences
+house.f_addHeatManagement(heatingType, false);
+house.f_setHeatingPreferences(heatingPreferences);
+
+//Add hot water and cooking demand
+f_addHotWaterDemand(house, hotWaterDemand_kWhpa);
+f_addCookingAsset(house, OL_EnergyAssetType.GAS_PIT, cookingDemand_kWhpa);
+
+/*ALCODEEND*/}
+
+double f_estimateHouseDHWDemand_kWh(double floorSurface_m2)
+{/*ALCODESTART::1768570811946*/
+int numberOfResidents;
+if( floorSurface_m2 > 150){
+	numberOfResidents = uniform_discr(2,6);
+}
+else if (floorSurface_m2 > 50){
+	numberOfResidents = uniform_discr(1,4);
+}
+else {
+	numberOfResidents = uniform_discr(1,2);
+}
+
+double yearlyHWD_kWh = 1000 + numberOfResidents * 150; //SOURCE!? Put in AVGC!!
+return yearlyHWD_kWh;
+
+/*ALCODEEND*/}
+
+double f_estimateHouseCookingDemand_kWh()
+{/*ALCODESTART::1768571246858*/
+double yearlyCookingDemand_kWh = uniform_discr(70,130); //SOURCE? -> Put in AVGC!
+return yearlyCookingDemand_kWh;
+
 /*ALCODEEND*/}
 

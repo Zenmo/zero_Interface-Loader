@@ -268,7 +268,7 @@
 		<Id>1696863329269</Id>
 		<Name><![CDATA[v_gridConnectionInBuildingIndex]]></Name>
 		<X>50</X>
-		<Y>1560</Y>
+		<Y>1490</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -309,7 +309,7 @@
 		<Id>1701879001472</Id>
 		<Name><![CDATA[v_clickedObjectText]]></Name>
 		<X>50</X>
-		<Y>1580</Y>
+		<Y>1510</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -324,28 +324,6 @@
 			<Type><![CDATA[String]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA["None"]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1701879014361</Id>
-		<Name><![CDATA[v_clickedObjectAdress]]></Name>
-		<X>50</X>
-		<Y>1600</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[String]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[""]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -456,28 +434,6 @@
 			<Type><![CDATA[Color]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[gainsboro]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1702046920293</Id>
-		<Name><![CDATA[v_clickedObjectDetails]]></Name>
-		<X>50</X>
-		<Y>1620</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[String]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[""]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -727,7 +683,7 @@
 		<Id>1705673181898</Id>
 		<Name><![CDATA[v_clickedGridNode]]></Name>
 		<X>50</X>
-		<Y>1460</Y>
+		<Y>1390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -746,7 +702,7 @@
 		<Id>1705673647104</Id>
 		<Name><![CDATA[v_previousClickedObjectType]]></Name>
 		<X>50</X>
-		<Y>1430</Y>
+		<Y>1360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -765,7 +721,7 @@
 		<Id>1705673714784</Id>
 		<Name><![CDATA[v_previousClickedGridNode]]></Name>
 		<X>50</X>
-		<Y>1480</Y>
+		<Y>1410</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -893,7 +849,7 @@
 		<Id>1707918668189</Id>
 		<Name><![CDATA[v_clickedObjectType]]></Name>
 		<X>50</X>
-		<Y>1410</Y>
+		<Y>1340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1582,7 +1538,7 @@
 		<Id>1725018118872</Id>
 		<Name><![CDATA[b_showCables]]></Name>
 		<X>50</X>
-		<Y>1660</Y>
+		<Y>1550</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1670,7 +1626,7 @@
 		<Id>1739980192808</Id>
 		<Name><![CDATA[v_customEnergyCoop]]></Name>
 		<X>50</X>
-		<Y>1370</Y>
+		<Y>1300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2943,6 +2899,56 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 			</ParameterEditor>
 		</Properties>
 	</Variable>
+	<Variable Class="Parameter">
+		<Id>1769002367902</Id>
+		<Name><![CDATA[p_customMapOverlayName]]></Name>
+		<X>1960</X>
+		<Y>2030</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1769002367900</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1769002638125</Id>
+		<Name><![CDATA[p_customMapOverlayLegend]]></Name>
+		<X>1960</X>
+		<Y>2050</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[ShapeGroup]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1769002638123</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
 	<Variable Class="CollectionVariable">
 		<Id>1707918668148</Id>
 		<Name><![CDATA[c_GISNeighborhoods]]></Name>
@@ -3091,7 +3097,7 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 		<Id>1721302080638</Id>
 		<Name><![CDATA[c_selectedGridConnections]]></Name>
 		<X>50</X>
-		<Y>1340</Y>
+		<Y>1270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3163,7 +3169,7 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 		<Id>1734512815255</Id>
 		<Name><![CDATA[c_previousSelectedObjects]]></Name>
 		<X>50</X>
-		<Y>1530</Y>
+		<Y>1460</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3181,7 +3187,7 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 		<Id>1734513139372</Id>
 		<Name><![CDATA[c_selectedObjects]]></Name>
 		<X>50</X>
-		<Y>1510</Y>
+		<Y>1440</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

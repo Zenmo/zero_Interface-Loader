@@ -32,7 +32,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
 			<Name><![CDATA[tab]]></Name>
-			<Type><![CDATA[EnergyDemandTab]]></Type>
+			<Type><![CDATA[OL_CustomScenarioTabs]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

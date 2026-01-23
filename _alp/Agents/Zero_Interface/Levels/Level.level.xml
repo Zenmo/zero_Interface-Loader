@@ -1776,7 +1776,7 @@ v_selectedGridConnectionIndex &gt; 0 ?
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>630</Width>
-		<Height>610</Height>
+		<Height>640</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -4206,7 +4206,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 				<Id>1716419413991</Id>
 				<Name><![CDATA[rect_supportFunctions]]></Name>
 				<X>-140</X>
-				<Y>-80</Y>
+				<Y>-110</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -4224,7 +4224,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>300</Width>
-				<Height>160</Height>
+				<Height>190</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
 				<FillMaterial>null</FillMaterial>
@@ -4233,7 +4233,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 				<Id>1716419425042</Id>
 				<Name><![CDATA[t_supportFunctions]]></Name>
 				<X>-120</X>
-				<Y>-70</Y>
+				<Y>-100</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>

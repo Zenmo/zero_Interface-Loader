@@ -110,7 +110,7 @@
 			</OptionList>
 			<OptionList>
 				<Id>1709718356700</Id>
-				<Name><![CDATA[EnergyDemandTab]]></Name>
+				<Name><![CDATA[OL_CustomScenarioTabs]]></Name>
 				<Option>
 					<Id>1709718356702</Id>
 					<Name><![CDATA[MOBILITY]]></Name>
@@ -178,6 +178,10 @@
 				<Option>
 					<Id>1754312700674</Id>
 					<Name><![CDATA[PARKING_TYPE]]></Name>
+				</Option>
+				<Option>
+					<Id>1769001724664</Id>
+					<Name><![CDATA[CUSTOM]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -391,6 +395,20 @@
 			<JavaClass>
 				<Id>1762351349700</Id>
 				<Name><![CDATA[J_RemainingTotalsManager]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1768318961854</Id>
+				<Name><![CDATA[PBL_DHWAndCooking_data]]></Name>
+				<Folder>1754045711603</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1768388160903</Id>
+				<Name><![CDATA[PBL_SpaceHeatingAndResidents_data]]></Name>
+				<Folder>1754045711603</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1768469188881</Id>
+				<Name><![CDATA[J_PBLUtil]]></Name>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

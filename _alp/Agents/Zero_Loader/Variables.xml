@@ -3,8 +3,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1726584205883</Id>
 		<Name><![CDATA[v_timeOfModelStart_ms]]></Name>
-		<X>1560</X>
-		<Y>140</Y>
+		<X>1800</X>
+		<Y>170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -22,8 +22,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1726584205885</Id>
 		<Name><![CDATA[v_modelStartUpDuration_s]]></Name>
-		<X>1560</X>
-		<Y>160</Y>
+		<X>1800</X>
+		<Y>190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -44,8 +44,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1733235094633</Id>
 		<Name><![CDATA[v_numberOfSurveyCompanies]]></Name>
-		<X>1560</X>
-		<Y>240</Y>
+		<X>1800</X>
+		<Y>270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -63,7 +63,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1737972861302</Id>
 		<Name><![CDATA[map_buildingData_Vallum]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>395</Y>
 		<Label>
 			<X>10</X>
@@ -83,7 +83,7 @@
 		<Id>1753450969530</Id>
 		<Name><![CDATA[v_objectMapper]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2450</X>
+		<X>2890</X>
 		<Y>49</Y>
 		<Label>
 			<X>10</X>
@@ -102,8 +102,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1755876520422</Id>
 		<Name><![CDATA[v_probabilityForAdditionalCar_privateParking]]></Name>
-		<X>1560</X>
-		<Y>190</Y>
+		<X>1800</X>
+		<Y>220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -121,8 +121,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1755876547633</Id>
 		<Name><![CDATA[v_probabilityForAdditionalCar_publicParking]]></Name>
-		<X>1560</X>
-		<Y>210</Y>
+		<X>1800</X>
+		<Y>240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -165,7 +165,7 @@
 	<Variable Class="Parameter">
 		<Id>1726584206070</Id>
 		<Name><![CDATA[defaultProfiles_data]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>280</Y>
 		<Label>
 			<X>10</X>
@@ -191,7 +191,7 @@
 		<Id>1726584206073</Id>
 		<Name><![CDATA[project_data]]></Name>
 		<Description><![CDATA[Should be filled with the Project_data record created in the startup of the project model]]></Description>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>230</Y>
 		<Label>
 			<X>10</X>
@@ -217,7 +217,7 @@
 		<Id>1726584206076</Id>
 		<Name><![CDATA[settings]]></Name>
 		<Description><![CDATA[Should be filled with the settings record created in the startup of the project model]]></Description>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>250</Y>
 		<Label>
 			<X>10</X>
@@ -242,7 +242,7 @@
 	<Variable Class="Parameter">
 		<Id>1726584206079</Id>
 		<Name><![CDATA[user]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>210</Y>
 		<Label>
 			<X>10</X>
@@ -268,7 +268,7 @@
 		<Id>1762184918471</Id>
 		<Name><![CDATA[p_userIdToken]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2630</X>
+		<X>3070</X>
 		<Y>50</Y>
 		<Label>
 			<X>10</X>
@@ -293,8 +293,8 @@
 	<Variable Class="Parameter">
 		<Id>1761907535651</Id>
 		<Name><![CDATA[p_remainingTotals]]></Name>
-		<X>1560</X>
-		<Y>290</Y>
+		<X>1800</X>
+		<Y>320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -405,8 +405,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1726584205737</Id>
 		<Name><![CDATA[c_gridNodeIDsInScope]]></Name>
-		<X>1560</X>
-		<Y>320</Y>
+		<X>1800</X>
+		<Y>350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -423,7 +423,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1726584205739</Id>
 		<Name><![CDATA[c_companyBuilding_data]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>415</Y>
 		<Label>
 			<X>10</X>
@@ -441,7 +441,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1726584205741</Id>
 		<Name><![CDATA[c_gridNode_data]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>360</Y>
 		<Label>
 			<X>10</X>
@@ -459,8 +459,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1726584205743</Id>
 		<Name><![CDATA[c_surveyCompanyBuilding_data]]></Name>
-		<X>-380</X>
-		<Y>910</Y>
+		<X>-400</X>
+		<Y>920</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -477,7 +477,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1726584205745</Id>
 		<Name><![CDATA[c_houseBuilding_data]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>435</Y>
 		<Label>
 			<X>10</X>
@@ -495,7 +495,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1726584205747</Id>
 		<Name><![CDATA[c_solarfarm_data]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>482</Y>
 		<Label>
 			<X>10</X>
@@ -513,7 +513,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1726584205749</Id>
 		<Name><![CDATA[c_windfarm_data]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>502</Y>
 		<Label>
 			<X>10</X>
@@ -531,7 +531,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1726584205751</Id>
 		<Name><![CDATA[c_electrolyser_data]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>521</Y>
 		<Label>
 			<X>10</X>
@@ -549,7 +549,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1726584205753</Id>
 		<Name><![CDATA[c_battery_data]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>540</Y>
 		<Label>
 			<X>10</X>
@@ -567,7 +567,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1726584205755</Id>
 		<Name><![CDATA[c_cable_data]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>650</Y>
 		<Label>
 			<X>10</X>
@@ -585,7 +585,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1726584205757</Id>
 		<Name><![CDATA[c_neighbourhood_data]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>590</Y>
 		<Label>
 			<X>10</X>
@@ -603,7 +603,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1726584205759</Id>
 		<Name><![CDATA[c_remainingBuilding_data]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>455</Y>
 		<Label>
 			<X>10</X>
@@ -621,7 +621,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1726584205763</Id>
 		<Name><![CDATA[c_chargingstation_data]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>560</Y>
 		<Label>
 			<X>10</X>
@@ -639,7 +639,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1726584205765</Id>
 		<Name><![CDATA[c_parcel_data]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>630</Y>
 		<Label>
 			<X>10</X>
@@ -657,8 +657,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1737744140895</Id>
 		<Name><![CDATA[c_vallumBuilding_data]]></Name>
-		<X>-380</X>
-		<Y>930</Y>
+		<X>-400</X>
+		<Y>940</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -675,7 +675,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1748944117397</Id>
 		<Name><![CDATA[c_customProfiles_data]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>300</Y>
 		<Label>
 			<X>10</X>
@@ -693,8 +693,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1749631164240</Id>
 		<Name><![CDATA[c_gridNodeIDsWithProfiles]]></Name>
-		<X>1560</X>
-		<Y>350</Y>
+		<X>1800</X>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -711,7 +711,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1749649688266</Id>
 		<Name><![CDATA[c_chargerProfiles_data]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>320</Y>
 		<Label>
 			<X>10</X>
@@ -729,7 +729,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1749738339329</Id>
 		<Name><![CDATA[c_parkingSpace_data]]></Name>
-		<X>-370</X>
+		<X>-390</X>
 		<Y>610</Y>
 		<Label>
 			<X>10</X>
@@ -748,7 +748,7 @@
 		<Id>1759135072429</Id>
 		<Name><![CDATA[c_GISregions]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2450</X>
+		<X>2890</X>
 		<Y>149</Y>
 		<Label>
 			<X>10</X>
@@ -766,8 +766,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1763648784984</Id>
 		<Name><![CDATA[c_activeNBH]]></Name>
-		<X>1540</X>
-		<Y>420</Y>
+		<X>1780</X>
+		<Y>450</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -779,6 +779,42 @@
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>GIS_Object</ElementClass>
 			<ValueElementClass>GISRegion</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1768319045952</Id>
+		<Name><![CDATA[c_lookupTablePBL_spaceHeatingAndResidents]]></Name>
+		<X>-390</X>
+		<Y>680</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>PBL_SpaceHeatingAndResidents_data</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1768319047453</Id>
+		<Name><![CDATA[c_lookupTablePBL_DHWAndCooking]]></Name>
+		<X>-390</X>
+		<Y>700</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>PBL_DHWAndCooking_data</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>
 </Variables>

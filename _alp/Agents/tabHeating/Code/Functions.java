@@ -442,12 +442,12 @@ zero_Interface.f_resetSettings();
 
 double f_householdInsulation(List<GCHouse> housesGCList,double houses_pct)
 {/*ALCODESTART::1752227724432*/
-int nbHouses = count(housesGCList, x -> x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
-int nbHousesWithImprovedInsulation = count(housesGCList, x -> x.p_BuildingThermalAsset.getLossScalingFactor_fr() < 1 && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
+int nbHouses = count(housesGCList, x -> x.p_insulationLabel != OL_GridConnectionInsulationLabel.A);
+int nbHousesWithImprovedInsulation = count(housesGCList, x -> x.p_BuildingThermalAsset.getLossScalingFactor_fr() < 1 && x.p_insulationLabel != OL_GridConnectionInsulationLabel.A);
 int targetNbHousesWithImprovedInsulation = roundToInt(houses_pct / 100.0 * nbHouses);
 
 while (nbHousesWithImprovedInsulation < targetNbHousesWithImprovedInsulation) {
-	GCHouse house = findFirst(housesGCList, x -> x.p_BuildingThermalAsset.getLossScalingFactor_fr() >= 1 && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
+	GCHouse house = findFirst(housesGCList, x -> x.p_BuildingThermalAsset.getLossScalingFactor_fr() >= 1 && x.p_insulationLabel != OL_GridConnectionInsulationLabel.A);
 	if (house != null) {
 		house.p_BuildingThermalAsset.setLossScalingFactor_fr( 0.7 );
 		nbHousesWithImprovedInsulation++;
@@ -457,7 +457,7 @@ while (nbHousesWithImprovedInsulation < targetNbHousesWithImprovedInsulation) {
 	}
 }
 while (nbHousesWithImprovedInsulation > targetNbHousesWithImprovedInsulation) {
-	GCHouse house = findFirst(housesGCList, x -> x.p_BuildingThermalAsset.getLossScalingFactor_fr() < 1 && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
+	GCHouse house = findFirst(housesGCList, x -> x.p_BuildingThermalAsset.getLossScalingFactor_fr() < 1 && x.p_insulationLabel != OL_GridConnectionInsulationLabel.A);
 	if (house != null) {
 		house.p_BuildingThermalAsset.setLossScalingFactor_fr( 1 );
 		nbHousesWithImprovedInsulation--;
@@ -911,8 +911,8 @@ sl_householdAircoResidentialArea_pct.setValue(pctOfHousesWithAirco, false);
 
 
 //Houses with better isolation
-int nbHousesThatCanGetImprovedIsolation = count(houseGridConnections, x -> x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
-int nbHousesWithImprovedInsulation = count(houseGridConnections, x -> x.p_BuildingThermalAsset.getLossScalingFactor_fr() < 1 && x.p_energyLabel != OL_GridConnectionIsolationLabel.A);
+int nbHousesThatCanGetImprovedIsolation = count(houseGridConnections, x -> x.p_insulationLabel != OL_GridConnectionInsulationLabel.A);
+int nbHousesWithImprovedInsulation = count(houseGridConnections, x -> x.p_BuildingThermalAsset.getLossScalingFactor_fr() < 1 && x.p_insulationLabel != OL_GridConnectionInsulationLabel.A);
 double pctOfHousesWithImprovedInsulation = 100.0 * ((double)nbHousesWithImprovedInsulation)/nbHousesThatCanGetImprovedIsolation;
 sl_householdHeatDemandReductionResidentialArea_pct.setValue(roundToInt(pctOfHousesWithImprovedInsulation), false);
 

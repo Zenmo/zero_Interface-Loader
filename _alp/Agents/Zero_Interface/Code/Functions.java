@@ -2,45 +2,45 @@ double f_setColorsBasedOnEnergyLabels(GIS_Object b)
 {/*ALCODESTART::1696837759924*/
 if (b.gisRegion != null){
 
-	OL_GridConnectionIsolationLabel buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.NONE;
+	OL_GridConnectionInsulationLabel buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.NONE;
 	
 	//Find the lowest energy label in the building
 	for(GridConnection GC : b.c_containedGridConnections){
-		switch(GC.p_energyLabel){
+		switch(GC.p_insulationLabel){
 			case A:
-				if(buildingLowestEnergyLabel == OL_GridConnectionIsolationLabel.NONE){
-					buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.A;
+				if(buildingLowestEnergyLabel == OL_GridConnectionInsulationLabel.NONE){
+					buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.A;
 				}
 			break;
 			case B:
-				if(buildingLowestEnergyLabel == OL_GridConnectionIsolationLabel.NONE || buildingLowestEnergyLabel == OL_GridConnectionIsolationLabel.A){
-					buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.B;
+				if(buildingLowestEnergyLabel == OL_GridConnectionInsulationLabel.NONE || buildingLowestEnergyLabel == OL_GridConnectionInsulationLabel.A){
+					buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.B;
 				}
 			break;
 			case C:
-				if(buildingLowestEnergyLabel == OL_GridConnectionIsolationLabel.NONE || buildingLowestEnergyLabel == OL_GridConnectionIsolationLabel.B
-				   || buildingLowestEnergyLabel == OL_GridConnectionIsolationLabel.C){
-					buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.C;
+				if(buildingLowestEnergyLabel == OL_GridConnectionInsulationLabel.NONE || buildingLowestEnergyLabel == OL_GridConnectionInsulationLabel.B
+				   || buildingLowestEnergyLabel == OL_GridConnectionInsulationLabel.C){
+					buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.C;
 				}
 			break;
 			case D:
-				if(buildingLowestEnergyLabel != OL_GridConnectionIsolationLabel.E || buildingLowestEnergyLabel != OL_GridConnectionIsolationLabel.F
-				   || buildingLowestEnergyLabel != OL_GridConnectionIsolationLabel.G){
-					buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.D;
+				if(buildingLowestEnergyLabel != OL_GridConnectionInsulationLabel.E || buildingLowestEnergyLabel != OL_GridConnectionInsulationLabel.F
+				   || buildingLowestEnergyLabel != OL_GridConnectionInsulationLabel.G){
+					buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.D;
 				}
 			break;
 			case E:
-				if(buildingLowestEnergyLabel != OL_GridConnectionIsolationLabel.F || buildingLowestEnergyLabel != OL_GridConnectionIsolationLabel.G){
-					buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.E;
+				if(buildingLowestEnergyLabel != OL_GridConnectionInsulationLabel.F || buildingLowestEnergyLabel != OL_GridConnectionInsulationLabel.G){
+					buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.E;
 				}
 			break;
 			case F:
-				if(buildingLowestEnergyLabel != OL_GridConnectionIsolationLabel.G){
-					buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.F;
+				if(buildingLowestEnergyLabel != OL_GridConnectionInsulationLabel.G){
+					buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.F;
 				}
 			break;
 			case G:
-				buildingLowestEnergyLabel = OL_GridConnectionIsolationLabel.G;
+				buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.G;
 			break;								
 		}
 	}
@@ -97,52 +97,23 @@ for ( GridNode GN : energyModel.pop_gridNodes ){
 	}
 }
 
-//Check if click was on Building, if yes, select grid building
-for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
-	if( b.gisRegion != null && b.gisRegion.contains(clickx, clicky) ){
-		if (b.gisRegion.isVisible()) { //only allow us to click on visible objects
-			if (b.c_containedGridConnections.size() > 0 ) { // only allow buildings with gridconnections
-				if(f_checkIfGCsAreAccesible(b.c_containedGridConnections)){
-					buildingsConnectedToSelectedBuildingsList = b.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
-					f_selectBuilding(b, buildingsConnectedToSelectedBuildingsList);
-				}
-				else{
-					f_selectEnergyModel();			
-				}
-				return;
-			}
-		}
-	}
+//Group all buildings with gisobjects in one array for a single loop (Fastest way to convert pop to list is writing out the loop)
+List<GIS_Object> allGISObjects = new ArrayList<>();
+for(GIS_Building b : energyModel.pop_GIS_Buildings) {
+    allGISObjects.add(b);
+}
+for(GIS_Object object : energyModel.pop_GIS_Objects) {
+    allGISObjects.add(object);
 }
 
-//Check if click was on remaining objects such as chargers, solarfields, parcels: if yes, select object
-for ( GIS_Object GISobject : energyModel.pop_GIS_Objects ){
-	if( GISobject.gisRegion != null && GISobject.gisRegion.contains(clickx, clicky) ) {
-		if (GISobject.gisRegion.isVisible()) { //only allow us to click on visible objects
-			if (GISobject.c_containedGridConnections.size() > 0 ) { // only allow objects with gridconnections
-				if(f_checkIfGCsAreAccesible(GISobject.c_containedGridConnections)){
-					// Find buildings powered by the same GC as the clicked object
-					buildingsConnectedToSelectedBuildingsList = GISobject.c_containedGridConnections.get(0).c_connectedGISObjects; 
-					
-					//Find the (first) connected GC in the object
-					GridConnection selectedGC = GISobject.c_containedGridConnections.get(0);
-					
-					//Set the selected GIS object type
-					v_clickedObjectType = GISobject.p_GISObjectType;
-					c_selectedObjects.add(GISobject);
-					
-					//Set the correct interface view for each object type
-					switch(v_clickedObjectType){
-					
-					case CHARGER:
-						f_selectCharger((GCPublicCharger)selectedGC, GISobject );
-						break;
-					
-					default:
-						buildingsConnectedToSelectedBuildingsList = GISobject.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked building
-						f_selectBuilding(GISobject, buildingsConnectedToSelectedBuildingsList);		
-						break;
-					}
+//Check if click was on Building or GISObject such as chargers, solarfields, windfarm, if yes: Select.
+for ( GIS_Object GISObject : allGISObjects ){
+	if( GISObject.gisRegion != null && GISObject.gisRegion.contains(clickx, clicky) ) {
+		if (GISObject.gisRegion.isVisible()) { //only allow us to click on visible objects
+			if (GISObject.c_containedGridConnections.size() > 0 ) { // only allow objects with gridconnections
+				if(f_checkIfGCsAreAccesible(GISObject.c_containedGridConnections)){
+					buildingsConnectedToSelectedBuildingsList = GISObject.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked object 
+					f_selectBuilding(GISObject, buildingsConnectedToSelectedBuildingsList);		
 				}
 				else{
 					f_selectEnergyModel();
@@ -204,6 +175,9 @@ switch(selectedMapOverlayType){
 		break;
 	case PARKING_TYPE:
 		f_setColorsBasedOnParkingType_objects(gis_area);
+		break;
+	case CUSTOM:
+		f_setColorsBasedOnCustom_objects(gis_area);
 		break;
 }
 /*ALCODEEND*/}
@@ -291,6 +265,9 @@ switch(selectedMapOverlayType){
 	case PARKING_TYPE:
 		f_setColorsBasedOnParkingType_gridnodes(GN);
 		break;
+	case CUSTOM:
+		f_setColorsBasedOnCustom_gridnodes(GN);
+		break;
 }
 /*ALCODEEND*/}
 
@@ -347,10 +324,6 @@ if ( GN.p_realCapacityAvailable ) {
 else {
 	v_clickedObjectText =  GN.p_nodeType + "-station, " + Integer.toString( ((int)GN.p_capacity_kW) ) + " kW (ingeschat), ID: " + GN.p_gridNodeID + ", aansluitingen: " + GN.f_getConnectedGridConnections().size() + ", Type station: " + GN.p_description;
 }
-
-v_clickedObjectAdress = "";
-v_clickedObjectDetails = "Type station:\t" + GN.p_description;
-
 
 // Color the GridNode
 GN.gisRegion.setFillColor( v_selectionColor );
@@ -452,8 +425,6 @@ c_selectedObjects.clear();
 if(v_previousClickedObjectType != null){
 	// Update for results_ui when deselecting objects to show entire area again as default option
 	v_clickedObjectText = "None";
-	v_clickedObjectAdress = "";
-	v_clickedObjectDetails = "";
 	v_clickedObjectType = null;
 	button_goToUI.setVisible(false);
 	gr_multipleBuildingInfo.setVisible(false);
@@ -772,29 +743,6 @@ uI_Tabs.f_updateSliders();
 if(uI_EnergyHub != null){
 	uI_EnergyHub.uI_Tabs.f_updateSliders();
 }
-/*ALCODEEND*/}
-
-double f_selectCharger(GCPublicCharger charger,GIS_Object objectGIS)
-{/*ALCODESTART::1718552624959*/
-objectGIS.gisRegion.setFillColor( v_selectionColor );
-objectGIS.gisRegion.setLineColor( orange );
-
-//set info text
-v_clickedObjectText = ""; //charger.p_CPOName + " laadpunt, ";
-if (charger.p_address == null || charger.p_address.getAddress() == null) {
-	v_clickedObjectAdress = "Onbekend adres";
-}
-else{
-	v_clickedObjectAdress = charger.p_address.getStreetName();
-}
-v_clickedObjectDetails = "No detaild info of charger available";
-
-//v_clickedGridConnection = charger;
-c_selectedGridConnections = new ArrayList<GridConnection>(Arrays.asList(charger));
-uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
-
-//Set the UI button
-f_setUIButton();
 /*ALCODEEND*/}
 
 double f_setColorsBasedOnGridTopology_objects(GIS_Object gis_area)
@@ -2006,7 +1954,7 @@ for(GIS_Building building : energyModel.pop_GIS_Buildings){
 
 double f_initialParkingSpacesOrder()
 {/*ALCODESTART::1749741185117*/
-//Collections.shuffle(c_orderedParkingSpaces);
+f_shuffleListWithFixedSeed(c_orderedParkingSpaces);
 /*ALCODEEND*/}
 
 double f_initialChargerOrder()
@@ -2055,7 +2003,7 @@ c_orderedV1GChargers.addAll( c_inactiveV1GChargers );
 c_orderedV2GChargers.addAll( c_inactiveV2GChargers );
 
 
-//Collections.shuffle(c_orderedPublicChargers);
+f_shuffleListWithFixedSeed(c_orderedPublicChargers);
 /*ALCODEEND*/}
 
 double f_initializeSpecialGISObjectsLegend()
@@ -2488,6 +2436,9 @@ for(OL_MapOverlayTypes mapOverlayType : c_loadedMapOverlayTypes){
 		case PARKING_TYPE:
 			RadioButtonOptions_list.add("Parkeer type");
 			break;
+		case CUSTOM:
+			RadioButtonOptions_list.add(p_customMapOverlayName);
+			break;
 	}
 } 
 
@@ -2518,6 +2469,9 @@ gr_mapOverlayLegend_PVProduction.setVisible(false);
 gr_mapOverlayLegend_gridNeighbours.setVisible(false);
 gr_mapOverlayLegend_congestion.setVisible(false);
 gr_mapOverlayLegend_EnergyLabel.setVisible(false);
+if (p_customMapOverlayLegend != null) {
+	p_customMapOverlayLegend.setVisible(false);
+}
 b_updateLiveCongestionColors = false;
 
 if(!b_inEnergyHubMode){
@@ -2549,6 +2503,9 @@ switch(selectedMapOverlayType){
 		break;
 	case PARKING_TYPE:
 		f_setMapOverlay_ParkingType();
+		break;
+	case CUSTOM:
+		f_setMapOverlay_Custom();
 		break;
 }
 /*ALCODEEND*/}
@@ -2853,8 +2810,8 @@ for (GCHouse house : energyModel.Houses) {
 }
 
 //Shuffle the collections to not have skewed initialization
-//Collections.shuffle(c_orderedVehiclesPrivateParking);
-//Collections.shuffle(allPublicParkedCars);
+f_shuffleListWithFixedSeed(c_orderedVehiclesPrivateParking);
+f_shuffleListWithFixedSeed(allPublicParkedCars);
 
 //Get the total amount of public chargers
 int totalChargers = c_orderedPublicChargers.size();
@@ -3123,25 +3080,27 @@ for(GCGridBattery batteryGC : energyModel.GridBatteries){
 
 double f_setCompaniesScenario(LinkedHashMap scenarioMap)
 {/*ALCODESTART::1761060882101*/
-//Solution for now
-int companyUIScenarioRBIndex = 0;
-if(scenarioMap == c_scenarioMap_Current){
-	companyUIScenarioRBIndex = 0;
+if(!energyModel.UtilityConnections.isEmpty()){
+	//Solution for now
+	int companyUIScenarioRBIndex = 0;
+	if(scenarioMap == c_scenarioMap_Current){
+		companyUIScenarioRBIndex = 0;
+	}
+	else if(scenarioMap == c_scenarioMap_Future){
+		companyUIScenarioRBIndex = 1;
+	}
+	else{
+		throw new RuntimeException("Tried to call the setCompaniesScenario function with a non existing companyUI scenario");
+	}
+	
+	//Set companyUI to correct radio button setting
+	uI_Company.b_runningMainInterfaceScenarioSettings = true;
+	for (GCUtility  GC : energyModel.UtilityConnections){
+		uI_Company.f_setCompanyUI(GC);
+		uI_Company.getRb_scenariosPrivateUI().setValue(companyUIScenarioRBIndex, true);
+	}
+	uI_Company.b_runningMainInterfaceScenarioSettings = false;
 }
-else if(scenarioMap == c_scenarioMap_Future){
-	companyUIScenarioRBIndex = 1;
-}
-else{
-	throw new RuntimeException("Tried to call the setCompaniesScenario function with a non existing companyUI scenario");
-}
-
-//Set companyUI to correct radio button setting
-uI_Company.b_runningMainInterfaceScenarioSettings = true;
-for (GCUtility  GC : energyModel.UtilityConnections){
-	uI_Company.f_setCompanyUI(GC);
-	uI_Company.getRb_scenariosPrivateUI().setValue(companyUIScenarioRBIndex, true);
-}
-uI_Company.b_runningMainInterfaceScenarioSettings = false;
 /*ALCODEEND*/}
 
 double f_initializeScenarioRadioButton()
@@ -3240,8 +3199,9 @@ return scenarioOptions;
 
 double f_setScenario_Future()
 {/*ALCODESTART::1761119479231*/
-f_setCompaniesScenario(c_scenarioMap_Future);
-
+if(c_scenarioMap_Future != null){
+	f_setCompaniesScenario(c_scenarioMap_Future);
+}
 //Set specifc assets active/non-active
 f_projectSpecificScenarioSettings("Future");
 
@@ -3251,8 +3211,10 @@ t_scenarioDescription.setText(t_scenario_future);
 
 double f_setScenario_Current()
 {/*ALCODESTART::1761119479233*/
-f_setCompaniesScenario(c_scenarioMap_Current);
-
+//if(project_data.project_type() == OL_ProjectType.BUSINESSPARK && c_scenarioMap_Current != null){
+if(c_scenarioMap_Current != null){
+	f_setCompaniesScenario(c_scenarioMap_Current);
+}
 //Reset sliders for households
 if(project_data.project_type() == OL_ProjectType.RESIDENTIAL && p_residentialScenario_Current != null){
 	f_setResidentialScenario_Current();
@@ -3727,9 +3689,12 @@ List<GridConnection> electricityTabEASliderGCs = new ArrayList<GridConnection>()
 
 //Find the energy production slider gcs that are not specificly for the EnergyHub
 List<GCEnergyProduction> electricityTabEASliderGCs_prod = findAll(energyModel.EnergyProductionSites, sliderProd -> 
-																									sliderProd.p_isSliderGC && 
-																									!sliderProd.p_gridConnectionID.equals(p_defaultEnergyHubSliderGCName_solarfarm) && 
-																									!sliderProd.p_gridConnectionID.equals(p_defaultEnergyHubSliderGCName_windfarm));
+	sliderProd.p_isSliderGC && 
+	!sliderProd.p_gridConnectionID.equals(p_defaultEnergyHubSliderGCName_solarfarm) && 
+	!sliderProd.p_gridConnectionID.equals(p_defaultEnergyHubSliderGCName_windfarm));
+
+//traceln("electricityTabEASliderGCs_prod.size(): %s", electricityTabEASliderGCs_prod.size());																								
+
 if(electricityTabEASliderGCs_prod.size() == 2){
 	electricityTabEASliderGCs.addAll(electricityTabEASliderGCs_prod);
 }
@@ -3749,5 +3714,36 @@ else{
 }
 
 return electricityTabEASliderGCs;
+/*ALCODEEND*/}
+
+double f_shuffleListWithFixedSeed(List<?> list)
+{/*ALCODESTART::1767626360938*/
+for (int i = list.size() - 1; i > 0; i--) {
+    int j = 0;
+    // Go through all possible positions 0..i
+    for (int k = 0; k <= i; k++) {
+        // With probability 1/(remaining slots), pick this position
+        if (randomTrue(1.0 / (i - k + 1))) {
+            j = k;
+            break; // stop after choosing
+        }
+    }
+    Collections.swap(list, i, j);
+}
+/*ALCODEEND*/}
+
+double f_setMapOverlay_Custom()
+{/*ALCODESTART::1769001821281*/
+//Override function to replace map overlay with custom colors
+/*ALCODEEND*/}
+
+double f_setColorsBasedOnCustom_objects(GIS_Object gis_area)
+{/*ALCODESTART::1769007351261*/
+//Override function to replace map overlay with custom colors
+/*ALCODEEND*/}
+
+double f_setColorsBasedOnCustom_gridnodes(GridNode GN)
+{/*ALCODESTART::1769007434081*/
+//Override function to replace map overlay with custom colors
 /*ALCODEEND*/}
 
