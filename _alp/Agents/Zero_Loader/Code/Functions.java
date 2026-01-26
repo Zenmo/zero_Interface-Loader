@@ -999,7 +999,8 @@ if ( hasQuarterlyData == true ) { // Add quarterly electricity data pattern if a
 } 
 
 else { // Add regular electricity and consumption profiles
-	J_EAConsumption profile = new J_EAConsumption(parentGC, OL_EnergyAssetType.ELECTRICITY_DEMAND, profileName, yearlyElectricityDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeParameters, null);
+	J_ProfilePointer profilePointer = energyModel.f_findProfile(profileName);
+	J_EAConsumption profile = new J_EAConsumption(parentGC, OL_EnergyAssetType.ELECTRICITY_DEMAND, profileName, yearlyElectricityDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeParameters, profilePointer);
 }
 /*ALCODEEND*/}
 
@@ -4541,25 +4542,25 @@ d.setMinutes(0);
 d.setDate(1);
 
 //Calculate sim start hour
-double simStartHour_h = roundToInt((getExperiment().getEngine().getStartDate().getTime() - d.getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
+double simStartTime_h = roundToInt((getExperiment().getEngine().getStartDate().getTime() - d.getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
 
 //Fix for if start is within summer time, the v_simStartHour_h is not correct anymore
 double summerTimeStart_h = avgc_data.map_yearlySummerWinterTimeStartHour.get(simStartYear).getFirst();
 double winterTimeStart_h = avgc_data.map_yearlySummerWinterTimeStartHour.get(simStartYear).getSecond();
-if(simStartHour_h > summerTimeStart_h && simStartHour_h < winterTimeStart_h){
-	simStartHour_h += 1;
+if(simStartTime_h > summerTimeStart_h && simStartTime_h < winterTimeStart_h){
+	simStartTime_h += 1;
 }
 
 
 
 //Set sim duration if it is set
-double simDuration_h = 0;
+double simDuration_h = 8760; // Default sim duration in hours
 if(getExperiment().getEngine().getStopDate() != null){ //If experiment has set time, it gets bias
 	simDuration_h = roundToInt(((double)getExperiment().getEngine().getStopDate().getTime() - getExperiment().getEngine().getStartDate().getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
-	if(simStartHour_h > summerTimeStart_h && simStartHour_h + simDuration_h > winterTimeStart_h){//Compensate if start time is in summer time, and end time is in winter time -> simulation would otherwise have 1 hour too much
+	if(simStartTime_h > summerTimeStart_h && simStartTime_h + simDuration_h > winterTimeStart_h){//Compensate if start time is in summer time, and end time is in winter time -> simulation would otherwise have 1 hour too much
 		simDuration_h -= 1;
 	}
-	if(simStartHour_h < summerTimeStart_h && simStartHour_h + simDuration_h < winterTimeStart_h){//Compensate if start time is in winter time, and end time is in summer time -> simulation would otherwise have 1 hour too less
+	if(simStartTime_h < summerTimeStart_h && simStartTime_h + simDuration_h < winterTimeStart_h){//Compensate if start time is in winter time, and end time is in summer time -> simulation would otherwise have 1 hour too less
 		simDuration_h += 1;
 	}
 }
@@ -4567,16 +4568,16 @@ else if(settings.simDuration_h() != null){//Else if manual set, use that instead
 	simDuration_h = settings.simDuration_h();
 }
 
-if (simStartHour_h % 24 != 0) {
+if (simStartTime_h % 24 != 0) {
 	throw new RuntimeException("Impossible to run a model that does not start at midnight. Please check the start in the simulation settings.");
 }
 if (simDuration_h % 24 != 0) {
 	throw new RuntimeException("Impossible to run a model that does not have a runtime that is an exact multiple of a day. Please check the start and endtime in the simulation settings.");
 }
 
-double simEndTime_h = simStartHour_h + simDuration_h;
+double simEndTime_h = simStartTime_h + simDuration_h;
 
-f_setEngineTimeVariables(simStartYear, simStartHour_h, simEndTime_h, settings.summerWeekNumber(), settings.winterWeekNumber());
+f_setEngineTimeVariables(simStartYear, simStartTime_h, simEndTime_h, settings.summerWeekNumber(), settings.winterWeekNumber());
 /*ALCODEEND*/}
 
 double f_addMixins()
@@ -4907,6 +4908,8 @@ energyModel.p_timeParameters = new J_TimeParameters(
 	startOfSummerWeek_h,
 	startOfWinterWeek_h
 );
+
+energyModel.p_timeVariables = new J_TimeVariables(0, energyModel.p_timeParameters);
 /*ALCODEEND*/}
 
 double f_getSpaceHeatingDemand_PBL_kWh(double floorSurfaceArea_m2,PBL_SpaceHeatingAndResidents_data spaceHeatingObjectPBL,double localFactor,double regionalClimateCorrectionFactor)
