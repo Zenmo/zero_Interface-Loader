@@ -25,13 +25,7 @@
 		</GenericParameterSubstitute>
 		<Parameters>
 			<Parameter>
-				<Name><![CDATA[p_timeStep_h]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_forecastTime_h]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_year]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[avgc_data]]></Name>
@@ -44,18 +38,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[b_enableDLR]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_winterWeekNumber]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_summerWeekNumber]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_runStartTime_h]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_runEndTime_h]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[b_isInitialized]]></Name>

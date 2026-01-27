@@ -420,7 +420,7 @@ if (setBatteryCapacity_kWh == 0) {
 else {
 	double c_rate = 1.0 / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power;
 	if (batteryAsset == null) {
-		batteryAsset = new J_EAStorageElectric(GC, setBatteryCapacity_kWh * c_rate, setBatteryCapacity_kWh, 0.5, zero_Interface.energyModel.p_timeStep_h);	
+		batteryAsset = new J_EAStorageElectric(GC, setBatteryCapacity_kWh * c_rate, setBatteryCapacity_kWh, 0.5, zero_Interface.energyModel.p_timeParameters);	
 	}
 	else {		
 		if (batteryAsset.getStorageCapacity_kWh() != 0) {

@@ -1437,7 +1437,7 @@ switch (storageType){
 
 	case STORAGE_ELECTRIC:
 		double initialStateOfCharge_fr = 0.5;
-		storage = new J_EAStorageElectric(parentGC, storagePower_kw, storageCapacity_kWh, initialStateOfCharge_fr, energyModel.p_timeStep_h);
+		storage = new J_EAStorageElectric(parentGC, storagePower_kw, storageCapacity_kWh, initialStateOfCharge_fr, energyModel.p_timeParameters);
 		//traceln("Battery with StorageCapacity_kWh: %s", storageCapacity_kWh);
 	break;
 	
@@ -1451,7 +1451,7 @@ switch (storageType){
 		//double heatCapacity_JpK = avgc_data.p_waterHeatCapacity_JpkgK * storageCapacity_kg;
 		//in short ->
 		double heatCapacity_JpK = storageCapacity_kWh*3.6e6 / (maxTemperature_degC - minTemperature_degC); 
-		new J_EAStorageHeat(parentGC, storageType, storagePower_kw, lossFactor_WpK, energyModel.p_timeStep_h, initialTemperature_degC, minTemperature_degC, maxTemperature_degC, setTemperature_degC, heatCapacity_JpK, OL_AmbientTempType.AMBIENT_AIR );
+		new J_EAStorageHeat(parentGC, storageType, storagePower_kw, lossFactor_WpK, energyModel.p_timeParameters, initialTemperature_degC, minTemperature_degC, maxTemperature_degC, setTemperature_degC, heatCapacity_JpK, OL_AmbientTempType.AMBIENT_AIR );
 			
 	break;
 	
@@ -1651,7 +1651,7 @@ else if (vehicle_type == OL_EnergyAssetType.HYDROGEN_VAN){
 
 double f_addChargingDemandProfile(GCPublicCharger GC,String profileName)
 {/*ALCODESTART::1726584205845*/
-J_EAProfile profile = new J_EAProfile(GC, OL_EnergyCarriers.ELECTRICITY, null, OL_AssetFlowCategories.evChargingPower_kW, energyModel.p_timeStep_h);		
+J_EAProfile profile = new J_EAProfile(GC, OL_EnergyCarriers.ELECTRICITY, null, OL_AssetFlowCategories.evChargingPower_kW, energyModel.p_timeParameters.getTimeStep_h(), energyModel.p_timeParameters);		
 profile.setEnergyAssetName("charging profile");
 List<Double> quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + profileName + " FROM charging_profiles;");			
 profile.a_energyProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> max(0,d)).map( d -> d / 4).toArray();
@@ -1856,7 +1856,7 @@ for (Cable_data dataCable : c_cable_data) {
 double f_createPreprocessedElectricityProfile_PV(GridConnection parentGC,double[] yearlyElectricityDelivery_kWh,double[] yearlyElectricityFeedin_kWh,double[] yearlyElectricityProduction_kWh,Double pvPower_kW,double[] yearlyHeatPumpElectricityConsumption_kWh)
 {/*ALCODESTART::1726584205861*/
 //Create the profile 
-J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, null, OL_AssetFlowCategories.fixedConsumptionElectric_kW, energyModel.p_timeStep_h);		
+J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, null, OL_AssetFlowCategories.fixedConsumptionElectric_kW, energyModel.p_timeParameters.getTimeStep_h(), energyModel.p_timeParameters);		
 profile.setStartTime_h(energyModel.p_timeParameters.getRunStartTime_h());
 profile.setEnergyAssetName(parentGC.p_ownerID + " custom profile");
 double extraConsumption_kWh = 0;
@@ -1933,7 +1933,7 @@ if(yearlyHeatPumpElectricityConsumption_kWh != null){
 	}
 	profile.a_energyProfile_kWh = preProcessedDefaultConsumptionProfile;
 	
-	J_EAProfile profileHeatPumpElectricityConsumption = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, yearlyHeatPumpElectricityConsumption_kWh, OL_AssetFlowCategories.heatPumpElectricityConsumption_kW, energyModel.p_timeStep_h);		
+	J_EAProfile profileHeatPumpElectricityConsumption = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, yearlyHeatPumpElectricityConsumption_kWh, OL_AssetFlowCategories.heatPumpElectricityConsumption_kW, energyModel.p_timeParameters.getTimeStep_h(), energyModel.p_timeParameters);		
 	profileHeatPumpElectricityConsumption.setStartTime_h(energyModel.p_timeParameters.getRunStartTime_h());
 	profileHeatPumpElectricityConsumption.setEnergyAssetName(parentGC.p_ownerID + " custom heat pump electricity consumption profile");
 }
@@ -3179,18 +3179,18 @@ GC_GridNode_profile.p_longitude = gridnode.p_longitude; // Get longitude of firs
 if(project_data.gridnode_profile_timestep_hr() == null){
 	throw new RuntimeException("Trying to load in gridnode profiles, without specifying the timestep of the data in the project_data");
 }
-else if(project_data.gridnode_profile_timestep_hr() < energyModel.p_timeStep_h){
-	throw new RuntimeException("Trying to loadin gridnode profile timestep data with smaller resolution (" + project_data.gridnode_profile_timestep_hr() + ") than simulation model time steps (" + energyModel.p_timeStep_h + "): This is not supported by the preprocessing yet!");
+else if(project_data.gridnode_profile_timestep_hr() < energyModel.p_timeParameters.getTimeStep_h()){
+	throw new RuntimeException("Trying to loadin gridnode profile timestep data with smaller resolution (" + project_data.gridnode_profile_timestep_hr() + ") than simulation model time steps (" + energyModel.p_timeParameters.getTimeStep_h() + "): This is not supported by the preprocessing yet!");
 }
 
 double profileTimestep_hr = project_data.gridnode_profile_timestep_hr();
-double modelToProfileStepsRatio = profileTimestep_hr / energyModel.p_timeStep_h;
+double modelToProfileStepsRatio = profileTimestep_hr / energyModel.p_timeParameters.getTimeStep_h();
 
 int roundedModelToProfileStepsRatio = roundToInt(modelToProfileStepsRatio);
 
 // Check: ratio must be integer
 if (abs(modelToProfileStepsRatio - roundedModelToProfileStepsRatio) > 1e-9) {
-    throw new RuntimeException("Profile timestep (" + profileTimestep_hr + ") is not an integer multiple of model timestep (" + energyModel.p_timeStep_h + ")");
+    throw new RuntimeException("Profile timestep (" + profileTimestep_hr + ") is not an integer multiple of model timestep (" + energyModel.p_timeParameters.getTimeStep_h() + ")");
 }
 
 double[] a_yearlyElectricityDelivery_kWh = new double[profile_data_kWh.length * roundedModelToProfileStepsRatio];
@@ -3201,7 +3201,7 @@ int idx = 0;
 for (double dataStep_kWh : profile_data_kWh) {
 
     // Energy per model timestep
-    double stepEnergy_kWh = dataStep_kWh * (energyModel.p_timeStep_h / profileTimestep_hr);
+    double stepEnergy_kWh = dataStep_kWh * (energyModel.p_timeParameters.getTimeStep_h() / profileTimestep_hr);
 
     for (int i = 0; i < roundedModelToProfileStepsRatio; i++) {
         double currentFeedin_kWh;
@@ -3224,7 +3224,7 @@ for (double dataStep_kWh : profile_data_kWh) {
     }
 }
 
-double pvPower_kW = 2.5 * (maxFeedin_kWh/energyModel.p_timeStep_h); // Estimation needed for pv power (only really influential for option 2, but a power estimate is still needed for option 1. Important that the factor >=1).
+double pvPower_kW = 2.5 * (maxFeedin_kWh/energyModel.p_timeParameters.getTimeStep_h()); // Estimation needed for pv power (only really influential for option 2, but a power estimate is still needed for option 1. Important that the factor >=1).
 
 //Option 1: use the feedin profile as production profile to create the exact same netto load, but consumption/production doesnt look natural (Only production when consumption == 0 and vice versa)
 f_createPreprocessedElectricityProfile_PV(GC_GridNode_profile, a_yearlyElectricityDelivery_kWh, a_yearlyElectricityFeedin_kWh, a_yearlyElectricityFeedin_kWh, pvPower_kW, null);
@@ -4005,7 +4005,7 @@ double yearlyGasDelivery_m3 = Arrays.stream(profile_m3).sum();
 // We assume all delivery is consumption and convert m3 to kWh
 ZeroMath.arrayMultiply(profile_m3, avgc_data.p_gas_kWhpm3);
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.METHANE, profile_m3, null, energyModel.p_timeStep_h);
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.METHANE, profile_m3, null, energyModel.p_timeParameters.getTimeStep_h(), energyModel.p_timeParameters);
 j_ea.setEnergyAssetName(engineGC.p_ownerID + " custom gas profile");
 
 if(engineGC.p_owner.p_detailedCompany){
@@ -4058,7 +4058,7 @@ if(engineGC.p_owner.p_detailedCompany){
 	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3);
 }
 
-return yearlyConsumptionHeat_kWh * max(profilePointer.getAllValues())/energyModel.p_timeStep_h;
+return yearlyConsumptionHeat_kWh * max(profilePointer.getAllValues())/energyModel.p_timeParameters.getTimeStep_h();
 /*ALCODEEND*/}
 
 double f_createGasProfileFromAnnualGasTotal(GridConnection engineGC,double yearlyGasDelivery_m3)
@@ -4141,14 +4141,14 @@ double ratioGasUsedForHeating = f_getRatioGasUsedForHeating(surveyGC);
 // Finally, multiply the gas profile with the total conversion factor to get the heat profile
 double[] profile_kWh = ZeroMath.arrayMultiply(profile_m3, avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile_kWh, null , energyModel.p_timeStep_h);
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile_kWh, null , energyModel.p_timeParameters.getTimeStep_h(), energyModel.p_timeParameters);
 j_ea.setEnergyAssetName(engineGC.p_ownerID + " custom building heat profile");
 
 if(engineGC.p_owner.p_detailedCompany){
 	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3);
 }
 
-return max(profile_m3)/energyModel.p_timeStep_h;
+return max(profile_m3)/energyModel.p_timeParameters.getTimeStep_h();
 /*ALCODEEND*/}
 
 double f_reconstructAgent(Agent agent,AgentArrayList pop,EnergyModel energyModel)
@@ -4229,10 +4229,10 @@ double[] profile = f_timeSeriesToQuarterHourlyDoubleArray(surveyGC.getHeat().get
 // TODO: Fix this for LT_DISTRICTHEAT, they have a different efficiency!
 ZeroMath.arrayMultiply(profile, avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr);
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile, null , energyModel.p_timeStep_h);
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile, null , energyModel.p_timeParameters.getTimeStep_h(), energyModel.p_timeParameters);
 j_ea.setEnergyAssetName(engineGC.p_ownerID + " custom building heat profile");
 
-return max(profile)/energyModel.p_timeStep_h;
+return max(profile)/energyModel.p_timeParameters.getTimeStep_h();
 /*ALCODEEND*/}
 
 double f_reconstructGridConnections1(EnergyModel energyModel)
@@ -4293,7 +4293,7 @@ String profileName = "default_building_heat_demand_fr";
 J_ProfilePointer profilePointer = energyModel.f_findProfile(profileName);
 new J_EAConsumption(engineGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, yearlyConsumptionHeat_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, profilePointer);
 
-return yearlyConsumptionHeat_kWh * max(profilePointer.getAllValues())/energyModel.p_timeStep_h;
+return yearlyConsumptionHeat_kWh * max(profilePointer.getAllValues())/energyModel.p_timeParameters.getTimeStep_h();
 /*ALCODEEND*/}
 
 double f_createHeatProfileFromSurvey(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC)
@@ -4577,7 +4577,17 @@ if (simDuration_h % 24 != 0) {
 
 double simEndTime_h = simStartTime_h + simDuration_h;
 
-f_setEngineTimeVariables(simStartYear, simStartTime_h, simEndTime_h, settings.summerWeekNumber(), settings.winterWeekNumber());
+energyModel.p_timeParameters = new J_TimeParameters(
+	settings.timeStep_h(),
+	simStartYear,
+	avgc_data.hourOfYearPerMonth,
+	simStartTime_h,
+	simEndTime_h,
+	settings.summerWeekNumber(),
+	settings.winterWeekNumber()
+);
+
+energyModel.p_timeVariables = new J_TimeVariables(0, energyModel.p_timeParameters);
 /*ALCODEEND*/}
 
 double f_addMixins()
@@ -4885,31 +4895,6 @@ else{
 	c_activeNBH.add(NBH);
 	return OL_GISObjectType.REGION;
 }
-/*ALCODEEND*/}
-
-double f_setEngineTimeVariables(int simStartYear,double simStartTime_h,double simEndTime_h,int summerWeekNumber,int winterWeekNumber)
-{/*ALCODESTART::1767606140975*/
-LocalDate localDate = LocalDate.of(simStartYear, 1, 1);
-int dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
-double startOfSummerWeek_h = roundToInt(24 * (summerWeekNumber * 7 + (8-dayOfWeek1jan)%7)); // Week 18 is summerweek.
-double startOfWinterWeek_h = roundToInt(24 * (winterWeekNumber * 7 + (8-dayOfWeek1jan)%7)); // Week 49 is winterweek.
-
-// TODO: Remove the hourOfYearPerMonth array from AVGC and calculate it based on the Simulation Year
-
-energyModel.p_timeParameters = new J_TimeParameters(
-	settings.timeStep_h(),
-	simStartYear,
-	avgc_data.hourOfYearPerMonth,
-	dayOfWeek1jan,
-	simStartTime_h,
-	simEndTime_h,
-	summerWeekNumber,
-	winterWeekNumber,
-	startOfSummerWeek_h,
-	startOfWinterWeek_h
-);
-
-energyModel.p_timeVariables = new J_TimeVariables(0, energyModel.p_timeParameters);
 /*ALCODEEND*/}
 
 double f_getSpaceHeatingDemand_PBL_kWh(double floorSurfaceArea_m2,PBL_SpaceHeatingAndResidents_data spaceHeatingObjectPBL,double localFactor,double regionalClimateCorrectionFactor)

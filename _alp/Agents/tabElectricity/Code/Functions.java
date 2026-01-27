@@ -326,7 +326,7 @@ if( nbHousesWithPV > 0 ){
 		double batteryCapacity_kW = batteryStorageCapacity_kWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power;
 		double batteryStateOfCharge = 0.5;
 
-		new J_EAStorageElectric(house, batteryCapacity_kW, batteryStorageCapacity_kWh, batteryStateOfCharge, zero_Interface.energyModel.p_timeStep_h );
+		new J_EAStorageElectric(house, batteryCapacity_kW, batteryStorageCapacity_kWh, batteryStateOfCharge, zero_Interface.energyModel.p_timeParameters );
 		house.f_setBatteryManagement(new J_BatteryManagementSelfConsumption( house ));
 		nbHouseBatteries++;
 	}

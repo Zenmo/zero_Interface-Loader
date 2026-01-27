@@ -1523,7 +1523,7 @@ while ( currentNbChargers > nbChargersGoal ) {
 		currentNbChargers--;
 		
 		for (J_EAFuelVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc.p_uid)) {
-			car.reRegisterEnergyAsset();
+			car.reRegisterEnergyAsset(zero_Interface.energyModel.p_timeParameters);
 		}
 	}
 	else {
@@ -1738,7 +1738,7 @@ zero_Interface.f_resetSettings();
 double f_activateV2G(List<GridConnection> gcList,boolean activateV2G)
 {/*ALCODESTART::1758276936913*/
 for(GridConnection GC : gcList){
-	GC.f_activateV2GChargingMode(activateV2G);
+	GC.f_activateV2GChargingMode(activateV2G, zero_Interface.energyModel.p_timeParameters);
 }
 
 //Update variable to change to custom scenario

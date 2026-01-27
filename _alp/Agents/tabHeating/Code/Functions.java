@@ -226,7 +226,7 @@ for (J_EAConsumption j_ea : gc.c_consumptionAssets) {
 for (J_EAProfile j_ea : gc.c_profileAssets) {
 	if (j_ea.energyCarrier == OL_EnergyCarriers.HEAT) {
 		double maxValue = j_ea.getProfileScaling_fr() * Arrays.stream(j_ea.a_energyProfile_kWh).max().getAsDouble();
-		peakHeatDemand_kW += maxValue / zero_Interface.energyModel.p_timeStep_h * j_ea.getProfileScaling_fr();
+		peakHeatDemand_kW += maxValue / zero_Interface.energyModel.p_timeParameters.getTimeStep_h() * j_ea.getProfileScaling_fr();
 	}
 }
 if (gc.p_BuildingThermalAsset != null) {
@@ -540,7 +540,7 @@ while ( nbHousesWithPTGoal > nbHousesWithPT ) {
 		double heatCapacity_JpK = zero_Interface.energyModel.avgc_data.p_waterHeatCapacity_JpkgK*(heatBufferStorageCapacity_m3*zero_Interface.energyModel.avgc_data.p_waterDensity_kgpm3);
 		
 		//Add heatbuffer
-		J_EAStorageHeat heatbufferAsset = new J_EAStorageHeat ( house, OL_EnergyAssetType.STORAGE_HEAT, installedPTCapacity_kW, lossFactor_WpK, zero_Interface.energyModel.p_timeStep_h, initialTemperature_degC, minTemperature_degC, maxTemperature_degC, setTemperature_degC, heatCapacity_JpK, OL_AmbientTempType.FIXED); 
+		J_EAStorageHeat heatbufferAsset = new J_EAStorageHeat ( house, OL_EnergyAssetType.STORAGE_HEAT, installedPTCapacity_kW, lossFactor_WpK, zero_Interface.energyModel.p_timeParameters, initialTemperature_degC, minTemperature_degC, maxTemperature_degC, setTemperature_degC, heatCapacity_JpK, OL_AmbientTempType.FIXED); 
 
 		houses.remove(house);
 		zero_Interface.c_orderedPTSystemsHouses.remove(house);
