@@ -239,6 +239,7 @@ zero_Interface.energyModel.pop_GIS_Parcels.forEach(x->{c_GISregions.put(x.p_id, 
 pauseSimulation();
 try {
 	v_objectMapper = new ObjectMapper();
+	v_objectMapper.registerModule(new JavaTimeModule());
 	f_addMixins();
 	
 	var repository = UserScenarioRepository.builder()
@@ -345,6 +346,8 @@ if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToke
 
 traceln("Starting model serialisation...");
 J_ModelSave saveObject = new J_ModelSave();
+saveObject.projectDataLastModifiedDate = zero_Interface.zero_loader.v_projectDataLastChangedDate;
+
 saveObject.energyModel = zero_Interface.energyModel;
 
 zero_Interface.energyModel.pop_gridNodes.forEach(x->saveObject.c_gridNodes.add(x));
@@ -371,6 +374,7 @@ List<LinkedHashMap<String, List<J_EAVehicle>>> c_additionalVehicleHashMaps = new
 saveObject.c_additionalVehicleHashMaps = c_additionalVehicleHashMaps;
 
 v_objectMapper = new ObjectMapper();
+v_objectMapper.registerModule(new JavaTimeModule());
 f_addMixins();
 v_objectMapper.setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 traceln("Model serialisation has been completed.");

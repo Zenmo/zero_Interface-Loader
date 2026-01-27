@@ -1,7 +1,12 @@
+import java.time.Instant;
+
 /**
  * J_ModelSave
  */	
 public class J_ModelSave implements Serializable {
+	
+	public Instant projectDataLastModifiedDate;
+	public String[] zorm_project_names;
 	
 	public EnergyModel energyModel;
 	public ArrayList<GridNode> c_gridNodes = new ArrayList<GridNode>();
