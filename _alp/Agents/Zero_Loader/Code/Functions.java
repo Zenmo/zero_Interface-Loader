@@ -409,10 +409,10 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) {
 		//Set default (initial) operation mode
 		switch (dataBattery.operation_mode()) {
 			case PRICE:
-				gridbattery.f_setBatteryManagement(new J_BatteryManagementPrice(gridbattery));
+				gridbattery.f_setBatteryManagement(new J_BatteryManagementPrice(gridbattery, energyModel.p_timeParameters));
 				break;
 			case PEAK_SHAVING_PARENT_NODE:
-				J_BatteryManagementPeakShaving batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery);
+				J_BatteryManagementPeakShaving batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery, energyModel.p_timeParameters);
 				GridNode gn = findFirst(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals(dataBattery.gridnode_id()));
 				if (gn == null) {
 					throw new RuntimeException("Could not find GridNode with ID: " + gridbattery.p_parentNodeElectricID + " for GCGridBattery");
@@ -422,7 +422,7 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) {
 				break;
 			case PEAK_SHAVING_COOP:
 				// target agent is still null, should be set at the moment of coop creation
-				batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery);
+				batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery, energyModel.p_timeParameters);
 				batteryAlgorithm.setTargetType( OL_ResultScope.ENERGYCOOP );
 				gridbattery.f_setBatteryManagement(batteryAlgorithm);
 				break;
@@ -1750,7 +1750,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 			boolean V1GCapable = randomTrue(avgc_data.p_v1gProbability);
 			boolean V2GCapable = randomTrue(avgc_data.p_v2gProbability);
 			chargingStation.f_setChargePoint( new J_ChargePoint(V1GCapable, V2GCapable));
-			chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation));
+			chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation, energyModel.p_timeParameters));
 			new J_EAChargingSession(chargingStation, chargerProfile, 0, energyModel.p_timeParameters);
 			new J_EAChargingSession(chargingStation, chargerProfile, 1, energyModel.p_timeParameters);
 		}
@@ -1801,7 +1801,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 			boolean V1GCapable = true; //randomTrue(avgc_data.p_v1gProbability);
 			boolean V2GCapable = true; //randomTrue(avgc_data.p_v2gProbability);
 			chargingStation.f_setChargePoint(new J_ChargePoint(V1GCapable, V2GCapable));
-			chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation));
+			chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation, energyModel.p_timeParameters));
 			new J_EAChargingSession(chargingStation, chargerProfile, 0, energyModel.p_timeParameters);
 			new J_EAChargingSession(chargingStation, chargerProfile, 1, energyModel.p_timeParameters);
 		}
@@ -2436,7 +2436,7 @@ if (gridConnection.getStorage().getHasBattery() != null && gridConnection.getSto
 	
 	if (battery_power_kW > 0 && battery_capacity_kWh > 0) {
 		f_addStorage(companyGC, battery_power_kW, battery_capacity_kWh, OL_EnergyAssetType.STORAGE_ELECTRIC);
-		companyGC.f_setBatteryManagement(new J_BatteryManagementSelfConsumption(companyGC));
+		companyGC.f_setBatteryManagement(new J_BatteryManagementSelfConsumption(companyGC, energyModel.p_timeParameters));
 	}	
 }
 

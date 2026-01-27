@@ -327,7 +327,7 @@ if( nbHousesWithPV > 0 ){
 		double batteryStateOfCharge = 0.5;
 
 		new J_EAStorageElectric(house, batteryCapacity_kW, batteryStorageCapacity_kWh, batteryStateOfCharge, zero_Interface.energyModel.p_timeParameters );
-		house.f_setBatteryManagement(new J_BatteryManagementSelfConsumption( house ));
+		house.f_setBatteryManagement(new J_BatteryManagementSelfConsumption( house, zero_Interface.energyModel.p_timeParameters ));
 		nbHouseBatteries++;
 	}
 }

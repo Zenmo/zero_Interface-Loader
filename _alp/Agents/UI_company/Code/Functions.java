@@ -433,7 +433,7 @@ else {
 
 //Add battery algorithm if it is not present
 if(GC.f_getBatteryManagement() == null){
-	GC.f_setBatteryManagement(new J_BatteryManagementSelfConsumption(GC));
+	GC.f_setBatteryManagement(new J_BatteryManagementSelfConsumption(GC, zero_Interface.energyModel.p_timeParameters));
 }
 
 /*ALCODEEND*/}
