@@ -27929,6 +27929,8 @@ try {
 		// Raise warning! Or even abort?
 		String errorString = "Loaded scenario contains outdated survey-data!";
 		System.err.println(errorString);
+		// This error should be more 'user friendly'; a popup that explains what's happening.
+		throw new RuntimeException("Trying to load old save file that no longer matches with current survey data");
 	}
 	
 	EnergyModel deserializedEnergyModel = saveObject.energyModel;
