@@ -40,11 +40,6 @@ f_createHouses();
 
 double f_configureEngine_default()
 {/*ALCODESTART::1726584205773*/
-//Engine time-date variables
-energyModel.p_runStartTime_h = v_simStartHour_h;
-energyModel.p_runEndTime_h = v_simStartHour_h + v_simDuration_h;
-energyModel.f_initializeTimeDates();
-
 //Set basic input files
 energyModel.p_truckTripsCsv = inputCSVtruckTrips;
 energyModel.p_householdTripsCsv = inputCSVhouseholdTrips;
@@ -73,8 +68,6 @@ f_createGridConnections();
 f_createAdditionalGISObjects();
 
 //Initialize the engine
-//energyModel.p_runStartTime_h = v_simStartHour_h;
-//energyModel.p_runEndTime_h = v_simStartHour_h + v_simDuration_h;
 energyModel.f_initializeEngine();
 
 /*ALCODEEND*/}
@@ -534,7 +527,7 @@ for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electro
 	H2Electrolyser.set_p_electrolyserOperationMode( dataElectrolyser.default_operation_mode());
 	
 	//Create EA for the electrolyser GC
-	J_EAConversionElectrolyser h2ElectrolyserEA = new J_EAConversionElectrolyser(H2Electrolyser, dataElectrolyser.capacity_electric_kw(), dataElectrolyser.conversion_efficiency(), energyModel.p_timeStep_h, OL_ElectrolyserState.STANDBY, dataElectrolyser.load_change_time_s(), dataElectrolyser.start_up_time_shutdown_s(), dataElectrolyser.start_up_time_standby_s(), dataElectrolyser.start_up_time_idle_s());
+	J_EAConversionElectrolyser h2ElectrolyserEA = new J_EAConversionElectrolyser(H2Electrolyser, dataElectrolyser.capacity_electric_kw(), dataElectrolyser.conversion_efficiency(), energyModel.p_timeParameters, OL_ElectrolyserState.STANDBY, dataElectrolyser.load_change_time_s(), dataElectrolyser.start_up_time_shutdown_s(), dataElectrolyser.start_up_time_standby_s(), dataElectrolyser.start_up_time_idle_s());
 	
 	//Set owner
 	ConnectionOwner owner;
@@ -1006,7 +999,8 @@ if ( hasQuarterlyData == true ) { // Add quarterly electricity data pattern if a
 } 
 
 else { // Add regular electricity and consumption profiles
-	J_EAConsumption profile = new J_EAConsumption(parentGC, OL_EnergyAssetType.ELECTRICITY_DEMAND, profileName, yearlyElectricityDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeStep_h, null);
+	J_ProfilePointer profilePointer = energyModel.f_findProfile(profileName);
+	J_EAConsumption profile = new J_EAConsumption(parentGC, OL_EnergyAssetType.ELECTRICITY_DEMAND, profileName, yearlyElectricityDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeParameters, profilePointer);
 }
 /*ALCODEEND*/}
 
@@ -1041,7 +1035,7 @@ for (Parcel_data dataParcel : c_parcel_data) {
 double f_addEnergyProduction(GridConnection parentGC,OL_EnergyAssetType asset_type,String asset_name,double installedPower_kW)
 {/*ALCODESTART::1726584205809*/
 double assetCapacity_kW				= 0;
-double timestep_h 					= energyModel.p_timeStep_h;
+J_TimeParameters timeParameters = energyModel.p_timeParameters;
 J_ProfilePointer profilePointer = null;
 OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 switch (asset_type){
@@ -1065,7 +1059,7 @@ case PHOTOTHERMAL: //NOT USED YET
 	break;
 }
 
-J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, energyCarrier, assetCapacity_kW, timestep_h, profilePointer);
+J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, energyCarrier, assetCapacity_kW, timeParameters, profilePointer);
 
 
 /*ALCODEEND*/}
@@ -1343,7 +1337,7 @@ double storageCapacity_kWh 		= 0;
 double energyConsumption_kWhpkm = 0;
 double capacityElectricity_kW 	= 0;
 double stateOfCharge_fr  		= 1; // Initial state of charge
-double timestep_h				= energyModel.p_timeStep_h;
+J_TimeParameters timeParameters	= energyModel.p_timeParameters;
 double vehicleScaling 			= 1.0;
 
 switch(vehicle_type){
@@ -1384,19 +1378,19 @@ if (!isDefaultVehicle && maxChargingPower_kW <= 0) {
 }
 
 //Create the EV vehicle energy asset with the set parameters + links
-J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timestep_h, energyConsumption_kWhpkm, vehicleScaling, vehicle_type, null);	
+J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timeParameters, energyConsumption_kWhpkm, vehicleScaling, vehicle_type, null);	
 
 if (!isDefaultVehicle && annualTravelDistance_km > avgc_data.p_minAnnualTravelDistanceSurveyVehicle_km){
-		electricVehicle.tripTracker.setAnnualDistance_km(annualTravelDistance_km);
+		electricVehicle.getTripTracker().setAnnualDistance_km(annualTravelDistance_km);
 }
 else if (vehicle_type == OL_EnergyAssetType.ELECTRIC_VAN){
-		electricVehicle.tripTracker.setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
+		electricVehicle.getTripTracker().setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
 }
 
 return electricVehicle;
 /*ALCODEEND*/}
 
-J_EAPetroleumFuelVehicle f_addPetroleumFuelVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_type,Boolean isDefaultVehicle,double annualTravelDistance_km)
+J_EAFuelVehicle f_addPetroleumFuelVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_type,Boolean isDefaultVehicle,double annualTravelDistance_km)
 {/*ALCODESTART::1726584205829*/
 double energyConsumption_kWhpkm = 0;
 double vehicleScaling = 1.0;
@@ -1418,14 +1412,14 @@ switch (vehicle_type){
 }
 
 //Create EA
-J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(parentGC, energyConsumption_kWhpkm, energyModel.p_timeStep_h, vehicleScaling, vehicle_type, null);
+J_EAFuelVehicle petroleumFuelVehicle = new J_EAFuelVehicle(parentGC, energyConsumption_kWhpkm, energyModel.p_timeParameters, vehicleScaling, vehicle_type, null, OL_EnergyCarriers.PETROLEUM_FUEL);
 
 //Set annual travel distance
 if (!isDefaultVehicle && annualTravelDistance_km > avgc_data.p_minAnnualTravelDistanceSurveyVehicle_km){
-		petroleumFuelVehicle.tripTracker.setAnnualDistance_km(annualTravelDistance_km);
+		petroleumFuelVehicle.getTripTracker().setAnnualDistance_km(annualTravelDistance_km);
 }
 else if (vehicle_type == OL_EnergyAssetType.PETROLEUM_FUEL_VAN){
-		petroleumFuelVehicle.tripTracker.setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
+		petroleumFuelVehicle.getTripTracker().setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
 }
 
 return petroleumFuelVehicle;
@@ -1644,21 +1638,21 @@ switch (vehicle_type){
 }
 
 //Create EA
-J_EAHydrogenVehicle hydrogenVehicle = new J_EAHydrogenVehicle(parentGC, energyConsumption_kWhpkm, energyModel.p_timeStep_h, vehicleScaling, vehicle_type, null);
+J_EAFuelVehicle hydrogenVehicle = new J_EAFuelVehicle(parentGC, energyConsumption_kWhpkm, energyModel.p_timeParameters, vehicleScaling, vehicle_type, null, OL_EnergyCarriers.HYDROGEN);
 
 //Set annual travel distance
 if (!isDefaultVehicle && annualTravelDistance_km > avgc_data.p_minAnnualTravelDistanceSurveyVehicle_km){
-		hydrogenVehicle.tripTracker.setAnnualDistance_km(annualTravelDistance_km);
+		hydrogenVehicle.getTripTracker().setAnnualDistance_km(annualTravelDistance_km);
 }
 else if (vehicle_type == OL_EnergyAssetType.HYDROGEN_VAN){
-		hydrogenVehicle.tripTracker.setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
+		hydrogenVehicle.getTripTracker().setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
 }
 /*ALCODEEND*/}
 
 double f_addChargingDemandProfile(GCPublicCharger GC,String profileName)
 {/*ALCODESTART::1726584205845*/
 J_EAProfile profile = new J_EAProfile(GC, OL_EnergyCarriers.ELECTRICITY, null, OL_AssetFlowCategories.evChargingPower_kW, energyModel.p_timeStep_h);		
-profile.energyAssetName = "charging profile";
+profile.setEnergyAssetName("charging profile");
 List<Double> quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + profileName + " FROM charging_profiles;");			
 profile.a_energyProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> max(0,d)).map( d -> d / 4).toArray();
 /*ALCODEEND*/}
@@ -1757,8 +1751,8 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 			boolean V2GCapable = randomTrue(avgc_data.p_v2gProbability);
 			chargingStation.f_setChargePoint( new J_ChargePoint(V1GCapable, V2GCapable));
 			chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation));
-			new J_EAChargingSession(chargingStation, chargerProfile, 0);
-			new J_EAChargingSession(chargingStation, chargerProfile, 1);
+			new J_EAChargingSession(chargingStation, chargerProfile, 0, energyModel.p_timeParameters);
+			new J_EAChargingSession(chargingStation, chargerProfile, 1, energyModel.p_timeParameters);
 		}
 		else{
 			for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerCharger_Centre; k++ ){
@@ -1808,8 +1802,8 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 			boolean V2GCapable = true; //randomTrue(avgc_data.p_v2gProbability);
 			chargingStation.f_setChargePoint(new J_ChargePoint(V1GCapable, V2GCapable));
 			chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation));
-			new J_EAChargingSession(chargingStation, chargerProfile, 0);
-			new J_EAChargingSession(chargingStation, chargerProfile, 1);
+			new J_EAChargingSession(chargingStation, chargerProfile, 0, energyModel.p_timeParameters);
+			new J_EAChargingSession(chargingStation, chargerProfile, 1, energyModel.p_timeParameters);
 		}
 		else{
 			for(int k = 0; k < avgc_data.p_avgVehiclesPerCharger_Chargepoint; k++ ){
@@ -1864,7 +1858,7 @@ double f_createPreprocessedElectricityProfile_PV(GridConnection parentGC,double[
 //Create the profile 
 J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, null, OL_AssetFlowCategories.fixedConsumptionElectric_kW, energyModel.p_timeStep_h);		
 profile.setStartTime_h(energyModel.p_timeParameters.getRunStartTime_h());
-profile.energyAssetName = parentGC.p_ownerID + " custom profile";
+profile.setEnergyAssetName(parentGC.p_ownerID + " custom profile");
 double extraConsumption_kWh = 0;
 
 
@@ -1941,7 +1935,7 @@ if(yearlyHeatPumpElectricityConsumption_kWh != null){
 	
 	J_EAProfile profileHeatPumpElectricityConsumption = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, yearlyHeatPumpElectricityConsumption_kWh, OL_AssetFlowCategories.heatPumpElectricityConsumption_kW, energyModel.p_timeStep_h);		
 	profileHeatPumpElectricityConsumption.setStartTime_h(energyModel.p_timeParameters.getRunStartTime_h());
-	profileHeatPumpElectricityConsumption.energyAssetName = parentGC.p_ownerID + " custom heat pump electricity consumption profile";
+	profileHeatPumpElectricityConsumption.setEnergyAssetName(parentGC.p_ownerID + " custom heat pump electricity consumption profile");
 }
 /*ALCODEEND*/}
 
@@ -1956,7 +1950,7 @@ double startTime = System.currentTimeMillis();
 v_timeOfModelStart_ms = startTime;
 
 //Get simulation start time
-f_getSimulationTimeVariables();
+f_setSimulationTimeParameters();
 
 //Send avgc data to engine
 avgc_data.f_setAVGC_data();
@@ -2187,7 +2181,7 @@ double[] a_normalizedPower_fr = Arrays.stream(yearlyElectricityProduction_kWh).m
 TableFunction tf_customPVproduction_fr = new TableFunction(a_arguments, a_normalizedPower_fr, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
 J_ProfilePointer profilePointer = new J_ProfilePointer((parentGC.p_ownerID + "_PVproduction") , tf_customPVproduction_fr);
 energyModel.f_addProfile(profilePointer);
-J_EAProduction production_asset = new J_EAProduction(parentGC, OL_EnergyAssetType.PHOTOVOLTAIC, (parentGC.p_ownerID + "_rooftopPV"), OL_EnergyCarriers.ELECTRICITY, (double)pvPower_kW, energyModel.p_timeStep_h, profilePointer);
+J_EAProduction production_asset = new J_EAProduction(parentGC, OL_EnergyAssetType.PHOTOVOLTAIC, (parentGC.p_ownerID + "_rooftopPV"), OL_EnergyCarriers.ELECTRICITY, (double)pvPower_kW, energyModel.p_timeParameters, profilePointer);
 
 traceln("Custom PV asset added to GC: " + parentGC.p_ownerID);
 /*ALCODEEND*/}
@@ -2775,7 +2769,7 @@ for (int i = 0; i < numTractors; i++) {
 	if(tractorProfile == null){
 		throw new RuntimeException("Trying to make a tractor, without having loaded in a tractor profile for GC: " + companyGridConnection.p_gridConnectionID);
 	}
-    new J_EAPetroleumFuelTractor(companyGridConnection, annualPetroleumFuel_L / numTractors, tractorProfile.getValuesArray(), energyModel.p_timeStep_h);
+    new J_EAPetroleumFuelTractor(companyGridConnection, annualPetroleumFuel_L / numTractors, tractorProfile.getValuesArray(), energyModel.p_timeParameters);
 }
 /*ALCODEEND*/}
 
@@ -2871,7 +2865,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 
 	case GAS_BURNER:
 		heatOutputCapacityGasBurner_kW = max(avgc_data.p_minGasBurnerOutputCapacity_kW, maxHeatOutputPower_kW);
-		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, heatOutputCapacityGasBurner_kW , avgc_data.p_avgEfficiencyGasBurner_fr, energyModel.p_timeStep_h, 90);
+		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, heatOutputCapacityGasBurner_kW , avgc_data.p_avgEfficiencyGasBurner_fr, energyModel.p_timeParameters, 90);
 		break;
 	
 	case HYBRID_HEATPUMP:
@@ -2885,7 +2879,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
 		
-		J_EAConversionHeatPump heatPumpHybrid = new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType);
+		J_EAConversionHeatPump heatPumpHybrid = new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeParameters, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType);
 
 		zero_Interface.energyModel.c_ambientDependentAssets.add(heatPumpHybrid);
 		
@@ -2894,7 +2888,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		efficiency = avgc_data.p_avgEfficiencyGasBurner_fr;
 		outputTemperature_degC = avgc_data.p_avgOutputTemperatureGasBurner_degC;
 		
-		J_EAConversionGasBurner gasBurnerHybrid = new J_EAConversionGasBurner(parentGC, heatOutputCapacityGasBurner_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC);		
+		J_EAConversionGasBurner gasBurnerHybrid = new J_EAConversionGasBurner(parentGC, heatOutputCapacityGasBurner_kW, efficiency, energyModel.p_timeParameters, outputTemperature_degC);		
 		break;
 	
 	case ELECTRIC_HEATPUMP:
@@ -2907,7 +2901,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
 		
-		new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType );		
+		new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeParameters, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType );		
 		break;
 
 	case GAS_CHP:
@@ -2916,7 +2910,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		outputTemperature_degC = avgc_data.p_avgOutputTemperatureCHP_degC;
 		efficiency = avgc_data.p_avgEfficiencyCHP_thermal_fr + avgc_data.p_avgEfficiencyCHP_electric_fr;
 		
-		new J_EAConversionGasCHP(parentGC, outputCapacityElectric_kW, maxHeatOutputPower_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC );
+		new J_EAConversionGasCHP(parentGC, outputCapacityElectric_kW, maxHeatOutputPower_kW, efficiency, energyModel.p_timeParameters, outputTemperature_degC );
 		break;
 
 	case DISTRICTHEAT:
@@ -2924,7 +2918,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		outputTemperature_degC = avgc_data.p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
 		efficiency = avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr;
 		
-		new J_EAConversionHeatDeliverySet(parentGC, heatOutputCapacityDeliverySet_kW, efficiency, energyModel.p_timeStep_h, outputTemperature_degC);
+		new J_EAConversionHeatDeliverySet(parentGC, heatOutputCapacityDeliverySet_kW, efficiency, energyModel.p_timeParameters, outputTemperature_degC);
 		
 		//Add GC to heat grid
 		GridNode heatgrid = findFirst(energyModel.pop_gridNodes, node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
@@ -3310,12 +3304,12 @@ if(yearlyCookingDemand_kWh <= 0){
 
 switch(CookingType){
 	case ELECTRIC_HOB:
-		new J_EAConsumption(GC, OL_EnergyAssetType.ELECTRIC_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeStep_h, null);
+		new J_EAConsumption(GC, OL_EnergyAssetType.ELECTRIC_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeParameters, null);
 		GC.p_cookingMethod = OL_HouseholdCookingMethod.ELECTRIC;
 		break;
 		
 	case GAS_PIT:
-		new J_EAConsumption(GC, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeStep_h, null);
+		new J_EAConsumption(GC, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeParameters, null);
 		GC.p_cookingMethod = OL_HouseholdCookingMethod.GAS;
 		break;
 }
@@ -3327,7 +3321,7 @@ if(yearlyHWD_kWh <= 0){
 	throw new RuntimeException("Trying to create a DHW asset, without specifying the yearly energy consumption");
 }
 
-J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, null);
+J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, null);
 /*ALCODEEND*/}
 
 double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,Double heatDemand_kwhpa,J_HeatingPreferences heatingPreferences)
@@ -3374,7 +3368,7 @@ heatCapacity_JpK = buildingCooldownPeriod_hr * lossFactor_WpK * 3600;
 heatCapacity_JpK = (avgc_data.p_heatCapacitySizingSlope_JpKm2 * floorArea_m2 + avgc_data.p_heatCapacitySizingConstant_JpK) * avgc_data.p_heatCapacitySizingFactor_fr;
 
 //Create the thermal building asset
-parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossFactor_WpK, energyModel.p_timeStep_h, initialTemp_degC, heatCapacity_JpK, solarAbsorptionFactor_m2 );
+parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossFactor_WpK, energyModel.p_timeParameters, initialTemp_degC, heatCapacity_JpK, solarAbsorptionFactor_m2 );
 
 
 //FOR NOW DEFAULT NO INTERIOR/EXTERIOR HEAT BUFFERS -> NOT NECESSARY
@@ -4012,7 +4006,7 @@ double yearlyGasDelivery_m3 = Arrays.stream(profile_m3).sum();
 ZeroMath.arrayMultiply(profile_m3, avgc_data.p_gas_kWhpm3);
 // Then we create the profile asset and name it
 J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.METHANE, profile_m3, null, energyModel.p_timeStep_h);
-j_ea.energyAssetName = engineGC.p_ownerID + " custom gas profile";
+j_ea.setEnergyAssetName(engineGC.p_ownerID + " custom gas profile");
 
 if(engineGC.p_owner.p_detailedCompany){
 	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3);
@@ -4058,7 +4052,7 @@ double yearlyConsumptionHeat_kWh = yearlyGasDelivery_m3 * avgc_data.p_gas_kWhpm3
 // We assume the heat consumption follows a standard profile
 String profileName = "default_building_heat_demand_fr";
 J_ProfilePointer profilePointer = energyModel.f_findProfile(profileName);
-new J_EAConsumption(engineGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, yearlyConsumptionHeat_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, profilePointer);
+new J_EAConsumption(engineGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, yearlyConsumptionHeat_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, profilePointer);
 
 if(engineGC.p_owner.p_detailedCompany){
 	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3);
@@ -4073,7 +4067,7 @@ double f_createGasProfileFromAnnualGasTotal(GridConnection engineGC,double yearl
 double yearlyGasConsumption_kWh = yearlyGasDelivery_m3 * avgc_data.p_gas_kWhpm3;
 // We assume the gas consumption follows a standard heat consumption profile
 String profileName = "default_building_heat_demand_fr";
-new J_EAConsumption(engineGC, OL_EnergyAssetType.METHANE_DEMAND, profileName, yearlyGasConsumption_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeStep_h, null);	 
+new J_EAConsumption(engineGC, OL_EnergyAssetType.METHANE_DEMAND, profileName, yearlyGasConsumption_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeParameters, null);	 
 
 if(engineGC.p_owner.p_detailedCompany){
 	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3);
@@ -4148,7 +4142,7 @@ double ratioGasUsedForHeating = f_getRatioGasUsedForHeating(surveyGC);
 double[] profile_kWh = ZeroMath.arrayMultiply(profile_m3, avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
 // Then we create the profile asset and name it
 J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile_kWh, null , energyModel.p_timeStep_h);
-j_ea.energyAssetName = engineGC.p_ownerID + " custom building heat profile";
+j_ea.setEnergyAssetName(engineGC.p_ownerID + " custom building heat profile");
 
 if(engineGC.p_owner.p_detailedCompany){
 	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3);
@@ -4236,7 +4230,7 @@ double[] profile = f_timeSeriesToQuarterHourlyDoubleArray(surveyGC.getHeat().get
 ZeroMath.arrayMultiply(profile, avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr);
 // Then we create the profile asset and name it
 J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile, null , energyModel.p_timeStep_h);
-j_ea.energyAssetName = engineGC.p_ownerID + " custom building heat profile";
+j_ea.setEnergyAssetName(engineGC.p_ownerID + " custom building heat profile");
 
 return max(profile)/energyModel.p_timeStep_h;
 /*ALCODEEND*/}
@@ -4297,7 +4291,7 @@ double f_createHeatProfileFromAnnualHeatTotal(GridConnection engineGC,double yea
 // We assume the heat consumption follows a standard profile
 String profileName = "default_building_heat_demand_fr";
 J_ProfilePointer profilePointer = energyModel.f_findProfile(profileName);
-new J_EAConsumption(engineGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, yearlyConsumptionHeat_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeStep_h, profilePointer);
+new J_EAConsumption(engineGC, OL_EnergyAssetType.HEAT_DEMAND, profileName, yearlyConsumptionHeat_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, profilePointer);
 
 return yearlyConsumptionHeat_kWh * max(profilePointer.getAllValues())/energyModel.p_timeStep_h;
 /*ALCODEEND*/}
@@ -4443,16 +4437,16 @@ for(int i = 0; i < amountOfOwnedCars ; i++){
 	if( house.p_eigenOprit){
 		if (randomTrue( avgc_data.p_shareOfElectricVehicleOwnership)){
 			J_EAEV ev = f_addElectricVehicle(house, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, 0, 0);
-			ev.tripTracker.setAnnualDistance_km(ev.tripTracker.getAnnualDistance_km()*tripTrackerScaling);
+			ev.getTripTracker().setAnnualDistance_km(ev.getTripTracker().getAnnualDistance_km()*tripTrackerScaling);
 		}
 		else{
-			J_EAPetroleumFuelVehicle petroleumFuelVehicle = f_addPetroleumFuelVehicle(house, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, true, 0);
-			petroleumFuelVehicle.tripTracker.setAnnualDistance_km(petroleumFuelVehicle.tripTracker.getAnnualDistance_km()*tripTrackerScaling);
+			J_EAFuelVehicle petroleumFuelVehicle = f_addPetroleumFuelVehicle(house, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, true, 0);
+			petroleumFuelVehicle.getTripTracker().setAnnualDistance_km(petroleumFuelVehicle.getTripTracker().getAnnualDistance_km()*tripTrackerScaling);
 		}
 	}
 	else {
-		J_EAPetroleumFuelVehicle petroleumFuelVehicle = f_addPetroleumFuelVehicle(house, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, true, 0);
-		petroleumFuelVehicle.tripTracker.setAnnualDistance_km(petroleumFuelVehicle.tripTracker.getAnnualDistance_km()*tripTrackerScaling);
+		J_EAFuelVehicle petroleumFuelVehicle = f_addPetroleumFuelVehicle(house, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, true, 0);
+		petroleumFuelVehicle.getTripTracker().setAnnualDistance_km(petroleumFuelVehicle.getTripTracker().getAnnualDistance_km()*tripTrackerScaling);
 	}
 }
 /*ALCODEEND*/}
@@ -4533,7 +4527,7 @@ for (ConnectionOwner CO : c_COCompanies) {
 
 /*ALCODEEND*/}
 
-double f_getSimulationTimeVariables()
+double f_setSimulationTimeParameters()
 {/*ALCODESTART::1758714675284*/
 //Sim start year
 int simStartYear = getExperiment().getEngine().getStartDate().getYear() + 1900;  // 1900 years offset because of Java/AnyLogic convention
@@ -4548,25 +4542,25 @@ d.setMinutes(0);
 d.setDate(1);
 
 //Calculate sim start hour
-double simStartHour_h = roundToInt((getExperiment().getEngine().getStartDate().getTime() - d.getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
+double simStartTime_h = roundToInt((getExperiment().getEngine().getStartDate().getTime() - d.getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
 
 //Fix for if start is within summer time, the v_simStartHour_h is not correct anymore
 double summerTimeStart_h = avgc_data.map_yearlySummerWinterTimeStartHour.get(simStartYear).getFirst();
 double winterTimeStart_h = avgc_data.map_yearlySummerWinterTimeStartHour.get(simStartYear).getSecond();
-if(simStartHour_h > summerTimeStart_h && simStartHour_h < winterTimeStart_h){
-	simStartHour_h += 1;
+if(simStartTime_h > summerTimeStart_h && simStartTime_h < winterTimeStart_h){
+	simStartTime_h += 1;
 }
 
 
 
 //Set sim duration if it is set
-double simDuration_h = 0;
+double simDuration_h = 8760; // Default sim duration in hours
 if(getExperiment().getEngine().getStopDate() != null){ //If experiment has set time, it gets bias
 	simDuration_h = roundToInt(((double)getExperiment().getEngine().getStopDate().getTime() - getExperiment().getEngine().getStartDate().getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
-	if(simStartHour_h > summerTimeStart_h && simStartHour_h + simDuration_h > winterTimeStart_h){//Compensate if start time is in summer time, and end time is in winter time -> simulation would otherwise have 1 hour too much
+	if(simStartTime_h > summerTimeStart_h && simStartTime_h + simDuration_h > winterTimeStart_h){//Compensate if start time is in summer time, and end time is in winter time -> simulation would otherwise have 1 hour too much
 		simDuration_h -= 1;
 	}
-	if(simStartHour_h < summerTimeStart_h && simStartHour_h + simDuration_h < winterTimeStart_h){//Compensate if start time is in winter time, and end time is in summer time -> simulation would otherwise have 1 hour too less
+	if(simStartTime_h < summerTimeStart_h && simStartTime_h + simDuration_h < winterTimeStart_h){//Compensate if start time is in winter time, and end time is in summer time -> simulation would otherwise have 1 hour too less
 		simDuration_h += 1;
 	}
 }
@@ -4574,14 +4568,16 @@ else if(settings.simDuration_h() != null){//Else if manual set, use that instead
 	simDuration_h = settings.simDuration_h();
 }
 
-if (simStartHour_h % 24 != 0) {
+if (simStartTime_h % 24 != 0) {
 	throw new RuntimeException("Impossible to run a model that does not start at midnight. Please check the start in the simulation settings.");
 }
 if (simDuration_h % 24 != 0) {
 	throw new RuntimeException("Impossible to run a model that does not have a runtime that is an exact multiple of a day. Please check the start and endtime in the simulation settings.");
 }
 
-f_setEngineTimeVariables(simStartYear, simStartHour_h, simStartHour_h + simDuration_h);
+double simEndTime_h = simStartTime_h + simDuration_h;
+
+f_setEngineTimeVariables(simStartYear, simStartTime_h, simEndTime_h, settings.summerWeekNumber(), settings.winterWeekNumber());
 /*ALCODEEND*/}
 
 double f_addMixins()
@@ -4891,27 +4887,29 @@ else{
 }
 /*ALCODEEND*/}
 
-double f_setEngineTimeVariables(int simStartYear,double simStartTime_h,double simEndTime_h)
+double f_setEngineTimeVariables(int simStartYear,double simStartTime_h,double simEndTime_h,int summerWeekNumber,int winterWeekNumber)
 {/*ALCODESTART::1767606140975*/
 LocalDate localDate = LocalDate.of(simStartYear, 1, 1);
 int dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
-double startOfSummerWeek_h = roundToInt(24 * (p_summerWeekNumber * 7 + (8-dayOfWeek1jan)%7)); // Week 18 is summerweek.
-double startOfWinterWeek_h = roundToInt(24 * (p_winterWeekNumber * 7 + (8-dayOfWeek1jan)%7)); // Week 49 is winterweek.
+double startOfSummerWeek_h = roundToInt(24 * (summerWeekNumber * 7 + (8-dayOfWeek1jan)%7)); // Week 18 is summerweek.
+double startOfWinterWeek_h = roundToInt(24 * (winterWeekNumber * 7 + (8-dayOfWeek1jan)%7)); // Week 49 is winterweek.
 
 // TODO: Remove the hourOfYearPerMonth array from AVGC and calculate it based on the Simulation Year
 
 energyModel.p_timeParameters = new J_TimeParameters(
-	p_timeStep_h,
+	settings.timeStep_h(),
 	simStartYear,
 	avgc_data.hourOfYearPerMonth,
 	dayOfWeek1jan,
 	simStartTime_h,
 	simEndTime_h,
-	p_summerWeekNumber,
-	p_winterWeekNumber,
+	summerWeekNumber,
+	winterWeekNumber,
 	startOfSummerWeek_h,
 	startOfWinterWeek_h
 );
+
+energyModel.p_timeVariables = new J_TimeVariables(0, energyModel.p_timeParameters);
 /*ALCODEEND*/}
 
 double f_getSpaceHeatingDemand_PBL_kWh(double floorSurfaceArea_m2,PBL_SpaceHeatingAndResidents_data spaceHeatingObjectPBL,double localFactor,double regionalClimateCorrectionFactor)

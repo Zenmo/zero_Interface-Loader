@@ -495,7 +495,7 @@
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>J_EAPetroleumFuelVehicle</ReturnType>
+		<ReturnType>J_EAFuelVehicle</ReturnType>
 		<Id>1726584205829</Id>
 		<Name><![CDATA[f_addPetroleumFuelVehicle]]></Name>
 		<X>1320</X>
@@ -2457,9 +2457,9 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1758714675284</Id>
-		<Name><![CDATA[f_getSimulationTimeVariables]]></Name>
-		<X>1880</X>
-		<Y>-160</Y>
+		<Name><![CDATA[f_setSimulationTimeParameters]]></Name>
+		<X>80</X>
+		<Y>110</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2625,8 +2625,8 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1767606140975</Id>
 		<Name><![CDATA[f_setEngineTimeVariables]]></Name>
-		<X>1880</X>
-		<Y>-140</Y>
+		<X>230</X>
+		<Y>-10</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2635,7 +2635,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-		<Name><![CDATA[simStartYear]]></Name>
+			<Name><![CDATA[simStartYear]]></Name>
 			<Type><![CDATA[int]]></Type>
 		</Parameter>
 		<Parameter>
@@ -2645,6 +2645,14 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[simEndTime_h]]></Name>
 			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[summerWeekNumber]]></Name>
+			<Type><![CDATA[int]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[winterWeekNumber]]></Name>
+			<Type><![CDATA[int]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
