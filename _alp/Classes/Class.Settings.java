@@ -19,7 +19,8 @@ public class Settings {
 	int summerWeekNumber = 18; //Week number of the year where data will be stored for to display a 'default' summerweek
 	@Builder.Default
 	int winterWeekNumber = 49; //Week number of the year where data will be stored for to display a 'default' winterweek
-	Double simDuration_h; // If filled in it will be set as the (rapid) sim duration instead of the default setting (8760 - p_timeStep_h) IF experiment end time is not set!.	
+	@Builder.Default
+	double simDuration_h = 8760; // (Rapid sim (and Live sim before loop) duration in hours since the start time h.
 	
 	
 	//Simulation settings (Startup)

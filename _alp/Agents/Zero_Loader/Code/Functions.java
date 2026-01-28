@@ -2473,7 +2473,7 @@ int nbDailyCarCommuters_notNull = (gridConnection.getTransport().getNumDailyCarA
 if (nbDailyCarCommuters_notNull + nbDailyCarVisitors_notNull > 0){	
 	
 	int nbEVCarsComute = (gridConnection.getTransport().getNumCommuterAndVisitorChargePoints() != null) ? gridConnection.getTransport().getNumCommuterAndVisitorChargePoints() : 0; // Wat doen we hier mee????
-	int nbPetroleumFuelCarsComute = gridConnection.getTransport().getNumDailyCarAndVanCommuters() + nbDailyCarVisitors_notNull - nbEVCarsComute;
+	int nbPetroleumFuelCarsComute = max(0, nbDailyCarCommuters_notNull + nbDailyCarVisitors_notNull - nbEVCarsComute);
 
 	boolean isDefaultVehicle = true;
 	double maxChargingPower_kW 		= avgc_data.p_avgEVMaxChargePowerCar_kW;	
@@ -4067,7 +4067,8 @@ double f_createGasProfileFromAnnualGasTotal(GridConnection engineGC,double yearl
 double yearlyGasConsumption_kWh = yearlyGasDelivery_m3 * avgc_data.p_gas_kWhpm3;
 // We assume the gas consumption follows a standard heat consumption profile
 String profileName = "default_building_heat_demand_fr";
-new J_EAConsumption(engineGC, OL_EnergyAssetType.METHANE_DEMAND, profileName, yearlyGasConsumption_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeParameters, null);	 
+J_ProfilePointer buildingHeatConsumptionProfile = energyModel.f_findProfile(profileName);
+new J_EAConsumption(engineGC, OL_EnergyAssetType.METHANE_DEMAND, profileName, yearlyGasConsumption_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeParameters, buildingHeatConsumptionProfile);	 
 
 if(engineGC.p_owner.p_detailedCompany){
 	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3);
@@ -4141,7 +4142,7 @@ double ratioGasUsedForHeating = f_getRatioGasUsedForHeating(surveyGC);
 // Finally, multiply the gas profile with the total conversion factor to get the heat profile
 double[] profile_kWh = ZeroMath.arrayMultiply(profile_m3, avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile_kWh, null , energyModel.p_timeParameters.getTimeStep_h(), energyModel.p_timeParameters);
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile_kWh, OL_AssetFlowCategories.spaceHeating_kW , energyModel.p_timeParameters.getTimeStep_h(), energyModel.p_timeParameters);
 j_ea.setEnergyAssetName(engineGC.p_ownerID + " custom building heat profile");
 
 if(engineGC.p_owner.p_detailedCompany){
@@ -4229,7 +4230,7 @@ double[] profile = f_timeSeriesToQuarterHourlyDoubleArray(surveyGC.getHeat().get
 // TODO: Fix this for LT_DISTRICTHEAT, they have a different efficiency!
 ZeroMath.arrayMultiply(profile, avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr);
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile, null , energyModel.p_timeParameters.getTimeStep_h(), energyModel.p_timeParameters);
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile, OL_AssetFlowCategories.spaceHeating_kW , energyModel.p_timeParameters.getTimeStep_h(), energyModel.p_timeParameters);
 j_ea.setEnergyAssetName(engineGC.p_ownerID + " custom building heat profile");
 
 return max(profile)/energyModel.p_timeParameters.getTimeStep_h();
@@ -4554,7 +4555,7 @@ if(simStartTime_h > summerTimeStart_h && simStartTime_h < winterTimeStart_h){
 
 
 //Set sim duration if it is set
-double simDuration_h = 8760; // Default sim duration in hours
+double simDuration_h; //Sim duration in hours
 if(getExperiment().getEngine().getStopDate() != null){ //If experiment has set time, it gets bias
 	simDuration_h = roundToInt(((double)getExperiment().getEngine().getStopDate().getTime() - getExperiment().getEngine().getStartDate().getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
 	if(simStartTime_h > summerTimeStart_h && simStartTime_h + simDuration_h > winterTimeStart_h){//Compensate if start time is in summer time, and end time is in winter time -> simulation would otherwise have 1 hour too much
@@ -4564,7 +4565,7 @@ if(getExperiment().getEngine().getStopDate() != null){ //If experiment has set t
 		simDuration_h += 1;
 	}
 }
-else if(settings.simDuration_h() != null){//Else if manual set, use that instead
+else{
 	simDuration_h = settings.simDuration_h();
 }
 
@@ -4573,6 +4574,9 @@ if (simStartTime_h % 24 != 0) {
 }
 if (simDuration_h % 24 != 0) {
 	throw new RuntimeException("Impossible to run a model that does not have a runtime that is an exact multiple of a day. Please check the start and endtime in the simulation settings.");
+}
+if (simDuration_h <= 0) {
+	throw new RuntimeException("Impossible to run a model that has a runtime that is <= 0. Please check the start and endtime in the simulation settings or simduration_h in the 'settings' class.");
 }
 
 double simEndTime_h = simStartTime_h + simDuration_h;
