@@ -633,7 +633,7 @@
 			<ActionCode>pauseSimulation();
 
 //Remove slider GCs from coop
-v_energyHubCoop.f_removeMemberGCs(c_sliderEAGCs);
+v_energyHubCoop.f_removeMemberGCs(c_sliderEAGCs, zero_Interface.energyModel.p_timeParameters);
 
 
 zero_Interface.f_getScenarioButtons().setPos( 19, 144);
@@ -718,7 +718,7 @@ zero_Interface.b_inEnergyHubSelectionMode = true;</ActionCode>
 					<TextColor/>
 					<Enabled>true</Enabled>
 					<ActionCode>//Remove slider GCs from coop
-v_energyHubCoop.f_removeMemberGCs(c_sliderEAGCs);
+v_energyHubCoop.f_removeMemberGCs(c_sliderEAGCs, zero_Interface.energyModel.p_timeParameters);
 c_sliderEAGCs.clear();
 
 zero_Interface.f_getScenarioButtons().setPos( 19, 144);

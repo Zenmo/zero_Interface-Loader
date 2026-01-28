@@ -2,6 +2,7 @@
 <ActiveObjectClass>
 	<Id>1717506309790</Id>
 	<Name><![CDATA[UI_Hydrogen]]></Name>
+	<ExcludeFromBuild>true</ExcludeFromBuild>
 	<Folder>1754045666929</Folder>
 	<Generic>false</Generic>
 	<GenericParameter>
