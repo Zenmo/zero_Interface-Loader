@@ -3661,9 +3661,9 @@ for (ParkingSpace_data dataParkingSpace : f_getParkingSpacesInSubScope(c_parking
 		carportGC = energyModel.add_EnergyProductionSites();
 		
 		carportGC.p_gridConnectionID = "Parking space gridconnection: " + dataParkingSpace.parking_id();
-		carportGC.v_liveConnectionMetaData.physicalCapacity_kW = dataParkingSpace.pv_potential_kwp();
+		carportGC.v_liveConnectionMetaData.physicalCapacity_kW = 1 + dataParkingSpace.pv_potential_kwp(); // 1 + is fix to prevent errors in engine for 0 capacity (= 0 pv potential for all parking spaces attached to this GC)
 		carportGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = 0.0;
-		carportGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataParkingSpace.pv_potential_kwp();
+		carportGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = 1 + dataParkingSpace.pv_potential_kwp(); // 1 + is fix to prevent errors in engine for 0 capacity (= 0 pv potential for all parking spaces attached to this GC)
 		
 		carportGC.v_liveConnectionMetaData.physicalCapacityKnown = false;
 		carportGC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
