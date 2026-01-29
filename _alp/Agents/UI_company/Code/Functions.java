@@ -243,7 +243,7 @@ J_EAConsumption heatDemandAsset = findFirst(GC.c_consumptionAssets, j_ea->j_ea.g
 
 //Check heating demand asset is null (shouldnt be possible)
 if (heatDemandAsset != null){
-	capacityThermal_kW = heatDemandAsset.yearlyDemand_kWh/8760*10; // --> average hourly consumption * 10 --> to always have enough capacity
+	capacityThermal_kW = heatDemandAsset.getYearlyDemand_kWh()/8760*10; // --> average hourly consumption * 10 --> to always have enough capacity
 }
 else{
 	//Select profile heat demand asset 

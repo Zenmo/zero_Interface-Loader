@@ -1663,8 +1663,8 @@ String energyAssetName = "charging profile";
 
 J_ProfilePointer profilePointer = f_createEngineProfile(energyAssetName, a_arguments_hr, profile_kWhpqh, OL_ProfileUnits.KWHPQUARTERHOUR);
 
-J_EAProfile profile = new J_EAProfile(GC, OL_EnergyCarriers.ELECTRICITY, profilePointer, OL_AssetFlowCategories.evChargingPower_kW, energyModel.p_timeStep_h);		
-profile.energyAssetName = energyAssetName;
+J_EAProfile profile = new J_EAProfile(GC, OL_EnergyCarriers.ELECTRICITY, profilePointer, OL_AssetFlowCategories.evChargingPower_kW, energyModel.p_timeParameters);		
+profile.setEnergyAssetName(energyAssetName);
 /*ALCODEEND*/}
 
 String f_createChargerPolygon(double lat,double lon)
@@ -1873,7 +1873,7 @@ double nettDelivery_kWh;
 double[] yearlyElectricityConsumption_kWh = new double[yearlyElectricityDelivery_kWh.length];
 double[] timeAxis_h = new double[yearlyElectricityDelivery_kWh.length];
 for (int i = 0; i<yearlyElectricityDelivery_kWh.length; i++){
-	timeAxis_h[i] = v_simStartHour_h + i*0.25;
+	timeAxis_h[i] = energyModel.p_timeParameters.getRunStartTime_h() + i*0.25;
 }
 
 //Preprocessing and adding new array to the J_EAProfile
@@ -1945,9 +1945,9 @@ if(yearlyHeatPumpElectricityConsumption_kWh != null){
 	//profile.a_energyProfile_kWh = preProcessedDefaultConsumptionProfile;
 	String heatpumpAssetName = parentGC.p_ownerID + " custom heat pump electricity consumption profile";
 	J_ProfilePointer heatpumpProfilePointer = f_createEngineProfile(heatpumpAssetName, timeAxis_h, yearlyHeatPumpElectricityConsumption_kWh, OL_ProfileUnits.KWHPQUARTERHOUR);	
-	J_EAProfile profileHeatPumpElectricityConsumption = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, heatpumpProfilePointer, OL_AssetFlowCategories.heatPumpElectricityConsumption_kW, energyModel.p_timeStep_h);		
+	J_EAProfile profileHeatPumpElectricityConsumption = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, heatpumpProfilePointer, OL_AssetFlowCategories.heatPumpElectricityConsumption_kW, energyModel.p_timeParameters);
 	//profileHeatPumpElectricityConsumption.setStartTime_h(v_simStartHour_h);
-	profileHeatPumpElectricityConsumption.energyAssetName = heatpumpAssetName;	
+	profileHeatPumpElectricityConsumption.setEnergyAssetName(heatpumpAssetName);	
 	yearlyElectricityConsumption_kWh = preProcessedDefaultConsumptionProfile;
 }
 
@@ -1955,9 +1955,9 @@ if(yearlyHeatPumpElectricityConsumption_kWh != null){
 String energyAssetName = parentGC.p_ownerID + " custom profile";
 J_ProfilePointer profilePointer = f_createEngineProfile(energyAssetName, timeAxis_h, yearlyElectricityConsumption_kWh, OL_ProfileUnits.KWHPQUARTERHOUR);
 //Create the profile 
-J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, profilePointer, OL_AssetFlowCategories.fixedConsumptionElectric_kW, energyModel.p_timeStep_h);		
+J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, profilePointer, OL_AssetFlowCategories.fixedConsumptionElectric_kW, energyModel.p_timeParameters);		
 //profile.setStartTime_h(v_simStartHour_h);
-profile.energyAssetName = energyAssetName;
+profile.setEnergyAssetName(energyAssetName);
 
 
 /*ALCODEEND*/}
@@ -4032,8 +4032,8 @@ double[] profile_kW = ZeroMath.arrayMultiply(profile_m3ph, avgc_data.p_gas_kWhpm
 J_ProfilePointer profilePointer = f_createEngineProfile(energyAssetName, a_arguments_hr, profile_m3ph, OL_ProfileUnits.KW);
 
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.METHANE, profilePointer, null, energyModel.p_timeStep_h);
-j_ea.energyAssetName = energyAssetName;
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.METHANE, profilePointer, null, energyModel.p_timeParameters);
+j_ea.setEnergyAssetName(energyAssetName);
 
 if(engineGC.p_owner.p_detailedCompany){
 	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3pa);
@@ -4175,8 +4175,8 @@ double[] profile_kW = ZeroMath.arrayMultiply(profile_m3ph, avgc_data.p_gas_kWhpm
 J_ProfilePointer profilePointer = f_createEngineProfile(energyAssetName, a_arguments_hr, profile_kW, OL_ProfileUnits.KW);
 
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profilePointer, null , energyModel.p_timeStep_h);
-j_ea.energyAssetName = energyAssetName;
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profilePointer, null , energyModel.p_timeParameters);
+j_ea.setEnergyAssetName(energyAssetName);
 
 if(engineGC.p_owner.p_detailedCompany){
 	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3pa);
@@ -4280,8 +4280,8 @@ J_ProfilePointer profilePointer = f_createEngineProfile(energyAssetName, a_argum
 // TODO: Fix this for LT_DISTRICTHEAT, they have a different efficiency!
  
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profilePointer, null , energyModel.p_timeStep_h);
-j_ea.energyAssetName = energyAssetName;
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profilePointer, null , energyModel.p_timeParameters);
+j_ea.setEnergyAssetName(energyAssetName);
 
 return max(profile_kWhpqh)/dataTimeStep_h;
 /*ALCODEEND*/}

@@ -720,7 +720,7 @@ for( GridConnection gc : gis_area.c_containedGridConnections){
 	else{
 		for ( J_EAConsumption consumptionAsset : gc.c_consumptionAssets){
 			if( consumptionAsset.getEAType() == OL_EnergyAssetType.ELECTRICITY_DEMAND ){
-				yearlyElectricityConsumption_kWh += consumptionAsset.yearlyDemand_kWh;
+				yearlyElectricityConsumption_kWh += consumptionAsset.getYearlyDemand_kWh();
 			}
 		}
 	}

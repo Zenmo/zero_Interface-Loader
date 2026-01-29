@@ -220,7 +220,7 @@ for (J_EAConsumption j_ea : gc.c_consumptionAssets) {
 	if (j_ea.getEAType() == OL_EnergyAssetType.HEAT_DEMAND || j_ea.getEAType() == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
 		double[] profile = j_ea.getProfilePointer().getAllValues();
 		double maxFactor = Arrays.stream(profile).max().getAsDouble();
-		peakHeatDemand_kW += maxFactor * j_ea.yearlyDemand_kWh * j_ea.getConsumptionScaling_fr();
+		peakHeatDemand_kW += maxFactor * j_ea.getYearlyDemand_kWh() * j_ea.getConsumptionScaling_fr();
 	}
 }
 for (J_EAProfile j_ea : gc.c_profileAssets) {
@@ -303,7 +303,7 @@ for (GCHouse house: housesGCList ) {
 	J_EAConversionGasBurner gasBurner;
 	//if house has follows the general heat deamnd profile
 	if (heatDemandAsset != null) {
-		gasBurner = new J_EAConversionGasBurner(house, heatDemandAsset.yearlyDemand_kWh/8760*10, 0.99, zero_Interface.energyModel.p_timeParameters, 90);
+		gasBurner = new J_EAConversionGasBurner(house, heatDemandAsset.getYearlyDemand_kWh()/8760*10, 0.99, zero_Interface.energyModel.p_timeParameters, 90);
 	}
 	//if house has a thermalBuildingAsset
 	else if (house.p_BuildingThermalAsset != null){
@@ -715,8 +715,8 @@ for(GridConnection GC : utilityGridConnections){
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
 		}
 		for(J_EAConsumption consumptionEA : consumptionEAs){
-			totalBaseConsumption_kWh += consumptionEA.yearlyDemand_kWh;
-			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.yearlyDemand_kWh;
+			totalBaseConsumption_kWh += consumptionEA.getYearlyDemand_kWh();
+			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.getYearlyDemand_kWh();
 		}
 		
 		if(GC.p_BuildingThermalAsset != null){
@@ -940,8 +940,8 @@ for(GridConnection GC : utilityGridConnections){
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
 		}
 		for(J_EAConsumption consumptionEA : consumptionEAs){
-			totalBaseConsumption_kWh += consumptionEA.yearlyDemand_kWh;
-			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.yearlyDemand_kWh;
+			totalBaseConsumption_kWh += consumptionEA.getYearlyDemand_kWh();
+			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.getYearlyDemand_kWh();
 		}
 		
 		if(GC.p_BuildingThermalAsset != null){
