@@ -128,7 +128,7 @@ if(sliderGC_gridBattery != null){
 	c_sliderEAGCs.add(sliderGC_gridBattery);
 }
 
-v_energyHubCoop.f_addMemberGCs(c_sliderEAGCs);
+v_energyHubCoop.f_addMemberGCs(c_sliderEAGCs, zero_Interface.energyModel.p_timeParameters);
 /*ALCODEEND*/}
 
 double f_initializeEnergyHubMemberNames()
@@ -366,7 +366,7 @@ saveObject.c_mappingOfVehiclesPerCharger = zero_Interface.c_mappingOfVehiclesPer
 saveObject.c_scenarioMap_Current = zero_Interface.c_scenarioMap_Current;
 saveObject.c_scenarioMap_Future = zero_Interface.c_scenarioMap_Future;
 
-List<LinkedHashMap<String, List<J_EAVehicle>>> c_additionalVehicleHashMaps = new ArrayList<LinkedHashMap<String, List<J_EAVehicle>>>();
+List<LinkedHashMap<String, List<I_Vehicle>>> c_additionalVehicleHashMaps = new ArrayList<>();
 
 saveObject.c_additionalVehicleHashMaps = c_additionalVehicleHashMaps;
 
