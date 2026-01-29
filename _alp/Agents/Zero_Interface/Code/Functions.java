@@ -3230,13 +3230,11 @@ t_scenarioDescription.setText(t_scenario_current);
 
 double f_resetSpecialSlidersAndButtons()
 {/*ALCODESTART::1761119842140*/
-uI_Tabs.pop_tabEHub.get(0).getButton_remove_nfato().action();
-
-
-
-
-
-
+if (uI_Tabs.pop_tabEHub.size() > 0){
+	if (uI_Tabs.pop_tabEHub.get(0).getButton_remove_nfato() != null){
+		uI_Tabs.pop_tabEHub.get(0).getButton_remove_nfato().action();
+	}
+}
 
 //Project specific sliders and buttons reset
 f_resetProjectSpecificSlidersAndButtons();

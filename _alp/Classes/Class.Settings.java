@@ -29,6 +29,8 @@ public class Settings {
 										//--> Put on 'false' to prevent electric assets from being made on top of real 
 										//electricity total or profile, to prevent wrong energy totals.
 	boolean runHeadlessAtStartup;// Runs year simulation on starting of the model
+	@Builder.Default
+	OL_GridNodeProfileLoaderType gridNodeProfileLoaderType = OL_GridNodeProfileLoaderType.NET_LOAD;
 	
 	
 	//Simulation settings (UI)

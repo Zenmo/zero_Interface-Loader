@@ -152,7 +152,7 @@ for (GridNode_data GN_data : c_gridNode_data) {
 			}
 			
 			//Gridnode profile
-			if(GN_data.profile_data_kWh() != null){
+			if(GN_data.profile_data_kWh() != null && settings.gridNodeProfileLoaderType() != OL_GridNodeProfileLoaderType.NO_PROFILE){
 				f_addGridNodeProfile(GN, GN_data.profile_data_kWh());
 			}
 		}
@@ -1468,6 +1468,14 @@ switch (storageType){
 
 double f_iEAGenericCompanies(GridConnection companyGC,Double pv_installed_kwp)
 {/*ALCODESTART::1726584205833*/
+//Get GridNode to know if it has a GridNode profile
+OL_GridNodeProfileLoaderType gridNodeProfileLoaderType = OL_GridNodeProfileLoaderType.NO_PROFILE;
+if (companyGC.p_parentNodeElectricID != null){
+	GridNode gn = findFirst(energyModel.pop_gridNodes, GN -> GN.p_gridNodeID.equals(companyGC.p_parentNodeElectricID));
+	if (gn != null) {
+		gridNodeProfileLoaderType = gn.p_profileType;
+	} 
+}
 //Create current & future scenario parameter list
 J_scenario_Current current_scenario_list = new J_scenario_Current();
 zero_Interface.c_scenarioMap_Current.put(companyGC.p_uid, current_scenario_list);
@@ -1490,7 +1498,7 @@ future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(companyGC.v_liveC
 //Basic heating and electricity demand profiles
 if (companyGC.p_floorSurfaceArea_m2 > 0){
 	
-	if(p_remainingTotals.getRemainingElectricityDeliveryCompanies_kWh(companyGC) > 0){
+	if(p_remainingTotals.getRemainingElectricityDeliveryCompanies_kWh(companyGC) > 0 && gridNodeProfileLoaderType == OL_GridNodeProfileLoaderType.NO_PROFILE){
 		//Buidling Base electricity load
 		double Remaining_electricity_demand_kWh_p_m2_yr = p_remainingTotals.getElectricityDeliveryOfAnonymousCompanies_kWhpm2(companyGC);
 		double yearlyElectricityDemand_kWh = Remaining_electricity_demand_kWh_p_m2_yr * companyGC.p_floorSurfaceArea_m2;
@@ -1519,6 +1527,9 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 
 
 //Production asset (PV) ??????????????????????????????????????????? willen we die toevoegen aan generieke bedrijven?
+if (gridNodeProfileLoaderType == OL_GridNodeProfileLoaderType.INCLUDE_PV || gridNodeProfileLoaderType == OL_GridNodeProfileLoaderType.NET_LOAD){ //dont count production if there is measured data on Node
+	pv_installed_kwp = 0.0;
+}
 if(pv_installed_kwp != null && pv_installed_kwp > 0){
 	f_addEnergyProduction(companyGC, OL_EnergyAssetType.PHOTOVOLTAIC, "Rooftop Solar", pv_installed_kwp);
 }
@@ -3210,7 +3221,8 @@ for (double dataStep_kWh : profile_data_kWh) {
         if (stepEnergy_kWh >= 0) {
             currentDelivery_kWh = stepEnergy_kWh;
             currentFeedin_kWh = 0;
-        } else {
+        }
+        else {
             currentDelivery_kWh = 0;
             currentFeedin_kWh = -stepEnergy_kWh;
             if (currentFeedin_kWh > maxFeedin_kWh) {
@@ -3224,24 +3236,43 @@ for (double dataStep_kWh : profile_data_kWh) {
     }
 }
 
-double pvPower_kW = 2.5 * (maxFeedin_kWh/energyModel.p_timeParameters.getTimeStep_h()); // Estimation needed for pv power (only really influential for option 2, but a power estimate is still needed for option 1. Important that the factor >=1).
+gridnode.p_profileType = settings.gridNodeProfileLoaderType();
 
-//Option 1: use the feedin profile as production profile to create the exact same netto load, but consumption/production doesnt look natural (Only production when consumption == 0 and vice versa)
-f_createPreprocessedElectricityProfile_PV(GC_GridNode_profile, a_yearlyElectricityDelivery_kWh, a_yearlyElectricityFeedin_kWh, a_yearlyElectricityFeedin_kWh, pvPower_kW, null);
-if(maxFeedin_kWh > 0){
-	f_createCustomPVAsset(GC_GridNode_profile, a_yearlyElectricityFeedin_kWh, pvPower_kW);
+if (gridnode.p_profileType == OL_GridNodeProfileLoaderType.NET_LOAD){
+	f_createPreprocessedElectricityProfile_PV(GC_GridNode_profile, a_yearlyElectricityDelivery_kWh, a_yearlyElectricityFeedin_kWh, a_yearlyElectricityFeedin_kWh, null, null);
+	if (maxFeedin_kWh > 0){
+		double pvPower_kW = 2.5 * (maxFeedin_kWh/energyModel.p_timeParameters.getTimeStep_h()); // Estimation needed for pv power
+		f_createCustomPVAsset(GC_GridNode_profile, a_yearlyElectricityFeedin_kWh, pvPower_kW);
+	}
+}
+else { //INCLUDE_PV or EXCLUDE_PV
+	Double pvPower_kW = f_getGNTotalPV_kWp(gridnode);
+	boolean isPvPowerKnownAndPositive = pvPower_kW != null && pvPower_kW != 0;
+	if (maxFeedin_kWh <= 0 && !isPvPowerKnownAndPositive) {
+		f_createPreprocessedElectricityProfile_PV(GC_GridNode_profile, a_yearlyElectricityDelivery_kWh, null, null, null, null);
+	}
+	else if (maxFeedin_kWh > 0 && !isPvPowerKnownAndPositive){
+		if (gridnode.p_profileType == OL_GridNodeProfileLoaderType.INCLUDE_PV){
+			pvPower_kW = 2.5 * (maxFeedin_kWh/energyModel.p_timeParameters.getTimeStep_h()); // Estimation needed for pv power
+			traceln("PV Power has been estimated!");
+			f_createPreprocessedElectricityProfile_PV(GC_GridNode_profile, a_yearlyElectricityDelivery_kWh, a_yearlyElectricityFeedin_kWh, null, pvPower_kW, null);
+			f_addEnergyProduction(GC_GridNode_profile, OL_EnergyAssetType.PHOTOVOLTAIC, "Total current Solar on GridNode", pvPower_kW);
+		}
+		else { //EXCLUDE_PV
+			throw new RuntimeException("Grid node profile contains feed-in but no PV power is found in Building_data for EXCLUDE_PV. This is not allowed.");
+		}
+	}
+	else {
+		if (maxFeedin_kWh > 4*pvPower_kW){
+			throw new RuntimeException("Max feed-in of grid node profile is higher than Excel building/solarfarm data!");
+		}
+		f_createPreprocessedElectricityProfile_PV(GC_GridNode_profile, a_yearlyElectricityDelivery_kWh, a_yearlyElectricityFeedin_kWh, null, pvPower_kW, null);
+		if (gridnode.p_profileType == OL_GridNodeProfileLoaderType.INCLUDE_PV){
+			f_addEnergyProduction(GC_GridNode_profile, OL_EnergyAssetType.PHOTOVOLTAIC, "Total current Solar on GridNode", pvPower_kW);
+		}
+	}
 }
 
-/* 
-//Option 2: use our own pv profile to create a more natural consumption/production pattern -> Netto wont be exact.
-f_createPreprocessedElectricityProfile_PV(GC_GridNode_profile, a_yearlyElectricityDelivery_kWh, a_yearlyElectricityFeedin_kWh, null, pvPower_kW, null);
-if(maxFeedin_kWh > 0){
-	f_addEnergyProduction(GC_GridNode_profile, OL_EnergyAssetType.PHOTOVOLTAIC, "Total current Solar on GridNode", pvPower_kW);
-}
-*/
-
-//Set boolean has profile data true
-gridnode.p_hasProfileData = true;
 c_gridNodeIDsWithProfiles.add(gridnode.p_gridNodeID);
 /*ALCODEEND*/}
 
@@ -3551,7 +3582,7 @@ double f_addEnergyAssetsToHouses(GCHouse house,Double electricityDemand_kwhpa,Do
 //Add generic electricity demand profile 
 GridNode gn = findFirst(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals( house.p_parentNodeElectricID));
 
-if ( ! gn.p_hasProfileData ){
+if ( gn.p_profileType == OL_GridNodeProfileLoaderType.NO_PROFILE ){
 	if(electricityDemand_kwhpa == null){
 		electricityDemand_kwhpa = uniform(avgc_data.p_avgHouseElectricityConsumption_kWh_yr - avgc_data.p_maxAvgHouseElectricityConsumptionOffset_kWhpa, 
 										  avgc_data.p_avgHouseElectricityConsumption_kWh_yr + avgc_data.p_maxAvgHouseElectricityConsumptionOffset_kWhpa);
@@ -3566,7 +3597,9 @@ f_addHeatAssetsToHouses(house, gasDemand_m3pa);
 
 //Add pv
 double installedRooftopSolar_kW = house.v_liveAssetsMetaData.initialPV_kW != null ? house.v_liveAssetsMetaData.initialPV_kW : 0;
-if (gn.p_hasProfileData){ //dont count production if there is measured data on Node
+
+
+if (gn.p_profileType == OL_GridNodeProfileLoaderType.INCLUDE_PV || gn.p_profileType == OL_GridNodeProfileLoaderType.NET_LOAD){ //dont count production if there is measured data on Node
 	installedRooftopSolar_kW = 0;
 }
 
@@ -5076,5 +5109,42 @@ double f_estimateHouseCookingDemand_kWh()
 double yearlyCookingDemand_kWh = uniform_discr(70,130); //SOURCE? -> Put in AVGC!
 return yearlyCookingDemand_kWh;
 
+/*ALCODEEND*/}
+
+Double f_getGNTotalPV_kWp(GridNode GN)
+{/*ALCODESTART::1769700769686*/
+//Function to get the total PV nominal power under grid node
+Double totalPVPower_kW = null;
+
+for (Building_data house : c_houseBuilding_data){
+	if(house.pv_installed_kwp() != null && house.gridnode_id() != null && house.gridnode_id().equals(GN.p_gridNodeID)) {
+		if (totalPVPower_kW == null){
+			totalPVPower_kW = 0.0;
+		}
+		totalPVPower_kW += house.pv_installed_kwp();
+	}
+}
+
+for (Building_data company : c_companyBuilding_data){
+	if(company.pv_installed_kwp() != null && company.gridnode_id() != null && company.gridnode_id().equals(GN.p_gridNodeID)) {
+		if (totalPVPower_kW == null){
+			totalPVPower_kW = 0.0;
+		}
+		totalPVPower_kW += company.pv_installed_kwp();
+	}
+}
+
+//if (totalPVPower_kW == null) return null;
+
+for (Solarfarm_data solarfarm : c_solarfarm_data){
+	if(solarfarm.initially_active() && solarfarm.capacity_electric_kw() > 0 && solarfarm.gridnode_id() != null && solarfarm.gridnode_id().equals(GN.p_gridNodeID)) {
+		if (totalPVPower_kW == null){
+			totalPVPower_kW = 0.0;
+		}
+		totalPVPower_kW += solarfarm.capacity_electric_kw();
+	}
+}
+
+return totalPVPower_kW;
 /*ALCODEEND*/}
 
