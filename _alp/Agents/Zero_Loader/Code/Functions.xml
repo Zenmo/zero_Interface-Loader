@@ -1267,6 +1267,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Name><![CDATA[values]]></Name>
 			<Type><![CDATA[double[]]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[profileUnitType]]></Name>
+			<Type><![CDATA[OL_ProfileUnits]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="public" StaticFunction="false">

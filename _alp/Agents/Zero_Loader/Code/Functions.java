@@ -1656,10 +1656,20 @@ else if (vehicle_type == OL_EnergyAssetType.HYDROGEN_VAN){
 
 double f_addChargingDemandProfile(GCPublicCharger GC,String profileName)
 {/*ALCODESTART::1726584205845*/
-J_EAProfile profile = new J_EAProfile(GC, OL_EnergyCarriers.ELECTRICITY, null, OL_AssetFlowCategories.evChargingPower_kW, energyModel.p_timeStep_h);		
-profile.energyAssetName = "charging profile";
 List<Double> quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + profileName + " FROM charging_profiles;");			
-profile.a_energyProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> max(0,d)).map( d -> d / 4).toArray();
+double[] profile_kWhpqh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> max(0,d)).map( d -> d / 4).toArray();
+
+double dataTimeStep_h = 0.25;
+double[] a_arguments_hr = new double[profile_kWhpqh.length];
+for (int i = 0; i<profile_kWhpqh.length; i++) {
+	a_arguments_hr[i] = i*dataTimeStep_h;
+}
+String energyAssetName = "charging profile";
+
+J_ProfilePointer profilePointer = f_createEngineProfile(energyAssetName, a_arguments_hr, profile_kWhpqh, OL_ProfileUnits.KWHPQUARTERHOUR);
+
+J_EAProfile profile = new J_EAProfile(GC, OL_EnergyCarriers.ELECTRICITY, profilePointer, OL_AssetFlowCategories.evChargingPower_kW, energyModel.p_timeStep_h);		
+profile.energyAssetName = energyAssetName;
 /*ALCODEEND*/}
 
 String f_createChargerPolygon(double lat,double lon)
@@ -1860,29 +1870,31 @@ for (Cable_data dataCable : c_cable_data) {
 
 double f_createPreprocessedElectricityProfile_PV(GridConnection parentGC,double[] yearlyElectricityDelivery_kWh,double[] yearlyElectricityFeedin_kWh,double[] yearlyElectricityProduction_kWh,Double pvPower_kW,double[] yearlyHeatPumpElectricityConsumption_kWh)
 {/*ALCODESTART::1726584205861*/
-//Create the profile 
-J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, null, OL_AssetFlowCategories.fixedConsumptionElectric_kW, energyModel.p_timeStep_h);		
-profile.setStartTime_h(v_simStartHour_h);
-profile.energyAssetName = parentGC.p_ownerID + " custom profile";
+
 double extraConsumption_kWh = 0;
 
 
 //Initialize parameters		
 double nettDelivery_kWh;
+double[] yearlyElectricityConsumption_kWh = new double[yearlyElectricityDelivery_kWh.length];
+double[] timeAxis_h = new double[yearlyElectricityDelivery_kWh.length];
+for (int i = 0; i<yearlyElectricityDelivery_kWh.length; i++){
+	timeAxis_h[i] = v_simStartHour_h + i*0.25;
+}
 
 //Preprocessing and adding new array to the J_EAProfile
 if (yearlyElectricityProduction_kWh != null && yearlyElectricityFeedin_kWh != null) { // When delivery, feedin and production profiles are available
-	double[] yearlyElectricityConsumption_kWh = new double[yearlyElectricityDelivery_kWh.length];
+	
 	for (int i = 0; i < yearlyElectricityDelivery_kWh.length; i++) {	
 		yearlyElectricityConsumption_kWh[i] = yearlyElectricityDelivery_kWh[i] - yearlyElectricityFeedin_kWh[i] + yearlyElectricityProduction_kWh[i];
 		extraConsumption_kWh += -min(yearlyElectricityConsumption_kWh[i],0);
 		yearlyElectricityConsumption_kWh[i] = max(0,yearlyElectricityConsumption_kWh[i]);
 	}
-	profile.a_energyProfile_kWh = yearlyElectricityConsumption_kWh;
+
 	nettDelivery_kWh = Arrays.stream(yearlyElectricityDelivery_kWh).sum() - Arrays.stream(yearlyElectricityFeedin_kWh).sum();
 	//traceln("Calculating consumption profile on delivery, feedin and production profiles for company %s with %s kWp PV", parentGC.p_gridConnectionID, pvPower_kW);
 } else if (pvPower_kW != null && pvPower_kW > 0) { // When only delivery, feedin profiles are available, in addition to PV power, make explicit consumption and production arrays using delivery profile and PV installed power [kW]
-	double[] yearlyElectricityConsumption_kWh = new double[yearlyElectricityDelivery_kWh.length];
+	
 	if (yearlyElectricityFeedin_kWh != null) { // Terugleveringsdata beschikbaar
 		//traceln("Estimating electricity consumption based on delivery and feedin profiles with pv power estimate for company %s with %s kWp PV", parentGC.p_gridConnectionID, pvPower_kW);
 		double addedConsumption_kWh = 0;
@@ -1913,10 +1925,10 @@ if (yearlyElectricityProduction_kWh != null && yearlyElectricityFeedin_kWh != nu
 		}
 		//traceln("Added electricity consumed compared to delivery profile: %s MWh", addedConsumption_kWh/1000);
 	}
-	profile.a_energyProfile_kWh = yearlyElectricityConsumption_kWh;
+	
 	nettDelivery_kWh = Arrays.stream(yearlyElectricityDelivery_kWh).sum();
 } else { // No PV production
-	profile.a_energyProfile_kWh = yearlyElectricityDelivery_kWh;
+	
 	nettDelivery_kWh = Arrays.stream(yearlyElectricityDelivery_kWh).sum();
 }
 
@@ -1932,16 +1944,28 @@ if(yearlyHeatPumpElectricityConsumption_kWh != null){
 	for(int i = 0; i < yearlyHeatPumpElectricityConsumption_kWh.length; i++){
 		yearlyHeatPumpElectricityConsumption_kWh[i] = max(0,yearlyHeatPumpElectricityConsumption_kWh[i]);
 	}
-	double[] preProcessedDefaultConsumptionProfile = new double[profile.a_energyProfile_kWh.length];
+	double[] preProcessedDefaultConsumptionProfile = new double[yearlyElectricityConsumption_kWh.length];
 	for(int i = 0; i < preProcessedDefaultConsumptionProfile.length; i++){
-		preProcessedDefaultConsumptionProfile[i] = max(0,profile.a_energyProfile_kWh[i] - yearlyHeatPumpElectricityConsumption_kWh[i]);
+		preProcessedDefaultConsumptionProfile[i] = max(0,yearlyElectricityConsumption_kWh[i] - yearlyHeatPumpElectricityConsumption_kWh[i]);
 	}
-	profile.a_energyProfile_kWh = preProcessedDefaultConsumptionProfile;
-	
-	J_EAProfile profileHeatPumpElectricityConsumption = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, yearlyHeatPumpElectricityConsumption_kWh, OL_AssetFlowCategories.heatPumpElectricityConsumption_kW, energyModel.p_timeStep_h);		
-	profileHeatPumpElectricityConsumption.setStartTime_h(v_simStartHour_h);
-	profileHeatPumpElectricityConsumption.energyAssetName = parentGC.p_ownerID + " custom heat pump electricity consumption profile";
+	//profile.a_energyProfile_kWh = preProcessedDefaultConsumptionProfile;
+	String heatpumpAssetName = parentGC.p_ownerID + " custom heat pump electricity consumption profile";
+	J_ProfilePointer heatpumpProfilePointer = f_createEngineProfile(heatpumpAssetName, timeAxis_h, yearlyHeatPumpElectricityConsumption_kWh, OL_ProfileUnits.KWHPQUARTERHOUR);	
+	J_EAProfile profileHeatPumpElectricityConsumption = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, heatpumpProfilePointer, OL_AssetFlowCategories.heatPumpElectricityConsumption_kW, energyModel.p_timeStep_h);		
+	//profileHeatPumpElectricityConsumption.setStartTime_h(v_simStartHour_h);
+	profileHeatPumpElectricityConsumption.energyAssetName = heatpumpAssetName;	
+	yearlyElectricityConsumption_kWh = preProcessedDefaultConsumptionProfile;
 }
+
+// Create the actual profile asset
+String energyAssetName = parentGC.p_ownerID + " custom profile";
+J_ProfilePointer profilePointer = f_createEngineProfile(energyAssetName, timeAxis_h, yearlyElectricityConsumption_kWh, OL_ProfileUnits.KWHPQUARTERHOUR);
+//Create the profile 
+J_EAProfile profile = new J_EAProfile(parentGC, OL_EnergyCarriers.ELECTRICITY, profilePointer, OL_AssetFlowCategories.fixedConsumptionElectric_kW, energyModel.p_timeStep_h);		
+//profile.setStartTime_h(v_simStartHour_h);
+profile.energyAssetName = energyAssetName;
+
+
 /*ALCODEEND*/}
 
 double f_startUpLoader_default()
@@ -2184,7 +2208,7 @@ double fullLoadHours_h = totalProduction_kWh / pvPower_kW;
 double[] a_normalizedPower_fr = Arrays.stream(yearlyElectricityProduction_kWh).map(i -> 4 * i / totalProduction_kWh * fullLoadHours_h ).toArray();
 
 TableFunction tf_customPVproduction_fr = new TableFunction(a_arguments, a_normalizedPower_fr, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-J_ProfilePointer profilePointer = new J_ProfilePointer((parentGC.p_ownerID + "_PVproduction") , tf_customPVproduction_fr);
+J_ProfilePointer profilePointer = new J_ProfilePointer((parentGC.p_ownerID + "_PVproduction") , tf_customPVproduction_fr, OL_ProfileUnits.NORMALIZEDPOWER);
 energyModel.f_addProfile(profilePointer);
 J_EAProduction production_asset = new J_EAProduction(parentGC, OL_EnergyAssetType.PHOTOVOLTAIC, (parentGC.p_ownerID + "_rooftopPV"), OL_EnergyCarriers.ELECTRICITY, (double)pvPower_kW, energyModel.p_timeStep_h, profilePointer);
 
@@ -3105,10 +3129,10 @@ else{
 }
 /*ALCODEEND*/}
 
-J_ProfilePointer f_createEngineProfile(String profileID,double[] arguments,double[] values)
+J_ProfilePointer f_createEngineProfile(String profileID,double[] arguments,double[] values,OL_ProfileUnits profileUnitType)
 {/*ALCODESTART::1749125189323*/
 TableFunction tf_profile = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-J_ProfilePointer profilePointer = new J_ProfilePointer(profileID, tf_profile);	
+J_ProfilePointer profilePointer = new J_ProfilePointer(profileID, tf_profile, profileUnitType);	
 energyModel.f_addProfile(profilePointer);
 return profilePointer;
 /*ALCODEEND*/}
@@ -3135,25 +3159,24 @@ double[] a_defaultOfficeElectricityDemandProfile_fr = ListUtil.doubleListToArray
 double[] a_defaultBuildingHeatDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultBuildingHeatDemandProfile_fr());
 
 //Create Weather engine profiles
-energyModel.pp_ambientTemperature_degC = f_createEngineProfile("ambient_temperature_degC", a_arguments_hr, a_ambientTemperatureProfile_degC);
-energyModel.pp_PVProduction35DegSouth_fr = f_createEngineProfile("pv_production_south_fr", a_arguments_hr, a_PVProductionProfile35DegSouth_fr);
-energyModel.pp_PVProduction15DegEastWest_fr = f_createEngineProfile("pv_production_eastwest_fr", a_arguments_hr, a_PVProductionProfile15DegEastWest_fr);
-energyModel.pp_windProduction_fr = f_createEngineProfile("wind_production_fr", a_arguments_hr, a_windProductionProfile_fr);
+energyModel.pp_ambientTemperature_degC = f_createEngineProfile("ambient_temperature_degC", a_arguments_hr, a_ambientTemperatureProfile_degC, OL_ProfileUnits.TEMPERATURE_DEGC);
+energyModel.pp_PVProduction35DegSouth_fr = f_createEngineProfile("pv_production_south_fr", a_arguments_hr, a_PVProductionProfile35DegSouth_fr, OL_ProfileUnits.NORMALIZEDPOWER);
+energyModel.pp_PVProduction15DegEastWest_fr = f_createEngineProfile("pv_production_eastwest_fr", a_arguments_hr, a_PVProductionProfile15DegEastWest_fr, OL_ProfileUnits.NORMALIZEDPOWER);
+energyModel.pp_windProduction_fr = f_createEngineProfile("wind_production_fr", a_arguments_hr, a_windProductionProfile_fr, OL_ProfileUnits.NORMALIZEDPOWER);
 
 //Create Epex engine profile
-energyModel.pp_dayAheadElectricityPricing_eurpMWh = f_createEngineProfile("epex_price_eurpMWh", a_arguments_hr, a_epexProfile_eurpMWh);
+energyModel.pp_dayAheadElectricityPricing_eurpMWh = f_createEngineProfile("epex_price_eurpMWh", a_arguments_hr, a_epexProfile_eurpMWh, OL_ProfileUnits.PRICE_EURPMWH);
 
 //Create Consumption engine profiles:
-f_createEngineProfile("default_house_electricity_demand_fr", a_arguments_hr, a_defaultHouseElectricityDemandProfile_fr);
-f_createEngineProfile("default_house_hot_water_demand_fr", a_arguments_hr, a_defaultHouseHotWaterDemandProfile_fr);
-f_createEngineProfile("default_house_cooking_demand_fr", a_arguments_hr, a_defaultHouseCookingDemandProfile_fr);
-f_createEngineProfile("default_office_electricity_demand_fr", a_arguments_hr, a_defaultOfficeElectricityDemandProfile_fr);
-f_createEngineProfile("default_building_heat_demand_fr", a_arguments_hr, a_defaultBuildingHeatDemandProfile_fr);
-
+f_createEngineProfile("default_house_electricity_demand_fr", a_arguments_hr, a_defaultHouseElectricityDemandProfile_fr, OL_ProfileUnits.YEARLYTOTALFRACTION);
+f_createEngineProfile("default_house_hot_water_demand_fr", a_arguments_hr, a_defaultHouseHotWaterDemandProfile_fr, OL_ProfileUnits.YEARLYTOTALFRACTION);
+f_createEngineProfile("default_house_cooking_demand_fr", a_arguments_hr, a_defaultHouseCookingDemandProfile_fr, OL_ProfileUnits.YEARLYTOTALFRACTION);
+f_createEngineProfile("default_office_electricity_demand_fr", a_arguments_hr, a_defaultOfficeElectricityDemandProfile_fr, OL_ProfileUnits.YEARLYTOTALFRACTION);
+f_createEngineProfile("default_building_heat_demand_fr", a_arguments_hr, a_defaultBuildingHeatDemandProfile_fr, OL_ProfileUnits.YEARLYTOTALFRACTION);
 
 //Create custom engine profiles
 for(CustomProfile_data customProfile : c_customProfiles_data){
-	f_createEngineProfile(customProfile.customProfileID(), customProfile.getArgumentsArray(), customProfile.getValuesArray());
+	f_createEngineProfile(customProfile.customProfileID(), customProfile.getArgumentsArray(), customProfile.getValuesArray(), OL_ProfileUnits.NORMALIZEDPOWER); // What type of profiles usually in custom profiles?? Custom production profiles?
 }
 /*ALCODEEND*/}
 
@@ -4002,19 +4025,24 @@ else {
 double f_createGasProfileFromGasTS(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC)
 {/*ALCODESTART::1753804393557*/
 // Gas delivery profile in m3
-double[] profile_m3 = f_timeSeriesToQuarterHourlyDoubleArray(surveyGC.getNaturalGas().getHourlyDelivery_m3());
+double[] profile_m3ph = f_convertFloatArrayToDoubleArray(surveyGC.getNaturalGas().getHourlyDelivery_m3().getFlatDataPoints());
+// TODO: Check startdate of profile! Perhaps update vallum method to do so?
 
+double[] a_arguments_hr = ListUtil.doubleListToArray(defaultProfiles_data.arguments_hr());
 //Calculate yearly gas delivery
-double yearlyGasDelivery_m3 = Arrays.stream(profile_m3).sum();
+double yearlyGasDelivery_m3pa = Arrays.stream(profile_m3ph).sum();
 
+String energyAssetName = engineGC.p_ownerID + " custom gas profile";
 // We assume all delivery is consumption and convert m3 to kWh
-ZeroMath.arrayMultiply(profile_m3, avgc_data.p_gas_kWhpm3);
+double[] profile_kW = ZeroMath.arrayMultiply(profile_m3ph, avgc_data.p_gas_kWhpm3);
+J_ProfilePointer profilePointer = f_createEngineProfile(energyAssetName, a_arguments_hr, profile_m3ph, OL_ProfileUnits.KW);
+
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.METHANE, profile_m3, null, energyModel.p_timeStep_h);
-j_ea.energyAssetName = engineGC.p_ownerID + " custom gas profile";
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.METHANE, profilePointer, null, energyModel.p_timeStep_h);
+j_ea.energyAssetName = energyAssetName;
 
 if(engineGC.p_owner.p_detailedCompany){
-	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3);
+	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3pa);
 }
 /*ALCODEEND*/}
 
@@ -4135,25 +4163,31 @@ else {
 double f_createHeatProfileFromGasTS(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC,OL_GridConnectionHeatingType heatingType)
 {/*ALCODESTART::1753949286953*/
 // Gas profile
-double[] profile_m3 = f_timeSeriesToQuarterHourlyDoubleArray(surveyGC.getNaturalGas().getHourlyDelivery_m3());
+double[] profile_m3ph = f_convertFloatArrayToDoubleArray(surveyGC.getNaturalGas().getHourlyDelivery_m3().getFlatDataPoints());
+// TODO: Check startdate of profile! Perhaps update vallum method to do so?
 
-double yearlyGasDelivery_m3 = Arrays.stream(profile_m3).sum();
+double[] a_arguments_hr = ListUtil.doubleListToArray(defaultProfiles_data.arguments_hr());
 
+double yearlyGasDelivery_m3pa = Arrays.stream(profile_m3ph).sum();
+
+String energyAssetName = engineGC.p_ownerID + " custom building heat profile";
 // First check what the heat conversion efficiency is from gas
 double gasToHeatEfficiency = f_getGasToHeatEfficiency(heatingType);
 // Then check which part of the gas consumption is used for heating
 double ratioGasUsedForHeating = f_getRatioGasUsedForHeating(surveyGC);
 // Finally, multiply the gas profile with the total conversion factor to get the heat profile
-double[] profile_kWh = ZeroMath.arrayMultiply(profile_m3, avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
+double[] profile_kW = ZeroMath.arrayMultiply(profile_m3ph, avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
+J_ProfilePointer profilePointer = f_createEngineProfile(energyAssetName, a_arguments_hr, profile_kW, OL_ProfileUnits.KW);
+
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile_kWh, null , energyModel.p_timeStep_h);
-j_ea.energyAssetName = engineGC.p_ownerID + " custom building heat profile";
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profilePointer, null , energyModel.p_timeStep_h);
+j_ea.energyAssetName = energyAssetName;
 
 if(engineGC.p_owner.p_detailedCompany){
-	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3);
+	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3pa);
 }
 
-return max(profile_m3)/energyModel.p_timeStep_h;
+return max(profile_m3ph);
 /*ALCODEEND*/}
 
 double f_reconstructAgent(Agent agent,AgentArrayList pop,EnergyModel energyModel)
@@ -4228,16 +4262,33 @@ return f_createHeatProfileFromAnnualHeatTotal( engineGC, yearlyHeatConsumption_k
 
 double f_createHeatProfileFromHeatTS(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC)
 {/*ALCODESTART::1753964366889*/
+
+String energyAssetName = engineGC.p_ownerID + " custom heat profile";
 // Heat profile
-double[] profile = f_timeSeriesToQuarterHourlyDoubleArray(surveyGC.getHeat().getHeatDeliveryTimeSeries_kWh());
+
+double[] profile_kWhpqh = f_convertFloatArrayToDoubleArray(surveyGC.getHeat().getHeatDeliveryTimeSeries_kWh().getFlatDataPoints());
+double[] a_arguments_hr;
+double dataTimeStep_h;
+if ( profile_kWhpqh.length > 10000) { // if longer than 10_000 values, conclude it's quarter-hourly data, not hourly
+	dataTimeStep_h = 0.25;
+	a_arguments_hr = new double[profile_kWhpqh.length];
+	for (int i = 0; i<profile_kWhpqh.length; i++) {
+		a_arguments_hr[i] = i*dataTimeStep_h;
+	}
+} else {
+	//dataTimeStep_h = 1;
+	throw new RuntimeException("Assumed heatprofile was quarter-hourly, but it has less than 10_000 datapoints!");
+}
+ZeroMath.arrayMultiply(profile_kWhpqh, avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr);
+J_ProfilePointer profilePointer = f_createEngineProfile(energyAssetName, a_arguments_hr, profile_kWhpqh, OL_ProfileUnits.KWHPQUARTERHOUR);
 // We multiply by the delivery set efficiency to go from delivery to consumption
 // TODO: Fix this for LT_DISTRICTHEAT, they have a different efficiency!
-ZeroMath.arrayMultiply(profile, avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr);
+ 
 // Then we create the profile asset and name it
-J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profile, null , energyModel.p_timeStep_h);
-j_ea.energyAssetName = engineGC.p_ownerID + " custom building heat profile";
+J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profilePointer, null , energyModel.p_timeStep_h);
+j_ea.energyAssetName = energyAssetName;
 
-return max(profile)/energyModel.p_timeStep_h;
+return max(profile_kWhpqh)/dataTimeStep_h;
 /*ALCODEEND*/}
 
 double f_reconstructGridConnections1(EnergyModel energyModel)

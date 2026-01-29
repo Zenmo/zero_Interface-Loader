@@ -247,10 +247,10 @@ if (heatDemandAsset != null){
 }
 else{
 	//Select profile heat demand asset 
-	J_EAProfile heatDemandAsset_Profile = findFirst(GC.c_profileAssets, j_ea->j_ea.energyCarrier == OL_EnergyCarriers.HEAT);
+	J_EAProfile heatDemandAsset_Profile = findFirst(GC.c_profileAssets, j_ea->j_ea.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
 	
 	if(heatDemandAsset_Profile != null){
-		capacityThermal_kW = heatDemandAsset_Profile.getProfileScaling_fr() * max(heatDemandAsset_Profile.a_energyProfile_kWh)*4;
+		capacityThermal_kW = heatDemandAsset_Profile.getPeakPower_kW();//heatDemandAsset_Profile.getProfileScaling_fr() * max(heatDemandAsset_Profile.a_energyProfile_kWh)*4;
 	}
 	else{
 		traceln("No heating demand asset found for GC:" + GC.p_gridConnectionID);
@@ -1600,7 +1600,7 @@ if (consumptionEAHEAT != null){
 	currentHeatSavings = roundToInt((consumptionEAHEAT.getConsumptionScaling_fr() - 1)*-100);
 }
 else{   
-	J_EAProfile profileEAHEAT = findFirst(p_gridConnection.c_profileAssets, profileAsset -> profileAsset.energyCarrier == OL_EnergyCarriers.HEAT);
+	J_EAProfile profileEAHEAT = findFirst(p_gridConnection.c_profileAssets, profileAsset -> profileAsset.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
 	if (profileEAHEAT != null){
 		currentHeatSavings = roundToInt((profileEAHEAT.getProfileScaling_fr() - 1)*-100);
 	}

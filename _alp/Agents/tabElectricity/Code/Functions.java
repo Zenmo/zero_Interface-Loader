@@ -135,7 +135,7 @@ for (GridConnection gc : gcList) {
 	}
 	// Set Profile Assets
 	for (J_EAProfile j_ea : gc.c_profileAssets) {
-		if (j_ea.energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
+		if (j_ea.getEnergyCarrier() == OL_EnergyCarriers.ELECTRICITY) {
 			j_ea.setProfileScaling_fr( scalingFactor );
 		}
 	}
@@ -461,7 +461,7 @@ for(GridConnection GC : allConsumerGridConnections){
 		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 		for(J_EAProfile profileEA : profileEAs){
-			double baseConsumption_kWh = ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh(); //ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
 			totalBaseConsumption_kWh += baseConsumption_kWh;
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
 		}
@@ -570,7 +570,7 @@ for(GCHouse GC : houseGridConnections){
 		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 		for(J_EAProfile profileEA : profileEAs){
-			double baseConsumption_kWh = ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh(); //ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
 			totalBaseConsumption_kWh += baseConsumption_kWh;
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
 		}
@@ -615,7 +615,7 @@ for(GridConnection GC : utilityGridConnections){
 		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 		for(J_EAProfile profileEA : profileEAs){
-			double baseConsumption_kWh = ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh();//ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
 			totalBaseConsumption_kWh += baseConsumption_kWh;
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
 		}

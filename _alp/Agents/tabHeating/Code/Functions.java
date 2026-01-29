@@ -119,7 +119,7 @@ for (GridConnection gc : gcList) {
 	}
 	// Set Profile Assets
 	for (J_EAProfile j_ea : gc.c_profileAssets) {
-		if (j_ea.energyCarrier == OL_EnergyCarriers.HEAT) {
+		if (j_ea.getEnergyCarrier() == OL_EnergyCarriers.HEAT) {
 			j_ea.setProfileScaling_fr( scalingFactor );
 		}
 	}
@@ -224,8 +224,8 @@ for (J_EAConsumption j_ea : gc.c_consumptionAssets) {
 	}
 }
 for (J_EAProfile j_ea : gc.c_profileAssets) {
-	if (j_ea.energyCarrier == OL_EnergyCarriers.HEAT) {
-		double maxValue = j_ea.getProfileScaling_fr() * Arrays.stream(j_ea.a_energyProfile_kWh).max().getAsDouble();
+	if (j_ea.getEnergyCarrier() == OL_EnergyCarriers.HEAT) {
+		double maxValue = j_ea.getPeakPower_kW(); //j_ea.getProfileScaling_fr() * Arrays.stream(j_ea.a_energyProfile_kWh).max().getAsDouble();
 		peakHeatDemand_kW += maxValue / zero_Interface.energyModel.p_timeStep_h * j_ea.getProfileScaling_fr();
 	}
 }
@@ -312,8 +312,8 @@ for (GCHouse house: housesGCList ) {
 	}
 	// Else house has a customprofiel
 	else {
-		J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(house.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrier == OL_EnergyCarriers.HEAT);
-		double peakHeatDemand_kW = heatDemandProfile.getProfileScaling_fr() * Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException("Unable to find the maximum of the heat demand profile"));
+		J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(house.c_profileAssets, x->x instanceof J_EAProfile && x.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
+		double peakHeatDemand_kW = heatDemandProfile.getPeakPower_kW();//heatDemandProfile.getProfileScaling_fr() * Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException("Unable to find the maximum of the heat demand profile"));
 		gasBurner = new J_EAConversionGasBurner(house, peakHeatDemand_kW, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
 	}	
 	house.f_addHeatManagement(OL_GridConnectionHeatingType.GAS_BURNER, false);
@@ -710,7 +710,7 @@ for(GridConnection GC : utilityGridConnections){
 		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
 		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.getActiveEnergyCarriers().contains(OL_EnergyCarriers.HEAT));
 		for(J_EAProfile profileEA : profileEAs){
-			double baseConsumption_kWh = ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh(); //ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
 			totalBaseConsumption_kWh += baseConsumption_kWh;
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
 		}
@@ -935,7 +935,7 @@ for(GridConnection GC : utilityGridConnections){
 		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT); // FIX FOR HOT WATER/PT IN LONG RUN
 		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
 		for(J_EAProfile profileEA : profileEAs){
-			double baseConsumption_kWh = ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh(); //ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
 			totalBaseConsumption_kWh += baseConsumption_kWh;
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
 		}
