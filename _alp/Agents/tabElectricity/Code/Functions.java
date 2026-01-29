@@ -363,7 +363,7 @@ for ( GCGridBattery battery : gcListGridBatteries) {
 	battery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = capacity_kW;
 	battery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = capacity_kW;
 	
-	if(storageCapacity_kWh == storageCapacity_kWh){
+	if(storageCapacity_kWh == 0){
 		battery.f_setActive(false, zero_Interface.energyModel.p_timeVariables);
 	}
 }
@@ -389,7 +389,8 @@ while ( nbHousesWithElectricCooking > nbHousesWithElectricCookingGoal ) { // rem
 		double yearlyCookingDemand_kWh = cookingAsset.yearlyDemand_kWh;
 		cookingAsset.removeEnergyAsset();
    		
-		new J_EAConsumption(house, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, zero_Interface.energyModel.p_timeParameters, null);
+   		J_ProfilePointer pp = zero_Interface.energyModel.f_findProfile("default_house_hot_water_demand_fr");
+		new J_EAConsumption(house, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, zero_Interface.energyModel.p_timeParameters, pp);
 		house.p_cookingMethod = OL_HouseholdCookingMethod.GAS;
 		nbHousesWithElectricCooking --; 
 	}

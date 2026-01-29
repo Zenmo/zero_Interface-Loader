@@ -3323,15 +3323,15 @@ double f_addCookingAsset(GCHouse GC,OL_EnergyAssetType CookingType,double yearly
 if(yearlyCookingDemand_kWh <= 0){
 	throw new RuntimeException("Trying to create a cooking asset, without specifying the yearly energy consumption");
 }
-
+J_ProfilePointer pp = energyModel.f_findProfile("default_house_hot_water_demand_fr");
 switch(CookingType){
 	case ELECTRIC_HOB:
-		new J_EAConsumption(GC, OL_EnergyAssetType.ELECTRIC_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeParameters, null);
+		new J_EAConsumption(GC, OL_EnergyAssetType.ELECTRIC_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeParameters, pp);
 		GC.p_cookingMethod = OL_HouseholdCookingMethod.ELECTRIC;
 		break;
 		
 	case GAS_PIT:
-		new J_EAConsumption(GC, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeParameters, null);
+		new J_EAConsumption(GC, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeParameters, pp);
 		GC.p_cookingMethod = OL_HouseholdCookingMethod.GAS;
 		break;
 }
@@ -3342,8 +3342,8 @@ double f_addHotWaterDemand(GridConnection GC,double yearlyHWD_kWh)
 if(yearlyHWD_kWh <= 0){
 	throw new RuntimeException("Trying to create a DHW asset, without specifying the yearly energy consumption");
 }
-
-J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, null);
+J_ProfilePointer pp = energyModel.f_findProfile("default_house_hot_water_demand_fr");
+J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, pp);
 /*ALCODEEND*/}
 
 double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,Double heatDemand_kwhpa,J_HeatingPreferences heatingPreferences)
