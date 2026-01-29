@@ -1922,7 +1922,7 @@ if (yearlyElectricityProduction_kWh != null && yearlyElectricityFeedin_kWh != nu
 	
 	nettDelivery_kWh = Arrays.stream(yearlyElectricityDelivery_kWh).sum();
 } else { // No PV production
-	
+	yearlyElectricityConsumption_kWh=yearlyElectricityDelivery_kWh;
 	nettDelivery_kWh = Arrays.stream(yearlyElectricityDelivery_kWh).sum();
 }
 
@@ -3170,7 +3170,7 @@ f_createEngineProfile("default_building_heat_demand_fr", a_arguments_hr, a_defau
 
 //Create custom engine profiles
 for(CustomProfile_data customProfile : c_customProfiles_data){
-	f_createEngineProfile(customProfile.customProfileID(), customProfile.getArgumentsArray(), customProfile.getValuesArray(), OL_ProfileUnits.NORMALIZEDPOWER); // What type of profiles usually in custom profiles?? Custom production profiles?
+	f_createEngineProfile(customProfile.customProfileID(), customProfile.getArgumentsArray(), customProfile.getValuesArray(), OL_ProfileUnits.KWHPQUARTERHOUR); // What type of profiles usually in custom profiles?? Custom production profiles?
 }
 /*ALCODEEND*/}
 
@@ -4022,7 +4022,12 @@ double f_createGasProfileFromGasTS(GridConnection engineGC,com.zenmo.zummon.comp
 double[] profile_m3ph = f_convertFloatArrayToDoubleArray(surveyGC.getNaturalGas().getHourlyDelivery_m3().getFlatDataPoints());
 // TODO: Check startdate of profile! Perhaps update vallum method to do so?
 
-double[] a_arguments_hr = ListUtil.doubleListToArray(defaultProfiles_data.arguments_hr());
+traceln("Gas data array length: %s", profile_m3ph.length);
+double dataTimeStep_h = 1.0;
+double[] a_arguments_hr = new double[profile_m3ph.length];
+for (int i = 0; i<profile_m3ph.length; i++) {
+	a_arguments_hr[i] = i*dataTimeStep_h;
+}
 //Calculate yearly gas delivery
 double yearlyGasDelivery_m3pa = Arrays.stream(profile_m3ph).sum();
 
@@ -4160,8 +4165,14 @@ double f_createHeatProfileFromGasTS(GridConnection engineGC,com.zenmo.zummon.com
 // Gas profile
 double[] profile_m3ph = f_convertFloatArrayToDoubleArray(surveyGC.getNaturalGas().getHourlyDelivery_m3().getFlatDataPoints());
 // TODO: Check startdate of profile! Perhaps update vallum method to do so?
+//traceln("Gas data array length: %s", profile_m3ph.length);
+//double[] a_arguments_hr = ListUtil.doubleListToArray(defaultProfiles_data.arguments_hr());
 
-double[] a_arguments_hr = ListUtil.doubleListToArray(defaultProfiles_data.arguments_hr());
+double dataTimeStep_h = 1.0;
+double[] a_arguments_hr = new double[profile_m3ph.length];
+for (int i = 0; i<profile_m3ph.length; i++) {
+	a_arguments_hr[i] = i*dataTimeStep_h;
+}
 
 double yearlyGasDelivery_m3pa = Arrays.stream(profile_m3ph).sum();
 

@@ -312,7 +312,7 @@ for (GCHouse house: housesGCList ) {
 	}
 	// Else house has a customprofiel
 	else {
-		J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(house.c_profileAssets, x->x instanceof J_EAProfile && x.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
+		J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(house.c_profileAssets, x->x instanceof J_EAProfile && x.getEnergyCarrier() == OL_EnergyCarriers.HEAT && !(x instanceof J_EAProduction));
 		double peakHeatDemand_kW = heatDemandProfile.getPeakPower_kW();//heatDemandProfile.getProfileScaling_fr() * Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException("Unable to find the maximum of the heat demand profile"));
 		gasBurner = new J_EAConversionGasBurner(house, peakHeatDemand_kW, 0.99, zero_Interface.energyModel.p_timeParameters, 90);
 	}	
