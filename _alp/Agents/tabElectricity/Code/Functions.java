@@ -363,7 +363,7 @@ for ( GCGridBattery battery : gcListGridBatteries) {
 	battery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = capacity_kW;
 	battery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = capacity_kW;
 	
-	if(storageCapacity_kWh == storageCapacity_kWh){
+	if(storageCapacity_kWh == 0){
 		battery.f_setActive(false, zero_Interface.energyModel.p_timeVariables);
 	}
 }
