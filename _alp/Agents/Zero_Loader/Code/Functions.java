@@ -308,7 +308,17 @@ for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data))
 		solarpark.v_isActive = dataSolarfarm.initially_active() ;
 		
 		//Add EA
-		f_addEnergyProduction(solarpark, OL_EnergyAssetType.PHOTOVOLTAIC, "Solar farm" , dataSolarfarm.capacity_electric_kw());
+		//Get GridNode to know if it has a GridNode profile
+		OL_GridNodeProfileLoaderType gridNodeProfileLoaderType = OL_GridNodeProfileLoaderType.NO_PROFILE;
+		if (solarpark.p_parentNodeElectricID != null){
+			GridNode gn = findFirst(energyModel.pop_gridNodes, GN -> GN.p_gridNodeID.equals(dataSolarfarm.gridnode_id()));
+			if (gn != null) {
+				gridNodeProfileLoaderType = gn.p_profileType;
+			} 
+		}
+		if(gridNodeProfileLoaderType != OL_GridNodeProfileLoaderType.INCLUDE_PV || gridNodeProfileLoaderType != OL_GridNodeProfileLoaderType.NET_LOAD){
+			f_addEnergyProduction(solarpark, OL_EnergyAssetType.PHOTOVOLTAIC, "Solar farm" , dataSolarfarm.capacity_electric_kw());
+		}
 		
 		//Set owner
 		ConnectionOwner owner;
@@ -1532,6 +1542,9 @@ if (gridNodeProfileLoaderType == OL_GridNodeProfileLoaderType.INCLUDE_PV || grid
 }
 if(pv_installed_kwp != null && pv_installed_kwp > 0){
 	f_addEnergyProduction(companyGC, OL_EnergyAssetType.PHOTOVOLTAIC, "Rooftop Solar", pv_installed_kwp);
+	
+	current_scenario_list.setCurrentPV_kW(roundToInt(pv_installed_kwp));
+	future_scenario_list.setPlannedPV_kW(roundToInt(pv_installed_kwp));
 }
 
 
@@ -5142,6 +5155,12 @@ for (Solarfarm_data solarfarm : c_solarfarm_data){
 			totalPVPower_kW = 0.0;
 		}
 		totalPVPower_kW += solarfarm.capacity_electric_kw();
+	}
+}
+
+for (Windfarm_data windpark : c_windfarm_data){
+	if(windpark.initially_active() && windpark.capacity_electric_kw() > 0 && windpark.gridnode_id() != null && windpark.gridnode_id().equals(GN.p_gridNodeID)) {
+		throw new RuntimeException("Windfarm found for grid node that is going to contain preprocessed profile data -> not allowed/supported yet.");
 	}
 }
 
