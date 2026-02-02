@@ -798,7 +798,6 @@ double f_createGenericCompanies()
 {/*ALCODESTART::1726584205799*/
 //Initialize variables
 List<GCUtility> generic_company_GCs = new ArrayList();
-HashMap<GridConnection, Double> map_GC_to_installedBuildingPV = new HashMap();
 
 //Get buildings in scope
 List<Building_data> buildingDataGenericCompanies = f_getBuildingsInSubScope(c_companyBuilding_data);
@@ -819,7 +818,6 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 
 		//Update counter and collections
 		generic_company_GCs.add(companyGC);
-		map_GC_to_installedBuildingPV.put(companyGC, 0.0);
 		
 		//Set parameters for the Grid Connection
 		companyGC.p_gridConnectionID = genericCompany.address_id();
@@ -853,13 +851,17 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 	 	companyGC.p_longitude = genericCompany.longitude();
 	 	companyGC.setLatLon(companyGC.p_latitude, companyGC.p_longitude);  
 	 	
+	 	//Set PV information
+		companyGC.v_liveAssetsMetaData.initialPV_kW = genericCompany.pv_installed_kwp() != null ? genericCompany.pv_installed_kwp() : 0;
+		//companyGC.v_liveAssetsMetaData.PVPotential_kW = ; // Still needs to be calculated
+	 	
+	 	
 	 	//Update remaining totals (AFTER Lat/Lon has been defined!)
 		p_remainingTotals.adjustTotalNumberOfAnonymousCompanies(companyGC, 1);
 		p_remainingTotals.adjustTotalFloorSurfaceAnonymousCompanies_m2(companyGC, genericCompany.address_floor_surface_m2());
 		
 		//Connect GC to grid node
 		companyGC.p_parentNodeElectricID = genericCompany.gridnode_id ();
-		
 		
 		// Create new actor and assign GC to that
 		ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
@@ -880,32 +882,13 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		GIS_Building b = f_createGISBuilding( genericCompany, companyGC );
 
 		companyGC.p_roofSurfaceArea_m2 += b.p_roofSurfaceArea_m2;
-		map_GC_to_installedBuildingPV.put(companyGC, map_GC_to_installedBuildingPV.get(companyGC) + (genericCompany.pv_installed_kwp() != null ? genericCompany.pv_installed_kwp() : 0));
-		
+			
 		//Style building
 		b.p_defaultFillColor = zero_Interface.v_companyBuildingColor;
 		b.p_defaultLineColor = zero_Interface.v_companyBuildingLineColor;
 		zero_Interface.f_styleAreas(b);
 	}
 	else{// Connect with existing building
-		//Redistribute the PV installed
-		List<GridConnection> currentConnectedGCWithBuilding_notDetailed = findAll(existingBuilding.c_containedGridConnections, gc -> !gc.p_owner.p_detailedCompany);
-		int currentAmountOfConnectedGCWithBuilding_notDetailed = currentConnectedGCWithBuilding_notDetailed.size();
-
-		double buildingPV = genericCompany.pv_installed_kwp() != null ? genericCompany.pv_installed_kwp() : 0;
-		double newPVDistributionForAllAttachedGC_kW = buildingPV/(currentAmountOfConnectedGCWithBuilding_notDetailed+1);
-		double deltaPV_earlierConnectedGC_kW = newPVDistributionForAllAttachedGC_kW - (buildingPV/currentAmountOfConnectedGCWithBuilding_notDetailed);
-		
-		for(GridConnection earlierConnectedGC : currentConnectedGCWithBuilding_notDetailed){
-			map_GC_to_installedBuildingPV.put(earlierConnectedGC, map_GC_to_installedBuildingPV.get(earlierConnectedGC) + deltaPV_earlierConnectedGC_kW);	
-			if(map_GC_to_installedBuildingPV.get(earlierConnectedGC) < 0){
-				new RuntimeException("Negative installed PV for GC: " + earlierConnectedGC.p_gridConnectionID + " after redistribution of PV on the building. This should never be possible!");
-			}
-		}
-		
-		map_GC_to_installedBuildingPV.put(companyGC, map_GC_to_installedBuildingPV.get(companyGC) + newPVDistributionForAllAttachedGC_kW);
-		
-		//Connect to the existing building
 		f_connectGCToExistingBuilding(companyGC, existingBuilding, genericCompany);
 	}
 	
@@ -917,7 +900,7 @@ p_remainingTotals.finalizeRemainingTotalsDistributionCompanies();
 
 //Add EA to all generic companies (Has to be after the remaining totals finalization, so cant happen at the same time as the creation of the GC and their buildings)
 for (GridConnection GCcompany : generic_company_GCs ) {
-	f_iEAGenericCompanies(GCcompany, map_GC_to_installedBuildingPV.get(GCcompany));
+	f_iEAGenericCompanies(GCcompany, GCcompany.v_liveAssetsMetaData.initialPV_kW);
 }
 /*ALCODEEND*/}
 
@@ -3345,7 +3328,7 @@ double f_addCookingAsset(GCHouse GC,OL_EnergyAssetType CookingType,double yearly
 if(yearlyCookingDemand_kWh <= 0){
 	throw new RuntimeException("Trying to create a cooking asset, without specifying the yearly energy consumption");
 }
-J_ProfilePointer pp = energyModel.f_findProfile("default_house_hot_water_demand_fr");
+J_ProfilePointer pp = energyModel.f_findProfile("default_house_cooking_demand_fr");
 switch(CookingType){
 	case ELECTRIC_HOB:
 		new J_EAConsumption(GC, OL_EnergyAssetType.ELECTRIC_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeParameters, pp);
@@ -3609,16 +3592,7 @@ f_addHeatAssetsToHouses(house, gasDemand_m3pa);
 
 
 //Add pv
-double installedRooftopSolar_kW = house.v_liveAssetsMetaData.initialPV_kW != null ? house.v_liveAssetsMetaData.initialPV_kW : 0;
-
-
-if (gn.p_profileType == OL_GridNodeProfileLoaderType.INCLUDE_PV || gn.p_profileType == OL_GridNodeProfileLoaderType.NET_LOAD){ //dont count production if there is measured data on Node
-	installedRooftopSolar_kW = 0;
-}
-
-if (installedRooftopSolar_kW > 0) {
-	f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW );
-}
+f_addPVToHouses(house, gn);
 
 //Add cars
 f_addCarsToHouses(house);
@@ -5165,5 +5139,18 @@ for (Windfarm_data windpark : c_windfarm_data){
 }
 
 return totalPVPower_kW;
+/*ALCODEEND*/}
+
+double f_addPVToHouses(GCHouse house,GridNode gn)
+{/*ALCODESTART::1770037586816*/
+double installedRooftopSolar_kW = house.v_liveAssetsMetaData.initialPV_kW != null ? house.v_liveAssetsMetaData.initialPV_kW : 0;
+
+if (gn.p_profileType == OL_GridNodeProfileLoaderType.INCLUDE_PV || gn.p_profileType == OL_GridNodeProfileLoaderType.NET_LOAD){ //dont count production if there is measured data on Node
+	installedRooftopSolar_kW = 0;
+}
+
+if (installedRooftopSolar_kW > 0) {
+	f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW );
+}
 /*ALCODEEND*/}
 

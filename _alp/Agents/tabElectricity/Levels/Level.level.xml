@@ -1900,7 +1900,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), 
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
 					<MaxValue>100</MaxValue>
-					<Step>5</Step>
+					<Step>1</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
