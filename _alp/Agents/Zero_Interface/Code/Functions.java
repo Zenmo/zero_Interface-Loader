@@ -241,13 +241,16 @@ switch(selectedMapOverlayType){
 					f_styleHVMV(GN.gisRegion);
 					break;
 				case HT:
-					
+					//f_styleHT(GN.gisRegion);
 					break;
 				case MT:
-					
+					//f_styleMT(GN.gisRegion);
 					break;
 				case LT:
-					
+					//f_styleLT(GN.gisRegion);
+					break;
+				case LT5thgen:
+					//f_styleLT(GN.gisRegion);
 					break;
 				default:
 			}
@@ -3743,5 +3746,37 @@ double f_setColorsBasedOnCustom_objects(GIS_Object gis_area)
 double f_setColorsBasedOnCustom_gridnodes(GridNode GN)
 {/*ALCODESTART::1769007434081*/
 //Override function to replace map overlay with custom colors
+/*ALCODEEND*/}
+
+double f_styleHT(GISRegion gisregion)
+{/*ALCODESTART::1770029124180*/
+gisregion.setFillColor(v_HTNodeColor);
+gisregion.setLineStyle( LINE_STYLE_SOLID );
+gisregion.setLineColor( v_HTLineColor );
+gisregion.setLineWidth(2);
+/*ALCODEEND*/}
+
+double f_styleMT(GISRegion gisregion)
+{/*ALCODESTART::1770029194191*/
+gisregion.setFillColor(v_HTNodeColor);
+gisregion.setLineStyle( LINE_STYLE_SOLID );
+gisregion.setLineColor( v_HTLineColor );
+gisregion.setLineWidth(2);
+/*ALCODEEND*/}
+
+double f_styleLT(GISRegion gisregion)
+{/*ALCODESTART::1770029203589*/
+gisregion.setFillColor(v_HTNodeColor);
+gisregion.setLineStyle( LINE_STYLE_SOLID );
+gisregion.setLineColor( v_HTLineColor );
+gisregion.setLineWidth(2);
+/*ALCODEEND*/}
+
+double f_styleLT5thgen(GISRegion gisregion)
+{/*ALCODESTART::1770029214515*/
+gisregion.setFillColor(v_HTNodeColor);
+gisregion.setLineStyle( LINE_STYLE_SOLID );
+gisregion.setLineColor( v_HTLineColor );
+gisregion.setLineWidth(2);
 /*ALCODEEND*/}
 

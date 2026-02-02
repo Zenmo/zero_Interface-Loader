@@ -1137,7 +1137,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>GridNode</ReturnType>
 		<Id>1747300761144</Id>
 		<Name><![CDATA[f_createHeatGridNode]]></Name>

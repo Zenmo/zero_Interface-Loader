@@ -59,7 +59,8 @@ if(user.NBHAccessType != null && user.NBHAccessType != OL_UserNBHAccessType.FULL
 f_initializeSpecificSliderGC();
 
 //Grid nodes
-f_createGridNodes();
+//f_createGridNodes();
+f_createHeatGridNode();
 
 //Grid connections
 f_createGridConnections();
@@ -666,6 +667,10 @@ double scaling_factor_LVLV = zero_Interface.v_LVLVNodeSize;
 double scaling_factor_MVLV = zero_Interface.v_MVLVNodeSize;
 double scaling_factor_MVMV = zero_Interface.v_MVMVNodeSize;
 double scaling_factor_HVMV = zero_Interface.v_HVMVNodeSize;
+double scaling_factor_HT = zero_Interface.v_HVMVNodeSize;
+double scaling_factor_MT = zero_Interface.v_HVMVNodeSize;
+double scaling_factor_LT = zero_Interface.v_HVMVNodeSize;
+double scaling_factor_LT5thgen = zero_Interface.v_HVMVNodeSize;
 
 int nb_GISCoords;
 String node_shape = "TRIANGLE";
@@ -2946,9 +2951,9 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		
 		//Add GC to heat grid
 		GridNode heatgrid = findFirst(energyModel.pop_gridNodes, node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
-		if(heatgrid == null){
+		/*if(heatgrid == null){
 			heatgrid = f_createHeatGridNode();
-		}
+		}*/
 		parentGC.p_parentNodeHeatID = heatgrid.p_gridNodeID;	
 		break;
 		
@@ -2963,38 +2968,120 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 
 GridNode f_createHeatGridNode()
 {/*ALCODESTART::1747300761144*/
-GridNode GN_heat = energyModel.add_pop_gridNodes();
-GN_heat.p_gridNodeID = "Heatgrid";
+OL_GridNodeType nodeType;
+GISRegion gisregion;
 
-// Check wether transformer capacity is known or estimated
-GN_heat.p_capacity_kW = 1000000;	
-GN_heat.p_realCapacityAvailable = false;
+// Grid operator (for now only one in the area)
+GridOperator Grid_Operator = findFirst(energyModel.pop_gridOperators, p->p.p_actorID.equals(project_data.grid_operator())) ;
 
-// Basic GN information
-GN_heat.p_description = "Warmtenet";
-
-/*
-//Owner
-GN_heat.p_ownerGridOperator = Grid_Operator;
-*/
-
-//Define node type
-GN_heat.p_nodeType = OL_GridNodeType.HT;
-GN_heat.p_energyCarrier = OL_EnergyCarriers.HEAT;
-
-//Define GN location
-GN_heat.p_latitude = 0;
-GN_heat.p_longitude = 0;
-GN_heat.setLatLon(GN_heat.p_latitude, GN_heat.p_longitude);
-
-//Create gis region
-/*
-GN.gisRegion = zero_Interface.f_createGISObject(f_createGISNodesTokens(GN));
-zero_Interface.f_styleGridNodes(GN);
-zero_Interface.c_GISNodes.add(GN.gisRegion);
-*/
-
-return GN_heat;
+for (GridNode_data GN_data : c_gridNode_data) {
+	//    if no scope selected, or if node has 'all scopes' in input file or if the node specific scope is selected (exists in the arrayList)       
+	if( settings.subscopesToSimulate() == null || settings.subscopesToSimulate().isEmpty() || GN_data.subscope() == null || settings.subscopesToSimulate().indexOf(GN_data.subscope()) > -1 ){ 
+		if (GN_data.status()) {
+			GridNode GN = energyModel.add_pop_gridNodes();
+			GN.p_gridNodeID = GN_data.gridnode_id();
+			c_gridNodeIDsInScope.add(GN.p_gridNodeID);
+			
+			// Check wether transformer capacity is known or estimated
+			GN.p_capacity_kW = GN_data.capacity_kw();
+			GN.p_originalCapacity_kW = GN.p_capacity_kW;	
+			GN.p_realCapacityAvailable = GN_data.is_capacity_available();
+			
+			// Basic GN information
+			//GN.p_nodeStatus = GN_data.status();
+			GN.p_description = GN_data.description();
+			String nodeTypeString = GN_data.type();
+			
+			// Connect
+			GN.p_parentNodeID = GN_data.parent_node_id(); // Needs to be manually defined in the excel file of the nodes!
+			GN.p_ownerGridOperator = Grid_Operator;
+			
+			//Define node type
+			switch (nodeTypeString) {
+			    case "LVLV":
+			        GN.p_nodeType = OL_GridNodeType.LVLV;
+			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
+			        //Grid operator nodes
+					Grid_Operator.c_electricityGridNodes.add(GN);
+			        break;
+			    case "MVLV":
+			        GN.p_nodeType = OL_GridNodeType.MVLV;
+			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
+			        //Grid operator nodes
+					Grid_Operator.c_electricityGridNodes.add(GN);
+			        break;
+			    case "SUBMV":
+			        GN.p_nodeType = OL_GridNodeType.SUBMV;
+			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
+			        //Grid operator nodes
+					Grid_Operator.c_electricityGridNodes.add(GN);
+			        break;
+			    case "MVMV":
+			        GN.p_nodeType = OL_GridNodeType.MVMV;
+			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
+			        //Grid operator nodes
+					Grid_Operator.c_electricityGridNodes.add(GN);
+			        break;
+			    case "HVMV":
+			        GN.p_nodeType = OL_GridNodeType.HVMV;
+			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
+			        //Grid operator nodes
+					Grid_Operator.c_electricityGridNodes.add(GN);
+			        break;
+			    case "HT":
+			        GN.p_nodeType = OL_GridNodeType.HT;
+			        GN.p_energyCarrier = OL_EnergyCarriers.HEAT;
+			        //Grid operator nodes
+					Grid_Operator.c_heatGridNodes.add(GN);
+			        break;
+			    case "MT":
+			        GN.p_nodeType = OL_GridNodeType.MT;
+			        GN.p_energyCarrier = OL_EnergyCarriers.HEAT;
+			        //Grid operator nodes
+					Grid_Operator.c_heatGridNodes.add(GN);
+			        break;
+			    case "LT":
+			        GN.p_nodeType = OL_GridNodeType.LT;
+			        GN.p_energyCarrier = OL_EnergyCarriers.HEAT;
+			        //Grid operator nodes
+					Grid_Operator.c_heatGridNodes.add(GN);
+			        break;
+			    case "LT5thgen":
+			        GN.p_nodeType = OL_GridNodeType.LT5thgen;
+			        GN.p_energyCarrier = OL_EnergyCarriers.HEAT;
+			        //Grid operator nodes
+					Grid_Operator.c_heatGridNodes.add(GN);
+			        break;
+			    default:
+			        traceln("There is a gridnode in your input file with an incorrect node type");
+			        break;
+			}
+			
+			//Define GN location
+			GN.p_latitude = GN_data.latitude();
+			GN.p_longitude = GN_data.longitude();
+			GN.setLatLon(GN.p_latitude, GN.p_longitude);
+			
+			//Create gis region
+			GN.gisRegion = zero_Interface.f_createGISObject(f_createGISNodesTokens(GN));
+			zero_Interface.f_styleGridNodes(GN);
+			
+			//Gridnode service area
+			if (GN_data.service_area_polygon() != null){
+				//Create service area gis object
+				GN.p_serviceAreaGisRegion = zero_Interface.f_createGISObject(f_createGISObjectTokens(GN_data.service_area_polygon(), OL_GISObjectType.GN_SERVICE_AREA));
+				
+				//Add to hashmap
+				zero_Interface.c_GISNetplanes.add( GN.p_serviceAreaGisRegion );
+			}
+			
+			//Gridnode profile
+			if(GN_data.profile_data_kWh() != null && settings.gridNodeProfileLoaderType() != OL_GridNodeProfileLoaderType.NO_PROFILE){
+				f_addGridNodeProfile(GN, GN_data.profile_data_kWh());
+			}
+		}
+	}
+}
 /*ALCODEEND*/}
 
 double f_addSliderSolarfarm(String sliderGCID,String gridNodeID)
@@ -3600,6 +3687,7 @@ if ( gn.p_profileType == OL_GridNodeProfileLoaderType.NO_PROFILE ){
 		electricityDemand_kwhpa = uniform(avgc_data.p_avgHouseElectricityConsumption_kWh_yr - avgc_data.p_maxAvgHouseElectricityConsumptionOffset_kWhpa, 
 										  avgc_data.p_avgHouseElectricityConsumption_kWh_yr + avgc_data.p_maxAvgHouseElectricityConsumptionOffset_kWhpa);
 	}
+	traceln("There is no grid load profile");
 	f_addElectricityDemandProfile(house, electricityDemand_kwhpa, null, false, "default_house_electricity_demand_fr");
 }
 
