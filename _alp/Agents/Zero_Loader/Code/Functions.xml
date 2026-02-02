@@ -2382,7 +2382,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1755866291695</Id>
 		<Name><![CDATA[f_addCarsToHouses]]></Name>
 		<X>880</X>
-		<Y>310</Y>
+		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2834,6 +2834,30 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
 			<Name><![CDATA[GN]]></Name>
+			<Type><![CDATA[GridNode]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1770037586816</Id>
+		<Name><![CDATA[f_addPVToHouses]]></Name>
+		<X>880</X>
+		<Y>310</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[house]]></Name>
+			<Type><![CDATA[GCHouse]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[gn]]></Name>
 			<Type><![CDATA[GridNode]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
