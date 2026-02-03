@@ -3117,7 +3117,7 @@ double a_profile[];
 if (simTimeStep_h < dataTimeStep_h) { //Interpolate data to timeStep_h = 0.25
 	//traceln("***** profilePointer using tableFunction to interpolate hourly data into quarter-hourly data ********");
 	if ((dataTimeStep_h/simTimeStep_h)%1.0 != 0.0) {
-		throw new RuntimeException("dataTimeStep_h and modelTimeStep are not integer multiples! Unsupported dataformat!");
+		throw new RuntimeException("dataTimeStep_h is not an integer multiple of modelTimeStep! Unsupported dataformat!");
 	}
 	TableFunction tableFunction = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
 	a_profile = new double[values.length*(int)(dataTimeStep_h/simTimeStep_h)];
