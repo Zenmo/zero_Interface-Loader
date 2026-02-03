@@ -1267,7 +1267,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_largeScalePV_ha_Businesspark.getIntValue() + " ha"</TextCode>
+				<TextCode>sl_largeScalePV_ha_Businesspark.getValue() + " ha"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
@@ -1457,7 +1457,7 @@ f_setWindTurbines( sl_largeScaleWind_MW_Businesspark.getValue() - p_currentWindT
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_largeScaleWind_MW_Businesspark.getIntValue() + " MW"</TextCode>
+				<TextCode>sl_largeScaleWind_MW_Businesspark.getValue() + " MW"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
@@ -2408,7 +2408,7 @@ gr_trafoReinforcement.setVisible(true);
 			<Image>
 				<Id>1752232850473</Id>
 				<Name><![CDATA[i_householdNeighbourhoodBatteries]]></Name>
-				<X>180</X>
+				<X>160</X>
 				<Y>305</Y>
 				<Label>
 					<X>0</X>
@@ -2451,7 +2451,7 @@ gr_trafoReinforcement.setVisible(true);
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[0 ha]]></Text>
-				<TextCode>sl_largeScalePV_ha_Residential.getIntValue() + " ha"</TextCode>
+				<TextCode>sl_largeScalePV_ha_Residential.getValue() + " ha"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -2616,7 +2616,7 @@ f_setWindTurbines( sl_largeScaleWind_MW_Residential.getValue() - p_currentWindTu
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[0 MW]]></Text>
-				<TextCode>sl_largeScaleWind_MW_Residential.getIntValue() + " MW"</TextCode>
+				<TextCode>sl_largeScaleWind_MW_Residential.getValue() + " MW"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -2627,7 +2627,7 @@ f_setWindTurbines( sl_largeScaleWind_MW_Residential.getValue() - p_currentWindTu
 			<Image>
 				<Id>1770118893549</Id>
 				<Name><![CDATA[i_landPV_Residential]]></Name>
-				<X>180</X>
+				<X>160</X>
 				<Y>235</Y>
 				<Label>
 					<X>0</X>
@@ -2654,7 +2654,7 @@ f_setWindTurbines( sl_largeScaleWind_MW_Residential.getValue() - p_currentWindTu
 			<Image>
 				<Id>1770118893567</Id>
 				<Name><![CDATA[i_landWind_Residential]]></Name>
-				<X>180</X>
+				<X>160</X>
 				<Y>270</Y>
 				<Label>
 					<X>0</X>
