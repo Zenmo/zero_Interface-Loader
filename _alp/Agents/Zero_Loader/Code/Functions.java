@@ -3112,20 +3112,20 @@ J_ProfilePointer f_createEngineProfile(String profileID,double[] arguments,doubl
 {/*ALCODESTART::1749125189323*/
 double dataTimeStep_h = (arguments[arguments.length-1] - arguments[0])/(arguments.length-1);
 double dataStartTime_h = arguments[0];
-double timeStep_h = settings.timeStep_h; 
+double simTimeStep_h = settings.timeStep_h(); 
 double a_profile[];
-if (timeStep_h < dataTimeStep_h) { //Interpolate data to timeStep_h = 0.25
+if (simTimeStep_h < dataTimeStep_h) { //Interpolate data to timeStep_h = 0.25
 	//traceln("***** profilePointer using tableFunction to interpolate hourly data into quarter-hourly data ********");
-	if ((dataTimeStep_h/timeStep_h)%1.0 != 0.0) {
+	if ((dataTimeStep_h/simTimeStep_h)%1.0 != 0.0) {
 		throw new RuntimeException("dataTimeStep_h and modelTimeStep are not integer multiples! Unsupported dataformat!");
 	}
 	TableFunction tableFunction = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-	a_profile = new double[values.length*(int)(dataTimeStep_h/timeStep_h)];
+	a_profile = new double[values.length*(int)(dataTimeStep_h/simTimeStep_h)];
 	for (int i=0; i<a_profile.length; i++) {
-		a_profile[i] = tableFunction.get(dataStartTime_h+i*timeStep_h);
+		a_profile[i] = tableFunction.get(dataStartTime_h+i*simTimeStep_h);
 	}
-	dataTimeStep_h = timeStep_h;
-} else if (timeStep_h > dataTimeStep_h) {
+	dataTimeStep_h = simTimeStep_h;
+} else if (simTimeStep_h > dataTimeStep_h) {
 	throw new RuntimeException("dataTimeStep_h smaller than modelTimeStep! Unsupported dataformat! Need to implement downsampling to allow this");
 } else {
 	a_profile=values;
@@ -3176,7 +3176,7 @@ f_createEngineProfile("default_building_heat_demand_fr", a_arguments_hr, a_defau
 
 //Create custom engine profiles
 for(CustomProfile_data customProfile : c_customProfiles_data){
-	f_createEngineProfile(customProfile.customProfileID(), customProfile.getArgumentsArray(), customProfile.getValuesArray(), OL_ProfileUnits.KWHPQUARTERHOUR); // What type of profiles usually in custom profiles?? Custom production profiles?
+	f_createEngineProfile(customProfile.customProfileID(), customProfile.getArgumentsArray(), customProfile.getValuesArray(), customProfile.profileUnits()); // What type of profiles usually in custom profiles?? Custom production profiles?
 }
 /*ALCODEEND*/}
 
