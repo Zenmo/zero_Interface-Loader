@@ -135,7 +135,7 @@ for (GridConnection gc : gcList) {
 	}
 	// Set Profile Assets
 	for (J_EAProfile j_ea : gc.c_profileAssets) {
-		if (j_ea.energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
+		if (j_ea.getEnergyCarrier() == OL_EnergyCarriers.ELECTRICITY) {
 			j_ea.setProfileScaling_fr( scalingFactor );
 		}
 	}
@@ -386,7 +386,7 @@ while ( nbHousesWithElectricCooking > nbHousesWithElectricCookingGoal ) { // rem
 	GCHouse house = randomWhere(gcListHouses, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.ELECTRIC);		
 	J_EAConsumption cookingAsset = findFirst(house.c_consumptionAssets, p -> p.getEAType() == OL_EnergyAssetType.ELECTRIC_HOB );
 	if (cookingAsset != null) {
-		double yearlyCookingDemand_kWh = cookingAsset.yearlyDemand_kWh;
+		double yearlyCookingDemand_kWh = cookingAsset.getBaseConsumption_kWh();
 		cookingAsset.removeEnergyAsset();
    		
    		J_ProfilePointer pp = zero_Interface.energyModel.f_findProfile("default_house_cooking_demand_fr");
@@ -407,7 +407,7 @@ while ( nbHousesWithElectricCooking < nbHousesWithElectricCookingGoal) {
 	else {
 		J_EAConsumption cookingAsset = findFirst(house.c_consumptionAssets, p -> p.getEAType() == OL_EnergyAssetType.GAS_PIT );
 		if (cookingAsset != null) {
-			double yearlyCookingDemand_kWh = cookingAsset.yearlyDemand_kWh;
+			double yearlyCookingDemand_kWh = cookingAsset.getBaseConsumption_kWh();
 			cookingAsset.removeEnergyAsset();
 			
 			J_ProfilePointer pp = zero_Interface.energyModel.f_findProfile("default_house_cooking_demand_fr");
@@ -463,13 +463,13 @@ for(GridConnection GC : allConsumerGridConnections){
 		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 		for(J_EAProfile profileEA : profileEAs){
-			double baseConsumption_kWh = ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh(); //ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
 			totalBaseConsumption_kWh += baseConsumption_kWh;
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
 		}
 		for(J_EAConsumption consumptionEA : consumptionEAs){
-			totalBaseConsumption_kWh += consumptionEA.yearlyDemand_kWh;
-			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.yearlyDemand_kWh;
+			totalBaseConsumption_kWh += consumptionEA.getBaseConsumption_kWh();
+			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.getBaseConsumption_kWh();
 		}
 	}
 }
@@ -572,13 +572,13 @@ for(GCHouse GC : houseGridConnections){
 		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 		for(J_EAProfile profileEA : profileEAs){
-			double baseConsumption_kWh = ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh(); //ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
 			totalBaseConsumption_kWh += baseConsumption_kWh;
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
 		}
 		for(J_EAConsumption consumptionEA : consumptionEAs){
-			totalBaseConsumption_kWh += consumptionEA.yearlyDemand_kWh;
-			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.yearlyDemand_kWh;
+			totalBaseConsumption_kWh += consumptionEA.getBaseConsumption_kWh();
+			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.getBaseConsumption_kWh();
 		}
 	}
 }
@@ -617,13 +617,13 @@ for(GridConnection GC : utilityGridConnections){
 		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 		for(J_EAProfile profileEA : profileEAs){
-			double baseConsumption_kWh = ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh();//ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
 			totalBaseConsumption_kWh += baseConsumption_kWh;
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
 		}
 		for(J_EAConsumption consumptionEA : consumptionEAs){
-			totalBaseConsumption_kWh += consumptionEA.yearlyDemand_kWh;
-			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.yearlyDemand_kWh;
+			totalBaseConsumption_kWh += consumptionEA.getBaseConsumption_kWh();
+			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.getBaseConsumption_kWh();
 		}
 	}
 }
