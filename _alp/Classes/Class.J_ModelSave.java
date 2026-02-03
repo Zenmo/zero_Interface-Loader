@@ -17,20 +17,20 @@ public class J_ModelSave implements Serializable {
 	public ArrayList<J_EA> c_orderedVehicles;
 	public ArrayList<GCUtility> c_orderedHeatingSystemsCompanies;
 	public ArrayList<GCHouse> c_orderedHeatingSystemsHouses;
-	public ArrayList<J_EAPetroleumFuelVehicle> c_orderedActiveVehiclesPublicParking;
-	public ArrayList<J_EAPetroleumFuelVehicle> c_orderedNonActiveVehiclesPublicParking;
-	public ArrayList<J_EAVehicle> c_orderedVehiclesPrivateParking;
+	public ArrayList<J_EAFuelVehicle> c_orderedActiveVehiclesPublicParking;
+	public ArrayList<J_EAFuelVehicle> c_orderedNonActiveVehiclesPublicParking;
+	public ArrayList<I_Vehicle> c_orderedVehiclesPrivateParking;
 	public ArrayList<GIS_Object> c_orderedParkingSpaces;
 	
 	public ArrayList<GCPublicCharger> c_orderedV1GChargers;
 	public ArrayList<GCPublicCharger> c_orderedV2GChargers;
 	public ArrayList<GCPublicCharger> c_orderedPublicChargers;
 
-	public LinkedHashMap<String, List<J_EAPetroleumFuelVehicle>> c_mappingOfVehiclesPerCharger;
+	public LinkedHashMap<String, List<J_EAFuelVehicle>> c_mappingOfVehiclesPerCharger;
 	public LinkedHashMap<String, J_scenario_Current> c_scenarioMap_Current;
 	public LinkedHashMap<String, J_scenario_Future> c_scenarioMap_Future;
 	
-	public List<LinkedHashMap<String, List<J_EAVehicle>>> c_additionalVehicleHashMaps;
+	public List<LinkedHashMap<String, List<I_Vehicle>>> c_additionalVehicleHashMaps;
 	
     /**
      * Default constructor

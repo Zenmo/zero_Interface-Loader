@@ -637,12 +637,11 @@ double consumptionScaling_fr = 1  - newHeatDemandReduction_pct/100;
 
 for (J_EA j_ea : p_gridConnection.c_energyAssets){
 	if (j_ea instanceof J_EAConsumption) {
-		if (j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND) {
+		if (j_ea.getEAType() == OL_EnergyAssetType.HEAT_DEMAND) {
 			((J_EAConsumption)j_ea).setConsumptionScaling_fr(consumptionScaling_fr);
 		}
-	}
-	if (j_ea instanceof J_EAProfile) {
-		if (((J_EAProfile) j_ea).energyCarrier== OL_EnergyCarriers.HEAT) {
+	} else if (j_ea instanceof J_EAProfile &amp;&amp; !(j_ea instanceof J_EAProduction)) {
+		if (((J_EAProfile) j_ea).getEnergyCarrier()== OL_EnergyCarriers.HEAT) {
 			((J_EAProfile) j_ea).setProfileScaling_fr( consumptionScaling_fr );
 		}
 	}
@@ -815,12 +814,11 @@ double consumptionScaling_fr = 1  - newElectricityDemandReduction_pct/100;
 
 for (J_EA j_ea : p_gridConnection.c_energyAssets) {
 	if (j_ea instanceof J_EAConsumption) {
-		if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND) {
+		if (j_ea.getEAType() == OL_EnergyAssetType.ELECTRICITY_DEMAND) {
 			((J_EAConsumption)j_ea).setConsumptionScaling_fr(consumptionScaling_fr);
 		}
-	}
-	if (j_ea instanceof J_EAProfile) {
-		if (((J_EAProfile) j_ea).energyCarrier  == OL_EnergyCarriers.ELECTRICITY) {
+	} else if (j_ea instanceof J_EAProfile &amp;&amp; !(j_ea instanceof J_EAProduction)) {
+		if (((J_EAProfile) j_ea).getEnergyCarrier() == OL_EnergyCarriers.ELECTRICITY) {
 			((J_EAProfile) j_ea).setProfileScaling_fr( consumptionScaling_fr );
 		}
 	}
@@ -4031,7 +4029,7 @@ gr_loadIcon.setVisible(true);
 rect_GCisPausedScreen3.setVisible(true);
 
 //Unpause gc
-p_gridConnection.f_setActive(true);
+p_gridConnection.f_setActive(true, zero_Interface.energyModel.p_timeVariables);
 zero_Interface.b_resultsUpToDate = false;
 zero_Interface.f_setScenarioToCustom();
 f_enableAllSliders(true);

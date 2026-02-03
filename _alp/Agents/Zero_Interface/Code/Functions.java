@@ -455,7 +455,7 @@ if(v_previousClickedObjectType != null){
 	}
 	
 	if(v_customEnergyCoop != null){
-		energyModel.f_removeEnergyCoop(v_customEnergyCoop);
+		energyModel.f_removeEnergyCoop(v_customEnergyCoop, energyModel.p_timeVariables);
 		v_customEnergyCoop = null;
 	}
 }
@@ -532,15 +532,15 @@ c_orderedPVSystemsCompanies.addAll(detailedCompaniesWithPV);
 double f_initialElectricVehiclesOrder()
 {/*ALCODESTART::1714130342440*/
 // First we make a copy of all the vehicle energy assets
-List<J_EA> EAs = new ArrayList<>(findAll(energyModel.f_getEnergyAssets(), ea -> !(ea.getParentAgent() instanceof GCPublicCharger)));
-EAs = EAs.stream().filter(ea -> ea instanceof J_EAVehicle).collect(Collectors.toList());
+List<J_EA> EAs = new ArrayList<>(findAll(energyModel.f_getEnergyAssets(), ea -> !(ea.getOwner() instanceof GCPublicCharger)));
+EAs = EAs.stream().filter(ea -> ea instanceof I_Vehicle).collect(Collectors.toList());
 // Find all the EVs at the start of the simulation
 ArrayList<J_EA> otherEAs = EAs.stream().filter(ea -> !(ea instanceof J_EAEV)).collect(Collectors.toCollection(ArrayList::new));
 // We make sure that the EVs at the start of the simulation are the last in the list
 
 
 for(J_EA vehicle : EAs){
-	if(vehicle instanceof J_EAEV && !(vehicle.getParentAgent() instanceof GCUtility)){ // Companies can not get lower EV then current situation
+	if(vehicle instanceof J_EAEV && !(vehicle.getOwner() instanceof GCUtility)){ // Companies can not get lower EV then current situation
 		otherEAs.add((J_EAEV) vehicle);	
 	}
 }
@@ -719,8 +719,8 @@ for( GridConnection gc : gis_area.c_containedGridConnections){
 	}
 	else{
 		for ( J_EAConsumption consumptionAsset : gc.c_consumptionAssets){
-			if( consumptionAsset.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ){
-				yearlyElectricityConsumption_kWh += consumptionAsset.yearlyDemand_kWh;
+			if( consumptionAsset.getEAType() == OL_EnergyAssetType.ELECTRICITY_DEMAND ){
+				yearlyElectricityConsumption_kWh += consumptionAsset.getBaseConsumption_kWh();
 			}
 		}
 	}
@@ -748,8 +748,13 @@ if(uI_EnergyHub != null){
 double f_setColorsBasedOnGridTopology_objects(GIS_Object gis_area)
 {/*ALCODESTART::1718566260603*/
 if (gis_area.c_containedGridConnections.size() > 0) {
-	Color c = gis_area.c_containedGridConnections.get(0).p_parentNodeElectric.p_uniqueColor;
-	gis_area.f_style(c, black, 1.0, null);
+	Color color = gis_area.c_containedGridConnections.get(0).p_parentNodeElectric.p_uniqueColor;
+	for(GridConnection GC : gis_area.c_containedGridConnections){
+		if(GC.p_owner.p_detailedCompany){
+			color = GC.p_parentNodeElectric.p_uniqueColor;
+		}
+	}
+	gis_area.f_style(color, black, 1.0, null);
 }
 /*ALCODEEND*/}
 
@@ -782,7 +787,7 @@ for (GridConnection gc : c_selectedObjects.get(0).c_containedGridConnections) {
 }
 
 if(c_selectedGridConnections.size()>1){
-	v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections);
+	v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections, energyModel.p_timeParameters);
 	uI_Results.f_updateResultsUI(v_customEnergyCoop);
 }
 else{
@@ -1103,7 +1108,7 @@ else{//Filtered GC returns GC
 	
 	//Set graphs	
 	if(c_selectedGridConnections.size()>1){
-		v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections);
+		v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections, energyModel.p_timeParameters);
 		uI_Results.f_updateResultsUI(v_customEnergyCoop);
 	}
 	else{
@@ -2325,7 +2330,7 @@ if (gn!=null && gn.gisRegion != null){
 		maxLoad_fr = abs(gn.v_currentLoad_kW)/gn.p_capacity_kW;
 	}
 	else{
-		J_LoadDurationCurves loadCurves = gn.f_getDuurkrommes();
+		J_LoadDurationCurves loadCurves = gn.f_getDuurkrommes(energyModel.p_timeParameters);
 		double maxLoad_fr_delivery = gn.p_capacity_kW > 0 ? abs(loadCurves.ds_loadDurationCurveTotal_kW.getY(0))/gn.p_capacity_kW : 0;
 		double maxLoad_fr_feedin = gn.p_capacity_kW > 0 ? abs(loadCurves.ds_loadDurationCurveTotal_kW.getY(loadCurves.ds_loadDurationCurveTotal_kW.size()-1))/gn.p_capacity_kW : 0;
 
@@ -2798,8 +2803,8 @@ else {
 double f_initializePrivateAndPublicParkingCarsOrder()
 {/*ALCODESTART::1753882411689*/
 //Get all public and private parked cars
-c_orderedVehiclesPrivateParking = new ArrayList<J_EAVehicle>();
-List<J_EAPetroleumFuelVehicle> allPublicParkedCars = new ArrayList<J_EAPetroleumFuelVehicle>();
+c_orderedVehiclesPrivateParking = new ArrayList<>();
+List<J_EAFuelVehicle> allPublicParkedCars = new ArrayList<>();
 for (GCHouse house : energyModel.Houses) {
 	if (house.p_eigenOprit) {
 		c_orderedVehiclesPrivateParking.addAll(house.c_vehicleAssets);
@@ -2827,12 +2832,12 @@ if(totalChargers > 0){
 	    GCPublicCharger charger = c_orderedPublicChargers.get(i);
 	    int numberOfCars = numberOfCarsPerCharger.get(i);
 	
-	    List<J_EAPetroleumFuelVehicle> assignedCars = new ArrayList<>(allPublicParkedCars.subList(index, index + numberOfCars));
+	    List<J_EAFuelVehicle> assignedCars = new ArrayList<>(allPublicParkedCars.subList(index, index + numberOfCars));
 	    c_mappingOfVehiclesPerCharger.put(charger.p_uid, assignedCars);
 	
 	    // Place vehicles depending on whether the charger is active
 	    if (charger.v_isActive) {
-	        for (J_EAPetroleumFuelVehicle car : assignedCars) {
+	        for (J_EAFuelVehicle car : assignedCars) {
 	           	J_ActivityTrackerTrips tripTracker = car.getTripTracker(); //Needed, as triptracker is removed when removeEnergyAsset is called.
 				car.removeEnergyAsset();
 				car.setTripTracker(tripTracker);//Re-set the triptracker again, for storing.
@@ -3041,7 +3046,7 @@ c_selectedGridConnections = new ArrayList<>(findAll(toBeFilteredGC, GC -> GC.c_e
 double f_initializeAdditionalVehicles()
 {/*ALCODESTART::1760955904715*/
 for(GridConnection GC : energyModel.UtilityConnections){
-	c_additionalVehicles.put(GC.p_uid, new ArrayList<J_EAVehicle>());
+	c_additionalVehicles.put(GC.p_uid, new ArrayList<I_Vehicle>());
 }
 /*ALCODEEND*/}
 
@@ -3230,13 +3235,11 @@ t_scenarioDescription.setText(t_scenario_current);
 
 double f_resetSpecialSlidersAndButtons()
 {/*ALCODESTART::1761119842140*/
-uI_Tabs.pop_tabEHub.get(0).getButton_remove_nfato().action();
-
-
-
-
-
-
+if (uI_Tabs.pop_tabEHub.size() > 0){
+	if (uI_Tabs.pop_tabEHub.get(0).getButton_remove_nfato() != null){
+		uI_Tabs.pop_tabEHub.get(0).getButton_remove_nfato().action();
+	}
+}
 
 //Project specific sliders and buttons reset
 f_resetProjectSpecificSlidersAndButtons();
@@ -3626,7 +3629,7 @@ if(user.GCAccessType == OL_UserGCAccessType.FULL){
 	}
 	else{
 		for (J_EA ea : energyModel.c_energyAssets) {
-		    if (ea instanceof J_EAVehicle) {
+		    if (ea instanceof I_Vehicle) {
 				c_cbFilterOptions.add(OL_FilterOptionsGC.HAS_TRANSPORT);
 				c_cbFilterOptions.add(OL_FilterOptionsGC.HAS_EV);
 		        break;

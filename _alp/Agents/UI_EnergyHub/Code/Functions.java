@@ -128,7 +128,7 @@ if(sliderGC_gridBattery != null){
 	c_sliderEAGCs.add(sliderGC_gridBattery);
 }
 
-v_energyHubCoop.f_addMemberGCs(c_sliderEAGCs);
+v_energyHubCoop.f_addMemberGCs(c_sliderEAGCs, zero_Interface.energyModel.p_timeParameters);
 /*ALCODEEND*/}
 
 double f_initializeEnergyHubMemberNames()
@@ -264,10 +264,10 @@ try {
 	f_reconstructGIS_Objects(deserializedEnergyModel, saveObject.c_GISObjects);
 	
 	// Get profilePointer tableFunctions from 'original' energyModel
-	deserializedEnergyModel.c_profiles.forEach(x->{
+	/* deserializedEnergyModel.c_profiles.forEach(x->{
 		J_ProfilePointer origProfile = zero_Interface.energyModel.f_findProfile(x.name);
 		x.setTableFunction(origProfile.getTableFunction());
-	});
+	}); */
 	// get heatingTypeHashmap from 'old' energyModel.
 	deserializedEnergyModel.c_defaultHeatingStrategies = zero_Interface.energyModel.c_defaultHeatingStrategies;
 	
@@ -369,7 +369,7 @@ saveObject.c_mappingOfVehiclesPerCharger = zero_Interface.c_mappingOfVehiclesPer
 saveObject.c_scenarioMap_Current = zero_Interface.c_scenarioMap_Current;
 saveObject.c_scenarioMap_Future = zero_Interface.c_scenarioMap_Future;
 
-List<LinkedHashMap<String, List<J_EAVehicle>>> c_additionalVehicleHashMaps = new ArrayList<LinkedHashMap<String, List<J_EAVehicle>>>();
+List<LinkedHashMap<String, List<I_Vehicle>>> c_additionalVehicleHashMaps = new ArrayList<>();
 
 saveObject.c_additionalVehicleHashMaps = c_additionalVehicleHashMaps;
 

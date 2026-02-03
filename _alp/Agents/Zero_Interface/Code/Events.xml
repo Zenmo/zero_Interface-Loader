@@ -33,7 +33,7 @@
 				<Unit Class="TimeUnits">HOUR</Unit>
 			</OccurrenceTime>
 			<RecurrenceCode Class="CodeUnitValue">
-				<Code><![CDATA[energyModel.p_timeStep_h]]></Code>
+				<Code><![CDATA[energyModel.p_timeParameters.getTimeStep_h()]]></Code>
 				<Unit Class="TimeUnits">HOUR</Unit>
 			</RecurrenceCode>
 			<Condition>false</Condition>

@@ -119,7 +119,7 @@ for (GridConnection gc : gcList) {
 	}
 	// Set Profile Assets
 	for (J_EAProfile j_ea : gc.c_profileAssets) {
-		if (j_ea.energyCarrier == OL_EnergyCarriers.HEAT) {
+		if (j_ea.getEnergyCarrier() == OL_EnergyCarriers.HEAT) {
 			j_ea.setProfileScaling_fr( scalingFactor );
 		}
 	}
@@ -216,17 +216,17 @@ while ( targetHeatPumpAmount > nbHeatPumps) { // remove gasburners, add heatpump
 double f_calculatePeakHeatDemand_kW(GridConnection gc)
 {/*ALCODESTART::1749116448649*/
 double peakHeatDemand_kW = 0.0;
-for (J_EAConsumption j_ea : gc.c_consumptionAssets) {
+/*for (J_EAConsumption j_ea : gc.c_consumptionAssets) {
 	if (j_ea.getEAType() == OL_EnergyAssetType.HEAT_DEMAND || j_ea.getEAType() == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
 		double[] profile = j_ea.getProfilePointer().getAllValues();
 		double maxFactor = Arrays.stream(profile).max().getAsDouble();
-		peakHeatDemand_kW += maxFactor * j_ea.yearlyDemand_kWh * j_ea.getConsumptionScaling_fr();
+		peakHeatDemand_kW += maxFactor * j_ea.getYearlyDemand_kWh() * j_ea.getConsumptionScaling_fr();
 	}
-}
+}*/
 for (J_EAProfile j_ea : gc.c_profileAssets) {
-	if (j_ea.energyCarrier == OL_EnergyCarriers.HEAT) {
-		double maxValue = j_ea.getProfileScaling_fr() * Arrays.stream(j_ea.a_energyProfile_kWh).max().getAsDouble();
-		peakHeatDemand_kW += maxValue / zero_Interface.energyModel.p_timeStep_h * j_ea.getProfileScaling_fr();
+	if (j_ea.getEnergyCarrier() == OL_EnergyCarriers.HEAT && !(j_ea instanceof J_EAProduction)) {
+		//double maxPower_kW = j_ea.getPeakPower_kW(); //j_ea.getProfileScaling_fr() * Arrays.stream(j_ea.a_energyProfile_kWh).max().getAsDouble();
+		peakHeatDemand_kW += j_ea.getPeakConsumptionPower_kW(); //maxValue / zero_Interface.energyModel.p_timeParameters.getTimeStep_h() * j_ea.getProfileScaling_fr();
 	}
 }
 if (gc.p_BuildingThermalAsset != null) {
@@ -278,7 +278,7 @@ for (GCHouse house: housesGCList ) {
 	double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
 	double efficiency = zero_Interface.energyModel.avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr;
 	
-	new J_EAConversionHeatDeliverySet(house, peakHeatDemand_kW, efficiency, zero_Interface.energyModel.p_timeStep_h, outputTemperature_degC);
+	new J_EAConversionHeatDeliverySet(house, peakHeatDemand_kW, efficiency, zero_Interface.energyModel.p_timeParameters, outputTemperature_degC);
 	
 	house.f_addHeatManagement(OL_GridConnectionHeatingType.DISTRICTHEAT, false);
 }
@@ -297,26 +297,32 @@ for (GCHouse house: housesGCList ) {
 	house.f_removeAllHeatingAssets();
 	house.p_parentNodeHeat = null;
 	house.p_parentNodeHeatID = null;
-		
+	
 	//add gasburner
-	J_EAConsumption heatDemandAsset = findFirst(house.c_consumptionAssets, j_ea -> j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
+	double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
+	new J_EAConversionGasBurner(house, peakHeatDemand_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner_fr, zero_Interface.energyModel.p_timeParameters, 90);
+	house.f_addHeatManagement(OL_GridConnectionHeatingType.GAS_BURNER, false);
+	
+	/*
+	J_EAConsumption heatDemandAsset = findFirst(house.c_consumptionAssets, j_ea -> j_ea.getEAType() == OL_EnergyAssetType.HEAT_DEMAND);
 	J_EAConversionGasBurner gasBurner;
 	//if house has follows the general heat deamnd profile
 	if (heatDemandAsset != null) {
-		gasBurner = new J_EAConversionGasBurner(house, heatDemandAsset.yearlyDemand_kWh/8760*10, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
+		gasBurner = new J_EAConversionGasBurner(house, heatDemandAsset.getYearlyDemand_kWh()/8760*10, 0.99, zero_Interface.energyModel.p_timeParameters, 90);
 	}
 	//if house has a thermalBuildingAsset
 	else if (house.p_BuildingThermalAsset != null){
 		double gasBurnerCapacity_kW = 10;
-		gasBurner = new J_EAConversionGasBurner(house, gasBurnerCapacity_kW, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
+		gasBurner = new J_EAConversionGasBurner(house, gasBurnerCapacity_kW, 0.99, zero_Interface.energyModel.p_timeParameters, 90);
 	}
 	// Else house has a customprofiel
 	else {
-		J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(house.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrier == OL_EnergyCarriers.HEAT);
-		double peakHeatDemand_kW = heatDemandProfile.getProfileScaling_fr() * Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException("Unable to find the maximum of the heat demand profile"));
-		gasBurner = new J_EAConversionGasBurner(house, peakHeatDemand_kW, 0.99, zero_Interface.energyModel.p_timeStep_h, 90);
+		J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(house.c_profileAssets, x->x instanceof J_EAProfile && x.getEnergyCarrier() == OL_EnergyCarriers.HEAT && !(x instanceof J_EAProduction));
+		double peakHeatDemand_kW = heatDemandProfile.getPeakPower_kW();//heatDemandProfile.getProfileScaling_fr() * Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException("Unable to find the maximum of the heat demand profile"));
+		gasBurner = new J_EAConversionGasBurner(house, peakHeatDemand_kW, 0.99, zero_Interface.energyModel.p_timeParameters, 90);
 	}	
 	house.f_addHeatManagement(OL_GridConnectionHeatingType.GAS_BURNER, false);
+	*/
 }
 
 //Update variable to change to custom scenario
@@ -335,7 +341,7 @@ double nbHouses = gcListHouses.size();
 while ( roundToInt(nbHouses * desiredShare) > nbHousesWithAirco ) {
 	GCHouse house = randomWhere(gcListHouses, x -> x.p_airco == null);
 	double aircoPower_kW = roundToDecimal(uniform(3,6),1);
-	new J_EAAirco(house, aircoPower_kW, zero_Interface.energyModel.p_timeStep_h);
+	new J_EAAirco(house, aircoPower_kW, zero_Interface.energyModel.p_timeParameters);
 	nbHousesWithAirco ++;
 }
 while ( roundToInt(nbHouses * desiredShare) < nbHousesWithAirco ) {
@@ -399,7 +405,7 @@ for (GCHouse house: housesGCList ) {
 	J_EAConversionHeatPump heatpump = new J_EAConversionHeatPump(house,
 		heatpumpElectricCapacity_kW,
 		efficiency_fr,
-		zero_Interface.energyModel.p_timeStep_h,
+		zero_Interface.energyModel.p_timeParameters,
 		outputTemperature_degC,
 		zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue(),
 		sourceAssetHeatPower_kW,
@@ -428,7 +434,7 @@ for (GCHouse house: housesGCList ) {
 	// Remove Heatpump and replace with gasburner
 	house.f_removeAllHeatingAssets();
 	double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
-	new J_EAConversionGasBurner(house, peakHeatDemand_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner_fr, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC);	
+	new J_EAConversionGasBurner(house, peakHeatDemand_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner_fr, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC);	
 	house.f_addHeatManagement(OL_GridConnectionHeatingType.GAS_BURNER, false);
 }
 
@@ -485,7 +491,7 @@ int nbHousesWithPTGoal = roundToInt(PT_pct / 100.0 * nbHouses);
 
 while ( nbHousesWithPTGoal < nbHousesWithPT ) { // remove excess PV systems
 	GCHouse house = findFirst(houses, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW));	
-	J_EA ptAsset = findFirst(house.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL );
+	J_EA ptAsset = findFirst(house.c_productionAssets, p -> p.getEAType() == OL_EnergyAssetType.PHOTOTHERMAL );
 		
 	if (ptAsset != null) {
 		ptAsset.removeEnergyAsset();
@@ -497,10 +503,10 @@ while ( nbHousesWithPTGoal < nbHousesWithPT ) { // remove excess PV systems
 			house.p_heatBuffer.removeEnergyAsset();
 		}
 		if(house.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
-			J_EAProduction pvAsset = findFirst(house.c_productionAssets, ea -> ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
+			J_EAProduction pvAsset = findFirst(house.c_productionAssets, ea -> ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC);
 			if(pvAsset != null){
 				double newInstalledPVCapacity = min(house.v_liveAssetsMetaData.PVPotential_kW, pvAsset.getCapacityElectric_kW() + zero_Interface.energyModel.avgc_data.p_avgPTPanelSize_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2);
-				pvAsset.setCapacityElectric_kW(newInstalledPVCapacity);
+				pvAsset.setCapacityElectric_kW(newInstalledPVCapacity, house);
 			}
 		}
 		nbHousesWithPT --; 
@@ -522,13 +528,13 @@ while ( nbHousesWithPTGoal > nbHousesWithPT ) {
 		
 		//Compensate for pt if it is present
 		if(house.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
-			J_EAProduction pvAsset = findFirst(house.c_productionAssets, ea -> ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
+			J_EAProduction pvAsset = findFirst(house.c_productionAssets, ea -> ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC);
 			if(pvAsset != null){
 				double newInstalledPVCapacity = max(0, pvAsset.getCapacityElectric_kW() - zero_Interface.energyModel.avgc_data.p_avgPTPanelSize_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2);
-				pvAsset.setCapacityElectric_kW(newInstalledPVCapacity);
+				pvAsset.setCapacityElectric_kW(newInstalledPVCapacity, house);
 			}
 		}
-		J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOTHERMAL, assetName, OL_EnergyCarriers.HEAT, installedPTCapacity_kW, zero_Interface.energyModel.p_timeStep_h, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
+		J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOTHERMAL, assetName, OL_EnergyCarriers.HEAT, installedPTCapacity_kW, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
 		
 		//Get parameters for the heatbuffer
 		double lossFactor_WpK = 0;// For now no loss factor
@@ -540,7 +546,7 @@ while ( nbHousesWithPTGoal > nbHousesWithPT ) {
 		double heatCapacity_JpK = zero_Interface.energyModel.avgc_data.p_waterHeatCapacity_JpkgK*(heatBufferStorageCapacity_m3*zero_Interface.energyModel.avgc_data.p_waterDensity_kgpm3);
 		
 		//Add heatbuffer
-		J_EAStorageHeat heatbufferAsset = new J_EAStorageHeat ( house, OL_EnergyAssetType.STORAGE_HEAT, installedPTCapacity_kW, lossFactor_WpK, zero_Interface.energyModel.p_timeStep_h, initialTemperature_degC, minTemperature_degC, maxTemperature_degC, setTemperature_degC, heatCapacity_JpK, OL_AmbientTempType.FIXED); 
+		J_EAStorageHeat heatbufferAsset = new J_EAStorageHeat ( house, OL_EnergyAssetType.STORAGE_HEAT, installedPTCapacity_kW, lossFactor_WpK, zero_Interface.energyModel.p_timeParameters, initialTemperature_degC, minTemperature_degC, maxTemperature_degC, setTemperature_degC, heatCapacity_JpK, OL_AmbientTempType.FIXED); 
 
 		houses.remove(house);
 		zero_Interface.c_orderedPTSystemsHouses.remove(house);
@@ -710,13 +716,13 @@ for(GridConnection GC : utilityGridConnections){
 		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
 		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.getActiveEnergyCarriers().contains(OL_EnergyCarriers.HEAT));
 		for(J_EAProfile profileEA : profileEAs){
-			double baseConsumption_kWh = ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh(); //ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
 			totalBaseConsumption_kWh += baseConsumption_kWh;
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
 		}
 		for(J_EAConsumption consumptionEA : consumptionEAs){
-			totalBaseConsumption_kWh += consumptionEA.yearlyDemand_kWh;
-			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.yearlyDemand_kWh;
+			totalBaseConsumption_kWh += consumptionEA.getBaseConsumption_kWh();
+			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.getBaseConsumption_kWh();
 		}
 		
 		if(GC.p_BuildingThermalAsset != null){
@@ -933,15 +939,15 @@ double totalSavedConsumption_kWh = 0;
 for(GridConnection GC : utilityGridConnections){
 	if(GC.v_isActive){
 		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT); // FIX FOR HOT WATER/PT IN LONG RUN
-		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
+		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.getEAType() == OL_EnergyAssetType.HEAT_DEMAND);
 		for(J_EAProfile profileEA : profileEAs){
-			double baseConsumption_kWh = ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh(); //ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
 			totalBaseConsumption_kWh += baseConsumption_kWh;
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
 		}
 		for(J_EAConsumption consumptionEA : consumptionEAs){
-			totalBaseConsumption_kWh += consumptionEA.yearlyDemand_kWh;
-			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.yearlyDemand_kWh;
+			totalBaseConsumption_kWh += consumptionEA.getBaseConsumption_kWh();
+			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.getBaseConsumption_kWh();
 		}
 		
 		if(GC.p_BuildingThermalAsset != null){
@@ -1190,13 +1196,13 @@ double sourceAssetHeatPower_kW;
 double belowZeroHeatpumpEtaReductionFactor;
 maxHeatOutputPower_kW = maxHeatOutputPower_kW*2; // Make the asset capacity twice as high, to make sure it can handle the load in other scenarios with more heat consumption.
 J_AVGC_data avgc_data = zero_Interface.energyModel.avgc_data;
-double timeStep_h = zero_Interface.energyModel.p_timeStep_h;
+J_TimeParameters timeParameters = zero_Interface.energyModel.p_timeParameters;
 
 switch (heatAssetType){ // There is always only one heatingType, If there are many assets the type is CUSTOM
 
 	case GAS_BURNER:
 		heatOutputCapacityGasBurner_kW = max(avgc_data.p_minGasBurnerOutputCapacity_kW, maxHeatOutputPower_kW);			
-		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, heatOutputCapacityGasBurner_kW , avgc_data.p_avgEfficiencyGasBurner_fr, timeStep_h, 90);
+		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, heatOutputCapacityGasBurner_kW , avgc_data.p_avgEfficiencyGasBurner_fr, timeParameters, 90);
 		break;
 	
 	case HYBRID_HEATPUMP:
@@ -1211,7 +1217,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
 		
-		J_EAConversionHeatPump heatPumpHybrid = new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType);
+		J_EAConversionHeatPump heatPumpHybrid = new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, timeParameters, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType);
 
 		zero_Interface.energyModel.c_ambientDependentAssets.add(heatPumpHybrid);
 		
@@ -1220,7 +1226,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		efficiency = avgc_data.p_avgEfficiencyGasBurner_fr;
 		outputTemperature_degC = avgc_data.p_avgOutputTemperatureGasBurner_degC;
 	
-		J_EAConversionGasBurner gasBurnerHybrid = new J_EAConversionGasBurner(parentGC, heatOutputCapacityGasBurner_kW, efficiency, timeStep_h, outputTemperature_degC);		
+		J_EAConversionGasBurner gasBurnerHybrid = new J_EAConversionGasBurner(parentGC, heatOutputCapacityGasBurner_kW, efficiency, timeParameters, outputTemperature_degC);		
 		break;
 	
 	case ELECTRIC_HEATPUMP:
@@ -1233,7 +1239,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
 		
-		new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, timeStep_h, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType );		
+		new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, timeParameters, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType );		
 		break;
 
 	case GAS_CHP:
@@ -1242,7 +1248,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		outputTemperature_degC = avgc_data.p_avgOutputTemperatureCHP_degC;
 		efficiency = avgc_data.p_avgEfficiencyCHP_thermal_fr + avgc_data.p_avgEfficiencyCHP_electric_fr;
 		
-		new J_EAConversionGasCHP(parentGC, outputCapacityElectric_kW, maxHeatOutputPower_kW, efficiency, timeStep_h, outputTemperature_degC );
+		new J_EAConversionGasCHP(parentGC, outputCapacityElectric_kW, maxHeatOutputPower_kW, efficiency, timeParameters, outputTemperature_degC );
 		break;
 
 	case DISTRICTHEAT:
@@ -1250,7 +1256,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		outputTemperature_degC = avgc_data.p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
 		efficiency = avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr;
 		
-		new J_EAConversionHeatDeliverySet(parentGC, heatOutputCapacityDeliverySet_kW, efficiency, timeStep_h, outputTemperature_degC);
+		new J_EAConversionHeatDeliverySet(parentGC, heatOutputCapacityDeliverySet_kW, efficiency, timeParameters, outputTemperature_degC);
 		
 		//Add GC to heat grid
 		GridNode heatgrid = findFirst(zero_Interface.energyModel.pop_gridNodes, node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);

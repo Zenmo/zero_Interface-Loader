@@ -67,8 +67,8 @@ double f_setDemandReduction(List<GridConnection> gcList,double demandReduction_p
 double scalingFactor = 1 - demandReduction_pct/100;
 
 for (GridConnection gc : gcList) {
-	for (J_EAVehicle j_ea : gc.c_vehicleAssets) {
-		j_ea.getTripTracker().distanceScaling_fr = scalingFactor;
+	for (I_Vehicle vehicle : gc.c_vehicleAssets) {
+		vehicle.getTripTracker().distanceScaling_fr = scalingFactor;
 	}
 }
 
@@ -291,13 +291,13 @@ zero_Interface.f_resetSettings();
 
 boolean f_petroleumFuelToElectricTruck(List<GridConnection> gcList)
 {/*ALCODESTART::1746008458938*/
-J_EAPetroleumFuelVehicle petroleumFuelTruck = null;
+J_EAFuelVehicle petroleumFuelTruck = null;
 boolean foundAdditionalVehicle = false;
 
 // find the petroleumFuel truck to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
 	if(gc instanceof GCUtility && gc.v_isActive){
-		petroleumFuelTruck = (J_EAPetroleumFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK);
+		petroleumFuelTruck = (J_EAFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.getEAType() == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK);
 		if ( petroleumFuelTruck != null ) {
 			foundAdditionalVehicle = true;
 			break;
@@ -307,12 +307,12 @@ for (GridConnection gc : gcList ) {
 
 // if no additional vehicle was found, search through the regular ordering of vehicles
 if (!foundAdditionalVehicle) {	
-	petroleumFuelTruck = (J_EAPetroleumFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
+	petroleumFuelTruck = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK && ((GridConnection)p.getOwner()).v_isActive && gcList.contains((GridConnection)p.getOwner()));
 }
 if (petroleumFuelTruck!=null) {
-	GridConnection gc = (GridConnection)petroleumFuelTruck.getParentAgent();
+	GridConnection gc = (GridConnection)petroleumFuelTruck.getOwner();
 		
-	J_ActivityTrackerTrips tripTracker = petroleumFuelTruck.tripTracker;
+	J_ActivityTrackerTrips tripTracker = petroleumFuelTruck.getTripTracker();
 	boolean available = petroleumFuelTruck.getAvailability();
 	zero_Interface.c_orderedVehicles.remove(petroleumFuelTruck);
 	petroleumFuelTruck.removeEnergyAsset();
@@ -323,7 +323,7 @@ if (petroleumFuelTruck!=null) {
 	double initialStateOfCharge_fr = 1.0;
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionTruck_kWhpkm;
 	double vehicleScalingElectric = 1.0;
-	J_EAEV electricTruck = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeStep_h, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_TRUCK, tripTracker, available);  
+	J_EAEV electricTruck = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeParameters, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_TRUCK, tripTracker, available);  
 	
 	zero_Interface.c_orderedVehicles.add(0, electricTruck);
 	
@@ -343,13 +343,13 @@ return true;
 
 boolean f_hydrogenToElectricTruck(List<GridConnection> gcList)
 {/*ALCODESTART::1746008458950*/
-J_EAHydrogenVehicle hydrogenTruck = null;
+J_EAFuelVehicle hydrogenTruck = null;
 boolean foundAdditionalVehicle = false;
 
 // find the hydrogen truck to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
 	if(gc instanceof GCUtility && gc.v_isActive){
-		hydrogenTruck = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK);
+		hydrogenTruck = (J_EAFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.getEAType() == OL_EnergyAssetType.HYDROGEN_TRUCK);
 		if ( hydrogenTruck != null ) {
 			foundAdditionalVehicle = true;
 			break;
@@ -359,12 +359,12 @@ for (GridConnection gc : gcList ) {
 
 // if no additional vehicle was found, search through the regular ordering of vehicles
 if (!foundAdditionalVehicle) {
-	hydrogenTruck = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
+	hydrogenTruck = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == OL_EnergyAssetType.HYDROGEN_TRUCK && ((GridConnection)p.getOwner()).v_isActive && gcList.contains((GridConnection)p.getOwner()));
 }
 if (hydrogenTruck!=null) {
-	GridConnection gc = (GridConnection)hydrogenTruck.getParentAgent();
+	GridConnection gc = (GridConnection)hydrogenTruck.getOwner();
 	
-	J_ActivityTrackerTrips tripTracker = hydrogenTruck.tripTracker;
+	J_ActivityTrackerTrips tripTracker = hydrogenTruck.getTripTracker();
 	boolean available = true;
 	available = hydrogenTruck.getAvailability();
 	zero_Interface.c_orderedVehicles.remove(hydrogenTruck);
@@ -377,7 +377,7 @@ if (hydrogenTruck!=null) {
 	double initialStateOfCharge_fr = 1.0;
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionTruck_kWhpkm;
 	double vehicleScalingElectric = 1.0;
-	J_EAEV electricTruck = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeStep_h, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_TRUCK, tripTracker, available);  
+	J_EAEV electricTruck = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeParameters, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_TRUCK, tripTracker, available);  
 
 	zero_Interface.c_orderedVehicles.add(0, electricTruck);
 	
@@ -402,7 +402,7 @@ boolean foundAdditionalVehicle = false;
 // find the electric truck to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
 	if(gc instanceof GCUtility && gc.v_isActive){
-		electricTruck = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK);
+		electricTruck = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.getEAType() == OL_EnergyAssetType.ELECTRIC_TRUCK);
 		if ( electricTruck != null ) {
 			foundAdditionalVehicle = true;
 			break;
@@ -412,12 +412,12 @@ for (GridConnection gc : gcList ) {
 
 // if no additional vehicle was found, search through the regular ordering of vehicle
 if (!foundAdditionalVehicle) {
-	electricTruck = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
+	electricTruck = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == OL_EnergyAssetType.ELECTRIC_TRUCK && ((GridConnection)p.getOwner()).v_isActive && gcList.contains((GridConnection)p.getOwner()));
 }
 if (electricTruck!=null) {
-	GridConnection gc = (GridConnection)electricTruck.getParentAgent();
+	GridConnection gc = (GridConnection)electricTruck.getOwner();
 	
-	J_ActivityTrackerTrips tripTracker = electricTruck.tripTracker;
+	J_ActivityTrackerTrips tripTracker = electricTruck.getTripTracker();
 	boolean available = true;
 	available = electricTruck.getAvailability();
 	zero_Interface.c_orderedVehicles.remove(electricTruck);
@@ -426,7 +426,7 @@ if (electricTruck!=null) {
 	// Re-add hydrogen vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgHydrogenConsumptionTruck_kWhpkm;			
 	double vehicleScaling = 1.0;
-	J_EAHydrogenVehicle hydrogenVehicle = new J_EAHydrogenVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.HYDROGEN_TRUCK, tripTracker, available);				
+	J_EAFuelVehicle hydrogenVehicle = new J_EAFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, vehicleScaling, OL_EnergyAssetType.HYDROGEN_TRUCK, tripTracker, OL_EnergyCarriers.HYDROGEN, available);				
 	
 	zero_Interface.c_orderedVehicles.add(0, hydrogenVehicle);
 	
@@ -445,13 +445,13 @@ return true;
 
 boolean f_petroleumFuelToHydrogenTruck(List<GridConnection> gcList)
 {/*ALCODESTART::1746008458968*/
-J_EAPetroleumFuelVehicle petroleumFuelTruck = null;
+J_EAFuelVehicle petroleumFuelTruck = null;
 boolean foundAdditionalVehicle = false;
 
 // find the petroleumFuel truck to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
 	if(gc instanceof GCUtility && gc.v_isActive){
-		petroleumFuelTruck = (J_EAPetroleumFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK);
+		petroleumFuelTruck = (J_EAFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.getEAType() == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK);
 		if ( petroleumFuelTruck != null ) {
 			foundAdditionalVehicle = true;
 			break;
@@ -461,12 +461,12 @@ for (GridConnection gc : gcList ) {
 
 // if no additional vehicle was found, search through the regular ordering of vehicles
 if (!foundAdditionalVehicle) {
-	petroleumFuelTruck = (J_EAPetroleumFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
+	petroleumFuelTruck = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK && ((GridConnection)p.getOwner()).v_isActive && gcList.contains((GridConnection)p.getOwner()));
 }
 if (petroleumFuelTruck!=null) {
-	GridConnection gc = (GridConnection)petroleumFuelTruck.getParentAgent();
+	GridConnection gc = (GridConnection)petroleumFuelTruck.getOwner();
 	
-	J_ActivityTrackerTrips tripTracker = petroleumFuelTruck.tripTracker;
+	J_ActivityTrackerTrips tripTracker = petroleumFuelTruck.getTripTracker();
 	boolean available = true;
 	available = petroleumFuelTruck.getAvailability();
 	zero_Interface.c_orderedVehicles.remove(petroleumFuelTruck);
@@ -475,7 +475,7 @@ if (petroleumFuelTruck!=null) {
 	// Re-add hydrogen vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgHydrogenConsumptionTruck_kWhpkm;			
 	double vehicleScaling = 1.0;
-	J_EAHydrogenVehicle hydrogenVehicle = new J_EAHydrogenVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.HYDROGEN_TRUCK, tripTracker, available);				
+	J_EAFuelVehicle hydrogenVehicle = new J_EAFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, vehicleScaling, OL_EnergyAssetType.HYDROGEN_TRUCK, tripTracker, OL_EnergyCarriers.HYDROGEN, available);				
 	
 	zero_Interface.c_orderedVehicles.add(0, hydrogenVehicle);
 	
@@ -500,7 +500,7 @@ boolean foundAdditionalVehicle = false;
 // find the electric truck to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
 	if(gc instanceof GCUtility && gc.v_isActive){
-		electricTruck = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK);
+		electricTruck = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.getEAType() == OL_EnergyAssetType.ELECTRIC_TRUCK);
 		if ( electricTruck != null ) {
 			foundAdditionalVehicle = true;
 			break;
@@ -510,12 +510,12 @@ for (GridConnection gc : gcList ) {
 
 // if no additional vehicle was found, search through the regular ordering of vehicles
 if (!foundAdditionalVehicle) {
-	electricTruck = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
+	electricTruck = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == OL_EnergyAssetType.ELECTRIC_TRUCK && ((GridConnection)p.getOwner()).v_isActive && gcList.contains((GridConnection)p.getOwner()));
 }
 if ( electricTruck != null ) {
-	GridConnection gc = (GridConnection)electricTruck.getParentAgent();
+	GridConnection gc = (GridConnection)electricTruck.getOwner();
 	
-	J_ActivityTrackerTrips tripTracker = electricTruck.tripTracker;
+	J_ActivityTrackerTrips tripTracker = electricTruck.getTripTracker();
 	boolean available = true;
 	available = electricTruck.getAvailability();
 	zero_Interface.c_orderedVehicles.remove(electricTruck);
@@ -524,7 +524,7 @@ if ( electricTruck != null ) {
 	// Re-add petroleumFuel vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionTruck_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, tripTracker, available);
+	J_EAFuelVehicle petroleumFuelVehicle = new J_EAFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, tripTracker, OL_EnergyCarriers.PETROLEUM_FUEL, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, petroleumFuelVehicle);
 	
@@ -543,13 +543,13 @@ return true;
 
 boolean f_hydrogenToPetroleumFuelTruck(List<GridConnection> gcList)
 {/*ALCODESTART::1746008458987*/
-J_EAHydrogenVehicle hydrogenTruck = null;
+J_EAFuelVehicle hydrogenTruck = null;
 boolean foundAdditionalVehicle = false;
 
 // find the hydrogen truck to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
 	if(gc instanceof GCUtility && gc.v_isActive){
-		hydrogenTruck = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK);
+		hydrogenTruck = (J_EAFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.getEAType() == OL_EnergyAssetType.HYDROGEN_TRUCK);
 		if ( hydrogenTruck != null ) {
 			foundAdditionalVehicle = true;
 			break;
@@ -559,12 +559,12 @@ for (GridConnection gc : gcList ) {
 
 // if no additional vehicle was found, search through the regular ordering of vehicles
 if (!foundAdditionalVehicle) {
-	hydrogenTruck = (J_EAHydrogenVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
+	hydrogenTruck = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == OL_EnergyAssetType.HYDROGEN_TRUCK && ((GridConnection)p.getOwner()).v_isActive && gcList.contains((GridConnection)p.getOwner()));
 }
 if ( hydrogenTruck != null ) {
-	GridConnection gc = (GridConnection)hydrogenTruck.getParentAgent();
+	GridConnection gc = (GridConnection)hydrogenTruck.getOwner();
 	
-	J_ActivityTrackerTrips tripTracker = hydrogenTruck.tripTracker;
+	J_ActivityTrackerTrips tripTracker = hydrogenTruck.getTripTracker();
 	boolean available = true;
 	available = hydrogenTruck.getAvailability();
 	zero_Interface.c_orderedVehicles.remove(hydrogenTruck);
@@ -573,7 +573,7 @@ if ( hydrogenTruck != null ) {
 	// Re-add petroleumFuel vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionTruck_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, tripTracker, available);
+	J_EAFuelVehicle petroleumFuelVehicle = new J_EAFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, tripTracker, OL_EnergyCarriers.PETROLEUM_FUEL, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, petroleumFuelVehicle);
 	
@@ -592,18 +592,22 @@ return true;
 
 double f_setTruckSlidersToCurrentEngineState(List<GridConnection> gcList,ShapeSlider sliderElectricTrucks,ShapeSlider sliderHydrogenTrucks,ShapeSlider sliderFossilFuelTrucks)
 {/*ALCODESTART::1746018501114*/
-List<J_EAVehicle> vehicles = new ArrayList<J_EAVehicle>();
+List<J_EAEV> electricVehicles = new ArrayList<>();
+List<J_EAFuelVehicle> petroleumVehicles = new ArrayList<>();
+List<J_EAFuelVehicle> hydrogenVehicles = new ArrayList<>();
 for (GridConnection gc : gcList) {
 	if (gc.v_isActive) {
-		vehicles.addAll(gc.c_vehicleAssets);
+		electricVehicles.addAll(gc.c_electricVehicles);
+		petroleumVehicles.addAll(gc.c_petroleumFuelVehicles);
+		hydrogenVehicles.addAll(gc.c_hydrogenVehicles);
 	}
 }
 
 int numberOfGhostVehicle_Trucks = f_calculateNumberOfGhostVehicles(gcList).getRight();
 
-int nbElectricTrucksCurrent = count(vehicles, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK && !(p.getParentAgent() instanceof GCPublicCharger)) + numberOfGhostVehicle_Trucks;
-int nbPetroleumFueltrucksCurrent = count(vehicles, p->p.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK);
-int nbHydrogentrucksCurrent = count(vehicles, p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK);
+int nbElectricTrucksCurrent = count(electricVehicles, p->p.getEAType() == OL_EnergyAssetType.ELECTRIC_TRUCK && !(p.getOwner() instanceof GCPublicCharger)) + numberOfGhostVehicle_Trucks;
+int nbPetroleumFueltrucksCurrent = count(petroleumVehicles, p->p.getEAType() == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK);
+int nbHydrogentrucksCurrent = count(hydrogenVehicles, p->p.getEAType() == OL_EnergyAssetType.HYDROGEN_TRUCK);
 
 int totalVehicles = nbElectricTrucksCurrent + nbPetroleumFueltrucksCurrent + nbHydrogentrucksCurrent;
 
@@ -639,9 +643,9 @@ int nbEtruckCurrent = numberOfGhostVehicle_Trucks;
 int nbHydrogenTrucksCurrent = 0;
 int nbPetroleumFuelTrucksCurrent = 0;
 for ( GridConnection gc : gcList ) {
-	nbEtruckCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK && !(gc instanceof GCPublicCharger) && gc.v_isActive);
-	nbHydrogenTrucksCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK && gc.v_isActive);
-	nbPetroleumFuelTrucksCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK && gc.v_isActive);
+	nbEtruckCurrent += count(gc.c_electricVehicles, p->p.getEAType() == OL_EnergyAssetType.ELECTRIC_TRUCK && !(gc instanceof GCPublicCharger) && gc.v_isActive);
+	nbHydrogenTrucksCurrent += count(gc.c_hydrogenVehicles, p->p.getEAType() == OL_EnergyAssetType.HYDROGEN_TRUCK && gc.v_isActive);
+	nbPetroleumFuelTrucksCurrent += count(gc.c_petroleumFuelVehicles, p->p.getEAType() == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK && gc.v_isActive);
 }
 
 return Triple.of(nbEtruckCurrent, nbHydrogenTrucksCurrent, nbPetroleumFuelTrucksCurrent);
@@ -649,13 +653,13 @@ return Triple.of(nbEtruckCurrent, nbHydrogenTrucksCurrent, nbPetroleumFuelTrucks
 
 boolean f_petroleumFuelToElectricVan(List<GridConnection> gcList)
 {/*ALCODESTART::1749645625091*/
-J_EAPetroleumFuelVehicle petroleumFuelVan = null;
+J_EAFuelVehicle petroleumFuelVan = null;
 boolean foundAdditionalVehicle = false;
 
 // find the petroleumFuel van to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
 	if(gc instanceof GCUtility && gc.v_isActive){
-		petroleumFuelVan = (J_EAPetroleumFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN);
+		petroleumFuelVan = (J_EAFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.getEAType() == OL_EnergyAssetType.PETROLEUM_FUEL_VAN);
 		if ( petroleumFuelVan != null ) {
 			foundAdditionalVehicle = true;
 			break;
@@ -665,12 +669,12 @@ for (GridConnection gc : gcList ) {
 
 // if no additional vehicle was found, search through the regular ordering of vehicles
 if (!foundAdditionalVehicle) {	
-	petroleumFuelVan = (J_EAPetroleumFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
+	petroleumFuelVan = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == OL_EnergyAssetType.PETROLEUM_FUEL_VAN && ((GridConnection)p.getOwner()).v_isActive && gcList.contains((GridConnection)p.getOwner()));
 }
 if (petroleumFuelVan!=null) {
-	GridConnection gc = (GridConnection)petroleumFuelVan.getParentAgent();
+	GridConnection gc = (GridConnection)petroleumFuelVan.getOwner();
 		
-	J_ActivityTrackerTrips tripTracker = petroleumFuelVan.tripTracker;
+	J_ActivityTrackerTrips tripTracker = petroleumFuelVan.getTripTracker();
 	boolean available = petroleumFuelVan.getAvailability();
 	zero_Interface.c_orderedVehicles.remove(petroleumFuelVan);
 	petroleumFuelVan.removeEnergyAsset();
@@ -681,7 +685,7 @@ if (petroleumFuelVan!=null) {
 	double initialStateOfCharge_fr = 1.0;
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionVan_kWhpkm;
 	double vehicleScalingElectric = 1.0;
-	J_EAEV electricVan = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeStep_h, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_VAN, tripTracker, available);  
+	J_EAEV electricVan = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeParameters, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_VAN, tripTracker, available);  
 	
 	zero_Interface.c_orderedVehicles.add(0, electricVan);
 	
@@ -707,7 +711,7 @@ boolean foundAdditionalVehicle = false;
 // find the electric van to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
 	if(gc instanceof GCUtility && gc.v_isActive){
-		electricVan = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN);
+		electricVan = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.getEAType() == OL_EnergyAssetType.ELECTRIC_VAN);
 		if ( electricVan != null ) {
 			foundAdditionalVehicle = true;
 			break;
@@ -717,12 +721,12 @@ for (GridConnection gc : gcList ) {
 
 // if no additional vehicle was found, search through the regular ordering of vehicles
 if (!foundAdditionalVehicle) {
-	electricVan = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
+	electricVan = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == OL_EnergyAssetType.ELECTRIC_VAN && ((GridConnection)p.getOwner()).v_isActive && gcList.contains((GridConnection)p.getOwner()));
 }
 if ( electricVan != null ) {
-	GridConnection gc = (GridConnection)electricVan.getParentAgent();
+	GridConnection gc = (GridConnection)electricVan.getOwner();
 	
-	J_ActivityTrackerTrips tripTracker = electricVan.tripTracker;
+	J_ActivityTrackerTrips tripTracker = electricVan.getTripTracker();
 	boolean available = true;
 	available = electricVan.getAvailability();
 	zero_Interface.c_orderedVehicles.remove(electricVan);
@@ -731,7 +735,7 @@ if ( electricVan != null ) {
 	// Re-add petroleumFuel vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionVan_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_VAN, tripTracker, available);
+	J_EAFuelVehicle petroleumFuelVehicle = new J_EAFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_VAN, tripTracker, OL_EnergyCarriers.PETROLEUM_FUEL, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, petroleumFuelVehicle);
 	
@@ -750,13 +754,13 @@ return true;
 
 boolean f_petroleumFuelToElectricCar(List<GridConnection> gcList)
 {/*ALCODESTART::1749646233660*/
-J_EAPetroleumFuelVehicle petroleumFuelCar = null;
+J_EAFuelVehicle petroleumFuelCar = null;
 boolean foundAdditionalVehicle = false;
 
 // find the petroleumFuel car to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
 	if(gc instanceof GCUtility && gc.v_isActive){
-		petroleumFuelCar = (J_EAPetroleumFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE);
+		petroleumFuelCar = (J_EAFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.getEAType() == OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE);
 		if ( petroleumFuelCar != null ) {
 			foundAdditionalVehicle = true;
 			break;
@@ -766,12 +770,12 @@ for (GridConnection gc : gcList ) {
 
 // if no additional vehicle was found, search through the regular ordering of vehicles
 if (!foundAdditionalVehicle) {	
-	petroleumFuelCar = (J_EAPetroleumFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
+	petroleumFuelCar = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE && ((GridConnection)p.getOwner()).v_isActive && gcList.contains((GridConnection)p.getOwner()));
 }
 if (petroleumFuelCar!=null) {
-	GridConnection gc = (GridConnection)petroleumFuelCar.getParentAgent();
+	GridConnection gc = (GridConnection)petroleumFuelCar.getOwner();
 		
-	J_ActivityTrackerTrips tripTracker = petroleumFuelCar.tripTracker;
+	J_ActivityTrackerTrips tripTracker = petroleumFuelCar.getTripTracker();
 	boolean available = petroleumFuelCar.getAvailability();
 	zero_Interface.c_orderedVehicles.remove(petroleumFuelCar);
 	petroleumFuelCar.removeEnergyAsset();
@@ -782,7 +786,7 @@ if (petroleumFuelCar!=null) {
 	double initialStateOfCharge_fr = 1.0;
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionCar_kWhpkm;
 	double vehicleScalingElectric = 1.0;
-	J_EAEV electricCar = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeStep_h, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_VEHICLE, tripTracker, available);  
+	J_EAEV electricCar = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeParameters, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_VEHICLE, tripTracker, available);  
 	
 	zero_Interface.c_orderedVehicles.add(0, electricCar);
 	
@@ -808,7 +812,7 @@ boolean foundAdditionalVehicle = false;
 // find the electric car to remove, search through additional vehicles first
 for (GridConnection gc : gcList ) {
 	if(gc instanceof GCUtility && gc.v_isActive){
-		electricCar = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE);
+		electricCar = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(gc.p_uid), p -> p.getEAType() == OL_EnergyAssetType.ELECTRIC_VEHICLE);
 		if ( electricCar != null ) {
 			foundAdditionalVehicle = true;
 			break;
@@ -818,12 +822,12 @@ for (GridConnection gc : gcList ) {
 
 // if no additional vehicle was found, search through the regular ordering of vehicles
 if (!foundAdditionalVehicle) {
-	electricCar = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && ((GridConnection)p.getParentAgent()).v_isActive && gcList.contains((GridConnection)p.getParentAgent()));
+	electricCar = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == OL_EnergyAssetType.ELECTRIC_VEHICLE && ((GridConnection)p.getOwner()).v_isActive && gcList.contains((GridConnection)p.getOwner()));
 }
 if ( electricCar != null ) {
-	GridConnection gc = (GridConnection)electricCar.getParentAgent();
+	GridConnection gc = (GridConnection)electricCar.getOwner();
 	
-	J_ActivityTrackerTrips tripTracker = electricCar.tripTracker;
+	J_ActivityTrackerTrips tripTracker = electricCar.getTripTracker();
 	boolean available = true;
 	available = electricCar.getAvailability();
 	zero_Interface.c_orderedVehicles.remove(electricCar);
@@ -832,7 +836,7 @@ if ( electricCar != null ) {
 	// Re-add petroleumFuel vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgGasolineConsumptionCar_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EAPetroleumFuelVehicle petroleumFuelVehicle = new J_EAPetroleumFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, tripTracker, available);
+	J_EAFuelVehicle petroleumFuelVehicle = new J_EAFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, tripTracker, OL_EnergyCarriers.PETROLEUM_FUEL, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, petroleumFuelVehicle);
 	
@@ -859,9 +863,9 @@ int nbEVansCurrent = numberOfGhostVehicle_Vans;
 int nbHydrogenVansCurrent = 0;
 int nbPetroleumFuelVansCurrent = 0;
 for ( GridConnection gc : gcList ) {
-	nbEVansCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN && !(gc instanceof GCPublicCharger) && gc.v_isActive);
-	nbHydrogenVansCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN && gc.v_isActive);
-	nbPetroleumFuelVansCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN && gc.v_isActive);
+	nbEVansCurrent += count(gc.c_electricVehicles, p->p.getEAType() == OL_EnergyAssetType.ELECTRIC_VAN && !(gc instanceof GCPublicCharger) && gc.v_isActive);
+	nbHydrogenVansCurrent += count(gc.c_hydrogenVehicles, p->p.getEAType() == OL_EnergyAssetType.HYDROGEN_VAN && gc.v_isActive);
+	nbPetroleumFuelVansCurrent += count(gc.c_petroleumFuelVehicles, p->p.getEAType() == OL_EnergyAssetType.PETROLEUM_FUEL_VAN && gc.v_isActive);
 }
 
 return Triple.of(nbEVansCurrent, nbHydrogenVansCurrent, nbPetroleumFuelVansCurrent);
@@ -877,9 +881,9 @@ int nbEVsCurrent = numberOfGhostVehicle_Cars;
 int nbHydrogenCarsCurrent = 0;
 int nbPetroleumFuelCarsCurrent = 0;
 for ( GridConnection gc : gcList ) {
-	nbEVsCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && !(gc instanceof GCPublicCharger) && gc.v_isActive);
-	nbHydrogenCarsCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_VEHICLE && gc.v_isActive);
-	nbPetroleumFuelCarsCurrent += count(gc.c_vehicleAssets, p->p.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE && gc.v_isActive);
+	nbEVsCurrent += count(gc.c_electricVehicles, p->p.getEAType() == OL_EnergyAssetType.ELECTRIC_VEHICLE && !(gc instanceof GCPublicCharger) && gc.v_isActive);
+	nbHydrogenCarsCurrent += count(gc.c_hydrogenVehicles, p->p.getEAType() == OL_EnergyAssetType.HYDROGEN_VEHICLE && gc.v_isActive);
+	nbPetroleumFuelCarsCurrent += count(gc.c_petroleumFuelVehicles, p->p.getEAType() == OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE && gc.v_isActive);
 }
 
 return Triple.of(nbEVsCurrent, nbHydrogenCarsCurrent, nbPetroleumFuelCarsCurrent);
@@ -1089,18 +1093,22 @@ zero_Interface.f_resetSettings();
 
 double f_setVanSlidersToCurrentEngineState(List<GridConnection> gcList,ShapeSlider sliderElectricVans,ShapeSlider sliderHydrogenVans,ShapeSlider sliderFossilFuelVans)
 {/*ALCODESTART::1749717909708*/
-List<J_EAVehicle> vehicles = new ArrayList<J_EAVehicle>();
+List<J_EAEV> electricVehicles = new ArrayList<>();
+List<J_EAFuelVehicle> petroleumVehicles = new ArrayList<>();
+List<J_EAFuelVehicle> hydrogenVehicles = new ArrayList<>();
 for (GridConnection gc : gcList) {
 	if (gc.v_isActive) {
-		vehicles.addAll(gc.c_vehicleAssets);
+		electricVehicles.addAll(gc.c_electricVehicles);
+		petroleumVehicles.addAll(gc.c_petroleumFuelVehicles);
+		hydrogenVehicles.addAll(gc.c_hydrogenVehicles);
 	}
 }
 
 int numberOfGhostVehicle_Vans = f_calculateNumberOfGhostVehicles(gcList).getRight();
 
-int nbElectricVansCurrent = count(vehicles, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN && !(p.getParentAgent() instanceof GCPublicCharger)) + numberOfGhostVehicle_Vans;
-int nbPetroleumFuelvansCurrent = count(vehicles, p->p.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN);
-int nbHydrogenvansCurrent = count(vehicles, p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN);
+int nbElectricVansCurrent = count(electricVehicles, p->p.getEAType() == OL_EnergyAssetType.ELECTRIC_VAN && !(p.getOwner() instanceof GCPublicCharger)) + numberOfGhostVehicle_Vans;
+int nbPetroleumFuelvansCurrent = count(petroleumVehicles, p->p.getEAType() == OL_EnergyAssetType.PETROLEUM_FUEL_VAN);
+int nbHydrogenvansCurrent = count(hydrogenVehicles, p->p.getEAType() == OL_EnergyAssetType.HYDROGEN_VAN);
 
 int totalVehicles = nbElectricVansCurrent + nbPetroleumFuelvansCurrent + nbHydrogenvansCurrent;
 
@@ -1129,18 +1137,22 @@ zero_Interface.f_resetSettings();
 
 double f_setCarSlidersToCurrentEngineState(List<GridConnection> gcList,ShapeSlider sliderElectricCars,ShapeSlider sliderHydrogenCars,ShapeSlider sliderFossilFuelCars)
 {/*ALCODESTART::1749717987139*/
-List<J_EAVehicle> vehicles = new ArrayList<J_EAVehicle>();
+List<J_EAEV> electricVehicles = new ArrayList<>();
+List<J_EAFuelVehicle> petroleumVehicles = new ArrayList<>();
+List<J_EAFuelVehicle> hydrogenVehicles = new ArrayList<>();
 for (GridConnection gc : gcList) {
 	if (gc.v_isActive) {
-		vehicles.addAll(gc.c_vehicleAssets);
+		electricVehicles.addAll(gc.c_electricVehicles);
+		petroleumVehicles.addAll(gc.c_petroleumFuelVehicles);
+		hydrogenVehicles.addAll(gc.c_hydrogenVehicles);
 	}
 }
 
 int numberOfGhostVehicle_Cars = f_calculateNumberOfGhostVehicles(gcList).getRight();
 
-int nbElectricCarsCurrent = count(vehicles, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && !(p.getParentAgent() instanceof GCPublicCharger)) + numberOfGhostVehicle_Cars;
-int nbPetroleumFuelcarsCurrent = count(vehicles, p->p.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE);
-int nbHydrogencarsCurrent = count(vehicles, p->p.energyAssetType == OL_EnergyAssetType.HYDROGEN_VEHICLE);
+int nbElectricCarsCurrent = count(electricVehicles, p->p.getEAType() == OL_EnergyAssetType.ELECTRIC_VEHICLE && !(p.getOwner() instanceof GCPublicCharger)) + numberOfGhostVehicle_Cars;
+int nbPetroleumFuelcarsCurrent = count(petroleumVehicles, p->p.getEAType() == OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE);
+int nbHydrogencarsCurrent = count(hydrogenVehicles, p->p.getEAType() == OL_EnergyAssetType.HYDROGEN_VEHICLE);
 
 int totalVehicles = nbElectricCarsCurrent + nbPetroleumFuelcarsCurrent + nbHydrogencarsCurrent;
 
@@ -1234,45 +1246,43 @@ int HydrogenTrucks = 0;
 //Count the amount of vehicles for each type
 for (GridConnection gc : allConsumerGridConnections) {
 	if(gc.v_isActive){
-		for (J_EAVehicle vehicle : gc.c_vehicleAssets) {
-			if (vehicle instanceof J_EAPetroleumFuelVehicle){
-			 	switch(vehicle.getEAType()){
-			 		case PETROLEUM_FUEL_VEHICLE:
-						PetroleumFuelCars += 1;
-					break;
-					case PETROLEUM_FUEL_VAN:
-						PetroleumFuelVans += 1;
-					break;
-					case PETROLEUM_FUEL_TRUCK:
-						PetroleumFuelTrucks += 1;
-					break;
-				}
+		for (J_EAFuelVehicle vehicle : gc.c_petroleumFuelVehicles) {
+			switch(vehicle.getEAType()){
+		 		case PETROLEUM_FUEL_VEHICLE:
+					PetroleumFuelCars += 1;
+				break;
+				case PETROLEUM_FUEL_VAN:
+					PetroleumFuelVans += 1;
+				break;
+				case PETROLEUM_FUEL_TRUCK:
+					PetroleumFuelTrucks += 1;
+				break;
 			}
-			else if (vehicle instanceof J_EAEV){
-			 	switch(vehicle.getEAType()){
-			 		case ELECTRIC_VEHICLE:
-						ElectricCars += 1;
-					break;
-					case ELECTRIC_VAN:
-						ElectricVans += 1;
-					break;
-					case ELECTRIC_TRUCK:
-						ElectricTrucks += 1;
-					break;
-				}
+		}
+		for (J_EAEV vehicle : gc.c_electricVehicles) {
+		 	switch(vehicle.getEAType()){
+		 		case ELECTRIC_VEHICLE:
+					ElectricCars += 1;
+				break;
+				case ELECTRIC_VAN:
+					ElectricVans += 1;
+				break;
+				case ELECTRIC_TRUCK:
+					ElectricTrucks += 1;
+				break;
 			}
-			else if (vehicle instanceof J_EAHydrogenVehicle){
-			 	switch(vehicle.getEAType()){
-			 		case HYDROGEN_VEHICLE:
-						HydrogenCars += 1;
-					break;
-					case HYDROGEN_VAN:
-						HydrogenVans += 1;
-					break;
-					case HYDROGEN_TRUCK:
-						HydrogenTrucks += 1;
-					break;
-				}
+		}
+		for (J_EAFuelVehicle vehicle : gc.c_hydrogenVehicles) {
+			switch(vehicle.getEAType()){
+		 		case HYDROGEN_VEHICLE:
+					HydrogenCars += 1;
+				break;
+				case HYDROGEN_VAN:
+					HydrogenVans += 1;
+				break;
+				case HYDROGEN_TRUCK:
+					HydrogenTrucks += 1;
+				break;
 			}
 		}
 	}
@@ -1363,7 +1373,7 @@ cb_activateV2GPrivateParkedCars.setSelected(false, false);
 gr_settingsV2G_privateParkedCars.setVisible(false);
 
 List<GCHouse> houseGridConnectionsWithPrivateParking = findAll(uI_Tabs.f_getActiveSliderGridConnections_houses(), house -> house.p_eigenOprit);
-List<J_EAVehicle> privateParkedCars = new ArrayList<J_EAVehicle>();
+List<I_Vehicle> privateParkedCars = new ArrayList<>();
 houseGridConnectionsWithPrivateParking.forEach(gc -> privateParkedCars.addAll(gc.c_vehicleAssets));
 
 if (privateParkedCars.size() > 0) {
@@ -1507,13 +1517,13 @@ int nbChargersGoal = roundToInt(publicChargers_pct / 100 * totalNbChargers) ;
 while ( currentNbChargers > nbChargersGoal ) {
 	GCPublicCharger gc = findFirst(zero_Interface.c_orderedPublicChargers, x -> x.v_isActive);
 	if (gc != null) {
-		gc.f_setActive(false);
+		gc.f_setActive(false, zero_Interface.energyModel.p_timeVariables);
 		zero_Interface.c_orderedPublicChargers.remove(gc);
 		zero_Interface.c_orderedPublicChargers.add(0, gc);
 		currentNbChargers--;
 		
-		for (J_EAPetroleumFuelVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc.p_uid)) {
-			car.reRegisterEnergyAsset();
+		for (J_EAFuelVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc.p_uid)) {
+			car.reRegisterEnergyAsset(zero_Interface.energyModel.p_timeParameters);
 		}
 	}
 	else {
@@ -1523,12 +1533,12 @@ while ( currentNbChargers > nbChargersGoal ) {
 while ( currentNbChargers < nbChargersGoal){
 	GCPublicCharger gc = findFirst(zero_Interface.c_orderedPublicChargers, x -> !x.v_isActive);
 	if (gc != null) {
-		gc.f_setActive(true);
+		gc.f_setActive(true, zero_Interface.energyModel.p_timeVariables);
 		zero_Interface.c_orderedPublicChargers.remove(gc);
 		zero_Interface.c_orderedPublicChargers.add(0, gc);
 		currentNbChargers++;
 		
-		for (J_EAPetroleumFuelVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc.p_uid)) {
+		for (J_EAFuelVehicle car : zero_Interface.c_mappingOfVehiclesPerCharger.get(gc.p_uid)) {
 			J_ActivityTrackerTrips tripTracker = car.getTripTracker(); //Needed, as triptracker is removed when removeEnergyAsset is called.
 			car.removeEnergyAsset();
 			car.setTripTracker(tripTracker);//Re-set the triptracker again, for storing.
@@ -1631,7 +1641,7 @@ zero_Interface.f_resetSettings();
 double f_setVehiclesPrivateParking(List<GCHouse> gcListHouses,double privateParkingEV_pct,ShapeSlider V2GCapableVehicleSlider)
 {/*ALCODESTART::1758183975234*/
 //Voor nu zo opgelost, echter gaat dit niet goed werken met de volgorde. BEDENK EEN BETER MANIER!?
-List<J_EAVehicle> gcListOrderedVehiclesPrivateParking = findAll( zero_Interface.c_orderedVehiclesPrivateParking, h -> gcListHouses.contains(h.getParentAgent()));
+List<I_Vehicle> gcListOrderedVehiclesPrivateParking = findAll( zero_Interface.c_orderedVehiclesPrivateParking, h -> gcListHouses.contains(((J_EA)h).getOwner()));
 
 int nbOfPrivateParkedEV = (int)sum(findAll(gcListHouses, gc -> gc.p_eigenOprit), x -> x.c_electricVehicles.size());
 int desiredNbOfPrivateParkedEV = roundToInt(privateParkingEV_pct / 100 * gcListOrderedVehiclesPrivateParking.size());
@@ -1641,35 +1651,35 @@ int desiredNbOfPrivateParkedEV = roundToInt(privateParkingEV_pct / 100 * gcListO
 double ratioEVToPetroleumFuelConsumption = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionCar_kWhpkm / zero_Interface.energyModel.avgc_data.p_avgGasolineConsumptionCar_kWhpkm;
 
 while ( nbOfPrivateParkedEV > desiredNbOfPrivateParkedEV){
-	J_EAVehicle j_ea = findFirst( gcListOrderedVehiclesPrivateParking, h -> h instanceof J_EAEV);
+	J_EAEV j_ea = (J_EAEV) findFirst( gcListOrderedVehiclesPrivateParking, h -> h instanceof J_EAEV);
 	if (j_ea.getVehicleScaling_fr() != 1) {
 		throw new RuntimeException("f_setVehiclesPrivateParking does not work with vehicles that have a vehicleScaling other than 1");
 	}
-	J_ActivityTrackerTrips triptracker = j_ea.tripTracker;
+	J_ActivityTrackerTrips triptracker = j_ea.getTripTracker();
 	boolean availability = j_ea.getAvailability();
 	double energyConsumption_kWhpkm = j_ea.getEnergyConsumption_kWhpkm() / ratioEVToPetroleumFuelConsumption; 
 	j_ea.removeEnergyAsset();
 	gcListOrderedVehiclesPrivateParking.remove(j_ea);
 	zero_Interface.c_orderedVehiclesPrivateParking.remove(j_ea);
-	J_EAPetroleumFuelVehicle petroleumFuelCar = new J_EAPetroleumFuelVehicle(j_ea.getParentAgent(), energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeStep_h, 1, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, triptracker, availability);
+	J_EAFuelVehicle petroleumFuelCar = new J_EAFuelVehicle(j_ea.getOwner(), energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, 1, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, triptracker, OL_EnergyCarriers.PETROLEUM_FUEL, availability);
 	gcListOrderedVehiclesPrivateParking.add(petroleumFuelCar);
 	zero_Interface.c_orderedVehiclesPrivateParking.add(petroleumFuelCar);
 	nbOfPrivateParkedEV --;
 }
 while ( nbOfPrivateParkedEV < desiredNbOfPrivateParkedEV){
-	J_EAVehicle j_ea = findFirst( gcListOrderedVehiclesPrivateParking, h -> h instanceof J_EAPetroleumFuelVehicle);
-	if (j_ea.getVehicleScaling_fr() != 1) {
+	J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle) findFirst( gcListOrderedVehiclesPrivateParking, h -> h.getEAType() == OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE);
+	if (petroleumFuelVehicle.getVehicleScaling_fr() != 1) {
 		throw new RuntimeException("f_setVehiclesPrivateParking does not work with vehicles that have a vehicleScaling other than 1");
 	}
-	J_ActivityTrackerTrips triptracker = j_ea.tripTracker;
-	boolean availability = j_ea.getAvailability();
-	double energyConsumption_kWhpkm = j_ea.getEnergyConsumption_kWhpkm() * ratioEVToPetroleumFuelConsumption;
-	j_ea.removeEnergyAsset();
-	gcListOrderedVehiclesPrivateParking.remove(j_ea);
-	zero_Interface.c_orderedVehiclesPrivateParking.remove(j_ea);
+	J_ActivityTrackerTrips triptracker = petroleumFuelVehicle.getTripTracker();
+	boolean availability = petroleumFuelVehicle.getAvailability();
+	double energyConsumption_kWhpkm = petroleumFuelVehicle.getEnergyConsumption_kWhpkm() * ratioEVToPetroleumFuelConsumption;
+	petroleumFuelVehicle.removeEnergyAsset();
+	gcListOrderedVehiclesPrivateParking.remove(petroleumFuelVehicle);
+	zero_Interface.c_orderedVehiclesPrivateParking.remove(petroleumFuelVehicle);
 	double capacityElectricity_kW = randomTrue(0.6) ? randomTrue(0.4) ? 3.2 : 5.6 : 11.0;
 	double storageCapacity_kWh = uniform_discr(65,90);
-	J_EAEV ev = new J_EAEV(j_ea.getParentAgent(), capacityElectricity_kW, storageCapacity_kWh, 1, zero_Interface.energyModel.p_timeStep_h, energyConsumption_kWhpkm, 1, OL_EnergyAssetType.ELECTRIC_VEHICLE, triptracker, availability);	
+	J_EAEV ev = new J_EAEV(petroleumFuelVehicle.getOwner(), capacityElectricity_kW, storageCapacity_kWh, 1, zero_Interface.energyModel.p_timeParameters, energyConsumption_kWhpkm, 1, OL_EnergyAssetType.ELECTRIC_VEHICLE, triptracker, availability);	
 	gcListOrderedVehiclesPrivateParking.add(ev);
 	zero_Interface.c_orderedVehiclesPrivateParking.add(ev);
 	nbOfPrivateParkedEV++;
@@ -1693,7 +1703,7 @@ double f_setV2GEVCapabilities(List<GCHouse> gcListHouses,double goal_pct)
 //Voor nu zo werkend gemaakt met gclist als input, echter gaat dit niet goed werken mochten er minder gcs tussen zitten dan in de zero_interface ordered collectie staat en gaat de volgorde veranderen. 
 // -> BEDENK EEN BETER MANIER!? --> Bestaat er uberhaupt een manier voor? 
 
-List<J_EAVehicle> gcListOrderedVehiclesPrivateParking_all = findAll( zero_Interface.c_orderedVehiclesPrivateParking, vehicle -> gcListHouses.contains(vehicle.getParentAgent()) && vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE);
+List<I_Vehicle> gcListOrderedVehiclesPrivateParking_all = findAll( zero_Interface.c_orderedVehiclesPrivateParking, vehicle -> gcListHouses.contains(((J_EA)vehicle).getOwner()) && vehicle instanceof J_EAEV && ((J_EAEV)vehicle).getEAType() == OL_EnergyAssetType.ELECTRIC_VEHICLE);
 
 List<J_EAEV> gcListOrderedVehiclesPrivateParking = gcListOrderedVehiclesPrivateParking_all.stream().map(v -> (J_EAEV) v).collect(Collectors.toList());
 
@@ -1702,7 +1712,7 @@ int currentNbEVsV2GCapable = count(gcListOrderedVehiclesPrivateParking, x -> x.g
 int nbEVsV2GCapableGoal = roundToInt(goal_pct / 100.0 * totalNbEVs);
 
 while (currentNbEVsV2GCapable < nbEVsV2GCapableGoal) {
-	J_EAEV j_ea = findFirst(gcListOrderedVehiclesPrivateParking, x -> x.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && !x.getV2GCapable());
+	J_EAEV j_ea = findFirst(gcListOrderedVehiclesPrivateParking, x -> x.getEAType() == OL_EnergyAssetType.ELECTRIC_VEHICLE && !x.getV2GCapable());
 	j_ea.setV2GCapable(true);
 	currentNbEVsV2GCapable++;
 	gcListOrderedVehiclesPrivateParking.remove(j_ea);
@@ -1710,7 +1720,7 @@ while (currentNbEVsV2GCapable < nbEVsV2GCapableGoal) {
 	
 }
 while (currentNbEVsV2GCapable > nbEVsV2GCapableGoal) {
-	J_EAEV j_ea = findFirst(gcListOrderedVehiclesPrivateParking, x -> x.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && x.getV2GCapable());
+	J_EAEV j_ea = findFirst(gcListOrderedVehiclesPrivateParking, x -> x.getEAType() == OL_EnergyAssetType.ELECTRIC_VEHICLE && x.getV2GCapable());
 	j_ea.setV2GCapable(false);
 	currentNbEVsV2GCapable--;
 	gcListOrderedVehiclesPrivateParking.remove(j_ea);
@@ -1728,7 +1738,7 @@ zero_Interface.f_resetSettings();
 double f_activateV2G(List<GridConnection> gcList,boolean activateV2G)
 {/*ALCODESTART::1758276936913*/
 for(GridConnection GC : gcList){
-	GC.f_activateV2GChargingMode(activateV2G);
+	GC.f_activateV2GChargingMode(activateV2G, zero_Interface.energyModel.p_timeParameters);
 }
 
 //Update variable to change to custom scenario

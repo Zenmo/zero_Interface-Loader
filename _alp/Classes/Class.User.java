@@ -2,6 +2,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+/**
+ * User
+ */	
+
 @Data
 @Builder(toBuilder = true)
 @Accessors(fluent = true)

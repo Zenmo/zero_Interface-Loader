@@ -495,7 +495,7 @@
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>J_EAPetroleumFuelVehicle</ReturnType>
+		<ReturnType>J_EAFuelVehicle</ReturnType>
 		<Id>1726584205829</Id>
 		<Name><![CDATA[f_addPetroleumFuelVehicle]]></Name>
 		<X>1320</X>
@@ -627,30 +627,6 @@
 		<Parameter>
 			<Name><![CDATA[annualTravelDistance_km]]></Name>
 			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1726584205845</Id>
-		<Name><![CDATA[f_addChargingDemandProfile]]></Name>
-		<X>1320</X>
-		<Y>600</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[GC]]></Name>
-			<Type><![CDATA[GCPublicCharger]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[profileName]]></Name>
-			<Type><![CDATA[String]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -1266,6 +1242,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[values]]></Name>
 			<Type><![CDATA[double[]]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[profileUnitType]]></Name>
+			<Type><![CDATA[OL_ProfileUnits]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -2382,7 +2362,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1755866291695</Id>
 		<Name><![CDATA[f_addCarsToHouses]]></Name>
 		<X>880</X>
-		<Y>310</Y>
+		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2457,7 +2437,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1758714675284</Id>
-		<Name><![CDATA[f_getSimulationTimeVariables]]></Name>
+		<Name><![CDATA[f_setSimulationTimeParameters]]></Name>
 		<X>80</X>
 		<Y>110</Y>
 		<Label>
@@ -2816,6 +2796,50 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>Double</ReturnType>
+		<Id>1769700769686</Id>
+		<Name><![CDATA[f_getGNTotalPV_kWp]]></Name>
+		<X>240</X>
+		<Y>580</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[GN]]></Name>
+			<Type><![CDATA[GridNode]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1770037586816</Id>
+		<Name><![CDATA[f_addPVToHouses]]></Name>
+		<X>880</X>
+		<Y>310</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[house]]></Name>
+			<Type><![CDATA[GCHouse]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[gn]]></Name>
+			<Type><![CDATA[GridNode]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>
