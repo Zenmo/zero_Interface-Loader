@@ -748,8 +748,13 @@ if(uI_EnergyHub != null){
 double f_setColorsBasedOnGridTopology_objects(GIS_Object gis_area)
 {/*ALCODESTART::1718566260603*/
 if (gis_area.c_containedGridConnections.size() > 0) {
-	Color c = gis_area.c_containedGridConnections.get(0).p_parentNodeElectric.p_uniqueColor;
-	gis_area.f_style(c, black, 1.0, null);
+	Color color = gis_area.c_containedGridConnections.get(0).p_parentNodeElectric.p_uniqueColor;
+	for(GridConnection GC : gis_area.c_containedGridConnections){
+		if(GC.p_owner.p_detailedCompany){
+			color = GC.p_parentNodeElectric.p_uniqueColor;
+		}
+	}
+	gis_area.f_style(color, black, 1.0, null);
 }
 /*ALCODEEND*/}
 

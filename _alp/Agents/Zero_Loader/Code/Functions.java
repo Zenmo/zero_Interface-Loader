@@ -3834,8 +3834,8 @@ if ( vallumGC.getPandIds() != null && !vallumGC.getPandIds().isEmpty()) {
 			connectedBuildingData = buildingsDataSameID.get(0);
 		}
 		else{//Multiple building packages with this building id -> Find the right one based on address, if none are found: pick a package without address
-			connectedBuildingData = findFirst(buildingsDataSameID, buildingData -> buildingData.house_number() != null && buildingData.house_number() == companyGC.p_address.getHouseNumber());
-			if(connectedBuildingData == null){ //If no matching house numbers, find first object that has no house number. 
+			connectedBuildingData = findFirst(buildingsDataSameID, buildingData -> buildingData.house_number() != null && companyGC.p_address.getHouseNumber() != null && buildingData.house_number().intValue() == companyGC.p_address.getHouseNumber().intValue());
+			if(connectedBuildingData == null){ //If no matching house numbers, find first object that has no house number.
 				connectedBuildingData = findFirst(buildingsDataSameID, buildingData -> buildingData.house_number() == null);
 			}
 		}
