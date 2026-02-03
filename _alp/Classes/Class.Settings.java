@@ -1,6 +1,9 @@
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+
 
 
 /**
@@ -10,6 +13,7 @@ import lombok.experimental.Accessors;
 @Data
 @Builder(toBuilder = true)
 @Accessors(fluent = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Settings {
 		
 	//Simulation settings (Time)
