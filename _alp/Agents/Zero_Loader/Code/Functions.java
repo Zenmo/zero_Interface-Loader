@@ -1649,24 +1649,6 @@ else if (vehicle_type == OL_EnergyAssetType.HYDROGEN_VAN){
 }
 /*ALCODEEND*/}
 
-double f_addChargingDemandProfile(GCPublicCharger GC,String profileName)
-{/*ALCODESTART::1726584205845*/
-List<Double> quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + profileName + " FROM charging_profiles;");			
-double[] profile_kWhpqh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> max(0,d)).map( d -> d / 4).toArray();
-
-double dataTimeStep_h = 0.25;
-double[] a_arguments_hr = new double[profile_kWhpqh.length];
-for (int i = 0; i<profile_kWhpqh.length; i++) {
-	a_arguments_hr[i] = i*dataTimeStep_h;
-}
-String energyAssetName = "charging profile";
-
-J_ProfilePointer profilePointer = f_createEngineProfile(energyAssetName, a_arguments_hr, profile_kWhpqh, OL_ProfileUnits.KWHPQUARTERHOUR);
-
-J_EAProfile profile = new J_EAProfile(GC, OL_EnergyCarriers.ELECTRICITY, profilePointer, OL_AssetFlowCategories.evChargingPower_kW, energyModel.p_timeParameters);		
-profile.setEnergyAssetName(energyAssetName);
-/*ALCODEEND*/}
-
 String f_createChargerPolygon(double lat,double lon)
 {/*ALCODESTART::1726584205847*/
 //Create shape coords and polygon string, that matches output of QGIS: Polygon(lon,lat,lon,lat, etc.)
@@ -2201,8 +2183,11 @@ double totalProduction_kWh = Arrays.stream(yearlyElectricityProduction_kWh).sum(
 double fullLoadHours_h = totalProduction_kWh / pvPower_kW;
 double[] a_normalizedPower_fr = Arrays.stream(yearlyElectricityProduction_kWh).map(i -> 4 * i / totalProduction_kWh * fullLoadHours_h ).toArray();
 
-TableFunction tf_customPVproduction_fr = new TableFunction(a_arguments, a_normalizedPower_fr, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-J_ProfilePointer profilePointer = new J_ProfilePointer((parentGC.p_ownerID + "_PVproduction") , tf_customPVproduction_fr, OL_ProfileUnits.NORMALIZEDPOWER);
+//TableFunction tf_customPVproduction_fr = new TableFunction(a_arguments, a_normalizedPower_fr, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+//J_ProfilePointer profilePointer = new J_ProfilePointer((parentGC.p_ownerID + "_PVproduction") , tf_customPVproduction_fr, OL_ProfileUnits.NORMALIZEDPOWER);
+double dataTimeStep_h = 0.25;
+double dataStartTime_h = 0.0;
+J_ProfilePointer profilePointer = new J_ProfilePointer((parentGC.p_ownerID + "_PVproduction") , a_normalizedPower_fr, dataTimeStep_h, dataStartTime_h, OL_ProfileUnits.NORMALIZEDPOWER);
 energyModel.f_addProfile(profilePointer);
 J_EAProduction production_asset = new J_EAProduction(parentGC, OL_EnergyAssetType.PHOTOVOLTAIC, (parentGC.p_ownerID + "_rooftopPV"), OL_EnergyCarriers.ELECTRICITY, (double)pvPower_kW, energyModel.p_timeParameters, profilePointer);
 
@@ -3125,8 +3110,29 @@ else{
 
 J_ProfilePointer f_createEngineProfile(String profileID,double[] arguments,double[] values,OL_ProfileUnits profileUnitType)
 {/*ALCODESTART::1749125189323*/
-TableFunction tf_profile = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-J_ProfilePointer profilePointer = new J_ProfilePointer(profileID, tf_profile, profileUnitType);	
+double dataTimeStep_h = (arguments[arguments.length-1] - arguments[0])/(arguments.length-1);
+double dataStartTime_h = arguments[0];
+double timeStep_h = settings.timeStep_h; 
+double a_profile[];
+if (timeStep_h < dataTimeStep_h) { //Interpolate data to timeStep_h = 0.25
+	//traceln("***** profilePointer using tableFunction to interpolate hourly data into quarter-hourly data ********");
+	if ((dataTimeStep_h/timeStep_h)%1.0 != 0.0) {
+		throw new RuntimeException("dataTimeStep_h and modelTimeStep are not integer multiples! Unsupported dataformat!");
+	}
+	TableFunction tableFunction = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+	a_profile = new double[values.length*(int)(dataTimeStep_h/timeStep_h)];
+	for (int i=0; i<a_profile.length; i++) {
+		a_profile[i] = tableFunction.get(dataStartTime_h+i*timeStep_h);
+	}
+	dataTimeStep_h = timeStep_h;
+} else if (timeStep_h > dataTimeStep_h) {
+	throw new RuntimeException("dataTimeStep_h smaller than modelTimeStep! Unsupported dataformat! Need to implement downsampling to allow this");
+} else {
+	a_profile=values;
+}
+
+J_ProfilePointer profilePointer = new J_ProfilePointer(profileID, a_profile, dataTimeStep_h, dataStartTime_h, profileUnitType);	
+
 energyModel.f_addProfile(profilePointer);
 return profilePointer;
 /*ALCODEEND*/}
@@ -4019,22 +4025,24 @@ else {
 double f_createGasProfileFromGasTS(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC)
 {/*ALCODESTART::1753804393557*/
 // Gas delivery profile in m3
-double[] profile_m3ph = f_convertFloatArrayToDoubleArray(surveyGC.getNaturalGas().getHourlyDelivery_m3().getFlatDataPoints());
+//double[] profile_m3ph = f_convertFloatArrayToDoubleArray(surveyGC.getNaturalGas().getHourlyDelivery_m3().getFlatDataPoints());
+double[] profile_m3pqh = f_timeSeriesToQuarterHourlyDoubleArray(surveyGC.getNaturalGas().getHourlyDelivery_m3());
+
 // TODO: Check startdate of profile! Perhaps update vallum method to do so?
 
-traceln("Gas data array length: %s", profile_m3ph.length);
-double dataTimeStep_h = 1.0;
-double[] a_arguments_hr = new double[profile_m3ph.length];
-for (int i = 0; i<profile_m3ph.length; i++) {
+traceln("Gas data array length: %s", profile_m3pqh.length);
+double dataTimeStep_h = 0.25;
+double[] a_arguments_hr = new double[profile_m3pqh.length];
+for (int i = 0; i<profile_m3pqh.length; i++) {
 	a_arguments_hr[i] = i*dataTimeStep_h;
 }
 //Calculate yearly gas delivery
-double yearlyGasDelivery_m3pa = Arrays.stream(profile_m3ph).sum();
+double yearlyGasDelivery_m3pa = Arrays.stream(profile_m3pqh).sum();
 
 String energyAssetName = engineGC.p_ownerID + " custom gas profile";
 // We assume all delivery is consumption and convert m3 to kWh
-double[] profile_kW = ZeroMath.arrayMultiply(profile_m3ph, avgc_data.p_gas_kWhpm3);
-J_ProfilePointer profilePointer = f_createEngineProfile(energyAssetName, a_arguments_hr, profile_m3ph, OL_ProfileUnits.KW);
+double[] profile_kW = ZeroMath.arrayMultiply(profile_m3pqh, avgc_data.p_gas_kWhpm3);
+J_ProfilePointer profilePointer = f_createEngineProfile(energyAssetName, a_arguments_hr, profile_m3pqh, OL_ProfileUnits.KWHPQUARTERHOUR);
 
 // Then we create the profile asset and name it
 J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.METHANE, profilePointer, null, energyModel.p_timeParameters);
@@ -4163,18 +4171,19 @@ else {
 double f_createHeatProfileFromGasTS(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC,OL_GridConnectionHeatingType heatingType)
 {/*ALCODESTART::1753949286953*/
 // Gas profile
-double[] profile_m3ph = f_convertFloatArrayToDoubleArray(surveyGC.getNaturalGas().getHourlyDelivery_m3().getFlatDataPoints());
+//double[] profile_m3ph = f_convertFloatArrayToDoubleArray(surveyGC.getNaturalGas().getHourlyDelivery_m3().getFlatDataPoints());
+double[] profile_m3pqh = f_timeSeriesToQuarterHourlyDoubleArray(surveyGC.getNaturalGas().getHourlyDelivery_m3());
 // TODO: Check startdate of profile! Perhaps update vallum method to do so?
 //traceln("Gas data array length: %s", profile_m3ph.length);
 //double[] a_arguments_hr = ListUtil.doubleListToArray(defaultProfiles_data.arguments_hr());
 
-double dataTimeStep_h = 1.0;
-double[] a_arguments_hr = new double[profile_m3ph.length];
-for (int i = 0; i<profile_m3ph.length; i++) {
+double dataTimeStep_h = 0.25;
+double[] a_arguments_hr = new double[profile_m3pqh.length];
+for (int i = 0; i<profile_m3pqh.length; i++) {
 	a_arguments_hr[i] = i*dataTimeStep_h;
 }
 
-double yearlyGasDelivery_m3pa = Arrays.stream(profile_m3ph).sum();
+double yearlyGasDelivery_m3pa = Arrays.stream(profile_m3pqh).sum();
 
 String energyAssetName = engineGC.p_ownerID + " custom building heat profile";
 // First check what the heat conversion efficiency is from gas
@@ -4182,8 +4191,8 @@ double gasToHeatEfficiency = f_getGasToHeatEfficiency(heatingType);
 // Then check which part of the gas consumption is used for heating
 double ratioGasUsedForHeating = f_getRatioGasUsedForHeating(surveyGC);
 // Finally, multiply the gas profile with the total conversion factor to get the heat profile
-double[] profile_kW = ZeroMath.arrayMultiply(profile_m3ph, avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
-J_ProfilePointer profilePointer = f_createEngineProfile(energyAssetName, a_arguments_hr, profile_kW, OL_ProfileUnits.KW);
+double[] profile_kWhpqh = ZeroMath.arrayMultiply(profile_m3pqh, avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
+J_ProfilePointer profilePointer = f_createEngineProfile(energyAssetName, a_arguments_hr, profile_kWhpqh, OL_ProfileUnits.KWHPQUARTERHOUR);
 
 // Then we create the profile asset and name it
 J_EAProfile j_ea = new J_EAProfile(engineGC, OL_EnergyCarriers.HEAT, profilePointer, null , energyModel.p_timeParameters);
@@ -4193,7 +4202,7 @@ if(engineGC.p_owner.p_detailedCompany){
 	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3pa);
 }
 
-return max(profile_m3ph);
+return max(profile_m3pqh)/dataTimeStep_h;
 /*ALCODEEND*/}
 
 double f_reconstructAgent(Agent agent,AgentArrayList pop,EnergyModel energyModel)
@@ -4272,7 +4281,9 @@ double f_createHeatProfileFromHeatTS(GridConnection engineGC,com.zenmo.zummon.co
 String energyAssetName = engineGC.p_ownerID + " custom heat profile";
 // Heat profile
 
-double[] profile_kWhpqh = f_convertFloatArrayToDoubleArray(surveyGC.getHeat().getHeatDeliveryTimeSeries_kWh().getFlatDataPoints());
+//double[] profile_kWhpqh = f_convertFloatArrayToDoubleArray(surveyGC.getHeat().getHeatDeliveryTimeSeries_kWh().getFlatDataPoints());
+double[] profile_kWhpqh = f_timeSeriesToQuarterHourlyDoubleArray(surveyGC.getHeat().getHeatDeliveryTimeSeries_kWh());
+
 double[] a_arguments_hr;
 double dataTimeStep_h;
 if ( profile_kWhpqh.length > 10000) { // if longer than 10_000 values, conclude it's quarter-hourly data, not hourly

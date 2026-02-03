@@ -386,7 +386,7 @@ while ( nbHousesWithElectricCooking > nbHousesWithElectricCookingGoal ) { // rem
 	GCHouse house = randomWhere(gcListHouses, x -> x.p_cookingMethod == OL_HouseholdCookingMethod.ELECTRIC);		
 	J_EAConsumption cookingAsset = findFirst(house.c_consumptionAssets, p -> p.getEAType() == OL_EnergyAssetType.ELECTRIC_HOB );
 	if (cookingAsset != null) {
-		double yearlyCookingDemand_kWh = cookingAsset.getYearlyDemand_kWh();
+		double yearlyCookingDemand_kWh = cookingAsset.getBaseConsumption_kWh();
 		cookingAsset.removeEnergyAsset();
    		
    		J_ProfilePointer pp = zero_Interface.energyModel.f_findProfile("default_house_hot_water_demand_fr");
@@ -407,7 +407,7 @@ while ( nbHousesWithElectricCooking < nbHousesWithElectricCookingGoal) {
 	else {
 		J_EAConsumption cookingAsset = findFirst(house.c_consumptionAssets, p -> p.getEAType() == OL_EnergyAssetType.GAS_PIT );
 		if (cookingAsset != null) {
-			double yearlyCookingDemand_kWh = cookingAsset.getYearlyDemand_kWh();
+			double yearlyCookingDemand_kWh = cookingAsset.getBaseConsumption_kWh();
 			cookingAsset.removeEnergyAsset();
 	
 			new J_EAConsumption(house, OL_EnergyAssetType.ELECTRIC_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, zero_Interface.energyModel.p_timeParameters, null);
@@ -467,8 +467,8 @@ for(GridConnection GC : allConsumerGridConnections){
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
 		}
 		for(J_EAConsumption consumptionEA : consumptionEAs){
-			totalBaseConsumption_kWh += consumptionEA.getYearlyDemand_kWh();
-			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.getYearlyDemand_kWh();
+			totalBaseConsumption_kWh += consumptionEA.getBaseConsumption_kWh();
+			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.getBaseConsumption_kWh();
 		}
 	}
 }
@@ -576,8 +576,8 @@ for(GCHouse GC : houseGridConnections){
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
 		}
 		for(J_EAConsumption consumptionEA : consumptionEAs){
-			totalBaseConsumption_kWh += consumptionEA.getYearlyDemand_kWh();
-			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.getYearlyDemand_kWh();
+			totalBaseConsumption_kWh += consumptionEA.getBaseConsumption_kWh();
+			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.getBaseConsumption_kWh();
 		}
 	}
 }
@@ -621,8 +621,8 @@ for(GridConnection GC : utilityGridConnections){
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
 		}
 		for(J_EAConsumption consumptionEA : consumptionEAs){
-			totalBaseConsumption_kWh += consumptionEA.getYearlyDemand_kWh();
-			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.getYearlyDemand_kWh();
+			totalBaseConsumption_kWh += consumptionEA.getBaseConsumption_kWh();
+			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.getBaseConsumption_kWh();
 		}
 	}
 }
