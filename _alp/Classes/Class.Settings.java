@@ -1,29 +1,22 @@
-import lombok.Builder;
-import lombok.Data;
-import lombok.experimental.Accessors;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
-
-
 
 /**
  * Settings
  */	
 
-@Data
-@Builder(toBuilder = true)
-@Accessors(fluent = true)
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@lombok.Builder
+@lombok.Value
+@lombok.experimental.Accessors(fluent = true)
+//@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Settings {
 		
 	//Simulation settings (Time)
-	@Builder.Default
+	@lombok.Builder.Default
 	double timeStep_h = 0.25; //Length of the simulation timestep in Hr	
-	@Builder.Default
+	@lombok.Builder.Default
 	int summerWeekNumber = 18; //Week number of the year where data will be stored for to display a 'default' summerweek
-	@Builder.Default
+	@lombok.Builder.Default
 	int winterWeekNumber = 49; //Week number of the year where data will be stored for to display a 'default' winterweek
-	@Builder.Default
+	@lombok.Builder.Default
 	double simDuration_h = 8760; // (Rapid sim (and Live sim before loop) duration in hours since the start time h.
 	
 	
