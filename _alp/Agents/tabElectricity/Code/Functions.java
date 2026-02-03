@@ -514,7 +514,7 @@ for(GridConnection productionGC : c_electricityTabEASliderGCs){
 		}
 	}
 }
-sl_largeScalePV_ha_Businesspark.setRange(0, 1000); // Needed to prevent anylogic range bug
+sl_largeScalePV_ha.setRange(0, 1000); // Needed to prevent anylogic range bug
 sl_largeScalePV_ha.setValue((totalPVOnLand_kW/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha) + p_currentPVOnLand_ha, false);
 sl_largeScaleWind_MW.setRange(0, 1000); // Needed to prevent anylogic range bug
 sl_largeScaleWind_MW.setValue((totalWind_kW/1000) + p_currentWindTurbines_MW, false);
@@ -585,6 +585,32 @@ for(GCHouse GC : houseGridConnections){
 
 double electricityDemandIncrease_pct = totalBaseConsumption_kWh > 0 ? ( (- totalSavedConsumption_kWh)/totalBaseConsumption_kWh * 100) : 0;
 sl_electricityDemandIncreaseResidentialArea_pct.setValue(roundToInt(electricityDemandIncrease_pct), false);
+
+
+//Large scale EA production systems (PV on land And Wind)
+f_getCurrentPVOnLandAndWindturbineValues(); // Used for slider minimum: non adjustable GCProductions
+
+double totalPVOnLand_kW = 0; // Of movable slider GC
+double totalWind_kW = 0; // Of movable slider GC
+
+for(GridConnection productionGC : c_electricityTabEASliderGCs){
+	if(productionGC instanceof GCEnergyProduction && productionGC.v_isActive){
+		for(J_EAProduction productionEA : productionGC.c_productionAssets){
+			if(productionEA.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC){
+				totalPVOnLand_kW += productionEA.getCapacityElectric_kW();
+				break;
+			}
+			else if(productionEA.getEAType() == OL_EnergyAssetType.WINDMILL){
+				totalWind_kW += productionEA.getCapacityElectric_kW();
+				break;
+			}
+		}
+	}
+}
+sl_largeScalePV_ha_Residential.setRange(0, 1000); // Needed to prevent anylogic range bug
+sl_largeScalePV_ha_Residential.setValue((totalPVOnLand_kW/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha) + p_currentPVOnLand_ha, false);
+sl_largeScaleWind_MW_Residential.setRange(0, 1000); // Needed to prevent anylogic range bug
+sl_largeScaleWind_MW_Residential.setValue((totalWind_kW/1000) + p_currentWindTurbines_MW, false);
 
 
 //Gridbatteries
