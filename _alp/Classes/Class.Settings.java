@@ -6,7 +6,6 @@
 @lombok.Builder
 @lombok.Value
 @lombok.experimental.Accessors(fluent = true)
-//@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Settings {
 		
 	//Simulation settings (Time)
@@ -26,7 +25,7 @@ public class Settings {
 										//--> Put on 'false' to prevent electric assets from being made on top of real 
 										//electricity total or profile, to prevent wrong energy totals.
 	boolean runHeadlessAtStartup;// Runs year simulation on starting of the model
-	@Builder.Default
+	@lombok.Builder.Default
 	OL_GridNodeProfileLoaderType gridNodeProfileLoaderType = OL_GridNodeProfileLoaderType.NET_LOAD;
 	
 	
