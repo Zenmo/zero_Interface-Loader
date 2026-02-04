@@ -30,6 +30,7 @@ public class Building_data {
 	OL_GridConnectionEnergyLabel energy_label;
 	Boolean has_private_parking;
 	String gridnode_id;
+	String heatgridnode_id;
 	Double latitude;
 	Double longitude;
 	String polygon;

@@ -2242,7 +2242,7 @@
               StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[30]]></Code>
+				<Code><![CDATA[40]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2308,7 +2308,7 @@
               StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[10]]></Code>
+				<Code><![CDATA[20]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>

@@ -218,60 +218,82 @@ if(rb_mapOverlay != null){
 else{
 	selectedMapOverlayType = OL_MapOverlayTypes.DEFAULT;
 }
+
+
+if(GN.p_energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 //Set the correct map overlay
-switch(selectedMapOverlayType){
-	case DEFAULT:
-	case ELECTRICITY_CONSUMPTION:
-	case PV_PRODUCTION:
-		if(!b_updateLiveCongestionColors){
+	switch(selectedMapOverlayType){
+		case DEFAULT:
+		case ELECTRICITY_CONSUMPTION:
+		case PV_PRODUCTION:
+			if(!b_updateLiveCongestionColors){
+				switch( GN.p_nodeType ) {
+					case LVLV:
+						f_styleLVLV(GN.gisRegion);
+						break;
+					case MVLV:
+						f_styleMVLV(GN.gisRegion);
+						break;
+					case SUBMV:
+						f_styleSUBMV(GN.gisRegion);
+						break;
+					case MVMV:
+						f_styleMVMV(GN.gisRegion);
+						break;
+					case HVMV:
+						f_styleHVMV(GN.gisRegion);
+						break;
+					default:
+				}
+			} else{
+				f_setColorsBasedOnCongestion_gridnodes(GN, true);
+			}
+			break;
+		case GRID_NEIGHBOURS:
+			f_setColorsBasedOnGridTopology_gridnodes(GN);
+			break;
+		case CONGESTION:
+			f_setColorsBasedOnCongestion_gridnodes(GN, false);
+			break;
+		case PARKING_TYPE:
+			f_setColorsBasedOnParkingType_gridnodes(GN);
+			break;
+		case CUSTOM:
+			f_setColorsBasedOnCustom_gridnodes(GN);
+			break;
+	}
+} else if(GN.p_energyCarrier == OL_EnergyCarriers.HEAT) {
+	switch(selectedMapOverlayType){
+		case DEFAULT:
+		case ELECTRICITY_CONSUMPTION:
+		case PV_PRODUCTION:
 			switch( GN.p_nodeType ) {
-				case LVLV:
-					f_styleLVLV(GN.gisRegion);
-					break;
-				case MVLV:
-					f_styleMVLV(GN.gisRegion);
-					break;
-				case SUBMV:
-					f_styleSUBMV(GN.gisRegion);
-					break;
-				case MVMV:
-					f_styleMVMV(GN.gisRegion);
-					break;
-				case HVMV:
-					f_styleHVMV(GN.gisRegion);
-					break;
 				case HT:
-					//f_styleHT(GN.gisRegion);
+					f_styleHT(GN.gisRegion);
 					break;
 				case MT:
-					//f_styleMT(GN.gisRegion);
+					f_styleMT(GN.gisRegion);
 					break;
 				case LT:
-					//f_styleLT(GN.gisRegion);
+					f_styleLT(GN.gisRegion);
 					break;
 				case LT5thgen:
-					//f_styleLT(GN.gisRegion);
+					f_styleLT(GN.gisRegion);
 					break;
 				default:
 			}
-		}
-		else{
-			f_setColorsBasedOnCongestion_gridnodes(GN, true);
-		}
-		break;
-	case GRID_NEIGHBOURS:
-		f_setColorsBasedOnGridTopology_gridnodes(GN);
-		break;
-	case CONGESTION:
-		f_setColorsBasedOnCongestion_gridnodes(GN, false);
-		break;
-	case PARKING_TYPE:
-		f_setColorsBasedOnParkingType_gridnodes(GN);
-		break;
-	case CUSTOM:
-		f_setColorsBasedOnCustom_gridnodes(GN);
-		break;
+			break;
+		case GRID_NEIGHBOURS:
+			break;
+		case CONGESTION:
+			break;
+		case PARKING_TYPE:
+			break;
+		case CUSTOM:
+			break;
+	}
 }
+
 /*ALCODEEND*/}
 
 double f_styleMVLV(GISRegion gisregion)

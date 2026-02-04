@@ -703,16 +703,24 @@ switch( GN.p_nodeType ) {
 		scaling_factor_gridnode = scaling_factor_HVMV;	
 		break;
 		case HT:
-		nb_GISCoords = 6;	
+		nb_GISCoords = 24;
+		node_shape = "CIRCLE";
+		scaling_factor_gridnode = scaling_factor_HT;	
 		break;
 		case MT:
-		nb_GISCoords = 6;	
+		nb_GISCoords = 24;
+		node_shape = "CIRCLE";
+		scaling_factor_gridnode = scaling_factor_MT;	
 		break;
 		case LT:
-		nb_GISCoords = 6;	
+		nb_GISCoords = 24;
+		node_shape = "CIRCLE";
+		scaling_factor_gridnode = scaling_factor_LT;	
 		break;
 		case LT5thgen:
-		nb_GISCoords = 6;	
+		nb_GISCoords = 24;
+		node_shape = "CIRCLE";
+		scaling_factor_gridnode = scaling_factor_LT5thgen;
 		break;
 		default:
 		nb_GISCoords = 6;
@@ -747,7 +755,7 @@ switch(node_shape){
 		GISCoords[5]=GN.p_longitude + scaling_factor_gridnode*0.00001*2;
 		GISCoords[7]=GN.p_longitude + scaling_factor_gridnode*0.00001;
 		break;
-	/*
+	
 	case "CIRCLE":
 			// if you want Circle coordinates -->
 		//x = r * cos(t) + a
@@ -755,8 +763,21 @@ switch(node_shape){
 		//t is an angle between 0 and 2π (more steps is more circle points, about 10-12 should suffice. --> adjust nb_GISCoords accordingly
 		// r is the radius: 0.000009 degrees in latitude is about 1 meter 
 		// a and b are latitude and longitude
+		double rLat = scaling_factor_gridnode * 0.000001;
+		double rLon = rLat / Math.cos(Math.toRadians(GN.p_latitude));  // degrees longitude corrected
+		int nPoints = GISCoords.length / 2;
+		
+		for (int i = 0; i < nPoints; i++) {
+
+	        double angle = 2 * Math.PI * i / nPoints;
+	        double lat = GN.p_latitude  + rLat * Math.sin(angle);
+	        double lon = GN.p_longitude + rLon * Math.cos(angle);
+	
+	        GISCoords[2*i] = lat;
+	        GISCoords[2*i+1] = lon;
+	    }
+		
 		break;
-	*/
 }
 
 return GISCoords;
@@ -3644,6 +3665,7 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	
 	//Connect GC to grid node
 	GCH.p_parentNodeElectricID = houseBuildingData.gridnode_id();
+	GCH.p_parentNodeHeatID = houseBuildingData.heatgridnode_id();
 		
 	//Set parameters for the Actor: ConnectionOwner
 	COH.p_actorID = GCH.p_ownerID;
