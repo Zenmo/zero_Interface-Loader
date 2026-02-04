@@ -1861,7 +1861,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1750165528617</Id>
-		<Name><![CDATA[v_numberOfSurveyCompanies]]></Name>
+		<Name><![CDATA[v_numberOfSurveyCompanyGC]]></Name>
 		<X>1390</X>
 		<Y>1520</Y>
 		<Label>

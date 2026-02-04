@@ -9,6 +9,7 @@ public class CustomProfile_data {
 	String customProfileID;
 	List<Double> argumentsList;
 	List<Double> valuesList;
+	OL_ProfileUnits profileUnits;
 	
 	public double[] getArgumentsArray() {
 		return ListUtil.doubleListToArray(argumentsList);

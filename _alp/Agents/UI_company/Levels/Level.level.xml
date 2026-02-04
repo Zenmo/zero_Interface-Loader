@@ -640,9 +640,8 @@ for (J_EA j_ea : p_gridConnection.c_energyAssets){
 		if (j_ea.getEAType() == OL_EnergyAssetType.HEAT_DEMAND) {
 			((J_EAConsumption)j_ea).setConsumptionScaling_fr(consumptionScaling_fr);
 		}
-	}
-	if (j_ea instanceof J_EAProfile) {
-		if (((J_EAProfile) j_ea).energyCarrier== OL_EnergyCarriers.HEAT) {
+	} else if (j_ea instanceof J_EAProfile &amp;&amp; !(j_ea instanceof J_EAProduction)) {
+		if (((J_EAProfile) j_ea).getEnergyCarrier()== OL_EnergyCarriers.HEAT) {
 			((J_EAProfile) j_ea).setProfileScaling_fr( consumptionScaling_fr );
 		}
 	}
@@ -818,9 +817,8 @@ for (J_EA j_ea : p_gridConnection.c_energyAssets) {
 		if (j_ea.getEAType() == OL_EnergyAssetType.ELECTRICITY_DEMAND) {
 			((J_EAConsumption)j_ea).setConsumptionScaling_fr(consumptionScaling_fr);
 		}
-	}
-	if (j_ea instanceof J_EAProfile) {
-		if (((J_EAProfile) j_ea).energyCarrier  == OL_EnergyCarriers.ELECTRICITY) {
+	} else if (j_ea instanceof J_EAProfile &amp;&amp; !(j_ea instanceof J_EAProduction)) {
+		if (((J_EAProfile) j_ea).getEnergyCarrier() == OL_EnergyCarriers.ELECTRICITY) {
 			((J_EAProfile) j_ea).setProfileScaling_fr( consumptionScaling_fr );
 		}
 	}

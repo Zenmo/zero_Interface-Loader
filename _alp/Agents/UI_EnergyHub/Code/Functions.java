@@ -263,10 +263,10 @@ try {
 	f_reconstructGIS_Objects(deserializedEnergyModel, saveObject.c_GISObjects);
 	
 	// Get profilePointer tableFunctions from 'original' energyModel
-	deserializedEnergyModel.c_profiles.forEach(x->{
+	/* deserializedEnergyModel.c_profiles.forEach(x->{
 		J_ProfilePointer origProfile = zero_Interface.energyModel.f_findProfile(x.name);
 		x.setTableFunction(origProfile.getTableFunction());
-	});
+	}); */
 	// get heatingTypeHashmap from 'old' energyModel.
 	deserializedEnergyModel.c_defaultHeatingStrategies = zero_Interface.energyModel.c_defaultHeatingStrategies;
 	

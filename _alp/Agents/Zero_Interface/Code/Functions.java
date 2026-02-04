@@ -723,7 +723,7 @@ for( GridConnection gc : gis_area.c_containedGridConnections){
 	else{
 		for ( J_EAConsumption consumptionAsset : gc.c_consumptionAssets){
 			if( consumptionAsset.getEAType() == OL_EnergyAssetType.ELECTRICITY_DEMAND ){
-				yearlyElectricityConsumption_kWh += consumptionAsset.yearlyDemand_kWh;
+				yearlyElectricityConsumption_kWh += consumptionAsset.getBaseConsumption_kWh();
 			}
 		}
 	}
@@ -751,8 +751,13 @@ if(uI_EnergyHub != null){
 double f_setColorsBasedOnGridTopology_objects(GIS_Object gis_area)
 {/*ALCODESTART::1718566260603*/
 if (gis_area.c_containedGridConnections.size() > 0) {
-	Color c = gis_area.c_containedGridConnections.get(0).p_parentNodeElectric.p_uniqueColor;
-	gis_area.f_style(c, black, 1.0, null);
+	Color color = gis_area.c_containedGridConnections.get(0).p_parentNodeElectric.p_uniqueColor;
+	for(GridConnection GC : gis_area.c_containedGridConnections){
+		if(GC.p_owner.p_detailedCompany){
+			color = GC.p_parentNodeElectric.p_uniqueColor;
+		}
+	}
+	gis_area.f_style(color, black, 1.0, null);
 }
 /*ALCODEEND*/}
 
@@ -2238,17 +2243,19 @@ legendOval.setVisible(true);
 
 switch(activeDefaultGISBuildingType){
 	case DETAILED_COMPANY:
-		legendText.setText("Gedetaileerd bedrijf: " + v_numberOfSurveyCompanies);
+		legendText.setText("Gedetaileerd bedrijf: " + v_numberOfSurveyCompanyGC);
 		legendOval.setFillColor(v_detailedCompanyBuildingColor);
 		legendOval.setLineColor(v_detailedCompanyBuildingLineColor);
 		break;
 	case DEFAULT_COMPANY:
-		legendText.setText("Standaard bedrijf");
+		int totalDefaulltCompanies = energyModel.UtilityConnections.size() - v_numberOfSurveyCompanyGC;
+		legendText.setText("Standaard bedrijf: " + totalDefaulltCompanies);
 		legendOval.setFillColor(v_companyBuildingColor);
 		legendOval.setLineColor(v_companyBuildingLineColor);
 		break;
 	case HOUSE:
-		legendText.setText("Huizen");
+		int totalHouses = energyModel.Houses.size();
+		legendText.setText("Huizen: " + totalHouses);
 		legendOval.setFillColor(v_houseBuildingColor);
 		legendOval.setLineColor(v_houseBuildingLineColor);
 		break;
@@ -3605,7 +3612,7 @@ if(energyModel.Houses.size() > 0){
 }
 if(energyModel.UtilityConnections.size() > 0){
 	c_cbFilterOptions.add(OL_FilterOptionsGC.COMPANIES);
-	if(v_numberOfSurveyCompanies > 0){
+	if(v_numberOfSurveyCompanyGC > 0){
 		c_cbFilterOptions.add(OL_FilterOptionsGC.DETAILED);
 	}
 }

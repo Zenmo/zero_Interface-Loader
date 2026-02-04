@@ -1267,7 +1267,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_largeScalePV_ha_Businesspark.getIntValue() + " ha"</TextCode>
+				<TextCode>sl_largeScalePV_ha_Businesspark.getValue() + " ha"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
@@ -1457,7 +1457,7 @@ f_setWindTurbines( sl_largeScaleWind_MW_Businesspark.getValue() - p_currentWindT
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_largeScaleWind_MW_Businesspark.getIntValue() + " MW"</TextCode>
+				<TextCode>sl_largeScaleWind_MW_Businesspark.getValue() + " MW"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
@@ -1817,8 +1817,8 @@ f_setGridBatteries(sl_collectiveBattery_MWh_businesspark.getValue() * 1000, gcLi
 			<Text>
 				<Id>1750063382221</Id>
 				<Name><![CDATA[t_electricityDemandIncreaseResidentialArea_pct]]></Name>
-				<X>235</X>
-				<Y>165</Y>
+				<X>250</X>
+				<Y>160</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1839,13 +1839,13 @@ f_setGridBatteries(sl_collectiveBattery_MWh_businesspark.getValue() * 1000, gcLi
 					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Text>
 				<Id>1750063382223</Id>
 				<Name><![CDATA[t_householdPVResidentialArea_pct]]></Name>
-				<X>235</X>
-				<Y>55</Y>
+				<X>250</X>
+				<Y>50</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1866,14 +1866,14 @@ f_setGridBatteries(sl_collectiveBattery_MWh_businesspark.getValue() * 1000, gcLi
 					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1750063382225</Id>
 				<Name><![CDATA[sl_householdPVResidentialArea_pct]]></Name>
 				<X>265</X>
-				<Y>50</Y>
+				<Y>45</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1908,7 +1908,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), 
 				<Id>1750063382227</Id>
 				<Name><![CDATA[t_householdPVResidentialAreaDescription]]></Name>
 				<X>20</X>
-				<Y>55</Y>
+				<Y>50</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1922,7 +1922,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), 
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Share of houses with PV]]></Text>
+				<Text><![CDATA[Aandeel huizen met PV]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -1932,7 +1932,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), 
 			</Text>
 			<Text>
 				<Id>1750063382229</Id>
-				<Name><![CDATA[t_electricitDemandSlidersResidentialAreaDescription]]></Name>
+				<Name><![CDATA[txt_electricitDemandSlidersResidentialAreaDescription]]></Name>
 				<X>20</X>
 				<Y>20</Y>
 				<Label>
@@ -1947,9 +1947,9 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), 
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Households]]></Text>
+				<Text><![CDATA[Huizen]]></Text>
 				<Font>
-					<Name><![CDATA[Calibri]]></Name>
+					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
 					<Style>1</Style>
 				</Font>
@@ -1959,7 +1959,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), 
 				<Id>1750063382237</Id>
 				<Name><![CDATA[t_householdBatteriesResidentialAreaDescription]]></Name>
 				<X>30</X>
-				<Y>85</Y>
+				<Y>80</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1973,7 +1973,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), 
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Of which with batteries]]></Text>
+				<Text><![CDATA[Welke een batterij hebben]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -1986,7 +1986,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), 
 				<Id>1750063382239</Id>
 				<Name><![CDATA[sl_householdBatteriesResidentialArea_pct]]></Name>
 				<X>265</X>
-				<Y>80</Y>
+				<Y>75</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2012,8 +2012,8 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), 
 			<Text>
 				<Id>1750063382241</Id>
 				<Name><![CDATA[t_householdBatteriesResidentialArea_pct]]></Name>
-				<X>235</X>
-				<Y>85</Y>
+				<X>250</X>
+				<Y>80</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2034,14 +2034,14 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), 
 					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1750063382243</Id>
 				<Name><![CDATA[sl_gridBatteriesResidentialArea_kWh]]></Name>
 				<X>266</X>
-				<Y>220</Y>
+				<Y>300</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2079,7 +2079,7 @@ f_setGridBatteries(sl_gridBatteriesResidentialArea_kWh.getValue(), gcListGridBat
 				<Id>1750063382245</Id>
 				<Name><![CDATA[t_gridBatteriesResidentialAreaDescription]]></Name>
 				<X>20</X>
-				<Y>226</Y>
+				<Y>306</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2093,7 +2093,7 @@ f_setGridBatteries(sl_gridBatteriesResidentialArea_kWh.getValue(), gcListGridBat
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Shared battery capacity]]></Text>
+				<Text><![CDATA[Trafo batterij capaciteit]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -2104,8 +2104,8 @@ f_setGridBatteries(sl_gridBatteriesResidentialArea_kWh.getValue(), gcListGridBat
 			<Text>
 				<Id>1750063382247</Id>
 				<Name><![CDATA[t_gridBatteriesResidentialArea_kW]]></Name>
-				<X>236</X>
-				<Y>225</Y>
+				<X>251</X>
+				<Y>305</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2119,20 +2119,20 @@ f_setGridBatteries(sl_gridBatteriesResidentialArea_kWh.getValue(), gcListGridBat
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[#]]></Text>
+				<Text><![CDATA[0 kWh]]></Text>
 				<TextCode>sl_gridBatteriesResidentialArea_kWh.getIntValue() + " kWh"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Text>
 				<Id>1750063382251</Id>
 				<Name><![CDATA[t_electricityDemandIncreaseResidentialAreaDescription]]></Name>
 				<X>20</X>
-				<Y>165</Y>
+				<Y>160</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2146,7 +2146,7 @@ f_setGridBatteries(sl_gridBatteriesResidentialArea_kWh.getValue(), gcListGridBat
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Electricity consumption growth]]></Text>
+				<Text><![CDATA[Groei in elektr. consumptie]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -2159,7 +2159,7 @@ f_setGridBatteries(sl_gridBatteriesResidentialArea_kWh.getValue(), gcListGridBat
 				<Id>1750063382253</Id>
 				<Name><![CDATA[sl_electricityDemandIncreaseResidentialArea_pct]]></Name>
 				<X>265</X>
-				<Y>160</Y>
+				<Y>155</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2187,7 +2187,7 @@ f_setGridBatteries(sl_gridBatteriesResidentialArea_kWh.getValue(), gcListGridBat
 				<Id>1750063382255</Id>
 				<Name><![CDATA[t_householdElectricCookingResidentialAreaDescription]]></Name>
 				<X>20</X>
-				<Y>125</Y>
+				<Y>120</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2201,7 +2201,7 @@ f_setGridBatteries(sl_gridBatteriesResidentialArea_kWh.getValue(), gcListGridBat
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Perc. electric cooking]]></Text>
+				<Text><![CDATA[Aandeel die elektrisch koken]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -2214,7 +2214,7 @@ f_setGridBatteries(sl_gridBatteriesResidentialArea_kWh.getValue(), gcListGridBat
 				<Id>1750063382257</Id>
 				<Name><![CDATA[sl_householdElectricCookingResidentialArea_pct]]></Name>
 				<X>265</X>
-				<Y>120</Y>
+				<Y>115</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2240,8 +2240,8 @@ f_setGridBatteries(sl_gridBatteriesResidentialArea_kWh.getValue(), gcListGridBat
 			<Text>
 				<Id>1750063382259</Id>
 				<Name><![CDATA[t_householdElectricCookingResidentialArea_pct]]></Name>
-				<X>235</X>
-				<Y>125</Y>
+				<X>250</X>
+				<Y>120</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2262,7 +2262,7 @@ f_setGridBatteries(sl_gridBatteriesResidentialArea_kWh.getValue(), gcListGridBat
 					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Control Type="Button">
 				<EmbeddedIcon>false</EmbeddedIcon>
@@ -2290,14 +2290,14 @@ gr_trafoReinforcement.setVisible(true);
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
-					<LabelText>Trafo reinforcement</LabelText>
+					<LabelText>Trafo uitbereiding</LabelText>
 				</ExtendedProperties>
 			</Control>
 			<Image>
 				<Id>1752232850349</Id>
 				<Name><![CDATA[i_householdRooftopPV]]></Name>
-				<X>190</X>
-				<Y>55</Y>
+				<X>180</X>
+				<Y>50</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2324,8 +2324,8 @@ gr_trafoReinforcement.setVisible(true);
 			<Image>
 				<Id>1752232850368</Id>
 				<Name><![CDATA[i_householdBatteries]]></Name>
-				<X>190</X>
-				<Y>85</Y>
+				<X>180</X>
+				<Y>80</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2352,8 +2352,8 @@ gr_trafoReinforcement.setVisible(true);
 			<Image>
 				<Id>1752232850385</Id>
 				<Name><![CDATA[i_householdElectricCooking]]></Name>
-				<X>190</X>
-				<Y>125</Y>
+				<X>180</X>
+				<Y>120</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2380,8 +2380,8 @@ gr_trafoReinforcement.setVisible(true);
 			<Image>
 				<Id>1752232850402</Id>
 				<Name><![CDATA[i_householdElectricityGrowth]]></Name>
-				<X>190</X>
-				<Y>165</Y>
+				<X>180</X>
+				<Y>160</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2408,8 +2408,8 @@ gr_trafoReinforcement.setVisible(true);
 			<Image>
 				<Id>1752232850473</Id>
 				<Name><![CDATA[i_householdNeighbourhoodBatteries]]></Name>
-				<X>190</X>
-				<Y>225</Y>
+				<X>160</X>
+				<Y>305</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2433,6 +2433,276 @@ gr_trafoReinforcement.setVisible(true);
 				</ImageFiles>
 				<OriginalSize>false</OriginalSize>
 			</Image>
+			<Text>
+				<Id>1770118893494</Id>
+				<Name><![CDATA[t_largeScalePV_ha_Residential]]></Name>
+				<X>250</X>
+				<Y>235</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0 ha]]></Text>
+				<TextCode>sl_largeScalePV_ha_Residential.getValue() + " ha"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1770118893505</Id>
+				<Name><![CDATA[sl_largeScalePV_ha_Residential]]></Name>
+				<X>265</X>
+				<Y>230</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>List&lt;GCEnergyProduction&gt; sliderPVFarmGCList = new ArrayList&lt;&gt;();
+for(GridConnection gc : c_electricityTabEASliderGCs){
+	if(gc instanceof GCEnergyProduction energyProductionSite){
+		for(J_EAProduction j_ea : energyProductionSite.c_productionAssets) {
+			if (j_ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC) {
+				sliderPVFarmGCList.add(energyProductionSite);
+				break;
+			}
+		}
+	}
+}
+
+if(sliderPVFarmGCList.size() == 0){
+	throw new IllegalStateException("Model does not contain any PVFarmSliderGC agent");
+}
+
+
+f_setPVOnLand(sl_largeScalePV_ha_Residential.getValue() - p_currentPVOnLand_ha, sliderPVFarmGCList);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>p_currentPVOnLand_ha</MinValue>
+					<MaxValue>p_currentPVOnLand_ha + 50</MaxValue>
+					<Step>0.1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1770118893516</Id>
+				<Name><![CDATA[txt_largeScalePVDescription_Residential]]></Name>
+				<X>20</X>
+				<Y>235</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Zon op land]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1770118893524</Id>
+				<Name><![CDATA[sl_largeScaleWind_MW_Residential]]></Name>
+				<X>265</X>
+				<Y>265</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>List&lt;GCEnergyProduction&gt; sliderWindFarmGCList = new ArrayList&lt;&gt;();
+for(GridConnection gc : c_electricityTabEASliderGCs){
+	if(gc instanceof GCEnergyProduction energyProductionSite){
+		for(J_EAProduction j_ea : energyProductionSite.c_productionAssets) {
+			if (j_ea.getEAType() == OL_EnergyAssetType.WINDMILL) {
+				sliderWindFarmGCList.add(energyProductionSite);
+				break;
+			}
+		}
+	}
+}
+
+if(sliderWindFarmGCList.size() == 0){
+	throw new IllegalStateException("Model does not contain any sliderWindFarmGC agent");
+}
+
+f_setWindTurbines( sl_largeScaleWind_MW_Residential.getValue() - p_currentWindTurbines_MW, sliderWindFarmGCList);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>p_currentWindTurbines_MW</MinValue>
+					<MaxValue>p_currentWindTurbines_MW + 10</MaxValue>
+					<Step>0.1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1770118893533</Id>
+				<Name><![CDATA[txt_largeScaleWindDescription_Residential]]></Name>
+				<X>20</X>
+				<Y>270</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Wind op land]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1770118893541</Id>
+				<Name><![CDATA[t_largeScaleWind_MW_Residential]]></Name>
+				<X>250</X>
+				<Y>270</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0 MW]]></Text>
+				<TextCode>sl_largeScaleWind_MW_Residential.getValue() + " MW"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Image>
+				<Id>1770118893549</Id>
+				<Name><![CDATA[i_landPV_Residential]]></Name>
+				<X>160</X>
+				<Y>235</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_landPV_Residential, zero_Interface.v_infoText.landPV, i_landPV_Residential.getX() + uI_Tabs.v_presentationXOffset, i_landPV_Residential.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1770118893567</Id>
+				<Name><![CDATA[i_landWind_Residential]]></Name>
+				<X>160</X>
+				<Y>270</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_landWind_Residential, zero_Interface.v_infoText.landWind, i_landWind_Residential.getX() + uI_Tabs.v_presentationXOffset, i_landWind_Residential.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1770120981382</Id>
+				<Name><![CDATA[txt_electricityTabResidential_Collective]]></Name>
+				<X>20</X>
+				<Y>205</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Collectief]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
 		</Presentation>
 	</Group>
 	<Group>
@@ -2792,7 +3062,7 @@ zero_Interface.f_setTrafoText();
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Trafostation reinforcement]]></Text>
+				<Text><![CDATA[Trafostation uitbereiding]]></Text>
 				<Font>
 					<Name><![CDATA[Calibri]]></Name>
 					<Size>14</Size>

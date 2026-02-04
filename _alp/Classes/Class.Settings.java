@@ -1,25 +1,21 @@
-import lombok.Builder;
-import lombok.Data;
-import lombok.experimental.Accessors;
-
 
 /**
  * Settings
  */	
 
-@Data
-@Builder(toBuilder = true)
-@Accessors(fluent = true)
+@lombok.Builder
+@lombok.Value
+@lombok.experimental.Accessors(fluent = true)
 public class Settings {
 		
 	//Simulation settings (Time)
-	@Builder.Default
+	@lombok.Builder.Default
 	double timeStep_h = 0.25; //Length of the simulation timestep in Hr	
-	@Builder.Default
+	@lombok.Builder.Default
 	int summerWeekNumber = 18; //Week number of the year where data will be stored for to display a 'default' summerweek
-	@Builder.Default
+	@lombok.Builder.Default
 	int winterWeekNumber = 49; //Week number of the year where data will be stored for to display a 'default' winterweek
-	@Builder.Default
+	@lombok.Builder.Default
 	double simDuration_h = 8760; // (Rapid sim (and Live sim before loop) duration in hours since the start time h.
 	
 	
@@ -29,7 +25,7 @@ public class Settings {
 										//--> Put on 'false' to prevent electric assets from being made on top of real 
 										//electricity total or profile, to prevent wrong energy totals.
 	boolean runHeadlessAtStartup;// Runs year simulation on starting of the model
-	@Builder.Default
+	@lombok.Builder.Default
 	OL_GridNodeProfileLoaderType gridNodeProfileLoaderType = OL_GridNodeProfileLoaderType.NET_LOAD;
 	
 	

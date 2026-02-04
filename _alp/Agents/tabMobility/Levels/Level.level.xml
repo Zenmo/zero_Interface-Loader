@@ -1409,7 +1409,7 @@ if(selectedChargingAttitude != null){
 				<Text><![CDATA[Actieve laadpalen in gebied]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -1462,7 +1462,7 @@ if(selectedChargingAttitude != null){
 				<Text><![CDATA[Aandeel Elektrisch]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -1588,7 +1588,7 @@ if(selectedChargingAttitude != null){
 						<Text><![CDATA[Laadpalen met V2G]]></Text>
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
-							<Size>14</Size>
+							<Size>12</Size>
 							<Style>0</Style>
 						</Font>
 						<Alignment>LEFT</Alignment>
@@ -1772,7 +1772,7 @@ if(selectedChargingAttitude != null){
 						<Text><![CDATA[Laadpalen met V1G]]></Text>
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
-							<Size>14</Size>
+							<Size>12</Size>
 							<Style>0</Style>
 						</Font>
 						<Alignment>LEFT</Alignment>
@@ -1927,7 +1927,7 @@ gr_settingsV2G_privateParkedCars.setVisible(cb_activateV2GPrivateParkedCars.isSe
 						<Text><![CDATA[Activeer V2G]]></Text>
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
-							<Size>14</Size>
+							<Size>12</Size>
 							<Style>0</Style>
 						</Font>
 						<Alignment>LEFT</Alignment>
@@ -1955,7 +1955,7 @@ gr_settingsV2G_privateParkedCars.setVisible(cb_activateV2GPrivateParkedCars.isSe
 				<Text><![CDATA[Laad strategie]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -2075,7 +2075,7 @@ else{
 				<Text><![CDATA[Laad strategie]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -2266,7 +2266,7 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected
 						<Text><![CDATA[Activeer V2G]]></Text>
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
-							<Size>14</Size>
+							<Size>12</Size>
 							<Style>0</Style>
 						</Font>
 						<Alignment>LEFT</Alignment>
@@ -2339,7 +2339,7 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected
 						<Text><![CDATA[EVs die V2G ondersteunen]]></Text>
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
-							<Size>14</Size>
+							<Size>12</Size>
 							<Style>0</Style>
 						</Font>
 						<Alignment>LEFT</Alignment>

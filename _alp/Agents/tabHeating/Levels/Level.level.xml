@@ -1669,7 +1669,7 @@
 				<Id>1722326800172</Id>
 				<Name><![CDATA[t_companiesDescription1]]></Name>
 				<X>10</X>
-				<Y>30</Y>
+				<Y>20</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2462,7 +2462,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1749738869841</Id>
 				<Name><![CDATA[t_householdHeatingTypeDescriptionResidentialArea]]></Name>
 				<X>20</X>
-				<Y>30</Y>
+				<Y>20</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2475,9 +2475,9 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Heating & Cooling]]></Text>
+				<Text><![CDATA[Verwarming en koeling]]></Text>
 				<Font>
-					<Name><![CDATA[Calibri]]></Name>
+					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
 					<Style>1</Style>
 				</Font>
@@ -2531,7 +2531,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Color>-16777216</Color>
 				<Text><![CDATA[Huizen met Airco]]></Text>
 				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
+					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
