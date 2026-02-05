@@ -3407,7 +3407,7 @@ else{
 }
 
 //Determine the solar absortion factor_m2 based on floor surface.
-solarAbsorptionFactor_m2 = floorArea_m2 * avgc_data.p_solarAbsorptionFloorSurfaceScalingFactor_fr; //solar irradiance [W/m2]
+solarAbsorptionFactor_m2 = floorArea_m2 * 4 * avgc_data.p_solarAbsorptionFloorSurfaceScalingFactor_fr; //solar irradiance [W/m2]
 
 //Determine the heat capacity of the building based on a cooldown period
 /*
@@ -3423,8 +3423,7 @@ heatCapacity_JpK = buildingCooldownPeriod_hr * lossFactor_WpK * 3600;
 */
 
 //Determine the heat capacity of the building based on the floor surface and some factors
-heatCapacity_JpK = (avgc_data.p_heatCapacitySizingSlope_JpKm2 * floorArea_m2 + avgc_data.p_heatCapacitySizingConstant_JpK) * avgc_data.p_heatCapacitySizingFactor_fr;
-
+heatCapacity_JpK = lossFactor_WpK * 3600 * 36; //  (avgc_data.p_heatCapacitySizingSlope_JpKm2 * floorArea_m2 + avgc_data.p_heatCapacitySizingConstant_JpK) * avgc_data.p_heatCapacitySizingFactor_fr;
 //Create the thermal building asset
 parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossFactor_WpK, energyModel.p_timeParameters, initialTemp_degC, heatCapacity_JpK, solarAbsorptionFactor_m2 );
 
@@ -3601,7 +3600,7 @@ for(GCHouse GCH : energyModel.Houses){
 	}
 }
 	
-
+//traceln("Total space heat demand houses input " + roundToDecimal(totalSpaceHeatDemand_kwhpa/1000000,3) + "GWh");
 /*ALCODEEND*/}
 
 double f_addEnergyAssetsToHouses(GCHouse house,Double electricityDemand_kwhpa,Double gasDemand_m3pa)
@@ -3636,6 +3635,7 @@ double nightTimeSetPoint_degC = 18;
 double dayTimeSetPoint_degC = 20;
 double startOfDayTime_h = 8;
 double startOfNightTime_h = 23;
+double windowOpenSetpoint_degC = 25;
 
 if( randomTrue(0.5) ){ //50% kans op ochtend ritme
 	nightTimeSetPoint_degC = uniform_discr(12,18);
@@ -3658,12 +3658,17 @@ else { // 25% kans op smiddags/savonds aan
 	startOfNightTime_h = uniform_discr(21,23);
 }
 
+nightTimeSetPoint_degC = 18;
+dayTimeSetPoint_degC = 20;
+startOfDayTime_h = 8;
+startOfNightTime_h = 22;
+windowOpenSetpoint_degC = 25;
+
 double maxComfortTemperature_degC = dayTimeSetPoint_degC + 2;
 double minComfortTemperature_degC = dayTimeSetPoint_degC - 2;
 
 //Create heating preferences class
-J_HeatingPreferences heatingPreferences = new J_HeatingPreferences(startOfDayTime_h, startOfNightTime_h, dayTimeSetPoint_degC, nightTimeSetPoint_degC, maxComfortTemperature_degC, minComfortTemperature_degC);
-
+J_HeatingPreferences heatingPreferences = new J_HeatingPreferences(startOfDayTime_h, startOfNightTime_h, dayTimeSetPoint_degC, nightTimeSetPoint_degC, maxComfortTemperature_degC, minComfortTemperature_degC, windowOpenSetpoint_degC);
 return heatingPreferences;
 /*ALCODEEND*/}
 
@@ -5146,6 +5151,8 @@ house.f_setHeatingPreferences(heatingPreferences);
 f_addHotWaterDemand(house, hotWaterDemand_kWhpa);
 f_addCookingAsset(house, OL_EnergyAssetType.GAS_PIT, cookingDemand_kWhpa);
 
+//For calibrating AVG data PBL loss factor 
+totalSpaceHeatDemand_kwhpa += spaceHeatingDemand_kwhpa;
 /*ALCODEEND*/}
 
 double f_estimateHouseDHWDemand_kWh(double floorSurface_m2)
