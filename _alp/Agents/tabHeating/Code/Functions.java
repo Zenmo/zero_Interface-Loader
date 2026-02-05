@@ -216,17 +216,16 @@ while ( targetHeatPumpAmount > nbHeatPumps) { // remove gasburners, add heatpump
 double f_calculatePeakHeatDemand_kW(GridConnection gc)
 {/*ALCODESTART::1749116448649*/
 double peakHeatDemand_kW = 0.0;
-/*for (J_EAConsumption j_ea : gc.c_consumptionAssets) {
+for (J_EAConsumption j_ea : gc.c_consumptionAssets) {
 	if (j_ea.getEAType() == OL_EnergyAssetType.HEAT_DEMAND || j_ea.getEAType() == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
 		double[] profile = j_ea.getProfilePointer().getAllValues();
 		double maxFactor = Arrays.stream(profile).max().getAsDouble();
-		peakHeatDemand_kW += maxFactor * j_ea.getYearlyDemand_kWh() * j_ea.getConsumptionScaling_fr();
+		peakHeatDemand_kW += j_ea.getPeakConsumptionPower_kW();
 	}
-}*/
+}
 for (J_EAProfile j_ea : gc.c_profileAssets) {
 	if (j_ea.getEnergyCarrier() == OL_EnergyCarriers.HEAT && !(j_ea instanceof J_EAProduction)) {
-		//double maxPower_kW = j_ea.getPeakPower_kW(); //j_ea.getProfileScaling_fr() * Arrays.stream(j_ea.a_energyProfile_kWh).max().getAsDouble();
-		peakHeatDemand_kW += j_ea.getPeakConsumptionPower_kW(); //maxValue / zero_Interface.energyModel.p_timeParameters.getTimeStep_h() * j_ea.getProfileScaling_fr();
+		peakHeatDemand_kW += j_ea.getPeakConsumptionPower_kW();
 	}
 }
 if (gc.p_BuildingThermalAsset != null) {
