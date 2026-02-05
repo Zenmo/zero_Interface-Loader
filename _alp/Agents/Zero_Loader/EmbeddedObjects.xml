@@ -418,6 +418,9 @@
 			<Parameter>
 				<Name><![CDATA[map_insulationLabel_cooldownPeriod_hr]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingDaysSetpoin]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">

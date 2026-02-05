@@ -137,6 +137,25 @@
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1770280954566</Id>
+		<Name><![CDATA[totalSpaceHeatDemand_kwhpa]]></Name>
+		<X>-380</X>
+		<Y>1020</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
 	<Variable Class="Parameter">
 		<Id>1726584206064</Id>
 		<Name><![CDATA[zero_Interface]]></Name>
