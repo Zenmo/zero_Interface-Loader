@@ -20,6 +20,7 @@ public class Building_data {
 	Double address_floor_surface_m2;	
 	Double polygon_area_m2;
 	String gc_id;
+	String dh_node_id;
 	String annotation;
 	String extra_info;
 	Double contracted_capacity_kw;
