@@ -25,6 +25,7 @@ public class Building_data {
 	Double contracted_capacity_kw;
 	Double electricity_consumption_kwhpa;
 	Double gas_consumption_m3pa;
+	String heating_type;
 	Double pv_installed_kwp;
 	Double pv_potential_kwp;
 	OL_GridConnectionEnergyLabel energy_label;

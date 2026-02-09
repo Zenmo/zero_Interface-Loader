@@ -3589,7 +3589,35 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.v_liveAssetsMetaData.PVPotential_kW = GCH.v_liveAssetsMetaData.initialPV_kW > 0 ? GCH.v_liveAssetsMetaData.initialPV_kW : houseBuildingData.pv_potential_kwp(); // To prevent sliders from changing outcomes
 
 	//Create and add EnergyAssets
-	f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa());	
+	OL_GridConnectionHeatingType heatingType;
+	if(houseBuildingData.heating_type() != null){
+		switch(houseBuildingData.heating_type()) {
+			case "GAS_BURNER":
+				heatingType = OL_GridConnectionHeatingType.GAS_BURNER;
+				break;
+			case "HYBRID_HEATPUMP":
+				heatingType = OL_GridConnectionHeatingType.HYBRID_HEATPUMP;
+				break;
+			case "ELECTRIC_HEATPUMP":
+				heatingType = OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP;
+				break;
+			case "GAS_CHP":
+				heatingType = OL_GridConnectionHeatingType.GAS_CHP;
+				break;
+			case "DISTRICTHEAT":
+				heatingType = OL_GridConnectionHeatingType.DISTRICTHEAT;
+				break;
+			case "CUSTOM":
+				heatingType = OL_GridConnectionHeatingType.CUSTOM;
+				break;
+			default:
+				heatingType = avgc_data.p_avgHouseHeatingMethod;
+				break;
+		}
+	} else {
+		heatingType = avgc_data.p_avgHouseHeatingMethod;
+	}
+	f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa(), heatingType);	
 	
 	i++;
 }
@@ -3604,7 +3632,7 @@ for(GCHouse GCH : energyModel.Houses){
 
 /*ALCODEEND*/}
 
-double f_addEnergyAssetsToHouses(GCHouse house,Double electricityDemand_kwhpa,Double gasDemand_m3pa)
+double f_addEnergyAssetsToHouses(GCHouse house,Double electricityDemand_kwhpa,Double gasDemand_m3pa,OL_GridConnectionHeatingType heatingType)
 {/*ALCODESTART::1749728889986*/
 //Add generic electricity demand profile 
 GridNode gn = findFirst(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals( house.p_parentNodeElectricID));
@@ -3619,7 +3647,7 @@ if ( gn.p_profileType == OL_GridNodeProfileLoaderType.NO_PROFILE ){
 
 
 //Add Heating assets: Spaceheating, DHW and cooking
-f_addHeatAssetsToHouses(house, gasDemand_m3pa);
+f_addHeatAssetsToHouses(house, gasDemand_m3pa, heatingType);
 
 
 //Add pv
@@ -5089,7 +5117,7 @@ else if(numberOfResidents > 5){
 return numberOfResidents;
 /*ALCODEEND*/}
 
-double f_addHeatAssetsToHouses(GCHouse house,Double gasDemand_m3pa)
+double f_addHeatAssetsToHouses(GCHouse house,Double gasDemand_m3pa,OL_GridConnectionHeatingType heatingType)
 {/*ALCODESTART::1768486498278*/
 //Add building heat model and asset
 double annualNaturalGasConsumption_kwhpa;
@@ -5135,7 +5163,6 @@ double maximalTemperatureDifference_K = 30.0; // Approximation
 double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000;
 
 //Add heating asset
-OL_GridConnectionHeatingType heatingType = avgc_data.p_avgHouseHeatingMethod;
 f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
 
 //Add heating management and set the heating preferences

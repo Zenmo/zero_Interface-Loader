@@ -1056,7 +1056,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1742915722586</Id>
@@ -1398,7 +1398,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1749727623536</Id>
@@ -1493,6 +1493,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[gasDemand_m3pa]]></Name>
 			<Type><![CDATA[Double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[heatingType]]></Name>
+			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -2757,6 +2761,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[gasDemand_m3pa]]></Name>
 			<Type><![CDATA[Double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[heatingType]]></Name>
+			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
