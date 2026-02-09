@@ -1082,6 +1082,9 @@ return area;
 
 double f_createSurveyCompanies_Zorm()
 {/*ALCODESTART::1726584205815*/
+//Start survey company GC counter
+v_numberOfSurveyCompanyGC = 0;
+
 //Get the survey data
 List<com.zenmo.zummon.companysurvey.Survey> surveys = f_getSurveys();
 traceln("Size of survey List: %s", surveys.size());
@@ -1109,10 +1112,6 @@ for (var survey : surveys) {
 	survey_owner.b_dataIsAccessible = f_getAccessOfSurveyGC(survey.getDataSharingAgreed(), survey.getId());
 	
 	for (var address : survey.getAddresses()) {
-		
-		//Update number of survey companies (locations)
-		v_numberOfSurveyCompanies++;
-		
         for (var gridConnection: address.getGridConnections()) {
 
 		 	//Check if it has (or will have) a direct connection with the grid (either gas or electric), if not: skip this gc.
@@ -1127,6 +1126,9 @@ for (var survey : surveys) {
 		 	//Create GC
 		 	GCUtility companyGC = energyModel.add_UtilityConnections();		  
 		 	
+		 	//Update number of survey companies (Connections)
+			v_numberOfSurveyCompanyGC++;
+		
 			//Set parameters for the Grid Connection
 			companyGC.p_ownerID = survey.getCompanyName();
 		 	companyGC.p_gridConnectionID = gridConnection.getSequence().toString() ;
@@ -1216,6 +1218,7 @@ for (var survey : surveys) {
 				if(!f_isLocatedInActiveNBH(companyGC.p_latitude, companyGC.p_longitude)){
 					companyGC.p_parentNodeElectricID = null;
 					companyGC.v_isActive = false;
+					v_numberOfSurveyCompanyGC--;
 				}
 			}
 			
@@ -1226,12 +1229,12 @@ for (var survey : surveys) {
 }
 
 //If survey companies are present, add to the ui legend
-if(v_numberOfSurveyCompanies>0){
+if(v_numberOfSurveyCompanyGC>0){
 	//Add to the legend
 	zero_Interface.c_modelActiveDefaultGISBuildings.add(OL_GISBuildingTypes.DETAILED_COMPANY);
 
 	//Pass the number of survey companies to interface for the dynamic legend
-	zero_Interface.v_numberOfSurveyCompanies = v_numberOfSurveyCompanies;
+	zero_Interface.v_numberOfSurveyCompanyGC = v_numberOfSurveyCompanyGC;
 }
 /*ALCODEEND*/}
 

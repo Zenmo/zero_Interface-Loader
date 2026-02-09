@@ -2240,17 +2240,19 @@ legendOval.setVisible(true);
 
 switch(activeDefaultGISBuildingType){
 	case DETAILED_COMPANY:
-		legendText.setText("Gedetaileerd bedrijf: " + v_numberOfSurveyCompanies);
+		legendText.setText("Gedetaileerd bedrijf: " + v_numberOfSurveyCompanyGC);
 		legendOval.setFillColor(v_detailedCompanyBuildingColor);
 		legendOval.setLineColor(v_detailedCompanyBuildingLineColor);
 		break;
 	case DEFAULT_COMPANY:
-		legendText.setText("Standaard bedrijf");
+		int totalDefaulltCompanies = energyModel.UtilityConnections.size() - v_numberOfSurveyCompanyGC;
+		legendText.setText("Standaard bedrijf: " + totalDefaulltCompanies);
 		legendOval.setFillColor(v_companyBuildingColor);
 		legendOval.setLineColor(v_companyBuildingLineColor);
 		break;
 	case HOUSE:
-		legendText.setText("Huizen");
+		int totalHouses = energyModel.Houses.size();
+		legendText.setText("Huizen: " + totalHouses);
 		legendOval.setFillColor(v_houseBuildingColor);
 		legendOval.setLineColor(v_houseBuildingLineColor);
 		break;
@@ -3607,7 +3609,7 @@ if(energyModel.Houses.size() > 0){
 }
 if(energyModel.UtilityConnections.size() > 0){
 	c_cbFilterOptions.add(OL_FilterOptionsGC.COMPANIES);
-	if(v_numberOfSurveyCompanies > 0){
+	if(v_numberOfSurveyCompanyGC > 0){
 		c_cbFilterOptions.add(OL_FilterOptionsGC.DETAILED);
 	}
 }
