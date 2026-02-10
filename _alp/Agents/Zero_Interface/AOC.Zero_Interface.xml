@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.Date;  
 import java.time.LocalDate;
 import java.time.DayOfWeek;
+import java.time.Instant;
 import java.text.SimpleDateFormat;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
@@ -33,7 +34,8 @@ import com.querydsl.core.types.dsl.TimeExpression;
 //import zero_engine.J_EAStorageElectric;
 //import zero_engine.J_EAConsumption;
 import org.apache.commons.lang3.tuple.Triple;
-import javax.media.jai.widget.ViewportListener;]]></Import>
+import javax.media.jai.widget.ViewportListener;
+]]></Import>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1658477103138</Id>
