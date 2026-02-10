@@ -200,7 +200,7 @@ if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToke
 }
 
 var repository = UserScenarioRepository.builder()
-    .userId(UUID.fromString(zero_Interface.user.userIdToken()))
+    .userIdToken(zero_Interface.user.userIdToken())
     .modelName(zero_Interface.project_data.project_name())
     .build();
 
