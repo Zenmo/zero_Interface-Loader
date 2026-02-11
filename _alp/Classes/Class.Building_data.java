@@ -25,7 +25,6 @@ public class Building_data {
 	Double contracted_capacity_kw;
 	Double electricity_consumption_kwhpa;
 	Double gas_consumption_m3pa;
-	String heating_type;
 	Double pv_installed_kwp;
 	Double pv_potential_kwp;
 	OL_GridConnectionEnergyLabel energy_label;
@@ -34,6 +33,10 @@ public class Building_data {
 	Double latitude;
 	Double longitude;
 	String polygon;
+	
+	//Heating customizability
+	OL_GridConnectionHeatingType heating_type;
+	String heat_node_id;
 	
 	//PBL data
 	boolean pbl_data_available;

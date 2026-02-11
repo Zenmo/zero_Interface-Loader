@@ -96,31 +96,31 @@ for (GridNode_data GN_data : c_gridNode_data) {
 			// Basic GN information
 			//GN.p_nodeStatus = GN_data.status();
 			GN.p_description = GN_data.description();
-			String nodeTypeString = GN_data.type();
+			//String nodeTypeString = GN_data.type();
 			
 			// Connect
 			GN.p_parentNodeID = GN_data.parent_node_id(); // Needs to be manually defined in the excel file of the nodes!
 			GN.p_ownerGridOperator = Grid_Operator;
 			
 			//Define node type
-			switch (nodeTypeString) {
-			    case "LVLV":
+			switch (GN_data.type()) {
+			    case LVLV:
 			        GN.p_nodeType = OL_GridNodeType.LVLV;
 			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 			        break;
-			    case "MVLV":
+			    case MVLV:
 			        GN.p_nodeType = OL_GridNodeType.MVLV;
 			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 			        break;
-			    case "SUBMV":
+			    case SUBMV:
 			        GN.p_nodeType = OL_GridNodeType.SUBMV;
 			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 			        break;
-			    case "MVMV":
+			    case MVMV:
 			        GN.p_nodeType = OL_GridNodeType.MVMV;
 			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 			        break;
-			    case "HVMV":
+			    case HVMV:
 			        GN.p_nodeType = OL_GridNodeType.HVMV;
 			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 			        break;
@@ -807,8 +807,6 @@ if(buildingDataGenericCompanies.size()>0){
 	zero_Interface.c_modelActiveDefaultGISBuildings.add(OL_GISBuildingTypes.DEFAULT_COMPANY);
 }
 
-OL_GridConnectionHeatingType heatingType = null;
-
 //Loop over the remaining buildings in c_CompanyBuilding_data (Survey buildings have been removed from this collection)
 for (Building_data genericCompany : buildingDataGenericCompanies) {
 	
@@ -857,37 +855,6 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		companyGC.v_liveAssetsMetaData.initialPV_kW = genericCompany.pv_installed_kwp() != null ? genericCompany.pv_installed_kwp() : 0;
 		//companyGC.v_liveAssetsMetaData.PVPotential_kW = ; // Still needs to be calculated
 	 	
-		if(genericCompany.heating_type() != null){
-			switch(genericCompany.heating_type()) {
-				case "GAS_BURNER":
-					heatingType = OL_GridConnectionHeatingType.GAS_BURNER;
-					break;
-				case "HYBRID_HEATPUMP":
-					heatingType = OL_GridConnectionHeatingType.HYBRID_HEATPUMP;
-					break;
-				case "ELECTRIC_HEATPUMP":
-					heatingType = OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP;
-					break;
-				case "GAS_CHP":
-					heatingType = OL_GridConnectionHeatingType.GAS_CHP;
-					break;
-				case "DISTRICTHEAT":
-					heatingType = OL_GridConnectionHeatingType.DISTRICTHEAT;
-					break;
-				case "CUSTOM":
-					heatingType = OL_GridConnectionHeatingType.CUSTOM;
-					break;
-				default:
-					throw new RuntimeException("Incorrect heatingType: " + genericCompany.heating_type() + " detected for '" + companyGC.p_gridConnectionID + "'.");
-			}
-		} else {
-			if(genericCompany.gas_consumption_m3pa() != null && genericCompany.gas_consumption_m3pa() > 0){
-				heatingType = avgc_data.p_avgCompanyHeatingMethod;
-			} else{
-				heatingType = OL_GridConnectionHeatingType.NONE;
-			}
-		}
-	 	
 	 	//Update remaining totals (AFTER Lat/Lon has been defined!)
 		p_remainingTotals.adjustTotalNumberOfAnonymousCompanies(companyGC, 1);
 		p_remainingTotals.adjustTotalFloorSurfaceAnonymousCompanies_m2(companyGC, genericCompany.address_floor_surface_m2());
@@ -932,7 +899,7 @@ p_remainingTotals.finalizeRemainingTotalsDistributionCompanies();
 
 //Add EA to all generic companies (Has to be after the remaining totals finalization, so cant happen at the same time as the creation of the GC and their buildings)
 for (GridConnection GCcompany : generic_company_GCs ) {
-	f_iEAGenericCompanies(GCcompany, GCcompany.v_liveAssetsMetaData.initialPV_kW, heatingType);
+	f_iEAGenericCompanies(GCcompany, GCcompany.v_liveAssetsMetaData.initialPV_kW);
 }
 /*ALCODEEND*/}
 
@@ -1494,7 +1461,7 @@ switch (storageType){
 
 /*ALCODEEND*/}
 
-double f_iEAGenericCompanies(GridConnection companyGC,Double pv_installed_kwp,OL_GridConnectionHeatingType heatingType)
+double f_iEAGenericCompanies(GridConnection companyGC,Double pv_installed_kwp)
 {/*ALCODESTART::1726584205833*/
 //Get GridNode to know if it has a GridNode profile
 OL_GridNodeProfileLoaderType gridNodeProfileLoaderType = OL_GridNodeProfileLoaderType.NO_PROFILE;
@@ -1534,7 +1501,6 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 		//Add base load profile
 		f_addElectricityDemandProfile(companyGC, yearlyElectricityDemand_kWh, null, false, "default_office_electricity_demand_fr");
 	}
-	
 	if(p_remainingTotals.getRemainingGasDeliveryCompanies_m3(companyGC) > 0){
 		//Building gas demand profile (purely heating)
 		double Remaining_gas_demand_m3_p_m2_yr = p_remainingTotals.getGasDeliveryOfAnonymousCompanies_m3pm2(companyGC);
@@ -1542,6 +1508,7 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 		double ratioGasUsedForHeating = 1;
 		
 		//Add heat demand profile
+		OL_GridConnectionHeatingType heatingType = avgc_data.p_avgCompanyHeatingMethod;
 		double maxHeatOutputPower_kW = f_createHeatProfileFromAnnualGasTotal(companyGC, heatingType, yearlyGasDemand_m3, ratioGasUsedForHeating);
 		f_addHeatAsset(companyGC, heatingType, maxHeatOutputPower_kW);
 		companyGC.f_addHeatManagement(heatingType, false);
@@ -3117,7 +3084,7 @@ Windfarm_data sliderWindfarm_data = findFirst(c_windfarm_data, wf_data -> wf_dat
 Battery_data sliderBattery_data = findFirst(c_battery_data, bat_data -> bat_data.isSliderGC());
 
 //Get top gridnode id
-GridNode_data topGridNode = findFirst(c_gridNode_data, node_data -> node_data.type().equals("HVMV"));
+GridNode_data topGridNode = findFirst(c_gridNode_data, node_data -> node_data.type().equals(OL_GridNodeType.HVMV));
 if ( topGridNode == null ) {
 	throw new RuntimeException("Unable to find top GridNode of type HVMV to create slider assets.");
 }
@@ -3620,36 +3587,7 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.v_liveAssetsMetaData.PVPotential_kW = GCH.v_liveAssetsMetaData.initialPV_kW > 0 ? GCH.v_liveAssetsMetaData.initialPV_kW : houseBuildingData.pv_potential_kwp(); // To prevent sliders from changing outcomes
 
 	//Create and add EnergyAssets
-	OL_GridConnectionHeatingType heatingType;
-	if(houseBuildingData.heating_type() != null){
-		switch(houseBuildingData.heating_type()) {
-			case "GAS_BURNER":
-				heatingType = OL_GridConnectionHeatingType.GAS_BURNER;
-				break;
-			case "HYBRID_HEATPUMP":
-				heatingType = OL_GridConnectionHeatingType.HYBRID_HEATPUMP;
-				break;
-			case "ELECTRIC_HEATPUMP":
-				heatingType = OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP;
-				break;
-			case "GAS_CHP":
-				heatingType = OL_GridConnectionHeatingType.GAS_CHP;
-				break;
-			case "DISTRICTHEAT":
-				heatingType = OL_GridConnectionHeatingType.DISTRICTHEAT;
-				break;
-			case "CUSTOM":
-				heatingType = OL_GridConnectionHeatingType.CUSTOM;
-				break;
-			default:
-				traceln("Incorrect heatingType: " + houseBuildingData.heating_type() + " detected for '" + GCH.p_ownerID + "'. Replaced by GAS_BURNER");
-				heatingType = avgc_data.p_avgHouseHeatingMethod;
-				break;
-		}
-	} else {
-		heatingType = avgc_data.p_avgHouseHeatingMethod;
-	}
-	f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa(), heatingType);	
+	f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa(), houseBuildingData.heating_type());
 	
 	i++;
 }
