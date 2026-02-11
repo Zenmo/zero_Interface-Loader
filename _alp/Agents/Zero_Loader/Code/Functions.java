@@ -1242,11 +1242,11 @@ List<com.zenmo.zummon.companysurvey.Survey> f_getSurveys()
 //Connect with API to database
 Vallum vallum = new Vallum(user.PROJECT_CLIENT_ID(), user.PROJECT_CLIENT_SECRET());
 
-
 List<com.zenmo.zummon.companysurvey.Survey> surveys = new ArrayList();
 
 
 String[] zorm_project_names;
+
 if(project_data.zorm_project_names() != null){
 	zorm_project_names = project_data.zorm_project_names();
 }
@@ -1254,7 +1254,19 @@ else{
 	zorm_project_names = new String[]{project_data.project_name()};
 }
 
+v_projectDataLastChangedDate = vallum.getProjectLastModifiedAt(zorm_project_names[0]);
+//traceln("Data last changed date: %s", v_projectDataLastChangedDate);
+if(zorm_project_names.length>1) {
+	for (int i = 1; i<zorm_project_names.length; i++) {
+		if (vallum.getProjectLastModifiedAt(zorm_project_names[i]).isAfter(v_projectDataLastChangedDate)) {
+			v_projectDataLastChangedDate = vallum.getProjectLastModifiedAt(zorm_project_names[i]);
+		}
+	//traceln("Data last changed date: %s", v_projectDataLastChangedDate);
+	}	
+}
+
 surveys = vallum.getEnabledSurveysByProjectNames(zorm_project_names);
+
 
 //Clear vallum user data
 user.clearVallumUser();
@@ -4886,7 +4898,7 @@ return usedId;
 
 /*ALCODEEND*/}
 
-boolean f_getAccessOfSurveyGC(boolean dataSharingAgreed,UUID companyUUID)
+boolean f_getAccessOfSurveyGC(boolean dataSharingAgreed,Uuid companyUUID)
 {/*ALCODESTART::1763646792610*/
 // If public model: only dataSharingAgreed matters
 if (settings.isPublicModel()) {

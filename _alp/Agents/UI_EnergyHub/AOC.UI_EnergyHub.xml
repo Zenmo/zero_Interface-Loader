@@ -6,12 +6,13 @@
 	<Import><![CDATA[import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-
+ 
 import java.io.IOException;
-
+ 
 import energy.lux.uplux.*;
 import java.util.UUID;
-import java.util.function.Predicate;]]></Import>
+import java.util.function.Predicate;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;]]></Import>
 	<StartupCode><![CDATA[zero_Interface.c_UIResultsInstances.add(uI_Results);]]></StartupCode>
 	<Generic>false</Generic>
 	<GenericParameter>

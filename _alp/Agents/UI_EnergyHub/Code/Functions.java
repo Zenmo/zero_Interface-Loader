@@ -239,6 +239,7 @@ zero_Interface.energyModel.pop_GIS_Parcels.forEach(x->{c_GISregions.put(x.p_id, 
 pauseSimulation();
 try {
 	v_objectMapper = new ObjectMapper();
+	v_objectMapper.registerModule(new JavaTimeModule());
 	f_addMixins();
 	
 	var repository = UserScenarioRepository.builder()
@@ -252,83 +253,97 @@ try {
     var jsonStream = repository.fetchUserScenarioContent(scenarioList.get(index).getId());
     
 	J_ModelSave saveObject = v_objectMapper.readValue(jsonStream, J_ModelSave.class);
-	EnergyModel deserializedEnergyModel = saveObject.energyModel;
+	
+	// Check last saved date, compare to current status of projectdata.
+	if (!saveObject.projectDataLastModifiedDate.equals(zero_Interface.zero_loader.v_projectDataLastChangedDate)) {
+		traceln("Current data last modified date: %s", zero_Interface.zero_loader.v_projectDataLastChangedDate);
+		traceln("Save-file data last modified date: %s", saveObject.projectDataLastModifiedDate);
+		getExperimentHost().showMessageDialog("Het opgeslagen scenario bevat data die niet overeenkomt met de huidige dataset in de data portal."); 
+		System.err.println("Data-last-changed-dates DON'T match!");
+	} else {
+		traceln("Current data last modified date: %s", zero_Interface.zero_loader.v_projectDataLastChangedDate);
+		traceln("Save-file data last modified date: %s", saveObject.projectDataLastModifiedDate);
+		traceln("Data-last-changed-dates match!");
 		
-	// Reconstruct all Agents
-	f_reconstructEnergyModel(deserializedEnergyModel);		
-	f_reconstructGridConnections(deserializedEnergyModel);
-	f_reconstructActors(deserializedEnergyModel);
-	f_reconstructGridNodes(deserializedEnergyModel, saveObject.c_gridNodes);
-	
-	f_reconstructGIS_Objects(deserializedEnergyModel, saveObject.c_GISObjects);
-	
-	// Get profilePointer tableFunctions from 'original' energyModel
-	/* deserializedEnergyModel.c_profiles.forEach(x->{
-		J_ProfilePointer origProfile = zero_Interface.energyModel.f_findProfile(x.name);
-		x.setTableFunction(origProfile.getTableFunction());
-	}); */
-	// get heatingTypeHashmap from 'old' energyModel.
-	deserializedEnergyModel.c_defaultHeatingStrategies = zero_Interface.energyModel.c_defaultHeatingStrategies;
-	
-	zero_Interface.zero_loader.energyModel = deserializedEnergyModel;
-	zero_Interface.energyModel = deserializedEnergyModel;
-	zero_Interface.uI_Results.energyModel = deserializedEnergyModel;
-	uI_Results.energyModel = deserializedEnergyModel;
-	
-	deserializedEnergyModel.f_startAfterDeserialisation();
-	
-	f_setEngineInputDataAfterDeserialisation(deserializedEnergyModel);
-	
-	
-	// Putting back the ordered collections in the interface
-	f_reconstructOrderedCollections(saveObject);
-	
-	
-	//Get the correct coop for the E-Hub Dashboard
-	v_energyHubCoop = findFirst(zero_Interface.energyModel.pop_energyCoops,x->x.p_actorID.equals("eHubConfiguratorCoop"));
-	if (v_energyHubCoop == null){
-		throw new RuntimeException("No energyCoop found with p_actorID = eHubConfiguratorCoop");
-	}
-	zero_Interface.v_customEnergyCoop = v_energyHubCoop;
-	
-	//Get the slider gcs of the reloaded EnergyHub
-	c_sliderEAGCs = f_getEnergyHubsliderEAGCsLoadedScenario(v_energyHubCoop);
-	
-	// Update the E-Hub Dashboard with the loaded E-Hub from savefile
-	f_initializeEnergyHubMemberNames();
-	uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null, c_sliderEAGCs);
-	gr_uI_Tabs_presentation.setVisible(false);
-	gr_uI_Tabs_presentation.setVisible(true);
-	uI_Results.f_updateResultsUI(v_energyHubCoop);
-	
-	// Update the main interface with the loaded E-Hub from savefile
-	zero_Interface.c_selectedGridConnections = new ArrayList<>(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer());
-	
-	// Update the main interface tabs with the GCs from the new engine
-	zero_Interface.uI_Tabs.f_initializeUI_Tabs(zero_Interface.energyModel.f_getGridConnectionsCollectionPointer(), zero_Interface.energyModel.f_getPausedGridConnectionsCollectionPointer(), zero_Interface.f_getMainInterfaceSliderEAGCs());
-	
-	// Reset all colors on the GIS map
-	zero_Interface.energyModel.pop_GIS_Buildings.forEach(x -> zero_Interface.f_styleAreas(x));
-	zero_Interface.energyModel.pop_GIS_Objects.forEach(x -> zero_Interface.f_styleAreas(x));
-	zero_Interface.energyModel.pop_GIS_Parcels.forEach(x -> zero_Interface.f_styleAreas(x));
-	
-	// Color all selected GC 
-	for (GridConnection gc : zero_Interface.c_selectedGridConnections) {
-		gc.c_connectedGISObjects.forEach(x -> x.gisRegion.setFillColor(zero_Interface.v_selectionColor));		
-	}
-	
-	// Zoom GIS Map to selected buildings
-	f_zoomMapToBuildings();
+		
+		EnergyModel deserializedEnergyModel = saveObject.energyModel;
 			
-	// Simulate a year
-	gr_simulateYearEnergyHub.setVisible(false);		
-	gr_loadIconYearSimulationEnergyHub.setVisible(true);
-	
-	
-	zero_Interface.f_simulateYearFromMainInterface();	
-	
-	traceln("ModelSave loaded succesfully!");
-	
+		// Reconstruct all Agents
+		f_reconstructEnergyModel(deserializedEnergyModel);		
+		f_reconstructGridConnections(deserializedEnergyModel);
+		f_reconstructActors(deserializedEnergyModel);
+		f_reconstructGridNodes(deserializedEnergyModel, saveObject.c_gridNodes);
+		
+		f_reconstructGIS_Objects(deserializedEnergyModel, saveObject.c_GISObjects);
+		
+		// Get profilePointer tableFunctions from 'original' energyModel
+		/* deserializedEnergyModel.c_profiles.forEach(x->{
+			J_ProfilePointer origProfile = zero_Interface.energyModel.f_findProfile(x.name);
+			x.setTableFunction(origProfile.getTableFunction());
+		}); */
+		// get heatingTypeHashmap from 'old' energyModel.
+		deserializedEnergyModel.c_defaultHeatingStrategies = zero_Interface.energyModel.c_defaultHeatingStrategies;
+		
+		zero_Interface.zero_loader.energyModel = deserializedEnergyModel;
+		zero_Interface.energyModel = deserializedEnergyModel;
+		zero_Interface.uI_Results.energyModel = deserializedEnergyModel;
+		uI_Results.energyModel = deserializedEnergyModel;
+		
+		deserializedEnergyModel.f_startAfterDeserialisation();
+		
+		f_setEngineInputDataAfterDeserialisation(deserializedEnergyModel);
+		
+		
+		// Putting back the ordered collections in the interface
+		f_reconstructOrderedCollections(saveObject);
+		
+		
+		//Get the correct coop for the E-Hub Dashboard
+		v_energyHubCoop = findFirst(zero_Interface.energyModel.pop_energyCoops,x->x.p_actorID.equals("eHubConfiguratorCoop"));
+		if (v_energyHubCoop == null){
+			throw new RuntimeException("No energyCoop found with p_actorID = eHubConfiguratorCoop");
+		}
+		zero_Interface.v_customEnergyCoop = v_energyHubCoop;
+		
+		//Get the slider gcs of the reloaded EnergyHub
+		c_sliderEAGCs = f_getEnergyHubsliderEAGCsLoadedScenario(v_energyHubCoop);
+		
+		// Update the E-Hub Dashboard with the loaded E-Hub from savefile
+		f_initializeEnergyHubMemberNames();
+		uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), null, c_sliderEAGCs);
+		gr_uI_Tabs_presentation.setVisible(false);
+		gr_uI_Tabs_presentation.setVisible(true);
+		uI_Results.f_updateResultsUI(v_energyHubCoop);
+		
+		// Update the main interface with the loaded E-Hub from savefile
+		zero_Interface.c_selectedGridConnections = new ArrayList<>(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer());
+		
+		// Update the main interface tabs with the GCs from the new engine
+		zero_Interface.uI_Tabs.f_initializeUI_Tabs(zero_Interface.energyModel.f_getGridConnectionsCollectionPointer(), zero_Interface.energyModel.f_getPausedGridConnectionsCollectionPointer(), zero_Interface.f_getMainInterfaceSliderEAGCs());
+		
+		// Reset all colors on the GIS map
+		zero_Interface.energyModel.pop_GIS_Buildings.forEach(x -> zero_Interface.f_styleAreas(x));
+		zero_Interface.energyModel.pop_GIS_Objects.forEach(x -> zero_Interface.f_styleAreas(x));
+		zero_Interface.energyModel.pop_GIS_Parcels.forEach(x -> zero_Interface.f_styleAreas(x));
+		
+		// Color all selected GC 
+		for (GridConnection gc : zero_Interface.c_selectedGridConnections) {
+			gc.c_connectedGISObjects.forEach(x -> x.gisRegion.setFillColor(zero_Interface.v_selectionColor));		
+		}
+		
+		// Zoom GIS Map to selected buildings
+		f_zoomMapToBuildings();
+				
+		// Simulate a year
+		gr_simulateYearEnergyHub.setVisible(false);		
+		gr_loadIconYearSimulationEnergyHub.setVisible(true);
+		
+		
+		zero_Interface.f_simulateYearFromMainInterface();	
+		
+		traceln("ModelSave loaded succesfully!");
+	}
+		
 } catch (IOException e) {
 	e.printStackTrace();
 }
@@ -345,6 +360,8 @@ if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToke
 
 traceln("Starting model serialisation...");
 J_ModelSave saveObject = new J_ModelSave();
+saveObject.projectDataLastModifiedDate = zero_Interface.zero_loader.v_projectDataLastChangedDate;
+
 saveObject.energyModel = zero_Interface.energyModel;
 
 zero_Interface.energyModel.pop_gridNodes.forEach(x->saveObject.c_gridNodes.add(x));
@@ -371,6 +388,7 @@ List<LinkedHashMap<String, List<I_Vehicle>>> c_additionalVehicleHashMaps = new A
 saveObject.c_additionalVehicleHashMaps = c_additionalVehicleHashMaps;
 
 v_objectMapper = new ObjectMapper();
+v_objectMapper.registerModule(new JavaTimeModule());
 f_addMixins();
 v_objectMapper.setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 traceln("Model serialisation has been completed.");
