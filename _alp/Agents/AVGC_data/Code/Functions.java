@@ -116,7 +116,7 @@ dataAVGC.map_insulationLabel_cooldownPeriod_hr = map_insulationLabel_cooldownPer
 dataAVGC.p_heatCapacitySizingConstant_JpK = p_heatCapacitySizingConstant_JpK;
 dataAVGC.p_heatCapacitySizingSlope_JpKm2 = p_heatCapacitySizingSlope_JpKm2;
 dataAVGC.p_heatCapacitySizingFactor_fr = p_heatCapacitySizingFactor_fr;
-
+dataAVGC.p_buildingDefaultCooldownTimescale_hr = p_buildingDefaultCooldownTimescale_hr;
 
 ////Constants
 dataAVGC.p_gas_kWhpm3 = p_gas_kWhpm3;

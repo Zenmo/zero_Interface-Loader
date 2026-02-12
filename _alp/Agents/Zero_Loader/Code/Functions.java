@@ -3384,10 +3384,10 @@ J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT
 
 double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,Double heatDemand_kwhpa,J_HeatingPreferences heatingPreferences)
 {/*ALCODESTART::1749727623536*/
-double maxPowerHeat_kW = 1000; 				//Dit is hoeveel vermogen het huis kan afgeven/opnemen, mag willekeurige waarden hebben. Wordt alleen gebruikt in rekenstap van ratio of capacity
+double maxPowerHeat_kW = 1000; 				//Dit is hoeveel vermogen het huis kan afgeven/opnemen, moet voldoende hoog zijn zodat het niet beperkend is voor warmteoverdracht tussen heatingAsset en J_EABuilding. Wordt alleen gebruikt in rekenstap van ratio of capacity
 double lossFactor_WpK; 						//Dit is wat bepaalt hoeveel warmte het huis verliest/opneemt per tijdstap per delta_T
 double initialTemp_degC = heatingPreferences.getCurrentPreferedTemperatureSetpoint_degC(0);
-double buildingCooldownPeriod_hr;
+double buildingCooldownPeriod_hr = avgc_data.p_buildingDefaultCooldownTimescale_hr;
 double heatCapacity_JpK; 					//hoeveel lucht zit er in je huis dat je moet verwarmen?
 double solarAbsorptionFactor_m2; 	//hoeveel m2 effectieve dak en muur oppervlakte er is dat opwarmt door zonneinstraling
 
@@ -3407,7 +3407,7 @@ else{
 }
 
 //Determine the solar absortion factor_m2 based on floor surface.
-solarAbsorptionFactor_m2 = floorArea_m2 * 4 * avgc_data.p_solarAbsorptionFloorSurfaceScalingFactor_fr; //solar irradiance [W/m2]
+solarAbsorptionFactor_m2 = floorArea_m2 * avgc_data.p_solarAbsorptionFloorSurfaceScalingFactor_fr; //solar irradiance [W/m2]
 
 //Determine the heat capacity of the building based on a cooldown period
 /*
@@ -3423,7 +3423,8 @@ heatCapacity_JpK = buildingCooldownPeriod_hr * lossFactor_WpK * 3600;
 */
 
 //Determine the heat capacity of the building based on the floor surface and some factors
-heatCapacity_JpK = lossFactor_WpK * 3600 * 36; //  (avgc_data.p_heatCapacitySizingSlope_JpKm2 * floorArea_m2 + avgc_data.p_heatCapacitySizingConstant_JpK) * avgc_data.p_heatCapacitySizingFactor_fr;
+double secondsPerHour = 3600;
+heatCapacity_JpK = lossFactor_WpK * secondsPerHour * buildingCooldownPeriod_hr; // Calculates heatCapacity_JpK of the building as a function of LossFactor_WpK and cooldownTimescale_h
 //Create the thermal building asset
 parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossFactor_WpK, energyModel.p_timeParameters, initialTemp_degC, heatCapacity_JpK, solarAbsorptionFactor_m2 );
 
