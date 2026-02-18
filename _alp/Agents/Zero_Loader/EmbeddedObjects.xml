@@ -25,9 +25,6 @@
 		</GenericParameterSubstitute>
 		<Parameters>
 			<Parameter>
-				<Name><![CDATA[p_forecastTime_h]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[avgc_data]]></Name>
 			</Parameter>
 			<Parameter>
@@ -65,6 +62,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_timeParameters]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_forecastTime_h]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>

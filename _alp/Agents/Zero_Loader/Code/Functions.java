@@ -1871,7 +1871,6 @@ double f_createPreprocessedElectricityProfile_PV(GridConnection parentGC,double[
 {/*ALCODESTART::1726584205861*/
 double extraConsumption_kWh = 0;
 
-
 //Initialize parameters		
 double nettDelivery_kWh;
 double[] yearlyElectricityConsumption_kWh = new double[yearlyElectricityDelivery_kWh.length];
@@ -2207,9 +2206,12 @@ double[] a_normalizedPower_fr = Arrays.stream(yearlyElectricityProduction_kWh).m
 
 //TableFunction tf_customPVproduction_fr = new TableFunction(a_arguments, a_normalizedPower_fr, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
 //J_ProfilePointer profilePointer = new J_ProfilePointer((parentGC.p_ownerID + "_PVproduction") , tf_customPVproduction_fr, OL_ProfileUnits.NORMALIZEDPOWER);
-double dataTimeStep_h = 0.25;
-double dataStartTime_h = 0.0;
-J_ProfilePointer profilePointer = new J_ProfilePointer((parentGC.p_ownerID + "_PVproduction") , a_normalizedPower_fr, dataTimeStep_h, dataStartTime_h, OL_ProfileUnits.NORMALIZEDPOWER);
+
+// 3. Create a Duration (Amount of time)
+//Duration timeStep = Duration.ofSeconds((long)this.dataTimeStep_h*3600);
+Duration dataTimeStep = Duration.ofSeconds((long)900);
+
+J_ProfilePointer profilePointer = new J_ProfilePointer((parentGC.p_ownerID + "_PVproduction") , a_normalizedPower_fr, energyModel.p_timeParameters.getStartInstant(), dataTimeStep, OL_ProfileUnits.NORMALIZEDPOWER);
 energyModel.f_addProfile(profilePointer);
 J_EAProduction production_asset = new J_EAProduction(parentGC, OL_EnergyAssetType.PHOTOVOLTAIC, (parentGC.p_ownerID + "_rooftopPV"), OL_EnergyCarriers.ELECTRICITY, (double)pvPower_kW, energyModel.p_timeParameters, profilePointer);
 
@@ -3153,7 +3155,12 @@ if (simTimeStep_h < dataTimeStep_h) { //Interpolate data to timeStep_h = 0.25
 	a_profile=values;
 }
 
-J_ProfilePointer profilePointer = new J_ProfilePointer(profileID, a_profile, dataTimeStep_h, dataStartTime_h, profileUnitType);	
+
+Duration timeStep = Duration.ofSeconds(Math.round(dataTimeStep_h * 3600));
+
+//Instant simStartInstant = 
+
+J_ProfilePointer profilePointer = new J_ProfilePointer(profileID, a_profile, energyModel.p_timeParameters.getStartInstant(), timeStep , profileUnitType);	
 
 energyModel.f_addProfile(profilePointer);
 return profilePointer;
@@ -4658,8 +4665,6 @@ double winterTimeStart_h = avgc_data.map_yearlySummerWinterTimeStartHour.get(sim
 if(simStartTime_h > summerTimeStart_h && simStartTime_h < winterTimeStart_h){
 	simStartTime_h += 1;
 }
-
-
 
 //Set sim duration if it is set
 double simDuration_h; //Sim duration in hours
