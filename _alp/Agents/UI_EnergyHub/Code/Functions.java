@@ -198,20 +198,7 @@ double f_initializeUserSavedScenarios(ShapeComboBox combo)
 if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToken() == "") {
 	return;
 }
-UserScenarioRepository repository;
-try{
-	repository = UserScenarioRepository.builder()
-    .userIdToken(zero_Interface.user.userIdToken())
-    .modelName(zero_Interface.project_data.project_name())
-    .build();
-}
-catch(Exception e) {
-	traceln("Warning: NO correct userIdToken found, trying to read it as a UUID instead!");
-	repository = UserScenarioRepository.builder()
-    .userId(UUID.fromString(zero_Interface.user.userIdToken()))
-    .modelName(zero_Interface.project_data.project_name())
-    .build();
-}
+UserScenarioRepository repository = f_getUserScenarioRepository();
 
 var scenarioList = repository.listUserScenarios();
 int nbScenarios = scenarioList.size();
@@ -250,10 +237,7 @@ try {
 	v_objectMapper.registerModule(new JavaTimeModule());
 	f_addMixins();
 	
-	var repository = UserScenarioRepository.builder()
-	    .userId(UUID.fromString(zero_Interface.user.userIdToken()))
-	    .modelName(zero_Interface.project_data.project_name())
-        .build();
+	UserScenarioRepository repository = f_getUserScenarioRepository();
       
     var scenarioList = repository.listUserScenarios();   
 
@@ -403,16 +387,7 @@ traceln("Model serialisation has been completed.");
 
 traceln("Trying to save to file...");
 try {
-
-	//v_objectMapper.writeValue(new File("energyModel.json"), energyModel);
-
-	//v_objectMapper.writeValue(new File("ModelSave.json"), saveObject);
-
-	var repository = UserScenarioRepository.builder()
-	    .userId(UUID.fromString(zero_Interface.user.userIdToken()))
-	    .modelName(zero_Interface.project_data.project_name())
-        .build();
-    
+	UserScenarioRepository repository = f_getUserScenarioRepository();
 	repository.saveUserScenario(
         scenarioName,
         v_objectMapper.writeValueAsBytes(saveObject)
@@ -733,5 +708,25 @@ if(energyHubSliderEAGCs.size() != 3){
 }
 
 return energyHubSliderEAGCs;
+/*ALCODEEND*/}
+
+UserScenarioRepository f_getUserScenarioRepository()
+{/*ALCODESTART::1771423999006*/
+UserScenarioRepository repository;
+try{
+	repository = UserScenarioRepository.builder()
+    .userIdToken(zero_Interface.user.userIdToken())
+    .modelName(zero_Interface.project_data.project_name())
+    .build();
+}
+catch(Exception e) {
+	traceln("Warning: NO correct userIdToken found, trying to read it as a UUID instead!");
+	repository = UserScenarioRepository.builder()
+    .userId(UUID.fromString(zero_Interface.user.userIdToken()))
+    .modelName(zero_Interface.project_data.project_name())
+    .build();
+}
+
+return repository;
 /*ALCODEEND*/}
 
