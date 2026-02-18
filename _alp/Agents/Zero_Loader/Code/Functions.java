@@ -3381,7 +3381,7 @@ J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT
 
 double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,Double heatDemand_kwhpa,J_HeatingPreferences heatingPreferences)
 {/*ALCODESTART::1749727623536*/
-double maxPowerHeat_kW = 1000; 				//Dit is hoeveel vermogen het huis kan afgeven/opnemen, mag willekeurige waarden hebben. Wordt alleen gebruikt in rekenstap van ratio of capacity
+double maxPowerHeat_kW = 1000; 				//Dit is hoeveel vermogen het huis kan afgeven/opnemen, moet voldoende hoog zijn zodat het niet beperkend is voor warmteoverdracht tussen heatingAsset en J_EABuilding. Wordt alleen gebruikt in rekenstap van ratio of capacity
 double lossFactor_WpK; 						//Dit is wat bepaalt hoeveel warmte het huis verliest/opneemt per tijdstap per delta_T
 double initialTemp_degC = heatingPreferences.getCurrentPreferedTemperatureSetpoint_degC(0);
 double buildingCooldownPeriod_hr;
@@ -3396,7 +3396,7 @@ else{
 	switch (parentGC.p_insulationLabel){
 		case NONE:
 		case UNKNOWN:
-			lossFactor_WpK = uniform (avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(OL_GridConnectionInsulationLabel.D), avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(OL_GridConnectionInsulationLabel.G)) * floorArea_m2;
+			lossFactor_WpK = uniform (avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(OL_GridConnectionInsulationLabel.B), avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(OL_GridConnectionInsulationLabel.G)) * floorArea_m2;
 			break;
 		default:
 			lossFactor_WpK = avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(parentGC.p_insulationLabel);
@@ -3407,21 +3407,20 @@ else{
 solarAbsorptionFactor_m2 = floorArea_m2 * avgc_data.p_solarAbsorptionFloorSurfaceScalingFactor_fr; //solar irradiance [W/m2]
 
 //Determine the heat capacity of the building based on a cooldown period
-/*
+
 switch (parentGC.p_insulationLabel){
 		case NONE:
 		case UNKNOWN:
-			buildingCooldownPeriod_hr = uniform (avgc_data.map_insulationLabel_cooldownPeriod_hr.get(OL_GridConnectionInsulationLabel.D), avgc_data.map_insulationLabel_cooldownPeriod_hr.get(OL_GridConnectionInsulationLabel.G));
+			buildingCooldownPeriod_hr = uniform (avgc_data.map_insulationLabel_cooldownPeriod_hr.get(OL_GridConnectionInsulationLabel.B), avgc_data.map_insulationLabel_cooldownPeriod_hr.get(OL_GridConnectionInsulationLabel.G));
 			break;
 		default:
 			buildingCooldownPeriod_hr = avgc_data.map_insulationLabel_cooldownPeriod_hr.get(parentGC.p_insulationLabel);
 }
-heatCapacity_JpK = buildingCooldownPeriod_hr * lossFactor_WpK * 3600;
-*/
+
 
 //Determine the heat capacity of the building based on the floor surface and some factors
-heatCapacity_JpK = (avgc_data.p_heatCapacitySizingSlope_JpKm2 * floorArea_m2 + avgc_data.p_heatCapacitySizingConstant_JpK) * avgc_data.p_heatCapacitySizingFactor_fr;
-
+double secondsPerHour = 3600;
+heatCapacity_JpK = lossFactor_WpK * secondsPerHour * buildingCooldownPeriod_hr; // Calculates heatCapacity_JpK of the building as a function of LossFactor_WpK and cooldownTimescale_h
 //Create the thermal building asset
 parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossFactor_WpK, energyModel.p_timeParameters, initialTemp_degC, heatCapacity_JpK, solarAbsorptionFactor_m2 );
 
@@ -3604,7 +3603,7 @@ for(GCHouse GCH : energyModel.Houses){
 	}
 }
 	
-
+//traceln("Total space heat demand houses input " + roundToDecimal(totalSpaceHeatDemand_kwhpa/1000000,3) + "GWh");
 /*ALCODEEND*/}
 
 double f_addEnergyAssetsToHouses(GCHouse house,Double electricityDemand_kwhpa,Double gasDemand_m3pa,OL_GridConnectionHeatingType heatingType)
@@ -3640,6 +3639,7 @@ double dayTimeSetPoint_degC = 20;
 double startOfDayTime_h = 8;
 double startOfNightTime_h = 23;
 
+
 if( randomTrue(0.5) ){ //50% kans op ochtend ritme
 	nightTimeSetPoint_degC = uniform_discr(12,18);
 	dayTimeSetPoint_degC = uniform_discr(18, 24);
@@ -3662,11 +3662,11 @@ else { // 25% kans op smiddags/savonds aan
 }
 
 double maxComfortTemperature_degC = dayTimeSetPoint_degC + 2;
+double windowOpenSetpoint_degC = maxComfortTemperature_degC+1; // Hardcoded offset of +1, to prevent OffPeakHeating from triggering extra ventilation.
 double minComfortTemperature_degC = dayTimeSetPoint_degC - 2;
 
 //Create heating preferences class
-J_HeatingPreferences heatingPreferences = new J_HeatingPreferences(startOfDayTime_h, startOfNightTime_h, dayTimeSetPoint_degC, nightTimeSetPoint_degC, maxComfortTemperature_degC, minComfortTemperature_degC);
-
+J_HeatingPreferences heatingPreferences = new J_HeatingPreferences(startOfDayTime_h, startOfNightTime_h, dayTimeSetPoint_degC, nightTimeSetPoint_degC, maxComfortTemperature_degC, minComfortTemperature_degC, windowOpenSetpoint_degC);
 return heatingPreferences;
 /*ALCODEEND*/}
 
@@ -5148,6 +5148,8 @@ house.f_setHeatingPreferences(heatingPreferences);
 f_addHotWaterDemand(house, hotWaterDemand_kWhpa);
 f_addCookingAsset(house, OL_EnergyAssetType.GAS_PIT, cookingDemand_kWhpa);
 
+//For calibrating AVG data PBL loss factor 
+totalSpaceHeatDemand_kwhpa += spaceHeatingDemand_kwhpa;
 /*ALCODEEND*/}
 
 double f_estimateHouseDHWDemand_kWh(double floorSurface_m2)

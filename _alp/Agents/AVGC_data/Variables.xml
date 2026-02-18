@@ -2644,7 +2644,7 @@ https://warmtepomp-panel.nl/afgiftesysteem.html? -> 35 graden afgifte bij -10 gr
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[67.0]]></Code>
+				<Code><![CDATA[52.5 //deviates a some of percentages based on neighborhood]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1768313716399</Id>
@@ -2695,6 +2695,7 @@ OL_GridConnectionInsulationLabel.G, 1.45
 	<Variable Class="Parameter">
 		<Id>1768314894157</Id>
 		<Name><![CDATA[p_solarAbsorptionFloorSurfaceScalingFactor_fr]]></Name>
+		<Description><![CDATA[Roughly aligned with data-analysis/fitting by Zin Li (TU/e PhD) based on measured data of 100 houses in Dalenm during DACS-HW project. Increased by a factor ~2 after manual testing/calibration by Gillis and Naud.]]></Description>
 		<X>520</X>
 		<Y>1070</Y>
 		<Label>
@@ -2709,7 +2710,7 @@ OL_GridConnectionInsulationLabel.G, 1.45
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[0.01]]></Code>
+				<Code><![CDATA[0.04]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1768314894155</Id>
@@ -2966,21 +2967,79 @@ FIND SOURCE AND CORRECT THE NUMBERS BEFORE USE!]]></Description>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[/*
+				<Code><![CDATA[
 Map.of(
 OL_GridConnectionInsulationLabel.A, 48.0, 
 OL_GridConnectionInsulationLabel.B, 24.0,
 OL_GridConnectionInsulationLabel.C, 16.0,
 OL_GridConnectionInsulationLabel.D, 10.0, 
-OL_GridConnectionInsulationLabel.E, 6.0,
-OL_GridConnectionInsulationLabel.F, 4.0,
-OL_GridConnectionInsulationLabel.G, 2.0
+OL_GridConnectionInsulationLabel.E, 8.0,
+OL_GridConnectionInsulationLabel.F, 6.0,
+OL_GridConnectionInsulationLabel.G, 4.0
 )
-*/
+
 ]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1768499901664</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1770224099145</Id>
+		<Name><![CDATA[p_heatingDaysSetpoin]]></Name>
+		<X>50</X>
+		<Y>420</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[18]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1770224099143</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1770903314356</Id>
+		<Name><![CDATA[p_buildingDefaultCooldownTimescale_hr]]></Name>
+		<Description><![CDATA[Cooldown timescale as approximately 'measured' on an energy label A, free-standing, wooden house. Modern, terraced and stone houses might have longer cooldown timescale. (meaning it can more effectively buffer heat)]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>520</X>
+		<Y>1210</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[36]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1770903314354</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
