@@ -140,8 +140,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1770280954566</Id>
 		<Name><![CDATA[totalSpaceHeatDemand_kwhpa]]></Name>
-		<X>-380</X>
-		<Y>1020</Y>
+		<X>1800</X>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -160,7 +160,7 @@
 		<Id>1769510412647</Id>
 		<Name><![CDATA[v_projectDataLastChangedDate]]></Name>
 		<X>1800</X>
-		<Y>290</Y>
+		<Y>360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

@@ -2967,17 +2967,17 @@ FIND SOURCE AND CORRECT THE NUMBERS BEFORE USE!]]></Description>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[/*
+				<Code><![CDATA[
 Map.of(
 OL_GridConnectionInsulationLabel.A, 48.0, 
 OL_GridConnectionInsulationLabel.B, 24.0,
 OL_GridConnectionInsulationLabel.C, 16.0,
 OL_GridConnectionInsulationLabel.D, 10.0, 
-OL_GridConnectionInsulationLabel.E, 6.0,
-OL_GridConnectionInsulationLabel.F, 4.0,
-OL_GridConnectionInsulationLabel.G, 2.0
+OL_GridConnectionInsulationLabel.E, 8.0,
+OL_GridConnectionInsulationLabel.F, 6.0,
+OL_GridConnectionInsulationLabel.G, 4.0
 )
-*/
+
 ]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
@@ -3021,6 +3021,7 @@ OL_GridConnectionInsulationLabel.G, 2.0
 		<Id>1770903314356</Id>
 		<Name><![CDATA[p_buildingDefaultCooldownTimescale_hr]]></Name>
 		<Description><![CDATA[Cooldown timescale as approximately 'measured' on an energy label A, free-standing, wooden house. Modern, terraced and stone houses might have longer cooldown timescale. (meaning it can more effectively buffer heat)]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>520</X>
 		<Y>1210</Y>
 		<Label>
