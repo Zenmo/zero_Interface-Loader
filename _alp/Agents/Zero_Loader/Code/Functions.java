@@ -2887,7 +2887,7 @@ double sourceAssetHeatPower_kW;
 double belowZeroHeatpumpEtaReductionFactor;
 if(parentGC.p_BuildingThermalAsset == null){
 	maxHeatOutputPower_kW = maxHeatOutputPower_kW*2; // Make the asset capacity twice as high, to make sure it can handle the load in other scenarios with more heat consumption.
-}	
+}
 
 switch (heatAssetType){ // There is always only one heatingType, If there are many assets the type is CUSTOM
 
@@ -3599,7 +3599,11 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.v_liveAssetsMetaData.PVPotential_kW = GCH.v_liveAssetsMetaData.initialPV_kW > 0 ? GCH.v_liveAssetsMetaData.initialPV_kW : houseBuildingData.pv_potential_kwp(); // To prevent sliders from changing outcomes
 
 	//Create and add EnergyAssets
-	f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa(), houseBuildingData.heating_type());
+	if(houseBuildingData.heating_type() == null){
+		f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa(), avgc_data.p_avgHouseHeatingMethod);
+	} else {
+		f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa(), houseBuildingData.heating_type());
+	}
 	
 	i++;
 }
