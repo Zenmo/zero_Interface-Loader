@@ -2528,7 +2528,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[companyUUID]]></Name>
-			<Type><![CDATA[UUID]]></Type>
+			<Type><![CDATA[Uuid]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
