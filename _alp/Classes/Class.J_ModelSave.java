@@ -30,7 +30,7 @@ public class J_ModelSave implements Serializable {
 	public LinkedHashMap<String, J_scenario_Current> c_scenarioMap_Current;
 	public LinkedHashMap<String, J_scenario_Future> c_scenarioMap_Future;
 	
-	public List<LinkedHashMap<String, List<I_Vehicle>>> c_additionalVehicleHashMaps;
+	public LinkedHashMap<String, List<I_Vehicle>> c_additionalVehicleHashMaps;
 	
     /**
      * Default constructor
