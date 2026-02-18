@@ -1993,6 +1993,10 @@ switch(cb_chargingAttitudePrivateParkedCars.getValue()){
 		selectedChargingAttitude = OL_ChargingAttitude.PRICE;
 		gr_activateV2GPrivateParkedCars.setVisible(true);
 		break;
+	case "Slim laden: Prijs marktfeedback":
+		selectedChargingAttitude = OL_ChargingAttitude.PRICE_MARKET_FEEDBACK;
+		gr_activateV2GPrivateParkedCars.setVisible(false);
+		break;
 	case "Slim laden: Netbewust":
 		selectedChargingAttitude = OL_ChargingAttitude.BALANCE_LOCAL; // For now Balance_Local
 		gr_activateV2GPrivateParkedCars.setVisible(true);
@@ -2021,6 +2025,7 @@ else{
 					<Editable>false</Editable>
 					<Button>Niet slim laden</Button>
 					<Button>Slim laden: Prijs gestuurd</Button>
+					<Button>Slim laden: Prijs marktfeedback</Button>
 					<Button>Slim laden: Netbewust</Button>
 					<Button>Gevarieerd</Button>
 					<LinkTo>false</LinkTo>
@@ -2115,6 +2120,11 @@ switch(cb_chargingAttitudePrivatePublicChargers.getValue()){
 		gr_activateV2GPublicChargers.setVisible(true);
 		gr_settingsV1G_publicChargers.setVisible(true);
 		break;
+	case "Slim laden: Prijs marktfeedback":
+		selectedChargingAttitude = OL_ChargingAttitude.PRICE_MARKET_FEEDBACK;
+		gr_activateV2GPublicChargers.setVisible(false);
+		gr_settingsV1G_publicChargers.setVisible(true);
+		break;
 	case "Slim laden: Netbewust":
 		selectedChargingAttitude = OL_ChargingAttitude.BALANCE_GRID;
 		gr_activateV2GPublicChargers.setVisible(true);
@@ -2140,6 +2150,7 @@ else{
 					<Editable>false</Editable>
 					<Button>Niet slim laden</Button>
 					<Button>Slim laden: Prijs gestuurd</Button>
+					<Button>Slim laden: Prijs marktfeedback</Button>
 					<Button>Slim laden: Netbewust</Button>
 					<Button>Gevarieerd</Button>
 					<LinkTo>false</LinkTo>
