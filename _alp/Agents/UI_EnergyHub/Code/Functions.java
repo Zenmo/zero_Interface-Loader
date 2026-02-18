@@ -198,11 +198,20 @@ double f_initializeUserSavedScenarios(ShapeComboBox combo)
 if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToken() == "") {
 	return;
 }
-
-var repository = UserScenarioRepository.builder()
+UserScenarioRepository repository;
+try{
+	repository = UserScenarioRepository.builder()
     .userIdToken(zero_Interface.user.userIdToken())
     .modelName(zero_Interface.project_data.project_name())
     .build();
+}
+catch(Exception e) {
+	traceln("Warning: NO correct userIdToken found, trying to read it as a UUID instead!");
+	repository = UserScenarioRepository.builder()
+    .userId(UUID.fromString(zero_Interface.user.userIdToken()))
+    .modelName(zero_Interface.project_data.project_name())
+    .build();
+}
 
 var scenarioList = repository.listUserScenarios();
 int nbScenarios = scenarioList.size();
@@ -210,7 +219,6 @@ String[] scenarioNames = new String[nbScenarios];
 for (int i = 0; i < nbScenarios; i++) {
 	scenarioNames[i] = scenarioList.get(i).getName();
 }
-
 combo.setItems(scenarioNames);
 /*ALCODEEND*/}
 
