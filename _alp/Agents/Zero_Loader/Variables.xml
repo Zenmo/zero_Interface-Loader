@@ -141,7 +141,7 @@
 		<Id>1769510412647</Id>
 		<Name><![CDATA[v_projectDataLastChangedDate]]></Name>
 		<X>1800</X>
-		<Y>290</Y>
+		<Y>260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -313,7 +313,7 @@
 		<Id>1761907535651</Id>
 		<Name><![CDATA[p_remainingTotals]]></Name>
 		<X>1800</X>
-		<Y>250</Y>
+		<Y>230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -341,7 +341,7 @@
 		<Id>1726584205737</Id>
 		<Name><![CDATA[c_gridNodeIDsInScope]]></Name>
 		<X>1800</X>
-		<Y>280</Y>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
