@@ -4645,20 +4645,19 @@ for (ConnectionOwner CO : c_COCompanies) {
 double f_setSimulationTimeParameters()
 {/*ALCODESTART::1758714675284*/
 //Sim start year
-int simStartYear = getExperiment().getEngine().getStartDate().getYear() + 1900;  // 1900 years offset because of Java/AnyLogic convention
+//int simStartYear = getExperiment().getEngine().getStartDate().getYear() + 1900;  // 1900 years offset because of Java/AnyLogic convention
+
 
 // Create date at start of simulation year to use to calculate v_simStartHour_h
-Date d = new Date();
-d.setYear(simStartYear - 1900);
-d.setMonth(0);
-d.setHours(0);
-d.setSeconds(0);
-d.setMinutes(0);
-d.setDate(1);
-
-//Calculate sim start hour
-double simStartTime_h = roundToInt((getExperiment().getEngine().getStartDate().getTime() - d.getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
-
+Instant startInstant = getExperiment().getEngine().getStartDate().toInstant();
+//startInstant.atZone(ZoneId.of("CET"));
+int simStartYear = startInstant.atZone(ZoneId.of("CET")).getYear();
+traceln("startInstant: %s", startInstant);
+ZonedDateTime startOfYear = ZonedDateTime.of(simStartYear, 1, 1, 0, 0, 0, 0, ZoneId.of("CET"));
+long millisDiff = startInstant.toEpochMilli() - startOfYear.toInstant().toEpochMilli();
+//traceln("millisDiff: %s", millisDiff);
+double simStartTime_h = millisDiff / 1000.0 / 60 / 60;
+traceln("simStartTime_h: %s", simStartTime_h);
 //Fix for if start is within summer time, the v_simStartHour_h is not correct anymore
 double summerTimeStart_h = avgc_data.map_yearlySummerWinterTimeStartHour.get(simStartYear).getFirst();
 double winterTimeStart_h = avgc_data.map_yearlySummerWinterTimeStartHour.get(simStartYear).getSecond();
@@ -4682,6 +4681,7 @@ else{
 }
 
 if (simStartTime_h % 24 != 0) {
+	traceln("simStartTime_h: %s", simStartTime_h);
 	throw new RuntimeException("Impossible to run a model that does not start at midnight. Please check the start in the simulation settings.");
 }
 if (simDuration_h % 24 != 0) {
@@ -4695,13 +4695,16 @@ double simEndTime_h = simStartTime_h + simDuration_h;
 
 energyModel.p_timeParameters = new J_TimeParameters(
 	settings.timeStep_h(),
-	simStartYear,
-	avgc_data.hourOfYearPerMonth,
-	simStartTime_h,
-	simEndTime_h,
+	startInstant,
+	//avgc_data.hourOfYearPerMonth,
+	//simStartTime_h,
+	simDuration_h,
 	settings.summerWeekNumber(),
 	settings.winterWeekNumber()
 );
+
+traceln("runStartTime_h: %s", energyModel.p_timeParameters.getRunStartTime_h());
+traceln("runEndTime_h: %s", energyModel.p_timeParameters.getRunEndTime_h());
 
 energyModel.p_timeVariables = new J_TimeVariables(0, energyModel.p_timeParameters);
 /*ALCODEEND*/}
