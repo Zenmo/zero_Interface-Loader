@@ -96,32 +96,19 @@ for (GridNode_data GN_data : c_gridNode_data) {
 			// Basic GN information
 			//GN.p_nodeStatus = GN_data.status();
 			GN.p_description = GN_data.description();
-			//String nodeTypeString = GN_data.type();
 			
 			// Connect
 			GN.p_parentNodeID = GN_data.parent_node_id(); // Needs to be manually defined in the excel file of the nodes!
 			GN.p_ownerGridOperator = Grid_Operator;
 			
 			//Define node type
+			GN.p_nodeType = GN_data.type();
 			switch (GN_data.type()) {
 			    case LVLV:
-			        GN.p_nodeType = OL_GridNodeType.LVLV;
-			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
-			        break;
 			    case MVLV:
-			        GN.p_nodeType = OL_GridNodeType.MVLV;
-			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
-			        break;
 			    case SUBMV:
-			        GN.p_nodeType = OL_GridNodeType.SUBMV;
-			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
-			        break;
 			    case MVMV:
-			        GN.p_nodeType = OL_GridNodeType.MVMV;
-			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
-			        break;
 			    case HVMV:
-			        GN.p_nodeType = OL_GridNodeType.HVMV;
 			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 			        break;
 			    default:
@@ -3096,7 +3083,7 @@ Windfarm_data sliderWindfarm_data = findFirst(c_windfarm_data, wf_data -> wf_dat
 Battery_data sliderBattery_data = findFirst(c_battery_data, bat_data -> bat_data.isSliderGC());
 
 //Get top gridnode id
-GridNode_data topGridNode = findFirst(c_gridNode_data, node_data -> node_data.type().equals(OL_GridNodeType.HVMV));
+GridNode_data topGridNode = findFirst(c_gridNode_data, node_data -> node_data.type() == OL_GridNodeType.HVMV);
 if ( topGridNode == null ) {
 	throw new RuntimeException("Unable to find top GridNode of type HVMV to create slider assets.");
 }
@@ -3599,11 +3586,13 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.v_liveAssetsMetaData.PVPotential_kW = GCH.v_liveAssetsMetaData.initialPV_kW > 0 ? GCH.v_liveAssetsMetaData.initialPV_kW : houseBuildingData.pv_potential_kwp(); // To prevent sliders from changing outcomes
 
 	//Create and add EnergyAssets
+	OL_GridConnectionHeatingType heatingType;
 	if(houseBuildingData.heating_type() == null){
-		f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa(), avgc_data.p_avgHouseHeatingMethod);
+		heatingType = avgc_data.p_avgHouseHeatingMethod;
 	} else {
-		f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa(), houseBuildingData.heating_type());
+		heatingType = houseBuildingData.heating_type();
 	}
+	f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa(), heatingType);
 	
 	i++;
 }

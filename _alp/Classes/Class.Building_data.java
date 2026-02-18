@@ -36,7 +36,7 @@ public class Building_data {
 	
 	//Heating customizability
 	OL_GridConnectionHeatingType heating_type;
-	String heat_node_id;
+	String heatnode_id;
 	
 	//PBL data
 	boolean pbl_data_available;
