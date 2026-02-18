@@ -2644,7 +2644,7 @@ https://warmtepomp-panel.nl/afgiftesysteem.html? -> 35 graden afgifte bij -10 gr
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[53 //deviates a some of percentages based on neighborhood]]></Code>
+				<Code><![CDATA[52.5 //deviates a some of percentages based on neighborhood]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1768313716399</Id>
