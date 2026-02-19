@@ -96,32 +96,19 @@ for (GridNode_data GN_data : c_gridNode_data) {
 			// Basic GN information
 			//GN.p_nodeStatus = GN_data.status();
 			GN.p_description = GN_data.description();
-			String nodeTypeString = GN_data.type();
 			
 			// Connect
 			GN.p_parentNodeID = GN_data.parent_node_id(); // Needs to be manually defined in the excel file of the nodes!
 			GN.p_ownerGridOperator = Grid_Operator;
 			
 			//Define node type
-			switch (nodeTypeString) {
-			    case "LVLV":
-			        GN.p_nodeType = OL_GridNodeType.LVLV;
-			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
-			        break;
-			    case "MVLV":
-			        GN.p_nodeType = OL_GridNodeType.MVLV;
-			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
-			        break;
-			    case "SUBMV":
-			        GN.p_nodeType = OL_GridNodeType.SUBMV;
-			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
-			        break;
-			    case "MVMV":
-			        GN.p_nodeType = OL_GridNodeType.MVMV;
-			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
-			        break;
-			    case "HVMV":
-			        GN.p_nodeType = OL_GridNodeType.HVMV;
+			GN.p_nodeType = GN_data.type();
+			switch (GN_data.type()) {
+			    case LVLV:
+			    case MVLV:
+			    case SUBMV:
+			    case MVMV:
+			    case HVMV:
 			        GN.p_energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 			        break;
 			    default:
@@ -855,7 +842,6 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		companyGC.v_liveAssetsMetaData.initialPV_kW = genericCompany.pv_installed_kwp() != null ? genericCompany.pv_installed_kwp() : 0;
 		//companyGC.v_liveAssetsMetaData.PVPotential_kW = ; // Still needs to be calculated
 	 	
-	 	
 	 	//Update remaining totals (AFTER Lat/Lon has been defined!)
 		p_remainingTotals.adjustTotalNumberOfAnonymousCompanies(companyGC, 1);
 		p_remainingTotals.adjustTotalFloorSurfaceAnonymousCompanies_m2(companyGC, genericCompany.address_floor_surface_m2());
@@ -1507,16 +1493,15 @@ future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(companyGC.v_liveC
 if (companyGC.p_floorSurfaceArea_m2 > 0){
 	
 	if(p_remainingTotals.getRemainingElectricityDeliveryCompanies_kWh(companyGC) > 0 && gridNodeProfileLoaderType == OL_GridNodeProfileLoaderType.NO_PROFILE){
-		//Buidling Base electricity load
+		//Building base electricity load
 		double Remaining_electricity_demand_kWh_p_m2_yr = p_remainingTotals.getElectricityDeliveryOfAnonymousCompanies_kWhpm2(companyGC);
 		double yearlyElectricityDemand_kWh = Remaining_electricity_demand_kWh_p_m2_yr * companyGC.p_floorSurfaceArea_m2;
 		
 		//Add base load profile
 		f_addElectricityDemandProfile(companyGC, yearlyElectricityDemand_kWh, null, false, "default_office_electricity_demand_fr");
 	}
-	
 	if(p_remainingTotals.getRemainingGasDeliveryCompanies_m3(companyGC) > 0){
-		//Building Gas demand profile (purely heating)
+		//Building gas demand profile (purely heating)
 		double Remaining_gas_demand_m3_p_m2_yr = p_remainingTotals.getGasDeliveryOfAnonymousCompanies_m3pm2(companyGC);
 		double yearlyGasDemand_m3 = Remaining_gas_demand_m3_p_m2_yr*companyGC.p_floorSurfaceArea_m2;
 		double ratioGasUsedForHeating = 1;
@@ -2889,7 +2874,7 @@ double sourceAssetHeatPower_kW;
 double belowZeroHeatpumpEtaReductionFactor;
 if(parentGC.p_BuildingThermalAsset == null){
 	maxHeatOutputPower_kW = maxHeatOutputPower_kW*2; // Make the asset capacity twice as high, to make sure it can handle the load in other scenarios with more heat consumption.
-}	
+}
 
 switch (heatAssetType){ // There is always only one heatingType, If there are many assets the type is CUSTOM
 
@@ -3098,7 +3083,7 @@ Windfarm_data sliderWindfarm_data = findFirst(c_windfarm_data, wf_data -> wf_dat
 Battery_data sliderBattery_data = findFirst(c_battery_data, bat_data -> bat_data.isSliderGC());
 
 //Get top gridnode id
-GridNode_data topGridNode = findFirst(c_gridNode_data, node_data -> node_data.type().equals("HVMV"));
+GridNode_data topGridNode = findFirst(c_gridNode_data, node_data -> node_data.type() == OL_GridNodeType.HVMV);
 if ( topGridNode == null ) {
 	throw new RuntimeException("Unable to find top GridNode of type HVMV to create slider assets.");
 }
@@ -3366,22 +3351,30 @@ else{
 return chargerProfile;
 /*ALCODEEND*/}
 
-double f_addCookingAsset(GCHouse GC,OL_EnergyAssetType CookingType,double yearlyCookingDemand_kWh)
+double f_addCookingAsset(GCHouse GC,OL_HouseholdCookingMethod cookingType,double yearlyCookingDemand_kWh)
 {/*ALCODESTART::1749726189312*/
-if(yearlyCookingDemand_kWh <= 0){
-	throw new RuntimeException("Trying to create a cooking asset, without specifying the yearly energy consumption");
-}
-J_ProfilePointer pp = energyModel.f_findProfile("default_house_cooking_demand_fr");
-switch(CookingType){
-	case ELECTRIC_HOB:
-		new J_EAConsumption(GC, OL_EnergyAssetType.ELECTRIC_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeParameters, pp);
-		GC.p_cookingMethod = OL_HouseholdCookingMethod.ELECTRIC;
-		break;
-		
-	case GAS_PIT:
-		new J_EAConsumption(GC, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeParameters, pp);
-		GC.p_cookingMethod = OL_HouseholdCookingMethod.GAS;
-		break;
+if(cookingType != OL_HouseholdCookingMethod.NONE){
+	if(yearlyCookingDemand_kWh <= 0){
+		throw new RuntimeException("Trying to create a cooking asset, without specifying the yearly energy consumption");
+	}
+
+	OL_EnergyAssetType energyAssetType;
+	OL_EnergyCarriers energyCarrier;
+	if(cookingType == OL_HouseholdCookingMethod.GAS){
+		energyAssetType = OL_EnergyAssetType.GAS_PIT;
+		energyCarrier = OL_EnergyCarriers.METHANE;
+	}
+	else if(cookingType == OL_HouseholdCookingMethod.ELECTRIC){
+		energyAssetType = OL_EnergyAssetType.ELECTRIC_HOB;
+		energyCarrier = OL_EnergyCarriers.ELECTRICITY;
+	}
+	else{
+		throw new RuntimeException("Unsupported cookingtype found! ( " + cookingType + " )");
+	}
+	
+	J_ProfilePointer pp = energyModel.f_findProfile("default_house_cooking_demand_fr");	
+	new J_EAConsumption(GC, energyAssetType, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, energyCarrier, energyModel.p_timeParameters, pp);
+	GC.p_cookingMethod = cookingType;
 }
 /*ALCODEEND*/}
 
@@ -3396,7 +3389,7 @@ J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT
 
 double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,Double heatDemand_kwhpa,J_HeatingPreferences heatingPreferences)
 {/*ALCODESTART::1749727623536*/
-double maxPowerHeat_kW = 1000; 				//Dit is hoeveel vermogen het huis kan afgeven/opnemen, mag willekeurige waarden hebben. Wordt alleen gebruikt in rekenstap van ratio of capacity
+double maxPowerHeat_kW = 1000; 				//Dit is hoeveel vermogen het huis kan afgeven/opnemen, moet voldoende hoog zijn zodat het niet beperkend is voor warmteoverdracht tussen heatingAsset en J_EABuilding. Wordt alleen gebruikt in rekenstap van ratio of capacity
 double lossFactor_WpK; 						//Dit is wat bepaalt hoeveel warmte het huis verliest/opneemt per tijdstap per delta_T
 double initialTemp_degC = heatingPreferences.getCurrentPreferedTemperatureSetpoint_degC(0);
 double buildingCooldownPeriod_hr;
@@ -3411,7 +3404,7 @@ else{
 	switch (parentGC.p_insulationLabel){
 		case NONE:
 		case UNKNOWN:
-			lossFactor_WpK = uniform (avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(OL_GridConnectionInsulationLabel.D), avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(OL_GridConnectionInsulationLabel.G)) * floorArea_m2;
+			lossFactor_WpK = uniform (avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(OL_GridConnectionInsulationLabel.B), avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(OL_GridConnectionInsulationLabel.G)) * floorArea_m2;
 			break;
 		default:
 			lossFactor_WpK = avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(parentGC.p_insulationLabel);
@@ -3422,21 +3415,20 @@ else{
 solarAbsorptionFactor_m2 = floorArea_m2 * avgc_data.p_solarAbsorptionFloorSurfaceScalingFactor_fr; //solar irradiance [W/m2]
 
 //Determine the heat capacity of the building based on a cooldown period
-/*
+
 switch (parentGC.p_insulationLabel){
 		case NONE:
 		case UNKNOWN:
-			buildingCooldownPeriod_hr = uniform (avgc_data.map_insulationLabel_cooldownPeriod_hr.get(OL_GridConnectionInsulationLabel.D), avgc_data.map_insulationLabel_cooldownPeriod_hr.get(OL_GridConnectionInsulationLabel.G));
+			buildingCooldownPeriod_hr = uniform (avgc_data.map_insulationLabel_cooldownPeriod_hr.get(OL_GridConnectionInsulationLabel.B), avgc_data.map_insulationLabel_cooldownPeriod_hr.get(OL_GridConnectionInsulationLabel.G));
 			break;
 		default:
 			buildingCooldownPeriod_hr = avgc_data.map_insulationLabel_cooldownPeriod_hr.get(parentGC.p_insulationLabel);
 }
-heatCapacity_JpK = buildingCooldownPeriod_hr * lossFactor_WpK * 3600;
-*/
+
 
 //Determine the heat capacity of the building based on the floor surface and some factors
-heatCapacity_JpK = (avgc_data.p_heatCapacitySizingSlope_JpKm2 * floorArea_m2 + avgc_data.p_heatCapacitySizingConstant_JpK) * avgc_data.p_heatCapacitySizingFactor_fr;
-
+double secondsPerHour = 3600;
+heatCapacity_JpK = lossFactor_WpK * secondsPerHour * buildingCooldownPeriod_hr; // Calculates heatCapacity_JpK of the building as a function of LossFactor_WpK and cooldownTimescale_h
 //Create the thermal building asset
 parentGC.p_BuildingThermalAsset = new J_EABuilding( parentGC, maxPowerHeat_kW, lossFactor_WpK, energyModel.p_timeParameters, initialTemp_degC, heatCapacity_JpK, solarAbsorptionFactor_m2 );
 
@@ -3601,7 +3593,7 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.v_liveAssetsMetaData.PVPotential_kW = GCH.v_liveAssetsMetaData.initialPV_kW > 0 ? GCH.v_liveAssetsMetaData.initialPV_kW : houseBuildingData.pv_potential_kwp(); // To prevent sliders from changing outcomes
 
 	//Create and add EnergyAssets
-	f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa());	
+	f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa(), houseBuildingData.heating_type(), houseBuildingData.cooking_type());
 	
 	i++;
 }
@@ -3613,10 +3605,10 @@ for(GCHouse GCH : energyModel.Houses){
 	}
 }
 	
-
+//traceln("Total space heat demand houses input " + roundToDecimal(totalSpaceHeatDemand_kwhpa/1000000,3) + "GWh");
 /*ALCODEEND*/}
 
-double f_addEnergyAssetsToHouses(GCHouse house,Double electricityDemand_kwhpa,Double gasDemand_m3pa)
+double f_addEnergyAssetsToHouses(GCHouse house,Double electricityDemand_kwhpa,Double gasDemand_m3pa,OL_GridConnectionHeatingType heatingType,OL_HouseholdCookingMethod cookingType)
 {/*ALCODESTART::1749728889986*/
 //Add generic electricity demand profile 
 GridNode gn = findFirst(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals( house.p_parentNodeElectricID));
@@ -3631,7 +3623,7 @@ if ( gn.p_profileType == OL_GridNodeProfileLoaderType.NO_PROFILE ){
 
 
 //Add Heating assets: Spaceheating, DHW and cooking
-f_addHeatAssetsToHouses(house, gasDemand_m3pa);
+f_addHeatAssetsToHouses(house, gasDemand_m3pa, heatingType, cookingType);
 
 
 //Add pv
@@ -3648,6 +3640,7 @@ double nightTimeSetPoint_degC = 18;
 double dayTimeSetPoint_degC = 20;
 double startOfDayTime_h = 8;
 double startOfNightTime_h = 23;
+
 
 if( randomTrue(0.5) ){ //50% kans op ochtend ritme
 	nightTimeSetPoint_degC = uniform_discr(12,18);
@@ -3671,11 +3664,11 @@ else { // 25% kans op smiddags/savonds aan
 }
 
 double maxComfortTemperature_degC = dayTimeSetPoint_degC + 2;
+double windowOpenSetpoint_degC = maxComfortTemperature_degC+1; // Hardcoded offset of +1, to prevent OffPeakHeating from triggering extra ventilation.
 double minComfortTemperature_degC = dayTimeSetPoint_degC - 2;
 
 //Create heating preferences class
-J_HeatingPreferences heatingPreferences = new J_HeatingPreferences(startOfDayTime_h, startOfNightTime_h, dayTimeSetPoint_degC, nightTimeSetPoint_degC, maxComfortTemperature_degC, minComfortTemperature_degC);
-
+J_HeatingPreferences heatingPreferences = new J_HeatingPreferences(startOfDayTime_h, startOfNightTime_h, dayTimeSetPoint_degC, nightTimeSetPoint_degC, maxComfortTemperature_degC, minComfortTemperature_degC, windowOpenSetpoint_degC);
 return heatingPreferences;
 /*ALCODEEND*/}
 
@@ -5101,7 +5094,7 @@ else if(numberOfResidents > 5){
 return numberOfResidents;
 /*ALCODEEND*/}
 
-double f_addHeatAssetsToHouses(GCHouse house,Double gasDemand_m3pa)
+double f_addHeatAssetsToHouses(GCHouse house,Double gasDemand_m3pa,OL_GridConnectionHeatingType heatingType,OL_HouseholdCookingMethod cookingType)
 {/*ALCODESTART::1768486498278*/
 //Add building heat model and asset
 double annualNaturalGasConsumption_kwhpa;
@@ -5146,18 +5139,30 @@ f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2, spaceHeatingDemand_kw
 double maximalTemperatureDifference_K = 30.0; // Approximation
 double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000;
 
+//Check if heating type is known: Else: take avgc
+if(heatingType == null){
+	heatingType = avgc_data.p_avgHouseHeatingMethod;
+}
+
 //Add heating asset
-OL_GridConnectionHeatingType heatingType = avgc_data.p_avgHouseHeatingMethod;
 f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
 
 //Add heating management and set the heating preferences
 house.f_addHeatManagement(heatingType, false);
 house.f_setHeatingPreferences(heatingPreferences);
 
-//Add hot water and cooking demand
+//Add hot water demand
 f_addHotWaterDemand(house, hotWaterDemand_kWhpa);
-f_addCookingAsset(house, OL_EnergyAssetType.GAS_PIT, cookingDemand_kWhpa);
 
+//Add cooking demand
+if(cookingType == null){
+	cookingType = avgc_data.p_avgHouseCookingMethod;
+}
+f_addCookingAsset(house, cookingType, cookingDemand_kWhpa);
+
+
+//For calibrating AVG data PBL loss factor 
+totalSpaceHeatDemand_kwhpa += spaceHeatingDemand_kwhpa;
 /*ALCODEEND*/}
 
 double f_estimateHouseDHWDemand_kWh(double floorSurface_m2)

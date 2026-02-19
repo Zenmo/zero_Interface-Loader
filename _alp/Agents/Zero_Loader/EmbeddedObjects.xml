@@ -25,7 +25,7 @@
 		</GenericParameterSubstitute>
 		<Parameters>
 			<Parameter>
-				<Name><![CDATA[p_forecastTime_h]]></Name>
+				<Name><![CDATA[p_tempForecastTime_h]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[avgc_data]]></Name>
@@ -65,6 +65,15 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_timeParameters]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_pvForecastTime_h]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_windForecastTime_h]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_epexForecastTime_h]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
@@ -417,6 +426,12 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[map_insulationLabel_cooldownPeriod_hr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_buildingDefaultCooldownTimescale_hr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_avgHouseCookingMethod]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>

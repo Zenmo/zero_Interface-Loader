@@ -138,10 +138,29 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
+		<Id>1770280954566</Id>
+		<Name><![CDATA[totalSpaceHeatDemand_kwhpa]]></Name>
+		<X>1800</X>
+		<Y>380</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
 		<Id>1769510412647</Id>
 		<Name><![CDATA[v_projectDataLastChangedDate]]></Name>
 		<X>1800</X>
-		<Y>260</Y>
+		<Y>360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -313,7 +332,7 @@
 		<Id>1761907535651</Id>
 		<Name><![CDATA[p_remainingTotals]]></Name>
 		<X>1800</X>
-		<Y>230</Y>
+		<Y>250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -341,7 +360,7 @@
 		<Id>1726584205737</Id>
 		<Name><![CDATA[c_gridNodeIDsInScope]]></Name>
 		<X>1800</X>
-		<Y>290</Y>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
