@@ -428,10 +428,10 @@
 				<Name><![CDATA[map_insulationLabel_cooldownPeriod_hr]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_heatingDaysSetpoin]]></Name>
+				<Name><![CDATA[p_buildingDefaultCooldownTimescale_hr]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_buildingDefaultCooldownTimescale_hr]]></Name>
+				<Name><![CDATA[p_avgHouseCookingMethod]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>

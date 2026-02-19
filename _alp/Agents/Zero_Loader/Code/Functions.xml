@@ -1365,8 +1365,8 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Type><![CDATA[GCHouse]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[CookingType]]></Name>
-			<Type><![CDATA[OL_EnergyAssetType]]></Type>
+			<Name><![CDATA[cookingType]]></Name>
+			<Type><![CDATA[OL_HouseholdCookingMethod]]></Type>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[yearlyCookingDemand_kWh]]></Name>
@@ -1497,6 +1497,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[heatingType]]></Name>
 			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[cookingType]]></Name>
+			<Type><![CDATA[OL_HouseholdCookingMethod]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -2765,6 +2769,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[heatingType]]></Name>
 			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[cookingType]]></Name>
+			<Type><![CDATA[OL_HouseholdCookingMethod]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

@@ -3351,22 +3351,30 @@ else{
 return chargerProfile;
 /*ALCODEEND*/}
 
-double f_addCookingAsset(GCHouse GC,OL_EnergyAssetType CookingType,double yearlyCookingDemand_kWh)
+double f_addCookingAsset(GCHouse GC,OL_HouseholdCookingMethod cookingType,double yearlyCookingDemand_kWh)
 {/*ALCODESTART::1749726189312*/
-if(yearlyCookingDemand_kWh <= 0){
-	throw new RuntimeException("Trying to create a cooking asset, without specifying the yearly energy consumption");
-}
-J_ProfilePointer pp = energyModel.f_findProfile("default_house_cooking_demand_fr");
-switch(CookingType){
-	case ELECTRIC_HOB:
-		new J_EAConsumption(GC, OL_EnergyAssetType.ELECTRIC_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeParameters, pp);
-		GC.p_cookingMethod = OL_HouseholdCookingMethod.ELECTRIC;
-		break;
-		
-	case GAS_PIT:
-		new J_EAConsumption(GC, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, energyModel.p_timeParameters, pp);
-		GC.p_cookingMethod = OL_HouseholdCookingMethod.GAS;
-		break;
+if(cookingType != OL_HouseholdCookingMethod.NONE){
+	if(yearlyCookingDemand_kWh <= 0){
+		throw new RuntimeException("Trying to create a cooking asset, without specifying the yearly energy consumption");
+	}
+
+	OL_EnergyAssetType energyAssetType;
+	OL_EnergyCarriers energyCarrier;
+	if(cookingType == OL_HouseholdCookingMethod.GAS){
+		energyAssetType = OL_EnergyAssetType.GAS_PIT;
+		energyCarrier = OL_EnergyCarriers.METHANE;
+	}
+	else if(cookingType == OL_HouseholdCookingMethod.ELECTRIC){
+		energyAssetType = OL_EnergyAssetType.ELECTRIC_HOB;
+		energyCarrier = OL_EnergyCarriers.ELECTRICITY;
+	}
+	else{
+		throw new RuntimeException("Unsupported cookingtype found! ( " + cookingType + " )");
+	}
+	
+	J_ProfilePointer pp = energyModel.f_findProfile("default_house_cooking_demand_fr");	
+	new J_EAConsumption(GC, energyAssetType, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, energyCarrier, energyModel.p_timeParameters, pp);
+	GC.p_cookingMethod = cookingType;
 }
 /*ALCODEEND*/}
 
@@ -3585,13 +3593,7 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.v_liveAssetsMetaData.PVPotential_kW = GCH.v_liveAssetsMetaData.initialPV_kW > 0 ? GCH.v_liveAssetsMetaData.initialPV_kW : houseBuildingData.pv_potential_kwp(); // To prevent sliders from changing outcomes
 
 	//Create and add EnergyAssets
-	OL_GridConnectionHeatingType heatingType;
-	if(houseBuildingData.heating_type() == null){
-		heatingType = avgc_data.p_avgHouseHeatingMethod;
-	} else {
-		heatingType = houseBuildingData.heating_type();
-	}
-	f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa(), heatingType);
+	f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa(), houseBuildingData.heating_type(), houseBuildingData.cooking_type());
 	
 	i++;
 }
@@ -3606,7 +3608,7 @@ for(GCHouse GCH : energyModel.Houses){
 //traceln("Total space heat demand houses input " + roundToDecimal(totalSpaceHeatDemand_kwhpa/1000000,3) + "GWh");
 /*ALCODEEND*/}
 
-double f_addEnergyAssetsToHouses(GCHouse house,Double electricityDemand_kwhpa,Double gasDemand_m3pa,OL_GridConnectionHeatingType heatingType)
+double f_addEnergyAssetsToHouses(GCHouse house,Double electricityDemand_kwhpa,Double gasDemand_m3pa,OL_GridConnectionHeatingType heatingType,OL_HouseholdCookingMethod cookingType)
 {/*ALCODESTART::1749728889986*/
 //Add generic electricity demand profile 
 GridNode gn = findFirst(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals( house.p_parentNodeElectricID));
@@ -3621,7 +3623,7 @@ if ( gn.p_profileType == OL_GridNodeProfileLoaderType.NO_PROFILE ){
 
 
 //Add Heating assets: Spaceheating, DHW and cooking
-f_addHeatAssetsToHouses(house, gasDemand_m3pa, heatingType);
+f_addHeatAssetsToHouses(house, gasDemand_m3pa, heatingType, cookingType);
 
 
 //Add pv
@@ -5092,7 +5094,7 @@ else if(numberOfResidents > 5){
 return numberOfResidents;
 /*ALCODEEND*/}
 
-double f_addHeatAssetsToHouses(GCHouse house,Double gasDemand_m3pa,OL_GridConnectionHeatingType heatingType)
+double f_addHeatAssetsToHouses(GCHouse house,Double gasDemand_m3pa,OL_GridConnectionHeatingType heatingType,OL_HouseholdCookingMethod cookingType)
 {/*ALCODESTART::1768486498278*/
 //Add building heat model and asset
 double annualNaturalGasConsumption_kwhpa;
@@ -5137,6 +5139,11 @@ f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2, spaceHeatingDemand_kw
 double maximalTemperatureDifference_K = 30.0; // Approximation
 double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000;
 
+//Check if heating type is known: Else: take avgc
+if(heatingType == null){
+	heatingType = avgc_data.p_avgHouseHeatingMethod;
+}
+
 //Add heating asset
 f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
 
@@ -5144,9 +5151,15 @@ f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
 house.f_addHeatManagement(heatingType, false);
 house.f_setHeatingPreferences(heatingPreferences);
 
-//Add hot water and cooking demand
+//Add hot water demand
 f_addHotWaterDemand(house, hotWaterDemand_kWhpa);
-f_addCookingAsset(house, OL_EnergyAssetType.GAS_PIT, cookingDemand_kWhpa);
+
+//Add cooking demand
+if(cookingType == null){
+	cookingType = avgc_data.p_avgHouseCookingMethod;
+}
+f_addCookingAsset(house, cookingType, cookingDemand_kWhpa);
+
 
 //For calibrating AVG data PBL loss factor 
 totalSpaceHeatDemand_kwhpa += spaceHeatingDemand_kwhpa;
