@@ -16,6 +16,7 @@ dataAVGC.p_maxAvgHouseElectricityConsumptionOffset_kWhpa = p_maxAvgHouseElectric
 dataAVGC.p_avgHouseConnectionCapacity_kW = p_avgHouseConnectionCapacity_kW;
 dataAVGC.p_avgNrOfCarsPerHouse = p_avgNrOfCarsPerHouse;
 dataAVGC.p_avgHouseHeatingMethod = p_avgHouseHeatingMethod;
+dataAVGC.p_avgHouseCookingMethod = p_avgHouseCookingMethod;
 dataAVGC.p_ratioEVHousePersonalCars = p_shareOfElectricVehicleOwnership;
 dataAVGC.p_avgHousePVInstallationPower_kWp = p_avgHousePVInstallationPower_kWp;
 dataAVGC.p_ratioHouseInstalledPV = p_ratioHouseInstalledPV;
@@ -24,6 +25,7 @@ dataAVGC.p_avgRatioHouseBatteryStorageCapacity_v_PVPower = p_avgRatioHouseBatter
 dataAVGC.p_avgSpaceHeatingTotalGasConsumptionShare_fr = p_avgSpaceHeatingTotalGasConsumptionShare_fr;
 dataAVGC.p_avgDHWTotalGasConsumptionShare_fr = p_avgDHWTotalGasConsumptionShare_fr;
 dataAVGC.p_avgCookingTotalGasConsumptionShare_fr = p_avgCookingTotalGasConsumptionShare_fr;
+
 
 //Utilities
 dataAVGC.p_avgUtilityHeatingMethod = p_avgUtilityHeatingMethod;
