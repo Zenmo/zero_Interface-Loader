@@ -374,10 +374,7 @@ saveObject.c_orderedPublicChargers = zero_Interface.c_orderedPublicChargers;
 saveObject.c_mappingOfVehiclesPerCharger = zero_Interface.c_mappingOfVehiclesPerCharger;
 saveObject.c_scenarioMap_Current = zero_Interface.c_scenarioMap_Current;
 saveObject.c_scenarioMap_Future = zero_Interface.c_scenarioMap_Future;
-
-List<LinkedHashMap<String, List<I_Vehicle>>> c_additionalVehicleHashMaps = new ArrayList<>();
-
-saveObject.c_additionalVehicleHashMaps = c_additionalVehicleHashMaps;
+saveObject.c_additionalVehicleHashMaps = zero_Interface.c_additionalVehicles;
 
 v_objectMapper = new ObjectMapper();
 v_objectMapper.registerModule(new JavaTimeModule());
@@ -608,20 +605,7 @@ zero_Interface.c_orderedPublicChargers = saveObject.c_orderedPublicChargers;
 zero_Interface.c_mappingOfVehiclesPerCharger = saveObject.c_mappingOfVehiclesPerCharger;
 zero_Interface.c_scenarioMap_Current = saveObject.c_scenarioMap_Current;
 zero_Interface.c_scenarioMap_Future = saveObject.c_scenarioMap_Future;
-
-/*
-List<ConnectionOwner> c_COCompanies = findAll(zero_Interface.energyModel.pop_connectionOwners, p -> p.p_connectionOwnerType == OL_ConnectionOwnerType.COMPANY); 
-
-int i = 0;
-for (ConnectionOwner CO : c_COCompanies) {
-	UI_company companyUI = zero_Interface.c_companyUIs.get(CO.p_connectionOwnerIndexNr);
-	companyUI.p_company = CO;
-	companyUI.c_ownedGridConnections = companyUI.p_company.f_getOwnedGridConnections();
-	companyUI.c_additionalVehicles = saveObject.c_additionalVehicleHashMaps.get(i);
-	companyUI.f_setSelectedGCSliders();
-	i++;
-}
-*/
+zero_Interface.c_additionalVehicles = saveObject.c_additionalVehicleHashMaps;
 
 /*ALCODEEND*/}
 
