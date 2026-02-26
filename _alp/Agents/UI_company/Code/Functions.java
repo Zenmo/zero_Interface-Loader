@@ -696,6 +696,11 @@ if (vehicleType == OL_EnergyAssetType.ELECTRIC_VEHICLE || vehicleType == OL_Ener
 	else{
 		zero_Interface.c_orderedVehicles.add(0, electricVehicle);
 	}
+	
+	//Check if charging management is present if not: add default management
+	if(parentGC.f_getCurrentChargingType() == OL_ChargingAttitude.NONE){
+		parentGC.f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
+	}
 }
 
 else if (vehicleType == OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE || vehicleType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN || vehicleType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK ){ // Create petroleumFuel vehicles

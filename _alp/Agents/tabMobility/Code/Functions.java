@@ -331,6 +331,11 @@ if (petroleumFuelTruck!=null) {
 	if(foundAdditionalVehicle){
 		zero_Interface.c_additionalVehicles.get(gc.p_uid).add(electricTruck);
 	}
+	
+	//Check if charging management is present if not: add default management
+	if(gc.f_getCurrentChargingType() == OL_ChargingAttitude.NONE){
+		gc.f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
+	}
 }
 
 else {
@@ -384,6 +389,11 @@ if (hydrogenTruck!=null) {
 	//check if was additional vehicle in companyUI, if so: add to collection
 	if(foundAdditionalVehicle){
 		zero_Interface.c_additionalVehicles.get(gc.p_uid).add(electricTruck);
+	}
+	
+	//Check if charging management is present if not: add default management
+	if(gc.f_getCurrentChargingType() == OL_ChargingAttitude.NONE){
+		gc.f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
 	}
 }
 else {
@@ -693,6 +703,11 @@ if (petroleumFuelVan!=null) {
 	if(foundAdditionalVehicle){
 		zero_Interface.c_additionalVehicles.get(gc.p_uid).add(electricVan);
 	}
+	
+	//Check if charging management is present if not: add default management
+	if(gc.f_getCurrentChargingType() == OL_ChargingAttitude.NONE){
+		gc.f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
+	}
 }
 
 else {
@@ -793,6 +808,11 @@ if (petroleumFuelCar!=null) {
 	//check if was additional vehicle in companyUI, if so: add to collection
 	if(foundAdditionalVehicle){
 		zero_Interface.c_additionalVehicles.get(gc.p_uid).add(electricCar);
+	}
+	
+	//Check if charging management is present if not: add default management
+	if(gc.f_getCurrentChargingType() == OL_ChargingAttitude.NONE){
+		gc.f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
 	}
 }
 
