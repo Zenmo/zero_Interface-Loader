@@ -1680,14 +1680,35 @@ double f_createChargingStations()
 {/*ALCODESTART::1726584205849*/
 //Initialize parameters
 int laadpaal_nr = 1;
-int laadstation_nr = 1;
+int laadCentrum_nr = 1;
 
 //Loop over charging stations
 for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(c_chargingstation_data)){
 
 	GCPublicCharger chargingStation = energyModel.add_PublicChargers();
-	chargingStation.set_p_gridConnectionID( dataChargingStation.gc_id());
+	chargingStation.p_gridConnectionID = dataChargingStation.gc_id();
+	chargingStation.p_ownerID = dataChargingStation.owner_id();				
 	
+	//Make owner name if it is not filled in (used for display on UI).
+	if (dataChargingStation.owner_id() == null){
+		if(chargingStation.p_isChargingCentre){
+			chargingStation.p_ownerID = "Publiek laadcentrum " + laadCentrum_nr;
+			laadCentrum_nr++;
+		}
+		else{
+			chargingStation.p_ownerID = "Publieke laadpaal " + laadpaal_nr;
+			laadpaal_nr++;
+	
+		}		
+	}
+	
+	//Create and connect ConnectionOwner	
+	ConnectionOwner owner = energyModel.add_pop_connectionOwners();
+	owner.p_actorID = chargingStation.p_ownerID;
+	owner.p_connectionOwnerType = OL_ConnectionOwnerType.CHARGEPOINT_OP;
+	owner.b_dataSharingAgreed = true;
+	chargingStation.p_owner = owner;
+		
 	//Set Address
 	chargingStation.p_address = new J_Address(dataChargingStation.streetname(), 
 											  dataChargingStation.house_number(), 
@@ -1696,6 +1717,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 											  dataChargingStation.postalcode(), 
 											  dataChargingStation.city());
 											
+	
 	//Electric Capacity
 	if (dataChargingStation.connection_capacity_kw() != null) {
 		// Assume the connection capacity is both physical and contracted.
@@ -1711,124 +1733,73 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 	//Is active at start?
 	chargingStation.v_isActive = dataChargingStation.initially_active();
 			
-	//Create and connect owner
-	ConnectionOwner owner = energyModel.add_pop_connectionOwners();
-
-	chargingStation.set_p_ownerID( dataChargingStation.owner_id());				
-	owner.set_p_actorID( chargingStation.p_ownerID );
-	//owner.set_p_actorType( OL_ActorType.CONNECTIONOWNER );
-	owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.CHARGEPOINT_OP );
-	owner.b_dataSharingAgreed = true;
-	
-	chargingStation.set_p_owner( owner );
-	
-	
-	//Check if centre or single
+		
+	//Default charger parameters
 	chargingStation.p_isChargingCentre = dataChargingStation.is_charging_centre();
-	if (chargingStation.p_isChargingCentre) {
+	chargingStation.p_nbOfChargers = dataChargingStation.number_of_chargers();
+	chargingStation.p_maxChargingPower_kW = dataChargingStation.power_per_charger_kw();
+	chargingStation.p_chargingVehicleType = dataChargingStation.vehicle_type();		
+			
+	//Assumption is all chargepoints are the same for one GCPublicCharger
+	boolean V1GCapable = true; //randomTrue(avgc_data.p_v1gProbability);
+	boolean V2GCapable = true; //randomTrue(avgc_data.p_v2gProbability);
+	chargingStation.f_setChargePoint(new J_ChargePoint(V1GCapable, V2GCapable, dataChargingStation.power_per_charger_kw()));
+	chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation, energyModel.p_timeParameters));
 		
-		if (chargingStation.p_ownerID == null){
-			chargingStation.p_ownerID = "Publiek laadstation " + laadstation_nr;
-			laadstation_nr++;
-		}
+	//Set vehicle type
+	chargingStation.p_chargingVehicleType = dataChargingStation.vehicle_type();		
+	
+	//Create chargingsession/vehicles
+	if(chargingStation.p_chargingVehicleType == OL_EnergyAssetType.CHARGER){
 
-		chargingStation.set_p_nbOfChargers( dataChargingStation.number_of_chargers() );
-		chargingStation.set_p_maxChargingPower_kW( dataChargingStation.power_per_charger_kw() );
-		
-		//If check on connection capacity to prevent more charging than possible
-		if(chargingStation.v_liveConnectionMetaData.contractedDeliveryCapacity_kW > chargingStation.p_nbOfChargers*chargingStation.p_maxChargingPower_kW){
-			chargingStation.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = chargingStation.p_nbOfChargers*chargingStation.p_maxChargingPower_kW;
-		}
-		
-		//Set vehicle type
-		chargingStation.p_chargingVehicleType = dataChargingStation.vehicle_type();		
-		
-		//Create vehicles that charge at the charging centre
-		if(chargingStation.p_chargingVehicleType == OL_EnergyAssetType.CHARGER){
-			List<J_ChargingSessionData> chargerProfile = f_getChargerProfile();
-			boolean V1GCapable = randomTrue(avgc_data.p_v1gProbability);
-			boolean V2GCapable = randomTrue(avgc_data.p_v2gProbability);
-			chargingStation.f_setChargePoint( new J_ChargePoint(V1GCapable, V2GCapable));
-			chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation, energyModel.p_timeParameters));
-			new J_EAChargingSession(chargingStation, chargerProfile, 0, energyModel.p_timeParameters);
-			new J_EAChargingSession(chargingStation, chargerProfile, 1, energyModel.p_timeParameters);
-		}
-		else{
-			for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerCharger_Centre; k++ ){
-				f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
+		int sessionSocketNr = 0;
+		List<J_ChargingSessionData> chargerProfile = f_getChargerProfile();
+		for(int i = 0; i<chargingStation.p_nbOfChargers; i++){
+			if(i != 0 && chargingStation.p_nbOfChargers % i == 0){
+				chargerProfile = f_getChargerProfile();
+				sessionSocketNr = 0;
 			}
-		}
-		
-		
-		if (dataChargingStation.polygon() != null) {
-			//Create EA GIS object (building) for the charging centre
-			GIS_Object area = f_createGISObject( dataChargingStation.gc_name(), dataChargingStation.latitude(), dataChargingStation.longitude(), dataChargingStation.polygon(), OL_GISObjectType.CHARGER );
-			
-			//Set gis object type
-			area.p_GISObjectType = OL_GISObjectType.CHARGER;
-			
-			//Add to collections
-			area.c_containedGridConnections.add(chargingStation);
-			chargingStation.c_connectedGISObjects.add(area);
-			
-			//Style building
-			area.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
-			area.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
-			area.set_p_defaultLineWidth( zero_Interface.v_energyAssetLineWidth);
-			zero_Interface.f_styleAreas(area);
-		}
-		else{
-			traceln("No gisobject created for charge centre: " + chargingStation.p_gridConnectionID);
+			new J_EAChargingSession(chargingStation, chargerProfile, sessionSocketNr, energyModel.p_timeParameters);
+			sessionSocketNr++;
 		}
 	}
-	else {
-
-		if (chargingStation.p_ownerID == null){
-			chargingStation.p_ownerID = "Publieke laadpaal " + laadpaal_nr;
-			laadpaal_nr++;
+	else{
+		for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerCharger_Chargepoint; k++ ){
+			f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
 		}
-		
-		//Set charging power
-		chargingStation.set_p_maxChargingPower_kW( dataChargingStation.power_per_charger_kw() );
-		
-		//Set vehicle type
-		chargingStation.p_chargingVehicleType = dataChargingStation.vehicle_type();		
-		
-		//Create vehicles that charge at the charging station
-		if(chargingStation.p_chargingVehicleType == OL_EnergyAssetType.CHARGER){
-			List<J_ChargingSessionData> chargerProfile = f_getChargerProfile();
-			boolean V1GCapable = true; //randomTrue(avgc_data.p_v1gProbability);
-			boolean V2GCapable = true; //randomTrue(avgc_data.p_v2gProbability);
-			chargingStation.f_setChargePoint(new J_ChargePoint(V1GCapable, V2GCapable));
-			chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation, energyModel.p_timeParameters));
-			new J_EAChargingSession(chargingStation, chargerProfile, 0, energyModel.p_timeParameters);
-			new J_EAChargingSession(chargingStation, chargerProfile, 1, energyModel.p_timeParameters);
+	}
+	
+	
+	//Get polygonString for GIS object	
+	String polygonString;
+	if (dataChargingStation.polygon() != null) {
+		polygonString = dataChargingStation.polygon();
+	}
+	else{
+		if(chargingStation.p_isChargingCentre){
+			throw new RuntimeException("Trying to make a charging CENTRE without specifying the polygon, this is only possible for a single charge POLE");
 		}
-		else{
-			for(int k = 0; k < avgc_data.p_avgVehiclesPerCharger_Chargepoint; k++ ){
-				f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
-			}
-		}
-		
-		
-		//Create GIS object for the chargingStation	
-		String polygonString = f_createChargerPolygon(dataChargingStation.latitude(), dataChargingStation.longitude());
-		GIS_Object gisregion = f_createGISObject(dataChargingStation.gc_name(), dataChargingStation.latitude(), dataChargingStation.longitude(), polygonString, OL_GISObjectType.CHARGER);		
-		
-		//Add to collections
-		chargingStation.c_connectedGISObjects.add(gisregion);
-		gisregion.c_containedGridConnections.add(chargingStation);
-		
-		if(chargingStation.v_isActive){
-			gisregion.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
-			gisregion.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
-		}
-		else{
-			gisregion.set_p_defaultFillColor( zero_Interface.v_newChargingStationColor );
-			gisregion.set_p_defaultLineColor( zero_Interface.v_newChargingStationLineColor );
-		}
-		zero_Interface.f_styleAreas(gisregion);
-	}	
+		polygonString = f_createChargerPolygon(dataChargingStation.latitude(), dataChargingStation.longitude());	
+	}
+	
+	//Create EA GIS object (building) for the charging centre
+	GIS_Object gisregion = f_createGISObject( dataChargingStation.gc_name(), dataChargingStation.latitude(), dataChargingStation.longitude(), polygonString, OL_GISObjectType.CHARGER );
+	
+	//Add to collections
+	gisregion.c_containedGridConnections.add(chargingStation);
+	chargingStation.c_connectedGISObjects.add(gisregion);
+	
+	//Style GIS object
+	if(chargingStation.v_isActive){
+		gisregion.set_p_defaultFillColor( zero_Interface.v_chargingStationColor );
+		gisregion.set_p_defaultLineColor( zero_Interface.v_chargingStationLineColor );
+	}
+	else{
+		gisregion.set_p_defaultFillColor( zero_Interface.v_newChargingStationColor );
+		gisregion.set_p_defaultLineColor( zero_Interface.v_newChargingStationLineColor );
+	}
+	gisregion.set_p_defaultLineWidth( zero_Interface.v_energyAssetLineWidth);
+	zero_Interface.f_styleAreas(gisregion);
 }
 
 
@@ -2711,13 +2682,17 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		future_scenario_list.setPlannedHydrogenTrucks((gridConnection.getTransport().getTrucks().getNumPlannedHydrogenTrucks() != null) ? gridConnection.getTransport().getTrucks().getNumPlannedHydrogenTrucks() : 0);
 	}
 	
-	
 	//Other
 	if (Objects.nonNull(gridConnection.getTransport().getOtherVehicles().getHasOtherVehicles())){
 	
 	// Wat doen we hier mee???
 	
 	}
+}
+
+//Set Default charging management if EV is present
+if(companyGC.c_electricVehicles.size() + companyGC.c_chargingSessions.size() > 0){
+	companyGC.f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
 }
 
 //Save if building is paused at start
@@ -4539,6 +4514,10 @@ for(int i = 0; i < amountOfOwnedCars ; i++){
 		if (randomTrue( avgc_data.p_shareOfElectricVehicleOwnership)){
 			J_EAEV ev = f_addElectricVehicle(house, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, 0, 0);
 			ev.getTripTracker().setAnnualDistance_km(ev.getTripTracker().getAnnualDistance_km()*tripTrackerScaling);
+			//Set Default charging management
+			if(house.f_getCurrentChargingType() == OL_ChargingAttitude.NONE){
+				house.f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
+			}
 		}
 		else{
 			J_EAFuelVehicle petroleumFuelVehicle = f_addPetroleumFuelVehicle(house, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, true, 0);
