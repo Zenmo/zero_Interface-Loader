@@ -61,8 +61,8 @@ dataAVGC.p_avgHydrogenConsumptionTruck_kWhpkm = p_avgHydrogenConsumptionTruck_kW
 
 dataAVGC.p_v1gProbability = p_v1gProbability;
 dataAVGC.p_v2gProbability = p_v2gProbability;
-dataAVGC.p_avgVehiclesPerCharger_Chargepoint = p_avgVehiclesPerCharger_Chargepoint;
-dataAVGC.p_avgVehiclesPerCharger_Centre = p_avgVehiclesPerCharger_Centre;
+dataAVGC.p_defaultNrOfVehiclesPerChargerSocket = p_defaultNrOfVehiclesPerChargerSocket;
+dataAVGC.p_defaultNrOfSocketsPerCharger = p_defaultNrOfSocketsPerCharger;
 
 dataAVGC.p_avgAnnualTravelDistancePrivateCar_km = p_avgAnnualTravelDistancePrivateCar_km;
 dataAVGC.p_avgAnnualTravelDistanceCompanyCar_km = p_avgAnnualTravelDistanceCompanyCar_km;
@@ -91,8 +91,8 @@ dataAVGC.p_avgOutputTemperatureDistrictHeatingDeliverySet_degC = p_avgOutputTemp
 dataAVGC.p_minDistrictHeatingDeliverySetOutputCapacity_kW = p_minDistrictHeatingDeliverySetOutputCapacity_kW;
 
 dataAVGC.p_avgEfficiencyCHP_thermal_fr = p_avgEfficiencyCHP_thermal_fr;
-dataAVGC.p_avgEfficiencyCHP_electric_fr = p_avgEfficiencyCHP_thermal_fr;
-dataAVGC.p_avgOutputTemperatureCHP_degC = p_avgEfficiencyCHP_thermal_fr;
+dataAVGC.p_avgEfficiencyCHP_electric_fr = p_avgEfficiencyCHP_electric_fr;
+dataAVGC.p_avgOutputTemperatureCHP_degC = p_avgOutputTemperatureCHP_degC;
 
 dataAVGC.p_avgPTPower_kWpm2 = p_avgPTPower_kWpm2;
 dataAVGC.p_avgPTPanelSize_m2 = p_avgPTPanelSize_m2;

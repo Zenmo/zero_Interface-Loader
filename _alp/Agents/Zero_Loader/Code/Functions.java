@@ -1688,7 +1688,8 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 	GCPublicCharger chargingStation = energyModel.add_PublicChargers();
 	chargingStation.p_gridConnectionID = dataChargingStation.gc_id();
 	chargingStation.p_ownerID = dataChargingStation.owner_id();				
-	
+	chargingStation.p_isChargingCentre = dataChargingStation.is_charging_centre();
+		
 	//Make owner name if it is not filled in (used for display on UI).
 	if (dataChargingStation.owner_id() == null){
 		if(chargingStation.p_isChargingCentre){
@@ -1735,27 +1736,22 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 			
 		
 	//Default charger parameters
-	chargingStation.p_isChargingCentre = dataChargingStation.is_charging_centre();
-	chargingStation.p_nbOfChargers = dataChargingStation.number_of_chargers();
-	chargingStation.p_maxChargingPower_kW = dataChargingStation.power_per_charger_kw();
-	chargingStation.p_chargingVehicleType = dataChargingStation.vehicle_type();		
-			
+	double numberOfSockets = dataChargingStation.number_of_chargers() != null ? dataChargingStation.number_of_chargers() : avgc_data.p_defaultNrOfSocketsPerCharger;
+	double maxPowerPerSocket_kW = dataChargingStation.power_per_charger_kw() != null ? dataChargingStation.power_per_charger_kw() : avgc_data.p_avgEVMaxChargePowerCar_kW;
+
 	//Assumption is all chargepoints are the same for one GCPublicCharger
 	boolean V1GCapable = true; //randomTrue(avgc_data.p_v1gProbability);
 	boolean V2GCapable = true; //randomTrue(avgc_data.p_v2gProbability);
-	chargingStation.f_setChargePoint(new J_ChargePoint(V1GCapable, V2GCapable, dataChargingStation.power_per_charger_kw()));
+	chargingStation.f_setChargePoint(new J_ChargePoint(V1GCapable, V2GCapable, maxPowerPerSocket_kW));
 	chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation, energyModel.p_timeParameters));
 		
-	//Set vehicle type
-	chargingStation.p_chargingVehicleType = dataChargingStation.vehicle_type();		
-	
 	//Create chargingsession/vehicles
-	if(chargingStation.p_chargingVehicleType == OL_EnergyAssetType.CHARGER){
+	if(dataChargingStation.vehicle_type() == OL_EnergyAssetType.CHARGER){
 
 		int sessionSocketNr = 0;
 		List<J_ChargingSessionData> chargerProfile = f_getChargerProfile();
-		for(int i = 0; i<chargingStation.p_nbOfChargers; i++){
-			if(i != 0 && chargingStation.p_nbOfChargers % i == 0){
+		for(int i = 0; i< numberOfSockets; i++){
+			if(i != 0 && numberOfSockets % i == 0){
 				chargerProfile = f_getChargerProfile();
 				sessionSocketNr = 0;
 			}
@@ -1764,24 +1760,24 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 		}
 	}
 	else{
-		for(int k = 0; k < chargingStation.p_nbOfChargers*avgc_data.p_avgVehiclesPerCharger_Chargepoint; k++ ){
-			f_addElectricVehicle(chargingStation, chargingStation.p_chargingVehicleType, true, 0, chargingStation.p_maxChargingPower_kW);
+		for(int k = 0; k < numberOfSockets*avgc_data.p_defaultNrOfVehiclesPerChargerSocket; k++ ){
+			f_addElectricVehicle(chargingStation, dataChargingStation.vehicle_type(), true, 0, maxPowerPerSocket_kW);
 		}
 	}
 	
 	
 	//Get polygonString for GIS object	
 	String polygonString;
-	if (dataChargingStation.polygon() != null) {
+	if (chargingStation.p_isChargingCentre) {
+		if(dataChargingStation.polygon() != null){
+			throw new RuntimeException("Trying to make a charging CENTRE without specifying the polygon, this is only possible for a single charge POLE");
+		}
 		polygonString = dataChargingStation.polygon();
 	}
 	else{
-		if(chargingStation.p_isChargingCentre){
-			throw new RuntimeException("Trying to make a charging CENTRE without specifying the polygon, this is only possible for a single charge POLE");
-		}
 		polygonString = f_createChargerPolygon(dataChargingStation.latitude(), dataChargingStation.longitude());	
 	}
-	
+
 	//Create EA GIS object (building) for the charging centre
 	GIS_Object gisregion = f_createGISObject( dataChargingStation.gc_name(), dataChargingStation.latitude(), dataChargingStation.longitude(), polygonString, OL_GISObjectType.CHARGER );
 	
