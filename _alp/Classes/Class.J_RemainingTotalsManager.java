@@ -116,7 +116,7 @@ public class J_RemainingTotalsManager {
     	//Manage model totals and backup
     	if(dataNBH.total_comp_elec_delivery_kwh_p_yr() != null && dataNBH.total_comp_elec_delivery_kwh_p_yr() >= 0){
     		if(totalElectricityConsumptionCompaniesTotalIsManualInput) { // Remove total of this nb from the 'backup total'
-    			remainingTotalsMap.get(this.originalModelTotalName).adjustRemainingECDeliveryCompanies_kWh(OL_EnergyCarriers.ELECTRICITY, -dataNBH.total_comp_elec_delivery_kwh_p_yr());
+    			remainingTotalsMap.get(this.remainingModelTotalName).adjustRemainingECDeliveryCompanies_kWh(OL_EnergyCarriers.ELECTRICITY, -dataNBH.total_comp_elec_delivery_kwh_p_yr());
         	}
     		else {
     			remainingTotalsMap.get(this.originalModelTotalName).adjustRemainingECDeliveryCompanies_kWh(OL_EnergyCarriers.ELECTRICITY, dataNBH.total_comp_elec_delivery_kwh_p_yr());
@@ -124,10 +124,10 @@ public class J_RemainingTotalsManager {
     	}
     	if(dataNBH.total_comp_gas_delivery_m3_p_yr() != null && dataNBH.total_comp_gas_delivery_m3_p_yr() >= 0){	
     		if(totalGasConsumptionCompaniesTotalIsManualInput) { // Remove total of this nb from the 'backup total'
-    			remainingTotalsMap.get(this.remainingModelTotalName).adjustRemainingECDeliveryCompanies_kWh(OL_EnergyCarriers.METHANE, -dataNBH.total_comp_gas_delivery_m3_p_yr());
+    			remainingTotalsMap.get(this.remainingModelTotalName).adjustRemainingECDeliveryCompanies_kWh(OL_EnergyCarriers.METHANE, -dataNBH.total_comp_gas_delivery_m3_p_yr()* this.avgc_data.p_gas_kWhpm3);
         	}
     		else {
-    			remainingTotalsMap.get(this.originalModelTotalName).adjustRemainingECDeliveryCompanies_kWh(OL_EnergyCarriers.METHANE, dataNBH.total_comp_gas_delivery_m3_p_yr());
+    			remainingTotalsMap.get(this.originalModelTotalName).adjustRemainingECDeliveryCompanies_kWh(OL_EnergyCarriers.METHANE, dataNBH.total_comp_gas_delivery_m3_p_yr()* this.avgc_data.p_gas_kWhpm3);
     		}
     	}
     	if(dataNBH.total_nr_comp_cars() != null && dataNBH.total_nr_comp_cars() >= 0){	
