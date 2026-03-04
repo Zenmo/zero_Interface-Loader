@@ -72,6 +72,9 @@
 			<Parameter>
 				<Name><![CDATA[p_epexForecastTime_h]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_tempForecastTime_h]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">

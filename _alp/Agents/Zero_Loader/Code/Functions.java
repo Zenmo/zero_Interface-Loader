@@ -4686,12 +4686,15 @@ if (simDuration_h <= 0) {
 
 double simEndTime_h = simStartTime_h + simDuration_h;
 
+Duration simDuration = Duration.ofSeconds((int)simDuration_h*3600);
+Duration timeStep = Duration.ofSeconds(900);
+
 energyModel.p_timeParameters = new J_TimeParameters(
-	settings.timeStep_h(),
+	timeStep,
 	startInstant,
 	//avgc_data.hourOfYearPerMonth,
 	//simStartTime_h,
-	simDuration_h,
+	simDuration,
 	settings.summerWeekNumber(),
 	settings.winterWeekNumber()
 );
