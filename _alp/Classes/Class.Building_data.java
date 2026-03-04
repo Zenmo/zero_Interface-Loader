@@ -34,10 +34,15 @@ public class Building_data {
 	Double longitude;
 	String polygon;
 	
+	//Heating customizability
+	OL_GridConnectionHeatingType heating_type;
+	String heatnode_id;
+	
 	//PBL data
 	boolean pbl_data_available;
 	OL_PBL_DwellingType dwelling_type;		
 	OL_PBL_OwnershipType ownership_type;
+	OL_HouseholdCookingMethod cooking_type;
 	OL_GridConnectionInsulationLabel insulation_label;
 	Double local_factor;
 	Double regional_climate_correction_factor;

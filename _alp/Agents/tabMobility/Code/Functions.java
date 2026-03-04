@@ -1738,7 +1738,7 @@ zero_Interface.f_resetSettings();
 double f_activateV2G(List<GridConnection> gcList,boolean activateV2G)
 {/*ALCODESTART::1758276936913*/
 for(GridConnection GC : gcList){
-	GC.f_activateV2GChargingMode(activateV2G, zero_Interface.energyModel.p_timeParameters);
+	GC.f_activateV2GChargingMode(activateV2G, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.p_timeVariables);
 }
 
 //Update variable to change to custom scenario

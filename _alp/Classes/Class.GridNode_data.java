@@ -8,7 +8,7 @@ public class GridNode_data {
 		String gridnode_id;
 		String fid;
 		boolean status;
-		String type;
+		OL_GridNodeType type;
 		String description;
 		double latitude;
 		double longitude;

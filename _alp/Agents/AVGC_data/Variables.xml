@@ -57,7 +57,7 @@
 		<Id>1726584205582</Id>
 		<Name><![CDATA[p_avgHouseHeatingMethod]]></Name>
 		<X>50</X>
-		<Y>248.976</Y>
+		<Y>250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -150,7 +150,7 @@
 --> Overwrite if numbers are available in the project selection agent
 ]]></Description>
 		<X>50</X>
-		<Y>188.976</Y>
+		<Y>190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -214,7 +214,7 @@
 
 https://www.rvo.nl/onderwerpen/elektrisch-vervoer/stand-van-zaken ]]></Description>
 		<X>50</X>
-		<Y>268.976</Y>
+		<Y>293.976</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -244,7 +244,7 @@ https://www.rvo.nl/onderwerpen/elektrisch-vervoer/stand-van-zaken ]]></Descripti
 		<Description><![CDATA[How many houses have installed PV in The Netherlands: 25% (end of 2022)
 https://solarmagazine.nl/nieuws-zonne-energie/i34591/de-harde-cijfers-drenthe-verstevigt-koppositie-38-procent-woningen-heeft-zonnepanelen]]></Description>
 		<X>50</X>
-		<Y>290</Y>
+		<Y>315</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -273,7 +273,7 @@ https://solarmagazine.nl/nieuws-zonne-energie/i34591/de-harde-cijfers-drenthe-ve
 		<Name><![CDATA[p_avgHousePVInstallationPower_kWp]]></Name>
 		<Description><![CDATA[volgens gegevens van het CBS (Centraal Bureau voor de Statistiek) en RVO (Rijksdienst voor Ondernemend Nederland), was het gemiddelde geïnstalleerde piekvermogen van residentiële zonnepanelen in Nederland in 2020 ongeveer 4 kilowatt piek (kWp) per huishouden. --> 4kWp]]></Description>
 		<X>50</X>
-		<Y>310</Y>
+		<Y>335</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2330,7 +2330,7 @@ Voor nu gekozen voor 4185.
 		<Name><![CDATA[p_avgNrOfCarsPerHouse]]></Name>
 		<Description><![CDATA[https://opendata.cbs.nl/#/CBS/nl/dataset/85039NED/table?searchKeywords=motorvoertuigen -> 1.1]]></Description>
 		<X>50</X>
-		<Y>330</Y>
+		<Y>355</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2644,7 +2644,7 @@ https://warmtepomp-panel.nl/afgiftesysteem.html? -> 35 graden afgifte bij -10 gr
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[67.0]]></Code>
+				<Code><![CDATA[52.5 //deviates a some of percentages based on neighborhood]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1768313716399</Id>
@@ -2695,6 +2695,7 @@ OL_GridConnectionInsulationLabel.G, 1.45
 	<Variable Class="Parameter">
 		<Id>1768314894157</Id>
 		<Name><![CDATA[p_solarAbsorptionFloorSurfaceScalingFactor_fr]]></Name>
+		<Description><![CDATA[Roughly aligned with data-analysis/fitting by Zin Li (TU/e PhD) based on measured data of 100 houses in Dalenm during DACS-HW project. Increased by a factor ~2 after manual testing/calibration by Gillis and Naud.]]></Description>
 		<X>520</X>
 		<Y>1070</Y>
 		<Label>
@@ -2709,7 +2710,7 @@ OL_GridConnectionInsulationLabel.G, 1.45
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[0.01]]></Code>
+				<Code><![CDATA[0.04]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1768314894155</Id>
@@ -2724,7 +2725,7 @@ OL_GridConnectionInsulationLabel.G, 1.45
 		<Id>1768486639507</Id>
 		<Name><![CDATA[p_avgSpaceHeatingTotalGasConsumptionShare_fr]]></Name>
 		<X>50</X>
-		<Y>360</Y>
+		<Y>385</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2752,7 +2753,7 @@ OL_GridConnectionInsulationLabel.G, 1.45
 		<Id>1768486762811</Id>
 		<Name><![CDATA[p_avgCookingTotalGasConsumptionShare_fr]]></Name>
 		<X>50</X>
-		<Y>400</Y>
+		<Y>425</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2780,7 +2781,7 @@ OL_GridConnectionInsulationLabel.G, 1.45
 		<Id>1768486764436</Id>
 		<Name><![CDATA[p_avgDHWTotalGasConsumptionShare_fr]]></Name>
 		<X>50</X>
-		<Y>380</Y>
+		<Y>405</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2966,21 +2967,79 @@ FIND SOURCE AND CORRECT THE NUMBERS BEFORE USE!]]></Description>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[/*
+				<Code><![CDATA[
 Map.of(
 OL_GridConnectionInsulationLabel.A, 48.0, 
 OL_GridConnectionInsulationLabel.B, 24.0,
 OL_GridConnectionInsulationLabel.C, 16.0,
 OL_GridConnectionInsulationLabel.D, 10.0, 
-OL_GridConnectionInsulationLabel.E, 6.0,
-OL_GridConnectionInsulationLabel.F, 4.0,
-OL_GridConnectionInsulationLabel.G, 2.0
+OL_GridConnectionInsulationLabel.E, 8.0,
+OL_GridConnectionInsulationLabel.F, 6.0,
+OL_GridConnectionInsulationLabel.G, 4.0
 )
-*/
+
 ]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1768499901664</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1770903314356</Id>
+		<Name><![CDATA[p_buildingDefaultCooldownTimescale_hr]]></Name>
+		<Description><![CDATA[Cooldown timescale as approximately 'measured' on an energy label A, free-standing, wooden house. Modern, terraced and stone houses might have longer cooldown timescale. (meaning it can more effectively buffer heat)]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>520</X>
+		<Y>1210</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[36]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1770903314354</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1771432558638</Id>
+		<Name><![CDATA[p_avgHouseCookingMethod]]></Name>
+		<X>50</X>
+		<Y>269</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[OL_HouseholdCookingMethod]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[OL_HouseholdCookingMethod.GAS]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1771432558636</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>

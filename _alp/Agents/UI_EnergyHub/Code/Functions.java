@@ -198,11 +198,7 @@ double f_initializeUserSavedScenarios(ShapeComboBox combo)
 if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToken() == "") {
 	return;
 }
-
-var repository = UserScenarioRepository.builder()
-    .userId(UUID.fromString(zero_Interface.user.userIdToken()))
-    .modelName(zero_Interface.project_data.project_name())
-    .build();
+UserScenarioRepository repository = f_getUserScenarioRepository();
 
 var scenarioList = repository.listUserScenarios();
 int nbScenarios = scenarioList.size();
@@ -210,7 +206,6 @@ String[] scenarioNames = new String[nbScenarios];
 for (int i = 0; i < nbScenarios; i++) {
 	scenarioNames[i] = scenarioList.get(i).getName();
 }
-
 combo.setItems(scenarioNames);
 /*ALCODEEND*/}
 
@@ -242,10 +237,7 @@ try {
 	v_objectMapper.registerModule(new JavaTimeModule());
 	f_addMixins();
 	
-	var repository = UserScenarioRepository.builder()
-	    .userId(UUID.fromString(zero_Interface.user.userIdToken()))
-	    .modelName(zero_Interface.project_data.project_name())
-        .build();
+	UserScenarioRepository repository = f_getUserScenarioRepository();
       
     var scenarioList = repository.listUserScenarios();   
 
@@ -382,10 +374,7 @@ saveObject.c_orderedPublicChargers = zero_Interface.c_orderedPublicChargers;
 saveObject.c_mappingOfVehiclesPerCharger = zero_Interface.c_mappingOfVehiclesPerCharger;
 saveObject.c_scenarioMap_Current = zero_Interface.c_scenarioMap_Current;
 saveObject.c_scenarioMap_Future = zero_Interface.c_scenarioMap_Future;
-
-List<LinkedHashMap<String, List<I_Vehicle>>> c_additionalVehicleHashMaps = new ArrayList<>();
-
-saveObject.c_additionalVehicleHashMaps = c_additionalVehicleHashMaps;
+saveObject.c_additionalVehicleHashMaps = zero_Interface.c_additionalVehicles;
 
 v_objectMapper = new ObjectMapper();
 v_objectMapper.registerModule(new JavaTimeModule());
@@ -395,16 +384,7 @@ traceln("Model serialisation has been completed.");
 
 traceln("Trying to save to file...");
 try {
-
-	//v_objectMapper.writeValue(new File("energyModel.json"), energyModel);
-
-	//v_objectMapper.writeValue(new File("ModelSave.json"), saveObject);
-
-	var repository = UserScenarioRepository.builder()
-	    .userId(UUID.fromString(zero_Interface.user.userIdToken()))
-	    .modelName(zero_Interface.project_data.project_name())
-        .build();
-    
+	UserScenarioRepository repository = f_getUserScenarioRepository();
 	repository.saveUserScenario(
         scenarioName,
         v_objectMapper.writeValueAsBytes(saveObject)
@@ -625,20 +605,7 @@ zero_Interface.c_orderedPublicChargers = saveObject.c_orderedPublicChargers;
 zero_Interface.c_mappingOfVehiclesPerCharger = saveObject.c_mappingOfVehiclesPerCharger;
 zero_Interface.c_scenarioMap_Current = saveObject.c_scenarioMap_Current;
 zero_Interface.c_scenarioMap_Future = saveObject.c_scenarioMap_Future;
-
-/*
-List<ConnectionOwner> c_COCompanies = findAll(zero_Interface.energyModel.pop_connectionOwners, p -> p.p_connectionOwnerType == OL_ConnectionOwnerType.COMPANY); 
-
-int i = 0;
-for (ConnectionOwner CO : c_COCompanies) {
-	UI_company companyUI = zero_Interface.c_companyUIs.get(CO.p_connectionOwnerIndexNr);
-	companyUI.p_company = CO;
-	companyUI.c_ownedGridConnections = companyUI.p_company.f_getOwnedGridConnections();
-	companyUI.c_additionalVehicles = saveObject.c_additionalVehicleHashMaps.get(i);
-	companyUI.f_setSelectedGCSliders();
-	i++;
-}
-*/
+zero_Interface.c_additionalVehicles = saveObject.c_additionalVehicleHashMaps;
 
 /*ALCODEEND*/}
 
@@ -725,5 +692,25 @@ if(energyHubSliderEAGCs.size() != 3){
 }
 
 return energyHubSliderEAGCs;
+/*ALCODEEND*/}
+
+UserScenarioRepository f_getUserScenarioRepository()
+{/*ALCODESTART::1771423999006*/
+UserScenarioRepository repository;
+try{
+	repository = UserScenarioRepository.builder()
+    .userIdToken(zero_Interface.user.userIdToken())
+    .modelName(zero_Interface.project_data.project_name())
+    .build();
+}
+catch(Exception e) {
+	traceln("Warning: NO correct userIdToken found, trying to read it as a UUID instead!");
+	repository = UserScenarioRepository.builder()
+    .userId(UUID.fromString(zero_Interface.user.userIdToken()))
+    .modelName(zero_Interface.project_data.project_name())
+    .build();
+}
+
+return repository;
 /*ALCODEEND*/}
 
