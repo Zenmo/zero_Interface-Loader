@@ -1769,7 +1769,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 	//Get polygonString for GIS object	
 	String polygonString;
 	if (chargingStation.p_isChargingCentre) {
-		if(dataChargingStation.polygon() != null){
+		if(dataChargingStation.polygon() == null){
 			throw new RuntimeException("Trying to make a charging CENTRE without specifying the polygon, this is only possible for a single charge POLE");
 		}
 		polygonString = dataChargingStation.polygon();
