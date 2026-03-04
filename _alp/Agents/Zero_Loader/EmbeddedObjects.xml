@@ -284,7 +284,7 @@
 				<Name><![CDATA[p_avgOutputTemperatureHydrogenBurner_degC]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_avgVehiclesPerCharger_Centre]]></Name>
+				<Name><![CDATA[p_defaultNrOfVehiclesPerChargerSocket]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgAnnualTravelDistanceVan_km]]></Name>
@@ -330,9 +330,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_v1gProbability]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_avgVehiclesPerCharger_Chargepoint]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgPTPower_kWpm2]]></Name>
@@ -432,6 +429,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_avgHouseCookingMethod]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultNrOfSocketsPerCharger]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>

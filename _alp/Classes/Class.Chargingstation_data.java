@@ -20,7 +20,7 @@ public class Chargingstation_data {
 	boolean is_charging_centre;
 	OL_EnergyAssetType vehicle_type;
 	Integer number_of_chargers;
-	double power_per_charger_kw;
+	Double power_per_charger_kw;
 	boolean initially_active;
 	double latitude;
 	double longitude;
