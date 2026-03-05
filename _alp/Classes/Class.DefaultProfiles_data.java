@@ -18,6 +18,9 @@ public class DefaultProfiles_data {
 	//EPEX data
 	List<Double> epexProfile_eurpMWh;
 	
+	//CO2 emission factor data
+	List<Double> CO2EmissionFactorElectricityImport_kgpkWh;
+	
 	// Various demand profiles
 	List<Double> defaultHouseElectricityDemandProfile_fr;
 	List<Double> defaultHouseHotWaterDemandProfile_fr;

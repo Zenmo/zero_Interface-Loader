@@ -3129,6 +3129,9 @@ double[] a_windProductionProfile_fr = ListUtil.doubleListToArray(defaultProfiles
 //EPEX data
 double[] a_epexProfile_eurpMWh = ListUtil.doubleListToArray(defaultProfiles_data.epexProfile_eurpMWh()); 
 
+//CO2 emission data
+double[] a_CO2EmissionFactorElectricityImport_kgpkWh = ListUtil.doubleListToArray(defaultProfiles_data.CO2EmissionFactorElectricityImport_kgpkWh()); 
+
 //Various demand data
 double[] a_defaultHouseElectricityDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultHouseElectricityDemandProfile_fr());
 double[] a_defaultHouseHotWaterDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultHouseHotWaterDemandProfile_fr());
@@ -3144,6 +3147,9 @@ energyModel.pp_windProduction_fr = f_createEngineProfile("wind_production_fr", a
 
 //Create Epex engine profile
 energyModel.pp_dayAheadElectricityPricing_eurpMWh = f_createEngineProfile("epex_price_eurpMWh", a_arguments_hr, a_epexProfile_eurpMWh, OL_ProfileUnits.PRICE_EURPMWH);
+
+//Create CO2 emission engine profile
+energyModel.pp_CO2EmissionFactorElectricityImport_kgpkWh = f_createEngineProfile("CO2EmissionFactorElectricityImport_kgpkWh", a_arguments_hr, a_CO2EmissionFactorElectricityImport_kgpkWh, OL_ProfileUnits.CO2EMISSION_KGPKWH);
 
 //Create Consumption engine profiles:
 f_createEngineProfile("default_house_electricity_demand_fr", a_arguments_hr, a_defaultHouseElectricityDemandProfile_fr, OL_ProfileUnits.YEARLYTOTALFRACTION);
