@@ -5088,7 +5088,6 @@ else{
 	 											 * avgc_data.p_gas_kWhpm3;
 }
 
-
 double spaceHeatingDemand_kwhpa;
 double hotWaterDemand_kWhpa;
 double cookingDemand_kWhpa;
@@ -5106,9 +5105,11 @@ else{
 	spaceHeatingDemand_kwhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgSpaceHeatingTotalGasConsumptionShare_fr;
 	hotWaterDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgDHWTotalGasConsumptionShare_fr;
 	cookingDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgCookingTotalGasConsumptionShare_fr;
-	
+
 	//hotWaterDemand_kWhpa = f_estimateHouseDHWDemand_kWh(house.p_floorSurfaceArea_m2);
-	//cookingDemand_kWhpa = f_estimateHouseCookingDemand_kWh();
+	if(cookingDemand_kWhpa <= 0){ // If still 0 -> no gas consumption in house, make estimation for cooking 
+		cookingDemand_kWhpa = f_estimateHouseCookingDemand_kWh();
+	}
 }
 
 //Get the house heating preferences
@@ -5133,7 +5134,9 @@ house.f_addHeatManagement(heatingType, false);
 house.f_setHeatingPreferences(heatingPreferences);
 
 //Add hot water demand
-f_addHotWaterDemand(house, hotWaterDemand_kWhpa);
+if(hotWaterDemand_kWhpa > 0){
+	f_addHotWaterDemand(house, hotWaterDemand_kWhpa);
+}
 
 //Add cooking demand
 if(cookingType == null){
