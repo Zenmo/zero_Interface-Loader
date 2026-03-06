@@ -2802,7 +2802,6 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1768571246858</Id>
 		<Name><![CDATA[f_estimateHouseCookingDemand_kWh]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>890</X>
 		<Y>450</Y>
 		<Label>
