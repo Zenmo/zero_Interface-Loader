@@ -5116,7 +5116,7 @@ double maximalTemperatureDifference_K = 30.0; // Approximation
 double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000;
 
 //Check if heating type is known: Else: take avgc
-if(heatingType == null){
+if(heatingType == null || heatingType == OL_GridConnectionHeatingType.UNKNOWN){
 	heatingType = avgc_data.p_avgHouseHeatingMethod;
 }
 
