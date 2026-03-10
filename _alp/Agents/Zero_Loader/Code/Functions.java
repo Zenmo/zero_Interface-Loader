@@ -78,7 +78,7 @@ OL_GridNodeType nodeType;
 GISRegion gisregion;
 
 // Grid operator (for now only one in the area)
-GridOperator Grid_Operator = findFirst(energyModel.pop_gridOperators, p->p.p_actorID.equals(project_data.grid_operator())) ;
+GridOperator Grid_Operator = findFirst(energyModel.pop_gridOperators, p->p.p_actorID.equals(project_data.grid_operator().toString())) ;
 
 for (GridNode_data GN_data : c_gridNode_data) {
 	//    if no scope selected, or if node has 'all scopes' in input file or if the node specific scope is selected (exists in the arrayList)       
@@ -760,7 +760,7 @@ double f_createEnergyActors()
 // Create the grid operator
 GridOperator GO = energyModel.add_pop_gridOperators();
 
-GO.p_actorID = project_data.grid_operator();
+GO.p_actorID = project_data.grid_operator().toString();
 GO.p_hasCongestionPricing = project_data.hasCongestionPricing() != null ? project_data.hasCongestionPricing() : false;
 
 
