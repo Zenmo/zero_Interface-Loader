@@ -403,29 +403,34 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) {
 		gridbattery.set_p_parentNodeElectricID( dataBattery.gridnode_id() );
 	
 	
-		//Set default (initial) operation mode
+		//Get default (initial) operation mode management class
+		I_BatteryManagement batteryAlgorithm;
 		switch (dataBattery.operation_mode()) {
 			case PRICE:
-				gridbattery.f_setBatteryManagement(new J_BatteryManagementPrice(gridbattery, energyModel.p_timeParameters));
+				batteryAlgorithm = new J_BatteryManagementPrice(gridbattery, energyModel.p_timeParameters);
 				break;
 			case PEAK_SHAVING_PARENT_NODE:
-				J_BatteryManagementPeakShaving batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery, energyModel.p_timeParameters);
+				batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery, energyModel.p_timeParameters);
 				GridNode gn = findFirst(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals(dataBattery.gridnode_id()));
 				if (gn == null) {
 					throw new RuntimeException("Could not find GridNode with ID: " + gridbattery.p_parentNodeElectricID + " for GCGridBattery");
 				}
-				batteryAlgorithm.setTarget(gn);
-				gridbattery.f_setBatteryManagement(batteryAlgorithm);
+				((J_BatteryManagementPeakShaving)batteryAlgorithm).setTarget(gn);
+				break;
+			case SELF_CONSUMPTION_PARENT_NODE:
+				batteryAlgorithm = new J_BatteryManagementSelfConsumptionGridNode(gridbattery, energyModel.p_timeParameters);
 				break;
 			case PEAK_SHAVING_COOP:
 				// target agent is still null, should be set at the moment of coop creation
 				batteryAlgorithm = new J_BatteryManagementPeakShaving(gridbattery, energyModel.p_timeParameters);
-				batteryAlgorithm.setTargetType( OL_ResultScope.ENERGYCOOP );
-				gridbattery.f_setBatteryManagement(batteryAlgorithm);
+				((J_BatteryManagementPeakShaving)batteryAlgorithm).setTargetType( OL_ResultScope.ENERGYCOOP );
 				break;
 			default:
 				throw new RuntimeException("Battery Operation Mode: " + dataBattery.operation_mode() + " is not supported for GCGridBattery.");
 		}
+		
+		//Set management
+		gridbattery.f_setBatteryManagement(batteryAlgorithm);
 		
 		//Get initial state
 		gridbattery.v_isActive = dataBattery.initially_active();
@@ -5122,7 +5127,7 @@ double maximalTemperatureDifference_K = 30.0; // Approximation
 double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000;
 
 //Check if heating type is known: Else: take avgc
-if(heatingType == null){
+if(heatingType == null || heatingType == OL_GridConnectionHeatingType.UNKNOWN){
 	heatingType = avgc_data.p_avgHouseHeatingMethod;
 }
 

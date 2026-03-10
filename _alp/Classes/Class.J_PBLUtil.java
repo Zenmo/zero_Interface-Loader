@@ -82,6 +82,20 @@ public class J_PBLUtil {
 		return 5; // floorSurfaceArea_m2 >= 150 -> 5
 	}
 	
+	
+	public static OL_GridConnectionHeatingType getHeatingTypeOptionFromPBLData(String PBLHeatingTypeString) {
+		if (PBLHeatingTypeString == null || PBLHeatingTypeString.equals("")){ return OL_GridConnectionHeatingType.UNKNOWN;}
+		if (PBLHeatingTypeString.equals("HR")){ return OL_GridConnectionHeatingType.GAS_BURNER;}
+		if (PBLHeatingTypeString.equals("gebiedsoptie")){ return OL_GridConnectionHeatingType.UNKNOWN;}
+		if (PBLHeatingTypeString.equals("Pellet")){ return OL_GridConnectionHeatingType.UNKNOWN;}
+		if (PBLHeatingTypeString.contains("WP")){ return OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP;}//eWP_lw (lucht water), of eWP_ww (water water)
+		traceln("Uknown PBL heating string (" + PBLHeatingTypeString + ") found! Converted into UNKOWN heating type.");
+		return OL_GridConnectionHeatingType.UNKNOWN;
+	}
+	
+	
+	
+	//Support functions
 	private static String getOLTypeString(String number) {
 		return "TYPE_" + number;
 	}
