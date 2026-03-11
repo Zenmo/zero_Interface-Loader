@@ -39,6 +39,10 @@ public ShapeSlider getSliderRooftopPVHouses_pct(){
 	return this.sl_rooftopPVHouses_pct;
 }
 
+public ShapeSlider getSliderHouseholdPVResidentialArea_pct(){
+	return this.sl_householdPVResidentialArea_pct;
+}
+
 public ShapeSlider getSliderHouseholdBatteriesResidentialArea_pct(){
 	return this.sl_householdBatteriesResidentialArea_pct;
 }
