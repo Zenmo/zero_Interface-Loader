@@ -429,11 +429,11 @@ else {
 		((J_EAStorageElectric)batteryAsset).setStorageCapacity_kWh(setBatteryCapacity_kWh, GC);
 		((J_EAStorageElectric)batteryAsset).setCapacityElectric_kW(c_rate * setBatteryCapacity_kWh);
 	}
-}
-
-//Add battery algorithm if it is not present
-if(GC.f_getBatteryManagement() == null){
-	GC.f_setBatteryManagement(new J_BatteryManagementSelfConsumption(GC, zero_Interface.energyModel.p_timeParameters));
+	
+	//Add battery algorithm if it is not present
+	if(GC.f_getBatteryManagement() == null){
+		GC.f_setBatteryManagement(new J_BatteryManagementSelfConsumption(GC, zero_Interface.energyModel.p_timeParameters));
+	}
 }
 
 /*ALCODEEND*/}

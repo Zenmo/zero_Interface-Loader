@@ -23,3 +23,7 @@ public ShapeSlider getSl_electricityDemandCompanyReduction(){
 public ShapeSlider getSl_mobilityDemandCompanyReduction(){
 	return this.sl_mobilityDemandCompanyReduction;
 }
+
+public ShapeSlider getSl_hydrogenTrucksCompany(){
+	return this.sl_hydrogenTrucksCompany;
+}
