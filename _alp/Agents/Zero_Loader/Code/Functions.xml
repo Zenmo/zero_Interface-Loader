@@ -320,6 +320,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1726584205809</Id>
 		<Name><![CDATA[f_addEnergyProduction]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>190</Y>
 		<Label>
@@ -1501,6 +1502,14 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[cookingType]]></Name>
 			<Type><![CDATA[OL_HouseholdCookingMethod]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[orientation]]></Name>
+			<Type><![CDATA[OL_Orientation]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[roofPitch_deg]]></Name>
+			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -2744,7 +2753,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1768486498278</Id>
@@ -2854,6 +2863,138 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[gn]]></Name>
 			<Type><![CDATA[GridNode]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[orientation]]></Name>
+			<Type><![CDATA[OL_Orientation]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[roofPitch_deg]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1773414911038</Id>
+		<Name><![CDATA[f_addPVProductionAsset]]></Name>
+		<X>1510</X>
+		<Y>180</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[parentGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[asset_name]]></Name>
+			<Type><![CDATA[String]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[installedPower_kW]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[orientation]]></Name>
+			<Type><![CDATA[OL_Orientation]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[roofPitch_deg]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>J_ProfilePointer</ReturnType>
+		<Id>1773414911040</Id>
+		<Name><![CDATA[f_determinePVTProfilePointer]]></Name>
+		<X>1530</X>
+		<Y>220</Y>
+		<Label>
+			<X>12</X>
+			<Y>1</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[orientation]]></Name>
+			<Type><![CDATA[OL_Orientation]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[roofPitch_deg]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1773414911042</Id>
+		<Name><![CDATA[f_addWindProductionAsset]]></Name>
+		<X>1510</X>
+		<Y>160</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[parentGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[asset_name]]></Name>
+			<Type><![CDATA[String]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[installedPower_kW]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1773414911044</Id>
+		<Name><![CDATA[f_addPTProductionAsset]]></Name>
+		<X>1510</X>
+		<Y>200</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[parentGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[asset_name]]></Name>
+			<Type><![CDATA[String]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[installedPower_kW]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[orientation]]></Name>
+			<Type><![CDATA[OL_Orientation]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[roofPitch_deg]]></Name>
+			<Type><![CDATA[int]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

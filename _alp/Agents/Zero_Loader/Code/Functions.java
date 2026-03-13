@@ -304,7 +304,8 @@ for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data))
 			} 
 		}
 		if(gridNodeProfileLoaderType != OL_GridNodeProfileLoaderType.INCLUDE_PV || gridNodeProfileLoaderType != OL_GridNodeProfileLoaderType.NET_LOAD){
-			f_addEnergyProduction(solarpark, OL_EnergyAssetType.PHOTOVOLTAIC, "Solar farm" , dataSolarfarm.capacity_electric_kw());
+			f_addPVProductionAsset(solarpark, "Solar farm" , dataSolarfarm.capacity_electric_kw(), dataSolarfarm.orientation(), dataSolarfarm.tilt_angle_deg());
+			//f_addEnergyProduction(solarpark, OL_EnergyAssetType.PHOTOVOLTAIC, "Solar farm" , dataSolarfarm.capacity_electric_kw());
 		}
 		
 		//Set owner
@@ -611,7 +612,8 @@ for (Windfarm_data dataWindfarm : f_getWindfarmsInSubScope(c_windfarm_data)) {
 		windfarm.v_isActive = dataWindfarm.initially_active();
 		
 		//Create EA for the windturbine GC
-		f_addEnergyProduction(windfarm, OL_EnergyAssetType.WINDMILL, "Windmill onshore", dataWindfarm.capacity_electric_kw());
+		f_addWindProductionAsset(windfarm, "Windmill onshore", dataWindfarm.capacity_electric_kw());
+		//f_addEnergyProduction(windfarm, OL_EnergyAssetType.WINDMILL, "Windmill onshore", dataWindfarm.capacity_electric_kw());
 		
 		//Set owner
 		ConnectionOwner owner;
@@ -1018,7 +1020,7 @@ for (Parcel_data dataParcel : c_parcel_data) {
 
 double f_addEnergyProduction(GridConnection parentGC,OL_EnergyAssetType asset_type,String asset_name,double installedPower_kW)
 {/*ALCODESTART::1726584205809*/
-double assetCapacity_kW				= 0;
+double assetCapacity_kW = 0;
 J_TimeParameters timeParameters = energyModel.p_timeParameters;
 J_ProfilePointer profilePointer = null;
 OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
@@ -1529,7 +1531,8 @@ if (gridNodeProfileLoaderType == OL_GridNodeProfileLoaderType.INCLUDE_PV || grid
 	pv_installed_kwp = 0.0;
 }
 if(pv_installed_kwp != null && pv_installed_kwp > 0){
-	f_addEnergyProduction(companyGC, OL_EnergyAssetType.PHOTOVOLTAIC, "Rooftop Solar", pv_installed_kwp);
+	f_addPVProductionAsset(companyGC, "Rooftop Solar", pv_installed_kwp, OL_Orientation.SOUTH, 35.0);
+	//f_addEnergyProduction(companyGC, OL_EnergyAssetType.PHOTOVOLTAIC, "Rooftop Solar", pv_installed_kwp);
 	
 	current_scenario_list.setCurrentPV_kW(roundToInt(pv_installed_kwp));
 	future_scenario_list.setPlannedPV_kW(roundToInt(pv_installed_kwp));
@@ -2367,7 +2370,8 @@ if (gridConnection.getSupply().getHasSupply() != null && gridConnection.getSuppl
 		current_scenario_list.setCurrentPV_kW(gridConnection.getSupply().getPvInstalledKwp());
 	} else if (gridConnection.getSupply().getPvInstalledKwp() != null && gridConnection.getSupply().getPvInstalledKwp() > 0){			
 		//gridConnection.getSupply().getPvOrientation(); // Wat doen we hier mee????? Nog niets!
-		f_addEnergyProduction(companyGC, OL_EnergyAssetType.PHOTOVOLTAIC, "Rooftop Solar", gridConnection.getSupply().getPvInstalledKwp());
+		f_addPVProductionAsset(companyGC, "Rooftop Solar", (double) gridConnection.getSupply().getPvInstalledKwp(), OL_Orientation.SOUTH, 35.0); //NEEDS FIXING
+		//f_addEnergyProduction(companyGC, OL_EnergyAssetType.PHOTOVOLTAIC, "Rooftop Solar", gridConnection.getSupply().getPvInstalledKwp());
 		
 		//add to scenario: current
 		current_scenario_list.setCurrentPV_kW(gridConnection.getSupply().getPvInstalledKwp());
@@ -2375,7 +2379,8 @@ if (gridConnection.getSupply().getHasSupply() != null && gridConnection.getSuppl
 	} 	
 	//Wind
 	if (gridConnection.getSupply().getWindInstalledKw() != null && gridConnection.getSupply().getWindInstalledKw() > 0){
-		f_addEnergyProduction(companyGC, OL_EnergyAssetType.WINDMILL, "Wind mill", gridConnection.getSupply().getWindInstalledKw());
+		f_addWindProductionAsset(companyGC, "Wind mill", gridConnection.getSupply().getWindInstalledKw());
+		//f_addEnergyProduction(companyGC, OL_EnergyAssetType.WINDMILL, "Wind mill", gridConnection.getSupply().getWindInstalledKw());
 
 		//add to scenario: current
 		current_scenario_list.setCurrentWind_kW(gridConnection.getSupply().getWindInstalledKw());
@@ -3256,7 +3261,8 @@ else { //INCLUDE_PV or EXCLUDE_PV
 			pvPower_kW = 2.5 * (maxFeedin_kWh/energyModel.p_timeParameters.getTimeStep_h()); // Estimation needed for pv power
 			traceln("PV Power has been estimated!");
 			f_createPreprocessedElectricityProfile_PV(GC_GridNode_profile, a_yearlyElectricityDelivery_kWh, a_yearlyElectricityFeedin_kWh, null, pvPower_kW, null);
-			f_addEnergyProduction(GC_GridNode_profile, OL_EnergyAssetType.PHOTOVOLTAIC, "Total current Solar on GridNode", pvPower_kW);
+			f_addPVProductionAsset(GC_GridNode_profile, "Total current Solar on GridNode", pvPower_kW, OL_Orientation.SOUTH, 35.0);
+			//f_addEnergyProduction(GC_GridNode_profile, OL_EnergyAssetType.PHOTOVOLTAIC, "Total current Solar on GridNode", pvPower_kW);
 		}
 		else { //EXCLUDE_PV
 			throw new RuntimeException("Grid node profile contains feed-in but no PV power is found in Building_data for EXCLUDE_PV. This is not allowed.");
@@ -3268,7 +3274,8 @@ else { //INCLUDE_PV or EXCLUDE_PV
 		}
 		f_createPreprocessedElectricityProfile_PV(GC_GridNode_profile, a_yearlyElectricityDelivery_kWh, a_yearlyElectricityFeedin_kWh, null, pvPower_kW, null);
 		if (gridnode.p_profileType == OL_GridNodeProfileLoaderType.INCLUDE_PV){
-			f_addEnergyProduction(GC_GridNode_profile, OL_EnergyAssetType.PHOTOVOLTAIC, "Total current Solar on GridNode", pvPower_kW);
+			f_addPVProductionAsset(GC_GridNode_profile, "Total current Solar on GridNode", pvPower_kW, OL_Orientation.SOUTH, 35.0);
+			//f_addEnergyProduction(GC_GridNode_profile, OL_EnergyAssetType.PHOTOVOLTAIC, "Total current Solar on GridNode", pvPower_kW);
 		}
 	}
 }
@@ -3569,7 +3576,7 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.v_liveAssetsMetaData.PVPotential_kW = GCH.v_liveAssetsMetaData.initialPV_kW > 0 ? GCH.v_liveAssetsMetaData.initialPV_kW : houseBuildingData.pv_potential_kwp(); // To prevent sliders from changing outcomes
 
 	//Create and add EnergyAssets
-	f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa(), houseBuildingData.heating_type(), houseBuildingData.cooking_type());
+	f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa(), houseBuildingData.heating_type(), houseBuildingData.cooking_type(), houseBuildingData.roof_orientation(), houseBuildingData.roof_pitch_deg());
 	
 	i++;
 }
@@ -3584,7 +3591,7 @@ for(GCHouse GCH : energyModel.Houses){
 //traceln("Total space heat demand houses input " + roundToDecimal(totalSpaceHeatDemand_kwhpa/1000000,3) + "GWh");
 /*ALCODEEND*/}
 
-double f_addEnergyAssetsToHouses(GCHouse house,Double electricityDemand_kwhpa,Double gasDemand_m3pa,OL_GridConnectionHeatingType heatingType,OL_HouseholdCookingMethod cookingType)
+double f_addEnergyAssetsToHouses(GCHouse house,Double electricityDemand_kwhpa,Double gasDemand_m3pa,OL_GridConnectionHeatingType heatingType,OL_HouseholdCookingMethod cookingType,OL_Orientation orientation,double roofPitch_deg)
 {/*ALCODESTART::1749728889986*/
 //Add generic electricity demand profile 
 GridNode gn = findFirst(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals( house.p_parentNodeElectricID));
@@ -3603,7 +3610,7 @@ f_addHeatAssetsToHouses(house, gasDemand_m3pa, heatingType, cookingType);
 
 
 //Add pv
-f_addPVToHouses(house, gn);
+f_addPVToHouses(house, gn, orientation, roofPitch_deg);
 
 //Add cars
 f_addCarsToHouses(house);
@@ -5216,7 +5223,7 @@ for (Windfarm_data windpark : c_windfarm_data){
 return totalPVPower_kW;
 /*ALCODEEND*/}
 
-double f_addPVToHouses(GCHouse house,GridNode gn)
+double f_addPVToHouses(GCHouse house,GridNode gn,OL_Orientation orientation,double roofPitch_deg)
 {/*ALCODESTART::1770037586816*/
 double installedRooftopSolar_kW = house.v_liveAssetsMetaData.initialPV_kW != null ? house.v_liveAssetsMetaData.initialPV_kW : 0;
 
@@ -5225,7 +5232,60 @@ if (gn.p_profileType == OL_GridNodeProfileLoaderType.INCLUDE_PV || gn.p_profileT
 }
 
 if (installedRooftopSolar_kW > 0) {
-	f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW );
+	f_addPVProductionAsset(house, "Residential Solar", installedRooftopSolar_kW, orientation, roofPitch_deg);
+	//f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW);
 }
+/*ALCODEEND*/}
+
+double f_addPVProductionAsset(GridConnection parentGC,String asset_name,double installedPower_kW,OL_Orientation orientation,double roofPitch_deg)
+{/*ALCODESTART::1773414911038*/
+J_TimeParameters timeParameters = energyModel.p_timeParameters;
+OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
+J_ProfilePointer profilePointer = f_determinePVTProfilePointer(orientation, roofPitch_deg);
+
+J_EAProduction production_asset = new J_EAProduction(parentGC, OL_EnergyAssetType.PHOTOVOLTAIC, asset_name, energyCarrier, installedPower_kW, timeParameters, profilePointer);
+/*ALCODEEND*/}
+
+J_ProfilePointer f_determinePVTProfilePointer(OL_Orientation orientation,double roofPitch_deg)
+{/*ALCODESTART::1773414911040*/
+J_ProfilePointer profilePointer = null;
+
+switch (orientation){
+	case EASTWEST:
+		if (roofPitch_deg <= 15 && roofPitch_deg >= 0){
+			profilePointer = energyModel.pp_PVProduction15DegEastWest_fr;
+		}
+		else {
+			throw new RuntimeException("ProfilePointer for a combination of " + orientation + " and " + roofPitch_deg + " is not supported (yet)!");
+		}
+	case SOUTH:
+		if (roofPitch_deg <= 35 && roofPitch_deg >= 0){
+			profilePointer = energyModel.pp_PVProduction35DegSouth_fr;
+		}
+		else {
+			throw new RuntimeException("ProfilePointer for a combination of " + orientation + " and " + roofPitch_deg + " is not supported (yet)!");
+		}
+}
+
+return profilePointer;
+/*ALCODEEND*/}
+
+double f_addWindProductionAsset(GridConnection parentGC,String asset_name,double installedPower_kW)
+{/*ALCODESTART::1773414911042*/
+J_TimeParameters timeParameters = energyModel.p_timeParameters;
+OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
+J_ProfilePointer profilePointer = energyModel.pp_windProduction_fr;
+
+J_EAProduction production_asset = new J_EAProduction(parentGC, OL_EnergyAssetType.WINDMILL, asset_name, energyCarrier, installedPower_kW, timeParameters, profilePointer);
+/*ALCODEEND*/}
+
+double f_addPTProductionAsset(GridConnection parentGC,String asset_name,double installedPower_kW,OL_Orientation orientation,int roofPitch_deg)
+{/*ALCODESTART::1773414911044*/
+//CONCEPT VERSION
+J_TimeParameters timeParameters = energyModel.p_timeParameters;
+OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.HEAT;
+J_ProfilePointer profilePointer = f_determinePVTProfilePointer(orientation, roofPitch_deg);
+
+J_EAProduction production_asset = new J_EAProduction(parentGC, OL_EnergyAssetType.PHOTOVOLTAIC, asset_name, energyCarrier, installedPower_kW, timeParameters, profilePointer);
 /*ALCODEEND*/}
 
