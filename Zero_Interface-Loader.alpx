@@ -230,6 +230,11 @@
 				<Id>1761915047244</Id>
 				<Name><![CDATA[DataClasses]]></Name>
 			</Folder>
+			<Folder>
+				<Id>1773320047333</Id>
+				<Name><![CDATA[GridOperator Data]]></Name>
+				<ParentId>1761915047244</ParentId>
+			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
 		<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
@@ -409,6 +414,23 @@
 			<JavaClass>
 				<Id>1768469188881</Id>
 				<Name><![CDATA[J_PBLUtil]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1773320069853</Id>
+				<Name><![CDATA[J_GridOperatorDataEnexis]]></Name>
+				<Folder>1773320047333</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1773320069960</Id>
+				<Name><![CDATA[J_GridOperatorDataLiander]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Folder>1773320047333</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1773320069964</Id>
+				<Name><![CDATA[J_GridOperatorDataStedin]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Folder>1773320047333</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
