@@ -1700,6 +1700,12 @@ while ( nbOfPrivateParkedEV < desiredNbOfPrivateParkedEV){
 	double capacityElectricity_kW = randomTrue(0.6) ? randomTrue(0.4) ? 3.2 : 5.6 : 11.0;
 	double storageCapacity_kWh = uniform_discr(65,90);
 	J_EAEV ev = new J_EAEV(petroleumFuelVehicle.getOwner(), capacityElectricity_kW, storageCapacity_kWh, 1, zero_Interface.energyModel.p_timeParameters, energyConsumption_kWhpkm, 1, OL_EnergyAssetType.ELECTRIC_VEHICLE, triptracker, availability);	
+	
+	//Check if charging management is present if not: add default management
+	if(((GridConnection)petroleumFuelVehicle.getOwner()).f_getCurrentChargingType() == OL_ChargingAttitude.NONE){
+		((GridConnection)petroleumFuelVehicle.getOwner()).f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
+	}
+	
 	gcListOrderedVehiclesPrivateParking.add(ev);
 	zero_Interface.c_orderedVehiclesPrivateParking.add(ev);
 	nbOfPrivateParkedEV++;
