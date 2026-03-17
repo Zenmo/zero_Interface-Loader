@@ -43,15 +43,17 @@ rb_heatingTypePrivateUI.setValue(nr_currentHeatingType, true);
 //Electricity savings
 sl_electricityDemandCompanyReduction.setValue(p_scenarioSettings_Future.getPlannedElectricitySavings_pct(), true);
 
-//Connection capacity (Delivery)
-sl_GCCapacityCompany.setValue(p_scenarioSettings_Future.getRequestedContractDeliveryCapacity_kW(), true);
-
-//Connection capacity (Feedin)
-sl_GCCapacityCompany_Feedin.setValue(p_scenarioSettings_Future.getRequestedContractFeedinCapacity_kW(), true);
-
 //Connection capacity (Physical)
 v_physicalConnectionCapacity_kW = p_scenarioSettings_Future.getRequestedPhysicalConnectionCapacity_kW();
-p_gridConnection.v_liveConnectionMetaData.physicalCapacity_kW = v_physicalConnectionCapacity_kW;
+double requestedContractDeliveryCapacity_kW = p_scenarioSettings_Future.getRequestedContractDeliveryCapacity_kW();
+double requestedContractFeedinCapacity_kW = p_scenarioSettings_Future.getRequestedContractFeedinCapacity_kW();
+p_gridConnection.v_liveConnectionMetaData.setCapacities_kW(requestedContractDeliveryCapacity_kW, requestedContractFeedinCapacity_kW, v_physicalConnectionCapacity_kW);
+
+//Connection capacity (Delivery)
+sl_GCCapacityCompany.setValue(requestedContractDeliveryCapacity_kW, true);
+
+//Connection capacity (Feedin)
+sl_GCCapacityCompany_Feedin.setValue(requestedContractFeedinCapacity_kW, true);
 
 //Solar panel power
 sl_rooftopPVCompany.setValue(p_scenarioSettings_Future.getPlannedPV_kW(), true);
@@ -174,15 +176,18 @@ rb_heatingTypePrivateUI.setValue(nr_currentHeatingType, true);
 //Electricity savings
 sl_electricityDemandCompanyReduction.setValue(0, true);
 
-//Connection capacity (Delivery)
-sl_GCCapacityCompany.setValue(p_scenarioSettings_Current.getCurrentContractDeliveryCapacity_kW(), true);
-
-//Connection capacity (Feedin)
-sl_GCCapacityCompany_Feedin.setValue(p_scenarioSettings_Current.getCurrentContractFeedinCapacity_kW(), true);
-
 //Connection capacity (Physical)
 v_physicalConnectionCapacity_kW = p_scenarioSettings_Current.getCurrentPhysicalConnectionCapacity_kW();
-p_gridConnection.v_liveConnectionMetaData.physicalCapacity_kW = v_physicalConnectionCapacity_kW;
+double currentContractDeliveryCapacity_kW = p_scenarioSettings_Current.getCurrentContractDeliveryCapacity_kW();
+double currentContractFeedinCapacity_kW = p_scenarioSettings_Current.getCurrentContractFeedinCapacity_kW();
+p_gridConnection.v_liveConnectionMetaData.setCapacities_kW(currentContractDeliveryCapacity_kW, currentContractFeedinCapacity_kW, v_physicalConnectionCapacity_kW);
+
+//Connection capacity (Delivery)
+sl_GCCapacityCompany.setValue(currentContractDeliveryCapacity_kW, true);
+
+//Connection capacity (Feedin)
+sl_GCCapacityCompany_Feedin.setValue(currentContractFeedinCapacity_kW, true);
+
 
 //Solar panel power
 sl_rooftopPVCompany.setValue(v_minPVSlider, true);
@@ -391,21 +396,23 @@ GC.f_addHeatManagement(selectedHeatingType, false);
 
 double f_setGCCapacity(GridConnection GC,double setGridConnectionCapacity_kW,String type)
 {/*ALCODESTART::1713537591117*/
-GC.f_nfatoSetConnectionCapacity(true, zero_Interface.energyModel.p_timeVariables);
+double contractedDeliveryCapacity_kW = GC.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW();
+double contractedFeedinCapacity_kW = GC.v_liveConnectionMetaData.getContractedFeedinCapacity_kW();
+double physicalCapacity_kW = GC.v_liveConnectionMetaData.getPhysicalCapacity_kW();
 
 switch(type){
 	case "DELIVERY":
-		GC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = setGridConnectionCapacity_kW;
+		contractedDeliveryCapacity_kW = setGridConnectionCapacity_kW;
 		break;
 	case "FEEDIN":
-		GC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = setGridConnectionCapacity_kW;
+		contractedFeedinCapacity_kW = setGridConnectionCapacity_kW;
 		break;
 	case "PHYSICAL":
-		GC.v_liveConnectionMetaData.physicalCapacity_kW = setGridConnectionCapacity_kW;
+		physicalCapacity_kW = setGridConnectionCapacity_kW;
 		break;
 }
 
-GC.f_nfatoSetConnectionCapacity(false, zero_Interface.energyModel.p_timeVariables);
+GC.v_liveConnectionMetaData.setCapacities_kW(contractedDeliveryCapacity_kW, contractedFeedinCapacity_kW, physicalCapacity_kW);
 /*ALCODEEND*/}
 
 double f_setBattery(GridConnection GC,double setBatteryCapacity_kWh)
@@ -1562,9 +1569,6 @@ parentGC.v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<GridConnection
 
 double f_setSelectedGCSliders()
 {/*ALCODESTART::1725439625846*/
-//Reset GC capacities to without NFATO values
-p_gridConnection.f_nfatoSetConnectionCapacity(true, zero_Interface.energyModel.p_timeVariables);
-	
 //Initialize slider presets to selected GC (min, max, etc.)
 f_setSliderPresets();
 
@@ -1626,10 +1630,10 @@ else{
 }
 
 //Find the current Connection capacity (delivery)
-int GCContractCapacityCurrent_Delivery = roundToInt(p_gridConnection.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+double GCContractCapacityCurrent_Delivery = p_gridConnection.v_liveConnectionMetaData.getDefaultContractedDeliveryCapacity_kW();
 
 //Find the current Connection capacity (feedin)
-int GCContractCapacityCurrent_Feedin = roundToInt(p_gridConnection.v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+double GCContractCapacityCurrent_Feedin = p_gridConnection.v_liveConnectionMetaData.getDefaultContractedFeedinCapacity_kW();
 
 //Set the nfato values
 f_getNFATOValues();
@@ -1742,9 +1746,6 @@ sl_petroleumFuelTrucksCompany.setValue(nbPetroleumFueltrucksCurrent, false);
 v_nbEVTrucks = nbEtrucksCurrent;
 v_nbHydrogenTrucks = nbHydrogentrucksCurrent;
 v_nbPetroleumFuelTrucks = nbPetroleumFueltrucksCurrent;
-
-//Add nfato again
-p_gridConnection.f_nfatoSetConnectionCapacity(false, zero_Interface.energyModel.p_timeVariables);
 /*ALCODEEND*/}
 
 double f_selectGCOnMainInterface()
@@ -1865,9 +1866,9 @@ sl_GCCapacityCompany_Feedin.setValue(v_defaultGCCapacitySlider_Feedin, false);
 
 double f_getNFATOValues()
 {/*ALCODESTART::1727884380899*/
-v_NFATO_active = p_gridConnection.v_enableNFato;
-v_NFATO_kW_delivery = p_gridConnection.v_liveConnectionMetaData.contractedDeliveryCapacity_kW - v_defaultGCCapacitySlider;
-v_NFATO_kW_feedin = p_gridConnection.v_liveConnectionMetaData.contractedFeedinCapacity_kW- v_defaultGCCapacitySlider_Feedin;
+v_NFATO_active = p_gridConnection.v_liveConnectionMetaData.hasCapacitySharingContract();
+v_NFATO_kW_delivery = p_gridConnection.v_liveConnectionMetaData.getCurrentSharedDeliveryCapacity_kW();
+v_NFATO_kW_feedin = p_gridConnection.v_liveConnectionMetaData.getCurrentSharedFeedinCapacity_kW();
 
 if(v_NFATO_kW_delivery > 0){
 	t_GCCapacityCompany_delivery_nfato.setColor(green);

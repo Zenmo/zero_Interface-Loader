@@ -21,26 +21,57 @@ public class J_GridOperatorDataEnexis implements I_GridOperatorData  {
 		//Vraag: Gecontracteerd vermogen kosten dan gelijk aan delivery kW + feedin kW ? Wordt niet vermeld.
 	*/
 	
-	Map<String, Double> periodicalPhyscialConnectionCapacityCostsTable_eurpyr = Map.of(
+	double vat_fr = 0.21; // 21% BTW
+	
+	double measurementServiceCostSmallConnection_eurpday = 0.04183;
+	Map<String, Double> periodicalPhyscialConnectionCapacityCostsTable_eurpyr = Map.ofEntries(
 			//Small
-			"> ", 381.0,			
-			"> ", 381.0,
-			"> ", 381.0,
-			"> ", 381.0,
-			"> ", 381.0,
-			"> ", 381.0,
+			Map.entry("t/m 1 x 10 A (onbemeten)", 0.11720*365),	
+			Map.entry("t/m 1 x 10 A", (0.11720 + measurementServiceCostSmallConnection_eurpday)*365),	
+			Map.entry("> 1 x 10 A t/m 3 x 25 A / 1 x 80 A (onbemeten)", 0.11720*365),			
+			Map.entry("> 1 x 10 A t/m 3 x 25 A / 1 x 80 A", (0.11720 + measurementServiceCostSmallConnection_eurpday)*365),
+			Map.entry("> 3 x 25 A t/m 3 x 35 A", (0.15435 + measurementServiceCostSmallConnection_eurpday)*365),
+			Map.entry("> 3 x 35 A t/m 3 x 50 A", (0.15435 + measurementServiceCostSmallConnection_eurpday)*365),
+			Map.entry("> 3 x 50 A t/m 3 x 63 A", (0.15435 + measurementServiceCostSmallConnection_eurpday)*365),
+			Map.entry("> 3 x 63 A t/m 3 x 80 A", (0.15435 + measurementServiceCostSmallConnection_eurpday)*365),
 			
 			//Large
-			"> 3 x 80 A t/m 3 x 250 A (173 kVA)", 381.0,
-			"> 3 x 250 A (173 kVA) t/m 1.750 kVA", 1653.0,
-			"> 1.750 kVA t/m 3 MVA", 4560.0,
-			"> 3 MVA t/m 6 MVA", 4560.0,
-			"> 6 MVA t/m 10 MVA", 5351.0,
-			"> 6 MVA N-0 t/m 10 MVA N-0", 5351.0, //MAATWERK -> assumed same as 6-10 MVA.
-			"> 10 MVA", 5351.0 //MAATWERK -> assumed same as 6-10 MVA.
+			Map.entry("> 3 x 80 A t/m 3 x 250 A (173 kVA)", 381.0),
+			Map.entry("> 3 x 250 A (173 kVA) t/m 1.750 kVA", 1653.0),
+			Map.entry("> 1.750 kVA t/m 3 MVA", 4560.0),
+			Map.entry("> 3 MVA t/m 6 MVA", 4560.0),
+			Map.entry("> 6 MVA t/m 10 MVA", 5351.0),
+			Map.entry("> 6 MVA N-0 t/m 10 MVA N-0", 5351.0), //MAATWERK -> assumed same as 6-10 MVA.
+			Map.entry("> 10 MVA", 5351.0) //MAATWERK -> assumed same as 6-10 MVA.
 			);
+	
 	//Map<String, Double> periodicalAdditionalCableLengthCostsTable_eurpyr = new HashMap(); // Ignored for now.
 	Map<String, Double> periodicalPhyscialConnectionCapacityTable = new HashMap();
+	
+	double transportCostsVastRecht_smallConnections_eurpday = 0.04931;
+	Map<String, Double> transportCostsTable_smallConnections_eurpday = Map.ofEntries(
+			//Small
+			Map.entry("t/m 1 x 10 A (onbemeten)", 0.10865 + transportCostsVastRecht_smallConnections_eurpday),	
+			Map.entry("t/m 1 x 10 A", 0.10865 + transportCostsVastRecht_smallConnections_eurpday),	
+			Map.entry("> 1 x 10 A t/m 3 x 25 A / 1 x 80 A (onbemeten)", 0.86926 + transportCostsVastRecht_smallConnections_eurpday),			
+			Map.entry("> 1 x 10 A t/m 3 x 25 A / 1 x 80 A", 0.86926 + transportCostsVastRecht_smallConnections_eurpday),
+			Map.entry("> 3 x 25 A t/m 3 x 35 A", 4.34630 + transportCostsVastRecht_smallConnections_eurpday),
+			Map.entry("> 3 x 35 A t/m 3 x 50 A", 6.51945 + transportCostsVastRecht_smallConnections_eurpday),
+			Map.entry("> 3 x 50 A t/m 3 x 63 A", 8.69260 + transportCostsVastRecht_smallConnections_eurpday),
+			Map.entry("> 3 x 63 A t/m 3 x 80 A", 10.86575 + transportCostsVastRecht_smallConnections_eurpday)
+			
+			//Large
+			/*
+			Map.entry("> 3 x 80 A t/m 3 x 250 A (173 kVA)", 381.0),
+			Map.entry("> 3 x 250 A (173 kVA) t/m 1.750 kVA", 1653.0),
+			Map.entry("> 1.750 kVA t/m 3 MVA", 4560.0),
+			Map.entry("> 3 MVA t/m 6 MVA", 4560.0),
+			Map.entry("> 6 MVA t/m 10 MVA", 5351.0),
+			Map.entry("> 6 MVA N-0 t/m 10 MVA N-0", 5351.0), //MAATWERK -> assumed same as 6-10 MVA.
+			Map.entry("> 10 MVA", 5351.0) //MAATWERK -> assumed same as 6-10 MVA.
+			);
+			*/
+			);
 	/**
      * Default constructor
      */

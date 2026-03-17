@@ -9,10 +9,9 @@ for ( GCEnergyProduction GCEP : gcListProduction) {
 				GCEP.f_setActive(true, zero_Interface.energyModel.p_timeVariables);
 			}
 			
-			double solarFieldPower = (double)roundToInt(hectare * zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha);
-			j_ea.setCapacityElectric_kW(solarFieldPower, GCEP);
-			GCEP.v_liveConnectionMetaData.physicalCapacity_kW = solarFieldPower;
-			GCEP.v_liveConnectionMetaData.contractedFeedinCapacity_kW = solarFieldPower;
+			double solarFieldPower_kW = (double)roundToInt(hectare * zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha);
+			j_ea.setCapacityElectric_kW(solarFieldPower_kW, GCEP);
+			GCEP.v_liveConnectionMetaData.setCapacities_kW(GCEP.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW(), solarFieldPower_kW, solarFieldPower_kW);
 			
 			if(hectare == 0){
 				GCEP.f_setActive(false, zero_Interface.energyModel.p_timeVariables);
@@ -102,9 +101,9 @@ for ( GCEnergyProduction GCEP : gcListProduction) {
 			if (!GCEP.v_isActive) {
 				GCEP.f_setActive(true, zero_Interface.energyModel.p_timeVariables);
 			}
-			j_ea.setCapacityElectric_kW(roundToInt(1000*AllocatedWindPower_MW), GCEP);
-			GCEP.v_liveConnectionMetaData.physicalCapacity_kW = (double)roundToInt(1000*AllocatedWindPower_MW);
-			GCEP.v_liveConnectionMetaData.contractedFeedinCapacity_kW = (double)roundToInt(1000*AllocatedWindPower_MW);
+			double setCapacity_kW = roundToInt(1000*AllocatedWindPower_MW);
+			j_ea.setCapacityElectric_kW(setCapacity_kW, GCEP);
+			GCEP.v_liveConnectionMetaData.setCapacities_kW(GCEP.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW(), setCapacity_kW, setCapacity_kW);
 			
 			if(AllocatedWindPower_MW == 0){
 				GCEP.f_setActive(false, zero_Interface.energyModel.p_timeVariables);
@@ -359,9 +358,7 @@ for ( GCGridBattery battery : gcListGridBatteries) {
 	}
 	batteryAsset.setCapacityElectric_kW( capacity_kW );
 	batteryAsset.setStorageCapacity_kWh( storageCapacity_kWh, battery );
-	battery.v_liveConnectionMetaData.physicalCapacity_kW = capacity_kW;
-	battery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = capacity_kW;
-	battery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = capacity_kW;
+	battery.v_liveConnectionMetaData.setCapacities_kW(capacity_kW, capacity_kW, capacity_kW);
 	
 	if(storageCapacity_kWh == 0){
 		battery.f_setActive(false, zero_Interface.energyModel.p_timeVariables);

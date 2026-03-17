@@ -2274,29 +2274,29 @@ if (gis_area.c_containedGridConnections.size() > 0) {
 	for(GridConnection gc : gis_area.c_containedGridConnections){
 		if(gc.v_rapidRunData != null){
 			double maxLoad_fr_gc = 0;
-			double maxLoad_fr_gc_delivery = gc.v_rapidRunData.connectionMetaData.contractedDeliveryCapacity_kW > 0 && gc.v_rapidRunData.connectionMetaData.contractedDeliveryCapacityKnown ? gc.v_rapidRunData.getPeakDelivery_kW()/gc.v_rapidRunData.connectionMetaData.contractedDeliveryCapacity_kW : 0;
-			double maxLoad_fr_gc_feedin = gc.v_rapidRunData.connectionMetaData.contractedFeedinCapacity_kW > 0 && gc.v_rapidRunData.connectionMetaData.contractedFeedinCapacityKnown  ? gc.v_rapidRunData.getPeakFeedin_kW()/gc.v_rapidRunData.connectionMetaData.contractedFeedinCapacity_kW : 0;
+			double maxLoad_fr_gc_delivery = gc.v_rapidRunData.connectionMetaData.getContractedDeliveryCapacity_kW() > 0 && gc.v_rapidRunData.connectionMetaData.getContractedDeliveryCapacityKnown() ? gc.v_rapidRunData.getPeakDelivery_kW()/gc.v_rapidRunData.connectionMetaData.getContractedDeliveryCapacity_kW() : 0;
+			double maxLoad_fr_gc_feedin = gc.v_rapidRunData.connectionMetaData.getContractedFeedinCapacity_kW() > 0 && gc.v_rapidRunData.connectionMetaData.getContractedFeedinCapacityKnown()  ? gc.v_rapidRunData.getPeakFeedin_kW()/gc.v_rapidRunData.connectionMetaData.getContractedFeedinCapacity_kW() : 0;
 
 			switch(rb_mapOverlayLegend_congestion.getValue()){
 				case 0:
 					maxLoad_fr_gc = maxLoad_fr_gc_delivery;
 					
-					if(gc.v_rapidRunData.connectionMetaData.contractedDeliveryCapacityKnown){
+					if(gc.v_rapidRunData.connectionMetaData.getContractedDeliveryCapacityKnown()){
 						capacityKnown = true;
 					}
 					break;
 				case 1:
 					maxLoad_fr_gc = maxLoad_fr_gc_feedin;
-					if(gc.v_rapidRunData.connectionMetaData.contractedFeedinCapacityKnown){
+					if(gc.v_rapidRunData.connectionMetaData.getContractedFeedinCapacityKnown()){
 						capacityKnown = true;
 					}
 					break;
 				case 2:
 					maxLoad_fr_gc = max(maxLoad_fr_gc_delivery, maxLoad_fr_gc_feedin);
-					if(maxLoad_fr_gc_delivery > maxLoad_fr_gc_feedin && gc.v_rapidRunData.connectionMetaData.contractedDeliveryCapacityKnown){
+					if(maxLoad_fr_gc_delivery > maxLoad_fr_gc_feedin && gc.v_rapidRunData.connectionMetaData.getContractedDeliveryCapacityKnown()){
 						capacityKnown = true;
 					}
-					else if(maxLoad_fr_gc_feedin > maxLoad_fr_gc_delivery && gc.v_rapidRunData.connectionMetaData.contractedFeedinCapacityKnown){
+					else if(maxLoad_fr_gc_feedin > maxLoad_fr_gc_delivery && gc.v_rapidRunData.connectionMetaData.getContractedFeedinCapacityKnown()){
 						capacityKnown = true;
 					}
 					break;

@@ -1938,7 +1938,7 @@ else if(b_inManualFilterSelectionMode){
 	f_selectManualFilteredGC(clickx, clicky);
 }
 else{
-	if (uI_Tabs.pop_tabEHub.size() &gt; 0 &amp;&amp; uI_Tabs.pop_tabEHub.get(0).b_NFATOListener) {
+	if (uI_Tabs.pop_tabEHub.size() &gt; 0 &amp;&amp; uI_Tabs.pop_tabEHub.get(0).b_inCapacitySharingSelectionMode) {
 		uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
 	}
 	else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP) || 
@@ -1971,7 +1971,7 @@ else if(b_inManualFilterSelectionMode){
 	f_selectManualFilteredGC(clickx, clicky);
 }
 else{
-	if (uI_Tabs.pop_tabEHub.size() &gt; 0 &amp;&amp; uI_Tabs.pop_tabEHub.get(0).b_NFATOListener) {
+	if (uI_Tabs.pop_tabEHub.size() &gt; 0 &amp;&amp; uI_Tabs.pop_tabEHub.get(0).b_inCapacitySharingSelectionMode) {
 		uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
 	}
 	else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP) || 
