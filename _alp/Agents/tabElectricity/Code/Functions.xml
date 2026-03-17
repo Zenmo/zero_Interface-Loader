@@ -449,4 +449,24 @@
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>J_ProfilePointer</ReturnType>
+		<Id>1773764103422</Id>
+		<Name><![CDATA[f_getPVTProfilePointer]]></Name>
+		<X>400</X>
+		<Y>790</Y>
+		<Label>
+			<X>12</X>
+			<Y>1</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[pvtOrientation]]></Name>
+			<Type><![CDATA[OL_PVOrientation]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
 </Functions>

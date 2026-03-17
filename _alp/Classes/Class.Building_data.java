@@ -27,8 +27,7 @@ public class Building_data {
 	Double gas_consumption_m3pa;
 	Double pv_installed_kwp;
 	Double pv_potential_kwp;
-	OL_Orientation roof_orientation;
-	double roof_pitch_deg;
+	OL_PVOrientation pv_orientation;
 	OL_GridConnectionEnergyLabel energy_label;
 	Boolean has_private_parking;
 	String gridnode_id;

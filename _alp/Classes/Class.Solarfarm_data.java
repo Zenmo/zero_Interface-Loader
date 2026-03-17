@@ -17,8 +17,7 @@ public class Solarfarm_data {
 		String city;
 		String gridnode_id;
 		boolean initially_active;
-		OL_Orientation orientation;
-		double tilt_angle_deg;
+		OL_PVOrientation orientation;
 		boolean isSliderGC;
 		double capacity_electric_kw;
 		double connection_capacity_kw;

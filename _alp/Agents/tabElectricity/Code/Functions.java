@@ -75,7 +75,8 @@ while ( nbHousesWithPVGoal > nbHousesWithPV ) {
 		if(house.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW)){
 			installedPVCapacity_kW = max(0, installedPVCapacity_kW-zero_Interface.energyModel.avgc_data.p_avgPTPanelSize_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2); //For now just 1 panel
 		}
-		J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, OL_EnergyCarriers.ELECTRICITY, installedPVCapacity_kW, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
+		J_ProfilePointer profilePointer = f_getPVTProfilePointer(house.v_liveAssetsMetaData.PVOrientation);
+		J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, OL_EnergyCarriers.ELECTRICITY, installedPVCapacity_kW, zero_Interface.energyModel.p_timeParameters, profilePointer );
 		houses.remove(house);
 		zero_Interface.c_orderedPVSystemsHouses.remove(house);
 		zero_Interface.c_orderedPVSystemsHouses.add(0, house);
@@ -271,7 +272,8 @@ else {
 	double yearlyProductionHydrogen_kWh = 0.0;
 	double outputTemperature_degC = 0.0;
 	
-	J_EAProduction productionAsset = new J_EAProduction ( gc, assetType, assetName, OL_EnergyCarriers.ELECTRICITY, capacity_kWp, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
+	J_ProfilePointer profilePointer = f_getPVTProfilePointer(gc.v_liveAssetsMetaData.PVOrientation);
+	J_EAProduction productionAsset = new J_EAProduction ( gc, assetType, assetName, OL_EnergyCarriers.ELECTRICITY, capacity_kWp, zero_Interface.energyModel.p_timeParameters, profilePointer );
 }
 
 // Update the ordered collection
@@ -751,5 +753,19 @@ for(GCGridBattery GCBat : uI_Tabs.f_getAllSliderGridConnections_gridBatteries())
 		p_currentTotalGridBatteryCapacity_MWh += (GCBat.p_batteryAsset.getStorageCapacity_kWh()/1000.0);
 	}
 }
+/*ALCODEEND*/}
+
+J_ProfilePointer f_getPVTProfilePointer(OL_PVOrientation pvtOrientation)
+{/*ALCODESTART::1773764103422*/
+J_ProfilePointer profilePointer = null;
+
+switch (pvtOrientation){
+	case EASTWEST:
+		profilePointer = zero_Interface.energyModel.pp_PVProduction15DegEastWest_fr;
+	case SOUTH:
+		profilePointer = zero_Interface.energyModel.pp_PVProduction35DegSouth_fr;
+}
+
+return profilePointer;
 /*ALCODEEND*/}
 

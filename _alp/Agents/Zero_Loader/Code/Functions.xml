@@ -1504,12 +1504,8 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Type><![CDATA[OL_HouseholdCookingMethod]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[orientation]]></Name>
-			<Type><![CDATA[OL_Orientation]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[roofPitch_deg]]></Name>
-			<Type><![CDATA[double]]></Type>
+			<Name><![CDATA[pvOrientation]]></Name>
+			<Type><![CDATA[OL_PVOrientation]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -2865,12 +2861,8 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Type><![CDATA[GridNode]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[orientation]]></Name>
-			<Type><![CDATA[OL_Orientation]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[roofPitch_deg]]></Name>
-			<Type><![CDATA[double]]></Type>
+			<Name><![CDATA[pvOrientation]]></Name>
+			<Type><![CDATA[OL_PVOrientation]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -2901,12 +2893,8 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[orientation]]></Name>
-			<Type><![CDATA[OL_Orientation]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[roofPitch_deg]]></Name>
-			<Type><![CDATA[double]]></Type>
+			<Name><![CDATA[pvOrientation]]></Name>
+			<Type><![CDATA[OL_PVOrientation]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -2914,7 +2902,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>J_ProfilePointer</ReturnType>
 		<Id>1773414911040</Id>
-		<Name><![CDATA[f_determinePVTProfilePointer]]></Name>
+		<Name><![CDATA[f_getPVTProfilePointer]]></Name>
 		<X>1530</X>
 		<Y>220</Y>
 		<Label>
@@ -2925,12 +2913,8 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[orientation]]></Name>
-			<Type><![CDATA[OL_Orientation]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[roofPitch_deg]]></Name>
-			<Type><![CDATA[double]]></Type>
+			<Name><![CDATA[pvtOrientation]]></Name>
+			<Type><![CDATA[OL_PVOrientation]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -2989,12 +2973,8 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[orientation]]></Name>
-			<Type><![CDATA[OL_Orientation]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[roofPitch_deg]]></Name>
-			<Type><![CDATA[int]]></Type>
+			<Name><![CDATA[ptOrientation]]></Name>
+			<Type><![CDATA[OL_PVOrientation]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
