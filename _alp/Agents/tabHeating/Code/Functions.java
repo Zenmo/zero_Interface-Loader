@@ -340,7 +340,8 @@ double nbHouses = gcListHouses.size();
 while ( roundToInt(nbHouses * desiredShare) > nbHousesWithAirco ) {
 	GCHouse house = randomWhere(gcListHouses, x -> x.p_airco == null);
 	double aircoPower_kW = roundToDecimal(uniform(3,6),1);
-	new J_EAAirco(house, aircoPower_kW, zero_Interface.energyModel.p_timeParameters);
+	new J_EAConversionAirConditioner(house, aircoPower_kW, zero_Interface.energyModel.p_timeParameters, house.p_BuildingThermalAsset);
+	//house.f_getHeatingManagement().initializeAssets();
 	nbHousesWithAirco ++;
 }
 while ( roundToInt(nbHouses * desiredShare) < nbHousesWithAirco ) {
