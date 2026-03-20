@@ -150,11 +150,17 @@ economicAVGC.map_avgCostOfEnergyCarrier_eur_p_kWh = map_avgCostOfEnergyCarrier_e
 economicAVGC.map_avgAssetCAPEX_eur_p_kW = map_avgAssetCAPEX_eur_p_kW;
 economicAVGC.map_avgAssetLifeTime_yr = map_avgAssetLifeTime_yr;
 economicAVGC.map_avgAssetOPEX_eur_p_kW = map_avgAssetOPEX_eur_p_kW;
-try {
-	economicAVGC.gridOperatorTariffs = map_gridOperatorTarrifs.get(gridOperator).get(year).getDeclaredConstructor().newInstance();
+
+if(gridOperator != null){
+	try {
+		economicAVGC.gridOperatorTariffs = map_gridOperatorTarrifs.get(gridOperator).get(year).getDeclaredConstructor().newInstance();
+	}
+	catch (Exception e) {
+		traceln("No gridOperatorTariffs sheet found for this GridOperator ( " + gridOperator + " ) and/or simulation year ( " + year + " ) -> Connection costs chart won't be supported.");
+	}
 }
-catch (Exception e) {
-	e.printStackTrace();
+else{
+	traceln("No GridOperator found -> Connection costs chart won't be supported.");
 }
 return economicAVGC;
 /*ALCODEEND*/}
