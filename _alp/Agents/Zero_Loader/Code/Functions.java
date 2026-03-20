@@ -1017,38 +1017,6 @@ for (Parcel_data dataParcel : c_parcel_data) {
 }
 /*ALCODEEND*/}
 
-double f_addEnergyProduction(GridConnection parentGC,OL_EnergyAssetType asset_type,String asset_name,double installedPower_kW)
-{/*ALCODESTART::1726584205809*/
-double assetCapacity_kW = 0;
-J_TimeParameters timeParameters = energyModel.p_timeParameters;
-J_ProfilePointer profilePointer = null;
-OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
-switch (asset_type){
-
-case PHOTOVOLTAIC: 
-	energyCarrier = OL_EnergyCarriers.ELECTRICITY;
-	profilePointer = energyModel.pp_PVProduction35DegSouth_fr;
-	assetCapacity_kW = installedPower_kW;
-	break;
-
-case WINDMILL:
-	energyCarrier = OL_EnergyCarriers.ELECTRICITY;
-	profilePointer=energyModel.pp_windProduction_fr;
-	assetCapacity_kW = installedPower_kW;
-	break;
-
-case PHOTOTHERMAL: //NOT USED YET
-	energyCarrier = OL_EnergyCarriers.HEAT;
-	profilePointer = energyModel.pp_PVProduction35DegSouth_fr; // Voor nu om te testen! Misschien valt dit wel te gebruiken met bepaalde efficientie factor!
-	assetCapacity_kW = installedPower_kW;
-	break;
-}
-
-J_EAProduction production_asset = new J_EAProduction(parentGC, asset_type, asset_name, energyCarrier, assetCapacity_kW, timeParameters, profilePointer);
-
-
-/*ALCODEEND*/}
-
 GIS_Object f_createGISObject(String name,double latitude,double longitude,String polygon,OL_GISObjectType GISObjectType)
 {/*ALCODESTART::1726584205811*/
 GIS_Object area = energyModel.add_pop_GIS_Objects();
