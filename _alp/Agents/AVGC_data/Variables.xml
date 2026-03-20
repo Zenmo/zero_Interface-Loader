@@ -3047,4 +3047,149 @@ OL_GridConnectionInsulationLabel.G, 4.0
 			</ParameterEditor>
 		</Properties>
 	</Variable>
+	<Variable Class="Parameter">
+		<Id>1773940397692</Id>
+		<Name><![CDATA[map_avgCostOfEnergyCarrier_eur_p_kWh]]></Name>
+		<X>1960</X>
+		<Y>100</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_EnergyCarriers, Double>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1773940397690</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1773940416645</Id>
+		<Name><![CDATA[map_avgAssetCAPEX_eur_p_kW]]></Name>
+		<X>1960</X>
+		<Y>130</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_EnergyAssetType, Double>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1773940416643</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1773940478512</Id>
+		<Name><![CDATA[map_avgAssetLifeTime_yr]]></Name>
+		<X>1960</X>
+		<Y>150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_EnergyAssetType, Double>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1773940478510</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1773940480159</Id>
+		<Name><![CDATA[map_avgAssetOPEX_eur_p_kW]]></Name>
+		<X>1960</X>
+		<Y>170</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_EnergyAssetType, Double>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1773940480157</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1774010687023</Id>
+		<Name><![CDATA[map_gridOperatorTarrifs]]></Name>
+		<X>1960</X>
+		<Y>200</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_GridOperator, Map<Integer, Class<? extends I_GridOperatorTariffs>>>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[Map.of(
+      	OL_GridOperator.ENEXIS, Map.of(
+	       //2026, J_GridOperatorTariffsEnexis_2026.class,
+	       2025, J_GridOperatorTariffsEnexis_2025.class,
+	       2024, J_GridOperatorTariffsEnexis_2025.class,
+	       2023, J_GridOperatorTariffsEnexis_2025.class
+		)/*,
+		OL_GridOperator.LIANDER, Map.of(
+	       //2026, J_GridOperatorTariffsStedin_2026.class,
+	       //2025, J_GridOperatorTariffsStedin_2025.class //,
+	       //2024, J_GridOperatorTariffsStedin_2024.class,
+		),
+		OL_GridOperator.STEDIN, Map.of(
+	       //2026, J_GridOperatorTariffsStedin_2026.class,
+	       //2025, J_GridOperatorTariffsStedin_2025.class //,
+	       //2024, J_GridOperatorTariffsStedin_2024.class,
+		)*/
+	)]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1774010687021</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
 </Variables>

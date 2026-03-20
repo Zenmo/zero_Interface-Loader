@@ -436,6 +436,21 @@
 			<Parameter>
 				<Name><![CDATA[p_defaultNrOfSocketsPerCharger]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_avgCostOfEnergyCarrier_eur_p_kWh]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_avgAssetCAPEX_eur_p_kW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_avgAssetLifeTime_yr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_avgAssetOPEX_eur_p_kW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_gridOperatorTarrifs]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">

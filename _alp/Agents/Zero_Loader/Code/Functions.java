@@ -1903,7 +1903,7 @@ v_timeOfModelStart_ms = startTime;
 f_setSimulationTimeParameters();
 
 //Send avgc data to engine
-avgc_data.f_setAVGC_data();
+avgc_data.f_setAVGC_data(project_data.grid_operator(), energyModel.p_timeParameters.getStartYear());
 
 // Set default heating strategies
 f_setDefaultHeatingStrategies();

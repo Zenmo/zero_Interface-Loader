@@ -416,19 +416,19 @@
 				<Name><![CDATA[J_PBLUtil]]></Name>
 			</JavaClass>
 			<JavaClass>
-				<Id>1773320069853</Id>
-				<Name><![CDATA[J_GridOperatorDataEnexis]]></Name>
+				<Id>1774003635050</Id>
+				<Name><![CDATA[J_GridOperatorTariffsEnexis_2025]]></Name>
 				<Folder>1773320047333</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1773320069960</Id>
-				<Name><![CDATA[J_GridOperatorDataLiander]]></Name>
+				<Id>1774003694447</Id>
+				<Name><![CDATA[J_GridOperatorTariffsLiander_2025]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1773320047333</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1773320069964</Id>
-				<Name><![CDATA[J_GridOperatorDataStedin]]></Name>
+				<Id>1774003704262</Id>
+				<Name><![CDATA[J_GridOperatorTariffsStedin_2025]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1773320047333</Folder>
 			</JavaClass>

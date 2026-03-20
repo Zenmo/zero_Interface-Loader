@@ -1,4 +1,4 @@
-double f_setAVGC_data()
+double f_setAVGC_data(OL_GridOperator gridOperator,int simulationYear)
 {/*ALCODESTART::1726584205530*/
 //Perform sanity checks on the values
 f_sanityChecks();
@@ -131,6 +131,7 @@ dataAVGC.p_hydrogenDensity_kg_Nm3 = p_hydrogenDensity_kg_Nm3;
 dataAVGC.p_oxygenDensity_kg_Nm3 = p_oxygenDensity_kg_Nm3;
 dataAVGC.p_oxygenProduction_kgO2pkgH2 = p_oxygenProduction_kgO2pkgH2;
 
+dataAVGC.economicAVGC = f_getEconomicAVGC(gridOperator, simulationYear);
 /*ALCODEEND*/}
 
 double f_sanityChecks()
@@ -140,5 +141,21 @@ if(p_avgSpaceHeatingTotalGasConsumptionShare_fr +
 	p_avgDHWTotalGasConsumptionShare_fr != 1){
 throw new RuntimeException("Total average heating+dhw+cooking house gas consumption shares dont add up to 1");
 }
+/*ALCODEEND*/}
+
+J_AVGC_Economic_data f_getEconomicAVGC(OL_GridOperator gridOperator,int year)
+{/*ALCODESTART::1773938569040*/
+J_AVGC_Economic_data economicAVGC = new J_AVGC_Economic_data();
+economicAVGC.map_avgCostOfEnergyCarrier_eur_p_kWh = map_avgCostOfEnergyCarrier_eur_p_kWh;
+economicAVGC.map_avgAssetCAPEX_eur_p_kW = map_avgAssetCAPEX_eur_p_kW;
+economicAVGC.map_avgAssetLifeTime_yr = map_avgAssetLifeTime_yr;
+economicAVGC.map_avgAssetOPEX_eur_p_kW = map_avgAssetOPEX_eur_p_kW;
+try {
+	economicAVGC.gridOperatorTariffs = map_gridOperatorTarrifs.get(gridOperator).get(year).getDeclaredConstructor().newInstance();
+}
+catch (Exception e) {
+	e.printStackTrace();
+}
+return economicAVGC;
 /*ALCODEEND*/}
 
