@@ -460,6 +460,9 @@
 			<Parameter>
 				<Name><![CDATA[VAT_CAPEXAndOPEX_fr]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_avgCO2EmissionOfEnergyCarrier_kgpkWh]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">
