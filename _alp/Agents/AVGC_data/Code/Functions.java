@@ -146,10 +146,13 @@ throw new RuntimeException("Total average heating+dhw+cooking house gas consumpt
 J_AVGC_Economic_data f_getEconomicAVGC(OL_GridOperator gridOperator,int year)
 {/*ALCODESTART::1773938569040*/
 J_AVGC_Economic_data economicAVGC = new J_AVGC_Economic_data();
-economicAVGC.map_avgCostOfEnergyCarrier_eur_p_kWh = map_avgCostOfEnergyCarrier_eur_p_kWh;
-economicAVGC.map_avgAssetCAPEX_eur_p_kW = map_avgAssetCAPEX_eur_p_kW;
+economicAVGC.map_avgCostOfEnergyCarrier_eurpkWh = map_avgCostOfEnergyCarrier_eurpkWh;
+economicAVGC.map_energyTaxesECImport_eurpkWh = map_energyTaxesECImport_eurpkWh.get(year);
+economicAVGC.VAT_energy_fr = VAT_energy_fr;
+economicAVGC.map_avgAssetCAPEX_eurpkW = map_avgAssetCAPEX_eurpkW;
 economicAVGC.map_avgAssetLifeTime_yr = map_avgAssetLifeTime_yr;
-economicAVGC.map_avgAssetOPEX_eur_p_kW = map_avgAssetOPEX_eur_p_kW;
+economicAVGC.map_avgAssetOPEX_eurpkWpyr = map_avgAssetOPEX_eurpkWpyr;
+economicAVGC.VAT_CAPEXAndOPEX_fr = VAT_CAPEXAndOPEX_fr;
 
 if(gridOperator != null){
 	try {

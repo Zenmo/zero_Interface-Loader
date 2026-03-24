@@ -437,19 +437,28 @@
 				<Name><![CDATA[p_defaultNrOfSocketsPerCharger]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[map_avgCostOfEnergyCarrier_eur_p_kWh]]></Name>
+				<Name><![CDATA[map_avgCostOfEnergyCarrier_eurpkWh]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[map_avgAssetCAPEX_eur_p_kW]]></Name>
+				<Name><![CDATA[map_avgAssetCAPEX_eurpkW]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[map_avgAssetLifeTime_yr]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[map_avgAssetOPEX_eur_p_kW]]></Name>
+				<Name><![CDATA[map_avgAssetOPEX_eurpkWpyr]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[map_gridOperatorTarrifs]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_energyTaxesECImport_eurpkWh]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[VAT_energy_fr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[VAT_CAPEXAndOPEX_fr]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>

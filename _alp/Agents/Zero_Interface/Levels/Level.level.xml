@@ -1159,7 +1159,7 @@ else{
 				<Color>-16777216</Color>
 				<Text><![CDATA[Het huidige scenario bevat de energie dynamieken van dit moment.
 Dit omvat o.a. de huidige zonnepanelen op de daken van huizen en 
-bedrijven, het aantal voertuigen per type, de electriciteitsconsumptie
+bedrijven, het aantal voertuigen per type, de elektriciteitsconsumptie
 van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 				<Font>
 					<Name><![CDATA[SansSerif]]></Name>
