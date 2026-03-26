@@ -2863,7 +2863,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>Double</ReturnType>
+		<ReturnType>double</ReturnType>
 		<Id>1774527617823</Id>
 		<Name><![CDATA[f_createGenericCompanyHeatProfiles]]></Name>
 		<X>470</X>

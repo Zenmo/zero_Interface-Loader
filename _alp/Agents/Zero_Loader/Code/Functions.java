@@ -1518,8 +1518,11 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 		double ratioGasUsedForHeating = 1;
 		
 		//Add heat demand profile
-		Double peakHeatConsumption_kW = f_createGenericCompanyHeatProfiles(companyGC, heatingType, yearlyGasDemand_m3, ratioGasUsedForHeating);
-		if(peakHeatConsumption_kW != null){
+		if (heatingType == null || heatingType == OL_GridConnectionHeatingType.UNKNOWN) { //Fall-back; default: GAS_BURNER
+			heatingType = avgc_data.p_avgCompanyHeatingMethod;
+		}
+		if (heatingType != OL_GridConnectionHeatingType.NONE) { //No heating asset present
+			double peakHeatConsumption_kW = f_createGenericCompanyHeatProfiles(companyGC, heatingType, yearlyGasDemand_m3, ratioGasUsedForHeating);
 			f_addHeatAsset(companyGC, heatingType, peakHeatConsumption_kW);
 			companyGC.f_addHeatManagement(heatingType, false);
 		}
@@ -5236,14 +5239,8 @@ if (installedRooftopSolar_kW > 0) {
 }
 /*ALCODEEND*/}
 
-Double f_createGenericCompanyHeatProfiles(GridConnection companyGC,OL_GridConnectionHeatingType heatingType,double yearlyGasDemand_m3,double ratioGasUsedForHeating)
+double f_createGenericCompanyHeatProfiles(GridConnection companyGC,OL_GridConnectionHeatingType heatingType,double yearlyGasDemand_m3,double ratioGasUsedForHeating)
 {/*ALCODESTART::1774527617823*/
-if (heatingType == null || heatingType == OL_GridConnectionHeatingType.UNKNOWN) { //Fall-back; default: GAS_BURNER
-	heatingType = OL_GridConnectionHeatingType.GAS_BURNER;
-}
-if (heatingType == OL_GridConnectionHeatingType.NONE) { //No heating asset present
-	return null;
-}
 if (heatingType == OL_GridConnectionHeatingType.CUSTOM) { // Custom heatingType requires Override
     throw new RuntimeException("HeatingType is CUSTOM for a generic company. Override f_addCustomHeatAsset() (and/or implement a custom setup) to support this.");
 }
