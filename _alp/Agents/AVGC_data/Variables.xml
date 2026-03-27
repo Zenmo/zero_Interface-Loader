@@ -3365,8 +3365,8 @@ OL_GridConnectionInsulationLabel.G, 4.0
 	<Variable Class="Parameter">
 		<Id>1774371060234</Id>
 		<Name><![CDATA[map_avgCO2EmissionOfEnergyCarrier_kgpkWh]]></Name>
-		<X>1960</X>
-		<Y>360</Y>
+		<X>60</X>
+		<Y>910</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

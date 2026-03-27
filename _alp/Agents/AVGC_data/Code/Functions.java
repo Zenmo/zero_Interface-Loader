@@ -131,6 +131,8 @@ dataAVGC.p_hydrogenDensity_kg_Nm3 = p_hydrogenDensity_kg_Nm3;
 dataAVGC.p_oxygenDensity_kg_Nm3 = p_oxygenDensity_kg_Nm3;
 dataAVGC.p_oxygenProduction_kgO2pkgH2 = p_oxygenProduction_kgO2pkgH2;
 
+dataAVGC.map_avgCO2EmissionOfEnergyCarrier_kgpkWh = map_avgCO2EmissionOfEnergyCarrier_kgpkWh;
+
 dataAVGC.economicAVGC = f_getEconomicAVGC(gridOperator, simulationYear);
 /*ALCODEEND*/}
 
