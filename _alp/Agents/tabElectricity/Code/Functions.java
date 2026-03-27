@@ -50,7 +50,7 @@ while ( nbHousesWithPVGoal < nbHousesWithPV ) { // remove excess PV systems
 		
 		if(house.p_batteryAsset != null ){
 			house.p_batteryAsset.removeEnergyAsset();
-			house.f_setBatteryManagement(null);
+			house.f_removeExternalAssetManagement(I_BatteryManagement.class);
 		}
 	}
 	else {
@@ -316,7 +316,7 @@ if( nbHousesWithPV > 0 ){
 	while ( nbHouseBatteries > nbHousesWithBatteryGoal ) {
 		GCHouse house = findFirst(gcListHouses, p -> p.p_batteryAsset != null );
 		house.p_batteryAsset.removeEnergyAsset();
-		house.f_setBatteryManagement(null);
+		house.f_removeExternalAssetManagement(I_BatteryManagement.class);
 		nbHouseBatteries--;
 	}
 	while ( nbHouseBatteries < nbHousesWithBatteryGoal) {
