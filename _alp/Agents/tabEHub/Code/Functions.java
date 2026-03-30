@@ -37,7 +37,7 @@ switch (rb_capacitySharingDeliveryOrFeedin.getValue()) {
 }
 
 
-new J_GridCapacitySharingManager(v_recievingGC, v_sendingGC, sharedWeekDeliveryCapacity_kW, sharedWeekendDeliveryCapacity_kW, 
+new J_CapacitySharingContract(v_recievingGC, v_sendingGC, sharedWeekDeliveryCapacity_kW, sharedWeekendDeliveryCapacity_kW, 
 								 sharedWeekFeedinCapacity_kW, sharedWeekendFeedinCapacity_kW, zero_Interface.energyModel.p_timeVariables);
 /*ALCODEEND*/}
 
