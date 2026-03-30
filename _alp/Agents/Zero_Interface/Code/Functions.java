@@ -467,9 +467,11 @@ double f_connectResultsUI()
 f_styleResultsUI();
 
 //Set ResultsUI radiobutton setup
-if(settings.resultsUIRadioButtonSetup() != null){
-	uI_Results.v_selectedRadioButtonSetup = settings.resultsUIRadioButtonSetup();
+List<OL_ChartTypes> selectedChartTypes_Energy = settings.resultsUISelectedChartTypes_Energy();
+if(selectedChartTypes_Energy == null){ // Temporary backup till all models have switched to new setup functionality
+	selectedChartTypes_Energy = f_getSelectedChartTypes_Energy();
 }
+List<OL_ChartTypes> selectedChartTypes_Economic = settings.resultsUISelectedChartTypes_Economic();
 
 //Disable summary button if summary is not selected
 if(settings.showKPISummary() == null || !settings.showKPISummary()){
@@ -477,7 +479,7 @@ if(settings.showKPISummary() == null || !settings.showKPISummary()){
 }
 
 //Connect resultsUI
-uI_Results.f_initializeResultsUI();
+uI_Results.f_initializeResultsUI(selectedChartTypes_Energy, selectedChartTypes_Economic);
 
 c_UIResultsInstances.add(uI_Results);
 /*ALCODEEND*/}
@@ -3750,5 +3752,45 @@ double f_setColorsBasedOnCustom_objects(GIS_Object gis_area)
 double f_setColorsBasedOnCustom_gridnodes(GridNode GN)
 {/*ALCODESTART::1769007434081*/
 //Override function to replace map overlay with custom colors
+/*ALCODEEND*/}
+
+List<OL_ChartTypes> f_getSelectedChartTypes_Energy()
+{/*ALCODESTART::1774880211868*/
+////TEMPORARY FUNCTION TO LET ALL CURRENT PROJECTS FUNCTION STILL!
+List<OL_ChartTypes> loadedChartTypes_Energy = new ArrayList<>();
+loadedChartTypes_Energy.add(OL_ChartTypes.PROFILES);
+loadedChartTypes_Energy.add(OL_ChartTypes.BAR_TOTALS);
+loadedChartTypes_Energy.add(OL_ChartTypes.LOAD_DURATION_CURVES);
+loadedChartTypes_Energy.add(OL_ChartTypes.SANKEY);
+
+//Aditional charts selected:
+if(settings.resultsUIRadioButtonSetup() != null){
+	switch(settings.resultsUIRadioButtonSetup()){
+		case DEFAULT_AND_GESPREKSLEIDRAAD:
+			loadedChartTypes_Energy.add(OL_ChartTypes.GESPREKSLEIDRAAD);
+			break;
+		case DEFAULT_AND_GESPREKSLEIDRAADBEDRIJVEN:
+			loadedChartTypes_Energy.add(OL_ChartTypes.GESPREKSLEIDRAAD_BEDRIJVEN);
+			break;
+		case DEFAULT_AND_BATTERY:	
+			loadedChartTypes_Energy.add(OL_ChartTypes.BATTERY);
+			break;
+		case DEFAULT_AND_BATTERY_AND_GESPREKSLEIDRAADBEDRIJVEN:	
+			loadedChartTypes_Energy.add(OL_ChartTypes.BATTERY);
+			loadedChartTypes_Energy.add(OL_ChartTypes.GESPREKSLEIDRAAD_BEDRIJVEN);
+			break;
+		case DEFAULT_AND_BATTERY_AND_ECONOMIC:	
+			loadedChartTypes_Energy.add(OL_ChartTypes.BATTERY);
+			break;
+		case DEFAULT_AND_GESPREKSLEIDRAADBEDRIJVEN_AND_GTO:	
+			loadedChartTypes_Energy.add(OL_ChartTypes.GESPREKSLEIDRAAD_BEDRIJVEN);
+			loadedChartTypes_Energy.add(OL_ChartTypes.GTO);
+			break;
+		case OFF:
+			loadedChartTypes_Energy.clear();
+			break;
+	}
+}
+return loadedChartTypes_Energy;
 /*ALCODEEND*/}
 

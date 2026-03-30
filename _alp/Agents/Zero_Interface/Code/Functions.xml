@@ -996,7 +996,7 @@
 		<Id>1736442051389</Id>
 		<Name><![CDATA[f_styleResultsUI]]></Name>
 		<X>-650</X>
-		<Y>800</Y>
+		<Y>820</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1356,7 +1356,7 @@
 		<Id>1746085650084</Id>
 		<Name><![CDATA[f_changeDefaultColorOfPrivateGC]]></Name>
 		<X>-670</X>
-		<Y>915</Y>
+		<Y>935</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2575,7 +2575,7 @@
 		<Id>1764777516393</Id>
 		<Name><![CDATA[f_checkIfGCsAreAccesible]]></Name>
 		<X>-670</X>
-		<Y>875</Y>
+		<Y>895</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2680,6 +2680,22 @@
 			<Name><![CDATA[GN]]></Name>
 			<Type><![CDATA[GridNode]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>List&lt;OL_ChartTypes&gt;</ReturnType>
+		<Id>1774880211868</Id>
+		<Name><![CDATA[f_getSelectedChartTypes_Energy]]></Name>
+		<X>-650</X>
+		<Y>800</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

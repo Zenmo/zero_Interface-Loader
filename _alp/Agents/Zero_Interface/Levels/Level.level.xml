@@ -3113,7 +3113,7 @@ fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(true);</ActionCode>
 		<Id>1745935981029</Id>
 		<Name><![CDATA[txt_dataAccesibilityFunctionalities]]></Name>
 		<X>-680</X>
-		<Y>845</Y>
+		<Y>865</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
