@@ -4566,8 +4566,6 @@ if(simStartTime_h > summerTimeStart_h && simStartTime_h < winterTimeStart_h){
 	simStartTime_h += 1;
 }
 
-
-
 //Set sim duration if it is set
 double simDuration_h; //Sim duration in hours
 if(getExperiment().getEngine().getStopDate() != null){ //If experiment has set time, it gets bias
@@ -4583,6 +4581,7 @@ else{
 	simDuration_h = settings.simDuration_h();
 }
 
+//Checks
 if (simStartTime_h % 24 != 0) {
 	throw new RuntimeException("Impossible to run a model that does not start at midnight. Please check the start in the simulation settings.");
 }
@@ -4593,18 +4592,30 @@ if (simDuration_h <= 0) {
 	throw new RuntimeException("Impossible to run a model that has a runtime that is <= 0. Please check the start and endtime in the simulation settings or simduration_h in the 'settings' class.");
 }
 
+//Calculate simEndTime_h
 double simEndTime_h = simStartTime_h + simDuration_h;
 
+//Get month start hours based on if leap year or not
+double[] monthStartHours;
+if(simStartYear % 4 == 0){
+	monthStartHours = avgc_data.monthStartHours_leapYear;
+}
+else{
+	monthStartHours = avgc_data.monthStartHours_default;
+}
+
+//Create time parameters object in engine
 energyModel.p_timeParameters = new J_TimeParameters(
 	settings.timeStep_h(),
 	simStartYear,
-	avgc_data.hourOfYearPerMonth,
+	monthStartHours,
 	simStartTime_h,
 	simEndTime_h,
 	settings.summerWeekNumber(),
 	settings.winterWeekNumber()
 );
 
+//Initialize time variables object in engine
 energyModel.p_timeVariables = new J_TimeVariables(0, energyModel.p_timeParameters);
 /*ALCODEEND*/}
 
