@@ -522,7 +522,7 @@ sl_largeScaleWind_MW.setValue((totalWind_kW/1000) + p_currentWindTurbines_MW, fa
 //Curtailment
 boolean curtailment = true;
 for(GridConnection GC : allConsumerGridConnections){
-	if(!GC.v_enableCurtailment){
+	if(!GC.f_isAssetManagementActive(I_CurtailManagement.class)){
 		curtailment = false;
 		break;
 	}
@@ -690,7 +690,7 @@ sl_largeScaleWind_MW_Businesspark.setValue((totalWind_kW/1000) + p_currentWindTu
 //Curtailment
 boolean curtailment = true;
 for(GridConnection GC : utilityGridConnections){
-	if(!GC.v_enableCurtailment){
+	if(!GC.f_isAssetManagementActive(I_CurtailManagement.class)){
 		curtailment = false;
 		break;
 	}
@@ -723,8 +723,14 @@ traceln("Forgot to override the update custom electricity sliders functionality"
 double f_setCurtailment(boolean activateCurtailment,List<GridConnection> gcList)
 {/*ALCODESTART::1754986167346*/
 for (GridConnection GC : gcList) {
-	GC.v_enableCurtailment = activateCurtailment;
+	if(activateCurtailment){
+		GC.f_setExternalAssetManagement(new J_CurtailManagementContractCapacity(GC, zero_Interface.energyModel.p_timeParameters));
+	}
+	else{
+		GC.f_removeExternalAssetManagement(I_CurtailManagement.class);
+	}
 }
+
 
 
 //Update variable to change to custom scenario

@@ -3258,10 +3258,10 @@ new Thread( () -&gt; {
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>if (cb_curtailmentCompany.isSelected()) {
-	p_gridConnection.v_enableCurtailment = true;
+	p_gridConnection.f_setExternalAssetManagement(new J_CurtailManagementContractCapacity(p_gridConnection, zero_Interface.energyModel.p_timeParameters));
 }
 else {
-	p_gridConnection.v_enableCurtailment = false;
+	p_gridConnection.f_removeExternalAssetManagement(I_CurtailManagement.class);
 }
 
 //Set scenario to custom
