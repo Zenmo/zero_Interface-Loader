@@ -544,10 +544,6 @@
 			<Name><![CDATA[companyGC]]></Name>
 			<Type><![CDATA[GridConnection]]></Type>
 		</Parameter>
-		<Parameter>
-			<Name><![CDATA[pv_installed_kwp]]></Name>
-			<Type><![CDATA[Double]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
@@ -2942,6 +2938,26 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[ptOrientation]]></Name>
 			<Type><![CDATA[OL_PVOrientation]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>OL_PVOrientation</ReturnType>
+		<Id>1775121934632</Id>
+		<Name><![CDATA[f_getPVOrientationFromZorm]]></Name>
+		<X>490</X>
+		<Y>500</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[PVOrientationZorm]]></Name>
+			<Type><![CDATA[com.zenmo.zummon.companysurvey.PVOrientation]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

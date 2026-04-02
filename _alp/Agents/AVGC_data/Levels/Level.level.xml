@@ -336,7 +336,7 @@
 		<Id>1726584205562</Id>
 		<Name><![CDATA[txt_avgBat]]></Name>
 		<X>510</X>
-		<Y>930</Y>
+		<Y>960</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -689,7 +689,7 @@
 		<Id>1768315329120</Id>
 		<Name><![CDATA[txt_thermalModelParameters]]></Name>
 		<X>510</X>
-		<Y>1000</Y>
+		<Y>1030</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>

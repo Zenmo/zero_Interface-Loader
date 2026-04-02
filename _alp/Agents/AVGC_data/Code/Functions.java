@@ -108,7 +108,7 @@ dataAVGC.p_avgPVPower_kWpm2= p_avgPVPower_kWpm2;
 dataAVGC.p_avgRatioRoofPotentialPV = p_avgRatioRoofPotentialPV;
 dataAVGC.p_avgRatioBatteryCapacity_v_Power = p_avgRatioBatteryCapacity_v_Power;
 dataAVGC.p_avgSolarFieldPower_kWppha = p_avgSolarFieldPower_kWppha;
-
+dataAVGC.p_defaultPVOrientation = p_defaultPVOrientation;
 
 //Thermal model parameters
 dataAVGC.p_PBL_HeatingLossFactor_fr = p_PBL_HeatingLossFactor_fr;

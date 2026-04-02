@@ -433,6 +433,9 @@
 			<Parameter>
 				<Name><![CDATA[p_defaultNrOfSocketsPerCharger]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultPVOrientation]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">

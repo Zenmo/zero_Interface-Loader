@@ -303,8 +303,8 @@ for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data))
 			} 
 		}
 		if(gridNodeProfileLoaderType != OL_GridNodeProfileLoaderType.INCLUDE_PV || gridNodeProfileLoaderType != OL_GridNodeProfileLoaderType.NET_LOAD){
-			f_addPVProductionAsset(solarpark, "Solar farm" , dataSolarfarm.capacity_electric_kw(), dataSolarfarm.orientation());
-			//f_addEnergyProduction(solarpark, OL_EnergyAssetType.PHOTOVOLTAIC, "Solar farm" , dataSolarfarm.capacity_electric_kw());
+			OL_PVOrientation pvOrientation = dataSolarfarm.orientation() != null ? dataSolarfarm.orientation() : avgc_data.p_defaultPVOrientation;
+			f_addPVProductionAsset(solarpark, "Solar farm" , dataSolarfarm.capacity_electric_kw(), pvOrientation);
 		}
 		
 		//Set owner
@@ -846,7 +846,8 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 	 	
 	 	//Set PV information
 		companyGC.v_liveAssetsMetaData.initialPV_kW = genericCompany.pv_installed_kwp() != null ? genericCompany.pv_installed_kwp() : 0;
-		//companyGC.v_liveAssetsMetaData.PVPotential_kW = ; // Still needs to be calculated
+		companyGC.v_liveAssetsMetaData.PVPotential_kW = genericCompany.pv_potential_kwp(); // if null: pv potential will be determined by sliders!
+	 	companyGC.v_liveAssetsMetaData.PVOrientation = genericCompany.pv_orientation() != null ? genericCompany.pv_orientation() : avgc_data.p_defaultPVOrientation;
 	 	
 	 	//Update remaining totals (AFTER Lat/Lon has been defined!)
 		p_remainingTotals.adjustTotalNumberOfAnonymousCompanies(companyGC, 1);
@@ -892,7 +893,7 @@ p_remainingTotals.finalizeRemainingTotalsDistributionCompanies();
 
 //Add EA to all generic companies (Has to be after the remaining totals finalization, so cant happen at the same time as the creation of the GC and their buildings)
 for (GridConnection GCcompany : generic_company_GCs ) {
-	f_iEAGenericCompanies(GCcompany, GCcompany.v_liveAssetsMetaData.initialPV_kW);
+	f_iEAGenericCompanies(GCcompany);
 }
 /*ALCODEEND*/}
 
@@ -1434,7 +1435,7 @@ switch (storageType){
 
 /*ALCODEEND*/}
 
-double f_iEAGenericCompanies(GridConnection companyGC,Double pv_installed_kwp)
+double f_iEAGenericCompanies(GridConnection companyGC)
 {/*ALCODESTART::1726584205833*/
 //Get GridNode to know if it has a GridNode profile
 OL_GridNodeProfileLoaderType gridNodeProfileLoaderType = OL_GridNodeProfileLoaderType.NO_PROFILE;
@@ -1493,16 +1494,18 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 }
 
 
-//Production asset (PV) ??????????????????????????????????????????? willen we die toevoegen aan generieke bedrijven?
+//Production asset (PV)
+Double pv_installed_kwp = companyGC.v_liveAssetsMetaData.initialPV_kW;
 if (gridNodeProfileLoaderType == OL_GridNodeProfileLoaderType.INCLUDE_PV || gridNodeProfileLoaderType == OL_GridNodeProfileLoaderType.NET_LOAD){ //dont count production if there is measured data on Node
 	pv_installed_kwp = 0.0;
 }
 if(pv_installed_kwp != null && pv_installed_kwp > 0){
-	f_addPVProductionAsset(companyGC, "Rooftop Solar", pv_installed_kwp, OL_PVOrientation.SOUTH);
-	//f_addEnergyProduction(companyGC, OL_EnergyAssetType.PHOTOVOLTAIC, "Rooftop Solar", pv_installed_kwp);
+	f_addPVProductionAsset(companyGC, "Rooftop Solar", pv_installed_kwp, companyGC.v_liveAssetsMetaData.PVOrientation);
 	
 	current_scenario_list.setCurrentPV_kW(roundToInt(pv_installed_kwp));
+	current_scenario_list.setCurrentPV_orientation(companyGC.v_liveAssetsMetaData.PVOrientation);
 	future_scenario_list.setPlannedPV_kW(roundToInt(pv_installed_kwp));
+	future_scenario_list.setPlannedPV_orientation(companyGC.v_liveAssetsMetaData.PVOrientation);
 }
 
 
@@ -2334,31 +2337,48 @@ if (gridConnection.getSupply().getHasSupply() != null && gridConnection.getSuppl
 	}
 	if (yearlyElectricityProduction_kWh_array != null && gridConnection.getSupply().getPvInstalledKwp() != null && gridConnection.getSupply().getPvInstalledKwp() > 0 && !gridConnection.getHeat().getHeatingTypes().contains(com.zenmo.zummon.companysurvey.HeatingType.COMBINED_HEAT_AND_POWER)){
 		f_createCustomPVAsset(companyGC, yearlyElectricityProduction_kWh_array, (double)gridConnection.getSupply().getPvInstalledKwp()); // Create custom PV asset when production data is available!
+		
+		companyGC.v_liveAssetsMetaData.PVOrientation = OL_PVOrientation.CUSTOM;
+		companyGC.v_liveAssetsMetaData.initialPV_kW = (double)gridConnection.getSupply().getPvInstalledKwp();
 		current_scenario_list.setCurrentPV_kW(gridConnection.getSupply().getPvInstalledKwp());
-	} else if (gridConnection.getSupply().getPvInstalledKwp() != null && gridConnection.getSupply().getPvInstalledKwp() > 0){			
-		//gridConnection.getSupply().getPvOrientation(); // Wat doen we hier mee????? Nog niets!
-		f_addPVProductionAsset(companyGC, "Rooftop Solar", (double) gridConnection.getSupply().getPvInstalledKwp(), OL_PVOrientation.SOUTH); //NEEDS FIXING
-		//f_addEnergyProduction(companyGC, OL_EnergyAssetType.PHOTOVOLTAIC, "Rooftop Solar", gridConnection.getSupply().getPvInstalledKwp());
+		current_scenario_list.setCurrentPV_orientation(OL_PVOrientation.CUSTOM);
+	} 
+	else if (gridConnection.getSupply().getPvInstalledKwp() != null && gridConnection.getSupply().getPvInstalledKwp() > 0){			
+		OL_PVOrientation installedPVOrientation = f_getPVOrientationFromZorm(gridConnection.getSupply().getPvOrientation());
+		f_addPVProductionAsset(companyGC, "Rooftop Solar", (double) gridConnection.getSupply().getPvInstalledKwp(), installedPVOrientation);
 		
 		//add to scenario: current
+		companyGC.v_liveAssetsMetaData.initialPV_kW = (double)gridConnection.getSupply().getPvInstalledKwp();
+		companyGC.v_liveAssetsMetaData.PVOrientation = installedPVOrientation;
 		current_scenario_list.setCurrentPV_kW(gridConnection.getSupply().getPvInstalledKwp());
-		//current_scenario_list.currentPV_orient = gridConnection.getSupply().getPvOrientation();
+		current_scenario_list.setCurrentPV_orientation(installedPVOrientation);
+	}
+	else{
+		companyGC.v_liveAssetsMetaData.initialPV_kW = 0.0;
+		companyGC.v_liveAssetsMetaData.PVOrientation = avgc_data.p_defaultPVOrientation;
+		current_scenario_list.setCurrentPV_kW(0);
+		current_scenario_list.setCurrentPV_orientation(avgc_data.p_defaultPVOrientation);
 	} 	
 	//Wind
 	if (gridConnection.getSupply().getWindInstalledKw() != null && gridConnection.getSupply().getWindInstalledKw() > 0){
 		f_addWindProductionAsset(companyGC, "Wind mill", gridConnection.getSupply().getWindInstalledKw());
-		//f_addEnergyProduction(companyGC, OL_EnergyAssetType.WINDMILL, "Wind mill", gridConnection.getSupply().getWindInstalledKw());
 
 		//add to scenario: current
 		current_scenario_list.setCurrentWind_kW(gridConnection.getSupply().getWindInstalledKw());
 	}
+}
+else{
+	companyGC.v_liveAssetsMetaData.initialPV_kW = 0.0;
+	companyGC.v_liveAssetsMetaData.PVOrientation = avgc_data.p_defaultPVOrientation;
+	current_scenario_list.setCurrentPV_kW(0);
+	current_scenario_list.setCurrentPV_orientation(avgc_data.p_defaultPVOrientation);
 }
 
 //Planned supply (PV)
 if (gridConnection.getSupply().getPvPlanned() != null && gridConnection.getSupply().getPvPlanned()){
 	future_scenario_list.setPlannedPV_kW(current_scenario_list.getCurrentPV_kW() + (gridConnection.getSupply().getPvPlannedKwp() != null ? gridConnection.getSupply().getPvPlannedKwp() : 0)); 
 	future_scenario_list.setPlannedPV_year(gridConnection.getSupply().getPvPlannedYear());
-	//gridConnection.getSupply().getPvPlannedOrientation();
+	future_scenario_list.setPlannedPV_orientation(f_getPVOrientationFromZorm(gridConnection.getSupply().getPvPlannedOrientation()));
 }
 else{
 	future_scenario_list.setPlannedPV_kW(current_scenario_list.getCurrentPV_kW());
@@ -5219,6 +5239,9 @@ J_ProfilePointer f_getPVTProfilePointer(OL_PVOrientation pvtOrientation)
 {/*ALCODESTART::1773414911040*/
 J_ProfilePointer profilePointer = null;
 
+if(pvtOrientation == null){
+	throw new RuntimeException("Trying to get a pvt profile pointer whithout specifying the orientation. Not allowed!");
+}
 switch (pvtOrientation){
 	case EASTWEST:
 		profilePointer = energyModel.pp_PVProduction15DegEastWest_fr;
@@ -5246,5 +5269,23 @@ OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.HEAT;
 J_ProfilePointer profilePointer = f_getPVTProfilePointer(ptOrientation);
 
 J_EAProduction production_asset = new J_EAProduction(parentGC, OL_EnergyAssetType.PHOTOVOLTAIC, asset_name, energyCarrier, installedPower_kW, timeParameters, profilePointer);
+/*ALCODEEND*/}
+
+OL_PVOrientation f_getPVOrientationFromZorm(com.zenmo.zummon.companysurvey.PVOrientation PVOrientationZorm)
+{/*ALCODESTART::1775121934632*/
+OL_PVOrientation pvOrientation = avgc_data.p_defaultPVOrientation;
+
+if(PVOrientationZorm != null){
+	switch(PVOrientationZorm){
+		case SOUTH:
+			pvOrientation = OL_PVOrientation.EASTWEST;
+			break;
+		case EAST_WEST:
+			pvOrientation = OL_PVOrientation.EASTWEST;
+			break;
+	}
+}
+
+return pvOrientation;
 /*ALCODEEND*/}
 

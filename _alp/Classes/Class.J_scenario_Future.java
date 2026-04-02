@@ -39,6 +39,7 @@ public class J_scenario_Future implements Serializable {
 	private boolean plannedCurtailment = false;
 	private Integer plannedPV_kW = 0;
 	private Integer plannedPV_year;
+	private OL_PVOrientation plannedPV_orientation;
 	private Float plannedWind_kW = 0f;
 	private Float plannedBatteryPower_kW = 0f;
 	private Float plannedBatteryCapacity_kWh = 0f;
@@ -111,7 +112,11 @@ public class J_scenario_Future implements Serializable {
     public void setPlannedPV_year(Integer plannedPV_year) {
         this.plannedPV_year = plannedPV_year;
     }
-
+    
+    public void setPlannedPV_orientation(OL_PVOrientation plannedPV_orientation) {
+        this.plannedPV_orientation = plannedPV_orientation;
+    }
+    
     public void setPlannedWind_kW(Float plannedWind_kW) {
         this.plannedWind_kW = plannedWind_kW;
     }
@@ -200,6 +205,10 @@ public class J_scenario_Future implements Serializable {
         return plannedPV_year;
     }
 
+    public OL_PVOrientation getPlannedPV_orientation() {
+        return this.plannedPV_orientation;
+    }
+    
     public Float getPlannedWind_kW() {
         return plannedWind_kW;
     }
