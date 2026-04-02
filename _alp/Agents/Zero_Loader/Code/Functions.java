@@ -2139,7 +2139,7 @@ double[] a_normalizedPower_fr = Arrays.stream(yearlyElectricityProduction_kWh).m
 //J_ProfilePointer profilePointer = new J_ProfilePointer((parentGC.p_ownerID + "_PVproduction") , tf_customPVproduction_fr, OL_ProfileUnits.NORMALIZEDPOWER);
 double dataTimeStep_h = 0.25;
 double dataStartTime_h = 0.0;
-J_ProfilePointer profilePointer = new J_ProfilePointer((parentGC.p_ownerID + "_PVproduction") , a_normalizedPower_fr, dataTimeStep_h, dataStartTime_h, OL_ProfileUnits.NORMALIZEDPOWER);
+J_ProfilePointer profilePointer = new J_ProfilePointer(("GC: " + parentGC.p_gridConnectionID + " custom pv profile") , a_normalizedPower_fr, dataTimeStep_h, dataStartTime_h, OL_ProfileUnits.NORMALIZEDPOWER);
 energyModel.f_addProfile(profilePointer);
 J_EAProduction production_asset = new J_EAProduction(parentGC, OL_EnergyAssetType.PHOTOVOLTAIC, (parentGC.p_ownerID + "_rooftopPV"), OL_EnergyCarriers.ELECTRICITY, (double)pvPower_kW, energyModel.p_timeParameters, profilePointer);
 

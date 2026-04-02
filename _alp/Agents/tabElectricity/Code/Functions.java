@@ -66,16 +66,13 @@ while ( nbHousesWithPVGoal > nbHousesWithPV ) {
 	}
 	else {
 		String assetName = "Rooftop PV";
-		double capacityHeat_kW = 0.0;
-		double yearlyProductionHydrogen_kWh = 0.0;
-		double yearlyProductionMethane_kWh = 0.0;
-		double installedPVCapacity_kW = house.v_liveAssetsMetaData.PVPotential_kW;//roundToDecimal(uniform(3,6),2);
+		double installedPVCapacity_kW = house.v_liveAssetsMetaData.PVPotential_kW;
 		
 		//Compensate for pt if it is present
 		if(house.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW)){
 			installedPVCapacity_kW = max(0, installedPVCapacity_kW-zero_Interface.energyModel.avgc_data.p_avgPTPanelSize_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2); //For now just 1 panel
 		}
-		J_ProfilePointer profilePointer = f_getPVTProfilePointer(house.v_liveAssetsMetaData.PVOrientation);
+		J_ProfilePointer profilePointer = f_getPVTProfilePointer(house.v_liveAssetsMetaData.PVOrientation, house.p_gridConnectionID);
 		J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, OL_EnergyCarriers.ELECTRICITY, installedPVCapacity_kW, zero_Interface.energyModel.p_timeParameters, profilePointer );
 		houses.remove(house);
 		zero_Interface.c_orderedPVSystemsHouses.remove(house);
@@ -261,12 +258,7 @@ else {
 	// Create a new asset
 	OL_EnergyAssetType assetType = OL_EnergyAssetType.PHOTOVOLTAIC;
 	String assetName = "Rooftop PV";
-	double capacityHeat_kW = 0.0;
-	double yearlyProductionMethane_kWh = 0.0;
-	double yearlyProductionHydrogen_kWh = 0.0;
-	double outputTemperature_degC = 0.0;
-	
-	J_ProfilePointer profilePointer = f_getPVTProfilePointer(gc.v_liveAssetsMetaData.PVOrientation);
+	J_ProfilePointer profilePointer = f_getPVTProfilePointer(gc.v_liveAssetsMetaData.PVOrientation, gc.p_gridConnectionID);
 	J_EAProduction productionAsset = new J_EAProduction ( gc, assetType, assetName, OL_EnergyCarriers.ELECTRICITY, capacity_kWp, zero_Interface.energyModel.p_timeParameters, profilePointer );
 }
 
@@ -740,15 +732,23 @@ for(GCGridBattery GCBat : uI_Tabs.f_getAllSliderGridConnections_gridBatteries())
 }
 /*ALCODEEND*/}
 
-J_ProfilePointer f_getPVTProfilePointer(OL_PVOrientation pvtOrientation)
+J_ProfilePointer f_getPVTProfilePointer(OL_PVOrientation pvtOrientation,String gridConnectionID)
 {/*ALCODESTART::1773764103422*/
 J_ProfilePointer profilePointer = null;
 
 switch (pvtOrientation){
 	case EASTWEST:
 		profilePointer = zero_Interface.energyModel.pp_PVProduction15DegEastWest_fr;
+		break;
 	case SOUTH:
 		profilePointer = zero_Interface.energyModel.pp_PVProduction35DegSouth_fr;
+		break;
+	case CUSTOM:
+		profilePointer = zero_Interface.energyModel.f_findProfile("GC: " + gridConnectionID + " custom pv profile");
+		if(profilePointer == null){
+			throw new RuntimeException("Can't find custom profile pointer for GC with custom orientation.");
+		}
+		break;
 }
 
 return profilePointer;
