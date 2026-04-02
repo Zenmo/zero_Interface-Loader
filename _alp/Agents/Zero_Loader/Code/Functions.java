@@ -3563,9 +3563,10 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	//Set PV information
 	GCH.v_liveAssetsMetaData.initialPV_kW = houseBuildingData.pv_installed_kwp() != null ? houseBuildingData.pv_installed_kwp() : 0;
 	GCH.v_liveAssetsMetaData.PVPotential_kW = GCH.v_liveAssetsMetaData.initialPV_kW > 0 ? GCH.v_liveAssetsMetaData.initialPV_kW : houseBuildingData.pv_potential_kwp(); // To prevent sliders from changing outcomes
-
+	GCH.v_liveAssetsMetaData.PVOrientation = houseBuildingData.pv_orientation() != null ? houseBuildingData.pv_orientation() : avgc_data.p_defaultPVOrientation;
+	
 	//Create and add EnergyAssets
-	f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa(), houseBuildingData.heating_type(), houseBuildingData.cooking_type(), houseBuildingData.pv_orientation());
+	f_addEnergyAssetsToHouses(GCH, houseBuildingData.electricity_consumption_kwhpa(), houseBuildingData.gas_consumption_m3pa(), houseBuildingData.heating_type(), houseBuildingData.cooking_type());
 	
 	i++;
 }
@@ -3580,7 +3581,7 @@ for(GCHouse GCH : energyModel.Houses){
 //traceln("Total space heat demand houses input " + roundToDecimal(totalSpaceHeatDemand_kwhpa/1000000,3) + "GWh");
 /*ALCODEEND*/}
 
-double f_addEnergyAssetsToHouses(GCHouse house,Double electricityDemand_kwhpa,Double gasDemand_m3pa,OL_GridConnectionHeatingType heatingType,OL_HouseholdCookingMethod cookingType,OL_PVOrientation pvOrientation)
+double f_addEnergyAssetsToHouses(GCHouse house,Double electricityDemand_kwhpa,Double gasDemand_m3pa,OL_GridConnectionHeatingType heatingType,OL_HouseholdCookingMethod cookingType)
 {/*ALCODESTART::1749728889986*/
 //Add generic electricity demand profile 
 GridNode gn = findFirst(energyModel.pop_gridNodes, x -> x.p_gridNodeID.equals( house.p_parentNodeElectricID));
@@ -3599,7 +3600,7 @@ f_addHeatAssetsToHouses(house, gasDemand_m3pa, heatingType, cookingType);
 
 
 //Add pv
-f_addPVToHouses(house, gn, pvOrientation);
+f_addPVToHouses(house, gn);
 
 //Add cars
 f_addCarsToHouses(house);
@@ -5212,9 +5213,10 @@ for (Windfarm_data windpark : c_windfarm_data){
 return totalPVPower_kW;
 /*ALCODEEND*/}
 
-double f_addPVToHouses(GCHouse house,GridNode gn,OL_PVOrientation pvOrientation)
+double f_addPVToHouses(GCHouse house,GridNode gn)
 {/*ALCODESTART::1770037586816*/
 double installedRooftopSolar_kW = house.v_liveAssetsMetaData.initialPV_kW != null ? house.v_liveAssetsMetaData.initialPV_kW : 0;
+OL_PVOrientation pvOrientation = house.v_liveAssetsMetaData.PVOrientation;
 
 if (gn.p_profileType == OL_GridNodeProfileLoaderType.INCLUDE_PV || gn.p_profileType == OL_GridNodeProfileLoaderType.NET_LOAD){ //dont count production if there is measured data on Node
 	installedRooftopSolar_kW = 0;
@@ -5222,7 +5224,6 @@ if (gn.p_profileType == OL_GridNodeProfileLoaderType.INCLUDE_PV || gn.p_profileT
 
 if (installedRooftopSolar_kW > 0) {
 	f_addPVProductionAsset(house, "Residential Solar", installedRooftopSolar_kW, pvOrientation);
-	//f_addEnergyProduction(house, OL_EnergyAssetType.PHOTOVOLTAIC, "Residential Solar", installedRooftopSolar_kW);
 }
 /*ALCODEEND*/}
 
@@ -5278,7 +5279,7 @@ OL_PVOrientation pvOrientation = avgc_data.p_defaultPVOrientation;
 if(PVOrientationZorm != null){
 	switch(PVOrientationZorm){
 		case SOUTH:
-			pvOrientation = OL_PVOrientation.EASTWEST;
+			pvOrientation = OL_PVOrientation.SOUTH;
 			break;
 		case EAST_WEST:
 			pvOrientation = OL_PVOrientation.EASTWEST;
