@@ -315,38 +315,6 @@
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1726584205809</Id>
-		<Name><![CDATA[f_addEnergyProduction]]></Name>
-		<X>1320</X>
-		<Y>190</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[parentGC]]></Name>
-			<Type><![CDATA[GridConnection]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[asset_type]]></Name>
-			<Type><![CDATA[OL_EnergyAssetType]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[asset_name]]></Name>
-			<Type><![CDATA[String]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[installedPower_kW]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
 	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>GIS_Object</ReturnType>
@@ -463,7 +431,7 @@
 		<Id>1726584205827</Id>
 		<Name><![CDATA[f_addElectricVehicle]]></Name>
 		<X>1320</X>
-		<Y>620</Y>
+		<Y>590</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -499,7 +467,7 @@
 		<Id>1726584205829</Id>
 		<Name><![CDATA[f_addPetroleumFuelVehicle]]></Name>
 		<X>1320</X>
-		<Y>640</Y>
+		<Y>610</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -576,10 +544,6 @@
 			<Name><![CDATA[companyGC]]></Name>
 			<Type><![CDATA[GridConnection]]></Type>
 		</Parameter>
-		<Parameter>
-			<Name><![CDATA[pv_installed_kwp]]></Name>
-			<Type><![CDATA[Double]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
@@ -604,7 +568,7 @@
 		<Id>1726584205837</Id>
 		<Name><![CDATA[f_addTransportHydrogen]]></Name>
 		<X>1320</X>
-		<Y>660</Y>
+		<Y>630</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -917,11 +881,11 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1732112209863</Id>
 		<Name><![CDATA[f_createCustomPVAsset]]></Name>
-		<X>1320</X>
-		<Y>210</Y>
+		<X>1340</X>
+		<Y>250</Y>
 		<Label>
-			<X>9</X>
-			<Y>-1</Y>
+			<X>12</X>
+			<Y>0</Y>
 		</Label>
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
@@ -994,7 +958,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1737712184349</Id>
 		<Name><![CDATA[f_createPetroleumFuelTractors]]></Name>
 		<X>1320</X>
-		<Y>680</Y>
+		<Y>650</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1090,7 +1054,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1745336570663</Id>
 		<Name><![CDATA[f_addHeatAsset]]></Name>
 		<X>1320</X>
-		<Y>430</Y>
+		<Y>460</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1352,7 +1316,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1749726189312</Id>
 		<Name><![CDATA[f_addCookingAsset]]></Name>
 		<X>1320</X>
-		<Y>500</Y>
+		<Y>510</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1380,7 +1344,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1749726279652</Id>
 		<Name><![CDATA[f_addHotWaterDemand]]></Name>
 		<X>1320</X>
-		<Y>520</Y>
+		<Y>530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1404,7 +1368,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1749727623536</Id>
 		<Name><![CDATA[f_addBuildingHeatModel]]></Name>
 		<X>1320</X>
-		<Y>400</Y>
+		<Y>430</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1859,7 +1823,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753883660006</Id>
 		<Name><![CDATA[f_createHeatProfileFromAnnualGasTotal]]></Name>
 		<X>1320</X>
-		<Y>295</Y>
+		<Y>325</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1891,7 +1855,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753883738731</Id>
 		<Name><![CDATA[f_createGasProfileFromAnnualGasTotal]]></Name>
 		<X>1320</X>
-		<Y>250</Y>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2045,7 +2009,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753951013582</Id>
 		<Name><![CDATA[f_getGasToHeatEfficiency]]></Name>
 		<X>1340</X>
-		<Y>315</Y>
+		<Y>345</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2085,7 +2049,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753955686832</Id>
 		<Name><![CDATA[f_createGasProfileFromEstimates]]></Name>
 		<X>1320</X>
-		<Y>270</Y>
+		<Y>300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2105,7 +2069,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753961830063</Id>
 		<Name><![CDATA[f_createHeatProfileFromEstimates]]></Name>
 		<X>1320</X>
-		<Y>360</Y>
+		<Y>390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2187,7 +2151,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753964605708</Id>
 		<Name><![CDATA[f_createHeatProfileFromAnnualHeatTotal]]></Name>
 		<X>1320</X>
-		<Y>340</Y>
+		<Y>370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2296,7 +2260,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1754050106254</Id>
 		<Name><![CDATA[f_addCustomHeatAsset]]></Name>
 		<X>1340</X>
-		<Y>450</Y>
+		<Y>480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2744,7 +2708,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1768486498278</Id>
@@ -2854,6 +2818,138 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[gn]]></Name>
 			<Type><![CDATA[GridNode]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1773414911038</Id>
+		<Name><![CDATA[f_addPVProductionAsset]]></Name>
+		<X>1320</X>
+		<Y>210</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[parentGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[asset_name]]></Name>
+			<Type><![CDATA[String]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[installedPower_kW]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[pvOrientation]]></Name>
+			<Type><![CDATA[OL_PVOrientation]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>J_ProfilePointer</ReturnType>
+		<Id>1773414911040</Id>
+		<Name><![CDATA[f_getPVTProfilePointer]]></Name>
+		<X>1340</X>
+		<Y>230</Y>
+		<Label>
+			<X>12</X>
+			<Y>1</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[pvtOrientation]]></Name>
+			<Type><![CDATA[OL_PVOrientation]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1773414911042</Id>
+		<Name><![CDATA[f_addWindProductionAsset]]></Name>
+		<X>1320</X>
+		<Y>170</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[parentGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[asset_name]]></Name>
+			<Type><![CDATA[String]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[installedPower_kW]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1773414911044</Id>
+		<Name><![CDATA[f_addPTProductionAsset]]></Name>
+		<X>1320</X>
+		<Y>190</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[parentGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[asset_name]]></Name>
+			<Type><![CDATA[String]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[installedPower_kW]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[ptOrientation]]></Name>
+			<Type><![CDATA[OL_PVOrientation]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>OL_PVOrientation</ReturnType>
+		<Id>1775121934632</Id>
+		<Name><![CDATA[f_getPVOrientationFromZorm]]></Name>
+		<X>490</X>
+		<Y>500</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[PVOrientationZorm]]></Name>
+			<Type><![CDATA[com.zenmo.zummon.companysurvey.PVOrientation]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

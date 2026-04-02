@@ -1263,7 +1263,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Description><![CDATA[Average ratio of battery capacity over battery power.
 --> If battery capacity (in kWh) is twice the battery power (in kW) --> ratio = 2.]]></Description>
 		<X>520</X>
-		<Y>955</Y>
+		<Y>985</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2322,7 +2322,7 @@ Voor nu gekozen voor 4185.
 		<Name><![CDATA[p_avgRatioHouseBatteryStorageCapacity_v_PVPower]]></Name>
 		<Description><![CDATA[https://www.essent.nl/thuisbatterij/capaciteit-thuisbatterij : Essent: "Over het algemeen kun je ervan uitgaan dat een thuisbatterij zo'n 1 à 1,5 kWh capaciteit nodig heeft per kWp zonnepanelen vermogen. " ]]></Description>
 		<X>520</X>
-		<Y>975</Y>
+		<Y>1005</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2652,7 +2652,7 @@ https://warmtepomp-panel.nl/afgiftesysteem.html? -> 35 graden afgifte bij -10 gr
 		<Name><![CDATA[p_PBL_HeatingLossFactor_fr]]></Name>
 		<Description><![CDATA[Manually calibrated value tested on 3 neighborhoods to get the total nbh yearly total to match with the expected outcome.]]></Description>
 		<X>520</X>
-		<Y>1030</Y>
+		<Y>1060</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2680,7 +2680,7 @@ https://warmtepomp-panel.nl/afgiftesysteem.html? -> 35 graden afgifte bij -10 gr
 		<Id>1768314112512</Id>
 		<Name><![CDATA[map_insulationLabel_lossfactorPerFloorSurface_WpKm2]]></Name>
 		<X>520</X>
-		<Y>1050</Y>
+		<Y>1080</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2718,7 +2718,7 @@ OL_GridConnectionInsulationLabel.G, 1.45
 		<Name><![CDATA[p_solarAbsorptionFloorSurfaceScalingFactor_fr]]></Name>
 		<Description><![CDATA[Roughly aligned with data-analysis/fitting by Zin Li (TU/e PhD) based on measured data of 100 houses in Dalenm during DACS-HW project. Increased by a factor ~2 after manual testing/calibration by Gillis and Naud.]]></Description>
 		<X>520</X>
-		<Y>1070</Y>
+		<Y>1100</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2830,7 +2830,7 @@ OL_GridConnectionInsulationLabel.G, 1.45
 		<Id>1768497744964</Id>
 		<Name><![CDATA[p_heatCapacitySizingConstant_JpK]]></Name>
 		<X>520</X>
-		<Y>1120</Y>
+		<Y>1150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2858,7 +2858,7 @@ OL_GridConnectionInsulationLabel.G, 1.45
 		<Id>1768497744970</Id>
 		<Name><![CDATA[p_heatCapacitySizingSlope_JpKm2]]></Name>
 		<X>520</X>
-		<Y>1140</Y>
+		<Y>1170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2887,7 +2887,7 @@ OL_GridConnectionInsulationLabel.G, 1.45
 		<Id>1768497744974</Id>
 		<Name><![CDATA[p_heatCapacitySizingFactor_fr]]></Name>
 		<X>520</X>
-		<Y>1160</Y>
+		<Y>1190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2975,7 +2975,7 @@ The cooldown period is defined as the duration of time before a building  is coo
 
 FIND SOURCE AND CORRECT THE NUMBERS BEFORE USE!]]></Description>
 		<X>520</X>
-		<Y>1100</Y>
+		<Y>1130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3016,7 +3016,7 @@ OL_GridConnectionInsulationLabel.G, 4.0
 		<Description><![CDATA[Cooldown timescale as approximately 'measured' on an energy label A, free-standing, wooden house. Modern, terraced and stone houses might have longer cooldown timescale. (meaning it can more effectively buffer heat)]]></Description>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>520</X>
-		<Y>1210</Y>
+		<Y>1240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
