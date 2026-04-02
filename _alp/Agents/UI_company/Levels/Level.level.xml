@@ -635,17 +635,12 @@ f_setSimulateYearScreen();</ActionCode>
 							<ActionCode>double newHeatDemandReduction_pct = sl_heatDemandCompanyReduction.getValue();
 double consumptionScaling_fr = 1  - newHeatDemandReduction_pct/100;
 
-for (J_EA j_ea : p_gridConnection.c_energyAssets){
-	if (j_ea instanceof J_EAConsumption) {
-		if (j_ea.getEAType() == OL_EnergyAssetType.HEAT_DEMAND) {
-			((J_EAConsumption)j_ea).setConsumptionScaling_fr(consumptionScaling_fr);
-		}
-	} else if (j_ea instanceof J_EAProfile &amp;&amp; !(j_ea instanceof J_EAProduction)) {
-		if (((J_EAProfile) j_ea).getEnergyCarrier()== OL_EnergyCarriers.HEAT) {
-			((J_EAProfile) j_ea).setProfileScaling_fr( consumptionScaling_fr );
-		}
+for (J_EAProfile j_ea : p_gridConnection.c_profileAssets) {
+	if(j_ea.getEnergyCarrier()== OL_EnergyCarriers.HEAT &amp;&amp; !(j_ea instanceof J_EAProduction)){
+		j_ea.setProfileScaling_fr( consumptionScaling_fr );
 	}
 }
+
 
 //Set scenario to custom
 f_setScenario(2);
@@ -812,15 +807,9 @@ f_setSimulateYearScreen();</ActionCode>
 					<ActionCode>double newElectricityDemandReduction_pct = sl_electricityDemandCompanyReduction.getValue();
 double consumptionScaling_fr = 1  - newElectricityDemandReduction_pct/100;
 
-for (J_EA j_ea : p_gridConnection.c_energyAssets) {
-	if (j_ea instanceof J_EAConsumption) {
-		if (j_ea.getEAType() == OL_EnergyAssetType.ELECTRICITY_DEMAND) {
-			((J_EAConsumption)j_ea).setConsumptionScaling_fr(consumptionScaling_fr);
-		}
-	} else if (j_ea instanceof J_EAProfile &amp;&amp; !(j_ea instanceof J_EAProduction)) {
-		if (((J_EAProfile) j_ea).getEnergyCarrier() == OL_EnergyCarriers.ELECTRICITY) {
-			((J_EAProfile) j_ea).setProfileScaling_fr( consumptionScaling_fr );
-		}
+for (J_EAProfile j_ea : p_gridConnection.c_profileAssets) {
+	if(j_ea.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW){
+		j_ea.setProfileScaling_fr( consumptionScaling_fr );
 	}
 }
 
@@ -3258,10 +3247,10 @@ new Thread( () -&gt; {
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>if (cb_curtailmentCompany.isSelected()) {
-	p_gridConnection.v_enableCurtailment = true;
+	p_gridConnection.f_setExternalAssetManagement(new J_CurtailManagementContractCapacity(p_gridConnection, zero_Interface.energyModel.p_timeParameters));
 }
 else {
-	p_gridConnection.v_enableCurtailment = false;
+	p_gridConnection.f_removeExternalAssetManagement(I_CurtailManagement.class);
 }
 
 //Set scenario to custom

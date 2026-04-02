@@ -111,15 +111,9 @@ double f_setDemandReductionHeating(List<GridConnection> gcList,double demandRedu
 double scalingFactor = 1 - demandReduction_pct/100;
 
 for (GridConnection gc : gcList) {
-	// Set Consumption Assets
-	for (J_EAConsumption j_ea : gc.c_consumptionAssets) {
-		if (j_ea.getEAType() == OL_EnergyAssetType.HEAT_DEMAND) {
-			j_ea.setConsumptionScaling_fr( scalingFactor );
-		}
-	}
 	// Set Profile Assets
 	for (J_EAProfile j_ea : gc.c_profileAssets) {
-		if (j_ea.getEnergyCarrier() == OL_EnergyCarriers.HEAT) {
+		if (j_ea.getEnergyCarrier() == OL_EnergyCarriers.HEAT && !(j_ea instanceof J_EAProduction)) {
 			j_ea.setProfileScaling_fr( scalingFactor );
 		}
 	}
@@ -216,15 +210,8 @@ while ( targetHeatPumpAmount > nbHeatPumps) { // remove gasburners, add heatpump
 double f_calculatePeakHeatDemand_kW(GridConnection gc)
 {/*ALCODESTART::1749116448649*/
 double peakHeatDemand_kW = 0.0;
-for (J_EAConsumption j_ea : gc.c_consumptionAssets) {
-	if (j_ea.getEAType() == OL_EnergyAssetType.HEAT_DEMAND || j_ea.getEAType() == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
-		double[] profile = j_ea.getProfilePointer().getAllValues();
-		double maxFactor = Arrays.stream(profile).max().getAsDouble();
-		peakHeatDemand_kW += j_ea.getPeakConsumptionPower_kW();
-	}
-}
 for (J_EAProfile j_ea : gc.c_profileAssets) {
-	if (j_ea.getEnergyCarrier() == OL_EnergyCarriers.HEAT && !(j_ea instanceof J_EAProduction)) {
+	if (j_ea.getEnergyCarrier() == OL_EnergyCarriers.HEAT) {
 		peakHeatDemand_kW += j_ea.getPeakConsumptionPower_kW();
 	}
 }
@@ -713,18 +700,12 @@ double totalBaseConsumption_kWh = 0;
 double totalSavedConsumption_kWh = 0;
 for(GridConnection GC : utilityGridConnections){
 	if(GC.v_isActive){
-		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
-		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.getActiveEnergyCarriers().contains(OL_EnergyCarriers.HEAT));
+		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT && !(profile instanceof J_EAProduction));
 		for(J_EAProfile profileEA : profileEAs){
-			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh(); //ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh();
 			totalBaseConsumption_kWh += baseConsumption_kWh;
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
-		}
-		for(J_EAConsumption consumptionEA : consumptionEAs){
-			totalBaseConsumption_kWh += consumptionEA.getBaseConsumption_kWh();
-			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.getBaseConsumption_kWh();
-		}
-		
+		}		
 		if(GC.p_BuildingThermalAsset != null){
 			traceln("WARNING: SLIDER SAVINGS UPDATE FUNCTION IS NOT FUNCTIONAL YET FOR COMPANIES WITH THERMAL BUILDING ASSETS");
 		}
@@ -786,21 +767,13 @@ double averageScalingFactor = 0;
 double totalScalingFactors = 0;
 for(GCHouse GC : houseGridConnections){
 	if(GC.v_isActive){
-		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
-		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.getActiveEnergyCarriers().contains(OL_EnergyCarriers.HEAT));
+		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT && !(profile instanceof J_EAProduction));
 		for(J_EAProfile profileEA : profileEAs){
 			double totalScalingFactorValue = averageScalingFactor*totalScalingFactors;
 			double newTotalScalingFactorValue = totalScalingFactorValue + profileEA.getProfileScaling_fr();
 			totalScalingFactors++;
 			averageScalingFactor = newTotalScalingFactorValue/totalScalingFactors;
-		}
-		for(J_EAConsumption consumptionEA : consumptionEAs){
-			double totalScalingFactorValue = averageScalingFactor*totalScalingFactors;
-			double newTotalScalingFactorValue = totalScalingFactorValue + consumptionEA.getConsumptionScaling_fr();
-			totalScalingFactors++;
-			averageScalingFactor = newTotalScalingFactorValue/totalScalingFactors;
-		}
-		
+		}	
 		if(GC.p_BuildingThermalAsset != null){
 			double totalScalingFactorValue = averageScalingFactor*totalScalingFactors;
 			double newTotalScalingFactorValue = totalScalingFactorValue + GC.p_BuildingThermalAsset.getLossScalingFactor_fr();
@@ -938,18 +911,12 @@ double totalBaseConsumption_kWh = 0;
 double totalSavedConsumption_kWh = 0;
 for(GridConnection GC : utilityGridConnections){
 	if(GC.v_isActive){
-		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT); // FIX FOR HOT WATER/PT IN LONG RUN
-		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.getEAType() == OL_EnergyAssetType.HEAT_DEMAND);
+		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT && !(profile instanceof J_EAProduction)); // FIX FOR HOT WATER IN LONG RUN
 		for(J_EAProfile profileEA : profileEAs){
-			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh(); //ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh();
 			totalBaseConsumption_kWh += baseConsumption_kWh;
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
 		}
-		for(J_EAConsumption consumptionEA : consumptionEAs){
-			totalBaseConsumption_kWh += consumptionEA.getBaseConsumption_kWh();
-			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.getBaseConsumption_kWh();
-		}
-		
 		if(GC.p_BuildingThermalAsset != null){
 			traceln("WARNING: SLIDER SAVINGS UPDATE FUNCTION IS NOT FUNCTIONAL YET FOR COMPANIES WITH THERMAL BUILDING ASSETS");
 		}
