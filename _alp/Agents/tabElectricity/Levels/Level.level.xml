@@ -911,7 +911,7 @@ f_setGridBatteries(sl_collectiveBattery_MWh_default.getValue() * 1000, gcListGri
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>310</Width>
-		<Height>250</Height>
+		<Height>290</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -3076,7 +3076,7 @@ zero_Interface.f_setTrafoText();
 		<Id>1754985710083</Id>
 		<Name><![CDATA[rect_batteryFunctions]]></Name>
 		<X>39</X>
-		<Y>931</Y>
+		<Y>991</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -3102,7 +3102,7 @@ zero_Interface.f_setTrafoText();
 		<Id>1754985710085</Id>
 		<Name><![CDATA[t_batteryFunctionsDescription]]></Name>
 		<X>189</X>
-		<Y>936</Y>
+		<Y>996</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>

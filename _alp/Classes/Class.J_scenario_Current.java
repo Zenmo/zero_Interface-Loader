@@ -34,7 +34,7 @@ public class J_scenario_Current implements Serializable {
 	private Double currentContractFeedinCapacity_kW = 0.0;
 	private Double currentPhysicalConnectionCapacity_kW = 0.0;
 	private Integer currentPV_kW = 0;
-	//String currentPV_orient;
+	private OL_PVOrientation currentPV_orientation;
 	private Float currentWind_kW = 0f;
 	private Float currentBatteryPower_kW = 0f;
 	private Float currentBatteryCapacity_kWh = 0f;
@@ -92,11 +92,11 @@ public class J_scenario_Current implements Serializable {
     	this.currentPV_kW = currentPV_kW;
     }
     
-    /*
-    public void setCurrentPV_orient(String currentPV_orient) {
-        this.currentPV_orient = currentPV_orient;
+    
+    public void setCurrentPV_orientation(OL_PVOrientation currentPV_orientation) {
+        this.currentPV_orientation = currentPV_orientation;
     }
-	*/
+	
     public void setCurrentWind_kW(Float currentWind_kW) {
         this.currentWind_kW = currentWind_kW;
     }
@@ -190,11 +190,9 @@ public class J_scenario_Current implements Serializable {
         return currentPV_kW;
     }
     
-    /*
-    public String getCurrentPV_orient() {
-        return currentPV_orient;
+    public OL_PVOrientation getCurrentPV_orientation() {
+        return this.currentPV_orientation;
     }
-	*/
     
     public Float getCurrentWind_kW() {
         return currentWind_kW;
