@@ -3856,7 +3856,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Color>-16777216</Color>
 				<Text><![CDATA[Custom]]></Text>
 				<TextCode>p_scenarioSettings_Current.getCurrentContractDeliveryCapacity_kW() != sl_GCCapacityCompany.getValue() ? "Custom" :
-p_gridConnection.v_liveConnectionMetaData.contractedDeliveryCapacityKnown ? "Bekend" : "Geschat"</TextCode>
+p_gridConnection.v_liveConnectionMetaData.getContractedDeliveryCapacityKnown() ? "Bekend" : "Geschat"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
@@ -3883,7 +3883,7 @@ p_gridConnection.v_liveConnectionMetaData.contractedDeliveryCapacityKnown ? "Bek
 				<Color>-16777216</Color>
 				<Text><![CDATA[Geschat]]></Text>
 				<TextCode>p_scenarioSettings_Current.getCurrentContractFeedinCapacity_kW() != sl_GCCapacityCompany_Feedin.getValue() ? "Custom" :
-p_gridConnection.v_liveConnectionMetaData.contractedFeedinCapacityKnown ? "Bekend" : "Geschat"</TextCode>
+p_gridConnection.v_liveConnectionMetaData.getContractedFeedinCapacityKnown() ? "Bekend" : "Geschat"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
@@ -3910,7 +3910,7 @@ p_gridConnection.v_liveConnectionMetaData.contractedFeedinCapacityKnown ? "Beken
 				<Color>-16777216</Color>
 				<Text><![CDATA[Bekend]]></Text>
 				<TextCode>p_scenarioSettings_Current.getCurrentPhysicalConnectionCapacity_kW() != v_physicalConnectionCapacity_kW ? "Custom" :
-p_gridConnection.v_liveConnectionMetaData.physicalCapacityKnown ? "Bekend" : "Geschat"</TextCode>
+p_gridConnection.v_liveConnectionMetaData.getPhysicalCapacityKnown() ? "Bekend" : "Geschat"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>

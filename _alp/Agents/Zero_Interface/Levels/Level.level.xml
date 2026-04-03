@@ -1159,7 +1159,7 @@ else{
 				<Color>-16777216</Color>
 				<Text><![CDATA[Het huidige scenario bevat de energie dynamieken van dit moment.
 Dit omvat o.a. de huidige zonnepanelen op de daken van huizen en 
-bedrijven, het aantal voertuigen per type, de electriciteitsconsumptie
+bedrijven, het aantal voertuigen per type, de elektriciteitsconsumptie
 van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 				<Font>
 					<Name><![CDATA[SansSerif]]></Name>
@@ -1938,7 +1938,7 @@ else if(b_inManualFilterSelectionMode){
 	f_selectManualFilteredGC(clickx, clicky);
 }
 else{
-	if (uI_Tabs.pop_tabEHub.size() &gt; 0 &amp;&amp; uI_Tabs.pop_tabEHub.get(0).b_NFATOListener) {
+	if (uI_Tabs.pop_tabEHub.size() &gt; 0 &amp;&amp; uI_Tabs.pop_tabEHub.get(0).b_inCapacitySharingSelectionMode) {
 		uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
 	}
 	else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP) || 
@@ -1971,7 +1971,7 @@ else if(b_inManualFilterSelectionMode){
 	f_selectManualFilteredGC(clickx, clicky);
 }
 else{
-	if (uI_Tabs.pop_tabEHub.size() &gt; 0 &amp;&amp; uI_Tabs.pop_tabEHub.get(0).b_NFATOListener) {
+	if (uI_Tabs.pop_tabEHub.size() &gt; 0 &amp;&amp; uI_Tabs.pop_tabEHub.get(0).b_inCapacitySharingSelectionMode) {
 		uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
 	}
 	else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP) || 
@@ -3113,7 +3113,7 @@ fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(true);</ActionCode>
 		<Id>1745935981029</Id>
 		<Name><![CDATA[txt_dataAccesibilityFunctionalities]]></Name>
 		<X>-680</X>
-		<Y>845</Y>
+		<Y>865</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>

@@ -36,12 +36,21 @@ uI_Results.v_interfaceViewAreaYOffset = zero_Interface.va_EHubDashboard.getY();
 //Style resultsUI
 f_styleEnergyHubResultsUI();
 
-//Set ResultsUI radiobutton setup
-uI_Results.v_selectedRadioButtonSetup = OL_RadioButtonSetup.DEFAULT_AND_GESPREKSLEIDRAADBEDRIJVEN_AND_GTO;
+//Set the selected radiobutton setup Energy
+List<OL_ChartTypes> selectedChartTypes_Energy = new ArrayList<>(List.of(
+												OL_ChartTypes.PROFILES,
+												OL_ChartTypes.BAR_TOTALS,
+												OL_ChartTypes.LOAD_DURATION_CURVES,
+												OL_ChartTypes.SANKEY,
+												OL_ChartTypes.GESPREKSLEIDRAAD_BEDRIJVEN,
+												OL_ChartTypes.GTO
+												));
 
+//Set the selected radiobutton setup Economic
+List<OL_ChartTypes> selectedChartTypes_Economic = new ArrayList<>();// Leave empty for now!
 
 //Connect resultsUI
-uI_Results.f_initializeResultsUI();
+uI_Results.f_initializeResultsUI(selectedChartTypes_Energy, selectedChartTypes_Economic);
 uI_Results.f_updateResultsUI(v_energyHubCoop);
 /*ALCODEEND*/}
 

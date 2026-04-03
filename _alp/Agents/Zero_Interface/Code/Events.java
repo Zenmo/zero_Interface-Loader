@@ -15,11 +15,12 @@ if ( b_updateLiveCongestionColors ){
 
 
 // Update the NFATO values in the selected companyUI
-if(c_selectedGridConnections.size() > 0 && c_selectedGridConnections.get(0).v_enableNFato){
+if(uI_Company != null){
 	if(uI_Company.v_NFATO_active){
 		uI_Company.f_getNFATOValues();
 	}
 }
+
 
 // Get the weather info
 f_getWeatherInfo();

@@ -2,9 +2,9 @@
 <Variables>
 	<Variable Class="PlainVariable">
 		<Id>1722256365490</Id>
-		<Name><![CDATA[b_NFATOListener]]></Name>
+		<Name><![CDATA[b_inCapacitySharingSelectionMode]]></Name>
 		<X>740</X>
-		<Y>915</Y>
+		<Y>925</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -21,9 +21,9 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1722256365499</Id>
-		<Name><![CDATA[v_nfatoFirstGC]]></Name>
+		<Name><![CDATA[v_recievingGC]]></Name>
 		<X>740</X>
-		<Y>855</Y>
+		<Y>865</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -40,9 +40,9 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1722256365507</Id>
-		<Name><![CDATA[v_nfatoSecondGC]]></Name>
+		<Name><![CDATA[v_sendingGC]]></Name>
 		<X>740</X>
-		<Y>875</Y>
+		<Y>885</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -59,9 +59,9 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1722256365515</Id>
-		<Name><![CDATA[b_nfatoWeekendDistinction]]></Name>
+		<Name><![CDATA[b_capacitySharingContractWeekendDistinction]]></Name>
 		<X>740</X>
-		<Y>895</Y>
+		<Y>905</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

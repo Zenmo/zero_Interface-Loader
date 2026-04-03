@@ -2,7 +2,7 @@
 <Variables>
 	<Variable Class="PlainVariable">
 		<Id>1726584205532</Id>
-		<Name><![CDATA[hourOfYearPerMonth]]></Name>
+		<Name><![CDATA[monthStartHours_default]]></Name>
 		<Description><![CDATA[Hour of year per month (not leap year) --> Houdt dit rekening met zomer/winter tijd?]]></Description>
 		<X>1550</X>
 		<Y>170</Y>
@@ -19,7 +19,56 @@
               StaticVariable="false">
 			<Type><![CDATA[double[]]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new double[] {0, 744, 1392, 2136, 2856, 3600, 4320, 5064, 5808, 6528, 7272, 7992}]]></Code>
+				<Code><![CDATA[new double[] {
+    0,    // Jan
+    744,  // Feb
+    1416, // Mar
+    2160, // Apr
+    2880, // May
+    3624, // Jun
+    4344, // Jul
+    5088, // Aug
+    5832, // Sep
+    6552, // Oct
+    7296, // Nov
+    8016  // Dec
+}]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1774887768351</Id>
+		<Name><![CDATA[monthStartHours_leapYear]]></Name>
+		<Description><![CDATA[Hour of year per month (leap year) --> Houdt dit rekening met zomer/winter tijd?]]></Description>
+		<X>1550</X>
+		<Y>190</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double[]]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new double[] {
+    0,    // Jan
+    744,  // Feb
+    1440, // Mar
+    2184, // Apr
+    2904, // May
+    3648, // Jun
+    4368, // Jul
+    5112, // Aug
+    5856, // Sep
+    6576, // Oct
+    7320, // Nov
+    8040  // Dec
+}]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -584,7 +633,7 @@ https://www.debedrijfswagenadviseurs.nl/praktijkverbruik-elektrische-bedrijfswag
 - https://econvice.nl/op-gas-of-elektra-verwarmen-wat-is-gunstig/
 - https://www.joostdevree.nl/shtmls/calorische_waarde.shtml]]></Description>
 		<X>1550</X>
-		<Y>250</Y>
+		<Y>270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -617,7 +666,7 @@ https://www.debedrijfswagenadviseurs.nl/praktijkverbruik-elektrische-bedrijfswag
 LHV = 3.00 kWh/Nm3
 HHV = 3.54 kWh/Nm3]]></Description>
 		<X>1570</X>
-		<Y>480</Y>
+		<Y>500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -646,7 +695,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 		<Name><![CDATA[p_hydrogenDensity_kg_Nm3]]></Name>
 		<Description><![CDATA[https://keengas.com/gases/hydrogen/]]></Description>
 		<X>1570</X>
-		<Y>530</Y>
+		<Y>550</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -675,7 +724,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 		<Name><![CDATA[p_oxygenDensity_kg_Nm3]]></Name>
 		<Description><![CDATA[http://www.uigi.com/o2_conv.html]]></Description>
 		<X>1570</X>
-		<Y>550</Y>
+		<Y>570</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -711,7 +760,7 @@ MM O = 16 g/mol
 
 --> 1/0.126 =7.9365 gram zuurstof productie per gram waterstof productie.]]></Description>
 		<X>1570</X>
-		<Y>580</Y>
+		<Y>600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -740,7 +789,7 @@ MM O = 16 g/mol
 		<Name><![CDATA[p_hydrogenSpecificEnergy_kWh_kg]]></Name>
 		<Description><![CDATA[https://www.cenex.co.uk/app/uploads/2021/05/Intro-to-hydrogen-1.pdf --> 33.6]]></Description>
 		<X>1570</X>
-		<Y>500</Y>
+		<Y>520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -769,7 +818,7 @@ MM O = 16 g/mol
 		<Name><![CDATA[p_diesel_kWhpl]]></Name>
 		<Description><![CDATA[https://www.joostdevree.nl/shtmls/calorische_waarde.shtml]]></Description>
 		<X>1550</X>
-		<Y>270</Y>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -856,7 +905,7 @@ MM O = 16 g/mol
 		<Name><![CDATA[p_gasoline_kWhpl]]></Name>
 		<Description><![CDATA[https://www.joostdevree.nl/shtmls/calorische_waarde.shtml]]></Description>
 		<X>1550</X>
-		<Y>290</Y>
+		<Y>310</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2129,7 +2178,7 @@ https://www.klimaat030.nl/warmteverlies-van-stadsverwarming-gigantisch/]]></Desc
 Voor nu gekozen voor 4185.
 ]]></Description>
 		<X>1550</X>
-		<Y>310</Y>
+		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2158,7 +2207,7 @@ Voor nu gekozen voor 4185.
 		<Name><![CDATA[p_waterDensity_kgpm3]]></Name>
 		<Description><![CDATA[https://www.sigmaaldrich.com/NL/en/substance/densitystandard998kgm318027732185 --> 998 kg/m3]]></Description>
 		<X>1550</X>
-		<Y>330</Y>
+		<Y>350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2390,7 +2439,7 @@ Voor nu gekozen voor 4185.
 		<Name><![CDATA[map_yearlySummerWinterTimeStartHour]]></Name>
 		<Description><![CDATA[Map that contains data, with key per year, and value a pair where pair.getFirst() == summertimeStartHour and pair.getSecond() == winterTimeStartHour.]]></Description>
 		<X>1550</X>
-		<Y>200</Y>
+		<Y>220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3048,7 +3097,357 @@ OL_GridConnectionInsulationLabel.G, 4.0
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
-		<Id>1775122631307</Id>
+		<Id>1773940397692</Id>
+		<Name><![CDATA[map_avgCostOfEnergyCarrier_eurpkWh]]></Name>
+		<X>1960</X>
+		<Y>100</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_EnergyCarriers, Double>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[Map.of(//MOET NOG WORDEN INGEVULD
+       OL_EnergyCarriers.ELECTRICITY, 0.1,
+       OL_EnergyCarriers.HEAT, 0.2,
+       OL_EnergyCarriers.METHANE, 0.3,
+       OL_EnergyCarriers.PETROLEUM_FUEL, 0.4,
+       OL_EnergyCarriers.HYDROGEN, 0.5,
+       OL_EnergyCarriers.IRON_POWDER, 0.6
+)]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1773940397690</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1773940416645</Id>
+		<Name><![CDATA[map_avgAssetCAPEX_eurpkW]]></Name>
+		<X>1960</X>
+		<Y>190</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_EnergyAssetType, Double>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[Map.ofEntries(
+    Map.entry(OL_EnergyAssetType.STORAGE_ELECTRIC, 1.0),
+    Map.entry(OL_EnergyAssetType.PHOTOVOLTAIC, 2.0),
+    Map.entry(OL_EnergyAssetType.HEAT_PUMP_AIR, 3.0),
+    Map.entry(OL_EnergyAssetType.PHOTOTHERMAL, 4.0),
+    Map.entry(OL_EnergyAssetType.WINDMILL, 5.0),
+    Map.entry(OL_EnergyAssetType.ELECTROLYSER, 6.0),
+    Map.entry(OL_EnergyAssetType.DIESEL_GENERATOR, 7.0),
+    Map.entry(OL_EnergyAssetType.METHANE_GENERATOR, 8.0),
+    Map.entry(OL_EnergyAssetType.GAS_BURNER, 9.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_VEHICLE, 10.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_VAN, 11.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_TRUCK, 12.0),
+    Map.entry(OL_EnergyAssetType.HYDROGEN_TRUCK, 13.0)
+)]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1773940416643</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1773940478512</Id>
+		<Name><![CDATA[map_avgAssetLifeTime_yr]]></Name>
+		<X>1960</X>
+		<Y>230</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_EnergyAssetType, Double>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[Map.ofEntries(
+    Map.entry(OL_EnergyAssetType.STORAGE_ELECTRIC, 20.0),
+    Map.entry(OL_EnergyAssetType.PHOTOVOLTAIC, 20.0),
+    Map.entry(OL_EnergyAssetType.HEAT_PUMP_AIR, 20.0),
+    Map.entry(OL_EnergyAssetType.PHOTOTHERMAL, 20.0),
+    Map.entry(OL_EnergyAssetType.WINDMILL, 20.0),
+    Map.entry(OL_EnergyAssetType.ELECTROLYSER, 20.0),
+    Map.entry(OL_EnergyAssetType.DIESEL_GENERATOR, 20.0),
+    Map.entry(OL_EnergyAssetType.METHANE_GENERATOR, 20.0),
+    Map.entry(OL_EnergyAssetType.GAS_BURNER, 20.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_VEHICLE, 20.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_VAN, 20.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_TRUCK, 20.0),
+    Map.entry(OL_EnergyAssetType.HYDROGEN_TRUCK, 20.0)
+)]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1773940478510</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1773940480159</Id>
+		<Name><![CDATA[map_avgAssetOPEX_eurpkWpyr]]></Name>
+		<X>1960</X>
+		<Y>210</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_EnergyAssetType, Double>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[Map.ofEntries(
+    Map.entry(OL_EnergyAssetType.STORAGE_ELECTRIC, 5.0),
+    Map.entry(OL_EnergyAssetType.PHOTOVOLTAIC, 6.0),
+    Map.entry(OL_EnergyAssetType.HEAT_PUMP_AIR, 7.0),
+    Map.entry(OL_EnergyAssetType.PHOTOTHERMAL, 8.0),
+    Map.entry(OL_EnergyAssetType.WINDMILL, 9.0),
+    Map.entry(OL_EnergyAssetType.ELECTROLYSER, 10.0),
+    Map.entry(OL_EnergyAssetType.DIESEL_GENERATOR, 11.0),
+    Map.entry(OL_EnergyAssetType.METHANE_GENERATOR, 12.0),
+    Map.entry(OL_EnergyAssetType.GAS_BURNER, 13.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_VEHICLE, 14.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_VAN, 15.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_TRUCK, 16.0),
+    Map.entry(OL_EnergyAssetType.HYDROGEN_TRUCK, 17.0)
+)]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1773940480157</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1774010687023</Id>
+		<Name><![CDATA[map_gridOperatorTarrifs]]></Name>
+		<X>1960</X>
+		<Y>300</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_GridOperator, Map<Integer, Class<? extends I_GridOperatorTariffs>>>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[Map.of(
+      	OL_GridOperator.ENEXIS, Map.of(
+	       //2026, J_GridOperatorTariffsEnexis_2026.class,
+	       2025, J_GridOperatorTariffsEnexis_2025.class,
+	       2024, J_GridOperatorTariffsEnexis_2025.class,
+	       2023, J_GridOperatorTariffsEnexis_2025.class
+		)/*,
+		OL_GridOperator.LIANDER, Map.of(
+	       //2026, J_GridOperatorTariffsStedin_2026.class,
+	       //2025, J_GridOperatorTariffsStedin_2025.class //,
+	       //2024, J_GridOperatorTariffsStedin_2024.class,
+		),
+		OL_GridOperator.STEDIN, Map.of(
+	       //2026, J_GridOperatorTariffsStedin_2026.class,
+	       //2025, J_GridOperatorTariffsStedin_2025.class //,
+	       //2024, J_GridOperatorTariffsStedin_2024.class,
+		)*/
+	)]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1774010687021</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1774264674117</Id>
+		<Name><![CDATA[map_energyTaxesECImport_eurpkWh]]></Name>
+		<X>1960</X>
+		<Y>120</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<Integer, Map<OL_EnergyCarriers, Double>>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[Map.of(
+      	2025, Map.of(//MOET NOG WORDEN INGEVULD
+	       OL_EnergyCarriers.ELECTRICITY, 0.03868,
+	       OL_EnergyCarriers.HEAT, 0.0,
+	       OL_EnergyCarriers.METHANE, 0.03868,
+	       OL_EnergyCarriers.PETROLEUM_FUEL, 0.0,
+	       OL_EnergyCarriers.HYDROGEN, 0.0,
+	       OL_EnergyCarriers.IRON_POWDER, 0.0
+		),
+		2024, Map.of(//MOET NOG WORDEN INGEVULD
+	       OL_EnergyCarriers.ELECTRICITY, 0.03868,
+	       OL_EnergyCarriers.HEAT, 0.0,
+	       OL_EnergyCarriers.METHANE, 0.03868,
+	       OL_EnergyCarriers.PETROLEUM_FUEL, 0.0,
+	       OL_EnergyCarriers.HYDROGEN, 0.0,
+	       OL_EnergyCarriers.IRON_POWDER, 0.0
+		),
+		2023, Map.of(//MOET NOG WORDEN INGEVULD
+	       OL_EnergyCarriers.ELECTRICITY, 0.03868,
+	       OL_EnergyCarriers.HEAT, 0.0,
+	       OL_EnergyCarriers.METHANE, 0.03868,
+	       OL_EnergyCarriers.PETROLEUM_FUEL, 0.0,
+	       OL_EnergyCarriers.HYDROGEN, 0.0,
+	       OL_EnergyCarriers.IRON_POWDER, 0.0
+		)
+	)]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1774264674115</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1774264693364</Id>
+		<Name><![CDATA[VAT_energy_fr]]></Name>
+		<X>1960</X>
+		<Y>140</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.21]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1774264693362</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1774264705889</Id>
+		<Name><![CDATA[VAT_CAPEXAndOPEX_fr]]></Name>
+		<X>1960</X>
+		<Y>250</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.21]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1774264705887</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1774371060234</Id>
+		<Name><![CDATA[map_avgCO2EmissionOfEnergyCarrier_kgpkWh]]></Name>
+		<X>60</X>
+		<Y>910</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_EnergyCarriers, Double>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[Map.of(//MOET NOG WORDEN INGEVULD
+       OL_EnergyCarriers.ELECTRICITY, 0.1,
+       OL_EnergyCarriers.HEAT, 0.2,
+       OL_EnergyCarriers.METHANE, 0.3,
+       OL_EnergyCarriers.PETROLEUM_FUEL, 0.4,
+       OL_EnergyCarriers.HYDROGEN, 0.5,
+       OL_EnergyCarriers.IRON_POWDER, 0.6
+)]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1774371060232</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1775145927207</Id>
 		<Name><![CDATA[p_defaultPVOrientation]]></Name>
 		<X>520</X>
 		<Y>935</Y>
@@ -3067,7 +3466,7 @@ OL_GridConnectionInsulationLabel.G, 4.0
 				<Code><![CDATA[OL_PVOrientation.SOUTH]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
-				<Id>1775122631305</Id>
+				<Id>1775145927205</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>

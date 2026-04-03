@@ -1,4 +1,4 @@
-double f_setAVGC_data()
+double f_setAVGC_data(OL_GridOperator gridOperator,int simulationYear)
 {/*ALCODESTART::1726584205530*/
 //Perform sanity checks on the values
 f_sanityChecks();
@@ -131,6 +131,9 @@ dataAVGC.p_hydrogenDensity_kg_Nm3 = p_hydrogenDensity_kg_Nm3;
 dataAVGC.p_oxygenDensity_kg_Nm3 = p_oxygenDensity_kg_Nm3;
 dataAVGC.p_oxygenProduction_kgO2pkgH2 = p_oxygenProduction_kgO2pkgH2;
 
+dataAVGC.map_avgCO2EmissionOfEnergyCarrier_kgpkWh = map_avgCO2EmissionOfEnergyCarrier_kgpkWh;
+
+dataAVGC.economicAVGC = f_getEconomicAVGC(gridOperator, simulationYear);
 /*ALCODEEND*/}
 
 double f_sanityChecks()
@@ -140,5 +143,30 @@ if(p_avgSpaceHeatingTotalGasConsumptionShare_fr +
 	p_avgDHWTotalGasConsumptionShare_fr != 1){
 throw new RuntimeException("Total average heating+dhw+cooking house gas consumption shares dont add up to 1");
 }
+/*ALCODEEND*/}
+
+J_AVGC_Economic_data f_getEconomicAVGC(OL_GridOperator gridOperator,int year)
+{/*ALCODESTART::1773938569040*/
+J_AVGC_Economic_data economicAVGC = new J_AVGC_Economic_data();
+economicAVGC.map_avgCostOfEnergyCarrier_eurpkWh = map_avgCostOfEnergyCarrier_eurpkWh;
+economicAVGC.map_energyTaxesECImport_eurpkWh = map_energyTaxesECImport_eurpkWh.get(year);
+economicAVGC.VAT_energy_fr = VAT_energy_fr;
+economicAVGC.map_avgAssetCAPEX_eurpkW = map_avgAssetCAPEX_eurpkW;
+economicAVGC.map_avgAssetLifeTime_yr = map_avgAssetLifeTime_yr;
+economicAVGC.map_avgAssetOPEX_eurpkWpyr = map_avgAssetOPEX_eurpkWpyr;
+economicAVGC.VAT_CAPEXAndOPEX_fr = VAT_CAPEXAndOPEX_fr;
+
+if(gridOperator != null){
+	try {
+		economicAVGC.gridOperatorTariffs = map_gridOperatorTarrifs.get(gridOperator).get(year).getDeclaredConstructor().newInstance();
+	}
+	catch (Exception e) {
+		traceln("No gridOperatorTariffs sheet found for this GridOperator ( " + gridOperator + " ) and/or simulation year ( " + year + " ) -> Connection costs chart won't be supported.");
+	}
+}
+else{
+	traceln("No GridOperator found -> Connection costs chart won't be supported.");
+}
+return economicAVGC;
 /*ALCODEEND*/}
 

@@ -3,7 +3,7 @@ public ShapeGroup getGroupHubSliders() {
 }
 
 public ShapeButton getButton_remove_nfato() {
-	return this.button_remove_nfato;
+	return this.button_remove_capacitySharingContracts;
 }
 
 public ShapeButton getButton_createEnergyHub() {
