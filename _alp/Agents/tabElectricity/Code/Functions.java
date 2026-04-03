@@ -50,7 +50,7 @@ while ( nbHousesWithPVGoal < nbHousesWithPV ) { // remove excess PV systems
 		
 		if(house.p_batteryAsset != null ){
 			house.p_batteryAsset.removeEnergyAsset();
-			house.f_setBatteryManagement(null);
+			house.f_removeExternalAssetManagement(I_BatteryManagement.class);
 		}
 	}
 	else {
@@ -66,16 +66,14 @@ while ( nbHousesWithPVGoal > nbHousesWithPV ) {
 	}
 	else {
 		String assetName = "Rooftop PV";
-		double capacityHeat_kW = 0.0;
-		double yearlyProductionHydrogen_kWh = 0.0;
-		double yearlyProductionMethane_kWh = 0.0;
-		double installedPVCapacity_kW = house.v_liveAssetsMetaData.PVPotential_kW;//roundToDecimal(uniform(3,6),2);
+		double installedPVCapacity_kW = house.v_liveAssetsMetaData.PVPotential_kW;
 		
 		//Compensate for pt if it is present
 		if(house.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW)){
 			installedPVCapacity_kW = max(0, installedPVCapacity_kW-zero_Interface.energyModel.avgc_data.p_avgPTPanelSize_m2*zero_Interface.energyModel.avgc_data.p_avgPVPower_kWpm2); //For now just 1 panel
 		}
-		J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, OL_EnergyCarriers.ELECTRICITY, installedPVCapacity_kW, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
+		J_ProfilePointer profilePointer = f_getPVTProfilePointer(house.v_liveAssetsMetaData.PVOrientation, house.p_gridConnectionID);
+		J_EAProduction productionAsset = new J_EAProduction ( house, OL_EnergyAssetType.PHOTOVOLTAIC, assetName, OL_EnergyCarriers.ELECTRICITY, installedPVCapacity_kW, zero_Interface.energyModel.p_timeParameters, profilePointer );
 		houses.remove(house);
 		zero_Interface.c_orderedPVSystemsHouses.remove(house);
 		zero_Interface.c_orderedPVSystemsHouses.add(0, house);
@@ -127,15 +125,9 @@ double f_setDemandReduction(List<GridConnection> gcList,double demandReduction_p
 double scalingFactor = 1 - demandReduction_pct/100;
 
 for (GridConnection gc : gcList) {
-	// Set Consumption Assets
-	for (J_EAConsumption j_ea : gc.c_consumptionAssets) {
-		if (j_ea.getEAType() == OL_EnergyAssetType.ELECTRICITY_DEMAND) {
-			j_ea.setConsumptionScaling_fr( scalingFactor );
-		}
-	}
 	// Set Profile Assets
 	for (J_EAProfile j_ea : gc.c_profileAssets) {
-		if (j_ea.getEnergyCarrier() == OL_EnergyCarriers.ELECTRICITY) {
+		if(j_ea.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW){
 			j_ea.setProfileScaling_fr( scalingFactor );
 		}
 	}
@@ -266,12 +258,8 @@ else {
 	// Create a new asset
 	OL_EnergyAssetType assetType = OL_EnergyAssetType.PHOTOVOLTAIC;
 	String assetName = "Rooftop PV";
-	double capacityHeat_kW = 0.0;
-	double yearlyProductionMethane_kWh = 0.0;
-	double yearlyProductionHydrogen_kWh = 0.0;
-	double outputTemperature_degC = 0.0;
-	
-	J_EAProduction productionAsset = new J_EAProduction ( gc, assetType, assetName, OL_EnergyCarriers.ELECTRICITY, capacity_kWp, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr );
+	J_ProfilePointer profilePointer = f_getPVTProfilePointer(gc.v_liveAssetsMetaData.PVOrientation, gc.p_gridConnectionID);
+	J_EAProduction productionAsset = new J_EAProduction ( gc, assetType, assetName, OL_EnergyCarriers.ELECTRICITY, capacity_kWp, zero_Interface.energyModel.p_timeParameters, profilePointer );
 }
 
 // Update the ordered collection
@@ -316,7 +304,7 @@ if( nbHousesWithPV > 0 ){
 	while ( nbHouseBatteries > nbHousesWithBatteryGoal ) {
 		GCHouse house = findFirst(gcListHouses, p -> p.p_batteryAsset != null );
 		house.p_batteryAsset.removeEnergyAsset();
-		house.f_setBatteryManagement(null);
+		house.f_removeExternalAssetManagement(I_BatteryManagement.class);
 		nbHouseBatteries--;
 	}
 	while ( nbHouseBatteries < nbHousesWithBatteryGoal) {
@@ -461,15 +449,10 @@ double totalSavedConsumption_kWh = 0;
 for(GridConnection GC : allConsumerGridConnections){
 	if(GC.v_isActive){
 		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
-		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 		for(J_EAProfile profileEA : profileEAs){
-			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh(); //ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh();
 			totalBaseConsumption_kWh += baseConsumption_kWh;
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
-		}
-		for(J_EAConsumption consumptionEA : consumptionEAs){
-			totalBaseConsumption_kWh += consumptionEA.getBaseConsumption_kWh();
-			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.getBaseConsumption_kWh();
 		}
 	}
 }
@@ -522,7 +505,7 @@ sl_largeScaleWind_MW.setValue((totalWind_kW/1000) + p_currentWindTurbines_MW, fa
 //Curtailment
 boolean curtailment = true;
 for(GridConnection GC : allConsumerGridConnections){
-	if(!GC.v_enableCurtailment){
+	if(!GC.f_isAssetManagementActive(I_CurtailManagement.class)){
 		curtailment = false;
 		break;
 	}
@@ -570,15 +553,10 @@ double totalSavedConsumption_kWh = 0;
 for(GCHouse GC : houseGridConnections){
 	if(GC.v_isActive){
 		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
-		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 		for(J_EAProfile profileEA : profileEAs){
-			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh(); //ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh();
 			totalBaseConsumption_kWh += baseConsumption_kWh;
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
-		}
-		for(J_EAConsumption consumptionEA : consumptionEAs){
-			totalBaseConsumption_kWh += consumptionEA.getBaseConsumption_kWh();
-			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.getBaseConsumption_kWh();
 		}
 	}
 }
@@ -641,15 +619,10 @@ double totalSavedConsumption_kWh = 0;
 for(GridConnection GC : utilityGridConnections){
 	if(GC.v_isActive){
 		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
-		List<J_EAConsumption> consumptionEAs = findAll(GC.c_consumptionAssets, consumption -> consumption.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
 		for(J_EAProfile profileEA : profileEAs){
-			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh();//ZeroMath.arraySum(profileEA.a_energyProfile_kWh);
+			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh();
 			totalBaseConsumption_kWh += baseConsumption_kWh;
 			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
-		}
-		for(J_EAConsumption consumptionEA : consumptionEAs){
-			totalBaseConsumption_kWh += consumptionEA.getBaseConsumption_kWh();
-			totalSavedConsumption_kWh += (1-consumptionEA.getConsumptionScaling_fr())*consumptionEA.getBaseConsumption_kWh();
 		}
 	}
 }
@@ -690,7 +663,7 @@ sl_largeScaleWind_MW_Businesspark.setValue((totalWind_kW/1000) + p_currentWindTu
 //Curtailment
 boolean curtailment = true;
 for(GridConnection GC : utilityGridConnections){
-	if(!GC.v_enableCurtailment){
+	if(!GC.f_isAssetManagementActive(I_CurtailManagement.class)){
 		curtailment = false;
 		break;
 	}
@@ -723,8 +696,14 @@ traceln("Forgot to override the update custom electricity sliders functionality"
 double f_setCurtailment(boolean activateCurtailment,List<GridConnection> gcList)
 {/*ALCODESTART::1754986167346*/
 for (GridConnection GC : gcList) {
-	GC.v_enableCurtailment = activateCurtailment;
+	if(activateCurtailment){
+		GC.f_setExternalAssetManagement(new J_CurtailManagementContractCapacity(GC, zero_Interface.energyModel.p_timeParameters));
+	}
+	else{
+		GC.f_removeExternalAssetManagement(I_CurtailManagement.class);
+	}
 }
+
 
 
 //Update variable to change to custom scenario
@@ -751,5 +730,27 @@ for(GCGridBattery GCBat : uI_Tabs.f_getAllSliderGridConnections_gridBatteries())
 		p_currentTotalGridBatteryCapacity_MWh += (GCBat.p_batteryAsset.getStorageCapacity_kWh()/1000.0);
 	}
 }
+/*ALCODEEND*/}
+
+J_ProfilePointer f_getPVTProfilePointer(OL_PVOrientation pvtOrientation,String gridConnectionID)
+{/*ALCODESTART::1773764103422*/
+J_ProfilePointer profilePointer = null;
+
+switch (pvtOrientation){
+	case EASTWEST:
+		profilePointer = zero_Interface.energyModel.pp_PVProduction15DegEastWest_fr;
+		break;
+	case SOUTH:
+		profilePointer = zero_Interface.energyModel.pp_PVProduction35DegSouth_fr;
+		break;
+	case CUSTOM:
+		profilePointer = zero_Interface.energyModel.f_findProfile("GC: " + gridConnectionID + " custom pv profile");
+		if(profilePointer == null){
+			throw new RuntimeException("Can't find custom profile pointer for GC with custom orientation.");
+		}
+		break;
+}
+
+return profilePointer;
 /*ALCODEEND*/}
 

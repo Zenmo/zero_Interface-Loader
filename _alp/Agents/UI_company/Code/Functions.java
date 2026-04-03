@@ -1649,7 +1649,7 @@ if (p_gridConnection.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlow
 }
 
 //Find the current curtailment setting
-boolean currentCurtailmentSetting = p_gridConnection.v_enableCurtailment;
+boolean currentCurtailmentSetting = p_gridConnection.f_isAssetManagementActive(I_CurtailManagement.class);
 
 //Find the current transport savings
 int currentTransportSavings = 0;
