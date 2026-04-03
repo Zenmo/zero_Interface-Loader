@@ -463,6 +463,9 @@
 			<Parameter>
 				<Name><![CDATA[map_avgCO2EmissionOfEnergyCarrier_kgpkWh]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultPVOrientation]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">
