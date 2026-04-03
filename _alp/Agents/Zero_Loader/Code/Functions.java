@@ -2405,7 +2405,7 @@ future_scenario_list.setPlannedHeatingType(heatingType);
 Float battery_power_kW = 0f;
 Float battery_capacity_kWh = 0f;
 
-if (gridConnection.getStorage().getHasBattery() != null && gridConnection.getStorage().getHasBattery() && createElectricEA){ // Check if battery present and if electric demand EA should be created
+if (gridConnection.getStorage().getHasBattery() != null && gridConnection.getStorage().getHasBattery()){// && createElectricEA){ // Check if battery present and if electric demand EA should be created
 	if (gridConnection.getStorage().getBatteryPowerKw() != null){
 		battery_power_kW = gridConnection.getStorage().getBatteryPowerKw();
 	}
