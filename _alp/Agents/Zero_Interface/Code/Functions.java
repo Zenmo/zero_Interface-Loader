@@ -1419,7 +1419,10 @@ double f_enableLivePlotsOnly(UI_Results resultsUI)
 {/*ALCODESTART::1740043548084*/
 if (resultsUI.f_getSelectedObjectData() != null) {
 	if(resultsUI.getGr_resultsUIHeader().isVisible()){
-		resultsUI.getRadioButtons().setValue(0, true);
+		if(resultsUI.getResultsUIModeRadioButtons() != null){
+			resultsUI.getResultsUIModeRadioButtons().setValue(0, true);
+		}
+		resultsUI.getEnergyRadioButtons().setValue(0, true);
 	}
 	resultsUI.chartProfielen.getPeriodRadioButton().setValue(0, true);
 	resultsUI.f_enableNonLivePlotRadioButtons(false);
