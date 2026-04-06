@@ -119,6 +119,10 @@ dataAVGC.p_heatCapacitySizingConstant_JpK = p_heatCapacitySizingConstant_JpK;
 dataAVGC.p_heatCapacitySizingSlope_JpKm2 = p_heatCapacitySizingSlope_JpKm2;
 dataAVGC.p_heatCapacitySizingFactor_fr = p_heatCapacitySizingFactor_fr;
 
+//Emissions
+dataAVGC.map_avgDirectCO2EmissionOfEnergyCarrier_kgpkWh = map_avgDirectCO2EmissionOfEnergyCarrier_kgpkWh;
+dataAVGC.map_avgLifeCycleCO2EmissionOfEnergyCarrier_kgpkWh = map_avgLifeCycleCO2EmissionOfEnergyCarrier_kgpkWh;
+
 ////Constants
 dataAVGC.p_gas_kWhpm3 = p_gas_kWhpm3;
 dataAVGC.p_diesel_kWhpl = p_diesel_kWhpl;
@@ -130,8 +134,6 @@ dataAVGC.p_hydrogenSpecificEnergy_kWh_kg = p_hydrogenSpecificEnergy_kWh_kg;
 dataAVGC.p_hydrogenDensity_kg_Nm3 = p_hydrogenDensity_kg_Nm3;
 dataAVGC.p_oxygenDensity_kg_Nm3 = p_oxygenDensity_kg_Nm3;
 dataAVGC.p_oxygenProduction_kgO2pkgH2 = p_oxygenProduction_kgO2pkgH2;
-
-dataAVGC.map_avgCO2EmissionOfEnergyCarrier_kgpkWh = map_avgCO2EmissionOfEnergyCarrier_kgpkWh;
 
 dataAVGC.economicAVGC = f_getEconomicAVGC(gridOperator, simulationYear);
 /*ALCODEEND*/}
@@ -148,17 +150,26 @@ throw new RuntimeException("Total average heating+dhw+cooking house gas consumpt
 J_AVGC_Economic_data f_getEconomicAVGC(OL_GridOperator gridOperator,int year)
 {/*ALCODESTART::1773938569040*/
 J_AVGC_Economic_data economicAVGC = new J_AVGC_Economic_data();
-economicAVGC.map_avgCostOfEnergyCarrier_eurpkWh = map_avgCostOfEnergyCarrier_eurpkWh;
-economicAVGC.map_energyTaxesECImport_eurpkWh = map_energyTaxesECImport_eurpkWh.get(year);
-economicAVGC.VAT_energy_fr = VAT_energy_fr;
-economicAVGC.map_avgAssetCAPEX_eurpkW = map_avgAssetCAPEX_eurpkW;
-economicAVGC.map_avgAssetLifeTime_yr = map_avgAssetLifeTime_yr;
-economicAVGC.map_avgAssetOPEX_eurpkWpyr = map_avgAssetOPEX_eurpkWpyr;
-economicAVGC.VAT_CAPEXAndOPEX_fr = VAT_CAPEXAndOPEX_fr;
 
+//Energy costs
+economicAVGC.setMap_avgCostOfEnergyCarrier_eurpkWh(map_avgCostOfEnergyCarrier_eurpkWh.get(year));
+economicAVGC.setMap_energyTaxesECImport_eurpkWh(map_energyTaxesECImport_eurpkWh.get(year));
+economicAVGC.setMap_bracketDependentEnergyTaxesECImport_eurpkWh(map_bracketDependentEnergyTaxesECImport_eurpkWh.get(year));
+economicAVGC.setReductionInEnergyTaxes_eurpyr(p_reductionInEnergyTaxes_eurpyr.get(year));
+economicAVGC.setVAT_energy_fr(VAT_energy_fr);
+
+//CAPEX & OPEX
+economicAVGC.setMap_avgAssetBaseCAPEX_eur(map_avgAssetBaseCAPEX_eur);
+economicAVGC.setMap_avgAssetSizeDependentCAPEX_eurpkW(map_avgAssetSizeDependentCAPEX_eurpkW);
+economicAVGC.setMap_avgAssetBaseOPEX_eurpyr(map_avgAssetBaseOPEX_eurpyr);
+economicAVGC.setMap_avgAssetSizeDependentOPEX_eurpkWpyr(map_avgAssetSizeDependentOPEX_eurpkWpyr);
+economicAVGC.setMap_avgAssetLifeTime_yr(map_avgAssetLifeTime_yr);
+economicAVGC.setVAT_CAPEXAndOPEX_fr(VAT_CAPEXAndOPEX_fr);
+
+//Grid operator tariffs
 if(gridOperator != null){
 	try {
-		economicAVGC.gridOperatorTariffs = map_gridOperatorTarrifs.get(gridOperator).get(year).getDeclaredConstructor().newInstance();
+		economicAVGC.setGridOperatorTariffs(map_gridOperatorTarrifs.get(gridOperator).get(year).getDeclaredConstructor().newInstance());
 	}
 	catch (Exception e) {
 		traceln("No gridOperatorTariffs sheet found for this GridOperator ( " + gridOperator + " ) and/or simulation year ( " + year + " ) -> Connection costs chart won't be supported.");

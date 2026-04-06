@@ -3099,6 +3099,7 @@ OL_GridConnectionInsulationLabel.G, 4.0
 	<Variable Class="Parameter">
 		<Id>1773940397692</Id>
 		<Name><![CDATA[map_avgCostOfEnergyCarrier_eurpkWh]]></Name>
+		<Description><![CDATA[data_Generic\Sources\EnergyCarrierPrices]]></Description>
 		<X>1960</X>
 		<Y>100</Y>
 		<Label>
@@ -3109,17 +3110,38 @@ OL_GridConnectionInsulationLabel.G, 4.0
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[Map<OL_EnergyCarriers, Double>]]></Type>
+			<Type><![CDATA[Map<Integer, Map<OL_EnergyCarriers, Double>>]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[Map.of(//MOET NOG WORDEN INGEVULD
-       OL_EnergyCarriers.ELECTRICITY, 0.1,
-       OL_EnergyCarriers.HEAT, 0.2,
-       OL_EnergyCarriers.METHANE, 0.3,
-       OL_EnergyCarriers.PETROLEUM_FUEL, 0.4,
-       OL_EnergyCarriers.HYDROGEN, 0.5,
-       OL_EnergyCarriers.IRON_POWDER, 0.6
+				<Code><![CDATA[Map.of(
+		2025, Map.of(
+		       OL_EnergyCarriers.ELECTRICITY, 0.0850,
+		       OL_EnergyCarriers.HEAT, 0.1576,
+		       OL_EnergyCarriers.METHANE, 0.0407,
+		       OL_EnergyCarriers.PETROLEUM_FUEL, 0.1864,
+		       OL_EnergyCarriers.HYDROGEN, 0.066//Grey hydrogen
+		       //OL_EnergyCarriers.HYDROGEN, 0.225,//green hydrogen
+		       //OL_EnergyCarriers.IRON_POWDER, 0.6
+		),
+		2024, Map.of(
+		       OL_EnergyCarriers.ELECTRICITY, 0.078,
+		       OL_EnergyCarriers.HEAT, 0.1681,
+		       OL_EnergyCarriers.METHANE, 0.0346,
+		       OL_EnergyCarriers.PETROLEUM_FUEL, 0.189,
+		       OL_EnergyCarriers.HYDROGEN, 0.06//Grey hydrogen
+		       //OL_EnergyCarriers.HYDROGEN, 0.21,//green hydrogen
+		       //OL_EnergyCarriers.IRON_POWDER, 0.6
+		),
+		2023, Map.of(
+		       OL_EnergyCarriers.ELECTRICITY, 0.097,
+		       OL_EnergyCarriers.HEAT, 0.1706,
+		       OL_EnergyCarriers.METHANE, 0.0396,
+		       OL_EnergyCarriers.PETROLEUM_FUEL, 0.1843,
+		       OL_EnergyCarriers.HYDROGEN, 0.075//Grey hydrogen
+		       //OL_EnergyCarriers.HYDROGEN, 0.195,//green hydrogen
+		       //OL_EnergyCarriers.IRON_POWDER, 0.6
+		)
 )]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
@@ -3133,9 +3155,10 @@ OL_GridConnectionInsulationLabel.G, 4.0
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1773940416645</Id>
-		<Name><![CDATA[map_avgAssetCAPEX_eurpkW]]></Name>
+		<Name><![CDATA[map_avgAssetSizeDependentCAPEX_eurpkW]]></Name>
+		<Description><![CDATA[data_Generic\Sources\CAPEX_OPEX_LifeTime/capex_references]]></Description>
 		<X>1960</X>
-		<Y>190</Y>
+		<Y>270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3149,19 +3172,19 @@ OL_GridConnectionInsulationLabel.G, 4.0
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
 				<Code><![CDATA[Map.ofEntries(
-    Map.entry(OL_EnergyAssetType.STORAGE_ELECTRIC, 1.0),
-    Map.entry(OL_EnergyAssetType.PHOTOVOLTAIC, 2.0),
-    Map.entry(OL_EnergyAssetType.HEAT_PUMP_AIR, 3.0),
-    Map.entry(OL_EnergyAssetType.PHOTOTHERMAL, 4.0),
-    Map.entry(OL_EnergyAssetType.WINDMILL, 5.0),
-    Map.entry(OL_EnergyAssetType.ELECTROLYSER, 6.0),
-    Map.entry(OL_EnergyAssetType.DIESEL_GENERATOR, 7.0),
+    Map.entry(OL_EnergyAssetType.STORAGE_ELECTRIC, 180.0/2.0),//Value is in kWh -> Divided by 2 to get kW for C-rate of 0.5
+    Map.entry(OL_EnergyAssetType.PHOTOVOLTAIC, 640.0),
+    Map.entry(OL_EnergyAssetType.HEAT_PUMP_AIR, 1800.0),
+    Map.entry(OL_EnergyAssetType.PHOTOTHERMAL, 600.0),
+    Map.entry(OL_EnergyAssetType.WINDMILL, 1200.0),
+    Map.entry(OL_EnergyAssetType.ELECTROLYSER, 1300.0),
+    Map.entry(OL_EnergyAssetType.DIESEL_GENERATOR, 500.0),
     Map.entry(OL_EnergyAssetType.METHANE_GENERATOR, 8.0),
     Map.entry(OL_EnergyAssetType.GAS_BURNER, 9.0),
-    Map.entry(OL_EnergyAssetType.ELECTRIC_VEHICLE, 10.0),
-    Map.entry(OL_EnergyAssetType.ELECTRIC_VAN, 11.0),
-    Map.entry(OL_EnergyAssetType.ELECTRIC_TRUCK, 12.0),
-    Map.entry(OL_EnergyAssetType.HYDROGEN_TRUCK, 13.0)
+    Map.entry(OL_EnergyAssetType.ELECTRIC_VEHICLE, 0.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_VAN, 0.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_TRUCK, 0.0),
+    Map.entry(OL_EnergyAssetType.HYDROGEN_TRUCK, 0.0)
 )]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
@@ -3176,8 +3199,9 @@ OL_GridConnectionInsulationLabel.G, 4.0
 	<Variable Class="Parameter">
 		<Id>1773940478512</Id>
 		<Name><![CDATA[map_avgAssetLifeTime_yr]]></Name>
+		<Description><![CDATA[data_Generic\Sources\CAPEX_OPEX_LifeTime/asset_lifetime_references]]></Description>
 		<X>1960</X>
-		<Y>230</Y>
+		<Y>350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3191,19 +3215,19 @@ OL_GridConnectionInsulationLabel.G, 4.0
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
 				<Code><![CDATA[Map.ofEntries(
-    Map.entry(OL_EnergyAssetType.STORAGE_ELECTRIC, 20.0),
-    Map.entry(OL_EnergyAssetType.PHOTOVOLTAIC, 20.0),
+    Map.entry(OL_EnergyAssetType.STORAGE_ELECTRIC, 15.0),
+    Map.entry(OL_EnergyAssetType.PHOTOVOLTAIC, 30.0),
     Map.entry(OL_EnergyAssetType.HEAT_PUMP_AIR, 20.0),
-    Map.entry(OL_EnergyAssetType.PHOTOTHERMAL, 20.0),
-    Map.entry(OL_EnergyAssetType.WINDMILL, 20.0),
+    Map.entry(OL_EnergyAssetType.PHOTOTHERMAL, 25.0),
+    Map.entry(OL_EnergyAssetType.WINDMILL, 25.0),
     Map.entry(OL_EnergyAssetType.ELECTROLYSER, 20.0),
-    Map.entry(OL_EnergyAssetType.DIESEL_GENERATOR, 20.0),
-    Map.entry(OL_EnergyAssetType.METHANE_GENERATOR, 20.0),
-    Map.entry(OL_EnergyAssetType.GAS_BURNER, 20.0),
-    Map.entry(OL_EnergyAssetType.ELECTRIC_VEHICLE, 20.0),
-    Map.entry(OL_EnergyAssetType.ELECTRIC_VAN, 20.0),
-    Map.entry(OL_EnergyAssetType.ELECTRIC_TRUCK, 20.0),
-    Map.entry(OL_EnergyAssetType.HYDROGEN_TRUCK, 20.0)
+    Map.entry(OL_EnergyAssetType.DIESEL_GENERATOR, 25.0),
+    Map.entry(OL_EnergyAssetType.METHANE_GENERATOR, 25.0),
+    Map.entry(OL_EnergyAssetType.GAS_BURNER, 30.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_VEHICLE, 15.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_VAN, 12.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_TRUCK, 12.0),
+    Map.entry(OL_EnergyAssetType.HYDROGEN_TRUCK, 12.0)
 )]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
@@ -3217,9 +3241,10 @@ OL_GridConnectionInsulationLabel.G, 4.0
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1773940480159</Id>
-		<Name><![CDATA[map_avgAssetOPEX_eurpkWpyr]]></Name>
+		<Name><![CDATA[map_avgAssetSizeDependentOPEX_eurpkWpyr]]></Name>
+		<Description><![CDATA[data_Generic\Sources\CAPEX_OPEX_LifeTime/opex_references]]></Description>
 		<X>1960</X>
-		<Y>210</Y>
+		<Y>320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3233,19 +3258,19 @@ OL_GridConnectionInsulationLabel.G, 4.0
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
 				<Code><![CDATA[Map.ofEntries(
-    Map.entry(OL_EnergyAssetType.STORAGE_ELECTRIC, 5.0),
-    Map.entry(OL_EnergyAssetType.PHOTOVOLTAIC, 6.0),
-    Map.entry(OL_EnergyAssetType.HEAT_PUMP_AIR, 7.0),
-    Map.entry(OL_EnergyAssetType.PHOTOTHERMAL, 8.0),
-    Map.entry(OL_EnergyAssetType.WINDMILL, 9.0),
-    Map.entry(OL_EnergyAssetType.ELECTROLYSER, 10.0),
-    Map.entry(OL_EnergyAssetType.DIESEL_GENERATOR, 11.0),
-    Map.entry(OL_EnergyAssetType.METHANE_GENERATOR, 12.0),
-    Map.entry(OL_EnergyAssetType.GAS_BURNER, 13.0),
-    Map.entry(OL_EnergyAssetType.ELECTRIC_VEHICLE, 14.0),
-    Map.entry(OL_EnergyAssetType.ELECTRIC_VAN, 15.0),
-    Map.entry(OL_EnergyAssetType.ELECTRIC_TRUCK, 16.0),
-    Map.entry(OL_EnergyAssetType.HYDROGEN_TRUCK, 17.0)
+    Map.entry(OL_EnergyAssetType.STORAGE_ELECTRIC, 8.0/2.0),// value is in kWh -> /2.0 to get for kW assuming C-rate of 0.5 
+    Map.entry(OL_EnergyAssetType.PHOTOVOLTAIC, 10.0),
+    Map.entry(OL_EnergyAssetType.HEAT_PUMP_AIR, 30.0),
+    Map.entry(OL_EnergyAssetType.PHOTOTHERMAL, 15.0),
+    Map.entry(OL_EnergyAssetType.WINDMILL, 25.0),
+    Map.entry(OL_EnergyAssetType.ELECTROLYSER, 35.0),
+    Map.entry(OL_EnergyAssetType.DIESEL_GENERATOR, 15.0),
+    Map.entry(OL_EnergyAssetType.METHANE_GENERATOR, 30.0),
+    Map.entry(OL_EnergyAssetType.GAS_BURNER, 3.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_VEHICLE, 0.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_VAN, 0.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_TRUCK, 0.0),
+    Map.entry(OL_EnergyAssetType.HYDROGEN_TRUCK, 0.0)
 )]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
@@ -3260,8 +3285,9 @@ OL_GridConnectionInsulationLabel.G, 4.0
 	<Variable Class="Parameter">
 		<Id>1774010687023</Id>
 		<Name><![CDATA[map_gridOperatorTarrifs]]></Name>
+		<Description><![CDATA[See gridoperator tarrif classes for the sources!]]></Description>
 		<X>1960</X>
-		<Y>300</Y>
+		<Y>430</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3320,27 +3346,21 @@ OL_GridConnectionInsulationLabel.G, 4.0
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
 				<Code><![CDATA[Map.of(
-      	2025, Map.of(//MOET NOG WORDEN INGEVULD
-	       OL_EnergyCarriers.ELECTRICITY, 0.03868,
+      	2025, Map.of(
 	       OL_EnergyCarriers.HEAT, 0.0,
-	       OL_EnergyCarriers.METHANE, 0.03868,
-	       OL_EnergyCarriers.PETROLEUM_FUEL, 0.0,
+	       OL_EnergyCarriers.PETROLEUM_FUEL, 0.04367,
 	       OL_EnergyCarriers.HYDROGEN, 0.0,
 	       OL_EnergyCarriers.IRON_POWDER, 0.0
 		),
-		2024, Map.of(//MOET NOG WORDEN INGEVULD
-	       OL_EnergyCarriers.ELECTRICITY, 0.03868,
+		2024, Map.of(
 	       OL_EnergyCarriers.HEAT, 0.0,
-	       OL_EnergyCarriers.METHANE, 0.03868,
-	       OL_EnergyCarriers.PETROLEUM_FUEL, 0.0,
+	       OL_EnergyCarriers.PETROLEUM_FUEL, 0.04255,
 	       OL_EnergyCarriers.HYDROGEN, 0.0,
 	       OL_EnergyCarriers.IRON_POWDER, 0.0
 		),
-		2023, Map.of(//MOET NOG WORDEN INGEVULD
-	       OL_EnergyCarriers.ELECTRICITY, 0.03868,
+		2023, Map.of(
 	       OL_EnergyCarriers.HEAT, 0.0,
-	       OL_EnergyCarriers.METHANE, 0.03868,
-	       OL_EnergyCarriers.PETROLEUM_FUEL, 0.0,
+	       OL_EnergyCarriers.PETROLEUM_FUEL, 0.04255,
 	       OL_EnergyCarriers.HYDROGEN, 0.0,
 	       OL_EnergyCarriers.IRON_POWDER, 0.0
 		)
@@ -3358,8 +3378,9 @@ OL_GridConnectionInsulationLabel.G, 4.0
 	<Variable Class="Parameter">
 		<Id>1774264693364</Id>
 		<Name><![CDATA[VAT_energy_fr]]></Name>
+		<Description><![CDATA[https://www.rijksoverheid.nl/onderwerpen/belasting-betalen/vraag-en-antwoord/betaal-ik-btw-over-mijn-energiebelasting]]></Description>
 		<X>1960</X>
-		<Y>140</Y>
+		<Y>180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3386,8 +3407,9 @@ OL_GridConnectionInsulationLabel.G, 4.0
 	<Variable Class="Parameter">
 		<Id>1774264705889</Id>
 		<Name><![CDATA[VAT_CAPEXAndOPEX_fr]]></Name>
+		<Description><![CDATA[https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/btw/tarieven_en_vrijstellingen/tarieven_en_vrijstellingen]]></Description>
 		<X>1960</X>
-		<Y>250</Y>
+		<Y>370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3413,9 +3435,10 @@ OL_GridConnectionInsulationLabel.G, 4.0
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1774371060234</Id>
-		<Name><![CDATA[map_avgCO2EmissionOfEnergyCarrier_kgpkWh]]></Name>
-		<X>60</X>
-		<Y>910</Y>
+		<Name><![CDATA[map_avgDirectCO2EmissionOfEnergyCarrier_kgpkWh]]></Name>
+		<Description><![CDATA[data_Generic\Sources\CO2Emissions]]></Description>
+		<X>1010</X>
+		<Y>1070</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3428,14 +3451,16 @@ OL_GridConnectionInsulationLabel.G, 4.0
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[Map.of(//MOET NOG WORDEN INGEVULD
-       OL_EnergyCarriers.ELECTRICITY, 0.1,
-       OL_EnergyCarriers.HEAT, 0.2,
-       OL_EnergyCarriers.METHANE, 0.3,
-       OL_EnergyCarriers.PETROLEUM_FUEL, 0.4,
-       OL_EnergyCarriers.HYDROGEN, 0.5,
-       OL_EnergyCarriers.IRON_POWDER, 0.6
-)]]></Code>
+				<Code><![CDATA[Map.of(
+       OL_EnergyCarriers.ELECTRICITY, 0.0,
+       OL_EnergyCarriers.HEAT, 0.0,
+       OL_EnergyCarriers.METHANE, 0.202,
+       OL_EnergyCarriers.PETROLEUM_FUEL, 0.264,
+       OL_EnergyCarriers.HYDROGEN, 0.0,
+       OL_EnergyCarriers.IRON_POWDER, 0.0
+)
+
+	]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1774371060232</Id>
@@ -3467,6 +3492,265 @@ OL_GridConnectionInsulationLabel.G, 4.0
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1775145927205</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1775469709129</Id>
+		<Name><![CDATA[map_avgLifeCycleCO2EmissionOfEnergyCarrier_kgpkWh]]></Name>
+		<Description><![CDATA[data_Generic\Sources\CO2Emissions]]></Description>
+		<X>1010</X>
+		<Y>1090</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_EnergyCarriers, Double>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[Map.of(
+       OL_EnergyCarriers.ELECTRICITY, 0.349, // 0.328–0.370
+       OL_EnergyCarriers.HEAT, 0.095,
+       OL_EnergyCarriers.METHANE, 0.244,
+       OL_EnergyCarriers.PETROLEUM_FUEL, 0.312,
+       OL_EnergyCarriers.HYDROGEN, 0.300 // Grey hydrogen
+       //OL_EnergyCarriers.HYDROGEN, 0.0225, // 0.015–0.030, Green hydrogen       
+       //OL_EnergyCarriers.IRON_POWDER, ???
+)
+
+	]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1775469709127</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1775471260499</Id>
+		<Name><![CDATA[p_reductionInEnergyTaxes_eurpyr]]></Name>
+		<Description><![CDATA[Numbers are excluding VAT!
+Full subtraction of energy taxes are including VAT!
+
+-https://www.engie.nl/klantenservice/overheidsheffingen/vermindering-energiebelasting
+-https://www.rijksoverheid.nl/onderwerpen/energie-thuis/vraag-en-antwoord/opbouw-energierekening
+
+Definition: In the Netherlands each year every GridConnection that is considered a 'Verblijfsobject' (All houses, most companies) get a fixed reduction in energy costs. ]]></Description>
+		<X>1960</X>
+		<Y>160</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<Integer, Double>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[Map.of(
+   2026, 519.80,
+   2025, 524.95,
+   2024, 521.81,
+   2023, 493.27
+)]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1775471260497</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1775473297394</Id>
+		<Name><![CDATA[map_bracketDependentEnergyTaxesECImport_eurpkWh]]></Name>
+		<Description><![CDATA[Source: https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/overige_belastingen/belastingen_op_milieugrondslag/energiebelasting/?utm_source=chatgpt.com]]></Description>
+		<X>1960</X>
+		<Y>140</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<Integer, Map<OL_EnergyCarriers, Map<OL_EnergyTaxesBracket, Double>>>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[Map.of(
+2026, Map.of(
+    OL_EnergyCarriers.ELECTRICITY, Map.of(
+        OL_EnergyTaxesBracket.BRACKET_1, 0.09161,
+        OL_EnergyTaxesBracket.BRACKET_2, 0.09161,
+        OL_EnergyTaxesBracket.BRACKET_3, 0.06671,
+        OL_EnergyTaxesBracket.BRACKET_4, 0.03735,
+        OL_EnergyTaxesBracket.BRACKET_5, 0.00379
+    ),
+    OL_EnergyCarriers.METHANE, Map.of(
+        OL_EnergyTaxesBracket.BRACKET_1, 0.60066,
+        OL_EnergyTaxesBracket.BRACKET_2, 0.60066,
+        OL_EnergyTaxesBracket.BRACKET_3, 0.33085,
+        OL_EnergyTaxesBracket.BRACKET_4, 0.21396,
+        OL_EnergyTaxesBracket.BRACKET_5, 0.05313
+    )
+),
+2025, Map.of(
+    OL_EnergyCarriers.ELECTRICITY, Map.of(
+        OL_EnergyTaxesBracket.BRACKET_1, 0.10154,
+        OL_EnergyTaxesBracket.BRACKET_2, 0.10154,
+        OL_EnergyTaxesBracket.BRACKET_3, 0.06937,
+        OL_EnergyTaxesBracket.BRACKET_4, 0.03868,
+        OL_EnergyTaxesBracket.BRACKET_5, 0.00321
+    ),
+    OL_EnergyCarriers.METHANE, Map.of(
+        OL_EnergyTaxesBracket.BRACKET_1, 0.57816,
+        OL_EnergyTaxesBracket.BRACKET_2, 0.57816,
+        OL_EnergyTaxesBracket.BRACKET_3, 0.31573,
+        OL_EnergyTaxesBracket.BRACKET_4, 0.20347,
+        OL_EnergyTaxesBracket.BRACKET_5, 0.05385
+    )
+),
+2024, Map.of(
+    OL_EnergyCarriers.ELECTRICITY, Map.of(
+        OL_EnergyTaxesBracket.BRACKET_1, 0.10880,
+        OL_EnergyTaxesBracket.BRACKET_2, 0.10880,
+        OL_EnergyTaxesBracket.BRACKET_3, 0.09037,
+        OL_EnergyTaxesBracket.BRACKET_4, 0.03943,
+        OL_EnergyTaxesBracket.BRACKET_5, 0.00254
+    ),
+    OL_EnergyCarriers.METHANE, Map.of(
+        OL_EnergyTaxesBracket.BRACKET_1, 0.58301,
+        OL_EnergyTaxesBracket.BRACKET_2, 0.58301,
+        OL_EnergyTaxesBracket.BRACKET_3, 0.22378,
+        OL_EnergyTaxesBracket.BRACKET_4, 0.12855,
+        OL_EnergyTaxesBracket.BRACKET_5, 0.04886
+    )
+),
+2023, Map.of(
+    OL_EnergyCarriers.ELECTRICITY, Map.of(
+        OL_EnergyTaxesBracket.BRACKET_1, 0.12599,
+        OL_EnergyTaxesBracket.BRACKET_2, 0.12599,
+        OL_EnergyTaxesBracket.BRACKET_3, 0.10046,
+        OL_EnergyTaxesBracket.BRACKET_4, 0.03942,
+        OL_EnergyTaxesBracket.BRACKET_5, 0.00115
+    ),
+    OL_EnergyCarriers.METHANE, Map.of(
+        OL_EnergyTaxesBracket.BRACKET_1, 0.48980,
+        OL_EnergyTaxesBracket.BRACKET_2, 0.48980,
+        OL_EnergyTaxesBracket.BRACKET_3, 0.09621,
+        OL_EnergyTaxesBracket.BRACKET_4, 0.05109,
+        OL_EnergyTaxesBracket.BRACKET_5, 0.03919
+    )
+)
+)]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1775473297392</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1775476781412</Id>
+		<Name><![CDATA[map_avgAssetBaseCAPEX_eur]]></Name>
+		<Description><![CDATA[data_Generic\Sources\CAPEX_OPEX_LifeTime/capex_references]]></Description>
+		<X>1960</X>
+		<Y>250</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_EnergyAssetType, Double>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[Map.ofEntries(
+    Map.entry(OL_EnergyAssetType.STORAGE_ELECTRIC, 0.0),
+    Map.entry(OL_EnergyAssetType.PHOTOVOLTAIC, 0.0),
+    Map.entry(OL_EnergyAssetType.HEAT_PUMP_AIR, 0.0),
+    Map.entry(OL_EnergyAssetType.PHOTOTHERMAL, 0.0),
+    Map.entry(OL_EnergyAssetType.WINDMILL, 0.0),
+    Map.entry(OL_EnergyAssetType.ELECTROLYSER, 0.0),
+    Map.entry(OL_EnergyAssetType.DIESEL_GENERATOR, 0.0),
+    Map.entry(OL_EnergyAssetType.METHANE_GENERATOR, 0.0),
+    Map.entry(OL_EnergyAssetType.GAS_BURNER, 0.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_VEHICLE, 57_000.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_VAN, 55_000.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_TRUCK, 300_000.0),
+    Map.entry(OL_EnergyAssetType.HYDROGEN_TRUCK, 350_000.0)
+)]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1775476781410</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1775477256801</Id>
+		<Name><![CDATA[map_avgAssetBaseOPEX_eurpyr]]></Name>
+		<Description><![CDATA[data_Generic\Sources\CAPEX_OPEX_LifeTime/capex_references]]></Description>
+		<X>1960</X>
+		<Y>300</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_EnergyAssetType, Double>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[Map.ofEntries(
+    Map.entry(OL_EnergyAssetType.STORAGE_ELECTRIC, 0.0),
+    Map.entry(OL_EnergyAssetType.PHOTOVOLTAIC, 0.0),
+    Map.entry(OL_EnergyAssetType.HEAT_PUMP_AIR, 0.0),
+    Map.entry(OL_EnergyAssetType.PHOTOTHERMAL, 0.0),
+    Map.entry(OL_EnergyAssetType.WINDMILL, 0.0),
+    Map.entry(OL_EnergyAssetType.ELECTROLYSER, 0.0),
+    Map.entry(OL_EnergyAssetType.DIESEL_GENERATOR, 0.0),
+    Map.entry(OL_EnergyAssetType.METHANE_GENERATOR, 0.0),
+    Map.entry(OL_EnergyAssetType.GAS_BURNER, 0.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_VEHICLE, 57_000.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_VAN, 55_000.0),
+    Map.entry(OL_EnergyAssetType.ELECTRIC_TRUCK, 300_000.0),
+    Map.entry(OL_EnergyAssetType.HYDROGEN_TRUCK, 350_000.0)
+)]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1775477256799</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
