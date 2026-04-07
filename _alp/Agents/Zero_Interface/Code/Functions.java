@@ -467,9 +467,11 @@ double f_connectResultsUI()
 f_styleResultsUI();
 
 //Set ResultsUI radiobutton setup
-if(settings.resultsUIRadioButtonSetup() != null){
-	uI_Results.v_selectedRadioButtonSetup = settings.resultsUIRadioButtonSetup();
+List<OL_ChartTypes> selectedChartTypes_Energy = settings.resultsUISelectedChartTypes_Energy();
+if(selectedChartTypes_Energy == null){ // Temporary backup till all models have switched to new setup functionality
+	selectedChartTypes_Energy = f_getSelectedChartTypes_Energy();
 }
+List<OL_ChartTypes> selectedChartTypes_Economic = settings.resultsUISelectedChartTypes_Economic();
 
 //Disable summary button if summary is not selected
 if(settings.showKPISummary() == null || !settings.showKPISummary()){
@@ -477,7 +479,7 @@ if(settings.showKPISummary() == null || !settings.showKPISummary()){
 }
 
 //Connect resultsUI
-uI_Results.f_initializeResultsUI();
+uI_Results.f_initializeResultsUI(selectedChartTypes_Energy, selectedChartTypes_Economic);
 
 c_UIResultsInstances.add(uI_Results);
 /*ALCODEEND*/}
@@ -1417,7 +1419,10 @@ double f_enableLivePlotsOnly(UI_Results resultsUI)
 {/*ALCODESTART::1740043548084*/
 if (resultsUI.f_getSelectedObjectData() != null) {
 	if(resultsUI.getGr_resultsUIHeader().isVisible()){
-		resultsUI.getRadioButtons().setValue(0, true);
+		if(resultsUI.getResultsUIModeRadioButtons() != null){
+			resultsUI.getResultsUIModeRadioButtons().setValue(0, true);
+		}
+		resultsUI.getEnergyRadioButtons().setValue(0, true);
 	}
 	resultsUI.chartProfielen.getPeriodRadioButton().setValue(0, true);
 	resultsUI.f_enableNonLivePlotRadioButtons(false);
@@ -2274,29 +2279,29 @@ if (gis_area.c_containedGridConnections.size() > 0) {
 	for(GridConnection gc : gis_area.c_containedGridConnections){
 		if(gc.v_rapidRunData != null){
 			double maxLoad_fr_gc = 0;
-			double maxLoad_fr_gc_delivery = gc.v_rapidRunData.connectionMetaData.contractedDeliveryCapacity_kW > 0 && gc.v_rapidRunData.connectionMetaData.contractedDeliveryCapacityKnown ? gc.v_rapidRunData.getPeakDelivery_kW()/gc.v_rapidRunData.connectionMetaData.contractedDeliveryCapacity_kW : 0;
-			double maxLoad_fr_gc_feedin = gc.v_rapidRunData.connectionMetaData.contractedFeedinCapacity_kW > 0 && gc.v_rapidRunData.connectionMetaData.contractedFeedinCapacityKnown  ? gc.v_rapidRunData.getPeakFeedin_kW()/gc.v_rapidRunData.connectionMetaData.contractedFeedinCapacity_kW : 0;
+			double maxLoad_fr_gc_delivery = gc.v_rapidRunData.connectionMetaData.getContractedDeliveryCapacity_kW() > 0 && gc.v_rapidRunData.connectionMetaData.getContractedDeliveryCapacityKnown() ? gc.v_rapidRunData.getPeakDelivery_kW()/gc.v_rapidRunData.connectionMetaData.getContractedDeliveryCapacity_kW() : 0;
+			double maxLoad_fr_gc_feedin = gc.v_rapidRunData.connectionMetaData.getContractedFeedinCapacity_kW() > 0 && gc.v_rapidRunData.connectionMetaData.getContractedFeedinCapacityKnown()  ? gc.v_rapidRunData.getPeakFeedin_kW()/gc.v_rapidRunData.connectionMetaData.getContractedFeedinCapacity_kW() : 0;
 
 			switch(rb_mapOverlayLegend_congestion.getValue()){
 				case 0:
 					maxLoad_fr_gc = maxLoad_fr_gc_delivery;
 					
-					if(gc.v_rapidRunData.connectionMetaData.contractedDeliveryCapacityKnown){
+					if(gc.v_rapidRunData.connectionMetaData.getContractedDeliveryCapacityKnown()){
 						capacityKnown = true;
 					}
 					break;
 				case 1:
 					maxLoad_fr_gc = maxLoad_fr_gc_feedin;
-					if(gc.v_rapidRunData.connectionMetaData.contractedFeedinCapacityKnown){
+					if(gc.v_rapidRunData.connectionMetaData.getContractedFeedinCapacityKnown()){
 						capacityKnown = true;
 					}
 					break;
 				case 2:
 					maxLoad_fr_gc = max(maxLoad_fr_gc_delivery, maxLoad_fr_gc_feedin);
-					if(maxLoad_fr_gc_delivery > maxLoad_fr_gc_feedin && gc.v_rapidRunData.connectionMetaData.contractedDeliveryCapacityKnown){
+					if(maxLoad_fr_gc_delivery > maxLoad_fr_gc_feedin && gc.v_rapidRunData.connectionMetaData.getContractedDeliveryCapacityKnown()){
 						capacityKnown = true;
 					}
-					else if(maxLoad_fr_gc_feedin > maxLoad_fr_gc_delivery && gc.v_rapidRunData.connectionMetaData.contractedFeedinCapacityKnown){
+					else if(maxLoad_fr_gc_feedin > maxLoad_fr_gc_delivery && gc.v_rapidRunData.connectionMetaData.getContractedFeedinCapacityKnown()){
 						capacityKnown = true;
 					}
 					break;
@@ -3750,5 +3755,45 @@ double f_setColorsBasedOnCustom_objects(GIS_Object gis_area)
 double f_setColorsBasedOnCustom_gridnodes(GridNode GN)
 {/*ALCODESTART::1769007434081*/
 //Override function to replace map overlay with custom colors
+/*ALCODEEND*/}
+
+List<OL_ChartTypes> f_getSelectedChartTypes_Energy()
+{/*ALCODESTART::1774880211868*/
+////TEMPORARY FUNCTION TO LET ALL CURRENT PROJECTS FUNCTION STILL!
+List<OL_ChartTypes> loadedChartTypes_Energy = new ArrayList<>();
+loadedChartTypes_Energy.add(OL_ChartTypes.PROFILES);
+loadedChartTypes_Energy.add(OL_ChartTypes.BAR_TOTALS);
+loadedChartTypes_Energy.add(OL_ChartTypes.LOAD_DURATION_CURVES);
+loadedChartTypes_Energy.add(OL_ChartTypes.SANKEY);
+
+//Aditional charts selected:
+if(settings.resultsUIRadioButtonSetup() != null){
+	switch(settings.resultsUIRadioButtonSetup()){
+		case DEFAULT_AND_GESPREKSLEIDRAAD:
+			loadedChartTypes_Energy.add(OL_ChartTypes.GESPREKSLEIDRAAD);
+			break;
+		case DEFAULT_AND_GESPREKSLEIDRAADBEDRIJVEN:
+			loadedChartTypes_Energy.add(OL_ChartTypes.GESPREKSLEIDRAAD_BEDRIJVEN);
+			break;
+		case DEFAULT_AND_BATTERY:	
+			loadedChartTypes_Energy.add(OL_ChartTypes.BATTERY);
+			break;
+		case DEFAULT_AND_BATTERY_AND_GESPREKSLEIDRAADBEDRIJVEN:	
+			loadedChartTypes_Energy.add(OL_ChartTypes.BATTERY);
+			loadedChartTypes_Energy.add(OL_ChartTypes.GESPREKSLEIDRAAD_BEDRIJVEN);
+			break;
+		case DEFAULT_AND_BATTERY_AND_ECONOMIC:	
+			loadedChartTypes_Energy.add(OL_ChartTypes.BATTERY);
+			break;
+		case DEFAULT_AND_GESPREKSLEIDRAADBEDRIJVEN_AND_GTO:	
+			loadedChartTypes_Energy.add(OL_ChartTypes.GESPREKSLEIDRAAD_BEDRIJVEN);
+			loadedChartTypes_Energy.add(OL_ChartTypes.GTO);
+			break;
+		case OFF:
+			loadedChartTypes_Energy.clear();
+			break;
+	}
+}
+return loadedChartTypes_Energy;
 /*ALCODEEND*/}
 
