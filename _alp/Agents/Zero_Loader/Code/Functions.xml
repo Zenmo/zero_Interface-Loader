@@ -227,7 +227,7 @@
 		<Name><![CDATA[f_createGenericCompanies]]></Name>
 		<Description><![CDATA[Creating the companies (using a single GC) + owned buildings, that have not filled in the survey. If created, they will be simulated using average values, scaled with the totals (CBS data) of the area.]]></Description>
 		<X>430</X>
-		<Y>553</Y>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -532,7 +532,7 @@
 		<Name><![CDATA[f_iEAGenericCompanies]]></Name>
 		<Description><![CDATA[Initialisation of the Energy assets using average values for companies that have not filled in the survey (yet) combined with totals (floor surface, electricity/yr, gas/yr and trucks)  of the simulated area.]]></Description>
 		<X>450</X>
-		<Y>573</Y>
+		<Y>580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -543,6 +543,10 @@
 		<Parameter>
 			<Name><![CDATA[companyGC]]></Name>
 			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[heatingType]]></Name>
+			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -1054,7 +1058,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1745336570663</Id>
 		<Name><![CDATA[f_addHeatAsset]]></Name>
 		<X>1320</X>
-		<Y>460</Y>
+		<Y>440</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1368,7 +1372,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1749727623536</Id>
 		<Name><![CDATA[f_addBuildingHeatModel]]></Name>
 		<X>1320</X>
-		<Y>430</Y>
+		<Y>410</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2260,7 +2264,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1754050106254</Id>
 		<Name><![CDATA[f_addCustomHeatAsset]]></Name>
 		<X>1340</X>
-		<Y>480</Y>
+		<Y>460</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2818,6 +2822,38 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[gn]]></Name>
 			<Type><![CDATA[GridNode]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1774527617823</Id>
+		<Name><![CDATA[f_createGenericCompanyHeatProfiles]]></Name>
+		<X>470</X>
+		<Y>600</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[companyGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[heatingType]]></Name>
+			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[yearlyGasDemand_m3]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[ratioGasUsedForHeating]]></Name>
+			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
