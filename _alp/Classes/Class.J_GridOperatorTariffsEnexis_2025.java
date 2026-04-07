@@ -135,8 +135,14 @@ public class J_GridOperatorTariffsEnexis_2025 implements I_GridOperatorTariffs {
     	else {
     		String keyString = getLargeConnectionContractKey(connectionMetaData);
     		double baseContractCapacityCosts_eurpyr = baseContractCapacityCostsTable_eurpyr.get(keyString);
-    		double maxContractCapacity_kW = max(connectionMetaData.getContractedDeliveryCapacity_kW(), connectionMetaData.getContractedFeedinCapacity_kW());
-    		double contractSizeDependendContractCapacityCost = maxContractCapacity_kW * contractCapacityCostsTable_eurpkWpyr.get(keyString);
+    		double contractCapacityUsedForCalculation_kW =0; 
+    		if(connectionMetaData.getContractedDeliveryCapacity_kW() > 0) {
+    			contractCapacityUsedForCalculation_kW = connectionMetaData.getContractedDeliveryCapacity_kW(); //Enexis tariff info says: "Levert u elektriciteit terug aan het net? Dan betaalt u hiervoor alleen vastrecht en geen variabele transportkosten."
+    		}
+    		else if(connectionMetaData.getContractedFeedinCapacity_kW() > 0){
+    			contractCapacityUsedForCalculation_kW = connectionMetaData.getContractedFeedinCapacity_kW(); 
+    		}
+    		double contractSizeDependendContractCapacityCost = contractCapacityUsedForCalculation_kW * contractCapacityCostsTable_eurpkWpyr.get(keyString);
     		return baseContractCapacityCosts_eurpyr + contractSizeDependendContractCapacityCost;
     	}
     }
@@ -218,28 +224,35 @@ public class J_GridOperatorTariffsEnexis_2025 implements I_GridOperatorTariffs {
     		throw new RuntimeException("getLargeConnectionContractKey not useable for small connnection meta data.");
     	}
     	
-    	double contractedCapacity_kW = max(connectionMetaData.getContractedDeliveryCapacity_kW(), connectionMetaData.getContractedFeedinCapacity_kW());
-    	double physicalCapacity_kW = connectionMetaData.getPhysicalCapacity_kW();
+    	//Enexis tariff info says: "Als u zowel afneemt als (terug)levert wordt het	vastrecht transportdienst gebaseerd op de contractwaarde levering."
+		double contractCapacityUsedForCalculation_kW =0; 
+		if(connectionMetaData.getContractedDeliveryCapacity_kW() > 0) {
+			contractCapacityUsedForCalculation_kW = connectionMetaData.getContractedDeliveryCapacity_kW(); 
+		}
+		else if(connectionMetaData.getContractedFeedinCapacity_kW() > 0){
+			contractCapacityUsedForCalculation_kW = connectionMetaData.getContractedFeedinCapacity_kW(); 
+		}
+		double physicalCapacity_kW = connectionMetaData.getPhysicalCapacity_kW();
     	
-        if(contractedCapacity_kW <=50) {
+        if(contractCapacityUsedForCalculation_kW <=50) {
     		keyString = "LS (contract vermogen t/m 50 kW)";
     	}
-    	else if(contractedCapacity_kW <=125) {
+    	else if(contractCapacityUsedForCalculation_kW <=125) {
     		keyString = "MS/LS (contract vermogen meer dan 50 kW t/m 125 kW)";
     	}
-    	else if(contractedCapacity_kW <=1500) {
+    	else if(contractCapacityUsedForCalculation_kW <=1500) {
     		keyString = "MS-D (contract vermogen meer dan 125 kW t/m 1500 kW)";
     	}
-    	else if(contractedCapacity_kW <1500 && physicalCapacity_kW <=1750) { // Op basis van onderzoek, tot 1750 KVA is MS-D
+    	else if(contractCapacityUsedForCalculation_kW <1500 && physicalCapacity_kW <=1750) { // Op basis van onderzoek, tot 1750 KVA is MS-D
     		keyString = "MS-D > 1500 kW";
     	}
-    	else if(contractedCapacity_kW <1500 && physicalCapacity_kW <=6000) { // Volgens mij is tot 6000 MS-T (Oud project was dat zo.)
+    	else if(contractCapacityUsedForCalculation_kW <1500 && physicalCapacity_kW <=6000) { // Volgens mij is tot 6000 MS-T (Oud project was dat zo.)
     		keyString = "MS-T > 1500 kW";
     	}
-    	else if(contractedCapacity_kW <1500 && physicalCapacity_kW <=100_000) {
+    	else if(contractCapacityUsedForCalculation_kW <1500 && physicalCapacity_kW <=100_000) {
     		keyString = "HS/MS > 1500 kW";
     	}
-    	else{// if(contractedCapacity_kW <1500 && physicalCapacity_kW >100_000) {
+    	else{// if(contractCapacityUsedForCalculation_kW <1500 && physicalCapacity_kW >100_000) {
     		keyString = "TS > 1500 kW";
     	}
     	return keyString;
