@@ -3424,7 +3424,7 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.p_eigenOprit = houseBuildingData.has_private_parking() != null ? houseBuildingData.has_private_parking() : false;
 	
 	//PBL heating
-	if(houseBuildingData.pbl_data_available()){
+	if(houseBuildingData.pbl_data_available() && (houseBuildingData.dwelling_type() != OL_PBL_DwellingType.UNKNOWN && houseBuildingData.ownership_type() != OL_PBL_OwnershipType.UNKNOWN && houseBuildingData.insulation_label() != OL_GridConnectionInsulationLabel.UNKNOWN && houseBuildingData.local_factor() != null && houseBuildingData.regional_climate_correction_factor() != null)){
 		GCH.p_PBLParameters = new J_PBLParameters(houseBuildingData.dwelling_type(), 
 												  houseBuildingData.ownership_type(),  
 												  houseBuildingData.insulation_label(), 

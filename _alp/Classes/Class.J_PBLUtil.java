@@ -4,11 +4,21 @@
 public class J_PBLUtil {
 	
 	//Convert input int or string into OL_PBL_DwellingType option
-	public static OL_PBL_DwellingType getPBLDwellingTypeOption(int value) {
-		return getPBLDwellingTypeOption(String.valueOf(value));
+	public static OL_PBL_DwellingType getPBLDwellingTypeOption(Integer value) {
+		if(value == null) {
+			return OL_PBL_DwellingType.UNKNOWN;
+		}
+		else {
+			return getPBLDwellingTypeOption(String.valueOf(value));
+		}
 	}
 	public static OL_PBL_DwellingType getPBLDwellingTypeOption(String value) {
-		return OL_PBL_DwellingType.valueOf(J_PBLUtil.getOLTypeString(value));
+		if(value.equals("")) {
+			return OL_PBL_DwellingType.UNKNOWN;
+		}
+		else {
+			return OL_PBL_DwellingType.valueOf(J_PBLUtil.getOLTypeString(value));
+		}
 	}
 	
 	//Convert input buildYear into ConstructionPeriod option (spaceHeating)
@@ -35,11 +45,21 @@ public class J_PBLUtil {
 	}
 	
 	//Convert input int or string into OL_PBL_OwnershipType option
-	public static OL_PBL_OwnershipType getPBLOwnershipTypeOption(int value) {
-		return getPBLOwnershipTypeOption(String.valueOf(value));
+	public static OL_PBL_OwnershipType getPBLOwnershipTypeOption(Integer value) {
+		if(value == null) {
+			return OL_PBL_OwnershipType.UNKNOWN;
+		}
+		else {
+			return getPBLOwnershipTypeOption(String.valueOf(value));
+		}
 	}
 	public static OL_PBL_OwnershipType getPBLOwnershipTypeOption(String value) {
-		return OL_PBL_OwnershipType.valueOf(J_PBLUtil.getOLTypeString(value));
+		if(value.equals("")) {
+			return OL_PBL_OwnershipType.UNKNOWN;
+		}
+		else {
+			return OL_PBL_OwnershipType.valueOf(J_PBLUtil.getOLTypeString(value));
+		}
 	}
 	
 	//Convert input string of energylabel into OL_GridConnectionEnergyLabel option	
@@ -89,7 +109,7 @@ public class J_PBLUtil {
 		if (PBLHeatingTypeString.equals("gebiedsoptie")){ return OL_GridConnectionHeatingType.UNKNOWN;}
 		if (PBLHeatingTypeString.equals("Pellet")){ return OL_GridConnectionHeatingType.UNKNOWN;}
 		if (PBLHeatingTypeString.contains("WP")){ return OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP;}//eWP_lw (lucht water), of eWP_ww (water water)
-		traceln("Uknown PBL heating string (" + PBLHeatingTypeString + ") found! Converted into UNKOWN heating type.");
+		traceln("Unknown PBL heating string (" + PBLHeatingTypeString + ") found! Converted into UNKNOWN heating type.");
 		return OL_GridConnectionHeatingType.UNKNOWN;
 	}
 	
