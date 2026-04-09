@@ -3,17 +3,23 @@
  */	
 public class J_PBLUtil {
 	
-	//Convert input int or string into OL_PBL_DwellingType option
-	public static OL_PBL_DwellingType getPBLDwellingTypeOption(Integer value) {
-		if(value == null) {
-			return OL_PBL_DwellingType.UNKNOWN;
+	//Convert string into OL_PBL_DwellingType option
+	public static OL_HouseholdCookingMethod getPBLCookingTypeOptionFromPBLData(String value) {
+		if(value == null || value.equals("")) {
+			return OL_HouseholdCookingMethod.UNKNOWN;
 		}
 		else {
-			return getPBLDwellingTypeOption(String.valueOf(value));
+			return OL_HouseholdCookingMethod.valueOf(value);
 		}
 	}
+	
+	//Convert input int or string into OL_PBL_DwellingType option
+	public static OL_PBL_DwellingType getPBLDwellingTypeOption(Integer value) {
+		String str_value = value != null ? String.valueOf(value) : null; 
+		return getPBLDwellingTypeOption(str_value);
+	}
 	public static OL_PBL_DwellingType getPBLDwellingTypeOption(String value) {
-		if(value.equals("")) {
+		if(value == null || value.equals("")) {
 			return OL_PBL_DwellingType.UNKNOWN;
 		}
 		else {
@@ -46,15 +52,11 @@ public class J_PBLUtil {
 	
 	//Convert input int or string into OL_PBL_OwnershipType option
 	public static OL_PBL_OwnershipType getPBLOwnershipTypeOption(Integer value) {
-		if(value == null) {
-			return OL_PBL_OwnershipType.UNKNOWN;
-		}
-		else {
-			return getPBLOwnershipTypeOption(String.valueOf(value));
-		}
+		String str_value = value != null ? String.valueOf(value) : null;
+		return getPBLOwnershipTypeOption(str_value);
 	}
 	public static OL_PBL_OwnershipType getPBLOwnershipTypeOption(String value) {
-		if(value.equals("")) {
+		if(value == null || value.equals("")) {
 			return OL_PBL_OwnershipType.UNKNOWN;
 		}
 		else {

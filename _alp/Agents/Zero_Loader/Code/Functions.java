@@ -3424,7 +3424,8 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.p_eigenOprit = houseBuildingData.has_private_parking() != null ? houseBuildingData.has_private_parking() : false;
 	
 	//PBL heating
-	if(houseBuildingData.pbl_data_available() && (houseBuildingData.dwelling_type() != OL_PBL_DwellingType.UNKNOWN && houseBuildingData.ownership_type() != OL_PBL_OwnershipType.UNKNOWN && houseBuildingData.insulation_label() != OL_GridConnectionInsulationLabel.UNKNOWN && houseBuildingData.local_factor() != null && houseBuildingData.regional_climate_correction_factor() != null)){
+	boolean dataAvailablePBL = houseBuildingData.dwelling_type() != OL_PBL_DwellingType.UNKNOWN && houseBuildingData.ownership_type() != OL_PBL_OwnershipType.UNKNOWN && houseBuildingData.local_factor() != null && houseBuildingData.regional_climate_correction_factor() != null;
+	if(houseBuildingData.use_pbl_data() && dataAvailablePBL){
 		GCH.p_PBLParameters = new J_PBLParameters(houseBuildingData.dwelling_type(), 
 												  houseBuildingData.ownership_type(),  
 												  houseBuildingData.insulation_label(), 
@@ -5080,7 +5081,7 @@ if(hotWaterDemand_kWhpa > 0){
 }
 
 //Add cooking demand
-if(cookingType == null){
+if(cookingType == null || cookingType == OL_HouseholdCookingMethod.UNKNOWN){
 	cookingType = avgc_data.p_avgHouseCookingMethod;
 }
 f_addCookingAsset(house, cookingType, cookingDemand_kWhpa);
