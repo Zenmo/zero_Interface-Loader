@@ -77,6 +77,59 @@ public class J_PBLUtil {
 		}
 	}
 	
+	public static OL_GridConnectionInsulationLabel getWorstInsulationLabel(OL_GridConnectionInsulationLabel insulationLabel_1, OL_GridConnectionInsulationLabel insulationLabel_2) {
+		return convertEnergyToInsulationLabel(getWorstEnergyLabel(convertInsulationToEnergyLabel(insulationLabel_1), convertInsulationToEnergyLabel(insulationLabel_2)));
+	}
+	
+	public static OL_GridConnectionEnergyLabel getWorstEnergyLabel(OL_GridConnectionEnergyLabel energyLabel_1, OL_GridConnectionEnergyLabel energyLabel_2) {
+		energyLabel_1 = energyLabel_1 != null ? energyLabel_1 : OL_GridConnectionEnergyLabel.UNKNOWN;
+		energyLabel_2 = energyLabel_2 != null ? energyLabel_2 : OL_GridConnectionEnergyLabel.UNKNOWN;
+		
+		//Find the lowest energy label in the building
+		if (energyLabel_1 != OL_GridConnectionEnergyLabel.NONE && energyLabel_2 != OL_GridConnectionEnergyLabel.NONE ){
+			switch(energyLabel_2){
+				case A:
+					if(energyLabel_1 == OL_GridConnectionEnergyLabel.UNKNOWN){
+						return OL_GridConnectionEnergyLabel.A;
+					}
+				break;
+				case B:
+					if(energyLabel_1 == OL_GridConnectionEnergyLabel.UNKNOWN || energyLabel_1 == OL_GridConnectionEnergyLabel.A){
+						return OL_GridConnectionEnergyLabel.B;
+					}
+				break;
+				case C:
+					if(energyLabel_1 == OL_GridConnectionEnergyLabel.UNKNOWN || energyLabel_1 == OL_GridConnectionEnergyLabel.B
+					   || energyLabel_1 == OL_GridConnectionEnergyLabel.C){
+						return OL_GridConnectionEnergyLabel.C;
+					}
+				break;
+				case D:
+					if(energyLabel_1 != OL_GridConnectionEnergyLabel.E || energyLabel_1 != OL_GridConnectionEnergyLabel.F
+					   || energyLabel_1 != OL_GridConnectionEnergyLabel.G){
+						return OL_GridConnectionEnergyLabel.D;
+					}
+				break;
+				case E:
+					if(energyLabel_1 != OL_GridConnectionEnergyLabel.F || energyLabel_1 != OL_GridConnectionEnergyLabel.G){
+						return OL_GridConnectionEnergyLabel.E;
+					}
+				break;
+				case F:
+					if(energyLabel_1 != OL_GridConnectionEnergyLabel.G){
+						return OL_GridConnectionEnergyLabel.F;
+					}
+				break;
+				case G:
+					return OL_GridConnectionEnergyLabel.G;
+			}
+			return energyLabel_1;
+		}
+		else {
+			return OL_GridConnectionEnergyLabel.NONE;
+		}
+	}
+	
 	//Convert input string of insulationlabel into OL_GridConnectionInsulationLabel option	
 	public static OL_GridConnectionInsulationLabel getInsulationLabelOption(String insulationLabel) {
 		return convertEnergyToInsulationLabel(getEnergyLabelOption(insulationLabel));
@@ -123,9 +176,9 @@ public class J_PBLUtil {
 	}
 	
 	public static OL_GridConnectionEnergyLabel convertInsulationToEnergyLabel(OL_GridConnectionInsulationLabel insulationLabel) {
-		return OL_GridConnectionEnergyLabel.valueOf(insulationLabel.toString());
+		return insulationLabel != null ? OL_GridConnectionEnergyLabel.valueOf(insulationLabel.toString()) : null;
 	}
 	public static OL_GridConnectionInsulationLabel convertEnergyToInsulationLabel(OL_GridConnectionEnergyLabel energyLabel) {
-		return OL_GridConnectionInsulationLabel.valueOf(energyLabel.toString());
+		return energyLabel != null ? OL_GridConnectionInsulationLabel.valueOf(energyLabel.toString()) : null;
 	}
 }

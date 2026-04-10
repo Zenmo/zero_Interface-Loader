@@ -2,52 +2,15 @@ double f_setColorsBasedOnEnergyLabels(GIS_Object b)
 {/*ALCODESTART::1696837759924*/
 if (b.gisRegion != null){
 
-	OL_GridConnectionInsulationLabel buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.NONE;
+	OL_GridConnectionEnergyLabel buildingLowestEnergyLabel = OL_GridConnectionEnergyLabel.UNKNOWN;
 	
 	//Find the lowest energy label in the building
 	for(GridConnection GC : b.c_containedGridConnections){
-		switch(GC.p_insulationLabel){
-			case A:
-				if(buildingLowestEnergyLabel == OL_GridConnectionInsulationLabel.NONE){
-					buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.A;
-				}
-			break;
-			case B:
-				if(buildingLowestEnergyLabel == OL_GridConnectionInsulationLabel.NONE || buildingLowestEnergyLabel == OL_GridConnectionInsulationLabel.A){
-					buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.B;
-				}
-			break;
-			case C:
-				if(buildingLowestEnergyLabel == OL_GridConnectionInsulationLabel.NONE || buildingLowestEnergyLabel == OL_GridConnectionInsulationLabel.B
-				   || buildingLowestEnergyLabel == OL_GridConnectionInsulationLabel.C){
-					buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.C;
-				}
-			break;
-			case D:
-				if(buildingLowestEnergyLabel != OL_GridConnectionInsulationLabel.E || buildingLowestEnergyLabel != OL_GridConnectionInsulationLabel.F
-				   || buildingLowestEnergyLabel != OL_GridConnectionInsulationLabel.G){
-					buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.D;
-				}
-			break;
-			case E:
-				if(buildingLowestEnergyLabel != OL_GridConnectionInsulationLabel.F || buildingLowestEnergyLabel != OL_GridConnectionInsulationLabel.G){
-					buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.E;
-				}
-			break;
-			case F:
-				if(buildingLowestEnergyLabel != OL_GridConnectionInsulationLabel.G){
-					buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.F;
-				}
-			break;
-			case G:
-				buildingLowestEnergyLabel = OL_GridConnectionInsulationLabel.G;
-			break;								
-		}
+		buildingLowestEnergyLabel = J_PBLUtil.getWorstEnergyLabel(buildingLowestEnergyLabel, GC.p_energyLabel);
 	}
 	
 	//Color building based on lowest energy label
 	switch(buildingLowestEnergyLabel){
-	
 		case A:
 			b.gisRegion.setFillColor(v_energyLabelAColor);
 		break;
@@ -70,6 +33,7 @@ if (b.gisRegion != null){
 			b.gisRegion.setFillColor(v_energyLabelGColor);
 		break;
 		case NONE:
+		case UNKNOWN:
 			b.gisRegion.setFillColor(v_energyLabelUnknownColor);
 		break;
 	}
