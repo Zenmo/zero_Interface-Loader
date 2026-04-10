@@ -785,7 +785,13 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		generic_company_GCs.add(companyGC);
 		
 		//Set parameters for the Grid Connection
-		companyGC.p_gridConnectionID = genericCompany.address_id();
+		companyGC.p_gridConnectionID = genericCompany.address_id();		
+		
+		
+		//Energylabel and InsulationLabel
+		companyGC.p_energyLabel = genericCompany.energy_label() != null ? genericCompany.energy_label() : OL_GridConnectionEnergyLabel.UNKNOWN;
+		companyGC.p_insulationLabel = genericCompany.insulation_label() != null ? genericCompany.insulation_label() : OL_GridConnectionInsulationLabel.UNKNOWN;
+	
 		
 		// Check that is needed until connectioncapacity is no longer in 'Panden' excel
 		if (genericCompany.contracted_capacity_kw() == null || genericCompany.contracted_capacity_kw() < 0) {
@@ -797,7 +803,7 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 			companyGC.v_liveConnectionMetaData.setCapacitiesKnown(true, false, false);
 		}
 
-		//set GC Adress
+		//set GC Address
 		companyGC.p_address = new J_Address(genericCompany.streetname(), 
 										    genericCompany.house_number(), 
 										    genericCompany.house_letter(), 
@@ -1101,6 +1107,10 @@ for (var survey : surveys) {
 				
 				//Set trafo ID
 				companyGC.p_parentNodeElectricID = buildingData.gridnode_id();
+				
+				//Energylabel and InsulationLabel
+				companyGC.p_energyLabel = J_PBLUtil.getWorstEnergyLabel(companyGC.p_energyLabel, buildingData.energy_label());
+				companyGC.p_insulationLabel = J_PBLUtil.getWorstInsulationLabel(companyGC.p_insulationLabel, buildingData.insulation_label());
 				
 				//Style building
 				gisBuilding.p_defaultFillColor = zero_Interface.v_detailedCompanyBuildingColor;
