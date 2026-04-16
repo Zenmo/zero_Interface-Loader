@@ -503,10 +503,12 @@ for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electro
 	I_ElectrolyserManagement electrolyserManagement;
 	switch(dataElectrolyser.default_operation_mode()){
 		case PRICE:
-			electrolyserManagement = new J_ElectrolyserManagementPrice(H2Electrolyser, energyModel.p_timeParameters);
+			double maxElectricityPriceForProfit_eurp_kWh = dataElectrolyser.conversion_efficiency()*energyModel.avgc_data.economicAVGC.getAvgCostOfEnergyCarrier_eurpkWh(OL_EnergyCarriers.HYDROGEN);
+			electrolyserManagement = new J_ElectrolyserManagementPrice(H2Electrolyser, maxElectricityPriceForProfit_eurp_kWh, energyModel.p_timeParameters);
 			break;
 		case POWER_SURPLUS:
-			electrolyserManagement = new J_ElectrolyserManagementPowerSurplus(H2Electrolyser, energyModel.p_timeParameters);
+			GridNode targetGN = findFirst(energyModel.pop_gridNodes, gn -> gn.p_gridNodeID.equals(H2Electrolyser.p_parentNodeElectricID));
+			electrolyserManagement = new J_ElectrolyserManagementPowerSurplus(H2Electrolyser, targetGN, energyModel.p_timeParameters);
 			break;
 		default:
 			traceln("No or unsupported default operation mode found for GC Electrolyser. Default (Power surplus) is taken.");
