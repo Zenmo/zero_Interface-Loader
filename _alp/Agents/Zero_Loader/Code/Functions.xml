@@ -431,7 +431,7 @@
 		<Id>1726584205827</Id>
 		<Name><![CDATA[f_addElectricVehicle]]></Name>
 		<X>1320</X>
-		<Y>590</Y>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -467,7 +467,7 @@
 		<Id>1726584205829</Id>
 		<Name><![CDATA[f_addPetroleumFuelVehicle]]></Name>
 		<X>1320</X>
-		<Y>610</Y>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -499,7 +499,7 @@
 		<Id>1726584205831</Id>
 		<Name><![CDATA[f_addStorage]]></Name>
 		<X>1320</X>
-		<Y>560</Y>
+		<Y>610</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -568,7 +568,7 @@
 		<Id>1726584205837</Id>
 		<Name><![CDATA[f_addTransportHydrogen]]></Name>
 		<X>1320</X>
-		<Y>630</Y>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -746,7 +746,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1726584205869</Id>
 		<Name><![CDATA[f_clearDataRecords]]></Name>
 		<X>-410</X>
-		<Y>730</Y>
+		<Y>740</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -958,7 +958,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1737712184349</Id>
 		<Name><![CDATA[f_createPetroleumFuelTractors]]></Name>
 		<X>1320</X>
-		<Y>650</Y>
+		<Y>700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2950,6 +2950,54 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[PVOrientationZorm]]></Name>
 			<Type><![CDATA[com.zenmo.zummon.companysurvey.PVOrientation]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>J_ProfilePointer</ReturnType>
+		<Id>1776432342124</Id>
+		<Name><![CDATA[f_getDHWProfile]]></Name>
+		<X>1340</X>
+		<Y>550</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>J_ProfilePointer</ReturnType>
+		<Id>1776443217505</Id>
+		<Name><![CDATA[f_createProfilePointer]]></Name>
+		<X>270</X>
+		<Y>150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[profileID]]></Name>
+			<Type><![CDATA[String]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[arguments]]></Name>
+			<Type><![CDATA[double[]]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[values]]></Name>
+			<Type><![CDATA[double[]]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[profileUnitType]]></Name>
+			<Type><![CDATA[OL_ProfileUnits]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

@@ -3044,28 +3044,7 @@ else{
 
 J_ProfilePointer f_createEngineProfile(String profileID,double[] arguments,double[] values,OL_ProfileUnits profileUnitType)
 {/*ALCODESTART::1749125189323*/
-double dataTimeStep_h = (arguments[arguments.length-1] - arguments[0])/(arguments.length-1);
-double dataStartTime_h = arguments[0];
-double simTimeStep_h = settings.timeStep_h(); 
-double a_profile[];
-if (simTimeStep_h < dataTimeStep_h) { //Interpolate data to timeStep_h = 0.25
-	//traceln("***** profilePointer using tableFunction to interpolate hourly data into quarter-hourly data ********");
-	if ((dataTimeStep_h/simTimeStep_h)%1.0 != 0.0) {
-		throw new RuntimeException("dataTimeStep_h is not an integer multiple of modelTimeStep! Unsupported dataformat!");
-	}
-	TableFunction tableFunction = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-	a_profile = new double[values.length*(int)(dataTimeStep_h/simTimeStep_h)];
-	for (int i=0; i<a_profile.length; i++) {
-		a_profile[i] = tableFunction.get(dataStartTime_h+i*simTimeStep_h);
-	}
-	dataTimeStep_h = simTimeStep_h;
-} else if (simTimeStep_h > dataTimeStep_h) {
-	throw new RuntimeException("dataTimeStep_h smaller than modelTimeStep! Unsupported dataformat! Need to implement downsampling to allow this");
-} else {
-	a_profile=values;
-}
-
-J_ProfilePointer profilePointer = new J_ProfilePointer(profileID, a_profile, dataTimeStep_h, dataStartTime_h, profileUnitType);	
+J_ProfilePointer profilePointer = f_createProfilePointer(profileID, arguments, values, profileUnitType);
 
 energyModel.f_addProfile(profilePointer);
 return profilePointer;
@@ -3313,8 +3292,14 @@ double f_addHotWaterDemand(GridConnection GC,double yearlyHWD_kWh)
 if(yearlyHWD_kWh <= 0){
 	throw new RuntimeException("Trying to create a DHW asset, without specifying the yearly energy consumption");
 }
-J_ProfilePointer pp = energyModel.f_findProfile("default_house_hot_water_demand_fr");
-J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, pp);
+if(c_DHWProfiles_data != null){
+	J_ProfilePointer pp = f_getDHWProfile();
+	J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, pp);
+}
+else{
+	J_ProfilePointer pp = energyModel.f_findProfile("default_house_hot_water_demand_fr");
+	J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, pp);
+}
 /*ALCODEEND*/}
 
 double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,Double heatDemand_kwhpa,J_HeatingPreferences heatingPreferences)
@@ -5244,5 +5229,53 @@ if(PVOrientationZorm != null){
 }
 
 return pvOrientation;
+/*ALCODEEND*/}
+
+J_ProfilePointer f_getDHWProfile()
+{/*ALCODESTART::1776432342124*/
+int randomIndex;
+J_ProfilePointer ppDHWProfile;
+
+if(c_DHWProfiles_data.size()>0){
+	randomIndex = uniform_discr(0, c_DHWProfiles_data.size() - 1);
+	DHWProfile_data dhwProfile = c_DHWProfiles_data.get(randomIndex);
+	ppDHWProfile = f_createProfilePointer(dhwProfile.DHWProfileID(), dhwProfile.getArgumentsArray(), dhwProfile.getValuesArray(), dhwProfile.profileUnits());
+	c_DHWProfiles_data.remove(randomIndex);
+	energyModel.c_DHWprofiles.add(ppDHWProfile);
+}
+else{
+	randomIndex = uniform_discr(0, energyModel.c_DHWprofiles.size() - 1);
+	ppDHWProfile = energyModel.c_DHWprofiles.get(randomIndex);
+}
+
+return ppDHWProfile;
+/*ALCODEEND*/}
+
+J_ProfilePointer f_createProfilePointer(String profileID,double[] arguments,double[] values,OL_ProfileUnits profileUnitType)
+{/*ALCODESTART::1776443217505*/
+double dataTimeStep_h = (arguments[arguments.length-1] - arguments[0])/(arguments.length-1);
+double dataStartTime_h = arguments[0];
+double simTimeStep_h = settings.timeStep_h(); 
+double a_profile[];
+if (simTimeStep_h < dataTimeStep_h) { //Interpolate data to timeStep_h = 0.25
+	//traceln("***** profilePointer using tableFunction to interpolate hourly data into quarter-hourly data ********");
+	if ((dataTimeStep_h/simTimeStep_h)%1.0 != 0.0) {
+		throw new RuntimeException("dataTimeStep_h is not an integer multiple of modelTimeStep! Unsupported dataformat!");
+	}
+	TableFunction tableFunction = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+	a_profile = new double[values.length*(int)(dataTimeStep_h/simTimeStep_h)];
+	for (int i=0; i<a_profile.length; i++) {
+		a_profile[i] = tableFunction.get(dataStartTime_h+i*simTimeStep_h);
+	}
+	dataTimeStep_h = simTimeStep_h;
+} else if (simTimeStep_h > dataTimeStep_h) {
+	throw new RuntimeException("dataTimeStep_h smaller than modelTimeStep! Unsupported dataformat! Need to implement downsampling to allow this");
+} else {
+	a_profile=values;
+}
+
+J_ProfilePointer profilePointer = new J_ProfilePointer(profileID, a_profile, dataTimeStep_h, dataStartTime_h, profileUnitType);	
+
+return profilePointer;
 /*ALCODEEND*/}
 

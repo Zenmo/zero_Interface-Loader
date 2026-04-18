@@ -432,6 +432,11 @@
 				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1773320047333</Folder>
 			</JavaClass>
+			<JavaClass>
+				<Id>1776429367217</Id>
+				<Name><![CDATA[DHWProfile_data]]></Name>
+				<Folder>1754045711603</Folder>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>zero_engine</LibraryName>
