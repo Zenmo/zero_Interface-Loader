@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Functions>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1696837759924</Id>
