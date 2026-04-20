@@ -3294,7 +3294,7 @@ if(yearlyHWD_kWh <= 0){
 }
 if(c_DHWProfiles_data != null){
 	J_ProfilePointer pp = f_getDHWProfile();
-	J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, pp);
+	J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, pp.name, yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, pp);
 }
 else{
 	J_ProfilePointer pp = energyModel.f_findProfile("default_house_hot_water_demand_fr");
