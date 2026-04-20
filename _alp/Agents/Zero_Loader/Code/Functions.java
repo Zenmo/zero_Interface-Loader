@@ -3679,6 +3679,9 @@ for (ParkingSpace_data dataParkingSpace : f_getParkingSpacesInSubScope(c_parking
 		parkingSpace.c_containedGridConnections.add(carportGC);
 		carportGC.c_connectedGISObjects.add(parkingSpace);
 		carportGCList.add(carportGC);
+		
+		//Initialize pv potential
+		carportGC.v_liveAssetsMetaData.PVPotential_kW = 0.0;
 	}
 	else{
 		double physicalCapacity_kW = carportGC.v_liveConnectionMetaData.getPhysicalCapacity_kW() + dataParkingSpace.pv_potential_kwp();
