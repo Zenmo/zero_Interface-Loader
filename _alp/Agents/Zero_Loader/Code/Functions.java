@@ -3292,13 +3292,12 @@ double f_addHotWaterDemand(GridConnection GC,double yearlyHWD_kWh)
 if(yearlyHWD_kWh <= 0){
 	throw new RuntimeException("Trying to create a DHW asset, without specifying the yearly energy consumption");
 }
-if(c_DHWProfiles_data != null){
-	J_ProfilePointer pp = f_getDHWProfile();
-	J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, pp.name, yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, pp);
-}
-else{
-	J_ProfilePointer pp = energyModel.f_findProfile("default_house_hot_water_demand_fr");
-	J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, pp);
+J_ProfilePointer pp = f_getDHWProfile();
+if(pp == null){
+	pp = energyModel.f_findProfile("default_house_hot_water_demand_fr");
+	new J_EAConsumption(GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, pp);
+} else {
+	new J_EAProfile( GC, OL_EnergyCarriers.HEAT, pp, OL_AssetFlowCategories.hotWaterConsumption_kW, energyModel.p_timeParameters);
 }
 /*ALCODEEND*/}
 
@@ -5237,16 +5236,16 @@ return pvOrientation;
 J_ProfilePointer f_getDHWProfile()
 {/*ALCODESTART::1776432342124*/
 int randomIndex;
-J_ProfilePointer ppDHWProfile;
+J_ProfilePointer ppDHWProfile = null;
 
-if(c_DHWProfiles_data.size()>0){
+if(c_DHWProfiles_data.size() > 0){
 	randomIndex = uniform_discr(0, c_DHWProfiles_data.size() - 1);
 	DHWProfile_data dhwProfile = c_DHWProfiles_data.get(randomIndex);
 	ppDHWProfile = f_createProfilePointer(dhwProfile.DHWProfileID(), dhwProfile.getArgumentsArray(), dhwProfile.getValuesArray(), dhwProfile.profileUnits());
 	c_DHWProfiles_data.remove(randomIndex);
 	energyModel.c_DHWprofiles.add(ppDHWProfile);
 }
-else{
+else if (energyModel.c_DHWprofiles.size() > 0){
 	randomIndex = uniform_discr(0, energyModel.c_DHWprofiles.size() - 1);
 	ppDHWProfile = energyModel.c_DHWprofiles.get(randomIndex);
 }
