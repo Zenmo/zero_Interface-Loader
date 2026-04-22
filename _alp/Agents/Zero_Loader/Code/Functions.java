@@ -3295,10 +3295,13 @@ if(yearlyHWD_kWh <= 0){
 J_ProfilePointer pp = f_getDHWProfile();
 if(pp == null){
 	pp = energyModel.f_findProfile("default_house_hot_water_demand_fr");
-	new J_EAConsumption(GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, pp);
+	J_EAConsumption profile = new J_EAConsumption(GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, pp);
+	return profile.getPeakConsumptionPower_kW();
 } else {
-	new J_EAProfile( GC, OL_EnergyCarriers.HEAT, pp, OL_AssetFlowCategories.hotWaterConsumption_kW, energyModel.p_timeParameters);
+	J_EAProfile profile = new J_EAProfile( GC, OL_EnergyCarriers.HEAT, pp, OL_AssetFlowCategories.hotWaterConsumption_kW, energyModel.p_timeParameters);
+	return profile.getPeakConsumptionPower_kW();
 }
+
 /*ALCODEEND*/}
 
 double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,Double heatDemand_kwhpa,J_HeatingPreferences heatingPreferences)
@@ -5056,9 +5059,26 @@ J_HeatingPreferences heatingPreferences = f_getHouseHeatingPreferences();
 
 f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2, spaceHeatingDemand_kwhpa, heatingPreferences);
 
+//Add hot water demand
+double maxHotWaterDemand_kW = 0;
+if(hotWaterDemand_kWhpa > 0){
+	maxHotWaterDemand_kW = f_addHotWaterDemand(house, hotWaterDemand_kWhpa);
+}
+
+//Add cooking demand
+if(cookingType == null || cookingType == OL_HouseholdCookingMethod.UNKNOWN){
+	cookingType = avgc_data.p_avgHouseCookingMethod;
+}
+f_addCookingAsset(house, cookingType, cookingDemand_kWhpa);
+
 //Determine required heating capacity for the heating asset	
 double maximalTemperatureDifference_K = 30.0; // Approximation
-double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000;
+double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000 + maxHotWaterDemand_kW;
+
+/*if (hotWaterDemand_kWhpa > 0) {
+	// A standard domestic peak is roughly 25-30 kW for instant hot water delivery
+	maxHeatOutputPower_kW += 100.0; 
+}*/
 
 //Check if heating type is known: Else: take avgc
 if(heatingType == null || heatingType == OL_GridConnectionHeatingType.UNKNOWN){
@@ -5071,18 +5091,6 @@ f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
 //Add heating management and set the heating preferences
 house.f_addHeatManagement(heatingType, false);
 house.f_setHeatingPreferences(heatingPreferences);
-
-//Add hot water demand
-if(hotWaterDemand_kWhpa > 0){
-	f_addHotWaterDemand(house, hotWaterDemand_kWhpa);
-}
-
-//Add cooking demand
-if(cookingType == null || cookingType == OL_HouseholdCookingMethod.UNKNOWN){
-	cookingType = avgc_data.p_avgHouseCookingMethod;
-}
-f_addCookingAsset(house, cookingType, cookingDemand_kWhpa);
-
 
 //For calibrating AVG data PBL loss factor 
 totalSpaceHeatDemand_kwhpa += spaceHeatingDemand_kwhpa;
@@ -5244,6 +5252,7 @@ if(c_DHWProfiles_data.size() > 0){
 	ppDHWProfile = f_createProfilePointer(dhwProfile.DHWProfileID(), dhwProfile.getArgumentsArray(), dhwProfile.getValuesArray(), dhwProfile.profileUnits());
 	c_DHWProfiles_data.remove(randomIndex);
 	energyModel.c_DHWprofiles.add(ppDHWProfile);
+	energyModel.f_addProfile(ppDHWProfile);
 }
 else if (energyModel.c_DHWprofiles.size() > 0){
 	randomIndex = uniform_discr(0, energyModel.c_DHWprofiles.size() - 1);
