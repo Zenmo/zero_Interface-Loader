@@ -497,13 +497,27 @@ for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electro
 
 	//Activation and electrolyser specifications
 	H2Electrolyser.v_isActive = dataElectrolyser.initially_active();	
-	H2Electrolyser.p_minProductionRatio = dataElectrolyser.min_production_ratio();
 
 	//Electrolyser operation mode
-	H2Electrolyser.set_p_electrolyserOperationMode( dataElectrolyser.default_operation_mode());
+	H2Electrolyser.f_setEnergyManagement(new J_EnergyManagementElectrolyser(H2Electrolyser, energyModel.p_timeParameters));
+	I_ElectrolyserManagement electrolyserManagement;
+	switch(dataElectrolyser.default_operation_mode()){
+		case PRICE:
+			double maxElectricityPriceForProfit_eurp_kWh = dataElectrolyser.conversion_efficiency()*energyModel.avgc_data.economicAVGC.getAvgCostOfEnergyCarrier_eurpkWh(OL_EnergyCarriers.HYDROGEN);
+			electrolyserManagement = new J_ElectrolyserManagementPrice(H2Electrolyser, maxElectricityPriceForProfit_eurp_kWh, energyModel.p_timeParameters);
+			break;
+		case POWER_SURPLUS:
+			GridNode targetGN = findFirst(energyModel.pop_gridNodes, gn -> gn.p_gridNodeID.equals(H2Electrolyser.p_parentNodeElectricID));
+			electrolyserManagement = new J_ElectrolyserManagementPowerSurplus(H2Electrolyser, targetGN, energyModel.p_timeParameters);
+			break;
+		default:
+			traceln("No or unsupported default operation mode found for GC Electrolyser. Default (Power surplus) is taken.");
+			electrolyserManagement = new J_ElectrolyserManagementPowerSurplus(H2Electrolyser, energyModel.p_timeParameters);
+	}
+	H2Electrolyser.f_setExternalAssetManagement(electrolyserManagement);
 	
 	//Create EA for the electrolyser GC
-	J_EAConversionElectrolyser h2ElectrolyserEA = new J_EAConversionElectrolyser(H2Electrolyser, dataElectrolyser.capacity_electric_kw(), dataElectrolyser.conversion_efficiency(), energyModel.p_timeParameters, OL_ElectrolyserState.STANDBY, dataElectrolyser.load_change_time_s(), dataElectrolyser.start_up_time_shutdown_s(), dataElectrolyser.start_up_time_standby_s(), dataElectrolyser.start_up_time_idle_s());
+	J_EAConversionElectrolyser h2ElectrolyserEA = new J_EAConversionElectrolyser(H2Electrolyser, dataElectrolyser.capacity_electric_kw(), dataElectrolyser.conversion_efficiency(), energyModel.p_timeParameters, OL_ElectrolyserState.STANDBY, dataElectrolyser.idle_consumption_power_ratio(), dataElectrolyser.min_production_ratio(), dataElectrolyser.load_change_time_h(), dataElectrolyser.start_up_time_shutdown_h(), dataElectrolyser.start_up_time_standby_h(), dataElectrolyser.start_up_time_idle_h());
 	
 	//Set owner
 	ConnectionOwner owner;

@@ -22,12 +22,12 @@ public class Electrolyser_data {
 		Double contracted_feed_in_capacity_kw;
 		OL_ElectrolyserOperationMode default_operation_mode;
 		double conversion_efficiency;
-		double min_production_ratio;
-		double idle_consumption_power_ratio;
-		double start_up_time_shutdown_s;
-		double start_up_time_standby_s;
-		double start_up_time_idle_s;
-		double load_change_time_s;
+		Double min_production_ratio;
+		Double idle_consumption_power_ratio;
+		Double start_up_time_shutdown_h;
+		Double start_up_time_standby_h;
+		Double start_up_time_idle_h;
+		Double load_change_time_h;
 		double latitude;
 		double longitude;
 		String polygon;
