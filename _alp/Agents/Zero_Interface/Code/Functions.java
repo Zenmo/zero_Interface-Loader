@@ -1092,7 +1092,7 @@ if(selectedFilter != OL_FilterOptionsGC.MANUAL_SELECTION && c_selectedFilterOpti
 	button_removeManualSelection.action();
 }
 
-if(!selectedFilterName.equals("-") && !c_selectedFilterOptions.contains(selectedFilter)){ // Set filter
+if(!c_selectedFilterOptions.contains(selectedFilter)){ // Set filter
 	traceln("Geselecteerde filter ( " + selectedFilterName + " ) toegevoegd.");
 	t_activeFilters.setText( t_activeFilters.getText() + selectedFilterName + "\n");
 	f_applyFilter(selectedFilter, selectedFilterName);
