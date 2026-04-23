@@ -3301,12 +3301,12 @@ if(cookingType != OL_HouseholdCookingMethod.NONE){
 }
 /*ALCODEEND*/}
 
-double f_addHotWaterDemand(GridConnection GC,double yearlyHWD_kWh)
+double f_addHotWaterDemand(GridConnection GC,double yearlyHWD_kWh,int numberOfResidents)
 {/*ALCODESTART::1749726279652*/
 if(yearlyHWD_kWh <= 0){
 	throw new RuntimeException("Trying to create a DHW asset, without specifying the yearly energy consumption");
 }
-J_ProfilePointer pp = f_getDHWProfile();
+J_ProfilePointer pp = f_getDHWProfile(numberOfResidents);
 if(pp == null){
 	pp = energyModel.f_findProfile("default_house_hot_water_demand_fr");
 	J_EAConsumption profile = new J_EAConsumption(GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, pp);
@@ -5058,6 +5058,8 @@ if(house.p_PBLParameters != null){
 	cookingDemand_kWhpa = DHWAndCookingDataObject.cooking_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
 }
 else{
+	int numberOfResidents = f_estimateHouseNmbrResidents();
+	
 	spaceHeatingDemand_kwhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgSpaceHeatingTotalGasConsumptionShare_fr;
 	hotWaterDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgDHWTotalGasConsumptionShare_fr;
 	cookingDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgCookingTotalGasConsumptionShare_fr;
@@ -5076,7 +5078,7 @@ f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2, spaceHeatingDemand_kw
 //Add hot water demand
 double maxHotWaterDemand_kW = 0;
 if(hotWaterDemand_kWhpa > 0){
-	maxHotWaterDemand_kW = f_addHotWaterDemand(house, hotWaterDemand_kWhpa);
+	maxHotWaterDemand_kW = f_addHotWaterDemand(house, hotWaterDemand_kWhpa, numberOfResidents);
 }
 
 //Add cooking demand
@@ -5110,22 +5112,10 @@ house.f_setHeatingPreferences(heatingPreferences);
 totalSpaceHeatDemand_kwhpa += spaceHeatingDemand_kwhpa;
 /*ALCODEEND*/}
 
-double f_estimateHouseDHWDemand_kWh(double floorSurface_m2)
+int f_estimateHouseNmbrResidents()
 {/*ALCODESTART::1768570811946*/
-int numberOfResidents;
-if( floorSurface_m2 > 150){
-	numberOfResidents = uniform_discr(2,6);
-}
-else if (floorSurface_m2 > 50){
-	numberOfResidents = uniform_discr(1,4);
-}
-else {
-	numberOfResidents = uniform_discr(1,2);
-}
-
-double yearlyHWD_kWh = 1000 + numberOfResidents * 150; //SOURCE!? Put in AVGC!!
-return yearlyHWD_kWh;
-
+int numberOfResidents = uniform_discr(1,5);
+return numberOfResidents;
 /*ALCODEEND*/}
 
 double f_estimateHouseCookingDemand_kWh()
@@ -5255,7 +5245,7 @@ if(PVOrientationZorm != null){
 return pvOrientation;
 /*ALCODEEND*/}
 
-J_ProfilePointer f_getDHWProfile()
+J_ProfilePointer f_getDHWProfile(int numberOfResidents)
 {/*ALCODESTART::1776432342124*/
 int randomIndex;
 J_ProfilePointer ppDHWProfile = null;

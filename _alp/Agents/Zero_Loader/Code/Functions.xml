@@ -1360,6 +1360,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Name><![CDATA[yearlyHWD_kWh]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[numberOfResidents]]></Name>
+			<Type><![CDATA[int]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
@@ -2742,10 +2746,9 @@ verbruik = levering + productie - teruglevering]]></Description>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>double</ReturnType>
+		<ReturnType>int</ReturnType>
 		<Id>1768570811946</Id>
-		<Name><![CDATA[f_estimateHouseDHWDemand_kWh]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<Name><![CDATA[f_estimateHouseNmbrResidents]]></Name>
 		<X>890</X>
 		<Y>430</Y>
 		<Label>
@@ -2755,10 +2758,6 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[floorSurface_m2]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -2967,6 +2966,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[numberOfResidents]]></Name>
+			<Type><![CDATA[int]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
