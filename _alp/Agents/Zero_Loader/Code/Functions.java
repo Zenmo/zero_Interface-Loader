@@ -5047,18 +5047,19 @@ else{
 double spaceHeatingDemand_kwhpa;
 double hotWaterDemand_kWhpa;
 double cookingDemand_kWhpa;
+int numberOfResidents = 0;
 if(house.p_PBLParameters != null){
 	PBL_SpaceHeatingAndResidents_data spaceHeatingDataObject = f_getPBLObject_spaceHeatingAndResidents(house.p_PBLParameters.getDwellingType(), house.p_buildYear, house.p_PBLParameters.getOwnershipType(), house.p_insulationLabel);
 	spaceHeatingDemand_kwhpa = f_getSpaceHeatingDemand_PBL_kWh(house.p_floorSurfaceArea_m2, spaceHeatingDataObject, house.p_PBLParameters.getLocalFactor(), house.p_PBLParameters.getRegionalClimateCorrectionFactor());
 	
-	int numberOfResidents = f_getNumberOfResidents_PBL(spaceHeatingDataObject, house.p_floorSurfaceArea_m2);
+	numberOfResidents = f_getNumberOfResidents_PBL(spaceHeatingDataObject, house.p_floorSurfaceArea_m2);
 	
 	PBL_DHWAndCooking_data DHWAndCookingDataObject = f_getPBLObject_DHWAndCooking(house.p_buildYear, house.p_floorSurfaceArea_m2, numberOfResidents);
 	hotWaterDemand_kWhpa = DHWAndCookingDataObject.dhw_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
 	cookingDemand_kWhpa = DHWAndCookingDataObject.cooking_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
 }
 else{
-	int numberOfResidents = f_estimateHouseNmbrResidents();
+	numberOfResidents = f_estimateHouseNmbrResidents();
 	
 	spaceHeatingDemand_kwhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgSpaceHeatingTotalGasConsumptionShare_fr;
 	hotWaterDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgDHWTotalGasConsumptionShare_fr;
@@ -5250,17 +5251,22 @@ J_ProfilePointer f_getDHWProfile(int numberOfResidents)
 int randomIndex;
 J_ProfilePointer ppDHWProfile = null;
 
-if(c_DHWProfiles_data.size() > 0){
-	randomIndex = uniform_discr(0, c_DHWProfiles_data.size() - 1);
-	DHWProfile_data dhwProfile = c_DHWProfiles_data.get(randomIndex);
+if(map_DHWProfiles_data.containsKey(numberOfResidents) && map_DHWProfiles_data.get(numberOfResidents).size() > 0){
+	List<DHWProfile_data> profiles = map_DHWProfiles_data.get(numberOfResidents);
+	randomIndex = uniform_discr(0, profiles.size() - 1);
+	DHWProfile_data dhwProfile = profiles.get(randomIndex);
 	ppDHWProfile = f_createProfilePointer(dhwProfile.DHWProfileID(), dhwProfile.getArgumentsArray(), dhwProfile.getValuesArray(), dhwProfile.profileUnits());
-	c_DHWProfiles_data.remove(randomIndex);
-	energyModel.c_DHWprofiles.add(ppDHWProfile);
+	profiles.remove(randomIndex);
+	if(!energyModel.map_DHWprofiles.containsKey(numberOfResidents)){
+		energyModel.map_DHWprofiles.put(numberOfResidents, new ArrayList<>());
+	}
+	energyModel.map_DHWprofiles.get(numberOfResidents).add(ppDHWProfile);
 	energyModel.f_addProfile(ppDHWProfile);
 }
-else if (energyModel.c_DHWprofiles.size() > 0){
-	randomIndex = uniform_discr(0, energyModel.c_DHWprofiles.size() - 1);
-	ppDHWProfile = energyModel.c_DHWprofiles.get(randomIndex);
+else if (energyModel.map_DHWprofiles.containsKey(numberOfResidents) && energyModel.map_DHWprofiles.get(numberOfResidents).size() > 0){
+	List<J_ProfilePointer> assignedProfiles = energyModel.map_DHWprofiles.get(numberOfResidents);
+	randomIndex = uniform_discr(0, assignedProfiles.size() - 1);
+	ppDHWProfile = assignedProfiles.get(randomIndex);
 }
 
 return ppDHWProfile;
