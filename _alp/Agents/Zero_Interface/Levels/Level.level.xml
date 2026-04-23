@@ -2305,9 +2305,11 @@ else{
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<EnableExpression>!gr_ForceMapSelectionText.isVisible()</EnableExpression>
-					<ActionCode>f_setFilter(map_UINamesFilterOption.get(cb_filterOptions.getValue()));
-
-cb_filterOptions.setValueIndex(0);</ActionCode>
+					<ActionCode>if(!cb_filterOptions.getValue().equals("-")){
+	f_setFilter(map_UINamesFilterOption.get(cb_filterOptions.getValue()));
+	
+	cb_filterOptions.setValueIndex(0);
+}</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
