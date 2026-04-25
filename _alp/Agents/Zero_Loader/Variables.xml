@@ -177,7 +177,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1776962543301</Id>
-		<Name><![CDATA[map_DHWProfiles_data]]></Name>
+		<Name><![CDATA[map_nrOfResidentsToDHWProfiles_data]]></Name>
 		<X>-390</X>
 		<Y>340</Y>
 		<Label>

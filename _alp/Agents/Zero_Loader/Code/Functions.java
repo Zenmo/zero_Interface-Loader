@@ -5251,20 +5251,20 @@ J_ProfilePointer f_getDHWProfile(int numberOfResidents)
 int randomIndex;
 J_ProfilePointer ppDHWProfile = null;
 
-if(map_DHWProfiles_data.containsKey(numberOfResidents) && map_DHWProfiles_data.get(numberOfResidents).size() > 0){
-	List<DHWProfile_data> profiles = map_DHWProfiles_data.get(numberOfResidents);
+if(map_nrOfResidentsToDHWProfiles_data.containsKey(numberOfResidents) && map_nrOfResidentsToDHWProfiles_data.get(numberOfResidents).size() > 0){
+	List<DHWProfile_data> profiles = map_nrOfResidentsToDHWProfiles_data.get(numberOfResidents);
 	randomIndex = uniform_discr(0, profiles.size() - 1);
 	DHWProfile_data dhwProfile = profiles.get(randomIndex);
 	ppDHWProfile = f_createProfilePointer(dhwProfile.DHWProfileID(), dhwProfile.getArgumentsArray(), dhwProfile.getValuesArray(), dhwProfile.profileUnits());
 	profiles.remove(randomIndex);
-	if(!energyModel.map_DHWprofiles.containsKey(numberOfResidents)){
-		energyModel.map_DHWprofiles.put(numberOfResidents, new ArrayList<>());
+	if(!energyModel.map_nrOfResidentsToDHWprofiles.containsKey(numberOfResidents)){
+		energyModel.map_nrOfResidentsToDHWprofiles.put(numberOfResidents, new ArrayList<>());
 	}
-	energyModel.map_DHWprofiles.get(numberOfResidents).add(ppDHWProfile);
+	energyModel.map_nrOfResidentsToDHWprofiles.get(numberOfResidents).add(ppDHWProfile);
 	energyModel.f_addProfile(ppDHWProfile);
 }
-else if (energyModel.map_DHWprofiles.containsKey(numberOfResidents) && energyModel.map_DHWprofiles.get(numberOfResidents).size() > 0){
-	List<J_ProfilePointer> assignedProfiles = energyModel.map_DHWprofiles.get(numberOfResidents);
+else if (energyModel.map_nrOfResidentsToDHWprofiles.containsKey(numberOfResidents) && energyModel.map_nrOfResidentsToDHWprofiles.get(numberOfResidents).size() > 0){
+	List<J_ProfilePointer> assignedProfiles = energyModel.map_nrOfResidentsToDHWprofiles.get(numberOfResidents);
 	randomIndex = uniform_discr(0, assignedProfiles.size() - 1);
 	ppDHWProfile = assignedProfiles.get(randomIndex);
 }
