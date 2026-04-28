@@ -311,7 +311,7 @@
 		<Id>1726584205560</Id>
 		<Name><![CDATA[txt_avgPV]]></Name>
 		<X>510</X>
-		<Y>825</Y>
+		<Y>840</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -336,7 +336,7 @@
 		<Id>1726584205562</Id>
 		<Name><![CDATA[txt_avgBat]]></Name>
 		<X>510</X>
-		<Y>960</Y>
+		<Y>975</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -411,7 +411,7 @@
 		<Id>1726584205568</Id>
 		<Name><![CDATA[txt_gasburners]]></Name>
 		<X>520</X>
-		<Y>265</Y>
+		<Y>280</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -436,7 +436,7 @@
 		<Id>1726584205570</Id>
 		<Name><![CDATA[txt_hydrogenburners]]></Name>
 		<X>520</X>
-		<Y>355</Y>
+		<Y>370</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -589,7 +589,7 @@
 		<Id>1745316061345</Id>
 		<Name><![CDATA[txt_CHP]]></Name>
 		<X>520</X>
-		<Y>445</Y>
+		<Y>460</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -614,7 +614,7 @@
 		<Id>1747314897311</Id>
 		<Name><![CDATA[txt_districtHeatingDeliverySet]]></Name>
 		<X>520</X>
-		<Y>535</Y>
+		<Y>550</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -639,7 +639,7 @@
 		<Id>1751906160194</Id>
 		<Name><![CDATA[txt_avgHeatBuffer]]></Name>
 		<X>520</X>
-		<Y>690</Y>
+		<Y>705</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -664,7 +664,7 @@
 		<Id>1751906173848</Id>
 		<Name><![CDATA[txt_avgPT]]></Name>
 		<X>520</X>
-		<Y>620</Y>
+		<Y>635</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -689,7 +689,7 @@
 		<Id>1768315329120</Id>
 		<Name><![CDATA[txt_thermalModelParameters]]></Name>
 		<X>510</X>
-		<Y>1030</Y>
+		<Y>1045</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>

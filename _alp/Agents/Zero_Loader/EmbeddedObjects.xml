@@ -481,6 +481,9 @@
 			<Parameter>
 				<Name><![CDATA[map_avgAssetBaseOPEX_eurpyr]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_maxHeatpumpElectricCapacity_kW]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">
