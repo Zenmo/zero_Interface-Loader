@@ -1790,7 +1790,7 @@ f_setGridBatteries(sl_collectiveBattery_MWh_businesspark.getValue() * 1000, gcLi
 		<Presentation>
 			<Rectangle>
 				<Id>1750063382219</Id>
-				<Name><![CDATA[rect_electricityDemandSlidersResidentialArea]]></Name>
+				<Name><![CDATA[rect_electricityDemandSlidersResidentialArea1]]></Name>
 				<X>0</X>
 				<Y>0</Y>
 				<Label>
@@ -2703,6 +2703,106 @@ f_setWindTurbines( sl_largeScaleWind_MW_Residential.getValue() - p_currentWindTu
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
+			<Group>
+				<Id>1777390566159</Id>
+				<Name><![CDATA[arrows_electricitySliders_residential1]]></Name>
+				<X>180</X>
+				<Y>23</Y>
+				<Label>
+					<X>7.073</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Image>
+						<Id>1777390328952</Id>
+						<Name><![CDATA[arrowLeftResidential]]></Name>
+						<X>-35</X>
+						<Y>-12</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<OnClickCode>gr_electricitySliders_residential.setVisible(false);
+gr_electricitySliders_residential2.setVisible(true);</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>12</Width>
+						<Height>12</Height>
+						<Rotation>90.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>icon_arrow.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
+					<Image>
+						<Id>1777390501717</Id>
+						<Name><![CDATA[arrowRightResidential1]]></Name>
+						<X>35</X>
+						<Y>0</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<OnClickCode>gr_electricitySliders_residential.setVisible(false);
+gr_electricitySliders_residential2.setVisible(true);</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>12</Width>
+						<Height>12</Height>
+						<Rotation>270.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>icon_arrow.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
+					<Text>
+						<Id>1777399186517</Id>
+						<Name><![CDATA[t_householdPVResidentialAreaDescription1]]></Name>
+						<X>0</X>
+						<Y>-12</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Pagina 1/2]]></Text>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>10</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
+					</Text>
+				</Presentation>
+			</Group>
 		</Presentation>
 	</Group>
 	<Group>
@@ -3123,4 +3223,283 @@ zero_Interface.f_setTrafoText();
 		</Font>
 		<Alignment>CENTER</Alignment>
 	</Text>
+	<Group>
+		<Id>1777399876468</Id>
+		<Name><![CDATA[gr_electricitySliders_residential2]]></Name>
+		<X>980</X>
+		<Y>580</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>180</XCode>
+		<YCode>180</YCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Rectangle>
+				<Id>1777382277807</Id>
+				<Name><![CDATA[rect_electricityDemandSlidersResidentialArea2]]></Name>
+				<X>-180</X>
+				<Y>-180</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>5</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>370</Width>
+				<Height>350</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-32</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Rectangle>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1777387501839</Id>
+				<Name><![CDATA[button_AddCustomSolarfarm]]></Name>
+				<X>-155</X>
+				<Y>-120</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="150" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>zero_Interface.v_isAddingCustomSolarfarm = true;
+zero_Interface.v_customEALatitude = 0;
+zero_Interface.v_customEALongitude = 0;
+traceln("Adding solarfarm: Please click on the map to set the location.");</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Zonnepark toevoegen</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Group>
+				<Id>1777399709244</Id>
+				<Name><![CDATA[arrows_electricitySliders_residential2]]></Name>
+				<X>0</X>
+				<Y>-157</Y>
+				<Label>
+					<X>7.073</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Image>
+						<Id>1777399709246</Id>
+						<Name><![CDATA[arrowLeftResidential1]]></Name>
+						<X>-35</X>
+						<Y>-12</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<OnClickCode>gr_electricitySliders_residential2.setVisible(false);
+gr_electricitySliders_residential.setVisible(true);</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>12</Width>
+						<Height>12</Height>
+						<Rotation>90.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>icon_arrow.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
+					<Image>
+						<Id>1777399709248</Id>
+						<Name><![CDATA[arrowRightResidential2]]></Name>
+						<X>35</X>
+						<Y>0</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<OnClickCode>gr_electricitySliders_residential2.setVisible(false);
+gr_electricitySliders_residential.setVisible(true);</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>12</Width>
+						<Height>12</Height>
+						<Rotation>270.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>icon_arrow.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
+					<Text>
+						<Id>1777399709250</Id>
+						<Name><![CDATA[t_householdPVResidentialAreaDescription2]]></Name>
+						<X>0</X>
+						<Y>-12</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Pagina 2/2]]></Text>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>10</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
+					</Text>
+				</Presentation>
+			</Group>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1777401127087</Id>
+				<Name><![CDATA[button_AddCustomGridBattery]]></Name>
+				<X>15</X>
+				<Y>-120</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="150" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>zero_Interface.v_isAddingCustomGridBattery = true;
+zero_Interface.v_customEALatitude = 0;
+zero_Interface.v_customEALongitude = 0;
+traceln("Adding grid battery: Please click on the map to set the location.");</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Netbatterij toevoegen</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1777401178614</Id>
+				<Name><![CDATA[button_AddCustomWindpark]]></Name>
+				<X>-90</X>
+				<Y>-75</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="190" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>zero_Interface.v_isAddingCustomWindfarm = true;
+zero_Interface.v_customEALatitude = 0;
+zero_Interface.v_customEALongitude = 0;
+traceln("Adding windfarm: Please click on the map to set the location.");</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Windmolenpark toevoegen</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1777403352801</Id>
+				<Name><![CDATA[button_DeleteCustomEA]]></Name>
+				<X>-155</X>
+				<Y>-30</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="150" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Verwijderen...</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1777405981544</Id>
+				<Name><![CDATA[button_DeleteAllCustomEAs]]></Name>
+				<X>15</X>
+				<Y>-30</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="150" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Verwijder alles</LabelText>
+				</ExtendedProperties>
+			</Control>
+		</Presentation>
+	</Group>
 </Presentation>

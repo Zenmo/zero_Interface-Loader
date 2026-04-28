@@ -427,7 +427,7 @@ if(gr_electricitySliders_default.isVisible()){
 else if(gr_electricitySliders_businesspark.isVisible()){
 	f_updateElectricitySliders_businesspark();
 }
-else if(gr_electricitySliders_residential.isVisible()){
+else if(gr_electricitySliders_residential.isVisible() || gr_electricitySliders_residential2.isVisible()){
 	f_updateElectricitySliders_residential();
 }
 else{
