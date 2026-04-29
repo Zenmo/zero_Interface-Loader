@@ -42,7 +42,7 @@ if (b.gisRegion != null){
 
 double f_selectGISRegion(double clickx,double clicky)
 {/*ALCODESTART::1696863329251*/
-if (v_isAddingCustomSolarfarm || v_isAddingCustomWindfarm || v_isAddingCustomGridBattery) {
+if (b_addCustomSolarfarm || b_addCustomWindfarm || b_addCustomGridBattery) {
     if (v_customEALatitude == 0 && v_customEALongitude == 0) {
         // Step 1: Set location
         v_customEALatitude = clickx; // Assuming clickx is lat or lon depending on map orientation
@@ -61,15 +61,15 @@ if (v_isAddingCustomSolarfarm || v_isAddingCustomWindfarm || v_isAddingCustomGri
         }
         
         if (clickedGN != null) {
-        	if (v_isAddingCustomSolarfarm){
+        	if (b_addCustomSolarfarm){
             	f_addCustomSolarfarm(v_customEALatitude, v_customEALongitude, clickedGN);
-            	v_isAddingCustomSolarfarm = false;
-            } else if (v_isAddingCustomWindfarm){
+            	b_addCustomSolarfarm = false;
+            } else if (b_addCustomWindfarm){
             	f_addCustomWindfarm(v_customEALatitude, v_customEALongitude, clickedGN);
-            	v_isAddingCustomWindfarm = false;
-            } else if (v_isAddingCustomGridBattery){
+            	b_addCustomWindfarm = false;
+            } else if (b_addCustomGridBattery){
             	f_addCustomGridBattery(v_customEALatitude, v_customEALongitude, clickedGN);
-            	v_isAddingCustomGridBattery = false;
+            	b_addCustomGridBattery = false;
             }
             v_customEALatitude = 0;
             v_customEALongitude = 0;
@@ -79,6 +79,46 @@ if (v_isAddingCustomSolarfarm || v_isAddingCustomWindfarm || v_isAddingCustomGri
             return;
         }
     }
+}
+
+if (b_removeCustomEA) {
+	// Group all GIS objects to check for the click
+    List<GIS_Object> allGISObjects = new ArrayList<>();
+    for(GIS_Building b : energyModel.pop_GIS_Buildings) {
+    	allGISObjects.add(b);
+    }
+    for(GIS_Object object : energyModel.pop_GIS_Objects){
+    	allGISObjects.add(object);
+    }
+    for (GIS_Object GISObject : allGISObjects) {
+        if (GISObject.gisRegion != null && GISObject.gisRegion.contains(clickx, clicky) && GISObject.gisRegion.isVisible()) {
+            if (GISObject.c_containedGridConnections.size() > 0) {
+                GridConnection gc = GISObject.c_containedGridConnections.get(0);
+                
+                // Only allow deletion of specific energy asset types
+                if (gc instanceof GCEnergyProduction || gc instanceof GCGridBattery) {
+                    f_removeCustomEA(gc);
+                    b_removeCustomEA = false; // Reset mode after deletion
+                    traceln("Removed the energy asset: " + gc.p_gridConnectionID);
+                    return;
+                }
+            }
+        }
+    }
+    // If the user clicks elsewhere, cancel the deletion mode
+    b_removeCustomEA = false;
+    traceln("Deletion mode cancelled.");
+    return;
+    
+    /*GCEnergyProduction clickedGCEnergyProduction = null;
+    GCGridBattery clickedGCGridBattery = null;
+    for (GridNode GN : energyModel.pop_gridNodes) {
+        if (GN.gisRegion != null && GN.gisRegion.contains(clickx, clicky) && GN.gisRegion.isVisible()) {
+            clickedGN = GN;
+            break;
+        }
+    }
+    traceln("Removed the energy asset: ");*/
 }
 
 //After a click, reset previous clicked building/gridNode colors and text
@@ -3867,38 +3907,50 @@ if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
 traceln("Successfully added custom solar farm at " + lat + ", " + lon + " connected to " + gn.p_gridNodeID);
 /*ALCODEEND*/}
 
-double f_removeCustomSolarfarm(GCEnergyProduction solarfarm)
+double f_removeCustomEA(GridConnection gc)
 {/*ALCODESTART::1777386082596*/
-if (!c_customSolarfarms.contains(solarfarm)) return;
-
 // 0. Gracefully detach from the grid totals and aggregators
-solarfarm.f_setActive(false, energyModel.p_timeVariables);
+gc.f_setActive(false, energyModel.p_timeVariables);
 
 // 1. Remove Energy Assets
-for(J_EAProduction ea : new ArrayList<>(solarfarm.c_productionAssets)) {
+for(J_EA ea : new ArrayList<>(gc.c_energyAssets)) {
     ea.removeEnergyAsset();
 }
 
 // 2. Remove GIS Object
-for (GIS_Object obj : new ArrayList<>(solarfarm.c_connectedGISObjects)) {
+for (GIS_Object obj : new ArrayList<>(gc.c_connectedGISObjects)) {
     obj.gisRegion.setVisible(false);
     energyModel.remove_pop_GIS_Objects(obj);
 }
 
 // 3. Remove Owner
-if (solarfarm.p_owner != null) {
-    energyModel.remove_pop_connectionOwners(solarfarm.p_owner);
+if (gc.p_owner != null) {
+    energyModel.remove_pop_connectionOwners(gc.p_owner);
 }
 
 // 4. Remove from collections
-c_customSolarfarms.remove(solarfarm);
-energyModel.c_pausedGridConnections.remove(solarfarm);
-energyModel.remove_EnergyProductionSites(solarfarm);
+energyModel.c_pausedGridConnections.remove(gc);
+if (gc instanceof GCEnergyProduction) {
+	energyModel.remove_EnergyProductionSites((GCEnergyProduction)gc);
+	if(c_customSolarfarms.contains((GCEnergyProduction)gc)){
+		c_customSolarfarms.remove(gc);
+		//v_customSolarfarmCounter--;
+	}
+	else if(c_customWindfarms.contains((GCEnergyProduction)gc)){
+		c_customWindfarms.remove(gc);
+		//v_customWindfarmCounter--;
+	}
+} else if (gc instanceof GCGridBattery) {
+    energyModel.remove_GridBatteries((GCGridBattery)gc);
+    c_customGridBatteries.remove((GCGridBattery)gc);
+    //v_customGridBatteryCounter--;
+}
+
 
 // 5. Update the active instance of tabElectricity and Refresh UI
 if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
     tabElectricity tabElec = uI_Tabs.pop_tabElectricity.get(0);
-    tabElec.c_electricityTabEASliderGCs.remove(solarfarm);
+    tabElec.c_electricityTabEASliderGCs.remove(gc);
     tabElec.f_updateSliders_Electricity();
 }
 
@@ -3973,45 +4025,6 @@ if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
 traceln("Successfully added custom wind farm at " + lat + ", " + lon + " connected to " + gn.p_gridNodeID);
 /*ALCODEEND*/}
 
-double f_removeCustomWindfarm(GCEnergyProduction windfarm)
-{/*ALCODESTART::1777406438991*/
-if (!c_customSolarfarms.contains(windfarm)) return;
-
-// 0. Gracefully detach from the grid totals and aggregators
-windfarm.f_setActive(false, energyModel.p_timeVariables);
-
-// 1. Remove Energy Assets
-for(J_EAProduction ea : new ArrayList<>(windfarm.c_productionAssets)) {
-    ea.removeEnergyAsset();
-}
-
-// 2. Remove GIS Object
-for (GIS_Object obj : new ArrayList<>(windfarm.c_connectedGISObjects)) {
-    obj.gisRegion.setVisible(false);
-    energyModel.remove_pop_GIS_Objects(obj);
-}
-
-// 3. Remove Owner
-if (windfarm.p_owner != null) {
-    energyModel.remove_pop_connectionOwners(windfarm.p_owner);
-}
-
-// 4. Remove from collections
-c_customWindfarms.remove(windfarm);
-energyModel.c_pausedGridConnections.remove(windfarm);
-energyModel.remove_EnergyProductionSites(windfarm);
-
-// 5. Update the active instance of tabElectricity and Refresh UI
-if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
-    tabElectricity tabElec = uI_Tabs.pop_tabElectricity.get(0);
-    tabElec.c_electricityTabEASliderGCs.remove(windfarm);
-    tabElec.f_updateSliders_Electricity();
-}
-
-// 4. Refresh UI
-f_deselectPreviousSelect();
-/*ALCODEEND*/}
-
 double f_addCustomGridBattery(double lat,double lon,GridNode gn)
 {/*ALCODESTART::1777406997338*/
 String id = "Custom_Grid_Battery_" + v_customGridBatteryCounter++;
@@ -4034,7 +4047,7 @@ battery.p_isSliderGC = true; // Allow slider to affect it
 // 2. Set capacity
 double defaultCapacity_kW = 100;
 double defaultStorageCapacity_kWh = 2*defaultCapacity_kW;
-battery.v_liveConnectionMetaData.setCapacities_kW(0, defaultCapacity_kW, defaultCapacity_kW);
+battery.v_liveConnectionMetaData.setCapacities_kW(defaultCapacity_kW, defaultCapacity_kW, defaultCapacity_kW);
 battery.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
 
 // 3. Initialize GridConnection internals and set active
@@ -4085,44 +4098,5 @@ if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
     tabElec.f_updateSliders_Electricity();
 }
 traceln("Successfully added custom grid battery at " + lat + ", " + lon + " connected to " + gn.p_gridNodeID);
-/*ALCODEEND*/}
-
-double f_removeCustomGridBattery(GCEnergyProduction windfarm)
-{/*ALCODESTART::1777406997340*/
-if (!c_customSolarfarms.contains(windfarm)) return;
-
-// 0. Gracefully detach from the grid totals and aggregators
-windfarm.f_setActive(false, energyModel.p_timeVariables);
-
-// 1. Remove Energy Assets
-for(J_EAProduction ea : new ArrayList<>(windfarm.c_productionAssets)) {
-    ea.removeEnergyAsset();
-}
-
-// 2. Remove GIS Object
-for (GIS_Object obj : new ArrayList<>(windfarm.c_connectedGISObjects)) {
-    obj.gisRegion.setVisible(false);
-    energyModel.remove_pop_GIS_Objects(obj);
-}
-
-// 3. Remove Owner
-if (windfarm.p_owner != null) {
-    energyModel.remove_pop_connectionOwners(windfarm.p_owner);
-}
-
-// 4. Remove from collections
-c_customWindfarms.remove(windfarm);
-energyModel.c_pausedGridConnections.remove(windfarm);
-energyModel.remove_EnergyProductionSites(windfarm);
-
-// 5. Update the active instance of tabElectricity and Refresh UI
-if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
-    tabElectricity tabElec = uI_Tabs.pop_tabElectricity.get(0);
-    tabElec.c_electricityTabEASliderGCs.remove(windfarm);
-    tabElec.f_updateSliders_Electricity();
-}
-
-// 4. Refresh UI
-f_deselectPreviousSelect();
 /*ALCODEEND*/}
 

@@ -3286,7 +3286,7 @@ zero_Interface.f_setTrafoText();
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<ActionCode>zero_Interface.v_isAddingCustomSolarfarm = true;
+					<ActionCode>zero_Interface.b_addCustomSolarfarm = true;
 zero_Interface.v_customEALatitude = 0;
 zero_Interface.v_customEALongitude = 0;
 traceln("Adding solarfarm: Please click on the map to set the location.");</ActionCode>
@@ -3414,7 +3414,7 @@ gr_electricitySliders_residential.setVisible(true);</OnClickCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<ActionCode>zero_Interface.v_isAddingCustomGridBattery = true;
+					<ActionCode>zero_Interface.b_addCustomGridBattery = true;
 zero_Interface.v_customEALatitude = 0;
 zero_Interface.v_customEALongitude = 0;
 traceln("Adding grid battery: Please click on the map to set the location.");</ActionCode>
@@ -3442,7 +3442,7 @@ traceln("Adding grid battery: Please click on the map to set the location.");</A
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<ActionCode>zero_Interface.v_isAddingCustomWindfarm = true;
+					<ActionCode>zero_Interface.b_addCustomWindfarm = true;
 zero_Interface.v_customEALatitude = 0;
 zero_Interface.v_customEALongitude = 0;
 traceln("Adding windfarm: Please click on the map to set the location.");</ActionCode>
@@ -3470,6 +3470,14 @@ traceln("Adding windfarm: Please click on the map to set the location.");</Actio
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
+					<ActionCode>if(!zero_Interface.c_customSolarfarms.isEmpty() || !zero_Interface.c_customWindfarms.isEmpty() || !zero_Interface.c_customGridBatteries.isEmpty()) {
+	zero_Interface.b_removeCustomEA = true;
+	zero_Interface.v_customEALatitude = 0;
+	zero_Interface.v_customEALongitude = 0;
+	traceln("Click on the energy asset you want to remove.");
+} else {
+	traceln("There is no custom energy asset loaded in.");
+}</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -3494,6 +3502,34 @@ traceln("Adding windfarm: Please click on the map to set the location.");</Actio
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
+					<ActionCode>if(!zero_Interface.c_customSolarfarms.isEmpty() || !zero_Interface.c_customWindfarms.isEmpty() || !zero_Interface.c_customGridBatteries.isEmpty()) {
+	zero_Interface.b_removeAllCustomEAs = true;
+	zero_Interface.v_customEALatitude = 0;
+	zero_Interface.v_customEALongitude = 0;
+	traceln("Are you sure you want to remove all custom energy assets?");
+	
+	if (zero_Interface.b_removeAllCustomEAs){
+		if(!zero_Interface.c_customSolarfarms.isEmpty()){
+			for (GridConnection solarfarm : zero_Interface.c_customSolarfarms){
+				zero_Interface.f_removeCustomEA(solarfarm);
+			}
+		}
+		if(!zero_Interface.c_customWindfarms.isEmpty()){
+			for (GridConnection windfarm : zero_Interface.c_customWindfarms){
+				zero_Interface.f_removeCustomEA(windfarm);
+			}
+		}
+		if(!zero_Interface.c_customGridBatteries.isEmpty()){
+			for (GridConnection battery : zero_Interface.c_customGridBatteries){
+				zero_Interface.f_removeCustomEA(battery);
+			}
+		}
+		traceln("Removed all custom EAs.");
+	}
+
+} else {
+	traceln("There is no custom energy asset loaded in.");
+}</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>

@@ -2704,7 +2704,7 @@
 		<Id>1777385973745</Id>
 		<Name><![CDATA[f_addCustomSolarfarm]]></Name>
 		<X>50</X>
-		<Y>1780</Y>
+		<Y>1840</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2730,9 +2730,9 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1777386082596</Id>
-		<Name><![CDATA[f_removeCustomSolarfarm]]></Name>
+		<Name><![CDATA[f_removeCustomEA]]></Name>
 		<X>50</X>
-		<Y>1800</Y>
+		<Y>1740</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2741,8 +2741,8 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[solarfarm]]></Name>
-			<Type><![CDATA[GCEnergyProduction]]></Type>
+			<Name><![CDATA[gc]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -2752,7 +2752,7 @@
 		<Id>1777406438989</Id>
 		<Name><![CDATA[f_addCustomWindfarm]]></Name>
 		<X>50</X>
-		<Y>1900</Y>
+		<Y>1930</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2771,26 +2771,6 @@
 		<Parameter>
 			<Name><![CDATA[gn]]></Name>
 			<Type><![CDATA[GridNode]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1777406438991</Id>
-		<Name><![CDATA[f_removeCustomWindfarm]]></Name>
-		<X>50</X>
-		<Y>1920</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[windfarm]]></Name>
-			<Type><![CDATA[GCEnergyProduction]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -2819,26 +2799,6 @@
 		<Parameter>
 			<Name><![CDATA[gn]]></Name>
 			<Type><![CDATA[GridNode]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1777406997340</Id>
-		<Name><![CDATA[f_removeCustomGridBattery]]></Name>
-		<X>50</X>
-		<Y>2040</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[windfarm]]></Name>
-			<Type><![CDATA[GCEnergyProduction]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
