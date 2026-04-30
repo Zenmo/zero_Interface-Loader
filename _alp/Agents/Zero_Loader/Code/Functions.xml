@@ -3002,6 +3002,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Name><![CDATA[profileUnitType]]></Name>
 			<Type><![CDATA[OL_ProfileUnits]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[offset_h]]></Name>
+			<Type><![CDATA[Double]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>
