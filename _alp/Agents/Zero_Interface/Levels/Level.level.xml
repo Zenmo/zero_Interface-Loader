@@ -1636,31 +1636,22 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 					<Enabled>true</Enabled>
 					<EnableExpression>v_selectedGridConnectionIndex &lt; v_nbGridConnectionsInSelectedBuilding</EnableExpression>
 					<ActionCode>if (v_selectedGridConnectionIndex &lt; v_nbGridConnectionsInSelectedBuilding ){
+	c_selectedGridConnections.clear();
 	v_selectedGridConnectionIndex += 1;
 
-	c_selectedGridConnections = new ArrayList&lt;&gt;();
-	
 	if(v_customEnergyCoop != null){
 		energyModel.f_removeEnergyCoop(v_customEnergyCoop, energyModel.p_timeVariables);
 		v_customEnergyCoop = null;
 	}
-
-	if( v_selectedGridConnectionIndex &gt; 0){
-		c_selectedGridConnections.add(c_selectedObjects.get(0).c_containedGridConnections.get(v_selectedGridConnectionIndex -1));
-		uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
-	}
-	/*
-	else {
-		c_selectedGridConnections.addAll(c_selectedObjects.get(0).c_containedGridConnections);
-		v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections);
-		uI_Results.f_updateResultsUI(v_customEnergyCoop);
-	}
-	*/
-	/*
-	//Update the resultsUI
-	f_updateUIResultsData();	
-	*/
 	
+	if(c_selectedObjects.size()&gt; 1){
+		f_clearAdditionalGCBuildingSelection();
+	}
+
+	if( v_selectedGridConnectionIndex &gt; 0){// Index &gt; 0 -&gt; Select the gc at the index in the building containedGC (index 1 = index 0 in containedGC). 
+		f_switchSelectedGCInBuilding();
+	}
+
 	//Set dashboard UI button
 	f_setUIButton();
 }</ActionCode>
@@ -1690,31 +1681,26 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 					<Enabled>true</Enabled>
 					<EnableExpression>v_selectedGridConnectionIndex &gt; 0</EnableExpression>
 					<ActionCode>if (v_selectedGridConnectionIndex &gt; 0){
-	c_selectedGridConnections = new ArrayList&lt;&gt;();
+	c_selectedGridConnections.clear();
 	v_selectedGridConnectionIndex -= 1;
 	
-	if( v_selectedGridConnectionIndex &gt; 0){
-		c_selectedGridConnections.add(c_selectedObjects.get(0).c_containedGridConnections.get(v_selectedGridConnectionIndex -1));
-		uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
+	if(c_selectedObjects.size()&gt; 1){
+		f_clearAdditionalGCBuildingSelection();
 	}
-	else {
-		c_selectedGridConnections.addAll(c_selectedObjects.get(0).c_containedGridConnections);
+	
+	if( v_selectedGridConnectionIndex &gt; 0){// Index &gt; 0 -&gt; Select the gc at the index in the building containedGC (index 1 = index 0 in containedGC). 
+		f_switchSelectedGCInBuilding();
+	}
+	else { // Index = 0 -&gt; Create coop containing all gc in this building, to visualize the total of the building
+		c_selectedGridConnections.addAll(v_clickedObject.c_containedGridConnections);
 		
 		v_customEnergyCoop = energyModel.f_addEnergyCoop(c_selectedGridConnections, energyModel.p_timeParameters);
 		uI_Results.f_updateResultsUI(v_customEnergyCoop);
 	}
 	
-	/*
-	//Update the resultsUI
-	f_updateUIResultsData();
-	*/
-	
 	//Set dashboard UI button
 	f_setUIButton();
-}
-
-
-</ActionCode>
+}</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="9" Style="0"/>
@@ -1742,9 +1728,12 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 				<TextCode>v_selectedGridConnectionIndex &gt; 0 &amp;&amp; c_selectedGridConnections.size() &gt; 0 &amp;&amp; c_selectedGridConnections.get(0).p_owner.p_detailedCompany ?
 "Je kijkt naar: " + c_selectedGridConnections.get(0).p_ownerID + ", " + c_selectedGridConnections.get(0).p_address.getAddress()
 :
+v_selectedGridConnectionIndex &gt; 0 &amp;&amp; c_selectedGridConnections.size() &gt; 0 &amp;&amp; c_selectedGridConnections.get(0).p_address != null ?
+"Je kijkt naar: de aansluiting van " + c_selectedGridConnections.get(0).p_address.getAddress()
+:
 v_selectedGridConnectionIndex &gt; 0 ?
 "Je kijkt naar het " + (v_selectedGridConnectionIndex ) + "e adres in het geselecteerde pand"
-: 
+:  
 "Je kijkt naar de som van alle " + v_nbGridConnectionsInSelectedBuilding + " addressen in dit pand"</TextCode>
 				<Font>
 					<Name><![CDATA[SansSerif]]></Name>
@@ -1883,7 +1872,7 @@ v_selectedGridConnectionIndex &gt; 0 ?
 	<Control Type="CheckBox">
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1725017697644</Id>
-		<Name><![CDATA[checkbox_cabels]]></Name>
+		<Name><![CDATA[checkbox_cables]]></Name>
 		<X>20</X>
 		<Y>460</Y>
 		<Label>
@@ -1898,21 +1887,23 @@ v_selectedGridConnectionIndex &gt; 0 ?
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
-			<ActionCode>for(GISRoute GISCable : c_LVCables){
-	GISCable.setVisible(b_showCables);
+			<ActionCode>boolean showCables = checkbox_cables.isSelected();
+
+for(GISRoute GISCable : c_LVCables){
+	GISCable.setVisible(showCables);
 }
 
 for(GISRoute GISCable : c_MVCables){
-	GISCable.setVisible(b_showCables);
+	GISCable.setVisible(showCables);
 }
-</ActionCode>
+
+gr_cablesLegend.setVisible(showCables);</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
 			<Font Name="Dialog" Size="11" Style="0"/>
 			<LabelText>Toon stroom kabels</LabelText>
 			<DefaultValueCode>false</DefaultValueCode>
-			<LinkTo>true</LinkTo>
-			<Link>b_showCables</Link>
+			<LinkTo>false</LinkTo>
 		</ExtendedProperties>
 	</Control>
 	<GISMap>
@@ -1929,69 +1920,11 @@ for(GISRoute GISCable : c_MVCables){
 		<ShowLabel>false</ShowLabel>
 		<Lock>true</Lock>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<OnClickCode>if(b_inEnergyHubMode ){
-	if(b_inEnergyHubSelectionMode){
-		f_selectEnergyHubGC(clickx, clicky);
-	}
-}
-else if(b_inManualFilterSelectionMode){
-	f_selectManualFilteredGC(clickx, clicky);
-}
-else{
-	if (uI_Tabs.pop_tabEHub.size() &gt; 0 &amp;&amp; uI_Tabs.pop_tabEHub.get(0).b_inCapacitySharingSelectionMode) {
-		uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
-	}
-	else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP) || 
-			c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
-		
-		if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP)){
-			f_selectGridLoop(clickx, clicky);
-		}
-		if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
-			f_selectNeighborhood(clickx, clicky);
-		}
-	}
-	
-	else {
-		if(c_selectedFilterOptions.size() &gt; 0){
-			f_removeAllFilters();
-		}
-		f_selectGISRegion(clickx, clicky);
-	}
-}</OnClickCode>
+		<OnClickCode>f_clickOnMap(clickx, clicky);</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Width>1000</Width>
 		<Height>620</Height>
-		<OnClickCode>if(b_inEnergyHubMode ){
-	if(b_inEnergyHubSelectionMode){
-		f_selectEnergyHubGC(clickx, clicky);
-	}
-}
-else if(b_inManualFilterSelectionMode){
-	f_selectManualFilteredGC(clickx, clicky);
-}
-else{
-	if (uI_Tabs.pop_tabEHub.size() &gt; 0 &amp;&amp; uI_Tabs.pop_tabEHub.get(0).b_inCapacitySharingSelectionMode) {
-		uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
-	}
-	else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP) || 
-			c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
-		
-		if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP)){
-			f_selectGridLoop(clickx, clicky);
-		}
-		if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
-			f_selectNeighborhood(clickx, clicky);
-		}
-	}
-	
-	else {
-		if(c_selectedFilterOptions.size() &gt; 0){
-			f_removeAllFilters();
-		}
-		f_selectGISRegion(clickx, clicky);
-	}
-}</OnClickCode>
+		<OnClickCode>f_clickOnMap(clickx, clicky);</OnClickCode>
 		<GISShapes/>
 		<Latitude>52.539123187983904</Latitude>
 		<Longitude>6.173604854475837</Longitude>
@@ -4733,7 +4666,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 					</Group>
 					<Group>
 						<Id>1724074839748</Id>
-						<Name><![CDATA[gr_cables]]></Name>
+						<Name><![CDATA[gr_cablesLegend]]></Name>
 						<X>75</X>
 						<Y>5</Y>
 						<Label>
@@ -4741,10 +4674,9 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							<Y>0</Y>
 						</Label>
 						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
+						<PresentationFlag>false</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<VisibleCode>b_showCables</VisibleCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
