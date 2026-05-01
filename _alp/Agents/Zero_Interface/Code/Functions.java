@@ -76,7 +76,12 @@ for ( GIS_Object GISObject : allGISObjects ){
 		if (GISObject.gisRegion.isVisible()) { //only allow us to click on visible objects
 			if (GISObject.c_containedGridConnections.size() > 0 ) { // only allow objects with gridconnections
 				if(f_checkIfGCsAreAccesible(GISObject.c_containedGridConnections)){
-					buildingsConnectedToSelectedBuildingsList = GISObject.c_containedGridConnections.get(0).c_connectedGISObjects; // Find buildings powered by the same GC as the clicked object 
+					if(GISObject.c_containedGridConnections.size() == 1){
+						buildingsConnectedToSelectedBuildingsList.addAll(GISObject.c_containedGridConnections.get(0).c_connectedGISObjects); // Find buildings powered by the same GC as the clicked object 
+					}
+					else{
+						buildingsConnectedToSelectedBuildingsList.add(GISObject);
+					}
 					f_selectBuilding(GISObject, buildingsConnectedToSelectedBuildingsList);		
 				}
 				else{
@@ -308,6 +313,7 @@ uI_Results.f_updateUIresultsGridNode(GN);
 
 double f_selectBuilding(GIS_Object b,ArrayList<GIS_Object> buildingsConnectedToSelectedGC_list)
 {/*ALCODESTART::1707918668163*/
+v_clickedObject = b;
 c_selectedObjects = new ArrayList<GIS_Object>(buildingsConnectedToSelectedGC_list);
 v_clickedObjectType = b.p_GISObjectType;
 
@@ -315,11 +321,11 @@ v_clickedObjectType = b.p_GISObjectType;
 uI_Results.getCheckbox_KPISummary().setEnabled(true);
 
 // Color all buildings of the GridConnection associated with the selected building
-if (!c_selectedObjects.get(0).c_containedGridConnections.get(0).p_ownerID.equals("-") && !c_selectedObjects.get(0).c_containedGridConnections.get(0).p_ownerID.contains("woonfunctie") && !c_selectedObjects.get(0).c_containedGridConnections.get(0).p_ownerID.contains("Onbekend")){
+//if (!c_selectedObjects.get(0).c_containedGridConnections.get(0).p_ownerID.equals("-") && !c_selectedObjects.get(0).c_containedGridConnections.get(0).p_ownerID.contains("woonfunctie") && !c_selectedObjects.get(0).c_containedGridConnections.get(0).p_ownerID.contains("Onbekend")){
 	for (GIS_Object obj : c_selectedObjects) { //Buildings that are grouped, select as well.
 		obj.gisRegion.setFillColor(v_selectionColorAddBuildings);
 	}
-}
+//}
 
 //Check the number of GCs in building
 v_nbGridConnectionsInSelectedBuilding = b.c_containedGridConnections.size();
@@ -381,12 +387,15 @@ f_setUIButton();
 
 double f_deselectPreviousSelect()
 {/*ALCODESTART::1707918668165*/
-v_previousClickedObjectType = v_clickedObjectType;
-c_previousSelectedObjects = new ArrayList<GIS_Object>(c_selectedObjects);
+OL_GISObjectType previousClickedObjectType = v_clickedObjectType;
+List<GIS_Object> previousSelectedObjects = new ArrayList<>(c_selectedObjects);
+GridNode previousClickedGridNode = v_clickedGridNode;
+v_clickedObject = null;
 c_selectedGridConnections.clear();
 c_selectedObjects.clear();
+v_clickedGridNode = null;
 
-if(v_previousClickedObjectType != null){
+if(previousClickedObjectType != null){
 	// Update for results_ui when deselecting objects to show entire area again as default option
 	v_clickedObjectText = "None";
 	v_clickedObjectType = null;
@@ -394,10 +403,9 @@ if(v_previousClickedObjectType != null){
 	gr_multipleBuildingInfo.setVisible(false);
 	
 	// We restore the colors of what we clicked on before
-	if (v_previousClickedObjectType == OL_GISObjectType.GRIDNODE){
-		v_previousClickedGridNode = v_clickedGridNode;
+	if (previousClickedObjectType == OL_GISObjectType.GRIDNODE){
 		f_styleGridNodes(v_clickedGridNode);
-		for ( Agent agent : v_previousClickedGridNode.f_getAllLowerLVLConnectedGridConnections()){	
+		for ( Agent agent : previousClickedGridNode.f_getAllLowerLVLConnectedGridConnections()){	
 			if (agent instanceof GridConnection) {
 				GridConnection GC = (GridConnection)agent;
 				for (GIS_Object a : GC.c_connectedGISObjects) {
@@ -406,14 +414,14 @@ if(v_previousClickedObjectType != null){
 			}
 		}
 	}
-	else if (v_previousClickedObjectType == OL_GISObjectType.BUILDING ||
-			 v_previousClickedObjectType == OL_GISObjectType.SOLARFARM ||
-			 v_previousClickedObjectType == OL_GISObjectType.WINDFARM ||
-			 v_previousClickedObjectType == OL_GISObjectType.ELECTROLYSER ||
-			 v_previousClickedObjectType == OL_GISObjectType.BATTERY ||
-			 v_previousClickedObjectType == OL_GISObjectType.CHARGER ||
-			 v_previousClickedObjectType == OL_GISObjectType.PARKING){
-		for(GIS_Object previousClickedObject: c_previousSelectedObjects){
+	else if (previousClickedObjectType == OL_GISObjectType.BUILDING ||
+			 previousClickedObjectType == OL_GISObjectType.SOLARFARM ||
+			 previousClickedObjectType == OL_GISObjectType.WINDFARM ||
+			 previousClickedObjectType == OL_GISObjectType.ELECTROLYSER ||
+			 previousClickedObjectType == OL_GISObjectType.BATTERY ||
+			 previousClickedObjectType == OL_GISObjectType.CHARGER ||
+			 previousClickedObjectType == OL_GISObjectType.PARKING){
+		for(GIS_Object previousClickedObject: previousSelectedObjects){
 			f_styleAreas(previousClickedObject);
 		}
 	}
@@ -636,7 +644,7 @@ f_setGridTopologyColors();
 
 //Disable cable button if no cables have been loaded in
 if(c_LVCables.size() == 0 && c_MVCables.size() == 0){
-	checkbox_cabels.setVisible(false);
+	checkbox_cables.setVisible(false);
 }
 
 //Set order of certain layovers and submenus
@@ -2332,7 +2340,7 @@ if (gn!=null && gn.gisRegion != null){
 		gn.gisRegion.setLineColor(v_gridNodeLineColorUncongested);
 	}
 	
-	if( gn == v_clickedGridNode && gn != v_previousClickedGridNode){ // dit zorgt ervoor dat de kleuringfunctie correct werkt in zowel live stand als pauze stand
+	if( gn == v_clickedGridNode){ // dit zorgt ervoor dat de kleuringfunctie correct werkt in zowel live stand als pauze stand
 		gn.gisRegion.setFillColor( v_selectionColor );
 		gn.gisRegion.setLineColor( orange );
 	}
@@ -3759,5 +3767,60 @@ if(settings.resultsUIRadioButtonSetup() != null){
 	}
 }
 return loadedChartTypes_Energy;
+/*ALCODEEND*/}
+
+double f_clickOnMap(double clickx,double clicky)
+{/*ALCODESTART::1777565261922*/
+if(b_inEnergyHubMode ){
+	if(b_inEnergyHubSelectionMode){
+		f_selectEnergyHubGC(clickx, clicky);
+	}
+}
+else if(b_inManualFilterSelectionMode){
+	f_selectManualFilteredGC(clickx, clicky);
+}
+else{
+	if (uI_Tabs.pop_tabEHub.size() > 0 && uI_Tabs.pop_tabEHub.get(0).b_inCapacitySharingSelectionMode) {
+		uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
+	}
+	else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP) || 
+			c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
+		
+		if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP)){
+			f_selectGridLoop(clickx, clicky);
+		}
+		if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
+			f_selectNeighborhood(clickx, clicky);
+		}
+	}
+	
+	else {
+		if(c_selectedFilterOptions.size() > 0){
+			f_removeAllFilters();
+		}
+		f_selectGISRegion(clickx, clicky);
+	}
+}
+/*ALCODEEND*/}
+
+double f_clearAdditionalGCBuildingSelection()
+{/*ALCODESTART::1777637682935*/
+c_selectedObjects.remove(v_clickedObject);
+for(GIS_Object previousAdditionalSelectedObjects : c_selectedObjects){
+	f_styleAreas(previousAdditionalSelectedObjects);
+}
+c_selectedObjects = new ArrayList<>(List.of(v_clickedObject));
+/*ALCODEEND*/}
+
+double f_switchSelectedGCInBuilding()
+{/*ALCODESTART::1777637752826*/
+c_selectedGridConnections.add(v_clickedObject.c_containedGridConnections.get(v_selectedGridConnectionIndex -1));
+if(c_selectedGridConnections.get(0).c_connectedGISObjects.size() > 1){ //Also color all buildings attached to the selected GC
+	c_selectedObjects = new ArrayList<>(c_selectedGridConnections.get(0).c_connectedGISObjects);
+	for (GIS_Object obj : c_selectedObjects) {
+		obj.gisRegion.setFillColor(v_selectionColorAddBuildings);
+	}
+}
+uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
 /*ALCODEEND*/}
 
