@@ -42,85 +42,6 @@ if (b.gisRegion != null){
 
 double f_selectGISRegion(double clickx,double clicky)
 {/*ALCODESTART::1696863329251*/
-if (b_addCustomSolarfarm || b_addCustomWindfarm || b_addCustomGridBattery) {
-    if (v_customEALatitude == 0 && v_customEALongitude == 0) {
-        // Step 1: Set location
-        v_customEALatitude = clickx; // Assuming clickx is lat or lon depending on map orientation
-        v_customEALongitude = clicky; 
-        traceln("Location set. Now click on a transformer (GridNode) to connect the energy asset.");
-        f_deselectPreviousSelect();
-        return;
-    } else {
-        // Step 2: Select transformer
-        GridNode clickedGN = null;
-        for (GridNode GN : energyModel.pop_gridNodes) {
-            if (GN.gisRegion != null && GN.gisRegion.contains(clickx, clicky) && GN.gisRegion.isVisible()) {
-                clickedGN = GN;
-                break;
-            }
-        }
-        
-        if (clickedGN != null) {
-        	if (b_addCustomSolarfarm){
-            	f_addCustomSolarfarm(v_customEALatitude, v_customEALongitude, clickedGN);
-            	b_addCustomSolarfarm = false;
-            } else if (b_addCustomWindfarm){
-            	f_addCustomWindfarm(v_customEALatitude, v_customEALongitude, clickedGN);
-            	b_addCustomWindfarm = false;
-            } else if (b_addCustomGridBattery){
-            	f_addCustomGridBattery(v_customEALatitude, v_customEALongitude, clickedGN);
-            	b_addCustomGridBattery = false;
-            }
-            v_customEALatitude = 0;
-            v_customEALongitude = 0;
-            return;
-        } else {
-            traceln("Please click on a valid transformer (GridNode).");
-            return;
-        }
-    }
-}
-
-if (b_removeCustomEA) {
-	// Group all GIS objects to check for the click
-    List<GIS_Object> allGISObjects = new ArrayList<>();
-    for(GIS_Building b : energyModel.pop_GIS_Buildings) {
-    	allGISObjects.add(b);
-    }
-    for(GIS_Object object : energyModel.pop_GIS_Objects){
-    	allGISObjects.add(object);
-    }
-    for (GIS_Object GISObject : allGISObjects) {
-        if (GISObject.gisRegion != null && GISObject.gisRegion.contains(clickx, clicky) && GISObject.gisRegion.isVisible()) {
-            if (GISObject.c_containedGridConnections.size() > 0) {
-                GridConnection gc = GISObject.c_containedGridConnections.get(0);
-                
-                // Only allow deletion of specific energy asset types
-                if (gc instanceof GCEnergyProduction || gc instanceof GCGridBattery) {
-                    f_removeCustomEA(gc);
-                    b_removeCustomEA = false; // Reset mode after deletion
-                    traceln("Removed the energy asset: " + gc.p_gridConnectionID);
-                    return;
-                }
-            }
-        }
-    }
-    // If the user clicks elsewhere, cancel the deletion mode
-    b_removeCustomEA = false;
-    traceln("Deletion mode cancelled.");
-    return;
-    
-    /*GCEnergyProduction clickedGCEnergyProduction = null;
-    GCGridBattery clickedGCGridBattery = null;
-    for (GridNode GN : energyModel.pop_gridNodes) {
-        if (GN.gisRegion != null && GN.gisRegion.contains(clickx, clicky) && GN.gisRegion.isVisible()) {
-            clickedGN = GN;
-            break;
-        }
-    }
-    traceln("Removed the energy asset: ");*/
-}
-
 //After a click, reset previous clicked building/gridNode colors and text
 ArrayList<GIS_Object> buildingsConnectedToSelectedBuildingsList = new ArrayList<>();
 
@@ -2834,16 +2755,32 @@ uI_Tabs.add_pop_tabElectricity();
 uI_Tabs.add_pop_tabHeating();
 uI_Tabs.add_pop_tabMobility();
 
+tabElectricity tabElec = (tabElectricity) uI_Tabs.pop_tabElectricity.get(0);
+if (settings.selectedElectricityTabPages() != null && !settings.selectedElectricityTabPages().isEmpty()) {
+	tabElec.f_initializeElectricityPages(settings.selectedElectricityTabPages());
+} else {
+	// Fallback: use project_type for backwards compatibility
+	if (project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
+		tabElec.f_initializeElectricityPages(new ArrayList<>(java.util.Arrays.asList(
+			OL_ElectricityTabPages.HOUSEHOLDS, 
+			OL_ElectricityTabPages.COLLECTIVE
+		)));
+	} else {
+		tabElec.f_initializeElectricityPages(new ArrayList<>(java.util.Arrays.asList(
+			OL_ElectricityTabPages.COMPANIES, 
+			OL_ElectricityTabPages.COLLECTIVE
+		)));
+	}
+}
+
 // Group visibilities
 // When using an extension of a generic tab don't forget to typecast it!
 if (project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
-	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_ResidentialArea().setVisible(true);
 	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersResidentialArea().setVisible(true);
 	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGr_mobilitySliders_residential().setVisible(true);
 }
 else {
 	uI_Tabs.add_pop_tabEHub();
-	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_Businesspark().setVisible(true);
 	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersCompanies().setVisible(true);
 	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGr_mobilitySliders_default().setVisible(true);
 	((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
@@ -3334,22 +3271,22 @@ double f_setResidentialScenario_Current()
 tabElectricity tabElec = uI_Tabs.pop_tabElectricity.get(0);
 
 double pv_pct = p_residentialScenario_Current.getHousesWithPV_pct();
-tabElec.sl_householdPVResidentialArea_pct.setValue(roundToInt(pv_pct), true);
+tabElec.sl_householdRooftopPV_pct.setValue(roundToInt(pv_pct), true);
 
 double battery_pct = p_residentialScenario_Current.getPvHousesWithBattery_pct();
-tabElec.sl_householdBatteriesResidentialArea_pct.setValue(roundToInt(battery_pct), true);
+tabElec.sl_householdBatteries_pct.setValue(roundToInt(battery_pct), true);
 
 //Electric cooking
 double cooking_pct = p_residentialScenario_Current.getCooking_pct();
-tabElec.sl_householdElectricCookingResidentialArea_pct.setValue(roundToInt(cooking_pct), true);
+tabElec.sl_householdElectricCooking_pct.setValue(roundToInt(cooking_pct), true);
 
 //Consumption growth
 double electricityDemandIncrease_pct = p_residentialScenario_Current.getElectricityDemandIncrease_pct();
-tabElec.sl_electricityDemandIncreaseResidentialArea_pct.setValue(roundToInt(electricityDemandIncrease_pct), true);
+tabElec.sl_householdElectricityDemandIncrease_pct.setValue(roundToInt(electricityDemandIncrease_pct), true);
 
 //Gridbatteries
 double averageNeighbourhoodBatterySize_kWh = p_residentialScenario_Current.getAverageNeighbourhoodBatterySize_kWh();
-tabElec.sl_gridBatteriesResidentialArea_kWh.setValue(averageNeighbourhoodBatterySize_kWh, true);
+tabElec.sl_gridBatteries_kWh.setValue(averageNeighbourhoodBatterySize_kWh, true);
 
 ////Heating
 tabHeating tabHeat = uI_Tabs.pop_tabHeating.get(0);
@@ -3438,23 +3375,24 @@ p_residentialScenario_Current = new J_SliderSettings_Residential();
 if(uI_Tabs.pop_tabElectricity.size() > 0){
 	tabElectricity tabElec = uI_Tabs.pop_tabElectricity.get(0);
 	
-	double housesWithPV_pct = tabElec.sl_householdPVResidentialArea_pct.getValue();
+	//Rooftop PV
+	double housesWithPV_pct = tabElec.sl_householdRooftopPV_pct.getValue();
 	p_residentialScenario_Current.setHousesWithPV_pct(housesWithPV_pct);
 	
-	double pvHousesWithBattery_pct = tabElec.sl_householdBatteriesResidentialArea_pct.getValue();
+	//Home batteries
+	double pvHousesWithBattery_pct = tabElec.sl_householdBatteries_pct.getValue();
 	p_residentialScenario_Current.setPvHousesWithBattery_pct(pvHousesWithBattery_pct);
 	
-	
 	//Electric cooking
-	double cooking_pct = tabElec.sl_householdElectricCookingResidentialArea_pct.getValue();
+	double cooking_pct = tabElec.sl_householdElectricCooking_pct.getValue();
 	p_residentialScenario_Current.setCooking_pct(cooking_pct);
 	
 	//Consumption growth
-	double electricityDemandIncrease_pct = tabElec.sl_electricityDemandIncreaseResidentialArea_pct.getValue();
+	double electricityDemandIncrease_pct = tabElec.sl_householdElectricityDemandIncrease_pct.getValue();
 	p_residentialScenario_Current.setElectricityDemandIncrease_pct(electricityDemandIncrease_pct);
 	
 	//Gridbatteries
-	double averageNeighbourhoodBatterySize_kWh = tabElec.sl_gridBatteriesResidentialArea_kWh.getValue();
+	double averageNeighbourhoodBatterySize_kWh = tabElec.sl_gridBatteries_kWh.getValue();
 	p_residentialScenario_Current.setAverageNeighbourhoodBatterySize_kWh(averageNeighbourhoodBatterySize_kWh);
 }
 
@@ -3838,265 +3776,5 @@ if(settings.resultsUIRadioButtonSetup() != null){
 	}
 }
 return loadedChartTypes_Energy;
-/*ALCODEEND*/}
-
-double f_addCustomSolarfarm(double lat,double lon,GridNode gn)
-{/*ALCODESTART::1777385973745*/
-String id = "Custom_Solarfarm_" + v_customSolarfarmCounter++;
-
-// 0. Create an owner for the solar farm
-ConnectionOwner owner = energyModel.add_pop_connectionOwners();
-owner.set_p_actorID(id + "_owner");
-owner.set_p_connectionOwnerType(OL_ConnectionOwnerType.SOLARFARM_OP);
-owner.b_dataSharingAgreed = true;
-owner.f_initialize();
-
-// 1. Create the GCEnergyProduction agent
-GCEnergyProduction solarpark = energyModel.add_EnergyProductionSites();
-solarpark.set_p_gridConnectionID(id);
-solarpark.set_p_ownerID(owner.p_actorID);
-solarpark.set_p_owner(owner);
-solarpark.p_parentNodeElectricID = gn.p_gridNodeID;
-solarpark.p_isSliderGC = true; // Allow slider to affect it
-
-// 2. Set capacity (default 1 hectare equivalent)
-double defaultCapacity_kW = energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
-solarpark.v_liveConnectionMetaData.setCapacities_kW(0, defaultCapacity_kW, defaultCapacity_kW);
-solarpark.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
-
-// 3. Initialize GridConnection internals and set active
-solarpark.f_initialize(energyModel.p_timeParameters);
-solarpark.f_setActive(true, energyModel.p_timeVariables);
-
-// 4. Create the Energy Asset
-J_EAProduction pvAsset = new J_EAProduction(solarpark, OL_EnergyAssetType.PHOTOVOLTAIC, "Custom PV", OL_EnergyCarriers.ELECTRICITY, defaultCapacity_kW, energyModel.p_timeParameters, energyModel.pp_PVProduction35DegSouth_fr);
-
-// 5. Create the GIS Object / Polygon
-GIS_Object area = energyModel.add_pop_GIS_Objects();
-area.p_id = id;
-area.p_GISObjectType = OL_GISObjectType.SOLARFARM;
-
-// Create a simple square polygon around the lat/lon (approx 100x100m)
-double offset = 0.0001;
-double[] polyCoords = new double[]{
-    lat + offset, lon - offset,
-    lat + offset, lon + offset,
-    lat - offset, lon + offset,
-    lat - offset, lon - offset
-};
-area.gisRegion = f_createGISObject(polyCoords);
-
-area.c_containedGridConnections.add(solarpark);
-solarpark.c_connectedGISObjects.add(area);
-
-// Style it
-area.set_p_defaultFillColor(v_solarParkColor);
-area.set_p_defaultLineColor(v_solarParkLineColor);
-area.set_p_defaultLineWidth(v_energyAssetLineWidth);
-f_styleAreas(area);
-
-// 6. Update Collections
-c_customSolarfarms.add(solarpark);
-
-// Get the active instance of tabElectricity
-if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
-    tabElectricity tabElec = uI_Tabs.pop_tabElectricity.get(0);
-    tabElec.c_electricityTabEASliderGCs.add(solarpark);
-    tabElec.f_updateSliders_Electricity();
-}
-traceln("Successfully added custom solar farm at " + lat + ", " + lon + " connected to " + gn.p_gridNodeID);
-/*ALCODEEND*/}
-
-double f_removeCustomEA(GridConnection gc)
-{/*ALCODESTART::1777386082596*/
-// 0. Gracefully detach from the grid totals and aggregators
-gc.f_setActive(false, energyModel.p_timeVariables);
-
-// 1. Remove Energy Assets
-for(J_EA ea : new ArrayList<>(gc.c_energyAssets)) {
-    ea.removeEnergyAsset();
-}
-
-// 2. Remove GIS Object
-for (GIS_Object obj : new ArrayList<>(gc.c_connectedGISObjects)) {
-    obj.gisRegion.setVisible(false);
-    energyModel.remove_pop_GIS_Objects(obj);
-}
-
-// 3. Remove Owner
-if (gc.p_owner != null) {
-    energyModel.remove_pop_connectionOwners(gc.p_owner);
-}
-
-// 4. Remove from collections
-energyModel.c_pausedGridConnections.remove(gc);
-if (gc instanceof GCEnergyProduction) {
-	energyModel.remove_EnergyProductionSites((GCEnergyProduction)gc);
-	if(c_customSolarfarms.contains((GCEnergyProduction)gc)){
-		c_customSolarfarms.remove(gc);
-		//v_customSolarfarmCounter--;
-	}
-	else if(c_customWindfarms.contains((GCEnergyProduction)gc)){
-		c_customWindfarms.remove(gc);
-		//v_customWindfarmCounter--;
-	}
-} else if (gc instanceof GCGridBattery) {
-    energyModel.remove_GridBatteries((GCGridBattery)gc);
-    c_customGridBatteries.remove((GCGridBattery)gc);
-    //v_customGridBatteryCounter--;
-}
-
-
-// 5. Update the active instance of tabElectricity and Refresh UI
-if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
-    tabElectricity tabElec = uI_Tabs.pop_tabElectricity.get(0);
-    tabElec.c_electricityTabEASliderGCs.remove(gc);
-    tabElec.f_updateSliders_Electricity();
-}
-
-// 4. Refresh UI
-f_deselectPreviousSelect();
-/*ALCODEEND*/}
-
-double f_addCustomWindfarm(double lat,double lon,GridNode gn)
-{/*ALCODESTART::1777406438989*/
-String id = "Custom_Windfarm_" + v_customWindfarmCounter++;
-
-// 0. Create an owner for the solar farm
-ConnectionOwner owner = energyModel.add_pop_connectionOwners();
-owner.set_p_actorID(id + "_owner");
-owner.set_p_connectionOwnerType(OL_ConnectionOwnerType.WINDFARM_OP);
-owner.b_dataSharingAgreed = true;
-owner.f_initialize();
-
-// 1. Create the GCEnergyProduction agent
-GCEnergyProduction windpark = energyModel.add_EnergyProductionSites();
-windpark.set_p_gridConnectionID(id);
-windpark.set_p_ownerID(owner.p_actorID);
-windpark.set_p_owner(owner);
-windpark.p_parentNodeElectricID = gn.p_gridNodeID;
-windpark.p_isSliderGC = true; // Allow slider to affect it
-
-// 2. Set capacity
-double defaultCapacity_kW = 100;
-windpark.v_liveConnectionMetaData.setCapacities_kW(0, defaultCapacity_kW, defaultCapacity_kW);
-windpark.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
-
-// 3. Initialize GridConnection internals and set active
-windpark.f_initialize(energyModel.p_timeParameters);
-windpark.f_setActive(true, energyModel.p_timeVariables);
-
-// 4. Create the Energy Asset
-J_EAProduction windAsset = new J_EAProduction(windpark, OL_EnergyAssetType.WINDMILL, "Custom Windpark", OL_EnergyCarriers.ELECTRICITY, defaultCapacity_kW, energyModel.p_timeParameters, energyModel.pp_windProduction_fr);
-
-// 5. Create the GIS Object / Polygon
-GIS_Object area = energyModel.add_pop_GIS_Objects();
-area.p_id = id;
-area.p_GISObjectType = OL_GISObjectType.WINDFARM;
-
-// Create a simple square polygon around the lat/lon (approx 100x100m)
-double offset = 0.0001;
-double[] polyCoords = new double[]{
-    lat + offset, lon - offset,
-    lat + offset, lon + offset,
-    lat - offset, lon + offset,
-    lat - offset, lon - offset
-};
-area.gisRegion = f_createGISObject(polyCoords);
-
-area.c_containedGridConnections.add(windpark);
-windpark.c_connectedGISObjects.add(area);
-
-// Style it
-area.set_p_defaultFillColor(v_windFarmColor);
-area.set_p_defaultLineColor(v_windFarmLineColor);
-area.set_p_defaultLineWidth(v_energyAssetLineWidth);
-f_styleAreas(area);
-
-// 6. Update Collections
-c_customWindfarms.add(windpark);
-
-// Get the active instance of tabElectricity
-if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
-    tabElectricity tabElec = uI_Tabs.pop_tabElectricity.get(0);
-    tabElec.c_electricityTabEASliderGCs.add(windpark);
-    tabElec.f_updateSliders_Electricity();
-}
-traceln("Successfully added custom wind farm at " + lat + ", " + lon + " connected to " + gn.p_gridNodeID);
-/*ALCODEEND*/}
-
-double f_addCustomGridBattery(double lat,double lon,GridNode gn)
-{/*ALCODESTART::1777406997338*/
-String id = "Custom_Grid_Battery_" + v_customGridBatteryCounter++;
-
-// 0. Create an owner for the solar farm
-ConnectionOwner owner = energyModel.add_pop_connectionOwners();
-owner.set_p_actorID(id + "_owner");
-owner.set_p_connectionOwnerType(OL_ConnectionOwnerType.BATTERY_OP);
-owner.b_dataSharingAgreed = true;
-owner.f_initialize();
-
-// 1. Create the GCGridBattery agent
-GCGridBattery battery = energyModel.add_GridBatteries();
-battery.set_p_gridConnectionID(id);
-battery.set_p_ownerID(owner.p_actorID);
-battery.set_p_owner(owner);
-battery.p_parentNodeElectricID = gn.p_gridNodeID;
-battery.p_isSliderGC = true; // Allow slider to affect it
-
-// 2. Set capacity
-double defaultCapacity_kW = 100;
-double defaultStorageCapacity_kWh = 2*defaultCapacity_kW;
-battery.v_liveConnectionMetaData.setCapacities_kW(defaultCapacity_kW, defaultCapacity_kW, defaultCapacity_kW);
-battery.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
-
-// 3. Initialize GridConnection internals and set active
-battery.f_initialize(energyModel.p_timeParameters);
-battery.f_setActive(true, energyModel.p_timeVariables);
-
-// 4. Create the Energy Asset
-J_EAStorageElectric batteryAsset = new J_EAStorageElectric(battery, defaultCapacity_kW, defaultStorageCapacity_kWh, 0.5, energyModel.p_timeParameters);
-
-//Pick default operation mode management class
-I_BatteryManagement batteryAlgorithm = new J_BatteryManagementPeakShaving(battery, energyModel.p_timeParameters);
-((J_BatteryManagementPeakShaving)batteryAlgorithm).setTarget(gn);
-
-//Set management
-battery.f_setBatteryManagement(batteryAlgorithm);
-		
-// 5. Create the GIS Object / Polygon
-GIS_Object area = energyModel.add_pop_GIS_Objects();
-area.p_id = id;
-area.p_GISObjectType = OL_GISObjectType.BATTERY;
-
-// Create a simple square polygon around the lat/lon
-double offset = 0.0001;
-double[] polyCoords = new double[]{
-    lat + offset, lon - offset,
-    lat + offset, lon + offset,
-    lat - offset, lon + offset,
-    lat - offset, lon - offset
-};
-area.gisRegion = f_createGISObject(polyCoords);
-
-area.c_containedGridConnections.add(battery);
-battery.c_connectedGISObjects.add(area);
-
-// Style it
-area.set_p_defaultFillColor(v_batteryColor);
-area.set_p_defaultLineColor(v_batteryLineColor);
-area.set_p_defaultLineWidth(v_energyAssetLineWidth);
-f_styleAreas(area);
-
-// 6. Update Collections
-c_customGridBatteries.add(battery);
-
-// Get the active instance of tabElectricity
-if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
-    tabElectricity tabElec = uI_Tabs.pop_tabElectricity.get(0);
-    tabElec.c_electricityTabEASliderGCs.add(battery);
-    tabElec.f_updateSliders_Electricity();
-}
-traceln("Successfully added custom grid battery at " + lat + ", " + lon + " connected to " + gn.p_gridNodeID);
 /*ALCODEEND*/}
 

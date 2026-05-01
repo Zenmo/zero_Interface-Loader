@@ -1,60 +1,62 @@
+// Page navigation
+public ShapeGroup getGroupPageIndicator() {
+	return this.gr_pageIndicator;
+}
+public List<OL_ElectricityTabPages> getLoadedPages() {
+	return this.c_loadedPages;
+}
+public int getCurrentPageIndex() {
+	return this.v_currentPageIndex;
+}
+
 // Default Sliders
-public ShapeGroup getGroupElectricityDemandSliders() {
-	return this.gr_electricitySliders_default;
+public ShapeGroup getGroupElectricityDemandSliders_Households() {
+	return this.gr_electricitySliders_households;
 }
 
-public ShapeGroup getGroupElectricityDemandSliders_Businesspark() {
-	return this.gr_electricitySliders_businesspark;
+public ShapeGroup getGroupElectricityDemandSliders_Companies() {
+	return this.gr_electricitySliders_companies;
 }
 
-public ShapeGroup getGroupElectricityDemandSliders_ResidentialArea() {
-	return this.gr_electricitySliders_residential;
-}
-public ShapeSlider getSliderElectricityDemandReduction_pct() {
-	return this.sl_electricityDemandReduction_pct;
+public ShapeGroup getGroupElectricityDemandSliders_Collective() {
+	return this.gr_electricitySliders_collective;
 }
 
-public ShapeSlider getSliderRooftopPVCompanies_pct(){
-	return this.sl_rooftopPVCompanies_pct;
+//Households
+public ShapeSlider getSliderHouseholdRooftopPV_pct(){
+	return this.sl_householdRooftopPV_pct;
 }
 
+public ShapeSlider getSliderHouseholdBatteries_pct(){
+	return this.sl_householdBatteries_pct;
+}
+
+public ShapeSlider getSliderHouseholdElectricCooking_pct(){
+	return this.sl_householdElectricCooking_pct;
+}
+
+public ShapeSlider getSliderHouseholdElectricityDemandIncrease_pct(){
+	return this.sl_householdElectricityDemandIncrease_pct;
+}
+
+//Companies
+public ShapeSlider getSliderCompaniesElectricityDemandReduction_pct() {
+	return this.sl_companiesElectricityDemandReduction_pct;
+}
+
+public ShapeSlider getSliderCompaniesRooftopPV_pct(){
+	return this.sl_companiesRooftopPV_pct;
+}
+
+//Collective
 public ShapeSlider getSliderLargeScalePV_ha(){
 	return this.sl_largeScalePV_ha;
 }
 
-public ShapeSlider getSliderLargeScalePV_ha_Businesspark(){
-	return this.sl_largeScalePV_ha_Businesspark;
-}
-
-public ShapeSlider getWindSlider(){
+public ShapeSlider getSliderLargeScaleWind(){
 	return this.sl_largeScaleWind_MW;
 }
 
-public ShapeSlider getSl_rooftopPVCompanies_pct_Businesspark(){
-	return this.sl_rooftopPVCompanies_pct_Businesspark;
-}
-
-//Households/Residential Area
-public ShapeSlider getSliderRooftopPVHouses_pct(){
-	return this.sl_rooftopPVHouses_pct;
-}
-
-public ShapeSlider getSliderHouseholdPVResidentialArea_pct(){
-	return this.sl_householdPVResidentialArea_pct;
-}
-
-public ShapeSlider getSliderHouseholdBatteriesResidentialArea_pct(){
-	return this.sl_householdBatteriesResidentialArea_pct;
-}
-
-public ShapeSlider getSliderHouseholdElectricCookingResidentialArea_pct(){
-	return this.sl_householdElectricCookingResidentialArea_pct;
-}
-
-public ShapeSlider getSliderElectricityDemandIncreaseResidentialArea_pct(){
-	return this.sl_electricityDemandIncreaseResidentialArea_pct;
-}
-
-public ShapeSlider getSliderGridBatteriesResidentialArea_kWh(){
-	return this.sl_gridBatteriesResidentialArea_kWh;
+public ShapeSlider getSliderGridBatteries(){
+	return this.sl_gridBatteries_kWh;
 }

@@ -66,13 +66,31 @@ uI_Tabs.gr_energyDemandSettings.setX(zero_Interface.uI_Tabs.gr_energyDemandSetti
 
 // Group visibilities
 // When using an extension of a generic tab don't forget to typecast it!
+tabElectricity tabElec = (tabElectricity) uI_Tabs.pop_tabElectricity.get(0);
+if (zero_Interface.settings.selectedElectricityTabPages() != null && !zero_Interface.settings.selectedElectricityTabPages().isEmpty()) {
+	tabElec.f_initializeElectricityPages(zero_Interface.settings.selectedElectricityTabPages());
+} else {
+	// Fallback: use project_type for backwards compatibility
+	if (zero_Interface.project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
+		tabElec.f_initializeElectricityPages(new ArrayList<>(java.util.Arrays.asList(
+			OL_ElectricityTabPages.HOUSEHOLDS, 
+			OL_ElectricityTabPages.COLLECTIVE
+		)));
+	} else {
+		tabElec.f_initializeElectricityPages(new ArrayList<>(java.util.Arrays.asList(
+			OL_ElectricityTabPages.COMPANIES, 
+			OL_ElectricityTabPages.COLLECTIVE
+		)));
+	}
+}
+
 if (zero_Interface.project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
-	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_ResidentialArea().setVisible(true);
+	//((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_ResidentialArea().setVisible(true);
 	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersResidentialArea().setVisible(true);
 	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGr_mobilitySliders_residential().setVisible(true);
 }
 else {
-	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_Businesspark().setVisible(true);
+	//((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_Businesspark().setVisible(true);
 	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersCompanies().setVisible(true);
 	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGr_mobilitySliders_default().setVisible(true);
 }

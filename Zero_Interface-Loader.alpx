@@ -100,8 +100,23 @@
 			</OptionList>
 			<OptionList>
 				<Id>1667742453792</Id>
-				<Name><![CDATA[OL_UNUSED3]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Name><![CDATA[OL_ElectricityTabPages]]></Name>
+				<Option>
+					<Id>1777550799737</Id>
+					<Name><![CDATA[HOUSEHOLDS]]></Name>
+				</Option>
+				<Option>
+					<Id>1777550865243</Id>
+					<Name><![CDATA[COMPANIES]]></Name>
+				</Option>
+				<Option>
+					<Id>1777551005223</Id>
+					<Name><![CDATA[COLLECTIVE]]></Name>
+				</Option>
+				<Option>
+					<Id>1777551085629</Id>
+					<Name><![CDATA[CUSTOM]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1675025163072</Id>

@@ -304,3 +304,27 @@ gridConnections.addAll(v_pausedSliderGridConnections);
 return gridConnections;
 /*ALCODEEND*/}
 
+List<GCGridBattery> f_getActiveSliderGridConnections_gridBatteries()
+{/*ALCODESTART::1777636800829*/
+List<GCGridBattery> gridBatteryGridConnections = new ArrayList<>();
+
+for(GridConnection GC : v_activeSliderGridConnections){
+	if(GC instanceof GCGridBattery){
+		gridBatteryGridConnections.add((GCGridBattery)GC);		
+	}
+}
+return gridBatteryGridConnections;
+/*ALCODEEND*/}
+
+List<GCEnergyProduction> f_getActiveSliderGridConnections_production()
+{/*ALCODESTART::1777636872212*/
+List<GCEnergyProduction> productionGridConnections = new ArrayList<>();
+
+for(GridConnection GC : v_activeSliderGridConnections){
+	if(GC instanceof GCEnergyProduction){
+		productionGridConnections.add((GCEnergyProduction)GC);
+	}
+}
+return productionGridConnections;
+/*ALCODEEND*/}
+

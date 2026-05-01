@@ -147,7 +147,7 @@
 		<Id>1754922546986</Id>
 		<Name><![CDATA[f_getAllSliderGridConnections_gridBatteries]]></Name>
 		<X>540</X>
-		<Y>320</Y>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -163,7 +163,7 @@
 		<Id>1754922547989</Id>
 		<Name><![CDATA[f_getSliderGridConnections_chargers]]></Name>
 		<X>550</X>
-		<Y>400</Y>
+		<Y>410</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -179,7 +179,7 @@
 		<Id>1754922591622</Id>
 		<Name><![CDATA[f_getAllSliderGridConnections_production]]></Name>
 		<X>540</X>
-		<Y>350</Y>
+		<Y>340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -243,7 +243,7 @@
 		<Id>1755013777878</Id>
 		<Name><![CDATA[f_getPausedSliderGridConnections_chargers]]></Name>
 		<X>550</X>
-		<Y>420</Y>
+		<Y>430</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -279,7 +279,7 @@
 		<Id>1758278620331</Id>
 		<Name><![CDATA[f_getAllSliderGridConnections_chargers]]></Name>
 		<X>540</X>
-		<Y>380</Y>
+		<Y>390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -328,6 +328,38 @@
 		<Name><![CDATA[f_getAllSliderGridConnections_all]]></Name>
 		<X>530</X>
 		<Y>130</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>List&lt;GCGridBattery&gt;</ReturnType>
+		<Id>1777636800829</Id>
+		<Name><![CDATA[f_getActiveSliderGridConnections_gridBatteries]]></Name>
+		<X>560</X>
+		<Y>310</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>List&lt;GCEnergyProduction&gt;</ReturnType>
+		<Id>1777636872212</Id>
+		<Name><![CDATA[f_getActiveSliderGridConnections_production]]></Name>
+		<X>560</X>
+		<Y>360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
