@@ -1,73 +1,74 @@
-// Default Sliders
-public ShapeGroup getGroupHeatDemandSliders() {
-	return this.gr_heatingSliders_default;
+// Page navigation
+public ShapeGroup getGroupPageIndicator() {
+	return this.gr_pageIndicator;
+}
+public List<OL_UITabPages> getLoadedPages() {
+	return this.c_loadedPages;
+}
+public int getCurrentPageIndex() {
+	return this.v_currentPageIndex;
 }
 
-public ShapeSlider getSliderHeatDemandReductionCompanies_pct() { 
-	return this.sl_heatDemandReductionCompanies_pct;
+// Slider groups
+public ShapeGroup getGroupHeatDemandSliders_Households() {
+	return this.gr_heatingSliders_households;
 }
 
-public ShapeSlider getSliderGasBurnerCompanies_pct() { 
-	return this.sl_gasBurnerCompanies_pct;
-}
-
-public ShapeSlider getSliderElectricHeatPumpCompanies_pct() { 
-	return this.sl_electricHeatPumpCompanies_pct;
-}
-
-public ShapeSlider getSliderHeatDemandReductionHouseholds_pct() { 
-	return this.sl_heatDemandReductionHouseholds_pct;
-}
-
-public ShapeSlider getSliderGasBurnerHouseholds_pct() { 
-	return this.sl_gasBurnerHouseholds_pct;
-}
-
-public ShapeSlider getSliderElectricHeatPumpHouseholds_pct() { 
-	return this.sl_electricHeatPumpHouseholds_pct;
+public ShapeGroup getGroupHeatDemandSliders_Companies() {
+	return this.gr_heatingSliders_companies;
 }
 
 // Residential Tab Sliders
-public ShapeGroup getGroupHeatDemandSlidersResidentialArea() {
-	return this.gr_heatingSliders_residential;
+public ShapeSlider getSliderHouseholdGasBurner_pct() { 
+	return this.sl_householdGasBurner_pct;
 }
 
-public ShapeSlider getSliderHeatDemandSlidersResidentialAreaHouseholdsGasBurner_pct() { 
-	return this.sl_householdGasBurnerResidentialArea_pct;
-}
-public ShapeSlider getSl_householdHybridHeatpumpResidentialArea() { 
-	return this.sl_householdHybridHeatpumpResidentialArea;
+public ShapeSlider getSliderHouseholdHybridHeatpump_pct() { 
+	return this.sl_householdHybridHeatpump_pct;
 }
 
-public ShapeSlider getSliderHeatDemandSlidersResidentialAreaHouseholdsElectricHeatPump_pct() { 
-	return this.sl_householdElectricHeatPumpResidentialArea_pct;
+public ShapeSlider getSliderHouseholdElectricHeatPump_pct() { 
+	return this.sl_householdElectricHeatPump_pct;
+}
+
+public ShapeSlider getSliderHouseholdAirco_pct() { 
+	return this.sl_householdAirco_pct;
+}
+
+public ShapeSlider getSliderHouseholdHeatDemandReduction_pct() { 
+	return this.sl_householdHeatDemandReduction_pct;
+}
+
+public ShapeSlider getSliderHouseholdRooftopPT_pct() { 
+	return this.sl_householdRooftopPT_pct;
 }
 
 // Company Tab Sliders
-public ShapeGroup getGroupHeatDemandSlidersCompanies() {
-	return this.gr_heatingSliders_businesspark;
+public ShapeSlider getSliderCompaniesHeatDemandReduction_pct() { 
+	return this.sl_companiesHeatDemandReduction_pct;
 }
 
-public ShapeSlider getSliderHeatDemandSlidersCompaniesHeatDemandReductionCompanies_pct() { 
-	return this.sl_heatDemandSlidersCompaniesHeatDemandReductionCompanies_pct;
+public ShapeSlider getSliderCompaniesGasBurner_pct() { 
+	return this.sl_companiesGasBurner_pct;
 }
 
-public ShapeSlider getSliderHeatDemandSlidersCompaniesGasBurnerCompanies_pct() { 
-	return this.sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct;
+public ShapeSlider getSliderCompaniesHybridHeatPump_pct() { 
+	return this.sl_companiesHybridHeatPump_pct;
 }
 
-public ShapeSlider getSliderHeatDemandSlidersCompaniesElectricHeatPumpCompanies_pct() { 
-	return this.sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct;
+public ShapeSlider getSliderCompaniesElectricHeatPump_pct() { 
+	return this.sl_companiesElectricHeatPump_pct;
 }
 
-public ShapeSlider getSl_heatingTypeSlidersCompaniesCustom_pct(){
-	return this.sl_heatingTypeSlidersCompaniesCustom_pct;
+public ShapeSlider getSliderCompaniesDistrictHeating_pct(){
+	return this.sl_companiesDistrictHeating_pct;
 }
 
-public ShapeSlider getSl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct(){
-	return this.sl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct;
+public ShapeSlider getSliderCompaniesEBoiler_pct(){
+	return this.sl_companiesEBoiler_pct;
 }
 
-public ShapeSlider getSl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct(){
-	return this.sl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct;
+public ShapeSlider getSliderCompaniesCustomHeating_pct(){
+	return this.sl_companiesCustom_pct;
 }
+

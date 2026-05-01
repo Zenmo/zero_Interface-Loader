@@ -2750,11 +2750,11 @@ double f_createUITabs_default()
 // Something like: tabElectricity.zero_Interface = loader_Project.zero_Interface;
 // No update to the pointer is needed for the generic tabs
 
-
 uI_Tabs.add_pop_tabElectricity();
 uI_Tabs.add_pop_tabHeating();
 uI_Tabs.add_pop_tabMobility();
 
+// Electricity tab
 tabElectricity tabElec = (tabElectricity) uI_Tabs.pop_tabElectricity.get(0);
 if (settings.selectedElectricityTabPages() != null && !settings.selectedElectricityTabPages().isEmpty()) {
 	tabElec.f_initializeElectricityPages(settings.selectedElectricityTabPages());
@@ -2762,27 +2762,46 @@ if (settings.selectedElectricityTabPages() != null && !settings.selectedElectric
 	// Fallback: use project_type for backwards compatibility
 	if (project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
 		tabElec.f_initializeElectricityPages(new ArrayList<>(java.util.Arrays.asList(
-			OL_ElectricityTabPages.HOUSEHOLDS, 
-			OL_ElectricityTabPages.COLLECTIVE
+			OL_UITabPages.HOUSEHOLDS, 
+			OL_UITabPages.COLLECTIVE
 		)));
 	} else {
 		tabElec.f_initializeElectricityPages(new ArrayList<>(java.util.Arrays.asList(
-			OL_ElectricityTabPages.COMPANIES, 
-			OL_ElectricityTabPages.COLLECTIVE
+			OL_UITabPages.COMPANIES, 
+			OL_UITabPages.COLLECTIVE
 		)));
 	}
 }
 
+// Heating tab
+tabHeating tabHeat = (tabHeating) uI_Tabs.pop_tabHeating.get(0);
+if (settings.selectedHeatingTabPages() != null && !settings.selectedHeatingTabPages().isEmpty()) {
+	tabHeat.f_initializeHeatingPages(settings.selectedHeatingTabPages());
+} else {
+	// Fallback: use project_type for backwards compatibility
+	if (project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
+		tabHeat.f_initializeHeatingPages(new ArrayList<>(java.util.Arrays.asList(OL_UITabPages.HOUSEHOLDS)));
+	} else {
+		tabHeat.f_initializeHeatingPages(new ArrayList<>(java.util.Arrays.asList(OL_UITabPages.COMPANIES)));
+	}
+}
+
+// Mobility tab
+tabMobility tabMob = (tabMobility) uI_Tabs.pop_tabMobility.get(0);
+if (settings.selectedMobilityTabPages() != null && !settings.selectedMobilityTabPages().isEmpty()) {
+	tabMob.f_initializeMobilityPages(settings.selectedMobilityTabPages());
+} else {
+	// Fallback: use project_type for backwards compatibility
+	if (project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
+		tabMob.f_initializeMobilityPages(new ArrayList<>(java.util.Arrays.asList(OL_UITabPages.HOUSEHOLDS)));
+	} else {
+		tabMob.f_initializeMobilityPages(new ArrayList<>(java.util.Arrays.asList(OL_UITabPages.COMPANIES)));
+	}
+}
 // Group visibilities
 // When using an extension of a generic tab don't forget to typecast it!
-if (project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
-	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersResidentialArea().setVisible(true);
-	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGr_mobilitySliders_residential().setVisible(true);
-}
-else {
+if (project_data.project_type() == OL_ProjectType.BUSINESSPARK) {
 	uI_Tabs.add_pop_tabEHub();
-	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersCompanies().setVisible(true);
-	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGr_mobilitySliders_default().setVisible(true);
 	((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
 }
 /*ALCODEEND*/}
@@ -3298,38 +3317,38 @@ boolean cb_householdHTDistrictHeatingActive = p_residentialScenario_Current.getC
 boolean cb_householdLTDistrictHeatingActive = p_residentialScenario_Current.getCb_householdLTDistrictHeatingActive();
 
 if(cb_householdHTDistrictHeatingActive || cb_householdLTDistrictHeatingActive){
-	tabHeat.sl_householdGasBurnerResidentialArea_pct.setValue(housesWithGasBurners_pct, false);
-	tabHeat.sl_householdHybridHeatpumpResidentialArea.setValue(housesWithHybridHeatpump_pct, false);
-	tabHeat.sl_householdElectricHeatPumpResidentialArea_pct.setValue(housesWithElectricHeatpump_pct, false);
+	tabHeat.sl_householdGasBurner_pct.setValue(housesWithGasBurners_pct, false);
+	tabHeat.sl_householdHybridHeatpump_pct.setValue(housesWithHybridHeatpump_pct, false);
+	tabHeat.sl_householdElectricHeatPump_pct.setValue(housesWithElectricHeatpump_pct, false);
 	if(cb_householdHTDistrictHeatingActive){
-		tabHeat.cb_householdHTDistrictHeatingResidentialArea.setSelected(cb_householdHTDistrictHeatingActive, false);
-		tabHeat.cb_householdLTDistrictHeatingResidentialArea.setSelected(cb_householdLTDistrictHeatingActive, true);
+		tabHeat.cb_householdHTDistrictHeating.setSelected(cb_householdHTDistrictHeatingActive, false);
+		tabHeat.cb_householdLTDistrictHeating.setSelected(cb_householdLTDistrictHeatingActive, true);
 	}
 	else if(cb_householdLTDistrictHeatingActive){
-		tabHeat.cb_householdHTDistrictHeatingResidentialArea.setSelected(cb_householdHTDistrictHeatingActive, false);
-		tabHeat.cb_householdLTDistrictHeatingResidentialArea.setSelected(cb_householdLTDistrictHeatingActive, true);
+		tabHeat.cb_householdHTDistrictHeating.setSelected(cb_householdHTDistrictHeatingActive, false);
+		tabHeat.cb_householdLTDistrictHeating.setSelected(cb_householdLTDistrictHeatingActive, true);
 	}
 }
 else{
-	tabHeat.sl_householdGasBurnerResidentialArea_pct.setValue(housesWithGasBurners_pct, true);
-	tabHeat.sl_householdHybridHeatpumpResidentialArea.setValue(housesWithHybridHeatpump_pct, true);
-	tabHeat.sl_householdElectricHeatPumpResidentialArea_pct.setValue(housesWithElectricHeatpump_pct, true);
-	tabHeat.cb_householdHTDistrictHeatingResidentialArea.setSelected(cb_householdHTDistrictHeatingActive, false);
-	tabHeat.cb_householdLTDistrictHeatingResidentialArea.setSelected(cb_householdLTDistrictHeatingActive, false);
+	tabHeat.sl_householdGasBurner_pct.setValue(housesWithGasBurners_pct, true);
+	tabHeat.sl_householdHybridHeatpump_pct.setValue(housesWithHybridHeatpump_pct, true);
+	tabHeat.sl_householdElectricHeatPump_pct.setValue(housesWithElectricHeatpump_pct, true);
+	tabHeat.cb_householdHTDistrictHeating.setSelected(cb_householdHTDistrictHeatingActive, false);
+	tabHeat.cb_householdLTDistrictHeating.setSelected(cb_householdLTDistrictHeatingActive, false);
 }
 
 
 //Houses with Airco
 double pctOfHousesWithAirco = p_residentialScenario_Current.getHousesWithAirco_pct();
-tabHeat.sl_householdAircoResidentialArea_pct.setValue(pctOfHousesWithAirco, true);
+tabHeat.sl_householdAirco_pct.setValue(pctOfHousesWithAirco, true);
 
 //Houses with better isolation
 double pctOfHousesWithImprovedInsulation = p_residentialScenario_Current.getHousesWithImprovedInsulation_pct();
-tabHeat.sl_householdHeatDemandReductionResidentialArea_pct.setValue(roundToInt(pctOfHousesWithImprovedInsulation), true);
+tabHeat.sl_householdHeatDemandReduction_pct.setValue(roundToInt(pctOfHousesWithImprovedInsulation), true);
 
 //PT
 double nbHousesWithPT_pct = p_residentialScenario_Current.getNbHousesWithPT_pct();
-tabHeat.sl_rooftopPTHouses_pct.setValue(roundToInt(nbHousesWithPT_pct), true);
+tabHeat.sl_householdRooftopPT_pct.setValue(roundToInt(nbHousesWithPT_pct), true);
 
 
 
@@ -3400,11 +3419,11 @@ if(uI_Tabs.pop_tabElectricity.size() > 0){
 if(uI_Tabs.pop_tabHeating.size() > 0){
 	tabHeating tabHeat = uI_Tabs.pop_tabHeating.get(0);
 	
-	double housesWithGasBurners_pct = tabHeat.sl_householdGasBurnerResidentialArea_pct.getValue();
-	double housesWithHybridHeatpump_pct = tabHeat.sl_householdHybridHeatpumpResidentialArea.getValue();
-	double housesWithElectricHeatpump_pct = tabHeat.sl_householdElectricHeatPumpResidentialArea_pct.getValue();
-	boolean cb_householdHTDistrictHeatingActive = tabHeat.cb_householdHTDistrictHeatingResidentialArea.isSelected();
-	boolean cb_householdLTDistrictHeatingActive = tabHeat.cb_householdLTDistrictHeatingResidentialArea.isSelected();
+	double housesWithGasBurners_pct = tabHeat.sl_householdGasBurner_pct.getValue();
+	double housesWithHybridHeatpump_pct = tabHeat.sl_householdHybridHeatpump_pct.getValue();
+	double housesWithElectricHeatpump_pct = tabHeat.sl_householdElectricHeatPump_pct.getValue();
+	boolean cb_householdHTDistrictHeatingActive = tabHeat.cb_householdHTDistrictHeating.isSelected();
+	boolean cb_householdLTDistrictHeatingActive = tabHeat.cb_householdLTDistrictHeating.isSelected();
 	
 	p_residentialScenario_Current.setHousesWithGasBurners_pct(housesWithGasBurners_pct);
 	p_residentialScenario_Current.setHousesWithHybridHeatpump_pct(housesWithHybridHeatpump_pct);
@@ -3414,15 +3433,15 @@ if(uI_Tabs.pop_tabHeating.size() > 0){
 	
 	
 	//Houses with Airco
-	double housesWithAirco_pct = tabHeat.sl_householdAircoResidentialArea_pct.getValue();
+	double housesWithAirco_pct = tabHeat.sl_householdAirco_pct.getValue();
 	p_residentialScenario_Current.setHousesWithAirco_pct(housesWithAirco_pct);
 	
 	//Houses with better isolation
-	double housesWithImprovedInsulation_pct = tabHeat.sl_householdHeatDemandReductionResidentialArea_pct.getValue();
+	double housesWithImprovedInsulation_pct = tabHeat.sl_householdHeatDemandReduction_pct.getValue();
 	p_residentialScenario_Current.setHousesWithImprovedInsulation_pct(housesWithImprovedInsulation_pct);
 	
 	//PT
-	double nbHousesWithPT_pct = tabHeat.sl_rooftopPTHouses_pct.getValue();
+	double nbHousesWithPT_pct = tabHeat.sl_householdRooftopPT_pct.getValue();
 	p_residentialScenario_Current.setNbHousesWithPT_pct(nbHousesWithPT_pct);
 }
 

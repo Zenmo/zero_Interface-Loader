@@ -2,14 +2,14 @@
 public ShapeGroup getGroupPageIndicator() {
 	return this.gr_pageIndicator;
 }
-public List<OL_ElectricityTabPages> getLoadedPages() {
+public List<OL_UITabPages> getLoadedPages() {
 	return this.c_loadedPages;
 }
 public int getCurrentPageIndex() {
 	return this.v_currentPageIndex;
 }
 
-// Default Sliders
+// Slider groups
 public ShapeGroup getGroupElectricityDemandSliders_Households() {
 	return this.gr_electricitySliders_households;
 }

@@ -1206,15 +1206,19 @@ v_totalNumberOfGhostVehicle_Cars = triple.getLeft();
 v_totalNumberOfGhostVehicle_Vans = triple.getMiddle();
 v_totalNumberOfGhostVehicle_Trucks = triple.getRight();
 
-
-if(gr_mobilitySliders_default.isVisible()){
-	f_updateMobilitySliders_default();
-}
-else if(gr_mobilitySliders_residential.isVisible()){
-	f_updateMobilitySliders_residential();
-}
-else{
-	f_updateMobilitySliders_custom();
+// Update all loaded pages
+for (OL_UITabPages page : c_loadedPages) {
+    switch (page) {
+        case HOUSEHOLDS:
+            f_updateMobilitySliders_residential();
+            break;
+        case COMPANIES:
+            f_updateMobilitySliders_default();
+            break;
+        case CUSTOM:
+            f_updateMobilitySliders_custom();
+            break;
+    }
 }
 /*ALCODEEND*/}
 
@@ -1778,5 +1782,81 @@ zero_Interface.f_resetSettings();
 double f_initializeTab_Mobility()
 {/*ALCODESTART::1764004906148*/
 //Use this function to initialize mobility tab settings at start of simulation
+/*ALCODEEND*/}
+
+double f_initializeMobilityPages(List<OL_UITabPages> selectedPages)
+{/*ALCODESTART::1777644430745*/
+// Store the page configuration
+c_loadedPages = new ArrayList<>(selectedPages);
+c_pageGroups = new ArrayList<>();
+
+// Map each page type to its ShapeGroup
+for (OL_UITabPages page : c_loadedPages) {
+    ShapeGroup group = f_getShapeGroupForPage(page);
+    if (group != null) {
+        c_pageGroups.add(group);
+    } else {
+        //throw new RuntimeException("No ShapeGroup found for electricity tab page: " + page);
+    }
+}
+// Show/hide page indicator based on number of pages
+if (c_loadedPages.size() <= 1) {
+    gr_pageIndicator.setVisible(false);
+} else {
+    gr_pageIndicator.setVisible(true);
+}
+// Navigate to the first page
+if (!c_loadedPages.isEmpty()) {
+    f_goToPage(0);
+}
+
+/*ALCODEEND*/}
+
+ShapeGroup f_getShapeGroupForPage(OL_UITabPages page)
+{/*ALCODESTART::1777644430771*/
+switch(page) {
+    case HOUSEHOLDS:
+        return gr_mobilitySliders_residential;
+    case COMPANIES:
+        return gr_mobilitySliders_default;
+    case CUSTOM:
+        //If you have a custom tab, override this function to return it here
+		traceln("Forgot to override the custom electricity tab");
+        return null;
+    default:
+        return null;
+}
+/*ALCODEEND*/}
+
+ShapeGroup f_goToPage(int pageIndex)
+{/*ALCODESTART::1777644430801*/
+for (ShapeGroup group : c_pageGroups) {
+    group.setVisible(false);
+}
+
+if (c_pageGroups.isEmpty()) return;
+
+v_currentPageIndex = pageIndex;
+c_pageGroups.get(v_currentPageIndex).setVisible(true); // Show the selected page group
+f_updatePageIndicator(); // Update the page indicator text
+/*ALCODEEND*/}
+
+ShapeGroup f_nextPage()
+{/*ALCODESTART::1777644430827*/
+if (c_loadedPages.isEmpty()) return;
+int nextIndex = (v_currentPageIndex + 1) % c_loadedPages.size();
+f_goToPage(nextIndex);
+/*ALCODEEND*/}
+
+ShapeGroup f_previousPage()
+{/*ALCODESTART::1777644430855*/
+if (c_loadedPages.isEmpty()) return;
+int prevIndex = (v_currentPageIndex - 1 + c_loadedPages.size()) % c_loadedPages.size();
+f_goToPage(prevIndex);
+/*ALCODEEND*/}
+
+ShapeGroup f_updatePageIndicator()
+{/*ALCODESTART::1777644430886*/
+t_pageIndicator.setText("Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPages.size());
 /*ALCODEEND*/}
 

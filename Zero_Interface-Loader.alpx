@@ -100,7 +100,7 @@
 			</OptionList>
 			<OptionList>
 				<Id>1667742453792</Id>
-				<Name><![CDATA[OL_ElectricityTabPages]]></Name>
+				<Name><![CDATA[OL_UITabPages]]></Name>
 				<Option>
 					<Id>1777550799737</Id>
 					<Name><![CDATA[HOUSEHOLDS]]></Name>

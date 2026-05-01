@@ -281,7 +281,7 @@
 				<Id>1728384392430</Id>
 				<Name><![CDATA[txt_companiesRooftopPVCompanies_pct]]></Name>
 				<X>245</X>
-				<Y>100</Y>
+				<Y>90</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -308,7 +308,7 @@
 				<Id>1728384392432</Id>
 				<Name><![CDATA[sl_companiesRooftopPV_pct]]></Name>
 				<X>260</X>
-				<Y>95</Y>
+				<Y>85</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -340,7 +340,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<Id>1728384392434</Id>
 				<Name><![CDATA[txt_companiesRooftopPVDescription]]></Name>
 				<X>20</X>
-				<Y>100</Y>
+				<Y>90</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -366,7 +366,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<Id>1746091438857</Id>
 				<Name><![CDATA[i_companiesRooftopPV]]></Name>
 				<X>180</X>
-				<Y>100</Y>
+				<Y>88</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -393,7 +393,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<Id>1746091438909</Id>
 				<Name><![CDATA[i_companiesElectricityReduction]]></Name>
 				<X>180</X>
-				<Y>60</Y>
+				<Y>58</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -445,7 +445,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<Id>1754985531354</Id>
 				<Name><![CDATA[txt_companiesCurtailmentDescription]]></Name>
 				<X>20</X>
-				<Y>140</Y>
+				<Y>120</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -471,8 +471,8 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1754985531358</Id>
 				<Name><![CDATA[cb_companiesCurtailment]]></Name>
-				<X>300</X>
-				<Y>132</Y>
+				<X>302</X>
+				<Y>112</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -497,7 +497,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<Id>1754985531361</Id>
 				<Name><![CDATA[i_companiesCurtailment]]></Name>
 				<X>180</X>
-				<Y>140</Y>
+				<Y>118</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -570,7 +570,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<Id>1750063382221</Id>
 				<Name><![CDATA[txt_electricityDemandIncrease_pct]]></Name>
 				<X>245</X>
-				<Y>210</Y>
+				<Y>180</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -792,7 +792,7 @@ f_setHouseholdBatteries( sl_householdBatteries_pct.getValue(), uI_Tabs.f_getActi
 				<Id>1750063382251</Id>
 				<Name><![CDATA[txt_householdElectricityDemandIncreaseDescription]]></Name>
 				<X>20</X>
-				<Y>210</Y>
+				<Y>180</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -819,7 +819,7 @@ f_setHouseholdBatteries( sl_householdBatteries_pct.getValue(), uI_Tabs.f_getActi
 				<Id>1750063382253</Id>
 				<Name><![CDATA[sl_householdElectricityDemandIncrease_pct]]></Name>
 				<X>260</X>
-				<Y>205</Y>
+				<Y>175</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -847,7 +847,7 @@ f_setHouseholdBatteries( sl_householdBatteries_pct.getValue(), uI_Tabs.f_getActi
 				<Id>1750063382255</Id>
 				<Name><![CDATA[txt_householdElectricCookingDescription]]></Name>
 				<X>20</X>
-				<Y>170</Y>
+				<Y>150</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -874,7 +874,7 @@ f_setHouseholdBatteries( sl_householdBatteries_pct.getValue(), uI_Tabs.f_getActi
 				<Id>1750063382257</Id>
 				<Name><![CDATA[sl_householdElectricCooking_pct]]></Name>
 				<X>260</X>
-				<Y>165</Y>
+				<Y>145</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -901,7 +901,7 @@ f_setHouseholdBatteries( sl_householdBatteries_pct.getValue(), uI_Tabs.f_getActi
 				<Id>1750063382259</Id>
 				<Name><![CDATA[txt_householdElectricCookingResidentialArea_pct]]></Name>
 				<X>245</X>
-				<Y>170</Y>
+				<Y>150</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1013,7 +1013,7 @@ gr_trafoReinforcement.setVisible(true);
 				<Id>1752232850385</Id>
 				<Name><![CDATA[i_householdElectricCooking]]></Name>
 				<X>180</X>
-				<Y>168</Y>
+				<Y>148</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1041,7 +1041,7 @@ gr_trafoReinforcement.setVisible(true);
 				<Id>1752232850402</Id>
 				<Name><![CDATA[i_householdElectricityGrowth]]></Name>
 				<X>180</X>
-				<Y>208</Y>
+				<Y>178</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1069,7 +1069,7 @@ gr_trafoReinforcement.setVisible(true);
 				<Id>1777639223067</Id>
 				<Name><![CDATA[txt_householdCurtailmentDescription]]></Name>
 				<X>20</X>
-				<Y>130</Y>
+				<Y>120</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1095,8 +1095,8 @@ gr_trafoReinforcement.setVisible(true);
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1777639223105</Id>
 				<Name><![CDATA[cb_householdCurtailment]]></Name>
-				<X>300</X>
-				<Y>122</Y>
+				<X>302</X>
+				<Y>112</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1121,7 +1121,7 @@ gr_trafoReinforcement.setVisible(true);
 				<Id>1777639223144</Id>
 				<Name><![CDATA[i_householdCurtailment]]></Name>
 				<X>180</X>
-				<Y>128</Y>
+				<Y>118</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1639,7 +1639,7 @@ zero_Interface.f_setTrafoText();
 				<Id>1750063382243</Id>
 				<Name><![CDATA[sl_gridBatteries_kWh]]></Name>
 				<X>80</X>
-				<Y>-45</Y>
+				<Y>-65</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1677,7 +1677,7 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 				<Id>1750063382245</Id>
 				<Name><![CDATA[txt_gridBatteriesDescription]]></Name>
 				<X>-160</X>
-				<Y>-40</Y>
+				<Y>-60</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1703,7 +1703,7 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 				<Id>1750063382247</Id>
 				<Name><![CDATA[txt_gridBatteries_kWh]]></Name>
 				<X>65</X>
-				<Y>-40</Y>
+				<Y>-60</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1730,7 +1730,7 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 				<Id>1752232850473</Id>
 				<Name><![CDATA[i_gridBatteries]]></Name>
 				<X>-15</X>
-				<Y>-42</Y>
+				<Y>-62</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1855,7 +1855,7 @@ f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_currentPVOnLand_ha, sliderPVFarm
 				<Id>1770118893524</Id>
 				<Name><![CDATA[sl_largeScaleWind_MW]]></Name>
 				<X>80</X>
-				<Y>-85</Y>
+				<Y>-95</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1898,7 +1898,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 				<Id>1770118893533</Id>
 				<Name><![CDATA[txt_largeScaleWindDescription]]></Name>
 				<X>-160</X>
-				<Y>-80</Y>
+				<Y>-90</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1923,7 +1923,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 				<Id>1770118893541</Id>
 				<Name><![CDATA[txt_largeScaleWind_MW]]></Name>
 				<X>65</X>
-				<Y>-80</Y>
+				<Y>-90</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1976,7 +1976,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 				<Id>1770118893567</Id>
 				<Name><![CDATA[i_largeScaleWind]]></Name>
 				<X>-15</X>
-				<Y>-82</Y>
+				<Y>-92</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2003,7 +2003,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 				<Id>1777620991223</Id>
 				<Name><![CDATA[txt_gridCurtailmentDescription]]></Name>
 				<X>-160</X>
-				<Y>0</Y>
+				<Y>-30</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2028,8 +2028,8 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1777620991268</Id>
 				<Name><![CDATA[cb_gridCurtailment]]></Name>
-				<X>120</X>
-				<Y>-8</Y>
+				<X>122</X>
+				<Y>-38</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2054,7 +2054,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 				<Id>1777620991324</Id>
 				<Name><![CDATA[i_gridCurtailment]]></Name>
 				<X>-15</X>
-				<Y>-2</Y>
+				<Y>-32</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>

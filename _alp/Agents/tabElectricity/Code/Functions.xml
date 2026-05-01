@@ -473,7 +473,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
 			<Name><![CDATA[selectedPages]]></Name>
-			<Type><![CDATA[List<OL_ElectricityTabPages>]]></Type>
+			<Type><![CDATA[List<OL_UITabPages>]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -493,7 +493,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
 			<Name><![CDATA[page]]></Name>
-			<Type><![CDATA[OL_ElectricityTabPages]]></Type>
+			<Type><![CDATA[OL_UITabPages]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

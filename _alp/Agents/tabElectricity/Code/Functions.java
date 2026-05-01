@@ -422,7 +422,7 @@ f_setDemandReduction(gcList, -demandReduction_pct);
 double f_updateSliders_Electricity()
 {/*ALCODESTART::1754926103683*/
 // Update all loaded pages
-for (OL_ElectricityTabPages page : c_loadedPages) {
+for (OL_UITabPages page : c_loadedPages) {
     switch (page) {
         case HOUSEHOLDS:
             f_updateElectricitySliders_households();
@@ -598,14 +598,14 @@ switch (pvtOrientation){
 return profilePointer;
 /*ALCODEEND*/}
 
-double f_initializeElectricityPages(List<OL_ElectricityTabPages> selectedPages)
+double f_initializeElectricityPages(List<OL_UITabPages> selectedPages)
 {/*ALCODESTART::1777551606246*/
 // Store the page configuration
 c_loadedPages = new ArrayList<>(selectedPages);
 c_pageGroups = new ArrayList<>();
 
 // Map each page type to its ShapeGroup
-for (OL_ElectricityTabPages page : c_loadedPages) {
+for (OL_UITabPages page : c_loadedPages) {
     ShapeGroup group = f_getShapeGroupForPage(page);
     if (group != null) {
         c_pageGroups.add(group);
@@ -626,7 +626,7 @@ if (!c_loadedPages.isEmpty()) {
 
 /*ALCODEEND*/}
 
-ShapeGroup f_getShapeGroupForPage(OL_ElectricityTabPages page)
+ShapeGroup f_getShapeGroupForPage(OL_UITabPages page)
 {/*ALCODESTART::1777552457477*/
 switch(page) {
     case HOUSEHOLDS:

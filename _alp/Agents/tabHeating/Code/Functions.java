@@ -676,164 +676,26 @@ f_setHeatingSystems(gcList, orderedHeatingSystemGCList, changedSliderHeatingType
 
 double f_updateSliders_Heating()
 {/*ALCODESTART::1754923748794*/
-if(gr_heatingSliders_default.isVisible()){
-	f_updateHeatingSliders_default();
-}
-else if(gr_heatingSliders_businesspark.isVisible()){
-	f_updateHeatingSliders_businesspark();
-}
-else if(gr_heatingSliders_residential.isVisible()){
-	f_updateHeatingSliders_residential();
-}
-else{
-	f_updateHeatingSliders_custom();
+// Update all loaded pages
+for (OL_UITabPages page : c_loadedPages) {
+    switch (page) {
+        case HOUSEHOLDS:
+            f_updateHeatingSliders_households();
+            break;
+        case COMPANIES:
+            f_updateHeatingSliders_companies();
+            break;
+        case CUSTOM:
+            f_updateHeatingSliders_custom();
+            break;
+    }
 }
 /*ALCODEEND*/}
 
-double f_updateHeatingSliders_default()
-{/*ALCODESTART::1754924509667*/
-////Companies
-List<GCUtility> utilityGridConnections = uI_Tabs.f_getActiveSliderGridConnections_utilities();
-
-//Savings (IN PROGRESS, WHAT ABOUT THERMAL BUILDINGS?????)
-double totalBaseConsumption_kWh = 0;
-double totalSavedConsumption_kWh = 0;
-for(GridConnection GC : utilityGridConnections){
-	if(GC.v_isActive){
-		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT && !(profile instanceof J_EAProduction));
-		for(J_EAProfile profileEA : profileEAs){
-			double baseConsumption_kWh = profileEA.getBaseConsumption_kWh();
-			totalBaseConsumption_kWh += baseConsumption_kWh;
-			totalSavedConsumption_kWh += (1 - profileEA.getProfileScaling_fr()) * baseConsumption_kWh;
-		}		
-		if(GC.p_BuildingThermalAsset != null){
-			traceln("WARNING: SLIDER SAVINGS UPDATE FUNCTION IS NOT FUNCTIONAL YET FOR COMPANIES WITH THERMAL BUILDING ASSETS");
-		}
-	}
-}
-
-double heatSavings_pct = totalBaseConsumption_kWh > 0 ? (totalSavedConsumption_kWh/totalBaseConsumption_kWh * 100) : 0;
-sl_heatDemandReductionCompanies_pct.setValue(roundToInt(heatSavings_pct), false);
-
-
-//Heating assets
-//Heating type
-int totalCompaniesWithHeating = 0;
-int nbOfCompaniesWithGasBurners = 0;
-int nbOfCompaniesWithHybridHeatpumps = 0;
-int nbOfCompaniesWithElectricHeatpumps = 0;
-int nbOfCompaniesOnHTHeatGrid = 0;
-int nbOfCompaniesOnLTHeatGrid = 0;
-
-for(GCUtility GC : utilityGridConnections){
-	if(GC.v_isActive && GC.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE){
-		totalCompaniesWithHeating++;
-		switch(GC.f_getCurrentHeatingType()){
-			case GAS_BURNER:
-				nbOfCompaniesWithGasBurners++;
-				break;
-			case HYBRID_HEATPUMP:
-				nbOfCompaniesWithHybridHeatpumps++;
-				break;
-			case ELECTRIC_HEATPUMP:
-				nbOfCompaniesWithElectricHeatpumps++;
-				break;
-			case DISTRICTHEAT:
-				nbOfCompaniesOnHTHeatGrid++;
-				break;
-			case LT_DISTRICTHEAT:
-				nbOfCompaniesOnLTHeatGrid++;
-				break;
-		}
-	}
-}
-
-int companiesWithGasBurners_pct = roundToInt(100.0 * nbOfCompaniesWithGasBurners / totalCompaniesWithHeating);
-int companiesWithHybridHeatpump_pct = roundToInt(100.0 * nbOfCompaniesWithHybridHeatpumps / totalCompaniesWithHeating);
-int companiesWithElectricHeatpump_pct = roundToInt(100.0 * nbOfCompaniesWithElectricHeatpumps / totalCompaniesWithHeating);
-int companiesWithHTDistrictHeat_pct = roundToInt(100.0 * nbOfCompaniesOnHTHeatGrid / totalCompaniesWithHeating);
-
-sl_gasBurnerCompanies_pct.setValue(companiesWithGasBurners_pct, false);
-sl_hybridHeatPumpCompanies_pct.setValue(companiesWithHybridHeatpump_pct, false);
-sl_electricHeatPumpCompanies_pct.setValue(companiesWithElectricHeatpump_pct, false);
-sl_districtHeatingCompanies_pct.setValue(companiesWithHTDistrictHeat_pct, false);
-
-
-////Houses
-List<GCHouse> houseGridConnections = uI_Tabs.f_getActiveSliderGridConnections_houses();
-
-//Savings
-double averageScalingFactor = 0;
-double totalScalingFactors = 0;
-for(GCHouse GC : houseGridConnections){
-	if(GC.v_isActive){
-		List<J_EAProfile> profileEAs = findAll(GC.c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT && !(profile instanceof J_EAProduction));
-		for(J_EAProfile profileEA : profileEAs){
-			double totalScalingFactorValue = averageScalingFactor*totalScalingFactors;
-			double newTotalScalingFactorValue = totalScalingFactorValue + profileEA.getProfileScaling_fr();
-			totalScalingFactors++;
-			averageScalingFactor = newTotalScalingFactorValue/totalScalingFactors;
-		}	
-		if(GC.p_BuildingThermalAsset != null){
-			double totalScalingFactorValue = averageScalingFactor*totalScalingFactors;
-			double newTotalScalingFactorValue = totalScalingFactorValue + GC.p_BuildingThermalAsset.getLossScalingFactor_fr();
-			totalScalingFactors++;
-			averageScalingFactor = newTotalScalingFactorValue/totalScalingFactors;
-		}
-	}
-}
-double averageSavingsFactor_pct = (1-averageScalingFactor)*100.0;
-sl_heatDemandReductionHouseholds_pct.setValue(roundToInt(averageSavingsFactor_pct), false);
-
-
-//Heating type
-int totalHousesWithHeating = 0;
-int nbOfHousesWithGasBurners = 0;
-int nbOfHousesWithHybridHeatpumps = 0;
-int nbOfHousesWithElectricHeatpumps = 0;
-int nbOfHousesOnHTHeatGrid = 0;
-int nbOfHousesOnLTHeatGrid = 0;
-
-for(GCHouse GC : houseGridConnections){
-	if(GC.v_isActive && GC.f_getCurrentHeatingType() != OL_GridConnectionHeatingType.NONE){
-		totalHousesWithHeating++;
-		switch(GC.f_getCurrentHeatingType()){
-			case GAS_BURNER:
-				nbOfHousesWithGasBurners++;
-				break;
-			case HYBRID_HEATPUMP:
-				nbOfHousesWithHybridHeatpumps++;
-				break;
-			case ELECTRIC_HEATPUMP:
-				nbOfHousesWithElectricHeatpumps++;
-				break;
-			case DISTRICTHEAT:
-				nbOfHousesOnHTHeatGrid++;
-				break;
-			case LT_DISTRICTHEAT:
-				nbOfHousesOnLTHeatGrid++;
-				break;
-		}
-	}
-}
-
-int housesWithGasBurners_pct = roundToInt(100.0 * nbOfHousesWithGasBurners / totalHousesWithHeating);
-int housesWithHybridHeatpump_pct = roundToInt(100.0 * nbOfHousesWithHybridHeatpumps / totalHousesWithHeating);
-int housesWithElectricHeatpump_pct = roundToInt(100.0 * nbOfHousesWithElectricHeatpumps / totalHousesWithHeating);
-int housesWithHTDistrictHeat_pct = roundToInt(100.0 * nbOfHousesOnHTHeatGrid / totalHousesWithHeating);
-
-sl_gasBurnerHouseholds_pct.setValue(housesWithGasBurners_pct, false);
-sl_hybridHeatPumpHouseholds_pct.setValue(housesWithHybridHeatpump_pct, false);
-sl_electricHeatPumpHouseholds_pct.setValue(housesWithElectricHeatpump_pct, false);
-sl_districtHeatingHouseholds_pct.setValue(housesWithHTDistrictHeat_pct, false);
-
-/*ALCODEEND*/}
-
-double f_updateHeatingSliders_residential()
+double f_updateHeatingSliders_households()
 {/*ALCODESTART::1754924542535*/
 List<GCHouse> houseGridConnections = uI_Tabs.f_getActiveSliderGridConnections_houses();
 
-
 //Heating type
 int totalHousesWithHeating = 0;
 int nbOfHousesWithGasBurners = 0;
@@ -869,40 +731,40 @@ int housesWithGasBurners_pct = roundToInt(100.0 * nbOfHousesWithGasBurners / tot
 int housesWithHybridHeatpump_pct = roundToInt(100.0 * nbOfHousesWithHybridHeatpumps / totalHousesWithHeating);
 int housesWithElectricHeatpump_pct = roundToInt(100.0 * nbOfHousesWithElectricHeatpumps / totalHousesWithHeating);
 
-sl_householdGasBurnerResidentialArea_pct.setValue(housesWithGasBurners_pct, false);
-sl_householdHybridHeatpumpResidentialArea.setValue(housesWithHybridHeatpump_pct, false);
-sl_householdElectricHeatPumpResidentialArea_pct.setValue(housesWithElectricHeatpump_pct, false);
-cb_householdHTDistrictHeatingResidentialArea.setSelected(false, false);
-cb_householdLTDistrictHeatingResidentialArea.setSelected(false, false);
+sl_householdGasBurner_pct.setValue(housesWithGasBurners_pct, false);
+sl_householdHybridHeatpump_pct.setValue(housesWithHybridHeatpump_pct, false);
+sl_householdElectricHeatPump_pct.setValue(housesWithElectricHeatpump_pct, false);
+cb_householdHTDistrictHeating.setSelected(false, false);
+cb_householdLTDistrictHeating.setSelected(false, false);
 
 if(nbOfHousesOnHTHeatGrid == totalHousesWithHeating){
-	cb_householdHTDistrictHeatingResidentialArea.setSelected(true, false);
+	cb_householdHTDistrictHeating.setSelected(true, false);
 }
 if(nbOfHousesOnLTHeatGrid == totalHousesWithHeating){
-	cb_householdLTDistrictHeatingResidentialArea.setSelected(true, false);
+	cb_householdLTDistrictHeating.setSelected(true, false);
 }
 
 //Houses with Airco
 double nbHouses = houseGridConnections.size();
 double nbHousesWithAirco = count(houseGridConnections, x -> x.p_airco != null);
 double pctOfHousesWithAirco = (nbHousesWithAirco*100.0)/nbHouses;
-sl_householdAircoResidentialArea_pct.setValue(pctOfHousesWithAirco, false);
+sl_householdAirco_pct.setValue(pctOfHousesWithAirco, false);
 
 
 //Houses with better isolation
 int nbHousesThatCanGetImprovedIsolation = count(houseGridConnections, x -> x.p_insulationLabel != OL_GridConnectionInsulationLabel.A);
 int nbHousesWithImprovedInsulation = count(houseGridConnections, x -> x.p_BuildingThermalAsset.getLossScalingFactor_fr() < 1 && x.p_insulationLabel != OL_GridConnectionInsulationLabel.A);
 double pctOfHousesWithImprovedInsulation = 100.0 * ((double)nbHousesWithImprovedInsulation)/nbHousesThatCanGetImprovedIsolation;
-sl_householdHeatDemandReductionResidentialArea_pct.setValue(roundToInt(pctOfHousesWithImprovedInsulation), false);
+sl_householdHeatDemandReduction_pct.setValue(roundToInt(pctOfHousesWithImprovedInsulation), false);
 
 
 //PT
 int nbHousesWithPT = count(houseGridConnections, x -> x.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW));
 
-sl_rooftopPTHouses_pct.setValue(roundToInt((nbHousesWithPT*100.0)/nbHouses), false);
+sl_householdRooftopPT_pct.setValue(roundToInt((nbHousesWithPT*100.0)/nbHouses), false);
 /*ALCODEEND*/}
 
-double f_updateHeatingSliders_businesspark()
+double f_updateHeatingSliders_companies()
 {/*ALCODESTART::1754924544023*/
 List<GCUtility> utilityGridConnections = uI_Tabs.f_getActiveSliderGridConnections_utilities();
 
@@ -924,7 +786,7 @@ for(GridConnection GC : utilityGridConnections){
 }
 
 double heatSavings_pct = totalBaseConsumption_kWh > 0 ? (totalSavedConsumption_kWh/totalBaseConsumption_kWh * 100) : 0;
-sl_heatDemandSlidersCompaniesHeatDemandReductionCompanies_pct.setValue(roundToInt(heatSavings_pct), false);
+sl_companiesHeatDemandReduction_pct.setValue(roundToInt(heatSavings_pct), false);
 
 
 //Heating type
@@ -970,12 +832,12 @@ int companiesWithLTDistrictHeat_pct = roundToInt(100.0 * nbOfCompaniesOnLTHeatGr
 int companiesWithCustomHeating_pct = roundToInt(100.0 * nbOfCompaniesWithCustomHeating / totalCompaniesWithHeating);
 
 
-sl_heatDemandSlidersCompaniesGasBurnerCompanies_pct.setValue(companiesWithGasBurners_pct, false);
-sl_heatDemandSlidersCompaniesHybridHeatPumpCompanies_pct.setValue(companiesWithHybridHeatpump_pct, false);
-sl_heatDemandSlidersCompaniesElectricHeatPumpCompanies_pct.setValue(companiesWithElectricHeatpump_pct, false);
-sl_heatDemandSlidersCompaniesDistrictHeatingCompanies_pct.setValue(companiesWithHTDistrictHeat_pct, false);
-//sl_heatDemandSlidersCompaniesLTDistrictHeatingCompanies_pct.setValue(companiesWithLTDistrictHeat_pct, false); Doesnt exist (yet) for companies
-sl_heatingTypeSlidersCompaniesCustom_pct.setValue(companiesWithCustomHeating_pct, false);
+sl_companiesGasBurner_pct.setValue(companiesWithGasBurners_pct, false);
+sl_companiesHybridHeatPump_pct.setValue(companiesWithHybridHeatpump_pct, false);
+sl_companiesElectricHeatPump_pct.setValue(companiesWithElectricHeatpump_pct, false);
+sl_companiesDistrictHeating_pct.setValue(companiesWithHTDistrictHeat_pct, false);
+//sl_companiesLTDistrictHeating_pct.setValue(companiesWithLTDistrictHeat_pct, false); Doesnt exist (yet) for companies
+sl_companiesCustom_pct.setValue(companiesWithCustomHeating_pct, false);
 
 /*ALCODEEND*/}
 
@@ -1264,5 +1126,81 @@ GN_heat.setLatLon(GN_heat.p_latitude, GN_heat.p_longitude);
 zero_Interface.f_setErrorScreen("LET OP: Er is nu een 'warmtenet' gecreëerd. Maar er is geen warmtebron aanwezig in het model. Daarom zal de benodigde warmte voor het warmtenet in de resultaten te zien zijn als warmte import.", 0, 0);
 
 return GN_heat;
+/*ALCODEEND*/}
+
+double f_initializeHeatingPages(List<OL_UITabPages> selectedPages)
+{/*ALCODESTART::1777640467790*/
+// Store the page configuration
+c_loadedPages = new ArrayList<>(selectedPages);
+c_pageGroups = new ArrayList<>();
+
+// Map each page type to its ShapeGroup
+for (OL_UITabPages page : c_loadedPages) {
+    ShapeGroup group = f_getShapeGroupForPage(page);
+    if (group != null) {
+        c_pageGroups.add(group);
+    } else {
+        //throw new RuntimeException("No ShapeGroup found for electricity tab page: " + page);
+    }
+}
+// Show/hide page indicator based on number of pages
+if (c_loadedPages.size() <= 1) {
+    gr_pageIndicator.setVisible(false);
+} else {
+    gr_pageIndicator.setVisible(true);
+}
+// Navigate to the first page
+if (!c_loadedPages.isEmpty()) {
+    f_goToPage(0);
+}
+
+/*ALCODEEND*/}
+
+ShapeGroup f_getShapeGroupForPage(OL_UITabPages page)
+{/*ALCODESTART::1777640467814*/
+switch(page) {
+    case HOUSEHOLDS:
+        return gr_heatingSliders_households;
+    case COMPANIES:
+        return gr_heatingSliders_companies;
+    case CUSTOM:
+        //If you have a custom tab, override this function to return it here
+		traceln("Forgot to override the custom electricity tab");
+        return null;
+    default:
+        return null;
+}
+/*ALCODEEND*/}
+
+ShapeGroup f_goToPage(int pageIndex)
+{/*ALCODESTART::1777640467839*/
+for (ShapeGroup group : c_pageGroups) {
+    group.setVisible(false);
+}
+
+if (c_pageGroups.isEmpty()) return;
+
+v_currentPageIndex = pageIndex;
+c_pageGroups.get(v_currentPageIndex).setVisible(true); // Show the selected page group
+f_updatePageIndicator(); // Update the page indicator text
+/*ALCODEEND*/}
+
+ShapeGroup f_nextPage()
+{/*ALCODESTART::1777640467863*/
+if (c_loadedPages.isEmpty()) return;
+int nextIndex = (v_currentPageIndex + 1) % c_loadedPages.size();
+f_goToPage(nextIndex);
+/*ALCODEEND*/}
+
+ShapeGroup f_previousPage()
+{/*ALCODESTART::1777640467886*/
+if (c_loadedPages.isEmpty()) return;
+int prevIndex = (v_currentPageIndex - 1 + c_loadedPages.size()) % c_loadedPages.size();
+f_goToPage(prevIndex);
+/*ALCODEEND*/}
+
+ShapeGroup f_updatePageIndicator()
+{/*ALCODESTART::1777640467910*/
+t_pageIndicator.setText("Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPages.size());
 /*ALCODEEND*/}
 
