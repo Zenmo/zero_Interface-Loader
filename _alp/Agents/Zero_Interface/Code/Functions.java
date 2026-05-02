@@ -2754,55 +2754,47 @@ uI_Tabs.add_pop_tabElectricity();
 uI_Tabs.add_pop_tabHeating();
 uI_Tabs.add_pop_tabMobility();
 
+boolean hasHouses = energyModel.Houses.size() > 0;
+boolean hasCompanies = energyModel.UtilityConnections.size() > 0;
+
 // Electricity tab
 tabElectricity tabElec = (tabElectricity) uI_Tabs.pop_tabElectricity.get(0);
-if (settings.selectedElectricityTabPages() != null && !settings.selectedElectricityTabPages().isEmpty()) {
-	tabElec.f_initializeElectricityPages(settings.selectedElectricityTabPages());
-} else {
-	// Fallback: use project_type for backwards compatibility
-	if (project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
-		tabElec.f_initializeElectricityPages(new ArrayList<>(java.util.Arrays.asList(
-			OL_UITabPages.HOUSEHOLDS, 
-			OL_UITabPages.COLLECTIVE
-		)));
-	} else {
-		tabElec.f_initializeElectricityPages(new ArrayList<>(java.util.Arrays.asList(
-			OL_UITabPages.COMPANIES, 
-			OL_UITabPages.COLLECTIVE
-		)));
-	}
+List<OL_UITabPages> elecPages = new ArrayList<>();
+if (hasHouses) {
+	elecPages.add(OL_UITabPages.HOUSEHOLDS);
+} 
+if (hasCompanies) {
+	elecPages.add(OL_UITabPages.COMPANIES);
 }
+elecPages.add(OL_UITabPages.COLLECTIVE);
+tabElec.f_initializeElectricityPages(elecPages);
 
 // Heating tab
 tabHeating tabHeat = (tabHeating) uI_Tabs.pop_tabHeating.get(0);
-if (settings.selectedHeatingTabPages() != null && !settings.selectedHeatingTabPages().isEmpty()) {
-	tabHeat.f_initializeHeatingPages(settings.selectedHeatingTabPages());
-} else {
-	// Fallback: use project_type for backwards compatibility
-	if (project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
-		tabHeat.f_initializeHeatingPages(new ArrayList<>(java.util.Arrays.asList(OL_UITabPages.HOUSEHOLDS)));
-	} else {
-		tabHeat.f_initializeHeatingPages(new ArrayList<>(java.util.Arrays.asList(OL_UITabPages.COMPANIES)));
-	}
+List<OL_UITabPages> heatPages = new ArrayList<>();
+if (hasHouses) {
+	heatPages.add(OL_UITabPages.HOUSEHOLDS);
+} 
+if (hasCompanies) {
+	heatPages.add(OL_UITabPages.COMPANIES);
 }
+tabHeat.f_initializeHeatingPages(heatPages);
 
 // Mobility tab
 tabMobility tabMob = (tabMobility) uI_Tabs.pop_tabMobility.get(0);
-if (settings.selectedMobilityTabPages() != null && !settings.selectedMobilityTabPages().isEmpty()) {
-	tabMob.f_initializeMobilityPages(settings.selectedMobilityTabPages());
-} else {
-	// Fallback: use project_type for backwards compatibility
-	if (project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
-		tabMob.f_initializeMobilityPages(new ArrayList<>(java.util.Arrays.asList(OL_UITabPages.HOUSEHOLDS)));
-	} else {
-		tabMob.f_initializeMobilityPages(new ArrayList<>(java.util.Arrays.asList(OL_UITabPages.COMPANIES)));
-	}
+List<OL_UITabPages> mobPages = new ArrayList<>();
+if (hasHouses) {
+	mobPages.add(OL_UITabPages.HOUSEHOLDS);
+} 
+if (hasCompanies) {
+	mobPages.add(OL_UITabPages.COMPANIES);
 }
-// Group visibilities
-// When using an extension of a generic tab don't forget to typecast it!
-if (project_data.project_type() == OL_ProjectType.BUSINESSPARK) {
-	uI_Tabs.add_pop_tabEHub();
-	((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
+tabMob.f_initializeMobilityPages(mobPages);
+
+// EHub tab
+if (hasCompanies) {
+    uI_Tabs.add_pop_tabEHub();
+    ((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
 }
 /*ALCODEEND*/}
 
@@ -3358,31 +3350,31 @@ tabMobility tabMob = uI_Tabs.pop_tabMobility.get(0);
 //Private EV
 double privateEVs_pct = p_residentialScenario_Current.getPrivateEVs_pct();
 double privateEVsThatSupportV2G_pct = p_residentialScenario_Current.getPrivateEVsThatSupportV2G_pct();
-tabMob.sl_privateEVsResidentialArea_pct.setValue(roundToInt(privateEVs_pct), true);
-tabMob.sl_EVsThatSupportV2G_pct.setValue(roundToInt(privateEVsThatSupportV2G_pct), true);
+tabMob.sl_householdPrivateEVs_pct.setValue(roundToInt(privateEVs_pct), true);
+tabMob.sl_householdEVsThatSupportV2G_pct.setValue(roundToInt(privateEVsThatSupportV2G_pct), true);
 
 //Selected charging mode
 String selectedChargingAttitudeStringPrivateEV = p_residentialScenario_Current.getSelectedChargingAttitudeStringPrivateEVs();
 boolean V2GActivePrivateEV = p_residentialScenario_Current.getV2GActivePrivateEVs();
 
-tabMob.cb_chargingAttitudePrivateParkedCars.setValue(selectedChargingAttitudeStringPrivateEV, true);
-tabMob.cb_activateV2GPrivateParkedCars.setSelected(V2GActivePrivateEV, true);
+tabMob.cb_householdChargingStrategyPrivateParkedCars.setValue(selectedChargingAttitudeStringPrivateEV, true);
+tabMob.cb_householdActivateV2GPrivateParkedCars.setSelected(V2GActivePrivateEV, true);
 
 //Chargers
 double activePublicChargers_pct = p_residentialScenario_Current.getActivePublicChargers_pct();
-tabMob.sl_publicChargersResidentialArea_pct.setValue(roundToInt(activePublicChargers_pct), true);
+tabMob.sl_householdPublicChargers_pct.setValue(roundToInt(activePublicChargers_pct), true);
 
 double V1G_pct = p_residentialScenario_Current.getChargersV1G_pct();
 double V2G_pct = p_residentialScenario_Current.getChargersV2G_pct();
-tabMob.sl_chargersThatSupportV1G_pct.setValue(roundToInt(V1G_pct), true);
-tabMob.sl_chargersThatSupportV2G_pct.setValue(roundToInt(V2G_pct), true);
+tabMob.sl_householdChargersThatSupportV1G_pct.setValue(roundToInt(V1G_pct), true);
+tabMob.sl_householdChargersThatSupportV2G_pct.setValue(roundToInt(V2G_pct), true);
 
 //Selected charging mode
 String selectedChargingAttitudeStringChargers = p_residentialScenario_Current.getSelectedChargingAttitudeStringChargers();
 boolean V2GActiveChargers = p_residentialScenario_Current.getV2GActiveChargers();
 
-tabMob.cb_chargingAttitudePrivatePublicChargers.setValue(selectedChargingAttitudeStringChargers, true);
-tabMob.cb_activateV2GPublicChargers.setSelected(V2GActiveChargers, true);
+tabMob.cb_householdChargingStrategyPrivatePublicChargers.setValue(selectedChargingAttitudeStringChargers, true);
+tabMob.cb_householdActivateV2GPublicChargers.setSelected(V2GActiveChargers, true);
 /*ALCODEEND*/}
 
 double f_storeResidentialScenario_Current()
@@ -3450,29 +3442,29 @@ if(uI_Tabs.pop_tabMobility.size() > 0){
 	tabMobility tabMob = uI_Tabs.pop_tabMobility.get(0);
 	
 	//Private EV
-	double privateEVs_pct = tabMob.sl_privateEVsResidentialArea_pct.getValue();
-	double privateEVsThatSupportV2G_pct = tabMob.sl_EVsThatSupportV2G_pct.getValue();
+	double privateEVs_pct = tabMob.sl_householdPrivateEVs_pct.getValue();
+	double privateEVsThatSupportV2G_pct = tabMob.sl_householdEVsThatSupportV2G_pct.getValue();
 	p_residentialScenario_Current.setPrivateEVs_pct(privateEVs_pct);
 	p_residentialScenario_Current.setPrivateEVsThatSupportV2G_pct(privateEVsThatSupportV2G_pct);
 	
 	//Selected charging mode
-	String selectedChargingAttitudeStringPrivateEVs = tabMob.cb_chargingAttitudePrivateParkedCars.getValue();
-	boolean V2GActivePrivateEVs = tabMob.cb_activateV2GPrivateParkedCars.isSelected();
+	String selectedChargingAttitudeStringPrivateEVs = tabMob.cb_householdChargingStrategyPrivateParkedCars.getValue();
+	boolean V2GActivePrivateEVs = tabMob.cb_householdActivateV2GPrivateParkedCars.isSelected();
 	p_residentialScenario_Current.setSelectedChargingAttitudeStringPrivateEVs(selectedChargingAttitudeStringPrivateEVs);
 	p_residentialScenario_Current.setV2GActivePrivateEVs(V2GActivePrivateEVs);
 	
 	//Chargers
-	double activePublicChargers_pct = tabMob.sl_publicChargersResidentialArea_pct.getValue();
-	double chargersV1G_pct = tabMob.sl_chargersThatSupportV1G_pct.getValue();
-	double chargersV2G_pct = tabMob.sl_chargersThatSupportV2G_pct.getValue();
+	double activePublicChargers_pct = tabMob.sl_householdPublicChargers_pct.getValue();
+	double chargersV1G_pct = tabMob.sl_householdChargersThatSupportV1G_pct.getValue();
+	double chargersV2G_pct = tabMob.sl_householdChargersThatSupportV2G_pct.getValue();
 	
 	p_residentialScenario_Current.setActivePublicChargers_pct(activePublicChargers_pct);
 	p_residentialScenario_Current.setChargersV1G_pct(chargersV1G_pct);
 	p_residentialScenario_Current.setChargersV2G_pct(chargersV2G_pct);
 	
 	//Selected charging mode
-	String selectedChargingAttitudeStringChargers = tabMob.cb_chargingAttitudePrivatePublicChargers.getValue();
-	boolean V2GActiveChargers = tabMob.cb_activateV2GPublicChargers.isSelected();
+	String selectedChargingAttitudeStringChargers = tabMob.cb_householdChargingStrategyPrivatePublicChargers.getValue();
+	boolean V2GActiveChargers = tabMob.cb_householdActivateV2GPublicChargers.isSelected();
 	p_residentialScenario_Current.setSelectedChargingAttitudeStringChargers(selectedChargingAttitudeStringChargers);
 	p_residentialScenario_Current.setV2GActiveChargers(V2GActiveChargers);
 }

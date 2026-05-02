@@ -1106,7 +1106,7 @@ GridNode GN_heat = zero_Interface.energyModel.add_pop_gridNodes();
 zero_Interface.energyModel.f_getGridNodesTopLevel().add(GN_heat);
 GN_heat.p_gridNodeID = "Heatgrid";
 
-// Check wether transformer capacity is known or estimated
+// Check whether transformer capacity is known or estimated
 GN_heat.p_capacity_kW = 1000000;	
 GN_heat.p_realCapacityAvailable = false;
 

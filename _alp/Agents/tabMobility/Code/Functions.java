@@ -1210,10 +1210,10 @@ v_totalNumberOfGhostVehicle_Trucks = triple.getRight();
 for (OL_UITabPages page : c_loadedPages) {
     switch (page) {
         case HOUSEHOLDS:
-            f_updateMobilitySliders_residential();
+            f_updateMobilitySliders_households();
             break;
         case COMPANIES:
-            f_updateMobilitySliders_default();
+            f_updateMobilitySliders_companies();
             break;
         case CUSTOM:
             f_updateMobilitySliders_custom();
@@ -1222,14 +1222,14 @@ for (OL_UITabPages page : c_loadedPages) {
 }
 /*ALCODEEND*/}
 
-double f_updateMobilitySliders_default()
+double f_updateMobilitySliders_companies()
 {/*ALCODESTART::1754928402694*/
-List<GridConnection> allConsumerGridConnections = uI_Tabs.f_getActiveSliderGridConnections_consumption();
+List<GCUtility> allUtilityGridConnections = uI_Tabs.f_getActiveSliderGridConnections_utilities();
 
 ////Savings
 double totalBaseTravelDistance_km = 0;
 double totalSavedTravelDistance_km = 0;
-for(GridConnection GC : allConsumerGridConnections){
+for(GridConnection GC : allUtilityGridConnections){
 	if(GC.v_isActive){
 		for(J_ActivityTrackerTrips tripTracker : GC.c_tripTrackers){
 			totalBaseTravelDistance_km += tripTracker.getAnnualDistance_km();
@@ -1239,18 +1239,18 @@ for(GridConnection GC : allConsumerGridConnections){
 }
 
 double mobilitySavings_pct = totalBaseTravelDistance_km > 0 ? (totalSavedTravelDistance_km/totalBaseTravelDistance_km * 100) : 0;
-sl_mobilityDemandReduction_pct.setValue(roundToInt(mobilitySavings_pct), false);
+sl_companiesMobilityDemandReduction_pct.setValue(roundToInt(mobilitySavings_pct), false);
 
 
 //Smart charging
 boolean smartCharging = false;
-for(GridConnection GC : allConsumerGridConnections){
+for(GridConnection GC : allUtilityGridConnections){
 	if(GC.c_electricVehicles.size() > 0 && GC.f_getCurrentChargingType() != OL_ChargingAttitude.SIMPLE){
 		smartCharging = true;
 		break;
 	}
 }
-cb_spreadChargingEVs.setSelected(smartCharging, false);
+cb_companiesSpreadChargingEVs.setSelected(smartCharging, false);
 
 
 ////Vehicles
@@ -1268,7 +1268,7 @@ int ElectricTrucks = v_totalNumberOfGhostVehicle_Trucks;
 int HydrogenTrucks = 0;
 
 //Count the amount of vehicles for each type
-for (GridConnection gc : allConsumerGridConnections) {
+for (GridConnection gc : allUtilityGridConnections) {
 	if(gc.v_isActive){
 		for (J_EAFuelVehicle vehicle : gc.c_petroleumFuelVehicles) {
 			switch(vehicle.getEAType()){
@@ -1324,11 +1324,11 @@ if (totalCars != 0) {
 	HydrogenCars_pct = roundToInt((100.0 * HydrogenCars) / totalCars);
 }
 else{
-	sl_fossilFuelCars_pct.setEnabled(false);
-	sl_electricCars_pct.setEnabled(false);
+	sl_companiesFossilFuelCars_pct.setEnabled(false);
+	sl_companiesElectricCars_pct.setEnabled(false);
 }
-sl_fossilFuelCars_pct.setValue(PetroleumFuelCars_pct, false);
-sl_electricCars_pct.setValue(ElectricCars_pct, false);
+sl_companiesFossilFuelCars_pct.setValue(PetroleumFuelCars_pct, false);
+sl_companiesElectricCars_pct.setValue(ElectricCars_pct, false);
 
 
 //Set VAN sliders
@@ -1342,11 +1342,11 @@ if (totalVans != 0) {
 	HydrogenVans_pct = roundToInt(100.0 * HydrogenVans / totalVans);
 }
 else{
-	sl_fossilFuelVans_pct.setEnabled(false);
-	sl_electricVans_pct.setEnabled(false);
+	sl_companiesFossilFuelVans_pct.setEnabled(false);
+	sl_companiesElectricVans_pct.setEnabled(false);
 }
-sl_fossilFuelVans_pct.setValue(PetroleumFuelVans_pct, false);
-sl_electricVans_pct.setValue(ElectricVans_pct, false);
+sl_companiesFossilFuelVans_pct.setValue(PetroleumFuelVans_pct, false);
+sl_companiesElectricVans_pct.setValue(ElectricVans_pct, false);
 
 
 //Set TRUCK sliders
@@ -1360,13 +1360,13 @@ if (totalTrucks != 0) {
 	HydrogenTrucks_pct = roundToInt(100.0 * HydrogenTrucks / totalTrucks);
 }
 else{
-	sl_fossilFuelTrucks_pct.setEnabled(false);
-	sl_electricTrucks_pct.setEnabled(false);
-	sl_hydrogenTrucks_pct.setEnabled(false);
+	sl_companiesFossilFuelTrucks_pct.setEnabled(false);
+	sl_companiesElectricTrucks_pct.setEnabled(false);
+	sl_companiesHydrogenTrucks_pct.setEnabled(false);
 }
-sl_fossilFuelTrucks_pct.setValue(PetroleumFuelTrucks_pct, false);
-sl_electricTrucks_pct.setValue(ElectricTrucks_pct, false);
-sl_hydrogenTrucks_pct.setValue(HydrogenTrucks_pct, false);
+sl_companiesFossilFuelTrucks_pct.setValue(PetroleumFuelTrucks_pct, false);
+sl_companiesElectricTrucks_pct.setValue(ElectricTrucks_pct, false);
+sl_companiesHydrogenTrucks_pct.setValue(HydrogenTrucks_pct, false);
 /*ALCODEEND*/}
 
 double f_updateMobilitySliders_custom()
@@ -1389,12 +1389,12 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-double f_updateMobilitySliders_residential()
+double f_updateMobilitySliders_households()
 {/*ALCODESTART::1758183013077*/
 ////Private EV
-gr_activateV2GPrivateParkedCars.setVisible(false);
-cb_activateV2GPrivateParkedCars.setSelected(false, false);
-gr_settingsV2G_privateParkedCars.setVisible(false);
+gr_householdActivateV2GPrivateParkedCars.setVisible(false);
+cb_householdActivateV2GPrivateParkedCars.setSelected(false, false);
+gr_householdSettingsV2G_privateParkedCars.setVisible(false);
 
 List<GCHouse> houseGridConnectionsWithPrivateParking = findAll(uI_Tabs.f_getActiveSliderGridConnections_houses(), house -> house.p_eigenOprit);
 List<I_Vehicle> privateParkedCars = new ArrayList<>();
@@ -1405,8 +1405,8 @@ if (privateParkedCars.size() > 0) {
 	int nbPrivateEVsThatSupportV2G = count(privateParkedCars, x -> x instanceof J_EAEV && ((J_EAEV)x).getV2GCapable());
 	double privateEVs_pct = 100.0 * nbPrivateEVs / privateParkedCars.size();
 	double privateEVsThatSupportV2G_pct = 100.0 * nbPrivateEVsThatSupportV2G / nbPrivateEVs;
-	sl_privateEVsResidentialArea_pct.setValue(roundToInt(privateEVs_pct), false);
-	sl_EVsThatSupportV2G_pct.setValue(roundToInt(privateEVsThatSupportV2G_pct), false);
+	sl_householdPrivateEVs_pct.setValue(roundToInt(privateEVs_pct), false);
+	sl_householdEVsThatSupportV2G_pct.setValue(roundToInt(privateEVsThatSupportV2G_pct), false);
 	
 	//Selected charging mode
 	GCHouse GCWithPrivateParkedEV = findFirst(houseGridConnectionsWithPrivateParking, gc -> gc.c_electricVehicles.size() > 0);
@@ -1435,34 +1435,34 @@ if (privateParkedCars.size() > 0) {
 			break;
 		case PRICE:
 			selectedChargingAttitudeString = "Slim laden: Prijs gestuurd";
-			gr_activateV2GPrivateParkedCars.setVisible(true);
+			gr_householdActivateV2GPrivateParkedCars.setVisible(true);
 			break;
 		case BALANCE_LOCAL:
 			selectedChargingAttitudeString = "Slim laden: Netbewust";
-			gr_activateV2GPrivateParkedCars.setVisible(true);
+			gr_householdActivateV2GPrivateParkedCars.setVisible(true);
 			break;
 		case CUSTOM:
 			selectedChargingAttitudeString = "Gevarieerd";
 			break;
 	}
 	
-	cb_chargingAttitudePrivateParkedCars.setValue(selectedChargingAttitudeString, false);
-	cb_activateV2GPrivateParkedCars.setSelected(V2GActive, false);
+	cb_householdChargingStrategyPrivateParkedCars.setValue(selectedChargingAttitudeString, false);
+	cb_householdActivateV2GPrivateParkedCars.setSelected(V2GActive, false);
 	
-	if(gr_activateV2GPrivateParkedCars.isVisible() && V2GActive){
-		gr_settingsV2G_privateParkedCars.setVisible(true);
+	if(gr_householdActivateV2GPrivateParkedCars.isVisible() && V2GActive){
+		gr_householdSettingsV2G_privateParkedCars.setVisible(true);
 	}
 }
 else{
-	sl_privateEVsResidentialArea_pct.setEnabled(false);
+	sl_householdPrivateEVs_pct.setEnabled(false);
 }
 
 ////Chargers
 OL_ChargingAttitude selectedChargingAttitude = null;
-gr_activateV2GPublicChargers.setVisible(false);
-cb_activateV2GPublicChargers.setSelected(false, false);
-gr_settingsV1G_publicChargers.setVisible(false);
-gr_settingsV2G_publicChargers.setVisible(false);
+gr_householdActivateV2GPublicChargers.setVisible(false);
+cb_householdActivateV2GPublicChargers.setSelected(false, false);
+gr_householdSettingsV1G_publicChargers.setVisible(false);
+gr_householdSettingsV2G_publicChargers.setVisible(false);
 
 List<GCPublicCharger> activeChargerGridConnections = uI_Tabs.f_getSliderGridConnections_chargers();
 List<GCPublicCharger> pausedChargerGridConnections = uI_Tabs.f_getPausedSliderGridConnections_chargers();
@@ -1473,7 +1473,7 @@ int nbPublicChargerGC = activeChargerGridConnections.size() + pausedChargerGridC
 if(nbPublicChargerGC > 0 ){
 	int nbActivePublicChargersGC = activeChargerGridConnections.size();
 	double activePublicChargers_pct = 100.0 * nbActivePublicChargersGC / nbPublicChargerGC;
-	sl_publicChargersResidentialArea_pct.setValue(roundToInt(activePublicChargers_pct), false);
+	sl_householdPublicChargers_pct.setValue(roundToInt(activePublicChargers_pct), false);
 	
 	int nbV1GChargers = count(activeChargerGridConnections, x -> x.f_getChargePoint().getV1GCapable());
 	int nbV2GChargers =count(activeChargerGridConnections, x -> x.f_getChargePoint().getV2GCapable());
@@ -1481,8 +1481,8 @@ if(nbPublicChargerGC > 0 ){
 		
 	double V1G_pct = 100.0 * nbV1GChargers / nbPublicChargers;
 	double V2G_pct = 100.0 * nbV2GChargers / nbPublicChargers;
-	sl_chargersThatSupportV1G_pct.setValue(roundToInt(V1G_pct), false);
-	sl_chargersThatSupportV2G_pct.setValue(roundToInt(V2G_pct), false);
+	sl_householdChargersThatSupportV1G_pct.setValue(roundToInt(V1G_pct), false);
+	sl_householdChargersThatSupportV2G_pct.setValue(roundToInt(V2G_pct), false);
 	
 	//Selected charging mode
 	OL_ChargingAttitude currentChargingAttitude = activeChargerGridConnections.size() > 0 ? activeChargerGridConnections.get(0).f_getCurrentChargingType(): OL_ChargingAttitude.SIMPLE;
@@ -1507,28 +1507,28 @@ if(nbPublicChargerGC > 0 ){
 			break;
 		case PRICE:
 			selectedChargingAttitudeString = "Slim laden: Prijs gestuurd";
-			gr_settingsV1G_publicChargers.setVisible(true);
-			gr_activateV2GPublicChargers.setVisible(true);
+			gr_householdSettingsV1G_publicChargers.setVisible(true);
+			gr_householdActivateV2GPublicChargers.setVisible(true);
 			break;
 		case BALANCE_GRID:
 			selectedChargingAttitudeString = "Slim laden: Netbewust";
-			gr_settingsV1G_publicChargers.setVisible(true);
-			gr_activateV2GPublicChargers.setVisible(true);
+			gr_householdSettingsV1G_publicChargers.setVisible(true);
+			gr_householdActivateV2GPublicChargers.setVisible(true);
 			break;
 		case CUSTOM:
 			selectedChargingAttitudeString = "Gevarieerd";
 			break;
 	}
 	
-	cb_chargingAttitudePrivatePublicChargers.setValue(selectedChargingAttitudeString, false);
-	cb_activateV2GPublicChargers.setSelected(V2GActive, false);
+	cb_householdChargingStrategyPrivatePublicChargers.setValue(selectedChargingAttitudeString, false);
+	cb_householdActivateV2GPublicChargers.setSelected(V2GActive, false);
 	
-	if(gr_activateV2GPublicChargers.isVisible() && V2GActive){
-		gr_settingsV2G_publicChargers.setVisible(true);
+	if(gr_householdActivateV2GPublicChargers.isVisible() && V2GActive){
+		gr_householdSettingsV2G_publicChargers.setVisible(true);
 	}
 }
 else{
-	sl_publicChargersResidentialArea_pct.setEnabled(false);
+	sl_householdPublicChargers_pct.setEnabled(false);
 }
 /*ALCODEEND*/}
 
@@ -1816,9 +1816,9 @@ ShapeGroup f_getShapeGroupForPage(OL_UITabPages page)
 {/*ALCODESTART::1777644430771*/
 switch(page) {
     case HOUSEHOLDS:
-        return gr_mobilitySliders_residential;
+        return gr_mobilitySliders_households;
     case COMPANIES:
-        return gr_mobilitySliders_default;
+        return gr_mobilitySliders_companies;
     case CUSTOM:
         //If you have a custom tab, override this function to return it here
 		traceln("Forgot to override the custom electricity tab");

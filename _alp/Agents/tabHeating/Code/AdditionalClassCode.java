@@ -2,9 +2,11 @@
 public ShapeGroup getGroupPageIndicator() {
 	return this.gr_pageIndicator;
 }
+
 public List<OL_UITabPages> getLoadedPages() {
 	return this.c_loadedPages;
 }
+
 public int getCurrentPageIndex() {
 	return this.v_currentPageIndex;
 }

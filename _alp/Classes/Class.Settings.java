@@ -40,8 +40,4 @@ public class Settings {
 							// Connection owners where dataSharingAgreed = false, cant be clicked. Just like low level gridnodes.
 	List<OL_MapOverlayTypes> activeMapOverlayTypes; //If defined it will override the default map overlay setup as defined in the generic interface/loader.
 													//Add all map overlays to this list that you want to be usable in the simulation
-	//Tab settings (UI/UX)
-	List<OL_UITabPages> selectedElectricityTabPages; // Selected Electricity tab page configuration
-	List<OL_UITabPages> selectedHeatingTabPages; // Selected Heating tab page configuration
-	List<OL_UITabPages> selectedMobilityTabPages; // Selected Mobility tab page configuration
 }

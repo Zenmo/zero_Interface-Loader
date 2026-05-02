@@ -1,49 +1,75 @@
-// Default Sliders
-public ShapeGroup getGr_mobilitySliders_default() {
-	return this.gr_mobilitySliders_default;
+// Page navigation
+public ShapeGroup getGroupPageIndicator() {
+	return this.gr_pageIndicator;
 }
 
-//Residential sliders
-public ShapeGroup getGr_mobilitySliders_residential() {
-	return this.gr_mobilitySliders_residential;
+public List<OL_UITabPages> getLoadedPages() {
+	return this.c_loadedPages;
 }
 
-public ShapeSlider getSliderMobilityDemandReduction_pct () {
-	return this.sl_mobilityDemandReduction_pct;
+public int getCurrentPageIndex() {
+	return this.v_currentPageIndex;
 }
 
-public ShapeSlider getSliderElectricTrucks_pct() {
-	return this.sl_electricTrucks_pct;
+// Slider groups
+public ShapeGroup getGroupMobilitySliders_Households() {
+	return this.gr_mobilitySliders_households;
 }
 
-public ShapeSlider getSliderHydrogenTrucks_pct() {
-	return this.sl_hydrogenTrucks_pct;
+public ShapeGroup getGroupMobilitySliders_Companies() {
+	return this.gr_mobilitySliders_companies;
 }
 
-public ShapeSlider getSliderFossilFuelTrucks_pct() {
-	return this.sl_fossilFuelTrucks_pct;
+//Household sliders
+public ShapeSlider getSliderHouseholdPrivateEVs_pct(){
+	return this.sl_householdPrivateEVs_pct;
 }
 
-public ShapeSlider getSliderElectricVans_pct() {
-	return this.sl_electricVans_pct;
+public ShapeSlider getSliderHouseholdEVsThatSupportV2G_pct(){
+	return this.sl_householdEVsThatSupportV2G_pct;
 }
 
-public ShapeSlider getSliderFossilFuelVans_pct() {
-	return this.sl_fossilFuelVans_pct;
+public ShapeSlider getSliderHouseholdPublicChargers_pct(){
+	return this.sl_householdPublicChargers_pct;
 }
 
-public ShapeSlider getSliderElectricCars_pct() {
-	return this.sl_electricCars_pct;
+public ShapeSlider getSliderHouseholdChargersThatSupportV1G_pct(){
+	return this.sl_householdChargersThatSupportV1G_pct;
 }
 
-public ShapeSlider getSliderFossilFuelCars_pct() {
-	return this.sl_fossilFuelCars_pct;
+public ShapeSlider getSliderHouseholdChargersThatSupportV2G_pct(){
+	return this.sl_householdChargersThatSupportV2G_pct;
 }
 
-public ShapeSlider getSl_privateEVsResidentialArea_pct(){
-	return this.sl_privateEVsResidentialArea_pct;
+// Company sliders
+public ShapeSlider getSliderCompaniesMobilityDemandReduction_pct () {
+	return this.sl_companiesMobilityDemandReduction_pct;
 }
 
-public ShapeSlider getSl_publicChargersResidentialArea_pct(){
-	return this.sl_publicChargersResidentialArea_pct;
+public ShapeSlider getSliderCompaniesElectricTrucks_pct() {
+	return this.sl_companiesElectricTrucks_pct;
+}
+
+public ShapeSlider getSliderCompaniesHydrogenTrucks_pct() {
+	return this.sl_companiesHydrogenTrucks_pct;
+}
+
+public ShapeSlider getSliderCompaniesFossilFuelTrucks_pct() {
+	return this.sl_companiesFossilFuelTrucks_pct;
+}
+
+public ShapeSlider getSliderCompaniesElectricVans_pct() {
+	return this.sl_companiesElectricVans_pct;
+}
+
+public ShapeSlider getSliderCompaniesFossilFuelVans_pct() {
+	return this.sl_companiesFossilFuelVans_pct;
+}
+
+public ShapeSlider getSliderCompaniesElectricCars_pct() {
+	return this.sl_companiesElectricCars_pct;
+}
+
+public ShapeSlider getSliderCompaniesFossilFuelCars_pct() {
+	return this.sl_companiesFossilFuelCars_pct;
 }

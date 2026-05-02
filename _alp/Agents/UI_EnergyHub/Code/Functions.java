@@ -64,52 +64,42 @@ uI_Tabs.add_pop_tabMobility();
 //Adjust location of buttons to account for missing e-hub tab
 uI_Tabs.gr_energyDemandSettings.setX(zero_Interface.uI_Tabs.gr_energyDemandSettings.getX()+40);
 
-// Group visibilities
-// When using an extension of a generic tab don't forget to typecast it!
-//Electricity tab
+boolean hasHouses = zero_Interface.energyModel.Houses.size() > 0;
+boolean hasCompanies = zero_Interface.energyModel.UtilityConnections.size() > 0;
+
+// Electricity tab
 tabElectricity tabElec = (tabElectricity) uI_Tabs.pop_tabElectricity.get(0);
-if (zero_Interface.settings.selectedElectricityTabPages() != null && !zero_Interface.settings.selectedElectricityTabPages().isEmpty()) {
-	tabElec.f_initializeElectricityPages(zero_Interface.settings.selectedElectricityTabPages());
-} else {
-	// Fallback: use project_type for backwards compatibility
-	if (zero_Interface.project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
-		tabElec.f_initializeElectricityPages(new ArrayList<>(java.util.Arrays.asList(
-			OL_UITabPages.HOUSEHOLDS, 
-			OL_UITabPages.COLLECTIVE
-		)));
-	} else {
-		tabElec.f_initializeElectricityPages(new ArrayList<>(java.util.Arrays.asList(
-			OL_UITabPages.COMPANIES, 
-			OL_UITabPages.COLLECTIVE
-		)));
-	}
+List<OL_UITabPages> elecPages = new ArrayList<>();
+if (hasHouses) {
+	elecPages.add(OL_UITabPages.HOUSEHOLDS);
+} 
+if (hasCompanies) {
+	elecPages.add(OL_UITabPages.COMPANIES);
 }
+elecPages.add(OL_UITabPages.COLLECTIVE);
+tabElec.f_initializeElectricityPages(elecPages);
 
-//Heating tab
+// Heating tab
 tabHeating tabHeat = (tabHeating) uI_Tabs.pop_tabHeating.get(0);
-if (zero_Interface.settings.selectedHeatingTabPages() != null && !zero_Interface.settings.selectedHeatingTabPages().isEmpty()) {
-	tabHeat.f_initializeHeatingPages(zero_Interface.settings.selectedHeatingTabPages());
-} else {
-	// Fallback: use project_type for backwards compatibility
-	if (zero_Interface.project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
-		tabHeat.f_initializeHeatingPages(new ArrayList<>(java.util.Arrays.asList(OL_UITabPages.HOUSEHOLDS)));
-	} else {
-		tabHeat.f_initializeHeatingPages(new ArrayList<>(java.util.Arrays.asList(OL_UITabPages.COMPANIES)));
-	}
+List<OL_UITabPages> heatPages = new ArrayList<>();
+if (hasHouses) {
+	heatPages.add(OL_UITabPages.HOUSEHOLDS);
+} 
+if (hasCompanies) {
+	heatPages.add(OL_UITabPages.COMPANIES);
 }
+tabHeat.f_initializeHeatingPages(heatPages);
 
-//Mobility tab
+// Mobility tab
 tabMobility tabMob = (tabMobility) uI_Tabs.pop_tabMobility.get(0);
-if (zero_Interface.settings.selectedMobilityTabPages() != null && !zero_Interface.settings.selectedMobilityTabPages().isEmpty()) {
-	tabMob.f_initializeMobilityPages(zero_Interface.settings.selectedMobilityTabPages());
-} else {
-	// Fallback: use project_type for backwards compatibility
-	if (zero_Interface.project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
-		tabMob.f_initializeMobilityPages(new ArrayList<>(java.util.Arrays.asList(OL_UITabPages.HOUSEHOLDS)));
-	} else {
-		tabMob.f_initializeMobilityPages(new ArrayList<>(java.util.Arrays.asList(OL_UITabPages.COMPANIES)));
-	}
+List<OL_UITabPages> mobPages = new ArrayList<>();
+if (hasHouses) {
+	mobPages.add(OL_UITabPages.HOUSEHOLDS);
+} 
+if (hasCompanies) {
+	mobPages.add(OL_UITabPages.COMPANIES);
 }
+tabMob.f_initializeMobilityPages(mobPages);
 
 //Initialize slider gcs and set sliders
 uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), new ArrayList<>(), c_sliderEAGCs);
