@@ -26,8 +26,8 @@
 		<Id>1696863329251</Id>
 		<Name><![CDATA[f_selectGISRegion]]></Name>
 		<Description><![CDATA[Function that selects gisregions after click on the map]]></Description>
-		<X>50</X>
-		<Y>1060</Y>
+		<X>60</X>
+		<Y>1080</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -166,8 +166,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1707918668161</Id>
 		<Name><![CDATA[f_selectGridNode]]></Name>
-		<X>70</X>
-		<Y>1100</Y>
+		<X>80</X>
+		<Y>1120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -186,8 +186,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1707918668163</Id>
 		<Name><![CDATA[f_selectBuilding]]></Name>
-		<X>70</X>
-		<Y>1120</Y>
+		<X>80</X>
+		<Y>1140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -210,8 +210,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1707918668165</Id>
 		<Name><![CDATA[f_deselectPreviousSelect]]></Name>
-		<X>70</X>
-		<Y>1080</Y>
+		<X>80</X>
+		<Y>1100</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -523,8 +523,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1720793723819</Id>
 		<Name><![CDATA[f_updateUIResultsData]]></Name>
-		<X>80</X>
-		<Y>1140</Y>
+		<X>90</X>
+		<Y>1160</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -595,8 +595,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1721049341787</Id>
 		<Name><![CDATA[f_listFunctions]]></Name>
-		<X>80</X>
-		<Y>1160</Y>
+		<X>90</X>
+		<Y>1180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -611,8 +611,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1725006890451</Id>
 		<Name><![CDATA[f_setUIButton]]></Name>
-		<X>80</X>
-		<Y>1180</Y>
+		<X>90</X>
+		<Y>1200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1419,8 +1419,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1750261221085</Id>
 		<Name><![CDATA[f_setTrafoText]]></Name>
-		<X>50</X>
-		<Y>1590</Y>
+		<X>60</X>
+		<Y>1520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1635,8 +1635,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1752836715726</Id>
 		<Name><![CDATA[f_clearSelectionAndSelectEnergyModel]]></Name>
-		<X>50</X>
-		<Y>1220</Y>
+		<X>60</X>
+		<Y>1240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2558,8 +2558,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1764776636006</Id>
 		<Name><![CDATA[f_selectEnergyModel]]></Name>
-		<X>70</X>
-		<Y>1200</Y>
+		<X>80</X>
+		<Y>1220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2689,6 +2689,62 @@
 		<Name><![CDATA[f_getSelectedChartTypes_Energy]]></Name>
 		<X>-650</X>
 		<Y>800</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1777565261922</Id>
+		<Name><![CDATA[f_clickOnMap]]></Name>
+		<X>50</X>
+		<Y>1060</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[clickx]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[clicky]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1777637682935</Id>
+		<Name><![CDATA[f_clearAdditionalGCBuildingSelection]]></Name>
+		<X>940</X>
+		<Y>-110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1777637752826</Id>
+		<Name><![CDATA[f_switchSelectedGCInBuilding]]></Name>
+		<X>940</X>
+		<Y>-90</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
