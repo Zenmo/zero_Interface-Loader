@@ -3058,28 +3058,7 @@ else{
 
 J_ProfilePointer f_createEngineProfile(String profileID,double[] arguments,double[] values,OL_ProfileUnits profileUnitType)
 {/*ALCODESTART::1749125189323*/
-double dataTimeStep_h = (arguments[arguments.length-1] - arguments[0])/(arguments.length-1);
-double dataStartTime_h = arguments[0];
-double simTimeStep_h = settings.timeStep_h(); 
-double a_profile[];
-if (simTimeStep_h < dataTimeStep_h) { //Interpolate data to timeStep_h = 0.25
-	//traceln("***** profilePointer using tableFunction to interpolate hourly data into quarter-hourly data ********");
-	if ((dataTimeStep_h/simTimeStep_h)%1.0 != 0.0) {
-		throw new RuntimeException("dataTimeStep_h is not an integer multiple of modelTimeStep! Unsupported dataformat!");
-	}
-	TableFunction tableFunction = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-	a_profile = new double[values.length*(int)(dataTimeStep_h/simTimeStep_h)];
-	for (int i=0; i<a_profile.length; i++) {
-		a_profile[i] = tableFunction.get(dataStartTime_h+i*simTimeStep_h);
-	}
-	dataTimeStep_h = simTimeStep_h;
-} else if (simTimeStep_h > dataTimeStep_h) {
-	throw new RuntimeException("dataTimeStep_h smaller than modelTimeStep! Unsupported dataformat! Need to implement downsampling to allow this");
-} else {
-	a_profile=values;
-}
-
-J_ProfilePointer profilePointer = new J_ProfilePointer(profileID, a_profile, dataTimeStep_h, dataStartTime_h, profileUnitType);	
+J_ProfilePointer profilePointer = f_createProfilePointer(profileID, arguments, values, profileUnitType, null);
 
 energyModel.f_addProfile(profilePointer);
 return profilePointer;
@@ -3322,13 +3301,21 @@ if(cookingType != OL_HouseholdCookingMethod.NONE){
 }
 /*ALCODEEND*/}
 
-double f_addHotWaterDemand(GridConnection GC,double yearlyHWD_kWh)
+double f_addHotWaterDemand(GridConnection GC,double yearlyHWD_kWh,int numberOfResidents)
 {/*ALCODESTART::1749726279652*/
 if(yearlyHWD_kWh <= 0){
 	throw new RuntimeException("Trying to create a DHW asset, without specifying the yearly energy consumption");
 }
-J_ProfilePointer pp = energyModel.f_findProfile("default_house_hot_water_demand_fr");
-J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, pp);
+J_ProfilePointer pp = f_getDHWProfile(numberOfResidents);
+if(pp == null){
+	pp = energyModel.f_findProfile("default_house_hot_water_demand_fr");
+	J_EAConsumption profile = new J_EAConsumption(GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, pp);
+	return profile.getPeakConsumptionPower_kW();
+} else {
+	J_EAProfile profile = new J_EAProfile( GC, OL_EnergyCarriers.HEAT, pp, OL_AssetFlowCategories.hotWaterConsumption_kW, energyModel.p_timeParameters);
+	return profile.getPeakConsumptionPower_kW();
+}
+
 /*ALCODEEND*/}
 
 double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,Double heatDemand_kwhpa,J_HeatingPreferences heatingPreferences)
@@ -5060,17 +5047,20 @@ else{
 double spaceHeatingDemand_kwhpa;
 double hotWaterDemand_kWhpa;
 double cookingDemand_kWhpa;
+int numberOfResidents = 0;
 if(house.p_PBLParameters != null){
 	PBL_SpaceHeatingAndResidents_data spaceHeatingDataObject = f_getPBLObject_spaceHeatingAndResidents(house.p_PBLParameters.getDwellingType(), house.p_buildYear, house.p_PBLParameters.getOwnershipType(), house.p_insulationLabel);
 	spaceHeatingDemand_kwhpa = f_getSpaceHeatingDemand_PBL_kWh(house.p_floorSurfaceArea_m2, spaceHeatingDataObject, house.p_PBLParameters.getLocalFactor(), house.p_PBLParameters.getRegionalClimateCorrectionFactor());
 	
-	int numberOfResidents = f_getNumberOfResidents_PBL(spaceHeatingDataObject, house.p_floorSurfaceArea_m2);
+	numberOfResidents = f_getNumberOfResidents_PBL(spaceHeatingDataObject, house.p_floorSurfaceArea_m2);
 	
 	PBL_DHWAndCooking_data DHWAndCookingDataObject = f_getPBLObject_DHWAndCooking(house.p_buildYear, house.p_floorSurfaceArea_m2, numberOfResidents);
 	hotWaterDemand_kWhpa = DHWAndCookingDataObject.dhw_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
 	cookingDemand_kWhpa = DHWAndCookingDataObject.cooking_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
 }
 else{
+	numberOfResidents = f_estimateHouseNmbrResidents();
+	
 	spaceHeatingDemand_kwhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgSpaceHeatingTotalGasConsumptionShare_fr;
 	hotWaterDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgDHWTotalGasConsumptionShare_fr;
 	cookingDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgCookingTotalGasConsumptionShare_fr;
@@ -5086,9 +5076,26 @@ J_HeatingPreferences heatingPreferences = f_getHouseHeatingPreferences();
 
 f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2, spaceHeatingDemand_kwhpa, heatingPreferences);
 
+//Add hot water demand
+double maxHotWaterDemand_kW = 0;
+if(hotWaterDemand_kWhpa > 0){
+	maxHotWaterDemand_kW = f_addHotWaterDemand(house, hotWaterDemand_kWhpa, numberOfResidents);
+}
+
+//Add cooking demand
+if(cookingType == null || cookingType == OL_HouseholdCookingMethod.UNKNOWN){
+	cookingType = avgc_data.p_avgHouseCookingMethod;
+}
+f_addCookingAsset(house, cookingType, cookingDemand_kWhpa);
+
 //Determine required heating capacity for the heating asset	
 double maximalTemperatureDifference_K = 30.0; // Approximation
-double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000;
+double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000 + maxHotWaterDemand_kW;
+
+/*if (hotWaterDemand_kWhpa > 0) {
+	// A standard domestic peak is roughly 25-30 kW for instant hot water delivery
+	maxHeatOutputPower_kW += 100.0; 
+}*/
 
 //Check if heating type is known: Else: take avgc
 if(heatingType == null || heatingType == OL_GridConnectionHeatingType.UNKNOWN){
@@ -5102,38 +5109,14 @@ f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
 house.f_addHeatManagement(heatingType, false);
 house.f_setHeatingPreferences(heatingPreferences);
 
-//Add hot water demand
-if(hotWaterDemand_kWhpa > 0){
-	f_addHotWaterDemand(house, hotWaterDemand_kWhpa);
-}
-
-//Add cooking demand
-if(cookingType == null || cookingType == OL_HouseholdCookingMethod.UNKNOWN){
-	cookingType = avgc_data.p_avgHouseCookingMethod;
-}
-f_addCookingAsset(house, cookingType, cookingDemand_kWhpa);
-
-
 //For calibrating AVG data PBL loss factor 
 totalSpaceHeatDemand_kwhpa += spaceHeatingDemand_kwhpa;
 /*ALCODEEND*/}
 
-double f_estimateHouseDHWDemand_kWh(double floorSurface_m2)
+int f_estimateHouseNmbrResidents()
 {/*ALCODESTART::1768570811946*/
-int numberOfResidents;
-if( floorSurface_m2 > 150){
-	numberOfResidents = uniform_discr(2,6);
-}
-else if (floorSurface_m2 > 50){
-	numberOfResidents = uniform_discr(1,4);
-}
-else {
-	numberOfResidents = uniform_discr(1,2);
-}
-
-double yearlyHWD_kWh = 1000 + numberOfResidents * 150; //SOURCE!? Put in AVGC!!
-return yearlyHWD_kWh;
-
+int numberOfResidents = uniform_discr(1,5);
+return numberOfResidents;
 /*ALCODEEND*/}
 
 double f_estimateHouseCookingDemand_kWh()
@@ -5261,5 +5244,63 @@ if(PVOrientationZorm != null){
 }
 
 return pvOrientation;
+/*ALCODEEND*/}
+
+J_ProfilePointer f_getDHWProfile(int numberOfResidents)
+{/*ALCODESTART::1776432342124*/
+int randomIndex;
+J_ProfilePointer ppDHWProfile = null;
+
+double offset_h = (energyModel.p_timeParameters.getDayOfWeek1jan() - 1) * 24.0; //Monday = index 0: -> detailed DHW profiles always start on monday! -> To have no offset you need to subtract -1.
+
+if(map_nrOfResidentsToDHWProfiles_data.containsKey(numberOfResidents) && map_nrOfResidentsToDHWProfiles_data.get(numberOfResidents).size() > 0){
+	List<DHWProfile_data> profiles = map_nrOfResidentsToDHWProfiles_data.get(numberOfResidents);
+	randomIndex = uniform_discr(0, profiles.size() - 1);
+	DHWProfile_data dhwProfile = profiles.get(randomIndex);
+	ppDHWProfile = f_createProfilePointer(dhwProfile.DHWProfileID(), dhwProfile.getArgumentsArray(), dhwProfile.getValuesArray(), dhwProfile.profileUnits(), offset_h);
+	profiles.remove(randomIndex);
+	if(!energyModel.map_nrOfResidentsToDHWprofiles.containsKey(numberOfResidents)){
+		energyModel.map_nrOfResidentsToDHWprofiles.put(numberOfResidents, new ArrayList<>());
+	}
+	energyModel.map_nrOfResidentsToDHWprofiles.get(numberOfResidents).add(ppDHWProfile);
+	energyModel.f_addProfile(ppDHWProfile);
+}
+else if (energyModel.map_nrOfResidentsToDHWprofiles.containsKey(numberOfResidents) && energyModel.map_nrOfResidentsToDHWprofiles.get(numberOfResidents).size() > 0){
+	List<J_ProfilePointer> assignedProfiles = energyModel.map_nrOfResidentsToDHWprofiles.get(numberOfResidents);
+	randomIndex = uniform_discr(0, assignedProfiles.size() - 1);
+	ppDHWProfile = assignedProfiles.get(randomIndex);
+}
+
+return ppDHWProfile;
+/*ALCODEEND*/}
+
+J_ProfilePointer f_createProfilePointer(String profileID,double[] arguments,double[] values,OL_ProfileUnits profileUnitType,Double offset_h)
+{/*ALCODESTART::1776443217505*/
+double dataTimeStep_h = (arguments[arguments.length-1] - arguments[0])/(arguments.length-1);
+double simTimeStep_h = settings.timeStep_h(); 
+double a_profile[];
+
+double dataStartTime_h = offset_h != null ? arguments[0] - offset_h : arguments[0];
+
+if (simTimeStep_h < dataTimeStep_h) { //Interpolate data to timeStep_h = 0.25
+	//traceln("***** profilePointer using tableFunction to interpolate hourly data into quarter-hourly data ********");
+	if ((dataTimeStep_h/simTimeStep_h)%1.0 != 0.0) {
+		throw new RuntimeException("dataTimeStep_h is not an integer multiple of modelTimeStep! Unsupported dataformat!");
+	}
+	TableFunction tableFunction = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+	a_profile = new double[values.length*(int)(dataTimeStep_h/simTimeStep_h)];
+	for (int i=0; i<a_profile.length; i++) {
+		a_profile[i] = tableFunction.get(arguments[0]+i*simTimeStep_h);
+	}
+	dataTimeStep_h = simTimeStep_h;
+} else if (simTimeStep_h > dataTimeStep_h) {
+	throw new RuntimeException("dataTimeStep_h smaller than modelTimeStep! Unsupported dataformat! Need to implement downsampling to allow this");
+} else {
+	a_profile=values;
+}
+
+J_ProfilePointer profilePointer = new J_ProfilePointer(profileID, a_profile, dataTimeStep_h, dataStartTime_h, profileUnitType);	
+
+return profilePointer;
 /*ALCODEEND*/}
 

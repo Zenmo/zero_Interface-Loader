@@ -1958,7 +1958,7 @@ f_setResidentialBatteries( sl_householdBatteriesResidentialArea_pct.getValue(), 
 			<Text>
 				<Id>1750063382237</Id>
 				<Name><![CDATA[t_householdBatteriesResidentialAreaDescription]]></Name>
-				<X>30</X>
+				<X>20</X>
 				<Y>80</Y>
 				<Label>
 					<X>0</X>
