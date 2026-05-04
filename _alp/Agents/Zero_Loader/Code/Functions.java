@@ -5251,7 +5251,7 @@ J_ProfilePointer f_getDHWProfile(int numberOfResidents)
 int randomIndex;
 J_ProfilePointer ppDHWProfile = null;
 
-double offset_h = (energyModel.p_timeParameters.getDayOfWeek1jan() - 1) * 24.0;
+double offset_h = (energyModel.p_timeParameters.getDayOfWeek1jan() - 1) * 24.0; //Monday = index 0: -> detailed DHW profiles always start on monday! -> To have no offset you need to subtract -1.
 
 if(map_nrOfResidentsToDHWProfiles_data.containsKey(numberOfResidents) && map_nrOfResidentsToDHWProfiles_data.get(numberOfResidents).size() > 0){
 	List<DHWProfile_data> profiles = map_nrOfResidentsToDHWProfiles_data.get(numberOfResidents);
