@@ -404,7 +404,7 @@ if(previousClickedObjectType != null){
 	
 	// We restore the colors of what we clicked on before
 	if (previousClickedObjectType == OL_GISObjectType.GRIDNODE){
-		f_styleGridNodes(v_clickedGridNode);
+		f_styleGridNodes(previousClickedGridNode);
 		for ( Agent agent : previousClickedGridNode.f_getAllLowerLVLConnectedGridConnections()){	
 			if (agent instanceof GridConnection) {
 				GridConnection GC = (GridConnection)agent;
