@@ -2068,7 +2068,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[Pagina 1/2]]></Text>
-				<TextCode>"Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPages.size()</TextCode>
+				<TextCode>"Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPageGroups.size()</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>10</Size>

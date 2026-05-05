@@ -234,7 +234,7 @@ if(!pop_tabElectricity.isEmpty()){
 	pop_tabElectricity.get(0).f_initializeTab_Electricity(electricityTabEASliderGCs);
 }
 if(!pop_tabHeating.isEmpty()){
-	//pop_tabHeating.get(0).f_initializeTab_Heating();
+	pop_tabHeating.get(0).f_initializeTab_Heating();
 }
 if(!pop_tabMobility.isEmpty()){
 	pop_tabMobility.get(0).f_initializeTab_Mobility();

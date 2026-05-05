@@ -100,23 +100,8 @@
 			</OptionList>
 			<OptionList>
 				<Id>1667742453792</Id>
-				<Name><![CDATA[OL_UITabPages]]></Name>
-				<Option>
-					<Id>1777550799737</Id>
-					<Name><![CDATA[HOUSEHOLDS]]></Name>
-				</Option>
-				<Option>
-					<Id>1777550865243</Id>
-					<Name><![CDATA[COMPANIES]]></Name>
-				</Option>
-				<Option>
-					<Id>1777551005223</Id>
-					<Name><![CDATA[COLLECTIVE]]></Name>
-				</Option>
-				<Option>
-					<Id>1777551085629</Id>
-					<Name><![CDATA[CUSTOM]]></Name>
-				</Option>
+				<Name><![CDATA[OL_UNUSED3]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 			</OptionList>
 			<OptionList>
 				<Id>1675025163072</Id>

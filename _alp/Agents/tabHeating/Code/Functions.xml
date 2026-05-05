@@ -370,8 +370,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1754923748794</Id>
 		<Name><![CDATA[f_updateSliders_Heating]]></Name>
-		<X>-380</X>
-		<Y>30</Y>
+		<X>-400</X>
+		<Y>250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -386,8 +386,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1754924542535</Id>
 		<Name><![CDATA[f_updateHeatingSliders_households]]></Name>
-		<X>-360</X>
-		<Y>50</Y>
+		<X>-380</X>
+		<Y>270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -402,8 +402,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1754924544023</Id>
 		<Name><![CDATA[f_updateHeatingSliders_companies]]></Name>
-		<X>-360</X>
-		<Y>70</Y>
+		<X>-380</X>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -418,8 +418,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1754924574713</Id>
 		<Name><![CDATA[f_updateHeatingSliders_custom]]></Name>
-		<X>-360</X>
-		<Y>90</Y>
+		<X>-380</X>
+		<Y>310</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -510,8 +510,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1777640467790</Id>
 		<Name><![CDATA[f_initializeHeatingPages]]></Name>
-		<X>-380</X>
-		<Y>-140</Y>
+		<X>-400</X>
+		<Y>130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -519,30 +519,6 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[selectedPages]]></Name>
-			<Type><![CDATA[List<OL_UITabPages>]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>ShapeGroup</ReturnType>
-		<Id>1777640467814</Id>
-		<Name><![CDATA[f_getShapeGroupForPage]]></Name>
-		<X>-360</X>
-		<Y>-120</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[page]]></Name>
-			<Type><![CDATA[OL_UITabPages]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -550,8 +526,8 @@
 		<ReturnType>ShapeGroup</ReturnType>
 		<Id>1777640467839</Id>
 		<Name><![CDATA[f_goToPage]]></Name>
-		<X>-360</X>
-		<Y>-100</Y>
+		<X>-380</X>
+		<Y>150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -570,8 +546,8 @@
 		<ReturnType>ShapeGroup</ReturnType>
 		<Id>1777640467863</Id>
 		<Name><![CDATA[f_nextPage]]></Name>
-		<X>-360</X>
-		<Y>-80</Y>
+		<X>-380</X>
+		<Y>170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -586,8 +562,8 @@
 		<ReturnType>ShapeGroup</ReturnType>
 		<Id>1777640467886</Id>
 		<Name><![CDATA[f_previousPage]]></Name>
-		<X>-360</X>
-		<Y>-60</Y>
+		<X>-380</X>
+		<Y>190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -602,8 +578,24 @@
 		<ReturnType>ShapeGroup</ReturnType>
 		<Id>1777640467910</Id>
 		<Name><![CDATA[f_updatePageIndicator]]></Name>
-		<X>-360</X>
-		<Y>-40</Y>
+		<X>-380</X>
+		<Y>210</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1777992529021</Id>
+		<Name><![CDATA[f_initializeTab_Heating]]></Name>
+		<X>-400</X>
+		<Y>50</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

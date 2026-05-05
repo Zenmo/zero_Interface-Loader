@@ -1574,7 +1574,7 @@ zero_Interface.f_setTrafoText();
 			<Y>0</Y>
 		</Label>
 		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
+		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<XCode>180</XCode>
@@ -2168,7 +2168,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[Pagina 1/2]]></Text>
-				<TextCode>"Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPages.size()</TextCode>
+				<TextCode>"Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPageGroups.size()</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>10</Size>

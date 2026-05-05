@@ -64,43 +64,6 @@ uI_Tabs.add_pop_tabMobility();
 //Adjust location of buttons to account for missing e-hub tab
 uI_Tabs.gr_energyDemandSettings.setX(zero_Interface.uI_Tabs.gr_energyDemandSettings.getX()+40);
 
-boolean hasHouses = zero_Interface.energyModel.Houses.size() > 0;
-boolean hasCompanies = zero_Interface.energyModel.UtilityConnections.size() > 0;
-
-// Electricity tab
-tabElectricity tabElec = (tabElectricity) uI_Tabs.pop_tabElectricity.get(0);
-List<OL_UITabPages> elecPages = new ArrayList<>();
-if (hasHouses) {
-	elecPages.add(OL_UITabPages.HOUSEHOLDS);
-} 
-if (hasCompanies) {
-	elecPages.add(OL_UITabPages.COMPANIES);
-}
-elecPages.add(OL_UITabPages.COLLECTIVE);
-tabElec.f_initializeElectricityPages(elecPages);
-
-// Heating tab
-tabHeating tabHeat = (tabHeating) uI_Tabs.pop_tabHeating.get(0);
-List<OL_UITabPages> heatPages = new ArrayList<>();
-if (hasHouses) {
-	heatPages.add(OL_UITabPages.HOUSEHOLDS);
-} 
-if (hasCompanies) {
-	heatPages.add(OL_UITabPages.COMPANIES);
-}
-tabHeat.f_initializeHeatingPages(heatPages);
-
-// Mobility tab
-tabMobility tabMob = (tabMobility) uI_Tabs.pop_tabMobility.get(0);
-List<OL_UITabPages> mobPages = new ArrayList<>();
-if (hasHouses) {
-	mobPages.add(OL_UITabPages.HOUSEHOLDS);
-} 
-if (hasCompanies) {
-	mobPages.add(OL_UITabPages.COMPANIES);
-}
-tabMob.f_initializeMobilityPages(mobPages);
-
 //Initialize slider gcs and set sliders
 uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), new ArrayList<>(), c_sliderEAGCs);
 

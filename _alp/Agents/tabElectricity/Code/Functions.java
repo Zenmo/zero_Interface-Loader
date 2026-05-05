@@ -422,21 +422,22 @@ f_setDemandReduction(gcList, -demandReduction_pct);
 double f_updateSliders_Electricity()
 {/*ALCODESTART::1754926103683*/
 // Update all loaded pages
-for (OL_UITabPages page : c_loadedPages) {
-    switch (page) {
-        case HOUSEHOLDS:
-            f_updateElectricitySliders_households();
-            break;
-        case COMPANIES:
-            f_updateElectricitySliders_companies();
-            break;
-        case COLLECTIVE:
-        	f_updateElectricitySliders_collective();
-            break;
-        case CUSTOM:
-            f_updateElectricitySliders_custom();
-            break;
-    }
+for (ShapeGroup page : c_loadedPageGroups) {
+	if(page == gr_electricitySliders_households){
+		f_updateElectricitySliders_households();
+	}
+	else if(page == gr_electricitySliders_companies){
+		f_updateElectricitySliders_companies();
+	}
+	else if(page == gr_electricitySliders_collective){
+		f_updateElectricitySliders_collective();
+	}
+	/*else if(page == gr_electricitySliders_custom){ //Override and uncomment, if you want to include and update your custom ShapeGroup
+		f_updateElectricitySliders_custom(); 
+	}*/
+	else{
+		throw new RuntimeException("Missing f_updateElectricitySliders for ShapeGroup" + page.getName() + "! Override this function and add it to the for-loop!");
+	}
 }
 /*ALCODEEND*/}
 
@@ -532,9 +533,8 @@ cb_companiesCurtailment.setSelected(curtailment, false);
 
 double f_updateElectricitySliders_custom()
 {/*ALCODESTART::1754926103691*/
-//If you have a custom tab, 
-//override this function to make it update automatically
-traceln("Forgot to override the update custom electricity sliders functionality");
+//If you have a custom tab, override this function to make it update automatically
+throw new RuntimeException("Forgot to override the update custom electricity sliders functionality");
 /*ALCODEEND*/}
 
 double f_setCurtailment(boolean activateCurtailment,List<GridConnection> gcList)
@@ -564,6 +564,8 @@ c_electricityTabEASliderGCs.addAll(electricityTabEASliderGCs);
 
 f_getCurrentPVOnLandAndWindturbineValues();
 f_getCurrentGridBatterySize();
+
+f_initializeElectricityPages();
 /*ALCODEEND*/}
 
 double f_getCurrentGridBatterySize()
@@ -598,82 +600,36 @@ switch (pvtOrientation){
 return profilePointer;
 /*ALCODEEND*/}
 
-double f_initializeElectricityPages(List<OL_UITabPages> selectedPages)
-{/*ALCODESTART::1777551606246*/
-// Store the page configuration
-c_loadedPages = new ArrayList<>(selectedPages);
-c_pageGroups = new ArrayList<>();
-
-// Map each page type to its ShapeGroup
-for (OL_UITabPages page : c_loadedPages) {
-    ShapeGroup group = f_getShapeGroupForPage(page);
-    if (group != null) {
-        c_pageGroups.add(group);
-    } else {
-        throw new RuntimeException("No ShapeGroup found for electricity tab page: " + page);
-    }
-}
-// Show/hide page indicator based on number of pages
-if (c_loadedPages.size() <= 1) {
-    gr_pageIndicator.setVisible(false);
-} else {
-    gr_pageIndicator.setVisible(true);
-}
-// Navigate to the first page
-if (!c_loadedPages.isEmpty()) {
-    f_goToPage(0);
-}
-
-/*ALCODEEND*/}
-
-ShapeGroup f_getShapeGroupForPage(OL_UITabPages page)
-{/*ALCODESTART::1777552457477*/
-switch(page) {
-    case HOUSEHOLDS:
-        return gr_electricitySliders_households;
-    case COMPANIES:
-        return gr_electricitySliders_companies;
-    case COLLECTIVE:
-        return gr_electricitySliders_collective;
-    case CUSTOM:
-        //If you have a custom tab, override this function to return it here
-		traceln("Forgot to override the custom electricity tab");
-        return null;
-    default:
-        return null;
-}
-/*ALCODEEND*/}
-
 ShapeGroup f_goToPage(int pageIndex)
 {/*ALCODESTART::1777552836057*/
-for (ShapeGroup group : c_pageGroups) {
+for (ShapeGroup group : c_loadedPageGroups) {
     group.setVisible(false);
 }
 
-if (c_pageGroups.isEmpty()) return;
+if (c_loadedPageGroups.isEmpty()) return;
 
 v_currentPageIndex = pageIndex;
-c_pageGroups.get(v_currentPageIndex).setVisible(true); // Show the selected page group
+c_loadedPageGroups.get(v_currentPageIndex).setVisible(true); // Show the selected page group
 f_updatePageIndicator(); // Update the page indicator text
 /*ALCODEEND*/}
 
 ShapeGroup f_nextPage()
 {/*ALCODESTART::1777552936318*/
-if (c_loadedPages.isEmpty()) return;
-int nextIndex = (v_currentPageIndex + 1) % c_loadedPages.size();
+if (c_loadedPageGroups.isEmpty()) return;
+int nextIndex = (v_currentPageIndex + 1) % c_loadedPageGroups.size();
 f_goToPage(nextIndex);
 /*ALCODEEND*/}
 
 ShapeGroup f_previousPage()
 {/*ALCODESTART::1777553025667*/
-if (c_loadedPages.isEmpty()) return;
-int prevIndex = (v_currentPageIndex - 1 + c_loadedPages.size()) % c_loadedPages.size();
+if (c_loadedPageGroups.isEmpty()) return;
+int prevIndex = (v_currentPageIndex - 1 + c_loadedPageGroups.size()) % c_loadedPageGroups.size();
 f_goToPage(prevIndex);
 /*ALCODEEND*/}
 
 ShapeGroup f_updatePageIndicator()
 {/*ALCODESTART::1777553071510*/
-t_pageIndicator.setText("Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPages.size());
+t_pageIndicator.setText("Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPageGroups.size());
 /*ALCODEEND*/}
 
 double f_updateElectricitySliders_collective()
@@ -729,5 +685,36 @@ for(GridConnection GC : productionGridConnections){
 	}
 }
 cb_gridCurtailment.setSelected(curtailment, false);
+/*ALCODEEND*/}
+
+double f_initializeElectricityPages()
+{/*ALCODESTART::1777985169528*/
+// CHOOSE WHICH PAGES IN YOUR TAB YOU WANT TO BE ABLE TO SHOW FOR YOUR PROJECT 
+boolean hasHouses = zero_Interface.energyModel.Houses.size() > 0;
+boolean hasCompanies = zero_Interface.energyModel.UtilityConnections.size() > 0;
+
+c_loadedPageGroups = new ArrayList<>();
+// Load in the existing pages you want to include in the tab
+if (hasHouses) {
+	c_loadedPageGroups.add(gr_electricitySliders_households);
+} 
+if (hasCompanies) {
+	c_loadedPageGroups.add(gr_electricitySliders_companies);
+}
+c_loadedPageGroups.add(gr_electricitySliders_collective);
+
+// If you have a custom page, override this function to add your custom page to the list. For instance:
+//pages.add(gr_electricitySliders_custom);
+
+// Show/hide page indicator based on number of pages
+if (c_loadedPageGroups.size() <= 1) {
+    gr_pageIndicator.setVisible(false);
+} else {
+    gr_pageIndicator.setVisible(true);
+}
+// Navigate to the first page
+if (!c_loadedPageGroups.isEmpty()) {
+    f_goToPage(0);
+}
 /*ALCODEEND*/}
 

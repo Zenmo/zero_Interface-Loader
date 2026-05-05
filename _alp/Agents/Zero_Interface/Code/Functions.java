@@ -271,7 +271,7 @@ f_setSliderPresets();
 b_runningMainInterfaceScenarios = false;
 
 //Store the initial slider state for Residential areas for the scenario current button
-if (project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
+if (energyModel.Houses.size() > 0) {
 	f_storeResidentialScenario_Current();
 }
 /*ALCODEEND*/}
@@ -2754,53 +2754,12 @@ double f_createUITabs_default()
 
 // Adding the (child) tabs to the tabArea population
 
-// If you use an extension of a tab, you must update the pointer to the instance of the interface
-// Something like: tabElectricity.zero_Interface = loader_Project.zero_Interface;
-// No update to the pointer is needed for the generic tabs
-
 uI_Tabs.add_pop_tabElectricity();
 uI_Tabs.add_pop_tabHeating();
 uI_Tabs.add_pop_tabMobility();
 
-boolean hasHouses = energyModel.Houses.size() > 0;
-boolean hasCompanies = energyModel.UtilityConnections.size() > 0;
-
-// Electricity tab
-tabElectricity tabElec = (tabElectricity) uI_Tabs.pop_tabElectricity.get(0);
-List<OL_UITabPages> elecPages = new ArrayList<>();
-if (hasHouses) {
-	elecPages.add(OL_UITabPages.HOUSEHOLDS);
-} 
-if (hasCompanies) {
-	elecPages.add(OL_UITabPages.COMPANIES);
-}
-elecPages.add(OL_UITabPages.COLLECTIVE);
-tabElec.f_initializeElectricityPages(elecPages);
-
-// Heating tab
-tabHeating tabHeat = (tabHeating) uI_Tabs.pop_tabHeating.get(0);
-List<OL_UITabPages> heatPages = new ArrayList<>();
-if (hasHouses) {
-	heatPages.add(OL_UITabPages.HOUSEHOLDS);
-} 
-if (hasCompanies) {
-	heatPages.add(OL_UITabPages.COMPANIES);
-}
-tabHeat.f_initializeHeatingPages(heatPages);
-
-// Mobility tab
-tabMobility tabMob = (tabMobility) uI_Tabs.pop_tabMobility.get(0);
-List<OL_UITabPages> mobPages = new ArrayList<>();
-if (hasHouses) {
-	mobPages.add(OL_UITabPages.HOUSEHOLDS);
-} 
-if (hasCompanies) {
-	mobPages.add(OL_UITabPages.COMPANIES);
-}
-tabMob.f_initializeMobilityPages(mobPages);
-
 // EHub tab
-if (hasCompanies) {
+if (energyModel.UtilityConnections.size() > 0) {
     uI_Tabs.add_pop_tabEHub();
     ((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
 }
@@ -3311,11 +3270,11 @@ tabElec.sl_householdElectricityDemandIncrease_pct.setValue(roundToInt(electricit
 
 //Large-scale PV
 double largeScalePV_ha = p_residentialScenario_Current.getLargeScalePV_ha();
-tabElec.sl_largeScalePV_ha.setValue(largeScalePV_ha);
+tabElec.sl_largeScalePV_ha.setValue(largeScalePV_ha, true);
 	
 //Large-scale Wind
 double largeScaleWind_MW = p_residentialScenario_Current.getLargeScaleWind_MW();
-tabElec.sl_largeScaleWind_MW.setValue(largeScaleWind_MW);
+tabElec.sl_largeScaleWind_MW.setValue(largeScaleWind_MW, true);
 
 //Gridbatteries
 double averageNeighbourhoodBatterySize_kWh = p_residentialScenario_Current.getAverageNeighbourhoodBatterySize_kWh();

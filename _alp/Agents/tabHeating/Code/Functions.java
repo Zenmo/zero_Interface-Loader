@@ -677,18 +677,19 @@ f_setHeatingSystems(gcList, orderedHeatingSystemGCList, changedSliderHeatingType
 double f_updateSliders_Heating()
 {/*ALCODESTART::1754923748794*/
 // Update all loaded pages
-for (OL_UITabPages page : c_loadedPages) {
-    switch (page) {
-        case HOUSEHOLDS:
-            f_updateHeatingSliders_households();
-            break;
-        case COMPANIES:
-            f_updateHeatingSliders_companies();
-            break;
-        case CUSTOM:
-            f_updateHeatingSliders_custom();
-            break;
-    }
+for (ShapeGroup page : c_loadedPageGroups) {
+	if(page == gr_heatingSliders_households){
+		f_updateHeatingSliders_households();
+	}
+	else if(page == gr_heatingSliders_companies){
+		f_updateHeatingSliders_companies();
+	}
+	/*else if(page == gr_electricitySliders_custom){ //Override and uncomment, if you want to include and update your custom ShapeGroup
+		f_updateElectricitySliders_custom(); 
+	}*/
+	else{
+		throw new RuntimeException("Missing f_updateElectricitySliders for ShapeGroup" + page.getName() + "! Override this function and add it to the for-loop!");
+	}
 }
 /*ALCODEEND*/}
 
@@ -843,9 +844,8 @@ sl_companiesCustom_pct.setValue(companiesWithCustomHeating_pct, false);
 
 double f_updateHeatingSliders_custom()
 {/*ALCODESTART::1754924574713*/
-//If you have a custom tab, 
-//override this function to make it update automatically
-traceln("Forgot to override the update custom heating sliders functionality");
+//If you have a custom tab, override this function to make it update automatically
+throw new RuntimeException("Forgot to override the update custom heating sliders functionality");
 /*ALCODEEND*/}
 
 double f_setHeatingSystems(List<GridConnection> gcList,List<GridConnection> orderedHeatingSystemGCList,OL_GridConnectionHeatingType changedSliderHeatingType,double sliderGoal_pct)
@@ -1128,79 +1128,70 @@ zero_Interface.f_setErrorScreen("LET OP: Er is nu een 'warmtenet' gecreëerd. Ma
 return GN_heat;
 /*ALCODEEND*/}
 
-double f_initializeHeatingPages(List<OL_UITabPages> selectedPages)
+double f_initializeHeatingPages()
 {/*ALCODESTART::1777640467790*/
-// Store the page configuration
-c_loadedPages = new ArrayList<>(selectedPages);
-c_pageGroups = new ArrayList<>();
+// CHOOSE WHICH PAGES IN YOUR TAB YOU WANT TO BE ABLE TO SHOW FOR YOUR PROJECT 
+boolean hasHouses = zero_Interface.energyModel.Houses.size() > 0;
+boolean hasCompanies = zero_Interface.energyModel.UtilityConnections.size() > 0;
 
-// Map each page type to its ShapeGroup
-for (OL_UITabPages page : c_loadedPages) {
-    ShapeGroup group = f_getShapeGroupForPage(page);
-    if (group != null) {
-        c_pageGroups.add(group);
-    } else {
-        //throw new RuntimeException("No ShapeGroup found for electricity tab page: " + page);
-    }
+c_loadedPageGroups = new ArrayList<>();
+// Load in the existing pages you want to include in the tab
+if (hasHouses) {
+	c_loadedPageGroups.add(gr_heatingSliders_households);
+} 
+if (hasCompanies) {
+	c_loadedPageGroups.add(gr_heatingSliders_companies);
 }
+
+// If you have a custom page, override this function to add your custom page to the list. For instance:
+//pages.add(gr_heatingSliders_custom);
+
 // Show/hide page indicator based on number of pages
-if (c_loadedPages.size() <= 1) {
+if (c_loadedPageGroups.size() <= 1) {
     gr_pageIndicator.setVisible(false);
 } else {
     gr_pageIndicator.setVisible(true);
 }
 // Navigate to the first page
-if (!c_loadedPages.isEmpty()) {
+if (!c_loadedPageGroups.isEmpty()) {
     f_goToPage(0);
-}
-
-/*ALCODEEND*/}
-
-ShapeGroup f_getShapeGroupForPage(OL_UITabPages page)
-{/*ALCODESTART::1777640467814*/
-switch(page) {
-    case HOUSEHOLDS:
-        return gr_heatingSliders_households;
-    case COMPANIES:
-        return gr_heatingSliders_companies;
-    case CUSTOM:
-        //If you have a custom tab, override this function to return it here
-		traceln("Forgot to override the custom electricity tab");
-        return null;
-    default:
-        return null;
 }
 /*ALCODEEND*/}
 
 ShapeGroup f_goToPage(int pageIndex)
 {/*ALCODESTART::1777640467839*/
-for (ShapeGroup group : c_pageGroups) {
+for (ShapeGroup group : c_loadedPageGroups) {
     group.setVisible(false);
 }
 
-if (c_pageGroups.isEmpty()) return;
+if (c_loadedPageGroups.isEmpty()) return;
 
 v_currentPageIndex = pageIndex;
-c_pageGroups.get(v_currentPageIndex).setVisible(true); // Show the selected page group
+c_loadedPageGroups.get(v_currentPageIndex).setVisible(true); // Show the selected page group
 f_updatePageIndicator(); // Update the page indicator text
 /*ALCODEEND*/}
 
 ShapeGroup f_nextPage()
 {/*ALCODESTART::1777640467863*/
-if (c_loadedPages.isEmpty()) return;
-int nextIndex = (v_currentPageIndex + 1) % c_loadedPages.size();
+if (c_loadedPageGroups.isEmpty()) return;
+int nextIndex = (v_currentPageIndex + 1) % c_loadedPageGroups.size();
 f_goToPage(nextIndex);
 /*ALCODEEND*/}
 
 ShapeGroup f_previousPage()
 {/*ALCODESTART::1777640467886*/
-if (c_loadedPages.isEmpty()) return;
-int prevIndex = (v_currentPageIndex - 1 + c_loadedPages.size()) % c_loadedPages.size();
+if (c_loadedPageGroups.isEmpty()) return;
+int prevIndex = (v_currentPageIndex - 1 + c_loadedPageGroups.size()) % c_loadedPageGroups.size();
 f_goToPage(prevIndex);
 /*ALCODEEND*/}
 
 ShapeGroup f_updatePageIndicator()
 {/*ALCODESTART::1777640467910*/
-t_pageIndicator.setText("Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPages.size());
+t_pageIndicator.setText("Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPageGroups.size());
+/*ALCODEEND*/}
+
+double f_initializeTab_Heating()
+{/*ALCODESTART::1777992529021*/
+f_initializeHeatingPages();
 /*ALCODEEND*/}
 
