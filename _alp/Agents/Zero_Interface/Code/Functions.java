@@ -3289,11 +3289,17 @@ double f_setResidentialScenario_Current()
 ////Electricity
 tabElectricity tabElec = uI_Tabs.pop_tabElectricity.get(0);
 
+//Rooftop PV
 double pv_pct = p_residentialScenario_Current.getHousesWithPV_pct();
 tabElec.sl_householdRooftopPV_pct.setValue(roundToInt(pv_pct), true);
 
+//Home batteries
 double battery_pct = p_residentialScenario_Current.getPvHousesWithBattery_pct();
 tabElec.sl_householdBatteries_pct.setValue(roundToInt(battery_pct), true);
+
+//Curtailment rooftop PV
+boolean cb_householdCurtailmentActive = p_residentialScenario_Current.getCb_householdCurtailmentActive();
+tabElec.cb_householdCurtailment.setSelected(cb_householdCurtailmentActive, true);
 
 //Electric cooking
 double cooking_pct = p_residentialScenario_Current.getCooking_pct();
@@ -3303,9 +3309,22 @@ tabElec.sl_householdElectricCooking_pct.setValue(roundToInt(cooking_pct), true);
 double electricityDemandIncrease_pct = p_residentialScenario_Current.getElectricityDemandIncrease_pct();
 tabElec.sl_householdElectricityDemandIncrease_pct.setValue(roundToInt(electricityDemandIncrease_pct), true);
 
+//Large-scale PV
+double largeScalePV_ha = p_residentialScenario_Current.getLargeScalePV_ha();
+tabElec.sl_largeScalePV_ha.setValue(largeScalePV_ha);
+	
+//Large-scale Wind
+double largeScaleWind_MW = p_residentialScenario_Current.getLargeScaleWind_MW();
+tabElec.sl_largeScaleWind_MW.setValue(largeScaleWind_MW);
+
 //Gridbatteries
 double averageNeighbourhoodBatterySize_kWh = p_residentialScenario_Current.getAverageNeighbourhoodBatterySize_kWh();
 tabElec.sl_gridBatteries_kWh.setValue(averageNeighbourhoodBatterySize_kWh, true);
+
+//Curtailment rooftop PV
+boolean cb_gridCurtailmentActive = p_residentialScenario_Current.getCb_gridCurtailmentActive();
+tabElec.cb_householdCurtailment.setSelected(cb_gridCurtailmentActive, true);
+
 
 ////Heating
 tabHeating tabHeat = uI_Tabs.pop_tabHeating.get(0);
@@ -3337,7 +3356,6 @@ else{
 	tabHeat.cb_householdLTDistrictHeating.setSelected(cb_householdLTDistrictHeatingActive, false);
 }
 
-
 //Houses with Airco
 double pctOfHousesWithAirco = p_residentialScenario_Current.getHousesWithAirco_pct();
 tabHeat.sl_householdAirco_pct.setValue(pctOfHousesWithAirco, true);
@@ -3349,7 +3367,6 @@ tabHeat.sl_householdHeatDemandReduction_pct.setValue(roundToInt(pctOfHousesWithI
 //PT
 double nbHousesWithPT_pct = p_residentialScenario_Current.getNbHousesWithPT_pct();
 tabHeat.sl_householdRooftopPT_pct.setValue(roundToInt(nbHousesWithPT_pct), true);
-
 
 
 ////Mobility
@@ -3402,6 +3419,10 @@ if(uI_Tabs.pop_tabElectricity.size() > 0){
 	double pvHousesWithBattery_pct = tabElec.sl_householdBatteries_pct.getValue();
 	p_residentialScenario_Current.setPvHousesWithBattery_pct(pvHousesWithBattery_pct);
 	
+	//Curtailment rooftop PV
+	boolean cb_householdCurtailmentActive = tabElec.cb_householdCurtailment.isSelected();
+	p_residentialScenario_Current.setCb_householdCurtailmentActive(cb_householdCurtailmentActive);
+	
 	//Electric cooking
 	double cooking_pct = tabElec.sl_householdElectricCooking_pct.getValue();
 	p_residentialScenario_Current.setCooking_pct(cooking_pct);
@@ -3410,9 +3431,21 @@ if(uI_Tabs.pop_tabElectricity.size() > 0){
 	double electricityDemandIncrease_pct = tabElec.sl_householdElectricityDemandIncrease_pct.getValue();
 	p_residentialScenario_Current.setElectricityDemandIncrease_pct(electricityDemandIncrease_pct);
 	
-	//Gridbatteries
+	//Large-scale PV
+	double largeScalePV_ha = tabElec.sl_largeScalePV_ha.getValue();
+	p_residentialScenario_Current.setLargeScalePV_ha(largeScalePV_ha);
+	
+	//Large-scale Wind
+	double largeScaleWind_MW = tabElec.sl_largeScaleWind_MW.getValue();
+	p_residentialScenario_Current.setLargeScaleWind_MW(largeScaleWind_MW);
+	
+	//Grid batteries
 	double averageNeighbourhoodBatterySize_kWh = tabElec.sl_gridBatteries_kWh.getValue();
 	p_residentialScenario_Current.setAverageNeighbourhoodBatterySize_kWh(averageNeighbourhoodBatterySize_kWh);
+	
+	//Large-scale grid curtailment EAs
+	boolean cb_gridCurtailmentActive = tabElec.cb_gridCurtailment.isSelected();
+	p_residentialScenario_Current.setCb_gridCurtailmentActive(cb_gridCurtailmentActive);
 }
 
 ////Heating
