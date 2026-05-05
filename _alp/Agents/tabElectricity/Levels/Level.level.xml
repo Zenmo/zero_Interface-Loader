@@ -2077,6 +2077,205 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 				</ImageFiles>
 				<OriginalSize>false</OriginalSize>
 			</Image>
+			<Text>
+				<Id>1777995324604</Id>
+				<Name><![CDATA[txt_addIndividualEA]]></Name>
+				<X>-160</X>
+				<Y>0</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Assets toevoegen]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1777995277264</Id>
+				<Name><![CDATA[button_AddCustomSolarfarm]]></Name>
+				<X>-160</X>
+				<Y>20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="110" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>zero_Interface.b_addCustomSolarfarm = true;
+zero_Interface.v_customEALatitude = 0;
+zero_Interface.v_customEALongitude = 0;
+zero_Interface.txt_addCustomEAToMapTaskInstruction.setText("Kies een locatie op de kaart");
+traceln("Adding solarfarm: Please click on the map to set the location.");</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Zonnepark</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1777995277266</Id>
+				<Name><![CDATA[button_AddCustomGridBattery]]></Name>
+				<X>-160</X>
+				<Y>80</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="110" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>zero_Interface.b_addCustomGridBattery = true;
+zero_Interface.v_customEALatitude = 0;
+zero_Interface.v_customEALongitude = 0;
+zero_Interface.txt_addCustomEAToMapTaskInstruction.setText("Kies een locatie op de kaart");
+traceln("Adding grid battery: Please click on the map to set the location.");</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Buurtbatterij</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1777995277268</Id>
+				<Name><![CDATA[button_AddCustomWindpark]]></Name>
+				<X>-160</X>
+				<Y>50</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="110" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>zero_Interface.b_addCustomWindfarm = true;
+zero_Interface.v_customEALatitude = 0;
+zero_Interface.v_customEALongitude = 0;
+zero_Interface.txt_addCustomEAToMapTaskInstruction.setText("Kies een locatie op de kaart");
+traceln("Adding windfarm: Please click on the map to set the location.");</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Windpark</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1777995277270</Id>
+				<Name><![CDATA[button_DeleteCustomEA]]></Name>
+				<X>50</X>
+				<Y>20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="130" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<EnableExpression>!zero_Interface.c_customSolarfarms.isEmpty() || !zero_Interface.c_customWindfarms.isEmpty() || !zero_Interface.c_customGridBatteries.isEmpty()</EnableExpression>
+					<ActionCode>if(!zero_Interface.c_customSolarfarms.isEmpty() || !zero_Interface.c_customWindfarms.isEmpty() || !zero_Interface.c_customGridBatteries.isEmpty()) {
+	zero_Interface.b_removeCustomEA = true;
+	zero_Interface.v_customEALatitude = 0;
+	zero_Interface.v_customEALongitude = 0;
+	zero_Interface.txt_addCustomEAToMapTaskInstruction.setText("Kies een energieasset op de kaart");
+	traceln("Click on the energy asset you want to remove.");
+} else {
+	traceln("There is no custom energy asset loaded in.");
+}</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Verwijderen...</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1777995277272</Id>
+				<Name><![CDATA[button_DeleteAllCustomEAs]]></Name>
+				<X>50</X>
+				<Y>50</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="130" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<EnableExpression>!zero_Interface.c_customSolarfarms.isEmpty() || !zero_Interface.c_customWindfarms.isEmpty() || !zero_Interface.c_customGridBatteries.isEmpty()</EnableExpression>
+					<ActionCode>if(!zero_Interface.c_customSolarfarms.isEmpty() || !zero_Interface.c_customWindfarms.isEmpty() || !zero_Interface.c_customGridBatteries.isEmpty()) {
+	zero_Interface.b_removeAllCustomEAs = true;
+	zero_Interface.v_customEALatitude = 0;
+	zero_Interface.v_customEALongitude = 0;
+	traceln("Are you sure you want to remove all custom energy assets?");
+	
+	if (zero_Interface.b_removeAllCustomEAs){
+		if(!zero_Interface.c_customSolarfarms.isEmpty()){
+			for (GridConnection solarfarm : zero_Interface.c_customSolarfarms){
+				zero_Interface.f_removeCustomEA(solarfarm);
+			}
+		}
+		if(!zero_Interface.c_customWindfarms.isEmpty()){
+			for (GridConnection windfarm : zero_Interface.c_customWindfarms){
+				zero_Interface.f_removeCustomEA(windfarm);
+			}
+		}
+		if(!zero_Interface.c_customGridBatteries.isEmpty()){
+			for (GridConnection battery : zero_Interface.c_customGridBatteries){
+				zero_Interface.f_removeCustomEA(battery);
+			}
+		}
+		traceln("Removed all custom EAs.");
+	}
+
+} else {
+	traceln("There is no custom energy asset loaded in.");
+}</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Verwijder alles</LabelText>
+				</ExtendedProperties>
+			</Control>
 		</Presentation>
 	</Group>
 	<Group>
