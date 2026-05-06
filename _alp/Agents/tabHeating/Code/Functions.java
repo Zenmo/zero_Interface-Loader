@@ -684,11 +684,8 @@ for (ShapeGroup page : c_loadedPageGroups) {
 	else if(page == gr_heatingSliders_companies){
 		f_updateHeatingSliders_companies();
 	}
-	/*else if(page == gr_electricitySliders_custom){ //Override and uncomment, if you want to include and update your custom ShapeGroup
-		f_updateElectricitySliders_custom(); 
-	}*/
 	else{
-		throw new RuntimeException("Missing f_updateElectricitySliders for ShapeGroup" + page.getName() + "! Override this function and add it to the for-loop!");
+		f_updateHeatingSliders_custom(); 
 	}
 }
 /*ALCODEEND*/}
@@ -1131,8 +1128,8 @@ return GN_heat;
 double f_initializeHeatingPages()
 {/*ALCODESTART::1777640467790*/
 // CHOOSE WHICH PAGES IN YOUR TAB YOU WANT TO BE ABLE TO SHOW FOR YOUR PROJECT 
-boolean hasHouses = zero_Interface.energyModel.Houses.size() > 0;
-boolean hasCompanies = zero_Interface.energyModel.UtilityConnections.size() > 0;
+boolean hasHouses = uI_Tabs.f_getActiveSliderGridConnections_houses().size() > 0;
+boolean hasCompanies = uI_Tabs.f_getActiveSliderGridConnections_utilities().size() > 0;
 
 c_loadedPageGroups = new ArrayList<>();
 // Load in the existing pages you want to include in the tab
@@ -1143,8 +1140,8 @@ if (hasCompanies) {
 	c_loadedPageGroups.add(gr_heatingSliders_companies);
 }
 
-// If you have a custom page, override this function to add your custom page to the list. For instance:
-//pages.add(gr_heatingSliders_custom);
+// If you have a custom page, it will be added through f_addCustomPage:
+f_addCustomPage();
 
 // Show/hide page indicator based on number of pages
 if (c_loadedPageGroups.size() <= 1) {
@@ -1193,5 +1190,11 @@ t_pageIndicator.setText("Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPag
 double f_initializeTab_Heating()
 {/*ALCODESTART::1777992529021*/
 f_initializeHeatingPages();
+/*ALCODEEND*/}
+
+double f_addCustomPage()
+{/*ALCODESTART::1778056462484*/
+// Override this function to add your custom page to c_loadedPageGroups, for instance, like this:
+//c_loadedPageGroups.add(gr_heatingSliders_custom);
 /*ALCODEEND*/}
 

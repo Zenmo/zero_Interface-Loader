@@ -2759,7 +2759,7 @@ uI_Tabs.add_pop_tabHeating();
 uI_Tabs.add_pop_tabMobility();
 
 // EHub tab
-if (energyModel.UtilityConnections.size() > 0) {
+if (energyModel.UtilityConnections.size() > 1) {
     uI_Tabs.add_pop_tabEHub();
     ((tabEHub)uI_Tabs.pop_tabEHub.get(0)).getGroupHubSliders().setVisible(true);
 }
@@ -3018,7 +3018,7 @@ for(GridConnection GC : energyModel.UtilityConnections){
 double f_createAdditionalUIs()
 {/*ALCODESTART::1760978860758*/
 //Energy hub dashboard
-if(project_data.project_type() == OL_ProjectType.BUSINESSPARK){
+if(energyModel.UtilityConnections.size() > 1){
 	uI_EnergyHub = add_pop_UI_EnergyHub();
 }
 

@@ -1072,7 +1072,7 @@ if(cb_companiesSpreadChargingEVs.isSelected()){
 	selectedChargingAttitude = OL_ChargingAttitude.MAX_POWER; 
 }
 
-f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()));</ActionCode>
+f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getAllSliderGridConnections_utilities()));</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -1607,7 +1607,7 @@ if(selectedChargingAttitude != null){
 						<BasicProperties Width="100" Height="30">
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
-							<ActionCode>f_setV2GChargerCapabilities( uI_Tabs.f_getSliderGridConnections_chargers(), sl_householdChargersThatSupportV2G_pct.getValue() );</ActionCode>
+							<ActionCode>f_setV2GChargerCapabilities( uI_Tabs.f_getActiveSliderGridConnections_chargers(), sl_householdChargersThatSupportV2G_pct.getValue() );</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
 							<DefaultValueCode>0</DefaultValueCode>
@@ -1791,7 +1791,7 @@ if(selectedChargingAttitude != null){
 						<BasicProperties Width="100" Height="30">
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
-							<ActionCode>f_setV1GChargerCapabilities( uI_Tabs.f_getSliderGridConnections_chargers(), sl_householdChargersThatSupportV1G_pct.getValue() );</ActionCode>
+							<ActionCode>f_setV1GChargerCapabilities( uI_Tabs.f_getActiveSliderGridConnections_chargers(), sl_householdChargersThatSupportV1G_pct.getValue() );</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
 							<DefaultValueCode>0</DefaultValueCode>
@@ -2188,8 +2188,7 @@ switch(cb_householdChargingStrategyPrivatePublicChargers.getValue()){
 }
 
 if(selectedChargingAttitude != null){
-	List&lt;GridConnection&gt; allChargersInModel = new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getSliderGridConnections_chargers());
-	allChargersInModel.addAll(uI_Tabs.f_getPausedSliderGridConnections_chargers());
+	List&lt;GridConnection&gt; allChargersInModel = new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getAllSliderGridConnections_chargers());
 	f_setChargingAttitude(selectedChargingAttitude, allChargersInModel);
 }
 else{

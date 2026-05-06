@@ -315,7 +315,7 @@
 		<Id>1754926103683</Id>
 		<Name><![CDATA[f_updateSliders_Electricity]]></Name>
 		<X>-350</X>
-		<Y>270</Y>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -331,7 +331,7 @@
 		<Id>1754926103687</Id>
 		<Name><![CDATA[f_updateElectricitySliders_households]]></Name>
 		<X>-330</X>
-		<Y>290</Y>
+		<Y>310</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -347,7 +347,7 @@
 		<Id>1754926103689</Id>
 		<Name><![CDATA[f_updateElectricitySliders_companies]]></Name>
 		<X>-330</X>
-		<Y>310</Y>
+		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -363,7 +363,7 @@
 		<Id>1754926103691</Id>
 		<Name><![CDATA[f_updateElectricitySliders_custom]]></Name>
 		<X>-330</X>
-		<Y>350</Y>
+		<Y>370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -463,7 +463,7 @@
 		<Id>1777552836057</Id>
 		<Name><![CDATA[f_goToPage]]></Name>
 		<X>-330</X>
-		<Y>170</Y>
+		<Y>190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -483,7 +483,7 @@
 		<Id>1777552936318</Id>
 		<Name><![CDATA[f_nextPage]]></Name>
 		<X>-330</X>
-		<Y>190</Y>
+		<Y>210</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -499,7 +499,7 @@
 		<Id>1777553025667</Id>
 		<Name><![CDATA[f_previousPage]]></Name>
 		<X>-330</X>
-		<Y>210</Y>
+		<Y>230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -515,7 +515,7 @@
 		<Id>1777553071510</Id>
 		<Name><![CDATA[f_updatePageIndicator]]></Name>
 		<X>-330</X>
-		<Y>230</Y>
+		<Y>250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -531,7 +531,7 @@
 		<Id>1777579296267</Id>
 		<Name><![CDATA[f_updateElectricitySliders_collective]]></Name>
 		<X>-330</X>
-		<Y>330</Y>
+		<Y>350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -548,6 +548,22 @@
 		<Name><![CDATA[f_initializeElectricityPages]]></Name>
 		<X>-350</X>
 		<Y>150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1778055837807</Id>
+		<Name><![CDATA[f_addCustomPage]]></Name>
+		<X>-330</X>
+		<Y>170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
