@@ -2754,6 +2754,17 @@ double f_createUITabs_default()
 
 // Adding the (child) tabs to the tabArea population
 
+// If you use an extension of a tab, you must update the pointer to the instance of the interface;
+// No update to the pointer is needed for the generic tabs
+
+// In case you want to add or only include your custom tab, remove uI_Tabs.add_pop_tabElectricity()) and
+// create your own custom tab agent and add the following code:
+
+// 	=== EXAMPLE CODE FOR CUSTOM TAB : === 
+// 	tabElectricityCustom customTabElectricity = new tabElectricityCustom();
+//	customTabElectricity.goToPopulation(uI_Tabs.pop_tabElectricity);
+//	customTabElectricity.interface_ProjectTemplate = this;
+
 uI_Tabs.add_pop_tabElectricity();
 uI_Tabs.add_pop_tabHeating();
 uI_Tabs.add_pop_tabMobility();

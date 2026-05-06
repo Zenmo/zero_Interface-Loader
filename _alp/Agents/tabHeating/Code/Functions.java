@@ -1140,7 +1140,7 @@ if (hasCompanies) {
 	c_loadedPageGroups.add(gr_heatingSliders_companies);
 }
 
-// If you have a custom page, it will be added through f_addCustomPage:
+// If you have a custom page, add it by using f_addCustomPage:
 f_addCustomPage();
 
 // Show/hide page indicator based on number of pages
@@ -1185,6 +1185,8 @@ f_goToPage(prevIndex);
 ShapeGroup f_updatePageIndicator()
 {/*ALCODESTART::1777640467910*/
 t_pageIndicator.setText("Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPageGroups.size());
+presentation.remove(gr_pageIndicator);
+presentation.add(gr_pageIndicator);
 /*ALCODEEND*/}
 
 double f_initializeTab_Heating()

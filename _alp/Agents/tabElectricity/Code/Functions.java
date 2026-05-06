@@ -628,6 +628,8 @@ f_goToPage(prevIndex);
 ShapeGroup f_updatePageIndicator()
 {/*ALCODESTART::1777553071510*/
 t_pageIndicator.setText("Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPageGroups.size());
+presentation.remove(gr_pageIndicator);
+presentation.add(gr_pageIndicator);
 /*ALCODEEND*/}
 
 double f_updateElectricitySliders_collective()
@@ -701,7 +703,7 @@ if (hasCompanies) {
 }
 c_loadedPageGroups.add(gr_electricitySliders_collective);
 
-// If you have a custom page, it will be added through f_addCustomPage:
+// If you have a custom page, add it by using f_addCustomPage:
 f_addCustomPage();
 
 // Show/hide page indicator based on number of pages
