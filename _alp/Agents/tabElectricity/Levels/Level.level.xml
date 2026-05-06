@@ -1567,8 +1567,8 @@ zero_Interface.f_setTrafoText();
 	<Group>
 		<Id>1777556480821</Id>
 		<Name><![CDATA[gr_electricitySliders_collective]]></Name>
-		<X>980</X>
-		<Y>180</Y>
+		<X>800</X>
+		<Y>0</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1577,8 +1577,8 @@ zero_Interface.f_setTrafoText();
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>180</XCode>
-		<YCode>180</YCode>
+		<XCode>0</XCode>
+		<YCode>0</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -1586,8 +1586,8 @@ zero_Interface.f_setTrafoText();
 			<Rectangle>
 				<Id>1777553906084</Id>
 				<Name><![CDATA[rect_electricityDemandSlidersCollective]]></Name>
-				<X>-180</X>
-				<Y>-180</Y>
+				<X>0</X>
+				<Y>0</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -1612,8 +1612,8 @@ zero_Interface.f_setTrafoText();
 			<Text>
 				<Id>1770120981382</Id>
 				<Name><![CDATA[txt_electricityDemandSlidersCollectiveDescription]]></Name>
-				<X>-160</X>
-				<Y>-160</Y>
+				<X>20</X>
+				<Y>20</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1638,8 +1638,8 @@ zero_Interface.f_setTrafoText();
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1750063382243</Id>
 				<Name><![CDATA[sl_gridBatteries_kWh]]></Name>
-				<X>80</X>
-				<Y>-65</Y>
+				<X>260</X>
+				<Y>115</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1676,8 +1676,8 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 			<Text>
 				<Id>1750063382245</Id>
 				<Name><![CDATA[txt_gridBatteriesDescription]]></Name>
-				<X>-160</X>
-				<Y>-60</Y>
+				<X>20</X>
+				<Y>120</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1702,8 +1702,8 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 			<Text>
 				<Id>1750063382247</Id>
 				<Name><![CDATA[txt_gridBatteries_kWh]]></Name>
-				<X>65</X>
-				<Y>-60</Y>
+				<X>245</X>
+				<Y>120</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1729,8 +1729,8 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 			<Image>
 				<Id>1752232850473</Id>
 				<Name><![CDATA[i_gridBatteries]]></Name>
-				<X>-15</X>
-				<Y>-62</Y>
+				<X>165</X>
+				<Y>118</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1757,8 +1757,8 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 			<Text>
 				<Id>1770118893494</Id>
 				<Name><![CDATA[txt_largeScalePV_ha]]></Name>
-				<X>65</X>
-				<Y>-120</Y>
+				<X>245</X>
+				<Y>60</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1784,8 +1784,8 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1770118893505</Id>
 				<Name><![CDATA[sl_largeScalePV_ha]]></Name>
-				<X>80</X>
-				<Y>-125</Y>
+				<X>260</X>
+				<Y>55</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1828,8 +1828,8 @@ f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_currentPVOnLand_ha, sliderPVFarm
 			<Text>
 				<Id>1770118893516</Id>
 				<Name><![CDATA[txt_largeScalePVDescription]]></Name>
-				<X>-160</X>
-				<Y>-120</Y>
+				<X>20</X>
+				<Y>60</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1854,8 +1854,8 @@ f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_currentPVOnLand_ha, sliderPVFarm
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1770118893524</Id>
 				<Name><![CDATA[sl_largeScaleWind_MW]]></Name>
-				<X>80</X>
-				<Y>-95</Y>
+				<X>260</X>
+				<Y>85</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1897,8 +1897,8 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 			<Text>
 				<Id>1770118893533</Id>
 				<Name><![CDATA[txt_largeScaleWindDescription]]></Name>
-				<X>-160</X>
-				<Y>-90</Y>
+				<X>20</X>
+				<Y>90</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1922,8 +1922,8 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 			<Text>
 				<Id>1770118893541</Id>
 				<Name><![CDATA[txt_largeScaleWind_MW]]></Name>
-				<X>65</X>
-				<Y>-90</Y>
+				<X>245</X>
+				<Y>90</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1948,8 +1948,8 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 			<Image>
 				<Id>1770118893549</Id>
 				<Name><![CDATA[i_largeScalePV]]></Name>
-				<X>-15</X>
-				<Y>-122</Y>
+				<X>165</X>
+				<Y>58</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1975,8 +1975,8 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 			<Image>
 				<Id>1770118893567</Id>
 				<Name><![CDATA[i_largeScaleWind]]></Name>
-				<X>-15</X>
-				<Y>-92</Y>
+				<X>165</X>
+				<Y>88</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2002,8 +2002,8 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 			<Text>
 				<Id>1777620991223</Id>
 				<Name><![CDATA[txt_gridCurtailmentDescription]]></Name>
-				<X>-160</X>
-				<Y>-30</Y>
+				<X>20</X>
+				<Y>150</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2028,8 +2028,8 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1777620991268</Id>
 				<Name><![CDATA[cb_gridCurtailment]]></Name>
-				<X>122</X>
-				<Y>-38</Y>
+				<X>302</X>
+				<Y>142</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2053,8 +2053,8 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 			<Image>
 				<Id>1777620991324</Id>
 				<Name><![CDATA[i_gridCurtailment]]></Name>
-				<X>-15</X>
-				<Y>-32</Y>
+				<X>165</X>
+				<Y>148</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
