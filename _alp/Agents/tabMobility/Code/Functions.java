@@ -1214,11 +1214,8 @@ for (ShapeGroup page : c_loadedPageGroups) {
 	else if(page == gr_mobilitySliders_companies){
 		f_updateMobilitySliders_companies();
 	}
-	/*else if(page == gr_electricitySliders_custom){ //Override and uncomment, if you want to include and update your custom ShapeGroup
-		f_updateElectricitySliders_custom(); 
-	}*/
 	else{
-		throw new RuntimeException("Missing f_updateElectricitySliders for ShapeGroup" + page.getName() + "! Override this function and add it to the for-loop!");
+		f_updateMobilitySliders_custom(); 
 	}
 }
 /*ALCODEEND*/}
@@ -1373,7 +1370,7 @@ sl_companiesHydrogenTrucks_pct.setValue(HydrogenTrucks_pct, false);
 double f_updateMobilitySliders_custom()
 {/*ALCODESTART::1754928402700*/
 //If you have a custom tab, override this function to make it update automatically
-traceln("Forgot to override the update custom electricity sliders functionality");
+throw new RuntimeException("Forgot to override the update custom mobility sliders functionality");
 /*ALCODEEND*/}
 
 double f_setChargingAttitude(OL_ChargingAttitude selectedChargingAttitude,List<GridConnection> gcList)
@@ -1464,7 +1461,7 @@ cb_householdActivateV2GPublicChargers.setSelected(false, false);
 gr_householdSettingsV1G_publicChargers.setVisible(false);
 gr_householdSettingsV2G_publicChargers.setVisible(false);
 
-List<GCPublicCharger> activeChargerGridConnections = uI_Tabs.f_getSliderGridConnections_chargers();
+List<GCPublicCharger> activeChargerGridConnections = uI_Tabs.f_getActiveSliderGridConnections_chargers();
 List<GCPublicCharger> pausedChargerGridConnections = uI_Tabs.f_getPausedSliderGridConnections_chargers();
 
 
@@ -1788,8 +1785,8 @@ f_initializeMobilityPages();
 double f_initializeMobilityPages()
 {/*ALCODESTART::1777644430745*/
 // CHOOSE WHICH PAGES IN YOUR TAB YOU WANT TO BE ABLE TO SHOW FOR YOUR PROJECT 
-boolean hasHouses = zero_Interface.energyModel.Houses.size() > 0;
-boolean hasCompanies = zero_Interface.energyModel.UtilityConnections.size() > 0;
+boolean hasHouses = uI_Tabs.f_getActiveSliderGridConnections_houses().size() > 0;
+boolean hasCompanies = uI_Tabs.f_getActiveSliderGridConnections_utilities().size() > 0;
 
 c_loadedPageGroups = new ArrayList<>();
 // Load in the existing pages you want to include in the tab
@@ -1800,8 +1797,8 @@ if (hasCompanies) {
 	c_loadedPageGroups.add(gr_mobilitySliders_companies);
 }
 
-// If you have a custom page, override this function to add your custom page to the list. For instance:
-//pages.add(gr_electricitySliders_custom);
+// If you have a custom page, add it by using f_addCustomPage:
+f_addCustomPage();
 
 // Show/hide page indicator based on number of pages
 if (c_loadedPageGroups.size() <= 1) {
@@ -1845,5 +1842,13 @@ f_goToPage(prevIndex);
 ShapeGroup f_updatePageIndicator()
 {/*ALCODESTART::1777644430886*/
 t_pageIndicator.setText("Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPageGroups.size());
+presentation.remove(gr_pageIndicator);
+presentation.add(gr_pageIndicator);
+/*ALCODEEND*/}
+
+double f_addCustomPage()
+{/*ALCODESTART::1778056566938*/
+// Override this function to add your custom page to c_loadedPageGroups, for instance, like this:
+//c_loadedPageGroups.add(gr_mobilitySliders_custom);
 /*ALCODEEND*/}
 

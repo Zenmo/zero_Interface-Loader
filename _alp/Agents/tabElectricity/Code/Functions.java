@@ -432,13 +432,11 @@ for (ShapeGroup page : c_loadedPageGroups) {
 	else if(page == gr_electricitySliders_collective){
 		f_updateElectricitySliders_collective();
 	}
-	/*else if(page == gr_electricitySliders_custom){ //Override and uncomment, if you want to include and update your custom ShapeGroup
-		f_updateElectricitySliders_custom(); 
-	}*/
 	else{
-		throw new RuntimeException("Missing f_updateElectricitySliders for ShapeGroup" + page.getName() + "! Override this function and add it to the for-loop!");
+		f_updateElectricitySliders_custom(); 
 	}
 }
+
 /*ALCODEEND*/}
 
 double f_updateElectricitySliders_households()
@@ -460,10 +458,10 @@ if ( nbHousesWithPV != 0 ) {
 }
 
 //Curtailment PV houses
-boolean curtailment = false;
+boolean curtailment = true;
 for(GridConnection GC : houseGridConnections){
-	if(GC.f_isAssetManagementActive(I_CurtailManagement.class)){
-		curtailment = true;
+	if(!GC.f_isAssetManagementActive(I_CurtailManagement.class)){
+		curtailment = false;
 		break;
 	}
 }
@@ -521,10 +519,10 @@ int PV_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());
 sl_companiesRooftopPV_pct.setValue(PV_pct, false);
 
 //Curtailment PV companies
-boolean curtailment = false;
+boolean curtailment = true;
 for(GridConnection GC : utilityGridConnections){
-	if(GC.f_isAssetManagementActive(I_CurtailManagement.class)){
-		curtailment = true;
+	if(!GC.f_isAssetManagementActive(I_CurtailManagement.class)){
+		curtailment = false;
 		break;
 	}
 }
@@ -630,11 +628,13 @@ f_goToPage(prevIndex);
 ShapeGroup f_updatePageIndicator()
 {/*ALCODESTART::1777553071510*/
 t_pageIndicator.setText("Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPageGroups.size());
+presentation.remove(gr_pageIndicator);
+presentation.add(gr_pageIndicator);
 /*ALCODEEND*/}
 
 double f_updateElectricitySliders_collective()
 {/*ALCODESTART::1777579296267*/
-List<GridConnection> productionGridConnections = new ArrayList<>(uI_Tabs.f_getActiveSliderGridConnections_production());
+List<GridConnection> productionGridConnections = new ArrayList<>(uI_Tabs.f_getAllSliderGridConnections_production());
 
 //Large scale EA production systems (PV/Wind on land)
 f_getCurrentPVOnLandAndWindturbineValues(); // Used for slider minimum: non adjustable GCProductions
@@ -677,10 +677,10 @@ for (GCGridBattery gc : sliderGridBatteryGridConnections) {
 sl_gridBatteries_kWh.setValue(averageNeighbourhoodBatterySize_kWh, false);
 
 //Curtailment large scale PV and wind
-boolean curtailment = false;
+boolean curtailment = true;
 for(GridConnection GC : productionGridConnections){
-	if(GC.f_isAssetManagementActive(I_CurtailManagement.class)){
-		curtailment = true;
+	if(!GC.f_isAssetManagementActive(I_CurtailManagement.class)){
+		curtailment = false;
 		break;
 	}
 }
@@ -690,8 +690,8 @@ cb_gridCurtailment.setSelected(curtailment, false);
 double f_initializeElectricityPages()
 {/*ALCODESTART::1777985169528*/
 // CHOOSE WHICH PAGES IN YOUR TAB YOU WANT TO BE ABLE TO SHOW FOR YOUR PROJECT 
-boolean hasHouses = zero_Interface.energyModel.Houses.size() > 0;
-boolean hasCompanies = zero_Interface.energyModel.UtilityConnections.size() > 0;
+boolean hasHouses = uI_Tabs.f_getActiveSliderGridConnections_houses().size() > 0;
+boolean hasCompanies = uI_Tabs.f_getActiveSliderGridConnections_utilities().size() > 0;
 
 c_loadedPageGroups = new ArrayList<>();
 // Load in the existing pages you want to include in the tab
@@ -703,8 +703,8 @@ if (hasCompanies) {
 }
 c_loadedPageGroups.add(gr_electricitySliders_collective);
 
-// If you have a custom page, override this function to add your custom page to the list. For instance:
-//pages.add(gr_electricitySliders_custom);
+// If you have a custom page, add it by using f_addCustomPage:
+f_addCustomPage();
 
 // Show/hide page indicator based on number of pages
 if (c_loadedPageGroups.size() <= 1) {
@@ -716,5 +716,11 @@ if (c_loadedPageGroups.size() <= 1) {
 if (!c_loadedPageGroups.isEmpty()) {
     f_goToPage(0);
 }
+/*ALCODEEND*/}
+
+double f_addCustomPage()
+{/*ALCODESTART::1778055837807*/
+// Override this function to add your custom page to c_loadedPageGroups, for instance, like this:
+//c_loadedPageGroups.add(gr_electricitySliders_custom);
 /*ALCODEEND*/}
 
