@@ -492,7 +492,7 @@
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), new ArrayList&lt;GridConnection&gt;(zero_Interface.c_orderedHeatingSystemsCompanies), OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, sl_companiesElectricHeatPump_pct, sl_companiesHybridHeatPump_pct, sl_companiesElectricHeatPump_pct, sl_companiesDistrictHeating_pct, null, sl_companiesCustom_pct );</ActionCode>
+					<ActionCode>f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), new ArrayList&lt;GridConnection&gt;(zero_Interface.c_orderedHeatingSystemsCompanies), OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, sl_companiesGasBurner_pct, sl_companiesHybridHeatPump_pct, sl_companiesElectricHeatPump_pct, sl_companiesDistrictHeating_pct, null, sl_companiesCustom_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>

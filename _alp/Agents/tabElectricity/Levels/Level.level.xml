@@ -2042,7 +2042,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setCurtailment(cb_gridCurtailment.isSelected(), new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_production()));</ActionCode>
+					<ActionCode>f_setCurtailment(cb_gridCurtailment.isSelected(), new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getAllSliderGridConnections_production()));</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>

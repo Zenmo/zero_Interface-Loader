@@ -458,10 +458,10 @@ if ( nbHousesWithPV != 0 ) {
 }
 
 //Curtailment PV houses
-boolean curtailment = false;
+boolean curtailment = true;
 for(GridConnection GC : houseGridConnections){
-	if(GC.f_isAssetManagementActive(I_CurtailManagement.class)){
-		curtailment = true;
+	if(!GC.f_isAssetManagementActive(I_CurtailManagement.class)){
+		curtailment = false;
 		break;
 	}
 }
@@ -519,10 +519,10 @@ int PV_pct = roundToInt(100.0 * pair.getFirst() / pair.getSecond());
 sl_companiesRooftopPV_pct.setValue(PV_pct, false);
 
 //Curtailment PV companies
-boolean curtailment = false;
+boolean curtailment = true;
 for(GridConnection GC : utilityGridConnections){
-	if(GC.f_isAssetManagementActive(I_CurtailManagement.class)){
-		curtailment = true;
+	if(!GC.f_isAssetManagementActive(I_CurtailManagement.class)){
+		curtailment = false;
 		break;
 	}
 }
@@ -634,7 +634,7 @@ presentation.add(gr_pageIndicator);
 
 double f_updateElectricitySliders_collective()
 {/*ALCODESTART::1777579296267*/
-List<GridConnection> productionGridConnections = new ArrayList<>(uI_Tabs.f_getActiveSliderGridConnections_production());
+List<GridConnection> productionGridConnections = new ArrayList<>(uI_Tabs.f_getAllSliderGridConnections_production());
 
 //Large scale EA production systems (PV/Wind on land)
 f_getCurrentPVOnLandAndWindturbineValues(); // Used for slider minimum: non adjustable GCProductions
@@ -677,10 +677,10 @@ for (GCGridBattery gc : sliderGridBatteryGridConnections) {
 sl_gridBatteries_kWh.setValue(averageNeighbourhoodBatterySize_kWh, false);
 
 //Curtailment large scale PV and wind
-boolean curtailment = false;
+boolean curtailment = true;
 for(GridConnection GC : productionGridConnections){
-	if(GC.f_isAssetManagementActive(I_CurtailManagement.class)){
-		curtailment = true;
+	if(!GC.f_isAssetManagementActive(I_CurtailManagement.class)){
+		curtailment = false;
 		break;
 	}
 }
