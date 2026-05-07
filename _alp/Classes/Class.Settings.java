@@ -36,7 +36,6 @@ public class Settings {
 	List<OL_ChartTypes> resultsUISelectedChartTypes_Energy; // Selected (Energy) charts setup for the resultsUI. 
 	List<OL_ChartTypes> resultsUISelectedChartTypes_Economic; // Selected (Economic) charts setup for the resultsUI. 
 	
-	
 	boolean isPublicModel; // Boolean used to control if the model should be ran in a public version mode:
 							// Connection owners where dataSharingAgreed = false, cant be clicked. Just like low level gridnodes.
 	List<OL_MapOverlayTypes> activeMapOverlayTypes; //If defined it will override the default map overlay setup as defined in the generic interface/loader.

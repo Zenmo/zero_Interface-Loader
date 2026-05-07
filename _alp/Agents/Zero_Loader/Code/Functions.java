@@ -3036,7 +3036,7 @@ if ( topGridNode == null ) {
 String topGridNodeID = topGridNode.gridnode_id();
 
 //Create data package for e-hub dashboard slider gcs
-if(project_data.project_type() == OL_ProjectType.BUSINESSPARK){
+if(c_companyBuilding_data.size() > 1){
 	f_addSliderSolarfarm(zero_Interface.p_defaultEnergyHubSliderGCName_solarfarm, topGridNodeID);
 	f_addSliderWindfarm(zero_Interface.p_defaultEnergyHubSliderGCName_windfarm, topGridNodeID);
 	f_addSliderBattery(zero_Interface.p_defaultEnergyHubSliderGCName_battery, topGridNodeID);

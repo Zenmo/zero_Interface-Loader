@@ -53,8 +53,8 @@
 	</Text>
 	<Group>
 		<Id>1722247567090</Id>
-		<Name><![CDATA[gr_mobilitySliders_default]]></Name>
-		<X>0</X>
+		<Name><![CDATA[gr_mobilitySliders_companies]]></Name>
+		<X>400</X>
 		<Y>0</Y>
 		<Label>
 			<X>10</X>
@@ -64,6 +64,8 @@
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>0</XCode>
+		<YCode>0</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -97,9 +99,9 @@
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567094</Id>
-				<Name><![CDATA[sl_fossilFuelCars_pct]]></Name>
+				<Name><![CDATA[sl_companiesFossilFuelCars_pct]]></Name>
 				<X>260</X>
-				<Y>315</Y>
+				<Y>309</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -111,8 +113,8 @@
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>sl_electricCars_pct.setValue(100 - sl_fossilFuelCars_pct.getIntValue(), false);
-f_setPetroleumFuelCars( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricCars_pct, sl_fossilFuelCars_pct );</ActionCode>
+					<ActionCode>sl_companiesElectricCars_pct.setValue(100 - sl_companiesFossilFuelCars_pct.getIntValue(), false);
+f_setPetroleumFuelCars( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), sl_companiesElectricCars_pct, sl_companiesFossilFuelCars_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -126,9 +128,9 @@ f_setPetroleumFuelCars( uI_Tabs.f_getActiveSliderGridConnections_consumption(), 
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567096</Id>
-				<Name><![CDATA[sl_electricTrucks_pct]]></Name>
+				<Name><![CDATA[sl_companiesElectricTrucks_pct]]></Name>
 				<X>260</X>
-				<Y>105</Y>
+				<Y>125</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -140,8 +142,8 @@ f_setPetroleumFuelCars( uI_Tabs.f_getActiveSliderGridConnections_consumption(), 
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setVehicleSliders( 0, sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );
-f_setElectricTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );</ActionCode>
+					<ActionCode>f_setVehicleSliders( 0, sl_companiesElectricTrucks_pct, sl_companiesHydrogenTrucks_pct, sl_companiesFossilFuelTrucks_pct );
+f_setElectricTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), sl_companiesElectricTrucks_pct, sl_companiesHydrogenTrucks_pct, sl_companiesFossilFuelTrucks_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -154,9 +156,9 @@ f_setElectricTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 			</Control>
 			<Text>
 				<Id>1722247567098</Id>
-				<Name><![CDATA[t_fossilFuelCars_pct]]></Name>
-				<X>230</X>
-				<Y>320</Y>
+				<Name><![CDATA[txt_companiesFossilFuelCars_pct]]></Name>
+				<X>245</X>
+				<Y>314</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -165,24 +167,25 @@ f_setElectricTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesFossilFuelCars_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_fossilFuelCars_pct.getIntValue() + "%"</TextCode>
+				<TextCode>sl_companiesFossilFuelCars_pct.getIntValue() + "%"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Text>
 				<Id>1722247567100</Id>
-				<Name><![CDATA[t_fossilFuelCarsDescription]]></Name>
+				<Name><![CDATA[txt_companiesFossilFuelCarsDescription]]></Name>
 				<X>20</X>
-				<Y>320</Y>
+				<Y>314</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -191,6 +194,7 @@ f_setElectricTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesFossilFuelCars_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -198,16 +202,16 @@ f_setElectricTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 				<Text><![CDATA[Fossiele brandstof]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
 			<Text>
 				<Id>1722247567102</Id>
-				<Name><![CDATA[t_electricTrucksDescription]]></Name>
-				<X>15</X>
-				<Y>110</Y>
+				<Name><![CDATA[txt_companiesElectricTrucksDescription]]></Name>
+				<X>20</X>
+				<Y>130</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -216,6 +220,7 @@ f_setElectricTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesElectricTrucks_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -223,16 +228,16 @@ f_setElectricTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 				<Text><![CDATA[Elektrisch]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
 			<Text>
 				<Id>1722247567104</Id>
-				<Name><![CDATA[t_electricTrucks_pct]]></Name>
-				<X>230</X>
-				<Y>110</Y>
+				<Name><![CDATA[txt_companiesElectricTrucks_pct]]></Name>
+				<X>245</X>
+				<Y>130</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -241,24 +246,25 @@ f_setElectricTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesElectricTrucks_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_electricTrucks_pct.getIntValue() + "%"</TextCode>
+				<TextCode>sl_companiesElectricTrucks_pct.getIntValue() + "%"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Text>
 				<Id>1722247567106</Id>
-				<Name><![CDATA[t_mobilityDemandReductionDescription]]></Name>
-				<X>15</X>
-				<Y>20</Y>
+				<Name><![CDATA[txt_companiesMobilityDemandReductionDescription]]></Name>
+				<X>20</X>
+				<Y>60</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -267,6 +273,7 @@ f_setElectricTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesMobilityDemandReduction_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -274,7 +281,7 @@ f_setElectricTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 				<Text><![CDATA[Besparing transport]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -282,9 +289,9 @@ f_setElectricTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567108</Id>
-				<Name><![CDATA[sl_mobilityDemandReduction_pct]]></Name>
+				<Name><![CDATA[sl_companiesMobilityDemandReduction_pct]]></Name>
 				<X>260</X>
-				<Y>15</Y>
+				<Y>55</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -296,8 +303,7 @@ f_setElectricTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReduction( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_mobilityDemandReduction_pct.getValue() );
-</ActionCode>
+					<ActionCode>f_setDemandReduction( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), sl_companiesMobilityDemandReduction_pct.getValue() );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -310,9 +316,9 @@ f_setElectricTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 			</Control>
 			<Text>
 				<Id>1722247567110</Id>
-				<Name><![CDATA[t_mobilityDemandReduction_pct]]></Name>
-				<X>230</X>
-				<Y>20</Y>
+				<Name><![CDATA[txt_companiesMobilityDemandReduction_pct]]></Name>
+				<X>245</X>
+				<Y>60</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -321,25 +327,26 @@ f_setElectricTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesMobilityDemandReduction_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_mobilityDemandReduction_pct.getIntValue() + "%"</TextCode>
+				<TextCode>sl_companiesMobilityDemandReduction_pct.getIntValue() + "%"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567112</Id>
-				<Name><![CDATA[sl_hydrogenTrucks_pct]]></Name>
+				<Name><![CDATA[sl_companiesHydrogenTrucks_pct]]></Name>
 				<X>260</X>
-				<Y>130</Y>
+				<Y>147</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -351,8 +358,8 @@ f_setElectricTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setVehicleSliders( 1, sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );
-f_setHydrogenTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );</ActionCode>
+					<ActionCode>f_setVehicleSliders( 1, sl_companiesElectricTrucks_pct, sl_companiesHydrogenTrucks_pct, sl_companiesFossilFuelTrucks_pct );
+f_setHydrogenTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), sl_companiesElectricTrucks_pct, sl_companiesHydrogenTrucks_pct, sl_companiesFossilFuelTrucks_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -365,9 +372,9 @@ f_setHydrogenTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 			</Control>
 			<Text>
 				<Id>1722247567114</Id>
-				<Name><![CDATA[t_hydrogenTrucksDescription]]></Name>
-				<X>15</X>
-				<Y>135</Y>
+				<Name><![CDATA[txt_companiesHydrogenTrucksDescription]]></Name>
+				<X>20</X>
+				<Y>152</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -376,6 +383,7 @@ f_setHydrogenTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesHydrogenTrucks_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -383,16 +391,16 @@ f_setHydrogenTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 				<Text><![CDATA[Waterstof]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
 			<Text>
 				<Id>1722247567116</Id>
-				<Name><![CDATA[t_hydrogenTrucks_pct]]></Name>
-				<X>230</X>
-				<Y>135</Y>
+				<Name><![CDATA[txt_companiesHydrogenTrucks_pct]]></Name>
+				<X>245</X>
+				<Y>152</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -406,20 +414,20 @@ f_setHydrogenTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_hydrogenTrucks_pct.getIntValue() + "%"</TextCode>
+				<TextCode>sl_companiesHydrogenTrucks_pct.getIntValue() + "%"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567118</Id>
-				<Name><![CDATA[sl_fossilFuelTrucks_pct]]></Name>
+				<Name><![CDATA[sl_companiesFossilFuelTrucks_pct]]></Name>
 				<X>260</X>
-				<Y>155</Y>
+				<Y>169</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -431,8 +439,8 @@ f_setHydrogenTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setVehicleSliders( 2, sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );
-f_setPetroleumFuelTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricTrucks_pct, sl_hydrogenTrucks_pct, sl_fossilFuelTrucks_pct );</ActionCode>
+					<ActionCode>f_setVehicleSliders( 2, sl_companiesElectricTrucks_pct, sl_companiesHydrogenTrucks_pct, sl_companiesFossilFuelTrucks_pct );
+f_setPetroleumFuelTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), sl_companiesElectricTrucks_pct, sl_companiesHydrogenTrucks_pct, sl_companiesFossilFuelTrucks_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -445,9 +453,9 @@ f_setPetroleumFuelTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption()
 			</Control>
 			<Text>
 				<Id>1722247567120</Id>
-				<Name><![CDATA[t_fossilFuelTrucksDescription]]></Name>
-				<X>15</X>
-				<Y>160</Y>
+				<Name><![CDATA[txt_companiesFossilFuelTrucksDescription]]></Name>
+				<X>20</X>
+				<Y>174</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -456,6 +464,7 @@ f_setPetroleumFuelTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption()
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesFossilFuelTrucks_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -463,7 +472,7 @@ f_setPetroleumFuelTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption()
 				<Text><![CDATA[Fossiele brandstof]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -471,8 +480,8 @@ f_setPetroleumFuelTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption()
 			<Text>
 				<Id>1722247567122</Id>
 				<Name><![CDATA[t_fossilFuelTrucks_pct]]></Name>
-				<X>230</X>
-				<Y>160</Y>
+				<X>245</X>
+				<Y>174</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -481,24 +490,25 @@ f_setPetroleumFuelTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption()
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesFossilFuelTrucks_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_fossilFuelTrucks_pct.getIntValue() + "%"</TextCode>
+				<TextCode>sl_companiesFossilFuelTrucks_pct.getIntValue() + "%"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Text>
 				<Id>1722247567124</Id>
 				<Name><![CDATA[t_trucksDescription]]></Name>
-				<X>15</X>
-				<Y>85</Y>
+				<X>20</X>
+				<Y>110</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -514,7 +524,7 @@ f_setPetroleumFuelTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption()
 				<Text><![CDATA[Vrachtwagens]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>1</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -522,9 +532,9 @@ f_setPetroleumFuelTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption()
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567126</Id>
-				<Name><![CDATA[sl_electricCars_pct]]></Name>
+				<Name><![CDATA[sl_companiesElectricCars_pct]]></Name>
 				<X>260</X>
-				<Y>290</Y>
+				<Y>287</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -536,8 +546,8 @@ f_setPetroleumFuelTrucks( uI_Tabs.f_getActiveSliderGridConnections_consumption()
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>sl_fossilFuelCars_pct.setValue(100 - sl_electricCars_pct.getIntValue(), false);
-f_setElectricCars( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricCars_pct, sl_fossilFuelCars_pct );</ActionCode>
+					<ActionCode>sl_companiesFossilFuelCars_pct.setValue(100 - sl_companiesElectricCars_pct.getIntValue(), false);
+f_setElectricCars( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), sl_companiesElectricCars_pct, sl_companiesFossilFuelCars_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -550,9 +560,9 @@ f_setElectricCars( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 			</Control>
 			<Text>
 				<Id>1722247567128</Id>
-				<Name><![CDATA[t_electricCarsDescription]]></Name>
+				<Name><![CDATA[txt_companiesElectricCarsDescription]]></Name>
 				<X>20</X>
-				<Y>295</Y>
+				<Y>292</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -561,6 +571,7 @@ f_setElectricCars( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesElectricCars_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -568,16 +579,16 @@ f_setElectricCars( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 				<Text><![CDATA[Elektrisch]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
 			<Text>
 				<Id>1722247567130</Id>
-				<Name><![CDATA[t_electricCars_pct]]></Name>
-				<X>230</X>
-				<Y>295</Y>
+				<Name><![CDATA[txt_companiesElectricCars_pct]]></Name>
+				<X>245</X>
+				<Y>292</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -586,24 +597,25 @@ f_setElectricCars( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesElectricCars_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_electricCars_pct.getIntValue() + "%"</TextCode>
+				<TextCode>sl_companiesElectricCars_pct.getIntValue() + "%"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Text>
 				<Id>1722247567132</Id>
 				<Name><![CDATA[t_carsDescription]]></Name>
-				<X>15</X>
-				<Y>270</Y>
+				<X>20</X>
+				<Y>272</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -619,7 +631,7 @@ f_setElectricCars( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 				<Text><![CDATA[Auto's]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>1</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -627,9 +639,9 @@ f_setElectricCars( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567134</Id>
-				<Name><![CDATA[sl_fossilFuelVans_pct]]></Name>
+				<Name><![CDATA[sl_companiesFossilFuelVans_pct]]></Name>
 				<X>260</X>
-				<Y>235</Y>
+				<Y>239</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -641,8 +653,8 @@ f_setElectricCars( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>sl_electricVans_pct.setValue(100 - sl_fossilFuelVans_pct.getIntValue(), false);
-f_setPetroleumFuelVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricVans_pct, sl_fossilFuelVans_pct );</ActionCode>
+					<ActionCode>sl_companiesElectricVans_pct.setValue(100 - sl_companiesFossilFuelVans_pct.getIntValue(), false);
+f_setPetroleumFuelVans( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), sl_companiesElectricVans_pct, sl_companiesFossilFuelVans_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -655,9 +667,9 @@ f_setPetroleumFuelVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), 
 			</Control>
 			<Text>
 				<Id>1722247567136</Id>
-				<Name><![CDATA[t_fossilFuelVans_pct]]></Name>
-				<X>230</X>
-				<Y>240</Y>
+				<Name><![CDATA[txt_companiesFossilFuelVans_pct]]></Name>
+				<X>245</X>
+				<Y>244</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -666,24 +678,25 @@ f_setPetroleumFuelVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), 
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesFossilFuelVans_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_fossilFuelVans_pct.getIntValue() + "%"</TextCode>
+				<TextCode>sl_companiesFossilFuelVans_pct.getIntValue() + "%"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Text>
 				<Id>1722247567138</Id>
-				<Name><![CDATA[t_fossilFuelVansDescription]]></Name>
-				<X>15</X>
-				<Y>240</Y>
+				<Name><![CDATA[txt_companiesFossilFuelVansDescription]]></Name>
+				<X>20</X>
+				<Y>244</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -692,6 +705,7 @@ f_setPetroleumFuelVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), 
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesFossilFuelVans_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -699,7 +713,7 @@ f_setPetroleumFuelVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), 
 				<Text><![CDATA[Fossiele brandstof]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -707,9 +721,9 @@ f_setPetroleumFuelVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), 
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567140</Id>
-				<Name><![CDATA[sl_electricVans_pct]]></Name>
+				<Name><![CDATA[sl_companiesElectricVans_pct]]></Name>
 				<X>260</X>
-				<Y>210</Y>
+				<Y>217</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -721,8 +735,8 @@ f_setPetroleumFuelVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), 
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>sl_fossilFuelVans_pct.setValue(100 - sl_electricVans_pct.getIntValue(), false);
-f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_electricVans_pct, sl_fossilFuelVans_pct );</ActionCode>
+					<ActionCode>sl_companiesFossilFuelVans_pct.setValue(100 - sl_companiesElectricVans_pct.getIntValue(), false);
+f_setElectricVans( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), sl_companiesElectricVans_pct, sl_companiesFossilFuelVans_pct );</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -735,9 +749,9 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 			</Control>
 			<Text>
 				<Id>1722247567142</Id>
-				<Name><![CDATA[t_electricVansDescription]]></Name>
-				<X>15</X>
-				<Y>215</Y>
+				<Name><![CDATA[txt_companiesElectricVansDescription]]></Name>
+				<X>20</X>
+				<Y>222</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -746,6 +760,7 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesElectricVans_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -753,16 +768,16 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 				<Text><![CDATA[Elektrisch]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
 			<Text>
 				<Id>1722247567144</Id>
-				<Name><![CDATA[t_electricVans_pct]]></Name>
-				<X>230</X>
-				<Y>215</Y>
+				<Name><![CDATA[txt_companiesElectricVans_pct]]></Name>
+				<X>245</X>
+				<Y>222</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -771,24 +786,25 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesElectricVans_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_electricVans_pct.getIntValue() + "%"</TextCode>
+				<TextCode>sl_companiesElectricVans_pct.getIntValue() + "%"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Text>
 				<Id>1722247567146</Id>
 				<Name><![CDATA[t_vansDescription]]></Name>
-				<X>15</X>
-				<Y>190</Y>
+				<X>20</X>
+				<Y>202</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -804,16 +820,16 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 				<Text><![CDATA[Busjes]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>1</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
 			<Image>
 				<Id>1746096199769</Id>
-				<Name><![CDATA[i_mobilityReduction]]></Name>
-				<X>160</X>
-				<Y>20</Y>
+				<Name><![CDATA[i_companiesMobilityReduction]]></Name>
+				<X>180</X>
+				<Y>58</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -822,7 +838,8 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_mobilityReduction, zero_Interface.v_infoText.mobilityDemandReduction, i_mobilityReduction.getX() + uI_Tabs.v_presentationXOffset, i_mobilityReduction.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<VisibleCode>sl_companiesMobilityDemandReduction_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_companiesMobilityReduction, zero_Interface.v_infoText.mobilityDemandReduction, i_companiesMobilityReduction.getX() + uI_Tabs.v_presentationXOffset, i_companiesMobilityReduction.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
@@ -838,9 +855,9 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 			</Image>
 			<Image>
 				<Id>1746096716217</Id>
-				<Name><![CDATA[i_electricTruck]]></Name>
-				<X>160</X>
-				<Y>110</Y>
+				<Name><![CDATA[i_companiesElectricTruck]]></Name>
+				<X>180</X>
+				<Y>128</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -849,7 +866,8 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_electricTruck, zero_Interface.v_infoText.electricTrucks, i_electricTruck.getX() + uI_Tabs.v_presentationXOffset, i_electricTruck.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<VisibleCode>sl_companiesElectricTrucks_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_companiesElectricTruck, zero_Interface.v_infoText.electricTrucks, i_companiesElectricTruck.getX() + uI_Tabs.v_presentationXOffset, i_companiesElectricTruck.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
@@ -865,9 +883,9 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 			</Image>
 			<Image>
 				<Id>1746096716230</Id>
-				<Name><![CDATA[i_hydrogenTruck]]></Name>
-				<X>160</X>
-				<Y>135</Y>
+				<Name><![CDATA[i_companiesHydrogenTruck]]></Name>
+				<X>180</X>
+				<Y>150</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -876,7 +894,8 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_hydrogenTruck, zero_Interface.v_infoText.hydrogenTrucks, i_hydrogenTruck.getX() + uI_Tabs.v_presentationXOffset, i_hydrogenTruck.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<VisibleCode>sl_companiesHydrogenTrucks_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_companiesHydrogenTruck, zero_Interface.v_infoText.hydrogenTrucks, i_companiesHydrogenTruck.getX() + uI_Tabs.v_presentationXOffset, i_companiesHydrogenTruck.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
@@ -892,9 +911,9 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 			</Image>
 			<Image>
 				<Id>1746096716242</Id>
-				<Name><![CDATA[i_fossilFuelTruck]]></Name>
-				<X>160</X>
-				<Y>160</Y>
+				<Name><![CDATA[i_companiesFossilFuelTruck]]></Name>
+				<X>180</X>
+				<Y>172</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -903,7 +922,8 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_fossilFuelTruck, zero_Interface.v_infoText.fossilTrucks, i_fossilFuelTruck.getX() + uI_Tabs.v_presentationXOffset, i_fossilFuelTruck.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<VisibleCode>sl_companiesFossilFuelTrucks_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_companiesFossilFuelTruck, zero_Interface.v_infoText.fossilTrucks, i_companiesFossilFuelTruck.getX() + uI_Tabs.v_presentationXOffset, i_companiesFossilFuelTruck.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
@@ -919,9 +939,9 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 			</Image>
 			<Image>
 				<Id>1746096716255</Id>
-				<Name><![CDATA[i_electricVans]]></Name>
-				<X>160</X>
-				<Y>215</Y>
+				<Name><![CDATA[i_companiesElectricVans]]></Name>
+				<X>180</X>
+				<Y>220</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -930,7 +950,8 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_electricVans, zero_Interface.v_infoText.electricVans, i_electricVans.getX() + uI_Tabs.v_presentationXOffset, i_electricVans.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<VisibleCode>sl_companiesElectricVans_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_companiesElectricVans, zero_Interface.v_infoText.electricVans, i_companiesElectricVans.getX() + uI_Tabs.v_presentationXOffset, i_companiesElectricVans.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
@@ -946,9 +967,9 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 			</Image>
 			<Image>
 				<Id>1746096716267</Id>
-				<Name><![CDATA[i_fossilFuelVans]]></Name>
-				<X>160</X>
-				<Y>240</Y>
+				<Name><![CDATA[i_companiesFossilFuelVans]]></Name>
+				<X>180</X>
+				<Y>242</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -957,7 +978,8 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_fossilFuelVans, zero_Interface.v_infoText.fossilVans, i_fossilFuelVans.getX() + uI_Tabs.v_presentationXOffset, i_fossilFuelVans.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<VisibleCode>sl_companiesFossilFuelVans_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_companiesFossilFuelVans, zero_Interface.v_infoText.fossilVans, i_companiesFossilFuelVans.getX() + uI_Tabs.v_presentationXOffset, i_companiesFossilFuelVans.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
@@ -973,9 +995,9 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 			</Image>
 			<Image>
 				<Id>1746096716280</Id>
-				<Name><![CDATA[i_electricCars]]></Name>
-				<X>160</X>
-				<Y>295</Y>
+				<Name><![CDATA[i_companiesElectricCars]]></Name>
+				<X>180</X>
+				<Y>290</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -984,7 +1006,8 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_electricCars, zero_Interface.v_infoText.electricCars, i_electricCars.getX() + uI_Tabs.v_presentationXOffset, i_electricCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<VisibleCode>sl_companiesElectricCars_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_companiesElectricCars, zero_Interface.v_infoText.electricCars, i_companiesElectricCars.getX() + uI_Tabs.v_presentationXOffset, i_companiesElectricCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
@@ -1000,9 +1023,9 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 			</Image>
 			<Image>
 				<Id>1746096716293</Id>
-				<Name><![CDATA[i_fossilFuelCars]]></Name>
-				<X>160</X>
-				<Y>320</Y>
+				<Name><![CDATA[i_companiesFossilFuelCars]]></Name>
+				<X>180</X>
+				<Y>312</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1011,7 +1034,8 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_fossilFuelCars, zero_Interface.v_infoText.fossilCars, i_fossilFuelCars.getX() + uI_Tabs.v_presentationXOffset, i_fossilFuelCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<VisibleCode>sl_companiesFossilFuelCars_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_companiesFossilFuelCars, zero_Interface.v_infoText.fossilCars, i_companiesFossilFuelCars.getX() + uI_Tabs.v_presentationXOffset, i_companiesFossilFuelCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
@@ -1028,9 +1052,9 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 			<Control Type="CheckBox">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1754990132964</Id>
-				<Name><![CDATA[cb_spreadChargingEVs]]></Name>
-				<X>260</X>
-				<Y>50</Y>
+				<Name><![CDATA[cb_companiesSpreadChargingEVs]]></Name>
+				<X>302</X>
+				<Y>74</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1044,11 +1068,11 @@ f_setElectricVans( uI_Tabs.f_getActiveSliderGridConnections_consumption(), sl_el
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>OL_ChargingAttitude selectedChargingAttitude = OL_ChargingAttitude.SIMPLE; 
-if(cb_spreadChargingEVs.isSelected()){
+if(cb_companiesSpreadChargingEVs.isSelected()){
 	selectedChargingAttitude = OL_ChargingAttitude.MAX_POWER; 
 }
 
-f_setChargingAttitude(selectedChargingAttitude, uI_Tabs.f_getAllSliderGridConnections_all());</ActionCode>
+f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getAllSliderGridConnections_utilities()));</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -1058,9 +1082,63 @@ f_setChargingAttitude(selectedChargingAttitude, uI_Tabs.f_getAllSliderGridConnec
 			</Control>
 			<Text>
 				<Id>1754990186800</Id>
-				<Name><![CDATA[t_spreadChargingEVsDescription1]]></Name>
-				<X>15</X>
-				<Y>55</Y>
+				<Name><![CDATA[txt_companiesSpreadChargingEVsDescription]]></Name>
+				<X>20</X>
+				<Y>82</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>cb_companiesSpreadChargingEVs.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Slim laden]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Image>
+				<Id>1754991641604</Id>
+				<Name><![CDATA[i_companiesMobilityChargingAttitude]]></Name>
+				<X>180</X>
+				<Y>80</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>cb_companiesSpreadChargingEVs.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_companiesMobilityChargingAttitude, zero_Interface.v_infoText.mobilitySmartCharging, i_companiesMobilityChargingAttitude.getX() + uI_Tabs.v_presentationXOffset, i_companiesMobilityChargingAttitude.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1777652928131</Id>
+				<Name><![CDATA[txt_mobilitySlidersCompaniesDescription]]></Name>
+				<X>20</X>
+				<Y>20</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1073,11 +1151,11 @@ f_setChargingAttitude(selectedChargingAttitude, uI_Tabs.f_getAllSliderGridConnec
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Slim laden]]></Text>
+				<Text><![CDATA[Bedrijven]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
+					<Size>22</Size>
+					<Style>1</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
@@ -1238,37 +1316,10 @@ if(selectedChargingAttitude != null){
 			<LinkTo>false</LinkTo>
 		</ExtendedProperties>
 	</Control>
-	<Image>
-		<Id>1754991641604</Id>
-		<Name><![CDATA[i_mobilityChargingAttitude]]></Name>
-		<X>160</X>
-		<Y>55</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<OnClickCode>zero_Interface.f_setInfoText(i_mobilityChargingAttitude, zero_Interface.v_infoText.mobilitySmartCharging, i_mobilityChargingAttitude.getX() + uI_Tabs.v_presentationXOffset, i_mobilityChargingAttitude.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Width>20</Width>
-		<Height>20</Height>
-		<Rotation>0.0</Rotation>
-		<ImageFiles>
-			<ImageResourceReference>
-				<PackageName>zerointerfaceloader</PackageName>
-				<ClassName>icon_i.png</ClassName>
-			</ImageResourceReference>
-		</ImageFiles>
-		<OriginalSize>false</OriginalSize>
-	</Image>
 	<Group>
 		<Id>1758182984074</Id>
-		<Name><![CDATA[gr_mobilitySliders_residential]]></Name>
-		<X>400</X>
+		<Name><![CDATA[gr_mobilitySliders_households]]></Name>
+		<X>0</X>
 		<Y>0</Y>
 		<Label>
 			<X>10</X>
@@ -1313,8 +1364,8 @@ if(selectedChargingAttitude != null){
 			<Text>
 				<Id>1758183089010</Id>
 				<Name><![CDATA[txt_privateParkedCars]]></Name>
-				<X>15</X>
-				<Y>10</Y>
+				<X>20</X>
+				<Y>60</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1330,7 +1381,7 @@ if(selectedChargingAttitude != null){
 				<Text><![CDATA[Privé geparkeerde autos]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>1</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -1338,8 +1389,8 @@ if(selectedChargingAttitude != null){
 			<Text>
 				<Id>1758183152912</Id>
 				<Name><![CDATA[txt_publicChargePoints]]></Name>
-				<X>15</X>
-				<Y>165</Y>
+				<X>20</X>
+				<Y>190</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1355,7 +1406,7 @@ if(selectedChargingAttitude != null){
 				<Text><![CDATA[Publieke laadpalen]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
+					<Size>12</Size>
 					<Style>1</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -1363,9 +1414,9 @@ if(selectedChargingAttitude != null){
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1758183196756</Id>
-				<Name><![CDATA[sl_publicChargersResidentialArea_pct]]></Name>
+				<Name><![CDATA[sl_householdPublicChargers_pct]]></Name>
 				<X>260</X>
-				<Y>190</Y>
+				<Y>205</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1377,7 +1428,7 @@ if(selectedChargingAttitude != null){
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setPublicChargingStations(uI_Tabs.f_getAllSliderGridConnections_chargers(), sl_publicChargersResidentialArea_pct.getIntValue(), sl_chargersThatSupportV1G_pct, sl_chargersThatSupportV2G_pct);</ActionCode>
+					<ActionCode>f_setPublicChargingStations(uI_Tabs.f_getAllSliderGridConnections_chargers(), sl_householdPublicChargers_pct.getIntValue(), sl_householdChargersThatSupportV1G_pct, sl_householdChargersThatSupportV2G_pct);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1390,9 +1441,9 @@ if(selectedChargingAttitude != null){
 			</Control>
 			<Text>
 				<Id>1758183196774</Id>
-				<Name><![CDATA[t_publicEVsResidentialAreaDescription]]></Name>
-				<X>15</X>
-				<Y>195</Y>
+				<Name><![CDATA[txt_householdPublicEVsResidentialAreaDescription]]></Name>
+				<X>20</X>
+				<Y>210</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1401,7 +1452,7 @@ if(selectedChargingAttitude != null){
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_publicChargersResidentialArea_pct.isVisible()</VisibleCode>
+				<VisibleCode>sl_householdPublicChargers_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -1416,9 +1467,9 @@ if(selectedChargingAttitude != null){
 			</Text>
 			<Text>
 				<Id>1758183196782</Id>
-				<Name><![CDATA[t_publicEVsResidentialArea_pct]]></Name>
+				<Name><![CDATA[txt_householdPublicEVs_pct]]></Name>
 				<X>245</X>
-				<Y>195</Y>
+				<Y>210</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1427,13 +1478,13 @@ if(selectedChargingAttitude != null){
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_publicChargersResidentialArea_pct.isVisible()</VisibleCode>
+				<VisibleCode>sl_householdPublicChargers_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[0%]]></Text>
-				<TextCode>sl_publicChargersResidentialArea_pct.getIntValue() + " %"</TextCode>
+				<TextCode>sl_householdPublicChargers_pct.getIntValue() + " %"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -1443,9 +1494,9 @@ if(selectedChargingAttitude != null){
 			</Text>
 			<Text>
 				<Id>1758183196796</Id>
-				<Name><![CDATA[t_privateEVsResidentialAreaDescription]]></Name>
-				<X>15</X>
-				<Y>40</Y>
+				<Name><![CDATA[txt_householdPrivateEVsDescription]]></Name>
+				<X>20</X>
+				<Y>80</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1454,7 +1505,7 @@ if(selectedChargingAttitude != null){
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_privateEVsResidentialArea_pct.isVisible()</VisibleCode>
+				<VisibleCode>sl_householdPrivateEVs_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -1470,9 +1521,9 @@ if(selectedChargingAttitude != null){
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1758183196803</Id>
-				<Name><![CDATA[sl_privateEVsResidentialArea_pct]]></Name>
+				<Name><![CDATA[sl_householdPrivateEVs_pct]]></Name>
 				<X>260</X>
-				<Y>34</Y>
+				<Y>75</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1484,7 +1535,7 @@ if(selectedChargingAttitude != null){
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>f_setVehiclesPrivateParking(uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_privateEVsResidentialArea_pct.getValue(), sl_EVsThatSupportV2G_pct);</ActionCode>
+					<ActionCode>f_setVehiclesPrivateParking(uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_householdPrivateEVs_pct.getValue(), sl_householdEVsThatSupportV2G_pct);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -1497,9 +1548,9 @@ if(selectedChargingAttitude != null){
 			</Control>
 			<Text>
 				<Id>1758183196811</Id>
-				<Name><![CDATA[t_privateEVsResidentialArea_pct]]></Name>
-				<X>244</X>
-				<Y>40</Y>
+				<Name><![CDATA[txt_householdPrivateEVs_pct]]></Name>
+				<X>245</X>
+				<Y>80</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1508,13 +1559,13 @@ if(selectedChargingAttitude != null){
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_privateEVsResidentialArea_pct.isVisible()</VisibleCode>
+				<VisibleCode>sl_householdPrivateEVs_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[0%]]></Text>
-				<TextCode>sl_privateEVsResidentialArea_pct.getIntValue() + " %"</TextCode>
+				<TextCode>sl_householdPrivateEVs_pct.getIntValue() + " %"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -1524,9 +1575,9 @@ if(selectedChargingAttitude != null){
 			</Text>
 			<Group>
 				<Id>1758183196871</Id>
-				<Name><![CDATA[gr_settingsV2G_publicChargers]]></Name>
-				<X>9</X>
-				<Y>311</Y>
+				<Name><![CDATA[gr_householdSettingsV2G_publicChargers]]></Name>
+				<X>10</X>
+				<Y>300</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -1542,9 +1593,9 @@ if(selectedChargingAttitude != null){
 					<Control Type="Slider">
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1758183196873</Id>
-						<Name><![CDATA[sl_chargersThatSupportV2G_pct]]></Name>
+						<Name><![CDATA[sl_householdChargersThatSupportV2G_pct]]></Name>
 						<X>251</X>
-						<Y>4</Y>
+						<Y>5</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1556,7 +1607,7 @@ if(selectedChargingAttitude != null){
 						<BasicProperties Width="100" Height="30">
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
-							<ActionCode>f_setV2GChargerCapabilities( uI_Tabs.f_getSliderGridConnections_chargers(), sl_chargersThatSupportV2G_pct.getValue() );</ActionCode>
+							<ActionCode>f_setV2GChargerCapabilities( uI_Tabs.f_getActiveSliderGridConnections_chargers(), sl_householdChargersThatSupportV2G_pct.getValue() );</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
 							<DefaultValueCode>0</DefaultValueCode>
@@ -1569,8 +1620,8 @@ if(selectedChargingAttitude != null){
 					</Control>
 					<Text>
 						<Id>1758183196875</Id>
-						<Name><![CDATA[t_chargersThatSupportV2GDescription]]></Name>
-						<X>5</X>
+						<Name><![CDATA[txt_chargersThatSupportV2GDescription]]></Name>
+						<X>10</X>
 						<Y>10</Y>
 						<Label>
 							<X>0</X>
@@ -1580,7 +1631,7 @@ if(selectedChargingAttitude != null){
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>sl_chargersThatSupportV2G_pct.isVisible()</VisibleCode>
+						<VisibleCode>sl_householdChargersThatSupportV2G_pct.isVisible()</VisibleCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
@@ -1595,35 +1646,8 @@ if(selectedChargingAttitude != null){
 					</Text>
 					<Text>
 						<Id>1758183196877</Id>
-						<Name><![CDATA[t_chargersThatSupportV2G_pct]]></Name>
-						<X>226</X>
-						<Y>11</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>sl_chargersThatSupportV2G_pct.isVisible()</VisibleCode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Color>-16777216</Color>
-						<Text><![CDATA[0%]]></Text>
-						<TextCode>sl_chargersThatSupportV2G_pct.getIntValue() + " %"</TextCode>
-						<Font>
-							<Name><![CDATA[Dialog]]></Name>
-							<Size>12</Size>
-							<Style>0</Style>
-						</Font>
-						<Alignment>CENTER</Alignment>
-					</Text>
-					<Image>
-						<Id>1758183196879</Id>
-						<Name><![CDATA[i_householdPublicChargersV2G]]></Name>
-						<X>181</X>
+						<Name><![CDATA[txt_householdChargersThatSupportV2G_pct]]></Name>
+						<X>235</X>
 						<Y>10</Y>
 						<Label>
 							<X>0</X>
@@ -1632,9 +1656,36 @@ if(selectedChargingAttitude != null){
 						<PublicFlag>true</PublicFlag>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<VisibleCode>sl_householdChargersThatSupportV2G_pct.isVisible()</VisibleCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[0%]]></Text>
+						<TextCode>sl_householdChargersThatSupportV2G_pct.getIntValue() + " %"</TextCode>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>12</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>RIGHT</Alignment>
+					</Text>
+					<Image>
+						<Id>1758183196879</Id>
+						<Name><![CDATA[i_householdPublicChargersV2G]]></Name>
+						<X>170</X>
+						<Y>8</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<VisibleCode>sl_chargersThatSupportV2G_pct.isVisible()</VisibleCode>
-						<OnClickCode>zero_Interface.f_setInfoText(i_householdPublicChargersV2G, zero_Interface.v_infoText.householdPublicParkingV2G, i_householdPublicChargersV2G.getX() + gr_settingsV2G_publicChargers.getX() + uI_Tabs.v_presentationXOffset, i_householdPublicChargersV2G.getY() + gr_settingsV2G_publicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+						<VisibleCode>sl_householdChargersThatSupportV2G_pct.isVisible()</VisibleCode>
+						<OnClickCode>zero_Interface.f_setInfoText(i_householdPublicChargersV2G, zero_Interface.v_infoText.householdPublicParkingV2G, i_householdPublicChargersV2G.getX() + gr_householdSettingsV2G_publicChargers.getX() + uI_Tabs.v_presentationXOffset, i_householdPublicChargersV2G.getY() + gr_householdSettingsV2G_publicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Width>20</Width>
@@ -1653,8 +1704,8 @@ if(selectedChargingAttitude != null){
 			<Image>
 				<Id>1758183196924</Id>
 				<Name><![CDATA[i_householdPrivateEV]]></Name>
-				<X>190</X>
-				<Y>39</Y>
+				<X>180</X>
+				<Y>78</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1663,7 +1714,7 @@ if(selectedChargingAttitude != null){
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>sl_privateEVsResidentialArea_pct.isVisible()</VisibleCode>
+				<VisibleCode>sl_householdPrivateEVs_pct.isVisible()</VisibleCode>
 				<OnClickCode>zero_Interface.f_setInfoText(i_householdPrivateEV, zero_Interface.v_infoText.householdPrivateParking, i_householdPrivateEV.getX() + uI_Tabs.v_presentationXOffset, i_householdPrivateEV.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
@@ -1681,8 +1732,8 @@ if(selectedChargingAttitude != null){
 			<Image>
 				<Id>1758183196939</Id>
 				<Name><![CDATA[i_householdPublicChargers]]></Name>
-				<X>190</X>
-				<Y>193</Y>
+				<X>180</X>
+				<Y>208</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1691,7 +1742,7 @@ if(selectedChargingAttitude != null){
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>sl_publicChargersResidentialArea_pct.isVisible()</VisibleCode>
+				<VisibleCode>sl_householdPublicChargers_pct.isVisible()</VisibleCode>
 				<OnClickCode>zero_Interface.f_setInfoText(i_householdPublicChargers, zero_Interface.v_infoText.householdPublicParking, i_householdPublicChargers.getX() + uI_Tabs.v_presentationXOffset, i_householdPublicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
@@ -1708,9 +1759,9 @@ if(selectedChargingAttitude != null){
 			</Image>
 			<Group>
 				<Id>1758183196817</Id>
-				<Name><![CDATA[gr_settingsV1G_publicChargers]]></Name>
+				<Name><![CDATA[gr_householdSettingsV1G_publicChargers]]></Name>
 				<X>5</X>
-				<Y>250</Y>
+				<Y>255</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -1726,7 +1777,7 @@ if(selectedChargingAttitude != null){
 					<Control Type="Slider">
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1758183196819</Id>
-						<Name><![CDATA[sl_chargersThatSupportV1G_pct]]></Name>
+						<Name><![CDATA[sl_householdChargersThatSupportV1G_pct]]></Name>
 						<X>255</X>
 						<Y>0</Y>
 						<Label>
@@ -1740,7 +1791,7 @@ if(selectedChargingAttitude != null){
 						<BasicProperties Width="100" Height="30">
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
-							<ActionCode>f_setV1GChargerCapabilities( uI_Tabs.f_getSliderGridConnections_chargers(), sl_chargersThatSupportV1G_pct.getValue() );</ActionCode>
+							<ActionCode>f_setV1GChargerCapabilities( uI_Tabs.f_getActiveSliderGridConnections_chargers(), sl_householdChargersThatSupportV1G_pct.getValue() );</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
 							<DefaultValueCode>0</DefaultValueCode>
@@ -1753,8 +1804,8 @@ if(selectedChargingAttitude != null){
 					</Control>
 					<Text>
 						<Id>1758183196821</Id>
-						<Name><![CDATA[txt_chargersThatSupportV1GDescription]]></Name>
-						<X>10</X>
+						<Name><![CDATA[txt_householdChargersThatSupportV1GDescription]]></Name>
+						<X>15</X>
 						<Y>5</Y>
 						<Label>
 							<X>0</X>
@@ -1764,7 +1815,7 @@ if(selectedChargingAttitude != null){
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>sl_chargersThatSupportV1G_pct.isVisible()</VisibleCode>
+						<VisibleCode>sl_householdChargersThatSupportV1G_pct.isVisible()</VisibleCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
@@ -1779,9 +1830,9 @@ if(selectedChargingAttitude != null){
 					</Text>
 					<Text>
 						<Id>1758183196823</Id>
-						<Name><![CDATA[t_chargersThatSupportV1G_pct]]></Name>
+						<Name><![CDATA[txt_householdChargersThatSupportV1G_pct]]></Name>
 						<X>240</X>
-						<Y>7</Y>
+						<Y>5</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1790,13 +1841,13 @@ if(selectedChargingAttitude != null){
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>sl_chargersThatSupportV1G_pct.isVisible()</VisibleCode>
+						<VisibleCode>sl_householdChargersThatSupportV1G_pct.isVisible()</VisibleCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
 						<Color>-16777216</Color>
 						<Text><![CDATA[0%]]></Text>
-						<TextCode>sl_chargersThatSupportV1G_pct.getIntValue() + " %"</TextCode>
+						<TextCode>sl_householdChargersThatSupportV1G_pct.getIntValue() + " %"</TextCode>
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>12</Size>
@@ -1807,8 +1858,8 @@ if(selectedChargingAttitude != null){
 					<Image>
 						<Id>1758183196825</Id>
 						<Name><![CDATA[i_householdPublicChargersV1G]]></Name>
-						<X>185</X>
-						<Y>5</Y>
+						<X>175</X>
+						<Y>3</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1817,8 +1868,8 @@ if(selectedChargingAttitude != null){
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<VisibleCode>sl_chargersThatSupportV1G_pct.isVisible()</VisibleCode>
-						<OnClickCode>zero_Interface.f_setInfoText(i_householdPublicChargersV1G, zero_Interface.v_infoText.householdPublicParkingV1G, i_householdPublicChargersV1G.getX() + gr_settingsV1G_publicChargers.getX() + uI_Tabs.v_presentationXOffset, i_householdPublicChargersV1G.getY() + gr_settingsV1G_publicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+						<VisibleCode>sl_householdChargersThatSupportV1G_pct.isVisible()</VisibleCode>
+						<OnClickCode>zero_Interface.f_setInfoText(i_householdPublicChargersV1G, zero_Interface.v_infoText.householdPublicParkingV1G, i_householdPublicChargersV1G.getX() + gr_householdSettingsV1G_publicChargers.getX() + uI_Tabs.v_presentationXOffset, i_householdPublicChargersV1G.getY() + gr_householdSettingsV1G_publicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Width>20</Width>
@@ -1836,9 +1887,9 @@ if(selectedChargingAttitude != null){
 			</Group>
 			<Group>
 				<Id>1758191125495</Id>
-				<Name><![CDATA[gr_activateV2GPrivateParkedCars]]></Name>
+				<Name><![CDATA[gr_householdActivateV2GPrivateParkedCars]]></Name>
 				<X>170</X>
-				<Y>110</Y>
+				<Y>140</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -1854,9 +1905,9 @@ if(selectedChargingAttitude != null){
 					<Control Type="CheckBox">
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1758190979055</Id>
-						<Name><![CDATA[cb_activateV2GPrivateParkedCars]]></Name>
-						<X>135</X>
-						<Y>-16</Y>
+						<Name><![CDATA[cb_householdActivateV2GPrivateParkedCars]]></Name>
+						<X>132</X>
+						<Y>-18</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1869,8 +1920,8 @@ if(selectedChargingAttitude != null){
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<TextColor>-16777216</TextColor>
 							<Enabled>true</Enabled>
-							<ActionCode>f_activateV2G(new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_houses()), cb_activateV2GPrivateParkedCars.isSelected());
-gr_settingsV2G_privateParkedCars.setVisible(cb_activateV2GPrivateParkedCars.isSelected());</ActionCode>
+							<ActionCode>f_activateV2G(new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_houses()), cb_householdActivateV2GPrivateParkedCars.isSelected());
+gr_householdSettingsV2G_privateParkedCars.setVisible(cb_householdActivateV2GPrivateParkedCars.isSelected());</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
 							<Font Name="Dialog" Size="11" Style="0"/>
@@ -1880,9 +1931,9 @@ gr_settingsV2G_privateParkedCars.setVisible(cb_activateV2GPrivateParkedCars.isSe
 					</Control>
 					<Image>
 						<Id>1758191012105</Id>
-						<Name><![CDATA[i_activateV2GPrivateParkedCars]]></Name>
-						<X>20</X>
-						<Y>-10</Y>
+						<Name><![CDATA[i_householdActivateV2GPrivateParkedCars]]></Name>
+						<X>10</X>
+						<Y>-12</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1891,8 +1942,8 @@ gr_settingsV2G_privateParkedCars.setVisible(cb_activateV2GPrivateParkedCars.isSe
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<VisibleCode>cb_activateV2GPrivateParkedCars.isVisible()</VisibleCode>
-						<OnClickCode>zero_Interface.f_setInfoText(i_activateV2GPrivateParkedCars, zero_Interface.v_infoText.activateV2GPrivateParkedCars, i_activateV2GPrivateParkedCars.getX() + gr_activateV2GPrivateParkedCars.getX() + uI_Tabs.v_presentationXOffset, i_activateV2GPrivateParkedCars.getY() + gr_activateV2GPrivateParkedCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+						<VisibleCode>cb_householdActivateV2GPrivateParkedCars.isVisible()</VisibleCode>
+						<OnClickCode>zero_Interface.f_setInfoText(i_householdActivateV2GPrivateParkedCars, zero_Interface.v_infoText.activateV2GPrivateParkedCars, i_householdActivateV2GPrivateParkedCars.getX() + gr_householdActivateV2GPrivateParkedCars.getX() + uI_Tabs.v_presentationXOffset, i_householdActivateV2GPrivateParkedCars.getY() + gr_householdActivateV2GPrivateParkedCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Width>20</Width>
@@ -1908,8 +1959,8 @@ gr_settingsV2G_privateParkedCars.setVisible(cb_activateV2GPrivateParkedCars.isSe
 					</Image>
 					<Text>
 						<Id>1758191030984</Id>
-						<Name><![CDATA[txt_activateV2GPrivateParkedCars]]></Name>
-						<X>-155</X>
+						<Name><![CDATA[txt_householdActivateV2GPrivateParkedCars]]></Name>
+						<X>-150</X>
 						<Y>-10</Y>
 						<Label>
 							<X>0</X>
@@ -1919,7 +1970,7 @@ gr_settingsV2G_privateParkedCars.setVisible(cb_activateV2GPrivateParkedCars.isSe
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>cb_activateV2GPrivateParkedCars.isVisible()</VisibleCode>
+						<VisibleCode>cb_householdActivateV2GPrivateParkedCars.isVisible()</VisibleCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
@@ -1936,9 +1987,9 @@ gr_settingsV2G_privateParkedCars.setVisible(cb_activateV2GPrivateParkedCars.isSe
 			</Group>
 			<Text>
 				<Id>1758189201608</Id>
-				<Name><![CDATA[txt_chargingStrategyPrivateParkedCars]]></Name>
-				<X>15</X>
-				<Y>70</Y>
+				<Name><![CDATA[txt_householdChargingStrategyPrivateParkedCars]]></Name>
+				<X>20</X>
+				<Y>105</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1947,7 +1998,7 @@ gr_settingsV2G_privateParkedCars.setVisible(cb_activateV2GPrivateParkedCars.isSe
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>cb_chargingAttitudePrivateParkedCars.isVisible()</VisibleCode>
+				<VisibleCode>cb_householdChargingStrategyPrivateParkedCars.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -1963,9 +2014,9 @@ gr_settingsV2G_privateParkedCars.setVisible(cb_activateV2GPrivateParkedCars.isSe
 			<Control Type="ComboBox">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1758189233415</Id>
-				<Name><![CDATA[cb_chargingAttitudePrivateParkedCars]]></Name>
+				<Name><![CDATA[cb_householdChargingStrategyPrivateParkedCars]]></Name>
 				<X>221</X>
-				<Y>70</Y>
+				<Y>103</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1979,27 +2030,27 @@ gr_settingsV2G_privateParkedCars.setVisible(cb_activateV2GPrivateParkedCars.isSe
 					<FillColor>-1</FillColor>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<EnableExpression>sl_privateEVsResidentialArea_pct.isEnabled()</EnableExpression>
+					<EnableExpression>sl_householdPrivateEVs_pct.isEnabled()</EnableExpression>
 					<ActionCode>OL_ChargingAttitude selectedChargingAttitude = null;
-gr_activateV2GPrivateParkedCars.setVisible(false);
-cb_activateV2GPrivateParkedCars.setSelected(false, false);
-gr_settingsV2G_privateParkedCars.setVisible(false);
+gr_householdActivateV2GPrivateParkedCars.setVisible(false);
+cb_householdActivateV2GPrivateParkedCars.setSelected(false, false);
+gr_householdSettingsV2G_privateParkedCars.setVisible(false);
 
-switch(cb_chargingAttitudePrivateParkedCars.getValue()){
+switch(cb_householdChargingStrategyPrivateParkedCars.getValue()){
 	case "Niet slim laden":
 		selectedChargingAttitude = OL_ChargingAttitude.SIMPLE;
 		break;
 	case "Slim laden: Prijs gestuurd":
 		selectedChargingAttitude = OL_ChargingAttitude.PRICE;
-		gr_activateV2GPrivateParkedCars.setVisible(true);
+		gr_householdActivateV2GPrivateParkedCars.setVisible(true);
 		break;
 	case "Slim laden: Prijs marktfeedback":
 		selectedChargingAttitude = OL_ChargingAttitude.PRICE_MARKET_FEEDBACK;
-		gr_activateV2GPrivateParkedCars.setVisible(false);
+		gr_householdActivateV2GPrivateParkedCars.setVisible(false);
 		break;
 	case "Slim laden: Netbewust":
 		selectedChargingAttitude = OL_ChargingAttitude.BALANCE_LOCAL; // For now Balance_Local
-		gr_activateV2GPrivateParkedCars.setVisible(true);
+		gr_householdActivateV2GPrivateParkedCars.setVisible(true);
 		break;
 	/*
 	case "Slim laden: Locale balans":
@@ -2017,7 +2068,7 @@ if(selectedChargingAttitude != null){
 	f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_houses()));
 }
 else{
-	cb_chargingAttitudePrivateParkedCars.setValue("Niet slim laden", true);
+	cb_householdChargingStrategyPrivateParkedCars.setValue("Niet slim laden", true);
 }</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -2033,9 +2084,9 @@ else{
 			</Control>
 			<Image>
 				<Id>1758189262812</Id>
-				<Name><![CDATA[i_chargingAttitudePrivateParkedCars]]></Name>
-				<X>190</X>
-				<Y>70</Y>
+				<Name><![CDATA[i_householdChargingStrategyPrivateParkedCars]]></Name>
+				<X>180</X>
+				<Y>103</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2044,8 +2095,8 @@ else{
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>cb_chargingAttitudePrivateParkedCars.isVisible()</VisibleCode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_chargingAttitudePrivateParkedCars, zero_Interface.v_infoText.chargingAttitudePrivateParkedCars, i_chargingAttitudePrivateParkedCars.getX() + uI_Tabs.v_presentationXOffset, i_chargingAttitudePrivateParkedCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<VisibleCode>cb_householdChargingStrategyPrivateParkedCars.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdChargingStrategyPrivateParkedCars, zero_Interface.v_infoText.chargingAttitudePrivateParkedCars, i_householdChargingStrategyPrivateParkedCars.getX() + uI_Tabs.v_presentationXOffset, i_householdChargingStrategyPrivateParkedCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
@@ -2062,8 +2113,8 @@ else{
 			<Text>
 				<Id>1758192054421</Id>
 				<Name><![CDATA[txt_chargingStrategyPublicChargers]]></Name>
-				<X>15</X>
-				<Y>225</Y>
+				<X>20</X>
+				<Y>235</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2072,7 +2123,7 @@ else{
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>cb_chargingAttitudePrivatePublicChargers.isVisible()</VisibleCode>
+				<VisibleCode>cb_householdChargingStrategyPrivatePublicChargers.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -2088,9 +2139,9 @@ else{
 			<Control Type="ComboBox">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1758192054440</Id>
-				<Name><![CDATA[cb_chargingAttitudePrivatePublicChargers]]></Name>
+				<Name><![CDATA[cb_householdChargingStrategyPrivatePublicChargers]]></Name>
 				<X>221</X>
-				<Y>225</Y>
+				<Y>233</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2104,31 +2155,31 @@ else{
 					<FillColor>-1</FillColor>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<EnableExpression>sl_publicChargersResidentialArea_pct.isEnabled()</EnableExpression>
+					<EnableExpression>sl_householdPublicChargers_pct.isEnabled()</EnableExpression>
 					<ActionCode>OL_ChargingAttitude selectedChargingAttitude = null;
-gr_activateV2GPublicChargers.setVisible(false);
-cb_activateV2GPublicChargers.setSelected(false, true); // True call for now needed for chargepoints only
-gr_settingsV1G_publicChargers.setVisible(false);
-gr_settingsV2G_publicChargers.setVisible(false);
+gr_householdActivateV2GPublicChargers.setVisible(false);
+cb_householdActivateV2GPublicChargers.setSelected(false, true); // True call for now needed for chargepoints only
+gr_householdSettingsV1G_publicChargers.setVisible(false);
+gr_householdSettingsV2G_publicChargers.setVisible(false);
 
-switch(cb_chargingAttitudePrivatePublicChargers.getValue()){
+switch(cb_householdChargingStrategyPrivatePublicChargers.getValue()){
 	case "Niet slim laden":
 		selectedChargingAttitude = OL_ChargingAttitude.SIMPLE;
 		break;
 	case "Slim laden: Prijs gestuurd":
 		selectedChargingAttitude = OL_ChargingAttitude.PRICE;
-		gr_activateV2GPublicChargers.setVisible(true);
-		gr_settingsV1G_publicChargers.setVisible(true);
+		gr_householdActivateV2GPublicChargers.setVisible(true);
+		gr_householdSettingsV1G_publicChargers.setVisible(true);
 		break;
 	case "Slim laden: Prijs marktfeedback":
 		selectedChargingAttitude = OL_ChargingAttitude.PRICE_MARKET_FEEDBACK;
-		gr_activateV2GPublicChargers.setVisible(false);
-		gr_settingsV1G_publicChargers.setVisible(true);
+		gr_householdActivateV2GPublicChargers.setVisible(false);
+		gr_householdSettingsV1G_publicChargers.setVisible(true);
 		break;
 	case "Slim laden: Netbewust":
 		selectedChargingAttitude = OL_ChargingAttitude.BALANCE_GRID;
-		gr_activateV2GPublicChargers.setVisible(true);
-		gr_settingsV1G_publicChargers.setVisible(true);
+		gr_householdActivateV2GPublicChargers.setVisible(true);
+		gr_householdSettingsV1G_publicChargers.setVisible(true);
 		break;
 	case "Gevarieerd":
 		zero_Interface.f_setErrorScreen("De geselecteerde laad strategie is er alleen ter visualisatie in het geval niet elk huis dezelfde laad strategie heeft. Dit is dus niet een strategie die je handmatig aan kunt zetten. Voor nu is 'Niet slim laden' weer geselecteerd.", 0, 0);
@@ -2137,12 +2188,11 @@ switch(cb_chargingAttitudePrivatePublicChargers.getValue()){
 }
 
 if(selectedChargingAttitude != null){
-	List&lt;GridConnection&gt; allChargersInModel = new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getSliderGridConnections_chargers());
-	allChargersInModel.addAll(uI_Tabs.f_getPausedSliderGridConnections_chargers());
+	List&lt;GridConnection&gt; allChargersInModel = new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getAllSliderGridConnections_chargers());
 	f_setChargingAttitude(selectedChargingAttitude, allChargersInModel);
 }
 else{
-	cb_chargingAttitudePrivatePublicChargers.setValue("Niet slim laden", true);
+	cb_householdChargingStrategyPrivatePublicChargers.setValue("Niet slim laden", true);
 }</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -2158,9 +2208,9 @@ else{
 			</Control>
 			<Image>
 				<Id>1758192054460</Id>
-				<Name><![CDATA[i_chargingStrategyPublicChargers]]></Name>
-				<X>190</X>
-				<Y>225</Y>
+				<Name><![CDATA[i_householdChargingStrategyPublicChargers]]></Name>
+				<X>180</X>
+				<Y>233</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2169,8 +2219,8 @@ else{
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>cb_chargingAttitudePrivatePublicChargers.isVisible()</VisibleCode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_chargingStrategyPublicChargers, zero_Interface.v_infoText.chargingStrategyPublicChargers, i_chargingStrategyPublicChargers.getX() + uI_Tabs.v_presentationXOffset, i_chargingStrategyPublicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<VisibleCode>cb_householdChargingStrategyPrivatePublicChargers.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdChargingStrategyPublicChargers, zero_Interface.v_infoText.chargingStrategyPublicChargers, i_householdChargingStrategyPublicChargers.getX() + uI_Tabs.v_presentationXOffset, i_householdChargingStrategyPublicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
@@ -2186,9 +2236,9 @@ else{
 			</Image>
 			<Group>
 				<Id>1758192011387</Id>
-				<Name><![CDATA[gr_activateV2GPublicChargers]]></Name>
+				<Name><![CDATA[gr_householdActivateV2GPublicChargers]]></Name>
 				<X>170</X>
-				<Y>300</Y>
+				<Y>295</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -2204,9 +2254,9 @@ else{
 					<Control Type="CheckBox">
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1758192011389</Id>
-						<Name><![CDATA[cb_activateV2GPublicChargers]]></Name>
-						<X>135</X>
-						<Y>-16</Y>
+						<Name><![CDATA[cb_householdActivateV2GPublicChargers]]></Name>
+						<X>132</X>
+						<Y>-18</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -2219,8 +2269,8 @@ else{
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<TextColor>-16777216</TextColor>
 							<Enabled>true</Enabled>
-							<ActionCode>f_activateV2G(new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getAllSliderGridConnections_chargers()), cb_activateV2GPublicChargers.isSelected());
-gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected());</ActionCode>
+							<ActionCode>f_activateV2G(new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getAllSliderGridConnections_chargers()), cb_householdActivateV2GPublicChargers.isSelected());
+gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicChargers.isSelected());</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
 							<Font Name="Dialog" Size="11" Style="0"/>
@@ -2230,9 +2280,9 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected
 					</Control>
 					<Image>
 						<Id>1758192011391</Id>
-						<Name><![CDATA[i_activateV2GPrivatePublicChargers]]></Name>
-						<X>20</X>
-						<Y>-10</Y>
+						<Name><![CDATA[i_householdActivateV2GPrivatePublicChargers]]></Name>
+						<X>10</X>
+						<Y>-12</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -2241,8 +2291,8 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<VisibleCode>cb_activateV2GPublicChargers.isVisible()</VisibleCode>
-						<OnClickCode>zero_Interface.f_setInfoText(i_activateV2GPrivatePublicChargers, zero_Interface.v_infoText.activateV2GPrivatePublicChargers, i_activateV2GPrivatePublicChargers.getX() + gr_activateV2GPublicChargers.getX() + uI_Tabs.v_presentationXOffset, i_activateV2GPrivatePublicChargers.getY() + gr_activateV2GPublicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+						<VisibleCode>cb_householdActivateV2GPublicChargers.isVisible()</VisibleCode>
+						<OnClickCode>zero_Interface.f_setInfoText(i_householdActivateV2GPrivatePublicChargers, zero_Interface.v_infoText.activateV2GPrivatePublicChargers, i_householdActivateV2GPrivatePublicChargers.getX() + gr_householdActivateV2GPublicChargers.getX() + uI_Tabs.v_presentationXOffset, i_householdActivateV2GPrivatePublicChargers.getY() + gr_householdActivateV2GPublicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Width>20</Width>
@@ -2259,7 +2309,7 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected
 					<Text>
 						<Id>1758192011393</Id>
 						<Name><![CDATA[txt_activateV2GPrivatePublicChargers]]></Name>
-						<X>-155</X>
+						<X>-150</X>
 						<Y>-10</Y>
 						<Label>
 							<X>0</X>
@@ -2269,7 +2319,7 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>cb_activateV2GPublicChargers.isVisible()</VisibleCode>
+						<VisibleCode>cb_householdActivateV2GPublicChargers.isVisible()</VisibleCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
@@ -2286,9 +2336,9 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected
 			</Group>
 			<Group>
 				<Id>1758274187930</Id>
-				<Name><![CDATA[gr_settingsV2G_privateParkedCars]]></Name>
-				<X>9</X>
-				<Y>121</Y>
+				<Name><![CDATA[gr_householdSettingsV2G_privateParkedCars]]></Name>
+				<X>10</X>
+				<Y>145</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -2304,9 +2354,9 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected
 					<Control Type="Slider">
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1758274187932</Id>
-						<Name><![CDATA[sl_EVsThatSupportV2G_pct]]></Name>
+						<Name><![CDATA[sl_householdEVsThatSupportV2G_pct]]></Name>
 						<X>251</X>
-						<Y>4</Y>
+						<Y>5</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -2318,7 +2368,7 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected
 						<BasicProperties Width="100" Height="30">
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
-							<ActionCode>f_setV2GEVCapabilities( uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_EVsThatSupportV2G_pct.getValue() );</ActionCode>
+							<ActionCode>f_setV2GEVCapabilities( uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_householdEVsThatSupportV2G_pct.getValue() );</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
 							<DefaultValueCode>0</DefaultValueCode>
@@ -2331,8 +2381,8 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected
 					</Control>
 					<Text>
 						<Id>1758274187934</Id>
-						<Name><![CDATA[txt_EVsThatSupportV2GDescription]]></Name>
-						<X>5</X>
+						<Name><![CDATA[txt_householdEVsThatSupportV2GDescription]]></Name>
+						<X>10</X>
 						<Y>10</Y>
 						<Label>
 							<X>0</X>
@@ -2342,7 +2392,7 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>sl_EVsThatSupportV2G_pct.isVisible()</VisibleCode>
+						<VisibleCode>sl_householdEVsThatSupportV2G_pct.isVisible()</VisibleCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
@@ -2357,8 +2407,8 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected
 					</Text>
 					<Text>
 						<Id>1758274187936</Id>
-						<Name><![CDATA[txt_EVsThatSupportV2G_pct]]></Name>
-						<X>226</X>
+						<Name><![CDATA[txt_householdEVsThatSupportV2G_pct]]></Name>
+						<X>235</X>
 						<Y>10</Y>
 						<Label>
 							<X>0</X>
@@ -2368,24 +2418,24 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>sl_EVsThatSupportV2G_pct.isVisible()</VisibleCode>
+						<VisibleCode>sl_householdEVsThatSupportV2G_pct.isVisible()</VisibleCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
 						<Color>-16777216</Color>
 						<Text><![CDATA[0%]]></Text>
-						<TextCode>sl_EVsThatSupportV2G_pct.getIntValue() + " %"</TextCode>
+						<TextCode>sl_householdEVsThatSupportV2G_pct.getIntValue() + " %"</TextCode>
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>12</Size>
 							<Style>0</Style>
 						</Font>
-						<Alignment>CENTER</Alignment>
+						<Alignment>RIGHT</Alignment>
 					</Text>
 					<Image>
 						<Id>1758274187938</Id>
-						<Name><![CDATA[i_EVsThatSupportV2G]]></Name>
-						<X>181</X>
+						<Name><![CDATA[i_householdEVsThatSupportV2G]]></Name>
+						<X>170</X>
 						<Y>8</Y>
 						<Label>
 							<X>0</X>
@@ -2395,8 +2445,8 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<VisibleCode>sl_EVsThatSupportV2G_pct.isVisible()</VisibleCode>
-						<OnClickCode>zero_Interface.f_setInfoText(i_EVsThatSupportV2G, zero_Interface.v_infoText.EVsThatSupportV2G, i_EVsThatSupportV2G.getX() + gr_settingsV2G_privateParkedCars.getX() + uI_Tabs.v_presentationXOffset, i_EVsThatSupportV2G.getY() + gr_settingsV2G_privateParkedCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+						<VisibleCode>sl_householdEVsThatSupportV2G_pct.isVisible()</VisibleCode>
+						<OnClickCode>zero_Interface.f_setInfoText(i_householdEVsThatSupportV2G, zero_Interface.v_infoText.EVsThatSupportV2G, i_householdEVsThatSupportV2G.getX() + gr_householdSettingsV2G_privateParkedCars.getX() + uI_Tabs.v_presentationXOffset, i_householdEVsThatSupportV2G.getY() + gr_householdSettingsV2G_privateParkedCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Width>20</Width>
@@ -2412,6 +2462,31 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected
 					</Image>
 				</Presentation>
 			</Group>
+			<Text>
+				<Id>1777651310496</Id>
+				<Name><![CDATA[txt_mobilitySlidersHousesholdsDescription]]></Name>
+				<X>20</X>
+				<Y>20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Huizen]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>22</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
 		</Presentation>
 	</Group>
 	<Text>
@@ -2490,4 +2565,103 @@ gr_settingsV2G_publicChargers.setVisible(cb_activateV2GPublicChargers.isSelected
 		</Font>
 		<Alignment>CENTER</Alignment>
 	</Text>
+	<Group>
+		<Id>1777644598792</Id>
+		<Name><![CDATA[gr_pageIndicator]]></Name>
+		<X>185</X>
+		<Y>20</Y>
+		<Label>
+			<X>7.073</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Image>
+				<Id>1777644598794</Id>
+				<Name><![CDATA[arrowLeftResidential]]></Name>
+				<X>-35</X>
+				<Y>-12</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>f_previousPage();</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>12</Width>
+				<Height>12</Height>
+				<Rotation>90.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_arrow.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1777644598796</Id>
+				<Name><![CDATA[arrowRightResidential1]]></Name>
+				<X>35</X>
+				<Y>0</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>f_nextPage();</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>12</Width>
+				<Height>12</Height>
+				<Rotation>270.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_arrow.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1777644598798</Id>
+				<Name><![CDATA[t_pageIndicator]]></Name>
+				<X>0</X>
+				<Y>-12</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Pagina 1/2]]></Text>
+				<TextCode>"Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPageGroups.size()</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+		</Presentation>
+	</Group>
 </Presentation>
