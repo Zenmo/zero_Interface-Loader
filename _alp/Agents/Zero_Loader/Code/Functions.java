@@ -517,8 +517,13 @@ for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electro
 	H2Electrolyser.f_setExternalAssetManagement(electrolyserManagement);
 	
 	//Create EA for the electrolyser GC
-	J_EAConversionElectrolyser h2ElectrolyserEA = new J_EAConversionElectrolyser(H2Electrolyser, dataElectrolyser.capacity_electric_kw(), dataElectrolyser.conversion_efficiency(), energyModel.p_timeParameters, OL_ElectrolyserState.STANDBY, dataElectrolyser.idle_consumption_power_ratio(), dataElectrolyser.min_production_ratio(), dataElectrolyser.load_change_time_h(), dataElectrolyser.start_up_time_shutdown_h(), dataElectrolyser.start_up_time_standby_h(), dataElectrolyser.start_up_time_idle_h());
+	if(dataElectrolyser.detailedElectrolyserModel()){
+		new J_EAConversionElectrolyser(H2Electrolyser, dataElectrolyser.capacity_electric_kw(), dataElectrolyser.conversion_efficiency(), energyModel.p_timeParameters, OL_ElectrolyserState.STANDBY, dataElectrolyser.idle_consumption_power_ratio(), dataElectrolyser.min_production_ratio(), dataElectrolyser.load_change_time_h(), dataElectrolyser.start_up_time_shutdown_h(), dataElectrolyser.start_up_time_standby_h(), dataElectrolyser.start_up_time_idle_h());
+	}
+	else{
+		new J_EAConversionElectrolyser(H2Electrolyser, dataElectrolyser.capacity_electric_kw(), dataElectrolyser.conversion_efficiency(), energyModel.p_timeParameters);
 	
+	}
 	//Set owner
 	ConnectionOwner owner;
 	if (!existing_actors.contains(H2Electrolyser.p_ownerID)){ // check if owner exists already, if not, create new owner.

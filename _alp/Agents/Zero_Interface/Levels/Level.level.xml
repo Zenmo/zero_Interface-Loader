@@ -1796,28 +1796,6 @@ v_selectedGridConnectionIndex &gt; 0 ?
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
-	<EmbeddedObjectPresentation>
-		<Id>1722252542596</Id>
-		<Name><![CDATA[uI_Tabs_presentation]]></Name>
-		<X>0</X>
-		<Y>0</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
-		<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
-		<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
-		<Latitude>52.51902183517265</Latitude>
-		<Longitude>6.169494834925871</Longitude>
-	</EmbeddedObjectPresentation>
 	<Rectangle>
 		<Id>1724419174775</Id>
 		<Name><![CDATA[rect_scenarioText]]></Name>
@@ -8351,4 +8329,26 @@ else{
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
+	<EmbeddedObjectPresentation>
+		<Id>1722252542596</Id>
+		<Name><![CDATA[uI_Tabs_presentation]]></Name>
+		<X>0</X>
+		<Y>0</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
+		<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
+		<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
+		<Latitude>52.51902183517265</Latitude>
+		<Longitude>6.169494834925871</Longitude>
+	</EmbeddedObjectPresentation>
 </Presentation>

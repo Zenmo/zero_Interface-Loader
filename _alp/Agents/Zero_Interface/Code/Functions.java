@@ -287,12 +287,7 @@ uI_Results.getCheckbox_KPISummary().setEnabled(false);
 
 
 // Set info text
-if ( GN.p_realCapacityAvailable ) {
-	v_clickedObjectText = GN.p_nodeType + "-station, " + Integer.toString( ((int)GN.p_capacity_kW) ) + " kW, ID: " + GN.p_gridNodeID + ", aansluitingen: " + GN.f_getConnectedGridConnections().size() + ", Type station: " + GN.p_description;
-}
-else {
-	v_clickedObjectText =  GN.p_nodeType + "-station, " + Integer.toString( ((int)GN.p_capacity_kW) ) + " kW (ingeschat), ID: " + GN.p_gridNodeID + ", aansluitingen: " + GN.f_getConnectedGridConnections().size() + ", Type station: " + GN.p_description;
-}
+f_setSelectedGNText();
 
 // Color the GridNode
 GN.gisRegion.setFillColor( v_selectionColor );
@@ -379,9 +374,6 @@ f_updateUIResultsData();
 
 //Set the button for going to the company UI (needs to be at the end of this function!)
 f_setUIButton();
-
-//alle panden met meerdere adressen hebben op dit moment (16-7-24) dezelfde functie(s) voor ieder adres, dus dit is op dit moment zinloos
-//f_listFunctions();
 
 /*ALCODEEND*/}
 
@@ -2018,14 +2010,22 @@ for(OL_GISObjectType activeSpecialGISObjectType : c_modelActiveSpecialGISObjects
 }
 /*ALCODEEND*/}
 
-double f_setTrafoText()
+double f_setSelectedGNText()
 {/*ALCODESTART::1750261221085*/
-if ( v_clickedGridNode.p_realCapacityAvailable ) {
-	v_clickedObjectText = v_clickedGridNode.p_nodeType + "-station, " + Integer.toString( ((int)v_clickedGridNode.p_capacity_kW) ) + " kW, ID: " + v_clickedGridNode.p_gridNodeID + ", aansluitingen: " + v_clickedGridNode.f_getConnectedGridConnections().size() + ", Type station: " + v_clickedGridNode.p_description;
+String GNCapacityUnitString = " kW"; 
+if ( !v_clickedGridNode.p_realCapacityAvailable ) {
+	GNCapacityUnitString += " (ingeschat)";
 }
-else {
-	v_clickedObjectText =  v_clickedGridNode.p_nodeType + "-station, " + Integer.toString( ((int)v_clickedGridNode.p_capacity_kW) ) + " kW (ingeschat), ID: " + v_clickedGridNode.p_gridNodeID + ", aansluitingen: " + v_clickedGridNode.f_getConnectedGridConnections().size() + ", Type station: " + v_clickedGridNode.p_description;
-}
+
+//Get total connected gcs
+int totalConnectedGCs = findAll(v_clickedGridNode.f_getAllLowerLVLConnectedGridConnections(), gc -> gc.f_isActive()).size();
+
+v_clickedObjectText =  v_clickedGridNode.p_nodeType + "-station, " + 
+					   roundToInt(v_clickedGridNode.p_capacity_kW) + GNCapacityUnitString +
+					   ", ID: " + v_clickedGridNode.p_gridNodeID + 
+					   ", aansluitingen: " + totalConnectedGCs + 
+					   ", Type station: " + v_clickedGridNode.p_description;
+
 /*ALCODEEND*/}
 
 double f_setSpecialGISObjectLegendItem(OL_GISObjectType activeSpecialGISObjectType,ShapeText legendText,ShapeRectangle legendRect)

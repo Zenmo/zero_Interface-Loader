@@ -2899,7 +2899,7 @@ f_setWindTurbines( sl_largeScaleWind_MW_Residential.getValue() - p_currentWindTu
 					<Enabled>true</Enabled>
 					<ActionCode>zero_Interface.v_clickedGridNode.p_capacity_kW += sl_trafoReinforcement.getValue();
 
-zero_Interface.f_setTrafoText();</ActionCode>
+zero_Interface.f_setSelectedGNText();</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -2956,7 +2956,7 @@ zero_Interface.f_setTrafoText();</ActionCode>
 for (GridNode GN : zero_Interface.energyModel.f_getGridNodesTopLevel() ){
 	GN.p_capacity_kW = GN.p_originalCapacity_kW;
 } 
-zero_Interface.f_setTrafoText();
+zero_Interface.f_setSelectedGNText();
 </ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>

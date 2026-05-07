@@ -1418,7 +1418,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1750261221085</Id>
-		<Name><![CDATA[f_setTrafoText]]></Name>
+		<Name><![CDATA[f_setSelectedGNText]]></Name>
 		<X>60</X>
 		<Y>1520</Y>
 		<Label>
