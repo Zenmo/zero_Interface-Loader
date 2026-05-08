@@ -2064,6 +2064,11 @@ switch(activeSpecialGISObjectType){
 		legendRect.setFillColor(v_electrolyserColor);
 		legendRect.setLineColor(v_electrolyserLineColor);
 		break;
+	case DIESEL_GEN:
+		legendText.setText("Diesel Generator");
+		legendRect.setFillColor(v_dieselGeneratorColor);
+		legendRect.setLineColor(v_dieselGeneratorLineColor);
+		break;
 }
 /*ALCODEEND*/}
 
@@ -2838,8 +2843,11 @@ new Thread( () -> {
 	
 	//After rapid run: remove loading screen
 	f_removeAllSimulateYearScreens();
-
-	if (c_selectedGridConnections.size() == 0){//Update main area collection
+	
+	if(v_clickedGridNode != null){
+		uI_Results.f_updateUIresultsGridNode(v_clickedGridNode);
+	}
+	else if (c_selectedGridConnections.size() == 0){//Update main area collection
 		uI_Results.f_updateResultsUI(energyModel);
 	}
 	else if (c_selectedGridConnections.size() == 1){//Update selected GC area collection

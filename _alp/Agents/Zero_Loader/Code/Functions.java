@@ -311,7 +311,6 @@ for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data))
 			owner = energyModel.add_pop_connectionOwners();
 			
 			owner.set_p_actorID( dataSolarfarm.owner_id());
-			owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.SOLARFARM_OP );
 			owner.b_dataSharingAgreed = true;
 			existing_actors.add(owner.p_actorID);
 		}
@@ -429,7 +428,6 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) {
 		if (!existing_actors.contains(gridbattery.p_ownerID)){ // check if owner exists already, if not, create new owner.
 			owner = energyModel.add_pop_connectionOwners();
 			owner.set_p_actorID( gridbattery.p_ownerID );
-			owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.BATTERY_OP );
 			owner.b_dataSharingAgreed = true;
 			existing_actors.add(gridbattery.p_ownerID);
 		}
@@ -530,7 +528,6 @@ for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electro
 		owner = energyModel.add_pop_connectionOwners();
 		
 		owner.set_p_actorID( H2Electrolyser.p_ownerID );
-		owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.ELECTROLYSER_OP );
 		owner.b_dataSharingAgreed = true;
 		existing_actors.add(H2Electrolyser.p_ownerID);
 	}
@@ -611,7 +608,6 @@ for (Windfarm_data dataWindfarm : f_getWindfarmsInSubScope(c_windfarm_data)) {
 			owner = energyModel.add_pop_connectionOwners();
 			
 			owner.set_p_actorID( windfarm.p_ownerID );
-			owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.WINDFARM_OP );
 			owner.b_dataSharingAgreed = true;
 			existing_actors.add(windfarm.p_ownerID);
 		}
@@ -852,7 +848,6 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
 			
 		COC.p_actorID = genericCompany.address_id();
-		COC.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
 		COC.p_detailedCompany = false;
 		COC.b_dataSharingAgreed = true;
 		
@@ -1059,7 +1054,6 @@ for (var survey : surveys) {
 	//Create connection owner
 	ConnectionOwner survey_owner = energyModel.add_pop_connectionOwners();
 	survey_owner.p_actorID = survey.getCompanyName();
-	survey_owner.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
 	survey_owner.p_detailedCompany = true;
 	survey_owner.b_dataSharingAgreed = survey.getDataSharingAgreed();
 	survey_owner.b_dataIsAccessible = f_getAccessOfSurveyGC(survey.getDataSharingAgreed(), survey.getId());
@@ -1680,7 +1674,6 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 	//Create and connect ConnectionOwner	
 	ConnectionOwner owner = energyModel.add_pop_connectionOwners();
 	owner.p_actorID = chargingStation.p_ownerID;
-	owner.p_connectionOwnerType = OL_ConnectionOwnerType.CHARGEPOINT_OP;
 	owner.b_dataSharingAgreed = true;
 	chargingStation.p_owner = owner;
 		
@@ -3488,7 +3481,6 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 		
 	//Set parameters for the Actor: ConnectionOwner
 	COH.p_actorID = GCH.p_ownerID;
-	COH.p_connectionOwnerType = OL_ConnectionOwnerType.HOUSEHOLD;
 	COH.p_detailedCompany = false;
 	GCH.p_owner = COH;
 	
@@ -3660,7 +3652,6 @@ for (ParkingSpace_data dataParkingSpace : f_getParkingSpacesInSubScope(c_parking
 		ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
 			
 		COC.p_actorID = "Parking space connection owner: " + dataParkingSpace.parking_id();
-		COC.p_connectionOwnerType = OL_ConnectionOwnerType.PARKINGSPACE_OP;
 		COC.p_detailedCompany = false;
 		COC.b_dataSharingAgreed = true;
 		
