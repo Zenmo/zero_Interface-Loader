@@ -656,9 +656,37 @@ for(GridConnection productionGC : c_electricityTabEASliderGCs){
 		}
 	}
 }
-sl_largeScalePV_ha.setRange(0, 1000); // Needed to prevent anylogic range bug
+
+double totalCustomPVOnLand_kW = 0;
+for(GCEnergyProduction customSF : zero_Interface.c_customSolarfarms){
+    if(customSF.v_isActive){
+        for(J_EAProduction ea : customSF.c_productionAssets){
+            if(ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC){
+                totalCustomPVOnLand_kW += ea.getCapacityElectric_kW();
+            }
+        }
+    }
+}
+
+double totalCustomWind_kW = 0;
+for(GCEnergyProduction customWF : zero_Interface.c_customWindfarms){
+    if(customWF.v_isActive){
+        for(J_EAProduction ea : customWF.c_productionAssets){
+            if(ea.getEAType() == OL_EnergyAssetType.WINDMILL){
+                totalCustomWind_kW += ea.getCapacityElectric_kW();
+            }
+        }
+    }
+}
+
+double minSliderPVOnLand_ha = p_currentPVOnLand_ha + totalCustomPVOnLand_kW/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
+double maxSliderPVOnLand_ha = minSliderPVOnLand_ha + 50;
+sl_largeScalePV_ha.setRange(minSliderPVOnLand_ha, maxSliderPVOnLand_ha);
 sl_largeScalePV_ha.setValue((totalPVOnLand_kW/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha) + p_currentPVOnLand_ha, false);
-sl_largeScaleWind_MW.setRange(0, 1000); // Needed to prevent anylogic range bug
+
+double minSliderWind_MW = p_currentWindTurbines_MW + totalCustomWind_kW/1000;
+double maxSliderWind_MW = minSliderWind_MW + 100;
+sl_largeScaleWind_MW.setRange(minSliderWind_MW, maxSliderWind_MW);
 sl_largeScaleWind_MW.setValue((totalWind_kW/1000) + p_currentWindTurbines_MW, false);
 
 

@@ -383,6 +383,25 @@ f_setUIButton();
 //alle panden met meerdere adressen hebben op dit moment (16-7-24) dezelfde functie(s) voor ieder adres, dus dit is op dit moment zinloos
 //f_listFunctions();
 
+f_updateCustomEASolarfarmSettings();
+f_updateCustomEAWindfarmSettings();
+
+boolean anyCustomSettingsOpen = false;
+if (!c_selectedGridConnections.isEmpty()) {
+    GCEnergyProduction selectedGC = (GCEnergyProduction) c_selectedGridConnections.get(0);
+    if (v_clickedObjectType == OL_GISObjectType.SOLARFARM && c_customSolarfarms.contains(selectedGC)) {
+        anyCustomSettingsOpen = true;
+    } 
+    else if (v_clickedObjectType == OL_GISObjectType.WINDFARM && c_customWindfarms.contains(selectedGC)) {
+        anyCustomSettingsOpen = true;
+    }
+}
+
+if (anyCustomSettingsOpen) {
+    uI_Tabs_presentation.setVisible(false);
+} else {
+    uI_Tabs_presentation.setVisible(true);
+}
 /*ALCODEEND*/}
 
 double f_deselectPreviousSelect()
@@ -431,6 +450,9 @@ if(previousClickedObjectType != null){
 		v_customEnergyCoop = null;
 	}
 }
+
+// RESTORE tab visibility when closing/deselecting settings
+uI_Tabs_presentation.setVisible(true);
 /*ALCODEEND*/}
 
 double f_connectResultsUI()
@@ -3877,16 +3899,6 @@ else if (b_removeCustomEA) {
     b_removeCustomEA = false;
     traceln("Deletion mode cancelled.");
     return;
-    
-    /*GCEnergyProduction clickedGCEnergyProduction = null;
-    GCGridBattery clickedGCGridBattery = null;
-    for (GridNode GN : energyModel.pop_gridNodes) {
-        if (GN.gisRegion != null && GN.gisRegion.contains(clickx, clicky) && GN.gisRegion.isVisible()) {
-            clickedGN = GN;
-            break;
-        }
-    }
-    traceln("Removed the energy asset: ");*/
 }
 else{
 	if (uI_Tabs.pop_tabEHub.size() > 0 && uI_Tabs.pop_tabEHub.get(0).b_inCapacitySharingSelectionMode) {
@@ -3997,7 +4009,7 @@ if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
     tabElec.c_electricityTabEASliderGCs.add(solarpark);
     tabElec.f_updateSliders_Electricity();
 }
-traceln("Successfully added custom solar farm at " + lat + ", " + lon + " connected to " + gn.p_gridNodeID);
+traceln("Successfully added custom solarfarm at " + lat + ", " + lon + " connected to " + gn.p_gridNodeID);
 /*ALCODEEND*/}
 
 double f_removeCustomEA(GridConnection gc)
@@ -4071,7 +4083,7 @@ windpark.p_parentNodeElectricID = gn.p_gridNodeID;
 windpark.p_isSliderGC = true; // Allow slider to affect it
 
 // 2. Set capacity
-double defaultCapacity_kW = 100;
+double defaultCapacity_kW = 2000;
 windpark.v_liveConnectionMetaData.setCapacities_kW(0, defaultCapacity_kW, defaultCapacity_kW);
 windpark.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
 
@@ -4115,7 +4127,7 @@ if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
     tabElec.c_electricityTabEASliderGCs.add(windpark);
     tabElec.f_updateSliders_Electricity();
 }
-traceln("Successfully added custom wind farm at " + lat + ", " + lon + " connected to " + gn.p_gridNodeID);
+traceln("Successfully added custom windfarm at " + lat + ", " + lon + " connected to " + gn.p_gridNodeID);
 /*ALCODEEND*/}
 
 double f_addCustomGridBattery(double lat,double lon,GridNode gn)
@@ -4193,5 +4205,70 @@ if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
     tabElec.f_updateSliders_Electricity();
 }
 traceln("Successfully added custom grid battery at " + lat + ", " + lon + " connected to " + gn.p_gridNodeID);
+/*ALCODEEND*/}
+
+double f_updateCustomEASolarfarmSettings()
+{/*ALCODESTART::1778162093872*/
+if (c_selectedGridConnections.isEmpty() || !c_customSolarfarms.contains((GCEnergyProduction)c_selectedGridConnections.get(0))) {
+	// RESTORE tab visibility if we didn't select a custom solarfarm
+    uI_Tabs_presentation.setVisible(true); 
+    return;
+}
+
+// HIDE the tabs underneath because custom solarfarm settings are open!
+uI_Tabs_presentation.setVisible(false);
+
+GCEnergyProduction gc = (GCEnergyProduction) c_selectedGridConnections.get(0);
+J_EAProduction pvAsset = (J_EAProduction) gc.c_productionAssets.get(0);
+
+double currentCapacity_kW = pvAsset.getCapacityElectric_kW();
+double currentCapacity_ha = currentCapacity_kW / energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
+
+// Setup capacity ha slider
+sl_customEASolarfarmInstalledCapacity_ha.setRange(0.1, 10);
+sl_customEASolarfarmInstalledCapacity_ha.setValue(currentCapacity_ha, false); // false prevents triggering ActionCode
+
+// Setup capacity kW slider
+sl_customEASolarfarmInstalledCapacity_kW.setRange((int)(0.1*energyModel.avgc_data.p_avgSolarFieldPower_kWppha), (int)(10*energyModel.avgc_data.p_avgSolarFieldPower_kWppha));
+sl_customEASolarfarmInstalledCapacity_kW.setValue(currentCapacity_kW, false);
+
+// Setup contracted capacity slider
+sl_customEASolarfarmContractedCapacity_kW.setRange(0, currentCapacity_kW);
+sl_customEASolarfarmContractedCapacity_kW.setValue(gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW(), false);
+
+// Setup curtailment checkbox
+boolean hasCurtailment = gc.f_isAssetManagementActive(I_CurtailManagement.class);
+cb_customEASolarfarmCurtailment.setSelected(hasCurtailment, false);
+
+/*ALCODEEND*/}
+
+double f_updateCustomEAWindfarmSettings()
+{/*ALCODESTART::1778241627082*/
+if (c_selectedGridConnections.isEmpty() || !c_customWindfarms.contains((GCEnergyProduction)c_selectedGridConnections.get(0))) {
+	// RESTORE tab visibility if we didn't select a custom windfarm
+    //uI_Tabs_presentation.setVisible(true); 
+    return;
+}
+
+// HIDE the tabs underneath because custom solarfarm settings are open!
+uI_Tabs_presentation.setVisible(false);
+
+GCEnergyProduction gc = (GCEnergyProduction) c_selectedGridConnections.get(0);
+J_EAProduction windAsset = (J_EAProduction) gc.c_productionAssets.get(0);
+
+double currentCapacity_MW = windAsset.getCapacityElectric_kW()/1000;
+
+// Setup capacity MW slider
+sl_customEAWindfarmInstalledCapacity_MW.setRange(0.1, 10);
+sl_customEAWindfarmInstalledCapacity_MW.setValue(currentCapacity_MW, false); // false prevents triggering ActionCode
+
+// Setup contracted capacity slider
+sl_customEAWindfarmContractedCapacity_MW.setRange(0, currentCapacity_MW);
+sl_customEAWindfarmContractedCapacity_MW.setValue(gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW()/1000, false);
+
+// Setup curtailment checkbox
+boolean hasCurtailment = gc.f_isAssetManagementActive(I_CurtailManagement.class);
+cb_customEAWindfarmCurtailment.setSelected(hasCurtailment, false);
+
 /*ALCODEEND*/}
 
