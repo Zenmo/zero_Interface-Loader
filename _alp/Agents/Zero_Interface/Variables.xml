@@ -2121,7 +2121,7 @@
 		<Id>1777995108239</Id>
 		<Name><![CDATA[b_addCustomSolarfarm]]></Name>
 		<X>60</X>
-		<Y>1730</Y>
+		<Y>1690</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2143,7 +2143,7 @@
 		<Id>1777995108241</Id>
 		<Name><![CDATA[v_customEALatitude]]></Name>
 		<X>60</X>
-		<Y>1610</Y>
+		<Y>1570</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2165,7 +2165,7 @@
 		<Id>1777995108243</Id>
 		<Name><![CDATA[v_customEALongitude]]></Name>
 		<X>60</X>
-		<Y>1630</Y>
+		<Y>1590</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2187,7 +2187,7 @@
 		<Id>1777995108245</Id>
 		<Name><![CDATA[v_customSolarfarmCounter]]></Name>
 		<X>60</X>
-		<Y>1750</Y>
+		<Y>1710</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2209,7 +2209,7 @@
 		<Id>1777995108247</Id>
 		<Name><![CDATA[b_addCustomWindfarm]]></Name>
 		<X>60</X>
-		<Y>1820</Y>
+		<Y>1780</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2231,7 +2231,7 @@
 		<Id>1777995108249</Id>
 		<Name><![CDATA[v_customWindfarmCounter]]></Name>
 		<X>60</X>
-		<Y>1840</Y>
+		<Y>1800</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2253,7 +2253,7 @@
 		<Id>1777995108251</Id>
 		<Name><![CDATA[b_addCustomGridBattery]]></Name>
 		<X>60</X>
-		<Y>1910</Y>
+		<Y>1870</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2275,7 +2275,7 @@
 		<Id>1777995108253</Id>
 		<Name><![CDATA[v_customGridBatteryCounter]]></Name>
 		<X>60</X>
-		<Y>1930</Y>
+		<Y>1890</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2297,7 +2297,7 @@
 		<Id>1777995108255</Id>
 		<Name><![CDATA[b_removeCustomEA]]></Name>
 		<X>60</X>
-		<Y>1650</Y>
+		<Y>1610</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2319,7 +2319,7 @@
 		<Id>1777995108257</Id>
 		<Name><![CDATA[b_removeAllCustomEAs]]></Name>
 		<X>60</X>
-		<Y>1670</Y>
+		<Y>1630</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3709,7 +3709,7 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 		<Id>1777995108215</Id>
 		<Name><![CDATA[c_customSolarfarms]]></Name>
 		<X>60</X>
-		<Y>1770</Y>
+		<Y>1730</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3727,7 +3727,7 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 		<Id>1777995108221</Id>
 		<Name><![CDATA[c_customWindfarms]]></Name>
 		<X>60</X>
-		<Y>1860</Y>
+		<Y>1820</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3745,7 +3745,7 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 		<Id>1777995108226</Id>
 		<Name><![CDATA[c_customGridBatteries]]></Name>
 		<X>60</X>
-		<Y>1950</Y>
+		<Y>1910</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
