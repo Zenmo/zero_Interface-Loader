@@ -3061,7 +3061,7 @@ if ( topGridNode == null ) {
 String topGridNodeID = topGridNode.gridnode_id();
 
 //Create data package for e-hub dashboard slider gcs
-if(project_data.project_type() == OL_ProjectType.BUSINESSPARK){
+if(c_companyBuilding_data.size() > 1){
 	f_addSliderSolarfarm(zero_Interface.p_defaultEnergyHubSliderGCName_solarfarm, topGridNodeID);
 	f_addSliderWindfarm(zero_Interface.p_defaultEnergyHubSliderGCName_windfarm, topGridNodeID);
 	f_addSliderBattery(zero_Interface.p_defaultEnergyHubSliderGCName_battery, topGridNodeID);
@@ -3088,7 +3088,7 @@ else{
 
 J_ProfilePointer f_createEngineProfile(String profileID,double[] arguments,double[] values,OL_ProfileUnits profileUnitType)
 {/*ALCODESTART::1749125189323*/
-J_ProfilePointer profilePointer = f_createProfilePointer(profileID, arguments, values, profileUnitType);
+J_ProfilePointer profilePointer = f_createProfilePointer(profileID, arguments, values, profileUnitType, null);
 
 energyModel.f_addProfile(profilePointer);
 return profilePointer;
@@ -5281,11 +5281,13 @@ J_ProfilePointer f_getDHWProfile(int numberOfResidents)
 int randomIndex;
 J_ProfilePointer ppDHWProfile = null;
 
+double offset_h = (energyModel.p_timeParameters.getDayOfWeek1jan() - 1) * 24.0; //Monday = index 0: -> detailed DHW profiles always start on monday! -> To have no offset you need to subtract -1.
+
 if(map_nrOfResidentsToDHWProfiles_data.containsKey(numberOfResidents) && map_nrOfResidentsToDHWProfiles_data.get(numberOfResidents).size() > 0){
 	List<DHWProfile_data> profiles = map_nrOfResidentsToDHWProfiles_data.get(numberOfResidents);
 	randomIndex = uniform_discr(0, profiles.size() - 1);
 	DHWProfile_data dhwProfile = profiles.get(randomIndex);
-	ppDHWProfile = f_createProfilePointer(dhwProfile.DHWProfileID(), dhwProfile.getArgumentsArray(), dhwProfile.getValuesArray(), dhwProfile.profileUnits());
+	ppDHWProfile = f_createProfilePointer(dhwProfile.DHWProfileID(), dhwProfile.getArgumentsArray(), dhwProfile.getValuesArray(), dhwProfile.profileUnits(), offset_h);
 	profiles.remove(randomIndex);
 	if(!energyModel.map_nrOfResidentsToDHWprofiles.containsKey(numberOfResidents)){
 		energyModel.map_nrOfResidentsToDHWprofiles.put(numberOfResidents, new ArrayList<>());
@@ -5302,12 +5304,14 @@ else if (energyModel.map_nrOfResidentsToDHWprofiles.containsKey(numberOfResident
 return ppDHWProfile;
 /*ALCODEEND*/}
 
-J_ProfilePointer f_createProfilePointer(String profileID,double[] arguments,double[] values,OL_ProfileUnits profileUnitType)
+J_ProfilePointer f_createProfilePointer(String profileID,double[] arguments,double[] values,OL_ProfileUnits profileUnitType,Double offset_h)
 {/*ALCODESTART::1776443217505*/
 double dataTimeStep_h = (arguments[arguments.length-1] - arguments[0])/(arguments.length-1);
-double dataStartTime_h = arguments[0];
 double simTimeStep_h = settings.timeStep_h(); 
 double a_profile[];
+
+double dataStartTime_h = offset_h != null ? arguments[0] - offset_h : arguments[0];
+
 if (simTimeStep_h < dataTimeStep_h) { //Interpolate data to timeStep_h = 0.25
 	//traceln("***** profilePointer using tableFunction to interpolate hourly data into quarter-hourly data ********");
 	if ((dataTimeStep_h/simTimeStep_h)%1.0 != 0.0) {
@@ -5316,7 +5320,7 @@ if (simTimeStep_h < dataTimeStep_h) { //Interpolate data to timeStep_h = 0.25
 	TableFunction tableFunction = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
 	a_profile = new double[values.length*(int)(dataTimeStep_h/simTimeStep_h)];
 	for (int i=0; i<a_profile.length; i++) {
-		a_profile[i] = tableFunction.get(dataStartTime_h+i*simTimeStep_h);
+		a_profile[i] = tableFunction.get(arguments[0]+i*simTimeStep_h);
 	}
 	dataTimeStep_h = simTimeStep_h;
 } else if (simTimeStep_h > dataTimeStep_h) {
