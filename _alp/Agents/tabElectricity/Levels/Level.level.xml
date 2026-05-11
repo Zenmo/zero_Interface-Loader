@@ -1652,23 +1652,30 @@ zero_Interface.f_setTrafoText();
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>List&lt;GCGridBattery&gt; gcListGridBatteries = new ArrayList&lt;&gt;();
+double totalCustomBatteryCapacity_kWh = 0;
+
 for(GridConnection gc : c_electricityTabEASliderGCs){
 	if(gc instanceof GCGridBattery gridbattery){
-		gcListGridBatteries.add(gridbattery);
+		if(zero_Interface.c_customGridBatteries.contains(gridbattery)){
+			totalCustomBatteryCapacity_kWh += gridbattery.p_batteryAsset.getStorageCapacity_kWh();
+		} else{
+			gcListGridBatteries.add(gridbattery);
+		}
 	}
 }
 
-if(gcListGridBatteries.size() == 0){
+double averageNeighbourhoodBatterySize_kWh = 0;
+if (!gcListGridBatteries.isEmpty()) {
+    averageNeighbourhoodBatterySize_kWh = (sl_gridBatteries_kWh.getValue() - totalCustomBatteryCapacity_kWh - p_currentTotalGridBatteryCapacity_MWh * 1000.0) / gcListGridBatteries.size();
+} else {
 	throw new IllegalStateException("Model does not contain any GCGridBattery agent");
 }
 
-f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</ActionCode>
+f_setGridBatteries(averageNeighbourhoodBatterySize_kWh, gcListGridBatteries);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>1000</MaxValue>
 					<Step>10</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>

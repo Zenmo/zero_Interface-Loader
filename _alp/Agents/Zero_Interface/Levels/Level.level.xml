@@ -9581,4 +9581,392 @@ f_resetSettings();</ActionCode>
 			</Control>
 		</Presentation>
 	</Group>
+	<Group>
+		<Id>1778278832476</Id>
+		<Name><![CDATA[gr_customEAGridBatterySettings]]></Name>
+		<X>2900</X>
+		<Y>-3500</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>15</XCode>
+		<YCode>630</YCode>
+		<VisibleCode>v_clickedObjectType == OL_GISObjectType.BATTERY &amp;&amp; !c_selectedGridConnections.isEmpty() &amp;&amp; c_customGridBatteries.contains((GCGridBattery)c_selectedGridConnections.get(0))</VisibleCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Rectangle>
+				<Id>1778278832478</Id>
+				<Name><![CDATA[rect_customEASolarfarmSettings1]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>3</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>370</Width>
+				<Height>350</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-32</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Rectangle>
+			<Text>
+				<Id>1778278832480</Id>
+				<Name><![CDATA[txt_customEASettingsGridBattery]]></Name>
+				<X>20</X>
+				<Y>20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Instellingen - Buurtbatterij]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>22</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778278832482</Id>
+				<Name><![CDATA[txt_customEASettingsGridBatteryInstalledCapacity_MWh]]></Name>
+				<X>20</X>
+				<Y>90</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Opslagcapaciteit]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778278832484</Id>
+				<Name><![CDATA[txt_customEAGridBatteryInstalledCapacity_MWh]]></Name>
+				<X>245</X>
+				<Y>90</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0 MWh]]></Text>
+				<TextCode>sl_customEAGridBatteryInstalledCapacity_MWh.getValue() + " MWh"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1778278832486</Id>
+				<Name><![CDATA[sl_customEAGridBatteryInstalledCapacity_MWh]]></Name>
+				<X>260</X>
+				<Y>85</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>double installedCapacity_MWh = sl_customEAGridBatteryInstalledCapacity_MWh.getValue();
+double installedCapacity_MW = sl_customEAGridBatteryInstalledCapacity_MW.getValue();
+
+if(installedCapacity_MW &gt; 0.5*installedCapacity_MWh){
+	installedCapacity_MW = 0.5*installedCapacity_MWh;
+	sl_customEAGridBatteryInstalledCapacity_MW.setValue(0.5*installedCapacity_MWh, false);
+}
+sl_customEAGridBatteryInstalledCapacity_MW.setRange(0.05, 0.5*installedCapacity_MWh);
+
+GCGridBattery gc = (GCGridBattery)c_selectedGridConnections.get(0);
+J_EAStorageElectric batteryAsset = (J_EAStorageElectric)gc.c_storageAssets.get(0);
+
+// Update backend
+batteryAsset.setStorageCapacity_kWh(installedCapacity_MWh*1000, gc);
+batteryAsset.setCapacityElectric_kW(installedCapacity_MW*1000);
+gc.v_liveConnectionMetaData.setCapacities_kW(installedCapacity_MW*1000, installedCapacity_MW*1000, installedCapacity_MW*1000);
+
+// Update the active instance of tabElectricity sliders
+if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
+    uI_Tabs.pop_tabElectricity.get(0).f_updateSliders_Electricity();
+}
+
+if (!b_runningMainInterfaceScenarios) f_setScenarioToCustom();
+f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<Step>0.1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Image>
+				<Id>1778278832488</Id>
+				<Name><![CDATA[i_customEASolarfarm2]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<X>165</X>
+				<Y>88</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>//f_setInfoText(i_largeScalePV, v_infoText.landPV, i_largeScalePV.getX() + uI_Tabs.v_presentationXOffset, i_largeScalePV.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1778278832490</Id>
+				<Name><![CDATA[txt_customEASettingsGridBatteryName]]></Name>
+				<X>20</X>
+				<Y>60</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Naam: ]]></Text>
+				<TextCode>c_selectedGridConnections.isEmpty() ? "" : "Naam: " + c_selectedGridConnections.get(0).p_gridConnectionID</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778278832492</Id>
+				<Name><![CDATA[txt_customEAGridBatteryInstalledCapacity_MW]]></Name>
+				<X>245</X>
+				<Y>120</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0 MW]]></Text>
+				<TextCode>sl_customEAGridBatteryInstalledCapacity_MW.getValue() + " MW"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1778278832494</Id>
+				<Name><![CDATA[sl_customEAGridBatteryInstalledCapacity_MW]]></Name>
+				<X>260</X>
+				<Y>115</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>double installedCapacity_MW = sl_customEAGridBatteryInstalledCapacity_MW.getValue();
+
+GCGridBattery gc = (GCGridBattery)c_selectedGridConnections.get(0);
+J_EAStorageElectric batteryAsset = (J_EAStorageElectric)gc.c_storageAssets.get(0);
+
+batteryAsset.setCapacityElectric_kW(installedCapacity_MW*1000);
+gc.v_liveConnectionMetaData.setCapacities_kW(installedCapacity_MW*1000, installedCapacity_MW*1000, installedCapacity_MW*1000);
+
+if (!b_runningMainInterfaceScenarios) f_setScenarioToCustom();
+f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<Step>0.05</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1778278832496</Id>
+				<Name><![CDATA[txt_customEASettingsGridBatteryAlgorithm]]></Name>
+				<X>20</X>
+				<Y>150</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Sturing]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778278946812</Id>
+				<Name><![CDATA[txt_customEASettingsGridBatteryInstalledCapacity_MW]]></Name>
+				<X>20</X>
+				<Y>120</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[(Ont)laad vermogen]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="ComboBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1778279933335</Id>
+				<Name><![CDATA[cb_customEAGridBatteryAlgorithm]]></Name>
+				<X>220</X>
+				<Y>150</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="140" Height="20">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<FillColor>-1</FillColor>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>if (c_selectedGridConnections.isEmpty() || !(c_selectedGridConnections.get(0) instanceof GCGridBattery)) {
+    return;
+}
+GCGridBattery gc = (GCGridBattery)c_selectedGridConnections.get(0);
+GridNode gn = gc.p_parentNodeElectric;
+I_BatteryManagement batteryAlgorithm = null;
+
+switch(cb_customEAGridBatteryAlgorithm.getValue()){
+	case "Zelfverbruik":
+    	batteryAlgorithm = new J_BatteryManagementSelfConsumptionGridNode(gc, energyModel.p_timeParameters);
+    	break;
+	case "Peak shaving":
+    	batteryAlgorithm = new J_BatteryManagementPeakShaving(gc, energyModel.p_timeParameters);
+    	((J_BatteryManagementPeakShaving)batteryAlgorithm).setTarget(gn);
+    	break;
+	case "Prijssturing":
+    	batteryAlgorithm = new J_BatteryManagementPrice(gc, energyModel.p_timeParameters);
+    	break;
+}
+
+gc.f_setBatteryManagement(batteryAlgorithm);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<Editable>false</Editable>
+					<Button>Zelfverbruik</Button>
+					<Button>Peak shaving</Button>
+					<Button>Prijssturing</Button>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+		</Presentation>
+	</Group>
 </Presentation>

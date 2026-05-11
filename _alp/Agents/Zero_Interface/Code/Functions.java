@@ -385,15 +385,23 @@ f_setUIButton();
 
 f_updateCustomEASolarfarmSettings();
 f_updateCustomEAWindfarmSettings();
+f_updateCustomEAGridBatterySettings();
 
 boolean anyCustomSettingsOpen = false;
 if (!c_selectedGridConnections.isEmpty()) {
-    GCEnergyProduction selectedGC = (GCEnergyProduction) c_selectedGridConnections.get(0);
-    if (v_clickedObjectType == OL_GISObjectType.SOLARFARM && c_customSolarfarms.contains(selectedGC)) {
-        anyCustomSettingsOpen = true;
-    } 
-    else if (v_clickedObjectType == OL_GISObjectType.WINDFARM && c_customWindfarms.contains(selectedGC)) {
-        anyCustomSettingsOpen = true;
+	GridConnection selectedGC = c_selectedGridConnections.get(0);
+    if(selectedGC instanceof GCEnergyProduction){
+    	if (v_clickedObjectType == OL_GISObjectType.SOLARFARM && c_customSolarfarms.contains((GCEnergyProduction)selectedGC)) {
+        	anyCustomSettingsOpen = true;
+    	} 
+    	else if (v_clickedObjectType == OL_GISObjectType.WINDFARM && c_customWindfarms.contains((GCEnergyProduction)selectedGC)) {
+        	anyCustomSettingsOpen = true;
+    	}
+    }
+    else if (selectedGC instanceof GCGridBattery){
+    	if (v_clickedObjectType == OL_GISObjectType.BATTERY && c_customGridBatteries.contains((GCGridBattery)selectedGC)) {
+        	anyCustomSettingsOpen = true;
+    	}
     }
 }
 
@@ -4150,7 +4158,7 @@ battery.p_parentNodeElectricID = gn.p_gridNodeID;
 battery.p_isSliderGC = true; // Allow slider to affect it
 
 // 2. Set capacity
-double defaultCapacity_kW = 100;
+double defaultCapacity_kW = 1000;
 double defaultStorageCapacity_kWh = 2*defaultCapacity_kW;
 battery.v_liveConnectionMetaData.setCapacities_kW(defaultCapacity_kW, defaultCapacity_kW, defaultCapacity_kW);
 battery.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
@@ -4163,10 +4171,8 @@ battery.f_setActive(true, energyModel.p_timeVariables);
 J_EAStorageElectric batteryAsset = new J_EAStorageElectric(battery, defaultCapacity_kW, defaultStorageCapacity_kWh, 0.5, energyModel.p_timeParameters);
 
 //Pick default operation mode management class
-I_BatteryManagement batteryAlgorithm = new J_BatteryManagementPeakShaving(battery, energyModel.p_timeParameters);
-((J_BatteryManagementPeakShaving)batteryAlgorithm).setTarget(gn);
-//I_BatteryManagement batteryAlgorithm = new J_BatteryManagementSelfConsumption(battery, energyModel.p_timeParameters);
-//((J_BatteryManagementSelfConsumption)batteryAlgorithm).setTarget(gn);
+I_BatteryManagement batteryAlgorithm = new J_BatteryManagementSelfConsumptionGridNode(battery, energyModel.p_timeParameters);
+//((J_BatteryManagementSelfConsumptionGridNode)batteryAlgorithm).setTarget(gn);
 
 //Set management
 battery.f_setBatteryManagement(batteryAlgorithm);
@@ -4209,16 +4215,16 @@ traceln("Successfully added custom grid battery at " + lat + ", " + lon + " conn
 
 double f_updateCustomEASolarfarmSettings()
 {/*ALCODESTART::1778162093872*/
-if (c_selectedGridConnections.isEmpty() || !c_customSolarfarms.contains((GCEnergyProduction)c_selectedGridConnections.get(0))) {
-	// RESTORE tab visibility if we didn't select a custom solarfarm
-    uI_Tabs_presentation.setVisible(true); 
+if (c_selectedGridConnections.isEmpty()) {
     return;
 }
 
-// HIDE the tabs underneath because custom solarfarm settings are open!
-uI_Tabs_presentation.setVisible(false);
+GridConnection selectedGC = c_selectedGridConnections.get(0);
+if (!(selectedGC instanceof GCEnergyProduction) || !c_customSolarfarms.contains(selectedGC)) {
+    return;
+}
 
-GCEnergyProduction gc = (GCEnergyProduction) c_selectedGridConnections.get(0);
+GCEnergyProduction gc = (GCEnergyProduction) selectedGC;
 J_EAProduction pvAsset = (J_EAProduction) gc.c_productionAssets.get(0);
 
 double currentCapacity_kW = pvAsset.getCapacityElectric_kW();
@@ -4244,16 +4250,19 @@ cb_customEASolarfarmCurtailment.setSelected(hasCurtailment, false);
 
 double f_updateCustomEAWindfarmSettings()
 {/*ALCODESTART::1778241627082*/
-if (c_selectedGridConnections.isEmpty() || !c_customWindfarms.contains((GCEnergyProduction)c_selectedGridConnections.get(0))) {
-	// RESTORE tab visibility if we didn't select a custom windfarm
-    //uI_Tabs_presentation.setVisible(true); 
+if (c_selectedGridConnections.isEmpty()) { 
     return;
 }
 
 // HIDE the tabs underneath because custom solarfarm settings are open!
-uI_Tabs_presentation.setVisible(false);
+//uI_Tabs_presentation.setVisible(false);
 
-GCEnergyProduction gc = (GCEnergyProduction) c_selectedGridConnections.get(0);
+GridConnection selectedGC = c_selectedGridConnections.get(0);
+if (!(selectedGC instanceof GCEnergyProduction) || !c_customWindfarms.contains(selectedGC)) {
+    return;
+}
+
+GCEnergyProduction gc = (GCEnergyProduction) selectedGC;
 J_EAProduction windAsset = (J_EAProduction) gc.c_productionAssets.get(0);
 
 double currentCapacity_MW = windAsset.getCapacityElectric_kW()/1000;
@@ -4270,5 +4279,44 @@ sl_customEAWindfarmContractedCapacity_MW.setValue(gc.v_liveConnectionMetaData.ge
 boolean hasCurtailment = gc.f_isAssetManagementActive(I_CurtailManagement.class);
 cb_customEAWindfarmCurtailment.setSelected(hasCurtailment, false);
 
+/*ALCODEEND*/}
+
+double f_updateCustomEAGridBatterySettings()
+{/*ALCODESTART::1778281342673*/
+if (c_selectedGridConnections.isEmpty()) {
+    return;
+}
+
+GridConnection selectedGC = c_selectedGridConnections.get(0);
+if (!(selectedGC instanceof GCGridBattery) || !c_customGridBatteries.contains(selectedGC)) {
+    return;
+}
+
+GCGridBattery gc = (GCGridBattery) selectedGC;
+J_EAStorageElectric batteryAsset = (J_EAStorageElectric)gc.c_storageAssets.get(0);
+
+double currentCapacity_MWh = batteryAsset.getStorageCapacity_kWh()/1000;
+double currentCapacity_MW = batteryAsset.getCapacityElectric_kW()/1000;
+
+// Setup capacity MW slider
+sl_customEAGridBatteryInstalledCapacity_MWh.setRange(0.1, 5);
+sl_customEAGridBatteryInstalledCapacity_MWh.setValue(currentCapacity_MWh, false);
+
+// Setup contracted capacity slider
+sl_customEAGridBatteryInstalledCapacity_MW.setRange(0.05, 2.5);
+sl_customEAGridBatteryInstalledCapacity_MW.setValue(currentCapacity_MW, false);
+
+// Battery Management selection
+I_BatteryManagement currentBatteryManagement = gc.f_getBatteryManagement();
+String currentBMS_str = "Zelfverbruik"; // Default fallback
+
+if (currentBatteryManagement instanceof J_BatteryManagementSelfConsumptionGridNode) {
+    currentBMS_str = "Zelfverbruik";
+} else if (currentBatteryManagement instanceof J_BatteryManagementPeakShaving) {
+    currentBMS_str = "Peak shaving";
+} else if (currentBatteryManagement instanceof J_BatteryManagementPrice) {
+    currentBMS_str = "Prijssturing";
+}
+cb_customEAGridBatteryAlgorithm.setValue(currentBMS_str, false);
 /*ALCODEEND*/}
 

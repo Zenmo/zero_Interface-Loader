@@ -691,18 +691,27 @@ sl_largeScaleWind_MW.setValue((totalWind_kW/1000) + p_currentWindTurbines_MW, fa
 
 
 //Grid batteries
-List<GCGridBattery> sliderGridBatteryGridConnections = new ArrayList<>();
+f_getCurrentGridBatterySize(); // Used for slider minimum: non adjustable GCGridBatteries
+
+double totalCustomBatteryCapacity_kWh = 0;
+double totalDefaultBatteryCapacity_kWh = 0;
+List<GCGridBattery> defaultGridBatteries = new ArrayList<>();
+
 for(GridConnection sliderGC : c_electricityTabEASliderGCs){
 	if(sliderGC.v_isActive && sliderGC instanceof GCGridBattery sliderGridBattery){
-		sliderGridBatteryGridConnections.add(sliderGridBattery);
+		if (zero_Interface.c_customGridBatteries.contains(sliderGridBattery)) {
+			totalCustomBatteryCapacity_kWh += sliderGridBattery.p_batteryAsset.getStorageCapacity_kWh();
+		} else {
+			defaultGridBatteries.add(sliderGridBattery);
+			totalDefaultBatteryCapacity_kWh += sliderGridBattery.p_batteryAsset.getStorageCapacity_kWh();
+		}
 	}
 }
 
-double averageNeighbourhoodBatterySize_kWh = 0;
-for (GCGridBattery gc : sliderGridBatteryGridConnections) {
-	averageNeighbourhoodBatterySize_kWh += gc.p_batteryAsset.getStorageCapacity_kWh()/sliderGridBatteryGridConnections.size();
-}
-sl_gridBatteries_kWh.setValue(averageNeighbourhoodBatterySize_kWh, false);
+double minSliderGridBattery_kWh = p_currentTotalGridBatteryCapacity_MWh*1000 + totalCustomBatteryCapacity_kWh;
+double maxSliderGridBattery_kWh = minSliderGridBattery_kWh + 20000;
+sl_gridBatteries_kWh.setRange(minSliderGridBattery_kWh, maxSliderGridBattery_kWh);
+sl_gridBatteries_kWh.setValue(totalDefaultBatteryCapacity_kWh + totalCustomBatteryCapacity_kWh + p_currentTotalGridBatteryCapacity_MWh*1000, false);
 
 //Curtailment large scale PV and wind
 boolean curtailment = true;
@@ -712,6 +721,9 @@ for(GridConnection GC : productionGridConnections){
 		break;
 	}
 }
+traceln(totalDefaultBatteryCapacity_kWh);
+traceln(p_currentTotalGridBatteryCapacity_MWh);
+traceln(totalCustomBatteryCapacity_kWh);
 cb_gridCurtailment.setSelected(curtailment, false);
 /*ALCODEEND*/}
 
