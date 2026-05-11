@@ -1071,8 +1071,12 @@ verbruik = levering + productie - teruglevering]]></Description>
 			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[maxHeatOutputPower_kW]]></Name>
+			<Name><![CDATA[maxSpaceHeatingDemand_kW]]></Name>
 			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[maxHotWaterDemand_kW]]></Name>
+			<Type><![CDATA[Double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

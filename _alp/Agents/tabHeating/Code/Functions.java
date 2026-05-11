@@ -1020,9 +1020,19 @@ double outputTemperature_degC;
 OL_AmbientTempType ambientTempType;
 double sourceAssetHeatPower_kW;
 double belowZeroHeatpumpEtaReductionFactor;
-maxHeatOutputPower_kW = maxHeatOutputPower_kW*2; // Make the asset capacity twice as high, to make sure it can handle the load in other scenarios with more heat consumption.
+//maxHeatOutputPower_kW = maxHeatOutputPower_kW*2; // Make the asset capacity twice as high, to make sure it can handle the load in other scenarios with more heat consumption.
 J_AVGC_data avgc_data = zero_Interface.energyModel.avgc_data;
 J_TimeParameters timeParameters = zero_Interface.energyModel.p_timeParameters;
+
+// Separate space heating and DHW peaks
+double maxHotWaterDemand_kW = 0;
+for (J_EAProfile j_ea : parentGC.c_profileAssets) {
+	if (j_ea.getEnergyCarrier() == OL_EnergyCarriers.HEAT) {
+		maxHotWaterDemand_kW += j_ea.getPeakConsumptionPower_kW();
+	}
+}
+double maxSpaceHeatingDemand_kW = maxHeatOutputPower_kW - maxHotWaterDemand_kW;
+if (maxSpaceHeatingDemand_kW < 0) maxSpaceHeatingDemand_kW = 0;
 
 switch (heatAssetType){ // There is always only one heatingType, If there are many assets the type is CUSTOM
 
@@ -1056,38 +1066,8 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		break;
 	
 	case ELECTRIC_HEATPUMP:
-		double effectiveMaxHeatPower_kW = maxHeatOutputPower_kW;
-		if (parentGC instanceof GCHouse) {
-			double limitHeatpumpThermalCapacity_kW = 8; //avgc_data.p_maxHeatpumpElectricCapacity_kW;
-			if (maxHeatOutputPower_kW > limitHeatpumpThermalCapacity_kW) {
-				effectiveMaxHeatPower_kW = limitHeatpumpThermalCapacity_kW;
-				// Create a heat buffer to meet the peak demand
-				double bufferPower_kW = maxHeatOutputPower_kW - limitHeatpumpThermalCapacity_kW;
-				traceln("Liter capacity of buffer tank: " + bufferPower_kW*avgc_data.p_avgHeatBufferWaterVolumePerHPPower_m3pkW*1000 + " L");
-				// Heat capacity approximation: Heat capacity required to sustain the deficit for 2 hours over a 20 degC delta T
-				double peakDuration = 20; // Time (hours)
-				double deltaTemp = 60-40; // Usable temperature difference: between storage (60 degC) and tap (40 degC)
-				double bufferHeatCapacity_JpK = (bufferPower_kW * 1000.0 * peakDuration * 3600.0) / deltaTemp;
-				double lossFactor_WpK = 5.0; // Typical loss factor
-				
-				new J_EAStorageHeat(
-					parentGC,
-					OL_EnergyAssetType.STORAGE_HEAT,
-					bufferPower_kW,
-					lossFactor_WpK, 
-					timeParameters, 
-					60.0, // initialTemperature_degC
-					40.0, // minTemperature_degC
-					80.0, // maxTemperature_degC
-					60.0, // setTemperature_degC
-					bufferHeatCapacity_JpK, 
-					OL_AmbientTempType.BUILDING
-				);
-			}
-		}
-		
 		//Add primary heating asset (heatpump)
-		inputCapacityElectric_kW = max(avgc_data.p_minHeatpumpElectricCapacity_kW, maxHeatOutputPower_kW); // Could be smaller due to high cop
+		inputCapacityElectric_kW = max(avgc_data.p_minHeatpumpElectricCapacity_kW, maxSpaceHeatingDemand_kW / avgc_data.p_avgEfficiencyHeatpump_fr);
 		efficiency = avgc_data.p_avgEfficiencyHeatpump_fr;
 		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
 		outputTemperature_degC = avgc_data.p_avgOutputTemperatureElectricHeatpump_degC;
@@ -1096,6 +1076,32 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		belowZeroHeatpumpEtaReductionFactor = 1;
 		
 		new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, timeParameters, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType );		
+		
+		if (parentGC instanceof GCHouse) {
+			double bufferPowerCapacity_kW = maxHotWaterDemand_kW + maxSpaceHeatingDemand_kW; 
+			double peakDuration_h = 2.0; 
+			double minTemp_degC = avgc_data.p_avgMinHeatBufferTemperature_degC; 
+			double maxTemp_degC = avgc_data.p_avgMaxHeatBufferTemperature_degC;
+			double deltaTemp_K = maxTemp_degC - minTemp_degC; 
+			double bufferHeatCapacity_JpK = (maxHotWaterDemand_kW * 1000.0 * peakDuration_h * 3600.0) / deltaTemp_K;
+			double lossFactor_WpK = 5.0; // Typical loss factor
+			
+			parentGC.p_heatBuffer =	new J_EAStorageHeat(
+				parentGC,
+				OL_EnergyAssetType.STORAGE_HEAT,
+				bufferPowerCapacity_kW, 
+				lossFactor_WpK, 
+				timeParameters, 
+				maxTemp_degC, // initialTemperature_degC - start fully charged
+				minTemp_degC, // minTemperature_degC
+				maxTemp_degC, // maxTemperature_degC
+				maxTemp_degC, // setTemperature_degC
+				bufferHeatCapacity_JpK, 
+				OL_AmbientTempType.BUILDING
+			);
+		}
+		
+		
 		break;
 
 	case GAS_CHP:

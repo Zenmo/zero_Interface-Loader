@@ -1475,7 +1475,7 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 		//Add heat demand profile
 		OL_GridConnectionHeatingType heatingType = avgc_data.p_avgCompanyHeatingMethod;
 		double maxHeatOutputPower_kW = f_createHeatProfileFromAnnualGasTotal(companyGC, heatingType, yearlyGasDemand_m3, ratioGasUsedForHeating);
-		f_addHeatAsset(companyGC, heatingType, maxHeatOutputPower_kW);
+		f_addHeatAsset(companyGC, heatingType, maxHeatOutputPower_kW, null);
 		companyGC.f_addHeatManagement(heatingType, false);
 		
 		//Set current scenario heating type
@@ -2800,7 +2800,7 @@ for(GridConnection connectedGC : existingBuilding.c_containedGridConnections){
 existingBuilding.p_floorSurfaceArea_m2 += connectingBuildingData.address_floor_surface_m2();
 /*ALCODEEND*/}
 
-double f_addHeatAsset(GridConnection parentGC,OL_GridConnectionHeatingType heatAssetType,double maxHeatOutputPower_kW)
+double f_addHeatAsset(GridConnection parentGC,OL_GridConnectionHeatingType heatAssetType,double maxSpaceHeatingDemand_kW,Double maxHotWaterDemand_kW)
 {/*ALCODESTART::1745336570663*/
 //Initialize parameters
 double heatOutputCapacityGasBurner_kW;
@@ -2811,20 +2811,22 @@ double outputTemperature_degC;
 OL_AmbientTempType ambientTempType;
 double sourceAssetHeatPower_kW;
 double belowZeroHeatpumpEtaReductionFactor;
-if(parentGC.p_BuildingThermalAsset == null){
+double maxHeatOutputPower_kW = maxSpaceHeatingDemand_kW;
+/*if(parentGC.p_BuildingThermalAsset == null){
 	maxHeatOutputPower_kW = maxHeatOutputPower_kW*2; // Make the asset capacity twice as high, to make sure it can handle the load in other scenarios with more heat consumption.
-}
+}*/
 
 switch (heatAssetType){ // There is always only one heatingType, If there are many assets the type is CUSTOM
 
 	case GAS_BURNER:
+		maxHeatOutputPower_kW += (maxHotWaterDemand_kW != null && maxHotWaterDemand_kW > 0) ? maxHotWaterDemand_kW : 0;
 		heatOutputCapacityGasBurner_kW = max(avgc_data.p_minGasBurnerOutputCapacity_kW, maxHeatOutputPower_kW);
 		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(parentGC, heatOutputCapacityGasBurner_kW , avgc_data.p_avgEfficiencyGasBurner_fr, energyModel.p_timeParameters, 90);
 		break;
 	
 	case HYBRID_HEATPUMP:
-	
-		//Add primary heating asset (heatpump) (if its not part of the basic profile already
+		//Add primary heating asset (heatpump) (if its not part of the basic profile already)
+		maxHeatOutputPower_kW += (maxHotWaterDemand_kW != null && maxHotWaterDemand_kW > 0) ? maxHotWaterDemand_kW : 0;
 		inputCapacityElectric_kW = max(avgc_data.p_minHeatpumpElectricCapacity_kW, maxHeatOutputPower_kW / 3); //-- /3, kan nog kleiner want is hybride zodat gasbrander ook bij springt, dus kleiner MOETEN aanname voor hoe klein onderzoeken
 		efficiency = avgc_data.p_avgEfficiencyHeatpump_fr;
 		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
@@ -2846,50 +2848,52 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		break;
 	
 	case ELECTRIC_HEATPUMP:
-		double effectiveMaxHeatPower_kW = maxHeatOutputPower_kW;
-		if (parentGC instanceof GCHouse) {
-			double limitHeatpumpThermalCapacity_kW = 8;//avgc_data.p_maxHeatpumpElectricCapacity_kW;
-			if (maxHeatOutputPower_kW > limitHeatpumpThermalCapacity_kW) {
-				effectiveMaxHeatPower_kW = limitHeatpumpThermalCapacity_kW;
-				// Create a heat buffer to meet the peak demand
-				double bufferPower_kW = maxHeatOutputPower_kW - limitHeatpumpThermalCapacity_kW;
-				traceln("Liter capacity of buffer tank: " + bufferPower_kW*avgc_data.p_avgHeatBufferWaterVolumePerHPPower_m3pkW*1000 + " L");
-				// Heat capacity approximation: Heat capacity required to sustain the deficit for 2 hours over a 20 degC delta T
-				double peakDuration = 2; // Time (hours)
-				double deltaTemp = 60-40; // Usable temperature difference: between storage (60 degC) and tap (40 degC)
-				double bufferHeatCapacity_JpK = (bufferPower_kW * 1000.0 * peakDuration * 3600.0) / deltaTemp;
-				double lossFactor_WpK = 5.0; // Typical loss factor
-				
-				parentGC.p_heatBuffer = new J_EAStorageHeat(
-					parentGC,
-					OL_EnergyAssetType.STORAGE_HEAT,
-					bufferPower_kW,
-					lossFactor_WpK, 
-					energyModel.p_timeParameters, 
-					avgc_data.p_avgMinHeatBufferTemperature_degC, // initialTemperature_degC
-					45.0, // minTemperature_degC
-					avgc_data.p_avgMaxHeatBufferTemperature_degC, // maxTemperature_degC
-					avgc_data.p_avgMinHeatBufferTemperature_degC, // setTemperature_degC
-					bufferHeatCapacity_JpK, 
-					OL_AmbientTempType.BUILDING
-				);
-			}
-		}
-		
 		//Add primary heating asset (heatpump)
-		inputCapacityElectric_kW = max(avgc_data.p_minHeatpumpElectricCapacity_kW, maxHeatOutputPower_kW); // Could be a lot smaller due to high cop
 		efficiency = avgc_data.p_avgEfficiencyHeatpump_fr;
+		inputCapacityElectric_kW = max(avgc_data.p_minHeatpumpElectricCapacity_kW,  0.5*maxHeatOutputPower_kW/efficiency);
+		traceln("inputCapacityElectric_kW: " + inputCapacityElectric_kW);
+		
 		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
 		outputTemperature_degC = avgc_data.p_avgOutputTemperatureElectricHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
 		belowZeroHeatpumpEtaReductionFactor = 1;
 		
-		new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeParameters, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType );		
+		new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeParameters, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType);
+		
+		//Add heat buffer for DHW usage
+		if (maxHotWaterDemand_kW != null && maxHotWaterDemand_kW > 0) {
+			traceln("Liter capacity of buffer tank: " + maxHotWaterDemand_kW*avgc_data.p_avgHeatBufferWaterVolumePerHPPower_m3pkW*1000 + " L");
+			double minTemp_degC = 45.0;
+			double maxTemp_degC = avgc_data.p_avgMaxHeatBufferTemperature_degC;
+			double deltaTemp_K = maxTemp_degC - minTemp_degC;
+			
+			double peakDuration_h = 2;
+			double bufferHeatCapacity_JpK = (maxHotWaterDemand_kW * 1000.0 * peakDuration_h * 3600.0) / deltaTemp_K;
+			double lossFactor_WpK = 5.0; // Typical loss factor
+			
+			double bufferPowerCapacity_kW = maxHotWaterDemand_kW + maxHeatOutputPower_kW;
+			
+			parentGC.p_heatBuffer = new J_EAStorageHeat(
+				parentGC,
+				OL_EnergyAssetType.STORAGE_HEAT,
+				maxHotWaterDemand_kW,
+				lossFactor_WpK, 
+				energyModel.p_timeParameters, 
+				maxTemp_degC, // initialTemperature_degC
+				minTemp_degC, // minTemperature_degC
+				maxTemp_degC, // maxTemperature_degC
+				maxTemp_degC, // setTemperature_degC
+				bufferHeatCapacity_JpK, 
+				OL_AmbientTempType.BUILDING
+			);
+		}
+		
+		
 		break;
 
 	case GAS_CHP:
-		
+		maxHeatOutputPower_kW += (maxHotWaterDemand_kW != null && maxHotWaterDemand_kW > 0) ? maxHotWaterDemand_kW : 0;
 		double outputCapacityElectric_kW = (maxHeatOutputPower_kW/avgc_data.p_avgEfficiencyCHP_thermal_fr) * avgc_data.p_avgEfficiencyCHP_electric_fr;
 		outputTemperature_degC = avgc_data.p_avgOutputTemperatureCHP_degC;
 		efficiency = avgc_data.p_avgEfficiencyCHP_thermal_fr + avgc_data.p_avgEfficiencyCHP_electric_fr;
@@ -2898,6 +2902,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		break;
 
 	case DISTRICTHEAT:
+		maxHeatOutputPower_kW += (maxHotWaterDemand_kW != null && maxHotWaterDemand_kW > 0) ? maxHotWaterDemand_kW : 0;
 		double heatOutputCapacityDeliverySet_kW = max(avgc_data.p_minDistrictHeatingDeliverySetOutputCapacity_kW, maxHeatOutputPower_kW);
 		outputTemperature_degC = avgc_data.p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
 		efficiency = avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr;
@@ -2913,6 +2918,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		break;
 		
 	case CUSTOM:
+		maxHeatOutputPower_kW += (maxHotWaterDemand_kW != null && maxHotWaterDemand_kW > 0) ? maxHotWaterDemand_kW : 0;
 		f_addCustomHeatAsset(parentGC, maxHeatOutputPower_kW);
 		break;
 		
@@ -3916,7 +3922,7 @@ else{
 	
 	// Create EA conversions
 	if (peakHeatConsumption_kW != null) {
-		f_addHeatAsset(engineGC, heatingType, peakHeatConsumption_kW);
+		f_addHeatAsset(engineGC, heatingType, peakHeatConsumption_kW, null);
 	}
 	
 	if (surveyGC.getStorage() != null && surveyGC.getStorage().getHasThermalStorage() != null) {
@@ -5120,12 +5126,7 @@ f_addCookingAsset(house, cookingType, cookingDemand_kWhpa);
 
 //Determine required heating capacity for the heating asset	
 double maximalTemperatureDifference_K = 30.0; // Approximation
-double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000 + maxHotWaterDemand_kW;
-
-/*if (hotWaterDemand_kWhpa > 0) {
-	// A standard domestic peak is roughly 25-30 kW for instant hot water delivery
-	maxHeatOutputPower_kW += 100.0; 
-}*/
+double maxSpaceHeatingDemand_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000;
 
 //Check if heating type is known: Else: take avgc
 if(heatingType == null || heatingType == OL_GridConnectionHeatingType.UNKNOWN){
@@ -5133,7 +5134,7 @@ if(heatingType == null || heatingType == OL_GridConnectionHeatingType.UNKNOWN){
 }
 
 //Add heating asset
-f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
+f_addHeatAsset(house, heatingType, maxSpaceHeatingDemand_kW, maxHotWaterDemand_kW);
 
 //Add heating management and set the heating preferences
 house.f_addHeatManagement(heatingType, false);
