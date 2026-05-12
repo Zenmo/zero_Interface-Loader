@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.7.202512121156"
+                   AnyLogicVersion="8.9.7.202512010504"
                    AlpVersion="8.9.7">
 	<Model>
 		<Id>1658477103134</Id>
@@ -230,6 +230,11 @@
 				<Id>1761915047244</Id>
 				<Name><![CDATA[DataClasses]]></Name>
 			</Folder>
+			<Folder>
+				<Id>1773320047333</Id>
+				<Name><![CDATA[GridOperator Data]]></Name>
+				<ParentId>1761915047244</ParentId>
+			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
 		<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
@@ -410,6 +415,28 @@
 				<Id>1768469188881</Id>
 				<Name><![CDATA[J_PBLUtil]]></Name>
 			</JavaClass>
+			<JavaClass>
+				<Id>1774003635050</Id>
+				<Name><![CDATA[J_GridOperatorTariffsEnexis_2025]]></Name>
+				<Folder>1773320047333</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1774003694447</Id>
+				<Name><![CDATA[J_GridOperatorTariffsLiander_2025]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Folder>1773320047333</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1774003704262</Id>
+				<Name><![CDATA[J_GridOperatorTariffsStedin_2025]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Folder>1773320047333</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1776429367217</Id>
+				<Name><![CDATA[DHWProfile_data]]></Name>
+				<Folder>1754045711603</Folder>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>zero_engine</LibraryName>
@@ -434,23 +461,23 @@
 		<ClassPathEntry>
 			<ResourceReference>
 				<PackageName>zerointerfaceloader</PackageName>
-				<ClassName>uplux-3.jar</ClassName>
-			</ResourceReference>
-			<Imported>true</Imported>
-			<Folder>false</Folder>
-		</ClassPathEntry>
-		<ClassPathEntry>
-			<ResourceReference>
-				<PackageName>zerointerfaceloader</PackageName>
-				<ClassName>vallum-main-835-49ed0dd-all.jar</ClassName>
-			</ResourceReference>
-			<Imported>true</Imported>
-			<Folder>false</Folder>
-		</ClassPathEntry>
-		<ClassPathEntry>
-			<ResourceReference>
-				<PackageName>zerointerfaceloader</PackageName>
 				<ClassName>jackson-datatype-jsr310-2.21.0.jar</ClassName>
+			</ResourceReference>
+			<Imported>true</Imported>
+			<Folder>false</Folder>
+		</ClassPathEntry>
+		<ClassPathEntry>
+			<ResourceReference>
+				<PackageName>zerointerfaceloader</PackageName>
+				<ClassName>uplux-4.jar</ClassName>
+			</ResourceReference>
+			<Imported>true</Imported>
+			<Folder>false</Folder>
+		</ClassPathEntry>
+		<ClassPathEntry>
+			<ResourceReference>
+				<PackageName>zerointerfaceloader</PackageName>
+				<ClassName>vallum-production-861-41ea4ca-all.jar</ClassName>
 			</ResourceReference>
 			<Imported>true</Imported>
 			<Folder>false</Folder>

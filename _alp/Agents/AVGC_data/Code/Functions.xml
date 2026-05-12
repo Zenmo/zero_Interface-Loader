@@ -14,6 +14,14 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gridOperator]]></Name>
+			<Type><![CDATA[OL_GridOperator]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[simulationYear]]></Name>
+			<Type><![CDATA[int]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -31,6 +39,30 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>J_AVGC_Economic_data</ReturnType>
+		<Id>1773938569040</Id>
+		<Name><![CDATA[f_getEconomicAVGC]]></Name>
+		<X>1960</X>
+		<Y>60</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gridOperator]]></Name>
+			<Type><![CDATA[OL_GridOperator]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[year]]></Name>
+			<Type><![CDATA[int]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

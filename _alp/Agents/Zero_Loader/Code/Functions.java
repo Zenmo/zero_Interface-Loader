@@ -78,7 +78,7 @@ OL_GridNodeType nodeType;
 GISRegion gisregion;
 
 // Grid operator (for now only one in the area)
-GridOperator Grid_Operator = findFirst(energyModel.pop_gridOperators, p->p.p_actorID.equals(project_data.grid_operator())) ;
+GridOperator Grid_Operator = findFirst(energyModel.pop_gridOperators, p->p.p_actorID.equals(project_data.grid_operator().toString())) ;
 
 for (GridNode_data GN_data : c_gridNode_data) {
 	//    if no scope selected, or if node has 'all scopes' in input file or if the node specific scope is selected (exists in the arrayList)       
@@ -273,18 +273,16 @@ for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data))
 		solarpark.p_isSliderGC = dataSolarfarm.isSliderGC();
 		
 		//Grid Capacity
-		solarpark.v_liveConnectionMetaData.physicalCapacity_kW = dataSolarfarm.connection_capacity_kw();
-		if ( dataSolarfarm.connection_capacity_kw() > 0 ) {
-			solarpark.v_liveConnectionMetaData.physicalCapacityKnown = true;
-		}
-		if ( dataSolarfarm.contracted_feed_in_capacity_kw() != null) {
-			solarpark.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataSolarfarm.contracted_feed_in_capacity_kw();
-			solarpark.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
-		}
-		else {
-			solarpark.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataSolarfarm.connection_capacity_kw();
-			solarpark.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
-		}
+		double physicalCapacity_kW = dataSolarfarm.connection_capacity_kw();
+		double contractedFeedinCapacity_kW = dataSolarfarm.contracted_feed_in_capacity_kw() != null ? dataSolarfarm.contracted_feed_in_capacity_kw() : physicalCapacity_kW; 
+		double contractedDeliveryCapacity_kW = dataSolarfarm.contracted_delivery_capacity_kw() != null ? dataSolarfarm.contracted_delivery_capacity_kw() : 0; 
+		solarpark.v_liveConnectionMetaData.setCapacities_kW(contractedDeliveryCapacity_kW, contractedFeedinCapacity_kW, physicalCapacity_kW);
+		
+		boolean physicalCapacityKnown = physicalCapacity_kW > 0;
+		boolean contractedFeedinCapacityKnown = dataSolarfarm.contracted_feed_in_capacity_kw() != null;
+		boolean contractedDeliveryCapacityKnown = dataSolarfarm.contracted_delivery_capacity_kw() != null;
+		solarpark.v_liveConnectionMetaData.setCapacitiesKnown(contractedDeliveryCapacityKnown, contractedFeedinCapacityKnown, physicalCapacityKnown);		
+		
 		
 		
 		//solarpark.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
@@ -363,8 +361,6 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) {
 		//GC parameters
 		gridbattery.set_p_gridConnectionID( dataBattery.gc_id () );
 		gridbattery.set_p_ownerID( dataBattery.owner_id() );
-		gridbattery.v_liveConnectionMetaData.physicalCapacity_kW = dataBattery.connection_capacity_kw();
-		
 		
 		//Set Address
 		gridbattery.p_address = new J_Address(dataBattery.streetname(), 
@@ -378,30 +374,19 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) {
 		gridbattery.p_isSliderGC = dataBattery.isSliderGC();
 		
 		//Grid Capacity
-		gridbattery.v_liveConnectionMetaData.physicalCapacity_kW = dataBattery.connection_capacity_kw();
-		if ( dataBattery.connection_capacity_kw() > 0 ) {
-			gridbattery.v_liveConnectionMetaData.physicalCapacityKnown = true;
-		}
-		if ( dataBattery.contracted_delivery_capacity_kw() != null ) {
-			gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = dataBattery.contracted_delivery_capacity_kw();
-			gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
-		}
-		else {
-			gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = dataBattery.connection_capacity_kw();
-			gridbattery.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
-		}
-		if ( dataBattery.contracted_feed_in_capacity_kw() != null ) {
-			gridbattery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataBattery.contracted_feed_in_capacity_kw();
-			gridbattery.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
-		}
-		else {
-			gridbattery.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataBattery.connection_capacity_kw();
-			gridbattery.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;	
-		}
+		double physicalCapacity_kW = dataBattery.connection_capacity_kw();
+		double contractedFeedinCapacity_kW = dataBattery.contracted_feed_in_capacity_kw() != null ? dataBattery.contracted_feed_in_capacity_kw() : physicalCapacity_kW; 
+		double contractedDeliveryCapacity_kW = dataBattery.contracted_delivery_capacity_kw() != null ? dataBattery.contracted_delivery_capacity_kw() : 0; 
+		gridbattery.v_liveConnectionMetaData.setCapacities_kW(contractedDeliveryCapacity_kW, contractedFeedinCapacity_kW, physicalCapacity_kW);
+		
+		boolean physicalCapacityKnown = physicalCapacity_kW > 0;
+		boolean contractedFeedinCapacityKnown = dataBattery.contracted_feed_in_capacity_kw() != null;
+		boolean contractedDeliveryCapacityKnown = dataBattery.contracted_delivery_capacity_kw() != null;
+		gridbattery.v_liveConnectionMetaData.setCapacitiesKnown(contractedDeliveryCapacityKnown, contractedFeedinCapacityKnown, physicalCapacityKnown);		
+		
 		
 		//Set parent node electric
 		gridbattery.set_p_parentNodeElectricID( dataBattery.gridnode_id() );
-	
 	
 		//Get default (initial) operation mode management class
 		I_BatteryManagement batteryAlgorithm;
@@ -486,9 +471,9 @@ List<String> existing_actors = new ArrayList();
 for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electrolyser_data)) {
 	GCEnergyConversion H2Electrolyser = energyModel.add_EnergyConversionSites();
 
-	H2Electrolyser.set_p_gridConnectionID( dataElectrolyser.gc_id() );
-	H2Electrolyser.set_p_ownerID( dataElectrolyser.owner_id() );	
-	H2Electrolyser.set_p_parentNodeElectricID( dataElectrolyser.gridnode_id() );
+	H2Electrolyser.p_gridConnectionID = dataElectrolyser.gc_id();
+	H2Electrolyser.p_ownerID = dataElectrolyser.owner_id();	
+	H2Electrolyser.p_parentNodeElectricID = dataElectrolyser.gridnode_id();
 	
 	//Set Address
 	H2Electrolyser.p_address = new J_Address(dataElectrolyser.streetname(), 
@@ -499,37 +484,40 @@ for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electro
 										     dataElectrolyser.city());
 
 	//Grid Capacity
-	H2Electrolyser.v_liveConnectionMetaData.physicalCapacity_kW = dataElectrolyser.connection_capacity_kw();
-	if ( dataElectrolyser.connection_capacity_kw() > 0 ) {
-		H2Electrolyser.v_liveConnectionMetaData.physicalCapacityKnown = true;
-	}
-	if ( dataElectrolyser.contracted_delivery_capacity_kw() != null ) {
-		H2Electrolyser.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = dataElectrolyser.contracted_delivery_capacity_kw();
-		H2Electrolyser.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
-	}
-	else {
-		H2Electrolyser.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = dataElectrolyser.connection_capacity_kw();
-		H2Electrolyser.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
-	}
-	if ( dataElectrolyser.contracted_feed_in_capacity_kw() != null ) {
-		H2Electrolyser.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataElectrolyser.contracted_feed_in_capacity_kw();
-		H2Electrolyser.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
-	}
-	else {
-		H2Electrolyser.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataElectrolyser.connection_capacity_kw();
-		H2Electrolyser.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;	
-	}
-
-
+	double physicalCapacity_kW = dataElectrolyser.connection_capacity_kw();
+	double contractedFeedinCapacity_kW = dataElectrolyser.contracted_feed_in_capacity_kw() != null ? dataElectrolyser.contracted_feed_in_capacity_kw() : physicalCapacity_kW; 
+	double contractedDeliveryCapacity_kW = dataElectrolyser.contracted_delivery_capacity_kw() != null ? dataElectrolyser.contracted_delivery_capacity_kw() : 0; 
+	H2Electrolyser.v_liveConnectionMetaData.setCapacities_kW(contractedDeliveryCapacity_kW, contractedFeedinCapacity_kW, physicalCapacity_kW);
 	
+	boolean physicalCapacityKnown = physicalCapacity_kW > 0;
+	boolean contractedFeedinCapacityKnown = dataElectrolyser.contracted_feed_in_capacity_kw() != null;
+	boolean contractedDeliveryCapacityKnown = dataElectrolyser.contracted_delivery_capacity_kw() != null;
+	H2Electrolyser.v_liveConnectionMetaData.setCapacitiesKnown(contractedDeliveryCapacityKnown, contractedFeedinCapacityKnown, physicalCapacityKnown);		
+	
+
+	//Activation and electrolyser specifications
 	H2Electrolyser.v_isActive = dataElectrolyser.initially_active();	
-	H2Electrolyser.p_minProductionRatio = dataElectrolyser.min_production_ratio();
 
 	//Electrolyser operation mode
-	H2Electrolyser.set_p_electrolyserOperationMode( dataElectrolyser.default_operation_mode());
+	H2Electrolyser.f_setEnergyManagement(new J_EnergyManagementElectrolyser(H2Electrolyser, energyModel.p_timeParameters));
+	I_ElectrolyserManagement electrolyserManagement;
+	switch(dataElectrolyser.default_operation_mode()){
+		case PRICE:
+			double maxElectricityPriceForProfit_eurp_kWh = dataElectrolyser.conversion_efficiency()*energyModel.avgc_data.economicAVGC.getAvgCostOfEnergyCarrier_eurpkWh(OL_EnergyCarriers.HYDROGEN);
+			electrolyserManagement = new J_ElectrolyserManagementPrice(H2Electrolyser, maxElectricityPriceForProfit_eurp_kWh, energyModel.p_timeParameters);
+			break;
+		case POWER_SURPLUS:
+			GridNode targetGN = findFirst(energyModel.pop_gridNodes, gn -> gn.p_gridNodeID.equals(H2Electrolyser.p_parentNodeElectricID));
+			electrolyserManagement = new J_ElectrolyserManagementPowerSurplus(H2Electrolyser, targetGN, energyModel.p_timeParameters);
+			break;
+		default:
+			traceln("No or unsupported default operation mode found for GC Electrolyser. Default (Power surplus) is taken.");
+			electrolyserManagement = new J_ElectrolyserManagementPowerSurplus(H2Electrolyser, energyModel.p_timeParameters);
+	}
+	H2Electrolyser.f_setExternalAssetManagement(electrolyserManagement);
 	
 	//Create EA for the electrolyser GC
-	J_EAConversionElectrolyser h2ElectrolyserEA = new J_EAConversionElectrolyser(H2Electrolyser, dataElectrolyser.capacity_electric_kw(), dataElectrolyser.conversion_efficiency(), energyModel.p_timeParameters, OL_ElectrolyserState.STANDBY, dataElectrolyser.load_change_time_s(), dataElectrolyser.start_up_time_shutdown_s(), dataElectrolyser.start_up_time_standby_s(), dataElectrolyser.start_up_time_idle_s());
+	J_EAConversionElectrolyser h2ElectrolyserEA = new J_EAConversionElectrolyser(H2Electrolyser, dataElectrolyser.capacity_electric_kw(), dataElectrolyser.conversion_efficiency(), energyModel.p_timeParameters, OL_ElectrolyserState.STANDBY, dataElectrolyser.idle_consumption_power_ratio(), dataElectrolyser.min_production_ratio(), dataElectrolyser.load_change_time_h(), dataElectrolyser.start_up_time_shutdown_h(), dataElectrolyser.start_up_time_standby_h(), dataElectrolyser.start_up_time_idle_h());
 	
 	//Set owner
 	ConnectionOwner owner;
@@ -590,22 +578,20 @@ for (Windfarm_data dataWindfarm : f_getWindfarmsInSubScope(c_windfarm_data)) {
 		windfarm.p_isSliderGC = dataWindfarm.isSliderGC();
 	
 		//Grid capacity
-		windfarm.v_liveConnectionMetaData.physicalCapacity_kW = dataWindfarm.connection_capacity_kw();
-		if ( dataWindfarm.connection_capacity_kw() > 0 ) {
-			windfarm.v_liveConnectionMetaData.physicalCapacityKnown = true;
-		}
-		if ( dataWindfarm.contracted_feed_in_capacity_kw() != null) {
-			windfarm.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataWindfarm.contracted_feed_in_capacity_kw();
-			windfarm.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
-		}
-		else {
-			windfarm.v_liveConnectionMetaData.contractedFeedinCapacity_kW = dataWindfarm.connection_capacity_kw();
-			windfarm.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
-		}
+		double physicalCapacity_kW = dataWindfarm.connection_capacity_kw();
+		double contractedFeedinCapacity_kW = dataWindfarm.contracted_feed_in_capacity_kw() != null ? dataWindfarm.contracted_feed_in_capacity_kw() : physicalCapacity_kW; 
+		double contractedDeliveryCapacity_kW = dataWindfarm.contracted_delivery_capacity_kw() != null ? dataWindfarm.contracted_delivery_capacity_kw() : 0; 
+		windfarm.v_liveConnectionMetaData.setCapacities_kW(contractedDeliveryCapacity_kW, contractedFeedinCapacity_kW, physicalCapacity_kW);
 		
-		//windfarm.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
-		windfarm.set_p_ownerID( dataWindfarm.owner_id() );	
-		windfarm.set_p_parentNodeElectricID( dataWindfarm.gridnode_id() );
+		boolean physicalCapacityKnown = physicalCapacity_kW > 0;
+		boolean contractedFeedinCapacityKnown = dataWindfarm.contracted_feed_in_capacity_kw() != null;
+		boolean contractedDeliveryCapacityKnown = dataWindfarm.contracted_delivery_capacity_kw() != null;
+		windfarm.v_liveConnectionMetaData.setCapacitiesKnown(contractedDeliveryCapacityKnown, contractedFeedinCapacityKnown, physicalCapacityKnown);		
+		
+		
+		//Connections
+		windfarm.p_ownerID = dataWindfarm.owner_id();	
+		windfarm.p_parentNodeElectricID = dataWindfarm.gridnode_id();
 		
 		//Get initial state
 		windfarm.v_isActive = dataWindfarm.initially_active();
@@ -761,7 +747,7 @@ double f_createEnergyActors()
 // Create the grid operator
 GridOperator GO = energyModel.add_pop_gridOperators();
 
-GO.p_actorID = project_data.grid_operator();
+GO.p_actorID = project_data.grid_operator().toString();
 GO.p_hasCongestionPricing = project_data.hasCongestionPricing() != null ? project_data.hasCongestionPricing() : false;
 
 
@@ -814,24 +800,25 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		generic_company_GCs.add(companyGC);
 		
 		//Set parameters for the Grid Connection
-		companyGC.p_gridConnectionID = genericCompany.address_id();
+		companyGC.p_gridConnectionID = genericCompany.address_id();		
+		
+		
+		//Energylabel and InsulationLabel
+		companyGC.p_energyLabel = genericCompany.energy_label() != null ? genericCompany.energy_label() : OL_GridConnectionEnergyLabel.UNKNOWN;
+		companyGC.p_insulationLabel = genericCompany.insulation_label() != null ? genericCompany.insulation_label() : OL_GridConnectionInsulationLabel.UNKNOWN;
+	
 		
 		// Check that is needed until connectioncapacity is no longer in 'Panden' excel
-		if (genericCompany.contracted_capacity_kw() == null || genericCompany.contracted_capacity_kw() <= 0) {
-			companyGC.v_liveConnectionMetaData.physicalCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
-			companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
-			companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
+		if (genericCompany.contracted_capacity_kw() == null || genericCompany.contracted_capacity_kw() < 0) {
+			companyGC.v_liveConnectionMetaData.setCapacities_kW(avgc_data.p_avgUtilityConnectionCapacity_kW, avgc_data.p_avgUtilityConnectionCapacity_kW, avgc_data.p_avgUtilityConnectionCapacity_kW);
+			companyGC.v_liveConnectionMetaData.setCapacitiesKnown(false, false, false);
 		}
 		else{
-			companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = genericCompany.contracted_capacity_kw();
-			companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
-			companyGC.v_liveConnectionMetaData.physicalCapacity_kW = companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
+			companyGC.v_liveConnectionMetaData.setCapacities_kW(genericCompany.contracted_capacity_kw(), genericCompany.contracted_capacity_kw(), genericCompany.contracted_capacity_kw());
+			companyGC.v_liveConnectionMetaData.setCapacitiesKnown(true, false, false);
 		}
-		
-		companyGC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
-		companyGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
 
-		//set GC Adress
+		//set GC Address
 		companyGC.p_address = new J_Address(genericCompany.streetname(), 
 										    genericCompany.house_number(), 
 										    genericCompany.house_letter(), 
@@ -1139,6 +1126,10 @@ for (var survey : surveys) {
 				
 				//Set trafo ID
 				companyGC.p_parentNodeElectricID = buildingData.gridnode_id();
+				
+				//Energylabel and InsulationLabel
+				companyGC.p_energyLabel = J_PBLUtil.getWorstEnergyLabel(companyGC.p_energyLabel, buildingData.energy_label());
+				companyGC.p_insulationLabel = J_PBLUtil.getWorstInsulationLabel(companyGC.p_insulationLabel, buildingData.insulation_label());
 				
 				//Style building
 				gisBuilding.p_defaultFillColor = zero_Interface.v_detailedCompanyBuildingColor;
@@ -1462,12 +1453,12 @@ current_scenario_list.setParentAgent(companyGC);
 future_scenario_list.setParentAgent(companyGC);
 
 //Add current grid capacity to current (and future, feedin, physical, as no data on plans so assumption it is/stays the same) scenario list
-current_scenario_list.setCurrentContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-future_scenario_list.setRequestedContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-current_scenario_list.setCurrentContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW);
-future_scenario_list.setRequestedContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW);
-current_scenario_list.setCurrentPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.physicalCapacity_kW);
-future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.physicalCapacity_kW);
+current_scenario_list.setCurrentContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW());
+future_scenario_list.setRequestedContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW());
+current_scenario_list.setCurrentContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.getContractedFeedinCapacity_kW());
+future_scenario_list.setRequestedContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.getContractedFeedinCapacity_kW());
+current_scenario_list.setCurrentPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.getPhysicalCapacity_kW());
+future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.getPhysicalCapacity_kW());
 
 //Basic heating and electricity demand profiles
 if (companyGC.p_floorSurfaceArea_m2 > 0){
@@ -1710,10 +1701,9 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 	//Electric Capacity
 	if (dataChargingStation.connection_capacity_kw() != null) {
 		// Assume the connection capacity is both physical and contracted.
-		chargingStation.v_liveConnectionMetaData.physicalCapacity_kW = dataChargingStation.connection_capacity_kw();
-		chargingStation.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = dataChargingStation.connection_capacity_kw();
-		chargingStation.v_liveConnectionMetaData.physicalCapacityKnown = true;
-		chargingStation.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
+		double connectionCapacity_kW = dataChargingStation.connection_capacity_kw();
+		chargingStation.v_liveConnectionMetaData.setCapacities_kW(connectionCapacity_kW, connectionCapacity_kW, connectionCapacity_kW);
+		chargingStation.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
 	}
 	
 	//Set parent node
@@ -1920,7 +1910,7 @@ v_timeOfModelStart_ms = startTime;
 f_setSimulationTimeParameters();
 
 //Send avgc data to engine
-avgc_data.f_setAVGC_data();
+avgc_data.f_setAVGC_data(project_data.grid_operator(), energyModel.p_timeParameters.getStartYear());
 
 // Set default heating strategies
 f_setDefaultHeatingStrategies();
@@ -2176,65 +2166,45 @@ Double pvPower_kW = (gridConnection.getSupply().getPvInstalledKwp() != null) ? n
 
 
 ////Electricity (connection and consumption)
-//Initialize contract capacity with 0 for when companies fill in survey already but currently have no connection yet
-companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = 0.0;
-companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = 0.0;
-companyGC.v_liveConnectionMetaData.physicalCapacity_kW = 0.0;
-
-f_createPetroleumFuelTractors(companyGC, gridConnection.getTransport().getAgriculture());
-
 //Check for electricity connection and data
 if (gridConnection.getElectricity().getHasConnection()){
-
+	
 	//Connection capacities
-	if(gridConnection.getElectricity().getContractedConnectionCapacityKw() != null && gridConnection.getElectricity().getContractedConnectionCapacityKw() >= 0){
-		companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = gridConnection.getElectricity().getContractedConnectionCapacityKw(); //Contracted connection capacity
-		companyGC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
-	}
-	else if((gridConnection.getElectricity().getContractedConnectionCapacityKw() == null || 
-		gridConnection.getElectricity().getContractedConnectionCapacityKw() < 0) &&
-		(gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw() == null || 
-		gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw() <= 0)) {
-		traceln("SURVEYOWNER HAS NOT FILLED IN DELIVERY OR PHYSICAL CONNECTION CAPACITY!!!");		
-		companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;			
-		companyGC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;			
-	}
-	else{
-		companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = ((double)gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw()); //Contracted connection capacity
-		companyGC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
-	}
-	
-	
-	//Check if contract capacity feedin has been filled in: if not, make the same as pv capacity
-	if(gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw() != null && gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw() >= 0){
-		companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = ((double)gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw()); //Contracted connection capacity
-		companyGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
-	}
-	else{
-		if(pvPower_kW != null){
-			companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = pvPower_kW;
+	//TEMPORARY CONVERSION NEEDED UNTIL NO LONGER INTEGER FROM SURVEY
+	Integer contractedFeedinCapacity_kW_INTEGER = gridConnection.getElectricity().getGrootverbruik().getContractedConnectionSupplyCapacityKw();
+	Integer physicalCapacity_kW_INTEGER = gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw();	
+	Double contractedDeliveryCapacity_kW = gridConnection.getElectricity().getContractedConnectionCapacityKw();
+	Double contractedFeedinCapacity_kW = contractedFeedinCapacity_kW_INTEGER != null ? contractedFeedinCapacity_kW_INTEGER.doubleValue() : null;
+	Double physicalCapacity_kW = physicalCapacity_kW_INTEGER != null ? physicalCapacity_kW_INTEGER.doubleValue() : null;
+	boolean contractedDeliveryCapacityKnown = contractedDeliveryCapacity_kW != null && contractedDeliveryCapacity_kW >= 0;
+	boolean contractedFeedinCapacityKnown = contractedFeedinCapacity_kW != null && contractedFeedinCapacity_kW >= 0;
+	boolean physicalCapacityKnown = physicalCapacity_kW != null && physicalCapacity_kW >= 0;
+			
+	//Backups
+	if(!contractedDeliveryCapacityKnown){//Backup for contracted delivery capacity if unknown (make same as physical if known or else average)
+		if(physicalCapacityKnown){
+			contractedDeliveryCapacity_kW = physicalCapacity_kW.doubleValue();
 		}
 		else{
-			companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = 0.0;
+			traceln("SURVEYOWNER HAS NOT FILLED IN DELIVERY OR PHYSICAL CONNECTION CAPACITY! -> Average utility connection taken as contracted Delivery Capacity.");		
+			contractedDeliveryCapacity_kW = avgc_data.p_avgUtilityConnectionCapacity_kW;
 		}
-		companyGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
+	}
+	if(!contractedFeedinCapacityKnown){	//Backup for contracted feedin capacity if unknown
+		contractedFeedinCapacity_kW = 0.0; // Assume no contract capacity, not even when there is PV.
+	}
+	if(!physicalCapacityKnown || physicalCapacity_kW < contractedDeliveryCapacity_kW || physicalCapacity_kW < contractedFeedinCapacity_kW){	//Backup for connection capacity if unknown OR smaller than 
+		physicalCapacity_kW = max(contractedDeliveryCapacity_kW, contractedFeedinCapacity_kW); //Contracted connection capacity
 	}
 	
-	//Check if physical capacity has been filled in: if not, make the same as maximum of contract delivery and feedin
-	if(gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw() != null && gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw() > 0){
-		companyGC.v_liveConnectionMetaData.physicalCapacity_kW = (double)gridConnection.getElectricity().getGrootverbruik().getPhysicalCapacityKw(); //Contracted connection capacity
-		companyGC.v_liveConnectionMetaData.physicalCapacityKnown = true;
-	}
-	else{
-		companyGC.v_liveConnectionMetaData.physicalCapacity_kW = max(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW, companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW); //Contracted connection capacity
-		companyGC.v_liveConnectionMetaData.physicalCapacityKnown = false;
-	}
-
-	
+	//Set values
+	companyGC.v_liveConnectionMetaData.setCapacities_kW(contractedDeliveryCapacity_kW, contractedFeedinCapacity_kW, physicalCapacity_kW);
+	companyGC.v_liveConnectionMetaData.setCapacitiesKnown(contractedDeliveryCapacityKnown, contractedFeedinCapacityKnown, physicalCapacityKnown);
+		
 	//Add to current scenario list
-	current_scenario_list.setCurrentContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-	current_scenario_list.setCurrentContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW);
-	current_scenario_list.setCurrentPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.physicalCapacity_kW);
+	current_scenario_list.setCurrentContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW());
+	current_scenario_list.setCurrentContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.getContractedFeedinCapacity_kW());
+	current_scenario_list.setCurrentPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.getPhysicalCapacity_kW());
 	
 	
 	//Electricity consumption profile
@@ -2283,8 +2253,8 @@ if (gridConnection.getElectricity().getHasConnection()){
 				yearlyElectricityConsumption_kWh = avgc_data.p_avgCompanyElectricityConsumption_kWhpm2*companyGC.p_floorSurfaceArea_m2;
 				
 				//Check if it is within the contracted limits (peak should at least be 20% lower than contracted capacity
-				if(yearlyElectricityConsumption_kWh*defaultProfiles_data.getDefaultOfficeElectricityDemandProfileMaximum_fr() > 0.8*companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW){
-					yearlyElectricityConsumption_kWh = 0.8*companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW/defaultProfiles_data.getDefaultOfficeElectricityDemandProfileMaximum_fr();
+				if(yearlyElectricityConsumption_kWh*defaultProfiles_data.getDefaultOfficeElectricityDemandProfileMaximum_fr() > 0.8*companyGC.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW()){
+					yearlyElectricityConsumption_kWh = 0.8*companyGC.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW()/defaultProfiles_data.getDefaultOfficeElectricityDemandProfileMaximum_fr();
 				}
 				 
 			}
@@ -2307,20 +2277,20 @@ if (gridConnection.getElectricity().getHasConnection()){
 }
 
 //If everything is 0 set the GC as non active
-if(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW == 0 && companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW == 0 && companyGC.v_liveConnectionMetaData.physicalCapacity_kW == 0){
+if(companyGC.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW() == 0 && companyGC.v_liveConnectionMetaData.getContractedFeedinCapacity_kW() == 0 && companyGC.v_liveConnectionMetaData.getPhysicalCapacity_kW() == 0){
 	companyGC.v_isActive = false;
 }
 		
 //Grid expansion request
 if (gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() != null && gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator()){
-	future_scenario_list.setRequestedContractDeliveryCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-	future_scenario_list.setRequestedContractFeedinCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW);
-	future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(max(companyGC.v_liveConnectionMetaData.physicalCapacity_kW, max(future_scenario_list.getRequestedContractDeliveryCapacity_kW(), future_scenario_list.getRequestedContractFeedinCapacity_kW())));
+	future_scenario_list.setRequestedContractDeliveryCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW());
+	future_scenario_list.setRequestedContractFeedinCapacity_kW(((gridConnection.getElectricity().getGridExpansion().getRequestedKW() != null) ? gridConnection.getElectricity().getGridExpansion().getRequestedKW() : 0) + companyGC.v_liveConnectionMetaData.getContractedFeedinCapacity_kW());
+	future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(max(companyGC.v_liveConnectionMetaData.getPhysicalCapacity_kW(), max(future_scenario_list.getRequestedContractDeliveryCapacity_kW(), future_scenario_list.getRequestedContractFeedinCapacity_kW())));
 }
 else{
-	future_scenario_list.setRequestedContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-	future_scenario_list.setRequestedContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW);
-	future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.physicalCapacity_kW);
+	future_scenario_list.setRequestedContractDeliveryCapacity_kW(companyGC.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW());
+	future_scenario_list.setRequestedContractFeedinCapacity_kW(companyGC.v_liveConnectionMetaData.getContractedFeedinCapacity_kW());
+	future_scenario_list.setRequestedPhysicalConnectionCapacity_kW(companyGC.v_liveConnectionMetaData.getPhysicalCapacity_kW());
 }
 
 
@@ -2687,9 +2657,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 	
 	//Other
 	if (Objects.nonNull(gridConnection.getTransport().getOtherVehicles().getHasOtherVehicles())){
-	
-	// Wat doen we hier mee???
-	
+		// Wat doen we hier mee???
 	}
 }
 
@@ -2697,6 +2665,9 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 if(companyGC.c_electricVehicles.size() + companyGC.c_chargingSessions.size() > 0){
 	companyGC.f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
 }
+
+//Add tractors
+f_createPetroleumFuelTractors(companyGC, gridConnection.getTransport().getAgriculture());
 
 //Save if building is paused at start
 current_scenario_list.setIsCurrentlyActive(companyGC.v_isActive);
@@ -3070,7 +3041,7 @@ if ( topGridNode == null ) {
 String topGridNodeID = topGridNode.gridnode_id();
 
 //Create data package for e-hub dashboard slider gcs
-if(project_data.project_type() == OL_ProjectType.BUSINESSPARK){
+if(c_companyBuilding_data.size() > 1){
 	f_addSliderSolarfarm(zero_Interface.p_defaultEnergyHubSliderGCName_solarfarm, topGridNodeID);
 	f_addSliderWindfarm(zero_Interface.p_defaultEnergyHubSliderGCName_windfarm, topGridNodeID);
 	f_addSliderBattery(zero_Interface.p_defaultEnergyHubSliderGCName_battery, topGridNodeID);
@@ -3097,28 +3068,7 @@ else{
 
 J_ProfilePointer f_createEngineProfile(String profileID,double[] arguments,double[] values,OL_ProfileUnits profileUnitType)
 {/*ALCODESTART::1749125189323*/
-double dataTimeStep_h = (arguments[arguments.length-1] - arguments[0])/(arguments.length-1);
-double dataStartTime_h = arguments[0];
-double simTimeStep_h = settings.timeStep_h(); 
-double a_profile[];
-if (simTimeStep_h < dataTimeStep_h) { //Interpolate data to timeStep_h = 0.25
-	//traceln("***** profilePointer using tableFunction to interpolate hourly data into quarter-hourly data ********");
-	if ((dataTimeStep_h/simTimeStep_h)%1.0 != 0.0) {
-		throw new RuntimeException("dataTimeStep_h is not an integer multiple of modelTimeStep! Unsupported dataformat!");
-	}
-	TableFunction tableFunction = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-	a_profile = new double[values.length*(int)(dataTimeStep_h/simTimeStep_h)];
-	for (int i=0; i<a_profile.length; i++) {
-		a_profile[i] = tableFunction.get(dataStartTime_h+i*simTimeStep_h);
-	}
-	dataTimeStep_h = simTimeStep_h;
-} else if (simTimeStep_h > dataTimeStep_h) {
-	throw new RuntimeException("dataTimeStep_h smaller than modelTimeStep! Unsupported dataformat! Need to implement downsampling to allow this");
-} else {
-	a_profile=values;
-}
-
-J_ProfilePointer profilePointer = new J_ProfilePointer(profileID, a_profile, dataTimeStep_h, dataStartTime_h, profileUnitType);	
+J_ProfilePointer profilePointer = f_createProfilePointer(profileID, arguments, values, profileUnitType, null);
 
 energyModel.f_addProfile(profilePointer);
 return profilePointer;
@@ -3138,6 +3088,9 @@ double[] a_windProductionProfile_fr = ListUtil.doubleListToArray(defaultProfiles
 //EPEX data
 double[] a_epexProfile_eurpMWh = ListUtil.doubleListToArray(defaultProfiles_data.epexProfile_eurpMWh()); 
 
+//CO2 emission data
+double[] a_CO2EmissionFactorElectricityImport_kgpkWh = ListUtil.doubleListToArray(defaultProfiles_data.CO2EmissionFactorElectricityImport_kgpkWh()); 
+
 //Various demand data
 double[] a_defaultHouseElectricityDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultHouseElectricityDemandProfile_fr());
 double[] a_defaultHouseHotWaterDemandProfile_fr = ListUtil.doubleListToArray(defaultProfiles_data.defaultHouseHotWaterDemandProfile_fr());
@@ -3153,6 +3106,9 @@ energyModel.pp_windProduction_fr = f_createEngineProfile("wind_production_fr", a
 
 //Create Epex engine profile
 energyModel.pp_dayAheadElectricityPricing_eurpMWh = f_createEngineProfile("epex_price_eurpMWh", a_arguments_hr, a_epexProfile_eurpMWh, OL_ProfileUnits.PRICE_EURPMWH);
+
+//Create CO2 emission engine profile
+energyModel.pp_CO2EmissionFactorElectricityImport_kgpkWh = f_createEngineProfile("CO2EmissionFactorElectricityImport_kgpkWh", a_arguments_hr, a_CO2EmissionFactorElectricityImport_kgpkWh, OL_ProfileUnits.CO2EMISSION_KGPKWH);
 
 //Create Consumption engine profiles:
 f_createEngineProfile("default_house_electricity_demand_fr", a_arguments_hr, a_defaultHouseElectricityDemandProfile_fr, OL_ProfileUnits.YEARLYTOTALFRACTION);
@@ -3179,13 +3135,8 @@ GC_GridNode_profile.p_gridConnectionID = "GridNode " + gridnode.p_gridNodeID + "
 GC_GridNode_profile.p_parentNodeElectricID = gridnode.p_gridNodeID;
 
 //Set capacity same as gridnode
-GC_GridNode_profile.v_liveConnectionMetaData.physicalCapacity_kW = gridnode.p_capacity_kW;
-GC_GridNode_profile.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = gridnode.p_capacity_kW;
-GC_GridNode_profile.v_liveConnectionMetaData.contractedFeedinCapacity_kW = gridnode.p_capacity_kW;
-
-GC_GridNode_profile.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
-GC_GridNode_profile.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
-GC_GridNode_profile.v_liveConnectionMetaData.physicalCapacityKnown = false;
+GC_GridNode_profile.v_liveConnectionMetaData.setCapacities_kW(gridnode.p_capacity_kW, gridnode.p_capacity_kW, gridnode.p_capacity_kW);
+GC_GridNode_profile.v_liveConnectionMetaData.setCapacitiesKnown(false, false, false);
 
 //Set lat lon same as gridnode
 GC_GridNode_profile.p_latitude = gridnode.p_latitude; // Get latitude of first building (only used to get nearest trafo)
@@ -3360,13 +3311,21 @@ if(cookingType != OL_HouseholdCookingMethod.NONE){
 }
 /*ALCODEEND*/}
 
-double f_addHotWaterDemand(GridConnection GC,double yearlyHWD_kWh)
+double f_addHotWaterDemand(GridConnection GC,double yearlyHWD_kWh,int numberOfResidents)
 {/*ALCODESTART::1749726279652*/
 if(yearlyHWD_kWh <= 0){
 	throw new RuntimeException("Trying to create a DHW asset, without specifying the yearly energy consumption");
 }
-J_ProfilePointer pp = energyModel.f_findProfile("default_house_hot_water_demand_fr");
-J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, pp);
+J_ProfilePointer pp = f_getDHWProfile(numberOfResidents);
+if(pp == null){
+	pp = energyModel.f_findProfile("default_house_hot_water_demand_fr");
+	J_EAConsumption profile = new J_EAConsumption(GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, pp);
+	return profile.getPeakConsumptionPower_kW();
+} else {
+	J_EAProfile profile = new J_EAProfile( GC, OL_EnergyCarriers.HEAT, pp, OL_AssetFlowCategories.hotWaterConsumption_kW, energyModel.p_timeParameters);
+	return profile.getPeakConsumptionPower_kW();
+}
+
 /*ALCODEEND*/}
 
 double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,Double heatDemand_kwhpa,J_HeatingPreferences heatingPreferences)
@@ -3486,7 +3445,8 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	GCH.p_eigenOprit = houseBuildingData.has_private_parking() != null ? houseBuildingData.has_private_parking() : false;
 	
 	//PBL heating
-	if(houseBuildingData.pbl_data_available()){
+	boolean dataAvailablePBL = houseBuildingData.dwelling_type() != OL_PBL_DwellingType.UNKNOWN && houseBuildingData.ownership_type() != OL_PBL_OwnershipType.UNKNOWN && houseBuildingData.local_factor() != null && houseBuildingData.regional_climate_correction_factor() != null;
+	if(houseBuildingData.use_pbl_data() && dataAvailablePBL){
 		GCH.p_PBLParameters = new J_PBLParameters(houseBuildingData.dwelling_type(), 
 												  houseBuildingData.ownership_type(),  
 												  houseBuildingData.insulation_label(), 
@@ -3510,23 +3470,10 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 	}
 	
 	//Connection data
-	if(houseBuildingData.contracted_capacity_kw() != null && houseBuildingData.contracted_capacity_kw() > 0){
-		GCH.v_liveConnectionMetaData.physicalCapacity_kW = houseBuildingData.contracted_capacity_kw();
-		GCH.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = houseBuildingData.contracted_capacity_kw();
-		GCH.v_liveConnectionMetaData.contractedFeedinCapacity_kW = houseBuildingData.contracted_capacity_kw();
-		GCH.v_liveConnectionMetaData.physicalCapacityKnown = true;
-		GCH.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
-		GCH.v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
-	}
-	else{
-		GCH.v_liveConnectionMetaData.physicalCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
-		GCH.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
-		GCH.v_liveConnectionMetaData.contractedFeedinCapacity_kW = avgc_data.p_avgHouseConnectionCapacity_kW;
-		GCH.v_liveConnectionMetaData.physicalCapacityKnown = false;
-		GCH.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
-		GCH.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
-	}
-
+	boolean gridConnectionCapacityKnown = houseBuildingData.contracted_capacity_kw() != null && houseBuildingData.contracted_capacity_kw() > 0;
+	double gridConnectionCapacity_kW = gridConnectionCapacityKnown ? houseBuildingData.contracted_capacity_kw() : avgc_data.p_avgHouseConnectionCapacity_kW;
+	GCH.v_liveConnectionMetaData.setCapacities_kW(gridConnectionCapacity_kW, gridConnectionCapacity_kW, gridConnectionCapacity_kW);
+	GCH.v_liveConnectionMetaData.setCapacitiesKnown(gridConnectionCapacityKnown, gridConnectionCapacityKnown, gridConnectionCapacityKnown);
 	
 	//Address data
 	GCH.p_address = new J_Address(houseBuildingData.streetname(), 
@@ -3700,13 +3647,10 @@ for (ParkingSpace_data dataParkingSpace : f_getParkingSpacesInSubScope(c_parking
 		carportGC = energyModel.add_EnergyProductionSites();
 		
 		carportGC.p_gridConnectionID = "Parking space gridconnection: " + dataParkingSpace.parking_id();
-		carportGC.v_liveConnectionMetaData.physicalCapacity_kW = 1 + dataParkingSpace.pv_potential_kwp(); // 1 + is fix to prevent errors in engine for 0 capacity (= 0 pv potential for all parking spaces attached to this GC)
-		carportGC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW = 0.0;
-		carportGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW = 1 + dataParkingSpace.pv_potential_kwp(); // 1 + is fix to prevent errors in engine for 0 capacity (= 0 pv potential for all parking spaces attached to this GC)
-		
-		carportGC.v_liveConnectionMetaData.physicalCapacityKnown = false;
-		carportGC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
-		carportGC.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
+		double physicalCapacity_kW = 1 + dataParkingSpace.pv_potential_kwp(); // 1 + is fix to prevent errors in engine for 0 capacity (= 0 pv potential for all parking spaces attached to this GC)
+		double contractedFeedinCapacity_kW = 1 + dataParkingSpace.pv_potential_kwp(); // 1 + is fix to prevent errors in engine for 0 capacity (= 0 pv potential for all parking spaces attached to this GC)
+		carportGC.v_liveConnectionMetaData.setCapacities_kW(0, contractedFeedinCapacity_kW, physicalCapacity_kW);
+		carportGC.v_liveConnectionMetaData.setCapacitiesKnown(false, false, false);
 		
 		carportGC.p_parentNodeElectricID = dataParkingSpace.gridnode_id();
 
@@ -3732,11 +3676,16 @@ for (ParkingSpace_data dataParkingSpace : f_getParkingSpacesInSubScope(c_parking
 		parkingSpace.c_containedGridConnections.add(carportGC);
 		carportGC.c_connectedGISObjects.add(parkingSpace);
 		carportGCList.add(carportGC);
+		
+		//Initialize pv potential
+		carportGC.v_liveAssetsMetaData.PVPotential_kW = 0.0;
 	}
 	else{
-		carportGC.v_liveConnectionMetaData.physicalCapacity_kW += dataParkingSpace.pv_potential_kwp();
-		carportGC.v_liveConnectionMetaData.contractedFeedinCapacity_kW += dataParkingSpace.pv_potential_kwp();
+		double physicalCapacity_kW = carportGC.v_liveConnectionMetaData.getPhysicalCapacity_kW() + dataParkingSpace.pv_potential_kwp();
+		double contractedFeedinCapacity_kW = carportGC.v_liveConnectionMetaData.getContractedFeedinCapacity_kW() + dataParkingSpace.pv_potential_kwp();
+		carportGC.v_liveConnectionMetaData.setCapacities_kW(0, contractedFeedinCapacity_kW, physicalCapacity_kW);
 		
+				
 		//Add to collections
 		parkingSpace.c_containedGridConnections.add(carportGC);
 		carportGC.c_connectedGISObjects.add(parkingSpace);
@@ -4639,8 +4588,6 @@ if(simStartTime_h > summerTimeStart_h && simStartTime_h < winterTimeStart_h){
 	simStartTime_h += 1;
 }
 
-
-
 //Set sim duration if it is set
 double simDuration_h; //Sim duration in hours
 if(getExperiment().getEngine().getStopDate() != null){ //If experiment has set time, it gets bias
@@ -4656,6 +4603,7 @@ else{
 	simDuration_h = settings.simDuration_h();
 }
 
+//Checks
 if (simStartTime_h % 24 != 0) {
 	throw new RuntimeException("Impossible to run a model that does not start at midnight. Please check the start in the simulation settings.");
 }
@@ -4666,18 +4614,30 @@ if (simDuration_h <= 0) {
 	throw new RuntimeException("Impossible to run a model that has a runtime that is <= 0. Please check the start and endtime in the simulation settings or simduration_h in the 'settings' class.");
 }
 
+//Calculate simEndTime_h
 double simEndTime_h = simStartTime_h + simDuration_h;
 
+//Get month start hours based on if leap year or not
+double[] monthStartHours;
+if(simStartYear % 4 == 0){
+	monthStartHours = avgc_data.monthStartHours_leapYear;
+}
+else{
+	monthStartHours = avgc_data.monthStartHours_default;
+}
+
+//Create time parameters object in engine
 energyModel.p_timeParameters = new J_TimeParameters(
 	settings.timeStep_h(),
 	simStartYear,
-	avgc_data.hourOfYearPerMonth,
+	monthStartHours,
 	simStartTime_h,
 	simEndTime_h,
 	settings.summerWeekNumber(),
 	settings.winterWeekNumber()
 );
 
+//Initialize time variables object in engine
 energyModel.p_timeVariables = new J_TimeVariables(0, energyModel.p_timeParameters);
 /*ALCODEEND*/}
 
@@ -5097,17 +5057,20 @@ else{
 double spaceHeatingDemand_kwhpa;
 double hotWaterDemand_kWhpa;
 double cookingDemand_kWhpa;
+int numberOfResidents = 0;
 if(house.p_PBLParameters != null){
 	PBL_SpaceHeatingAndResidents_data spaceHeatingDataObject = f_getPBLObject_spaceHeatingAndResidents(house.p_PBLParameters.getDwellingType(), house.p_buildYear, house.p_PBLParameters.getOwnershipType(), house.p_insulationLabel);
 	spaceHeatingDemand_kwhpa = f_getSpaceHeatingDemand_PBL_kWh(house.p_floorSurfaceArea_m2, spaceHeatingDataObject, house.p_PBLParameters.getLocalFactor(), house.p_PBLParameters.getRegionalClimateCorrectionFactor());
 	
-	int numberOfResidents = f_getNumberOfResidents_PBL(spaceHeatingDataObject, house.p_floorSurfaceArea_m2);
+	numberOfResidents = f_getNumberOfResidents_PBL(spaceHeatingDataObject, house.p_floorSurfaceArea_m2);
 	
 	PBL_DHWAndCooking_data DHWAndCookingDataObject = f_getPBLObject_DHWAndCooking(house.p_buildYear, house.p_floorSurfaceArea_m2, numberOfResidents);
 	hotWaterDemand_kWhpa = DHWAndCookingDataObject.dhw_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
 	cookingDemand_kWhpa = DHWAndCookingDataObject.cooking_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
 }
 else{
+	numberOfResidents = f_estimateHouseNmbrResidents();
+	
 	spaceHeatingDemand_kwhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgSpaceHeatingTotalGasConsumptionShare_fr;
 	hotWaterDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgDHWTotalGasConsumptionShare_fr;
 	cookingDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgCookingTotalGasConsumptionShare_fr;
@@ -5123,9 +5086,26 @@ J_HeatingPreferences heatingPreferences = f_getHouseHeatingPreferences();
 
 f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2, spaceHeatingDemand_kwhpa, heatingPreferences);
 
+//Add hot water demand
+double maxHotWaterDemand_kW = 0;
+if(hotWaterDemand_kWhpa > 0){
+	maxHotWaterDemand_kW = f_addHotWaterDemand(house, hotWaterDemand_kWhpa, numberOfResidents);
+}
+
+//Add cooking demand
+if(cookingType == null || cookingType == OL_HouseholdCookingMethod.UNKNOWN){
+	cookingType = avgc_data.p_avgHouseCookingMethod;
+}
+f_addCookingAsset(house, cookingType, cookingDemand_kWhpa);
+
 //Determine required heating capacity for the heating asset	
 double maximalTemperatureDifference_K = 30.0; // Approximation
-double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000;
+double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000 + maxHotWaterDemand_kW;
+
+/*if (hotWaterDemand_kWhpa > 0) {
+	// A standard domestic peak is roughly 25-30 kW for instant hot water delivery
+	maxHeatOutputPower_kW += 100.0; 
+}*/
 
 //Check if heating type is known: Else: take avgc
 if(heatingType == null || heatingType == OL_GridConnectionHeatingType.UNKNOWN){
@@ -5139,38 +5119,14 @@ f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
 house.f_addHeatManagement(heatingType, false);
 house.f_setHeatingPreferences(heatingPreferences);
 
-//Add hot water demand
-if(hotWaterDemand_kWhpa > 0){
-	f_addHotWaterDemand(house, hotWaterDemand_kWhpa);
-}
-
-//Add cooking demand
-if(cookingType == null){
-	cookingType = avgc_data.p_avgHouseCookingMethod;
-}
-f_addCookingAsset(house, cookingType, cookingDemand_kWhpa);
-
-
 //For calibrating AVG data PBL loss factor 
 totalSpaceHeatDemand_kwhpa += spaceHeatingDemand_kwhpa;
 /*ALCODEEND*/}
 
-double f_estimateHouseDHWDemand_kWh(double floorSurface_m2)
+int f_estimateHouseNmbrResidents()
 {/*ALCODESTART::1768570811946*/
-int numberOfResidents;
-if( floorSurface_m2 > 150){
-	numberOfResidents = uniform_discr(2,6);
-}
-else if (floorSurface_m2 > 50){
-	numberOfResidents = uniform_discr(1,4);
-}
-else {
-	numberOfResidents = uniform_discr(1,2);
-}
-
-double yearlyHWD_kWh = 1000 + numberOfResidents * 150; //SOURCE!? Put in AVGC!!
-return yearlyHWD_kWh;
-
+int numberOfResidents = uniform_discr(1,5);
+return numberOfResidents;
 /*ALCODEEND*/}
 
 double f_estimateHouseCookingDemand_kWh()
@@ -5321,5 +5277,63 @@ if(PVOrientationZorm != null){
 }
 
 return pvOrientation;
+/*ALCODEEND*/}
+
+J_ProfilePointer f_getDHWProfile(int numberOfResidents)
+{/*ALCODESTART::1776432342124*/
+int randomIndex;
+J_ProfilePointer ppDHWProfile = null;
+
+double offset_h = (energyModel.p_timeParameters.getDayOfWeek1jan() - 1) * 24.0; //Monday = index 0: -> detailed DHW profiles always start on monday! -> To have no offset you need to subtract -1.
+
+if(map_nrOfResidentsToDHWProfiles_data.containsKey(numberOfResidents) && map_nrOfResidentsToDHWProfiles_data.get(numberOfResidents).size() > 0){
+	List<DHWProfile_data> profiles = map_nrOfResidentsToDHWProfiles_data.get(numberOfResidents);
+	randomIndex = uniform_discr(0, profiles.size() - 1);
+	DHWProfile_data dhwProfile = profiles.get(randomIndex);
+	ppDHWProfile = f_createProfilePointer(dhwProfile.DHWProfileID(), dhwProfile.getArgumentsArray(), dhwProfile.getValuesArray(), dhwProfile.profileUnits(), offset_h);
+	profiles.remove(randomIndex);
+	if(!energyModel.map_nrOfResidentsToDHWprofiles.containsKey(numberOfResidents)){
+		energyModel.map_nrOfResidentsToDHWprofiles.put(numberOfResidents, new ArrayList<>());
+	}
+	energyModel.map_nrOfResidentsToDHWprofiles.get(numberOfResidents).add(ppDHWProfile);
+	energyModel.f_addProfile(ppDHWProfile);
+}
+else if (energyModel.map_nrOfResidentsToDHWprofiles.containsKey(numberOfResidents) && energyModel.map_nrOfResidentsToDHWprofiles.get(numberOfResidents).size() > 0){
+	List<J_ProfilePointer> assignedProfiles = energyModel.map_nrOfResidentsToDHWprofiles.get(numberOfResidents);
+	randomIndex = uniform_discr(0, assignedProfiles.size() - 1);
+	ppDHWProfile = assignedProfiles.get(randomIndex);
+}
+
+return ppDHWProfile;
+/*ALCODEEND*/}
+
+J_ProfilePointer f_createProfilePointer(String profileID,double[] arguments,double[] values,OL_ProfileUnits profileUnitType,Double offset_h)
+{/*ALCODESTART::1776443217505*/
+double dataTimeStep_h = (arguments[arguments.length-1] - arguments[0])/(arguments.length-1);
+double simTimeStep_h = settings.timeStep_h(); 
+double a_profile[];
+
+double dataStartTime_h = offset_h != null ? arguments[0] - offset_h : arguments[0];
+
+if (simTimeStep_h < dataTimeStep_h) { //Interpolate data to timeStep_h = 0.25
+	//traceln("***** profilePointer using tableFunction to interpolate hourly data into quarter-hourly data ********");
+	if ((dataTimeStep_h/simTimeStep_h)%1.0 != 0.0) {
+		throw new RuntimeException("dataTimeStep_h is not an integer multiple of modelTimeStep! Unsupported dataformat!");
+	}
+	TableFunction tableFunction = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+	a_profile = new double[values.length*(int)(dataTimeStep_h/simTimeStep_h)];
+	for (int i=0; i<a_profile.length; i++) {
+		a_profile[i] = tableFunction.get(arguments[0]+i*simTimeStep_h);
+	}
+	dataTimeStep_h = simTimeStep_h;
+} else if (simTimeStep_h > dataTimeStep_h) {
+	throw new RuntimeException("dataTimeStep_h smaller than modelTimeStep! Unsupported dataformat! Need to implement downsampling to allow this");
+} else {
+	a_profile=values;
+}
+
+J_ProfilePointer profilePointer = new J_ProfilePointer(profileID, a_profile, dataTimeStep_h, dataStartTime_h, profileUnitType);	
+
+return profilePointer;
 /*ALCODEEND*/}
 

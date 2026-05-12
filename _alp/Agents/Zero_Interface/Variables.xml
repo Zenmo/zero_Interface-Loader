@@ -265,28 +265,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1696863329269</Id>
-		<Name><![CDATA[v_gridConnectionInBuildingIndex]]></Name>
-		<X>50</X>
-		<Y>1490</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[int]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[0]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1701164360663</Id>
 		<Name><![CDATA[b_resultsUpToDate]]></Name>
 		<X>-240</X>
@@ -308,8 +286,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1701879001472</Id>
 		<Name><![CDATA[v_clickedObjectText]]></Name>
-		<X>50</X>
-		<Y>1510</Y>
+		<X>60</X>
+		<Y>1470</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -682,45 +660,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1705673181898</Id>
 		<Name><![CDATA[v_clickedGridNode]]></Name>
-		<X>50</X>
-		<Y>1390</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[GridNode]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1705673647104</Id>
-		<Name><![CDATA[v_previousClickedObjectType]]></Name>
-		<X>50</X>
-		<Y>1360</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[OL_GISObjectType]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1705673714784</Id>
-		<Name><![CDATA[v_previousClickedGridNode]]></Name>
-		<X>50</X>
+		<X>60</X>
 		<Y>1410</Y>
 		<Label>
 			<X>10</X>
@@ -848,8 +788,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1707918668189</Id>
 		<Name><![CDATA[v_clickedObjectType]]></Name>
-		<X>50</X>
-		<Y>1340</Y>
+		<X>60</X>
+		<Y>1300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1255,7 +1195,7 @@
 		<Id>1720905248678</Id>
 		<Name><![CDATA[v_selectedGridConnectionIndex]]></Name>
 		<X>940</X>
-		<Y>-130</Y>
+		<Y>-160</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1277,7 +1217,7 @@
 		<Id>1720905365617</Id>
 		<Name><![CDATA[v_nbGridConnectionsInSelectedBuilding]]></Name>
 		<X>940</X>
-		<Y>-110</Y>
+		<Y>-140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1535,28 +1475,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1725018118872</Id>
-		<Name><![CDATA[b_showCables]]></Name>
-		<X>50</X>
-		<Y>1550</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[boolean]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[false]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1728404379677</Id>
 		<Name><![CDATA[v_energyAssetLineWidth]]></Name>
 		<X>690</X>
@@ -1625,8 +1543,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1739980192808</Id>
 		<Name><![CDATA[v_customEnergyCoop]]></Name>
-		<X>50</X>
-		<Y>1300</Y>
+		<X>60</X>
+		<Y>1390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2180,6 +2098,25 @@
 			<Type><![CDATA[Zero_Loader]]></Type>
 		</Properties>
 	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1777565007741</Id>
+		<Name><![CDATA[v_clickedObject]]></Name>
+		<X>60</X>
+		<Y>1280</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[GIS_Object]]></Type>
+		</Properties>
+	</Variable>
 	<Variable Class="Parameter">
 		<Id>1715858732720</Id>
 		<Name><![CDATA[energyModel]]></Name>
@@ -2292,7 +2229,7 @@
 		<Id>1745937830300</Id>
 		<Name><![CDATA[p_minSelectedGCForPublicAggregation]]></Name>
 		<X>-655</X>
-		<Y>895</Y>
+		<Y>915</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3098,8 +3035,8 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 	<Variable Class="CollectionVariable">
 		<Id>1721302080638</Id>
 		<Name><![CDATA[c_selectedGridConnections]]></Name>
-		<X>50</X>
-		<Y>1270</Y>
+		<X>60</X>
+		<Y>1360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3168,28 +3105,10 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 		</Properties>
 	</Variable>
 	<Variable Class="CollectionVariable">
-		<Id>1734512815255</Id>
-		<Name><![CDATA[c_previousSelectedObjects]]></Name>
-		<X>50</X>
-		<Y>1460</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>GIS_Object</ElementClass>
-			<ValueElementClass>String</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
 		<Id>1734513139372</Id>
 		<Name><![CDATA[c_selectedObjects]]></Name>
-		<X>50</X>
-		<Y>1440</Y>
+		<X>60</X>
+		<Y>1340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

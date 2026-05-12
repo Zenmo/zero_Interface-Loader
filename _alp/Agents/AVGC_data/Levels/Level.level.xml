@@ -159,7 +159,7 @@
 		<Id>1726584205548</Id>
 		<Name><![CDATA[text4]]></Name>
 		<X>1540</X>
-		<Y>220</Y>
+		<Y>240</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -210,7 +210,7 @@
 		<Id>1726584205552</Id>
 		<Name><![CDATA[rect_hydrogenC]]></Name>
 		<X>1540</X>
-		<Y>420</Y>
+		<Y>440</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -236,7 +236,7 @@
 		<Id>1726584205554</Id>
 		<Name><![CDATA[txt_hydrogenC]]></Name>
 		<X>1560</X>
-		<Y>440</Y>
+		<Y>460</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -703,6 +703,82 @@
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
 		<Text><![CDATA[Thermal model parameters]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>12</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Rectangle>
+		<Id>1773997875592</Id>
+		<Name><![CDATA[rect_economicAVGC]]></Name>
+		<X>1920</X>
+		<Y>0</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>3</LineWidth>
+		<LineColor>-16711936</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>680</Width>
+		<Height>600</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Rectangle>
+	<Text>
+		<Id>1773997890096</Id>
+		<Name><![CDATA[txt_economicAVGC]]></Name>
+		<X>1950</X>
+		<Y>20</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Economic AVGC]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>14</Size>
+			<Style>1</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Text>
+		<Id>1775469989167</Id>
+		<Name><![CDATA[txt_avgEmissions]]></Name>
+		<X>1000</X>
+		<Y>1040</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Average values for CO2 emissions]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>12</Size>

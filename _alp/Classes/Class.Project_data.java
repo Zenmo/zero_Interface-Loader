@@ -23,7 +23,7 @@ public class Project_data {
 		Double map_scale;
 		
 		//Project specific actors
-		String grid_operator;
+		OL_GridOperator grid_operator;
 		Boolean hasCongestionPricing;
 		String energy_coop;
 		String energy_supplier;

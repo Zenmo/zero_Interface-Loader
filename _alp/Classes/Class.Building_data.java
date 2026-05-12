@@ -40,7 +40,7 @@ public class Building_data {
 	String heatnode_id;
 	
 	//PBL data
-	boolean pbl_data_available;
+	boolean use_pbl_data;
 	OL_PBL_DwellingType dwelling_type;		
 	OL_PBL_OwnershipType ownership_type;
 	OL_HouseholdCookingMethod cooking_type;

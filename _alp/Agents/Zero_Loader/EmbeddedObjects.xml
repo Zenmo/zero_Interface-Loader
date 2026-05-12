@@ -75,6 +75,9 @@
 			<Parameter>
 				<Name><![CDATA[p_epexForecastTime_h]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_CO2EmissionFactorForecastTime_h]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -113,7 +116,7 @@
 		<Id>1726584829907</Id>
 		<Name><![CDATA[avgc_data]]></Name>
 		<X>-390</X>
-		<Y>850</Y>
+		<Y>860</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -434,7 +437,49 @@
 				<Name><![CDATA[p_defaultNrOfSocketsPerCharger]]></Name>
 			</Parameter>
 			<Parameter>
+				<Name><![CDATA[map_avgCostOfEnergyCarrier_eurpkWh]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_avgAssetSizeDependentCAPEX_eurpkW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_avgAssetLifeTime_yr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_avgAssetSizeDependentOPEX_eurpkWpyr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_gridOperatorTarrifs]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_energyTaxesECImport_eurpkWh]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[VAT_energy_fr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[VAT_CAPEXAndOPEX_fr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_avgDirectCO2EmissionOfEnergyCarrier_kgpkWh]]></Name>
+			</Parameter>
+			<Parameter>
 				<Name><![CDATA[p_defaultPVOrientation]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_avgLifeCycleCO2EmissionOfEnergyCarrier_kgpkWh]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_reductionInEnergyTaxes_eurpyr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_bracketDependentEnergyTaxesECImport_eurpkWh]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_avgAssetBaseCAPEX_eur]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_avgAssetBaseOPEX_eurpyr]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>

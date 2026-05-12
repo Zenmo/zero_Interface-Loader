@@ -23,7 +23,7 @@
 		<Id>1726584205771</Id>
 		<Name><![CDATA[f_createGridConnections]]></Name>
 		<X>90</X>
-		<Y>250</Y>
+		<Y>270</Y>
 		<Label>
 			<X>11</X>
 			<Y>1</Y>
@@ -45,7 +45,7 @@
 @since: Sprint 6
 @author: Jorrit]]></Description>
 		<X>79</X>
-		<Y>191</Y>
+		<Y>211</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -210,7 +210,7 @@
 		<Name><![CDATA[f_createEnergyActors]]></Name>
 		<Description><![CDATA[Function used to generate specific actors like grid operator, energy supplier and energy coop. Actors used to create variable pricing.]]></Description>
 		<X>60</X>
-		<Y>460</Y>
+		<Y>470</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -390,7 +390,7 @@
 		<Id>1726584205821</Id>
 		<Name><![CDATA[f_createActors]]></Name>
 		<X>90</X>
-		<Y>231</Y>
+		<Y>251</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -431,7 +431,7 @@
 		<Id>1726584205827</Id>
 		<Name><![CDATA[f_addElectricVehicle]]></Name>
 		<X>1320</X>
-		<Y>590</Y>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -467,7 +467,7 @@
 		<Id>1726584205829</Id>
 		<Name><![CDATA[f_addPetroleumFuelVehicle]]></Name>
 		<X>1320</X>
-		<Y>610</Y>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -499,7 +499,7 @@
 		<Id>1726584205831</Id>
 		<Name><![CDATA[f_addStorage]]></Name>
 		<X>1320</X>
-		<Y>560</Y>
+		<Y>610</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -572,7 +572,7 @@
 		<Id>1726584205837</Id>
 		<Name><![CDATA[f_addTransportHydrogen]]></Name>
 		<X>1320</X>
-		<Y>630</Y>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -750,7 +750,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1726584205869</Id>
 		<Name><![CDATA[f_clearDataRecords]]></Name>
 		<X>-410</X>
-		<Y>730</Y>
+		<Y>740</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -798,7 +798,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1726584205881</Id>
 		<Name><![CDATA[f_createAdditionalGISObjects]]></Name>
 		<X>90</X>
-		<Y>270</Y>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -962,7 +962,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1737712184349</Id>
 		<Name><![CDATA[f_createPetroleumFuelTractors]]></Name>
 		<X>1320</X>
-		<Y>650</Y>
+		<Y>700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1086,7 +1086,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1747300761144</Id>
 		<Name><![CDATA[f_createHeatGridNode]]></Name>
 		<X>50</X>
-		<Y>600</Y>
+		<Y>620</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1102,7 +1102,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1747829476305</Id>
 		<Name><![CDATA[f_addSliderSolarfarm]]></Name>
 		<X>50</X>
-		<Y>340</Y>
+		<Y>360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1126,7 +1126,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1747829476307</Id>
 		<Name><![CDATA[f_addSliderWindfarm]]></Name>
 		<X>50</X>
-		<Y>360</Y>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1150,7 +1150,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1747829476311</Id>
 		<Name><![CDATA[f_addSliderBattery]]></Name>
 		<X>50</X>
-		<Y>378</Y>
+		<Y>398</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1174,7 +1174,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1747830228830</Id>
 		<Name><![CDATA[f_initializeSpecificSliderGC]]></Name>
 		<X>90</X>
-		<Y>212</Y>
+		<Y>232</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1343,7 +1343,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1749726279652</Id>
 		<Name><![CDATA[f_addHotWaterDemand]]></Name>
@@ -1363,6 +1363,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[yearlyHWD_kWh]]></Name>
 			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[numberOfResidents]]></Name>
+			<Type><![CDATA[int]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -1404,7 +1408,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1749728889982</Id>
 		<Name><![CDATA[f_getBuildingsInSubScope]]></Name>
 		<X>50</X>
-		<Y>680</Y>
+		<Y>690</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1510,7 +1514,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1749739602491</Id>
 		<Name><![CDATA[f_getSolarfarmsInSubScope]]></Name>
 		<X>50</X>
-		<Y>700</Y>
+		<Y>710</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1530,7 +1534,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1750857080998</Id>
 		<Name><![CDATA[f_getWindfarmsInSubScope]]></Name>
 		<X>50</X>
-		<Y>720</Y>
+		<Y>730</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1550,7 +1554,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1750857082460</Id>
 		<Name><![CDATA[f_getChargingstationsInSubScope]]></Name>
 		<X>50</X>
-		<Y>740</Y>
+		<Y>750</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1570,7 +1574,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1750857083468</Id>
 		<Name><![CDATA[f_getElectrolysersInSubScope]]></Name>
 		<X>50</X>
-		<Y>760</Y>
+		<Y>770</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1590,7 +1594,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1750857084547</Id>
 		<Name><![CDATA[f_getParkingSpacesInSubScope]]></Name>
 		<X>50</X>
-		<Y>800</Y>
+		<Y>810</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1610,7 +1614,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1750861476829</Id>
 		<Name><![CDATA[f_getBatteriesInSubScope]]></Name>
 		<X>50</X>
-		<Y>780</Y>
+		<Y>790</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2203,7 +2207,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1753968816374</Id>
 		<Name><![CDATA[f_setDefaultHeatingStrategies]]></Name>
 		<X>80</X>
-		<Y>170</Y>
+		<Y>190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2338,7 +2342,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1755866291695</Id>
 		<Name><![CDATA[f_addCarsToHouses]]></Name>
 		<X>880</X>
-		<Y>330</Y>
+		<Y>370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2746,12 +2750,11 @@ verbruik = levering + productie - teruglevering]]></Description>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>double</ReturnType>
+		<ReturnType>int</ReturnType>
 		<Id>1768570811946</Id>
-		<Name><![CDATA[f_estimateHouseDHWDemand_kWh]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<Name><![CDATA[f_estimateHouseNmbrResidents]]></Name>
 		<X>890</X>
-		<Y>430</Y>
+		<Y>310</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2759,10 +2762,6 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[floorSurface_m2]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -2771,7 +2770,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1768571246858</Id>
 		<Name><![CDATA[f_estimateHouseCookingDemand_kWh]]></Name>
 		<X>890</X>
-		<Y>450</Y>
+		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2786,8 +2785,8 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>Double</ReturnType>
 		<Id>1769700769686</Id>
 		<Name><![CDATA[f_getGNTotalPV_kWp]]></Name>
-		<X>240</X>
-		<Y>580</Y>
+		<X>90</X>
+		<Y>600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2807,7 +2806,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Id>1770037586816</Id>
 		<Name><![CDATA[f_addPVToHouses]]></Name>
 		<X>880</X>
-		<Y>310</Y>
+		<Y>350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2986,6 +2985,62 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[PVOrientationZorm]]></Name>
 			<Type><![CDATA[com.zenmo.zummon.companysurvey.PVOrientation]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>J_ProfilePointer</ReturnType>
+		<Id>1776432342124</Id>
+		<Name><![CDATA[f_getDHWProfile]]></Name>
+		<X>1340</X>
+		<Y>550</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[numberOfResidents]]></Name>
+			<Type><![CDATA[int]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>J_ProfilePointer</ReturnType>
+		<Id>1776443217505</Id>
+		<Name><![CDATA[f_createProfilePointer]]></Name>
+		<X>120</X>
+		<Y>170</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[profileID]]></Name>
+			<Type><![CDATA[String]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[arguments]]></Name>
+			<Type><![CDATA[double[]]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[values]]></Name>
+			<Type><![CDATA[double[]]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[profileUnitType]]></Name>
+			<Type><![CDATA[OL_ProfileUnits]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[offset_h]]></Name>
+			<Type><![CDATA[Double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

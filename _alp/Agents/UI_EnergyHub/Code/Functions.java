@@ -36,12 +36,21 @@ uI_Results.v_interfaceViewAreaYOffset = zero_Interface.va_EHubDashboard.getY();
 //Style resultsUI
 f_styleEnergyHubResultsUI();
 
-//Set ResultsUI radiobutton setup
-uI_Results.v_selectedRadioButtonSetup = OL_RadioButtonSetup.DEFAULT_AND_GESPREKSLEIDRAADBEDRIJVEN_AND_GTO;
+//Set the selected radiobutton setup Energy
+List<OL_ChartTypes> selectedChartTypes_Energy = new ArrayList<>(List.of(
+												OL_ChartTypes.PROFILES,
+												OL_ChartTypes.BAR_TOTALS,
+												OL_ChartTypes.LOAD_DURATION_CURVES,
+												OL_ChartTypes.SANKEY,
+												OL_ChartTypes.GESPREKSLEIDRAAD_BEDRIJVEN,
+												OL_ChartTypes.GTO
+												));
 
+//Set the selected radiobutton setup Economic
+List<OL_ChartTypes> selectedChartTypes_Economic = new ArrayList<>();// Leave empty for now!
 
 //Connect resultsUI
-uI_Results.f_initializeResultsUI();
+uI_Results.f_initializeResultsUI(selectedChartTypes_Energy, selectedChartTypes_Economic);
 uI_Results.f_updateResultsUI(v_energyHubCoop);
 /*ALCODEEND*/}
 
@@ -54,19 +63,6 @@ uI_Tabs.add_pop_tabMobility();
 
 //Adjust location of buttons to account for missing e-hub tab
 uI_Tabs.gr_energyDemandSettings.setX(zero_Interface.uI_Tabs.gr_energyDemandSettings.getX()+40);
-
-// Group visibilities
-// When using an extension of a generic tab don't forget to typecast it!
-if (zero_Interface.project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
-	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_ResidentialArea().setVisible(true);
-	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersResidentialArea().setVisible(true);
-	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGr_mobilitySliders_residential().setVisible(true);
-}
-else {
-	((tabElectricity)uI_Tabs.pop_tabElectricity.get(0)).getGroupElectricityDemandSliders_Businesspark().setVisible(true);
-	((tabHeating)uI_Tabs.pop_tabHeating.get(0)).getGroupHeatDemandSlidersCompanies().setVisible(true);
-	((tabMobility)uI_Tabs.pop_tabMobility.get(0)).getGr_mobilitySliders_default().setVisible(true);
-}
 
 //Initialize slider gcs and set sliders
 uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), new ArrayList<>(), c_sliderEAGCs);
