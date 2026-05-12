@@ -2501,6 +2501,12 @@ switch(selectedMapOverlayType){
 
 double f_setMapOverlay_ElectricityConsumption()
 {/*ALCODESTART::1753097345978*/
+if(energyModel.v_rapidRunData == null || !b_resultsUpToDate){
+	f_setErrorScreen("Dit overzicht wordt pas beschikbaar na het uitvoeren van een jaarsimulatie. In plaats daarvan is de standaard kaart geselecteerd.", 0, 0);
+	rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT),true);
+	return;			
+}
+
 //Set legend
 b_updateLiveCongestionColors = true;
 gr_mapOverlayLegend_ElectricityConsumption.setVisible(true);
@@ -2564,7 +2570,7 @@ for (GridNode GN : energyModel.pop_gridNodes){
 
 double f_setMapOverlay_Congestion()
 {/*ALCODESTART::1753097518541*/
-if(energyModel.v_rapidRunData == null){
+if(energyModel.v_rapidRunData == null || !b_resultsUpToDate){
 	f_setErrorScreen("Dit overzicht wordt pas beschikbaar na het uitvoeren van een jaarsimulatie. In plaats daarvan is de standaard kaart geselecteerd.", 0, 0);
 	rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT),true);
 	return;			
