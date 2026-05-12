@@ -777,6 +777,7 @@ double f_createGenericCompanies()
 {/*ALCODESTART::1726584205799*/
 //Initialize variables
 List<GCUtility> generic_company_GCs = new ArrayList();
+HashMap<String, OL_GridConnectionHeatingType> companyHeatingTypeMap = new HashMap<String, OL_GridConnectionHeatingType>();
 
 //Get buildings in scope
 List<Building_data> buildingDataGenericCompanies = f_getBuildingsInSubScope(c_companyBuilding_data);
@@ -835,6 +836,9 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		companyGC.v_liveAssetsMetaData.initialPV_kW = genericCompany.pv_installed_kwp() != null ? genericCompany.pv_installed_kwp() : 0;
 		companyGC.v_liveAssetsMetaData.PVPotential_kW = genericCompany.pv_potential_kwp(); // if null: pv potential will be determined by sliders!
 	 	companyGC.v_liveAssetsMetaData.PVOrientation = genericCompany.pv_orientation() != null ? genericCompany.pv_orientation() : avgc_data.p_defaultPVOrientation;
+		
+		//Save heatingType per companyGC for f_iEAGenericCompanies
+		companyHeatingTypeMap.put(companyGC.p_gridConnectionID, genericCompany.heating_type());
 	 	
 	 	//Update remaining totals (AFTER Lat/Lon has been defined!)
 		p_remainingTotals.adjustTotalNumberOfAnonymousCompanies(companyGC, 1);
@@ -880,7 +884,8 @@ p_remainingTotals.finalizeRemainingTotalsDistributionCompanies();
 
 //Add EA to all generic companies (Has to be after the remaining totals finalization, so cant happen at the same time as the creation of the GC and their buildings)
 for (GridConnection GCcompany : generic_company_GCs ) {
-	f_iEAGenericCompanies(GCcompany);
+	OL_GridConnectionHeatingType heatingType = companyHeatingTypeMap.get(GCcompany.p_gridConnectionID);
+	f_iEAGenericCompanies(GCcompany, heatingType);
 }
 /*ALCODEEND*/}
 
@@ -1426,7 +1431,7 @@ switch (storageType){
 
 /*ALCODEEND*/}
 
-double f_iEAGenericCompanies(GridConnection companyGC)
+double f_iEAGenericCompanies(GridConnection companyGC,OL_GridConnectionHeatingType heatingType)
 {/*ALCODESTART::1726584205833*/
 //Get GridNode to know if it has a GridNode profile
 OL_GridNodeProfileLoaderType gridNodeProfileLoaderType = OL_GridNodeProfileLoaderType.NO_PROFILE;
@@ -1466,6 +1471,7 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 		//Add base load profile
 		f_addElectricityDemandProfile(companyGC, yearlyElectricityDemand_kWh, null, false, "default_office_electricity_demand_fr");
 	}
+	
 	if(p_remainingTotals.getRemainingGasDeliveryCompanies_m3(companyGC) > 0){
 		//Building gas demand profile (purely heating)
 		double Remaining_gas_demand_m3_p_m2_yr = p_remainingTotals.getGasDeliveryOfAnonymousCompanies_m3pm2(companyGC);
@@ -1473,10 +1479,14 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 		double ratioGasUsedForHeating = 1;
 		
 		//Add heat demand profile
-		OL_GridConnectionHeatingType heatingType = avgc_data.p_avgCompanyHeatingMethod;
-		double maxHeatOutputPower_kW = f_createHeatProfileFromAnnualGasTotal(companyGC, heatingType, yearlyGasDemand_m3, ratioGasUsedForHeating);
-		f_addHeatAsset(companyGC, heatingType, maxHeatOutputPower_kW);
-		companyGC.f_addHeatManagement(heatingType, false);
+		if (heatingType == null || heatingType == OL_GridConnectionHeatingType.UNKNOWN) { //Fall-back; default: GAS_BURNER
+			heatingType = avgc_data.p_avgCompanyHeatingMethod;
+		}
+		if (heatingType != OL_GridConnectionHeatingType.NONE) { //No heating asset present
+			double peakHeatConsumption_kW = f_createGenericCompanyHeatProfiles(companyGC, heatingType, yearlyGasDemand_m3, ratioGasUsedForHeating);
+			f_addHeatAsset(companyGC, heatingType, peakHeatConsumption_kW);
+			companyGC.f_addHeatManagement(heatingType, false);
+		}
 		
 		//Set current scenario heating type
 		current_scenario_list.setCurrentHeatingType(heatingType);
@@ -5183,6 +5193,29 @@ if (installedRooftopSolar_kW > 0) {
 }
 /*ALCODEEND*/}
 
+double f_createGenericCompanyHeatProfiles(GridConnection companyGC,OL_GridConnectionHeatingType heatingType,double yearlyGasDemand_m3,double ratioGasUsedForHeating)
+{/*ALCODESTART::1774527617823*/
+if (heatingType == OL_GridConnectionHeatingType.CUSTOM) { // Custom heatingType requires Override
+    throw new RuntimeException("HeatingType is CUSTOM for a generic company. Override f_addCustomHeatAsset() (and/or implement a custom setup) to support this.");
+}
+
+switch (heatingType) {
+	// Gas types
+    case GAS_BURNER:
+    case GAS_CHP:
+    case HYBRID_HEATPUMP:
+        return f_createHeatProfileFromAnnualGasTotal(companyGC, heatingType, yearlyGasDemand_m3, ratioGasUsedForHeating);
+    // Non-gas types
+    case ELECTRIC_HEATPUMP:
+    case DISTRICTHEAT:
+    case LT_DISTRICTHEAT:
+    case HYDROGENBURNER:
+        double yearlyHeatConsumption_kWh = yearlyGasDemand_m3 * avgc_data.p_gas_kWhpm3 * avgc_data.p_avgEfficiencyGasBurner_fr * ratioGasUsedForHeating;
+        return f_createHeatProfileFromAnnualHeatTotal(companyGC, yearlyHeatConsumption_kWh);
+    default:
+        throw new RuntimeException("Unsupported heatingType for generic company: " + heatingType);
+}
+/*ALCODEEND*/}
 double f_addPVProductionAsset(GridConnection parentGC,String asset_name,double installedPower_kW,OL_PVOrientation pvOrientation)
 {/*ALCODESTART::1773414911038*/
 J_TimeParameters timeParameters = energyModel.p_timeParameters;
