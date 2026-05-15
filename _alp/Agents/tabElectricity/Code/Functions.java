@@ -656,25 +656,62 @@ for(GridConnection productionGC : c_electricityTabEASliderGCs){
 		}
 	}
 }
-sl_largeScalePV_ha.setRange(0, 1000); // Needed to prevent anylogic range bug
+
+double totalCustomPVOnLand_kW = 0;
+for(GCEnergyProduction customSF : zero_Interface.c_customSolarfarms){
+    if(customSF.v_isActive){
+        for(J_EAProduction ea : customSF.c_productionAssets){
+            if(ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC){
+                totalCustomPVOnLand_kW += ea.getCapacityElectric_kW();
+            }
+        }
+    }
+}
+
+double totalCustomWind_kW = 0;
+for(GCEnergyProduction customWF : zero_Interface.c_customWindfarms){
+    if(customWF.v_isActive){
+        for(J_EAProduction ea : customWF.c_productionAssets){
+            if(ea.getEAType() == OL_EnergyAssetType.WINDMILL){
+                totalCustomWind_kW += ea.getCapacityElectric_kW();
+            }
+        }
+    }
+}
+
+double minSliderPVOnLand_ha = p_currentPVOnLand_ha + totalCustomPVOnLand_kW/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
+double maxSliderPVOnLand_ha = minSliderPVOnLand_ha + 50;
+sl_largeScalePV_ha.setRange(minSliderPVOnLand_ha, maxSliderPVOnLand_ha);
 sl_largeScalePV_ha.setValue((totalPVOnLand_kW/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha) + p_currentPVOnLand_ha, false);
-sl_largeScaleWind_MW.setRange(0, 1000); // Needed to prevent anylogic range bug
+
+double minSliderWind_MW = p_currentWindTurbines_MW + totalCustomWind_kW/1000;
+double maxSliderWind_MW = minSliderWind_MW + 100;
+sl_largeScaleWind_MW.setRange(minSliderWind_MW, maxSliderWind_MW);
 sl_largeScaleWind_MW.setValue((totalWind_kW/1000) + p_currentWindTurbines_MW, false);
 
 
 //Grid batteries
-List<GCGridBattery> sliderGridBatteryGridConnections = new ArrayList<>();
+f_getCurrentGridBatterySize(); // Used for slider minimum: non adjustable GCGridBatteries
+
+double totalCustomBatteryCapacity_kWh = 0;
+double totalDefaultBatteryCapacity_kWh = 0;
+List<GCGridBattery> defaultGridBatteries = new ArrayList<>();
+
 for(GridConnection sliderGC : c_electricityTabEASliderGCs){
 	if(sliderGC.v_isActive && sliderGC instanceof GCGridBattery sliderGridBattery){
-		sliderGridBatteryGridConnections.add(sliderGridBattery);
+		if (zero_Interface.c_customGridBatteries.contains(sliderGridBattery)) {
+			totalCustomBatteryCapacity_kWh += sliderGridBattery.p_batteryAsset.getStorageCapacity_kWh();
+		} else {
+			defaultGridBatteries.add(sliderGridBattery);
+			totalDefaultBatteryCapacity_kWh += sliderGridBattery.p_batteryAsset.getStorageCapacity_kWh();
+		}
 	}
 }
 
-double averageNeighbourhoodBatterySize_kWh = 0;
-for (GCGridBattery gc : sliderGridBatteryGridConnections) {
-	averageNeighbourhoodBatterySize_kWh += gc.p_batteryAsset.getStorageCapacity_kWh()/sliderGridBatteryGridConnections.size();
-}
-sl_gridBatteries_kWh.setValue(averageNeighbourhoodBatterySize_kWh, false);
+double minSliderGridBattery_kWh = p_currentTotalGridBatteryCapacity_MWh*1000 + totalCustomBatteryCapacity_kWh;
+double maxSliderGridBattery_kWh = minSliderGridBattery_kWh + 20000;
+sl_gridBatteries_kWh.setRange(minSliderGridBattery_kWh, maxSliderGridBattery_kWh);
+sl_gridBatteries_kWh.setValue(totalDefaultBatteryCapacity_kWh + totalCustomBatteryCapacity_kWh + p_currentTotalGridBatteryCapacity_MWh*1000, false);
 
 //Curtailment large scale PV and wind
 boolean curtailment = true;
@@ -684,6 +721,9 @@ for(GridConnection GC : productionGridConnections){
 		break;
 	}
 }
+traceln(totalDefaultBatteryCapacity_kWh);
+traceln(p_currentTotalGridBatteryCapacity_MWh);
+traceln(totalCustomBatteryCapacity_kWh);
 cb_gridCurtailment.setSelected(curtailment, false);
 /*ALCODEEND*/}
 
