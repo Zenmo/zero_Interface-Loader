@@ -1063,10 +1063,10 @@ for (var survey : surveys) {
         for (var gridConnection: address.getGridConnections()) {
 
 		 	//Check if it has (or will have) a direct connection with the grid (either gas or electric), if not: skip this gc.
-		 	boolean hasNaturalGasConnection = (gridConnection.getNaturalGas().getHasConnection() != null)? gridConnection.getNaturalGas().getHasConnection() : false;	 	
+		 	boolean hasNaturalGasConnection = gridConnection.getNaturalGas().checkHasConnection();	 	
 		 	boolean hasExpansionRequest = (gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() != null ) ? gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() : false;
 		 	
-		 	if (!gridConnection.getElectricity().getHasConnection() && !hasExpansionRequest && !hasNaturalGasConnection){
+		 	if (!gridConnection.getElectricity().checkHasConnection() && !hasExpansionRequest && !hasNaturalGasConnection){
 				traceln("surveyGC with sequence: " + gridConnection.getSequence() + " is not created, as it has no connection to the grid, future grid connection or current gas connection.");	
 			 	continue;
 		 	}
@@ -2157,7 +2157,7 @@ Double pvPower_kW = (gridConnection.getSupply().getPvInstalledKwp() != null) ? n
 
 ////Electricity (connection and consumption)
 //Check for electricity connection and data
-if (gridConnection.getElectricity().getHasConnection()){
+if (gridConnection.getElectricity().checkHasConnection()){
 	
 	//Connection capacities
 	//TEMPORARY CONVERSION NEEDED UNTIL NO LONGER INTEGER FROM SURVEY
@@ -3910,7 +3910,7 @@ return heatingType;
 Double f_createSurveyHeatProfiles(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC,OL_GridConnectionHeatingType heatingType)
 {/*ALCODESTART::1753801098736*/
 ////Gas and Heating
-if (surveyGC.getNaturalGas().getHasConnection() != null && surveyGC.getNaturalGas().getHasConnection() ) {
+if (surveyGC.getNaturalGas().checkHasConnection()) {
 	switch (heatingType) {
 		case HYBRID_HEATPUMP:
 			// Exception for hybrid heatpumps, when it will be a ghost asset make gas profile
