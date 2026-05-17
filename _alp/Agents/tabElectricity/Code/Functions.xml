@@ -105,7 +105,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1745483988251</Id>
-		<Name><![CDATA[f_getCurrentPVOnLandAndWindturbineValues]]></Name>
+		<Name><![CDATA[f_getInitialPVOnLandAndWindturbineValues]]></Name>
 		<X>30</X>
 		<Y>1250</Y>
 		<Label>
@@ -421,7 +421,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1765276703854</Id>
-		<Name><![CDATA[f_getCurrentGridBatterySize]]></Name>
+		<Name><![CDATA[f_getInitialGridBatterySize]]></Name>
 		<X>30</X>
 		<Y>1320</Y>
 		<Label>
