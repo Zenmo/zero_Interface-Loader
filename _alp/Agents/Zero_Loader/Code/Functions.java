@@ -4557,7 +4557,7 @@ for (ConnectionOwner CO : c_COCompanies) {
 double f_setSimulationTimeParameters()
 {/*ALCODESTART::1758714675284*/
 //Sim start year
-int simStartYear = getExperiment().getEngine().getStartDate().getYear() + 1900;  // 1900 years offset because of Java/AnyLogic convention
+int simStartYear = getEngine().getStartDate().getYear() + 1900;  // 1900 years offset because of Java/AnyLogic convention
 
 // Create date at start of simulation year to use to calculate v_simStartHour_h
 Date d = new Date();
@@ -4569,7 +4569,7 @@ d.setMinutes(0);
 d.setDate(1);
 
 //Calculate sim start hour
-double simStartTime_h = roundToInt((getExperiment().getEngine().getStartDate().getTime() - d.getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
+double simStartTime_h = roundToInt((getEngine().getStartDate().getTime() - d.getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
 
 //Fix for if start is within summer time, the v_simStartHour_h is not correct anymore
 double summerTimeStart_h = avgc_data.map_yearlySummerWinterTimeStartHour.get(simStartYear).getFirst();
@@ -4580,8 +4580,8 @@ if(simStartTime_h > summerTimeStart_h && simStartTime_h < winterTimeStart_h){
 
 //Set sim duration if it is set
 double simDuration_h; //Sim duration in hours
-if(getExperiment().getEngine().getStopDate() != null){ //If experiment has set time, it gets bias
-	simDuration_h = roundToInt(((double)getExperiment().getEngine().getStopDate().getTime() - getExperiment().getEngine().getStartDate().getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
+if(getEngine().getStopDate() != null){ //If experiment has set time, it gets bias
+	simDuration_h = roundToInt(((double)getEngine().getStopDate().getTime() - getEngine().getStartDate().getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
 	if(simStartTime_h > summerTimeStart_h && simStartTime_h + simDuration_h > winterTimeStart_h){//Compensate if start time is in summer time, and end time is in winter time -> simulation would otherwise have 1 hour too much
 		simDuration_h -= 1;
 	}
@@ -4806,14 +4806,14 @@ try {
 	//zero_Interface.f_updateOrderedListsAfterDeserialising(deserializedEnergyModel);
 	
 	/*
-	Date startDate = getExperiment().getEngine().getStartDate();
-	int day = getExperiment().getEngine().getDayOfMonth();
-	int month = getExperiment().getEngine().getMonth();
+	Date startDate = getEngine().getStartDate();
+	int day = getEngine().getDayOfMonth();
+	int month = getEngine().getMonth();
 	traceln("day: " + day);
 	traceln("month: " + month);
 	startDate.setMonth(startDate.getMonth() - month);
 	startDate.setDate(startDate.getDate() - day);
-	getExperiment().getEngine().setStartDate(startDate);
+	getEngine().setStartDate(startDate);
 	*/
 	
 } catch (IOException e) {
