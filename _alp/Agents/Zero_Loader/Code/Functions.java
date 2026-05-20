@@ -2879,7 +2879,9 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		if(heatgrid == null){
 			heatgrid = f_createHeatGridNode();
 		}
-		parentGC.p_parentNodeHeatID = heatgrid.p_gridNodeID;	
+		parentGC.p_parentNodeHeatID = heatgrid.p_gridNodeID;
+		parentGC.p_parentNodeHeat = heatgrid;	
+		
 		break;
 		
 	case CUSTOM:
