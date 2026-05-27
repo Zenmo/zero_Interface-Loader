@@ -1820,18 +1820,12 @@ if (p_companyName == null) {
     return;
 }
 
-int nameLength = p_companyName.length();
-
-int i = 0;
-if(nameLength > 24){
-	while(24+i != nameLength){
-	
-		t_companyName.setScale(0.9);
-		i++;
-	}
+int excess = p_companyName.length() - 24;
+if (excess > 0){
+	t_companyName.setScale(pow(0.9, excess));
 }
 //Works for now: Possible to make it more accurate using getFontMetrics package and comparing width of text with the name text box width.
-//--> Not done for now, as it feels unnecessary.
+//--> Not done for now.
 /*ALCODEEND*/}
 
 double f_getNFATOValues()

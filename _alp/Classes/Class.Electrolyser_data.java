@@ -22,6 +22,7 @@ public class Electrolyser_data {
 		Double contracted_feed_in_capacity_kw;
 		OL_ElectrolyserOperationMode default_operation_mode;
 		double conversion_efficiency;
+		boolean detailedElectrolyserModel;
 		Double min_production_ratio;
 		Double idle_consumption_power_ratio;
 		Double start_up_time_shutdown_h;

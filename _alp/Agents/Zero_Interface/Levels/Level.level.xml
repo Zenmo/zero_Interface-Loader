@@ -171,7 +171,7 @@
 				<Id>1724074987235</Id>
 				<Name><![CDATA[image_tueLogo]]></Name>
 				<X>730</X>
-				<Y>25</Y>
+				<Y>20.861</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -183,8 +183,8 @@
 				<OnClickCode>getExperimentHost().openWebSite("https://www.tue.nl/en/");</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>205.802</Width>
-				<Height>60</Height>
+				<Width>220</Width>
+				<Height>64.139</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -230,8 +230,8 @@ getExperimentHost().openWebSite("https://lux.energy/");
 			<Image>
 				<Id>1758877617096</Id>
 				<Name><![CDATA[image_zenmoLogo]]></Name>
-				<X>532</X>
-				<Y>16</Y>
+				<X>562</X>
+				<Y>9.932</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -243,8 +243,8 @@ getExperimentHost().openWebSite("https://lux.energy/");
 				<OnClickCode>getExperimentHost().openWebSite("https://zenmo.com/");</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>170</Width>
-				<Height>73</Height>
+				<Width>153</Width>
+				<Height>80.068</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -1796,28 +1796,6 @@ v_selectedGridConnectionIndex &gt; 0 ?
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
-	<EmbeddedObjectPresentation>
-		<Id>1722252542596</Id>
-		<Name><![CDATA[uI_Tabs_presentation]]></Name>
-		<X>0</X>
-		<Y>0</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
-		<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
-		<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
-		<Latitude>52.51902183517265</Latitude>
-		<Longitude>6.169494834925871</Longitude>
-	</EmbeddedObjectPresentation>
 	<Rectangle>
 		<Id>1724419174775</Id>
 		<Name><![CDATA[rect_scenarioText]]></Name>
@@ -8351,4 +8329,26 @@ else{
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
+	<EmbeddedObjectPresentation>
+		<Id>1722252542596</Id>
+		<Name><![CDATA[uI_Tabs_presentation]]></Name>
+		<X>0</X>
+		<Y>0</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
+		<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
+		<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
+		<Latitude>52.51902183517265</Latitude>
+		<Longitude>6.169494834925871</Longitude>
+	</EmbeddedObjectPresentation>
 </Presentation>
