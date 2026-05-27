@@ -171,7 +171,7 @@
 				<Id>1724074987235</Id>
 				<Name><![CDATA[image_tueLogo]]></Name>
 				<X>730</X>
-				<Y>25</Y>
+				<Y>20.861</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -183,8 +183,8 @@
 				<OnClickCode>getExperimentHost().openWebSite("https://www.tue.nl/en/");</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>205.802</Width>
-				<Height>60</Height>
+				<Width>220</Width>
+				<Height>64.139</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -230,8 +230,8 @@ getExperimentHost().openWebSite("https://lux.energy/");
 			<Image>
 				<Id>1758877617096</Id>
 				<Name><![CDATA[image_zenmoLogo]]></Name>
-				<X>532</X>
-				<Y>16</Y>
+				<X>562</X>
+				<Y>9.932</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -243,8 +243,8 @@ getExperimentHost().openWebSite("https://lux.energy/");
 				<OnClickCode>getExperimentHost().openWebSite("https://zenmo.com/");</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>170</Width>
-				<Height>73</Height>
+				<Width>153</Width>
+				<Height>80.068</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
