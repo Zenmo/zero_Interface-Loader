@@ -3282,7 +3282,7 @@ if(cookingType != OL_HouseholdCookingMethod.NONE){
 	OL_EnergyAssetType energyAssetType;
 	OL_EnergyCarriers energyCarrier;
 	if(cookingType == OL_HouseholdCookingMethod.GAS){
-		energyAssetType = OL_EnergyAssetType.GAS_PIT;
+		energyAssetType = OL_EnergyAssetType.GAS_HOB;
 		energyCarrier = OL_EnergyCarriers.METHANE;
 	}
 	else if(cookingType == OL_HouseholdCookingMethod.ELECTRIC){

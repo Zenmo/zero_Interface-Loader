@@ -1967,3 +1967,8 @@ new Thread( () -> {
 
 /*ALCODEEND*/}
 
+double f_activateDailyDifferenceButtons()
+{/*ALCODESTART::1779979626408*/
+
+/*ALCODEEND*/}
+

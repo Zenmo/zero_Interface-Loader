@@ -68,7 +68,7 @@ double scalingFactor = 1 - demandReduction_pct/100;
 
 for (GridConnection gc : gcList) {
 	for (I_Vehicle vehicle : gc.c_vehicleAssets) {
-		vehicle.getTripTracker().distanceScaling_fr = scalingFactor;
+		vehicle.getTripTracker().setDistanceScaling_fr(scalingFactor);
 	}
 }
 

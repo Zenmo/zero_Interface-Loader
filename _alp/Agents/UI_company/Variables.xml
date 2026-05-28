@@ -1380,4 +1380,66 @@
 			</ParameterEditor>
 		</Properties>
 	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1779979706964</Id>
+		<Name><![CDATA[map_dayToVehicleConfigurationButtons]]></Name>
+		<X>-540</X>
+		<Y>1785</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>Map&lt;OL_Days, Map&lt;String, ShapeSlider&gt;&gt;</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+			<CollectionInitializer Class="CodeValue">
+				<Code><![CDATA[Map.ofEntries(
+	Map.entry(OL_Days.MONDAY, Map.ofEntries(
+							  	Map.entry("STARTTIME", sl_configureVehicleTrips_week_or_monday_startTime),
+							  	Map.entry("ENDTTIME", sl_configureVehicleTrips_week_or_monday_endTime),
+							  	Map.entry("DISTANCE", sl_configureVehicleTrips_week_or_monday_dailyDistance_km)
+							  )),
+	Map.entry(OL_Days.TUESDAY, Map.ofEntries(
+								Map.entry("STARTTIME", sl_configureVehicleTrips_weekend_or_tuesday_startTime),
+							  	Map.entry("ENDTTIME", sl_configureVehicleTrips_weekend_or_tuesday_endTime),
+							  	Map.entry("DISTANCE", sl_configureVehicleTrips_weekend_or_tuesday_dailyDistance_km)
+							  )),
+	Map.entry(OL_Days.WEDNESDAY, Map.ofEntries(
+								Map.entry("STARTTIME", sl_configureVehicleTrips_wednesday_startTime),
+							  	Map.entry("ENDTTIME", sl_configureVehicleTrips_wednesday_endTime),
+							  	Map.entry("DISTANCE", sl_configureVehicleTrips_wednesday_dailyDistance_km)
+							  )
+	),
+	Map.entry(OL_Days.THURSDAY, Map.ofEntries(
+							    Map.entry("STARTTIME", sl_configureVehicleTrips_thursday_startTime),
+							    Map.entry("ENDTTIME", sl_configureVehicleTrips_thursday_endTime),
+							    Map.entry("DISTANCE", sl_configureVehicleTrips_thursday_dailyDistance_km)
+							  )
+	),
+	Map.entry(OL_Days.FRIDAY, Map.ofEntries(
+							    Map.entry("STARTTIME", sl_configureVehicleTrips_friday_startTime),
+							    Map.entry("ENDTTIME", sl_configureVehicleTrips_friday_endTime),
+							    Map.entry("DISTANCE", sl_configureVehicleTrips_friday_dailyDistance_km)
+							  )
+	),
+	Map.entry(OL_Days.SATURDAY, Map.ofEntries(
+							    Map.entry("STARTTIME", sl_configureVehicleTrips_saturday_startTime),
+							    Map.entry("ENDTTIME", sl_configureVehicleTrips_saturday_endTime),
+							    Map.entry("DISTANCE", sl_configureVehicleTrips_saturday_dailyDistance_km)
+							  )
+	),
+	Map.entry(OL_Days.SUNDAY, Map.ofEntries(
+							    Map.entry("STARTTIME", sl_configureVehicleTrips_sunday_startTime),
+							    Map.entry("ENDTTIME", sl_configureVehicleTrips_sunday_endTime),
+							    Map.entry("DISTANCE", sl_configureVehicleTrips_sunday_dailyDistance_km)
+							  )
+	)
+)]]></Code>
+			</CollectionInitializer>
+		</Properties>
+	</Variable>
 </Variables>

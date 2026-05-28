@@ -375,7 +375,7 @@ while ( nbHousesWithElectricCooking > nbHousesWithElectricCookingGoal ) { // rem
 		cookingAsset.removeEnergyAsset();
    		
    		J_ProfilePointer pp = zero_Interface.energyModel.f_findProfile("default_house_cooking_demand_fr");
-		new J_EAConsumption(house, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, zero_Interface.energyModel.p_timeParameters, pp);
+		new J_EAConsumption(house, OL_EnergyAssetType.GAS_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, zero_Interface.energyModel.p_timeParameters, pp);
 		house.p_cookingMethod = OL_HouseholdCookingMethod.GAS;
 		nbHousesWithElectricCooking --; 
 	}
@@ -390,7 +390,7 @@ while ( nbHousesWithElectricCooking < nbHousesWithElectricCookingGoal) {
 		throw new RuntimeException("No gridconnection without GAS cooking asset found! Current electric cooking count: " + nbHousesWithElectricCooking);
 	}
 	else {
-		J_EAConsumption cookingAsset = findFirst(house.c_consumptionAssets, p -> p.getEAType() == OL_EnergyAssetType.GAS_PIT );
+		J_EAConsumption cookingAsset = findFirst(house.c_consumptionAssets, p -> p.getEAType() == OL_EnergyAssetType.GAS_HOB );
 		if (cookingAsset != null) {
 			double yearlyCookingDemand_kWh = cookingAsset.getBaseConsumption_kWh();
 			cookingAsset.removeEnergyAsset();
