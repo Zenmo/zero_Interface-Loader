@@ -5,6 +5,8 @@ pop_tabHeating_presentation.setVisible(false);
 pop_tabMobility_presentation.setVisible(false);
 pop_tabEHub_presentation.setVisible(false);
 
+roundRectangle4.setFillColor(white);
+
 switch (v_selectedTabType) {
 	case ELECTRICITY:
 		pop_tabElectricity_presentation.setVisible(true);

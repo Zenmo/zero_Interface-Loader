@@ -325,7 +325,11 @@
 				<ItemName>1722245292191</ItemName>
 			</GenericParameterSubstituteReference>
 		</GenericParameterSubstitute>
-		<Parameters/>
+		<Parameters>
+			<Parameter>
+				<Name><![CDATA[yellowCole]]></Name>
+			</Parameter>
+		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">
 			<Code><![CDATA[100]]></Code>

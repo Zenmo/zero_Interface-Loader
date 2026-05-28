@@ -3163,12 +3163,12 @@ switch(rb_scenarios.getValue()){
 		}
 		else if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 			selected_scenario = "Custom";
-			t_scenarioDescription.setText(t_scenario_custom);
+			//t_scenarioDescription.setText(t_scenario_custom);
 		}
 	break;
 	case 2:
 		selected_scenario = "Custom";
-		t_scenarioDescription.setText(t_scenario_custom);
+		//t_scenarioDescription.setText(t_scenario_custom);
 	break;
 	
 	default:
@@ -3201,7 +3201,7 @@ if(c_scenarioMap_Future != null){
 f_projectSpecificScenarioSettings("Future");
 
 //Set the scenario text
-t_scenarioDescription.setText(t_scenario_future);
+//t_scenarioDescription.setText(t_scenario_future);
 /*ALCODEEND*/}
 
 double f_setScenario_Current()
@@ -3220,7 +3220,7 @@ if(project_data.project_type() == OL_ProjectType.RESIDENTIAL && p_residentialSce
 f_projectSpecificScenarioSettings("Current");
 
 //Set the scenario text
-t_scenarioDescription.setText(t_scenario_current);
+//t_scenarioDescription.setText(t_scenario_current);
 /*ALCODEEND*/}
 
 double f_resetSpecialSlidersAndButtons()
@@ -3495,17 +3495,18 @@ if(uI_Tabs.pop_tabMobility.size() > 0){
 }
 /*ALCODEEND*/}
 
-String f_getDateAndTimeString()
+String f_getTimeString()
 {/*ALCODESTART::1762253228735*/
 Date date = energyModel.f_getDate();
 
 SimpleDateFormat formatter = new SimpleDateFormat();
-formatter.applyPattern("dd MMM yyyy, kk:mm");
+//formatter.applyPattern("dd MMM yyyy, kk:mm");
+formatter.applyPattern("kk:mm");
 
 return formatter.format(date);
 /*ALCODEEND*/}
 
-String f_getDateString()
+String f_getDateStringRapid()
 {/*ALCODESTART::1762253251373*/
 Date date = energyModel.f_getDate();
 
@@ -3543,8 +3544,8 @@ b_runningMainInterfaceScenarios = true;
 String selected_scenario = f_setSelectedScenario();	
 
 //Set scenario name text to the correct scenario
-t_scenarioName.setText("Scenario: " + selected_scenario);
-traceln("Selected scenario: \"" + selected_scenario + "\"");
+//t_scenarioName.setText("Scenario: " + selected_scenario);
+//traceln("Selected scenario: \"" + selected_scenario + "\"");
 
 //Deselect the selected building, if selected GC is now paused
 if(c_selectedGridConnections.size()>0 && !c_selectedGridConnections.get(0).v_isActive){
@@ -3867,5 +3868,25 @@ if(c_selectedGridConnections.get(0).c_connectedGISObjects.size() > 1){ //Also co
 	}
 }
 uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
+/*ALCODEEND*/}
+
+String f_getDateStringNormal()
+{/*ALCODESTART::1779966122092*/
+Date date = energyModel.f_getDate();
+
+SimpleDateFormat formatter = new SimpleDateFormat();
+formatter.applyPattern("dd MMM yyyy");
+
+return formatter.format(date);
+/*ALCODEEND*/}
+
+String f_getDateAndTimeString()
+{/*ALCODESTART::1779966176103*/
+Date date = energyModel.f_getDate();
+
+SimpleDateFormat formatter = new SimpleDateFormat();
+formatter.applyPattern("dd MMM yyyy");
+
+return formatter.format(date);
 /*ALCODEEND*/}
 

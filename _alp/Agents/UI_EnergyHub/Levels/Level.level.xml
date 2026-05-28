@@ -1794,7 +1794,7 @@ gr_loadScenario.setVisible(true);
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
 		<Text><![CDATA[Datum]]></Text>
-		<TextCode>zero_Interface.energyModel.v_isRapidRun ? zero_Interface.f_getDateString() : zero_Interface.f_getDateAndTimeString()</TextCode>
+		<TextCode>zero_Interface.energyModel.v_isRapidRun ? zero_Interface.f_getDateStringRapid() : zero_Interface.f_getDateAndTimeString()</TextCode>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>16</Size>
