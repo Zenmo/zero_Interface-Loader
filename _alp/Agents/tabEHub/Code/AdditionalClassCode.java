@@ -3,9 +3,9 @@ public ShapeGroup getGroupHubSliders() {
 }
 
 public ShapeButton getButton_remove_nfato() {
-	return this.button_remove_capacitySharingContracts;
+	return null;//this.button_remove_capacitySharingContracts;
 }
 
 public ShapeButton getButton_createEnergyHub() {
-	return this.button_createEnergyHub;
+	return null; //this.button_createEnergyHub;
 }

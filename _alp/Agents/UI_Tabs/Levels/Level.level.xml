@@ -1,6 +1,171 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Presentation>
 	<RoundedRectangle>
+		<Id>1779958973088</Id>
+		<Name><![CDATA[roundRectangle3]]></Name>
+		<X>283</X>
+		<Y>344</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<OnClickCode>f_setTab(OL_CustomScenarioTabs.HUB);</OnClickCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor>-4144960</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>75</Width>
+		<Height>70</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+		<ArcRadius>10</ArcRadius>
+	</RoundedRectangle>
+	<RoundedRectangle>
+		<Id>1780090824305</Id>
+		<Name><![CDATA[roundRectangle7]]></Name>
+		<X>283</X>
+		<Y>344</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor>-4144960</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>75</Width>
+		<Height>70</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-3736634</FillColor>
+		<FillMaterial>null</FillMaterial>
+		<ArcRadius>10</ArcRadius>
+	</RoundedRectangle>
+	<RoundedRectangle>
+		<Id>1779958970336</Id>
+		<Name><![CDATA[roundRectangle2]]></Name>
+		<X>198</X>
+		<Y>344</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<OnClickCode>f_setTab(OL_CustomScenarioTabs.MOBILITY);</OnClickCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor>-4144960</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>75</Width>
+		<Height>70</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+		<ArcRadius>10</ArcRadius>
+	</RoundedRectangle>
+	<RoundedRectangle>
+		<Id>1780090817851</Id>
+		<Name><![CDATA[roundRectangle6]]></Name>
+		<X>198</X>
+		<Y>344</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor>-4144960</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>75</Width>
+		<Height>70</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-2625550</FillColor>
+		<FillMaterial>null</FillMaterial>
+		<ArcRadius>10</ArcRadius>
+	</RoundedRectangle>
+	<RoundedRectangle>
+		<Id>1779958963186</Id>
+		<Name><![CDATA[roundRectangle1]]></Name>
+		<X>112</X>
+		<Y>344</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<OnClickCode>f_setTab(OL_CustomScenarioTabs.HEAT);</OnClickCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor>-4144960</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>75</Width>
+		<Height>70</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+		<ArcRadius>10</ArcRadius>
+	</RoundedRectangle>
+	<RoundedRectangle>
+		<Id>1780090811747</Id>
+		<Name><![CDATA[roundRectangle5]]></Name>
+		<X>112</X>
+		<Y>344</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor>-4144960</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>75</Width>
+		<Height>70</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-6943</FillColor>
+		<FillMaterial>null</FillMaterial>
+		<ArcRadius>10</ArcRadius>
+	</RoundedRectangle>
+	<RoundedRectangle>
 		<Id>1779958496067</Id>
 		<Name><![CDATA[roundRectangle]]></Name>
 		<X>28</X>
@@ -24,7 +189,7 @@
 		<Width>75</Width>
 		<Height>70</Height>
 		<Rotation>0.0</Rotation>
-		<FillColor>-1</FillColor>
+		<FillColor>1610597120</FillColor>
 		<FillMaterial>null</FillMaterial>
 		<ArcRadius>10</ArcRadius>
 	</RoundedRectangle>
@@ -51,88 +216,7 @@
 		<Width>75</Width>
 		<Height>70</Height>
 		<Rotation>0.0</Rotation>
-		<FillColor>-1</FillColor>
-		<FillMaterial>null</FillMaterial>
-		<ArcRadius>10</ArcRadius>
-	</RoundedRectangle>
-	<RoundedRectangle>
-		<Id>1779958963186</Id>
-		<Name><![CDATA[roundRectangle1]]></Name>
-		<X>112</X>
-		<Y>344</Y>
-		<Label>
-			<X>10</X>
-			<Y>10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>1</LineWidth>
-		<LineColor>-4144960</LineColor>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<Width>75</Width>
-		<Height>70</Height>
-		<Rotation>0.0</Rotation>
-		<FillColor>-1</FillColor>
-		<FillMaterial>null</FillMaterial>
-		<ArcRadius>10</ArcRadius>
-	</RoundedRectangle>
-	<RoundedRectangle>
-		<Id>1779958970336</Id>
-		<Name><![CDATA[roundRectangle2]]></Name>
-		<X>198</X>
-		<Y>344</Y>
-		<Label>
-			<X>10</X>
-			<Y>10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>1</LineWidth>
-		<LineColor>-4144960</LineColor>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<Width>75</Width>
-		<Height>70</Height>
-		<Rotation>0.0</Rotation>
-		<FillColor>-1</FillColor>
-		<FillMaterial>null</FillMaterial>
-		<ArcRadius>10</ArcRadius>
-	</RoundedRectangle>
-	<RoundedRectangle>
-		<Id>1779958973088</Id>
-		<Name><![CDATA[roundRectangle3]]></Name>
-		<X>283</X>
-		<Y>344</Y>
-		<Label>
-			<X>10</X>
-			<Y>10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>1</LineWidth>
-		<LineColor>-4144960</LineColor>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<Width>75</Width>
-		<Height>70</Height>
-		<Rotation>0.0</Rotation>
-		<FillColor>-1</FillColor>
+		<FillColor>1610597120</FillColor>
 		<FillMaterial>null</FillMaterial>
 		<ArcRadius>10</ArcRadius>
 	</RoundedRectangle>
@@ -167,9 +251,6 @@
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<VisibleCode>!pop_tabElectricity.isEmpty()</VisibleCode>
-				<OnClickCode>if(true){
-;
-}</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -242,7 +323,6 @@
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<VisibleCode>!pop_tabHeating.isEmpty()</VisibleCode>
-				<OnClickCode>f_setTab(OL_CustomScenarioTabs.HEAT);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -315,7 +395,6 @@
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<VisibleCode>!pop_tabMobility.isEmpty()</VisibleCode>
-				<OnClickCode>f_setTab(OL_CustomScenarioTabs.MOBILITY);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -388,7 +467,6 @@
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<VisibleCode>!pop_tabEHub.isEmpty()</VisibleCode>
-				<OnClickCode>f_setTab(OL_CustomScenarioTabs.HUB);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>

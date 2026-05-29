@@ -757,7 +757,7 @@ else{
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="270.667" Height="135">
+		<BasicProperties Width="270" Height="135">
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<VisibleCode>false</VisibleCode>
@@ -3217,13 +3217,13 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<Z>0</Z>
 								<ZHeight>10</ZHeight>
 								<LineWidth>3</LineWidth>
-								<LineColor>-16777216</LineColor>
+								<LineColor/>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
 								<Width>275</Width>
 								<Height>75</Height>
 								<Rotation>0.0</Rotation>
-								<FillColor>-1</FillColor>
+								<FillColor>-16744320</FillColor>
 								<FillMaterial>null</FillMaterial>
 								<ArcRadius>10</ArcRadius>
 							</RoundedRectangle>
@@ -3243,7 +3243,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<EmbeddedIcon>false</EmbeddedIcon>
 								<Z>0</Z>
 								<Rotation>0.0</Rotation>
-								<Color>-16777216</Color>
+								<Color>-1</Color>
 								<Text><![CDATA[Voltooien]]></Text>
 								<Font>
 									<Name><![CDATA[SansSerif]]></Name>
@@ -3288,15 +3288,15 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<Z>0</Z>
 								<ZHeight>10</ZHeight>
 								<LineWidth>2</LineWidth>
-								<LineColor>-16777216</LineColor>
-								<LineColorCode>uI_EnergyHub.p_energyHubLineColor</LineColorCode>
+								<LineColor/>
+								<LineColorCode>//uI_EnergyHub.p_energyHubLineColor</LineColorCode>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
 								<Width>1000</Width>
 								<Height>90</Height>
 								<Rotation>0.0</Rotation>
-								<FillColor>-1</FillColor>
-								<FillColorCode>uI_EnergyHub.p_energyHubBackGroundColor</FillColorCode>
+								<FillColor>-16744320</FillColor>
+								<FillColorCode>//uI_EnergyHub.p_energyHubBackGroundColor</FillColorCode>
 								<FillMaterial>null</FillMaterial>
 								<ArcRadius>10</ArcRadius>
 							</RoundedRectangle>
@@ -3316,7 +3316,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<EmbeddedIcon>false</EmbeddedIcon>
 								<Z>0</Z>
 								<Rotation>0.0</Rotation>
-								<Color>-16777216</Color>
+								<Color>-1</Color>
 								<Text><![CDATA[Energie Hub Configurator]]></Text>
 								<Font>
 									<Name><![CDATA[SansSerif]]></Name>
@@ -3362,7 +3362,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<Z>0</Z>
 								<ZHeight>10</ZHeight>
 								<LineWidth>3</LineWidth>
-								<LineColor>-2345659</LineColor>
+								<LineColor>-1</LineColor>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
 								<Width>275</Width>
