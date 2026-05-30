@@ -189,7 +189,7 @@
 		<Width>75</Width>
 		<Height>70</Height>
 		<Rotation>0.0</Rotation>
-		<FillColor>1610597120</FillColor>
+		<FillColor>-132906</FillColor>
 		<FillMaterial>null</FillMaterial>
 		<ArcRadius>10</ArcRadius>
 	</RoundedRectangle>
@@ -278,7 +278,7 @@
 						<RadiusX>20</RadiusX>
 						<RadiusY>40</RadiusY>
 						<Rotation>0.0</Rotation>
-						<FillColor>-269672</FillColor>
+						<FillColor>-332883</FillColor>
 						<FillMaterial>null</FillMaterial>
 					</Oval>
 					<Image>
