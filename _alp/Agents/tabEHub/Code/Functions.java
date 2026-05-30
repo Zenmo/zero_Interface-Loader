@@ -241,3 +241,68 @@ double f_updateSliders_EHub()
 //--> empty for now
 /*ALCODEEND*/}
 
+ShapeGroup f_goToPage(int pageIndex)
+{/*ALCODESTART::1780125279802*/
+for (ShapeGroup group : c_loadedPageGroups) {
+    group.setVisible(false);
+}
+
+if (c_loadedPageGroups.isEmpty()) return;
+
+v_currentPageIndex = pageIndex;
+c_loadedPageGroups.get(v_currentPageIndex).setVisible(true); // Show the selected page group
+f_updatePageIndicator(); // Update the page indicator text
+/*ALCODEEND*/}
+
+ShapeGroup f_nextPage()
+{/*ALCODESTART::1780125279809*/
+if (c_loadedPageGroups.isEmpty()) return;
+int nextIndex = (v_currentPageIndex + 1) % c_loadedPageGroups.size();
+f_goToPage(nextIndex);
+/*ALCODEEND*/}
+
+ShapeGroup f_previousPage()
+{/*ALCODESTART::1780125279816*/
+if (c_loadedPageGroups.isEmpty()) return;
+int prevIndex = (v_currentPageIndex - 1 + c_loadedPageGroups.size()) % c_loadedPageGroups.size();
+f_goToPage(prevIndex);
+/*ALCODEEND*/}
+
+ShapeGroup f_updatePageIndicator()
+{/*ALCODESTART::1780125279823*/
+t_pageIndicator.setText("Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPageGroups.size());
+presentation.remove(gr_pageIndicator);
+presentation.add(gr_pageIndicator);
+/*ALCODEEND*/}
+
+double f_initializeElectricityPages()
+{/*ALCODESTART::1780125279830*/
+// CHOOSE WHICH PAGES IN YOUR TAB YOU WANT TO BE ABLE TO SHOW FOR YOUR PROJECT 
+boolean hasHouses = uI_Tabs.f_getActiveSliderGridConnections_houses().size() > 0;
+boolean hasCompanies = uI_Tabs.f_getActiveSliderGridConnections_utilities().size() > 0;
+
+c_loadedPageGroups = new ArrayList<>();
+// Load in the existing pages you want to include in the tab
+c_loadedPageGroups.add(gr_hubSliders);
+
+// If you have a custom page, add it by using f_addCustomPage:
+f_addCustomPage();
+
+// Show/hide page indicator based on number of pages
+if (c_loadedPageGroups.size() <= 1) {
+    gr_pageIndicator.setVisible(false);
+} else {
+    gr_pageIndicator.setVisible(true);
+}
+// Navigate to the first page
+if (!c_loadedPageGroups.isEmpty()) {
+    f_goToPage(0);
+}
+/*ALCODEEND*/}
+
+double f_addCustomPage()
+{/*ALCODESTART::1780125279836*/
+// Override this function to add your custom page to c_loadedPageGroups, for instance, like this:
+//c_loadedPageGroups.add(gr_electricitySliders_custom);
+/*ALCODEEND*/}
+

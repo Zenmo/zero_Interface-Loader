@@ -4,7 +4,7 @@
 		<Id>1779958973088</Id>
 		<Name><![CDATA[roundRectangle3]]></Name>
 		<X>283</X>
-		<Y>344</Y>
+		<Y>347</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -18,7 +18,7 @@
 		<Z>0</Z>
 		<ZHeight>10</ZHeight>
 		<LineWidth>1</LineWidth>
-		<LineColor>-4144960</LineColor>
+		<LineColor/>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>75</Width>
@@ -32,7 +32,7 @@
 		<Id>1780090824305</Id>
 		<Name><![CDATA[roundRectangle7]]></Name>
 		<X>283</X>
-		<Y>344</Y>
+		<Y>347</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -45,13 +45,13 @@
 		<Z>0</Z>
 		<ZHeight>10</ZHeight>
 		<LineWidth>1</LineWidth>
-		<LineColor>-4144960</LineColor>
+		<LineColor/>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>75</Width>
 		<Height>70</Height>
 		<Rotation>0.0</Rotation>
-		<FillColor>-3736634</FillColor>
+		<FillColor>-1516972079</FillColor>
 		<FillMaterial>null</FillMaterial>
 		<ArcRadius>10</ArcRadius>
 	</RoundedRectangle>
@@ -59,7 +59,7 @@
 		<Id>1779958970336</Id>
 		<Name><![CDATA[roundRectangle2]]></Name>
 		<X>198</X>
-		<Y>344</Y>
+		<Y>347</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -73,7 +73,7 @@
 		<Z>0</Z>
 		<ZHeight>10</ZHeight>
 		<LineWidth>1</LineWidth>
-		<LineColor>-4144960</LineColor>
+		<LineColor/>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>75</Width>
@@ -87,7 +87,7 @@
 		<Id>1780090817851</Id>
 		<Name><![CDATA[roundRectangle6]]></Name>
 		<X>198</X>
-		<Y>344</Y>
+		<Y>347</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -100,7 +100,7 @@
 		<Z>0</Z>
 		<ZHeight>10</ZHeight>
 		<LineWidth>1</LineWidth>
-		<LineColor>-4144960</LineColor>
+		<LineColor/>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>75</Width>
@@ -114,7 +114,7 @@
 		<Id>1779958963186</Id>
 		<Name><![CDATA[roundRectangle1]]></Name>
 		<X>112</X>
-		<Y>344</Y>
+		<Y>347</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -128,7 +128,7 @@
 		<Z>0</Z>
 		<ZHeight>10</ZHeight>
 		<LineWidth>1</LineWidth>
-		<LineColor>-4144960</LineColor>
+		<LineColor/>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>75</Width>
@@ -142,7 +142,7 @@
 		<Id>1780090811747</Id>
 		<Name><![CDATA[roundRectangle5]]></Name>
 		<X>112</X>
-		<Y>344</Y>
+		<Y>347</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -155,7 +155,7 @@
 		<Z>0</Z>
 		<ZHeight>10</ZHeight>
 		<LineWidth>1</LineWidth>
-		<LineColor>-4144960</LineColor>
+		<LineColor/>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>75</Width>
@@ -169,7 +169,7 @@
 		<Id>1779958496067</Id>
 		<Name><![CDATA[roundRectangle]]></Name>
 		<X>28</X>
-		<Y>344</Y>
+		<Y>347</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -183,7 +183,7 @@
 		<Z>0</Z>
 		<ZHeight>10</ZHeight>
 		<LineWidth>1</LineWidth>
-		<LineColor>-4144960</LineColor>
+		<LineColor/>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>75</Width>
@@ -197,7 +197,7 @@
 		<Id>1779959365928</Id>
 		<Name><![CDATA[roundRectangle4]]></Name>
 		<X>28</X>
-		<Y>344</Y>
+		<Y>347</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -210,13 +210,13 @@
 		<Z>0</Z>
 		<ZHeight>10</ZHeight>
 		<LineWidth>1</LineWidth>
-		<LineColor>-4144960</LineColor>
+		<LineColor/>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>75</Width>
 		<Height>70</Height>
 		<Rotation>0.0</Rotation>
-		<FillColor>1610597120</FillColor>
+		<FillColor>-268568350</FillColor>
 		<FillMaterial>null</FillMaterial>
 		<ArcRadius>10</ArcRadius>
 	</RoundedRectangle>
@@ -272,13 +272,13 @@
 						<Z>0</Z>
 						<ZHeight>10</ZHeight>
 						<LineWidth>2</LineWidth>
-						<LineColor>-657931</LineColor>
+						<LineColor/>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
 						<RadiusX>20</RadiusX>
 						<RadiusY>40</RadiusY>
 						<Rotation>0.0</Rotation>
-						<FillColor>1610597120</FillColor>
+						<FillColor>-269672</FillColor>
 						<FillMaterial>null</FillMaterial>
 					</Oval>
 					<Image>
@@ -344,13 +344,13 @@
 						<Z>0</Z>
 						<ZHeight>10</ZHeight>
 						<LineWidth>2</LineWidth>
-						<LineColor>-657931</LineColor>
+						<LineColor/>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
 						<RadiusX>20</RadiusX>
 						<RadiusY>40</RadiusY>
 						<Rotation>0.0</Rotation>
-						<FillColor>-6943</FillColor>
+						<FillColor>-14141</FillColor>
 						<FillMaterial>null</FillMaterial>
 					</Oval>
 					<Image>
@@ -416,13 +416,13 @@
 						<Z>0</Z>
 						<ZHeight>10</ZHeight>
 						<LineWidth>2</LineWidth>
-						<LineColor>-657931</LineColor>
+						<LineColor/>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
 						<RadiusX>20</RadiusX>
 						<RadiusY>40</RadiusY>
 						<Rotation>0.0</Rotation>
-						<FillColor>-2625550</FillColor>
+						<FillColor>-4003861</FillColor>
 						<FillMaterial>null</FillMaterial>
 					</Oval>
 					<Image>
@@ -488,13 +488,13 @@
 						<Z>0</Z>
 						<ZHeight>10</ZHeight>
 						<LineWidth>2</LineWidth>
-						<LineColor>-657931</LineColor>
+						<LineColor/>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
 						<RadiusX>20</RadiusX>
 						<RadiusY>40</RadiusY>
 						<Rotation>0.0</Rotation>
-						<FillColor>-3736634</FillColor>
+						<FillColor>-1518415949</FillColor>
 						<FillMaterial>null</FillMaterial>
 					</Oval>
 					<Line>
@@ -732,7 +732,7 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
-				<Color>-8355712</Color>
+				<Color>-9868951</Color>
 				<Text><![CDATA[Elektriciteit]]></Text>
 				<Font>
 					<Name><![CDATA[Centaur]]></Name>
@@ -758,7 +758,7 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
-				<Color>-8355712</Color>
+				<Color>-9868951</Color>
 				<Text><![CDATA[Warmte]]></Text>
 				<Font>
 					<Name><![CDATA[Centaur]]></Name>
@@ -784,12 +784,12 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
-				<Color>-8355712</Color>
+				<Color>-9868951</Color>
 				<Text><![CDATA[Transport]]></Text>
 				<Font>
 					<Name><![CDATA[Centaur]]></Name>
 					<Size>11</Size>
-					<Style>1</Style>
+					<Style>0</Style>
 				</Font>
 				<Alignment>CENTER</Alignment>
 			</Text>
@@ -810,7 +810,7 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
-				<Color>-8355712</Color>
+				<Color>-9868951</Color>
 				<Text><![CDATA[E-hub]]></Text>
 				<Font>
 					<Name><![CDATA[Centaur]]></Name>

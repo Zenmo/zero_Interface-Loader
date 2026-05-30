@@ -946,7 +946,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 		<Id>1780089498203</Id>
 		<Name><![CDATA[gr_hubSliders]]></Name>
 		<X>190</X>
-		<Y>180</Y>
+		<Y>210</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1187,7 +1187,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 				<Font>
 					<Name><![CDATA[Centaur]]></Name>
 					<Size>26</Size>
-					<Style>0</Style>
+					<Style>1</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
@@ -1481,7 +1481,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
 								<Width>320</Width>
-								<Height>65</Height>
+								<Height>70</Height>
 								<Rotation>0.0</Rotation>
 								<FillColor>-657931</FillColor>
 								<FillMaterial>null</FillMaterial>
@@ -1918,7 +1918,7 @@ new Thread( () -&gt; {
 					<Line>
 						<Id>1780089178053</Id>
 						<Name><![CDATA[line11]]></Name>
-						<X>-68</X>
+						<X>-67</X>
 						<Y>0</Y>
 						<Label>
 							<X>10</X>
@@ -1939,14 +1939,14 @@ new Thread( () -&gt; {
 						<BeginArrowStyle>0</BeginArrowStyle>
 						<EndArrowSize>1</EndArrowSize>
 						<EndArrowStyle>0</EndArrowStyle>
-						<Dx>15</Dx>
+						<Dx>14</Dx>
 						<Dy>0</Dy>
 						<Dz>0</Dz>
 					</Line>
 					<Line>
 						<Id>1780089188349</Id>
 						<Name><![CDATA[line12]]></Name>
-						<X>-68</X>
+						<X>-67</X>
 						<Y>0</Y>
 						<Label>
 							<X>10</X>
@@ -2007,7 +2007,7 @@ new Thread( () -&gt; {
 		<Id>1780089671048</Id>
 		<Name><![CDATA[gr_removeCapacitySharingContracts]]></Name>
 		<X>260</X>
-		<Y>195</Y>
+		<Y>225</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2084,6 +2084,157 @@ zero_Interface.f_resetSettings();</OnClickCode>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
+			</Text>
+		</Presentation>
+	</Group>
+	<Group>
+		<Id>1780125202441</Id>
+		<Name><![CDATA[gr_pageIndicator]]></Name>
+		<X>182</X>
+		<Y>20</Y>
+		<Label>
+			<X>7.073</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Oval>
+				<Id>1780125202443</Id>
+				<Name><![CDATA[oval2]]></Name>
+				<X>42</X>
+				<Y>-5</Y>
+				<Label>
+					<X>0</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>0.5</LineWidth>
+				<LineColor>-4144960</LineColor>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<RadiusX>9</RadiusX>
+				<RadiusY>40</RadiusY>
+				<Rotation>0.0</Rotation>
+				<FillColor>-1</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Oval>
+			<Oval>
+				<Id>1780125202445</Id>
+				<Name><![CDATA[oval5]]></Name>
+				<X>-41</X>
+				<Y>-5</Y>
+				<Label>
+					<X>0</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>0.5</LineWidth>
+				<LineColor>-4144960</LineColor>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<RadiusX>9</RadiusX>
+				<RadiusY>40</RadiusY>
+				<Rotation>0.0</Rotation>
+				<FillColor>-1</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Oval>
+			<Image>
+				<Id>1780125202447</Id>
+				<Name><![CDATA[arrowLeftResidential]]></Name>
+				<X>-37</X>
+				<Y>-9</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>f_previousPage();</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>7</Width>
+				<Height>8</Height>
+				<Rotation>90.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_arrow.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1780125202449</Id>
+				<Name><![CDATA[arrowRightResidential1]]></Name>
+				<X>38</X>
+				<Y>-2</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>f_nextPage();</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>7</Width>
+				<Height>8</Height>
+				<Rotation>270.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_arrow.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1780125202451</Id>
+				<Name><![CDATA[t_pageIndicator]]></Name>
+				<X>0</X>
+				<Y>-12</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-8355712</Color>
+				<Text><![CDATA[Pagina 1/1]]></Text>
+				<TextCode>"Pagina 1/1"// + (v_currentPageIndex + 1) + "/" + c_loadedPageGroups.size()</TextCode>
+				<Font>
+					<Name><![CDATA[Centaur]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
 			</Text>
 		</Presentation>
 	</Group>
