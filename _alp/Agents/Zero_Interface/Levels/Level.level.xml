@@ -17,13 +17,13 @@
 		<Z>0</Z>
 		<ZHeight>10</ZHeight>
 		<LineWidth>1</LineWidth>
-		<LineColor>-855310</LineColor>
+		<LineColor>-1184275</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>910</Width>
 		<Height>80</Height>
 		<Rotation>0.0</Rotation>
-		<FillColor>-855310</FillColor>
+		<FillColor>-1184275</FillColor>
 		<FillMaterial>null</FillMaterial>
 		<ArcRadius>10</ArcRadius>
 	</RoundedRectangle>

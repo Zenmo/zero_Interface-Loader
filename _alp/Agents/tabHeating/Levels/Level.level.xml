@@ -1982,9 +1982,9 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 		<Alignment>CENTER</Alignment>
 	</Text>
 	<Group>
-		<Id>1780125864879</Id>
+		<Id>1780139159555</Id>
 		<Name><![CDATA[gr_pageIndicator]]></Name>
-		<X>182</X>
+		<X>180</X>
 		<Y>20</Y>
 		<Label>
 			<X>7.073</X>
@@ -1999,9 +1999,9 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 		<Rotation>0.0</Rotation>
 		<Presentation>
 			<Oval>
-				<Id>1780125864881</Id>
+				<Id>1780139159557</Id>
 				<Name><![CDATA[oval1]]></Name>
-				<X>42</X>
+				<X>52</X>
 				<Y>-5</Y>
 				<Label>
 					<X>0</X>
@@ -2015,20 +2015,20 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<ZHeight>10</ZHeight>
-				<LineWidth>0.5</LineWidth>
+				<LineWidth>0.8</LineWidth>
 				<LineColor>-4144960</LineColor>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<RadiusX>9</RadiusX>
+				<RadiusX>13</RadiusX>
 				<RadiusY>40</RadiusY>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
 				<FillMaterial>null</FillMaterial>
 			</Oval>
 			<Oval>
-				<Id>1780125864883</Id>
+				<Id>1780139159559</Id>
 				<Name><![CDATA[oval]]></Name>
-				<X>-41</X>
+				<X>-51</X>
 				<Y>-5</Y>
 				<Label>
 					<X>0</X>
@@ -2042,21 +2042,21 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<ZHeight>10</ZHeight>
-				<LineWidth>0.5</LineWidth>
+				<LineWidth>0.8</LineWidth>
 				<LineColor>-4144960</LineColor>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<RadiusX>9</RadiusX>
+				<RadiusX>13</RadiusX>
 				<RadiusY>40</RadiusY>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
 				<FillMaterial>null</FillMaterial>
 			</Oval>
 			<Image>
-				<Id>1780125864885</Id>
+				<Id>1780139159561</Id>
 				<Name><![CDATA[arrowLeftResidential]]></Name>
-				<X>-37</X>
-				<Y>-9</Y>
+				<X>-46</X>
+				<Y>-11</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2067,8 +2067,8 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>7</Width>
-				<Height>8</Height>
+				<Width>11</Width>
+				<Height>11</Height>
 				<Rotation>90.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -2079,10 +2079,10 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<OriginalSize>false</OriginalSize>
 			</Image>
 			<Image>
-				<Id>1780125864887</Id>
+				<Id>1780139159563</Id>
 				<Name><![CDATA[arrowRightResidential1]]></Name>
-				<X>38</X>
-				<Y>-2</Y>
+				<X>47</X>
+				<Y>0</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2091,10 +2091,11 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>f_nextPage();</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>7</Width>
-				<Height>8</Height>
+				<Width>11</Width>
+				<Height>11</Height>
 				<Rotation>270.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -2105,10 +2106,10 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<OriginalSize>false</OriginalSize>
 			</Image>
 			<Text>
-				<Id>1780125864889</Id>
+				<Id>1780139159565</Id>
 				<Name><![CDATA[t_pageIndicator]]></Name>
 				<X>0</X>
-				<Y>-12</Y>
+				<Y>-13</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2125,7 +2126,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<TextCode>"Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPageGroups.size()</TextCode>
 				<Font>
 					<Name><![CDATA[Centaur]]></Name>
-					<Size>12</Size>
+					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>CENTER</Alignment>
