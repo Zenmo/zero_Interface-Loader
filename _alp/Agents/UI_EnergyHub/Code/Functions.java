@@ -74,7 +74,6 @@ uI_Tabs.v_presentationYOffset += zero_Interface.va_EHubDashboard.getY();
 double f_styleEnergyHubResultsUI()
 {/*ALCODESTART::1753694556229*/
 uI_Results.f_styleAllCharts(white, p_energyHubLineColor, p_energyHubLineWidth, p_energyHubLineStyle);
-uI_Results.f_styleResultsUIHeader(p_energyHubLineColor, p_energyHubLineColor, p_energyHubLineWidth, p_energyHubLineStyle);
 /*ALCODEEND*/}
 
 double f_addSliderEAGridConnections()

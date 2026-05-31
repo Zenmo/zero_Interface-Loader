@@ -1454,8 +1454,8 @@ v_selectedGridConnectionIndex &gt; 0 ?
 			<Rectangle>
 				<Id>1736344526647</Id>
 				<Name><![CDATA[rect_errorScreenGrayOut]]></Name>
-				<X>0</X>
-				<Y>0</Y>
+				<X>40</X>
+				<Y>100</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -1481,8 +1481,8 @@ v_selectedGridConnectionIndex &gt; 0 ?
 			<Rectangle>
 				<Id>1736443451929</Id>
 				<Name><![CDATA[rect_errorScreenClickBlocking]]></Name>
-				<X>0</X>
-				<Y>0</Y>
+				<X>40</X>
+				<Y>100</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -6059,7 +6059,7 @@ else{
 					<Rectangle>
 						<Id>1709717180406</Id>
 						<Name><![CDATA[rect_loadIconSmall]]></Name>
-						<X>-219</X>
+						<X>-309</X>
 						<Y>-50</Y>
 						<Label>
 							<X>10</X>
@@ -6077,7 +6077,7 @@ else{
 						<LineColorCode>zenmocolor_blue1.getFillColor()</LineColorCode>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>DASHED</LineStyle>
-						<Width>460</Width>
+						<Width>550</Width>
 						<Height>250</Height>
 						<Rotation>0.0</Rotation>
 						<FillColor>-369756683</FillColor>
@@ -6139,7 +6139,7 @@ else{
 			<Group>
 				<Id>1709717180367</Id>
 				<Name><![CDATA[gr_simulateYear]]></Name>
-				<X>270</X>
+				<X>-340</X>
 				<Y>20</Y>
 				<Label>
 					<X>10</X>
@@ -6149,7 +6149,7 @@ else{
 				<PresentationFlag>false</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<XCode>-250</XCode>
+				<XCode>-340</XCode>
 				<YCode>20</YCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
@@ -6159,7 +6159,7 @@ else{
 						<Id>1709717180369</Id>
 						<Name><![CDATA[rect_simulateYearScreenSmall]]></Name>
 						<X>-230</X>
-						<Y>-95</Y>
+						<Y>-94</Y>
 						<Label>
 							<X>10</X>
 							<Y>10</Y>
@@ -6175,18 +6175,18 @@ else{
 						<LineColor/>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>DASHED</LineStyle>
-						<Width>460</Width>
-						<Height>185</Height>
+						<Width>550</Width>
+						<Height>249</Height>
 						<Rotation>0.0</Rotation>
-						<FillColor>-1</FillColor>
-						<FillColorCode>zenmocolor_blue2.getFillColor()</FillColorCode>
+						<FillColor>-4069658</FillColor>
+						<FillColorCode>zenmocolor_blue3.getFillColor()</FillColorCode>
 						<FillMaterial>null</FillMaterial>
 					</Rectangle>
 					<Group>
 						<Id>1709717180371</Id>
 						<Name><![CDATA[gr_simulateYearButton]]></Name>
-						<X>10</X>
-						<Y>50</Y>
+						<X>1</X>
+						<Y>69</Y>
 						<Label>
 							<X>10</X>
 							<Y>0</Y>
@@ -6216,7 +6216,7 @@ else{
 								<EmbeddedIcon>false</EmbeddedIcon>
 								<Z>0</Z>
 								<Rotation>0.0</Rotation>
-								<Color>-16777216</Color>
+								<Color>-16760768</Color>
 								<Text><![CDATA[Simuleer jaar voor KPI's]]></Text>
 								<Font>
 									<Name><![CDATA[SansSerif]]></Name>
@@ -6676,8 +6676,8 @@ else{
 		<Id>1762354401486</Id>
 		<Name><![CDATA[image_loadingScreenIcon]]></Name>
 		<Description><![CDATA[3470]]></Description>
-		<X>3040</X>
-		<Y>680</Y>
+		<X>3200</X>
+		<Y>0</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -7202,8 +7202,8 @@ else{
 			<RoundedRectangle>
 				<Id>1780216657896</Id>
 				<Name><![CDATA[roundRectangle3]]></Name>
-				<X>-844</X>
-				<Y>-11</Y>
+				<X>-839</X>
+				<Y>-1</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -7230,8 +7230,8 @@ else{
 			<Text>
 				<Id>1780216691720</Id>
 				<Name><![CDATA[text]]></Name>
-				<X>-814</X>
-				<Y>29</Y>
+				<X>-809</X>
+				<Y>39</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -7255,8 +7255,8 @@ else{
 			<Image>
 				<Id>1780216770311</Id>
 				<Name><![CDATA[image]]></Name>
-				<X>-838</X>
-				<Y>-3</Y>
+				<X>-833</X>
+				<Y>7</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -7281,8 +7281,8 @@ else{
 			<Group>
 				<Id>1780221460766</Id>
 				<Name><![CDATA[gr_layerButtons]]></Name>
-				<X>-624</X>
-				<Y>24</Y>
+				<X>-619</X>
+				<Y>34</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>

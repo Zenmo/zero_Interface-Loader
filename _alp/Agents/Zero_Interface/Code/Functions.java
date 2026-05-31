@@ -427,9 +427,6 @@ if(previousClickedObjectType != null){
 
 double f_connectResultsUI()
 {/*ALCODESTART::1709716821854*/
-//Style resultsUI
-f_styleResultsUI();
-
 //Set ResultsUI radiobutton setup
 List<OL_ChartTypes> selectedChartTypes_Energy = settings.resultsUISelectedChartTypes_Energy();
 if(selectedChartTypes_Energy == null){ // Temporary backup till all models have switched to new setup functionality
@@ -1315,12 +1312,6 @@ t_errorMessage.setY(t_errorMessage.getY() - 40 * additionalLines);
 
 t_errorMessage.setText(errorMessage);
 gr_errorScreen.setVisible(true);
-/*ALCODEEND*/}
-
-double f_styleResultsUI()
-{/*ALCODESTART::1736442051389*/
-uI_Results.f_styleResultsUIHeader(zenmocolor_blue3.getFillColor(), zenmocolor_blue3.getFillColor(), 1.0, LINE_STYLE_SOLID);
-uI_Results.f_styleAllCharts(v_backgroundColor, zenmocolor_blue3.getFillColor(), 1.0, LINE_STYLE_SOLID);
 /*ALCODEEND*/}
 
 double f_selectNeighborhood(double clickx,double clicky)
