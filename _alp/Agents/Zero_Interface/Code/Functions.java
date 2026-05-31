@@ -625,7 +625,7 @@ f_initializeScenarioRadioButton();
 f_initializeLegend();
 
 //Initialize map overlay buttons
-f_initializeMapOverlayRadioButton();
+//f_initializeMapOverlayRadioButton();
 
 //Set ui button visibility false at startup
 f_createAdditionalUIs();
@@ -2002,7 +2002,7 @@ for(OL_GISObjectType activeSpecialGISObjectType : c_modelActiveSpecialGISObjects
 			legendShapes = f_getNextSpecialLegendShapes(numberOfSpecialActiveGISObjectTypes);
 			legendShapes.getFirst().setVisible(true);
 			legendShapes.getSecond().setVisible(true);
-			legendShapes.getFirst().setText("Laadpaal/plein (Toegevoegd)");
+			legendShapes.getFirst().setText("Laadinfra (toekomstig)");
 			legendShapes.getSecond().setFillColor(v_newChargingStationColor);
 			legendShapes.getSecond().setLineColor(v_newChargingStationLineColor);	
 		}
@@ -2045,7 +2045,7 @@ switch(activeSpecialGISObjectType){
 		legendRect.setLineColor(v_windFarmLineColor);
 		break;
 	case CHARGER:
-		legendText.setText("Laadpaal/plein (Bestaand)");
+		legendText.setText("Laadinfra");
 		legendRect.setFillColor(v_chargingStationColor);
 		legendRect.setLineColor(v_chargingStationLineColor);
 		break;
@@ -2451,21 +2451,7 @@ if(c_loadedMapOverlayTypes.size() > 5){
 
 double f_setMapOverlay()
 {/*ALCODESTART::1753096794863*/
-//reset legend
-gr_defaultLegenda.setVisible(false);
-gr_mapOverlayLegend_ElectricityConsumption.setVisible(false);
-gr_mapOverlayLegend_PVProduction.setVisible(false);
-gr_mapOverlayLegend_gridNeighbours.setVisible(false);
-gr_mapOverlayLegend_congestion.setVisible(false);
-gr_mapOverlayLegend_EnergyLabel.setVisible(false);
-if (p_customMapOverlayLegend != null) {
-	p_customMapOverlayLegend.setVisible(false);
-}
-b_updateLiveCongestionColors = false;
-
-if(!b_inEnergyHubMode){
-	f_clearSelectionAndSelectEnergyModel();
-}
+f_resetMap();
 
 //Get selected map overlay type, based on loaded order of the radio buttons
 OL_MapOverlayTypes selectedMapOverlayType = c_loadedMapOverlayTypes.get(rb_mapOverlay.getValue());
@@ -3139,10 +3125,7 @@ rb_scenarios = new ShapeRadioButtonGroup(presentable, ispublic, x ,y, width, hei
 
 presentation.add(rb_scenarios);
 
-//For now: Adjust location of radiobutton title if 6 buttons
-if(c_loadedMapOverlayTypes.size() > 5){
-	gr_colorings.setY(-17);
-}
+
 /*ALCODEEND*/}
 
 String f_setSelectedScenario()
@@ -3888,5 +3871,24 @@ SimpleDateFormat formatter = new SimpleDateFormat();
 formatter.applyPattern("dd MMM yyyy");
 
 return formatter.format(date);
+/*ALCODEEND*/}
+
+double f_resetMap()
+{/*ALCODESTART::1780217802554*/
+//reset legend
+gr_defaultLegenda.setVisible(false);
+gr_mapOverlayLegend_ElectricityConsumption.setVisible(false);
+gr_mapOverlayLegend_PVProduction.setVisible(false);
+gr_mapOverlayLegend_gridNeighbours.setVisible(false);
+gr_mapOverlayLegend_congestion.setVisible(false);
+gr_mapOverlayLegend_EnergyLabel.setVisible(false);
+if (p_customMapOverlayLegend != null) {
+	p_customMapOverlayLegend.setVisible(false);
+}
+b_updateLiveCongestionColors = false;
+
+if(!b_inEnergyHubMode){
+	f_clearSelectionAndSelectEnergyModel();
+}
 /*ALCODEEND*/}
 

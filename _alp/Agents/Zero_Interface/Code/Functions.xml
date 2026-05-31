@@ -1671,6 +1671,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1753085860778</Id>
 		<Name><![CDATA[f_initializeMapOverlayRadioButton]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1920</X>
 		<Y>1450</Y>
 		<Label>
@@ -2777,6 +2778,22 @@
 		<Name><![CDATA[f_getDateAndTimeString]]></Name>
 		<X>940</X>
 		<Y>-300</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1780217802554</Id>
+		<Name><![CDATA[f_resetMap]]></Name>
+		<X>2050</X>
+		<Y>1540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

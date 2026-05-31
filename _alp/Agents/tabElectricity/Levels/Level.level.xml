@@ -800,8 +800,8 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 					<ActionCode>f_setPVSystemHouses( uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_householdRooftopPV_pct.getValue() );
 
 //If on pv map overlay, adjust colouring
-if(zero_Interface.rb_mapOverlay != null &amp;&amp; zero_Interface.c_loadedMapOverlayTypes.get(zero_Interface.rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
-	zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
+if(zero_Interface.v_activeMapLayer == OL_MapOverlayTypes.PV_PRODUCTION){
+	zero_Interface.f_setMapOverlay_PVProduction();
 }
 
 // Also updates the home batteries
