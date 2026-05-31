@@ -1055,7 +1055,7 @@ if(c_selectedGridConnections.size() == 0 && !filterCanReturnZero){ // Not allowe
 	f_removeFilter(selectedFilter, selectedFilterName);
 	
 	//Notify filter has not been applied, cause no results are given
-	f_setErrorScreen("Geselecteerde filter geeft geen resultaten. De filter is gedeactiveerd.", 0, 0);
+	f_setErrorScreen("Er zijn geen panden die voldoen aan de selectiecritia.", 0, 0);
 }
 else if(c_selectedGridConnections.size() == 0 && filterCanReturnZero){//Allowed to return zero filtered gc, while returning zero
 	//Do nothing
@@ -1089,7 +1089,7 @@ String selectedFilterName = map_filterOptionUINames.get(selectedFilter);
 
 //Remove manual filter first
 if(selectedFilter != OL_FilterOptionsGC.MANUAL_SELECTION && c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
-	button_removeManualSelection.action();
+	f_removeManualSelection();
 }
 
 if(!c_selectedFilterOptions.contains(selectedFilter)){ // Set filter
@@ -3000,7 +3000,7 @@ if(uI_Company != null){
 
 double f_cancelEnergyHubConfiguration()
 {/*ALCODESTART::1760014973975*/
-button_clearFilters.action();
+f_clearFilters();
 
 b_inEnergyHubMode = false;
 b_inEnergyHubSelectionMode = false;
@@ -3889,6 +3889,70 @@ b_updateLiveCongestionColors = false;
 
 if(!b_inEnergyHubMode){
 	f_clearSelectionAndSelectEnergyModel();
+}
+/*ALCODEEND*/}
+
+double f_clearFilters()
+{/*ALCODESTART::1780224962073*/
+c_filterSelectedGridLoops.clear();
+c_filterSelectedNeighborhoods.clear();
+c_manualFilterSelectedGC.clear();
+c_manualFilterDeselectedGC.clear();
+b_inManualFilterSelectionMode = false;
+if (c_manualFilterSelectedGC.isEmpty() && c_manualFilterDeselectedGC.isEmpty() && c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
+	f_setFilter(OL_FilterOptionsGC.MANUAL_SELECTION);
+}
+
+f_setForcedClickScreenText("");
+if(!b_inEnergyHubSelectionMode){
+	f_setForcedClickScreenVisibility(false);
+}
+f_removeAllFilters();
+/*ALCODEEND*/}
+
+double f_removeManualSelection()
+{/*ALCODESTART::1780225375501*/
+if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
+	c_manualFilterSelectedGC.clear();
+	c_manualFilterDeselectedGC.clear();
+	
+	f_setForcedClickScreenText("");
+	if(!b_inEnergyHubSelectionMode){
+		f_setForcedClickScreenVisibility(false);
+	}
+	
+	b_inManualFilterSelectionMode = false;
+	if (c_manualFilterSelectedGC.isEmpty() && c_manualFilterDeselectedGC.isEmpty() && c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
+		f_setFilter(OL_FilterOptionsGC.MANUAL_SELECTION);
+	}
+}
+/*ALCODEEND*/}
+
+double f_finishManualSelection()
+{/*ALCODESTART::1780225465387*/
+if(!b_inManualFilterSelectionMode){
+	b_inManualFilterSelectionMode = true;
+	
+	f_setForcedClickScreenText("(De)Selecteer gebouwen");
+	if(!b_inEnergyHubSelectionMode){
+		f_setForcedClickScreenVisibility(true);
+	}
+	
+	if(!c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
+		f_setFilter(OL_FilterOptionsGC.MANUAL_SELECTION);
+	}
+}
+else{ 
+	b_inManualFilterSelectionMode = false;
+	
+	f_setForcedClickScreenText("");
+	if(!b_inEnergyHubSelectionMode){
+		f_setForcedClickScreenVisibility(false);
+	}
+	
+	if (c_manualFilterSelectedGC.isEmpty() && c_manualFilterDeselectedGC.isEmpty() && c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
+		f_setFilter(OL_FilterOptionsGC.MANUAL_SELECTION);
+	}
 }
 /*ALCODEEND*/}
 

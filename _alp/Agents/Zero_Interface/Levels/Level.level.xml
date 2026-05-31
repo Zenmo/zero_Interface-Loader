@@ -1362,7 +1362,7 @@ v_selectedGridConnectionIndex &gt; 0 ?
 		<Id>1734442437753</Id>
 		<Name><![CDATA[rect_filterFunctions]]></Name>
 		<X>-1620</X>
-		<Y>0</Y>
+		<Y>10</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -1379,7 +1379,7 @@ v_selectedGridConnectionIndex &gt; 0 ?
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>360</Width>
-		<Height>630</Height>
+		<Height>700</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -2390,8 +2390,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 	<Group>
 		<Id>1742296970246</Id>
 		<Name><![CDATA[gr_forceMapSelection]]></Name>
-		<X>1080</X>
-		<Y>-1480</Y>
+		<X>800</X>
+		<Y>-1600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2401,7 +2401,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<XCode>960</XCode>
-		<YCode>500</YCode>
+		<YCode>470</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -2572,7 +2572,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 				<Id>1742296941081</Id>
 				<Name><![CDATA[rect_forceMapSelection3]]></Name>
 				<X>-550</X>
-				<Y>250</Y>
+				<Y>290</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -2589,7 +2589,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>1000</Width>
-				<Height>330</Height>
+				<Height>290</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1765752640</FillColor>
 				<FillColorCode>v_forcedClickScreenColor</FillColorCode>
@@ -2598,7 +2598,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 			<Rectangle>
 				<Id>1742296952388</Id>
 				<Name><![CDATA[rect_forceMapSelection4]]></Name>
-				<X>450</X>
+				<X>360</X>
 				<Y>-620</Y>
 				<Label>
 					<X>10</X>
@@ -2615,7 +2615,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 				<LineColor/>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>510</Width>
+				<Width>600</Width>
 				<Height>1200</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1765752640</FillColor>
@@ -2625,7 +2625,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 			<Group>
 				<Id>1753446087501</Id>
 				<Name><![CDATA[gr_ForceMapSelectionText]]></Name>
-				<X>-40</X>
+				<X>-90</X>
 				<Y>-320</Y>
 				<Label>
 					<X>10</X>
@@ -2642,8 +2642,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 					<RoundedRectangle>
 						<Id>1742300401759</Id>
 						<Name><![CDATA[rect_selectText]]></Name>
-						<X>-440</X>
-						<Y>-40</Y>
+						<X>-410</X>
+						<Y>-30</Y>
 						<Label>
 							<X>10</X>
 							<Y>10</Y>
@@ -2655,14 +2655,14 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<ZHeight>10</ZHeight>
-						<LineWidth>2</LineWidth>
-						<LineColor>-16777216</LineColor>
+						<LineWidth>1</LineWidth>
+						<LineColor>-1</LineColor>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
-						<Width>860</Width>
-						<Height>70</Height>
+						<Width>820</Width>
+						<Height>50</Height>
 						<Rotation>0.0</Rotation>
-						<FillColor>-1</FillColor>
+						<FillColor>-7022639</FillColor>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>10</ArcRadius>
 					</RoundedRectangle>
@@ -2671,7 +2671,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						<Id>1753445072603</Id>
 						<Name><![CDATA[button_completeManualSelectionMode]]></Name>
 						<X>220</X>
-						<Y>-30</Y>
+						<Y>-20</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -2680,14 +2680,14 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<BasicProperties Width="170" Height="50">
+						<BasicProperties Width="180" Height="35">
 							<EmbeddedIcon>false</EmbeddedIcon>
-							<TextColor>-16777216</TextColor>
+							<TextColor>-16754086</TextColor>
 							<VisibleCode>gr_ForceMapSelectionText.isVisible() &amp;&amp; b_inManualFilterSelectionMode </VisibleCode>
 							<Enabled>true</Enabled>
 							<EnableExpression>button_completeManualSelectionMode.isVisible()</EnableExpression>
 							<ActionCode>if(b_inManualFilterSelectionMode){
-	button_manualFilterSelection.action();
+	f_finishManualSelection();
 }</ActionCode>
 						</BasicProperties>
 						<ExtendedProperties>
@@ -2699,7 +2699,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						<Id>1742300418297</Id>
 						<Name><![CDATA[t_forcedClickMessage]]></Name>
 						<X>-10</X>
-						<Y>-30</Y>
+						<Y>-18</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -2715,7 +2715,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						<Text/>
 						<Font>
 							<Name><![CDATA[SansSerif]]></Name>
-							<Size>36</Size>
+							<Size>22</Size>
 							<Style>0</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
@@ -2950,7 +2950,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<Text><![CDATA[Energie Hub Configurator]]></Text>
 								<Font>
 									<Name><![CDATA[SansSerif]]></Name>
-									<Size>48</Size>
+									<Size>36</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>CENTER</Alignment>
@@ -6952,8 +6952,8 @@ else{
 			<Arc>
 				<Id>1696520897608</Id>
 				<Name><![CDATA[arc_zoomIn]]></Name>
-				<X>-2.5319999999999965</X>
-				<Y>-20.114000000000004</Y>
+				<X>3.541</X>
+				<Y>2.337</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -6966,23 +6966,23 @@ else{
 				<Z>0</Z>
 				<ZHeight>10</ZHeight>
 				<LineWidth>1</LineWidth>
-				<LineColor>-13882324</LineColor>
+				<LineColor>-16744320</LineColor>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Dz>0</Dz>
 				<Rotation>0.0</Rotation>
-				<RadiusX>17.53</RadiusX>
+				<RadiusX>16.527</RadiusX>
 				<RadiusY>40</RadiusY>
-				<StartAngle>-179.1999969482422</StartAngle>
+				<StartAngle>-177.0</StartAngle>
 				<Angle>178.1999969482422</Angle>
-				<FillColor>-13882324</FillColor>
+				<FillColor>-16744320</FillColor>
 				<FillMaterial>null</FillMaterial>
 			</Arc>
 			<Arc>
 				<Id>1696520897610</Id>
 				<Name><![CDATA[arc_zoomOut]]></Name>
-				<X>-2.483000000000004</X>
-				<Y>8.137</Y>
+				<X>3.391</X>
+				<Y>28.787</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -6995,23 +6995,23 @@ else{
 				<Z>0</Z>
 				<ZHeight>10</ZHeight>
 				<LineWidth>1</LineWidth>
-				<LineColor>-13882324</LineColor>
+				<LineColor>-16744320</LineColor>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Dz>0</Dz>
 				<Rotation>0.0</Rotation>
-				<RadiusX>17.483</RadiusX>
+				<RadiusX>16.494</RadiusX>
 				<RadiusY>40</RadiusY>
-				<StartAngle>1.2000000476837158</StartAngle>
+				<StartAngle>1.100000023841858</StartAngle>
 				<Angle>178.1999969482422</Angle>
-				<FillColor>-13882324</FillColor>
+				<FillColor>-16744320</FillColor>
 				<FillMaterial>null</FillMaterial>
 			</Arc>
 			<Rectangle>
 				<Id>1696520897612</Id>
 				<Name><![CDATA[rect_zoomButton]]></Name>
-				<X>-20</X>
-				<Y>-20</Y>
+				<X>-13</X>
+				<Y>1</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -7024,20 +7024,20 @@ else{
 				<Z>0</Z>
 				<ZHeight>10</ZHeight>
 				<LineWidth>1</LineWidth>
-				<LineColor>-13882324</LineColor>
+				<LineColor>-16744320</LineColor>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>35</Width>
+				<Width>33</Width>
 				<Height>28</Height>
 				<Rotation>0.0</Rotation>
-				<FillColor>-13882324</FillColor>
+				<FillColor>-16744320</FillColor>
 				<FillMaterial>null</FillMaterial>
 			</Rectangle>
 			<Line>
 				<Id>1696520897614</Id>
 				<Name><![CDATA[line_zoomButtonSeperator]]></Name>
-				<X>-16</X>
-				<Y>-5</Y>
+				<X>-10</X>
+				<Y>16</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -7050,7 +7050,7 @@ else{
 				<Z>0</Z>
 				<ZHeight>10</ZHeight>
 				<LineWidth>1</LineWidth>
-				<LineColor>-8355712</LineColor>
+				<LineColor>-16727358</LineColor>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<BeginArrowSize>1</BeginArrowSize>
@@ -7064,8 +7064,8 @@ else{
 			<Line>
 				<Id>1696520897616</Id>
 				<Name><![CDATA[line_zoomIn1]]></Name>
-				<X>-9</X>
-				<Y>-21</Y>
+				<X>-3</X>
+				<Y>0</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -7092,8 +7092,8 @@ else{
 			<Line>
 				<Id>1696520897618</Id>
 				<Name><![CDATA[line_zoomIn2]]></Name>
-				<X>-3</X>
-				<Y>-27</Y>
+				<X>3</X>
+				<Y>-6</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -7120,8 +7120,8 @@ else{
 			<Line>
 				<Id>1696520897620</Id>
 				<Name><![CDATA[line_zoomOut]]></Name>
-				<X>-10</X>
-				<Y>8</Y>
+				<X>-4</X>
+				<Y>29</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -7148,8 +7148,8 @@ else{
 			<Rectangle>
 				<Id>1696520897622</Id>
 				<Name><![CDATA[rect_zoomIn]]></Name>
-				<X>-20</X>
-				<Y>-35</Y>
+				<X>-14</X>
+				<Y>-14</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -7175,8 +7175,8 @@ else{
 			<Rectangle>
 				<Id>1696520897624</Id>
 				<Name><![CDATA[rect_zoomOut]]></Name>
-				<X>-20</X>
-				<Y>-5</Y>
+				<X>-14</X>
+				<Y>16</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -7212,6 +7212,7 @@ else{
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<OnClickCode>gr_layerButtons.setVisible(!gr_layerButtons.isVisible());</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<ZHeight>10</ZHeight>
@@ -7277,310 +7278,329 @@ else{
 				</ImageFiles>
 				<OriginalSize>false</OriginalSize>
 			</Image>
-			<RoundedRectangle>
-				<Id>1780216848048</Id>
-				<Name><![CDATA[roundRectangle4]]></Name>
-				<X>-774</X>
-				<Y>-11</Y>
+			<Group>
+				<Id>1780221460766</Id>
+				<Name><![CDATA[gr_layerButtons]]></Name>
+				<X>-624</X>
+				<Y>24</Y>
 				<Label>
 					<X>10</X>
-					<Y>10</Y>
+					<Y>0</Y>
 				</Label>
 				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
+				<PresentationFlag>false</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor>-1</LineColor>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>300</Width>
-				<Height>60</Height>
 				<Rotation>0.0</Rotation>
-				<FillColor>-1</FillColor>
-				<FillMaterial>null</FillMaterial>
-				<ArcRadius>6</ArcRadius>
-			</RoundedRectangle>
-			<RoundedRectangle>
-				<Id>1780216876212</Id>
-				<Name><![CDATA[roundRectangle5]]></Name>
-				<X>-774</X>
-				<Y>-11</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<OnClickCode>f_resetMap();
+				<Presentation>
+					<RoundedRectangle>
+						<Id>1780216848048</Id>
+						<Name><![CDATA[roundRectangle4]]></Name>
+						<X>-150</X>
+						<Y>-35</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor>-1</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>300</Width>
+						<Height>60</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-1</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>6</ArcRadius>
+					</RoundedRectangle>
+					<RoundedRectangle>
+						<Id>1780216876212</Id>
+						<Name><![CDATA[roundRectangle5]]></Name>
+						<X>-150</X>
+						<Y>-35</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<OnClickCode>f_resetMap();
 f_setMapOverlay_Default();
 v_activeMapLayer = OL_MapOverlayTypes.DEFAULT;</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor>-7022639</LineColor>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>60</Width>
-				<Height>60</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-855310</FillColor>
-				<FillMaterial>null</FillMaterial>
-				<ArcRadius>6</ArcRadius>
-			</RoundedRectangle>
-			<RoundedRectangle>
-				<Id>1780216898098</Id>
-				<Name><![CDATA[roundRectangle6]]></Name>
-				<X>-714</X>
-				<Y>-11</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<OnClickCode>f_resetMap();
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor>-7022639</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>60</Width>
+						<Height>60</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-855310</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>6</ArcRadius>
+					</RoundedRectangle>
+					<RoundedRectangle>
+						<Id>1780216898098</Id>
+						<Name><![CDATA[roundRectangle6]]></Name>
+						<X>-90</X>
+						<Y>-35</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<OnClickCode>f_resetMap();
 f_setMapOverlay_ElectricityConsumption();
 v_activeMapLayer = OL_MapOverlayTypes.ELECTRICITY_CONSUMPTION;</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor>-7022639</LineColor>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>60</Width>
-				<Height>60</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-855310</FillColor>
-				<FillMaterial>null</FillMaterial>
-				<ArcRadius>6</ArcRadius>
-			</RoundedRectangle>
-			<RoundedRectangle>
-				<Id>1780216901243</Id>
-				<Name><![CDATA[roundRectangle7]]></Name>
-				<X>-654</X>
-				<Y>-11</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<OnClickCode>f_resetMap();
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor>-7022639</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>60</Width>
+						<Height>60</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-855310</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>6</ArcRadius>
+					</RoundedRectangle>
+					<RoundedRectangle>
+						<Id>1780216901243</Id>
+						<Name><![CDATA[roundRectangle7]]></Name>
+						<X>-30</X>
+						<Y>-35</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<OnClickCode>f_resetMap();
 f_setMapOverlay_PVProduction();
 v_activeMapLayer = OL_MapOverlayTypes.PV_PRODUCTION;</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor>-7022639</LineColor>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>60</Width>
-				<Height>60</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-855310</FillColor>
-				<FillMaterial>null</FillMaterial>
-				<ArcRadius>6</ArcRadius>
-			</RoundedRectangle>
-			<RoundedRectangle>
-				<Id>1780216903639</Id>
-				<Name><![CDATA[roundRectangle8]]></Name>
-				<X>-594</X>
-				<Y>-11</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<OnClickCode>f_resetMap();
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor>-7022639</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>60</Width>
+						<Height>60</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-855310</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>6</ArcRadius>
+					</RoundedRectangle>
+					<RoundedRectangle>
+						<Id>1780216903639</Id>
+						<Name><![CDATA[roundRectangle8]]></Name>
+						<X>30</X>
+						<Y>-35</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<OnClickCode>f_resetMap();
 f_setMapOverlay_Congestion();
 v_activeMapLayer = OL_MapOverlayTypes.CONGESTION;</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor>-7022639</LineColor>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>60</Width>
-				<Height>60</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-855310</FillColor>
-				<FillMaterial>null</FillMaterial>
-				<ArcRadius>6</ArcRadius>
-			</RoundedRectangle>
-			<RoundedRectangle>
-				<Id>1780216906247</Id>
-				<Name><![CDATA[roundRectangle9]]></Name>
-				<X>-534</X>
-				<Y>-11</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<OnClickCode>f_resetMap();
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor>-7022639</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>60</Width>
+						<Height>60</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-855310</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>6</ArcRadius>
+					</RoundedRectangle>
+					<RoundedRectangle>
+						<Id>1780216906247</Id>
+						<Name><![CDATA[roundRectangle9]]></Name>
+						<X>90</X>
+						<Y>-35</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<OnClickCode>f_resetMap();
 f_setMapOverlay_ParkingType();
 v_activeMapLayer = OL_MapOverlayTypes.PARKING_TYPE;</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor>-7022639</LineColor>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>60</Width>
-				<Height>60</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-855310</FillColor>
-				<FillMaterial>null</FillMaterial>
-				<ArcRadius>6</ArcRadius>
-			</RoundedRectangle>
-			<Text>
-				<Id>1780216917977</Id>
-				<Name><![CDATA[text1]]></Name>
-				<X>-744</X>
-				<Y>29</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Default]]></Text>
-				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
-					<Size>8</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<Text>
-				<Id>1780216939776</Id>
-				<Name><![CDATA[text2]]></Name>
-				<X>-684</X>
-				<Y>24</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Energie-
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor>-7022639</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>60</Width>
+						<Height>60</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-855310</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>6</ArcRadius>
+					</RoundedRectangle>
+					<Text>
+						<Id>1780216917977</Id>
+						<Name><![CDATA[text1]]></Name>
+						<X>-120</X>
+						<Y>5</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Default]]></Text>
+						<Font>
+							<Name><![CDATA[SansSerif]]></Name>
+							<Size>8</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
+					</Text>
+					<Text>
+						<Id>1780216939776</Id>
+						<Name><![CDATA[text2]]></Name>
+						<X>-60</X>
+						<Y>0</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Energie-
 consumptie]]></Text>
-				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
-					<Size>8</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<Text>
-				<Id>1780217000394</Id>
-				<Name><![CDATA[text3]]></Name>
-				<X>-624</X>
-				<Y>29</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[PV opwek]]></Text>
-				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
-					<Size>8</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<Text>
-				<Id>1780217020184</Id>
-				<Name><![CDATA[text4]]></Name>
-				<X>-564</X>
-				<Y>29</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Congestie]]></Text>
-				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
-					<Size>8</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<Text>
-				<Id>1780217034189</Id>
-				<Name><![CDATA[text5]]></Name>
-				<X>-504</X>
-				<Y>24</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Parkeer-
+						<Font>
+							<Name><![CDATA[SansSerif]]></Name>
+							<Size>8</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
+					</Text>
+					<Text>
+						<Id>1780217000394</Id>
+						<Name><![CDATA[text3]]></Name>
+						<X>0</X>
+						<Y>5</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[PV opwek]]></Text>
+						<Font>
+							<Name><![CDATA[SansSerif]]></Name>
+							<Size>8</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
+					</Text>
+					<Text>
+						<Id>1780217020184</Id>
+						<Name><![CDATA[text4]]></Name>
+						<X>60</X>
+						<Y>5</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Congestie]]></Text>
+						<Font>
+							<Name><![CDATA[SansSerif]]></Name>
+							<Size>8</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
+					</Text>
+					<Text>
+						<Id>1780217034189</Id>
+						<Name><![CDATA[text5]]></Name>
+						<X>120</X>
+						<Y>0</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Parkeer-
 type]]></Text>
-				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
-					<Size>8</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
+						<Font>
+							<Name><![CDATA[SansSerif]]></Name>
+							<Size>8</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
+					</Text>
+				</Presentation>
+			</Group>
 		</Presentation>
 	</Group>
 	<Text>
@@ -8001,7 +8021,7 @@ type]]></Text>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<ZHeight>10</ZHeight>
-		<LineWidth>1</LineWidth>
+		<LineWidth>0.6</LineWidth>
 		<LineColor>-16744320</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
@@ -8072,7 +8092,7 @@ gr_cablesLegend.setVisible(showCables);</ActionCode>
 			<ActionCode>gr_filterInterface.setVisible(cb_showFilterInterface.isSelected());
 
 if(!cb_showFilterInterface.isSelected()){
-	button_clearFilters.action();
+	f_clearFilters();
 	gr_sliderClickBlocker.setVisible(false);
 }
 else{
@@ -8132,8 +8152,8 @@ else{
 	<Group>
 		<Id>1734444441402</Id>
 		<Name><![CDATA[gr_filterInterface]]></Name>
-		<X>-1473</X>
-		<Y>820</Y>
+		<X>-1470</X>
+		<Y>930</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -8142,7 +8162,7 @@ else{
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>1471</XCode>
+		<XCode>1475</XCode>
 		<YCode>248</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
@@ -8165,13 +8185,13 @@ else{
 				<Z>0</Z>
 				<ZHeight>10</ZHeight>
 				<LineWidth>1</LineWidth>
-				<LineColor>-16744320</LineColor>
+				<LineColor>-16727358</LineColor>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>360</Width>
 				<Height>390</Height>
 				<Rotation>0.0</Rotation>
-				<FillColor>-23799855</FillColor>
+				<FillColor>-33521536</FillColor>
 				<FillMaterial>null</FillMaterial>
 				<ArcRadius>5</ArcRadius>
 			</RoundedRectangle>
@@ -8191,11 +8211,11 @@ else{
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
+				<Color>-1</Color>
 				<Text><![CDATA[Selecteer gebouwen:]]></Text>
 				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
-					<Size>12</Size>
+					<Name><![CDATA[Centaur]]></Name>
+					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -8204,7 +8224,7 @@ else{
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1734442617547</Id>
 				<Name><![CDATA[cb_filterOptions]]></Name>
-				<X>-10</X>
+				<X>-5</X>
 				<Y>-140</Y>
 				<Label>
 					<X>0</X>
@@ -8258,12 +8278,12 @@ else{
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
+				<Color>-1</Color>
 				<Text><![CDATA[Geen Actieve Filters.]]></Text>
 				<TextCode>!t_activeFilters.getText().equals("") ? "Actieve filters:" : "Geen Actieve Filters."</TextCode>
 				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
-					<Size>12</Size>
+					<Name><![CDATA[Centaur]]></Name>
+					<Size>14</Size>
 					<Style>1</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -8284,11 +8304,11 @@ else{
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
+				<Color>-1</Color>
 				<Text/>
 				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
-					<Size>12</Size>
+					<Name><![CDATA[Centaur]]></Name>
+					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -8309,11 +8329,11 @@ else{
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Filter opties]]></Text>
+				<Color>-1</Color>
+				<Text><![CDATA[Maak een selectie van gebouwen]]></Text>
 				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
-					<Size>14</Size>
+					<Name><![CDATA[Centaur]]></Name>
+					<Size>18</Size>
 					<Style>1</Style>
 				</Font>
 				<Alignment>CENTER</Alignment>
@@ -8322,7 +8342,8 @@ else{
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1734446701124</Id>
 				<Name><![CDATA[button_clearFilters]]></Name>
-				<X>50</X>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<X>243</X>
 				<Y>160</Y>
 				<Label>
 					<X>0</X>
@@ -8350,8 +8371,7 @@ if(!b_inEnergyHubSelectionMode){
 	f_setForcedClickScreenVisibility(false);
 }
 	
-f_removeAllFilters();
-traceln("Alle filters zijn verwijderd.");</ActionCode>
+f_removeAllFilters();</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -8362,7 +8382,7 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 				<Id>1734524446136</Id>
 				<Name><![CDATA[t_selectedGridLoop]]></Name>
 				<X>-130</X>
-				<Y>140</Y>
+				<Y>170</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8375,12 +8395,12 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
+				<Color>-1</Color>
 				<Text/>
 				<TextCode>c_filterSelectedGridLoops.size() == 1 ? "Geselecteerde lus: " + c_filterSelectedGridLoops.get(0).p_gridNodeID : c_filterSelectedGridLoops.size() &gt; 1 ? "Meerdere lussen geselecteerd." : "Geen lus geselecteerd."</TextCode>
 				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
-					<Size>12</Size>
+					<Name><![CDATA[Centaur]]></Name>
+					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -8389,7 +8409,7 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 				<Id>1737640715642</Id>
 				<Name><![CDATA[t_selectedNBh]]></Name>
 				<X>-130</X>
-				<Y>117</Y>
+				<Y>147</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8402,12 +8422,12 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
+				<Color>-1</Color>
 				<Text/>
 				<TextCode>c_filterSelectedNeighborhoods.size() == 1 ? "Geselecteerde buurt: " + c_filterSelectedNeighborhoods.get(0).p_id : c_filterSelectedNeighborhoods.size() &gt; 1 ? "Meerdere buurten geselecteerd." : "Geen buurt geselecteerd."</TextCode>
 				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
-					<Size>12</Size>
+					<Name><![CDATA[Centaur]]></Name>
+					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -8416,7 +8436,8 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1742227694564</Id>
 				<Name><![CDATA[button_removeManualSelection]]></Name>
-				<X>50</X>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<X>218</X>
 				<Y>90</Y>
 				<Label>
 					<X>0</X>
@@ -8455,7 +8476,8 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1743092954558</Id>
 				<Name><![CDATA[button_manualFilterSelection]]></Name>
-				<X>50</X>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<X>218</X>
 				<Y>50</Y>
 				<Label>
 					<X>0</X>
@@ -8504,7 +8526,7 @@ else{
 			<Group>
 				<Id>1780213504540</Id>
 				<Name><![CDATA[gr_closeInfoText1]]></Name>
-				<X>180</X>
+				<X>190</X>
 				<Y>-160</Y>
 				<Label>
 					<X>5.17</X>
@@ -8514,6 +8536,7 @@ else{
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>cb_showFilterInterface.setSelected(false, true);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -8541,7 +8564,7 @@ else{
 						<RadiusX>12</RadiusX>
 						<RadiusY>40</RadiusY>
 						<Rotation>0.0</Rotation>
-						<FillColor>-16744320</FillColor>
+						<FillColor>-7022639</FillColor>
 						<FillMaterial>null</FillMaterial>
 					</Oval>
 					<Line>
@@ -8561,7 +8584,7 @@ else{
 						<Z>0</Z>
 						<ZHeight>10</ZHeight>
 						<LineWidth>3</LineWidth>
-						<LineColor>-1</LineColor>
+						<LineColor>-16744320</LineColor>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
 						<BeginArrowSize>1</BeginArrowSize>
@@ -8589,7 +8612,7 @@ else{
 						<Z>0</Z>
 						<ZHeight>10</ZHeight>
 						<LineWidth>3</LineWidth>
-						<LineColor>-1</LineColor>
+						<LineColor>-16744320</LineColor>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
 						<BeginArrowSize>1</BeginArrowSize>
@@ -8602,6 +8625,169 @@ else{
 					</Line>
 				</Presentation>
 			</Group>
+			<RoundedRectangle>
+				<Id>1780224303235</Id>
+				<Name><![CDATA[roundRectangle10]]></Name>
+				<X>53</X>
+				<Y>50</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<OnClickCode>f_finishManualSelection();</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>0.5</LineWidth>
+				<LineColor>-1</LineColor>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>145</Width>
+				<Height>25</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-7022639</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>5</ArcRadius>
+			</RoundedRectangle>
+			<Text>
+				<Id>1780224327937</Id>
+				<Name><![CDATA[text6]]></Name>
+				<X>128</X>
+				<Y>57</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-12566464</Color>
+				<Text><![CDATA[Selecteer op kaart]]></Text>
+				<TextCode>b_inManualFilterSelectionMode ? "Selectie voltooien" : "Selecteer op kaart"</TextCode>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>9</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<RoundedRectangle>
+				<Id>1780224601258</Id>
+				<Name><![CDATA[roundRectangle11]]></Name>
+				<X>53</X>
+				<Y>165</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<OnClickCode>f_clearFilters();
+	
+f_removeAllFilters();
+</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>0.5</LineWidth>
+				<LineColor>-1</LineColor>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>145</Width>
+				<Height>25</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-7022639</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>5</ArcRadius>
+			</RoundedRectangle>
+			<Text>
+				<Id>1780224601260</Id>
+				<Name><![CDATA[text7]]></Name>
+				<X>128</X>
+				<Y>172</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-12566464</Color>
+				<Text><![CDATA[Verwijder alle filters]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>9</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<RoundedRectangle>
+				<Id>1780224606886</Id>
+				<Name><![CDATA[roundRectangle12]]></Name>
+				<X>53</X>
+				<Y>90</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<OnClickCode>f_removeManualSelection();</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>0.5</LineWidth>
+				<LineColor>-1</LineColor>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>145</Width>
+				<Height>25</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-7022639</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>5</ArcRadius>
+			</RoundedRectangle>
+			<Text>
+				<Id>1780224606888</Id>
+				<Name><![CDATA[text8]]></Name>
+				<X>128</X>
+				<Y>97</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-12566464</Color>
+				<Text><![CDATA[Wis selectie]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>9</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
 		</Presentation>
 	</Group>
 </Presentation>
