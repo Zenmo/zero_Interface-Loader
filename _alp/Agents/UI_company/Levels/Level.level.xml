@@ -889,7 +889,7 @@ f_setSimulateYearScreen();
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setElectricVehicleSliders(p_gridConnection, OL_EnergyAssetType.ELECTRIC_VAN, (int)sl_electricVansCompany.getValue());
+f_setElectricVehicleSliders(p_gridConnection, OL_VehicleType.VAN, (int)sl_electricVansCompany.getValue());
 
 //Update the other two sliders aswell
 sl_hydrogenVansCompany.setValue(v_nbHydrogenVans, false);
@@ -980,7 +980,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setHydrogenVehicleSliders(p_gridConnection, OL_EnergyAssetType.HYDROGEN_VAN, (int)sl_hydrogenVansCompany.getValue());
+f_setHydrogenVehicleSliders(p_gridConnection, OL_VehicleType.VAN, (int)sl_hydrogenVansCompany.getValue());
 
 //Update the other two sliders aswell
 sl_electricVansCompany.setValue(v_nbEVVans, false);
@@ -1071,7 +1071,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setPetroleumFuelVehicleSliders(p_gridConnection, OL_EnergyAssetType.PETROLEUM_FUEL_VAN, (int)sl_petroleumFuelVansCompany.getValue());
+f_setPetroleumFuelVehicleSliders(p_gridConnection, OL_VehicleType.VAN, (int)sl_petroleumFuelVansCompany.getValue());
 
 //Update the other two sliders aswell
 sl_electricVansCompany.setValue(v_nbEVVans, false);
@@ -1339,7 +1339,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setHydrogenVehicleSliders(p_gridConnection, OL_EnergyAssetType.HYDROGEN_TRUCK, (int)sl_hydrogenTrucksCompany.getValue());
+f_setHydrogenVehicleSliders(p_gridConnection, OL_VehicleType.TRUCK, (int)sl_hydrogenTrucksCompany.getValue());
 
 //Update the other two sliders aswell
 sl_electricTrucksCompany.setValue(v_nbEVTrucks, false);
@@ -1405,7 +1405,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setElectricVehicleSliders(p_gridConnection, OL_EnergyAssetType.ELECTRIC_TRUCK, (int)sl_electricTrucksCompany.getValue());
+f_setElectricVehicleSliders(p_gridConnection, OL_VehicleType.TRUCK, (int)sl_electricTrucksCompany.getValue());
 
 //Update the other two sliders aswell
 sl_hydrogenTrucksCompany.setValue(v_nbHydrogenTrucks, false);
@@ -1445,7 +1445,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setPetroleumFuelVehicleSliders(p_gridConnection, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, (int)sl_petroleumFuelTrucksCompany.getValue());
+f_setPetroleumFuelVehicleSliders(p_gridConnection, OL_VehicleType.TRUCK, (int)sl_petroleumFuelTrucksCompany.getValue());
 
 //Update the other two sliders aswell
 sl_electricTrucksCompany.setValue(v_nbEVTrucks, false);
@@ -1485,7 +1485,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setElectricVehicleSliders(p_gridConnection, OL_EnergyAssetType.ELECTRIC_VEHICLE, (int)sl_electricCarsCompany.getValue());
+f_setElectricVehicleSliders(p_gridConnection, OL_VehicleType.CAR, (int)sl_electricCarsCompany.getValue());
 
 //Update the other two sliders aswell
 sl_hydrogenCarsCompany.setValue(v_nbHydrogenCars, false);
@@ -1661,7 +1661,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setHydrogenVehicleSliders(p_gridConnection, OL_EnergyAssetType.HYDROGEN_VEHICLE, (int)sl_hydrogenCarsCompany.getValue());
+f_setHydrogenVehicleSliders(p_gridConnection, OL_VehicleType.CAR, (int)sl_hydrogenCarsCompany.getValue());
 
 //Update the other two sliders aswell
 sl_electricCarsCompany.setValue(v_nbEVCars, false);
@@ -1752,7 +1752,7 @@ f_setSimulateYearScreen();</ActionCode>
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>//Slider function
-f_setPetroleumFuelVehicleSliders(p_gridConnection, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, (int)sl_petroleumFuelCarsCompany.getValue());
+f_setPetroleumFuelVehicleSliders(p_gridConnection, OL_VehicleType.CAR, (int)sl_petroleumFuelCarsCompany.getValue());
 
 //Update the other two sliders aswell
 sl_electricCarsCompany.setValue(v_nbEVCars, false);
@@ -1842,7 +1842,7 @@ f_setSimulateYearScreen();</ActionCode>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
 						<Color>-16777216</Color>
-						<Text><![CDATA[Autos]]></Text>
+						<Text><![CDATA[Auto's]]></Text>
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
@@ -4472,8 +4472,8 @@ else{
 	<Group>
 		<Id>1779978293977</Id>
 		<Name><![CDATA[gr_configureVehicleTrips]]></Name>
-		<X>-580</X>
-		<Y>1320</Y>
+		<X>-540</X>
+		<Y>1500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4482,8 +4482,8 @@ else{
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>0</XCode>
-		<YCode>0</YCode>
+		<XCode>360</XCode>
+		<YCode>580</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -4531,7 +4531,7 @@ else{
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Configureer je voertuig planning]]></Text>
+				<Text><![CDATA[Configureer je voertuig rijtijden van:]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>18</Size>
@@ -4559,7 +4559,7 @@ else{
 				<Text><![CDATA[Trucks]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
-					<Size>16</Size>
+					<Size>20</Size>
 					<Style>3</Style>
 				</Font>
 				<Alignment>CENTER</Alignment>
@@ -4567,7 +4567,7 @@ else{
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1779978293985</Id>
-				<Name><![CDATA[sl_configureVehicleTrips_week_or_monday_startTime]]></Name>
+				<Name><![CDATA[sl_configureVehicleTrips_monday_startTime]]></Name>
 				<X>125</X>
 				<Y>140</Y>
 				<Label>
@@ -4581,9 +4581,14 @@ else{
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
+					<ActionCode>if(!cb_configureVehicleTrips_dailyDistinction.isSelected()){
+	for(OL_Days day : map_dayToVehicleConfigurationButtons.keySet()){
+		map_dayToVehicleConfigurationButtons.get(day).get(OL_CustomTripTrackerValueTypes.STARTTIME_H).setValue(sl_configureVehicleTrips_monday_startTime.getValue(), false);
+	}
+}</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
-					<DefaultValueCode>8</DefaultValueCode>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.STARTTIME_H)</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
 					<MaxValue>24</MaxValue>
@@ -4594,7 +4599,7 @@ else{
 			<Control Type="CheckBox">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1779978293987</Id>
-				<Name><![CDATA[txt_configureVehicleTrips_dailyDistinction]]></Name>
+				<Name><![CDATA[cb_configureVehicleTrips_dailyDistinction]]></Name>
 				<X>25</X>
 				<Y>75</Y>
 				<Label>
@@ -4609,11 +4614,12 @@ else{
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<ActionCode>f_activateDailyDifferenceButtons()</ActionCode>
+					<ActionCode>f_activateDailyDifferenceButtons(cb_configureVehicleTrips_dailyDistinction.isSelected());</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="14" Style="0"/>
 					<LabelText>Verschil per dag</LabelText>
+					<DefaultValueCode>false</DefaultValueCode>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -4635,10 +4641,13 @@ else{
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
+					<EnableExpression>c_activeVehicleConfigurationDays.size()&gt;0</EnableExpression>
+					<ActionCode>f_confirmVehicleTripsConfiguration(v_currentTripConfiguringVehicleType);
+f_closeVehicleTripsConfigurationMenu();</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
-					<LabelText>Voltooi voertuig planning configuratie</LabelText>
+					<LabelText>Voltooi voertuig rijtijden configuratie</LabelText>
 				</ExtendedProperties>
 			</Control>
 			<Control Type="Button">
@@ -4659,6 +4668,7 @@ else{
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
+					<ActionCode>f_closeVehicleTripsConfigurationMenu();</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -4667,7 +4677,7 @@ else{
 			</Control>
 			<Text>
 				<Id>1779978293997</Id>
-				<Name><![CDATA[txt_configureVehicleTrips_week_or_monday]]></Name>
+				<Name><![CDATA[txt_configureVehicleTrips_monday]]></Name>
 				<X>20</X>
 				<Y>145</Y>
 				<Label>
@@ -4692,7 +4702,7 @@ else{
 			</Text>
 			<Text>
 				<Id>1779978293999</Id>
-				<Name><![CDATA[txt_configureVehicleTrips_weekend_or_tuesday]]></Name>
+				<Name><![CDATA[txt_configureVehicleTrips_tuesday]]></Name>
 				<X>20</X>
 				<Y>175</Y>
 				<Label>
@@ -4795,7 +4805,7 @@ else{
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1779978294007</Id>
-				<Name><![CDATA[sl_configureVehicleTrips_week_or_monday_endTime]]></Name>
+				<Name><![CDATA[sl_configureVehicleTrips_monday_endTime]]></Name>
 				<X>240</X>
 				<Y>140</Y>
 				<Label>
@@ -4809,9 +4819,14 @@ else{
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
+					<ActionCode>if(!cb_configureVehicleTrips_dailyDistinction.isSelected()){
+	for(OL_Days day : map_dayToVehicleConfigurationButtons.keySet()){
+		map_dayToVehicleConfigurationButtons.get(day).get(OL_CustomTripTrackerValueTypes.ENDTIME_H).setValue(sl_configureVehicleTrips_monday_endTime.getValue(), false);
+	}
+}</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
-					<DefaultValueCode>8</DefaultValueCode>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.ENDTIME_H)</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
 					<MaxValue>24</MaxValue>
@@ -4922,7 +4937,7 @@ else{
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1779978743333</Id>
-				<Name><![CDATA[sl_configureVehicleTrips_weekend_or_tuesday_startTime]]></Name>
+				<Name><![CDATA[sl_configureVehicleTrips_tuesday_startTime]]></Name>
 				<X>125</X>
 				<Y>170</Y>
 				<Label>
@@ -4935,10 +4950,10 @@ else{
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
+					<Enabled>false</Enabled>
 				</BasicProperties>
 				<ExtendedProperties>
-					<DefaultValueCode>8</DefaultValueCode>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.STARTTIME_H)</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
 					<MaxValue>24</MaxValue>
@@ -4949,7 +4964,7 @@ else{
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1779978743335</Id>
-				<Name><![CDATA[sl_configureVehicleTrips_weekend_or_tuesday_endTime]]></Name>
+				<Name><![CDATA[sl_configureVehicleTrips_tuesday_endTime]]></Name>
 				<X>240</X>
 				<Y>170</Y>
 				<Label>
@@ -4962,10 +4977,10 @@ else{
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
+					<Enabled>false</Enabled>
 				</BasicProperties>
 				<ExtendedProperties>
-					<DefaultValueCode>8</DefaultValueCode>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.ENDTIME_H)</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
 					<MaxValue>24</MaxValue>
@@ -4989,10 +5004,10 @@ else{
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
+					<Enabled>false</Enabled>
 				</BasicProperties>
 				<ExtendedProperties>
-					<DefaultValueCode>8</DefaultValueCode>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.STARTTIME_H)</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
 					<MaxValue>24</MaxValue>
@@ -5016,10 +5031,10 @@ else{
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
+					<Enabled>false</Enabled>
 				</BasicProperties>
 				<ExtendedProperties>
-					<DefaultValueCode>8</DefaultValueCode>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.ENDTIME_H)</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
 					<MaxValue>24</MaxValue>
@@ -5043,10 +5058,10 @@ else{
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
+					<Enabled>false</Enabled>
 				</BasicProperties>
 				<ExtendedProperties>
-					<DefaultValueCode>8</DefaultValueCode>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.STARTTIME_H)</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
 					<MaxValue>24</MaxValue>
@@ -5070,10 +5085,10 @@ else{
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
+					<Enabled>false</Enabled>
 				</BasicProperties>
 				<ExtendedProperties>
-					<DefaultValueCode>8</DefaultValueCode>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.ENDTIME_H)</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
 					<MaxValue>24</MaxValue>
@@ -5097,10 +5112,10 @@ else{
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
+					<Enabled>false</Enabled>
 				</BasicProperties>
 				<ExtendedProperties>
-					<DefaultValueCode>8</DefaultValueCode>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.STARTTIME_H)</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
 					<MaxValue>24</MaxValue>
@@ -5124,10 +5139,10 @@ else{
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
+					<Enabled>false</Enabled>
 				</BasicProperties>
 				<ExtendedProperties>
-					<DefaultValueCode>8</DefaultValueCode>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.ENDTIME_H)</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
 					<MaxValue>24</MaxValue>
@@ -5151,10 +5166,10 @@ else{
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
+					<Enabled>false</Enabled>
 				</BasicProperties>
 				<ExtendedProperties>
-					<DefaultValueCode>8</DefaultValueCode>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.STARTTIME_H)</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
 					<MaxValue>24</MaxValue>
@@ -5178,10 +5193,10 @@ else{
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
+					<Enabled>false</Enabled>
 				</BasicProperties>
 				<ExtendedProperties>
-					<DefaultValueCode>8</DefaultValueCode>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.ENDTIME_H)</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
 					<MaxValue>24</MaxValue>
@@ -5205,10 +5220,10 @@ else{
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
+					<Enabled>false</Enabled>
 				</BasicProperties>
 				<ExtendedProperties>
-					<DefaultValueCode>8</DefaultValueCode>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.STARTTIME_H)</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
 					<MaxValue>24</MaxValue>
@@ -5232,10 +5247,10 @@ else{
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
+					<Enabled>false</Enabled>
 				</BasicProperties>
 				<ExtendedProperties>
-					<DefaultValueCode>8</DefaultValueCode>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.ENDTIME_H)</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
 					<MinValue>0</MinValue>
 					<MaxValue>24</MaxValue>
@@ -5268,14 +5283,469 @@ else{
 				</Font>
 				<Alignment>CENTER</Alignment>
 			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1779979055895</Id>
+				<Name><![CDATA[sl_configureVehicleTrips_monday_dailyDistance_km]]></Name>
+				<X>355</X>
+				<Y>140</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>if(!cb_configureVehicleTrips_dailyDistinction.isSelected()){
+	for(OL_Days day : map_dayToVehicleConfigurationButtons.keySet()){
+		map_dayToVehicleConfigurationButtons.get(day).get(OL_CustomTripTrackerValueTypes.DISTANCE_KM).setValue(sl_configureVehicleTrips_monday_dailyDistance_km.getValue(), false);
+	}
+}</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.DISTANCE_KM)</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>1000</MaxValue>
+					<Step>10</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1779979547564</Id>
+				<Name><![CDATA[sl_configureVehicleTrips_tuesday_dailyDistance_km]]></Name>
+				<X>355</X>
+				<Y>170</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>false</Enabled>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.DISTANCE_KM)</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>1000</MaxValue>
+					<Step>10</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1779979550047</Id>
+				<Name><![CDATA[sl_configureVehicleTrips_wednesday_dailyDistance_km]]></Name>
+				<X>355</X>
+				<Y>200</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>false</Enabled>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.DISTANCE_KM)</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>1000</MaxValue>
+					<Step>10</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1779979552296</Id>
+				<Name><![CDATA[sl_configureVehicleTrips_thursday_dailyDistance_km]]></Name>
+				<X>355</X>
+				<Y>230</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>false</Enabled>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.DISTANCE_KM)</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>1000</MaxValue>
+					<Step>10</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1779979554440</Id>
+				<Name><![CDATA[sl_configureVehicleTrips_friday_dailyDistance_km]]></Name>
+				<X>355</X>
+				<Y>260</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>false</Enabled>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.DISTANCE_KM)</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>1000</MaxValue>
+					<Step>10</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1779979556745</Id>
+				<Name><![CDATA[sl_configureVehicleTrips_saturday_dailyDistance_km]]></Name>
+				<X>355</X>
+				<Y>290</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>false</Enabled>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.DISTANCE_KM)</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>1000</MaxValue>
+					<Step>10</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1779979558999</Id>
+				<Name><![CDATA[sl_configureVehicleTrips_sunday_dailyDistance_km]]></Name>
+				<X>355</X>
+				<Y>320</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>false</Enabled>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>map_defaultValuesCustomTripButtons.get(OL_CustomTripTrackerValueTypes.DISTANCE_KM)</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>1000</MaxValue>
+					<Step>10</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1779979342322</Id>
+				<Name><![CDATA[cb_configureVehicleTripsMonday]]></Name>
+				<X>100</X>
+				<Y>140</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="20" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>if(cb_configureVehicleTripsMonday.isSelected()){
+	c_activeVehicleConfigurationDays.add(OL_Days.MONDAY);
+}
+else{
+	c_activeVehicleConfigurationDays.remove(OL_Days.MONDAY);
+}
+map_dayToVehicleConfigurationButtons.get(OL_Days.MONDAY).values().forEach(button -&gt; button.setEnabled(cb_configureVehicleTripsMonday.isSelected()));</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText/>
+					<DefaultValueCode>true</DefaultValueCode>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1779979363993</Id>
+				<Name><![CDATA[cb_configureVehicleTripsTuesday]]></Name>
+				<X>100</X>
+				<Y>170</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="20" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>false</Enabled>
+					<ActionCode>if(cb_configureVehicleTripsTuesday.isSelected()){
+	c_activeVehicleConfigurationDays.add(OL_Days.TUESDAY);
+}
+else{
+	c_activeVehicleConfigurationDays.remove(OL_Days.TUESDAY);
+}
+map_dayToVehicleConfigurationButtons.get(OL_Days.TUESDAY).values().forEach(button -&gt; button.setEnabled(cb_configureVehicleTripsTuesday.isSelected()));</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText/>
+					<DefaultValueCode>true</DefaultValueCode>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1779979365166</Id>
+				<Name><![CDATA[cb_configureVehicleTripsWednesday]]></Name>
+				<X>100</X>
+				<Y>200</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="20" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>false</Enabled>
+					<ActionCode>if(cb_configureVehicleTripsWednesday.isSelected()){
+	c_activeVehicleConfigurationDays.add(OL_Days.WEDNESDAY);
+}
+else{
+	c_activeVehicleConfigurationDays.remove(OL_Days.WEDNESDAY);
+}
+map_dayToVehicleConfigurationButtons.get(OL_Days.WEDNESDAY).values().forEach(button -&gt; button.setEnabled(cb_configureVehicleTripsWednesday.isSelected()));</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText/>
+					<DefaultValueCode>true</DefaultValueCode>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1779979366336</Id>
+				<Name><![CDATA[cb_configureVehicleTripsThursday]]></Name>
+				<X>100</X>
+				<Y>230</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="20" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>false</Enabled>
+					<ActionCode>if(cb_configureVehicleTripsThursday.isSelected()){
+	c_activeVehicleConfigurationDays.add(OL_Days.THURSDAY);
+}
+else{
+	c_activeVehicleConfigurationDays.remove(OL_Days.THURSDAY);
+}
+map_dayToVehicleConfigurationButtons.get(OL_Days.THURSDAY).values().forEach(button -&gt; button.setEnabled(cb_configureVehicleTripsThursday.isSelected()));</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText/>
+					<DefaultValueCode>true</DefaultValueCode>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1779979367437</Id>
+				<Name><![CDATA[cb_configureVehicleTripsFriday]]></Name>
+				<X>100</X>
+				<Y>260</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="20" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>false</Enabled>
+					<ActionCode>if(cb_configureVehicleTripsFriday.isSelected()){
+	c_activeVehicleConfigurationDays.add(OL_Days.FRIDAY);
+}
+else{
+	c_activeVehicleConfigurationDays.remove(OL_Days.FRIDAY);
+}
+map_dayToVehicleConfigurationButtons.get(OL_Days.FRIDAY).values().forEach(button -&gt; button.setEnabled(cb_configureVehicleTripsFriday.isSelected()));</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText/>
+					<DefaultValueCode>true</DefaultValueCode>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1779979368460</Id>
+				<Name><![CDATA[cb_configureVehicleTripsSaturday]]></Name>
+				<X>100</X>
+				<Y>290</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="20" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>false</Enabled>
+					<ActionCode>if(cb_configureVehicleTripsSaturday.isSelected()){
+	c_activeVehicleConfigurationDays.add(OL_Days.SATURDAY);
+}
+else{
+	c_activeVehicleConfigurationDays.remove(OL_Days.SATURDAY);
+}
+map_dayToVehicleConfigurationButtons.get(OL_Days.SATURDAY).values().forEach(button -&gt; button.setEnabled(cb_configureVehicleTripsSaturday.isSelected()));</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText/>
+					<DefaultValueCode>true</DefaultValueCode>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1779979369498</Id>
+				<Name><![CDATA[cb_configureVehicleTripsSunday]]></Name>
+				<X>100</X>
+				<Y>320</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="20" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>false</Enabled>
+					<ActionCode>if(cb_configureVehicleTripsSunday.isSelected()){
+	c_activeVehicleConfigurationDays.add(OL_Days.SUNDAY);
+}
+else{
+	c_activeVehicleConfigurationDays.remove(OL_Days.SUNDAY);
+}
+map_dayToVehicleConfigurationButtons.get(OL_Days.SUNDAY).values().forEach(button -&gt; button.setEnabled(cb_configureVehicleTripsSunday.isSelected()));</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText/>
+					<DefaultValueCode>true</DefaultValueCode>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1780327302671</Id>
+				<Name><![CDATA[button_configureVehicleTrips_reset]]></Name>
+				<X>350</X>
+				<Y>80</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>if(map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid) != null &amp;&amp;
+	map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).get(v_currentTripConfiguringVehicleType) != null){
+	map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).remove(v_currentTripConfiguringVehicleType);
+	f_initializeVehicleTripsConfigurationMenuButtons(v_currentTripConfiguringVehicleType);
+	f_resetVehicleTypeToOriginalTripTracker(v_currentTripConfiguringVehicleType);
+}</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>reset values</LabelText>
+				</ExtendedProperties>
+			</Control>
 		</Presentation>
 	</Group>
-	<Control Type="Slider">
+	<Control Type="Button">
 		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1779979055895</Id>
-		<Name><![CDATA[sl_configureVehicleTrips_week_or_monday_dailyDistance_km]]></Name>
-		<X>-225</X>
-		<Y>1460</Y>
+		<Id>1780055931342</Id>
+		<Name><![CDATA[button_openVehicleTripsConfigurationMenu_car]]></Name>
+		<X>225</X>
+		<Y>680</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -5284,50 +5754,29 @@ else{
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="100" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<Enabled>true</Enabled>
-		</BasicProperties>
-		<ExtendedProperties>
-			<DefaultValueCode>8</DefaultValueCode>
-			<Orientation>HORIZONTAL</Orientation>
-			<MinValue>0</MinValue>
-			<MaxValue>24</MaxValue>
-			<Step>1</Step>
-			<LinkTo>false</LinkTo>
-		</ExtendedProperties>
-	</Control>
-	<Control Type="CheckBox">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1779979342322</Id>
-		<Name><![CDATA[cb_configureVehicleTripsWeekOrMonday]]></Name>
-		<X>-480</X>
-		<Y>1460</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="20" Height="30">
+		<BasicProperties Width="125" Height="20">
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
+			<ActionCode>if(v_currentTripConfiguringVehicleType != OL_VehicleType.CAR){
+	f_openVehicleTripsConfigurationMenu(OL_VehicleType.CAR);
+}
+else{
+	f_closeVehicleTripsConfigurationMenu();
+}
+</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
 			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText/>
-			<LinkTo>false</LinkTo>
+			<LabelText>Configureer rijtijden</LabelText>
 		</ExtendedProperties>
 	</Control>
-	<Control Type="CheckBox">
+	<Control Type="Button">
 		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1779979363993</Id>
-		<Name><![CDATA[cb_configureVehicleTripsWeekendOrTuesday]]></Name>
-		<X>-480</X>
-		<Y>1490</Y>
+		<Id>1780055981741</Id>
+		<Name><![CDATA[button_openVehicleTripsConfigurationMenu_van]]></Name>
+		<X>230</X>
+		<Y>780</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -5336,23 +5785,28 @@ else{
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="20" Height="30">
+		<BasicProperties Width="125" Height="20">
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
+			<ActionCode>if(v_currentTripConfiguringVehicleType != OL_VehicleType.VAN){
+	f_openVehicleTripsConfigurationMenu(OL_VehicleType.VAN);
+}
+else{
+	f_closeVehicleTripsConfigurationMenu();
+}</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
 			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText/>
-			<LinkTo>false</LinkTo>
+			<LabelText>Configureer rijtijden</LabelText>
 		</ExtendedProperties>
 	</Control>
-	<Control Type="CheckBox">
+	<Control Type="Button">
 		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1779979365166</Id>
-		<Name><![CDATA[cb_configureVehicleTripsWednesday]]></Name>
-		<X>-480</X>
-		<Y>1520</Y>
+		<Id>1780056008958</Id>
+		<Name><![CDATA[button_openVehicleTripsConfigurationMenu_truck]]></Name>
+		<X>230</X>
+		<Y>880</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -5361,277 +5815,20 @@ else{
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="20" Height="30">
+		<BasicProperties Width="125" Height="20">
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
+			<ActionCode>if(v_currentTripConfiguringVehicleType != OL_VehicleType.TRUCK){
+	f_openVehicleTripsConfigurationMenu(OL_VehicleType.TRUCK);
+}
+else{
+	f_closeVehicleTripsConfigurationMenu();
+}</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
 			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText/>
-			<LinkTo>false</LinkTo>
-		</ExtendedProperties>
-	</Control>
-	<Control Type="CheckBox">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1779979366336</Id>
-		<Name><![CDATA[cb_configureVehicleTripsThursday]]></Name>
-		<X>-480</X>
-		<Y>1550</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="20" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor>-16777216</TextColor>
-			<Enabled>true</Enabled>
-		</BasicProperties>
-		<ExtendedProperties>
-			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText/>
-			<LinkTo>false</LinkTo>
-		</ExtendedProperties>
-	</Control>
-	<Control Type="CheckBox">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1779979367437</Id>
-		<Name><![CDATA[cb_configureVehicleTripsFriday]]></Name>
-		<X>-480</X>
-		<Y>1580</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="20" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor>-16777216</TextColor>
-			<Enabled>true</Enabled>
-		</BasicProperties>
-		<ExtendedProperties>
-			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText/>
-			<LinkTo>false</LinkTo>
-		</ExtendedProperties>
-	</Control>
-	<Control Type="CheckBox">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1779979368460</Id>
-		<Name><![CDATA[cb_configureVehicleTripsSaturday]]></Name>
-		<X>-480</X>
-		<Y>1610</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="20" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor>-16777216</TextColor>
-			<Enabled>true</Enabled>
-		</BasicProperties>
-		<ExtendedProperties>
-			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText/>
-			<LinkTo>false</LinkTo>
-		</ExtendedProperties>
-	</Control>
-	<Control Type="CheckBox">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1779979369498</Id>
-		<Name><![CDATA[cb_configureVehicleTripsSunday]]></Name>
-		<X>-480</X>
-		<Y>1640</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="20" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor>-16777216</TextColor>
-			<Enabled>true</Enabled>
-		</BasicProperties>
-		<ExtendedProperties>
-			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText/>
-			<LinkTo>false</LinkTo>
-		</ExtendedProperties>
-	</Control>
-	<Control Type="Slider">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1779979547564</Id>
-		<Name><![CDATA[sl_configureVehicleTrips_weekend_or_tuesday_dailyDistance_km]]></Name>
-		<X>-225</X>
-		<Y>1490</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="100" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<Enabled>true</Enabled>
-		</BasicProperties>
-		<ExtendedProperties>
-			<DefaultValueCode>8</DefaultValueCode>
-			<Orientation>HORIZONTAL</Orientation>
-			<MinValue>0</MinValue>
-			<MaxValue>24</MaxValue>
-			<Step>1</Step>
-			<LinkTo>false</LinkTo>
-		</ExtendedProperties>
-	</Control>
-	<Control Type="Slider">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1779979550047</Id>
-		<Name><![CDATA[sl_configureVehicleTrips_wednesday_dailyDistance_km]]></Name>
-		<X>-225</X>
-		<Y>1520</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="100" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<Enabled>true</Enabled>
-		</BasicProperties>
-		<ExtendedProperties>
-			<DefaultValueCode>8</DefaultValueCode>
-			<Orientation>HORIZONTAL</Orientation>
-			<MinValue>0</MinValue>
-			<MaxValue>24</MaxValue>
-			<Step>1</Step>
-			<LinkTo>false</LinkTo>
-		</ExtendedProperties>
-	</Control>
-	<Control Type="Slider">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1779979552296</Id>
-		<Name><![CDATA[sl_configureVehicleTrips_thursday_dailyDistance_km]]></Name>
-		<X>-225</X>
-		<Y>1550</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="100" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<Enabled>true</Enabled>
-		</BasicProperties>
-		<ExtendedProperties>
-			<DefaultValueCode>8</DefaultValueCode>
-			<Orientation>HORIZONTAL</Orientation>
-			<MinValue>0</MinValue>
-			<MaxValue>24</MaxValue>
-			<Step>1</Step>
-			<LinkTo>false</LinkTo>
-		</ExtendedProperties>
-	</Control>
-	<Control Type="Slider">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1779979554440</Id>
-		<Name><![CDATA[sl_configureVehicleTrips_friday_dailyDistance_km]]></Name>
-		<X>-225</X>
-		<Y>1580</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="100" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<Enabled>true</Enabled>
-		</BasicProperties>
-		<ExtendedProperties>
-			<DefaultValueCode>8</DefaultValueCode>
-			<Orientation>HORIZONTAL</Orientation>
-			<MinValue>0</MinValue>
-			<MaxValue>24</MaxValue>
-			<Step>1</Step>
-			<LinkTo>false</LinkTo>
-		</ExtendedProperties>
-	</Control>
-	<Control Type="Slider">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1779979556745</Id>
-		<Name><![CDATA[sl_configureVehicleTrips_saturday_dailyDistance_km]]></Name>
-		<X>-225</X>
-		<Y>1610</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="100" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<Enabled>true</Enabled>
-		</BasicProperties>
-		<ExtendedProperties>
-			<DefaultValueCode>8</DefaultValueCode>
-			<Orientation>HORIZONTAL</Orientation>
-			<MinValue>0</MinValue>
-			<MaxValue>24</MaxValue>
-			<Step>1</Step>
-			<LinkTo>false</LinkTo>
-		</ExtendedProperties>
-	</Control>
-	<Control Type="Slider">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1779979558999</Id>
-		<Name><![CDATA[sl_configureVehicleTrips_sunday_dailyDistance_km]]></Name>
-		<X>-225</X>
-		<Y>1640</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="100" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<Enabled>true</Enabled>
-		</BasicProperties>
-		<ExtendedProperties>
-			<DefaultValueCode>8</DefaultValueCode>
-			<Orientation>HORIZONTAL</Orientation>
-			<MinValue>0</MinValue>
-			<MaxValue>24</MaxValue>
-			<Step>1</Step>
-			<LinkTo>false</LinkTo>
+			<LabelText>Configureer rijtijden</LabelText>
 		</ExtendedProperties>
 	</Control>
 </Presentation>

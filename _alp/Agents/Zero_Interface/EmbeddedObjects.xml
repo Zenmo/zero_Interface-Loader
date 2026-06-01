@@ -45,6 +45,24 @@
 			<Parameter>
 				<Name><![CDATA[p_minSavingsSliders_default]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_dayToVehicleConfigurationButtons]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_createdCustomTripWeeklyConfiguration]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_customTripTrackerToOriginal]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_storedCustomTripButtonConfiguration]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_defaultValuesCustomTripButtons]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_dayToEnableDayButtons]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">

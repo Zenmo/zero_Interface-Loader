@@ -1290,7 +1290,7 @@ if (heatingType == null) {
 return heatingType;
 /*ALCODEEND*/}
 
-J_EAEV f_addElectricVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_type,boolean isDefaultVehicle,double annualTravelDistance_km,double maxChargingPower_kW)
+J_EAEV f_addElectricVehicle(GridConnection parentGC,OL_VehicleType vehicleType,boolean isDefaultVehicle,double annualTravelDistance_km,double maxChargingPower_kW)
 {/*ALCODESTART::1726584205827*/
 double storageCapacity_kWh 		= 0;
 double energyConsumption_kWhpkm = 0;
@@ -1299,7 +1299,7 @@ double stateOfCharge_fr  		= 1; // Initial state of charge
 J_TimeParameters timeParameters	= energyModel.p_timeParameters;
 double vehicleScaling 			= 1.0;
 
-switch(vehicle_type){
+switch(vehicleType){
 	
 	/*
 	case ELECTRIC_VEHICLE_COMUTERS: // ??? Hoe laad je andere laadprofielen in.?? Deze moet ander laadprofiel dan de Standaard Electric_vehicle 
@@ -1309,19 +1309,19 @@ switch(vehicle_type){
 	break;
 	*/
 	
-	case ELECTRIC_VEHICLE:
+	case CAR:
 		capacityElectricity_kW	= avgc_data.p_avgEVMaxChargePowerCar_kW;
 		storageCapacity_kWh		= avgc_data.p_avgEVStorageCar_kWh;
 		energyConsumption_kWhpkm = avgc_data.p_avgEVEnergyConsumptionCar_kWhpkm;
 	break;
 	
-	case ELECTRIC_VAN:
+	case VAN:
 		capacityElectricity_kW 	= avgc_data.p_avgEVMaxChargePowerVan_kW;
 		storageCapacity_kWh		= avgc_data.p_avgEVStorageVan_kWh;
 		energyConsumption_kWhpkm = avgc_data.p_avgEVEnergyConsumptionVan_kWhpkm;
 	break;
 	
-	case ELECTRIC_TRUCK:
+	case TRUCK:
 		capacityElectricity_kW	= avgc_data.p_avgEVMaxChargePowerTruck_kW;
 		storageCapacity_kWh		= avgc_data.p_avgEVStorageTruck_kWh;
 		energyConsumption_kWhpkm = avgc_data.p_avgEVEnergyConsumptionTruck_kWhpkm;
@@ -1337,47 +1337,47 @@ if (!isDefaultVehicle && maxChargingPower_kW <= 0) {
 }
 
 //Create the EV vehicle energy asset with the set parameters + links
-J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timeParameters, energyConsumption_kWhpkm, vehicleScaling, vehicle_type, null);	
+J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timeParameters, energyConsumption_kWhpkm, vehicleScaling, vehicleType, null);	
 
 if (!isDefaultVehicle && annualTravelDistance_km > avgc_data.p_minAnnualTravelDistanceSurveyVehicle_km){
 		electricVehicle.getTripTracker().setAnnualDistance_km(annualTravelDistance_km);
 }
-else if (vehicle_type == OL_EnergyAssetType.ELECTRIC_VAN){
+else if (vehicleType == OL_VehicleType.VAN){
 		electricVehicle.getTripTracker().setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
 }
 
 return electricVehicle;
 /*ALCODEEND*/}
 
-J_EAFuelVehicle f_addPetroleumFuelVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_type,Boolean isDefaultVehicle,double annualTravelDistance_km)
+J_EAFuelVehicle f_addPetroleumFuelVehicle(GridConnection parentGC,OL_VehicleType vehicleType,Boolean isDefaultVehicle,double annualTravelDistance_km)
 {/*ALCODESTART::1726584205829*/
 double energyConsumption_kWhpkm = 0;
 double vehicleScaling = 1.0;
 
 //PetroleumFuel car
-switch (vehicle_type){
+switch (vehicleType){
 	
-	case PETROLEUM_FUEL_VEHICLE:
+	case CAR:
 		energyConsumption_kWhpkm = roundToDecimal(uniform(0.7, 1.3),2) * avgc_data.p_avgGasolineConsumptionCar_kWhpkm;
 	break;
 	
-	case PETROLEUM_FUEL_VAN:
+	case VAN:
 		energyConsumption_kWhpkm = avgc_data.p_avgDieselConsumptionVan_kWhpkm;
 	break;
 	
-	case PETROLEUM_FUEL_TRUCK:
+	case TRUCK:
 		energyConsumption_kWhpkm = avgc_data.p_avgDieselConsumptionTruck_kWhpkm;
 	break;
 }
 
 //Create EA
-J_EAFuelVehicle petroleumFuelVehicle = new J_EAFuelVehicle(parentGC, energyConsumption_kWhpkm, energyModel.p_timeParameters, vehicleScaling, vehicle_type, null, OL_EnergyCarriers.PETROLEUM_FUEL);
+J_EAFuelVehicle petroleumFuelVehicle = new J_EAFuelVehicle(parentGC, energyConsumption_kWhpkm, energyModel.p_timeParameters, vehicleScaling, vehicleType, null, OL_EnergyCarriers.PETROLEUM_FUEL);
 
 //Set annual travel distance
 if (!isDefaultVehicle && annualTravelDistance_km > avgc_data.p_minAnnualTravelDistanceSurveyVehicle_km){
 		petroleumFuelVehicle.getTripTracker().setAnnualDistance_km(annualTravelDistance_km);
 }
-else if (vehicle_type == OL_EnergyAssetType.PETROLEUM_FUEL_VAN){
+else if (vehicleType == OL_VehicleType.VAN){
 		petroleumFuelVehicle.getTripTracker().setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
 }
 
@@ -1513,7 +1513,7 @@ if(p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_Vehicle
 	int nbCars = 0;
 	int ceiledRemainingNumberOfCarsPerCompany = p_remainingTotals.getCeiledRemainingNumberOfVehiclesPerCompany(companyGC, OL_VehicleType.CAR);
 	for (int k = 0; k < ceiledRemainingNumberOfCarsPerCompany; k++){
-		f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, true, 0);
+		f_addPetroleumFuelVehicle(companyGC, OL_VehicleType.CAR, true, 0);
 		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.CAR, - 1);
 		nbCars++;
 	}
@@ -1532,7 +1532,7 @@ if(p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_Vehicle
 	int nbVans = 0;
 	int ceiledRemainingNumberOfVansPerCompany = p_remainingTotals.getCeiledRemainingNumberOfVehiclesPerCompany(companyGC, OL_VehicleType.VAN);
 	for (int k = 0; k< ceiledRemainingNumberOfVansPerCompany; k++){
-		f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_VAN, true, 0);
+		f_addPetroleumFuelVehicle(companyGC, OL_VehicleType.VAN, true, 0);
 		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.VAN, - 1);
 		nbVans++;
 	}
@@ -1551,7 +1551,7 @@ if (p_remainingTotals.getRemainingNumberOfVehiclesCompanies(companyGC, OL_Vehicl
 	int nbTrucks= 0;
 	int ceiledRemainingNumberOfTrucksPerCompany = p_remainingTotals.getCeiledRemainingNumberOfVehiclesPerCompany(companyGC, OL_VehicleType.TRUCK);
 	for (int k = 0; k< ceiledRemainingNumberOfTrucksPerCompany; k++){
-		f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, true, 0);
+		f_addPetroleumFuelVehicle(companyGC, OL_VehicleType.TRUCK, true, 0);
 		p_remainingTotals.adjustRemainingNumberOfVehiclesCompanies(companyGC, OL_VehicleType.TRUCK, - 1);
 		nbTrucks++;
 	}
@@ -1591,35 +1591,33 @@ for (Building_data remainingBuilding_data : c_remainingBuilding_data) {
 }
 /*ALCODEEND*/}
 
-double f_addTransportHydrogen(GridConnection parentGC,OL_EnergyAssetType vehicle_type,boolean isDefaultVehicle,double annualTravelDistance_km)
+double f_addTransportHydrogen(GridConnection parentGC,OL_VehicleType vehicleType,boolean isDefaultVehicle,double annualTravelDistance_km)
 {/*ALCODESTART::1726584205837*/
 double energyConsumption_kWhpkm = 0;
 double vehicleScaling = 1.0;
 
 //Hydrogen car
-switch (vehicle_type){
+switch (vehicleType){
 
-	case HYDROGEN_VEHICLE:
+	case CAR:
 		energyConsumption_kWhpkm = avgc_data.p_avgHydrogenConsumptionCar_kWhpkm;
-	break;
-	
-	case HYDROGEN_VAN:
+		break;
+	case VAN:
 		energyConsumption_kWhpkm = avgc_data.p_avgHydrogenConsumptionVan_kWhpkm;
-	break;
-	
-	case HYDROGEN_TRUCK:
+		break;
+	case TRUCK:
 		energyConsumption_kWhpkm = avgc_data.p_avgHydrogenConsumptionTruck_kWhpkm;
-	break;
+		break;
 }
 
 //Create EA
-J_EAFuelVehicle hydrogenVehicle = new J_EAFuelVehicle(parentGC, energyConsumption_kWhpkm, energyModel.p_timeParameters, vehicleScaling, vehicle_type, null, OL_EnergyCarriers.HYDROGEN);
+J_EAFuelVehicle hydrogenVehicle = new J_EAFuelVehicle(parentGC, energyConsumption_kWhpkm, energyModel.p_timeParameters, vehicleScaling, vehicleType, null, OL_EnergyCarriers.HYDROGEN);
 
 //Set annual travel distance
 if (!isDefaultVehicle && annualTravelDistance_km > avgc_data.p_minAnnualTravelDistanceSurveyVehicle_km){
 		hydrogenVehicle.getTripTracker().setAnnualDistance_km(annualTravelDistance_km);
 }
-else if (vehicle_type == OL_EnergyAssetType.HYDROGEN_VAN){
+else if (vehicleType == OL_VehicleType.VAN){
 		hydrogenVehicle.getTripTracker().setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
 }
 /*ALCODEEND*/}
@@ -1656,19 +1654,11 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 	GCPublicCharger chargingStation = energyModel.add_PublicChargers();
 	chargingStation.p_gridConnectionID = dataChargingStation.gc_id();
 	chargingStation.p_ownerID = dataChargingStation.owner_id();				
-	chargingStation.p_isChargingCentre = dataChargingStation.is_charging_centre();
 		
 	//Make owner name if it is not filled in (used for display on UI).
 	if (dataChargingStation.owner_id() == null){
-		if(chargingStation.p_isChargingCentre){
-			chargingStation.p_ownerID = "Publiek laadcentrum " + laadCentrum_nr;
-			laadCentrum_nr++;
-		}
-		else{
-			chargingStation.p_ownerID = "Publieke laadpaal " + laadpaal_nr;
-			laadpaal_nr++;
-	
-		}		
+		chargingStation.p_ownerID = "Publiek laadpunt " + laadpaal_nr;
+		laadpaal_nr++;	
 	}
 	
 	//Create and connect ConnectionOwner	
@@ -1702,8 +1692,8 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 			
 		
 	//Default charger parameters
-	double numberOfSockets = dataChargingStation.number_of_chargers() != null ? dataChargingStation.number_of_chargers() : avgc_data.p_defaultNrOfSocketsPerCharger;
-	double maxPowerPerSocket_kW = dataChargingStation.power_per_charger_kw() != null ? dataChargingStation.power_per_charger_kw() : avgc_data.p_avgEVMaxChargePowerCar_kW;
+	double numberOfSockets = dataChargingStation.number_of_sockets() != null ? dataChargingStation.number_of_sockets() : avgc_data.p_defaultNrOfSocketsPerCharger;
+	double maxPowerPerSocket_kW = dataChargingStation.power_per_socket_kw() != null ? dataChargingStation.power_per_socket_kw() : avgc_data.p_avgEVMaxChargePowerCar_kW;
 
 	//Assumption is all chargepoints are the same for one GCPublicCharger
 	boolean V1GCapable = true; //randomTrue(avgc_data.p_v1gProbability);
@@ -1712,8 +1702,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 	chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation, energyModel.p_timeParameters));
 		
 	//Create chargingsession/vehicles
-	if(dataChargingStation.vehicle_type() == OL_EnergyAssetType.CHARGER){
-
+	if(dataChargingStation.uses_charging_sessions()){
 		int sessionSocketNr = 0;
 		List<J_ChargingSessionData> chargerProfile = f_getChargerProfile();
 		for(int i = 0; i< numberOfSockets; i++){
@@ -1734,10 +1723,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 	
 	//Get polygonString for GIS object	
 	String polygonString;
-	if (chargingStation.p_isChargingCentre) {
-		if(dataChargingStation.polygon() == null){
-			throw new RuntimeException("Trying to make a charging CENTRE without specifying the polygon, this is only possible for a single charge POLE");
-		}
+	if (dataChargingStation.polygon() != null || !dataChargingStation.equals("")) {
 		polygonString = dataChargingStation.polygon();
 	}
 	else{
@@ -2426,7 +2412,7 @@ if (nbDailyCarCommuters_notNull + nbDailyCarVisitors_notNull > 0){
 	double maxChargingPower_kW 		= avgc_data.p_avgEVMaxChargePowerCar_kW;	
 	
 	for (int i = 0; i< nbPetroleumFuelCarsComute; i++){
-		f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, isDefaultVehicle, 0);
+		f_addPetroleumFuelVehicle(companyGC, OL_VehicleType.CAR, isDefaultVehicle, 0);
 	}
 	
 	
@@ -2443,7 +2429,7 @@ if (nbDailyCarCommuters_notNull + nbDailyCarVisitors_notNull > 0){
 	
 	if (createElectricEA){ // Check if electric demand EA should be created
 		for (int j = 0; j< nbEVCarsComute; j++){
-			f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VEHICLE, isDefaultVehicle, 0, maxChargingPower_kW);
+			f_addElectricVehicle(companyGC, OL_VehicleType.CAR, isDefaultVehicle, 0, maxChargingPower_kW);
 		}
 	}
 	
@@ -2487,7 +2473,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		
 		//create petroleumFuel vehicle
 		for (int i = 0; i< nbPetroleumFuelCars; i++){
-			f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, isDefaultVehicle, annualTravelDistance_km);
+			f_addPetroleumFuelVehicle(companyGC, OL_VehicleType.CAR, isDefaultVehicle, annualTravelDistance_km);
 		}
 		
 		//Get number of chargepoints if filled in
@@ -2507,7 +2493,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		//create EV
 		if (createElectricEA){ // Check if electric demand EA should be created
 			for (int j = 0; j< nbEVCars; j++){
-				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VEHICLE, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW);
+				f_addElectricVehicle(companyGC, OL_VehicleType.CAR, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW);
 			}
 		}
 		
@@ -2547,7 +2533,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		
 		//create petroleumFuel vehicles
 		for (int i = 0; i< nbPetroleumFuelVans; i++){
-			f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_VAN, isDefaultVehicle, annualTravelDistance_km);
+			f_addPetroleumFuelVehicle(companyGC, OL_VehicleType.VAN, isDefaultVehicle, annualTravelDistance_km);
 		}
 		
 		//Get number of chargepoints if filled in
@@ -2568,7 +2554,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		//create electric vehicles
 		if (createElectricEA){ // Check if electric demand EA should be created
 			for (int j = 0; j< nbEVVans; j++){
-				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VAN, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW);
+				f_addElectricVehicle(companyGC, OL_VehicleType.VAN, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW);
 			}
 		}
 		
@@ -2608,7 +2594,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		
 		//create petroleumFuel vehicles
 		for (int i = 0; i< nbPetroleumFuelTrucks; i++){
-			f_addPetroleumFuelVehicle(companyGC, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, isDefaultVehicle, annualTravelDistance_km);
+			f_addPetroleumFuelVehicle(companyGC, OL_VehicleType.TRUCK, isDefaultVehicle, annualTravelDistance_km);
 		}
 		
 		//Get number of chargepoints if filled in
@@ -2629,7 +2615,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		//create electric vehicles
 		if (createElectricEA){ // Check if electric demand EA should be created
 			for (int j = 0; j< nbEVTrucks; j++){
-				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_TRUCK, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW);
+				f_addElectricVehicle(companyGC, OL_VehicleType.TRUCK, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW);
 			}
 		}
 		
@@ -4455,7 +4441,7 @@ for(int i = 0; i < amountOfOwnedCars ; i++){
 	//Oprit? -> only then you should have a chance to start with EV (public ev is not supported by sliders, public chargepoint is then used instead)
 	if( house.p_eigenOprit){
 		if (randomTrue( avgc_data.p_shareOfElectricVehicleOwnership)){
-			J_EAEV ev = f_addElectricVehicle(house, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, 0, 0);
+			J_EAEV ev = f_addElectricVehicle(house, OL_VehicleType.CAR, true, 0, 0);
 			ev.getTripTracker().setAnnualDistance_km(ev.getTripTracker().getAnnualDistance_km()*tripTrackerScaling);
 			//Set Default charging management
 			if(house.f_getCurrentChargingType() == OL_ChargingAttitude.NONE){
@@ -4463,12 +4449,12 @@ for(int i = 0; i < amountOfOwnedCars ; i++){
 			}
 		}
 		else{
-			J_EAFuelVehicle petroleumFuelVehicle = f_addPetroleumFuelVehicle(house, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, true, 0);
+			J_EAFuelVehicle petroleumFuelVehicle = f_addPetroleumFuelVehicle(house, OL_VehicleType.CAR, true, 0);
 			petroleumFuelVehicle.getTripTracker().setAnnualDistance_km(petroleumFuelVehicle.getTripTracker().getAnnualDistance_km()*tripTrackerScaling);
 		}
 	}
 	else {
-		J_EAFuelVehicle petroleumFuelVehicle = f_addPetroleumFuelVehicle(house, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, true, 0);
+		J_EAFuelVehicle petroleumFuelVehicle = f_addPetroleumFuelVehicle(house, OL_VehicleType.CAR, true, 0);
 		petroleumFuelVehicle.getTripTracker().setAnnualDistance_km(petroleumFuelVehicle.getTripTracker().getAnnualDistance_km()*tripTrackerScaling);
 	}
 }

@@ -165,7 +165,7 @@ zero_Interface.c_UIResultsInstances.add(uI_Results);]]></StartupCode>
 			<ShowLabel>false</ShowLabel>
 			<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 			<Z>0</Z>
-			<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
+			<LevelVisibility>HIDE_NON_CURRENT</LevelVisibility>
 			<Presentation xmlns:al="http://anylogic.com"/>
 		</Level>
 	</Presentation>

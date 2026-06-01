@@ -100,8 +100,19 @@
 			</OptionList>
 			<OptionList>
 				<Id>1667742453792</Id>
-				<Name><![CDATA[OL_UNUSED3]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Name><![CDATA[OL_CustomTripTrackerValueTypes]]></Name>
+				<Option>
+					<Id>1780057159776</Id>
+					<Name><![CDATA[STARTTIME_H]]></Name>
+				</Option>
+				<Option>
+					<Id>1780057171170</Id>
+					<Name><![CDATA[ENDTIME_H]]></Name>
+				</Option>
+				<Option>
+					<Id>1780057173562</Id>
+					<Name><![CDATA[DISTANCE_KM]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1675025163072</Id>
@@ -436,6 +447,10 @@
 				<Id>1776429367217</Id>
 				<Name><![CDATA[DHWProfile_data]]></Name>
 				<Folder>1754045711603</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1780057244152</Id>
+				<Name><![CDATA[J_CustomTripTrackerGenerator]]></Name>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

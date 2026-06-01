@@ -444,8 +444,8 @@
 			<Type><![CDATA[GridConnection]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[vehicle_type]]></Name>
-			<Type><![CDATA[OL_EnergyAssetType]]></Type>
+			<Name><![CDATA[vehicleType]]></Name>
+			<Type><![CDATA[OL_VehicleType]]></Type>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[isDefaultVehicle]]></Name>
@@ -480,8 +480,8 @@
 			<Type><![CDATA[GridConnection]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[vehicle_type]]></Name>
-			<Type><![CDATA[OL_EnergyAssetType]]></Type>
+			<Name><![CDATA[vehicleType]]></Name>
+			<Type><![CDATA[OL_VehicleType]]></Type>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[isDefaultVehicle]]></Name>
@@ -581,8 +581,8 @@
 			<Type><![CDATA[GridConnection]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[vehicle_type]]></Name>
-			<Type><![CDATA[OL_EnergyAssetType]]></Type>
+			<Name><![CDATA[vehicleType]]></Name>
+			<Type><![CDATA[OL_VehicleType]]></Type>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[isDefaultVehicle]]></Name>
