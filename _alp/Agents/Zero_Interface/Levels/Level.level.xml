@@ -1,10 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Presentation>
 	<RoundedRectangle>
+		<Id>1780350035065</Id>
+		<Name><![CDATA[roundRectangle14]]></Name>
+		<X>409</X>
+		<Y>24</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>6</LineWidth>
+		<LineColor>-6316129</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>80</Width>
+		<Height>60</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+		<ArcRadius>10</ArcRadius>
+	</RoundedRectangle>
+	<Rectangle>
+		<Id>1780345704010</Id>
+		<Name><![CDATA[rectangle]]></Name>
+		<X>410</X>
+		<Y>40</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>8</LineWidth>
+		<LineColor>-1080057953</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>900</Width>
+		<Height>708</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor/>
+		<FillMaterial>null</FillMaterial>
+	</Rectangle>
+	<RoundedRectangle>
+		<Id>1780345866124</Id>
+		<Name><![CDATA[roundRectangle13]]></Name>
+		<X>410</X>
+		<Y>18</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>3</LineWidth>
+		<LineColor>-16744320</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>910</Width>
+		<Height>80</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor/>
+		<FillMaterial>null</FillMaterial>
+		<ArcRadius>10</ArcRadius>
+	</RoundedRectangle>
+	<RoundedRectangle>
 		<Id>1779967662969</Id>
 		<Name><![CDATA[roundRectangle1]]></Name>
 		<X>410</X>
-		<Y>30</Y>
+		<Y>18</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -17,13 +97,15 @@
 		<Z>0</Z>
 		<ZHeight>10</ZHeight>
 		<LineWidth>1</LineWidth>
-		<LineColor>-1184275</LineColor>
+		<LineColor>-1</LineColor>
+		<LineColorCode>zenmocolor_blue3.getFillColor()</LineColorCode>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>910</Width>
 		<Height>80</Height>
 		<Rotation>0.0</Rotation>
-		<FillColor>-1184275</FillColor>
+		<FillColor>-1052689</FillColor>
+		<FillColorCode>zenmocolor_blue3.getFillColor()</FillColorCode>
 		<FillMaterial>null</FillMaterial>
 		<ArcRadius>10</ArcRadius>
 	</RoundedRectangle>
@@ -466,7 +548,7 @@ getExperimentHost().openWebSite("https://lux.energy/");
 		<Id>1704210756310</Id>
 		<Name><![CDATA[gr_clickedObjectInfo]]></Name>
 		<X>120</X>
-		<Y>-15</Y>
+		<Y>-25</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -983,7 +1065,7 @@ else{
 		<Id>1720909739871</Id>
 		<Name><![CDATA[gr_multipleBuildingInfo]]></Name>
 		<X>1275</X>
-		<Y>770</Y>
+		<Y>760</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1231,7 +1313,7 @@ v_selectedGridConnectionIndex &gt; 0 ?
 		<Id>1725020138710</Id>
 		<Name><![CDATA[map]]></Name>
 		<X>410</X>
-		<Y>100</Y>
+		<Y>88</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1319,8 +1401,8 @@ v_selectedGridConnectionIndex &gt; 0 ?
 	<Group>
 		<Id>1730113808401</Id>
 		<Name><![CDATA[gr_uI_Results_presentation]]></Name>
-		<X>1440</X>
-		<Y>230</Y>
+		<X>1350</X>
+		<Y>260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1328,7 +1410,6 @@ v_selectedGridConnectionIndex &gt; 0 ?
 		<PublicFlag>true</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
-		<Lock>true</Lock>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
@@ -1353,8 +1434,8 @@ v_selectedGridConnectionIndex &gt; 0 ?
 				<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
 				<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
 				<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
-				<Latitude>52.52173648990926</Latitude>
-				<Longitude>6.109451573117503</Longitude>
+				<Latitude>52.5332614633099</Latitude>
+				<Longitude>6.206915486889641</Longitude>
 			</EmbeddedObjectPresentation>
 		</Presentation>
 	</Group>
@@ -3108,7 +3189,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 		<Id>1701951640330</Id>
 		<Name><![CDATA[gr_legenda]]></Name>
 		<X>910</X>
-		<Y>880</Y>
+		<Y>870</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -6022,241 +6103,6 @@ else{
 			</Group>
 		</Presentation>
 	</Group>
-	<Group>
-		<Id>1753883303789</Id>
-		<Name><![CDATA[gr_simulateYearScreen]]></Name>
-		<X>1920</X>
-		<Y>160</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Presentation>
-			<Group>
-				<Id>1709717180404</Id>
-				<Name><![CDATA[gr_loadIconYearSimulation]]></Name>
-				<X>-261</X>
-				<Y>-25</Y>
-				<Label>
-					<X>10</X>
-					<Y>0</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>false</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Presentation>
-					<Rectangle>
-						<Id>1709717180406</Id>
-						<Name><![CDATA[rect_loadIconSmall]]></Name>
-						<X>-309</X>
-						<Y>-50</Y>
-						<Label>
-							<X>10</X>
-							<Y>10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-1644806</LineColor>
-						<LineColorCode>zenmocolor_blue1.getFillColor()</LineColorCode>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>DASHED</LineStyle>
-						<Width>550</Width>
-						<Height>250</Height>
-						<Rotation>0.0</Rotation>
-						<FillColor>-369756683</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Rectangle>
-					<Image>
-						<Id>1709717180408</Id>
-						<Name><![CDATA[image_loadIconSmall]]></Name>
-						<X>-19</X>
-						<Y>60</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Width>60</Width>
-						<Height>60</Height>
-						<Rotation>0.0</Rotation>
-						<ImageFiles>
-							<ImageResourceReference>
-								<PackageName>zerointerfaceloader</PackageName>
-								<ClassName>icon_loading.gif</ClassName>
-							</ImageResourceReference>
-						</ImageFiles>
-						<OriginalSize>false</OriginalSize>
-					</Image>
-					<Text>
-						<Id>1709717180410</Id>
-						<Name><![CDATA[t_loadIconSmall]]></Name>
-						<X>12</X>
-						<Y>15</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Color>-16777216</Color>
-						<Text><![CDATA[Jaar wordt gesimuleerd]]></Text>
-						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
-							<Size>22</Size>
-							<Style>1</Style>
-						</Font>
-						<Alignment>CENTER</Alignment>
-					</Text>
-				</Presentation>
-			</Group>
-			<Group>
-				<Id>1709717180367</Id>
-				<Name><![CDATA[gr_simulateYear]]></Name>
-				<X>-340</X>
-				<Y>20</Y>
-				<Label>
-					<X>10</X>
-					<Y>0</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>false</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<XCode>-340</XCode>
-				<YCode>20</YCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Presentation>
-					<Rectangle>
-						<Id>1709717180369</Id>
-						<Name><![CDATA[rect_simulateYearScreenSmall]]></Name>
-						<X>-230</X>
-						<Y>-94</Y>
-						<Label>
-							<X>10</X>
-							<Y>10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor/>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>DASHED</LineStyle>
-						<Width>550</Width>
-						<Height>249</Height>
-						<Rotation>0.0</Rotation>
-						<FillColor>-4069658</FillColor>
-						<FillColorCode>zenmocolor_blue3.getFillColor()</FillColorCode>
-						<FillMaterial>null</FillMaterial>
-					</Rectangle>
-					<Group>
-						<Id>1709717180371</Id>
-						<Name><![CDATA[gr_simulateYearButton]]></Name>
-						<X>1</X>
-						<Y>69</Y>
-						<Label>
-							<X>10</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<OnClickCode>f_simulateYearFromMainInterface();</OnClickCode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Presentation>
-							<Text>
-								<Id>1709717180373</Id>
-								<Name><![CDATA[t_simulateYearToCalculateCostsSmall]]></Name>
-								<X>10</X>
-								<Y>-60</Y>
-								<Label>
-									<X>0</X>
-									<Y>-10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<Rotation>0.0</Rotation>
-								<Color>-16760768</Color>
-								<Text><![CDATA[Simuleer jaar voor KPI's]]></Text>
-								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>22</Size>
-									<Style>1</Style>
-								</Font>
-								<Alignment>CENTER</Alignment>
-							</Text>
-							<Image>
-								<Id>1709717180375</Id>
-								<Name><![CDATA[image_simulateYearToCalculateCostsSmall]]></Name>
-								<X>-200</X>
-								<Y>-75</Y>
-								<Label>
-									<X>0</X>
-									<Y>-10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<Width>60</Width>
-								<Height>60</Height>
-								<Rotation>0.0</Rotation>
-								<ImageFiles>
-									<ImageResourceReference>
-										<PackageName>zerointerfaceloader</PackageName>
-										<ClassName>icon_greater_than.png</ClassName>
-									</ImageResourceReference>
-								</ImageFiles>
-								<OriginalSize>false</OriginalSize>
-							</Image>
-						</Presentation>
-					</Group>
-				</Presentation>
-			</Group>
-		</Presentation>
-	</Group>
 	<Text>
 		<Id>1758032385328</Id>
 		<Name><![CDATA[txt_cablesAndPipesColors]]></Name>
@@ -6936,7 +6782,7 @@ else{
 		<Id>1696520897606</Id>
 		<Name><![CDATA[gr_zoomButton]]></Name>
 		<X>1264</X>
-		<Y>686</Y>
+		<Y>674</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -7223,7 +7069,7 @@ else{
 				<Width>60</Width>
 				<Height>60</Height>
 				<Rotation>0.0</Rotation>
-				<FillColor>-7022639</FillColor>
+				<FillColor>-1052689</FillColor>
 				<FillMaterial>null</FillMaterial>
 				<ArcRadius>6</ArcRadius>
 			</RoundedRectangle>
@@ -7231,7 +7077,7 @@ else{
 				<Id>1780216691720</Id>
 				<Name><![CDATA[text]]></Name>
 				<X>-809</X>
-				<Y>39</Y>
+				<Y>38</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -7255,8 +7101,8 @@ else{
 			<Image>
 				<Id>1780216770311</Id>
 				<Name><![CDATA[image]]></Name>
-				<X>-833</X>
-				<Y>7</Y>
+				<X>-831</X>
+				<Y>8</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -7267,8 +7113,8 @@ else{
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>50</Width>
-				<Height>36</Height>
+				<Width>45</Width>
+				<Height>33</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -7476,7 +7322,7 @@ v_activeMapLayer = OL_MapOverlayTypes.PARKING_TYPE;</OnClickCode>
 						<Id>1780216917977</Id>
 						<Name><![CDATA[text1]]></Name>
 						<X>-120</X>
-						<Y>5</Y>
+						<Y>8</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -7527,7 +7373,7 @@ consumptie]]></Text>
 						<Id>1780217000394</Id>
 						<Name><![CDATA[text3]]></Name>
 						<X>0</X>
-						<Y>5</Y>
+						<Y>8</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -7552,7 +7398,7 @@ consumptie]]></Text>
 						<Id>1780217020184</Id>
 						<Name><![CDATA[text4]]></Name>
 						<X>60</X>
-						<Y>5</Y>
+						<Y>8</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -7737,7 +7583,7 @@ type]]></Text>
 		<Id>1719829993001</Id>
 		<Name><![CDATA[t_windSpeed]]></Name>
 		<X>970</X>
-		<Y>70</Y>
+		<Y>58</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -7763,7 +7609,7 @@ type]]></Text>
 		<Id>1719847144211</Id>
 		<Name><![CDATA[plot_outsideTemperature]]></Name>
 		<X>751</X>
-		<Y>39</Y>
+		<Y>27</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -7837,7 +7683,7 @@ type]]></Text>
 		<Id>1719848137592</Id>
 		<Name><![CDATA[plot_solarIrradiance]]></Name>
 		<X>751</X>
-		<Y>64</Y>
+		<Y>52</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -7911,7 +7757,7 @@ type]]></Text>
 		<Id>1719829988146</Id>
 		<Name><![CDATA[t_solarIrradiance]]></Name>
 		<X>740</X>
-		<Y>68</Y>
+		<Y>56</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -7937,7 +7783,7 @@ type]]></Text>
 		<Id>1719829894799</Id>
 		<Name><![CDATA[t_outsideTemperature]]></Name>
 		<X>740</X>
-		<Y>43</Y>
+		<Y>31</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -7963,7 +7809,7 @@ type]]></Text>
 		<Id>1779967314498</Id>
 		<Name><![CDATA[gr_dataInfoBox]]></Name>
 		<X>478</X>
-		<Y>65</Y>
+		<Y>53</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -8139,7 +7985,7 @@ type]]></Text>
 		<Id>1780212818564</Id>
 		<Name><![CDATA[roundRectangle2]]></Name>
 		<X>410</X>
-		<Y>780</Y>
+		<Y>770</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -8156,7 +8002,7 @@ type]]></Text>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>910</Width>
-		<Height>190</Height>
+		<Height>200</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor/>
 		<FillMaterial>null</FillMaterial>
@@ -8166,8 +8012,8 @@ type]]></Text>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1725017697644</Id>
 		<Name><![CDATA[checkbox_cables]]></Name>
-		<X>1205</X>
-		<Y>38</Y>
+		<X>1125</X>
+		<Y>58</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -8176,7 +8022,7 @@ type]]></Text>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="105" Height="30">
+		<BasicProperties Width="105" Height="20">
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
@@ -8204,7 +8050,7 @@ gr_cablesLegend.setVisible(showCables);</ActionCode>
 		<Id>1734444497900</Id>
 		<Name><![CDATA[cb_showFilterInterface]]></Name>
 		<X>1250</X>
-		<Y>70</Y>
+		<Y>53</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -8240,8 +8086,8 @@ else{
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1780213147396</Id>
 		<Name><![CDATA[checkbox_netPlanes]]></Name>
-		<X>1085</X>
-		<Y>38</Y>
+		<X>1125</X>
+		<Y>28</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -8250,7 +8096,7 @@ else{
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="110" Height="30">
+		<BasicProperties Width="110" Height="23">
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
@@ -8918,6 +8764,241 @@ f_removeAllFilters();
 				</Font>
 				<Alignment>CENTER</Alignment>
 			</Text>
+		</Presentation>
+	</Group>
+	<Group>
+		<Id>1709717180404</Id>
+		<Name><![CDATA[gr_loadIconYearSimulation]]></Name>
+		<X>1350</X>
+		<Y>100</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Rectangle>
+				<Id>1709717180406</Id>
+				<Name><![CDATA[rect_loadIconSmall]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor>-1644806</LineColor>
+				<LineColorCode>zenmocolor_blue1.getFillColor()</LineColorCode>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>DASHED</LineStyle>
+				<Width>550</Width>
+				<Height>150</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-369756683</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Rectangle>
+			<Image>
+				<Id>1709717180408</Id>
+				<Name><![CDATA[image_loadIconSmall]]></Name>
+				<X>151</X>
+				<Y>60</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>60</Width>
+				<Height>60</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_loading.gif</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1709717180410</Id>
+				<Name><![CDATA[t_loadIconSmall]]></Name>
+				<X>151</X>
+				<Y>20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Jaar wordt gesimuleerd]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>22</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+		</Presentation>
+	</Group>
+	<Group>
+		<Id>1780305988344</Id>
+		<Name><![CDATA[gr_simulateYearScreen]]></Name>
+		<X>1570</X>
+		<Y>-270</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Group>
+				<Id>1709717180367</Id>
+				<Name><![CDATA[gr_simulateYear]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<XCode>-340</XCode>
+				<YCode>20</YCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Rectangle>
+						<Id>1709717180369</Id>
+						<Name><![CDATA[rect_simulateYearScreenSmall]]></Name>
+						<X>-250</X>
+						<Y>-30</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor/>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>DASHED</LineStyle>
+						<Width>550</Width>
+						<Height>194</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-4069658</FillColor>
+						<FillColorCode>zenmocolor_blue3.getFillColor()</FillColorCode>
+						<FillMaterial>null</FillMaterial>
+					</Rectangle>
+					<Group>
+						<Id>1709717180371</Id>
+						<Name><![CDATA[gr_simulateYearButton]]></Name>
+						<X>1</X>
+						<Y>69</Y>
+						<Label>
+							<X>10</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<OnClickCode>f_simulateYearFromMainInterface();</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Presentation>
+							<Text>
+								<Id>1709717180373</Id>
+								<Name><![CDATA[t_simulateYearToCalculateCostsSmall]]></Name>
+								<X>10</X>
+								<Y>-60</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16760768</Color>
+								<Text><![CDATA[Simuleer jaar voor KPI's]]></Text>
+								<Font>
+									<Name><![CDATA[SansSerif]]></Name>
+									<Size>22</Size>
+									<Style>1</Style>
+								</Font>
+								<Alignment>CENTER</Alignment>
+							</Text>
+							<Image>
+								<Id>1709717180375</Id>
+								<Name><![CDATA[image_simulateYearToCalculateCostsSmall]]></Name>
+								<X>-200</X>
+								<Y>-75</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Width>60</Width>
+								<Height>60</Height>
+								<Rotation>0.0</Rotation>
+								<ImageFiles>
+									<ImageResourceReference>
+										<PackageName>zerointerfaceloader</PackageName>
+										<ClassName>icon_greater_than.png</ClassName>
+									</ImageResourceReference>
+								</ImageFiles>
+								<OriginalSize>false</OriginalSize>
+							</Image>
+						</Presentation>
+					</Group>
+				</Presentation>
+			</Group>
 		</Presentation>
 	</Group>
 </Presentation>

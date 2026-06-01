@@ -19,6 +19,33 @@
 		<Rotation>0.0</Rotation>
 		<Presentation>
 			<RoundedRectangle>
+				<Id>1780349257504</Id>
+				<Name><![CDATA[roundRectangle5]]></Name>
+				<X>7</X>
+				<Y>2</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor>-1</LineColor>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>371</Width>
+				<Height>247</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-2894893</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>10</ArcRadius>
+			</RoundedRectangle>
+			<RoundedRectangle>
 				<Id>1780132580411</Id>
 				<Name><![CDATA[rect_electricityDemandSlidersCompanies]]></Name>
 				<X>10</X>
@@ -48,7 +75,7 @@
 			<RoundedRectangle>
 				<Id>1780141849295</Id>
 				<Name><![CDATA[roundRectangle2]]></Name>
-				<X>20</X>
+				<X>21</X>
 				<Y>15</Y>
 				<Label>
 					<X>10</X>
@@ -68,14 +95,14 @@
 				<Width>335</Width>
 				<Height>36</Height>
 				<Rotation>0.0</Rotation>
-				<FillColor>-599795</FillColor>
+				<FillColor>2096675328</FillColor>
 				<FillMaterial>null</FillMaterial>
 				<ArcRadius>6</ArcRadius>
 			</RoundedRectangle>
 			<Text>
 				<Id>1728384392422</Id>
 				<Name><![CDATA[txt_companiesElectricityDemandReduction_pct]]></Name>
-				<X>350</X>
+				<X>353</X>
 				<Y>65</Y>
 				<Label>
 					<X>0</X>
@@ -102,7 +129,7 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1728384392424</Id>
 				<Name><![CDATA[sl_companiesElectricityDemandReduction_pct]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>85</Y>
 				<Label>
 					<X>0</X>
@@ -129,7 +156,7 @@
 			<Text>
 				<Id>1728384392426</Id>
 				<Name><![CDATA[txt_companiesElectricityDemandReductionDescription]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>65</Y>
 				<Label>
 					<X>0</X>
@@ -155,7 +182,7 @@
 			<Text>
 				<Id>1728384392430</Id>
 				<Name><![CDATA[txt_companiesRooftopPVCompanies_pct]]></Name>
-				<X>350</X>
+				<X>353</X>
 				<Y>120</Y>
 				<Label>
 					<X>0</X>
@@ -182,7 +209,7 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1728384392432</Id>
 				<Name><![CDATA[sl_companiesRooftopPV_pct]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>139</Y>
 				<Label>
 					<X>0</X>
@@ -214,7 +241,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 			<Text>
 				<Id>1728384392434</Id>
 				<Name><![CDATA[txt_companiesRooftopPVDescription]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>120</Y>
 				<Label>
 					<X>0</X>
@@ -240,7 +267,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 			<Image>
 				<Id>1746091438857</Id>
 				<Name><![CDATA[i_companiesRooftopPV]]></Name>
-				<X>178</X>
+				<X>181</X>
 				<Y>123</Y>
 				<Label>
 					<X>0</X>
@@ -267,7 +294,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 			<Image>
 				<Id>1746091438909</Id>
 				<Name><![CDATA[i_companiesElectricityReduction]]></Name>
-				<X>207</X>
+				<X>210</X>
 				<Y>68</Y>
 				<Label>
 					<X>0</X>
@@ -319,7 +346,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 			<Text>
 				<Id>1754985531354</Id>
 				<Name><![CDATA[txt_companiesCurtailmentDescription]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>185</Y>
 				<Label>
 					<X>0</X>
@@ -346,7 +373,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1754985531358</Id>
 				<Name><![CDATA[cb_companiesCurtailment]]></Name>
-				<X>325</X>
+				<X>328</X>
 				<Y>179</Y>
 				<Label>
 					<X>0</X>
@@ -371,7 +398,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 			<Image>
 				<Id>1754985531361</Id>
 				<Name><![CDATA[i_companiesCurtailment]]></Name>
-				<X>144</X>
+				<X>147</X>
 				<Y>188</Y>
 				<Label>
 					<X>0</X>
@@ -398,7 +425,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 			<Text>
 				<Id>1780132917587</Id>
 				<Name><![CDATA[text8]]></Name>
-				<X>25</X>
+				<X>28</X>
 				<Y>105</Y>
 				<Label>
 					<X>0</X>
@@ -424,7 +451,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 			<Text>
 				<Id>1780132917591</Id>
 				<Name><![CDATA[text9]]></Name>
-				<X>350</X>
+				<X>353</X>
 				<Y>105</Y>
 				<Label>
 					<X>0</X>
@@ -450,7 +477,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 			<Text>
 				<Id>1780132955882</Id>
 				<Name><![CDATA[text10]]></Name>
-				<X>25</X>
+				<X>28</X>
 				<Y>159</Y>
 				<Label>
 					<X>0</X>
@@ -476,7 +503,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 			<Text>
 				<Id>1780132955885</Id>
 				<Name><![CDATA[text11]]></Name>
-				<X>350</X>
+				<X>353</X>
 				<Y>159</Y>
 				<Label>
 					<X>0</X>
@@ -657,7 +684,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 	<Group>
 		<Id>1750063382217</Id>
 		<Name><![CDATA[gr_electricitySliders_households]]></Name>
-		<X>-10</X>
+		<X>0</X>
 		<Y>40</Y>
 		<Label>
 			<X>10</X>
@@ -672,6 +699,33 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Presentation>
+			<RoundedRectangle>
+				<Id>1780348447781</Id>
+				<Name><![CDATA[roundRectangle4]]></Name>
+				<X>6</X>
+				<Y>2</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor>-1</LineColor>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>372</Width>
+				<Height>363</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-2894893</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>10</ArcRadius>
+			</RoundedRectangle>
 			<RoundedRectangle>
 				<Id>1779960514382</Id>
 				<Name><![CDATA[roundRectangle]]></Name>
@@ -702,7 +756,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 			<RoundedRectangle>
 				<Id>1780141632066</Id>
 				<Name><![CDATA[roundRectangle1]]></Name>
-				<X>20</X>
+				<X>21</X>
 				<Y>15</Y>
 				<Label>
 					<X>10</X>
@@ -722,14 +776,14 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<Width>335</Width>
 				<Height>36</Height>
 				<Rotation>0.0</Rotation>
-				<FillColor>-599795</FillColor>
+				<FillColor>2096675328</FillColor>
 				<FillMaterial>null</FillMaterial>
 				<ArcRadius>6</ArcRadius>
 			</RoundedRectangle>
 			<Text>
 				<Id>1750063382221</Id>
 				<Name><![CDATA[txt_electricityDemandIncrease_pct]]></Name>
-				<X>350</X>
+				<X>353</X>
 				<Y>270</Y>
 				<Label>
 					<X>0</X>
@@ -756,7 +810,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 			<Text>
 				<Id>1750063382223</Id>
 				<Name><![CDATA[txt_householdPV_pct]]></Name>
-				<X>352</X>
+				<X>355</X>
 				<Y>65</Y>
 				<Label>
 					<X>0</X>
@@ -784,7 +838,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1750063382225</Id>
 				<Name><![CDATA[sl_householdRooftopPV_pct]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>85</Y>
 				<Label>
 					<X>0</X>
@@ -819,7 +873,7 @@ f_setHouseholdBatteries( sl_householdBatteries_pct.getValue(), uI_Tabs.f_getActi
 			<Text>
 				<Id>1750063382227</Id>
 				<Name><![CDATA[txt_householdPVDescription]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>65</Y>
 				<Label>
 					<X>0</X>
@@ -870,7 +924,7 @@ f_setHouseholdBatteries( sl_householdBatteries_pct.getValue(), uI_Tabs.f_getActi
 			<Text>
 				<Id>1750063382237</Id>
 				<Name><![CDATA[txt_householdBatteriesDescription]]></Name>
-				<X>61</X>
+				<X>64</X>
 				<Y>120</Y>
 				<Label>
 					<X>0</X>
@@ -897,7 +951,7 @@ f_setHouseholdBatteries( sl_householdBatteries_pct.getValue(), uI_Tabs.f_getActi
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1750063382239</Id>
 				<Name><![CDATA[sl_householdBatteries_pct]]></Name>
-				<X>65</X>
+				<X>68</X>
 				<Y>138</Y>
 				<Label>
 					<X>0</X>
@@ -924,7 +978,7 @@ f_setHouseholdBatteries( sl_householdBatteries_pct.getValue(), uI_Tabs.f_getActi
 			<Text>
 				<Id>1750063382241</Id>
 				<Name><![CDATA[txt_householdBatteriesResidentialArea_pct]]></Name>
-				<X>350</X>
+				<X>353</X>
 				<Y>121</Y>
 				<Label>
 					<X>0</X>
@@ -951,7 +1005,7 @@ f_setHouseholdBatteries( sl_householdBatteries_pct.getValue(), uI_Tabs.f_getActi
 			<Text>
 				<Id>1750063382251</Id>
 				<Name><![CDATA[txt_householdElectricityDemandIncreaseDescription]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>270</Y>
 				<Label>
 					<X>0</X>
@@ -978,7 +1032,7 @@ f_setHouseholdBatteries( sl_householdBatteries_pct.getValue(), uI_Tabs.f_getActi
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1750063382253</Id>
 				<Name><![CDATA[sl_householdElectricityDemandIncrease_pct]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>289</Y>
 				<Label>
 					<X>0</X>
@@ -1006,7 +1060,7 @@ f_setHouseholdBatteries( sl_householdBatteries_pct.getValue(), uI_Tabs.f_getActi
 			<Text>
 				<Id>1750063382255</Id>
 				<Name><![CDATA[txt_householdElectricCookingDescription]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>215</Y>
 				<Label>
 					<X>0</X>
@@ -1033,7 +1087,7 @@ f_setHouseholdBatteries( sl_householdBatteries_pct.getValue(), uI_Tabs.f_getActi
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1750063382257</Id>
 				<Name><![CDATA[sl_householdElectricCooking_pct]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>234</Y>
 				<Label>
 					<X>0</X>
@@ -1060,7 +1114,7 @@ f_setHouseholdBatteries( sl_householdBatteries_pct.getValue(), uI_Tabs.f_getActi
 			<Text>
 				<Id>1750063382259</Id>
 				<Name><![CDATA[txt_householdElectricCookingResidentialArea_pct]]></Name>
-				<X>350</X>
+				<X>353</X>
 				<Y>215</Y>
 				<Label>
 					<X>0</X>
@@ -1116,7 +1170,7 @@ gr_trafoReinforcement.setVisible(true);
 			<Image>
 				<Id>1752232850349</Id>
 				<Name><![CDATA[i_householdPV]]></Name>
-				<X>123</X>
+				<X>126</X>
 				<Y>67</Y>
 				<Label>
 					<X>0</X>
@@ -1144,7 +1198,7 @@ gr_trafoReinforcement.setVisible(true);
 			<Image>
 				<Id>1752232850368</Id>
 				<Name><![CDATA[i_householdBatteries]]></Name>
-				<X>201</X>
+				<X>204</X>
 				<Y>121</Y>
 				<Label>
 					<X>0</X>
@@ -1172,7 +1226,7 @@ gr_trafoReinforcement.setVisible(true);
 			<Image>
 				<Id>1752232850385</Id>
 				<Name><![CDATA[i_householdElectricCooking]]></Name>
-				<X>200</X>
+				<X>203</X>
 				<Y>218</Y>
 				<Label>
 					<X>0</X>
@@ -1200,7 +1254,7 @@ gr_trafoReinforcement.setVisible(true);
 			<Image>
 				<Id>1752232850402</Id>
 				<Name><![CDATA[i_householdElectricityGrowth]]></Name>
-				<X>190</X>
+				<X>193</X>
 				<Y>273</Y>
 				<Label>
 					<X>0</X>
@@ -1228,7 +1282,7 @@ gr_trafoReinforcement.setVisible(true);
 			<Text>
 				<Id>1777639223067</Id>
 				<Name><![CDATA[txt_householdCurtailmentDescription]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>184</Y>
 				<Label>
 					<X>0</X>
@@ -1255,7 +1309,7 @@ gr_trafoReinforcement.setVisible(true);
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1777639223105</Id>
 				<Name><![CDATA[cb_householdCurtailment]]></Name>
-				<X>324</X>
+				<X>327</X>
 				<Y>180</Y>
 				<Label>
 					<X>0</X>
@@ -1280,7 +1334,7 @@ gr_trafoReinforcement.setVisible(true);
 			<Image>
 				<Id>1777639223144</Id>
 				<Name><![CDATA[i_householdCurtailment]]></Name>
-				<X>151</X>
+				<X>154</X>
 				<Y>187</Y>
 				<Label>
 					<X>0</X>
@@ -1307,7 +1361,7 @@ gr_trafoReinforcement.setVisible(true);
 			<Text>
 				<Id>1780129827541</Id>
 				<Name><![CDATA[text]]></Name>
-				<X>25</X>
+				<X>28</X>
 				<Y>105</Y>
 				<Label>
 					<X>0</X>
@@ -1333,7 +1387,7 @@ gr_trafoReinforcement.setVisible(true);
 			<Text>
 				<Id>1780129827545</Id>
 				<Name><![CDATA[text1]]></Name>
-				<X>351</X>
+				<X>354</X>
 				<Y>105</Y>
 				<Label>
 					<X>0</X>
@@ -1359,7 +1413,7 @@ gr_trafoReinforcement.setVisible(true);
 			<Text>
 				<Id>1780130223574</Id>
 				<Name><![CDATA[text2]]></Name>
-				<X>70</X>
+				<X>73</X>
 				<Y>158</Y>
 				<Label>
 					<X>0</X>
@@ -1385,7 +1439,7 @@ gr_trafoReinforcement.setVisible(true);
 			<Text>
 				<Id>1780130248438</Id>
 				<Name><![CDATA[text3]]></Name>
-				<X>350</X>
+				<X>353</X>
 				<Y>158</Y>
 				<Label>
 					<X>0</X>
@@ -1411,7 +1465,7 @@ gr_trafoReinforcement.setVisible(true);
 			<Text>
 				<Id>1780130398592</Id>
 				<Name><![CDATA[text4]]></Name>
-				<X>25</X>
+				<X>28</X>
 				<Y>254</Y>
 				<Label>
 					<X>0</X>
@@ -1437,7 +1491,7 @@ gr_trafoReinforcement.setVisible(true);
 			<Text>
 				<Id>1780130398603</Id>
 				<Name><![CDATA[text5]]></Name>
-				<X>351</X>
+				<X>354</X>
 				<Y>254</Y>
 				<Label>
 					<X>0</X>
@@ -1463,7 +1517,7 @@ gr_trafoReinforcement.setVisible(true);
 			<Text>
 				<Id>1780130401807</Id>
 				<Name><![CDATA[text6]]></Name>
-				<X>25</X>
+				<X>28</X>
 				<Y>309</Y>
 				<Label>
 					<X>0</X>
@@ -1489,7 +1543,7 @@ gr_trafoReinforcement.setVisible(true);
 			<Text>
 				<Id>1780130401817</Id>
 				<Name><![CDATA[text7]]></Name>
-				<X>351</X>
+				<X>354</X>
 				<Y>309</Y>
 				<Label>
 					<X>0</X>
@@ -1977,6 +2031,33 @@ zero_Interface.f_setSelectedGNText();
 		<Rotation>0.0</Rotation>
 		<Presentation>
 			<RoundedRectangle>
+				<Id>1780349375618</Id>
+				<Name><![CDATA[roundRectangle6]]></Name>
+				<X>7</X>
+				<Y>2</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor>-1</LineColor>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>370</Width>
+				<Height>291</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-2894893</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>10</ArcRadius>
+			</RoundedRectangle>
+			<RoundedRectangle>
 				<Id>1780132623772</Id>
 				<Name><![CDATA[rect_electricityDemandSlidersCompanies1]]></Name>
 				<X>10</X>
@@ -2006,7 +2087,7 @@ zero_Interface.f_setSelectedGNText();
 			<RoundedRectangle>
 				<Id>1780142036170</Id>
 				<Name><![CDATA[roundRectangle3]]></Name>
-				<X>20</X>
+				<X>21</X>
 				<Y>15</Y>
 				<Label>
 					<X>10</X>
@@ -2026,7 +2107,7 @@ zero_Interface.f_setSelectedGNText();
 				<Width>335</Width>
 				<Height>36</Height>
 				<Rotation>0.0</Rotation>
-				<FillColor>-599795</FillColor>
+				<FillColor>2096675328</FillColor>
 				<FillMaterial>null</FillMaterial>
 				<ArcRadius>6</ArcRadius>
 			</RoundedRectangle>
@@ -2059,7 +2140,7 @@ zero_Interface.f_setSelectedGNText();
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1750063382243</Id>
 				<Name><![CDATA[sl_gridBatteries_kWh]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>189</Y>
 				<Label>
 					<X>0</X>
@@ -2097,7 +2178,7 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 			<Text>
 				<Id>1750063382245</Id>
 				<Name><![CDATA[txt_gridBatteriesDescription]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>170</Y>
 				<Label>
 					<X>0</X>
@@ -2123,7 +2204,7 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 			<Text>
 				<Id>1750063382247</Id>
 				<Name><![CDATA[txt_gridBatteries_kWh]]></Name>
-				<X>350</X>
+				<X>353</X>
 				<Y>170</Y>
 				<Label>
 					<X>0</X>
@@ -2150,7 +2231,7 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 			<Image>
 				<Id>1752232850473</Id>
 				<Name><![CDATA[i_gridBatteries]]></Name>
-				<X>172</X>
+				<X>175</X>
 				<Y>173</Y>
 				<Label>
 					<X>0</X>
@@ -2178,7 +2259,7 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 			<Text>
 				<Id>1770118893494</Id>
 				<Name><![CDATA[txt_largeScalePV_ha]]></Name>
-				<X>350</X>
+				<X>353</X>
 				<Y>60</Y>
 				<Label>
 					<X>0</X>
@@ -2205,7 +2286,7 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1770118893505</Id>
 				<Name><![CDATA[sl_largeScalePV_ha]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>80</Y>
 				<Label>
 					<X>0</X>
@@ -2249,7 +2330,7 @@ f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_currentPVOnLand_ha, sliderPVFarm
 			<Text>
 				<Id>1770118893516</Id>
 				<Name><![CDATA[txt_largeScalePVDescription]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>60</Y>
 				<Label>
 					<X>0</X>
@@ -2275,7 +2356,7 @@ f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_currentPVOnLand_ha, sliderPVFarm
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1770118893524</Id>
 				<Name><![CDATA[sl_largeScaleWind_MW]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>133</Y>
 				<Label>
 					<X>0</X>
@@ -2318,7 +2399,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 			<Text>
 				<Id>1770118893533</Id>
 				<Name><![CDATA[txt_largeScaleWindDescription]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>115</Y>
 				<Label>
 					<X>0</X>
@@ -2343,7 +2424,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 			<Text>
 				<Id>1770118893541</Id>
 				<Name><![CDATA[txt_largeScaleWind_MW]]></Name>
-				<X>351</X>
+				<X>354</X>
 				<Y>115</Y>
 				<Label>
 					<X>0</X>
@@ -2369,7 +2450,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 			<Image>
 				<Id>1770118893549</Id>
 				<Name><![CDATA[i_largeScalePV]]></Name>
-				<X>107</X>
+				<X>110</X>
 				<Y>63</Y>
 				<Label>
 					<X>0</X>
@@ -2396,7 +2477,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 			<Image>
 				<Id>1770118893567</Id>
 				<Name><![CDATA[i_largeScaleWind]]></Name>
-				<X>116</X>
+				<X>119</X>
 				<Y>117</Y>
 				<Label>
 					<X>0</X>
@@ -2423,7 +2504,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 			<Text>
 				<Id>1777620991223</Id>
 				<Name><![CDATA[txt_gridCurtailmentDescription]]></Name>
-				<X>20</X>
+				<X>23</X>
 				<Y>231</Y>
 				<Label>
 					<X>0</X>
@@ -2449,7 +2530,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1777620991268</Id>
 				<Name><![CDATA[cb_gridCurtailment]]></Name>
-				<X>324</X>
+				<X>327</X>
 				<Y>226</Y>
 				<Label>
 					<X>0</X>
@@ -2474,7 +2555,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 			<Image>
 				<Id>1777620991324</Id>
 				<Name><![CDATA[i_gridCurtailment]]></Name>
-				<X>143</X>
+				<X>146</X>
 				<Y>234</Y>
 				<Label>
 					<X>0</X>
@@ -2652,14 +2733,14 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 			</Text>
 		</Presentation>
 	</Group>
-	<Group>
-		<Id>1780127593551</Id>
-		<Name><![CDATA[gr_electricityButton]]></Name>
-		<X>36</X>
-		<Y>73</Y>
+	<Image>
+		<Id>1780127593555</Id>
+		<Name><![CDATA[image3]]></Name>
+		<X>30</X>
+		<Y>61</Y>
 		<Label>
-			<X>10</X>
-			<Y>0</Y>
+			<X>0</X>
+			<Y>-10</Y>
 		</Label>
 		<PublicFlag>true</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
@@ -2667,40 +2748,21 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
+		<Width>30</Width>
+		<Height>24</Height>
 		<Rotation>0.0</Rotation>
-		<Presentation>
-			<Image>
-				<Id>1780127593555</Id>
-				<Name><![CDATA[image3]]></Name>
-				<X>-15</X>
-				<Y>-12</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>30</Width>
-				<Height>24</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>noun-electricity-3408805.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-		</Presentation>
-	</Group>
+		<ImageFiles>
+			<ImageResourceReference>
+				<PackageName>zerointerfaceloader</PackageName>
+				<ClassName>noun-electricity-3408805.png</ClassName>
+			</ImageResourceReference>
+		</ImageFiles>
+		<OriginalSize>false</OriginalSize>
+	</Image>
 	<Image>
 		<Id>1780143003510</Id>
 		<Name><![CDATA[image]]></Name>
-		<X>22</X>
+		<X>31</X>
 		<Y>61</Y>
 		<Label>
 			<X>0</X>
