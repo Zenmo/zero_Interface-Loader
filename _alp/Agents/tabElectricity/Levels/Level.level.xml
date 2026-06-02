@@ -41,7 +41,7 @@
 				<Width>371</Width>
 				<Height>247</Height>
 				<Rotation>0.0</Rotation>
-				<FillColor>-2894893</FillColor>
+				<FillColor>-4343957</FillColor>
 				<FillMaterial>null</FillMaterial>
 				<ArcRadius>10</ArcRadius>
 			</RoundedRectangle>
@@ -722,7 +722,7 @@ if(zero_Interface.rb_mapOverlay != null  &amp;&amp; zero_Interface.c_loadedMapOv
 				<Width>372</Width>
 				<Height>363</Height>
 				<Rotation>0.0</Rotation>
-				<FillColor>-2894893</FillColor>
+				<FillColor>-4343957</FillColor>
 				<FillMaterial>null</FillMaterial>
 				<ArcRadius>10</ArcRadius>
 			</RoundedRectangle>
@@ -2053,7 +2053,7 @@ zero_Interface.f_setSelectedGNText();
 				<Width>370</Width>
 				<Height>291</Height>
 				<Rotation>0.0</Rotation>
-				<FillColor>-2894893</FillColor>
+				<FillColor>-4343957</FillColor>
 				<FillMaterial>null</FillMaterial>
 				<ArcRadius>10</ArcRadius>
 			</RoundedRectangle>
