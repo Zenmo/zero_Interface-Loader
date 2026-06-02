@@ -437,6 +437,11 @@ if(selectedChartTypes_Energy == null){ // Temporary backup till all models have 
 }
 List<OL_ChartTypes> selectedChartTypes_Economic = settings.resultsUISelectedChartTypes_Economic();
 
+//Disable export functionality in profiles if not full access.
+if(settings.isPublicModel() || user.GCAccessType != OL_UserGCAccessType.FULL){
+	uI_Results.f_enablePublicVersion(true);
+}
+
 //Disable summary button if summary is not selected
 if(settings.showKPISummary() == null || !settings.showKPISummary()){
 	uI_Results.getCheckbox_KPISummary().setVisible(false);

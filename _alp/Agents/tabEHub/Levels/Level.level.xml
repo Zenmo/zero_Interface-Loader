@@ -114,7 +114,7 @@
 					<TextColor>-16777216</TextColor>
 					<VisibleCode>//!zero_Interface.settings.isPublicModel()</VisibleCode>
 					<Enabled>true</Enabled>
-					<EnableExpression>!zero_Interface.settings.isPublicModel()</EnableExpression>
+					<EnableExpression>!zero_Interface.settings.isPublicModel() &amp;&amp; zero_Interface.user.GCAccessType == OL_UserGCAccessType.FULL</EnableExpression>
 					<ActionCode>/*
 if (v_NFATOListener) {
 	// This should not be reachable anymore
@@ -176,7 +176,7 @@ else {
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<VisibleCode>!zero_Interface.settings.isPublicModel()</VisibleCode>
-					<Enabled>true</Enabled>
+					<Enabled>false</Enabled>
 					<ActionCode>for (GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()) {
 	GC.v_liveConnectionMetaData.clearSharedCapacityManagers();
 }
@@ -213,7 +213,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<EnableExpression>!zero_Interface.settings.isPublicModel()</EnableExpression>
+					<EnableExpression>!zero_Interface.settings.isPublicModel() &amp;&amp; zero_Interface.user.GCAccessType == OL_UserGCAccessType.FULL</EnableExpression>
 					<ActionCode>zero_Interface.f_startEnergyHubConfiguration();</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -289,7 +289,7 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<EnableExpression>!zero_Interface.settings.isPublicModel()</EnableExpression>
+					<EnableExpression>!zero_Interface.settings.isPublicModel() &amp;&amp; zero_Interface.user.GCAccessType == OL_UserGCAccessType.FULL</EnableExpression>
 					<ActionCode>// First check if there are any save files, if there are none we display an error screen
 
 zero_Interface.uI_EnergyHub.f_initializeUserSavedScenarios(zero_Interface.uI_EnergyHub.combobox_selectScenario);
