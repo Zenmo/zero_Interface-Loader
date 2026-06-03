@@ -1722,11 +1722,8 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 	
 	
 	//Get polygonString for GIS object	
-	String polygonString;
-	if (dataChargingStation.polygon() != null || !dataChargingStation.equals("")) {
-		polygonString = dataChargingStation.polygon();
-	}
-	else{
+	String polygonString = dataChargingStation.polygon();
+	if (polygonString == null || polygonString.equals("")) {
 		polygonString = f_createChargerPolygon(dataChargingStation.latitude(), dataChargingStation.longitude());	
 	}
 
