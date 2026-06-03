@@ -1382,9 +1382,10 @@ if (resultsUI.f_getSelectedObjectData() != null) {
 	resultsUI.chartProfielen.getPeriodRadioButton().setValue(0, true);
 	resultsUI.f_enableNonLivePlotRadioButtons(false);
 }
-for (ShapeRadioButtonGroup rb :resultsUI.chartProfielen.getAllPeriodRadioButtons()) {
-	rb.setValue(0, false);
-}
+//for (ShapeRadioButtonGroup rb :resultsUI.chartProfielen.getAllPeriodRadioButtons()) {
+	//rb.setValue(0, false);
+//}
+
 resultsUI.chartProfielen.getPeriodRadioButton().setValue(0, true);
 
 resultsUI.f_enableNonLivePlotRadioButtons(false);

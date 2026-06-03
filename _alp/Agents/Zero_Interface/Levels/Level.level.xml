@@ -205,112 +205,6 @@
 			</EmbeddedObjectPresentation>
 		</Presentation>
 	</Group>
-	<Group>
-		<Id>1724074923402</Id>
-		<Name><![CDATA[gr_logos]]></Name>
-		<X>940</X>
-		<Y>-10</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Presentation>
-			<Image>
-				<Id>1724074987235</Id>
-				<Name><![CDATA[image_tueLogo]]></Name>
-				<X>730</X>
-				<Y>20.861</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>getExperimentHost().openWebSite("https://www.tue.nl/en/");</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>220</Width>
-				<Height>64.139</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>logo_TUe_red.png</ClassName>
-					</ImageResourceReference>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>logo_TUe_white.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-			<Image>
-				<Id>1731938214224</Id>
-				<Name><![CDATA[image_luxLogo]]></Name>
-				<X>-910</X>
-				<Y>30</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>//Go to website on click
-getExperimentHost().openWebSite("https://lux.energy/");
-</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>188</Width>
-				<Height>73.947</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>logo_lux-energy-twin.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-			<Image>
-				<Id>1758877617096</Id>
-				<Name><![CDATA[image_zenmoLogo]]></Name>
-				<X>562</X>
-				<Y>9.932</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>getExperimentHost().openWebSite("https://zenmo.com/");</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>153</Width>
-				<Height>80.068</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>logo_zenmo.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-		</Presentation>
-	</Group>
 	<Rectangle>
 		<Id>1665052211228</Id>
 		<Name><![CDATA[rect_mainFunctions]]></Name>
@@ -828,7 +722,7 @@ else{
 		<Id>1709718299889</Id>
 		<Name><![CDATA[rb_scenarios_template]]></Name>
 		<X>29.333</X>
-		<Y>154.667</Y>
+		<Y>144.667</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -860,7 +754,7 @@ else{
 		<Id>1709718299891</Id>
 		<Name><![CDATA[t_scenarios]]></Name>
 		<X>29.333</X>
-		<Y>128.667</Y>
+		<Y>118.667</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -6467,7 +6361,7 @@ else{
 		<Id>1758882977187</Id>
 		<Name><![CDATA[line3]]></Name>
 		<X>5</X>
-		<Y>110</Y>
+		<Y>90</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -6645,7 +6539,7 @@ else{
 		<Id>1779964785512</Id>
 		<Name><![CDATA[i_householdPV]]></Name>
 		<X>350</X>
-		<Y>160</Y>
+		<Y>150</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -6672,7 +6566,7 @@ else{
 		<Id>1779964814847</Id>
 		<Name><![CDATA[i_householdPV1]]></Name>
 		<X>350</X>
-		<Y>187</Y>
+		<Y>177</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -6699,7 +6593,7 @@ else{
 		<Id>1779964817988</Id>
 		<Name><![CDATA[i_householdPV2]]></Name>
 		<X>350</X>
-		<Y>214</Y>
+		<Y>204</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -6726,7 +6620,7 @@ else{
 		<Id>1779964832924</Id>
 		<Name><![CDATA[i_householdPV3]]></Name>
 		<X>350</X>
-		<Y>240</Y>
+		<Y>230</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -6753,7 +6647,7 @@ else{
 		<Id>1779964837664</Id>
 		<Name><![CDATA[i_householdPV4]]></Name>
 		<X>350</X>
-		<Y>267</Y>
+		<Y>257</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -9078,4 +8972,91 @@ en meer resultaten te bekijken]]></Text>
 		<FillMaterial>null</FillMaterial>
 		<ArcRadius>10</ArcRadius>
 	</RoundedRectangle>
+	<Image>
+		<Id>1724074987235</Id>
+		<Name><![CDATA[image_tueLogo]]></Name>
+		<X>1670</X>
+		<Y>10.861</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<OnClickCode>getExperimentHost().openWebSite("https://www.tue.nl/en/");</OnClickCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Width>220</Width>
+		<Height>64.139</Height>
+		<Rotation>0.0</Rotation>
+		<ImageFiles>
+			<ImageResourceReference>
+				<PackageName>zerointerfaceloader</PackageName>
+				<ClassName>logo_TUe_red.png</ClassName>
+			</ImageResourceReference>
+			<ImageResourceReference>
+				<PackageName>zerointerfaceloader</PackageName>
+				<ClassName>logo_TUe_white.png</ClassName>
+			</ImageResourceReference>
+		</ImageFiles>
+		<OriginalSize>false</OriginalSize>
+	</Image>
+	<Image>
+		<Id>1731938214224</Id>
+		<Name><![CDATA[image_luxLogo]]></Name>
+		<X>30</X>
+		<Y>10</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<OnClickCode>//Go to website on click
+getExperimentHost().openWebSite("https://lux.energy/");
+</OnClickCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Width>150</Width>
+		<Height>60</Height>
+		<Rotation>0.0</Rotation>
+		<ImageFiles>
+			<ImageResourceReference>
+				<PackageName>zerointerfaceloader</PackageName>
+				<ClassName>logo_lux-energy-twin.png</ClassName>
+			</ImageResourceReference>
+		</ImageFiles>
+		<OriginalSize>false</OriginalSize>
+	</Image>
+	<Image>
+		<Id>1758877617096</Id>
+		<Name><![CDATA[image_zenmoLogo]]></Name>
+		<X>1502</X>
+		<Y>-0.06799999999999962</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<OnClickCode>getExperimentHost().openWebSite("https://zenmo.com/");</OnClickCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Width>153</Width>
+		<Height>80.068</Height>
+		<Rotation>0.0</Rotation>
+		<ImageFiles>
+			<ImageResourceReference>
+				<PackageName>zerointerfaceloader</PackageName>
+				<ClassName>logo_zenmo.png</ClassName>
+			</ImageResourceReference>
+		</ImageFiles>
+		<OriginalSize>false</OriginalSize>
+	</Image>
 </Presentation>
