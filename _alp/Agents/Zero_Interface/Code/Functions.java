@@ -2697,8 +2697,8 @@ if(b_inEnergyHubSelectionMode){
 	
 	//Set map in correct pos and navigate to e-hub view
 	map.setPos( 
-		gr_energyHubPresentation.getX() + uI_EnergyHub.rect_map.getX() + 10.0,
-		gr_energyHubPresentation.getY() + uI_EnergyHub.rect_map.getY() + 10.0
+		gr_energyHubPresentation.getX() + map.getX(),
+		gr_energyHubPresentation.getY() + map.getY()
 	);
 	map.setScale( 0.85, 0.85 );
 	va_EHubDashboard.navigateTo();
@@ -2999,6 +2999,7 @@ b_inEnergyHubSelectionMode = false;
 
 f_setForcedClickScreenText("");
 f_setForcedClickScreenVisibility(false);
+va_Interface.navigateTo();
 
 cb_showFilterInterface.setSelected(false, true);
 /*ALCODEEND*/}

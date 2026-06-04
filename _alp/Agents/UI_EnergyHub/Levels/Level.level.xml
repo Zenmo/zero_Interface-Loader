@@ -23,45 +23,14 @@
 		<Width>1920</Width>
 		<Height>980</Height>
 		<Rotation>0.0</Rotation>
-		<FillColor>-1</FillColor>
-		<FillColorCode>p_energyHubBackGroundColor</FillColorCode>
+		<FillColor>-2166287</FillColor>
 		<FillMaterial>null</FillMaterial>
 	</Rectangle>
-	<RoundedRectangle>
-		<Id>1747228615096</Id>
-		<Name><![CDATA[rect_settings]]></Name>
-		<X>10</X>
-		<Y>440</Y>
-		<Label>
-			<X>10</X>
-			<Y>10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>1</LineWidth>
-		<LineWidthCode>p_energyHubLineWidth</LineWidthCode>
-		<LineColor>-16777216</LineColor>
-		<LineColorCode>p_energyHubLineColor</LineColorCode>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<LineStyleCode>p_energyHubLineStyle</LineStyleCode>
-		<Width>380</Width>
-		<Height>530</Height>
-		<Rotation>0.0</Rotation>
-		<FillColor>-1</FillColor>
-		<FillMaterial>null</FillMaterial>
-		<ArcRadius>10</ArcRadius>
-	</RoundedRectangle>
 	<Group>
 		<Id>1753702302932</Id>
 		<Name><![CDATA[gr_uI_Tabs_presentation]]></Name>
 		<X>0</X>
-		<Y>-20</Y>
+		<Y>980</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -98,33 +67,6 @@
 			</EmbeddedObjectPresentation>
 		</Presentation>
 	</Group>
-	<Rectangle>
-		<Id>1753706195332</Id>
-		<Name><![CDATA[rect_uITabsModelBlocker]]></Name>
-		<X>400</X>
-		<Y>10</Y>
-		<Label>
-			<X>10</X>
-			<Y>10</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>false</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<Lock>true</Lock>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>0</LineWidth>
-		<LineColor/>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<Width>1500</Width>
-		<Height>960</Height>
-		<Rotation>0.0</Rotation>
-		<FillColor>-1</FillColor>
-		<FillMaterial>null</FillMaterial>
-	</Rectangle>
 	<RoundedRectangle>
 		<Id>1747228569476</Id>
 		<Name><![CDATA[rect_scenarios]]></Name>
@@ -142,14 +84,11 @@
 		<Z>0</Z>
 		<ZHeight>10</ZHeight>
 		<LineWidth>1</LineWidth>
-		<LineWidthCode>p_energyHubLineWidth</LineWidthCode>
-		<LineColor>-16777216</LineColor>
-		<LineColorCode>p_energyHubLineColor</LineColorCode>
+		<LineColor/>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<LineStyleCode>p_energyHubLineStyle</LineStyleCode>
 		<Width>380</Width>
-		<Height>300</Height>
+		<Height>340</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -158,7 +97,7 @@
 	<Text>
 		<Id>1747228738085</Id>
 		<Name><![CDATA[t_scenario]]></Name>
-		<X>200</X>
+		<X>30</X>
 		<Y>100</Y>
 		<Label>
 			<X>0</X>
@@ -175,67 +114,11 @@
 		<Text><![CDATA[Scenario's]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
-			<Size>36</Size>
-			<Style>0</Style>
+			<Size>26</Size>
+			<Style>1</Style>
 		</Font>
-		<Alignment>CENTER</Alignment>
+		<Alignment>LEFT</Alignment>
 	</Text>
-	<Text>
-		<Id>1747228860030</Id>
-		<Name><![CDATA[txt_settings]]></Name>
-		<X>200</X>
-		<Y>460</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Instellingen]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>36</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>CENTER</Alignment>
-	</Text>
-	<RoundedRectangle>
-		<Id>1747231288371</Id>
-		<Name><![CDATA[rect_map]]></Name>
-		<X>470</X>
-		<Y>190</Y>
-		<Label>
-			<X>10</X>
-			<Y>10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>1</LineWidth>
-		<LineWidthCode>p_energyHubLineWidth</LineWidthCode>
-		<LineColor>-16777216</LineColor>
-		<LineColorCode>p_energyHubLineColor</LineColorCode>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<LineStyleCode>p_energyHubLineStyle</LineStyleCode>
-		<Width>870</Width>
-		<Height>550</Height>
-		<Rotation>0.0</Rotation>
-		<FillColor>-1</FillColor>
-		<FillColorCode>p_energyHubLineColor</FillColorCode>
-		<FillMaterial>null</FillMaterial>
-		<ArcRadius>10</ArcRadius>
-	</RoundedRectangle>
 	<Group>
 		<Id>1753704667485</Id>
 		<Name><![CDATA[gr_energyHubTitle]]></Name>
@@ -253,41 +136,11 @@
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Presentation>
-			<RoundedRectangle>
-				<Id>1747228628985</Id>
-				<Name><![CDATA[rect_title]]></Name>
-				<X>-440</X>
-				<Y>-50</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineWidthCode>p_energyHubLineWidth</LineWidthCode>
-				<LineColor>-16777216</LineColor>
-				<LineColorCode>p_energyHubLineColor</LineColorCode>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<LineStyleCode>p_energyHubLineStyle</LineStyleCode>
-				<Width>870</Width>
-				<Height>110</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-1</FillColor>
-				<FillMaterial>null</FillMaterial>
-				<ArcRadius>10</ArcRadius>
-			</RoundedRectangle>
 			<Text>
 				<Id>1747228659472</Id>
 				<Name><![CDATA[txt_energyHubTitle]]></Name>
-				<X>-25</X>
-				<Y>-25</Y>
+				<X>-890</X>
+				<Y>-60</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -299,20 +152,20 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[EnergyHub Configurator]]></Text>
+				<Color>-16744320</Color>
+				<Text><![CDATA[Energy Hub Configurator]]></Text>
 				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
-					<Size>48</Size>
-					<Style>0</Style>
+					<Name><![CDATA[Centaur]]></Name>
+					<Size>36</Size>
+					<Style>1</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>LEFT</Alignment>
 			</Text>
 			<Group>
 				<Id>1753704116114</Id>
 				<Name><![CDATA[gr_energyHubLogo]]></Name>
-				<X>-350</X>
-				<Y>5</Y>
+				<X>-710</X>
+				<Y>-140</Y>
 				<Label>
 					<X>24.062</X>
 					<Y>0</Y>
@@ -574,8 +427,8 @@
 	<Group>
 		<Id>1753694681879</Id>
 		<Name><![CDATA[gr_uI_Results_presentation]]></Name>
-		<X>1420</X>
-		<Y>200</Y>
+		<X>1440</X>
+		<Y>2640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -584,6 +437,8 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>1420</XCode>
+		<YCode>200</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -616,8 +471,9 @@
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1753706469000</Id>
 		<Name><![CDATA[button_reconfigureEnergyHub]]></Name>
-		<X>1100</X>
-		<Y>760</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>990</X>
+		<Y>-130</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -658,8 +514,8 @@ zero_Interface.b_inEnergyHubSelectionMode = true;</ActionCode>
 	<Group>
 		<Id>1753706641851</Id>
 		<Name><![CDATA[gr_exitButton]]></Name>
-		<X>1245</X>
-		<Y>85</Y>
+		<X>1400</X>
+		<Y>-90</Y>
 		<Label>
 			<X>9.146</X>
 			<Y>0</Y>
@@ -747,247 +603,10 @@ runSimulation();</ActionCode>
 			</Control>
 		</Presentation>
 	</Group>
-	<Group>
-		<Id>1753883623020</Id>
-		<Name><![CDATA[gr_simulateYearScreenEnergyHub]]></Name>
-		<X>1900</X>
-		<Y>130</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Presentation>
-			<Group>
-				<Id>1753883623022</Id>
-				<Name><![CDATA[gr_loadIconYearSimulationEnergyHub]]></Name>
-				<X>-261</X>
-				<Y>-25</Y>
-				<Label>
-					<X>10</X>
-					<Y>0</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>false</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Presentation>
-					<Rectangle>
-						<Id>1753883623024</Id>
-						<Name><![CDATA[rect_loadIconSmall]]></Name>
-						<X>-219</X>
-						<Y>-50</Y>
-						<Label>
-							<X>10</X>
-							<Y>10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-1644806</LineColor>
-						<LineColorCode>p_energyHubLineColor</LineColorCode>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>DASHED</LineStyle>
-						<Width>460</Width>
-						<Height>250</Height>
-						<Rotation>0.0</Rotation>
-						<FillColor>-369756683</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Rectangle>
-					<Image>
-						<Id>1753883623026</Id>
-						<Name><![CDATA[image_loadIconSmall]]></Name>
-						<X>-30</X>
-						<Y>60</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Width>60</Width>
-						<Height>60</Height>
-						<Rotation>0.0</Rotation>
-						<ImageFiles>
-							<ImageResourceReference>
-								<PackageName>zerointerfaceloader</PackageName>
-								<ClassName>icon_loading.gif</ClassName>
-							</ImageResourceReference>
-						</ImageFiles>
-						<OriginalSize>false</OriginalSize>
-					</Image>
-					<Text>
-						<Id>1753883623028</Id>
-						<Name><![CDATA[t_loadIconSmall]]></Name>
-						<X>0</X>
-						<Y>15</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Color>-16777216</Color>
-						<Text><![CDATA[Jaar wordt gesimuleerd ]]></Text>
-						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
-							<Size>22</Size>
-							<Style>1</Style>
-						</Font>
-						<Alignment>CENTER</Alignment>
-					</Text>
-				</Presentation>
-			</Group>
-			<Group>
-				<Id>1753883623030</Id>
-				<Name><![CDATA[gr_simulateYearEnergyHub]]></Name>
-				<X>270</X>
-				<Y>20</Y>
-				<Label>
-					<X>10</X>
-					<Y>0</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>false</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<XCode>-250</XCode>
-				<YCode>15</YCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Presentation>
-					<Rectangle>
-						<Id>1753883623032</Id>
-						<Name><![CDATA[rect_simulateYearScreenSmall]]></Name>
-						<X>-230</X>
-						<Y>-90</Y>
-						<Label>
-							<X>10</X>
-							<Y>10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor/>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>DASHED</LineStyle>
-						<Width>460</Width>
-						<Height>180</Height>
-						<Rotation>0.0</Rotation>
-						<FillColor>-1</FillColor>
-						<FillColorCode>p_energyHubLineColor</FillColorCode>
-						<FillMaterial>null</FillMaterial>
-					</Rectangle>
-					<Group>
-						<Id>1753883623034</Id>
-						<Name><![CDATA[gr_simulateYearButtonEnergyHub]]></Name>
-						<X>10</X>
-						<Y>50</Y>
-						<Label>
-							<X>10</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<OnClickCode>gr_simulateYearEnergyHub.setVisible(false);		
-gr_loadIconYearSimulationEnergyHub.setVisible(true);
-zero_Interface.f_simulateYearFromMainInterface();	</OnClickCode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Presentation>
-							<Text>
-								<Id>1753883623036</Id>
-								<Name><![CDATA[t_simulateYearToCalculateCostsSmall]]></Name>
-								<X>10</X>
-								<Y>-60</Y>
-								<Label>
-									<X>0</X>
-									<Y>-10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<Rotation>0.0</Rotation>
-								<Color>-16777216</Color>
-								<Text><![CDATA[Simuleer jaar voor KPI's]]></Text>
-								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>22</Size>
-									<Style>1</Style>
-								</Font>
-								<Alignment>CENTER</Alignment>
-							</Text>
-							<Image>
-								<Id>1753883623038</Id>
-								<Name><![CDATA[image_simulateYearToCalculateCostsSmall]]></Name>
-								<X>-200</X>
-								<Y>-75</Y>
-								<Label>
-									<X>0</X>
-									<Y>-10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<Width>60</Width>
-								<Height>60</Height>
-								<Rotation>0.0</Rotation>
-								<ImageFiles>
-									<ImageResourceReference>
-										<PackageName>zerointerfaceloader</PackageName>
-										<ClassName>icon_greater_than.png</ClassName>
-									</ImageResourceReference>
-								</ImageFiles>
-								<OriginalSize>false</OriginalSize>
-							</Image>
-						</Presentation>
-					</Group>
-				</Presentation>
-			</Group>
-		</Presentation>
-	</Group>
 	<RoundedRectangle>
 		<Id>1756302313206</Id>
 		<Name><![CDATA[rect_memberNames]]></Name>
-		<X>470</X>
+		<X>412</X>
 		<Y>760</Y>
 		<Label>
 			<X>10</X>
@@ -1001,10 +620,10 @@ zero_Interface.f_simulateYearFromMainInterface();	</OnClickCode>
 		<Z>0</Z>
 		<ZHeight>10</ZHeight>
 		<LineWidth>1</LineWidth>
-		<LineColor>-16777216</LineColor>
+		<LineColor/>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>500</Width>
+		<Width>898</Width>
 		<Height>200</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
@@ -1014,8 +633,8 @@ zero_Interface.f_simulateYearFromMainInterface();	</OnClickCode>
 	<Text>
 		<Id>1756302430570</Id>
 		<Name><![CDATA[t_energyHubMember1]]></Name>
-		<X>500</X>
-		<Y>820</Y>
+		<X>450</X>
+		<Y>810</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1027,11 +646,11 @@ zero_Interface.f_simulateYearFromMainInterface();	</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
+		<Color>-9868951</Color>
 		<Text><![CDATA[name 1]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
-			<Size>18</Size>
+			<Size>16</Size>
 			<Style>0</Style>
 		</Font>
 		<Alignment>LEFT</Alignment>
@@ -1039,8 +658,8 @@ zero_Interface.f_simulateYearFromMainInterface();	</OnClickCode>
 	<Text>
 		<Id>1756302500322</Id>
 		<Name><![CDATA[t_energyHubMembers]]></Name>
-		<X>720</X>
-		<Y>765</Y>
+		<X>450</X>
+		<Y>770</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1055,17 +674,17 @@ zero_Interface.f_simulateYearFromMainInterface();	</OnClickCode>
 		<Color>-16777216</Color>
 		<Text><![CDATA[E-Hub Members]]></Text>
 		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>36</Size>
-			<Style>0</Style>
+			<Name><![CDATA[Centaur]]></Name>
+			<Size>28</Size>
+			<Style>1</Style>
 		</Font>
-		<Alignment>CENTER</Alignment>
+		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
 		<Id>1756302556840</Id>
 		<Name><![CDATA[t_energyHubMember3]]></Name>
-		<X>500</X>
-		<Y>850</Y>
+		<X>450</X>
+		<Y>870</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1077,11 +696,11 @@ zero_Interface.f_simulateYearFromMainInterface();	</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
+		<Color>-9868951</Color>
 		<Text><![CDATA[name 3]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
-			<Size>18</Size>
+			<Size>16</Size>
 			<Style>0</Style>
 		</Font>
 		<Alignment>LEFT</Alignment>
@@ -1089,8 +708,8 @@ zero_Interface.f_simulateYearFromMainInterface();	</OnClickCode>
 	<Text>
 		<Id>1756302569681</Id>
 		<Name><![CDATA[t_energyHubMember2]]></Name>
-		<X>930</X>
-		<Y>820</Y>
+		<X>450</X>
+		<Y>840</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1102,20 +721,20 @@ zero_Interface.f_simulateYearFromMainInterface();	</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
+		<Color>-9868951</Color>
 		<Text><![CDATA[name 2]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
-			<Size>18</Size>
+			<Size>16</Size>
 			<Style>0</Style>
 		</Font>
-		<Alignment>RIGHT</Alignment>
+		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
 		<Id>1756302580797</Id>
 		<Name><![CDATA[t_energyHubMember4]]></Name>
-		<X>930</X>
-		<Y>850</Y>
+		<X>450</X>
+		<Y>900</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1127,20 +746,20 @@ zero_Interface.f_simulateYearFromMainInterface();	</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
+		<Color>-9868951</Color>
 		<Text><![CDATA[name 4]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
-			<Size>18</Size>
+			<Size>16</Size>
 			<Style>0</Style>
 		</Font>
-		<Alignment>RIGHT</Alignment>
+		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
 		<Id>1756302616239</Id>
 		<Name><![CDATA[t_energyHubMember5]]></Name>
-		<X>500</X>
-		<Y>880</Y>
+		<X>730</X>
+		<Y>810</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1152,11 +771,11 @@ zero_Interface.f_simulateYearFromMainInterface();	</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
+		<Color>-9868951</Color>
 		<Text><![CDATA[name 5]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
-			<Size>18</Size>
+			<Size>16</Size>
 			<Style>0</Style>
 		</Font>
 		<Alignment>LEFT</Alignment>
@@ -1164,8 +783,8 @@ zero_Interface.f_simulateYearFromMainInterface();	</OnClickCode>
 	<Text>
 		<Id>1756302630734</Id>
 		<Name><![CDATA[t_energyHubMember7]]></Name>
-		<X>500</X>
-		<Y>910</Y>
+		<X>730</X>
+		<Y>870</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1177,45 +796,20 @@ zero_Interface.f_simulateYearFromMainInterface();	</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
+		<Color>-9868951</Color>
 		<Text><![CDATA[name 7]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
-			<Size>18</Size>
+			<Size>16</Size>
 			<Style>0</Style>
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1756302634233</Id>
-		<Name><![CDATA[t_energyHubMemberOthers]]></Name>
-		<X>930</X>
-		<Y>910</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Etc]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>18</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>RIGHT</Alignment>
-	</Text>
-	<Text>
 		<Id>1756302654947</Id>
 		<Name><![CDATA[t_energyHubMember6]]></Name>
-		<X>930</X>
-		<Y>880</Y>
+		<X>730</X>
+		<Y>840</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1227,14 +821,14 @@ zero_Interface.f_simulateYearFromMainInterface();	</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
+		<Color>-9868951</Color>
 		<Text><![CDATA[name 6]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
-			<Size>18</Size>
+			<Size>16</Size>
 			<Style>0</Style>
 		</Font>
-		<Alignment>RIGHT</Alignment>
+		<Alignment>LEFT</Alignment>
 	</Text>
 	<Group>
 		<Id>1758546856343</Id>
@@ -1489,7 +1083,7 @@ zero_Interface.f_simulateYearFromMainInterface();	</OnClickCode>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>gr_saveScenario.setVisible(false);
-gr_loadScenario.setVisible(false);
+gr_scenarioLoad.setVisible(false);
 gr_forceSaveLoadScenario.setVisible(false);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -1499,11 +1093,686 @@ gr_forceSaveLoadScenario.setVisible(false);</ActionCode>
 			</Control>
 		</Presentation>
 	</Group>
+	<Rectangle>
+		<Id>1780585748539</Id>
+		<Name><![CDATA[rectangle]]></Name>
+		<X>408</X>
+		<Y>39</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>8</LineWidth>
+		<LineColor>-6316129</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>900</Width>
+		<Height>708</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor/>
+		<FillMaterial>null</FillMaterial>
+	</Rectangle>
+	<RoundedRectangle>
+		<Id>1780585808638</Id>
+		<Name><![CDATA[roundRectangle14]]></Name>
+		<X>407</X>
+		<Y>24</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>6</LineWidth>
+		<LineColor>-6316129</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>80</Width>
+		<Height>60</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+		<ArcRadius>10</ArcRadius>
+	</RoundedRectangle>
+	<RoundedRectangle>
+		<Id>1780585748551</Id>
+		<Name><![CDATA[roundRectangle1]]></Name>
+		<X>410</X>
+		<Y>18</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor>-1</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>910</Width>
+		<Height>80</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+		<ArcRadius>10</ArcRadius>
+	</RoundedRectangle>
 	<Group>
-		<Id>1756800864903</Id>
+		<Id>1780585794748</Id>
+		<Name><![CDATA[gr_dataInfoBox]]></Name>
+		<X>490</X>
+		<Y>60</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<RoundedRectangle>
+				<Id>1780585794750</Id>
+				<Name><![CDATA[roundRectangle]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<X>-55</X>
+				<Y>-25</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>110</Width>
+				<Height>50</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-657931</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>10</ArcRadius>
+			</RoundedRectangle>
+			<Text>
+				<Id>1780585794752</Id>
+				<Name><![CDATA[t_date2]]></Name>
+				<X>-40</X>
+				<Y>-18</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Datum]]></Text>
+				<TextCode>zero_Interface.energyModel.v_isRapidRun ? "" : (zero_Interface.f_getTimeString() + " hr")</TextCode>
+				<Font>
+					<Name><![CDATA[Calibri]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1780585794754</Id>
+				<Name><![CDATA[t_date1]]></Name>
+				<X>-40</X>
+				<Y>4</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Datum]]></Text>
+				<TextCode>zero_Interface.energyModel.v_isRapidRun ? zero_Interface.f_getDateStringRapid() : zero_Interface.
+f_getDateStringNormal()</TextCode>
+				<Font>
+					<Name><![CDATA[Calibri]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+		</Presentation>
+	</Group>
+	<RoundedRectangle>
+		<Id>1780585993085</Id>
+		<Name><![CDATA[roundRectangle2]]></Name>
+		<X>1100</X>
+		<Y>40</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<OnClickCode>pauseSimulation();
+
+//Remove slider GCs from coop
+v_energyHubCoop.f_removeMemberGCs(c_sliderEAGCs, zero_Interface.energyModel.p_timeParameters);
+
+
+zero_Interface.f_getScenarioButtons().setPos( 19, 144);
+
+zero_Interface.map.setScale( 1.0, 1.0);
+zero_Interface.map.setPos(410, 130);
+
+zero_Interface.va_Interface.navigateTo();
+zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
+//zero_Interface.c_selectedGridConnections = new ArrayList&lt;GridConnection&gt;(c_selectedEnergyHubGC);
+//zero_Interface.v_customEnergyCoop = v_energyHubCoop;
+	
+v_energyHubCoop = null;
+
+zero_Interface.b_inEnergyHubSelectionMode = true;</OnClickCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor/>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>190</Width>
+		<Height>40</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-4069658</FillColor>
+		<FillMaterial>null</FillMaterial>
+		<ArcRadius>10</ArcRadius>
+	</RoundedRectangle>
+	<Group>
+		<Id>1780586116126</Id>
+		<Name><![CDATA[gr_loadIconYearSimulationEnergyHub]]></Name>
+		<X>1341</X>
+		<Y>40</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<RoundedRectangle>
+				<Id>1780586116128</Id>
+				<Name><![CDATA[roundRectangle17]]></Name>
+				<X>0</X>
+				<Y>80</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>556</Width>
+				<Height>60</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-118098443</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>10</ArcRadius>
+			</RoundedRectangle>
+			<Rectangle>
+				<Id>1780586116130</Id>
+				<Name><![CDATA[rect_loadIconSmall1]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>DASHED</LineStyle>
+				<Width>556</Width>
+				<Height>100</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-118098443</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Rectangle>
+			<Image>
+				<Id>1780586116132</Id>
+				<Name><![CDATA[image_loadIconSmall1]]></Name>
+				<X>240</X>
+				<Y>60</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>60</Width>
+				<Height>60</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_loading.gif</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1780586116134</Id>
+				<Name><![CDATA[t_loadIconSmall1]]></Name>
+				<X>270</X>
+				<Y>30</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Jaar wordt gesimuleerd]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>16</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+		</Presentation>
+	</Group>
+	<Group>
+		<Id>1780586116219</Id>
+		<Name><![CDATA[gr_simulateYearEnergyHub]]></Name>
+		<X>1340</X>
+		<Y>200</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<YCode>120</YCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Group>
+				<Id>1780586116221</Id>
+				<Name><![CDATA[gr_simulateYearBackground]]></Name>
+				<X>279</X>
+				<Y>70</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>gr_simulateYearEnergyHub.setVisible(false);		
+gr_loadIconYearSimulationEnergyHub.setVisible(true);
+zero_Interface.f_simulateYearFromMainInterface();	</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<RoundedRectangle>
+						<Id>1780586116223</Id>
+						<Name><![CDATA[roundRectangle15]]></Name>
+						<X>-279</X>
+						<Y>50</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor/>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>555</Width>
+						<Height>20</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-205396250</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>10</ArcRadius>
+					</RoundedRectangle>
+					<Rectangle>
+						<Id>1780586116225</Id>
+						<Name><![CDATA[rect_simulateYearScreenSmall1]]></Name>
+						<X>-279</X>
+						<Y>-70</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor/>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>DASHED</LineStyle>
+						<Width>555</Width>
+						<Height>130</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-205396250</FillColor>
+						<FillMaterial>null</FillMaterial>
+					</Rectangle>
+				</Presentation>
+			</Group>
+			<Group>
+				<Id>1780586116227</Id>
+				<Name><![CDATA[gr_simulateYearButton]]></Name>
+				<X>270</X>
+				<Y>115</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Text>
+						<Id>1780586116229</Id>
+						<Name><![CDATA[t_simulateYearToCalculateCostsSmall1]]></Name>
+						<X>-118</X>
+						<Y>-64</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16760768</Color>
+						<Text><![CDATA[Klik hier om een jaar door te rekenen
+en meer resultaten te bekijken]]></Text>
+						<Font>
+							<Name><![CDATA[SansSerif]]></Name>
+							<Size>16</Size>
+							<Style>1</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Image>
+						<Id>1780586116231</Id>
+						<Name><![CDATA[image_simulateYearToCalculateCostsSmall1]]></Name>
+						<X>-195</X>
+						<Y>-65</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>45</Width>
+						<Height>45</Height>
+						<Rotation>0.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>icon_greater_than.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
+				</Presentation>
+			</Group>
+		</Presentation>
+	</Group>
+	<Text>
+		<Id>1780586696255</Id>
+		<Name><![CDATA[text2]]></Name>
+		<X>1196</X>
+		<Y>53</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Herconfigureer de energiehub]]></Text>
+		<Font>
+			<Name><![CDATA[Centaur]]></Name>
+			<Size>14</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>CENTER</Alignment>
+	</Text>
+	<Group>
+		<Id>1756805661168</Id>
+		<Name><![CDATA[gr_saveScenario1]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>250</X>
+		<Y>-340</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Control Type="EditBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1756805661172</Id>
+				<Name><![CDATA[eb_scenarioName2]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="220" Height="25">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<FillColor>-1</FillColor>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LinkTo>true</LinkTo>
+					<Link>v_scenarioName</Link>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1758545634906</Id>
+				<Name><![CDATA[t_saveScenarioInstructions]]></Name>
+				<X>5</X>
+				<Y>-20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Geef je scenario een naam en klik rechts op het icoontje]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+		</Presentation>
+	</Group>
+	<Control Type="Button">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1758532628277</Id>
+		<Name><![CDATA[button_saveScenario1]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>249</X>
+		<Y>-395</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<BasicProperties Width="140" Height="30">
+			<EmbeddedIcon>false</EmbeddedIcon>
+			<TextColor>-16777216</TextColor>
+			<Enabled>true</Enabled>
+			<ActionCode>gr_loadScenario.setVisible(false);
+gr_forceSaveLoadScenario.setVisible(true);
+gr_saveScenario.setVisible(true);</ActionCode>
+		</BasicProperties>
+		<ExtendedProperties>
+			<Font Name="Dialog" Size="11" Style="0"/>
+			<LabelText>Bewaar een scenario</LabelText>
+		</ExtendedProperties>
+	</Control>
+	<Control Type="Button">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1758532628290</Id>
+		<Name><![CDATA[button_loadScenario2]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>399</X>
+		<Y>-395</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<BasicProperties Width="140" Height="30">
+			<EmbeddedIcon>false</EmbeddedIcon>
+			<TextColor>-16777216</TextColor>
+			<Enabled>true</Enabled>
+			<ActionCode>f_initializeUserSavedScenarios(combobox_selectScenario);
+if (combobox_selectScenario.getItems().length == 0) {
+	zero_Interface.f_setErrorScreen("Er zijn nog geen scenario's opgeslagen.", zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
+	return;
+}
+
+gr_saveScenario.setVisible(false);
+gr_forceSaveLoadScenario.setVisible(true);
+gr_loadScenario.setVisible(true);
+
+</ActionCode>
+		</BasicProperties>
+		<ExtendedProperties>
+			<Font Name="Dialog" Size="11" Style="0"/>
+			<LabelText>Laad een scenario in</LabelText>
+		</ExtendedProperties>
+	</Control>
+	<Group>
+		<Id>1780587071437</Id>
 		<Name><![CDATA[gr_saveAndLoadScenarios]]></Name>
-		<X>365</X>
-		<Y>-270</Y>
+		<X>191</X>
+		<Y>384</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1516,81 +1785,194 @@ gr_forceSaveLoadScenario.setVisible(false);</ActionCode>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Presentation>
-			<Group>
-				<Id>1756805661168</Id>
-				<Name><![CDATA[gr_saveScenario]]></Name>
-				<X>-330</X>
-				<Y>610</Y>
+			<Rectangle>
+				<Id>1780586386920</Id>
+				<Name><![CDATA[button_saveScenario]]></Name>
+				<X>-145</X>
+				<Y>-60</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>gr_scenarioLoad.setVisible(false);
+gr_forceSaveLoadScenario.setVisible(true);
+gr_saveScenario.setVisible(true);
+line4.setX(-115);
+s_saveScenarioText.setColor(teal);
+s_loadScenarioText.setColor(black);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>140</Width>
+				<Height>30</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-657931</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Rectangle>
+			<Rectangle>
+				<Id>1780586400453</Id>
+				<Name><![CDATA[button_loadScenario]]></Name>
+				<X>5</X>
+				<Y>-60</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>f_loadScenarioButtonAction();
+
+</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>140</Width>
+				<Height>30</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-657931</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Rectangle>
+			<Text>
+				<Id>1780586423804</Id>
+				<Name><![CDATA[s_saveScenarioText]]></Name>
+				<X>-76</X>
+				<Y>-51</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16744320</Color>
+				<Text><![CDATA[Bewaar een scenario]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Text>
+				<Id>1780586440336</Id>
+				<Name><![CDATA[s_loadScenarioText]]></Name>
+				<X>70</X>
+				<Y>-51</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Laad een scenario in]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Line>
+				<Id>1780586640979</Id>
+				<Name><![CDATA[line4]]></Name>
+				<X>-115</X>
+				<Y>-30</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
 				</Label>
 				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>false</PresentationFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor>-16744320</LineColor>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<BeginArrowSize>1</BeginArrowSize>
+				<BeginArrowStyle>0</BeginArrowStyle>
+				<EndArrowSize>1</EndArrowSize>
+				<EndArrowStyle>0</EndArrowStyle>
+				<Dx>80</Dx>
+				<Dy>0</Dy>
+				<Dz>0</Dz>
+			</Line>
+			<Group>
+				<Id>1780586971515</Id>
+				<Name><![CDATA[gr_saveScenario]]></Name>
+				<X>0</X>
+				<Y>5</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Presentation>
-					<Image>
-						<Id>1756805661170</Id>
-						<Name><![CDATA[image_saveScenario]]></Name>
-						<X>225</X>
+					<RoundedRectangle>
+						<Id>1780586533996</Id>
+						<Name><![CDATA[roundRectangle3]]></Name>
+						<X>120</X>
 						<Y>-5</Y>
 						<Label>
-							<X>0</X>
-							<Y>-10</Y>
+							<X>10</X>
+							<Y>10</Y>
 						</Label>
 						<PublicFlag>true</PublicFlag>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<OnClickCode>f_saveScenarioButton();</OnClickCode>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
-						<Width>32</Width>
-						<Height>32</Height>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor/>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>25</Width>
+						<Height>25</Height>
 						<Rotation>0.0</Rotation>
-						<ImageFiles>
-							<ImageResourceReference>
-								<PackageName>zerointerfaceloader</PackageName>
-								<ClassName>save_icon.png</ClassName>
-							</ImageResourceReference>
-						</ImageFiles>
-						<OriginalSize>false</OriginalSize>
-					</Image>
-					<Control Type="EditBox">
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Id>1756805661172</Id>
-						<Name><![CDATA[eb_scenarioName]]></Name>
-						<X>0</X>
-						<Y>0</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<BasicProperties Width="220" Height="25">
-							<EmbeddedIcon>false</EmbeddedIcon>
-							<FillColor>-1</FillColor>
-							<TextColor>-16777216</TextColor>
-							<Enabled>true</Enabled>
-						</BasicProperties>
-						<ExtendedProperties>
-							<Font Name="Dialog" Size="11" Style="0"/>
-							<LinkTo>true</LinkTo>
-							<Link>v_scenarioName</Link>
-						</ExtendedProperties>
-					</Control>
+						<FillColor>-4069658</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>5</ArcRadius>
+					</RoundedRectangle>
 					<Text>
-						<Id>1758545634906</Id>
-						<Name><![CDATA[t_saveScenarioInstructions]]></Name>
-						<X>5</X>
-						<Y>-20</Y>
+						<Id>1780586463036</Id>
+						<Name><![CDATA[t_saveScenarioInstructions1]]></Name>
+						<X>-145</X>
+						<Y>-25</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1611,31 +1993,111 @@ gr_forceSaveLoadScenario.setVisible(false);</ActionCode>
 						</Font>
 						<Alignment>LEFT</Alignment>
 					</Text>
+					<Control Type="EditBox">
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Id>1780586509287</Id>
+						<Name><![CDATA[eb_scenarioName]]></Name>
+						<X>-145</X>
+						<Y>-5</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<BasicProperties Width="255" Height="25">
+							<EmbeddedIcon>false</EmbeddedIcon>
+							<FillColor>-1</FillColor>
+							<TextColor>-16777216</TextColor>
+							<Enabled>true</Enabled>
+						</BasicProperties>
+						<ExtendedProperties>
+							<Font Name="Dialog" Size="11" Style="0"/>
+							<LinkTo>true</LinkTo>
+							<Link>v_scenarioName</Link>
+						</ExtendedProperties>
+					</Control>
+					<Image>
+						<Id>1756805661170</Id>
+						<Name><![CDATA[image_saveScenario]]></Name>
+						<X>125</X>
+						<Y>1</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<OnClickCode>f_saveScenarioButton();</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>16</Width>
+						<Height>14</Height>
+						<Rotation>0.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>save_icon.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
 				</Presentation>
 			</Group>
 			<Group>
-				<Id>1756805661208</Id>
-				<Name><![CDATA[gr_loadScenario]]></Name>
-				<X>-330</X>
-				<Y>665</Y>
+				<Id>1780586995548</Id>
+				<Name><![CDATA[gr_scenarioLoad]]></Name>
+				<X>0</X>
+				<Y>55</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
 				</Label>
 				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>false</PresentationFlag>
+				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<YCode>610</YCode>
+				<YCode>5</YCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Presentation>
+					<RoundedRectangle>
+						<Id>1780586859701</Id>
+						<Name><![CDATA[roundRectangle4]]></Name>
+						<X>120</X>
+						<Y>-5</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor/>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>25</Width>
+						<Height>25</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-4069658</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>5</ArcRadius>
+					</RoundedRectangle>
 					<Image>
 						<Id>1756805661210</Id>
 						<Name><![CDATA[image_loadScenario]]></Name>
-						<X>225</X>
-						<Y>-5</Y>
+						<X>124</X>
+						<Y>0</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1647,8 +2109,8 @@ gr_forceSaveLoadScenario.setVisible(false);</ActionCode>
 						<OnClickCode>f_loadScenarioButton();</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
-						<Width>32</Width>
-						<Height>32</Height>
+						<Width>17</Width>
+						<Height>14</Height>
 						<Rotation>0.0</Rotation>
 						<ImageFiles>
 							<ImageResourceReference>
@@ -1662,8 +2124,8 @@ gr_forceSaveLoadScenario.setVisible(false);</ActionCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1756805661212</Id>
 						<Name><![CDATA[combobox_selectScenario]]></Name>
-						<X>0</X>
-						<Y>0</Y>
+						<X>-145</X>
+						<Y>-5</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1672,7 +2134,7 @@ gr_forceSaveLoadScenario.setVisible(false);</ActionCode>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<BasicProperties Width="220" Height="25">
+						<BasicProperties Width="255" Height="25">
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<FillColor>-1</FillColor>
 							<TextColor>-16777216</TextColor>
@@ -1688,8 +2150,8 @@ gr_forceSaveLoadScenario.setVisible(false);</ActionCode>
 					<Text>
 						<Id>1758545638022</Id>
 						<Name><![CDATA[t_loadScenarioInstructions]]></Name>
-						<X>5</X>
-						<Y>-20</Y>
+						<X>-145</X>
+						<Y>-25</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1712,75 +2174,13 @@ gr_forceSaveLoadScenario.setVisible(false);</ActionCode>
 					</Text>
 				</Presentation>
 			</Group>
-			<Control Type="Button">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1758532628277</Id>
-				<Name><![CDATA[button_saveScenario]]></Name>
-				<X>-331</X>
-				<Y>555</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="140" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor>-16777216</TextColor>
-					<Enabled>true</Enabled>
-					<ActionCode>gr_loadScenario.setVisible(false);
-gr_forceSaveLoadScenario.setVisible(true);
-gr_saveScenario.setVisible(true);</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<Font Name="Dialog" Size="11" Style="0"/>
-					<LabelText>Bewaar een scenario</LabelText>
-				</ExtendedProperties>
-			</Control>
-			<Control Type="Button">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1758532628290</Id>
-				<Name><![CDATA[button_loadScenario]]></Name>
-				<X>-181</X>
-				<Y>555</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="140" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor>-16777216</TextColor>
-					<Enabled>true</Enabled>
-					<ActionCode>f_initializeUserSavedScenarios(combobox_selectScenario);
-if (combobox_selectScenario.getItems().length == 0) {
-	zero_Interface.f_setErrorScreen("Er zijn nog geen scenario's opgeslagen.", zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
-	return;
-}
-
-gr_saveScenario.setVisible(false);
-gr_forceSaveLoadScenario.setVisible(true);
-gr_loadScenario.setVisible(true);
-
-</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<Font Name="Dialog" Size="11" Style="0"/>
-					<LabelText>Laad een scenario in</LabelText>
-				</ExtendedProperties>
-			</Control>
 		</Presentation>
 	</Group>
 	<Text>
-		<Id>1762252612468</Id>
-		<Name><![CDATA[t_date]]></Name>
-		<X>490</X>
-		<Y>160</Y>
+		<Id>1780597548454</Id>
+		<Name><![CDATA[t_energyHubMemberOthers]]></Name>
+		<X>450</X>
+		<Y>1000</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1793,12 +2193,11 @@ gr_loadScenario.setVisible(true);
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
-		<Text><![CDATA[Datum]]></Text>
-		<TextCode>zero_Interface.energyModel.v_isRapidRun ? zero_Interface.f_getDateStringRapid() : zero_Interface.f_getDateAndTimeString()</TextCode>
+		<Text><![CDATA[t_energyHubMemberOthers]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
-			<Size>16</Size>
-			<Style>1</Style>
+			<Size>10</Size>
+			<Style>0</Style>
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>

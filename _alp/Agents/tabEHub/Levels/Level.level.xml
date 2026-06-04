@@ -1017,7 +1017,8 @@ f_resetCapacitySharingSettings();</ActionCode>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<OnClickCode>zero_Interface.f_startEnergyHubConfiguration();</OnClickCode>
+						<OnClickCode>zero_Interface.f_startEnergyHubConfiguration();
+zero_Interface.va_energieHubSelection.navigateTo();</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<ZHeight>10</ZHeight>
@@ -1718,8 +1719,7 @@ new Thread( () -&gt; {
 	zero_Interface.f_finalizeEnergyHubConfiguration();	
 	
 	// Select load scenario in the E-Hub configurator
-	zero_Interface.uI_EnergyHub.button_loadScenario.action();
-
+	zero_Interface.uI_EnergyHub.f_loadScenarioButtonAction();
 }).start();</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>

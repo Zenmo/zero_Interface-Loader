@@ -643,7 +643,7 @@ double f_loadScenarioButton()
 {/*ALCODESTART::1762356123802*/
 // The function creates a new thread, otherwise visibilities are only updated after the entire button action is finished, which is not enough feedback for the user
 gr_forceSaveLoadScenario.setVisible(false);
-gr_loadScenario.setVisible(false);
+gr_scenarioLoad.setVisible(false);
 zero_Interface.f_setLoadingScreen(true, zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
 
 new Thread( () -> {
@@ -707,5 +707,21 @@ catch(Exception e) {
 }
 
 return repository;
+/*ALCODEEND*/}
+
+double f_loadScenarioButtonAction()
+{/*ALCODESTART::1780598140452*/
+f_initializeUserSavedScenarios(combobox_selectScenario);
+if (combobox_selectScenario.getItems().length == 0) {
+	zero_Interface.f_setErrorScreen("Er zijn nog geen scenario's opgeslagen.", zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
+	return;
+}
+
+gr_saveScenario.setVisible(false);
+gr_forceSaveLoadScenario.setVisible(true);
+gr_scenarioLoad.setVisible(true);
+line4.setX(33);
+s_saveScenarioText.setColor(black);
+s_loadScenarioText.setColor(teal);
 /*ALCODEEND*/}
 
