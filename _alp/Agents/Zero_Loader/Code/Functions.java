@@ -311,7 +311,6 @@ for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data))
 			owner = energyModel.add_pop_connectionOwners();
 			
 			owner.set_p_actorID( dataSolarfarm.owner_id());
-			owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.SOLARFARM_OP );
 			owner.b_dataSharingAgreed = true;
 			existing_actors.add(owner.p_actorID);
 		}
@@ -429,7 +428,6 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) {
 		if (!existing_actors.contains(gridbattery.p_ownerID)){ // check if owner exists already, if not, create new owner.
 			owner = energyModel.add_pop_connectionOwners();
 			owner.set_p_actorID( gridbattery.p_ownerID );
-			owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.BATTERY_OP );
 			owner.b_dataSharingAgreed = true;
 			existing_actors.add(gridbattery.p_ownerID);
 		}
@@ -517,15 +515,19 @@ for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electro
 	H2Electrolyser.f_setExternalAssetManagement(electrolyserManagement);
 	
 	//Create EA for the electrolyser GC
-	J_EAConversionElectrolyser h2ElectrolyserEA = new J_EAConversionElectrolyser(H2Electrolyser, dataElectrolyser.capacity_electric_kw(), dataElectrolyser.conversion_efficiency(), energyModel.p_timeParameters, OL_ElectrolyserState.STANDBY, dataElectrolyser.idle_consumption_power_ratio(), dataElectrolyser.min_production_ratio(), dataElectrolyser.load_change_time_h(), dataElectrolyser.start_up_time_shutdown_h(), dataElectrolyser.start_up_time_standby_h(), dataElectrolyser.start_up_time_idle_h());
+	if(dataElectrolyser.detailedElectrolyserModel()){
+		new J_EAConversionElectrolyser(H2Electrolyser, dataElectrolyser.capacity_electric_kw(), dataElectrolyser.conversion_efficiency(), energyModel.p_timeParameters, OL_ElectrolyserState.STANDBY, dataElectrolyser.idle_consumption_power_ratio(), dataElectrolyser.min_production_ratio(), dataElectrolyser.load_change_time_h(), dataElectrolyser.start_up_time_shutdown_h(), dataElectrolyser.start_up_time_standby_h(), dataElectrolyser.start_up_time_idle_h());
+	}
+	else{
+		new J_EAConversionElectrolyser(H2Electrolyser, dataElectrolyser.capacity_electric_kw(), dataElectrolyser.conversion_efficiency(), energyModel.p_timeParameters);
 	
+	}
 	//Set owner
 	ConnectionOwner owner;
 	if (!existing_actors.contains(H2Electrolyser.p_ownerID)){ // check if owner exists already, if not, create new owner.
 		owner = energyModel.add_pop_connectionOwners();
 		
 		owner.set_p_actorID( H2Electrolyser.p_ownerID );
-		owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.ELECTROLYSER_OP );
 		owner.b_dataSharingAgreed = true;
 		existing_actors.add(H2Electrolyser.p_ownerID);
 	}
@@ -606,7 +608,6 @@ for (Windfarm_data dataWindfarm : f_getWindfarmsInSubScope(c_windfarm_data)) {
 			owner = energyModel.add_pop_connectionOwners();
 			
 			owner.set_p_actorID( windfarm.p_ownerID );
-			owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.WINDFARM_OP );
 			owner.b_dataSharingAgreed = true;
 			existing_actors.add(windfarm.p_ownerID);
 		}
@@ -847,7 +848,6 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
 			
 		COC.p_actorID = genericCompany.address_id();
-		COC.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
 		COC.p_detailedCompany = false;
 		COC.b_dataSharingAgreed = true;
 		
@@ -1054,7 +1054,6 @@ for (var survey : surveys) {
 	//Create connection owner
 	ConnectionOwner survey_owner = energyModel.add_pop_connectionOwners();
 	survey_owner.p_actorID = survey.getCompanyName();
-	survey_owner.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
 	survey_owner.p_detailedCompany = true;
 	survey_owner.b_dataSharingAgreed = survey.getDataSharingAgreed();
 	survey_owner.b_dataIsAccessible = f_getAccessOfSurveyGC(survey.getDataSharingAgreed(), survey.getId());
@@ -1063,10 +1062,10 @@ for (var survey : surveys) {
         for (var gridConnection: address.getGridConnections()) {
 
 		 	//Check if it has (or will have) a direct connection with the grid (either gas or electric), if not: skip this gc.
-		 	boolean hasNaturalGasConnection = (gridConnection.getNaturalGas().getHasConnection() != null)? gridConnection.getNaturalGas().getHasConnection() : false;	 	
+		 	boolean hasNaturalGasConnection = gridConnection.getNaturalGas().checkHasConnection();	 	
 		 	boolean hasExpansionRequest = (gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() != null ) ? gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() : false;
 		 	
-		 	if (!gridConnection.getElectricity().getHasConnection() && !hasExpansionRequest && !hasNaturalGasConnection){
+		 	if (!gridConnection.getElectricity().checkHasConnection() && !hasExpansionRequest && !hasNaturalGasConnection){
 				traceln("surveyGC with sequence: " + gridConnection.getSequence() + " is not created, as it has no connection to the grid, future grid connection or current gas connection.");	
 			 	continue;
 		 	}
@@ -1675,7 +1674,6 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 	//Create and connect ConnectionOwner	
 	ConnectionOwner owner = energyModel.add_pop_connectionOwners();
 	owner.p_actorID = chargingStation.p_ownerID;
-	owner.p_connectionOwnerType = OL_ConnectionOwnerType.CHARGEPOINT_OP;
 	owner.b_dataSharingAgreed = true;
 	chargingStation.p_owner = owner;
 		
@@ -2157,7 +2155,7 @@ Double pvPower_kW = (gridConnection.getSupply().getPvInstalledKwp() != null) ? n
 
 ////Electricity (connection and consumption)
 //Check for electricity connection and data
-if (gridConnection.getElectricity().getHasConnection()){
+if (gridConnection.getElectricity().checkHasConnection()){
 	
 	//Connection capacities
 	//TEMPORARY CONVERSION NEEDED UNTIL NO LONGER INTEGER FROM SURVEY
@@ -2827,7 +2825,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		//Add primary heating asset (heatpump) (if its not part of the basic profile already
 		inputCapacityElectric_kW = max(avgc_data.p_minHeatpumpElectricCapacity_kW, maxHeatOutputPower_kW / 3); //-- /3, kan nog kleiner want is hybride zodat gasbrander ook bij springt, dus kleiner MOETEN aanname voor hoe klein onderzoeken
 		efficiency = avgc_data.p_avgEfficiencyHeatpump_fr;
-		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
+		baseTemperature_degC = energyModel.pp_ambientTemperature_degC.getCurrentValue();
 		outputTemperature_degC = avgc_data.p_avgOutputTemperatureHybridHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
@@ -2835,7 +2833,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		
 		J_EAConversionHeatPump heatPumpHybrid = new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeParameters, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType);
 
-		zero_Interface.energyModel.c_ambientDependentAssets.add(heatPumpHybrid);
+		energyModel.c_ambientDependentAssets.add(heatPumpHybrid);
 		
 		//Add secondary heating asset (gasburner)
 		heatOutputCapacityGasBurner_kW = max(avgc_data.p_minGasBurnerOutputCapacity_kW, maxHeatOutputPower_kW);
@@ -2849,7 +2847,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		//Add primary heating asset (heatpump)
 		inputCapacityElectric_kW = max(avgc_data.p_minHeatpumpElectricCapacity_kW, maxHeatOutputPower_kW); // Could be a lot smaller due to high cop
 		efficiency = avgc_data.p_avgEfficiencyHeatpump_fr;
-		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
+		baseTemperature_degC = energyModel.pp_ambientTemperature_degC.getCurrentValue();
 		outputTemperature_degC = avgc_data.p_avgOutputTemperatureElectricHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
@@ -3031,7 +3029,7 @@ if ( topGridNode == null ) {
 String topGridNodeID = topGridNode.gridnode_id();
 
 //Create data package for e-hub dashboard slider gcs
-if(project_data.project_type() == OL_ProjectType.BUSINESSPARK){
+if(c_companyBuilding_data.size() > 1){
 	f_addSliderSolarfarm(zero_Interface.p_defaultEnergyHubSliderGCName_solarfarm, topGridNodeID);
 	f_addSliderWindfarm(zero_Interface.p_defaultEnergyHubSliderGCName_windfarm, topGridNodeID);
 	f_addSliderBattery(zero_Interface.p_defaultEnergyHubSliderGCName_battery, topGridNodeID);
@@ -3058,28 +3056,7 @@ else{
 
 J_ProfilePointer f_createEngineProfile(String profileID,double[] arguments,double[] values,OL_ProfileUnits profileUnitType)
 {/*ALCODESTART::1749125189323*/
-double dataTimeStep_h = (arguments[arguments.length-1] - arguments[0])/(arguments.length-1);
-double dataStartTime_h = arguments[0];
-double simTimeStep_h = settings.timeStep_h(); 
-double a_profile[];
-if (simTimeStep_h < dataTimeStep_h) { //Interpolate data to timeStep_h = 0.25
-	//traceln("***** profilePointer using tableFunction to interpolate hourly data into quarter-hourly data ********");
-	if ((dataTimeStep_h/simTimeStep_h)%1.0 != 0.0) {
-		throw new RuntimeException("dataTimeStep_h is not an integer multiple of modelTimeStep! Unsupported dataformat!");
-	}
-	TableFunction tableFunction = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
-	a_profile = new double[values.length*(int)(dataTimeStep_h/simTimeStep_h)];
-	for (int i=0; i<a_profile.length; i++) {
-		a_profile[i] = tableFunction.get(dataStartTime_h+i*simTimeStep_h);
-	}
-	dataTimeStep_h = simTimeStep_h;
-} else if (simTimeStep_h > dataTimeStep_h) {
-	throw new RuntimeException("dataTimeStep_h smaller than modelTimeStep! Unsupported dataformat! Need to implement downsampling to allow this");
-} else {
-	a_profile=values;
-}
-
-J_ProfilePointer profilePointer = new J_ProfilePointer(profileID, a_profile, dataTimeStep_h, dataStartTime_h, profileUnitType);	
+J_ProfilePointer profilePointer = f_createProfilePointer(profileID, arguments, values, profileUnitType, null);
 
 energyModel.f_addProfile(profilePointer);
 return profilePointer;
@@ -3322,13 +3299,21 @@ if(cookingType != OL_HouseholdCookingMethod.NONE){
 }
 /*ALCODEEND*/}
 
-double f_addHotWaterDemand(GridConnection GC,double yearlyHWD_kWh)
+double f_addHotWaterDemand(GridConnection GC,double yearlyHWD_kWh,int numberOfResidents)
 {/*ALCODESTART::1749726279652*/
 if(yearlyHWD_kWh <= 0){
 	throw new RuntimeException("Trying to create a DHW asset, without specifying the yearly energy consumption");
 }
-J_ProfilePointer pp = energyModel.f_findProfile("default_house_hot_water_demand_fr");
-J_EAConsumption hotwaterDemand = new J_EAConsumption( GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, pp);
+J_ProfilePointer pp = f_getDHWProfile(numberOfResidents);
+if(pp == null){
+	pp = energyModel.f_findProfile("default_house_hot_water_demand_fr");
+	J_EAConsumption profile = new J_EAConsumption(GC, OL_EnergyAssetType.HOT_WATER_CONSUMPTION, "default_house_hot_water_demand_fr", yearlyHWD_kWh, OL_EnergyCarriers.HEAT, energyModel.p_timeParameters, pp);
+	return profile.getPeakConsumptionPower_kW();
+} else {
+	J_EAProfile profile = new J_EAProfile( GC, OL_EnergyCarriers.HEAT, pp, OL_AssetFlowCategories.hotWaterConsumption_kW, energyModel.p_timeParameters);
+	return profile.getPeakConsumptionPower_kW();
+}
+
 /*ALCODEEND*/}
 
 double f_addBuildingHeatModel(GridConnection parentGC,double floorArea_m2,Double heatDemand_kwhpa,J_HeatingPreferences heatingPreferences)
@@ -3496,7 +3481,6 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 		
 	//Set parameters for the Actor: ConnectionOwner
 	COH.p_actorID = GCH.p_ownerID;
-	COH.p_connectionOwnerType = OL_ConnectionOwnerType.HOUSEHOLD;
 	COH.p_detailedCompany = false;
 	GCH.p_owner = COH;
 	
@@ -3668,7 +3652,6 @@ for (ParkingSpace_data dataParkingSpace : f_getParkingSpacesInSubScope(c_parking
 		ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
 			
 		COC.p_actorID = "Parking space connection owner: " + dataParkingSpace.parking_id();
-		COC.p_connectionOwnerType = OL_ConnectionOwnerType.PARKINGSPACE_OP;
 		COC.p_detailedCompany = false;
 		COC.b_dataSharingAgreed = true;
 		
@@ -3923,7 +3906,7 @@ return heatingType;
 Double f_createSurveyHeatProfiles(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC,OL_GridConnectionHeatingType heatingType)
 {/*ALCODESTART::1753801098736*/
 ////Gas and Heating
-if (surveyGC.getNaturalGas().getHasConnection() != null && surveyGC.getNaturalGas().getHasConnection() ) {
+if (surveyGC.getNaturalGas().checkHasConnection()) {
 	switch (heatingType) {
 		case HYBRID_HEATPUMP:
 			// Exception for hybrid heatpumps, when it will be a ghost asset make gas profile
@@ -4551,7 +4534,7 @@ zero_Interface.c_scenarioMap_Future = saveObject.c_scenarioMap_Future;
 
 
 /*
-List<ConnectionOwner> c_COCompanies = findAll(zero_Interface.energyModel.pop_connectionOwners, p -> p.p_connectionOwnerType == OL_ConnectionOwnerType.COMPANY); 
+List<ConnectionOwner> c_COCompanies = findAll(energyModel.pop_connectionOwners, p -> p.p_connectionOwnerType == OL_ConnectionOwnerType.COMPANY); 
 
 
 int i = 0;
@@ -4570,7 +4553,7 @@ for (ConnectionOwner CO : c_COCompanies) {
 double f_setSimulationTimeParameters()
 {/*ALCODESTART::1758714675284*/
 //Sim start year
-int simStartYear = getExperiment().getEngine().getStartDate().getYear() + 1900;  // 1900 years offset because of Java/AnyLogic convention
+int simStartYear = getEngine().getStartDate().getYear() + 1900;  // 1900 years offset because of Java/AnyLogic convention
 
 // Create date at start of simulation year to use to calculate v_simStartHour_h
 Date d = new Date();
@@ -4582,7 +4565,7 @@ d.setMinutes(0);
 d.setDate(1);
 
 //Calculate sim start hour
-double simStartTime_h = roundToInt((getExperiment().getEngine().getStartDate().getTime() - d.getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
+double simStartTime_h = roundToInt((getEngine().getStartDate().getTime() - d.getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
 
 //Fix for if start is within summer time, the v_simStartHour_h is not correct anymore
 double summerTimeStart_h = avgc_data.map_yearlySummerWinterTimeStartHour.get(simStartYear).getFirst();
@@ -4593,8 +4576,8 @@ if(simStartTime_h > summerTimeStart_h && simStartTime_h < winterTimeStart_h){
 
 //Set sim duration if it is set
 double simDuration_h; //Sim duration in hours
-if(getExperiment().getEngine().getStopDate() != null){ //If experiment has set time, it gets bias
-	simDuration_h = roundToInt(((double)getExperiment().getEngine().getStopDate().getTime() - getExperiment().getEngine().getStartDate().getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
+if(getEngine().getStopDate() != null){ //If experiment has set time, it gets bias
+	simDuration_h = roundToInt(((double)getEngine().getStopDate().getTime() - getEngine().getStartDate().getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
 	if(simStartTime_h > summerTimeStart_h && simStartTime_h + simDuration_h > winterTimeStart_h){//Compensate if start time is in summer time, and end time is in winter time -> simulation would otherwise have 1 hour too much
 		simDuration_h -= 1;
 	}
@@ -4699,9 +4682,9 @@ traceln("Loading modelSave...");
 //pauseSimulation();
 
 // Collect GIS_Objects into hashmap, to link to new EnergyModel.
-zero_Interface.energyModel.pop_GIS_Buildings.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
-zero_Interface.energyModel.pop_GIS_Objects.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
-zero_Interface.energyModel.pop_GIS_Parcels.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
+energyModel.pop_GIS_Buildings.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
+energyModel.pop_GIS_Objects.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
+energyModel.pop_GIS_Parcels.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
 pauseSimulation();
 try {
 	v_objectMapper = new ObjectMapper();
@@ -4750,7 +4733,7 @@ try {
 	// get heatingTypeHashmap from 'old' energyModel.
 	deserializedEnergyModel.c_defaultHeatingStrategies = zero_Interface.energyModel.c_defaultHeatingStrategies;
 	
-	zero_Interface.zero_loader.energyModel = deserializedEnergyModel;
+	this.energyModel = deserializedEnergyModel;
 	zero_Interface.energyModel = deserializedEnergyModel;
 	zero_Interface.uI_Results.energyModel = deserializedEnergyModel;
 	uI_Results.energyModel = deserializedEnergyModel;
@@ -4819,14 +4802,14 @@ try {
 	//zero_Interface.f_updateOrderedListsAfterDeserialising(deserializedEnergyModel);
 	
 	/*
-	Date startDate = getExperiment().getEngine().getStartDate();
-	int day = getExperiment().getEngine().getDayOfMonth();
-	int month = getExperiment().getEngine().getMonth();
+	Date startDate = getEngine().getStartDate();
+	int day = getEngine().getDayOfMonth();
+	int month = getEngine().getMonth();
 	traceln("day: " + day);
 	traceln("month: " + month);
 	startDate.setMonth(startDate.getMonth() - month);
 	startDate.setDate(startDate.getDate() - day);
-	getExperiment().getEngine().setStartDate(startDate);
+	getEngine().setStartDate(startDate);
 	*/
 	
 } catch (IOException e) {
@@ -5060,17 +5043,20 @@ else{
 double spaceHeatingDemand_kwhpa;
 double hotWaterDemand_kWhpa;
 double cookingDemand_kWhpa;
+int numberOfResidents = 0;
 if(house.p_PBLParameters != null){
 	PBL_SpaceHeatingAndResidents_data spaceHeatingDataObject = f_getPBLObject_spaceHeatingAndResidents(house.p_PBLParameters.getDwellingType(), house.p_buildYear, house.p_PBLParameters.getOwnershipType(), house.p_insulationLabel);
 	spaceHeatingDemand_kwhpa = f_getSpaceHeatingDemand_PBL_kWh(house.p_floorSurfaceArea_m2, spaceHeatingDataObject, house.p_PBLParameters.getLocalFactor(), house.p_PBLParameters.getRegionalClimateCorrectionFactor());
 	
-	int numberOfResidents = f_getNumberOfResidents_PBL(spaceHeatingDataObject, house.p_floorSurfaceArea_m2);
+	numberOfResidents = f_getNumberOfResidents_PBL(spaceHeatingDataObject, house.p_floorSurfaceArea_m2);
 	
 	PBL_DHWAndCooking_data DHWAndCookingDataObject = f_getPBLObject_DHWAndCooking(house.p_buildYear, house.p_floorSurfaceArea_m2, numberOfResidents);
 	hotWaterDemand_kWhpa = DHWAndCookingDataObject.dhw_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
 	cookingDemand_kWhpa = DHWAndCookingDataObject.cooking_gas_demand_m3pa() * avgc_data.p_gas_kWhpm3;
 }
 else{
+	numberOfResidents = f_estimateHouseNmbrResidents();
+	
 	spaceHeatingDemand_kwhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgSpaceHeatingTotalGasConsumptionShare_fr;
 	hotWaterDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgDHWTotalGasConsumptionShare_fr;
 	cookingDemand_kWhpa = annualNaturalGasConsumption_kwhpa * avgc_data.p_avgCookingTotalGasConsumptionShare_fr;
@@ -5086,9 +5072,26 @@ J_HeatingPreferences heatingPreferences = f_getHouseHeatingPreferences();
 
 f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2, spaceHeatingDemand_kwhpa, heatingPreferences);
 
+//Add hot water demand
+double maxHotWaterDemand_kW = 0;
+if(hotWaterDemand_kWhpa > 0){
+	maxHotWaterDemand_kW = f_addHotWaterDemand(house, hotWaterDemand_kWhpa, numberOfResidents);
+}
+
+//Add cooking demand
+if(cookingType == null || cookingType == OL_HouseholdCookingMethod.UNKNOWN){
+	cookingType = avgc_data.p_avgHouseCookingMethod;
+}
+f_addCookingAsset(house, cookingType, cookingDemand_kWhpa);
+
 //Determine required heating capacity for the heating asset	
 double maximalTemperatureDifference_K = 30.0; // Approximation
-double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000;
+double maxHeatOutputPower_kW = house.p_BuildingThermalAsset.getLossFactor_WpK() * maximalTemperatureDifference_K / 1000 + maxHotWaterDemand_kW;
+
+/*if (hotWaterDemand_kWhpa > 0) {
+	// A standard domestic peak is roughly 25-30 kW for instant hot water delivery
+	maxHeatOutputPower_kW += 100.0; 
+}*/
 
 //Check if heating type is known: Else: take avgc
 if(heatingType == null || heatingType == OL_GridConnectionHeatingType.UNKNOWN){
@@ -5102,38 +5105,14 @@ f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
 house.f_addHeatManagement(heatingType, false);
 house.f_setHeatingPreferences(heatingPreferences);
 
-//Add hot water demand
-if(hotWaterDemand_kWhpa > 0){
-	f_addHotWaterDemand(house, hotWaterDemand_kWhpa);
-}
-
-//Add cooking demand
-if(cookingType == null || cookingType == OL_HouseholdCookingMethod.UNKNOWN){
-	cookingType = avgc_data.p_avgHouseCookingMethod;
-}
-f_addCookingAsset(house, cookingType, cookingDemand_kWhpa);
-
-
 //For calibrating AVG data PBL loss factor 
 totalSpaceHeatDemand_kwhpa += spaceHeatingDemand_kwhpa;
 /*ALCODEEND*/}
 
-double f_estimateHouseDHWDemand_kWh(double floorSurface_m2)
+int f_estimateHouseNmbrResidents()
 {/*ALCODESTART::1768570811946*/
-int numberOfResidents;
-if( floorSurface_m2 > 150){
-	numberOfResidents = uniform_discr(2,6);
-}
-else if (floorSurface_m2 > 50){
-	numberOfResidents = uniform_discr(1,4);
-}
-else {
-	numberOfResidents = uniform_discr(1,2);
-}
-
-double yearlyHWD_kWh = 1000 + numberOfResidents * 150; //SOURCE!? Put in AVGC!!
-return yearlyHWD_kWh;
-
+int numberOfResidents = uniform_discr(1,5);
+return numberOfResidents;
 /*ALCODEEND*/}
 
 double f_estimateHouseCookingDemand_kWh()
@@ -5261,5 +5240,63 @@ if(PVOrientationZorm != null){
 }
 
 return pvOrientation;
+/*ALCODEEND*/}
+
+J_ProfilePointer f_getDHWProfile(int numberOfResidents)
+{/*ALCODESTART::1776432342124*/
+int randomIndex;
+J_ProfilePointer ppDHWProfile = null;
+
+double offset_h = (energyModel.p_timeParameters.getDayOfWeek1jan() - 1) * 24.0; //Monday = index 0: -> detailed DHW profiles always start on monday! -> To have no offset you need to subtract -1.
+
+if(map_nrOfResidentsToDHWProfiles_data.containsKey(numberOfResidents) && map_nrOfResidentsToDHWProfiles_data.get(numberOfResidents).size() > 0){
+	List<DHWProfile_data> profiles = map_nrOfResidentsToDHWProfiles_data.get(numberOfResidents);
+	randomIndex = uniform_discr(0, profiles.size() - 1);
+	DHWProfile_data dhwProfile = profiles.get(randomIndex);
+	ppDHWProfile = f_createProfilePointer(dhwProfile.DHWProfileID(), dhwProfile.getArgumentsArray(), dhwProfile.getValuesArray(), dhwProfile.profileUnits(), offset_h);
+	profiles.remove(randomIndex);
+	if(!energyModel.map_nrOfResidentsToDHWprofiles.containsKey(numberOfResidents)){
+		energyModel.map_nrOfResidentsToDHWprofiles.put(numberOfResidents, new ArrayList<>());
+	}
+	energyModel.map_nrOfResidentsToDHWprofiles.get(numberOfResidents).add(ppDHWProfile);
+	energyModel.f_addProfile(ppDHWProfile);
+}
+else if (energyModel.map_nrOfResidentsToDHWprofiles.containsKey(numberOfResidents) && energyModel.map_nrOfResidentsToDHWprofiles.get(numberOfResidents).size() > 0){
+	List<J_ProfilePointer> assignedProfiles = energyModel.map_nrOfResidentsToDHWprofiles.get(numberOfResidents);
+	randomIndex = uniform_discr(0, assignedProfiles.size() - 1);
+	ppDHWProfile = assignedProfiles.get(randomIndex);
+}
+
+return ppDHWProfile;
+/*ALCODEEND*/}
+
+J_ProfilePointer f_createProfilePointer(String profileID,double[] arguments,double[] values,OL_ProfileUnits profileUnitType,Double offset_h)
+{/*ALCODESTART::1776443217505*/
+double dataTimeStep_h = (arguments[arguments.length-1] - arguments[0])/(arguments.length-1);
+double simTimeStep_h = settings.timeStep_h(); 
+double a_profile[];
+
+double dataStartTime_h = offset_h != null ? arguments[0] - offset_h : arguments[0];
+
+if (simTimeStep_h < dataTimeStep_h) { //Interpolate data to timeStep_h = 0.25
+	//traceln("***** profilePointer using tableFunction to interpolate hourly data into quarter-hourly data ********");
+	if ((dataTimeStep_h/simTimeStep_h)%1.0 != 0.0) {
+		throw new RuntimeException("dataTimeStep_h is not an integer multiple of modelTimeStep! Unsupported dataformat!");
+	}
+	TableFunction tableFunction = new TableFunction(arguments, values, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+	a_profile = new double[values.length*(int)(dataTimeStep_h/simTimeStep_h)];
+	for (int i=0; i<a_profile.length; i++) {
+		a_profile[i] = tableFunction.get(arguments[0]+i*simTimeStep_h);
+	}
+	dataTimeStep_h = simTimeStep_h;
+} else if (simTimeStep_h > dataTimeStep_h) {
+	throw new RuntimeException("dataTimeStep_h smaller than modelTimeStep! Unsupported dataformat! Need to implement downsampling to allow this");
+} else {
+	a_profile=values;
+}
+
+J_ProfilePointer profilePointer = new J_ProfilePointer(profileID, a_profile, dataTimeStep_h, dataStartTime_h, profileUnitType);	
+
+return profilePointer;
 /*ALCODEEND*/}
 

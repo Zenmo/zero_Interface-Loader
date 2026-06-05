@@ -6,9 +6,13 @@ public class J_SliderSettings_Residential {
 	////Electricity
 	private double housesWithPV_pct;
 	private double pvHousesWithBattery_pct;
+	private boolean cb_householdCurtailmentActive;
 	private double cooking_pct;
 	private double electricityDemandIncrease_pct;
+	private double largeScalePV_ha;
+	private double largeScaleWind_MW;
 	private double averageNeighbourhoodBatterySize_kWh;
+	private boolean cb_gridCurtailmentActive;
 
 	////Heating
 	private double housesWithGasBurners_pct;
@@ -40,12 +44,17 @@ public class J_SliderSettings_Residential {
     }
 	
 	// ====== Setters ======
+    // Electricity
 	public void setHousesWithPV_pct(double housesWithPV_pct) {
 	    this.housesWithPV_pct = housesWithPV_pct;
 	}
 
 	public void setPvHousesWithBattery_pct(double pvHousesWithBattery_pct) {
 	    this.pvHousesWithBattery_pct = pvHousesWithBattery_pct;
+	}
+	
+	public void setCb_householdCurtailmentActive(boolean cb_householdCurtailmentActive) {
+	    this.cb_householdCurtailmentActive = cb_householdCurtailmentActive;
 	}
 
 	public void setCooking_pct(double cooking_pct) {
@@ -55,9 +64,21 @@ public class J_SliderSettings_Residential {
 	public void setElectricityDemandIncrease_pct(double electricityDemandIncrease_pct) {
 	    this.electricityDemandIncrease_pct = electricityDemandIncrease_pct;
 	}
+	
+	public void setLargeScalePV_ha(double largeScalePV_ha) {
+	    this.largeScalePV_ha = largeScalePV_ha;
+	}
+	
+	public void setLargeScaleWind_MW(double largeScaleWind_MW) {
+	    this.largeScaleWind_MW = largeScaleWind_MW;
+	}
 
 	public void setAverageNeighbourhoodBatterySize_kWh(double averageNeighbourhoodBatterySize_kWh) {
 	    this.averageNeighbourhoodBatterySize_kWh = averageNeighbourhoodBatterySize_kWh;
+	}
+	
+	public void setCb_gridCurtailmentActive(boolean cb_gridCurtailmentActive) {
+	    this.cb_gridCurtailmentActive = cb_gridCurtailmentActive;
 	}
 
 	// Heating
@@ -131,12 +152,17 @@ public class J_SliderSettings_Residential {
 	}
 
 	// ====== Getters ======
+	// Electricity
 	public double getHousesWithPV_pct() {
 	    return housesWithPV_pct;
 	}
 
 	public double getPvHousesWithBattery_pct() {
 	    return pvHousesWithBattery_pct;
+	}
+	
+	public boolean getCb_householdCurtailmentActive() {
+	    return cb_householdCurtailmentActive;
 	}
 
 	public double getCooking_pct() {
@@ -146,9 +172,21 @@ public class J_SliderSettings_Residential {
 	public double getElectricityDemandIncrease_pct() {
 	    return electricityDemandIncrease_pct;
 	}
+	
+	public double getLargeScalePV_ha() {
+	    return largeScalePV_ha;
+	}
+	
+	public double getLargeScaleWind_MW() {
+	    return largeScaleWind_MW;
+	}
 
 	public double getAverageNeighbourhoodBatterySize_kWh() {
 	    return averageNeighbourhoodBatterySize_kWh;
+	}
+	
+	public boolean getCb_gridCurtailmentActive() {
+	    return cb_gridCurtailmentActive;
 	}
 
 	// Heating

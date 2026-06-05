@@ -191,7 +191,7 @@
 		<Id>1714139629738</Id>
 		<Name><![CDATA[f_setPVSliderPresets]]></Name>
 		<X>-1070</X>
-		<Y>410</Y>
+		<Y>390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -207,7 +207,7 @@
 		<Id>1714139648227</Id>
 		<Name><![CDATA[f_setBatSliderPresets]]></Name>
 		<X>-1070</X>
-		<Y>490</Y>
+		<Y>470</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -223,7 +223,7 @@
 		<Id>1714139684603</Id>
 		<Name><![CDATA[f_setVehicleSliderPresets]]></Name>
 		<X>-1070</X>
-		<Y>570</Y>
+		<Y>550</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -239,7 +239,7 @@
 		<Id>1714140108358</Id>
 		<Name><![CDATA[f_setCarSliderPresets]]></Name>
 		<X>-1060</X>
-		<Y>590</Y>
+		<Y>570</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -255,7 +255,7 @@
 		<Id>1714140134819</Id>
 		<Name><![CDATA[f_setVanSliderPresets]]></Name>
 		<X>-1060</X>
-		<Y>790</Y>
+		<Y>770</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -271,7 +271,7 @@
 		<Id>1714140156233</Id>
 		<Name><![CDATA[f_setTruckSliderPresets]]></Name>
 		<X>-1060</X>
-		<Y>990</Y>
+		<Y>970</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -407,7 +407,7 @@
 		<Id>1714654645264</Id>
 		<Name><![CDATA[f_setResultsUIPresets]]></Name>
 		<X>-1050</X>
-		<Y>1350</Y>
+		<Y>1330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -443,7 +443,7 @@
 		<Id>1714656835269</Id>
 		<Name><![CDATA[f_updateUIResultsCompanyUI]]></Name>
 		<X>-1050</X>
-		<Y>1370</Y>
+		<Y>1350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -580,22 +580,6 @@
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1727798399503</Id>
-		<Name><![CDATA[f_setGCCapacitySliderPresets_Feedin]]></Name>
-		<X>-1070</X>
-		<Y>330</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1727884380899</Id>
 		<Name><![CDATA[f_getNFATOValues]]></Name>
 		<X>-430</X>
@@ -655,7 +639,7 @@
 		<Id>1756898097088</Id>
 		<Name><![CDATA[f_setDemandReductionSliderPresets]]></Name>
 		<X>-1060</X>
-		<Y>1240</Y>
+		<Y>1220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -683,6 +667,22 @@
 			<Name><![CDATA[selectedOwnedGCIndex]]></Name>
 			<Type><![CDATA[int]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1777642337289</Id>
+		<Name><![CDATA[f_rapidRunFromCompanyUI]]></Name>
+		<X>-420</X>
+		<Y>960</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>
