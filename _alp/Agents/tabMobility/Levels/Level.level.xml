@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Presentation>
 	<RoundedRectangle>
+		<Id>1780638321997</Id>
+		<Name><![CDATA[roundRectangle3]]></Name>
+		<X>-2</X>
+		<Y>45</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor/>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>367</Width>
+		<Height>408</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-8943463</FillColor>
+		<FillMaterial>null</FillMaterial>
+		<ArcRadius>10</ArcRadius>
+	</RoundedRectangle>
+	<RoundedRectangle>
 		<Id>1780124941301</Id>
 		<Name><![CDATA[roundRectangle]]></Name>
 		<X>0</X>
@@ -21,9 +48,9 @@
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>370</Width>
-		<Height>350</Height>
+		<Height>410</Height>
 		<Rotation>0.0</Rotation>
-		<FillColor>-271061006</FillColor>
+		<FillColor>-1315080</FillColor>
 		<FillMaterial>null</FillMaterial>
 		<ArcRadius>10</ArcRadius>
 	</RoundedRectangle>
@@ -92,7 +119,6 @@
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<XCode>0</XCode>
-		<YCode>0</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -1165,8 +1191,8 @@ f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&
 			<Text>
 				<Id>1777652928131</Id>
 				<Name><![CDATA[txt_mobilitySlidersCompaniesDescription]]></Name>
-				<X>20</X>
-				<Y>20</Y>
+				<X>50</X>
+				<Y>17</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1181,8 +1207,8 @@ f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&
 				<Color>-16777216</Color>
 				<Text><![CDATA[Bedrijven]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>22</Size>
+					<Name><![CDATA[Centaur]]></Name>
+					<Size>26</Size>
 					<Style>1</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -1362,6 +1388,60 @@ if(selectedChargingAttitude != null){
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Presentation>
+			<RoundedRectangle>
+				<Id>1780638157326</Id>
+				<Name><![CDATA[roundRectangle2]]></Name>
+				<X>10</X>
+				<Y>220</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>350</Width>
+				<Height>170</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-328966</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>10</ArcRadius>
+			</RoundedRectangle>
+			<RoundedRectangle>
+				<Id>1780637904099</Id>
+				<Name><![CDATA[roundRectangle1]]></Name>
+				<X>10</X>
+				<Y>50</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>350</Width>
+				<Height>140</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-328966</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>10</ArcRadius>
+			</RoundedRectangle>
 			<Text>
 				<Id>1758183089010</Id>
 				<Name><![CDATA[txt_privateParkedCars]]></Name>
@@ -1391,7 +1471,7 @@ if(selectedChargingAttitude != null){
 				<Id>1758183152912</Id>
 				<Name><![CDATA[txt_publicChargePoints]]></Name>
 				<X>20</X>
-				<Y>190</Y>
+				<Y>230</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1417,7 +1497,7 @@ if(selectedChargingAttitude != null){
 				<Id>1758183196756</Id>
 				<Name><![CDATA[sl_householdPublicChargers_pct]]></Name>
 				<X>260</X>
-				<Y>205</Y>
+				<Y>255</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1444,7 +1524,7 @@ if(selectedChargingAttitude != null){
 				<Id>1758183196774</Id>
 				<Name><![CDATA[txt_householdPublicEVsResidentialAreaDescription]]></Name>
 				<X>20</X>
-				<Y>210</Y>
+				<Y>260</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1470,7 +1550,7 @@ if(selectedChargingAttitude != null){
 				<Id>1758183196782</Id>
 				<Name><![CDATA[txt_householdPublicEVs_pct]]></Name>
 				<X>245</X>
-				<Y>210</Y>
+				<Y>260</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1497,7 +1577,7 @@ if(selectedChargingAttitude != null){
 				<Id>1758183196796</Id>
 				<Name><![CDATA[txt_householdPrivateEVsDescription]]></Name>
 				<X>20</X>
-				<Y>80</Y>
+				<Y>90</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1524,7 +1604,7 @@ if(selectedChargingAttitude != null){
 				<Id>1758183196803</Id>
 				<Name><![CDATA[sl_householdPrivateEVs_pct]]></Name>
 				<X>260</X>
-				<Y>75</Y>
+				<Y>85</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1551,7 +1631,7 @@ if(selectedChargingAttitude != null){
 				<Id>1758183196811</Id>
 				<Name><![CDATA[txt_householdPrivateEVs_pct]]></Name>
 				<X>245</X>
-				<Y>80</Y>
+				<Y>90</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1578,7 +1658,7 @@ if(selectedChargingAttitude != null){
 				<Id>1758183196871</Id>
 				<Name><![CDATA[gr_householdSettingsV2G_publicChargers]]></Name>
 				<X>10</X>
-				<Y>300</Y>
+				<Y>350</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -1706,7 +1786,7 @@ if(selectedChargingAttitude != null){
 				<Id>1758183196924</Id>
 				<Name><![CDATA[i_householdPrivateEV]]></Name>
 				<X>180</X>
-				<Y>78</Y>
+				<Y>88</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1734,7 +1814,7 @@ if(selectedChargingAttitude != null){
 				<Id>1758183196939</Id>
 				<Name><![CDATA[i_householdPublicChargers]]></Name>
 				<X>180</X>
-				<Y>208</Y>
+				<Y>258</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1762,7 +1842,7 @@ if(selectedChargingAttitude != null){
 				<Id>1758183196817</Id>
 				<Name><![CDATA[gr_householdSettingsV1G_publicChargers]]></Name>
 				<X>5</X>
-				<Y>255</Y>
+				<Y>305</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -1890,7 +1970,7 @@ if(selectedChargingAttitude != null){
 				<Id>1758191125495</Id>
 				<Name><![CDATA[gr_householdActivateV2GPrivateParkedCars]]></Name>
 				<X>170</X>
-				<Y>140</Y>
+				<Y>150</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -1990,7 +2070,7 @@ gr_householdSettingsV2G_privateParkedCars.setVisible(cb_householdActivateV2GPriv
 				<Id>1758189201608</Id>
 				<Name><![CDATA[txt_householdChargingStrategyPrivateParkedCars]]></Name>
 				<X>20</X>
-				<Y>105</Y>
+				<Y>115</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2017,7 +2097,7 @@ gr_householdSettingsV2G_privateParkedCars.setVisible(cb_householdActivateV2GPriv
 				<Id>1758189233415</Id>
 				<Name><![CDATA[cb_householdChargingStrategyPrivateParkedCars]]></Name>
 				<X>221</X>
-				<Y>103</Y>
+				<Y>113</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2026,7 +2106,7 @@ gr_householdSettingsV2G_privateParkedCars.setVisible(cb_householdActivateV2GPriv
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="140" Height="20">
+				<BasicProperties Width="134" Height="20">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<FillColor>-1</FillColor>
 					<TextColor>-16777216</TextColor>
@@ -2087,7 +2167,7 @@ else{
 				<Id>1758189262812</Id>
 				<Name><![CDATA[i_householdChargingStrategyPrivateParkedCars]]></Name>
 				<X>180</X>
-				<Y>103</Y>
+				<Y>113</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2115,7 +2195,7 @@ else{
 				<Id>1758192054421</Id>
 				<Name><![CDATA[txt_chargingStrategyPublicChargers]]></Name>
 				<X>20</X>
-				<Y>235</Y>
+				<Y>285</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2142,7 +2222,7 @@ else{
 				<Id>1758192054440</Id>
 				<Name><![CDATA[cb_householdChargingStrategyPrivatePublicChargers]]></Name>
 				<X>221</X>
-				<Y>233</Y>
+				<Y>283</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2151,7 +2231,7 @@ else{
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="140" Height="20">
+				<BasicProperties Width="134" Height="20">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<FillColor>-1</FillColor>
 					<TextColor>-16777216</TextColor>
@@ -2211,7 +2291,7 @@ else{
 				<Id>1758192054460</Id>
 				<Name><![CDATA[i_householdChargingStrategyPublicChargers]]></Name>
 				<X>180</X>
-				<Y>233</Y>
+				<Y>283</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2239,7 +2319,7 @@ else{
 				<Id>1758192011387</Id>
 				<Name><![CDATA[gr_householdActivateV2GPublicChargers]]></Name>
 				<X>170</X>
-				<Y>295</Y>
+				<Y>345</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -2339,7 +2419,7 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 				<Id>1758274187930</Id>
 				<Name><![CDATA[gr_householdSettingsV2G_privateParkedCars]]></Name>
 				<X>10</X>
-				<Y>145</Y>
+				<Y>155</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -2467,7 +2547,7 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 				<Id>1777651310496</Id>
 				<Name><![CDATA[txt_mobilitySlidersHousesholdsDescription]]></Name>
 				<X>50</X>
-				<Y>20</Y>
+				<Y>17</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2718,4 +2798,30 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 			</Text>
 		</Presentation>
 	</Group>
+	<Image>
+		<Id>1780638271468</Id>
+		<Name><![CDATA[image15]]></Name>
+		<X>20</X>
+		<Y>65</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Width>20</Width>
+		<Height>15</Height>
+		<Rotation>0.0</Rotation>
+		<ImageFiles>
+			<ImageResourceReference>
+				<PackageName>zerointerfaceloader</PackageName>
+				<ClassName>noun-car-1777731.png</ClassName>
+			</ImageResourceReference>
+		</ImageFiles>
+		<OriginalSize>false</OriginalSize>
+	</Image>
 </Presentation>

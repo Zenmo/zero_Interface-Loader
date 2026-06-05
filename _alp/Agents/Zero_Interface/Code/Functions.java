@@ -120,7 +120,7 @@ else{
 //Set the correct map overlay
 switch(selectedMapOverlayType){
 	case DEFAULT:
-		gis_area.f_style(null, null, null, null);
+		gis_area.f_style(null, white, null, null);
 		break;
 	case ELECTRICITY_CONSUMPTION:
 		if (project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
@@ -582,13 +582,13 @@ if (gis_area.c_containedGridConnections.size() > 0) {
 	
 	//Set color of object based on total pv capacity
 	if(totalPVCapacity_kWp == 0){
-		gis_area.f_style(rect_mapOverlayLegend_PVProduction1.getFillColor(), null, null, null);
+		gis_area.f_style(rect_mapOverlayLegend_PVProduction1.getFillColor(), lightGrey, null, null);
 	}
 	else if (totalPVCapacity_kWp < mediumPVValue_kWp){
-		gis_area.f_style(rect_mapOverlayLegend_PVProduction2.getFillColor(), null, null, null);
+		gis_area.f_style(rect_mapOverlayLegend_PVProduction2.getFillColor(), whiteSmoke, null, null);
 	}
 	else{
-		gis_area.f_style(rect_mapOverlayLegend_PVProduction3.getFillColor(), null, null, null);
+		gis_area.f_style(rect_mapOverlayLegend_PVProduction3.getFillColor(), white, null, null);
 	}
 }
 /*ALCODEEND*/}
@@ -690,11 +690,11 @@ for( GridConnection gc : gis_area.c_containedGridConnections){
 }
 
 if ( yearlyElectricityConsumption_kWh == 0) { gis_area.f_style( v_unknownConsumptionColor, null, null, null );}
-else if ( yearlyElectricityConsumption_kWh < 1500){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption1.getFillColor(), null, null, null);}
-else if ( yearlyElectricityConsumption_kWh < 2500){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption2.getFillColor(), null, null, null);}
-else if ( yearlyElectricityConsumption_kWh < 4000){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption3.getFillColor(), null, null, null);}
-else if ( yearlyElectricityConsumption_kWh < 6000){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption4.getFillColor(), null, null, null);}
-else if ( yearlyElectricityConsumption_kWh > 6000){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption5.getFillColor(), null, null, null);}
+else if ( yearlyElectricityConsumption_kWh < 1500){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption1.getFillColor(), rect_mapOverlayLegend_ElectricityConsumption1.getFillColor().brighter(), null, null);}
+else if ( yearlyElectricityConsumption_kWh < 2500){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption2.getFillColor(), rect_mapOverlayLegend_ElectricityConsumption2.getFillColor().brighter(), null, null);}
+else if ( yearlyElectricityConsumption_kWh < 4000){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption3.getFillColor(), rect_mapOverlayLegend_ElectricityConsumption3.getFillColor().brighter(), null, null);}
+else if ( yearlyElectricityConsumption_kWh < 6000){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption4.getFillColor(), rect_mapOverlayLegend_ElectricityConsumption4.getFillColor().brighter(), null, null);}
+else if ( yearlyElectricityConsumption_kWh > 6000){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption5.getFillColor(), rect_mapOverlayLegend_ElectricityConsumption5.getFillColor().brighter(), null, null);}
 	
 
 /*ALCODEEND*/}
@@ -2919,7 +2919,7 @@ if (gis_area.c_containedGridConnections.size() > 0) {
 			objectLineColor = v_parkingSpaceLineColor_private;
 		}
 	}
-	gis_area.f_style(objectColor, objectLineColor, null, null);
+	gis_area.f_style(objectColor, objectColor.brighter(), null, null);
 }
 /*ALCODEEND*/}
 

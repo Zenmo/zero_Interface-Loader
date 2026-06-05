@@ -3,8 +3,8 @@
 	<RoundedRectangle>
 		<Id>1780408514263</Id>
 		<Name><![CDATA[roundRectangle9]]></Name>
-		<X>109</X>
-		<Y>355</Y>
+		<X>111</X>
+		<Y>352</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -30,8 +30,8 @@
 	<RoundedRectangle>
 		<Id>1780408525352</Id>
 		<Name><![CDATA[roundRectangle10]]></Name>
-		<X>195</X>
-		<Y>355</Y>
+		<X>197</X>
+		<Y>352</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -57,8 +57,8 @@
 	<RoundedRectangle>
 		<Id>1780408533107</Id>
 		<Name><![CDATA[roundRectangle11]]></Name>
-		<X>280</X>
-		<Y>355</Y>
+		<X>282</X>
+		<Y>352</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -84,8 +84,8 @@
 	<RoundedRectangle>
 		<Id>1780408479316</Id>
 		<Name><![CDATA[roundRectangle8]]></Name>
-		<X>25</X>
-		<Y>355</Y>
+		<X>27</X>
+		<Y>352</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -214,7 +214,7 @@
 		<Width>75</Width>
 		<Height>70</Height>
 		<Rotation>0.0</Rotation>
-		<FillColor>-807931918</FillColor>
+		<FillColor>-806621448</FillColor>
 		<FillMaterial>null</FillMaterial>
 		<ArcRadius>10</ArcRadius>
 	</RoundedRectangle>
@@ -530,7 +530,7 @@
 						<RadiusX>20</RadiusX>
 						<RadiusY>40</RadiusY>
 						<Rotation>0.0</Rotation>
-						<FillColor>-4003861</FillColor>
+						<FillColor>-808331026</FillColor>
 						<FillMaterial>null</FillMaterial>
 					</Oval>
 					<Image>
@@ -932,7 +932,7 @@
 	<Group>
 		<Id>1744964727616</Id>
 		<Name><![CDATA[gr_tabElectricity_presentation]]></Name>
-		<X>10</X>
+		<X>5</X>
 		<Y>450</Y>
 		<Label>
 			<X>10</X>
@@ -973,7 +973,7 @@
 	<Group>
 		<Id>1744964732289</Id>
 		<Name><![CDATA[gr_tabHeating_presentation]]></Name>
-		<X>10</X>
+		<X>15</X>
 		<Y>450</Y>
 		<Label>
 			<X>10</X>
@@ -1014,7 +1014,7 @@
 	<Group>
 		<Id>1744964737688</Id>
 		<Name><![CDATA[gr_tabEHub_presentation]]></Name>
-		<X>10</X>
+		<X>15</X>
 		<Y>450</Y>
 		<Label>
 			<X>10</X>
@@ -1055,7 +1055,7 @@
 	<Group>
 		<Id>1744964742286</Id>
 		<Name><![CDATA[gr_tabMobility_presentation]]></Name>
-		<X>10</X>
+		<X>15</X>
 		<Y>450</Y>
 		<Label>
 			<X>10</X>

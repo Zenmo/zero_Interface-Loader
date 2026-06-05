@@ -3,7 +3,7 @@
 	<RoundedRectangle>
 		<Id>1780350035065</Id>
 		<Name><![CDATA[roundRectangle14]]></Name>
-		<X>407</X>
+		<X>412</X>
 		<Y>24</Y>
 		<Label>
 			<X>10</X>
@@ -30,8 +30,8 @@
 	<Rectangle>
 		<Id>1780345704010</Id>
 		<Name><![CDATA[rectangle]]></Name>
-		<X>408</X>
-		<Y>40</Y>
+		<X>413</X>
+		<Y>38</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -97,7 +97,7 @@
 		<Z>0</Z>
 		<ZHeight>10</ZHeight>
 		<LineWidth>1</LineWidth>
-		<LineColor>-1</LineColor>
+		<LineColor/>
 		<LineColorCode>zenmocolor_blue3.getFillColor()</LineColorCode>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
@@ -2196,7 +2196,7 @@ fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(true);</ActionCode>
 				<Width>620</Width>
 				<Height>170</Height>
 				<Rotation>0.0</Rotation>
-				<FillColor>-292235311</FillColor>
+				<FillColor>-173023014</FillColor>
 				<FillMaterial>null</FillMaterial>
 				<ArcRadius>5</ArcRadius>
 			</RoundedRectangle>
@@ -2324,7 +2324,7 @@ gr_infoText.setVisible(false);</OnClickCode>
 				<Font>
 					<Name><![CDATA[Calibri]]></Name>
 					<Size>18</Size>
-					<Style>1</Style>
+					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
@@ -3869,13 +3869,13 @@ else {
 								<Z>0</Z>
 								<ZHeight>10</ZHeight>
 								<LineWidth>1</LineWidth>
-								<LineColor>-16777216</LineColor>
+								<LineColor>-1</LineColor>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
 								<RadiusX>6.5</RadiusX>
 								<RadiusY>40</RadiusY>
 								<Rotation>0.0</Rotation>
-								<FillColor>-1</FillColor>
+								<FillColor>-8355712</FillColor>
 								<FillMaterial>null</FillMaterial>
 							</Oval>
 							<Text>
@@ -3945,13 +3945,13 @@ else {
 								<Z>0</Z>
 								<ZHeight>10</ZHeight>
 								<LineWidth>1</LineWidth>
-								<LineColor>-16777216</LineColor>
+								<LineColor>-1</LineColor>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
 								<RadiusX>6.5</RadiusX>
 								<RadiusY>40</RadiusY>
 								<Rotation>0.0</Rotation>
-								<FillColor>-1</FillColor>
+								<FillColor>-1315080</FillColor>
 								<FillMaterial>null</FillMaterial>
 							</Oval>
 							<Text>
@@ -3996,13 +3996,13 @@ else {
 								<Z>0</Z>
 								<ZHeight>10</ZHeight>
 								<LineWidth>1</LineWidth>
-								<LineColor>-16777216</LineColor>
+								<LineColor>-1</LineColor>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
 								<RadiusX>6.5</RadiusX>
 								<RadiusY>40</RadiusY>
 								<Rotation>0.0</Rotation>
-								<FillColor>-1</FillColor>
+								<FillColor>-4144960</FillColor>
 								<FillMaterial>null</FillMaterial>
 							</Oval>
 							<Text>
@@ -4047,13 +4047,13 @@ else {
 								<Z>0</Z>
 								<ZHeight>10</ZHeight>
 								<LineWidth>1</LineWidth>
-								<LineColor>-16777216</LineColor>
+								<LineColor>-1</LineColor>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
 								<RadiusX>6.5</RadiusX>
 								<RadiusY>40</RadiusY>
 								<Rotation>0.0</Rotation>
-								<FillColor>-1</FillColor>
+								<FillColor>-3024658</FillColor>
 								<FillMaterial>null</FillMaterial>
 							</Oval>
 							<Text>
@@ -4098,13 +4098,13 @@ else {
 								<Z>0</Z>
 								<ZHeight>10</ZHeight>
 								<LineWidth>1</LineWidth>
-								<LineColor>-16777216</LineColor>
+								<LineColor>-1</LineColor>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
 								<RadiusX>6.5</RadiusX>
 								<RadiusY>40</RadiusY>
 								<Rotation>0.0</Rotation>
-								<FillColor>-1</FillColor>
+								<FillColor>-16777216</FillColor>
 								<FillColorCode>v_selectionColor</FillColorCode>
 								<FillMaterial>null</FillMaterial>
 							</Oval>
@@ -7950,7 +7950,7 @@ type]]></Text>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
-		<Text><![CDATA[Trafo stabiel]]></Text>
+		<Text><![CDATA[Trafonsformator]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>12</Size>
@@ -7983,7 +7983,7 @@ type]]></Text>
 		<Rotation>0.0</Rotation>
 		<FillColor/>
 		<FillMaterial>null</FillMaterial>
-		<ArcRadius>6</ArcRadius>
+		<ArcRadius>3</ArcRadius>
 	</RoundedRectangle>
 	<Control Type="CheckBox">
 		<EmbeddedIcon>false</EmbeddedIcon>
@@ -8738,7 +8738,7 @@ f_removeAllFilters();
 	<Group>
 		<Id>1709717180367</Id>
 		<Name><![CDATA[gr_simulateYear]]></Name>
-		<X>1350</X>
+		<X>1351</X>
 		<Y>280</Y>
 		<Label>
 			<X>10</X>
@@ -8794,7 +8794,7 @@ f_removeAllFilters();
 						<Width>555</Width>
 						<Height>20</Height>
 						<Rotation>0.0</Rotation>
-						<FillColor>-205396250</FillColor>
+						<FillColor>-4069658</FillColor>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>10</ArcRadius>
 					</RoundedRectangle>
@@ -8821,7 +8821,7 @@ f_removeAllFilters();
 						<Width>555</Width>
 						<Height>130</Height>
 						<Rotation>0.0</Rotation>
-						<FillColor>-205396250</FillColor>
+						<FillColor>-4069658</FillColor>
 						<FillMaterial>null</FillMaterial>
 					</Rectangle>
 				</Presentation>
@@ -8929,8 +8929,8 @@ en meer resultaten te bekijken]]></Text>
 	<Image>
 		<Id>1724074987235</Id>
 		<Name><![CDATA[image_tueLogo]]></Name>
-		<X>1670</X>
-		<Y>10.861</Y>
+		<X>1680</X>
+		<Y>11.861</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -8942,8 +8942,8 @@ en meer resultaten te bekijken]]></Text>
 		<OnClickCode>getExperimentHost().openWebSite("https://www.tue.nl/en/");</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
-		<Width>220</Width>
-		<Height>64.139</Height>
+		<Width>214</Width>
+		<Height>62.139</Height>
 		<Rotation>0.0</Rotation>
 		<ImageFiles>
 			<ImageResourceReference>
@@ -8960,7 +8960,7 @@ en meer resultaten te bekijken]]></Text>
 	<Image>
 		<Id>1731938214224</Id>
 		<Name><![CDATA[image_luxLogo]]></Name>
-		<X>30</X>
+		<X>110</X>
 		<Y>10</Y>
 		<Label>
 			<X>0</X>
@@ -8989,8 +8989,8 @@ getExperimentHost().openWebSite("https://lux.energy/");
 	<Image>
 		<Id>1758877617096</Id>
 		<Name><![CDATA[image_zenmoLogo]]></Name>
-		<X>1502</X>
-		<Y>-0.06799999999999962</Y>
+		<X>1520</X>
+		<Y>0</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>

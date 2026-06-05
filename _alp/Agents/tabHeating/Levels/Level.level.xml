@@ -1033,7 +1033,6 @@
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>0</XCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -1320,8 +1319,8 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Color>-16777216</Color>
 				<Text><![CDATA[Huizen]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>22</Size>
+					<Name><![CDATA[Centaur]]></Name>
+					<Size>26</Size>
 					<Style>1</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
