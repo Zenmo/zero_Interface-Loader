@@ -41,6 +41,10 @@ public ShapeSlider getSliderHouseholdChargersThatSupportV2G_pct(){
 	return this.sl_householdChargersThatSupportV2G_pct;
 }
 
+public ShapeComboBox getCb_ChargingAttitudePrivateParkedCars(){
+	return this.cb_householdChargingStrategyPrivateParkedCars;
+}
+
 // Company sliders
 public ShapeSlider getSliderCompaniesMobilityDemandReduction_pct () {
 	return this.sl_companiesMobilityDemandReduction_pct;

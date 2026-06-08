@@ -485,7 +485,7 @@
 				<Id>1701879145306</Id>
 				<Name><![CDATA[t_clickedObjectInfo]]></Name>
 				<X>640</X>
-				<Y>813</Y>
+				<Y>816</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -503,7 +503,7 @@
 "Selecteer een gebouw of trafostation" :
 v_clickedObjectText</TextCode>
 				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
+					<Name><![CDATA[HOLONline2]]></Name>
 					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
@@ -688,7 +688,7 @@ else{
 </ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
-			<Font Name="Dialog" Size="9" Style="1"/>
+			<Font Name="HOLONline2" Size="9" Style="1"/>
 			<LabelText>Bekijk bedrijf</LabelText>
 		</ExtendedProperties>
 	</Control>
@@ -739,7 +739,7 @@ else{
 			<ActionCode>f_scenarioRadioButtonAction();</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
-			<Font Name="Dialog" Size="14" Style="0"/>
+			<Font Name="HOLONline2" Size="14" Style="0"/>
 			<DefaultValueCode>0</DefaultValueCode>
 			<Orientation>VERTICAL</Orientation>
 			<Button>Huidige situatie</Button>
@@ -767,11 +767,11 @@ else{
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16744320</Color>
-		<Text><![CDATA[Scenario]]></Text>
+		<Text><![CDATA[SCENARIO]]></Text>
 		<Font>
-			<Name><![CDATA[Calibri]]></Name>
+			<Name><![CDATA[HolonBLOCK2]]></Name>
 			<Size>20</Size>
-			<Style>1</Style>
+			<Style>0</Style>
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
@@ -1011,7 +1011,7 @@ else{
 }</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
-					<Font Name="Dialog" Size="9" Style="0"/>
+					<Font Name="HOLONline2" Size="9" Style="0"/>
 					<LabelText>Volgend adres</LabelText>
 				</ExtendedProperties>
 			</Control>
@@ -1057,7 +1057,7 @@ else{
 }</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
-					<Font Name="Dialog" Size="9" Style="0"/>
+					<Font Name="HOLONline2" Size="9" Style="0"/>
 					<LabelText>Vorig adres</LabelText>
 				</ExtendedProperties>
 			</Control>
@@ -1334,6 +1334,7 @@ v_selectedGridConnectionIndex &gt; 0 ?
 	<Rectangle>
 		<Id>1734442437753</Id>
 		<Name><![CDATA[rect_filterFunctions]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-1620</X>
 		<Y>10</Y>
 		<Label>
@@ -1352,7 +1353,7 @@ v_selectedGridConnectionIndex &gt; 0 ?
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>360</Width>
-		<Height>700</Height>
+		<Height>800</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -2598,7 +2599,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 			<Group>
 				<Id>1753446087501</Id>
 				<Name><![CDATA[gr_ForceMapSelectionText]]></Name>
-				<X>70</X>
+				<X>-120</X>
 				<Y>-740</Y>
 				<Label>
 					<X>10</X>
@@ -2643,6 +2644,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1753445072603</Id>
 						<Name><![CDATA[button_completeManualSelectionMode]]></Name>
+						<ExcludeFromBuild>true</ExcludeFromBuild>
 						<X>220</X>
 						<Y>-20</Y>
 						<Label>
@@ -3089,6 +3091,160 @@ else {
 					</Oval>
 				</Presentation>
 			</Group>
+			<Group>
+				<Id>1780771313330</Id>
+				<Name><![CDATA[gr_filterInfoText]]></Name>
+				<X>-90</X>
+				<Y>-540</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<XCode>-90</XCode>
+				<YCode>-420</YCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<RoundedRectangle>
+						<Id>1780768882582</Id>
+						<Name><![CDATA[rect_filterUpperScreenblock1]]></Name>
+						<X>-460</X>
+						<Y>-50</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>2</LineWidth>
+						<LineColor/>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>910</Width>
+						<Height>89.011</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-16744320</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>1</ArcRadius>
+					</RoundedRectangle>
+					<Oval>
+						<Id>1780769461083</Id>
+						<Name><![CDATA[oval7]]></Name>
+						<X>-405</X>
+						<Y>-27</Y>
+						<Label>
+							<X>0</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor/>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<RadiusX>4</RadiusX>
+						<RadiusY>40</RadiusY>
+						<Rotation>0.0</Rotation>
+						<FillColor>-1</FillColor>
+						<FillMaterial>null</FillMaterial>
+					</Oval>
+					<Oval>
+						<Id>1780769461085</Id>
+						<Name><![CDATA[oval8]]></Name>
+						<X>-405</X>
+						<Y>-7</Y>
+						<Label>
+							<X>0</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor/>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<RadiusX>4</RadiusX>
+						<RadiusY>40</RadiusY>
+						<Rotation>0.0</Rotation>
+						<FillColor>-1</FillColor>
+						<FillMaterial>null</FillMaterial>
+					</Oval>
+					<Oval>
+						<Id>1780769461087</Id>
+						<Name><![CDATA[oval9]]></Name>
+						<X>-405</X>
+						<Y>13</Y>
+						<Label>
+							<X>0</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor/>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<RadiusX>4</RadiusX>
+						<RadiusY>40</RadiusY>
+						<Rotation>0.0</Rotation>
+						<FillColor>-1</FillColor>
+						<FillMaterial>null</FillMaterial>
+					</Oval>
+					<Text>
+						<Id>1780769477618</Id>
+						<Name><![CDATA[txt_energyHubConfigurator2]]></Name>
+						<X>-380</X>
+						<Y>-37</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-1</Color>
+						<Text><![CDATA[Selecteer gebouwen met het filtermenu (rechts) of door op panden op de kaart te klikken 
+Filteren gaat in volgerde van wat u selecteert
+Met de kaart kunt u zowel gebouwen toevoegen aan als uitsluiten van uw lopende selectie
+]]></Text>
+						<Font>
+							<Name><![CDATA[SansSerif]]></Name>
+							<Size>16</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+				</Presentation>
+			</Group>
 		</Presentation>
 	</Group>
 	<Group>
@@ -3182,8 +3338,8 @@ else {
 			<Text>
 				<Id>1701951640338</Id>
 				<Name><![CDATA[t_legenda]]></Name>
-				<X>-470</X>
-				<Y>-95</Y>
+				<X>-477</X>
+				<Y>-91</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -3196,10 +3352,10 @@ else {
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16744320</Color>
-				<Text><![CDATA[Legenda]]></Text>
+				<Text><![CDATA[LEGENDA]]></Text>
 				<Font>
-					<Name><![CDATA[Centaur]]></Name>
-					<Size>24</Size>
+					<Name><![CDATA[HolonBLOCK2]]></Name>
+					<Size>22</Size>
 					<Style>1</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -3371,7 +3527,7 @@ else {
 								<Id>1724074870571</Id>
 								<Name><![CDATA[t_MV]]></Name>
 								<X>-170</X>
-								<Y>-25</Y>
+								<Y>-20</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -3386,7 +3542,7 @@ else {
 								<Color>-16777216</Color>
 								<Text><![CDATA[MS-net]]></Text>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
+									<Name><![CDATA[HOLONline2]]></Name>
 									<Size>12</Size>
 									<Style>0</Style>
 								</Font>
@@ -3396,7 +3552,7 @@ else {
 								<Id>1724074870573</Id>
 								<Name><![CDATA[t_LV]]></Name>
 								<X>-170</X>
-								<Y>-5</Y>
+								<Y>0</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -3411,7 +3567,7 @@ else {
 								<Color>-16777216</Color>
 								<Text><![CDATA[LS-net]]></Text>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
+									<Name><![CDATA[HOLONline2]]></Name>
 									<Size>12</Size>
 									<Style>0</Style>
 								</Font>
@@ -3704,8 +3860,8 @@ else {
 							<Text>
 								<Id>1753868816361</Id>
 								<Name><![CDATA[txt_mapOverlayLegend_ElectricityConsumption1]]></Name>
-								<X>-20</X>
-								<Y>-51</Y>
+								<X>-21</X>
+								<Y>-49</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -3721,8 +3877,8 @@ else {
 								<Text><![CDATA[< 10 MWh / jaar]]></Text>
 								<TextCode>project_data.project_type() == OL_ProjectType.RESIDENTIAL ? "&lt; 1500 kWh / jaar" : "&lt; 10 MWh / jaar"</TextCode>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>10</Size>
+									<Name><![CDATA[HOLONline2]]></Name>
+									<Size>11</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>LEFT</Alignment>
@@ -3730,8 +3886,8 @@ else {
 							<Text>
 								<Id>1753868816363</Id>
 								<Name><![CDATA[txt_mapOverlayLegend_ElectricityConsumption2]]></Name>
-								<X>-20</X>
-								<Y>-28</Y>
+								<X>-21</X>
+								<Y>-26</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -3747,8 +3903,8 @@ else {
 								<Text><![CDATA[< 50 MWh / jaar]]></Text>
 								<TextCode>project_data.project_type() == OL_ProjectType.RESIDENTIAL ? "&lt; 2500 kWh / jaar" : "&lt; 50 MWh / jaar"</TextCode>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>10</Size>
+									<Name><![CDATA[HOLONline2]]></Name>
+									<Size>11</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>LEFT</Alignment>
@@ -3756,8 +3912,8 @@ else {
 							<Text>
 								<Id>1753868816365</Id>
 								<Name><![CDATA[txt_mapOverlayLegend_ElectricityConsumption3]]></Name>
-								<X>-20</X>
-								<Y>-3</Y>
+								<X>-21</X>
+								<Y>-1</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -3773,8 +3929,8 @@ else {
 								<Text><![CDATA[< 150 MWh / jaar]]></Text>
 								<TextCode>project_data.project_type() == OL_ProjectType.RESIDENTIAL ? "&lt; 4000 kWh / jaar" : "&lt; 150 MWh / jaar"</TextCode>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>10</Size>
+									<Name><![CDATA[HOLONline2]]></Name>
+									<Size>11</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>LEFT</Alignment>
@@ -3782,8 +3938,8 @@ else {
 							<Text>
 								<Id>1753868816367</Id>
 								<Name><![CDATA[txt_mapOverlayLegend_ElectricityConsumption4]]></Name>
-								<X>-20</X>
-								<Y>21</Y>
+								<X>-21</X>
+								<Y>23</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -3799,8 +3955,8 @@ else {
 								<Text><![CDATA[< 500 MWh / jaar]]></Text>
 								<TextCode>project_data.project_type() == OL_ProjectType.RESIDENTIAL ? "&lt; 6000 kWh / jaar" : "&lt; 500 MWh / jaar"</TextCode>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>10</Size>
+									<Name><![CDATA[HOLONline2]]></Name>
+									<Size>11</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>LEFT</Alignment>
@@ -3808,8 +3964,8 @@ else {
 							<Text>
 								<Id>1753868816369</Id>
 								<Name><![CDATA[txt_mapOverlayLegend_ElectricityConsumption5]]></Name>
-								<X>-20</X>
-								<Y>45</Y>
+								<X>-21</X>
+								<Y>47</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -3825,8 +3981,8 @@ else {
 								<Text><![CDATA[> 500 MWh / jaar]]></Text>
 								<TextCode>project_data.project_type() == OL_ProjectType.RESIDENTIAL ? "&gt; 6000 kWh / jaar" : "&gt; 500 MWh / jaar"</TextCode>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>10</Size>
+									<Name><![CDATA[HOLONline2]]></Name>
+									<Size>11</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>LEFT</Alignment>
@@ -3882,7 +4038,7 @@ else {
 								<Id>1753868816375</Id>
 								<Name><![CDATA[t_defaultLegend2]]></Name>
 								<X>-39.5</X>
-								<Y>-52.5</Y>
+								<Y>-49.5</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -3897,7 +4053,7 @@ else {
 								<Color>-16777216</Color>
 								<Text><![CDATA[Gedetaileerd bedrijf]]></Text>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
+									<Name><![CDATA[HOLONline2]]></Name>
 									<Size>12</Size>
 									<Style>0</Style>
 								</Font>
@@ -3907,7 +4063,7 @@ else {
 								<Id>1753868816377</Id>
 								<Name><![CDATA[t_defaultLegend5]]></Name>
 								<X>-39.5</X>
-								<Y>7.5</Y>
+								<Y>10.5</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -3922,7 +4078,7 @@ else {
 								<Color>-16777216</Color>
 								<Text><![CDATA[Overig]]></Text>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
+									<Name><![CDATA[HOLONline2]]></Name>
 									<Size>12</Size>
 									<Style>0</Style>
 								</Font>
@@ -3958,7 +4114,7 @@ else {
 								<Id>1753868816381</Id>
 								<Name><![CDATA[t_defaultLegend3]]></Name>
 								<X>-39.5</X>
-								<Y>-32.5</Y>
+								<Y>-29.5</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -3973,7 +4129,7 @@ else {
 								<Color>-16777216</Color>
 								<Text><![CDATA[Bedrijf]]></Text>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
+									<Name><![CDATA[HOLONline2]]></Name>
 									<Size>12</Size>
 									<Style>0</Style>
 								</Font>
@@ -4009,7 +4165,7 @@ else {
 								<Id>1753868816385</Id>
 								<Name><![CDATA[t_defaultLegend4]]></Name>
 								<X>-39.5</X>
-								<Y>-12.5</Y>
+								<Y>-9.5</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -4024,7 +4180,7 @@ else {
 								<Color>-16777216</Color>
 								<Text><![CDATA[Huis]]></Text>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
+									<Name><![CDATA[HOLONline2]]></Name>
 									<Size>12</Size>
 									<Style>0</Style>
 								</Font>
@@ -4060,7 +4216,7 @@ else {
 								<Id>1753868816389</Id>
 								<Name><![CDATA[t_defaultLegend1]]></Name>
 								<X>-39.5</X>
-								<Y>-72.5</Y>
+								<Y>-69.5</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -4075,7 +4231,7 @@ else {
 								<Color>-16777216</Color>
 								<Text><![CDATA[Selectie]]></Text>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
+									<Name><![CDATA[HOLONline2]]></Name>
 									<Size>12</Size>
 									<Style>0</Style>
 								</Font>
@@ -4211,7 +4367,7 @@ else {
 								<Id>1753868816401</Id>
 								<Name><![CDATA[txt_mapOverlayLegend_PVProduction1]]></Name>
 								<X>-20</X>
-								<Y>-51</Y>
+								<Y>-49</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -4226,8 +4382,8 @@ else {
 								<Color>-16777216</Color>
 								<Text><![CDATA[Geen opwek]]></Text>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>10</Size>
+									<Name><![CDATA[HOLONline2]]></Name>
+									<Size>11</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>LEFT</Alignment>
@@ -4236,7 +4392,7 @@ else {
 								<Id>1753868816403</Id>
 								<Name><![CDATA[txt_mapOverlayLegend_PVProduction2]]></Name>
 								<X>-20</X>
-								<Y>-28</Y>
+								<Y>-26</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -4252,8 +4408,8 @@ else {
 								<Text><![CDATA[< 100 MWh / jaar]]></Text>
 								<TextCode>project_data.project_type() == OL_ProjectType.RESIDENTIAL ? "&lt; 5000 kWh / jaar" : "&lt; 100 MWh / jaar"</TextCode>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>10</Size>
+									<Name><![CDATA[HOLONline2]]></Name>
+									<Size>11</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>LEFT</Alignment>
@@ -4262,7 +4418,7 @@ else {
 								<Id>1753868816405</Id>
 								<Name><![CDATA[txt_mapOverlayLegend_PVProduction3]]></Name>
 								<X>-20</X>
-								<Y>-3</Y>
+								<Y>-1</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -4278,8 +4434,8 @@ else {
 								<Text><![CDATA[> 100 MWh / jaar]]></Text>
 								<TextCode>project_data.project_type() == OL_ProjectType.RESIDENTIAL ? "&gt; 5000 kWh / jaar" : "&gt; 100 MWh / jaar"</TextCode>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>10</Size>
+									<Name><![CDATA[HOLONline2]]></Name>
+									<Size>11</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>LEFT</Alignment>
@@ -5330,8 +5486,8 @@ else {
 					<Text>
 						<Id>1724074583635</Id>
 						<Name><![CDATA[t_specialGISObjectLegend1]]></Name>
-						<X>-150</X>
-						<Y>-40</Y>
+						<X>-153</X>
+						<Y>-37</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -5346,7 +5502,7 @@ else {
 						<Color>-16777216</Color>
 						<Text><![CDATA[Zonneweide]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
+							<Name><![CDATA[HOLONline2]]></Name>
 							<Size>12</Size>
 							<Style>0</Style>
 						</Font>
@@ -5381,8 +5537,8 @@ else {
 					<Text>
 						<Id>1750079302591</Id>
 						<Name><![CDATA[t_specialGISObjectLegend2]]></Name>
-						<X>-150</X>
-						<Y>-20</Y>
+						<X>-153</X>
+						<Y>-17</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -5397,7 +5553,7 @@ else {
 						<Color>-16777216</Color>
 						<Text><![CDATA[Zonneweide]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
+							<Name><![CDATA[HOLONline2]]></Name>
 							<Size>12</Size>
 							<Style>0</Style>
 						</Font>
@@ -5432,8 +5588,8 @@ else {
 					<Text>
 						<Id>1750079303792</Id>
 						<Name><![CDATA[t_specialGISObjectLegend3]]></Name>
-						<X>-150</X>
-						<Y>0</Y>
+						<X>-153</X>
+						<Y>3</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -5448,7 +5604,7 @@ else {
 						<Color>-16777216</Color>
 						<Text><![CDATA[Zonneweide]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
+							<Name><![CDATA[HOLONline2]]></Name>
 							<Size>12</Size>
 							<Style>0</Style>
 						</Font>
@@ -5483,8 +5639,8 @@ else {
 					<Text>
 						<Id>1750079304865</Id>
 						<Name><![CDATA[t_specialGISObjectLegend4]]></Name>
-						<X>-150</X>
-						<Y>20</Y>
+						<X>-153</X>
+						<Y>23</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -5499,7 +5655,7 @@ else {
 						<Color>-16777216</Color>
 						<Text><![CDATA[Zonneweide]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
+							<Name><![CDATA[HOLONline2]]></Name>
 							<Size>12</Size>
 							<Style>0</Style>
 						</Font>
@@ -5534,8 +5690,8 @@ else {
 					<Text>
 						<Id>1750079305951</Id>
 						<Name><![CDATA[t_specialGISObjectLegend5]]></Name>
-						<X>-150</X>
-						<Y>40</Y>
+						<X>-153</X>
+						<Y>43</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -5550,7 +5706,7 @@ else {
 						<Color>-16777216</Color>
 						<Text><![CDATA[Zonneweide]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
+							<Name><![CDATA[HOLONline2]]></Name>
 							<Size>12</Size>
 							<Style>0</Style>
 						</Font>
@@ -5585,8 +5741,8 @@ else {
 					<Text>
 						<Id>1750079521908</Id>
 						<Name><![CDATA[t_specialGISObjectLegend6]]></Name>
-						<X>-150</X>
-						<Y>60</Y>
+						<X>-153</X>
+						<Y>63</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -5601,7 +5757,7 @@ else {
 						<Color>-16777216</Color>
 						<Text><![CDATA[Zonneweide]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
+							<Name><![CDATA[HOLONline2]]></Name>
 							<Size>12</Size>
 							<Style>0</Style>
 						</Font>
@@ -6070,7 +6226,7 @@ else{
 						<Color>-16744320</Color>
 						<Text><![CDATA[Zie meer...]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
+							<Name><![CDATA[HOLONline2]]></Name>
 							<Size>10</Size>
 							<Style>2</Style>
 						</Font>
@@ -6612,11 +6768,11 @@ else{
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16744320</Color>
-		<Text><![CDATA[Custom input]]></Text>
+		<Text><![CDATA[CUSTOM INPUT]]></Text>
 		<Font>
-			<Name><![CDATA[Leelawadee UI]]></Name>
+			<Name><![CDATA[HolonBLOCK2]]></Name>
 			<Size>20</Size>
-			<Style>1</Style>
+			<Style>0</Style>
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
@@ -7054,7 +7210,7 @@ else{
 				<Id>1780216691720</Id>
 				<Name><![CDATA[text]]></Name>
 				<X>-809</X>
-				<Y>38</Y>
+				<Y>42</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -7069,8 +7225,8 @@ else{
 				<Color>-16777216</Color>
 				<Text><![CDATA[Lagen]]></Text>
 				<Font>
-					<Name><![CDATA[Centaur]]></Name>
-					<Size>14</Size>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>CENTER</Alignment>
@@ -7299,7 +7455,7 @@ v_activeMapLayer = OL_MapOverlayTypes.PARKING_TYPE;</OnClickCode>
 						<Id>1780216917977</Id>
 						<Name><![CDATA[text1]]></Name>
 						<X>-120</X>
-						<Y>8</Y>
+						<Y>10</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -7314,8 +7470,8 @@ v_activeMapLayer = OL_MapOverlayTypes.PARKING_TYPE;</OnClickCode>
 						<Color>-16777216</Color>
 						<Text><![CDATA[Default]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
-							<Size>8</Size>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>10</Size>
 							<Style>0</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
@@ -7324,7 +7480,7 @@ v_activeMapLayer = OL_MapOverlayTypes.PARKING_TYPE;</OnClickCode>
 						<Id>1780216939776</Id>
 						<Name><![CDATA[text2]]></Name>
 						<X>-60</X>
-						<Y>2</Y>
+						<Y>5</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -7340,8 +7496,8 @@ v_activeMapLayer = OL_MapOverlayTypes.PARKING_TYPE;</OnClickCode>
 						<Text><![CDATA[Energie-
 consumptie]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
-							<Size>8</Size>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>10</Size>
 							<Style>0</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
@@ -7350,7 +7506,7 @@ consumptie]]></Text>
 						<Id>1780217000394</Id>
 						<Name><![CDATA[text3]]></Name>
 						<X>0</X>
-						<Y>8</Y>
+						<Y>10</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -7365,8 +7521,8 @@ consumptie]]></Text>
 						<Color>-16777216</Color>
 						<Text><![CDATA[PV opwek]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
-							<Size>8</Size>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>10</Size>
 							<Style>0</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
@@ -7375,7 +7531,7 @@ consumptie]]></Text>
 						<Id>1780217020184</Id>
 						<Name><![CDATA[text4]]></Name>
 						<X>60</X>
-						<Y>8</Y>
+						<Y>10</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -7390,8 +7546,8 @@ consumptie]]></Text>
 						<Color>-16777216</Color>
 						<Text><![CDATA[Congestie]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
-							<Size>8</Size>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>10</Size>
 							<Style>0</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
@@ -7400,7 +7556,7 @@ consumptie]]></Text>
 						<Id>1780217034189</Id>
 						<Name><![CDATA[text5]]></Name>
 						<X>120</X>
-						<Y>3</Y>
+						<Y>5</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -7416,8 +7572,8 @@ consumptie]]></Text>
 						<Text><![CDATA[Parkeer-
 type]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
-							<Size>8</Size>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>10</Size>
 							<Style>0</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
@@ -7572,11 +7728,11 @@ type]]></Text>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
-		<Color>-7631989</Color>
+		<Color>-9868951</Color>
 		<Text><![CDATA[Windsnelheid: hoog]]></Text>
 		<TextCode>"Windsnelheid: " + v_windspeed </TextCode>
 		<Font>
-			<Name><![CDATA[Cambria]]></Name>
+			<Name><![CDATA[HOLONline2]]></Name>
 			<Size>10</Size>
 			<Style>1</Style>
 		</Font>
@@ -7746,11 +7902,11 @@ type]]></Text>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
-		<Color>-7631989</Color>
+		<Color>-9868951</Color>
 		<Text><![CDATA[Zonne instraling: 12 w/m2]]></Text>
 		<TextCode>"Zonneinstraling " + v_solarIrradiance + " W/m2"</TextCode>
 		<Font>
-			<Name><![CDATA[Cambria]]></Name>
+			<Name><![CDATA[HOLONline2]]></Name>
 			<Size>10</Size>
 			<Style>1</Style>
 		</Font>
@@ -7772,11 +7928,11 @@ type]]></Text>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
-		<Color>-7631989</Color>
+		<Color>-9868951</Color>
 		<Text><![CDATA[Buitentemperatuur: 23 graden]]></Text>
 		<TextCode>"Buiten temperatuur " + v_outsideTemperature + " graden"</TextCode>
 		<Font>
-			<Name><![CDATA[Cambria]]></Name>
+			<Name><![CDATA[HOLONline2]]></Name>
 			<Size>10</Size>
 			<Style>1</Style>
 		</Font>
@@ -7847,8 +8003,8 @@ type]]></Text>
 				<Text><![CDATA[Datum]]></Text>
 				<TextCode>energyModel.v_isRapidRun ? "" : (f_getTimeString() + " hr")</TextCode>
 				<Font>
-					<Name><![CDATA[Calibri]]></Name>
-					<Size>14</Size>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>16</Size>
 					<Style>1</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -7873,7 +8029,7 @@ type]]></Text>
 				<Text><![CDATA[Datum]]></Text>
 				<TextCode>energyModel.v_isRapidRun ? f_getDateStringRapid() : f_getDateStringNormal()</TextCode>
 				<Font>
-					<Name><![CDATA[Calibri]]></Name>
+					<Name><![CDATA[HOLONline2]]></Name>
 					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
@@ -7937,7 +8093,7 @@ type]]></Text>
 		<Id>1724074853969</Id>
 		<Name><![CDATA[txt_gridnode]]></Name>
 		<X>460</X>
-		<Y>816</Y>
+		<Y>820</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -7952,7 +8108,7 @@ type]]></Text>
 		<Color>-16777216</Color>
 		<Text><![CDATA[Trafonsformator]]></Text>
 		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
+			<Name><![CDATA[HOLONline2]]></Name>
 			<Size>12</Size>
 			<Style>0</Style>
 		</Font>
@@ -8016,7 +8172,7 @@ for(GISRoute GISCable : c_MVCables){
 gr_cablesLegend.setVisible(showCables);</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
-			<Font Name="Dialog" Size="11" Style="0"/>
+			<Font Name="HOLONline2" Size="11" Style="0"/>
 			<LabelText>Toon stroomnet</LabelText>
 			<DefaultValueCode>false</DefaultValueCode>
 			<LinkTo>false</LinkTo>
@@ -8044,17 +8200,19 @@ gr_cablesLegend.setVisible(showCables);</ActionCode>
 			<EnableExpression>!settings.isPublicModel() &amp;&amp; c_cbFilterOptions.size() &gt; 0</EnableExpression>
 			<ActionCode>gr_filterInterface.setVisible(cb_showFilterInterface.isSelected());
 
-if(!cb_showFilterInterface.isSelected()){
-	f_clearFilters();
+if(! cb_showFilterInterface.isSelected()){
+	b_inFilterMode = false;
+	//f_clearFilters();
 	gr_sliderClickBlocker.setVisible(false);
 }
 else{
+	b_inFilterMode = true;
 	gr_sliderClickBlocker.setVisible(true);
 	gr_filterInterface.setPos(170, 710);
 }</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
-			<Font Name="Dialog" Size="11" Style="0"/>
+			<Font Name="HOLONline2" Size="11" Style="0"/>
 			<LabelText>Filters</LabelText>
 			<LinkTo>false</LinkTo>
 		</ExtendedProperties>
@@ -8096,7 +8254,7 @@ else{
 }</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
-			<Font Name="Dialog" Size="11" Style="0"/>
+			<Font Name="HOLONline2" Size="11" Style="0"/>
 			<LabelText>Toon netvlakken</LabelText>
 			<DefaultValueCode>false</DefaultValueCode>
 			<LinkTo>false</LinkTo>
@@ -8106,7 +8264,7 @@ else{
 		<Id>1734444441402</Id>
 		<Name><![CDATA[gr_filterInterface]]></Name>
 		<X>-1780</X>
-		<Y>740</Y>
+		<Y>900</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -8151,8 +8309,8 @@ else{
 			<Text>
 				<Id>1734443492902</Id>
 				<Name><![CDATA[txt_filterDescription]]></Name>
-				<X>25</X>
-				<Y>41</Y>
+				<X>30</X>
+				<Y>50</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8165,9 +8323,9 @@ else{
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-1</Color>
-				<Text><![CDATA[Selecteer gebouwen:]]></Text>
+				<Text><![CDATA[Filter]]></Text>
 				<Font>
-					<Name><![CDATA[Centaur]]></Name>
+					<Name><![CDATA[HOLONline2]]></Name>
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
@@ -8177,8 +8335,8 @@ else{
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1734442617547</Id>
 				<Name><![CDATA[cb_filterOptions]]></Name>
-				<X>150</X>
-				<Y>41</Y>
+				<X>75</X>
+				<Y>45</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8194,10 +8352,13 @@ else{
 					<Enabled>true</Enabled>
 					<EnableExpression>!gr_ForceMapSelectionText.isVisible()</EnableExpression>
 					<ActionCode>if(!cb_filterOptions.getValue().equals("-")){
-	f_setFilter(map_UINamesFilterOption.get(cb_filterOptions.getValue()));
-	
+	if( b_manualSelectionMode){
+		f_endManualSelection();
+	}
+	f_setFilter2(map_UINamesFilterOption.get(cb_filterOptions.getValue()));
 	cb_filterOptions.setValueIndex(0);
-}</ActionCode>
+}
+f_startNewFilter();</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -8219,7 +8380,7 @@ else{
 				<Id>1734443541801</Id>
 				<Name><![CDATA[txt_activeFilters]]></Name>
 				<X>25</X>
-				<Y>71</Y>
+				<Y>121</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8228,24 +8389,25 @@ else{
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<YCode>108</YCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-1</Color>
 				<Text><![CDATA[Geen Actieve Filters.]]></Text>
-				<TextCode>!t_activeFilters.getText().equals("") ? "Actieve filters:" : "Geen Actieve Filters."</TextCode>
+				<TextCode>!t_filterNames.getText().equals("") ? "" : "Geen Actieve Filters."</TextCode>
 				<Font>
-					<Name><![CDATA[Centaur]]></Name>
+					<Name><![CDATA[HOLONline2]]></Name>
 					<Size>14</Size>
-					<Style>1</Style>
+					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
 			<Text>
 				<Id>1734444104065</Id>
-				<Name><![CDATA[t_activeFilters]]></Name>
-				<X>25</X>
-				<Y>91</Y>
+				<Name><![CDATA[t_filterNames]]></Name>
+				<X>79</X>
+				<Y>102</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8260,7 +8422,7 @@ else{
 				<Color>-1</Color>
 				<Text/>
 				<Font>
-					<Name><![CDATA[Centaur]]></Name>
+					<Name><![CDATA[HOLONline2]]></Name>
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
@@ -8269,8 +8431,8 @@ else{
 			<Text>
 				<Id>1734444671650</Id>
 				<Name><![CDATA[txt_filterInterface]]></Name>
-				<X>24</X>
-				<Y>10</Y>
+				<X>25</X>
+				<Y>15</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8283,11 +8445,11 @@ else{
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-1</Color>
-				<Text><![CDATA[Maak een selectie van gebouwen]]></Text>
+				<Text><![CDATA[MAAK EEN SELECTIE VAN GEBOUWEN]]></Text>
 				<Font>
-					<Name><![CDATA[Centaur]]></Name>
+					<Name><![CDATA[HolonBLOCK2]]></Name>
 					<Size>18</Size>
-					<Style>1</Style>
+					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
@@ -8450,8 +8612,9 @@ else{
 			<RoundedRectangle>
 				<Id>1780224303235</Id>
 				<Name><![CDATA[roundRectangle10]]></Name>
-				<X>390</X>
-				<Y>131</Y>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<X>400</X>
+				<Y>110</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -8478,8 +8641,9 @@ else{
 			<Text>
 				<Id>1780224327937</Id>
 				<Name><![CDATA[text6]]></Name>
-				<X>465</X>
-				<Y>138</Y>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<X>480</X>
+				<Y>120</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8536,7 +8700,7 @@ f_removeAllFilters();
 				<Id>1780224601260</Id>
 				<Name><![CDATA[text7]]></Name>
 				<X>465</X>
-				<Y>213</Y>
+				<Y>215</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8551,8 +8715,8 @@ f_removeAllFilters();
 				<Color>-12566464</Color>
 				<Text><![CDATA[Verwijder alle filters]]></Text>
 				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
-					<Size>9</Size>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>11</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>CENTER</Alignment>
@@ -8560,6 +8724,7 @@ f_removeAllFilters();
 			<RoundedRectangle>
 				<Id>1780224606886</Id>
 				<Name><![CDATA[roundRectangle12]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<X>390</X>
 				<Y>171</Y>
 				<Label>
@@ -8610,6 +8775,159 @@ f_removeAllFilters();
 				</Font>
 				<Alignment>CENTER</Alignment>
 			</Text>
+			<Text>
+				<Id>1780912439364</Id>
+				<Name><![CDATA[t_filterCount]]></Name>
+				<X>244</X>
+				<Y>100</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-1</Color>
+				<Text/>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Text>
+				<Id>1780946272407</Id>
+				<Name><![CDATA[t_filterIndex]]></Name>
+				<X>44</X>
+				<Y>102</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-1</Color>
+				<Text/>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+			<Text>
+				<Id>1780947045406</Id>
+				<Name><![CDATA[text9]]></Name>
+				<X>25</X>
+				<Y>81</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-1</Color>
+				<Text><![CDATA[Filter #]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>11</Size>
+					<Style>2</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1780947049557</Id>
+				<Name><![CDATA[text10]]></Name>
+				<X>79</X>
+				<Y>81</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-1</Color>
+				<Text><![CDATA[Filter type]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>11</Size>
+					<Style>2</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1780947067356</Id>
+				<Name><![CDATA[text11]]></Name>
+				<X>200</X>
+				<Y>81</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-1</Color>
+				<Text><![CDATA[Aantal aansluitingen]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>11</Size>
+					<Style>2</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Line>
+				<Id>1780947375256</Id>
+				<Name><![CDATA[line1]]></Name>
+				<X>25</X>
+				<Y>95</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>0.5</LineWidth>
+				<LineColor>-1</LineColor>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<BeginArrowSize>1</BeginArrowSize>
+				<BeginArrowStyle>0</BeginArrowStyle>
+				<EndArrowSize>1</EndArrowSize>
+				<EndArrowStyle>0</EndArrowStyle>
+				<Dx>285</Dx>
+				<Dy>0</Dy>
+				<Dz>0</Dz>
+			</Line>
 		</Presentation>
 	</Group>
 	<Group>
@@ -8727,7 +9045,7 @@ f_removeAllFilters();
 				<Color>-16777216</Color>
 				<Text><![CDATA[Jaar wordt gesimuleerd]]></Text>
 				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
+					<Name><![CDATA[HOLONline2]]></Name>
 					<Size>16</Size>
 					<Style>0</Style>
 				</Font>
@@ -8846,8 +9164,8 @@ f_removeAllFilters();
 					<Text>
 						<Id>1709717180373</Id>
 						<Name><![CDATA[t_simulateYearToCalculateCostsSmall]]></Name>
-						<X>-118</X>
-						<Y>-64</Y>
+						<X>-121</X>
+						<Y>-58</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -8863,9 +9181,9 @@ f_removeAllFilters();
 						<Text><![CDATA[Klik hier om een jaar door te rekenen
 en meer resultaten te bekijken]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
-							<Size>16</Size>
-							<Style>1</Style>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>18</Size>
+							<Style>0</Style>
 						</Font>
 						<Alignment>LEFT</Alignment>
 					</Text>
@@ -9148,7 +9466,112 @@ else{
 		<Id>1780603825771</Id>
 		<Name><![CDATA[oval1]]></Name>
 		<X>-1136</X>
-		<Y>1036</Y>
+		<Y>1111</Y>
+		<Label>
+			<X>0</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor/>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<RadiusX>4</RadiusX>
+		<RadiusY>40</RadiusY>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Oval>
+	<Text>
+		<Id>1780769443316</Id>
+		<Name><![CDATA[txt_energyHubConfigurator1]]></Name>
+		<X>1443.6666666666665</X>
+		<Y>-3692</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-1</Color>
+		<Text><![CDATA[Selecteer minimaal twee panden voor de energiehub
+Klik op de knop 'voltooi energiehub'
+Je kunt ook gebruik maken van de filters (venster rechts)]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>16</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Oval>
+		<Id>1780769443318</Id>
+		<Name><![CDATA[oval4]]></Name>
+		<X>1476.6666666666665</X>
+		<Y>-3502</Y>
+		<Label>
+			<X>0</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor/>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<RadiusX>4</RadiusX>
+		<RadiusY>40</RadiusY>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Oval>
+	<Oval>
+		<Id>1780769443320</Id>
+		<Name><![CDATA[oval5]]></Name>
+		<X>1476.6666666666665</X>
+		<Y>-3482</Y>
+		<Label>
+			<X>0</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor/>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<RadiusX>4</RadiusX>
+		<RadiusY>40</RadiusY>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Oval>
+	<Oval>
+		<Id>1780769443322</Id>
+		<Name><![CDATA[oval6]]></Name>
+		<X>1476.6666666666665</X>
+		<Y>-3462</Y>
 		<Label>
 			<X>0</X>
 			<Y>0</Y>
