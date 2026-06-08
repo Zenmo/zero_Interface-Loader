@@ -46,10 +46,7 @@
 				<Name><![CDATA[p_minSavingsSliders_default]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[map_dayToVehicleConfigurationButtons]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[map_createdCustomTripWeeklyConfiguration]]></Name>
+				<Name><![CDATA[matrix_vehicleTripsConfigurationButtons]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[map_customTripTrackerToOriginal]]></Name>
@@ -58,10 +55,25 @@
 				<Name><![CDATA[map_storedCustomTripButtonConfiguration]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[map_defaultValuesCustomTripButtons]]></Name>
+				<Name><![CDATA[matrix_defaultValuesCustomTripButtons]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[map_dayToEnableDayButtons]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_configureVehicleTripsOnColor]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_configureVehicleTripsOffColor]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_dayToDisableRectangles]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_createdCustomTripWeeklyConfiguration]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultTravelDistance_km]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>

@@ -1843,16 +1843,16 @@ new Thread( () -> {
 
 double f_activateDailyDifferenceButtons(boolean activate)
 {/*ALCODESTART::1779979626408*/
-map_dayToVehicleConfigurationButtons.entrySet().stream()
-    .filter(entry -> entry.getKey() != OL_Days.MONDAY)
-    .forEach(entry -> entry.getValue().values()
-        .forEach(button -> button.setEnabled(activate)));
-
 map_dayToEnableDayButtons.values().forEach(cb -> cb.setEnabled(activate));
 
 if(!activate){
 	map_dayToEnableDayButtons.values().forEach(cb -> cb.setSelected(true, true));
 }
+
+map_dayToDisableRectangles.entrySet().stream()
+    .filter(entry -> entry.getKey() != OL_Days.MONDAY)
+    .forEach(entry -> entry.getValue().setVisible(!activate));
+    
 /*ALCODEEND*/}
 
 double f_confirmVehicleTripsConfiguration(OL_VehicleType vehicleType)
@@ -1886,31 +1886,22 @@ gr_configureVehicleTrips.setVisible(true);
 
 boolean f_createCustomTripConfiguration(OL_VehicleType vehicleType)
 {/*ALCODESTART::1780056555300*/
-Map<OL_Days, Double> tripStartTime_hourOfDay = new HashMap<>(); 
-Map<OL_Days, Double> tripEndTime_hourOfDay = new HashMap<>();  
-Map<OL_Days, Double> tripTravelDistance_km = new HashMap<>(); 
 
-//Get slider values
-c_activeVehicleConfigurationDays.forEach(day -> tripStartTime_hourOfDay.put(day, map_dayToVehicleConfigurationButtons.get(day).get(OL_CustomTripTrackerValueTypes.STARTTIME_H).getValue()));
-c_activeVehicleConfigurationDays.forEach(day -> tripEndTime_hourOfDay.put(day, map_dayToVehicleConfigurationButtons.get(day).get(OL_CustomTripTrackerValueTypes.ENDTIME_H).getValue()));
-c_activeVehicleConfigurationDays.forEach(day -> tripTravelDistance_km.put(day, map_dayToVehicleConfigurationButtons.get(day).get(OL_CustomTripTrackerValueTypes.DISTANCE_KM).getValue()));
+boolean[][] tripMatrix = f_getTripBooleanMatrix();
+double weeklyTravelDistance_km = eb_configureVehicleTrips_weeklyDistance_km.getDoubleValue();
 
 //Validate values and continue
-if(J_CustomTripTrackerGenerator.checkIfCustomTripInputsAreValid(tripStartTime_hourOfDay, tripEndTime_hourOfDay, tripTravelDistance_km)){
+if(J_CustomTripTrackerGenerator.checkIfCustomTripInputsAreValid(tripMatrix, weeklyTravelDistance_km)){
 	//Store this setting, so buttons can be brought back to this
-	Map<OL_VehicleType, Map<OL_CustomTripTrackerValueTypes, Map<OL_Days, Double>>> storeGCVehicleCustomTripDailyValuesMap = map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid);
+	Map<OL_VehicleType, boolean[][]> storeGCVehicleCustomTripDailyValuesMap = map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid);
 	if(storeGCVehicleCustomTripDailyValuesMap == null){
 		map_storedCustomTripButtonConfiguration.put(p_gridConnection.p_uid, new HashMap<>());
 	}
-	Map<OL_CustomTripTrackerValueTypes, Map<OL_Days, Double>> dailyValuesMap = new HashMap<>();
-	dailyValuesMap.put(OL_CustomTripTrackerValueTypes.STARTTIME_H, tripStartTime_hourOfDay);
-	dailyValuesMap.put(OL_CustomTripTrackerValueTypes.ENDTIME_H, tripEndTime_hourOfDay);
-	dailyValuesMap.put(OL_CustomTripTrackerValueTypes.DISTANCE_KM, tripTravelDistance_km);
 	
-	map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).put(vehicleType, dailyValuesMap);
+	map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).put(vehicleType, tripMatrix);
 	
 	//Create customTripTrackerWeeklyValuesMap
-	Map<OL_CustomTripTrackerValueTypes, List<Double>> newCustomTripTrackerWeeklyValuesMap = J_CustomTripTrackerGenerator.getCustomTripTrackerValues(tripStartTime_hourOfDay, tripEndTime_hourOfDay, tripTravelDistance_km); 
+	Map<OL_CustomTripTrackerValueTypes, List<Double>> newCustomTripTrackerWeeklyValuesMap = J_CustomTripTrackerGenerator.getCustomTripTrackerValues(f_getTripBooleanMatrix(), weeklyTravelDistance_km); 
 	
 	//Add it to stored custom trip values maps
 	Map<OL_VehicleType, Map<OL_CustomTripTrackerValueTypes, List<Double>>> GCCustomTripValuesMap = map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid);
@@ -1922,7 +1913,7 @@ if(J_CustomTripTrackerGenerator.checkIfCustomTripInputsAreValid(tripStartTime_ho
 	return true;
 }
 else{
-	f_setErrorScreen("De custom rijtijden configuratie is niet doorgevoerd, want de start en eind tijden zijn verkeerd geconfigureerd. Zorg ervoor dat nooit twee start of eind tijden elkaar opvolgen. Een trip moet altijd eerst eindigen voor er een nieuwe kan beginnen.");
+	f_setErrorScreen("De custom rijtijden configuratie is niet doorgevoerd, want de start en eind tijden zijn verkeerd geconfigureerd.");
 	return false;
 }
 /*ALCODEEND*/}
@@ -1983,74 +1974,35 @@ double f_initializeVehicleTripsConfigurationMenuButtons(OL_VehicleType vehicleTy
 {/*ALCODESTART::1780063352490*/
 if(map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid) != null &&
 	map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).get(vehicleType) != null){
-	Map<OL_CustomTripTrackerValueTypes, Map<OL_Days, Double>> previousButtonConfiguration = map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).get(vehicleType);
-	
-	Set<OL_Days> activeDays = previousButtonConfiguration.get(OL_CustomTripTrackerValueTypes.STARTTIME_H).keySet();	
-	
-	//Is daily difference enabled?
+	boolean[][] previousButtonConfiguration = map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).get(vehicleType);
+
+	//Is daily difference enabled?	
 	boolean dailyDifferenceEnabled = false;
-	if(activeDays.size() == 7){
-		double previousStartTime_h = previousButtonConfiguration.get(OL_CustomTripTrackerValueTypes.STARTTIME_H).get(activeDays.iterator().next());
-		double previousEndTime_h = previousButtonConfiguration.get(OL_CustomTripTrackerValueTypes.ENDTIME_H).get(activeDays.iterator().next());
-		double previousDistance_km = previousButtonConfiguration.get(OL_CustomTripTrackerValueTypes.DISTANCE_KM).get(activeDays.iterator().next());
-		
-		for(OL_Days day : activeDays){
-			if(previousStartTime_h != previousButtonConfiguration.get(OL_CustomTripTrackerValueTypes.STARTTIME_H).get(day)){
-				 dailyDifferenceEnabled = true;
-				 break;
-			}
-			if(previousEndTime_h != previousButtonConfiguration.get(OL_CustomTripTrackerValueTypes.ENDTIME_H).get(day)){
-				 dailyDifferenceEnabled = true;
-				 break;
-			}
-			if(previousDistance_km != previousButtonConfiguration.get(OL_CustomTripTrackerValueTypes.DISTANCE_KM).get(day)){
-				 dailyDifferenceEnabled = true;
-				 break;
-			}
-		}
-	}
-	else{
-		dailyDifferenceEnabled = true;
-	}
+	List<OL_Days> activeDays = new ArrayList<>();
 	
-	//Enable/disable correct buttons
+	for (int dayNumber = 0; dayNumber < previousButtonConfiguration.length; dayNumber++) {
+	    if (!Arrays.equals(previousButtonConfiguration[0], previousButtonConfiguration[dayNumber])) {
+	        dailyDifferenceEnabled = true;
+	    }
+	    for (boolean hour : previousButtonConfiguration[dayNumber]) {
+	        if (hour) {
+	            activeDays.add(J_CustomTripTrackerGenerator.getWeekdayFromDayNumber(dayNumber));
+	            break;
+	        }
+	    }
+	}
+
+	//Set dailyDifferenceEnabled button correctly
 	cb_configureVehicleTrips_dailyDistinction.setSelected(dailyDifferenceEnabled, true);
-	
-	if(!dailyDifferenceEnabled){
-		for(OL_CustomTripTrackerValueTypes valueType : OL_CustomTripTrackerValueTypes.values()){
-			map_dayToVehicleConfigurationButtons.get(OL_Days.MONDAY).get(valueType).setValue(previousButtonConfiguration.get(valueType).get(OL_Days.MONDAY), true);
-		}
+
+	for(OL_Days day : J_CustomTripTrackerGenerator.getOrderedDaysList()){
+		map_dayToEnableDayButtons.get(day).setSelected(activeDays.contains(day), true);
 	}
-	else{
-		for(OL_Days day : J_CustomTripTrackerGenerator.getOrderedDaysList()){
-			if(activeDays.contains(day)){
-				//Set monday slider to default (slider actions will move the rest with them).
-				for(OL_CustomTripTrackerValueTypes valueType : OL_CustomTripTrackerValueTypes.values()){
-					map_dayToVehicleConfigurationButtons.get(day).get(valueType).setValue(previousButtonConfiguration.get(valueType).get(day), false);
-				}
-				//Enable day.
-				map_dayToEnableDayButtons.get(day).setSelected(true, true);
-			}
-			else{
-				//Disable day.
-				map_dayToEnableDayButtons.get(day).setSelected(false, true);
-				
-				//Set slider to default if day was previously not activated.
-				for(OL_CustomTripTrackerValueTypes valueType : OL_CustomTripTrackerValueTypes.values()){
-					map_dayToVehicleConfigurationButtons.get(day).get(valueType).setValue(map_defaultValuesCustomTripButtons.get(valueType), true);
-				}
-			}
-		}
-	}
+	//Set all buttons to correct values
+	f_setAllVehicleTripsConfigurationButtonsToInputMatrix(previousButtonConfiguration);
 }
 else{ // No previous configuration for this GC and/or vehicle type -> Everything at default values
-	//Disable distinction button
-	cb_configureVehicleTrips_dailyDistinction.setSelected(false, true);
-	
-	//Set monday slider to default (slider actions will move the rest with them).
-	for(OL_CustomTripTrackerValueTypes valueType : OL_CustomTripTrackerValueTypes.values()){
-		map_dayToVehicleConfigurationButtons.get(OL_Days.MONDAY).get(valueType).setValue(map_defaultValuesCustomTripButtons.get(valueType), true);
-	}
+	f_setAllVehicleTripsConfigurationButtonsToDefault();
 }
 
 /*ALCODEEND*/}
@@ -2145,6 +2097,60 @@ if(GCcustomTripTrackerToOriginalMap != null && !GCcustomTripTrackerToOriginalMap
 	            //Remove previous link
 	            GCcustomTripTrackerToOriginalMap.remove(customTripTracker);
 	        }
+        }
+    }
+}
+/*ALCODEEND*/}
+
+double f_setAllVehicleTripsConfigurationButtonsToDefault()
+{/*ALCODESTART::1780475468522*/
+//Disable distinction button
+cb_configureVehicleTrips_dailyDistinction.setSelected(false, true);
+f_setAllVehicleTripsConfigurationButtonsToInputMatrix(matrix_defaultValuesCustomTripButtons);
+eb_configureVehicleTrips_weeklyDistance_km.setValueToDefault();
+/*ALCODEEND*/}
+
+boolean[][] f_getTripBooleanMatrix()
+{/*ALCODESTART::1780922799439*/
+if (matrix_vehicleTripsConfigurationButtons == null){
+	return null;
+}
+
+int rows = matrix_vehicleTripsConfigurationButtons.length;
+int cols = rows > 0 ? matrix_vehicleTripsConfigurationButtons[0].length : 0;
+
+boolean[][] booleanMatrix = new boolean[rows][cols];
+
+for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < cols; j++) {
+        ShapeRectangle rect = matrix_vehicleTripsConfigurationButtons[i][j];
+        if (rect == null) {
+            booleanMatrix[i][j] = false;
+            continue;
+        }
+        
+        Color fillColor = rect.getFillColor();
+        
+        if (fillColor.equals(p_configureVehicleTripsOnColor)) {
+            booleanMatrix[i][j] = true;
+        } 
+        else { // default for unrecognized colors
+            booleanMatrix[i][j] = false;
+        }
+    }
+}
+
+return booleanMatrix;
+/*ALCODEEND*/}
+
+double f_setAllVehicleTripsConfigurationButtonsToInputMatrix(boolean[][] booleanMatrix)
+{/*ALCODESTART::1780928240644*/
+for (int day = 0; day < matrix_vehicleTripsConfigurationButtons.length; day++) {
+    for (int hour = 0; hour < matrix_vehicleTripsConfigurationButtons[day].length; hour++) {
+        if (booleanMatrix[day][hour]) {
+            matrix_vehicleTripsConfigurationButtons[day][hour].setFillColor(p_configureVehicleTripsOnColor);
+        } else {
+            matrix_vehicleTripsConfigurationButtons[day][hour].setFillColor(p_configureVehicleTripsOffColor);
         }
     }
 }
