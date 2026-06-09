@@ -3726,7 +3726,12 @@ if(electricityTabEASliderGCs_prod.size() == 2){
 	electricityTabEASliderGCs.addAll(electricityTabEASliderGCs_prod);
 }
 else{
-	throw new RuntimeException("electricityTabEASliderGCs_prod.size() != 2 -> Should be exactly 2, one solarfarm and one windfarm.");
+	throw new RuntimeException(
+		String.format(
+			"electricityTabEASliderGCs_prod.size() Should be exactly 2, one solarfarm and one windfarm, got %s",
+			electricityTabEASliderGCs_prod.size()
+		)
+	);
 }
 
 //Find the GridBattery slider gcs that are not specificly for the EnergyHub
