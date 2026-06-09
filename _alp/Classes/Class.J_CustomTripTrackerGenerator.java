@@ -76,48 +76,6 @@ public class J_CustomTripTrackerGenerator {
 	    return true;
 	}
 	
-	private static double getOffSetSinceStartOfWeek_h(OL_Days day) {
-		switch(day) {
-		    case MONDAY:
-		        return 0;
-		    case TUESDAY:
-		        return 24;
-		    case WEDNESDAY:
-		        return 48;
-		    case THURSDAY:
-		        return 72;
-		    case FRIDAY:
-		        return 96;
-		    case SATURDAY:
-		        return 120;
-		    case SUNDAY:
-		        return 144;
-		    default:
-		    	throw new RuntimeException("Day found that should not exist.");
-		}
-	}
-	
-	public static int getNumberOfWeekDay(OL_Days day){
-		switch(day) {
-		    case MONDAY:
-		        return 0;
-		    case TUESDAY:
-		        return 1;
-		    case WEDNESDAY:
-		        return 2;
-		    case THURSDAY:
-		        return 3;
-		    case FRIDAY:
-		        return 4;
-		    case SATURDAY:
-		        return 5;
-		    case SUNDAY:
-		        return 6;
-		    default:
-		    	throw new RuntimeException("Day found that should not exist.");
-		}
-	}
-	
 	public static OL_Days getWeekdayFromDayNumber(int dayNumber){
 		switch(dayNumber) {
 		    case 0:
@@ -150,4 +108,11 @@ public class J_CustomTripTrackerGenerator {
 			    OL_Days.SUNDAY
 			);
 	}
+	
+    public record StoredTripConfiguration(
+            boolean[][] buttonConfigurationMatrix,
+            double weeklyTravelDistance_km,
+            boolean dailyDistinctionEnabled,
+            Set<OL_Days> activeDays) {
+    }
 }

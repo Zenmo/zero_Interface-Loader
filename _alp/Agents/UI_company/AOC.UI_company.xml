@@ -6,11 +6,13 @@
 	<Folder>1754045666929</Folder>
 	<Import><![CDATA[//import kotlinx.serialization.internal.ArrayListClassDesc;
 import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
-]]></Import>
+import java.math.BigDecimal;]]></Import>
 	<StartupCode><![CDATA[//Initialize graph locations and visibility
 f_setResultsUIPresets();
 
-zero_Interface.c_UIResultsInstances.add(uI_Results);]]></StartupCode>
+zero_Interface.c_UIResultsInstances.add(uI_Results);
+
+f_initializeDayToDisableRectanglesMap();]]></StartupCode>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1708522361868</Id>

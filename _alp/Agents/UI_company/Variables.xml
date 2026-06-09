@@ -1617,7 +1617,7 @@
 	Map<J_TripTracker, Triptracker> New triptracker to original triptracker.
 -> When new triptracker is replaced again, the newest triptracker should get the original triptracker as value again.]]></Description>
 		<X>-470</X>
-		<Y>2340</Y>
+		<Y>2360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1648,7 +1648,7 @@
 	Map of vehicleType to
 		Boolean matrix of created weekly configuration]]></Description>
 		<X>-490</X>
-		<Y>2260</Y>
+		<Y>2280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1657,7 +1657,7 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[Map<String, Map<OL_VehicleType, boolean[][]>>]]></Type>
+			<Type><![CDATA[Map<String, Map<OL_VehicleType, J_CustomTripTrackerGenerator.StoredTripConfiguration>>]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
@@ -1814,20 +1814,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[Map<OL_Days, ShapeRectangle>]]></Type>
+			<Type><![CDATA[Map<OL_Days, ShapeGroup>]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
-			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[Map.ofEntries(
-	Map.entry(OL_Days.MONDAY, rect_disableTripConfigurationButtons_monday),
-	Map.entry(OL_Days.TUESDAY,rect_disableTripConfigurationButtons_tuesday),
-	Map.entry(OL_Days.WEDNESDAY, rect_disableTripConfigurationButtons_wednesday),
-	Map.entry(OL_Days.THURSDAY, rect_disableTripConfigurationButtons_thursday),
-	Map.entry(OL_Days.FRIDAY, rect_disableTripConfigurationButtons_friday),
-	Map.entry(OL_Days.SATURDAY, rect_disableTripConfigurationButtons_saturday),
-	Map.entry(OL_Days.SUNDAY, rect_disableTripConfigurationButtons_sunday)
-)]]></Code>
-			</DefaultValue>
 			<ParameterEditor>
 				<Id>1780919514408</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
@@ -1844,7 +1833,7 @@
 	Map of vehicleType to
 		Boolean matrix of created weekly configuration]]></Description>
 		<X>-490</X>
-		<Y>2280</Y>
+		<Y>2300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1900,7 +1889,7 @@
 		<Id>1780043469444</Id>
 		<Name><![CDATA[c_activeVehicleConfigurationDays]]></Name>
 		<X>-510</X>
-		<Y>2160</Y>
+		<Y>2180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

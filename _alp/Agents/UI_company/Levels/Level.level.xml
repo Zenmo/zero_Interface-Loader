@@ -10285,184 +10285,9 @@ f_setSimulateYearScreen();</ActionCode>
 				</ExtendedProperties>
 			</Control>
 			<Text>
-				<Id>1779978293997</Id>
-				<Name><![CDATA[txt_configureVehicleTrips_monday]]></Name>
-				<X>20</X>
-				<Y>145</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Maandag]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1779978293999</Id>
-				<Name><![CDATA[txt_configureVehicleTrips_tuesday]]></Name>
-				<X>20</X>
-				<Y>175</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Dinsdag]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1779978294001</Id>
-				<Name><![CDATA[txt_configureVehicleTrips_wednesday]]></Name>
-				<X>20</X>
-				<Y>205</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Woensdag]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1779978851969</Id>
-				<Name><![CDATA[txt_configureVehicleTrips_thursday]]></Name>
-				<X>20</X>
-				<Y>235</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Donderdag]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1779978865083</Id>
-				<Name><![CDATA[txt_configureVehicleTrips_friday]]></Name>
-				<X>20</X>
-				<Y>265</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Vrijdag]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1779978872470</Id>
-				<Name><![CDATA[txt_configureVehicleTrips_saturday]]></Name>
-				<X>20</X>
-				<Y>295</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Zaterdag]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1779978873467</Id>
-				<Name><![CDATA[txt_configureVehicleTrips_sunday]]></Name>
-				<X>20</X>
-				<Y>325</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Zondag]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
 				<Id>1779979460602</Id>
 				<Name><![CDATA[txt_configureVehicleTrips_km]]></Name>
-				<X>615</X>
+				<X>605</X>
 				<Y>50</Y>
 				<Label>
 					<X>0</X>
@@ -10480,7 +10305,7 @@ f_setSimulateYearScreen();</ActionCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>14</Size>
-					<Style>0</Style>
+					<Style>1</Style>
 				</Font>
 				<Alignment>CENTER</Alignment>
 			</Text>
@@ -10765,195 +10590,510 @@ else{
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Presentation>
-					<Rectangle>
-						<Id>1780919301319</Id>
-						<Name><![CDATA[rect_disableTripConfigurationButtons_wednesday]]></Name>
-						<X>-300</X>
-						<Y>-47</Y>
+					<Group>
+						<Id>1780997588123</Id>
+						<Name><![CDATA[gr_disableTripConfigurationButtons_monday]]></Name>
+						<X>0</X>
+						<Y>-95</Y>
 						<Label>
 							<X>10</X>
-							<Y>10</Y>
+							<Y>0</Y>
 						</Label>
 						<PublicFlag>true</PublicFlag>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<OnClickCode>;</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-922746881</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<Width>600</Width>
-						<Height>25</Height>
 						<Rotation>0.0</Rotation>
-						<FillColor>-922746881</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Rectangle>
-					<Rectangle>
-						<Id>1780919407656</Id>
-						<Name><![CDATA[rect_disableTripConfigurationButtons_thursday]]></Name>
-						<X>-300</X>
-						<Y>-17</Y>
+						<Presentation>
+							<Rectangle>
+								<Id>1780997588125</Id>
+								<Name><![CDATA[rect_disableTripConfigurationButtons_monday]]></Name>
+								<X>-300</X>
+								<Y>-12</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<OnClickCode>;</OnClickCode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor/>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>600</Width>
+								<Height>25</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor/>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Rectangle>
+								<Id>1780997588127</Id>
+								<Name><![CDATA[rect_disableTripConfigurationButtons_monday1]]></Name>
+								<X>-300</X>
+								<Y>-12</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-1761607681</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>600</Width>
+								<Height>25</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-1761607681</FillColor>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+						</Presentation>
+					</Group>
+					<Group>
+						<Id>1780997588129</Id>
+						<Name><![CDATA[gr_disableTripConfigurationButtons_tuesday]]></Name>
+						<X>0</X>
+						<Y>-65</Y>
 						<Label>
 							<X>10</X>
-							<Y>10</Y>
+							<Y>0</Y>
 						</Label>
 						<PublicFlag>true</PublicFlag>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<OnClickCode>;</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-922746881</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<Width>600</Width>
-						<Height>25</Height>
 						<Rotation>0.0</Rotation>
-						<FillColor>-922746881</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Rectangle>
-					<Rectangle>
-						<Id>1780919409274</Id>
-						<Name><![CDATA[rect_disableTripConfigurationButtons_friday]]></Name>
-						<X>-300</X>
-						<Y>13</Y>
+						<Presentation>
+							<Rectangle>
+								<Id>1780997588131</Id>
+								<Name><![CDATA[rect_disableTripConfigurationButtons_tuesday]]></Name>
+								<X>-300</X>
+								<Y>-12</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<OnClickCode>;</OnClickCode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor/>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>600</Width>
+								<Height>25</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor/>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Rectangle>
+								<Id>1780997588133</Id>
+								<Name><![CDATA[rect_disableTripConfigurationButtons_tuesday1]]></Name>
+								<X>-300</X>
+								<Y>-12</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-1761607681</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>600</Width>
+								<Height>25</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-1761607681</FillColor>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+						</Presentation>
+					</Group>
+					<Group>
+						<Id>1780997588135</Id>
+						<Name><![CDATA[gr_disableTripConfigurationButtons_sunday]]></Name>
+						<X>0</X>
+						<Y>85</Y>
 						<Label>
 							<X>10</X>
-							<Y>10</Y>
+							<Y>0</Y>
 						</Label>
 						<PublicFlag>true</PublicFlag>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<OnClickCode>;</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-922746881</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<Width>600</Width>
-						<Height>25</Height>
 						<Rotation>0.0</Rotation>
-						<FillColor>-922746881</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Rectangle>
-					<Rectangle>
-						<Id>1780919410502</Id>
-						<Name><![CDATA[rect_disableTripConfigurationButtons_saturday]]></Name>
-						<X>-300</X>
-						<Y>43</Y>
+						<Presentation>
+							<Rectangle>
+								<Id>1780997588137</Id>
+								<Name><![CDATA[rect_disableTripConfigurationButtons_sunday]]></Name>
+								<X>-300</X>
+								<Y>-12</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<OnClickCode>;</OnClickCode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor/>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>600</Width>
+								<Height>25</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor/>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Rectangle>
+								<Id>1780997588139</Id>
+								<Name><![CDATA[rect_disableTripConfigurationButtons_sunday1]]></Name>
+								<X>-300</X>
+								<Y>-12</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-1761607681</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>600</Width>
+								<Height>25</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-1761607681</FillColor>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+						</Presentation>
+					</Group>
+					<Group>
+						<Id>1780997588141</Id>
+						<Name><![CDATA[gr_disableTripConfigurationButtons_saturday]]></Name>
+						<X>0</X>
+						<Y>55</Y>
 						<Label>
 							<X>10</X>
-							<Y>10</Y>
+							<Y>0</Y>
 						</Label>
 						<PublicFlag>true</PublicFlag>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<OnClickCode>;</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-922746881</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<Width>600</Width>
-						<Height>25</Height>
 						<Rotation>0.0</Rotation>
-						<FillColor>-922746881</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Rectangle>
-					<Rectangle>
-						<Id>1780919411556</Id>
-						<Name><![CDATA[rect_disableTripConfigurationButtons_sunday]]></Name>
-						<X>-300</X>
-						<Y>73</Y>
+						<Presentation>
+							<Rectangle>
+								<Id>1780997588143</Id>
+								<Name><![CDATA[rect_disableTripConfigurationButtons_saturday]]></Name>
+								<X>-300</X>
+								<Y>-12</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<OnClickCode>;</OnClickCode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor/>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>600</Width>
+								<Height>25</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor/>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Rectangle>
+								<Id>1780997588145</Id>
+								<Name><![CDATA[rect_disableTripConfigurationButtons_saturday1]]></Name>
+								<X>-300</X>
+								<Y>-12</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-1761607681</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>600</Width>
+								<Height>25</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-1761607681</FillColor>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+						</Presentation>
+					</Group>
+					<Group>
+						<Id>1780997588147</Id>
+						<Name><![CDATA[gr_disableTripConfigurationButtons_friday]]></Name>
+						<X>0</X>
+						<Y>25</Y>
 						<Label>
 							<X>10</X>
-							<Y>10</Y>
+							<Y>0</Y>
 						</Label>
 						<PublicFlag>true</PublicFlag>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<OnClickCode>;</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-922746881</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<Width>600</Width>
-						<Height>25</Height>
 						<Rotation>0.0</Rotation>
-						<FillColor>-922746881</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Rectangle>
-					<Rectangle>
-						<Id>1780919430701</Id>
-						<Name><![CDATA[rect_disableTripConfigurationButtons_tuesday]]></Name>
-						<X>-300</X>
-						<Y>-77</Y>
+						<Presentation>
+							<Rectangle>
+								<Id>1780997588149</Id>
+								<Name><![CDATA[rect_disableTripConfigurationButtons_friday]]></Name>
+								<X>-300</X>
+								<Y>-12</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<OnClickCode>;</OnClickCode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor/>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>600</Width>
+								<Height>25</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor/>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Rectangle>
+								<Id>1780997588151</Id>
+								<Name><![CDATA[rect_disableTripConfigurationButtons_friday1]]></Name>
+								<X>-300</X>
+								<Y>-12</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-1761607681</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>600</Width>
+								<Height>25</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-1761607681</FillColor>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+						</Presentation>
+					</Group>
+					<Group>
+						<Id>1780997588153</Id>
+						<Name><![CDATA[gr_disableTripConfigurationButtons_thursday]]></Name>
+						<X>0</X>
+						<Y>-5</Y>
 						<Label>
 							<X>10</X>
-							<Y>10</Y>
+							<Y>0</Y>
 						</Label>
 						<PublicFlag>true</PublicFlag>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<OnClickCode>;</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-922746881</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<Width>600</Width>
-						<Height>25</Height>
 						<Rotation>0.0</Rotation>
-						<FillColor>-922746881</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Rectangle>
-					<Rectangle>
-						<Id>1780919549536</Id>
-						<Name><![CDATA[rect_disableTripConfigurationButtons_monday]]></Name>
-						<X>-300</X>
-						<Y>-107</Y>
+						<Presentation>
+							<Rectangle>
+								<Id>1780997588155</Id>
+								<Name><![CDATA[rect_disableTripConfigurationButtons_thursday]]></Name>
+								<X>-300</X>
+								<Y>-12</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<OnClickCode>;</OnClickCode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor/>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>600</Width>
+								<Height>25</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor/>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Rectangle>
+								<Id>1780997588157</Id>
+								<Name><![CDATA[rect_disableTripConfigurationButtons_thursday1]]></Name>
+								<X>-300</X>
+								<Y>-12</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-1761607681</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>600</Width>
+								<Height>25</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-1761607681</FillColor>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+						</Presentation>
+					</Group>
+					<Group>
+						<Id>1780997588159</Id>
+						<Name><![CDATA[gr_disableTripConfigurationButtons_wednesday]]></Name>
+						<X>0</X>
+						<Y>-35</Y>
 						<Label>
 							<X>10</X>
-							<Y>10</Y>
+							<Y>0</Y>
 						</Label>
 						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>false</PresentationFlag>
+						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<OnClickCode>;</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-922746881</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<Width>600</Width>
-						<Height>25</Height>
 						<Rotation>0.0</Rotation>
-						<FillColor>-922746881</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Rectangle>
+						<Presentation>
+							<Rectangle>
+								<Id>1780997588161</Id>
+								<Name><![CDATA[rect_disableTripConfigurationButtons_wednesday]]></Name>
+								<X>-300</X>
+								<Y>-12</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<OnClickCode>;</OnClickCode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor/>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>600</Width>
+								<Height>25</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor/>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Rectangle>
+								<Id>1780997588163</Id>
+								<Name><![CDATA[rect_disableTripConfigurationButtons_wednesday1]]></Name>
+								<X>-300</X>
+								<Y>-12</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-1761607681</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>600</Width>
+								<Height>25</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-1761607681</FillColor>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+						</Presentation>
+					</Group>
 				</Presentation>
 			</Group>
 			<Group>
@@ -10994,7 +11134,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11019,7 +11159,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11044,7 +11184,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11069,7 +11209,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11094,7 +11234,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11119,7 +11259,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11144,7 +11284,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11169,7 +11309,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11194,7 +11334,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11219,7 +11359,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11244,7 +11384,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11269,7 +11409,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11294,7 +11434,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11319,7 +11459,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11344,7 +11484,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11369,7 +11509,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11394,7 +11534,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11419,7 +11559,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11444,7 +11584,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11469,7 +11609,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11494,7 +11634,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11519,7 +11659,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11544,7 +11684,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11569,7 +11709,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11594,7 +11734,7 @@ else{
 						<Font>
 							<Name><![CDATA[Dialog]]></Name>
 							<Size>14</Size>
-							<Style>0</Style>
+							<Style>1</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -11604,7 +11744,7 @@ else{
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1780941951335</Id>
 				<Name><![CDATA[eb_configureVehicleTrips_weeklyDistance_km]]></Name>
-				<X>550</X>
+				<X>555</X>
 				<Y>75</Y>
 				<Label>
 					<X>0</X>
@@ -11627,10 +11767,9 @@ else{
         eb_configureVehicleTrips_weeklyDistance_km.setValueToDefault();
         f_setErrorScreen("De wekelijkse afstand moet groter zijn dan 0 km.");
     }
-} catch (NumberFormatException e) {
+} catch (Exception e) {
     eb_configureVehicleTrips_weeklyDistance_km.setValueToDefault();
     f_setErrorScreen("De wekelijkse afstand moet een getal zijn die groter is dan 0 km.");
-	
 }</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -11642,7 +11781,7 @@ else{
 			<Text>
 				<Id>1780941955671</Id>
 				<Name><![CDATA[txt_configureVehicleTrips_weeklyDistance_unit]]></Name>
-				<X>660</X>
+				<X>670</X>
 				<Y>80</Y>
 				<Label>
 					<X>0</X>
@@ -11664,6 +11803,200 @@ else{
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
+			<Group>
+				<Id>1780993546312</Id>
+				<Name><![CDATA[gr_vehicleTripConfiguratorWeekdays]]></Name>
+				<X>60</X>
+				<Y>250</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Text>
+						<Id>1780993546314</Id>
+						<Name><![CDATA[txt_configureVehicleTrips_monday]]></Name>
+						<X>-40</X>
+						<Y>-105</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Maandag]]></Text>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>14</Size>
+							<Style>1</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1780993546316</Id>
+						<Name><![CDATA[txt_configureVehicleTrips_tuesday]]></Name>
+						<X>-40</X>
+						<Y>-75</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Dinsdag]]></Text>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>14</Size>
+							<Style>1</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1780993546318</Id>
+						<Name><![CDATA[txt_configureVehicleTrips_wednesday]]></Name>
+						<X>-40</X>
+						<Y>-45</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Woensdag]]></Text>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>14</Size>
+							<Style>1</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1780993546320</Id>
+						<Name><![CDATA[txt_configureVehicleTrips_thursday]]></Name>
+						<X>-40</X>
+						<Y>-15</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Donderdag]]></Text>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>14</Size>
+							<Style>1</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1780993546322</Id>
+						<Name><![CDATA[txt_configureVehicleTrips_friday]]></Name>
+						<X>-40</X>
+						<Y>15</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Vrijdag]]></Text>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>14</Size>
+							<Style>1</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1780993546324</Id>
+						<Name><![CDATA[txt_configureVehicleTrips_saturday]]></Name>
+						<X>-40</X>
+						<Y>45</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Zaterdag]]></Text>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>14</Size>
+							<Style>1</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1780993546326</Id>
+						<Name><![CDATA[txt_configureVehicleTrips_sunday]]></Name>
+						<X>-40</X>
+						<Y>75</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Zondag]]></Text>
+						<Font>
+							<Name><![CDATA[Dialog]]></Name>
+							<Size>14</Size>
+							<Style>1</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+				</Presentation>
+			</Group>
 		</Presentation>
 	</Group>
 	<Control Type="Button">

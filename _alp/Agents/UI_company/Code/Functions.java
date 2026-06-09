@@ -1287,18 +1287,8 @@ switch (vehicleType){
 
 double f_setResultsUIPresets()
 {/*ALCODESTART::1714654645264*/
-//Set the order of the resultsUI to front but behind simulation screen group and load icon
-presentation.remove(uI_Results_presentation);
-presentation.insert(presentation.size()-1, uI_Results_presentation);
-presentation.remove(gr_configureVehicleTrips);
-presentation.insert(presentation.size()-1, gr_configureVehicleTrips);
-presentation.remove(gr_loadIcon);
-presentation.insert(presentation.size()-1, gr_loadIcon);
-presentation.remove(gr_simulateYearScreen);
-presentation.insert(presentation.size()-1, gr_simulateYearScreen);
-presentation.remove(gr_GCisPausedScreen);
-presentation.insert(presentation.size()-1, gr_GCisPausedScreen);
-
+//Set the order of the presentation objects
+f_setPresentationOrder();
 
 
 //Set the locations and visibilities of the ResultsUI agents
@@ -1892,13 +1882,14 @@ double weeklyTravelDistance_km = eb_configureVehicleTrips_weeklyDistance_km.getD
 
 //Validate values and continue
 if(J_CustomTripTrackerGenerator.checkIfCustomTripInputsAreValid(tripMatrix, weeklyTravelDistance_km)){
-	//Store this setting, so buttons can be brought back to this
-	Map<OL_VehicleType, boolean[][]> storeGCVehicleCustomTripDailyValuesMap = map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid);
-	if(storeGCVehicleCustomTripDailyValuesMap == null){
+	//Store this setting, so buttons can be brought back to this when reopening the menu for this gc and vehicle type
+	Map<OL_VehicleType, J_CustomTripTrackerGenerator.StoredTripConfiguration> storeGCVehicleCustomTripValuesMap = map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid);
+	if(storeGCVehicleCustomTripValuesMap == null){
 		map_storedCustomTripButtonConfiguration.put(p_gridConnection.p_uid, new HashMap<>());
 	}
 	
-	map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).put(vehicleType, tripMatrix);
+	J_CustomTripTrackerGenerator.StoredTripConfiguration storedTripButtonConfiguration = new J_CustomTripTrackerGenerator.StoredTripConfiguration(tripMatrix, weeklyTravelDistance_km, cb_configureVehicleTrips_dailyDistinction.isSelected(), c_activeVehicleConfigurationDays);
+	map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).put(vehicleType, storedTripButtonConfiguration);
 	
 	//Create customTripTrackerWeeklyValuesMap
 	Map<OL_CustomTripTrackerValueTypes, List<Double>> newCustomTripTrackerWeeklyValuesMap = J_CustomTripTrackerGenerator.getCustomTripTrackerValues(f_getTripBooleanMatrix(), weeklyTravelDistance_km); 
@@ -1974,32 +1965,22 @@ double f_initializeVehicleTripsConfigurationMenuButtons(OL_VehicleType vehicleTy
 {/*ALCODESTART::1780063352490*/
 if(map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid) != null &&
 	map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).get(vehicleType) != null){
-	boolean[][] previousButtonConfiguration = map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).get(vehicleType);
-
-	//Is daily difference enabled?	
-	boolean dailyDifferenceEnabled = false;
-	List<OL_Days> activeDays = new ArrayList<>();
-	
-	for (int dayNumber = 0; dayNumber < previousButtonConfiguration.length; dayNumber++) {
-	    if (!Arrays.equals(previousButtonConfiguration[0], previousButtonConfiguration[dayNumber])) {
-	        dailyDifferenceEnabled = true;
-	    }
-	    for (boolean hour : previousButtonConfiguration[dayNumber]) {
-	        if (hour) {
-	            activeDays.add(J_CustomTripTrackerGenerator.getWeekdayFromDayNumber(dayNumber));
-	            break;
-	        }
-	    }
-	}
+	boolean[][] previousButtonConfigurationMatrix = map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).get(vehicleType).buttonConfigurationMatrix();
+	double previousWeeklyTravelDistance_km = map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).get(vehicleType).weeklyTravelDistance_km();
+	boolean dailyDistinctionEnabled = map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).get(vehicleType).dailyDistinctionEnabled();
+    Set<OL_Days> activeDays = map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).get(vehicleType).activeDays();
 
 	//Set dailyDifferenceEnabled button correctly
-	cb_configureVehicleTrips_dailyDistinction.setSelected(dailyDifferenceEnabled, true);
+	cb_configureVehicleTrips_dailyDistinction.setSelected(dailyDistinctionEnabled, true);
 
 	for(OL_Days day : J_CustomTripTrackerGenerator.getOrderedDaysList()){
 		map_dayToEnableDayButtons.get(day).setSelected(activeDays.contains(day), true);
 	}
 	//Set all buttons to correct values
-	f_setAllVehicleTripsConfigurationButtonsToInputMatrix(previousButtonConfiguration);
+	f_setAllVehicleTripsConfigurationButtonsToInputMatrix(previousButtonConfigurationMatrix);
+	
+	//Set weekly travel distance to correct value;
+	eb_configureVehicleTrips_weeklyDistance_km.setText(BigDecimal.valueOf(previousWeeklyTravelDistance_km).stripTrailingZeros().toPlainString(), false);
 }
 else{ // No previous configuration for this GC and/or vehicle type -> Everything at default values
 	f_setAllVehicleTripsConfigurationButtonsToDefault();
@@ -2112,26 +2093,17 @@ eb_configureVehicleTrips_weeklyDistance_km.setValueToDefault();
 
 boolean[][] f_getTripBooleanMatrix()
 {/*ALCODESTART::1780922799439*/
-if (matrix_vehicleTripsConfigurationButtons == null){
-	return null;
-}
-
 int rows = matrix_vehicleTripsConfigurationButtons.length;
 int cols = rows > 0 ? matrix_vehicleTripsConfigurationButtons[0].length : 0;
 
 boolean[][] booleanMatrix = new boolean[rows][cols];
 
 for (int i = 0; i < rows; i++) {
+	boolean rowIsEnabled = !map_dayToDisableRectangles.get(J_CustomTripTrackerGenerator.getWeekdayFromDayNumber(i)).isVisible() || cb_configureVehicleTrips_dailyDistinction.isSelected();
     for (int j = 0; j < cols; j++) {
-        ShapeRectangle rect = matrix_vehicleTripsConfigurationButtons[i][j];
-        if (rect == null) {
-            booleanMatrix[i][j] = false;
-            continue;
-        }
-        
-        Color fillColor = rect.getFillColor();
-        
-        if (fillColor.equals(p_configureVehicleTripsOnColor)) {
+    
+        Color fillColor = matrix_vehicleTripsConfigurationButtons[i][j].getFillColor();
+        if (rowIsEnabled && fillColor.equals(p_configureVehicleTripsOnColor)) {
             booleanMatrix[i][j] = true;
         } 
         else { // default for unrecognized colors
@@ -2154,5 +2126,32 @@ for (int day = 0; day < matrix_vehicleTripsConfigurationButtons.length; day++) {
         }
     }
 }
+/*ALCODEEND*/}
+
+double f_initializeDayToDisableRectanglesMap()
+{/*ALCODESTART::1780997445385*/
+//Needed, cause groups are created after map initialization, creating errors if done in default value
+map_dayToDisableRectangles = new LinkedHashMap<OL_Days, ShapeGroup>();
+map_dayToDisableRectangles.put(OL_Days.MONDAY,    gr_disableTripConfigurationButtons_monday);
+map_dayToDisableRectangles.put(OL_Days.TUESDAY,   gr_disableTripConfigurationButtons_tuesday);
+map_dayToDisableRectangles.put(OL_Days.WEDNESDAY, gr_disableTripConfigurationButtons_wednesday);
+map_dayToDisableRectangles.put(OL_Days.THURSDAY,  gr_disableTripConfigurationButtons_thursday);
+map_dayToDisableRectangles.put(OL_Days.FRIDAY,    gr_disableTripConfigurationButtons_friday);
+map_dayToDisableRectangles.put(OL_Days.SATURDAY,  gr_disableTripConfigurationButtons_saturday);
+map_dayToDisableRectangles.put(OL_Days.SUNDAY,    gr_disableTripConfigurationButtons_sunday);
+/*ALCODEEND*/}
+
+double f_setPresentationOrder()
+{/*ALCODESTART::1780999540461*/
+presentation.remove(uI_Results_presentation);
+presentation.insert(presentation.size()-1, uI_Results_presentation);
+presentation.remove(gr_loadIcon);
+presentation.insert(presentation.size()-1, gr_loadIcon);
+presentation.remove(gr_simulateYearScreen);
+presentation.insert(presentation.size()-1, gr_simulateYearScreen);
+presentation.remove(gr_configureVehicleTrips);
+presentation.insert(presentation.size()-1, gr_configureVehicleTrips);
+presentation.remove(gr_GCisPausedScreen);
+presentation.insert(presentation.size()-1, gr_GCisPausedScreen);
 /*ALCODEEND*/}
 

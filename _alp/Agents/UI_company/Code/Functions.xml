@@ -447,7 +447,7 @@
 		<Id>1714656835269</Id>
 		<Name><![CDATA[f_updateUIResultsCompanyUI]]></Name>
 		<X>-1050</X>
-		<Y>1350</Y>
+		<Y>1370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -715,7 +715,7 @@
 		<Id>1780045148927</Id>
 		<Name><![CDATA[f_confirmVehicleTripsConfiguration]]></Name>
 		<X>-530</X>
-		<Y>2200</Y>
+		<Y>2220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -755,7 +755,7 @@
 		<Id>1780056555300</Id>
 		<Name><![CDATA[f_createCustomTripConfiguration]]></Name>
 		<X>-510</X>
-		<Y>2240</Y>
+		<Y>2260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -775,7 +775,7 @@
 		<Id>1780057851211</Id>
 		<Name><![CDATA[f_replaceAllCurrentTripTrackersWithCustom]]></Name>
 		<X>-510</X>
-		<Y>2300</Y>
+		<Y>2320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -795,7 +795,7 @@
 		<Id>1780063188067</Id>
 		<Name><![CDATA[f_storeOriginalTripTracker]]></Name>
 		<X>-490</X>
-		<Y>2320</Y>
+		<Y>2340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -839,7 +839,7 @@
 		<Id>1780307953910</Id>
 		<Name><![CDATA[f_closeVehicleTripsConfigurationMenu]]></Name>
 		<X>-530</X>
-		<Y>2370</Y>
+		<Y>2390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -855,7 +855,7 @@
 		<Id>1780312282022</Id>
 		<Name><![CDATA[f_addNewInstanceOfCustomTripTrackerToAdditionalVehicle]]></Name>
 		<X>-530</X>
-		<Y>2400</Y>
+		<Y>2420</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -875,7 +875,7 @@
 		<Id>1780327676306</Id>
 		<Name><![CDATA[f_resetAllVehiclesToOriginalTripTracker]]></Name>
 		<X>-530</X>
-		<Y>2490</Y>
+		<Y>2510</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -891,7 +891,7 @@
 		<Id>1780327998135</Id>
 		<Name><![CDATA[f_replaceTripTrackerWithOtherTripTracker]]></Name>
 		<X>-510</X>
-		<Y>2430</Y>
+		<Y>2450</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -915,7 +915,7 @@
 		<Id>1780328883341</Id>
 		<Name><![CDATA[f_resetVehicleTypeToOriginalTripTracker]]></Name>
 		<X>-530</X>
-		<Y>2510</Y>
+		<Y>2530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -951,7 +951,7 @@
 		<Id>1780922799439</Id>
 		<Name><![CDATA[f_getTripBooleanMatrix]]></Name>
 		<X>-510</X>
-		<Y>2220</Y>
+		<Y>2240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -979,6 +979,38 @@
 			<Name><![CDATA[booleanMatrix]]></Name>
 			<Type><![CDATA[boolean[][]]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1780997445385</Id>
+		<Name><![CDATA[f_initializeDayToDisableRectanglesMap]]></Name>
+		<X>-490</X>
+		<Y>2160</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1780999540461</Id>
+		<Name><![CDATA[f_setPresentationOrder]]></Name>
+		<X>-1035</X>
+		<Y>1350</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>
