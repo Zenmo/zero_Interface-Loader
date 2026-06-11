@@ -99,22 +99,6 @@
 				</Option>
 			</OptionList>
 			<OptionList>
-				<Id>1667742453792</Id>
-				<Name><![CDATA[OL_CustomTripTrackerValueTypes]]></Name>
-				<Option>
-					<Id>1780057159776</Id>
-					<Name><![CDATA[STARTTIME_H]]></Name>
-				</Option>
-				<Option>
-					<Id>1780057171170</Id>
-					<Name><![CDATA[ENDTIME_H]]></Name>
-				</Option>
-				<Option>
-					<Id>1780057173562</Id>
-					<Name><![CDATA[DISTANCE_KM]]></Name>
-				</Option>
-			</OptionList>
-			<OptionList>
 				<Id>1675025163072</Id>
 				<Name><![CDATA[OL_UNUSED4]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>

@@ -1855,20 +1855,24 @@ if(f_createCustomTripConfiguration(vehicleType)){
 double f_openVehicleTripsConfigurationMenu(OL_VehicleType vehicleType)
 {/*ALCODESTART::1780047941753*/
 String vehicleTypeString = "";
-
+String pluralAddition = "";
 switch(vehicleType){
 	case CAR:
-		vehicleTypeString = "Auto's";
+		vehicleTypeString = "Auto";
+		pluralAddition = "'s";
 		break;
 	case VAN:
-		vehicleTypeString = "Busjes";
+		vehicleTypeString = "Busje";
+		pluralAddition = "s";
 		break;
 	case TRUCK:
-		vehicleTypeString = "Trucks";
+		vehicleTypeString = "Truck";
+		pluralAddition = "s";
 		break;
 }
 
-t_selectedVehicleTypeForTripConfiguration.setText(vehicleTypeString);
+t_tripConfiguratorExplanation.setText("Wanneer zijn je " + vehicleTypeString + pluralAddition + " onderweg?");
+t_configureVehicleTrips_km.setText("Weeklijks gereden afstand per " + vehicleTypeString + ":");
 v_currentTripConfiguringVehicleType = vehicleType;
 f_initializeVehicleTripsConfigurationMenuButtons(vehicleType);
 gr_configureVehicleTrips.setVisible(true);
@@ -1891,31 +1895,27 @@ if(J_CustomTripTrackerGenerator.checkIfCustomTripInputsAreValid(tripMatrix, week
 	J_CustomTripTrackerGenerator.StoredTripConfiguration storedTripButtonConfiguration = new J_CustomTripTrackerGenerator.StoredTripConfiguration(tripMatrix, weeklyTravelDistance_km, cb_configureVehicleTrips_dailyDistinction.isSelected(), c_activeVehicleConfigurationDays);
 	map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).put(vehicleType, storedTripButtonConfiguration);
 	
-	//Create customTripTrackerWeeklyValuesMap
-	Map<OL_CustomTripTrackerValueTypes, List<Double>> newCustomTripTrackerWeeklyValuesMap = J_CustomTripTrackerGenerator.getCustomTripTrackerValues(f_getTripBooleanMatrix(), weeklyTravelDistance_km); 
+	//Create customTripRecords
+	List<J_ActivityTrackerTrips.TripRecord> customTripRecords = J_CustomTripTrackerGenerator.getCustomTripTrackerRecords(f_getTripBooleanMatrix(), weeklyTravelDistance_km); 
 	
 	//Add it to stored custom trip values maps
-	Map<OL_VehicleType, Map<OL_CustomTripTrackerValueTypes, List<Double>>> GCCustomTripValuesMap = map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid);
-	if(GCCustomTripValuesMap == null){
+	Map<OL_VehicleType, List<J_ActivityTrackerTrips.TripRecord>> GCCustomTripRecordsMap = map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid);
+	if(GCCustomTripRecordsMap == null){
 		map_createdCustomTripWeeklyConfiguration.put(p_gridConnection.p_uid, new HashMap<>());
 	}
-	map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid).put(vehicleType, newCustomTripTrackerWeeklyValuesMap);
+	map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid).put(vehicleType, customTripRecords);
 	
 	return true;
 }
 else{
-	f_setErrorScreen("De custom rijtijden configuratie is niet doorgevoerd, want de start en eind tijden zijn verkeerd geconfigureerd.");
+	f_setErrorScreen("De custom rijtijden configuratie is niet doorgevoerd, door een onbekende error.");
 	return false;
 }
 /*ALCODEEND*/}
 
 double f_replaceAllCurrentTripTrackersWithCustom(OL_VehicleType vehicleType)
 {/*ALCODESTART::1780057851211*/
-Map<OL_CustomTripTrackerValueTypes, List<Double>> customTripValuesMap = map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid).get(vehicleType);
-
-List<Double> startTimes_h = customTripValuesMap.get(OL_CustomTripTrackerValueTypes.STARTTIME_H);
-List<Double> endTimes_h = customTripValuesMap.get(OL_CustomTripTrackerValueTypes.ENDTIME_H);
-List<Double> distances_km = customTripValuesMap.get(OL_CustomTripTrackerValueTypes.DISTANCE_KM);
+List<J_ActivityTrackerTrips.TripRecord> customTripRecords = map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid).get(vehicleType);
 
 J_TimeVariables timeVariables = zero_Interface.energyModel.p_timeVariables;
 J_TimeParameters timeParameters = zero_Interface.energyModel.p_timeParameters;
@@ -1930,7 +1930,7 @@ for(I_Vehicle vehicle : findAll(p_gridConnection.c_vehicleAssets, veh -> veh.get
 	}
 	
 	//Create new triptracker and add to vehicle
-	J_ActivityTrackerTrips newCustomTripTracker = new J_ActivityTrackerTrips(startTimes_h, endTimes_h, distances_km, vehicle, p_gridConnection.f_getChargePoint(), timeParameters, timeVariables); 	
+	J_ActivityTrackerTrips newCustomTripTracker = new J_ActivityTrackerTrips(customTripRecords, vehicle, p_gridConnection.f_getChargePoint(), timeParameters, timeVariables); 	
 	
 	//Replace current with new one
 	f_replaceTripTrackerWithOtherTripTracker(currentTripTracker, newCustomTripTracker);
@@ -1973,7 +1973,7 @@ if(map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid) != null &
 	//Set dailyDifferenceEnabled button correctly
 	cb_configureVehicleTrips_dailyDistinction.setSelected(dailyDistinctionEnabled, true);
 
-	for(OL_Days day : J_CustomTripTrackerGenerator.getOrderedDaysList()){
+	for(OL_Days day : J_TimeParameters.getOrderedDaysList()){
 		map_dayToEnableDayButtons.get(day).setSelected(activeDays.contains(day), true);
 	}
 	//Set all buttons to correct values
@@ -1998,12 +1998,8 @@ double f_addNewInstanceOfCustomTripTrackerToAdditionalVehicle(I_Vehicle vehicle)
 {/*ALCODESTART::1780312282022*/
 //Check if this vehicle should get a custom triptracker
 if(map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid) != null && map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid).get(vehicle) != null){
-	//Get the values for the custom triptracker
-	Map<OL_CustomTripTrackerValueTypes, List<Double>> customTripValuesMap = map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid).get(vehicle);
-	
-	List<Double> startTimes_h = customTripValuesMap.get(OL_CustomTripTrackerValueTypes.STARTTIME_H);
-	List<Double> endTimes_h = customTripValuesMap.get(OL_CustomTripTrackerValueTypes.ENDTIME_H);
-	List<Double> distances_km = customTripValuesMap.get(OL_CustomTripTrackerValueTypes.DISTANCE_KM);
+	//Get the records for the custom triptracker
+	List<J_ActivityTrackerTrips.TripRecord> customTripRecords = map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid).get(vehicle);
 	
 	J_TimeVariables timeVariables = zero_Interface.energyModel.p_timeVariables;
 	J_TimeParameters timeParameters = zero_Interface.energyModel.p_timeParameters;
@@ -2017,7 +2013,7 @@ if(map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid) != null 
 	}
 	
 	//Create new triptracker
-	J_ActivityTrackerTrips newCustomTripTracker = new J_ActivityTrackerTrips(startTimes_h, endTimes_h, distances_km, vehicle, p_gridConnection.f_getChargePoint(), timeParameters, timeVariables); 	
+	J_ActivityTrackerTrips newCustomTripTracker = new J_ActivityTrackerTrips(customTripRecords, vehicle, p_gridConnection.f_getChargePoint(), timeParameters, timeVariables); 	
 	
 	//Replace current with new one
 	f_replaceTripTrackerWithOtherTripTracker(currentTripTracker, newCustomTripTracker);
@@ -2033,6 +2029,7 @@ if(GCcustomTripTrackerToOriginalMap != null && !GCcustomTripTrackerToOriginalMap
 		J_ActivityTrackerTrips originalTripTracker = GCcustomTripTrackerToOriginalMap.get(vehicle.getTripTracker());
 		if(originalTripTracker != null){
 			//Reverse custom triptracker to original
+			originalTripTracker.setVehicle(vehicle); //Needed, cause vehicleEA might have changed for this trip tracker
 			f_replaceTripTrackerWithOtherTripTracker(vehicle.getTripTracker(), originalTripTracker);
 		}
 	}
@@ -2050,6 +2047,8 @@ J_ChargePoint chargePoint = p_gridConnection.f_getChargePoint();
 
 //Remove current
 p_gridConnection.c_tripTrackers.remove(currentTripTracker);
+currentTripTracker.setVehicle(null);
+
 if(vehicle instanceof J_EAEV ev && chargePoint.isRegistered(ev)){
 	chargePoint.deregisterChargingRequest(ev);
 }
@@ -2059,7 +2058,7 @@ newTripTracker.setDistanceScaling_fr(currentTripTracker.getDistanceScaling_fr())
 p_gridConnection.c_tripTrackers.add(newTripTracker);
 vehicle.setTripTracker(newTripTracker);
 vehicle.setAvailability(true);
-newTripTracker.prepareNextActivity(zero_Interface.energyModel.p_timeVariables, chargePoint);
+newTripTracker.setStartIndex(zero_Interface.energyModel.p_timeVariables, chargePoint);
 /*ALCODEEND*/}
 
 double f_resetVehicleTypeToOriginalTripTracker(OL_VehicleType vehicleType)
@@ -2072,9 +2071,11 @@ if(GCcustomTripTrackerToOriginalMap != null && !GCcustomTripTrackerToOriginalMap
             J_ActivityTrackerTrips customTripTracker = vehicle.getTripTracker();
 	        J_ActivityTrackerTrips originalTripTracker = GCcustomTripTrackerToOriginalMap.get(customTripTracker);
 	        if(originalTripTracker != null){
+	            
 	            //Reverse custom triptracker to original
+	            originalTripTracker.setVehicle(vehicle); //Needed, cause vehicleEA might have changed for this trip tracker
 	            f_replaceTripTrackerWithOtherTripTracker(customTripTracker, originalTripTracker);
-	
+				
 	            //Remove previous link
 	            GCcustomTripTrackerToOriginalMap.remove(customTripTracker);
 	        }
@@ -2099,11 +2100,10 @@ int cols = rows > 0 ? matrix_vehicleTripsConfigurationButtons[0].length : 0;
 boolean[][] booleanMatrix = new boolean[rows][cols];
 
 for (int i = 0; i < rows; i++) {
-	boolean rowIsEnabled = !map_dayToDisableRectangles.get(J_CustomTripTrackerGenerator.getWeekdayFromDayNumber(i)).isVisible() || cb_configureVehicleTrips_dailyDistinction.isSelected();
-    for (int j = 0; j < cols; j++) {
+	for (int j = 0; j < cols; j++) {
     
         Color fillColor = matrix_vehicleTripsConfigurationButtons[i][j].getFillColor();
-        if (rowIsEnabled && fillColor.equals(p_configureVehicleTripsOnColor)) {
+        if (fillColor.equals(p_configureVehicleTripsOnColor)) {
             booleanMatrix[i][j] = true;
         } 
         else { // default for unrecognized colors
@@ -2153,5 +2153,20 @@ presentation.remove(gr_configureVehicleTrips);
 presentation.insert(presentation.size()-1, gr_configureVehicleTrips);
 presentation.remove(gr_GCisPausedScreen);
 presentation.insert(presentation.size()-1, gr_GCisPausedScreen);
+/*ALCODEEND*/}
+
+double f_enableSingleDay(boolean enable,OL_Days day)
+{/*ALCODESTART::1781094625996*/
+if(enable){
+	c_activeVehicleConfigurationDays.add(day);
+}
+else{
+	c_activeVehicleConfigurationDays.remove(day);
+	//Set color of entire row to off, if turned off.
+	for(ShapeRectangle rectangle : matrix_vehicleTripsConfigurationButtons[J_TimeParameters.getDayIndexFromDay(day)]){
+		rectangle.setFillColor(p_configureVehicleTripsOffColor);
+	}
+}
+map_dayToDisableRectangles.get(day).setVisible(!enable);
 /*ALCODEEND*/}
 

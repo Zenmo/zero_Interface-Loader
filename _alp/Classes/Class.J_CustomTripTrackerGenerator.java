@@ -2,16 +2,14 @@
  * J_CustomTripTrackerGenerator
  */	
 public class J_CustomTripTrackerGenerator {
-	public static Map<OL_CustomTripTrackerValueTypes, List<Double>> getCustomTripTrackerValues(boolean[][] weeklyTravelMatrix, double weeklyTravelDistance_km) {
+	public static List<J_ActivityTrackerTrips.TripRecord> getCustomTripTrackerRecords(boolean[][] weeklyTravelMatrix, double weeklyTravelDistance_km) {
 		
 		//Validate
 	    if(!checkIfCustomTripInputsAreValid(weeklyTravelMatrix, weeklyTravelDistance_km)) {
 	        throw new IllegalArgumentException("Invalid trip inputs.");
 	    }
 	    
-	    List<Double> startTimes_h = new ArrayList<>();
-	    List<Double> endTimes_h = new ArrayList<>();
-	    List<Double> distances_km = new ArrayList<>();
+	    List<J_ActivityTrackerTrips.TripRecord> customTripTrackerRecords = new ArrayList<>();
 	    
 	    // Count total hours traveled (every true cell) across the whole week
 	    int totalHoursTraveled = 0;
@@ -45,25 +43,19 @@ public class J_CustomTripTrackerGenerator {
 	            // Previous hour was the last driving hour; trip ends here
 	            inTrip = false;
 	            double tripEnd_h = absoluteHour;
-	            startTimes_h.add(tripStart_h);
-	            endTimes_h.add(tripEnd_h);
-	            distances_km.add((tripEnd_h - tripStart_h) * distancePerHour_km);
+	            double distance_km = (tripEnd_h - tripStart_h) * distancePerHour_km;
+	            customTripTrackerRecords.add(new J_ActivityTrackerTrips.TripRecord(tripStart_h, tripEnd_h, distance_km));
 	        }
 	    }
 
 	    // Close a trip that runs to the very end of the week
 	    if (inTrip) {
 	        double tripEnd_h = 7 * 24;
-	        startTimes_h.add(tripStart_h);
-	        endTimes_h.add(tripEnd_h);
-	        distances_km.add((tripEnd_h - tripStart_h) * distancePerHour_km);
+            double distance_km = (tripEnd_h - tripStart_h) * distancePerHour_km;
+            customTripTrackerRecords.add(new J_ActivityTrackerTrips.TripRecord(tripStart_h, tripEnd_h, distance_km));
 	    }
-	    
-	    Map<OL_CustomTripTrackerValueTypes, List<Double>> result = new HashMap<>();
-	    result.put(OL_CustomTripTrackerValueTypes.STARTTIME_H, startTimes_h);
-	    result.put(OL_CustomTripTrackerValueTypes.ENDTIME_H, endTimes_h);
-	    result.put(OL_CustomTripTrackerValueTypes.DISTANCE_KM, distances_km);
-	    return result;
+
+	    return customTripTrackerRecords;
 	}
 	
 	public static boolean checkIfCustomTripInputsAreValid(boolean[][] weeklyTravelMatrix, double weeklyTravelDistance_km) {
@@ -74,39 +66,6 @@ public class J_CustomTripTrackerGenerator {
 	    	return false;
 	    }
 	    return true;
-	}
-	
-	public static OL_Days getWeekdayFromDayNumber(int dayNumber){
-		switch(dayNumber) {
-		    case 0:
-		        return OL_Days.MONDAY;
-		    case 1:
-		        return OL_Days.TUESDAY;
-		    case 2:
-		        return OL_Days.WEDNESDAY;
-		    case 3:
-		        return OL_Days.THURSDAY;
-		    case 4:
-		        return OL_Days.FRIDAY;
-		    case 5:
-		        return OL_Days.SATURDAY;
-		    case 6:
-		        return OL_Days.SUNDAY;
-		    default:
-		    	throw new RuntimeException("Day found that should not exist.");
-		}
-	}
-	
-	public static List<OL_Days> getOrderedDaysList(){
-		return List.of(
-			    OL_Days.MONDAY,
-			    OL_Days.TUESDAY,
-			    OL_Days.WEDNESDAY,
-			    OL_Days.THURSDAY,
-			    OL_Days.FRIDAY,
-			    OL_Days.SATURDAY,
-			    OL_Days.SUNDAY
-			);
 	}
 	
     public record StoredTripConfiguration(

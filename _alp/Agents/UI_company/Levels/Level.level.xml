@@ -4492,7 +4492,7 @@ else{
 				<Id>1779978293979</Id>
 				<Name><![CDATA[rect_configureVehicleTripsBackground]]></Name>
 				<X>0</X>
-				<Y>0</Y>
+				<Y>20</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -4509,7 +4509,7 @@ else{
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>750</Width>
-				<Height>400</Height>
+				<Height>380</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-14115680</FillColor>
 				<FillMaterial>null</FillMaterial>
@@ -10149,62 +10149,12 @@ else{
 					</Rectangle>
 				</Presentation>
 			</Group>
-			<Text>
-				<Id>1779978293981</Id>
-				<Name><![CDATA[txt_configureVehicleTrips]]></Name>
-				<X>375</X>
-				<Y>16</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Configureer je voertuig rijtijden van:]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>18</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<Text>
-				<Id>1779978293983</Id>
-				<Name><![CDATA[t_selectedVehicleTypeForTripConfiguration]]></Name>
-				<X>375</X>
-				<Y>50</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Trucks]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>20</Size>
-					<Style>3</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
 			<Control Type="CheckBox">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1779978293987</Id>
 				<Name><![CDATA[cb_configureVehicleTrips_dailyDistinction]]></Name>
-				<X>35</X>
-				<Y>75</Y>
+				<X>20</X>
+				<Y>90</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -10213,7 +10163,7 @@ else{
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="190" Height="30">
+				<BasicProperties Width="135" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
@@ -10230,7 +10180,7 @@ else{
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1779978293993</Id>
 				<Name><![CDATA[button_confirm_configureVehicleTrips]]></Name>
-				<X>25</X>
+				<X>20</X>
 				<Y>360</Y>
 				<Label>
 					<X>0</X>
@@ -10286,9 +10236,9 @@ f_setSimulateYearScreen();</ActionCode>
 			</Control>
 			<Text>
 				<Id>1779979460602</Id>
-				<Name><![CDATA[txt_configureVehicleTrips_km]]></Name>
-				<X>605</X>
-				<Y>50</Y>
+				<Name><![CDATA[t_configureVehicleTrips_km]]></Name>
+				<X>595</X>
+				<Y>45</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -10327,13 +10277,7 @@ f_setSimulateYearScreen();</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<ActionCode>if(cb_configureVehicleTripsMonday.isSelected()){
-	c_activeVehicleConfigurationDays.add(OL_Days.MONDAY);
-}
-else{
-	c_activeVehicleConfigurationDays.remove(OL_Days.MONDAY);
-}
-map_dayToDisableRectangles.get(OL_Days.MONDAY).setVisible(!cb_configureVehicleTripsMonday.isSelected());</ActionCode>
+					<ActionCode>f_enableSingleDay(cb_configureVehicleTripsMonday.isSelected(), OL_Days.MONDAY);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -10360,13 +10304,7 @@ map_dayToDisableRectangles.get(OL_Days.MONDAY).setVisible(!cb_configureVehicleTr
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>false</Enabled>
-					<ActionCode>if(cb_configureVehicleTripsTuesday.isSelected()){
-	c_activeVehicleConfigurationDays.add(OL_Days.TUESDAY);
-}
-else{
-	c_activeVehicleConfigurationDays.remove(OL_Days.TUESDAY);
-}
-map_dayToDisableRectangles.get(OL_Days.TUESDAY).setVisible(!cb_configureVehicleTripsTuesday.isSelected());</ActionCode>
+					<ActionCode>f_enableSingleDay(cb_configureVehicleTripsTuesday.isSelected(), OL_Days.TUESDAY);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -10393,13 +10331,7 @@ map_dayToDisableRectangles.get(OL_Days.TUESDAY).setVisible(!cb_configureVehicleT
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>false</Enabled>
-					<ActionCode>if(cb_configureVehicleTripsWednesday.isSelected()){
-	c_activeVehicleConfigurationDays.add(OL_Days.WEDNESDAY);
-}
-else{
-	c_activeVehicleConfigurationDays.remove(OL_Days.WEDNESDAY);
-}
-map_dayToDisableRectangles.get(OL_Days.WEDNESDAY).setVisible(!cb_configureVehicleTripsWednesday.isSelected());</ActionCode>
+					<ActionCode>f_enableSingleDay(cb_configureVehicleTripsWednesday.isSelected(), OL_Days.WEDNESDAY);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -10426,13 +10358,7 @@ map_dayToDisableRectangles.get(OL_Days.WEDNESDAY).setVisible(!cb_configureVehicl
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>false</Enabled>
-					<ActionCode>if(cb_configureVehicleTripsThursday.isSelected()){
-	c_activeVehicleConfigurationDays.add(OL_Days.THURSDAY);
-}
-else{
-	c_activeVehicleConfigurationDays.remove(OL_Days.THURSDAY);
-}
-map_dayToDisableRectangles.get(OL_Days.THURSDAY).setVisible(!cb_configureVehicleTripsThursday.isSelected());</ActionCode>
+					<ActionCode>f_enableSingleDay(cb_configureVehicleTripsThursday.isSelected(), OL_Days.THURSDAY);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -10459,13 +10385,7 @@ map_dayToDisableRectangles.get(OL_Days.THURSDAY).setVisible(!cb_configureVehicle
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>false</Enabled>
-					<ActionCode>if(cb_configureVehicleTripsFriday.isSelected()){
-	c_activeVehicleConfigurationDays.add(OL_Days.FRIDAY);
-}
-else{
-	c_activeVehicleConfigurationDays.remove(OL_Days.FRIDAY);
-}
-map_dayToDisableRectangles.get(OL_Days.FRIDAY).setVisible(!cb_configureVehicleTripsFriday.isSelected());</ActionCode>
+					<ActionCode>f_enableSingleDay(cb_configureVehicleTripsFriday.isSelected(), OL_Days.FRIDAY);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -10492,13 +10412,7 @@ map_dayToDisableRectangles.get(OL_Days.FRIDAY).setVisible(!cb_configureVehicleTr
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>false</Enabled>
-					<ActionCode>if(cb_configureVehicleTripsSaturday.isSelected()){
-	c_activeVehicleConfigurationDays.add(OL_Days.SATURDAY);
-}
-else{
-	c_activeVehicleConfigurationDays.remove(OL_Days.SATURDAY);
-}
-map_dayToDisableRectangles.get(OL_Days.SATURDAY).setVisible(!cb_configureVehicleTripsSaturday.isSelected());</ActionCode>
+					<ActionCode>f_enableSingleDay(cb_configureVehicleTripsSaturday.isSelected(), OL_Days.SATURDAY);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -10525,13 +10439,7 @@ map_dayToDisableRectangles.get(OL_Days.SATURDAY).setVisible(!cb_configureVehicle
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>false</Enabled>
-					<ActionCode>if(cb_configureVehicleTripsSunday.isSelected()){
-	c_activeVehicleConfigurationDays.add(OL_Days.SUNDAY);
-}
-else{
-	c_activeVehicleConfigurationDays.remove(OL_Days.SUNDAY);
-}
-map_dayToDisableRectangles.get(OL_Days.SUNDAY).setVisible(!cb_configureVehicleTripsSunday.isSelected());</ActionCode>
+					<ActionCode>f_enableSingleDay(cb_configureVehicleTripsSunday.isSelected(), OL_Days.SUNDAY);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -11744,8 +11652,8 @@ else{
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1780941951335</Id>
 				<Name><![CDATA[eb_configureVehicleTrips_weeklyDistance_km]]></Name>
-				<X>555</X>
-				<Y>75</Y>
+				<X>545</X>
+				<Y>70</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -11781,8 +11689,8 @@ else{
 			<Text>
 				<Id>1780941955671</Id>
 				<Name><![CDATA[txt_configureVehicleTrips_weeklyDistance_unit]]></Name>
-				<X>670</X>
-				<Y>80</Y>
+				<X>660</X>
+				<Y>75</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -11997,6 +11905,31 @@ else{
 					</Text>
 				</Presentation>
 			</Group>
+			<Text>
+				<Id>1781169177527</Id>
+				<Name><![CDATA[t_tripConfiguratorExplanation]]></Name>
+				<X>190</X>
+				<Y>45</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Wanneer zijn je voertuigen onderweg?]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>18</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
 		</Presentation>
 	</Group>
 	<Control Type="Button">
