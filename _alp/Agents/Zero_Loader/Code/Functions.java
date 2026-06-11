@@ -4819,7 +4819,7 @@ if (settings.isPublicModel()) {
 // If private model: several conditions allow access
 return 	user.GCAccessType == OL_UserGCAccessType.FULL ||
         dataSharingAgreed ||
-        user.accessibleCompanyIDs.contains(companyUUID.toString());
+        (user.GCAccessType == OL_UserGCAccessType.SPECIFIED && user.accessibleCompanyIDs.contains(companyUUID.toString()));
 /*ALCODEEND*/}
 
 boolean f_isLocatedInActiveNBH(double lat,double lon)
