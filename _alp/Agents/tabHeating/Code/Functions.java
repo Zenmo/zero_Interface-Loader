@@ -229,11 +229,10 @@ for (GCHouse house: housesGCList ) {
 	house.f_removeAllHeatingAssets();
 	
 	// Add a heat node
-	house.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getGridNodesTopLevel(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
+	house.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getRootGridNodes(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
 	// Create a heat node if it does not exist yet
 	if(house.p_parentNodeHeat == null){
 		GridNode GN_heat = zero_Interface.energyModel.add_pop_gridNodes();
-		zero_Interface.energyModel.f_getGridNodesTopLevel().add(GN_heat);
 		GN_heat.p_gridNodeID = "Heatgrid";
 		
 		// Check wether transformer capacity is known or estimated
@@ -352,11 +351,10 @@ for (GCHouse house: housesGCList ) {
 	house.f_removeAllHeatingAssets();
 
 	// Add a heat node
-	house.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getGridNodesTopLevel(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
+	house.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getRootGridNodes(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
 	// Create a heat node if it does not exist yet
 	if(house.p_parentNodeHeat == null){
 		GridNode GN_heat = zero_Interface.energyModel.add_pop_gridNodes();
-		zero_Interface.energyModel.f_getGridNodesTopLevel().add(GN_heat);
 		GN_heat.p_gridNodeID = "Heatgrid";
 		
 		// Check wether transformer capacity is known or estimated
@@ -1100,7 +1098,6 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 GridNode f_createNewHeatGrid()
 {/*ALCODESTART::1760370085949*/
 GridNode GN_heat = zero_Interface.energyModel.add_pop_gridNodes();
-zero_Interface.energyModel.f_getGridNodesTopLevel().add(GN_heat);
 GN_heat.p_gridNodeID = "Heatgrid";
 
 // Check whether transformer capacity is known or estimated
