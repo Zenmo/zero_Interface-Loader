@@ -391,7 +391,7 @@ switch (selectedHeatingType){
 }
 
 // Add a management for the chosen heating type
-GC.f_addHeatManagement(selectedHeatingType, false);		
+GC.f_addHeatManagement(selectedHeatingType, false, GC.f_getHeatingPreferences());
 /*ALCODEEND*/}
 
 double f_setGCCapacity(GridConnection GC,double setGridConnectionCapacity_kW,String type)

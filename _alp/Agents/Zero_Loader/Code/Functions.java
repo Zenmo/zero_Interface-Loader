@@ -1290,7 +1290,7 @@ if (heatingType == null) {
 return heatingType;
 /*ALCODEEND*/}
 
-J_EAEV f_addElectricVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_type,boolean isDefaultVehicle,double annualTravelDistance_km,double maxChargingPower_kW)
+J_EAEV f_addElectricVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_type,boolean isDefaultVehicle,double annualTravelDistance_km,double maxChargingPower_kW,OL_ChargingAttitude chargingAttitude)
 {/*ALCODESTART::1726584205827*/
 double storageCapacity_kWh 		= 0;
 double energyConsumption_kWhpkm = 0;
@@ -1346,6 +1346,20 @@ else if (vehicle_type == OL_EnergyAssetType.ELECTRIC_VAN){
 		electricVehicle.getTripTracker().setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
 }
 
+if (parentGC.f_getChargingManagement() == null) {
+	parentGC.f_addChargingManagement(chargingAttitude);
+}
+else {
+	if (parentGC.f_getCurrentChargingType() != chargingAttitude) {
+		throw new RuntimeException( String.format("Tried to add EV with charging attitude %s to GC %s with charging type %s",
+			chargingAttitude,
+			parentGC.p_gridConnectionID,
+			parentGC.f_getCurrentChargingType()
+			)
+		);
+	}
+}
+
 return electricVehicle;
 /*ALCODEEND*/}
 
@@ -1398,6 +1412,11 @@ switch (storageType){
 		double initialStateOfCharge_fr = 0.5;
 		storage = new J_EAStorageElectric(parentGC, storagePower_kw, storageCapacity_kWh, initialStateOfCharge_fr, energyModel.p_timeParameters);
 		//traceln("Battery with StorageCapacity_kWh: %s", storageCapacity_kWh);
+		if (parentGC.f_getBatteryManagement() == null) {
+			I_BatteryManagement batteryManagement = new J_BatteryManagementSelfConsumption( parentGC, energyModel.p_timeParameters );
+			parentGC.f_setBatteryManagement(batteryManagement);
+		}
+		
 	break;
 	
 	case STORAGE_HEAT:
@@ -1411,7 +1430,8 @@ switch (storageType){
 		//in short ->
 		double heatCapacity_JpK = storageCapacity_kWh*3.6e6 / (maxTemperature_degC - minTemperature_degC); 
 		new J_EAStorageHeat(parentGC, storageType, storagePower_kw, lossFactor_WpK, energyModel.p_timeParameters, initialTemperature_degC, minTemperature_degC, maxTemperature_degC, setTemperature_degC, heatCapacity_JpK, OL_AmbientTempType.AMBIENT_AIR );
-			
+		
+		// TODO: Add management?	
 	break;
 	
 	case STORAGE_GAS:
@@ -1474,8 +1494,8 @@ if (companyGC.p_floorSurfaceArea_m2 > 0){
 		//Add heat demand profile
 		OL_GridConnectionHeatingType heatingType = avgc_data.p_avgCompanyHeatingMethod;
 		double maxHeatOutputPower_kW = f_createHeatProfileFromAnnualGasTotal(companyGC, heatingType, yearlyGasDemand_m3, ratioGasUsedForHeating);
-		f_addHeatAsset(companyGC, heatingType, maxHeatOutputPower_kW);
-		companyGC.f_addHeatManagement(heatingType, false);
+		f_addHeatAsset(companyGC, heatingType, maxHeatOutputPower_kW, null);
+		//companyGC.f_addHeatManagement(heatingType, false);
 		
 		//Set current scenario heating type
 		current_scenario_list.setCurrentHeatingType(heatingType);
@@ -1709,7 +1729,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 	boolean V1GCapable = true; //randomTrue(avgc_data.p_v1gProbability);
 	boolean V2GCapable = true; //randomTrue(avgc_data.p_v2gProbability);
 	chargingStation.f_setChargePoint(new J_ChargePoint(V1GCapable, V2GCapable, maxPowerPerSocket_kW));
-	chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation, energyModel.p_timeParameters));
+	//chargingStation.f_setChargingManagement(new J_ChargingManagementSimple(chargingStation, energyModel.p_timeParameters));
 		
 	//Create chargingsession/vehicles
 	if(dataChargingStation.vehicle_type() == OL_EnergyAssetType.CHARGER){
@@ -1727,7 +1747,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 	}
 	else{
 		for(int k = 0; k < numberOfSockets*avgc_data.p_defaultNrOfVehiclesPerChargerSocket; k++ ){
-			f_addElectricVehicle(chargingStation, dataChargingStation.vehicle_type(), true, 0, maxPowerPerSocket_kW);
+			f_addElectricVehicle(chargingStation, dataChargingStation.vehicle_type(), true, 0, maxPowerPerSocket_kW, OL_ChargingAttitude.SIMPLE);
 		}
 	}
 	
@@ -2383,7 +2403,7 @@ if (gridConnection.getStorage().getHasBattery() != null && gridConnection.getSto
 	
 	if (battery_power_kW > 0 && battery_capacity_kWh > 0) {
 		f_addStorage(companyGC, battery_power_kW, battery_capacity_kWh, OL_EnergyAssetType.STORAGE_ELECTRIC);
-		companyGC.f_setBatteryManagement(new J_BatteryManagementSelfConsumption(companyGC, energyModel.p_timeParameters));
+		//companyGC.f_setBatteryManagement(new J_BatteryManagementSelfConsumption(companyGC, energyModel.p_timeParameters));
 	}	
 }
 
@@ -2443,7 +2463,7 @@ if (nbDailyCarCommuters_notNull + nbDailyCarVisitors_notNull > 0){
 	
 	if (createElectricEA){ // Check if electric demand EA should be created
 		for (int j = 0; j< nbEVCarsComute; j++){
-			f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VEHICLE, isDefaultVehicle, 0, maxChargingPower_kW);
+			f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VEHICLE, isDefaultVehicle, 0, maxChargingPower_kW, OL_ChargingAttitude.SIMPLE);
 		}
 	}
 	
@@ -2507,7 +2527,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		//create EV
 		if (createElectricEA){ // Check if electric demand EA should be created
 			for (int j = 0; j< nbEVCars; j++){
-				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VEHICLE, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW);
+				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VEHICLE, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW, OL_ChargingAttitude.SIMPLE);
 			}
 		}
 		
@@ -2568,7 +2588,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		//create electric vehicles
 		if (createElectricEA){ // Check if electric demand EA should be created
 			for (int j = 0; j< nbEVVans; j++){
-				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VAN, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW);
+				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VAN, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW, OL_ChargingAttitude.SIMPLE);
 			}
 		}
 		
@@ -2629,7 +2649,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		//create electric vehicles
 		if (createElectricEA){ // Check if electric demand EA should be created
 			for (int j = 0; j< nbEVTrucks; j++){
-				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_TRUCK, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW);
+				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_TRUCK, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW, OL_ChargingAttitude.SIMPLE);
 			}
 		}
 		
@@ -2650,9 +2670,9 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 }
 
 //Set Default charging management if EV is present
-if(companyGC.c_electricVehicles.size() + companyGC.c_chargingSessions.size() > 0){
-	companyGC.f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
-}
+//if(companyGC.c_electricVehicles.size() + companyGC.c_chargingSessions.size() > 0){
+	//companyGC.f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
+//}
 
 //Add tractors
 f_createPetroleumFuelTractors(companyGC, gridConnection.getTransport().getAgriculture());
@@ -2798,7 +2818,7 @@ for(GridConnection connectedGC : existingBuilding.c_containedGridConnections){
 existingBuilding.p_floorSurfaceArea_m2 += connectingBuildingData.address_floor_surface_m2();
 /*ALCODEEND*/}
 
-double f_addHeatAsset(GridConnection parentGC,OL_GridConnectionHeatingType heatAssetType,double maxHeatOutputPower_kW)
+double f_addHeatAsset(GridConnection parentGC,OL_GridConnectionHeatingType heatAssetType,double maxHeatOutputPower_kW,J_HeatingPreferences heatingPreferences)
 {/*ALCODESTART::1745336570663*/
 //Initialize parameters
 double heatOutputCapacityGasBurner_kW;
@@ -2887,6 +2907,10 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 	default:
 		traceln("HEATING TYPE NOT FOUND FOR GC: " + parentGC);
 }											
+
+
+//Add heating management and set the heating preferences
+parentGC.f_addHeatManagement(heatAssetType, false, heatingPreferences);
 /*ALCODEEND*/}
 
 GridNode f_createHeatGridNode()
@@ -3882,7 +3906,7 @@ else{
 	
 	// Create EA conversions
 	if (peakHeatConsumption_kW != null) {
-		f_addHeatAsset(engineGC, heatingType, peakHeatConsumption_kW);
+		f_addHeatAsset(engineGC, heatingType, peakHeatConsumption_kW, null);
 	}
 	
 	if (surveyGC.getStorage() != null && surveyGC.getStorage().getHasThermalStorage() != null) {
@@ -3894,10 +3918,10 @@ else{
 	}
 	
 	// Heating management (needs: heatingType & assets such as building thermal model or profiles, survey companies never have a thermal building mdoel)
-	boolean isGhost = heatingType != OL_GridConnectionHeatingType.NONE && peakHeatConsumption_kW == null;
+	//boolean isGhost = heatingType != OL_GridConnectionHeatingType.NONE && peakHeatConsumption_kW == null;
 	
 	//Add heating management
-	engineGC.f_addHeatManagement(heatingType, isGhost);
+	//engineGC.f_addHeatManagement(heatingType, isGhost);
 }
 
 return heatingType;
@@ -4455,12 +4479,12 @@ for(int i = 0; i < amountOfOwnedCars ; i++){
 	//Oprit? -> only then you should have a chance to start with EV (public ev is not supported by sliders, public chargepoint is then used instead)
 	if( house.p_eigenOprit){
 		if (randomTrue( avgc_data.p_shareOfElectricVehicleOwnership)){
-			J_EAEV ev = f_addElectricVehicle(house, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, 0, 0);
+			J_EAEV ev = f_addElectricVehicle(house, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, 0, 0, OL_ChargingAttitude.SIMPLE);
 			ev.getTripTracker().setAnnualDistance_km(ev.getTripTracker().getAnnualDistance_km()*tripTrackerScaling);
 			//Set Default charging management
-			if(house.f_getCurrentChargingType() == OL_ChargingAttitude.NONE){
-				house.f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
-			}
+			//if(house.f_getCurrentChargingType() == OL_ChargingAttitude.NONE){
+				//house.f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
+			//}
 		}
 		else{
 			J_EAFuelVehicle petroleumFuelVehicle = f_addPetroleumFuelVehicle(house, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, true, 0);
@@ -5067,7 +5091,7 @@ else{
 	}
 }
 
-//Get the house heating preferences
+// Set the house heating preferences
 J_HeatingPreferences heatingPreferences = f_getHouseHeatingPreferences();
 
 f_addBuildingHeatModel(house, house.p_floorSurfaceArea_m2, spaceHeatingDemand_kwhpa, heatingPreferences);
@@ -5099,14 +5123,12 @@ if(heatingType == null || heatingType == OL_GridConnectionHeatingType.UNKNOWN){
 }
 
 //Add heating asset
-f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW);
+f_addHeatAsset(house, heatingType, maxHeatOutputPower_kW, heatingPreferences);
 
-//Add heating management and set the heating preferences
-house.f_addHeatManagement(heatingType, false);
-house.f_setHeatingPreferences(heatingPreferences);
 
 //For calibrating AVG data PBL loss factor 
 totalSpaceHeatDemand_kwhpa += spaceHeatingDemand_kwhpa;
+
 /*ALCODEEND*/}
 
 int f_estimateHouseNmbrResidents()

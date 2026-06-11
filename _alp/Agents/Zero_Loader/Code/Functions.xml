@@ -459,6 +459,10 @@
 			<Name><![CDATA[maxChargingPower_kW]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[chargingAttitude]]></Name>
+			<Type><![CDATA[OL_ChargingAttitude]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
@@ -1053,6 +1057,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<ReturnType>double</ReturnType>
 		<Id>1745336570663</Id>
 		<Name><![CDATA[f_addHeatAsset]]></Name>
+		<Description><![CDATA[This function adds heating to a gridconnection. It takes a heatingType and a maximal required output power as arguments. Depending on the heating type one or multiple assets are created. A heat management is also added to the GC. The choice is made in f_addHeatManagement and its defaults are found in the energy model in c_defaultHeatingStrategies.]]></Description>
 		<X>1320</X>
 		<Y>460</Y>
 		<Label>
@@ -1073,6 +1078,10 @@ verbruik = levering + productie - teruglevering]]></Description>
 		<Parameter>
 			<Name><![CDATA[maxHeatOutputPower_kW]]></Name>
 			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[heatingPreferences]]></Name>
+			<Type><![CDATA[J_HeatingPreferences]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
