@@ -1481,7 +1481,7 @@ verbruik = levering + productie - teruglevering]]></Description>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="protected" StaticFunction="false">
+	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>J_HeatingPreferences</ReturnType>
 		<Id>1749728889988</Id>
