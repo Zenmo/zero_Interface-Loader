@@ -354,10 +354,9 @@ switch (selectedHeatingType){
 		new J_EAConversionHeatDeliverySet(GC, capacityThermal_kW, efficiency, timeParameters, outputTemperature_degC);
 		
 		//Add GC to heat grid if it exists, else create new one
-		GC.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getGridNodesTopLevel(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
+		GC.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getRootGridNodes(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
 		if(GC.p_parentNodeHeat == null){
 			GridNode GN_heat = zero_Interface.energyModel.add_pop_gridNodes();
-			zero_Interface.energyModel.f_getGridNodesTopLevel().add(GN_heat);
 			GN_heat.p_gridNodeID = "Heatgrid";
 			
 			// Check wether transformer capacity is known or estimated
