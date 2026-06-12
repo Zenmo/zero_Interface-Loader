@@ -229,11 +229,10 @@ for (GCHouse house: housesGCList ) {
 	house.f_removeAllHeatingAssets();
 	
 	// Add a heat node
-	house.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getGridNodesTopLevel(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
+	house.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getRootGridNodes(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
 	// Create a heat node if it does not exist yet
 	if(house.p_parentNodeHeat == null){
 		GridNode GN_heat = zero_Interface.energyModel.add_pop_gridNodes();
-		zero_Interface.energyModel.f_getGridNodesTopLevel().add(GN_heat);
 		GN_heat.p_gridNodeID = "Heatgrid";
 		
 		// Check wether transformer capacity is known or estimated
@@ -266,7 +265,7 @@ for (GCHouse house: housesGCList ) {
 	
 	new J_EAConversionHeatDeliverySet(house, peakHeatDemand_kW, efficiency, zero_Interface.energyModel.p_timeParameters, outputTemperature_degC);
 	
-	house.f_addHeatManagement(OL_GridConnectionHeatingType.DISTRICTHEAT, false);
+	house.f_addHeatManagement(OL_GridConnectionHeatingType.DISTRICTHEAT, false, house.f_getHeatingPreferences());
 }
 
 //Update variable to change to custom scenario
@@ -287,7 +286,7 @@ for (GCHouse house: housesGCList ) {
 	//add gasburner
 	double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
 	new J_EAConversionGasBurner(house, peakHeatDemand_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner_fr, zero_Interface.energyModel.p_timeParameters, 90);
-	house.f_addHeatManagement(OL_GridConnectionHeatingType.GAS_BURNER, false);
+	house.f_addHeatManagement(OL_GridConnectionHeatingType.GAS_BURNER, false, house.f_getHeatingPreferences());
 	
 	/*
 	J_EAConsumption heatDemandAsset = findFirst(house.c_consumptionAssets, j_ea -> j_ea.getEAType() == OL_EnergyAssetType.HEAT_DEMAND);
@@ -352,11 +351,10 @@ for (GCHouse house: housesGCList ) {
 	house.f_removeAllHeatingAssets();
 
 	// Add a heat node
-	house.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getGridNodesTopLevel(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
+	house.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getRootGridNodes(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
 	// Create a heat node if it does not exist yet
 	if(house.p_parentNodeHeat == null){
 		GridNode GN_heat = zero_Interface.energyModel.add_pop_gridNodes();
-		zero_Interface.energyModel.f_getGridNodesTopLevel().add(GN_heat);
 		GN_heat.p_gridNodeID = "Heatgrid";
 		
 		// Check wether transformer capacity is known or estimated
@@ -400,7 +398,7 @@ for (GCHouse house: housesGCList ) {
 		OL_AmbientTempType.HEAT_GRID
 	);
 	heatpump.updateParameters(inputTemperature_degC, outputTemperature_degC);
-	house.f_addHeatManagement(OL_GridConnectionHeatingType.LT_DISTRICTHEAT, false);		
+	house.f_addHeatManagement(OL_GridConnectionHeatingType.LT_DISTRICTHEAT, false, house.f_getHeatingPreferences());
 }
 
 //Update variable to change to custom scenario
@@ -422,7 +420,7 @@ for (GCHouse house: housesGCList ) {
 	house.f_removeAllHeatingAssets();
 	double peakHeatDemand_kW = f_calculatePeakHeatDemand_kW(house);
 	new J_EAConversionGasBurner(house, peakHeatDemand_kW, zero_Interface.energyModel.avgc_data.p_avgEfficiencyGasBurner_fr, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.avgc_data.p_avgOutputTemperatureGasBurner_degC);	
-	house.f_addHeatManagement(OL_GridConnectionHeatingType.GAS_BURNER, false);
+	house.f_addHeatManagement(OL_GridConnectionHeatingType.GAS_BURNER, false, house.f_getHeatingPreferences());
 }
 
 //Update variable to change to custom scenario
@@ -963,7 +961,7 @@ if (currentNumberOfChangedHeatingType < nbChangedHeatingTypeGoal) {
 		//Change the current heating type to the new one
 		changingGC.f_removeAllHeatingAssets();
 		f_addHeatAsset(changingGC, changedSliderHeatingType, f_calculatePeakHeatDemand_kW(changingGC));
-		changingGC.f_addHeatManagement(changedSliderHeatingType, false);
+		changingGC.f_addHeatManagement(changedSliderHeatingType, false, changingGC.f_getHeatingPreferences());
 		currentNumberOfChangedHeatingType ++;
 	}
 }
@@ -996,7 +994,7 @@ else {
 		}
 		changingGC.f_removeAllHeatingAssets();
 		f_addHeatAsset(changingGC, newHeatingType, f_calculatePeakHeatDemand_kW(changingGC));
-		changingGC.f_addHeatManagement(newHeatingType, false);
+		changingGC.f_addHeatManagement(newHeatingType, false, changingGC.f_getHeatingPreferences());
 		currentNumberOfChangedHeatingType--;
 	}
 }
@@ -1100,7 +1098,6 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 GridNode f_createNewHeatGrid()
 {/*ALCODESTART::1760370085949*/
 GridNode GN_heat = zero_Interface.energyModel.add_pop_gridNodes();
-zero_Interface.energyModel.f_getGridNodesTopLevel().add(GN_heat);
 GN_heat.p_gridNodeID = "Heatgrid";
 
 // Check whether transformer capacity is known or estimated
