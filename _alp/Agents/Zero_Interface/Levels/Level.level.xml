@@ -2110,7 +2110,7 @@ gr_cablesLegend.setVisible(showCables);</ActionCode>
 			<TextColor>-16777216</TextColor>
 			<VisibleCode>cb_showFilterInterface.isEnabled()</VisibleCode>
 			<Enabled>true</Enabled>
-			<EnableExpression>!settings.isPublicModel() &amp;&amp; c_cbFilterOptions.size() &gt; 0</EnableExpression>
+			<EnableExpression>!settings.isPublicModel() &amp;&amp; user.GCAccessType == OL_UserGCAccessType.FULL &amp;&amp; c_cbFilterOptions.size() &gt; 0</EnableExpression>
 			<ActionCode>gr_filterInterface.setVisible(cb_showFilterInterface.isSelected());
 
 if(!cb_showFilterInterface.isSelected()){

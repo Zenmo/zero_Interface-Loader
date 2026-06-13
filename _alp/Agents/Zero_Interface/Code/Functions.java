@@ -437,6 +437,11 @@ if(selectedChartTypes_Energy == null){ // Temporary backup till all models have 
 }
 List<OL_ChartTypes> selectedChartTypes_Economic = settings.resultsUISelectedChartTypes_Economic();
 
+//Disable export functionality in profiles if not full access.
+if(settings.isPublicModel() || user.GCAccessType != OL_UserGCAccessType.FULL){
+	uI_Results.f_enablePublicVersion(true);
+}
+
 //Disable summary button if summary is not selected
 if(settings.showKPISummary() == null || !settings.showKPISummary()){
 	uI_Results.getCheckbox_KPISummary().setVisible(false);
@@ -788,9 +793,9 @@ if(MVsubstations != null){
 	}
 }
 else if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
-	int totalNotToplevelGridNodes = energyModel.f_getGridNodesNotTopLevel().size();
+	int totalNotToplevelGridNodes = energyModel.f_getNonRootGridNodes().size();
 	//Set all unique grid topology colors for each substation and its children if the gridloops are defined
-	for (GridNode node : energyModel.f_getGridNodesNotTopLevel()){
+	for (GridNode node : energyModel.f_getNonRootGridNodes()){
 		
 		//Create a unique color from a spectrum and assign it to the subMV
 		node.p_uniqueColor = spectrumColor(v_amountOfDefinedGridLoops, totalNotToplevelGridNodes);
@@ -1121,8 +1126,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 			if (b.c_containedGridConnections.size() > 0 ) { // only allow buildings with gridconnections
 				GridConnection clickedGridConnection = b.c_containedGridConnections.get(0); // Find buildings powered by the same GC as the clicked building
 				GridNode clickedGridConnectionConnectedGridNode = clickedGridConnection.p_parentNodeElectric;
-				ArrayList<GridNode> allGridNodes = new ArrayList<GridNode>(energyModel.f_getGridNodesTopLevel());
-				allGridNodes.addAll(energyModel.f_getGridNodesNotTopLevel());
+				var allGridNodes = energyModel.pop_gridNodes;
 				
 				while(	clickedGridConnectionConnectedGridNode.p_parentNodeID != null && 
 					  	clickedGridConnectionConnectedGridNode.p_nodeType != OL_GridNodeType.SUBMV &&
