@@ -3042,15 +3042,8 @@ if(sliderSolarfarm_data == null){
 if(sliderWindfarm_data == null){
 	f_addSliderWindfarm(zero_Interface.p_defaultMainSliderGCName_windfarm, topGridNodeID);
 }
-if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
-	for(GridNode_data nodeData : c_gridNode_data){
-		f_addSliderBattery(zero_Interface.p_defaultMainSliderGCName_battery + " " + nodeData.gridnode_id(), nodeData.gridnode_id());
-	}
-}
-else{
-	if(sliderBattery_data == null){
-		f_addSliderBattery(zero_Interface.p_defaultMainSliderGCName_battery, topGridNodeID);
-	}
+if(sliderBattery_data == null){
+	f_addSliderBattery(zero_Interface.p_defaultMainSliderGCName_battery, topGridNodeID);
 }
 /*ALCODEEND*/}
 
