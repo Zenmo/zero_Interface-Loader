@@ -8668,6 +8668,7 @@ else{
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
 						<OnClickCode>v_customGCLatitude = 0;
 v_customGCLongitude = 0;
+//c_tempSavedCoordinates.clear();
 b_addCustomSolarfarmGC = false;
 b_addCustomWindfarmGC = false;
 b_addCustomGridBatteryGC = false;
@@ -8678,7 +8679,7 @@ b_removeCustomGC = false;</OnClickCode>
 						<Presentation>
 							<RoundedRectangle>
 								<Id>1777996495570</Id>
-								<Name><![CDATA[button_cancelEnergyHubConfiguration1]]></Name>
+								<Name><![CDATA[button_cancelAddingCustomEAToMap]]></Name>
 								<X>-90</X>
 								<Y>-30</Y>
 								<Label>
@@ -8705,7 +8706,7 @@ b_removeCustomGC = false;</OnClickCode>
 							</RoundedRectangle>
 							<Text>
 								<Id>1777996495572</Id>
-								<Name><![CDATA[txt_cancelEnergyHubConfiguration1]]></Name>
+								<Name><![CDATA[txt_cancelAddingCustomEAToMap]]></Name>
 								<X>48</X>
 								<Y>-10</Y>
 								<Label>
@@ -8721,6 +8722,80 @@ b_removeCustomGC = false;</OnClickCode>
 								<Rotation>0.0</Rotation>
 								<Color>-16777216</Color>
 								<Text><![CDATA[Annuleer]]></Text>
+								<Font>
+									<Name><![CDATA[SansSerif]]></Name>
+									<Size>28</Size>
+									<Style>1</Style>
+								</Font>
+								<Alignment>CENTER</Alignment>
+							</Text>
+						</Presentation>
+					</Group>
+					<Group>
+						<Id>1781530425858</Id>
+						<Name><![CDATA[gr_completeAddingCustomEAToMap]]></Name>
+						<ExcludeFromBuild>true</ExcludeFromBuild>
+						<X>-770</X>
+						<Y>550</Y>
+						<Label>
+							<X>10</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<VisibleCode>c_tempSavedCoordinates.size()&gt;=1</VisibleCode>
+						<OnClickCode>f_finalizeCustomGCCreationDeletion();</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Presentation>
+							<RoundedRectangle>
+								<Id>1781530425860</Id>
+								<Name><![CDATA[button_completeAddingCustomEAToMap]]></Name>
+								<X>-140</X>
+								<Y>-40</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>3</LineWidth>
+								<LineColor>-16777216</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>275</Width>
+								<Height>75</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-1</FillColor>
+								<FillMaterial>null</FillMaterial>
+								<ArcRadius>10</ArcRadius>
+							</RoundedRectangle>
+							<Text>
+								<Id>1781530425862</Id>
+								<Name><![CDATA[txt_completeAddingCustomEAToMap]]></Name>
+								<X>0</X>
+								<Y>-20</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[Voltooien]]></Text>
 								<Font>
 									<Name><![CDATA[SansSerif]]></Name>
 									<Size>28</Size>
@@ -9586,7 +9661,7 @@ f_resetSettings();</ActionCode>
 			</Text>
 			<Text>
 				<Id>1778278832482</Id>
-				<Name><![CDATA[txt_customGCSettingsGridBatteryInstalledCapacity_MWh]]></Name>
+				<Name><![CDATA[txt_customGCSettingsGridBatteryInstalledCapacity_kWh]]></Name>
 				<X>20</X>
 				<Y>90</Y>
 				<Label>
@@ -9611,7 +9686,7 @@ f_resetSettings();</ActionCode>
 			</Text>
 			<Text>
 				<Id>1778278832484</Id>
-				<Name><![CDATA[txt_customGCGridBatteryInstalledCapacity_MWh]]></Name>
+				<Name><![CDATA[txt_customGCGridBatteryInstalledCapacity_kWh]]></Name>
 				<X>245</X>
 				<Y>90</Y>
 				<Label>
@@ -9626,8 +9701,8 @@ f_resetSettings();</ActionCode>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[0 MWh]]></Text>
-				<TextCode>sl_customGCGridBatteryInstalledCapacity_MWh.getValue() + " MWh"</TextCode>
+				<Text><![CDATA[0 kWh]]></Text>
+				<TextCode>sl_customGCGridBatteryInstalledCapacity_kWh.getValue() + " kWh"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -9638,7 +9713,7 @@ f_resetSettings();</ActionCode>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1778278832486</Id>
-				<Name><![CDATA[sl_customGCGridBatteryInstalledCapacity_MWh]]></Name>
+				<Name><![CDATA[sl_customGCGridBatteryInstalledCapacity_kWh]]></Name>
 				<X>260</X>
 				<Y>85</Y>
 				<Label>
@@ -9652,22 +9727,22 @@ f_resetSettings();</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>double installedCapacity_MWh = sl_customGCGridBatteryInstalledCapacity_MWh.getValue();
-double installedCapacity_MW = sl_customGCGridBatteryInstalledCapacity_MW.getValue();
+					<ActionCode>double installedCapacity_kWh = sl_customGCGridBatteryInstalledCapacity_kWh.getValue();
+double installedCapacity_kW = sl_customGCGridBatteryInstalledCapacity_kW.getValue();
 
-if(installedCapacity_MW &gt; 0.5*installedCapacity_MWh){
-	installedCapacity_MW = 0.5*installedCapacity_MWh;
-	sl_customGCGridBatteryInstalledCapacity_MW.setValue(0.5*installedCapacity_MWh, false);
+if(installedCapacity_kW &gt; 0.5*installedCapacity_kWh){
+	installedCapacity_kW = 0.5*installedCapacity_kWh;
+	sl_customGCGridBatteryInstalledCapacity_kW.setValue(0.5*installedCapacity_kWh, false);
 }
-sl_customGCGridBatteryInstalledCapacity_MW.setRange(0.05, 0.5*installedCapacity_MWh);
+sl_customGCGridBatteryInstalledCapacity_kW.setRange(25, 0.5*installedCapacity_kWh);
 
 GCGridBattery gc = (GCGridBattery)c_selectedGridConnections.get(0);
 J_EAStorageElectric batteryAsset = (J_EAStorageElectric)gc.c_storageAssets.get(0);
 
 // Update backend
-batteryAsset.setStorageCapacity_kWh(installedCapacity_MWh*1000, gc);
-batteryAsset.setCapacityElectric_kW(installedCapacity_MW*1000);
-gc.v_liveConnectionMetaData.setCapacities_kW(installedCapacity_MW*1000, installedCapacity_MW*1000, installedCapacity_MW*1000);
+batteryAsset.setStorageCapacity_kWh(installedCapacity_kWh, gc);
+batteryAsset.setCapacityElectric_kW(installedCapacity_kW);
+gc.v_liveConnectionMetaData.setCapacities_kW(installedCapacity_kW, installedCapacity_kW, installedCapacity_kW);
 
 // Update polygon size
 f_updateGISObjectSize(gc);
@@ -9683,7 +9758,7 @@ f_resetSettings();</ActionCode>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<Step>0.1</Step>
+					<Step>50</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -9715,7 +9790,7 @@ f_resetSettings();</ActionCode>
 			</Text>
 			<Text>
 				<Id>1778278832492</Id>
-				<Name><![CDATA[txt_customGCGridBatteryInstalledCapacity_MW]]></Name>
+				<Name><![CDATA[txt_customGCGridBatteryInstalledCapacity_kW]]></Name>
 				<X>245</X>
 				<Y>120</Y>
 				<Label>
@@ -9730,8 +9805,8 @@ f_resetSettings();</ActionCode>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[0 MW]]></Text>
-				<TextCode>sl_customGCGridBatteryInstalledCapacity_MW.getValue() + " MW"</TextCode>
+				<Text><![CDATA[0 kW]]></Text>
+				<TextCode>sl_customGCGridBatteryInstalledCapacity_kW.getValue() + " kW"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -9742,7 +9817,7 @@ f_resetSettings();</ActionCode>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1778278832494</Id>
-				<Name><![CDATA[sl_customGCGridBatteryInstalledCapacity_MW]]></Name>
+				<Name><![CDATA[sl_customGCGridBatteryInstalledCapacity_kW]]></Name>
 				<X>260</X>
 				<Y>115</Y>
 				<Label>
@@ -9756,13 +9831,13 @@ f_resetSettings();</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>double installedCapacity_MW = sl_customGCGridBatteryInstalledCapacity_MW.getValue();
+					<ActionCode>double installedCapacity_kW = sl_customGCGridBatteryInstalledCapacity_kW.getValue();
 
 GCGridBattery gc = (GCGridBattery)c_selectedGridConnections.get(0);
 J_EAStorageElectric batteryAsset = (J_EAStorageElectric)gc.c_storageAssets.get(0);
 
-batteryAsset.setCapacityElectric_kW(installedCapacity_MW*1000);
-gc.v_liveConnectionMetaData.setCapacities_kW(installedCapacity_MW*1000, installedCapacity_MW*1000, installedCapacity_MW*1000);
+batteryAsset.setCapacityElectric_kW(installedCapacity_kW);
+gc.v_liveConnectionMetaData.setCapacities_kW(installedCapacity_kW, installedCapacity_kW, installedCapacity_kW);
 
 if (!b_runningMainInterfaceScenarios) f_setScenarioToCustom();
 f_resetSettings();</ActionCode>
@@ -9770,7 +9845,7 @@ f_resetSettings();</ActionCode>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<Step>0.05</Step>
+					<Step>25</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -9801,7 +9876,7 @@ f_resetSettings();</ActionCode>
 			</Text>
 			<Text>
 				<Id>1778278946812</Id>
-				<Name><![CDATA[txt_customGCSettingsGridBatteryInstalledCapacity_MW]]></Name>
+				<Name><![CDATA[txt_customGCSettingsGridBatteryInstalledCapacity_kW]]></Name>
 				<X>20</X>
 				<Y>120</Y>
 				<Label>

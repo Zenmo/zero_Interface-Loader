@@ -1662,14 +1662,7 @@ for(GCGridBattery customGB : zero_Interface.c_customGridBatteryGCs){
 	}
 }
 
-double averageNeighbourhoodBatterySize_kWh = 0;
-if (!gcListGridBatteries.isEmpty()) {
-    averageNeighbourhoodBatterySize_kWh = (sl_gridBatteries_kWh.getValue() - totalCustomBatteryCapacity_kWh - p_initialTotalGridBatteryCapacity_MWh * 1000.0) / gcListGridBatteries.size();
-} else {
-	throw new IllegalStateException("Model does not contain any GCGridBattery agent");
-}
-
-f_setGridBatteries(averageNeighbourhoodBatterySize_kWh, gcListGridBatteries);</ActionCode>
+f_setGridBatteries(sl_gridBatteries_kWh.getValue() - totalCustomBatteryCapacity_kWh - p_initialTotalGridBatteryCapacity_MWh*1000.0, gcListGridBatteries);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
@@ -2150,6 +2143,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 zero_Interface.v_customGCLatitude = 0;
 zero_Interface.v_customGCLongitude = 0;
 zero_Interface.txt_addCustomGCToMapTaskInstruction.setText("Kies een locatie op de kaart");
+
 traceln("Adding solarfarm: Please click on the map to set the location.");</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
@@ -2271,7 +2265,6 @@ traceln("Adding windfarm: Please click on the map to set the location.");</Actio
 					<ActionCode>if(!zero_Interface.c_customSolarfarmGCs.isEmpty() || !zero_Interface.c_customWindfarmGCs.isEmpty() || !zero_Interface.c_customGridBatteryGCs.isEmpty()) {
 	zero_Interface.v_customGCLatitude = 0;
 	zero_Interface.v_customGCLongitude = 0;
-	//traceln("Are you sure you want to remove all custom energy assets?");
 	
 	while (!zero_Interface.c_customSolarfarmGCs.isEmpty()) {
 		zero_Interface.f_removeCustomGC(zero_Interface.c_customSolarfarmGCs.get(0));

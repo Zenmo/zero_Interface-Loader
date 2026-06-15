@@ -2699,6 +2699,7 @@ f_setShapePresentationOnTop(map);
 f_setShapePresentationOnTop(gr_zoomButton);
 f_setShapePresentationOnTop(gr_sliderClickBlocker);
 f_setShapePresentationOnTop(gr_forceMapSelection);
+f_setShapePresentationOnTop(gr_addingCustomGCToMapForceMapSelection);
 f_setShapePresentationOnTop(gr_filterInterface);
 f_setShapePresentationOnTop(gr_infoText);
 
@@ -3998,7 +3999,7 @@ solarpark.p_parentNodeElectricID = gn.p_gridNodeID;
 solarpark.p_isSliderGC = true; // This affects the slider range + setValue
 
 // 2. Set capacity
-double defaultCapacity_kW = energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
+double defaultCapacity_kW = 0.2*energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
 solarpark.v_liveConnectionMetaData.setCapacities_kW(0, defaultCapacity_kW, defaultCapacity_kW);
 solarpark.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
 
@@ -4096,7 +4097,7 @@ windpark.p_parentNodeElectricID = gn.p_gridNodeID;
 windpark.p_isSliderGC = true; // This affects the slider range + setValue
 
 // 2. Set capacity
-double defaultCapacity_kW = 2000;
+double defaultCapacity_kW = 500;
 windpark.v_liveConnectionMetaData.setCapacities_kW(0, defaultCapacity_kW, defaultCapacity_kW);
 windpark.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
 
@@ -4142,7 +4143,7 @@ battery.p_parentNodeElectricID = gn.p_gridNodeID;
 battery.p_isSliderGC = true; // This affects the slider range + setValue
 
 // 2. Set capacity
-double defaultCapacity_kW = 1000;
+double defaultCapacity_kW = 250;
 double defaultStorageCapacity_kWh = 2*defaultCapacity_kW;
 battery.v_liveConnectionMetaData.setCapacities_kW(defaultCapacity_kW, defaultCapacity_kW, defaultCapacity_kW);
 battery.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
@@ -4251,16 +4252,16 @@ if (!(selectedGC instanceof GCGridBattery) || !c_customGridBatteryGCs.contains(s
 GCGridBattery gc = (GCGridBattery) selectedGC;
 J_EAStorageElectric batteryAsset = (J_EAStorageElectric)gc.c_storageAssets.get(0);
 
-double currentCapacity_MWh = batteryAsset.getStorageCapacity_kWh()/1000;
-double currentCapacity_MW = batteryAsset.getCapacityElectric_kW()/1000;
+double currentCapacity_kWh = batteryAsset.getStorageCapacity_kWh();
+double currentCapacity_kW = batteryAsset.getCapacityElectric_kW();
 
 // Setup capacity MW slider
-sl_customGCGridBatteryInstalledCapacity_MWh.setRange(0.1, 5);
-sl_customGCGridBatteryInstalledCapacity_MWh.setValue(currentCapacity_MWh, false);
+sl_customGCGridBatteryInstalledCapacity_kWh.setRange(100, 5000);
+sl_customGCGridBatteryInstalledCapacity_kWh.setValue(currentCapacity_kWh, false);
 
 // Setup contracted capacity slider
-sl_customGCGridBatteryInstalledCapacity_MW.setRange(0.05, 2.5);
-sl_customGCGridBatteryInstalledCapacity_MW.setValue(currentCapacity_MW, false);
+sl_customGCGridBatteryInstalledCapacity_kW.setRange(50, 2500);
+sl_customGCGridBatteryInstalledCapacity_kW.setValue(currentCapacity_kW, false);
 
 // Battery Management selection
 I_BatteryManagement currentBatteryManagement = gc.f_getBatteryManagement();
