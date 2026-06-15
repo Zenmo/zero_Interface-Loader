@@ -311,7 +311,6 @@ for (Solarfarm_data dataSolarfarm : f_getSolarfarmsInSubScope(c_solarfarm_data))
 			owner = energyModel.add_pop_connectionOwners();
 			
 			owner.set_p_actorID( dataSolarfarm.owner_id());
-			owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.SOLARFARM_OP );
 			owner.b_dataSharingAgreed = true;
 			existing_actors.add(owner.p_actorID);
 		}
@@ -429,7 +428,6 @@ for (Battery_data dataBattery : f_getBatteriesInSubScope(c_battery_data)) {
 		if (!existing_actors.contains(gridbattery.p_ownerID)){ // check if owner exists already, if not, create new owner.
 			owner = energyModel.add_pop_connectionOwners();
 			owner.set_p_actorID( gridbattery.p_ownerID );
-			owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.BATTERY_OP );
 			owner.b_dataSharingAgreed = true;
 			existing_actors.add(gridbattery.p_ownerID);
 		}
@@ -517,15 +515,19 @@ for (Electrolyser_data dataElectrolyser : f_getElectrolysersInSubScope(c_electro
 	H2Electrolyser.f_setExternalAssetManagement(electrolyserManagement);
 	
 	//Create EA for the electrolyser GC
-	J_EAConversionElectrolyser h2ElectrolyserEA = new J_EAConversionElectrolyser(H2Electrolyser, dataElectrolyser.capacity_electric_kw(), dataElectrolyser.conversion_efficiency(), energyModel.p_timeParameters, OL_ElectrolyserState.STANDBY, dataElectrolyser.idle_consumption_power_ratio(), dataElectrolyser.min_production_ratio(), dataElectrolyser.load_change_time_h(), dataElectrolyser.start_up_time_shutdown_h(), dataElectrolyser.start_up_time_standby_h(), dataElectrolyser.start_up_time_idle_h());
+	if(dataElectrolyser.detailedElectrolyserModel()){
+		new J_EAConversionElectrolyser(H2Electrolyser, dataElectrolyser.capacity_electric_kw(), dataElectrolyser.conversion_efficiency(), energyModel.p_timeParameters, OL_ElectrolyserState.STANDBY, dataElectrolyser.idle_consumption_power_ratio(), dataElectrolyser.min_production_ratio(), dataElectrolyser.load_change_time_h(), dataElectrolyser.start_up_time_shutdown_h(), dataElectrolyser.start_up_time_standby_h(), dataElectrolyser.start_up_time_idle_h());
+	}
+	else{
+		new J_EAConversionElectrolyser(H2Electrolyser, dataElectrolyser.capacity_electric_kw(), dataElectrolyser.conversion_efficiency(), energyModel.p_timeParameters);
 	
+	}
 	//Set owner
 	ConnectionOwner owner;
 	if (!existing_actors.contains(H2Electrolyser.p_ownerID)){ // check if owner exists already, if not, create new owner.
 		owner = energyModel.add_pop_connectionOwners();
 		
 		owner.set_p_actorID( H2Electrolyser.p_ownerID );
-		owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.ELECTROLYSER_OP );
 		owner.b_dataSharingAgreed = true;
 		existing_actors.add(H2Electrolyser.p_ownerID);
 	}
@@ -606,7 +608,6 @@ for (Windfarm_data dataWindfarm : f_getWindfarmsInSubScope(c_windfarm_data)) {
 			owner = energyModel.add_pop_connectionOwners();
 			
 			owner.set_p_actorID( windfarm.p_ownerID );
-			owner.set_p_connectionOwnerType( OL_ConnectionOwnerType.WINDFARM_OP );
 			owner.b_dataSharingAgreed = true;
 			existing_actors.add(windfarm.p_ownerID);
 		}
@@ -847,7 +848,6 @@ for (Building_data genericCompany : buildingDataGenericCompanies) {
 		ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
 			
 		COC.p_actorID = genericCompany.address_id();
-		COC.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
 		COC.p_detailedCompany = false;
 		COC.b_dataSharingAgreed = true;
 		
@@ -1054,7 +1054,6 @@ for (var survey : surveys) {
 	//Create connection owner
 	ConnectionOwner survey_owner = energyModel.add_pop_connectionOwners();
 	survey_owner.p_actorID = survey.getCompanyName();
-	survey_owner.p_connectionOwnerType = OL_ConnectionOwnerType.COMPANY;
 	survey_owner.p_detailedCompany = true;
 	survey_owner.b_dataSharingAgreed = survey.getDataSharingAgreed();
 	survey_owner.b_dataIsAccessible = f_getAccessOfSurveyGC(survey.getDataSharingAgreed(), survey.getId());
@@ -1063,10 +1062,10 @@ for (var survey : surveys) {
         for (var gridConnection: address.getGridConnections()) {
 
 		 	//Check if it has (or will have) a direct connection with the grid (either gas or electric), if not: skip this gc.
-		 	boolean hasNaturalGasConnection = (gridConnection.getNaturalGas().getHasConnection() != null)? gridConnection.getNaturalGas().getHasConnection() : false;	 	
+		 	boolean hasNaturalGasConnection = gridConnection.getNaturalGas().checkHasConnection();	 	
 		 	boolean hasExpansionRequest = (gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() != null ) ? gridConnection.getElectricity().getGridExpansion().getHasRequestAtGridOperator() : false;
 		 	
-		 	if (!gridConnection.getElectricity().getHasConnection() && !hasExpansionRequest && !hasNaturalGasConnection){
+		 	if (!gridConnection.getElectricity().checkHasConnection() && !hasExpansionRequest && !hasNaturalGasConnection){
 				traceln("surveyGC with sequence: " + gridConnection.getSequence() + " is not created, as it has no connection to the grid, future grid connection or current gas connection.");	
 			 	continue;
 		 	}
@@ -1675,7 +1674,6 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 	//Create and connect ConnectionOwner	
 	ConnectionOwner owner = energyModel.add_pop_connectionOwners();
 	owner.p_actorID = chargingStation.p_ownerID;
-	owner.p_connectionOwnerType = OL_ConnectionOwnerType.CHARGEPOINT_OP;
 	owner.b_dataSharingAgreed = true;
 	chargingStation.p_owner = owner;
 		
@@ -2157,7 +2155,7 @@ Double pvPower_kW = (gridConnection.getSupply().getPvInstalledKwp() != null) ? n
 
 ////Electricity (connection and consumption)
 //Check for electricity connection and data
-if (gridConnection.getElectricity().getHasConnection()){
+if (gridConnection.getElectricity().checkHasConnection()){
 	
 	//Connection capacities
 	//TEMPORARY CONVERSION NEEDED UNTIL NO LONGER INTEGER FROM SURVEY
@@ -2827,7 +2825,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		//Add primary heating asset (heatpump) (if its not part of the basic profile already
 		inputCapacityElectric_kW = max(avgc_data.p_minHeatpumpElectricCapacity_kW, maxHeatOutputPower_kW / 3); //-- /3, kan nog kleiner want is hybride zodat gasbrander ook bij springt, dus kleiner MOETEN aanname voor hoe klein onderzoeken
 		efficiency = avgc_data.p_avgEfficiencyHeatpump_fr;
-		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
+		baseTemperature_degC = energyModel.pp_ambientTemperature_degC.getCurrentValue();
 		outputTemperature_degC = avgc_data.p_avgOutputTemperatureHybridHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
@@ -2835,7 +2833,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		
 		J_EAConversionHeatPump heatPumpHybrid = new J_EAConversionHeatPump(parentGC, inputCapacityElectric_kW, efficiency, energyModel.p_timeParameters, outputTemperature_degC, baseTemperature_degC, sourceAssetHeatPower_kW, belowZeroHeatpumpEtaReductionFactor, ambientTempType);
 
-		zero_Interface.energyModel.c_ambientDependentAssets.add(heatPumpHybrid);
+		energyModel.c_ambientDependentAssets.add(heatPumpHybrid);
 		
 		//Add secondary heating asset (gasburner)
 		heatOutputCapacityGasBurner_kW = max(avgc_data.p_minGasBurnerOutputCapacity_kW, maxHeatOutputPower_kW);
@@ -2849,7 +2847,7 @@ switch (heatAssetType){ // There is always only one heatingType, If there are ma
 		//Add primary heating asset (heatpump)
 		inputCapacityElectric_kW = max(avgc_data.p_minHeatpumpElectricCapacity_kW, maxHeatOutputPower_kW); // Could be a lot smaller due to high cop
 		efficiency = avgc_data.p_avgEfficiencyHeatpump_fr;
-		baseTemperature_degC = zero_Interface.energyModel.pp_ambientTemperature_degC.getCurrentValue();
+		baseTemperature_degC = energyModel.pp_ambientTemperature_degC.getCurrentValue();
 		outputTemperature_degC = avgc_data.p_avgOutputTemperatureElectricHeatpump_degC;
 		ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		sourceAssetHeatPower_kW = 0;
@@ -3483,7 +3481,6 @@ for (Building_data houseBuildingData : buildingDataHouses) {
 		
 	//Set parameters for the Actor: ConnectionOwner
 	COH.p_actorID = GCH.p_ownerID;
-	COH.p_connectionOwnerType = OL_ConnectionOwnerType.HOUSEHOLD;
 	COH.p_detailedCompany = false;
 	GCH.p_owner = COH;
 	
@@ -3655,7 +3652,6 @@ for (ParkingSpace_data dataParkingSpace : f_getParkingSpacesInSubScope(c_parking
 		ConnectionOwner COC = energyModel.add_pop_connectionOwners(); // Create Connection owner company
 			
 		COC.p_actorID = "Parking space connection owner: " + dataParkingSpace.parking_id();
-		COC.p_connectionOwnerType = OL_ConnectionOwnerType.PARKINGSPACE_OP;
 		COC.p_detailedCompany = false;
 		COC.b_dataSharingAgreed = true;
 		
@@ -3910,7 +3906,7 @@ return heatingType;
 Double f_createSurveyHeatProfiles(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC,OL_GridConnectionHeatingType heatingType)
 {/*ALCODESTART::1753801098736*/
 ////Gas and Heating
-if (surveyGC.getNaturalGas().getHasConnection() != null && surveyGC.getNaturalGas().getHasConnection() ) {
+if (surveyGC.getNaturalGas().checkHasConnection()) {
 	switch (heatingType) {
 		case HYBRID_HEATPUMP:
 			// Exception for hybrid heatpumps, when it will be a ghost asset make gas profile
@@ -4538,7 +4534,7 @@ zero_Interface.c_scenarioMap_Future = saveObject.c_scenarioMap_Future;
 
 
 /*
-List<ConnectionOwner> c_COCompanies = findAll(zero_Interface.energyModel.pop_connectionOwners, p -> p.p_connectionOwnerType == OL_ConnectionOwnerType.COMPANY); 
+List<ConnectionOwner> c_COCompanies = findAll(energyModel.pop_connectionOwners, p -> p.p_connectionOwnerType == OL_ConnectionOwnerType.COMPANY); 
 
 
 int i = 0;
@@ -4557,7 +4553,7 @@ for (ConnectionOwner CO : c_COCompanies) {
 double f_setSimulationTimeParameters()
 {/*ALCODESTART::1758714675284*/
 //Sim start year
-int simStartYear = getExperiment().getEngine().getStartDate().getYear() + 1900;  // 1900 years offset because of Java/AnyLogic convention
+int simStartYear = getEngine().getStartDate().getYear() + 1900;  // 1900 years offset because of Java/AnyLogic convention
 
 // Create date at start of simulation year to use to calculate v_simStartHour_h
 Date d = new Date();
@@ -4569,7 +4565,7 @@ d.setMinutes(0);
 d.setDate(1);
 
 //Calculate sim start hour
-double simStartTime_h = roundToInt((getExperiment().getEngine().getStartDate().getTime() - d.getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
+double simStartTime_h = roundToInt((getEngine().getStartDate().getTime() - d.getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
 
 //Fix for if start is within summer time, the v_simStartHour_h is not correct anymore
 double summerTimeStart_h = avgc_data.map_yearlySummerWinterTimeStartHour.get(simStartYear).getFirst();
@@ -4580,8 +4576,8 @@ if(simStartTime_h > summerTimeStart_h && simStartTime_h < winterTimeStart_h){
 
 //Set sim duration if it is set
 double simDuration_h; //Sim duration in hours
-if(getExperiment().getEngine().getStopDate() != null){ //If experiment has set time, it gets bias
-	simDuration_h = roundToInt(((double)getExperiment().getEngine().getStopDate().getTime() - getExperiment().getEngine().getStartDate().getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
+if(getEngine().getStopDate() != null){ //If experiment has set time, it gets bias
+	simDuration_h = roundToInt(((double)getEngine().getStopDate().getTime() - getEngine().getStartDate().getTime())/1000.0/60/60); //Get time is in ms -> converted into hours
 	if(simStartTime_h > summerTimeStart_h && simStartTime_h + simDuration_h > winterTimeStart_h){//Compensate if start time is in summer time, and end time is in winter time -> simulation would otherwise have 1 hour too much
 		simDuration_h -= 1;
 	}
@@ -4686,9 +4682,9 @@ traceln("Loading modelSave...");
 //pauseSimulation();
 
 // Collect GIS_Objects into hashmap, to link to new EnergyModel.
-zero_Interface.energyModel.pop_GIS_Buildings.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
-zero_Interface.energyModel.pop_GIS_Objects.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
-zero_Interface.energyModel.pop_GIS_Parcels.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
+energyModel.pop_GIS_Buildings.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
+energyModel.pop_GIS_Objects.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
+energyModel.pop_GIS_Parcels.forEach(x->{c_GISregions.put(x.p_id, x.gisRegion);});
 pauseSimulation();
 try {
 	v_objectMapper = new ObjectMapper();
@@ -4737,7 +4733,7 @@ try {
 	// get heatingTypeHashmap from 'old' energyModel.
 	deserializedEnergyModel.c_defaultHeatingStrategies = zero_Interface.energyModel.c_defaultHeatingStrategies;
 	
-	zero_Interface.zero_loader.energyModel = deserializedEnergyModel;
+	this.energyModel = deserializedEnergyModel;
 	zero_Interface.energyModel = deserializedEnergyModel;
 	zero_Interface.uI_Results.energyModel = deserializedEnergyModel;
 	uI_Results.energyModel = deserializedEnergyModel;
@@ -4806,14 +4802,14 @@ try {
 	//zero_Interface.f_updateOrderedListsAfterDeserialising(deserializedEnergyModel);
 	
 	/*
-	Date startDate = getExperiment().getEngine().getStartDate();
-	int day = getExperiment().getEngine().getDayOfMonth();
-	int month = getExperiment().getEngine().getMonth();
+	Date startDate = getEngine().getStartDate();
+	int day = getEngine().getDayOfMonth();
+	int month = getEngine().getMonth();
 	traceln("day: " + day);
 	traceln("month: " + month);
 	startDate.setMonth(startDate.getMonth() - month);
 	startDate.setDate(startDate.getDate() - day);
-	getExperiment().getEngine().setStartDate(startDate);
+	getEngine().setStartDate(startDate);
 	*/
 	
 } catch (IOException e) {
@@ -4840,7 +4836,7 @@ if (settings.isPublicModel()) {
 // If private model: several conditions allow access
 return 	user.GCAccessType == OL_UserGCAccessType.FULL ||
         dataSharingAgreed ||
-        user.accessibleCompanyIDs.contains(companyUUID.toString());
+        (user.GCAccessType == OL_UserGCAccessType.SPECIFIED && user.accessibleCompanyIDs.contains(companyUUID.toString()));
 /*ALCODEEND*/}
 
 boolean f_isLocatedInActiveNBH(double lat,double lon)

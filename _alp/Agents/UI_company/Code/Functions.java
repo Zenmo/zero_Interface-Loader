@@ -348,10 +348,9 @@ switch (selectedHeatingType){
 		new J_EAConversionHeatDeliverySet(GC, capacityThermal_kW, efficiency, timeParameters, outputTemperature_degC);
 		
 		//Add GC to heat grid if it exists, else create new one
-		GC.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getGridNodesTopLevel(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
+		GC.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getRootGridNodes(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
 		if(GC.p_parentNodeHeat == null){
 			GridNode GN_heat = zero_Interface.energyModel.add_pop_gridNodes();
-			zero_Interface.energyModel.f_getGridNodesTopLevel().add(GN_heat);
 			GN_heat.p_gridNodeID = "Heatgrid";
 			
 			// Check wether transformer capacity is known or estimated
@@ -447,8 +446,8 @@ else {
 
 double f_setPVSystem(GridConnection GC,double v_rooftopPV_kWp)
 {/*ALCODESTART::1713954180112*/
-if (GC.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
-	J_EAProduction pvAsset = findFirst(GC.c_productionAssets, p -> p.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC );
+J_EAProduction pvAsset = findFirst(GC.c_productionAssets, p -> p.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC );
+if (pvAsset != null){
 	if (v_rooftopPV_kWp == 0) {
 		pvAsset.removeEnergyAsset();
 	}
@@ -1820,18 +1819,12 @@ if (p_companyName == null) {
     return;
 }
 
-int nameLength = p_companyName.length();
-
-int i = 0;
-if(nameLength > 24){
-	while(24+i != nameLength){
-	
-		t_companyName.setScale(0.9);
-		i++;
-	}
+int excess = p_companyName.length() - 24;
+if (excess > 0){
+	t_companyName.setScale(pow(0.9, excess));
 }
 //Works for now: Possible to make it more accurate using getFontMetrics package and comparing width of text with the name text box width.
-//--> Not done for now, as it feels unnecessary.
+//--> Not done for now.
 /*ALCODEEND*/}
 
 double f_getNFATOValues()

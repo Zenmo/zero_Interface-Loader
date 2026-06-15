@@ -115,14 +115,14 @@
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Id>1776931922142</Id>
-		<Path>vallum-production-861-41ea4ca-all.jar</Path>
+		<Id>1777376766232</Id>
+		<Path>icon_arrow.png</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Id>1777376766232</Id>
-		<Path>icon_arrow.png</Path>
+		<Id>1780401378047</Id>
+		<Path>vallum-main-863-c779e37-all.jar</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>

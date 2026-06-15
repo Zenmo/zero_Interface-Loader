@@ -287,12 +287,7 @@ uI_Results.getCheckbox_KPISummary().setEnabled(false);
 
 
 // Set info text
-if ( GN.p_realCapacityAvailable ) {
-	v_clickedObjectText = GN.p_nodeType + "-station, " + Integer.toString( ((int)GN.p_capacity_kW) ) + " kW, ID: " + GN.p_gridNodeID + ", aansluitingen: " + GN.f_getConnectedGridConnections().size() + ", Type station: " + GN.p_description;
-}
-else {
-	v_clickedObjectText =  GN.p_nodeType + "-station, " + Integer.toString( ((int)GN.p_capacity_kW) ) + " kW (ingeschat), ID: " + GN.p_gridNodeID + ", aansluitingen: " + GN.f_getConnectedGridConnections().size() + ", Type station: " + GN.p_description;
-}
+f_setSelectedGNText();
 
 // Color the GridNode
 GN.gisRegion.setFillColor( v_selectionColor );
@@ -474,6 +469,11 @@ if(selectedChartTypes_Energy == null){ // Temporary backup till all models have 
 	selectedChartTypes_Energy = f_getSelectedChartTypes_Energy();
 }
 List<OL_ChartTypes> selectedChartTypes_Economic = settings.resultsUISelectedChartTypes_Economic();
+
+//Disable export functionality in profiles if not full access.
+if(settings.isPublicModel() || user.GCAccessType != OL_UserGCAccessType.FULL){
+	uI_Results.f_enablePublicVersion(true);
+}
 
 //Disable summary button if summary is not selected
 if(settings.showKPISummary() == null || !settings.showKPISummary()){
@@ -826,9 +826,9 @@ if(MVsubstations != null){
 	}
 }
 else if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
-	int totalNotToplevelGridNodes = energyModel.f_getGridNodesNotTopLevel().size();
+	int totalNotToplevelGridNodes = energyModel.f_getNonRootGridNodes().size();
 	//Set all unique grid topology colors for each substation and its children if the gridloops are defined
-	for (GridNode node : energyModel.f_getGridNodesNotTopLevel()){
+	for (GridNode node : energyModel.f_getNonRootGridNodes()){
 		
 		//Create a unique color from a spectrum and assign it to the subMV
 		node.p_uniqueColor = spectrumColor(v_amountOfDefinedGridLoops, totalNotToplevelGridNodes);
@@ -1159,8 +1159,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 			if (b.c_containedGridConnections.size() > 0 ) { // only allow buildings with gridconnections
 				GridConnection clickedGridConnection = b.c_containedGridConnections.get(0); // Find buildings powered by the same GC as the clicked building
 				GridNode clickedGridConnectionConnectedGridNode = clickedGridConnection.p_parentNodeElectric;
-				ArrayList<GridNode> allGridNodes = new ArrayList<GridNode>(energyModel.f_getGridNodesTopLevel());
-				allGridNodes.addAll(energyModel.f_getGridNodesNotTopLevel());
+				var allGridNodes = energyModel.pop_gridNodes;
 				
 				while(	clickedGridConnectionConnectedGridNode.p_parentNodeID != null && 
 					  	clickedGridConnectionConnectedGridNode.p_nodeType != OL_GridNodeType.SUBMV &&
@@ -2048,14 +2047,22 @@ for(OL_GISObjectType activeSpecialGISObjectType : c_modelActiveSpecialGISObjects
 }
 /*ALCODEEND*/}
 
-double f_setTrafoText()
+double f_setSelectedGNText()
 {/*ALCODESTART::1750261221085*/
-if ( v_clickedGridNode.p_realCapacityAvailable ) {
-	v_clickedObjectText = v_clickedGridNode.p_nodeType + "-station, " + Integer.toString( ((int)v_clickedGridNode.p_capacity_kW) ) + " kW, ID: " + v_clickedGridNode.p_gridNodeID + ", aansluitingen: " + v_clickedGridNode.f_getConnectedGridConnections().size() + ", Type station: " + v_clickedGridNode.p_description;
+String GNCapacityUnitString = " kW"; 
+if ( !v_clickedGridNode.p_realCapacityAvailable ) {
+	GNCapacityUnitString += " (ingeschat)";
 }
-else {
-	v_clickedObjectText =  v_clickedGridNode.p_nodeType + "-station, " + Integer.toString( ((int)v_clickedGridNode.p_capacity_kW) ) + " kW (ingeschat), ID: " + v_clickedGridNode.p_gridNodeID + ", aansluitingen: " + v_clickedGridNode.f_getConnectedGridConnections().size() + ", Type station: " + v_clickedGridNode.p_description;
-}
+
+//Get total connected gcs
+int totalConnectedGCs = findAll(v_clickedGridNode.f_getAllLowerLVLConnectedGridConnections(), gc -> gc.f_isActive()).size();
+
+v_clickedObjectText =  v_clickedGridNode.p_nodeType + "-station, " + 
+					   roundToInt(v_clickedGridNode.p_capacity_kW) + GNCapacityUnitString +
+					   ", ID: " + v_clickedGridNode.p_gridNodeID + 
+					   ", aansluitingen: " + totalConnectedGCs + 
+					   ", Type station: " + v_clickedGridNode.p_description;
+
 /*ALCODEEND*/}
 
 double f_setSpecialGISObjectLegendItem(OL_GISObjectType activeSpecialGISObjectType,ShapeText legendText,ShapeRectangle legendRect)
@@ -2093,6 +2100,11 @@ switch(activeSpecialGISObjectType){
 		legendText.setText("Electrolyser");
 		legendRect.setFillColor(v_electrolyserColor);
 		legendRect.setLineColor(v_electrolyserLineColor);
+		break;
+	case DIESEL_GEN:
+		legendText.setText("Diesel Generator");
+		legendRect.setFillColor(v_dieselGeneratorColor);
+		legendRect.setLineColor(v_dieselGeneratorLineColor);
 		break;
 }
 /*ALCODEEND*/}
@@ -2526,6 +2538,12 @@ switch(selectedMapOverlayType){
 
 double f_setMapOverlay_ElectricityConsumption()
 {/*ALCODESTART::1753097345978*/
+if(energyModel.v_rapidRunData == null || !b_resultsUpToDate){
+	f_setErrorScreen("Dit overzicht wordt pas beschikbaar na het uitvoeren van een jaarsimulatie. In plaats daarvan is de standaard kaart geselecteerd.", 0, 0);
+	rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT),true);
+	return;			
+}
+
 //Set legend
 b_updateLiveCongestionColors = true;
 gr_mapOverlayLegend_ElectricityConsumption.setVisible(true);
@@ -2589,7 +2607,7 @@ for (GridNode GN : energyModel.pop_gridNodes){
 
 double f_setMapOverlay_Congestion()
 {/*ALCODESTART::1753097518541*/
-if(energyModel.v_rapidRunData == null){
+if(energyModel.v_rapidRunData == null || !b_resultsUpToDate){
 	f_setErrorScreen("Dit overzicht wordt pas beschikbaar na het uitvoeren van een jaarsimulatie. In plaats daarvan is de standaard kaart geselecteerd.", 0, 0);
 	rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT),true);
 	return;			
@@ -2868,8 +2886,11 @@ new Thread( () -> {
 	
 	//After rapid run: remove loading screen
 	f_removeAllSimulateYearScreens();
-
-	if (c_selectedGridConnections.size() == 0){//Update main area collection
+	
+	if(v_clickedGridNode != null){
+		uI_Results.f_updateUIresultsGridNode(v_clickedGridNode);
+	}
+	else if (c_selectedGridConnections.size() == 0){//Update main area collection
 		uI_Results.f_updateResultsUI(energyModel);
 	}
 	else if (c_selectedGridConnections.size() == 1){//Update selected GC area collection
@@ -3742,7 +3763,12 @@ if(electricityTabEASliderGCs_prod.size() == 2){
 	electricityTabEASliderGCs.addAll(electricityTabEASliderGCs_prod);
 }
 else{
-	throw new RuntimeException("electricityTabEASliderGCs_prod.size() != 2 -> Should be exactly 2, one solarfarm and one windfarm.");
+	throw new RuntimeException(
+		String.format(
+			"electricityTabEASliderGCs_prod.size() Should be exactly 2, one solarfarm and one windfarm, got %s",
+			electricityTabEASliderGCs_prod.size()
+		)
+	);
 }
 
 //Find the GridBattery slider gcs that are not specificly for the EnergyHub
