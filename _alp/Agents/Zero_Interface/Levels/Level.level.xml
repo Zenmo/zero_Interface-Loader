@@ -97,15 +97,13 @@
 		<Z>0</Z>
 		<ZHeight>10</ZHeight>
 		<LineWidth>1</LineWidth>
-		<LineColor/>
-		<LineColorCode>zenmocolor_blue3.getFillColor()</LineColorCode>
+		<LineColor>-1842205</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>910</Width>
 		<Height>80</Height>
 		<Rotation>0.0</Rotation>
-		<FillColor>-1052689</FillColor>
-		<FillColorCode>zenmocolor_blue3.getFillColor()</FillColorCode>
+		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
 		<ArcRadius>10</ArcRadius>
 	</RoundedRectangle>
@@ -478,7 +476,7 @@
 				<Width>450</Width>
 				<Height>20</Height>
 				<Rotation>0.0</Rotation>
-				<FillColor>-4069658</FillColor>
+				<FillColor>-1052689</FillColor>
 				<FillMaterial>null</FillMaterial>
 			</Rectangle>
 			<Text>
@@ -1411,8 +1409,8 @@ v_selectedGridConnectionIndex &gt; 0 ?
 	<Group>
 		<Id>1736337963311</Id>
 		<Name><![CDATA[gr_errorScreen]]></Name>
-		<X>3380</X>
-		<Y>-100</Y>
+		<X>3400</X>
+		<Y>0</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1428,8 +1426,8 @@ v_selectedGridConnectionIndex &gt; 0 ?
 			<Rectangle>
 				<Id>1736344526647</Id>
 				<Name><![CDATA[rect_errorScreenGrayOut]]></Name>
-				<X>40</X>
-				<Y>100</Y>
+				<X>0</X>
+				<Y>0</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -1455,8 +1453,8 @@ v_selectedGridConnectionIndex &gt; 0 ?
 			<Rectangle>
 				<Id>1736443451929</Id>
 				<Name><![CDATA[rect_errorScreenClickBlocking]]></Name>
-				<X>40</X>
-				<Y>100</Y>
+				<X>0</X>
+				<Y>0</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -1484,8 +1482,8 @@ v_selectedGridConnectionIndex &gt; 0 ?
 			<RoundedRectangle>
 				<Id>1747320252784</Id>
 				<Name><![CDATA[rect_errorMessage]]></Name>
-				<X>690</X>
-				<Y>380</Y>
+				<X>640</X>
+				<Y>340</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -1511,8 +1509,8 @@ v_selectedGridConnectionIndex &gt; 0 ?
 			<Text>
 				<Id>1736337707551</Id>
 				<Name><![CDATA[t_errorMessage]]></Name>
-				<X>960</X>
-				<Y>430</Y>
+				<X>910</X>
+				<Y>390</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1527,17 +1525,17 @@ v_selectedGridConnectionIndex &gt; 0 ?
 				<Color>-16777216</Color>
 				<Text><![CDATA[TYPE YOUR ERROR MESSAGE HERE]]></Text>
 				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
-					<Size>18</Size>
-					<Style>1</Style>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>20</Size>
+					<Style>0</Style>
 				</Font>
 				<Alignment>CENTER</Alignment>
 			</Text>
 			<Group>
 				<Id>1736338014404</Id>
 				<Name><![CDATA[button_errorOK]]></Name>
-				<X>960</X>
-				<Y>550</Y>
+				<X>910</X>
+				<Y>510</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -1593,12 +1591,12 @@ v_selectedGridConnectionIndex &gt; 0 ?
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
-						<Color>-16744320</Color>
+						<Color>-16777216</Color>
 						<Text><![CDATA[Ok]]></Text>
 						<Font>
 							<Name><![CDATA[SansSerif]]></Name>
 							<Size>18</Size>
-							<Style>1</Style>
+							<Style>0</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
 					</Text>
@@ -8202,6 +8200,7 @@ gr_cablesLegend.setVisible(showCables);</ActionCode>
 
 if(! cb_showFilterInterface.isSelected()){
 	b_inFilterMode = false;
+	b_manualSelectionMode = false; //turn of manual selection mode cus you might be in it
 	//f_clearFilters();
 	gr_sliderClickBlocker.setVisible(false);
 }
@@ -8351,14 +8350,16 @@ else{
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<EnableExpression>!gr_ForceMapSelectionText.isVisible()</EnableExpression>
-					<ActionCode>if(!cb_filterOptions.getValue().equals("-")){
-	if( b_manualSelectionMode){
-		f_endManualSelection();
+					<ActionCode>if( ! cb_filterOptions.getValue().equals("-")){
+	if( c_selectedFilterOptions.contains(map_UINamesFilterOption.get(cb_filterOptions.getValue()))){
+		f_setErrorScreen("Deze filter is al geselecteerd", 0, 0);
 	}
-	f_setFilter2(map_UINamesFilterOption.get(cb_filterOptions.getValue()));
-	cb_filterOptions.setValueIndex(0);
+	else {
+		f_startNewFilter();
+		cb_filterOptions.setValueIndex(0);
+	}
 }
-f_startNewFilter();</ActionCode>
+</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
@@ -8678,9 +8679,8 @@ f_startNewFilter();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<OnClickCode>f_clearFilters();
-	
-f_removeAllFilters();
+				<OnClickCode>f_clearAllFilters();
+
 </OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
@@ -8760,7 +8760,7 @@ f_removeAllFilters();
 					<Y>-10</Y>
 				</Label>
 				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
+				<PresentationFlag>false</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
 				<EmbeddedIcon>false</EmbeddedIcon>
@@ -8778,8 +8778,8 @@ f_removeAllFilters();
 			<Text>
 				<Id>1780912439364</Id>
 				<Name><![CDATA[t_filterCount]]></Name>
-				<X>244</X>
-				<Y>100</Y>
+				<X>200</X>
+				<Y>101</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8798,7 +8798,7 @@ f_removeAllFilters();
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>LEFT</Alignment>
 			</Text>
 			<Text>
 				<Id>1780946272407</Id>
@@ -8924,10 +8924,141 @@ f_removeAllFilters();
 				<BeginArrowStyle>0</BeginArrowStyle>
 				<EndArrowSize>1</EndArrowSize>
 				<EndArrowStyle>0</EndArrowStyle>
-				<Dx>285</Dx>
+				<Dx>341</Dx>
 				<Dy>0</Dy>
 				<Dz>0</Dz>
 			</Line>
+			<Text>
+				<Id>1781259216377</Id>
+				<Name><![CDATA[text12]]></Name>
+				<X>309</X>
+				<Y>81</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-1</Color>
+				<Text><![CDATA[Verwijder]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>11</Size>
+					<Style>2</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Group>
+				<Id>1781260155053</Id>
+				<Name><![CDATA[gr_removeLastFilterButton]]></Name>
+				<X>333</X>
+				<Y>109</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<YCode>109 + (c_filterMatrix.size() - 1 ) * 12</YCode>
+				<VisibleCode>c_filterMatrix.size() &gt; 0</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Oval>
+						<Id>1781259270030</Id>
+						<Name><![CDATA[oval10]]></Name>
+						<X>-1</X>
+						<Y>-1</Y>
+						<Label>
+							<X>0</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<OnClickCode>f_removeLastFilter();
+f_setFilterInfoText();</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor>-16744320</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<RadiusX>10</RadiusX>
+						<RadiusY>40</RadiusY>
+						<Rotation>0.0</Rotation>
+						<FillColor>-1</FillColor>
+						<FillColorCode>teal</FillColorCode>
+						<FillMaterial>null</FillMaterial>
+					</Oval>
+					<Line>
+						<Id>1781259300624</Id>
+						<Name><![CDATA[line2]]></Name>
+						<X>-5</X>
+						<Y>3</Y>
+						<Label>
+							<X>10</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor>-65536</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<BeginArrowSize>1</BeginArrowSize>
+						<BeginArrowStyle>0</BeginArrowStyle>
+						<EndArrowSize>1</EndArrowSize>
+						<EndArrowStyle>0</EndArrowStyle>
+						<Dx>8</Dx>
+						<Dy>-8</Dy>
+						<Dz>0</Dz>
+					</Line>
+					<Line>
+						<Id>1781259313766</Id>
+						<Name><![CDATA[line4]]></Name>
+						<X>-5</X>
+						<Y>-5</Y>
+						<Label>
+							<X>10</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor>-65536</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<BeginArrowSize>1</BeginArrowSize>
+						<BeginArrowStyle>0</BeginArrowStyle>
+						<EndArrowSize>1</EndArrowSize>
+						<EndArrowStyle>0</EndArrowStyle>
+						<Dx>8</Dx>
+						<Dy>8</Dy>
+						<Dz>0</Dz>
+					</Line>
+				</Presentation>
+			</Group>
 		</Presentation>
 	</Group>
 	<Group>
@@ -9112,7 +9243,7 @@ f_removeAllFilters();
 						<Width>555</Width>
 						<Height>20</Height>
 						<Rotation>0.0</Rotation>
-						<FillColor>-4069658</FillColor>
+						<FillColor>-1052689</FillColor>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>10</ArcRadius>
 					</RoundedRectangle>
@@ -9139,7 +9270,7 @@ f_removeAllFilters();
 						<Width>555</Width>
 						<Height>130</Height>
 						<Rotation>0.0</Rotation>
-						<FillColor>-4069658</FillColor>
+						<FillColor>-1052689</FillColor>
 						<FillMaterial>null</FillMaterial>
 					</Rectangle>
 				</Presentation>
@@ -9465,6 +9596,7 @@ else{
 	<Oval>
 		<Id>1780603825771</Id>
 		<Name><![CDATA[oval1]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-1136</X>
 		<Y>1111</Y>
 		<Label>

@@ -1062,6 +1062,7 @@ else{//Filtered GC returns GC
 	//Set color of all gis objects of new filter selection
 	v_clickedObjectType = OL_GISObjectType.BUILDING;
 		
+		
 	for (GridConnection GC: c_selectedGridConnections){
 		for (GIS_Object objectGIS : GC.c_connectedGISObjects) {
 			objectGIS.gisRegion.setFillColor(v_selectionColorAddBuildings);
@@ -1169,26 +1170,21 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 double f_filterCompanies()
 {/*ALCODESTART::1734448628428*/
 c_selectedGridConnections = new ArrayList<>(findAll(c_filterDummy, GC -> GC instanceof GCUtility));
-c_filterDummy = new ArrayList<>(c_selectedGridConnections);
-
 /*ALCODEEND*/}
 
 double f_filterHouses()
 {/*ALCODESTART::1734448687355*/
 c_selectedGridConnections = new ArrayList<>(findAll(c_filterDummy, GC -> GC instanceof GCHouse));
-c_filterDummy = new ArrayList<>(c_selectedGridConnections);
 /*ALCODEEND*/}
 
 double f_filterDetailed()
 {/*ALCODESTART::1734448688472*/
 c_selectedGridConnections = new ArrayList<>(findAll(c_filterDummy, GC -> GC.p_owner.p_detailedCompany));
-c_filterDummy = new ArrayList<>(c_selectedGridConnections);
 /*ALCODEEND*/}
 
 double f_filterEstimated()
 {/*ALCODESTART::1734448689519*/
 c_selectedGridConnections = new ArrayList<>(findAll(c_filterDummy, GC -> !GC.p_owner.p_detailedCompany));
-c_filterDummy = new ArrayList<>(c_selectedGridConnections);
 /*ALCODEEND*/}
 
 double f_filterHasPV()
@@ -1199,14 +1195,11 @@ for(GridConnection GC : c_filterDummy){ //Find all GC with PV AND a gis region (
 		c_selectedGridConnections.add(GC);
 	}
 }
-c_filterDummy = new ArrayList<>(c_selectedGridConnections);
 /*ALCODEEND*/}
 
 double f_filterHasTransport()
 {/*ALCODESTART::1734448691508*/
 c_selectedGridConnections = new ArrayList<>(findAll(c_filterDummy, GC -> GC.c_vehicleAssets.size() > 0));
-c_filterDummy = new ArrayList<>(c_selectedGridConnections);
-
 /*ALCODEEND*/}
 
 double f_removeFilter(OL_FilterOptionsGC selectedFilter,String selectedFilterName)
@@ -3007,7 +3000,6 @@ cb_showFilterInterface.setSelected(false, true);
 double f_filterHasEV()
 {/*ALCODESTART::1760085891920*/
 c_selectedGridConnections = new ArrayList<>(findAll(c_filterDummy, GC -> GC.c_electricVehicles.size() > 0));
-c_filterDummy = new ArrayList<>(c_selectedGridConnections);
 //Werkt nog niet helemaal naar behoren, want ghost assets worden nog niet aangemaakt, 
 //en dus hebben bedrijven met ghost ev geen c_electricVehicles en dus komen niet door deze filter.
 // --> Als ghost vehicles ook worden aangemaakt, werkt het wel.
@@ -3089,7 +3081,7 @@ double width = rb_scenarios_template.getWidth();
 double height = 0;//Not needed, automatically adjust by adding options
 Color textColor = Color.BLACK;
 boolean enabled = true;
-Font font = new Font("Dialog", Font.PLAIN, 14);
+Font font = new Font("HOLONline2", Font.PLAIN, 14);
 boolean vertical = true;
 
 //Set words for the radiobutton options
@@ -3804,7 +3796,7 @@ else if(b_inManualFilterSelectionMode){
 }
 */
 if( b_inFilterMode || b_inHubSelectionMode){
-	f_manualSelection(clickx, clicky);	
+	f_manualSelectionClickOnMap(clickx, clicky);	
 }
 
 else{
@@ -3967,19 +3959,7 @@ if(!c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
 }
 /*ALCODEEND*/}
 
-double f_endManualSelection()
-{/*ALCODESTART::1780767574903*/
-b_manualSelectionMode = false;
-if (b_manualChangesMade) {
-	
-}
-
-//if (c_manualFilterSelectedGC.isEmpty() && c_manualFilterDeselectedGC.isEmpty() && c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
-	//f_setFilter(OL_FilterOptionsGC.MANUAL_SELECTION);
-//}
-/*ALCODEEND*/}
-
-double f_manualSelection(double clickx,double clicky)
+double f_manualSelectionClickOnMap(double clickx,double clicky)
 {/*ALCODESTART::1780854316419*/
 //you clicked on the map and the Filter or the Energy Hub screen is active. 
 //That means you want to do some manual selection. 
@@ -3988,13 +3968,26 @@ double f_manualSelection(double clickx,double clicky)
 ArrayList<GridConnection> clickedGC = f_checkIfClickedOnGC(clickx, clicky);
 
 if( clickedGC != null){
-	//So you clicked on a building, now we check if you just need to start a new manual selection
+	//So you clicked on a GC, now we check if you just need to start a new manual selection
 	//Or wheter you already selected some 
 	if (!b_manualSelectionMode){
-		t_filterNames.setText( t_filterNames.getText() + "Manual filter" + "\n");
-		f_startNewFilter();
+		//traceln("manual selection started");
+		b_manualSelectionMode = true;
+		if( c_filterMatrix.size() > 0){
+			c_filterDummy = new ArrayList<>(c_filterMatrix.get(c_filterMatrix.size()-1));
+		}
+		else {
+			c_filterDummy = new ArrayList<>();//this is the first filter so a new empty list is created
+		}
+		v_filterNames.add( "Handmatige selectie");
+		v_filterIndex.add(String.valueOf(1 + c_filterMatrix.size()));
 	}
 	f_addOrRemoveGCFromFilter(clickedGC);
+	if (v_filterCount.size() == 0){ //dit kan alleen gebeuren als de allereerste filter begint met het klikken op een gebouw
+		v_filterCount.add( 1 );
+	}
+	v_filterCount.set(v_filterCount.size()-1, c_filterDummy.size());
+	f_setFilterInfoText();
 }
 /*ALCODEEND*/}
 
@@ -4040,54 +4033,39 @@ return clickedGridConnections;
 
 double f_addOrRemoveGCFromFilter(ArrayList<GridConnection> clickedGridConnections)
 {/*ALCODESTART::1780856353840*/
-boolean select = true; //Deselect == false;
-boolean removedFromSelectedGC = false;
-boolean removedFromDeselectedGC = false;
-
-for (GridConnection clickedGC : clickedGridConnections){
-	if(c_filterDummy.contains(clickedGC)){
-		c_filterDummy.remove(clickedGC);
-		select = false;
+for (GridConnection GC : clickedGridConnections){
+	if(c_filterDummy.contains(GC)){
+		c_filterDummy.remove(GC);
+		for( GIS_Object polygon : GC.c_connectedGISObjects){
+			polygon.f_style(null, null, null, null);
+		}
 	}
 	else {
-		c_filterDummy.add(clickedGC);
+		c_filterDummy.add(GC);
+		for( GIS_Object polygon : GC.c_connectedGISObjects){
+			polygon.f_style(v_selectionColor, null, null, null);
+		}
 	}
 }
+
+
 /*ALCODEEND*/}
 
 double f_startNewFilter()
 {/*ALCODESTART::1780857842436*/
-if(v_activeFilters == 0){
-	c_filter1 = new ArrayList<>(c_filterDummy);
+if( b_manualSelectionMode){
+	b_manualSelectionMode = false;
 }
-else if(v_activeFilters == 1){
-	c_filter2 = new ArrayList<>(c_filterDummy);
-}
-else if(v_activeFilters == 2){
-	c_filter3 = new ArrayList<>(c_filterDummy);
-}
-else if(v_activeFilters == 3){
-	c_filter4 = new ArrayList<>(c_filterDummy);
-}
-else if(v_activeFilters == 4){
-	c_filter5 = new ArrayList<>(c_filterDummy);
-}
-else if(v_activeFilters == 5){
-	c_filter6 = new ArrayList<>(c_filterDummy);
-}
-v_activeFilters ++;
+f_setPrefixFilter(map_UINamesFilterOption.get(cb_filterOptions.getValue()));
+
 /*ALCODEEND*/}
 
-double f_applyFilter2(OL_FilterOptionsGC selectedFilter,String selectedFilterName)
+double f_applyPrefixFilter(OL_FilterOptionsGC selectedFilter,String selectedFilterName)
 {/*ALCODESTART::1780913436841*/
-
 c_selectedFilterOptions.add(selectedFilter);
 
 //After a filter selecttion, reset previous clicked building/gridNode colors and text
-traceln( c_filterDummy.size() + " test 1");
 f_deselectPreviousSelect();
-traceln( c_filterDummy.size() + " test 2");
-traceln(  " ");
 
 //Can filter return 0? (Only allowed for filters who are not inmediately active (gridLoops, nbh, etc.)
 boolean filterCanReturnZero = false;
@@ -4095,31 +4073,38 @@ boolean filterCanReturnZero = false;
 switch(selectedFilter){
 	case COMPANIES:
 		f_filterCompanies();
+		c_filterMatrix.add(new ArrayList<>(c_selectedGridConnections));
 		break;
 		
 	case HOUSES:
 		f_filterHouses();
+		c_filterMatrix.add(new ArrayList<>(c_selectedGridConnections));
 		break;
 		
 	case DETAILED:
 		f_filterDetailed();
+		c_filterMatrix.add(new ArrayList<>(c_selectedGridConnections));
 		break;
 		
 	case NONDETAILED:
 		f_filterEstimated();
+		c_filterMatrix.add(new ArrayList<>(c_selectedGridConnections));
 		break;
 		
 	case HAS_PV:
 		f_filterHasPV();
+		c_filterMatrix.add(new ArrayList<>(c_selectedGridConnections));
 
 		break;
 		
 	case HAS_TRANSPORT:
 		f_filterHasTransport();
+		c_filterMatrix.add(new ArrayList<>(c_selectedGridConnections));
 		break;
 		
 	case HAS_EV:
 		f_filterHasEV();
+		c_filterMatrix.add(new ArrayList<>(c_selectedGridConnections));
 		break;	
 		
 	case GRIDTOPOLOGY_SELECTEDLOOP:
@@ -4162,7 +4147,7 @@ switch(selectedFilter){
 			}
 		}
 		break;
-	case MANUAL_SELECTION:
+	/*case MANUAL_SELECTION:
 		if(c_manualFilterSelectedGC.size() > 0){
 			f_filterManualSelection(c_filterDummy);
 		}
@@ -4179,6 +4164,7 @@ switch(selectedFilter){
 		}
 			
 		break;
+	*/
 }
 
 if(c_selectedGridConnections.size() == 0 && !filterCanReturnZero){ // Not allowed to return zero, while returning zero
@@ -4213,24 +4199,81 @@ else{//Filtered GC returns GC
 }
 /*ALCODEEND*/}
 
-double f_setFilter2(OL_FilterOptionsGC selectedFilter)
+double f_setPrefixFilter(OL_FilterOptionsGC selectedFilter)
 {/*ALCODESTART::1780913618251*/
 String selectedFilterName = map_filterOptionUINames.get(selectedFilter);
 
 //als dit de eerste filter is zet de dummy lijst gelijk aan alle GCs
-if( v_activeFilters == 0){
+if( c_filterMatrix.size() == 0){
 	c_filterDummy = new ArrayList<GridConnection>(energyModel.f_getActiveGridConnections());
 }
+else {
+	c_filterDummy = new ArrayList<GridConnection>(c_filterMatrix.get(c_filterMatrix.size()-1));
+}
 
-if(!c_selectedFilterOptions.contains(selectedFilter)){ // Set filter
-	
-	f_applyFilter2(selectedFilter, selectedFilterName);
-	t_filterNames.setText( t_filterNames.getText() + selectedFilterName + "\n");
-	t_filterCount.setText( t_filterCount.getText() + c_filterDummy.size() + "\n");
-	t_filterIndex.setText( t_filterIndex.getText() + (roundToInt(v_activeFilters + 1)) + "\n");
+// Set filter
+f_applyPrefixFilter(selectedFilter, selectedFilterName);
+v_filterNames.add( selectedFilterName);
+v_filterCount.add( c_filterMatrix.get(c_filterMatrix.size()-1).size()); 
+v_filterIndex.add(String.valueOf( 1 + c_filterMatrix.size()));
+f_setFilterInfoText();
+/*ALCODEEND*/}
+
+double f_setFilterInfoText()
+{/*ALCODESTART::1781179311799*/
+t_filterNames.setText("");
+t_filterCount.setText("");
+t_filterIndex.setText("");
+for( String s : v_filterNames){
+	t_filterNames.setText( t_filterNames.getText() + s + "\n");
 }
-else if(c_selectedFilterOptions.contains(selectedFilter)){ // Remove filter
-	f_setErrorScreen("Deze filter is al geselecteerd", 0, 0);
+for( int s : v_filterCount){
+	t_filterCount.setText( t_filterCount.getText() + s + "\n");
 }
+for( String s : v_filterIndex){
+	t_filterIndex.setText( t_filterIndex.getText() + s + "\n");
+}
+/*ALCODEEND*/}
+
+double f_clearAllFilters()
+{/*ALCODESTART::1781204814021*/
+c_filterDummy = new ArrayList<GridConnection>();
+t_filterNames.setText("");
+t_filterCount.setText("");
+t_filterIndex.setText("");
+
+v_filterCount = new ArrayList<>();
+v_filterNames = new ArrayList<String>();
+v_filterIndex = new ArrayList<String>();
+
+c_filterMatrix.clear();
+//c_filter1.clear();
+//c_filter2.clear();
+//c_filter3.clear();
+//c_filter4.clear();
+//c_filter5.clear();
+//c_filter6.clear();
+
+f_setForcedClickScreenText("");
+if(!b_inEnergyHubSelectionMode){
+	f_setForcedClickScreenVisibility(false);
+}
+
+c_selectedFilterOptions.clear();
+
+
+//Deselect everything and set region as main
+f_clearSelectionAndSelectEnergyModel();
+
+/*ALCODEEND*/}
+
+double f_removeLastFilter()
+{/*ALCODESTART::1781259851978*/
+c_filterMatrix.remove(c_filterMatrix.size()-1);
+v_filterCount.remove(v_filterCount.size()-1);
+v_filterNames.remove(v_filterNames.size()-1);
+v_filterIndex.remove(v_filterIndex.size()-1);
+c_filterDummy.clear();
+c_selectedFilterOptions.remove(c_selectedFilterOptions.size()- 1);
 /*ALCODEEND*/}
 
