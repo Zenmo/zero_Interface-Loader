@@ -871,6 +871,97 @@ f_setSimulateYearScreen();
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Presentation>
+					<Control Type="Button">
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Id>1781612346258</Id>
+						<Name><![CDATA[button_openVehicleTripsConfigurationMenu_car]]></Name>
+						<X>35</X>
+						<Y>-125</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<BasicProperties Width="125" Height="20">
+							<EmbeddedIcon>false</EmbeddedIcon>
+							<TextColor>-16777216</TextColor>
+							<Enabled>true</Enabled>
+							<ActionCode>if(v_currentTripConfiguringVehicleType != OL_VehicleType.CAR){
+	f_openVehicleTripsConfigurationMenu(OL_VehicleType.CAR);
+}
+else{
+	f_closeVehicleTripsConfigurationMenu();
+}
+</ActionCode>
+						</BasicProperties>
+						<ExtendedProperties>
+							<Font Name="Dialog" Size="11" Style="0"/>
+							<LabelText>Configureer rijtijden</LabelText>
+						</ExtendedProperties>
+					</Control>
+					<Control Type="Button">
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Id>1781612346260</Id>
+						<Name><![CDATA[button_openVehicleTripsConfigurationMenu_van]]></Name>
+						<X>35</X>
+						<Y>-25</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<BasicProperties Width="125" Height="20">
+							<EmbeddedIcon>false</EmbeddedIcon>
+							<TextColor>-16777216</TextColor>
+							<Enabled>true</Enabled>
+							<ActionCode>if(v_currentTripConfiguringVehicleType != OL_VehicleType.VAN){
+	f_openVehicleTripsConfigurationMenu(OL_VehicleType.VAN);
+}
+else{
+	f_closeVehicleTripsConfigurationMenu();
+}</ActionCode>
+						</BasicProperties>
+						<ExtendedProperties>
+							<Font Name="Dialog" Size="11" Style="0"/>
+							<LabelText>Configureer rijtijden</LabelText>
+						</ExtendedProperties>
+					</Control>
+					<Control Type="Button">
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Id>1781612346262</Id>
+						<Name><![CDATA[button_openVehicleTripsConfigurationMenu_truck]]></Name>
+						<X>35</X>
+						<Y>75</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<BasicProperties Width="125" Height="20">
+							<EmbeddedIcon>false</EmbeddedIcon>
+							<TextColor>-16777216</TextColor>
+							<Enabled>true</Enabled>
+							<ActionCode>if(v_currentTripConfiguringVehicleType != OL_VehicleType.TRUCK){
+	f_openVehicleTripsConfigurationMenu(OL_VehicleType.TRUCK);
+}
+else{
+	f_closeVehicleTripsConfigurationMenu();
+}</ActionCode>
+						</BasicProperties>
+						<ExtendedProperties>
+							<Font Name="Dialog" Size="11" Style="0"/>
+							<LabelText>Configureer rijtijden</LabelText>
+						</ExtendedProperties>
+					</Control>
 					<Control Type="Slider">
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1713446839189</Id>
@@ -11932,95 +12023,4 @@ else{
 			</Text>
 		</Presentation>
 	</Group>
-	<Control Type="Button">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1780055931342</Id>
-		<Name><![CDATA[button_openVehicleTripsConfigurationMenu_car]]></Name>
-		<X>225</X>
-		<Y>680</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="125" Height="20">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor>-16777216</TextColor>
-			<Enabled>true</Enabled>
-			<ActionCode>if(v_currentTripConfiguringVehicleType != OL_VehicleType.CAR){
-	f_openVehicleTripsConfigurationMenu(OL_VehicleType.CAR);
-}
-else{
-	f_closeVehicleTripsConfigurationMenu();
-}
-</ActionCode>
-		</BasicProperties>
-		<ExtendedProperties>
-			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText>Configureer rijtijden</LabelText>
-		</ExtendedProperties>
-	</Control>
-	<Control Type="Button">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1780055981741</Id>
-		<Name><![CDATA[button_openVehicleTripsConfigurationMenu_van]]></Name>
-		<X>230</X>
-		<Y>780</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="125" Height="20">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor>-16777216</TextColor>
-			<Enabled>true</Enabled>
-			<ActionCode>if(v_currentTripConfiguringVehicleType != OL_VehicleType.VAN){
-	f_openVehicleTripsConfigurationMenu(OL_VehicleType.VAN);
-}
-else{
-	f_closeVehicleTripsConfigurationMenu();
-}</ActionCode>
-		</BasicProperties>
-		<ExtendedProperties>
-			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText>Configureer rijtijden</LabelText>
-		</ExtendedProperties>
-	</Control>
-	<Control Type="Button">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1780056008958</Id>
-		<Name><![CDATA[button_openVehicleTripsConfigurationMenu_truck]]></Name>
-		<X>230</X>
-		<Y>880</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="125" Height="20">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor>-16777216</TextColor>
-			<Enabled>true</Enabled>
-			<ActionCode>if(v_currentTripConfiguringVehicleType != OL_VehicleType.TRUCK){
-	f_openVehicleTripsConfigurationMenu(OL_VehicleType.TRUCK);
-}
-else{
-	f_closeVehicleTripsConfigurationMenu();
-}</ActionCode>
-		</BasicProperties>
-		<ExtendedProperties>
-			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText>Configureer rijtijden</LabelText>
-		</ExtendedProperties>
-	</Control>
 </Presentation>
