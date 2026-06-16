@@ -17,10 +17,11 @@ public class Chargingstation_data {
 	String city;
 	String gridnode_id;
 	Double connection_capacity_kw;	
-	boolean is_charging_centre;
-	OL_EnergyAssetType vehicle_type;
-	Integer number_of_chargers;
-	Double power_per_charger_kw;
+	//boolean is_charging_centre;
+	OL_VehicleType vehicle_type;
+	boolean uses_charging_sessions;
+	Integer number_of_sockets;
+	Double power_per_socket_kw;
 	boolean initially_active;
 	double latitude;
 	double longitude;

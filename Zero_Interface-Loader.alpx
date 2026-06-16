@@ -99,11 +99,6 @@
 				</Option>
 			</OptionList>
 			<OptionList>
-				<Id>1667742453792</Id>
-				<Name><![CDATA[OL_UNUSED3]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-			</OptionList>
-			<OptionList>
 				<Id>1675025163072</Id>
 				<Name><![CDATA[OL_UNUSED4]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
@@ -436,6 +431,10 @@
 				<Id>1776429367217</Id>
 				<Name><![CDATA[DHWProfile_data]]></Name>
 				<Folder>1754045711603</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1780057244152</Id>
+				<Name><![CDATA[J_CustomTripTrackerGenerator]]></Name>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
