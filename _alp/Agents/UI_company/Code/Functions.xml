@@ -301,7 +301,11 @@
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[vehicleType]]></Name>
-			<Type><![CDATA[OL_EnergyAssetType]]></Type>
+			<Type><![CDATA[OL_VehicleType]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[fuelType]]></Name>
+			<Type><![CDATA[OL_EnergyCarriers]]></Type>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[tripTracker]]></Name>
@@ -337,7 +341,7 @@
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[vehicleType]]></Name>
-			<Type><![CDATA[OL_EnergyAssetType]]></Type>
+			<Type><![CDATA[OL_VehicleType]]></Type>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[setAmountOfVehicles]]></Name>
@@ -365,7 +369,7 @@
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[vehicleType]]></Name>
-			<Type><![CDATA[OL_EnergyAssetType]]></Type>
+			<Type><![CDATA[OL_VehicleType]]></Type>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[setAmountOfVehicles]]></Name>
@@ -393,7 +397,7 @@
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[vehicleType]]></Name>
-			<Type><![CDATA[OL_EnergyAssetType]]></Type>
+			<Type><![CDATA[OL_VehicleType]]></Type>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[setAmountOfVehicles]]></Name>
@@ -443,7 +447,7 @@
 		<Id>1714656835269</Id>
 		<Name><![CDATA[f_updateUIResultsCompanyUI]]></Name>
 		<X>-1050</X>
-		<Y>1350</Y>
+		<Y>1370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -683,6 +687,354 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1779979626408</Id>
+		<Name><![CDATA[f_activateDailyDifferenceButtons]]></Name>
+		<X>-530</X>
+		<Y>2140</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[activate]]></Name>
+			<Type><![CDATA[boolean]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1780045148927</Id>
+		<Name><![CDATA[f_confirmVehicleTripsConfiguration]]></Name>
+		<X>-530</X>
+		<Y>2300</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[vehicleType]]></Name>
+			<Type><![CDATA[OL_VehicleType]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1780047941753</Id>
+		<Name><![CDATA[f_openVehicleTripsConfigurationMenu]]></Name>
+		<X>-530</X>
+		<Y>2010</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[vehicleType]]></Name>
+			<Type><![CDATA[OL_VehicleType]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>boolean</ReturnType>
+		<Id>1780056555300</Id>
+		<Name><![CDATA[f_createCustomTripConfiguration]]></Name>
+		<X>-510</X>
+		<Y>2340</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[vehicleType]]></Name>
+			<Type><![CDATA[OL_VehicleType]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1780057851211</Id>
+		<Name><![CDATA[f_replaceAllCurrentTripTrackersWithCustom]]></Name>
+		<X>-510</X>
+		<Y>2400</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[vehicleType]]></Name>
+			<Type><![CDATA[OL_VehicleType]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1780063188067</Id>
+		<Name><![CDATA[f_storeOriginalTripTracker]]></Name>
+		<X>-490</X>
+		<Y>2420</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[oldTripTracker]]></Name>
+			<Type><![CDATA[J_ActivityTrackerTrips]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[newTripTracker]]></Name>
+			<Type><![CDATA[J_ActivityTrackerTrips]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1780063352490</Id>
+		<Name><![CDATA[f_initializeVehicleTripsConfigurationMenuButtons]]></Name>
+		<X>-510</X>
+		<Y>2050</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[vehicleType]]></Name>
+			<Type><![CDATA[OL_VehicleType]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1780307953910</Id>
+		<Name><![CDATA[f_closeVehicleTripsConfigurationMenu]]></Name>
+		<X>-530</X>
+		<Y>2560</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1780312282022</Id>
+		<Name><![CDATA[f_addNewInstanceOfCustomTripTrackerToAdditionalVehicle]]></Name>
+		<X>-530</X>
+		<Y>2470</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[vehicle]]></Name>
+			<Type><![CDATA[I_Vehicle]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1780327676306</Id>
+		<Name><![CDATA[f_resetAllVehiclesToOriginalTripTracker]]></Name>
+		<X>-530</X>
+		<Y>2490</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1780327998135</Id>
+		<Name><![CDATA[f_replaceTripTrackerWithOtherTripTracker]]></Name>
+		<X>-510</X>
+		<Y>2530</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[currentTripTracker]]></Name>
+			<Type><![CDATA[J_ActivityTrackerTrips]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[newTripTracker]]></Name>
+			<Type><![CDATA[J_ActivityTrackerTrips]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1780328883341</Id>
+		<Name><![CDATA[f_resetVehicleTypeToOriginalTripTracker]]></Name>
+		<X>-530</X>
+		<Y>2510</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[vehicleType]]></Name>
+			<Type><![CDATA[OL_VehicleType]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1780475468522</Id>
+		<Name><![CDATA[f_setAllVehicleTripsConfigurationButtonsToDefault]]></Name>
+		<X>-490</X>
+		<Y>2090</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>boolean[][]</ReturnType>
+		<Id>1780922799439</Id>
+		<Name><![CDATA[f_getTripBooleanMatrix]]></Name>
+		<X>-510</X>
+		<Y>2320</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1780928240644</Id>
+		<Name><![CDATA[f_setAllVehicleTripsConfigurationButtonsToInputMatrix]]></Name>
+		<X>-470</X>
+		<Y>2110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[booleanMatrix]]></Name>
+			<Type><![CDATA[boolean[][]]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1780997445385</Id>
+		<Name><![CDATA[f_initializeDayToDisableRectanglesMap]]></Name>
+		<X>-490</X>
+		<Y>2220</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1780999540461</Id>
+		<Name><![CDATA[f_setPresentationOrder]]></Name>
+		<X>-1035</X>
+		<Y>1350</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1781094625996</Id>
+		<Name><![CDATA[f_enableSingleDay]]></Name>
+		<X>-530</X>
+		<Y>2270</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[enable]]></Name>
+			<Type><![CDATA[boolean]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[day]]></Name>
+			<Type><![CDATA[OL_Days]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

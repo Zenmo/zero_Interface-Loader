@@ -14,7 +14,7 @@ public class J_ModelSave implements Serializable {
 	
 	public ArrayList<GCUtility> c_orderedPVSystemsCompanies;
 	public ArrayList<GCHouse> c_orderedPVSystemsHouses;
-	public ArrayList<J_EA> c_orderedVehicles;
+	public ArrayList<I_Vehicle> c_orderedVehicles;
 	public ArrayList<GCUtility> c_orderedHeatingSystemsCompanies;
 	public ArrayList<GCHouse> c_orderedHeatingSystemsHouses;
 	public ArrayList<J_EAFuelVehicle> c_orderedActiveVehiclesPublicParking;

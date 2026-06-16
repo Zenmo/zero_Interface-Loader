@@ -516,7 +516,11 @@ for(J_EA vehicle : EAs){
 	}
 }
 
-c_orderedVehicles = otherEAs;
+ArrayList<I_Vehicle> orderedVehicleList = new ArrayList<>();
+for(J_EA vehicle : otherEAs){
+	orderedVehicleList.add((I_Vehicle)vehicle);
+}
+c_orderedVehicles = orderedVehicleList;
 /*ALCODEEND*/}
 
 double f_initialHeatingSystemsOrder()
@@ -1972,11 +1976,11 @@ for (GCPublicCharger gc : energyModel.PublicChargers) {
 		collectionPointerV2GChargers.add(gc);
 	}
 	
-	if ( !gc.p_isChargingCentre ) { //Should maybe be a check for charger capabilities as well? 
-		c_orderedPublicChargers.add(gc);
-	}
+	//Add to total public charger collection
+	c_orderedPublicChargers.add(gc);
 }
 
+//Add all inactive chargers at the end of the list.
 c_orderedV1GChargers.addAll( c_inactiveV1GChargers );
 c_orderedV2GChargers.addAll( c_inactiveV2GChargers );
 

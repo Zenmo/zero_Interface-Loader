@@ -68,7 +68,7 @@ double scalingFactor = 1 - demandReduction_pct/100;
 
 for (GridConnection gc : gcList) {
 	for (I_Vehicle vehicle : gc.c_vehicleAssets) {
-		vehicle.getTripTracker().distanceScaling_fr = scalingFactor;
+		vehicle.getTripTracker().setDistanceScaling_fr(scalingFactor);
 	}
 }
 
@@ -323,7 +323,7 @@ if (petroleumFuelTruck!=null) {
 	double initialStateOfCharge_fr = 1.0;
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionTruck_kWhpkm;
 	double vehicleScalingElectric = 1.0;
-	J_EAEV electricTruck = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeParameters, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_TRUCK, tripTracker, available);  
+	J_EAEV electricTruck = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeParameters, energyConsumption_kWhpkm, vehicleScalingElectric, OL_VehicleType.TRUCK, tripTracker, available);  
 	
 	zero_Interface.c_orderedVehicles.add(0, electricTruck);
 	
@@ -382,7 +382,7 @@ if (hydrogenTruck!=null) {
 	double initialStateOfCharge_fr = 1.0;
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionTruck_kWhpkm;
 	double vehicleScalingElectric = 1.0;
-	J_EAEV electricTruck = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeParameters, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_TRUCK, tripTracker, available);  
+	J_EAEV electricTruck = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeParameters, energyConsumption_kWhpkm, vehicleScalingElectric, OL_VehicleType.TRUCK, tripTracker, available);  
 
 	zero_Interface.c_orderedVehicles.add(0, electricTruck);
 	
@@ -436,7 +436,7 @@ if (electricTruck!=null) {
 	// Re-add hydrogen vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgHydrogenConsumptionTruck_kWhpkm;			
 	double vehicleScaling = 1.0;
-	J_EAFuelVehicle hydrogenVehicle = new J_EAFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, vehicleScaling, OL_EnergyAssetType.HYDROGEN_TRUCK, tripTracker, OL_EnergyCarriers.HYDROGEN, available);				
+	J_EAFuelVehicle hydrogenVehicle = new J_EAFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, vehicleScaling, OL_VehicleType.TRUCK, tripTracker, OL_EnergyCarriers.HYDROGEN, available);				
 	
 	zero_Interface.c_orderedVehicles.add(0, hydrogenVehicle);
 	
@@ -485,7 +485,7 @@ if (petroleumFuelTruck!=null) {
 	// Re-add hydrogen vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgHydrogenConsumptionTruck_kWhpkm;			
 	double vehicleScaling = 1.0;
-	J_EAFuelVehicle hydrogenVehicle = new J_EAFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, vehicleScaling, OL_EnergyAssetType.HYDROGEN_TRUCK, tripTracker, OL_EnergyCarriers.HYDROGEN, available);				
+	J_EAFuelVehicle hydrogenVehicle = new J_EAFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, vehicleScaling, OL_VehicleType.TRUCK, tripTracker, OL_EnergyCarriers.HYDROGEN, available);				
 	
 	zero_Interface.c_orderedVehicles.add(0, hydrogenVehicle);
 	
@@ -534,7 +534,7 @@ if ( electricTruck != null ) {
 	// Re-add petroleumFuel vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionTruck_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EAFuelVehicle petroleumFuelVehicle = new J_EAFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, tripTracker, OL_EnergyCarriers.PETROLEUM_FUEL, available);
+	J_EAFuelVehicle petroleumFuelVehicle = new J_EAFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, vehicleScaling, OL_VehicleType.TRUCK, tripTracker, OL_EnergyCarriers.PETROLEUM_FUEL, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, petroleumFuelVehicle);
 	
@@ -583,7 +583,7 @@ if ( hydrogenTruck != null ) {
 	// Re-add petroleumFuel vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionTruck_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EAFuelVehicle petroleumFuelVehicle = new J_EAFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK, tripTracker, OL_EnergyCarriers.PETROLEUM_FUEL, available);
+	J_EAFuelVehicle petroleumFuelVehicle = new J_EAFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, vehicleScaling, OL_VehicleType.TRUCK, tripTracker, OL_EnergyCarriers.PETROLEUM_FUEL, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, petroleumFuelVehicle);
 	
@@ -695,7 +695,7 @@ if (petroleumFuelVan!=null) {
 	double initialStateOfCharge_fr = 1.0;
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionVan_kWhpkm;
 	double vehicleScalingElectric = 1.0;
-	J_EAEV electricVan = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeParameters, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_VAN, tripTracker, available);  
+	J_EAEV electricVan = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeParameters, energyConsumption_kWhpkm, vehicleScalingElectric, OL_VehicleType.VAN, tripTracker, available);  
 	
 	zero_Interface.c_orderedVehicles.add(0, electricVan);
 	
@@ -750,7 +750,7 @@ if ( electricVan != null ) {
 	// Re-add petroleumFuel vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionVan_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EAFuelVehicle petroleumFuelVehicle = new J_EAFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_VAN, tripTracker, OL_EnergyCarriers.PETROLEUM_FUEL, available);
+	J_EAFuelVehicle petroleumFuelVehicle = new J_EAFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, vehicleScaling, OL_VehicleType.VAN, tripTracker, OL_EnergyCarriers.PETROLEUM_FUEL, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, petroleumFuelVehicle);
 	
@@ -801,7 +801,7 @@ if (petroleumFuelCar!=null) {
 	double initialStateOfCharge_fr = 1.0;
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionCar_kWhpkm;
 	double vehicleScalingElectric = 1.0;
-	J_EAEV electricCar = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeParameters, energyConsumption_kWhpkm, vehicleScalingElectric, OL_EnergyAssetType.ELECTRIC_VEHICLE, tripTracker, available);  
+	J_EAEV electricCar = new J_EAEV(gc, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_fr, zero_Interface.energyModel.p_timeParameters, energyConsumption_kWhpkm, vehicleScalingElectric, OL_VehicleType.CAR, tripTracker, available);  
 	
 	zero_Interface.c_orderedVehicles.add(0, electricCar);
 	
@@ -856,7 +856,7 @@ if ( electricCar != null ) {
 	// Re-add petroleumFuel vehicle
 	double energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgGasolineConsumptionCar_kWhpkm;
 	double vehicleScaling = 1.0;
-	J_EAFuelVehicle petroleumFuelVehicle = new J_EAFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, vehicleScaling, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, tripTracker, OL_EnergyCarriers.PETROLEUM_FUEL, available);
+	J_EAFuelVehicle petroleumFuelVehicle = new J_EAFuelVehicle(gc, energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, vehicleScaling, OL_VehicleType.CAR, tripTracker, OL_EnergyCarriers.PETROLEUM_FUEL, available);
 	
 	zero_Interface.c_orderedVehicles.add(0, petroleumFuelVehicle);
 	
@@ -1682,7 +1682,7 @@ while ( nbOfPrivateParkedEV > desiredNbOfPrivateParkedEV){
 	j_ea.removeEnergyAsset();
 	gcListOrderedVehiclesPrivateParking.remove(j_ea);
 	zero_Interface.c_orderedVehiclesPrivateParking.remove(j_ea);
-	J_EAFuelVehicle petroleumFuelCar = new J_EAFuelVehicle(j_ea.getOwner(), energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, 1, OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE, triptracker, OL_EnergyCarriers.PETROLEUM_FUEL, availability);
+	J_EAFuelVehicle petroleumFuelCar = new J_EAFuelVehicle(j_ea.getOwner(), energyConsumption_kWhpkm, zero_Interface.energyModel.p_timeParameters, 1, OL_VehicleType.CAR, triptracker, OL_EnergyCarriers.PETROLEUM_FUEL, availability);
 	gcListOrderedVehiclesPrivateParking.add(petroleumFuelCar);
 	zero_Interface.c_orderedVehiclesPrivateParking.add(petroleumFuelCar);
 	nbOfPrivateParkedEV --;
@@ -1700,7 +1700,7 @@ while ( nbOfPrivateParkedEV < desiredNbOfPrivateParkedEV){
 	zero_Interface.c_orderedVehiclesPrivateParking.remove(petroleumFuelVehicle);
 	double capacityElectricity_kW = randomTrue(0.6) ? randomTrue(0.4) ? 3.2 : 5.6 : 11.0;
 	double storageCapacity_kWh = uniform_discr(65,90);
-	J_EAEV ev = new J_EAEV(petroleumFuelVehicle.getOwner(), capacityElectricity_kW, storageCapacity_kWh, 1, zero_Interface.energyModel.p_timeParameters, energyConsumption_kWhpkm, 1, OL_EnergyAssetType.ELECTRIC_VEHICLE, triptracker, availability);	
+	J_EAEV ev = new J_EAEV(petroleumFuelVehicle.getOwner(), capacityElectricity_kW, storageCapacity_kWh, 1, zero_Interface.energyModel.p_timeParameters, energyConsumption_kWhpkm, 1, OL_VehicleType.CAR, triptracker, availability);	
 	
 	//Check if charging management is present if not: add default management
 	if(((GridConnection)petroleumFuelVehicle.getOwner()).f_getCurrentChargingType() == OL_ChargingAttitude.NONE){
