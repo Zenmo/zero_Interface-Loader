@@ -3984,8 +3984,13 @@ solarpark.set_p_owner(owner);
 solarpark.p_parentNodeElectricID = gn.p_gridNodeID;
 solarpark.p_isSliderGC = false; // This affects the slider range + setValue
 
-double defaultCapacity_kW = 0.2*energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
-solarpark.v_liveConnectionMetaData.setCapacities_kW(0, defaultCapacity_kW, defaultCapacity_kW);
+// 2. Create the GIS Object
+GIS_Object area = f_createAndLinkGISObject(solarpark, id, OL_GISObjectType.SOLARFARM, v_solarParkColor, v_solarParkLineColor);
+
+double area_ha = area.gisRegion.area() / 10000;
+double installedCapacity_kW = area_ha * energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
+double maxContractedCapacity_kW = Math.ceil(installedCapacity_kW / 50.0) * 50.0;
+solarpark.v_liveConnectionMetaData.setCapacities_kW(0, maxContractedCapacity_kW, maxContractedCapacity_kW);
 solarpark.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
 
 // 3. Initialize GridConnection internals and set active
@@ -3993,10 +3998,7 @@ solarpark.f_initialize(energyModel.p_timeParameters);
 solarpark.f_setActive(true, energyModel.p_timeVariables);
 
 // 4. Create the energy asset
-J_EAProduction pvAsset = new J_EAProduction(solarpark, OL_EnergyAssetType.PHOTOVOLTAIC, "Custom PV", OL_EnergyCarriers.ELECTRICITY, defaultCapacity_kW, energyModel.p_timeParameters, energyModel.pp_PVProduction35DegSouth_fr);
-
-// 5. Create the GIS Object
-GIS_Object area = f_createAndLinkGISObject(solarpark, id, OL_GISObjectType.SOLARFARM, v_solarParkColor, v_solarParkLineColor);
+J_EAProduction pvAsset = new J_EAProduction(solarpark, OL_EnergyAssetType.PHOTOVOLTAIC, "Custom PV", OL_EnergyCarriers.ELECTRICITY, installedCapacity_kW, energyModel.p_timeParameters, energyModel.pp_PVProduction35DegSouth_fr);
 
 // 6. Update collections, sliders and legend
 c_customSolarfarmGCs.add(solarpark);
@@ -4007,6 +4009,11 @@ if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
     uI_Tabs.pop_tabElectricity.get(0).f_updateSliders_Electricity();
 }
 f_refreshLegend();
+
+// 7. Select the newly created asset immediately to update and set settings panel sliders
+ArrayList<GIS_Object> selectedList = new ArrayList<>();
+selectedList.add(area);
+f_selectBuilding(area, selectedList);
 
 traceln("Successfully added custom solarfarm");
 /*ALCODEEND*/}
@@ -4106,6 +4113,11 @@ if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
 }
 f_refreshLegend();
 
+// 7. Select the newly created asset immediately to update and set settings panel sliders
+ArrayList<GIS_Object> selectedList = new ArrayList<>();
+selectedList.add(area);
+f_selectBuilding(area, selectedList);
+
 traceln("Successfully added custom windfarm");
 /*ALCODEEND*/}
 
@@ -4155,6 +4167,11 @@ if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
 }
 f_refreshLegend();
 
+// 7. Select the newly created asset immediately to update and set settings panel sliders
+ArrayList<GIS_Object> selectedList = new ArrayList<>();
+selectedList.add(area);
+f_selectBuilding(area, selectedList);
+
 traceln("Successfully added custom grid battery");
 /*ALCODEEND*/}
 
@@ -4173,18 +4190,19 @@ GCEnergyProduction gc = (GCEnergyProduction) selectedGC;
 J_EAProduction pvAsset = (J_EAProduction) gc.c_productionAssets.get(0);
 
 double currentCapacity_kW = pvAsset.getCapacityElectric_kW();
-double currentCapacity_ha = currentCapacity_kW / energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
+double maxContractedCapacity_kW = Math.ceil(currentCapacity_kW / 50.0) * 50.0;
 
-// Setup capacity ha slider
-sl_customGCSolarfarmInstalledCapacity_ha.setRange(0.1, 10);
-sl_customGCSolarfarmInstalledCapacity_ha.setValue(currentCapacity_ha, false); // false prevents triggering ActionCode
+// Get the area of the custom solarfarm in hectares + Calculate current capacity density in kW/ha
+double area_m2 = gc.c_connectedGISObjects.get(0).gisRegion.area();
+double area_ha = area_m2 / 10000.0;
+double currentCapacity_kWpha = currentCapacity_kW / area_ha;
 
-// Setup capacity kW slider
-sl_customGCSolarfarmInstalledCapacity_kW.setRange((int)(0.1*energyModel.avgc_data.p_avgSolarFieldPower_kWppha), (int)(10*energyModel.avgc_data.p_avgSolarFieldPower_kWppha));
-sl_customGCSolarfarmInstalledCapacity_kW.setValue(currentCapacity_kW, false);
+// Setup capacity per ha slider
+sl_customGCSolarfarmInstalledCapacity_kWpha.setRange((int)(0.5*energyModel.avgc_data.p_avgSolarFieldPower_kWppha), (int)(2*energyModel.avgc_data.p_avgSolarFieldPower_kWppha));
+sl_customGCSolarfarmInstalledCapacity_kWpha.setValue(currentCapacity_kWpha, false);
 
 // Setup contracted capacity slider
-sl_customGCSolarfarmContractedCapacity_kW.setRange(0, currentCapacity_kW);
+sl_customGCSolarfarmContractedCapacity_kW.setRange(0, maxContractedCapacity_kW);
 sl_customGCSolarfarmContractedCapacity_kW.setValue(gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW(), false);
 
 // Setup curtailment checkbox
@@ -4441,6 +4459,7 @@ c_tempSavedDots.add(f_drawTempCoordinateDot(clickx, clicky));
 
 if (b_addCustomWindfarmGC || b_addCustomGridBatteryGC){
 	b_customGCPolygonCreated = true;
+	txt_addCustomGCToMapTaskInstruction.setText("Kies een trafo op de kaart");
 } else {
 	// Update instruction text
 	int minNbRequiredVertices = 3;
@@ -4564,13 +4583,6 @@ dot.setLineColor(Color.WHITE);
 dot.setLineWidth(1.0);
 
 return dot;
-/*ALCODEEND*/}
-
-double f_finalizeCustomGCCreationDeletion()
-{/*ALCODESTART::1781686995779*/
-b_customGCPolygonCreated = true;
-txt_addCustomGCToMapTaskInstruction.setText("Kies een trafo op de kaart");
-traceln("Vertices confirmed. Now click on a transformer (GridNode) to connect the custom energy asset.");
 /*ALCODEEND*/}
 
 double f_cancelCustomGCCreation()

@@ -8744,8 +8744,9 @@ b_removeCustomGC = false;</OnClickCode>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>c_tempSavedCoordinates.size()&gt;=3</VisibleCode>
-						<OnClickCode>f_finalizeCustomGCCreationDeletion();</OnClickCode>
+						<VisibleCode>c_tempSavedCoordinates.size()&gt;=3 &amp;&amp; !b_customGCPolygonCreated</VisibleCode>
+						<OnClickCode>b_customGCPolygonCreated = true;
+txt_addCustomGCToMapTaskInstruction.setText("Kies een trafo op de kaart");</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
@@ -8883,7 +8884,7 @@ b_removeCustomGC = false;</OnClickCode>
 				<Id>1778088565568</Id>
 				<Name><![CDATA[txt_customGCSettingsSolarfarmInstalledCapacity_ha]]></Name>
 				<X>20</X>
-				<Y>90</Y>
+				<Y>150</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8906,9 +8907,9 @@ b_removeCustomGC = false;</OnClickCode>
 			</Text>
 			<Text>
 				<Id>1778089224407</Id>
-				<Name><![CDATA[txt_customGCSolarfarmInstalledCapacity_ha]]></Name>
+				<Name><![CDATA[txt_customGCSolarfarmTotalSolarfarmArea_ha]]></Name>
 				<X>245</X>
-				<Y>90</Y>
+				<Y>120</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8922,7 +8923,7 @@ b_removeCustomGC = false;</OnClickCode>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[0 ha]]></Text>
-				<TextCode>sl_customGCSolarfarmInstalledCapacity_ha.getValue() + " ha"</TextCode>
+				<TextCode>c_selectedGridConnections.isEmpty() ? "" : (round((c_selectedGridConnections.get(0).c_connectedGISObjects.get(0).gisRegion.area() / 10000.0) * 10.0) / 10.0) + " ha"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -8933,7 +8934,7 @@ b_removeCustomGC = false;</OnClickCode>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1778089224409</Id>
-				<Name><![CDATA[sl_customGCSolarfarmInstalledCapacity_ha]]></Name>
+				<Name><![CDATA[sl_customGCSolarfarmInstalledCapacity_kWpha]]></Name>
 				<X>260</X>
 				<Y>85</Y>
 				<Label>
@@ -8947,27 +8948,39 @@ b_removeCustomGC = false;</OnClickCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>double installedCapacity_ha = sl_customGCSolarfarmInstalledCapacity_ha.getValue();
-double installedCapacity_kW = installedCapacity_ha * energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
-
-// Sync sl_customGCSolarfarmInstalledCapacity_kW slider without triggering its action
-sl_customGCSolarfarmInstalledCapacity_kW.setValue(installedCapacity_kW, false);
+					<ActionCode>double installedCapacity_kWpha = sl_customGCSolarfarmInstalledCapacity_kWpha.getValue();
 
 GCEnergyProduction gc = (GCEnergyProduction)c_selectedGridConnections.get(0);
 J_EAProduction pvAsset = (J_EAProduction)gc.c_productionAssets.get(0);
 
-// If needed, adjust the contracted capacity 
+// Calculate new installed capacity solarfarm and update text objects
+double area_m2 = gc.c_connectedGISObjects.get(0).gisRegion.area();
+double area_ha = area_m2 / 10000.0;
+double installedCapacity_kW = installedCapacity_kWpha * area_ha;
+
+traceln("installedCapacity_kW: " + installedCapacity_kW);
+
+// Calculate max contracted range to be the next multiple of 50 kW above installed capacity
+double maxContractedCapacity_kW = Math.ceil(installedCapacity_kW / 50.0) * 50.0;
+//if (maxContractedCapacity_kW == 0) maxContractedCapacity_kW = 50.0; // fallback to prevent 0 range
+traceln("maxContractedCapacity_kW: " + maxContractedCapacity_kW);
+//txt_customGCSolarfarmTotalSolarfarmArea_ha.setText(area_ha + " ha");
+//txt_customGCSolarfarmInstalledCapacity_kW.setText(installedCapacity_kW + " kW");
+
+// If needed, adjust the contracted capacity
 double contractedCapacity_kW = sl_customGCSolarfarmContractedCapacity_kW.getValue();
-if (contractedCapacity_kW &gt; installedCapacity_kW) {
-    contractedCapacity_kW = installedCapacity_kW;
+traceln("contractedCapacity_kW: " + contractedCapacity_kW);
+if (contractedCapacity_kW &gt; maxContractedCapacity_kW) {
+    contractedCapacity_kW = maxContractedCapacity_kW;
+    traceln("contractedCapacity_kW after: " + contractedCapacity_kW);
     sl_customGCSolarfarmContractedCapacity_kW.setValue(contractedCapacity_kW, false);
 }
 // Dynamically clamp the range of the contracted capacity slider
-sl_customGCSolarfarmContractedCapacity_kW.setRange(0, installedCapacity_kW);
+sl_customGCSolarfarmContractedCapacity_kW.setRange(0,  maxContractedCapacity_kW);
 
 // Update backend
 pvAsset.setCapacityElectric_kW(installedCapacity_kW, gc);
-gc.v_liveConnectionMetaData.setCapacities_kW(0, contractedCapacity_kW, installedCapacity_kW);
+gc.v_liveConnectionMetaData.setCapacities_kW(0, maxContractedCapacity_kW, maxContractedCapacity_kW);
 
 // Update the active instance of tabElectricity sliders
 if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
@@ -8980,7 +8993,7 @@ f_resetSettings();</ActionCode>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<Step>0.1</Step>
+					<Step>100</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -9014,7 +9027,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778157755373</Id>
 				<Name><![CDATA[txt_customGCSolarfarmInstalledCapacity_kW]]></Name>
 				<X>245</X>
-				<Y>120</Y>
+				<Y>150</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -9028,7 +9041,7 @@ f_resetSettings();</ActionCode>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[0 kW]]></Text>
-				<TextCode>sl_customGCSolarfarmInstalledCapacity_kW.getValue() + " kW"</TextCode>
+				<TextCode>c_selectedGridConnections.isEmpty() ? "" : (round(c_selectedGridConnections.get(0).c_productionAssets.get(0).getCapacityElectric_kW() * 10.0) / 10.0) + " kW"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -9036,65 +9049,11 @@ f_resetSettings();</ActionCode>
 				</Font>
 				<Alignment>RIGHT</Alignment>
 			</Text>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1778157791903</Id>
-				<Name><![CDATA[sl_customGCSolarfarmInstalledCapacity_kW]]></Name>
-				<X>260</X>
-				<Y>115</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>double installedCapacity_kW = sl_customGCSolarfarmInstalledCapacity_kW.getValue();
-double installedCapacity_ha = installedCapacity_kW / energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
-
-// Sync sl_customEASolarfarmInstalledCapacity_ha slider without triggering its action
-sl_customGCSolarfarmInstalledCapacity_ha.setValue(installedCapacity_ha, false);
-
-GCEnergyProduction gc = (GCEnergyProduction)c_selectedGridConnections.get(0);
-J_EAProduction pvAsset = (J_EAProduction)gc.c_productionAssets.get(0);
-
-// If needed, adjust the contracted capacity
-double contractedCapacity_kW = sl_customGCSolarfarmContractedCapacity_kW.getValue();
-if (contractedCapacity_kW &gt; installedCapacity_kW) {
-    contractedCapacity_kW = installedCapacity_kW;
-    sl_customGCSolarfarmContractedCapacity_kW.setValue(contractedCapacity_kW, false);
-}
-// Dynamically clamp the range of the contracted capacity slider
-sl_customGCSolarfarmContractedCapacity_kW.setRange(0, installedCapacity_kW);
-
-// Update backend
-pvAsset.setCapacityElectric_kW(installedCapacity_kW, gc);
-gc.v_liveConnectionMetaData.setCapacities_kW(0, contractedCapacity_kW, installedCapacity_kW);
-
-// Update the active instance of tabElectricity sliders
-if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
-    uI_Tabs.pop_tabElectricity.get(0).f_updateSliders_Electricity();
-}
-
-if (!b_runningMainInterfaceScenarios) f_setScenarioToCustom();
-f_resetSettings();</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<Step>100</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
 			<Text>
 				<Id>1778157960511</Id>
 				<Name><![CDATA[txt_customGCSettingsSolarfarmContractedCapacity_kW]]></Name>
 				<X>20</X>
-				<Y>150</Y>
+				<Y>180</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -9119,7 +9078,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778158102891</Id>
 				<Name><![CDATA[txt_customGCSettingsSolarfarmCurtailment]]></Name>
 				<X>20</X>
-				<Y>180</Y>
+				<Y>210</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -9144,7 +9103,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778158258122</Id>
 				<Name><![CDATA[txt_customEASolarfarmContractedCapacity_kW]]></Name>
 				<X>245</X>
-				<Y>150</Y>
+				<Y>180</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -9171,7 +9130,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778158369195</Id>
 				<Name><![CDATA[cb_customGCSolarfarmCurtailment]]></Name>
 				<X>302</X>
-				<Y>172</Y>
+				<Y>202</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -9205,7 +9164,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778158173095</Id>
 				<Name><![CDATA[sl_customGCSolarfarmContractedCapacity_kW]]></Name>
 				<X>260</X>
-				<Y>145</Y>
+				<Y>175</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -9217,11 +9176,17 @@ f_resetSettings();</ActionCode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>double contractedCapacity_kW = sl_customGCSolarfarmContractedCapacity_kW.getValue();
+					<ActionCode>GCEnergyProduction gc = (GCEnergyProduction) c_selectedGridConnections.get(0);
+double physicalCapacity_kW = gc.v_liveConnectionMetaData.getPhysicalCapacity_kW();
 
-// Update backend
-GCEnergyProduction gc = (GCEnergyProduction) c_selectedGridConnections.get(0);
-gc.v_liveConnectionMetaData.setCapacities_kW(0, contractedCapacity_kW, gc.v_liveConnectionMetaData.getPhysicalCapacity_kW());
+double contractedCapacity_kW = sl_customGCSolarfarmContractedCapacity_kW.getValue();
+
+if (contractedCapacity_kW &gt; physicalCapacity_kW) {
+    contractedCapacity_kW = physicalCapacity_kW;
+    sl_customGCSolarfarmContractedCapacity_kW.setValue(contractedCapacity_kW, false);
+}
+
+gc.v_liveConnectionMetaData.setCapacities_kW(0, contractedCapacity_kW, physicalCapacity_kW);
 
 if (!b_runningMainInterfaceScenarios) f_setScenarioToCustom();
 f_resetSettings();</ActionCode>
@@ -9233,6 +9198,82 @@ f_resetSettings();</ActionCode>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
+			<Text>
+				<Id>1781771512388</Id>
+				<Name><![CDATA[txt_customGCSettingsSolarfarmInstalledCapacityPerHectare_kWpha]]></Name>
+				<X>20</X>
+				<Y>90</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Vermogen per hectare]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1781772075017</Id>
+				<Name><![CDATA[txt_customGCSettingsSolarfarmInstalledCapacityPerHectare_kWpha1]]></Name>
+				<X>20</X>
+				<Y>120</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Totaal oppervlak]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1781772181108</Id>
+				<Name><![CDATA[txt_customGCSolarfarmInstalledCapacity_kWpha]]></Name>
+				<X>245</X>
+				<Y>90</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0 kW/ha]]></Text>
+				<TextCode>(round(sl_customGCSolarfarmInstalledCapacity_kWpha.getValue() * 10.0) / 10.0) + " kW/ha"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
 		</Presentation>
 	</Group>
 	<Group>

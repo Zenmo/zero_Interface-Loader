@@ -1770,7 +1770,7 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue() - totalCustomBatteryCapacity_
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[0 ha]]></Text>
-				<TextCode>sl_largeScalePV_ha.getValue() + " ha"</TextCode>
+				<TextCode>(round(sl_largeScalePV_ha.getValue() * 10.0) / 10.0) + " ha"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
