@@ -2140,9 +2140,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>zero_Interface.b_addCustomSolarfarmGC = true;
-zero_Interface.v_customGCLatitude = 0;
-zero_Interface.v_customGCLongitude = 0;
-zero_Interface.txt_addCustomGCToMapTaskInstruction.setText("Kies een locatie op de kaart");
+zero_Interface.txt_addCustomGCToMapTaskInstruction.setText("Teken je locatie op de kaart. Kies minimaal 3 hoekpunten.");
 
 traceln("Adding solarfarm: Please click on the map to set the location.");</ActionCode>
 				</BasicProperties>
@@ -2170,8 +2168,6 @@ traceln("Adding solarfarm: Please click on the map to set the location.");</Acti
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>zero_Interface.b_addCustomGridBatteryGC = true;
-zero_Interface.v_customGCLatitude = 0;
-zero_Interface.v_customGCLongitude = 0;
 zero_Interface.txt_addCustomGCToMapTaskInstruction.setText("Kies een locatie op de kaart");
 traceln("Adding grid battery: Please click on the map to set the location.");</ActionCode>
 				</BasicProperties>
@@ -2199,8 +2195,6 @@ traceln("Adding grid battery: Please click on the map to set the location.");</A
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>zero_Interface.b_addCustomWindfarmGC = true;
-zero_Interface.v_customGCLatitude = 0;
-zero_Interface.v_customGCLongitude = 0;
 zero_Interface.txt_addCustomGCToMapTaskInstruction.setText("Kies een locatie op de kaart");
 traceln("Adding windfarm: Please click on the map to set the location.");</ActionCode>
 				</BasicProperties>
@@ -2230,8 +2224,6 @@ traceln("Adding windfarm: Please click on the map to set the location.");</Actio
 					<EnableExpression>!zero_Interface.c_customSolarfarmGCs.isEmpty() || !zero_Interface.c_customWindfarmGCs.isEmpty() || !zero_Interface.c_customGridBatteryGCs.isEmpty()</EnableExpression>
 					<ActionCode>if(!zero_Interface.c_customSolarfarmGCs.isEmpty() || !zero_Interface.c_customWindfarmGCs.isEmpty() || !zero_Interface.c_customGridBatteryGCs.isEmpty()) {
 	zero_Interface.b_removeCustomGC = true;
-	zero_Interface.v_customGCLatitude = 0;
-	zero_Interface.v_customGCLongitude = 0;
 	zero_Interface.txt_addCustomGCToMapTaskInstruction.setText("Kies een energieasset op de kaart");
 	traceln("Click on the energy asset you want to remove.");
 } else {

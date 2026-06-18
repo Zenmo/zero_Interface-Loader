@@ -2359,6 +2359,47 @@
 			</InitialValue>
 		</Properties>
 	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1781682558407</Id>
+		<Name><![CDATA[b_customGCPolygonCreated]]></Name>
+		<X>-240</X>
+		<Y>1200</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[boolean]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[false]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1781693560986</Id>
+		<Name><![CDATA[previewGISRegion]]></Name>
+		<X>2120</X>
+		<Y>-2990</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[GISRegion]]></Type>
+		</Properties>
+	</Variable>
 	<Variable Class="Parameter">
 		<Id>1715858732720</Id>
 		<Name><![CDATA[energyModel]]></Name>
@@ -3785,7 +3826,6 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 		<Id>1781530600300</Id>
 		<Name><![CDATA[c_tempSavedCoordinates]]></Name>
 		<Description><![CDATA[Temporary saved Pair list of various latitude/longitude combinations (for creating a custom EA GC GIS region polygon]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2120</X>
 		<Y>-3030</Y>
 		<Label>
@@ -3797,7 +3837,26 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>List&lt;Pair&lt;double,double&gt;&gt;</ElementClass>
+			<ElementClass>Pair&lt;Double,Double&gt;</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1781678594369</Id>
+		<Name><![CDATA[c_tempSavedDots]]></Name>
+		<Description><![CDATA[Temporary saved GIS_Object which represent the latitude/longitude coordinates saved in c_tempSavedCoordinates]]></Description>
+		<X>2120</X>
+		<Y>-3010</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>GISRegion</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>

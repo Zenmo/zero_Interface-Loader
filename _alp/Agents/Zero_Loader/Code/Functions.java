@@ -722,16 +722,27 @@ switch(node_shape){
 		GISCoords[5]=GN.p_longitude + scaling_factor_gridnode*0.00001*2;
 		GISCoords[7]=GN.p_longitude + scaling_factor_gridnode*0.00001;
 		break;
-	/*
 	case "CIRCLE":
-			// if you want Circle coordinates -->
+		// if you want Circle coordinates -->
 		//x = r * cos(t) + a
 		//y = r * sin(t) + b
 		//t is an angle between 0 and 2π (more steps is more circle points, about 10-12 should suffice. --> adjust nb_GISCoords accordingly
 		// r is the radius: 0.000009 degrees in latitude is about 1 meter 
 		// a and b are latitude and longitude
+		double rLat = scaling_factor_gridnode * 0.000001;
+		double rLon = rLat / Math.cos(Math.toRadians(GN.p_latitude));  // degrees longitude corrected
+		int nPoints = GISCoords.length / 2;
+		
+		for (int i = 0; i < nPoints; i++) {
+
+	        double angle = 2 * Math.PI * i / nPoints;
+	        double lat = GN.p_latitude  + rLat * Math.sin(angle);
+	        double lon = GN.p_longitude + rLon * Math.cos(angle);
+	
+	        GISCoords[2*i] = lat;
+	        GISCoords[2*i+1] = lon;
+	    }
 		break;
-	*/
 }
 
 return GISCoords;

@@ -3872,7 +3872,16 @@ else if(b_inManualFilterSelectionMode){
 	f_selectManualFilteredGC(clickx, clicky);
 }
 else if (b_addCustomSolarfarmGC || b_addCustomWindfarmGC || b_addCustomGridBatteryGC) {
-    if (v_customGCLatitude == 0 && v_customGCLongitude == 0) {
+	if (!b_customGCPolygonCreated) {
+		f_addCustomGCLocationSelection(clickx, clicky);
+	} else {
+		f_addCustomGCTransformerSelection(clickx, clicky);
+	}
+}
+	
+    
+    
+    /*if (v_customGCLatitude == 0 && v_customGCLongitude == 0) {
         // Step 1: Set location
         v_customGCLatitude = clickx; // Assuming clickx is lat or lon depending on map orientation
         v_customGCLongitude = clicky;
@@ -3908,36 +3917,9 @@ else if (b_addCustomSolarfarmGC || b_addCustomWindfarmGC || b_addCustomGridBatte
             traceln("Please click on a valid transformer (GridNode).");
             return;
         }
-    }
-}
+    }*/
 else if (b_removeCustomGC) {
-	// Group all GIS objects to check for the click
-    List<GIS_Object> allGISObjects = new ArrayList<>();
-    for(GIS_Building b : energyModel.pop_GIS_Buildings) {
-    	allGISObjects.add(b);
-    }
-    for(GIS_Object object : energyModel.pop_GIS_Objects){
-    	allGISObjects.add(object);
-    }
-    for (GIS_Object GISObject : allGISObjects) {
-        if (GISObject.gisRegion != null && GISObject.gisRegion.contains(clickx, clicky) && GISObject.gisRegion.isVisible()) {
-            if (GISObject.c_containedGridConnections.size() > 0) {
-                GridConnection gc = GISObject.c_containedGridConnections.get(0);
-                
-                // Only allow deletion of specific energy asset types
-                if (gc instanceof GCEnergyProduction || gc instanceof GCGridBattery) {
-                    f_removeCustomGC(gc);
-                    b_removeCustomGC = false; // Reset mode after deletion
-                    traceln("Removed the energy asset: " + gc.p_gridConnectionID);
-                    return;
-                }
-            }
-        }
-    }
-    // If the user clicks elsewhere, cancel the deletion mode
-    b_removeCustomGC = false;
-    traceln("Deletion mode cancelled.");
-    return;
+	f_removeCustomGCSelection(clickx,clicky);
 }
 else{
 	if (uI_Tabs.pop_tabEHub.size() > 0 && uI_Tabs.pop_tabEHub.get(0).b_inCapacitySharingSelectionMode) {
@@ -3984,7 +3966,7 @@ if(c_selectedGridConnections.get(0).c_connectedGISObjects.size() > 1){ //Also co
 uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
 /*ALCODEEND*/}
 
-double f_addCustomSolarfarmGC(double lat,double lon,GridNode gn)
+double f_addCustomSolarfarmGC(GridNode gn)
 {/*ALCODESTART::1777995108231*/
 String id = "Custom_Solarfarm_" + v_customSolarfarmGCCounter++;
 
@@ -4000,9 +3982,8 @@ solarpark.set_p_gridConnectionID(id);
 solarpark.set_p_ownerID(owner.p_actorID);
 solarpark.set_p_owner(owner);
 solarpark.p_parentNodeElectricID = gn.p_gridNodeID;
-solarpark.p_isSliderGC = true; // This affects the slider range + setValue
+solarpark.p_isSliderGC = false; // This affects the slider range + setValue
 
-// 2. Set capacity
 double defaultCapacity_kW = 0.2*energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
 solarpark.v_liveConnectionMetaData.setCapacities_kW(0, defaultCapacity_kW, defaultCapacity_kW);
 solarpark.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
@@ -4015,7 +3996,7 @@ solarpark.f_setActive(true, energyModel.p_timeVariables);
 J_EAProduction pvAsset = new J_EAProduction(solarpark, OL_EnergyAssetType.PHOTOVOLTAIC, "Custom PV", OL_EnergyCarriers.ELECTRICITY, defaultCapacity_kW, energyModel.p_timeParameters, energyModel.pp_PVProduction35DegSouth_fr);
 
 // 5. Create the GIS Object
-GIS_Object area = f_createAndLinkGISObject(solarpark, id, OL_GISObjectType.SOLARFARM, v_solarParkColor, v_solarParkLineColor, lat, lon);
+GIS_Object area = f_createAndLinkGISObject(solarpark, id, OL_GISObjectType.SOLARFARM, v_solarParkColor, v_solarParkLineColor);
 
 // 6. Update collections, sliders and legend
 c_customSolarfarmGCs.add(solarpark);
@@ -4027,7 +4008,7 @@ if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
 }
 f_refreshLegend();
 
-traceln("Successfully added custom solarfarm at " + lat + ", " + lon + " connected to " + gn.p_gridNodeID);
+traceln("Successfully added custom solarfarm");
 /*ALCODEEND*/}
 
 double f_removeCustomGC(GridConnection gc)
@@ -4082,7 +4063,7 @@ if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
 f_refreshLegend();
 /*ALCODEEND*/}
 
-double f_addCustomWindfarmGC(double lat,double lon,GridNode gn)
+double f_addCustomWindfarmGC(GridNode gn)
 {/*ALCODESTART::1777995108235*/
 String id = "Custom_Windfarm_" + v_customWindfarmGCCounter++;
 
@@ -4098,7 +4079,7 @@ windpark.set_p_gridConnectionID(id);
 windpark.set_p_ownerID(owner.p_actorID);
 windpark.set_p_owner(owner);
 windpark.p_parentNodeElectricID = gn.p_gridNodeID;
-windpark.p_isSliderGC = true; // This affects the slider range + setValue
+windpark.p_isSliderGC = false; // This affects the slider range + setValue
 
 // 2. Set capacity
 double defaultCapacity_kW = 500;
@@ -4113,7 +4094,7 @@ windpark.f_setActive(true, energyModel.p_timeVariables);
 J_EAProduction windAsset = new J_EAProduction(windpark, OL_EnergyAssetType.WINDMILL, "Custom Windpark", OL_EnergyCarriers.ELECTRICITY, defaultCapacity_kW, energyModel.p_timeParameters, energyModel.pp_windProduction_fr);
 
 // 5. Create the GIS Object
-GIS_Object area = f_createAndLinkGISObject(windpark, id, OL_GISObjectType.WINDFARM, v_windFarmColor, v_windFarmLineColor, lat, lon);
+GIS_Object area = f_createAndLinkGISObject(windpark, id, OL_GISObjectType.WINDFARM, v_windFarmColor, v_windFarmLineColor);
 
 // 6. Update collections, sliders and legend
 c_customWindfarmGCs.add(windpark);
@@ -4125,10 +4106,10 @@ if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
 }
 f_refreshLegend();
 
-traceln("Successfully added custom windfarm at " + lat + ", " + lon + " connected to " + gn.p_gridNodeID);
+traceln("Successfully added custom windfarm");
 /*ALCODEEND*/}
 
-double f_addCustomGridBatteryGC(double lat,double lon,GridNode gn)
+double f_addCustomGridBatteryGC(GridNode gn)
 {/*ALCODESTART::1777995108237*/
 String id = "Custom_Grid_Battery_" + v_customGridBatteryGCCounter++;
 
@@ -4144,7 +4125,7 @@ battery.set_p_gridConnectionID(id);
 battery.set_p_ownerID(owner.p_actorID);
 battery.set_p_owner(owner);
 battery.p_parentNodeElectricID = gn.p_gridNodeID;
-battery.p_isSliderGC = true; // This affects the slider range + setValue
+battery.p_isSliderGC = false; // This affects the slider range + setValue
 
 // 2. Set capacity
 double defaultCapacity_kW = 250;
@@ -4162,7 +4143,7 @@ I_BatteryManagement batteryAlgorithm = new J_BatteryManagementSelfConsumptionGri
 battery.f_setBatteryManagement(batteryAlgorithm);
 		
 // 5. Create GIS Object 
-GIS_Object area = f_createAndLinkGISObject(battery, id, OL_GISObjectType.BATTERY, v_batteryColor, v_batteryLineColor, lat, lon);
+GIS_Object area = f_createAndLinkGISObject(battery, id, OL_GISObjectType.BATTERY, v_batteryColor, v_batteryLineColor);
 
 // 6. Update collections, sliders and legend
 c_customGridBatteryGCs.add(battery);
@@ -4174,7 +4155,7 @@ if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
 }
 f_refreshLegend();
 
-traceln("Successfully added custom grid battery at " + lat + ", " + lon + " connected to " + gn.p_gridNodeID);
+traceln("Successfully added custom grid battery");
 /*ALCODEEND*/}
 
 double f_updateCustomGCSolarfarmSettings()
@@ -4304,20 +4285,29 @@ if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
 return null;
 /*ALCODEEND*/}
 
-GIS_Object f_createAndLinkGISObject(GridConnection gc,String id,OL_GISObjectType gisType,Color fillColor,Color lineColor,double lat,double lon)
+GIS_Object f_createAndLinkGISObject(GridConnection gc,String id,OL_GISObjectType gisType,Color fillColor,Color lineColor)
 {/*ALCODESTART::1778855159263*/
 GIS_Object area = energyModel.add_pop_GIS_Objects();
 area.p_id = id;
 area.p_GISObjectType = gisType;
-area.p_latitude = lat;
-area.p_longitude = lon;
+area.p_latitude = c_tempSavedCoordinates.get(0).getFirst();
+area.p_longitude = c_tempSavedCoordinates.get(0).getSecond();
 
-// 1. Calculate physical footprint size (area in m2) based on capacity
-double area_m2 = f_calculateGISObjectArea(gc, gisType);
-
-// 2. Generate square polygon coordinates and assign to region
-double[] polyCoords = f_calculateSquareCoordinates(lat, lon, area_m2);
-area.gisRegion = f_createGISObject(polyCoords);
+// 2. Generate coordinates (circular for windfarm, square for others) and assign to region
+double[] polyCoords;
+if (gisType == OL_GISObjectType.WINDFARM || gisType == OL_GISObjectType.BATTERY) {
+	double area_m2 = f_calculateGISObjectArea(gc, gisType);
+	if (gisType == OL_GISObjectType.WINDFARM) {
+    	polyCoords = f_calculateCircleCoordinates(area.p_latitude, area.p_longitude, area_m2);
+    	area.gisRegion = f_createGISObject(polyCoords);
+	} else if (gisType == OL_GISObjectType.BATTERY) {
+    	polyCoords = f_calculateSquareCoordinates(area.p_latitude, area.p_longitude, area_m2);
+    	area.gisRegion = f_createGISObject(polyCoords);
+    }
+} else {
+	polyCoords = f_calculateCustomPolygonCoordinates(c_tempSavedCoordinates);
+	area.gisRegion = f_createGISObject(polyCoords);
+}
 
 // 3. Add to collections
 area.c_containedGridConnections.add(gc);
@@ -4350,31 +4340,6 @@ for (int i = 1; i <= 10; i++) {
 f_initializeLegend();
 /*ALCODEEND*/}
 
-double f_updateGISObjectSize(GridConnection gc)
-{/*ALCODESTART::1778950448168*/
-for (GIS_Object area : gc.c_connectedGISObjects) {
-    if (area.p_GISObjectType == OL_GISObjectType.SOLARFARM || area.p_GISObjectType == OL_GISObjectType.WINDFARM || area.p_GISObjectType == OL_GISObjectType.BATTERY) {
-        
-        // 1. Calculate physical footprint size (area in m2) based on capacity
-        double area_m2 = f_calculateGISObjectArea(gc, area.p_GISObjectType);
-		
-        // 2. Generate square polygon coordinates
-        double[] polyCoords = f_calculateSquareCoordinates(area.p_latitude, area.p_longitude, area_m2);
-        
-        // 3. Clean up the previously drawn polygon region
-        if (area.gisRegion != null) {
-            area.gisRegion.remove();
-        }
-        
-        // 4. Create new polygon region
-        area.gisRegion = f_createGISObject(polyCoords);
-        
-        // 5. Re-apply styling (colors/visibility)
-        f_styleAreas(area);
-    }
-}
-/*ALCODEEND*/}
-
 double f_calculateGISObjectArea(GridConnection gc,OL_GISObjectType gisType)
 {/*ALCODESTART::1778997814360*/
 /**
@@ -4398,21 +4363,16 @@ if (gc instanceof GCEnergyProduction prodGC) {
         area_m2 = capacity_ha * 10000.0;
     } 
     else if (gisType == OL_GISObjectType.WINDFARM) {
-        double capacity_kW = 0.0;
-        for (J_EAProduction asset : prodGC.c_productionAssets) {
-            if (asset.getEAType() == OL_EnergyAssetType.WINDMILL) {
-                capacity_kW += asset.getCapacityElectric_kW();
-            }
-        }
-        double capacity_ha = (capacity_kW / 1000.0) / 5.0; // 5 MW per hectare
-        area_m2 = capacity_ha * 10000.0;
+        double defaultCapacity_kW = 500.0;
+        double defaultCapacity_ha = (defaultCapacity_kW / 1000.0) / 5.0; // 5 MW per hectare -> 0.1
+        area_m2 = defaultCapacity_ha * 10000.0;
     }
 } 
 else if (gc instanceof GCGridBattery batteryGC) {
     if (gisType == OL_GISObjectType.BATTERY) {
-        double capacity_MWh = batteryGC.p_batteryAsset.getStorageCapacity_kWh() / 1000.0;
-        double capacity_ha = capacity_MWh / 100.0; // 100 MWh per hectare
-            area_m2 = capacity_ha * 10000.0;
+        double defaultCapacity_MWh = 500.0 / 1000.0;
+        double defaultCapacity_ha = defaultCapacity_MWh / 100.0; // 100 MWh per hectare -> 0.005 ha
+            area_m2 = defaultCapacity_ha * 10000.0;
         }
     }
 return area_m2;
@@ -4441,5 +4401,195 @@ return new double[]{
     lat - offsetLat, lon + offsetLon, // Bottom-right
     lat - offsetLat, lon - offsetLon  // Bottom-left
 };
+/*ALCODEEND*/}
+
+double[] f_calculateCircleCoordinates(double lat,double lon,double area_m2)
+{/*ALCODESTART::1781623122174*/
+// A circle's radius in meters from its area in m²: Area = pi * r^2  =>  r = sqrt(Area / pi)
+double radius_m = Math.sqrt(area_m2 / Math.PI);
+
+// Number of points (vertices) to approximate the circle
+int numPoints = 32;
+double[] polyCoords = new double[numPoints * 2];
+
+// Earth conversion factors (approximate for localized areas)
+double metersPerDegLat = 111320.0;
+double metersPerDegLon = 111320.0 * Math.cos(Math.toRadians(lat));
+
+for (int i = 0; i < numPoints; i++) {
+    double angle = 2.0 * Math.PI * i / numPoints;
+    double offsetLat = (radius_m * Math.sin(angle)) / metersPerDegLat;
+    double offsetLon = (radius_m * Math.cos(angle)) / metersPerDegLon;
+    
+    polyCoords[2 * i] = lat + offsetLat;
+    polyCoords[2 * i + 1] = lon + offsetLon;
+}
+
+return polyCoords;
+/*ALCODEEND*/}
+
+double f_addCustomGCLocationSelection(double clickx,double clicky)
+{/*ALCODESTART::1781677700343*/
+// --- PHASE 1: Drawing Polygon Vertices ---
+
+// Add a vertex to the coordinates list
+Pair<Double, Double> clickedCoord = new Pair<>(clickx, clicky);
+c_tempSavedCoordinates.add(clickedCoord);
+
+// Place a small square dot on the map representing this vertex
+c_tempSavedDots.add(f_drawTempCoordinateDot(clickx, clicky));
+
+if (b_addCustomWindfarmGC || b_addCustomGridBatteryGC){
+	b_customGCPolygonCreated = true;
+} else {
+	// Update instruction text
+	int minNbRequiredVertices = 3;
+	int currentNbOfSavedCoordinates = c_tempSavedCoordinates.size();
+	if(minNbRequiredVertices - currentNbOfSavedCoordinates > 1){
+		txt_addCustomGCToMapTaskInstruction.setText("Teken je locatie op de kaart. Kies nog minimaal" + (minNbRequiredVertices - currentNbOfSavedCoordinates) + " hoekpunten.");
+	}
+	else if(minNbRequiredVertices - currentNbOfSavedCoordinates == 1){
+		txt_addCustomGCToMapTaskInstruction.setText("Teken je locatie op de kaart. Kies nog minimaal" + (minNbRequiredVertices - currentNbOfSavedCoordinates) + " hoekpunt.");
+	} else {
+		if (previewGISRegion != null) {
+	        previewGISRegion.remove();
+	    }
+	    double[] previewCoords = f_calculateCustomPolygonCoordinates(c_tempSavedCoordinates);
+	    previewGISRegion = f_createGISObject(previewCoords);
+	    previewGISRegion.setFillColor(new Color(255, 0, 0, 50)); // Semi-transparent red
+	    previewGISRegion.setLineColor(Color.RED);
+	    previewGISRegion.setLineWidth(1.0);
+		txt_addCustomGCToMapTaskInstruction.setText("Huidig aantal hoekpunten: " + currentNbOfSavedCoordinates + ". Klik op 'Voltooien' om te bevestigen.");
+	}
+}
+
+f_deselectPreviousSelect();
+/*ALCODEEND*/}
+
+double f_addCustomGCTransformerSelection(double clickx,double clicky)
+{/*ALCODESTART::1781677735606*/
+// --- PHASE 2: Choose transformer to connect to ---
+GridNode clickedGN = null;
+for (GridNode GN : energyModel.pop_gridNodes) {
+    if (GN.gisRegion != null && GN.gisRegion.contains(clickx, clicky) && GN.gisRegion.isVisible()) {
+        clickedGN = GN;
+        break;
+    }
+}
+
+if (clickedGN != null) {    
+	if (b_addCustomSolarfarmGC){
+    	f_addCustomSolarfarmGC(clickedGN);
+    	b_addCustomSolarfarmGC = false;
+    } else if (b_addCustomWindfarmGC){
+    	f_addCustomWindfarmGC(clickedGN);
+    	b_addCustomWindfarmGC = false;
+    } else if (b_addCustomGridBatteryGC){
+    	f_addCustomGridBatteryGC(clickedGN);
+    	b_addCustomGridBatteryGC = false;
+    }
+    // Clean up coordinate temporary dots, state variables, lists
+    f_clearCustomGCCreationTempData();
+    
+    // Clear task instruction text
+    txt_addCustomGCToMapTaskInstruction.setText("");
+    return;
+} else {
+    traceln("Please click on a valid transformer (GridNode).");
+    return;
+}
+/*ALCODEEND*/}
+
+double f_removeCustomGCSelection(double clickx,double clicky)
+{/*ALCODESTART::1781678055851*/
+// Group all GIS objects to check for the click
+List<GIS_Object> allGISObjects = new ArrayList<>();
+for(GIS_Building b : energyModel.pop_GIS_Buildings) {
+	allGISObjects.add(b);
+}
+for(GIS_Object object : energyModel.pop_GIS_Objects){
+	allGISObjects.add(object);
+}
+for (GIS_Object GISObject : allGISObjects) {
+    if (GISObject.gisRegion != null && GISObject.gisRegion.contains(clickx, clicky) && GISObject.gisRegion.isVisible()) {
+        if (GISObject.c_containedGridConnections.size() > 0) {
+            GridConnection gc = GISObject.c_containedGridConnections.get(0);
+            
+            // Only allow deletion of specific energy asset types
+            if (gc instanceof GCEnergyProduction || gc instanceof GCGridBattery) {
+                f_removeCustomGC(gc);
+                b_removeCustomGC = false; // Reset mode after deletion
+                traceln("Removed the energy asset: " + gc.p_gridConnectionID);
+                return;
+            }
+        }
+    }
+}
+// If the user clicks elsewhere, cancel the deletion mode
+b_removeCustomGC = false;
+traceln("Deletion mode cancelled.");
+/*ALCODEEND*/}
+
+double f_clearCustomGCCreationTempData()
+{/*ALCODESTART::1781682595709*/
+// 1. Clean up temporary dot markers
+for (GISRegion dot : c_tempSavedDots) {
+    if (dot != null) {
+        dot.remove();
+    }
+}
+c_tempSavedDots.clear();
+
+// 2. Clean up preview polygon
+if (previewGISRegion != null) {
+    previewGISRegion.remove();
+    previewGISRegion = null;
+}
+
+// 3. Clear coordinates list
+c_tempSavedCoordinates.clear();
+
+// 4. Reset state variables
+b_customGCPolygonCreated = false;
+/*ALCODEEND*/}
+
+GISRegion f_drawTempCoordinateDot(double lat,double lon)
+{/*ALCODESTART::1781682728045*/
+//Draw a small dot (2m x 2m square = 4m²) on map at clicked coordinates
+double[] polyCoords = f_calculateSquareCoordinates(lat, lon, 25);
+
+GISRegion dot = f_createGISObject(polyCoords);
+dot.setFillColor(Color.RED);
+dot.setLineColor(Color.WHITE);
+dot.setLineWidth(1.0);
+
+return dot;
+/*ALCODEEND*/}
+
+double f_finalizeCustomGCCreationDeletion()
+{/*ALCODESTART::1781686995779*/
+b_customGCPolygonCreated = true;
+txt_addCustomGCToMapTaskInstruction.setText("Kies een trafo op de kaart");
+traceln("Vertices confirmed. Now click on a transformer (GridNode) to connect the custom energy asset.");
+/*ALCODEEND*/}
+
+double f_cancelCustomGCCreation()
+{/*ALCODESTART::1781688506944*/
+f_clearCustomGCCreationTempData();
+
+// 5. Hide instruction texts if needed
+txt_addCustomGCToMapTaskInstruction.setText("");
+/*ALCODEEND*/}
+
+double[] f_calculateCustomPolygonCoordinates(List<Pair<Double,Double>> coordinateList)
+{/*ALCODESTART::1781694164851*/
+int size = coordinateList.size();
+double[] polyCoords = new double[size * 2];
+for (int i = 0; i < size; i++) {
+    Pair<Double, Double> p = coordinateList.get(i);
+    polyCoords[2 * i] = p.getFirst();
+    polyCoords[2 * i + 1] = p.getSecond();
+}
+return polyCoords;
 /*ALCODEEND*/}
 

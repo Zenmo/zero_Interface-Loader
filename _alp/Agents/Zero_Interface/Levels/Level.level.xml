@@ -8734,7 +8734,6 @@ b_removeCustomGC = false;</OnClickCode>
 					<Group>
 						<Id>1781530425858</Id>
 						<Name><![CDATA[gr_completeAddingCustomEAToMap]]></Name>
-						<ExcludeFromBuild>true</ExcludeFromBuild>
 						<X>-770</X>
 						<Y>550</Y>
 						<Label>
@@ -8745,7 +8744,7 @@ b_removeCustomGC = false;</OnClickCode>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>c_tempSavedCoordinates.size()&gt;=1</VisibleCode>
+						<VisibleCode>c_tempSavedCoordinates.size()&gt;=3</VisibleCode>
 						<OnClickCode>f_finalizeCustomGCCreationDeletion();</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
@@ -8970,9 +8969,6 @@ sl_customGCSolarfarmContractedCapacity_kW.setRange(0, installedCapacity_kW);
 pvAsset.setCapacityElectric_kW(installedCapacity_kW, gc);
 gc.v_liveConnectionMetaData.setCapacities_kW(0, contractedCapacity_kW, installedCapacity_kW);
 
-// Update polygon size
-f_updateGISObjectSize(gc);
-
 // Update the active instance of tabElectricity sliders
 if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
     uI_Tabs.pop_tabElectricity.get(0).f_updateSliders_Electricity();
@@ -9078,9 +9074,6 @@ sl_customGCSolarfarmContractedCapacity_kW.setRange(0, installedCapacity_kW);
 // Update backend
 pvAsset.setCapacityElectric_kW(installedCapacity_kW, gc);
 gc.v_liveConnectionMetaData.setCapacities_kW(0, contractedCapacity_kW, installedCapacity_kW);
-
-// Update polygon size
-f_updateGISObjectSize(gc);
 
 // Update the active instance of tabElectricity sliders
 if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
@@ -9398,9 +9391,6 @@ sl_customGCWindfarmContractedCapacity_MW.setRange(0, installedCapacity_MW);
 // Update backend
 windAsset.setCapacityElectric_kW(installedCapacity_MW*1000, gc);
 gc.v_liveConnectionMetaData.setCapacities_kW(0, contractedCapacity_MW*1000, installedCapacity_MW*1000);
-
-// Update polygon size
-f_updateGISObjectSize(gc);
 
 // Update the active instance of tabElectricity sliders
 if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
@@ -9743,9 +9733,6 @@ J_EAStorageElectric batteryAsset = (J_EAStorageElectric)gc.c_storageAssets.get(0
 batteryAsset.setStorageCapacity_kWh(installedCapacity_kWh, gc);
 batteryAsset.setCapacityElectric_kW(installedCapacity_kW);
 gc.v_liveConnectionMetaData.setCapacities_kW(installedCapacity_kW, installedCapacity_kW, installedCapacity_kW);
-
-// Update polygon size
-f_updateGISObjectSize(gc);
 
 // Update the active instance of tabElectricity sliders
 if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
