@@ -2215,7 +2215,7 @@ else{
 					<FillColor>-1</FillColor>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<EnableExpression>!gr_ForceMapSelectionText.isVisible()</EnableExpression>
+					<EnableExpression>!gr_ForceMapSelectionMessageText.isVisible()</EnableExpression>
 					<ActionCode>if(!cb_filterOptions.getValue().equals("-")){
 	f_setFilter(map_UINamesFilterOption.get(cb_filterOptions.getValue()));
 	
@@ -2341,7 +2341,7 @@ if (c_manualFilterSelectedGC.isEmpty() &amp;&amp; c_manualFilterDeselectedGC.isE
 	f_setFilter(OL_FilterOptionsGC.MANUAL_SELECTION);
 }
 
-f_setForcedClickScreenText("");
+f_setForcedClickScreenMessageText("");
 if(!b_inEnergyHubSelectionMode){
 	f_setForcedClickScreenVisibility(false);
 }
@@ -2431,7 +2431,7 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 	c_manualFilterSelectedGC.clear();
 	c_manualFilterDeselectedGC.clear();
 	
-	f_setForcedClickScreenText("");
+	f_setForcedClickScreenMessageText("");
 	if(!b_inEnergyHubSelectionMode){
 		f_setForcedClickScreenVisibility(false);
 	}
@@ -2465,11 +2465,11 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<EnableExpression>user.GCAccessType == OL_UserGCAccessType.FULL &amp;&amp; (!gr_ForceMapSelectionText.isVisible() || b_inManualFilterSelectionMode)</EnableExpression>
+					<EnableExpression>user.GCAccessType == OL_UserGCAccessType.FULL &amp;&amp; (!gr_ForceMapSelectionMessageText.isVisible() || b_inManualFilterSelectionMode)</EnableExpression>
 					<ActionCode>if(!b_inManualFilterSelectionMode){
 	b_inManualFilterSelectionMode = true;
-	
-	f_setForcedClickScreenText("(De)Selecteer gebouwen");
+	f_setForcedClickScreenTitleText("");
+	f_setForcedClickScreenMessageText("(De)Selecteer gebouwen");
 	if(!b_inEnergyHubSelectionMode){
 		f_setForcedClickScreenVisibility(true);
 	}
@@ -2481,7 +2481,7 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 else{ 
 	b_inManualFilterSelectionMode = false;
 	
-	f_setForcedClickScreenText("");
+	f_setForcedClickScreenMessageText("");
 	if(!b_inEnergyHubSelectionMode){
 		f_setForcedClickScreenVisibility(false);
 	}
@@ -3689,7 +3689,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 			</Rectangle>
 			<Group>
 				<Id>1753446087501</Id>
-				<Name><![CDATA[gr_ForceMapSelectionText]]></Name>
+				<Name><![CDATA[gr_ForceMapSelectionMessageText]]></Name>
 				<X>-40</X>
 				<Y>-320</Y>
 				<Label>
@@ -3748,7 +3748,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						<BasicProperties Width="170" Height="50">
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<TextColor>-16777216</TextColor>
-							<VisibleCode>gr_ForceMapSelectionText.isVisible() &amp;&amp; b_inManualFilterSelectionMode </VisibleCode>
+							<VisibleCode>gr_ForceMapSelectionMessageText.isVisible() &amp;&amp; b_inManualFilterSelectionMode </VisibleCode>
 							<Enabled>true</Enabled>
 							<EnableExpression>button_completeManualSelectionMode.isVisible()</EnableExpression>
 							<ActionCode>if(b_inManualFilterSelectionMode){
@@ -3950,79 +3950,6 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						</Presentation>
 					</Group>
 					<Group>
-						<Id>1760015470898</Id>
-						<Name><![CDATA[gr_energieHubConfiguratorTxt]]></Name>
-						<X>-60</X>
-						<Y>-190</Y>
-						<Label>
-							<X>10</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Presentation>
-							<RoundedRectangle>
-								<Id>1760015470900</Id>
-								<Name><![CDATA[rect_energyHubConfigurator]]></Name>
-								<X>-500</X>
-								<Y>-50</Y>
-								<Label>
-									<X>10</X>
-									<Y>10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<ZHeight>10</ZHeight>
-								<LineWidth>2</LineWidth>
-								<LineColor>-16777216</LineColor>
-								<LineColorCode>uI_EnergyHub.p_energyHubLineColor</LineColorCode>
-								<LineMaterial>null</LineMaterial>
-								<LineStyle>SOLID</LineStyle>
-								<Width>1000</Width>
-								<Height>90</Height>
-								<Rotation>0.0</Rotation>
-								<FillColor>-1</FillColor>
-								<FillColorCode>uI_EnergyHub.p_energyHubBackGroundColor</FillColorCode>
-								<FillMaterial>null</FillMaterial>
-								<ArcRadius>10</ArcRadius>
-							</RoundedRectangle>
-							<Text>
-								<Id>1760015470902</Id>
-								<Name><![CDATA[txt_energyHubConfigurator]]></Name>
-								<X>0</X>
-								<Y>-35</Y>
-								<Label>
-									<X>0</X>
-									<Y>-10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<Rotation>0.0</Rotation>
-								<Color>-16777216</Color>
-								<Text><![CDATA[Energie Hub Configurator]]></Text>
-								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>48</Size>
-									<Style>0</Style>
-								</Font>
-								<Alignment>CENTER</Alignment>
-							</Text>
-						</Presentation>
-					</Group>
-					<Group>
 						<Id>1760015470904</Id>
 						<Name><![CDATA[gr_cancelEnergyHubConfiguration]]></Name>
 						<X>-820</X>
@@ -4094,6 +4021,243 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							</Text>
 						</Presentation>
 					</Group>
+				</Presentation>
+			</Group>
+			<Group>
+				<Id>1777996495548</Id>
+				<Name><![CDATA[gr_addingCustomGCToMapButtons]]></Name>
+				<X>10</X>
+				<Y>-240</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>b_addCustomSolarfarmGC || b_addCustomWindfarmGC || b_addCustomGridBatteryGC || b_removeCustomGC</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Group>
+						<Id>1777996495568</Id>
+						<Name><![CDATA[gr_cancelAddingCustomEAToMap]]></Name>
+						<X>-820</X>
+						<Y>630</Y>
+						<Label>
+							<X>10</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<OnClickCode>f_resetCustomGCCreation();</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Presentation>
+							<RoundedRectangle>
+								<Id>1777996495570</Id>
+								<Name><![CDATA[button_cancelAddingCustomEAToMap]]></Name>
+								<X>-90</X>
+								<Y>-30</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>3</LineWidth>
+								<LineColor>-2345659</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>275</Width>
+								<Height>75</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-1</FillColor>
+								<FillMaterial>null</FillMaterial>
+								<ArcRadius>10</ArcRadius>
+							</RoundedRectangle>
+							<Text>
+								<Id>1777996495572</Id>
+								<Name><![CDATA[txt_cancelAddingCustomEAToMap]]></Name>
+								<X>48</X>
+								<Y>-10</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[Annuleer]]></Text>
+								<Font>
+									<Name><![CDATA[SansSerif]]></Name>
+									<Size>28</Size>
+									<Style>1</Style>
+								</Font>
+								<Alignment>CENTER</Alignment>
+							</Text>
+						</Presentation>
+					</Group>
+					<Group>
+						<Id>1781530425858</Id>
+						<Name><![CDATA[gr_completeAddingCustomEAToMap]]></Name>
+						<X>-770</X>
+						<Y>550</Y>
+						<Label>
+							<X>10</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<VisibleCode>c_tempSavedCoordinates.size()&gt;=3 &amp;&amp; !b_customGCPolygonCreated</VisibleCode>
+						<OnClickCode>b_customGCPolygonCreated = true;
+f_setForcedClickScreenMessageText("Kies een trafo op de kaart");</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Presentation>
+							<RoundedRectangle>
+								<Id>1781530425860</Id>
+								<Name><![CDATA[button_completeAddingCustomEAToMap]]></Name>
+								<X>-140</X>
+								<Y>-40</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>3</LineWidth>
+								<LineColor>-16777216</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>275</Width>
+								<Height>75</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-1</FillColor>
+								<FillMaterial>null</FillMaterial>
+								<ArcRadius>10</ArcRadius>
+							</RoundedRectangle>
+							<Text>
+								<Id>1781530425862</Id>
+								<Name><![CDATA[txt_completeAddingCustomEAToMap]]></Name>
+								<X>0</X>
+								<Y>-20</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[Voltooien]]></Text>
+								<Font>
+									<Name><![CDATA[SansSerif]]></Name>
+									<Size>28</Size>
+									<Style>1</Style>
+								</Font>
+								<Alignment>CENTER</Alignment>
+							</Text>
+						</Presentation>
+					</Group>
+				</Presentation>
+			</Group>
+			<Group>
+				<Id>1760015470898</Id>
+				<Name><![CDATA[gr_forcedClickTitleTxt]]></Name>
+				<X>-50</X>
+				<Y>-430</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<RoundedRectangle>
+						<Id>1760015470900</Id>
+						<Name><![CDATA[rect_forcedClickTitle]]></Name>
+						<X>-500</X>
+						<Y>-50</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>2</LineWidth>
+						<LineColor>-16777216</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>1000</Width>
+						<Height>90</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-1</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>10</ArcRadius>
+					</RoundedRectangle>
+					<Text>
+						<Id>1760015470902</Id>
+						<Name><![CDATA[txt_forcedClickTitle]]></Name>
+						<X>0</X>
+						<Y>-35</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[<txt_forcedClickTitle>]]></Text>
+						<Font>
+							<Name><![CDATA[SansSerif]]></Name>
+							<Size>48</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
+					</Text>
 				</Presentation>
 			</Group>
 		</Presentation>
@@ -8329,480 +8493,6 @@ else{
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
-	<Group>
-		<Id>1777996495522</Id>
-		<Name><![CDATA[gr_addingCustomGCToMapForceMapSelection]]></Name>
-		<X>1080</X>
-		<Y>-2880</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>false</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>960</XCode>
-		<YCode>500</YCode>
-		<VisibleCode>b_addCustomSolarfarmGC || b_addCustomWindfarmGC || b_addCustomGridBatteryGC || b_removeCustomGC</VisibleCode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Presentation>
-			<Rectangle>
-				<Id>1777996495524</Id>
-				<Name><![CDATA[rect_forceMapSelectionClickBlocker5]]></Name>
-				<X>-960</X>
-				<Y>-500</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>int clickblocker;</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor/>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>410</Width>
-				<Height>980</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>16777215</FillColor>
-				<FillMaterial>null</FillMaterial>
-			</Rectangle>
-			<Rectangle>
-				<Id>1777996495526</Id>
-				<Name><![CDATA[rect_forceMapSelectionClickBlocker6]]></Name>
-				<X>-550</X>
-				<Y>-500</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>int clickblocker;</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor/>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>1000</Width>
-				<Height>130</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>16777215</FillColor>
-				<FillMaterial>null</FillMaterial>
-			</Rectangle>
-			<Rectangle>
-				<Id>1777996495528</Id>
-				<Name><![CDATA[rect_forceMapSelectionClickBlocker7]]></Name>
-				<X>-550</X>
-				<Y>250</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>int clickblocker;</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor/>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>1000</Width>
-				<Height>230</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>16777215</FillColor>
-				<FillMaterial>null</FillMaterial>
-			</Rectangle>
-			<Rectangle>
-				<Id>1777996495530</Id>
-				<Name><![CDATA[rect_forceMapSelectionClickBlocker8]]></Name>
-				<X>450</X>
-				<Y>-500</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>int clickblocker;</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor/>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>510</Width>
-				<Height>980</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>16777215</FillColor>
-				<FillMaterial>null</FillMaterial>
-			</Rectangle>
-			<Rectangle>
-				<Id>1777996495532</Id>
-				<Name><![CDATA[rect_forceMapSelection5]]></Name>
-				<X>-960</X>
-				<Y>-620</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor/>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>410</Width>
-				<Height>1200</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-1765752640</FillColor>
-				<FillColorCode>v_forcedClickScreenColor</FillColorCode>
-				<FillMaterial>null</FillMaterial>
-			</Rectangle>
-			<Rectangle>
-				<Id>1777996495534</Id>
-				<Name><![CDATA[rect_forceMapSelection6]]></Name>
-				<X>-550</X>
-				<Y>-620</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor/>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>1000</Width>
-				<Height>250</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-1765752640</FillColor>
-				<FillColorCode>v_forcedClickScreenColor</FillColorCode>
-				<FillMaterial>null</FillMaterial>
-			</Rectangle>
-			<Rectangle>
-				<Id>1777996495536</Id>
-				<Name><![CDATA[rect_forceMapSelection7]]></Name>
-				<X>-550</X>
-				<Y>250</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor/>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>1000</Width>
-				<Height>330</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-1765752640</FillColor>
-				<FillColorCode>v_forcedClickScreenColor</FillColorCode>
-				<FillMaterial>null</FillMaterial>
-			</Rectangle>
-			<Rectangle>
-				<Id>1777996495538</Id>
-				<Name><![CDATA[rect_forceMapSelection8]]></Name>
-				<X>450</X>
-				<Y>-620</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor/>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>510</Width>
-				<Height>1200</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-1765752640</FillColor>
-				<FillColorCode>v_forcedClickScreenColor</FillColorCode>
-				<FillMaterial>null</FillMaterial>
-			</Rectangle>
-			<Group>
-				<Id>1777996495548</Id>
-				<Name><![CDATA[gr_addingCustomGCToMapButtons]]></Name>
-				<X>10</X>
-				<Y>-240</Y>
-				<Label>
-					<X>10</X>
-					<Y>0</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Presentation>
-					<Group>
-						<Id>1777996495562</Id>
-						<Name><![CDATA[gr_addingCustomGCToMapInstruction]]></Name>
-						<X>-60</X>
-						<Y>-190</Y>
-						<Label>
-							<X>10</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Presentation>
-							<RoundedRectangle>
-								<Id>1777996495564</Id>
-								<Name><![CDATA[rect_energyHubConfigurator1]]></Name>
-								<X>-500</X>
-								<Y>-50</Y>
-								<Label>
-									<X>10</X>
-									<Y>10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<ZHeight>10</ZHeight>
-								<LineWidth>2</LineWidth>
-								<LineColor>-16777216</LineColor>
-								<LineMaterial>null</LineMaterial>
-								<LineStyle>SOLID</LineStyle>
-								<Width>1000</Width>
-								<Height>90</Height>
-								<Rotation>0.0</Rotation>
-								<FillColor>-1</FillColor>
-								<FillMaterial>null</FillMaterial>
-								<ArcRadius>10</ArcRadius>
-							</RoundedRectangle>
-							<Text>
-								<Id>1777996495566</Id>
-								<Name><![CDATA[txt_addCustomGCToMapTaskInstruction]]></Name>
-								<X>0</X>
-								<Y>-35</Y>
-								<Label>
-									<X>0</X>
-									<Y>-10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<Rotation>0.0</Rotation>
-								<Color>-16777216</Color>
-								<Text><![CDATA[Kies een locatie op de kaart]]></Text>
-								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>48</Size>
-									<Style>0</Style>
-								</Font>
-								<Alignment>CENTER</Alignment>
-							</Text>
-						</Presentation>
-					</Group>
-					<Group>
-						<Id>1777996495568</Id>
-						<Name><![CDATA[gr_cancelAddingCustomEAToMap]]></Name>
-						<X>-820</X>
-						<Y>630</Y>
-						<Label>
-							<X>10</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<OnClickCode>f_resetCustomGCCreation();</OnClickCode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Presentation>
-							<RoundedRectangle>
-								<Id>1777996495570</Id>
-								<Name><![CDATA[button_cancelAddingCustomEAToMap]]></Name>
-								<X>-90</X>
-								<Y>-30</Y>
-								<Label>
-									<X>10</X>
-									<Y>10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<ZHeight>10</ZHeight>
-								<LineWidth>3</LineWidth>
-								<LineColor>-2345659</LineColor>
-								<LineMaterial>null</LineMaterial>
-								<LineStyle>SOLID</LineStyle>
-								<Width>275</Width>
-								<Height>75</Height>
-								<Rotation>0.0</Rotation>
-								<FillColor>-1</FillColor>
-								<FillMaterial>null</FillMaterial>
-								<ArcRadius>10</ArcRadius>
-							</RoundedRectangle>
-							<Text>
-								<Id>1777996495572</Id>
-								<Name><![CDATA[txt_cancelAddingCustomEAToMap]]></Name>
-								<X>48</X>
-								<Y>-10</Y>
-								<Label>
-									<X>0</X>
-									<Y>-10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<Rotation>0.0</Rotation>
-								<Color>-16777216</Color>
-								<Text><![CDATA[Annuleer]]></Text>
-								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>28</Size>
-									<Style>1</Style>
-								</Font>
-								<Alignment>CENTER</Alignment>
-							</Text>
-						</Presentation>
-					</Group>
-					<Group>
-						<Id>1781530425858</Id>
-						<Name><![CDATA[gr_completeAddingCustomEAToMap]]></Name>
-						<X>-770</X>
-						<Y>550</Y>
-						<Label>
-							<X>10</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>c_tempSavedCoordinates.size()&gt;=3 &amp;&amp; !b_customGCPolygonCreated</VisibleCode>
-						<OnClickCode>b_customGCPolygonCreated = true;
-txt_addCustomGCToMapTaskInstruction.setText("Kies een trafo op de kaart");</OnClickCode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Presentation>
-							<RoundedRectangle>
-								<Id>1781530425860</Id>
-								<Name><![CDATA[button_completeAddingCustomEAToMap]]></Name>
-								<X>-140</X>
-								<Y>-40</Y>
-								<Label>
-									<X>10</X>
-									<Y>10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<ZHeight>10</ZHeight>
-								<LineWidth>3</LineWidth>
-								<LineColor>-16777216</LineColor>
-								<LineMaterial>null</LineMaterial>
-								<LineStyle>SOLID</LineStyle>
-								<Width>275</Width>
-								<Height>75</Height>
-								<Rotation>0.0</Rotation>
-								<FillColor>-1</FillColor>
-								<FillMaterial>null</FillMaterial>
-								<ArcRadius>10</ArcRadius>
-							</RoundedRectangle>
-							<Text>
-								<Id>1781530425862</Id>
-								<Name><![CDATA[txt_completeAddingCustomEAToMap]]></Name>
-								<X>0</X>
-								<Y>-20</Y>
-								<Label>
-									<X>0</X>
-									<Y>-10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<Rotation>0.0</Rotation>
-								<Color>-16777216</Color>
-								<Text><![CDATA[Voltooien]]></Text>
-								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>28</Size>
-									<Style>1</Style>
-								</Font>
-								<Alignment>CENTER</Alignment>
-							</Text>
-						</Presentation>
-					</Group>
-				</Presentation>
-			</Group>
-		</Presentation>
-	</Group>
 	<Group>
 		<Id>1778088271551</Id>
 		<Name><![CDATA[gr_customGCSolarfarmSettings]]></Name>

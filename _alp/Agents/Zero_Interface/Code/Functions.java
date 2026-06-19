@@ -1039,8 +1039,7 @@ switch(selectedFilter){
 			f_filterGridLoops(toBeFilteredGC);
 		}
 		else{
-		
-			f_setForcedClickScreenText("Selecteer een lus");
+			f_setForcedClickScreenMessageText("Selecteer een lus");
 			if(!b_inEnergyHubSelectionMode){
 				f_setForcedClickScreenVisibility(true);
 			}
@@ -1062,7 +1061,7 @@ switch(selectedFilter){
 			f_filterNeighborhoods(toBeFilteredGC);
 		}
 		else{
-			f_setForcedClickScreenText("Selecteer een buurt");
+			f_setForcedClickScreenMessageText("Selecteer een buurt");
 			if(!b_inEnergyHubSelectionMode){
 				f_setForcedClickScreenVisibility(true);
 			}
@@ -1191,7 +1190,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 				}
 			
 				if(gr_forceMapSelection.isVisible()){
-					f_setForcedClickScreenText("");
+					f_setForcedClickScreenMessageText("");
 					if(!b_inEnergyHubSelectionMode){
 						f_setForcedClickScreenVisibility(false);
 					}
@@ -1386,7 +1385,7 @@ for ( GIS_Object region : c_GISNeighborhoods ){
 			}
 
 			if(gr_forceMapSelection.isVisible()){
-				f_setForcedClickScreenText("");
+				f_setForcedClickScreenMessageText("");
 				if(!b_inEnergyHubSelectionMode){
 					f_setForcedClickScreenVisibility(false);
 				}
@@ -1545,15 +1544,15 @@ if(clickedObject != null){
 }
 /*ALCODEEND*/}
 
-double f_setForcedClickScreenText(String forcedClickScreenText)
+double f_setForcedClickScreenMessageText(String forcedClickScreenMessageText)
 {/*ALCODESTART::1742300624199*/
-t_forcedClickMessage.setText(forcedClickScreenText);
+t_forcedClickMessage.setText(forcedClickScreenMessageText);
 
 if(t_forcedClickMessage.getText().equals("")){
-	gr_ForceMapSelectionText.setVisible(false);
+	gr_ForceMapSelectionMessageText.setVisible(false);
 }
 else{
-	gr_ForceMapSelectionText.setVisible(true);
+	gr_ForceMapSelectionMessageText.setVisible(true);
 }
 /*ALCODEEND*/}
 
@@ -2703,7 +2702,6 @@ f_setShapePresentationOnTop(map);
 f_setShapePresentationOnTop(gr_zoomButton);
 f_setShapePresentationOnTop(gr_sliderClickBlocker);
 f_setShapePresentationOnTop(gr_forceMapSelection);
-f_setShapePresentationOnTop(gr_addingCustomGCToMapForceMapSelection);
 f_setShapePresentationOnTop(gr_filterInterface);
 f_setShapePresentationOnTop(gr_infoText);
 
@@ -2738,7 +2736,9 @@ pauseSimulation();
 b_inEnergyHubMode = true;
 b_inEnergyHubSelectionMode = true;
 
-f_setForcedClickScreenText("");
+f_setForcedClickScreenTitleText("Energie Hub Configurator");
+f_setForcedClickScreenTitleBackgroundColor(uI_EnergyHub.p_energyHubBackGroundColor, uI_EnergyHub.p_energyHubLineColor);
+f_setForcedClickScreenMessageText("");
 f_setForcedClickScreenVisibility(true);
 
 cb_showFilterInterface.setSelected(true, true);
@@ -3061,7 +3061,9 @@ button_clearFilters.action();
 b_inEnergyHubMode = false;
 b_inEnergyHubSelectionMode = false;
 
-f_setForcedClickScreenText("");
+f_setForcedClickScreenTitleText("");
+f_setForcedClickScreenTitleBackgroundColor(new Color(255, 255, 255), new Color(0, 0, 0));
+f_setForcedClickScreenMessageText("");
 f_setForcedClickScreenVisibility(false);
 
 cb_showFilterInterface.setSelected(false, true);
@@ -4459,16 +4461,16 @@ c_tempSavedDots.add(f_drawTempCoordinateDot(clickx, clicky));
 
 if (b_addCustomWindfarmGC || b_addCustomGridBatteryGC){
 	b_customGCPolygonCreated = true;
-	txt_addCustomGCToMapTaskInstruction.setText("Kies een trafo op de kaart");
+	f_setForcedClickScreenMessageText("Kies een trafo op de kaart");
 } else {
 	// Update instruction text
 	int minNbRequiredVertices = 3;
 	int currentNbOfSavedCoordinates = c_tempSavedCoordinates.size();
 	if(minNbRequiredVertices - currentNbOfSavedCoordinates > 1){
-		txt_addCustomGCToMapTaskInstruction.setText("Teken je locatie op de kaart. Kies nog minimaal" + (minNbRequiredVertices - currentNbOfSavedCoordinates) + " hoekpunten.");
+		f_setForcedClickScreenMessageText("Teken je locatie op de kaart. Kies nog minimaal" + (minNbRequiredVertices - currentNbOfSavedCoordinates) + " hoekpunten.");
 	}
 	else if(minNbRequiredVertices - currentNbOfSavedCoordinates == 1){
-		txt_addCustomGCToMapTaskInstruction.setText("Teken je locatie op de kaart. Kies nog minimaal" + (minNbRequiredVertices - currentNbOfSavedCoordinates) + " hoekpunt.");
+		f_setForcedClickScreenMessageText("Teken je locatie op de kaart. Kies nog minimaal" + (minNbRequiredVertices - currentNbOfSavedCoordinates) + " hoekpunt.");
 	} else {
 		if (previewGISRegion != null) {
 	        previewGISRegion.remove();
@@ -4478,7 +4480,7 @@ if (b_addCustomWindfarmGC || b_addCustomGridBatteryGC){
 	    previewGISRegion.setFillColor(new Color(255, 0, 0, 50)); // Semi-transparent red
 	    previewGISRegion.setLineColor(Color.RED);
 	    previewGISRegion.setLineWidth(1.0);
-		txt_addCustomGCToMapTaskInstruction.setText("Huidig aantal hoekpunten: " + currentNbOfSavedCoordinates + ". Klik op 'Voltooien' om te bevestigen.");
+		f_setForcedClickScreenMessageText("Huidig aantal hoekpunten: " + currentNbOfSavedCoordinates + ". Klik op 'Voltooien' om te bevestigen.");
 	}
 }
 
@@ -4583,8 +4585,10 @@ b_addCustomWindfarmGC = false;
 b_addCustomGridBatteryGC = false;
 b_removeCustomGC = false;
 
-// 5. Hide instruction texts if needed
-txt_addCustomGCToMapTaskInstruction.setText("");
+// 5. Hide forced click screen, if needed
+f_setForcedClickScreenVisibility(false);
+f_setForcedClickScreenTitleText("");
+f_setForcedClickScreenMessageText("");
 /*ALCODEEND*/}
 
 double[] f_calculateCustomPolygonCoordinates(List<Pair<Double,Double>> coordinateList)
@@ -4597,5 +4601,23 @@ for (int i = 0; i < size; i++) {
     polyCoords[2 * i + 1] = p.getSecond();
 }
 return polyCoords;
+/*ALCODEEND*/}
+
+double f_setForcedClickScreenTitleText(String forcedClickScreenText)
+{/*ALCODESTART::1781861106301*/
+txt_forcedClickTitle.setText(forcedClickScreenText);
+
+if(txt_forcedClickTitle.getText().equals("")){
+	gr_forcedClickTitleTxt.setVisible(false);
+}
+else{
+	gr_forcedClickTitleTxt.setVisible(true);
+}
+/*ALCODEEND*/}
+
+double f_setForcedClickScreenTitleBackgroundColor(Color fillColor,Color lineColor)
+{/*ALCODESTART::1781863042854*/
+rect_forcedClickTitle.setFillColor(fillColor);
+rect_forcedClickTitle.setLineColor(lineColor);
 /*ALCODEEND*/}
 
