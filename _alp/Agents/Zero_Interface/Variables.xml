@@ -2156,13 +2156,16 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[OL_MapOverlayTypes]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[DEFAULT]]></Code>
+			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1780854115326</Id>
 		<Name><![CDATA[b_inFilterMode]]></Name>
-		<X>-1190</X>
-		<Y>875</Y>
+		<X>-980</X>
+		<Y>750</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2180,8 +2183,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1780854138492</Id>
 		<Name><![CDATA[b_inHubSelectionMode]]></Name>
-		<X>-1080</X>
-		<Y>875</Y>
+		<X>-980</X>
+		<Y>770</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2199,8 +2202,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1780854265607</Id>
 		<Name><![CDATA[b_manualSelectionMode]]></Name>
-		<X>-1080</X>
-		<Y>905</Y>
+		<X>-980</X>
+		<Y>790</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

@@ -2441,10 +2441,10 @@ double f_setMapOverlay()
 f_resetMap();
 
 //Get selected map overlay type, based on loaded order of the radio buttons
-OL_MapOverlayTypes selectedMapOverlayType = c_loadedMapOverlayTypes.get(rb_mapOverlay.getValue());
+//OL_MapOverlayTypes selectedMapOverlayType = c_loadedMapOverlayTypes.get(rb_mapOverlay.getValue());
 
 //Set the correct map overlay
-switch(selectedMapOverlayType){
+switch(v_activeMapLayer){
 	case DEFAULT:
 		f_setMapOverlay_Default();
 		break;
@@ -3879,7 +3879,7 @@ if (p_customMapOverlayLegend != null) {
 b_updateLiveCongestionColors = false;
 
 if(!b_inEnergyHubMode){
-	f_clearSelectionAndSelectEnergyModel();
+	//f_clearSelectionAndSelectEnergyModel();  //deze voior nu even uit, volgens mij hebben we die niet nodig (PH 19-06-2026)
 }
 /*ALCODEEND*/}
 
@@ -3898,6 +3898,8 @@ f_setForcedClickScreenText("");
 if(!b_inEnergyHubSelectionMode){
 	f_setForcedClickScreenVisibility(false);
 }
+
+
 f_removeAllFilters();
 /*ALCODEEND*/}
 
@@ -3981,13 +3983,16 @@ if( clickedGC != null){
 		}
 		v_filterNames.add( "Handmatige selectie");
 		v_filterIndex.add(String.valueOf(1 + c_filterMatrix.size()));
+		v_filterCount.add( 1 );
 	}
 	f_addOrRemoveGCFromFilter(clickedGC);
-	if (v_filterCount.size() == 0){ //dit kan alleen gebeuren als de allereerste filter begint met het klikken op een gebouw
-		v_filterCount.add( 1 );
+	if (v_filterCount.size() == 0){
+		//v_filterCount.add( 1 );
 	}
 	v_filterCount.set(v_filterCount.size()-1, c_filterDummy.size());
 	f_setFilterInfoText();
+	f_setMapOverlay(); //Go back to base coloring of map							
+	f_colorSelectedBuildings(c_filterDummy); //geen null check nodig want na selecteren van filter is er altijd 1	
 }
 /*ALCODEEND*/}
 
@@ -4048,15 +4053,6 @@ for (GridConnection GC : clickedGridConnections){
 	}
 }
 
-
-/*ALCODEEND*/}
-
-double f_startNewFilter()
-{/*ALCODESTART::1780857842436*/
-if( b_manualSelectionMode){
-	b_manualSelectionMode = false;
-}
-f_setPrefixFilter(map_UINamesFilterOption.get(cb_filterOptions.getValue()));
 
 /*ALCODEEND*/}
 
@@ -4199,8 +4195,13 @@ else{//Filtered GC returns GC
 }
 /*ALCODEEND*/}
 
-double f_setPrefixFilter(OL_FilterOptionsGC selectedFilter)
+double f_setPrefixFilter()
 {/*ALCODESTART::1780913618251*/
+if( b_manualSelectionMode){ //End manual selection filter if its active
+	f_finishManualFilter();
+}
+
+OL_FilterOptionsGC selectedFilter = map_UINamesFilterOption.get(cb_filterOptions.getValue());
 String selectedFilterName = map_filterOptionUINames.get(selectedFilter);
 
 //als dit de eerste filter is zet de dummy lijst gelijk aan alle GCs
@@ -4215,7 +4216,7 @@ else {
 f_applyPrefixFilter(selectedFilter, selectedFilterName);
 v_filterNames.add( selectedFilterName);
 v_filterCount.add( c_filterMatrix.get(c_filterMatrix.size()-1).size()); 
-v_filterIndex.add(String.valueOf( 1 + c_filterMatrix.size()));
+v_filterIndex.add(String.valueOf( c_filterMatrix.size()));
 f_setFilterInfoText();
 /*ALCODEEND*/}
 
@@ -4269,11 +4270,36 @@ f_clearSelectionAndSelectEnergyModel();
 
 double f_removeLastFilter()
 {/*ALCODESTART::1781259851978*/
+if( ! v_filterNames.get(v_filterNames.size()-1).equals("Handmatige selectie")){ // c_selected filters doesnt contain manual filtes, only remove, if last filter is not manaul
+	c_selectedFilterOptions.remove(c_selectedFilterOptions.size()- 1);
+}
+
 c_filterMatrix.remove(c_filterMatrix.size()-1);
 v_filterCount.remove(v_filterCount.size()-1);
 v_filterNames.remove(v_filterNames.size()-1);
 v_filterIndex.remove(v_filterIndex.size()-1);
 c_filterDummy.clear();
-c_selectedFilterOptions.remove(c_selectedFilterOptions.size()- 1);
+
+f_setMapOverlay(); //Go back to base coloring of map
+if( c_filterMatrix.size() > 0 ){ //color selected buildings									
+	f_colorSelectedBuildings(c_filterMatrix.get(c_filterMatrix.size()-1));
+}
+/*ALCODEEND*/}
+
+double f_finishManualFilter()
+{/*ALCODESTART::1781865687377*/
+b_manualSelectionMode = false;
+c_filterMatrix.add(new ArrayList<>(c_filterDummy));
+
+/*ALCODEEND*/}
+
+double f_colorSelectedBuildings(ArrayList<GridConnection> gcList)
+{/*ALCODESTART::1781868493301*/
+for (GridConnection gc : gcList){
+	for( GIS_Object obj : gc.c_connectedGISObjects){
+		obj.f_style(yellow, null, null, null);
+	}
+}
+
 /*ALCODEEND*/}
 

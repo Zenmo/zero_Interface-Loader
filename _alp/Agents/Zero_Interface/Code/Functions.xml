@@ -2895,26 +2895,10 @@
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1780857842436</Id>
-		<Name><![CDATA[f_startNewFilter]]></Name>
-		<X>-1190</X>
-		<Y>810</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1780913436841</Id>
 		<Name><![CDATA[f_applyPrefixFilter]]></Name>
 		<X>-1190</X>
-		<Y>850</Y>
+		<Y>840</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2938,7 +2922,7 @@
 		<Id>1780913618251</Id>
 		<Name><![CDATA[f_setPrefixFilter]]></Name>
 		<X>-1190</X>
-		<Y>830</Y>
+		<Y>820</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2946,10 +2930,6 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[selectedFilter]]></Name>
-			<Type><![CDATA[OL_FilterOptionsGC]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -2957,8 +2937,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1781179311799</Id>
 		<Name><![CDATA[f_setFilterInfoText]]></Name>
-		<X>-1080</X>
-		<Y>810</Y>
+		<X>-1190</X>
+		<Y>860</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2973,8 +2953,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1781204814021</Id>
 		<Name><![CDATA[f_clearAllFilters]]></Name>
-		<X>-1080</X>
-		<Y>830</Y>
+		<X>-1190</X>
+		<Y>880</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2989,8 +2969,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1781259851978</Id>
 		<Name><![CDATA[f_removeLastFilter]]></Name>
-		<X>-1070</X>
-		<Y>850</Y>
+		<X>-1190</X>
+		<Y>900</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2998,6 +2978,42 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1781865687377</Id>
+		<Name><![CDATA[f_finishManualFilter]]></Name>
+		<X>-1190</X>
+		<Y>780</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1781868493301</Id>
+		<Name><![CDATA[f_colorSelectedBuildings]]></Name>
+		<X>-980</X>
+		<Y>820</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gcList]]></Name>
+			<Type><![CDATA[ArrayList<GridConnection>]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>
