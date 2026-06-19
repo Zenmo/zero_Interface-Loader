@@ -8666,13 +8666,7 @@ else{
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<OnClickCode>v_customGCLatitude = 0;
-v_customGCLongitude = 0;
-//c_tempSavedCoordinates.clear();
-b_addCustomSolarfarmGC = false;
-b_addCustomWindfarmGC = false;
-b_addCustomGridBatteryGC = false;
-b_removeCustomGC = false;</OnClickCode>
+						<OnClickCode>f_resetCustomGCCreation();</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>

@@ -2140,50 +2140,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1777995108241</Id>
-		<Name><![CDATA[v_customGCLatitude]]></Name>
-		<X>60</X>
-		<Y>1570</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[0]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1777995108243</Id>
-		<Name><![CDATA[v_customGCLongitude]]></Name>
-		<X>60</X>
-		<Y>1590</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[0]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1777995108245</Id>
 		<Name><![CDATA[v_customSolarfarmGCCounter]]></Name>
 		<X>60</X>
@@ -2362,8 +2318,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1781682558407</Id>
 		<Name><![CDATA[b_customGCPolygonCreated]]></Name>
-		<X>-240</X>
-		<Y>1200</Y>
+		<X>80</X>
+		<Y>2050</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

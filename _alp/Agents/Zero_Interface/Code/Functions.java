@@ -4499,19 +4499,14 @@ for (GridNode GN : energyModel.pop_gridNodes) {
 if (clickedGN != null) {    
 	if (b_addCustomSolarfarmGC){
     	f_addCustomSolarfarmGC(clickedGN);
-    	b_addCustomSolarfarmGC = false;
     } else if (b_addCustomWindfarmGC){
     	f_addCustomWindfarmGC(clickedGN);
-    	b_addCustomWindfarmGC = false;
     } else if (b_addCustomGridBatteryGC){
     	f_addCustomGridBatteryGC(clickedGN);
-    	b_addCustomGridBatteryGC = false;
     }
     // Clean up coordinate temporary dots, state variables, lists
-    f_clearCustomGCCreationTempData();
+    f_resetCustomGCCreation();
     
-    // Clear task instruction text
-    txt_addCustomGCToMapTaskInstruction.setText("");
     return;
 } else {
     traceln("Please click on a valid transformer (GridNode).");
@@ -4549,8 +4544,21 @@ b_removeCustomGC = false;
 traceln("Deletion mode cancelled.");
 /*ALCODEEND*/}
 
-double f_clearCustomGCCreationTempData()
-{/*ALCODESTART::1781682595709*/
+GISRegion f_drawTempCoordinateDot(double lat,double lon)
+{/*ALCODESTART::1781682728045*/
+//Draw a small dot (2m x 2m square = 4m²) on map at clicked coordinates
+double[] polyCoords = f_calculateSquareCoordinates(lat, lon, 25);
+
+GISRegion dot = f_createGISObject(polyCoords);
+dot.setFillColor(Color.RED);
+dot.setLineColor(Color.WHITE);
+dot.setLineWidth(1.0);
+
+return dot;
+/*ALCODEEND*/}
+
+double f_resetCustomGCCreation()
+{/*ALCODESTART::1781688506944*/
 // 1. Clean up temporary dot markers
 for (GISRegion dot : c_tempSavedDots) {
     if (dot != null) {
@@ -4570,24 +4578,10 @@ c_tempSavedCoordinates.clear();
 
 // 4. Reset state variables
 b_customGCPolygonCreated = false;
-/*ALCODEEND*/}
-
-GISRegion f_drawTempCoordinateDot(double lat,double lon)
-{/*ALCODESTART::1781682728045*/
-//Draw a small dot (2m x 2m square = 4m²) on map at clicked coordinates
-double[] polyCoords = f_calculateSquareCoordinates(lat, lon, 25);
-
-GISRegion dot = f_createGISObject(polyCoords);
-dot.setFillColor(Color.RED);
-dot.setLineColor(Color.WHITE);
-dot.setLineWidth(1.0);
-
-return dot;
-/*ALCODEEND*/}
-
-double f_cancelCustomGCCreation()
-{/*ALCODESTART::1781688506944*/
-f_clearCustomGCCreationTempData();
+b_addCustomSolarfarmGC = false;
+b_addCustomWindfarmGC = false;
+b_addCustomGridBatteryGC = false;
+b_removeCustomGC = false;
 
 // 5. Hide instruction texts if needed
 txt_addCustomGCToMapTaskInstruction.setText("");

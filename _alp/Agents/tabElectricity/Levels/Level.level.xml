@@ -2255,8 +2255,6 @@ traceln("Adding windfarm: Please click on the map to set the location.");</Actio
 					<Enabled>true</Enabled>
 					<EnableExpression>!zero_Interface.c_customSolarfarmGCs.isEmpty() || !zero_Interface.c_customWindfarmGCs.isEmpty() || !zero_Interface.c_customGridBatteryGCs.isEmpty()</EnableExpression>
 					<ActionCode>if(!zero_Interface.c_customSolarfarmGCs.isEmpty() || !zero_Interface.c_customWindfarmGCs.isEmpty() || !zero_Interface.c_customGridBatteryGCs.isEmpty()) {
-	zero_Interface.v_customGCLatitude = 0;
-	zero_Interface.v_customGCLongitude = 0;
 	
 	while (!zero_Interface.c_customSolarfarmGCs.isEmpty()) {
 		zero_Interface.f_removeCustomGC(zero_Interface.c_customSolarfarmGCs.get(0));

@@ -2907,8 +2907,8 @@
 		<ReturnType>GIS_Object</ReturnType>
 		<Id>1778855159263</Id>
 		<Name><![CDATA[f_createAndLinkGISObject]]></Name>
-		<X>60</X>
-		<Y>1980</Y>
+		<X>80</X>
+		<Y>2070</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2959,8 +2959,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1778997814360</Id>
 		<Name><![CDATA[f_calculateGISObjectArea]]></Name>
-		<X>80</X>
-		<Y>2000</Y>
+		<X>100</X>
+		<Y>2090</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2983,8 +2983,8 @@
 		<ReturnType>double[]</ReturnType>
 		<Id>1778997955081</Id>
 		<Name><![CDATA[f_calculateSquareCoordinates]]></Name>
-		<X>80</X>
-		<Y>2020</Y>
+		<X>100</X>
+		<Y>2110</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3011,8 +3011,8 @@
 		<ReturnType>double[]</ReturnType>
 		<Id>1781623122174</Id>
 		<Name><![CDATA[f_calculateCircleCoordinates]]></Name>
-		<X>80</X>
-		<Y>2040</Y>
+		<X>100</X>
+		<Y>2130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3039,8 +3039,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1781677700343</Id>
 		<Name><![CDATA[f_addCustomGCLocationSelection]]></Name>
-		<X>-240</X>
-		<Y>1140</Y>
+		<X>60</X>
+		<Y>1970</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3063,8 +3063,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1781677735606</Id>
 		<Name><![CDATA[f_addCustomGCTransformerSelection]]></Name>
-		<X>-240</X>
-		<Y>1160</Y>
+		<X>60</X>
+		<Y>1990</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3087,8 +3087,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1781678055851</Id>
 		<Name><![CDATA[f_removeCustomGCSelection]]></Name>
-		<X>-240</X>
-		<Y>1180</Y>
+		<X>60</X>
+		<Y>2030</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3107,28 +3107,12 @@
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1781682595709</Id>
-		<Name><![CDATA[f_clearCustomGCCreationTempData]]></Name>
-		<X>-220</X>
-		<Y>1220</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>GISRegion</ReturnType>
 		<Id>1781682728045</Id>
 		<Name><![CDATA[f_drawTempCoordinateDot]]></Name>
-		<X>-220</X>
-		<Y>1240</Y>
+		<X>100</X>
+		<Y>2170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3150,9 +3134,9 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1781688506944</Id>
-		<Name><![CDATA[f_cancelCustomGCCreation]]></Name>
-		<X>-240</X>
-		<Y>1270</Y>
+		<Name><![CDATA[f_resetCustomGCCreation]]></Name>
+		<X>60</X>
+		<Y>2010</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3167,8 +3151,8 @@
 		<ReturnType>double[]</ReturnType>
 		<Id>1781694164851</Id>
 		<Name><![CDATA[f_calculateCustomPolygonCoordinates]]></Name>
-		<X>80</X>
-		<Y>2060</Y>
+		<X>100</X>
+		<Y>2150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
