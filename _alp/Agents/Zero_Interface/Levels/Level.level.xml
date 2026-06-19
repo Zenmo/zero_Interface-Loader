@@ -9053,7 +9053,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778157960511</Id>
 				<Name><![CDATA[txt_customGCSettingsSolarfarmContractedCapacity_kW]]></Name>
 				<X>20</X>
-				<Y>180</Y>
+				<Y>210</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -9062,6 +9062,7 @@ f_resetSettings();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>cb_customGCSolarfarmCurtailment.isSelected()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -9078,7 +9079,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778158102891</Id>
 				<Name><![CDATA[txt_customGCSettingsSolarfarmCurtailment]]></Name>
 				<X>20</X>
-				<Y>210</Y>
+				<Y>180</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -9103,7 +9104,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778158258122</Id>
 				<Name><![CDATA[txt_customEASolarfarmContractedCapacity_kW]]></Name>
 				<X>245</X>
-				<Y>180</Y>
+				<Y>210</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -9112,6 +9113,7 @@ f_resetSettings();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>cb_customGCSolarfarmCurtailment.isSelected()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -9130,7 +9132,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778158369195</Id>
 				<Name><![CDATA[cb_customGCSolarfarmCurtailment]]></Name>
 				<X>302</X>
-				<Y>202</Y>
+				<Y>172</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -9164,7 +9166,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778158173095</Id>
 				<Name><![CDATA[sl_customGCSolarfarmContractedCapacity_kW]]></Name>
 				<X>260</X>
-				<Y>175</Y>
+				<Y>205</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -9175,6 +9177,7 @@ f_resetSettings();</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
+					<VisibleCode>cb_customGCSolarfarmCurtailment.isSelected()</VisibleCode>
 					<Enabled>true</Enabled>
 					<ActionCode>GCEnergyProduction gc = (GCEnergyProduction) c_selectedGridConnections.get(0);
 double physicalCapacity_kW = gc.v_liveConnectionMetaData.getPhysicalCapacity_kW();
@@ -9478,7 +9481,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778241988056</Id>
 				<Name><![CDATA[txt_customGCSettingsWindfarmContractedCapacity_MW]]></Name>
 				<X>20</X>
-				<Y>120</Y>
+				<Y>150</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -9487,6 +9490,7 @@ f_resetSettings();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>cb_customGCWindfarmCurtailment.isSelected()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -9503,7 +9507,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778241988058</Id>
 				<Name><![CDATA[txt_customGCSettingsWindfarmCurtailment]]></Name>
 				<X>20</X>
-				<Y>150</Y>
+				<Y>120</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -9528,7 +9532,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778241988060</Id>
 				<Name><![CDATA[txt_customGCWindfarmContractedCapacity_MW]]></Name>
 				<X>245</X>
-				<Y>120</Y>
+				<Y>150</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -9537,6 +9541,7 @@ f_resetSettings();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>cb_customGCWindfarmCurtailment.isSelected()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -9555,7 +9560,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778241988062</Id>
 				<Name><![CDATA[cb_customGCWindfarmCurtailment]]></Name>
 				<X>302</X>
-				<Y>142</Y>
+				<Y>112</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -9589,7 +9594,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778241988064</Id>
 				<Name><![CDATA[sl_customGCWindfarmContractedCapacity_MW]]></Name>
 				<X>260</X>
-				<Y>115</Y>
+				<Y>145</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -9600,6 +9605,7 @@ f_resetSettings();</ActionCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
+					<VisibleCode>cb_customGCWindfarmCurtailment.isSelected()</VisibleCode>
 					<Enabled>true</Enabled>
 					<ActionCode>double contractedCapacity_MW = sl_customGCWindfarmContractedCapacity_MW.getValue();
 
