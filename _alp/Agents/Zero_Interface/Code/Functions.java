@@ -4164,13 +4164,15 @@ switch(selectedFilter){
 }
 
 if(c_selectedGridConnections.size() == 0 && !filterCanReturnZero){ // Not allowed to return zero, while returning zero
-	f_removeFilter(selectedFilter, selectedFilterName);
+	//f_removeFilter(selectedFilter, selectedFilterName);
+	f_removeLastFilter();
+	f_setFilterInfoText();
 	
 	//Notify filter has not been applied, cause no results are given
-	f_setErrorScreen("Er zijn geen panden die voldoen aan de selectiecritia.", 0, 0);
+	f_setErrorScreen("Er zijn geen panden die voldoen aan de selectiecritia", 0, 0);
 }
 else if(c_selectedGridConnections.size() == 0 && filterCanReturnZero){//Allowed to return zero filtered gc, while returning zero
-	//Do nothing
+
 }
 else{//Filtered GC returns GC
 

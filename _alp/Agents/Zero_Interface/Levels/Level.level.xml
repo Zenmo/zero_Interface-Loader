@@ -973,7 +973,7 @@ else{
 				<Id>1720904897811</Id>
 				<Name><![CDATA[button_nextBuilding]]></Name>
 				<X>-65</X>
-				<Y>20</Y>
+				<Y>40</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1018,7 +1018,7 @@ else{
 				<Id>1720904921271</Id>
 				<Name><![CDATA[button_previousBuilding]]></Name>
 				<X>-65</X>
-				<Y>45</Y>
+				<Y>55</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1063,7 +1063,7 @@ else{
 				<Id>1720908988631</Id>
 				<Name><![CDATA[t_multipleBuildingInfo]]></Name>
 				<X>-515</X>
-				<Y>50</Y>
+				<Y>40</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8138,7 +8138,7 @@ type]]></Text>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1725017697644</Id>
 		<Name><![CDATA[checkbox_cables]]></Name>
-		<X>1125</X>
+		<X>1195</X>
 		<Y>58</Y>
 		<Label>
 			<X>0</X>
@@ -8175,8 +8175,8 @@ gr_cablesLegend.setVisible(showCables);</ActionCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1734444497900</Id>
 		<Name><![CDATA[cb_showFilterInterface]]></Name>
-		<X>1250</X>
-		<Y>53</Y>
+		<X>1260</X>
+		<Y>770</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -8215,7 +8215,7 @@ else{
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1780213147396</Id>
 		<Name><![CDATA[checkbox_netPlanes]]></Name>
-		<X>1125</X>
+		<X>1195</X>
 		<Y>28</Y>
 		<Label>
 			<X>0</X>
@@ -8257,8 +8257,8 @@ else{
 	<Group>
 		<Id>1734444441402</Id>
 		<Name><![CDATA[gr_filterInterface]]></Name>
-		<X>-1780</X>
-		<Y>900</Y>
+		<X>-1810</X>
+		<Y>930</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -8267,8 +8267,8 @@ else{
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>1350</XCode>
-		<YCode>90</YCode>
+		<XCode>750</XCode>
+		<YCode>770</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -8293,8 +8293,8 @@ else{
 				<LineColor>-16727358</LineColor>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>557</Width>
-				<Height>240</Height>
+				<Width>570</Width>
+				<Height>200</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-33521536</FillColor>
 				<FillMaterial>null</FillMaterial>
@@ -8303,8 +8303,8 @@ else{
 			<Text>
 				<Id>1734443492902</Id>
 				<Name><![CDATA[txt_filterDescription]]></Name>
-				<X>30</X>
-				<Y>50</Y>
+				<X>395</X>
+				<Y>24</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8317,7 +8317,7 @@ else{
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-1</Color>
-				<Text><![CDATA[Filter]]></Text>
+				<Text><![CDATA[Filterbox]]></Text>
 				<Font>
 					<Name><![CDATA[HOLONline2]]></Name>
 					<Size>14</Size>
@@ -8329,8 +8329,8 @@ else{
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1734442617547</Id>
 				<Name><![CDATA[cb_filterOptions]]></Name>
-				<X>75</X>
-				<Y>45</Y>
+				<X>395</X>
+				<Y>44</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8339,7 +8339,7 @@ else{
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="230" Height="20">
+				<BasicProperties Width="170" Height="20">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<FillColor>-1</FillColor>
 					<TextColor>-16777216</TextColor>
@@ -8377,8 +8377,8 @@ else{
 			<Text>
 				<Id>1734443541801</Id>
 				<Name><![CDATA[txt_activeFilters]]></Name>
-				<X>25</X>
-				<Y>121</Y>
+				<X>19</X>
+				<Y>40</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8387,16 +8387,16 @@ else{
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<YCode>108</YCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-1</Color>
 				<Text><![CDATA[Geen Actieve Filters.]]></Text>
-				<TextCode>!t_filterNames.getText().equals("") ? "" : "Geen Actieve Filters."</TextCode>
+				<TextCode>!t_filterNames.getText().equals("") ? "" : 
+"- Momenteel zijn er geen filters actief\n- Selecteer op de kaart of gebruik de filterbox"</TextCode>
 				<Font>
 					<Name><![CDATA[HOLONline2]]></Name>
-					<Size>14</Size>
+					<Size>16</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -8405,7 +8405,7 @@ else{
 				<Id>1734444104065</Id>
 				<Name><![CDATA[t_filterNames]]></Name>
 				<X>79</X>
-				<Y>102</Y>
+				<Y>37</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8430,13 +8430,13 @@ else{
 				<Id>1734444671650</Id>
 				<Name><![CDATA[txt_filterInterface]]></Name>
 				<X>25</X>
-				<Y>15</Y>
+				<Y>165</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
 				</Label>
 				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
+				<PresentationFlag>false</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
 				<EmbeddedIcon>false</EmbeddedIcon>
@@ -8446,7 +8446,7 @@ else{
 				<Text><![CDATA[MAAK EEN SELECTIE VAN GEBOUWEN]]></Text>
 				<Font>
 					<Name><![CDATA[HolonBLOCK2]]></Name>
-					<Size>18</Size>
+					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -8454,8 +8454,8 @@ else{
 			<Text>
 				<Id>1734524446136</Id>
 				<Name><![CDATA[t_selectedGridLoop]]></Name>
-				<X>25</X>
-				<Y>210</Y>
+				<X>30</X>
+				<Y>180</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8481,8 +8481,8 @@ else{
 			<Text>
 				<Id>1737640715642</Id>
 				<Name><![CDATA[t_selectedNBh]]></Name>
-				<X>25</X>
-				<Y>187</Y>
+				<X>160</X>
+				<Y>180</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8508,7 +8508,7 @@ else{
 			<Group>
 				<Id>1780213504540</Id>
 				<Name><![CDATA[gr_closeInfoText1]]></Name>
-				<X>530</X>
+				<X>550</X>
 				<Y>21</Y>
 				<Label>
 					<X>5.17</X>
@@ -8608,66 +8608,10 @@ else{
 				</Presentation>
 			</Group>
 			<RoundedRectangle>
-				<Id>1780224303235</Id>
-				<Name><![CDATA[roundRectangle10]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<X>400</X>
-				<Y>110</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<OnClickCode>f_finishManualSelection();</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>0.5</LineWidth>
-				<LineColor>-1</LineColor>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>145</Width>
-				<Height>25</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-7022639</FillColor>
-				<FillMaterial>null</FillMaterial>
-				<ArcRadius>5</ArcRadius>
-			</RoundedRectangle>
-			<Text>
-				<Id>1780224327937</Id>
-				<Name><![CDATA[text6]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<X>480</X>
-				<Y>120</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-12566464</Color>
-				<Text><![CDATA[Selecteer op kaart]]></Text>
-				<TextCode>b_inManualFilterSelectionMode ? "Selectie voltooien" : "Selecteer op kaart"</TextCode>
-				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
-					<Size>9</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<RoundedRectangle>
 				<Id>1780224601258</Id>
 				<Name><![CDATA[roundRectangle11]]></Name>
-				<X>390</X>
-				<Y>206</Y>
+				<X>420</X>
+				<Y>170</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -8704,8 +8648,8 @@ if( c_filterMatrix.size() &gt; 0 ){ //color selected buildings
 			<Text>
 				<Id>1780224601260</Id>
 				<Name><![CDATA[text7]]></Name>
-				<X>465</X>
-				<Y>215</Y>
+				<X>496</X>
+				<Y>179</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8726,65 +8670,11 @@ if( c_filterMatrix.size() &gt; 0 ){ //color selected buildings
 				</Font>
 				<Alignment>CENTER</Alignment>
 			</Text>
-			<RoundedRectangle>
-				<Id>1780224606886</Id>
-				<Name><![CDATA[roundRectangle12]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<X>390</X>
-				<Y>171</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<OnClickCode>f_removeManualSelection();</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>0.5</LineWidth>
-				<LineColor>-1</LineColor>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>145</Width>
-				<Height>25</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-7022639</FillColor>
-				<FillMaterial>null</FillMaterial>
-				<ArcRadius>5</ArcRadius>
-			</RoundedRectangle>
-			<Text>
-				<Id>1780224606888</Id>
-				<Name><![CDATA[text8]]></Name>
-				<X>465</X>
-				<Y>178</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>false</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-12566464</Color>
-				<Text><![CDATA[Wis selectie]]></Text>
-				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
-					<Size>9</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
 			<Text>
 				<Id>1780912439364</Id>
 				<Name><![CDATA[t_filterCount]]></Name>
-				<X>243</X>
-				<Y>102</Y>
+				<X>238</X>
+				<Y>37</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8808,8 +8698,8 @@ if( c_filterMatrix.size() &gt; 0 ){ //color selected buildings
 			<Text>
 				<Id>1780946272407</Id>
 				<Name><![CDATA[t_filterIndex]]></Name>
-				<X>44</X>
-				<Y>102</Y>
+				<X>39</X>
+				<Y>37</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8834,7 +8724,7 @@ if( c_filterMatrix.size() &gt; 0 ){ //color selected buildings
 				<Id>1780947045406</Id>
 				<Name><![CDATA[text9]]></Name>
 				<X>25</X>
-				<Y>81</Y>
+				<Y>16</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8859,7 +8749,7 @@ if( c_filterMatrix.size() &gt; 0 ){ //color selected buildings
 				<Id>1780947049557</Id>
 				<Name><![CDATA[text10]]></Name>
 				<X>79</X>
-				<Y>81</Y>
+				<Y>16</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8883,8 +8773,8 @@ if( c_filterMatrix.size() &gt; 0 ){ //color selected buildings
 			<Text>
 				<Id>1780947067356</Id>
 				<Name><![CDATA[text11]]></Name>
-				<X>200</X>
-				<Y>81</Y>
+				<X>195</X>
+				<Y>16</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8908,8 +8798,8 @@ if( c_filterMatrix.size() &gt; 0 ){ //color selected buildings
 			<Line>
 				<Id>1780947375256</Id>
 				<Name><![CDATA[line1]]></Name>
-				<X>25</X>
-				<Y>95</Y>
+				<X>20</X>
+				<Y>30</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -8929,15 +8819,15 @@ if( c_filterMatrix.size() &gt; 0 ){ //color selected buildings
 				<BeginArrowStyle>0</BeginArrowStyle>
 				<EndArrowSize>1</EndArrowSize>
 				<EndArrowStyle>0</EndArrowStyle>
-				<Dx>341</Dx>
+				<Dx>335</Dx>
 				<Dy>0</Dy>
 				<Dz>0</Dz>
 			</Line>
 			<Text>
 				<Id>1781259216377</Id>
 				<Name><![CDATA[text12]]></Name>
-				<X>309</X>
-				<Y>81</Y>
+				<X>304</X>
+				<Y>16</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8961,8 +8851,8 @@ if( c_filterMatrix.size() &gt; 0 ){ //color selected buildings
 			<Group>
 				<Id>1781260155053</Id>
 				<Name><![CDATA[gr_removeLastFilterButton]]></Name>
-				<X>333</X>
-				<Y>109</Y>
+				<X>328</X>
+				<Y>44</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -8971,7 +8861,7 @@ if( c_filterMatrix.size() &gt; 0 ){ //color selected buildings
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<YCode>109 + (v_filterIndex.size() - 1 ) * 12</YCode>
+				<YCode>44 + (v_filterIndex.size() - 1 ) * 12</YCode>
 				<VisibleCode>v_filterIndex.size() &gt; 0</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
