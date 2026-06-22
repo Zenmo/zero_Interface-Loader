@@ -2637,6 +2637,7 @@ f_setShapePresentationOnTop(gr_sliderClickBlocker);
 f_setShapePresentationOnTop(gr_forceMapSelection);
 f_setShapePresentationOnTop(gr_filterInterface);
 f_setShapePresentationOnTop(gr_infoText);
+f_setShapePresentationOnTop(gr_filterOverlay);
 
 /*ALCODEEND*/}
 
@@ -4169,7 +4170,7 @@ if(c_selectedGridConnections.size() == 0 && !filterCanReturnZero){ // Not allowe
 	f_setFilterInfoText();
 	
 	//Notify filter has not been applied, cause no results are given
-	f_setErrorScreen("Er zijn geen panden die voldoen aan de selectiecritia", 0, 0);
+	f_setErrorScreen("Er zijn geen panden die voldoen aan de selectiecritia. De laatst geselecteerde filter wordt niet toegepast", 0, 0);
 }
 else if(c_selectedGridConnections.size() == 0 && filterCanReturnZero){//Allowed to return zero filtered gc, while returning zero
 
@@ -4285,6 +4286,9 @@ c_filterDummy.clear();
 f_setMapOverlay(); //Go back to base coloring of map
 if( c_filterMatrix.size() > 0 ){ //color selected buildings									
 	f_colorSelectedBuildings(c_filterMatrix.get(c_filterMatrix.size()-1));
+}
+else {
+	f_clearAllFilters();
 }
 /*ALCODEEND*/}
 
