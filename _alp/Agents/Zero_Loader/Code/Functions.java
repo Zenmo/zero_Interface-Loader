@@ -3360,7 +3360,7 @@ else{
 			lossFactor_WpK = uniform (avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(OL_GridConnectionInsulationLabel.B), avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(OL_GridConnectionInsulationLabel.G)) * floorArea_m2;
 			break;
 		default:
-			lossFactor_WpK = avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(parentGC.p_insulationLabel);
+			lossFactor_WpK = avgc_data.map_insulationLabel_lossfactorPerFloorSurface_WpKm2.get(parentGC.p_insulationLabel) * floorArea_m2;
 	}
 }
 
