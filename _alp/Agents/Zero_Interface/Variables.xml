@@ -1562,8 +1562,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1742298194173</Id>
 		<Name><![CDATA[v_forcedClickScreenColor]]></Name>
-		<X>140</X>
-		<Y>-820</Y>
+		<X>500</X>
+		<Y>-2180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

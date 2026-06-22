@@ -3880,46 +3880,6 @@ else if (b_addCustomSolarfarmGC || b_addCustomWindfarmGC || b_addCustomGridBatte
 		f_addCustomGCTransformerSelection(clickx, clicky);
 	}
 }
-	
-    
-    
-    /*if (v_customGCLatitude == 0 && v_customGCLongitude == 0) {
-        // Step 1: Set location
-        v_customGCLatitude = clickx; // Assuming clickx is lat or lon depending on map orientation
-        v_customGCLongitude = clicky;
-        txt_addCustomGCToMapTaskInstruction.setText("Kies een trafo op de kaart");
-        traceln("Location set. Now click on a transformer (GridNode) to connect the energy asset.");
-        f_deselectPreviousSelect();
-        return;
-    } else {
-        // Step 2: Select transformer
-        GridNode clickedGN = null;
-        for (GridNode GN : energyModel.pop_gridNodes) {
-            if (GN.gisRegion != null && GN.gisRegion.contains(clickx, clicky) && GN.gisRegion.isVisible()) {
-                clickedGN = GN;
-                break;
-            }
-        }
-        
-        if (clickedGN != null) {
-        	if (b_addCustomSolarfarmGC){
-            	f_addCustomSolarfarmGC(v_customGCLatitude, v_customGCLongitude, clickedGN);
-            	b_addCustomSolarfarmGC = false;
-            } else if (b_addCustomWindfarmGC){
-            	f_addCustomWindfarmGC(v_customGCLatitude, v_customGCLongitude, clickedGN);
-            	b_addCustomWindfarmGC = false;
-            } else if (b_addCustomGridBatteryGC){
-            	f_addCustomGridBatteryGC(v_customGCLatitude, v_customGCLongitude, clickedGN);
-            	b_addCustomGridBatteryGC = false;
-            }
-            v_customGCLatitude = 0;
-            v_customGCLongitude = 0;
-            return;
-        } else {
-            traceln("Please click on a valid transformer (GridNode).");
-            return;
-        }
-    }*/
 else if (b_removeCustomGC) {
 	f_removeCustomGCSelection(clickx,clicky);
 }
@@ -3995,9 +3955,10 @@ double maxContractedCapacity_kW = Math.ceil(installedCapacity_kW / 50.0) * 50.0;
 solarpark.v_liveConnectionMetaData.setCapacities_kW(0, maxContractedCapacity_kW, maxContractedCapacity_kW);
 solarpark.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
 
-// 3. Initialize GridConnection internals and set active
+solarpark.v_liveAssetsMetaData.PVOrientation = OL_PVOrientation.SOUTH;
+
+// 3. Initialize GridConnection
 solarpark.f_initialize(energyModel.p_timeParameters);
-solarpark.f_setActive(true, energyModel.p_timeVariables);
 
 // 4. Create the energy asset
 J_EAProduction pvAsset = new J_EAProduction(solarpark, OL_EnergyAssetType.PHOTOVOLTAIC, "Custom PV", OL_EnergyCarriers.ELECTRICITY, installedCapacity_kW, energyModel.p_timeParameters, energyModel.pp_PVProduction35DegSouth_fr);
@@ -4095,9 +4056,8 @@ double defaultCapacity_kW = 500;
 windpark.v_liveConnectionMetaData.setCapacities_kW(0, defaultCapacity_kW, defaultCapacity_kW);
 windpark.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
 
-// 3. Initialize GridConnection internals and set active
+// 3. Initialize GridConnection
 windpark.f_initialize(energyModel.p_timeParameters);
-windpark.f_setActive(true, energyModel.p_timeVariables);
 
 // 4. Create the Energy Asset
 J_EAProduction windAsset = new J_EAProduction(windpark, OL_EnergyAssetType.WINDMILL, "Custom Windpark", OL_EnergyCarriers.ELECTRICITY, defaultCapacity_kW, energyModel.p_timeParameters, energyModel.pp_windProduction_fr);
@@ -4147,9 +4107,8 @@ double defaultStorageCapacity_kWh = 2*defaultCapacity_kW;
 battery.v_liveConnectionMetaData.setCapacities_kW(defaultCapacity_kW, defaultCapacity_kW, defaultCapacity_kW);
 battery.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
 
-// 3. Initialize GridConnection internals and set active
+// 3. Initialize GridConnection
 battery.f_initialize(energyModel.p_timeParameters);
-battery.f_setActive(true, energyModel.p_timeVariables);
 
 // 4. Create the energy asset + pick default operation mode management class
 J_EAStorageElectric batteryAsset = new J_EAStorageElectric(battery, defaultCapacity_kW, defaultStorageCapacity_kWh, 0.5, energyModel.p_timeParameters);
@@ -4191,25 +4150,32 @@ if (!(selectedGC instanceof GCEnergyProduction) || !c_customSolarfarmGCs.contain
 GCEnergyProduction gc = (GCEnergyProduction) selectedGC;
 J_EAProduction pvAsset = (J_EAProduction) gc.c_productionAssets.get(0);
 
+// Installed capacity per hectare
 double currentCapacity_kW = pvAsset.getCapacityElectric_kW();
-double maxContractedCapacity_kW = Math.ceil(currentCapacity_kW / 50.0) * 50.0;
-
-// Get the area of the custom solarfarm in hectares + Calculate current capacity density in kW/ha
 double area_m2 = gc.c_connectedGISObjects.get(0).gisRegion.area();
 double area_ha = area_m2 / 10000.0;
 double currentCapacity_kWpha = currentCapacity_kW / area_ha;
 
-// Setup capacity per ha slider
 sl_customGCSolarfarmInstalledCapacity_kWpha.setRange((int)(0.5*energyModel.avgc_data.p_avgSolarFieldPower_kWppha), (int)(2*energyModel.avgc_data.p_avgSolarFieldPower_kWppha));
 sl_customGCSolarfarmInstalledCapacity_kWpha.setValue(currentCapacity_kWpha, false);
 
-// Setup contracted capacity slider
-sl_customGCSolarfarmContractedCapacity_kW.setRange(0, maxContractedCapacity_kW);
-sl_customGCSolarfarmContractedCapacity_kW.setValue(gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW(), false);
+// PV Orientation
+J_ProfilePointer currentProfile = pvAsset.getProfilePointer();
+String currentOrientationLabel = "Zuid (15°)"; // Default
+if (currentProfile == energyModel.pp_PVProduction15DegEastWest_fr) {
+    currentOrientationLabel = "Oost/West (35°)";
+}
+cb_customGCSolarfarmPVOrientation.setValue(currentOrientationLabel, false);
 
-// Setup curtailment checkbox
+// Curtailment
 boolean hasCurtailment = gc.f_isAssetManagementActive(I_CurtailManagement.class);
 cb_customGCSolarfarmCurtailment.setSelected(hasCurtailment, false);
+
+// Contracted capacity limit
+double maxContractedCapacity_kW = Math.ceil(currentCapacity_kW / 50.0) * 50.0;
+
+sl_customGCSolarfarmContractedCapacity_kW.setRange(0, maxContractedCapacity_kW);
+sl_customGCSolarfarmContractedCapacity_kW.setValue(gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW(), false);
 
 /*ALCODEEND*/}
 
@@ -4227,20 +4193,19 @@ if (!(selectedGC instanceof GCEnergyProduction) || !c_customWindfarmGCs.contains
 GCEnergyProduction gc = (GCEnergyProduction) selectedGC;
 J_EAProduction windAsset = (J_EAProduction) gc.c_productionAssets.get(0);
 
+// Installed capacity
 double currentCapacity_MW = windAsset.getCapacityElectric_kW()/1000;
 
-// Setup capacity MW slider
 sl_customGCWindfarmInstalledCapacity_MW.setRange(0.1, 10);
 sl_customGCWindfarmInstalledCapacity_MW.setValue(currentCapacity_MW, false); // false prevents triggering ActionCode
 
-// Setup contracted capacity slider
-sl_customGCWindfarmContractedCapacity_MW.setRange(0, currentCapacity_MW);
-sl_customGCWindfarmContractedCapacity_MW.setValue(gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW()/1000, false);
-
-// Setup curtailment checkbox
+// Curtailment
 boolean hasCurtailment = gc.f_isAssetManagementActive(I_CurtailManagement.class);
 cb_customGCWindfarmCurtailment.setSelected(hasCurtailment, false);
 
+// Contracted capacity limit
+sl_customGCWindfarmContractedCapacity_MW.setRange(0, currentCapacity_MW);
+sl_customGCWindfarmContractedCapacity_MW.setValue(gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW()/1000, false);
 /*ALCODEEND*/}
 
 double f_updateCustomGCGridBatterySettings()
@@ -4257,18 +4222,17 @@ if (!(selectedGC instanceof GCGridBattery) || !c_customGridBatteryGCs.contains(s
 GCGridBattery gc = (GCGridBattery) selectedGC;
 J_EAStorageElectric batteryAsset = (J_EAStorageElectric)gc.c_storageAssets.get(0);
 
+// Installed capacity
 double currentCapacity_kWh = batteryAsset.getStorageCapacity_kWh();
 double currentCapacity_kW = batteryAsset.getCapacityElectric_kW();
 
-// Setup capacity MW slider
 sl_customGCGridBatteryInstalledCapacity_kWh.setRange(100, 5000);
 sl_customGCGridBatteryInstalledCapacity_kWh.setValue(currentCapacity_kWh, false);
 
-// Setup contracted capacity slider
 sl_customGCGridBatteryInstalledCapacity_kW.setRange(50, 2500);
 sl_customGCGridBatteryInstalledCapacity_kW.setValue(currentCapacity_kW, false);
 
-// Battery Management selection
+// Battery management selection
 I_BatteryManagement currentBatteryManagement = gc.f_getBatteryManagement();
 String currentBMS_str = "Zelfverbruik"; // Default fallback
 
@@ -4619,5 +4583,19 @@ double f_setForcedClickScreenTitleBackgroundColor(Color fillColor,Color lineColo
 {/*ALCODESTART::1781863042854*/
 rect_forcedClickTitle.setFillColor(fillColor);
 rect_forcedClickTitle.setLineColor(lineColor);
+/*ALCODEEND*/}
+
+double f_setForcedClickScreenTextBoxes(String titleText,Color titleBackgroundFillColor,Color titleBackgroundLineColor,String messageText,Color messageBackgroundFillColor,Color messageBackgroundLineColor)
+{/*ALCODESTART::1782123595562*/
+f_setForcedClickScreenTitleText(titleText);
+f_setForcedClickScreenTitleBackgroundColor(titleBackgroundFillColor, titleBackgroundLineColor);
+f_setForcedClickScreenMessageText(messageText);
+f_setForcedClickScreenMessageBackgroundColor(messageBackgroundFillColor, messageBackgroundLineColor);
+/*ALCODEEND*/}
+
+double f_setForcedClickScreenMessageBackgroundColor(Color fillColor,Color lineColor)
+{/*ALCODESTART::1782123808280*/
+rect_selectText.setFillColor(fillColor);
+rect_selectText.setLineColor(lineColor);
 /*ALCODEEND*/}
 

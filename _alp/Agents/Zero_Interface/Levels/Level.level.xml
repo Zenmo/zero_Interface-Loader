@@ -8737,7 +8737,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778157960511</Id>
 				<Name><![CDATA[txt_customGCSettingsSolarfarmContractedCapacity_kW]]></Name>
 				<X>20</X>
-				<Y>210</Y>
+				<Y>240</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8763,7 +8763,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778158102891</Id>
 				<Name><![CDATA[txt_customGCSettingsSolarfarmCurtailment]]></Name>
 				<X>20</X>
-				<Y>180</Y>
+				<Y>210</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8788,7 +8788,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778158258122</Id>
 				<Name><![CDATA[txt_customEASolarfarmContractedCapacity_kW]]></Name>
 				<X>245</X>
-				<Y>210</Y>
+				<Y>240</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8816,7 +8816,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778158369195</Id>
 				<Name><![CDATA[cb_customGCSolarfarmCurtailment]]></Name>
 				<X>302</X>
-				<Y>172</Y>
+				<Y>202</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8850,7 +8850,7 @@ f_resetSettings();</ActionCode>
 				<Id>1778158173095</Id>
 				<Name><![CDATA[sl_customGCSolarfarmContractedCapacity_kW]]></Name>
 				<X>260</X>
-				<Y>205</Y>
+				<Y>235</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -8960,6 +8960,83 @@ f_resetSettings();</ActionCode>
 					<Style>0</Style>
 				</Font>
 				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Control Type="ComboBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1781878970701</Id>
+				<Name><![CDATA[cb_customGCSolarfarmPVOrientation]]></Name>
+				<X>220</X>
+				<Y>180</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="140" Height="20">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<FillColor>-1</FillColor>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>GCEnergyProduction solarpark = (GCEnergyProduction) (c_selectedGridConnections.get(0));
+J_EAProduction pvAsset = (J_EAProduction) solarpark.c_productionAssets.get(0);
+J_ProfilePointer profile;
+OL_PVOrientation pvOrientation;
+
+switch(cb_customGCSolarfarmPVOrientation.getValue()){
+	case "Zuid (15°)":
+    	profile = energyModel.pp_PVProduction35DegSouth_fr;
+        pvOrientation = OL_PVOrientation.SOUTH;
+    	break;
+	case "Oost/West (35°)":
+    	profile = energyModel.pp_PVProduction15DegEastWest_fr;
+        pvOrientation = OL_PVOrientation.EASTWEST;
+    	break;
+    default:
+        return;
+}
+
+solarpark.v_liveAssetsMetaData.PVOrientation = pvOrientation;
+pvAsset.setProfilePointer(profile);
+
+if (!b_runningMainInterfaceScenarios) f_setScenarioToCustom();
+f_resetSettings();
+//f_updateUIResultsData();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<Editable>false</Editable>
+					<Button>Zuid (15°)</Button>
+					<Button>Oost/West (35°)</Button>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1781879229854</Id>
+				<Name><![CDATA[txt_customGCSettingsSolarfarmPVOrientation]]></Name>
+				<X>20</X>
+				<Y>180</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Oriëntatie]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
 			</Text>
 		</Presentation>
 	</Group>
@@ -9656,7 +9733,10 @@ switch(cb_customGCGridBatteryAlgorithm.getValue()){
     	break;
 }
 
-gc.f_setBatteryManagement(batteryAlgorithm);</ActionCode>
+gc.f_setBatteryManagement(batteryAlgorithm);
+
+if (!b_runningMainInterfaceScenarios) f_setScenarioToCustom();
+f_resetSettings();</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>

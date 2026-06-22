@@ -2140,9 +2140,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>zero_Interface.b_addCustomSolarfarmGC = true;
-zero_Interface.f_setForcedClickScreenTitleText("Energieassets toevoegen");
-zero_Interface.f_setForcedClickScreenTitleBackgroundColor(new Color(255, 255, 255), new Color(0, 0, 0));
-zero_Interface.f_setForcedClickScreenMessageText("Teken je locatie op de kaart. Kies minimaal 3 hoekpunten.");
+zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets toevoegen", new Color(255, 255, 255), new Color(0, 0, 0), "Teken je locatie op de kaart. Kies minimaal 3 hoekpunten.", new Color(255, 255, 255), new Color(0, 0, 0));
 zero_Interface.f_setForcedClickScreenVisibility(true);
 traceln("Adding solarfarm: Please click on the map to set the location.");</ActionCode>
 				</BasicProperties>
@@ -2170,9 +2168,7 @@ traceln("Adding solarfarm: Please click on the map to set the location.");</Acti
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>zero_Interface.b_addCustomGridBatteryGC = true;
-zero_Interface.f_setForcedClickScreenTitleText("Energieassets toevoegen");
-zero_Interface.f_setForcedClickScreenTitleBackgroundColor(new Color(255, 255, 255), new Color(0, 0, 0));
-zero_Interface.f_setForcedClickScreenMessageText("Kies een locatie op de kaart");
+zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets toevoegen", new Color(255, 255, 255), new Color(0, 0, 0), "Kies een locatie op de kaart", new Color(255, 255, 255), new Color(0, 0, 0));
 zero_Interface.f_setForcedClickScreenVisibility(true);
 traceln("Adding grid battery: Please click on the map to set the location.");</ActionCode>
 				</BasicProperties>
@@ -2200,9 +2196,7 @@ traceln("Adding grid battery: Please click on the map to set the location.");</A
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 					<ActionCode>zero_Interface.b_addCustomWindfarmGC = true;
-zero_Interface.f_setForcedClickScreenTitleText("Energieassets toevoegen");
-zero_Interface.f_setForcedClickScreenTitleBackgroundColor(new Color(255, 255, 255), new Color(0, 0, 0));
-zero_Interface.f_setForcedClickScreenMessageText("Kies een locatie op de kaart");
+zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets toevoegen", new Color(255, 255, 255), new Color(0, 0, 0), "Kies een locatie op de kaart", new Color(255, 255, 255), new Color(0, 0, 0));
 zero_Interface.f_setForcedClickScreenVisibility(true);
 traceln("Adding windfarm: Please click on the map to set the location.");</ActionCode>
 				</BasicProperties>
@@ -2232,9 +2226,7 @@ traceln("Adding windfarm: Please click on the map to set the location.");</Actio
 					<EnableExpression>!zero_Interface.c_customSolarfarmGCs.isEmpty() || !zero_Interface.c_customWindfarmGCs.isEmpty() || !zero_Interface.c_customGridBatteryGCs.isEmpty()</EnableExpression>
 					<ActionCode>if(!zero_Interface.c_customSolarfarmGCs.isEmpty() || !zero_Interface.c_customWindfarmGCs.isEmpty() || !zero_Interface.c_customGridBatteryGCs.isEmpty()) {
 	zero_Interface.b_removeCustomGC = true;
-	zero_Interface.f_setForcedClickScreenTitleText("Energieassets toevoegen");
-	zero_Interface.f_setForcedClickScreenTitleBackgroundColor(new Color(255, 255, 255), new Color(0, 0, 0));
-	zero_Interface.f_setForcedClickScreenMessageText("Kies een energieasset op de kaart");
+	zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets verwijderen", new Color(255, 255, 255), new Color(0, 0, 0), "Kies een energieasset op de kaart", new Color(255, 255, 255), new Color(0, 0, 0));
 	zero_Interface.f_setForcedClickScreenVisibility(true);
 	traceln("Click on the energy asset you want to remove.");
 } else {
