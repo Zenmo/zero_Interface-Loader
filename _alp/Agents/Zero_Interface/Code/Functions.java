@@ -2736,9 +2736,7 @@ pauseSimulation();
 b_inEnergyHubMode = true;
 b_inEnergyHubSelectionMode = true;
 
-f_setForcedClickScreenTitleText("Energie Hub Configurator");
-f_setForcedClickScreenTitleBackgroundColor(uI_EnergyHub.p_energyHubBackGroundColor, uI_EnergyHub.p_energyHubLineColor);
-f_setForcedClickScreenMessageText("");
+f_setForcedClickScreenTextBoxes("Energie Hub Configurator", uI_EnergyHub.p_energyHubBackGroundColor, uI_EnergyHub.p_energyHubLineColor, "", new Color(255, 255, 255), new Color(0, 0, 0));
 f_setForcedClickScreenVisibility(true);
 
 cb_showFilterInterface.setSelected(true, true);
@@ -3061,9 +3059,7 @@ button_clearFilters.action();
 b_inEnergyHubMode = false;
 b_inEnergyHubSelectionMode = false;
 
-f_setForcedClickScreenTitleText("");
-f_setForcedClickScreenTitleBackgroundColor(new Color(255, 255, 255), new Color(0, 0, 0));
-f_setForcedClickScreenMessageText("");
+f_setForcedClickScreenTextBoxes("", new Color(255, 255, 255), new Color(0, 0, 0), "", new Color(255, 255, 255), new Color(0, 0, 0));
 f_setForcedClickScreenVisibility(false);
 
 cb_showFilterInterface.setSelected(false, true);
@@ -4551,8 +4547,7 @@ b_removeCustomGC = false;
 
 // 5. Hide forced click screen, if needed
 f_setForcedClickScreenVisibility(false);
-f_setForcedClickScreenTitleText("");
-f_setForcedClickScreenMessageText("");
+f_setForcedClickScreenTextBoxes("", new Color(255, 255, 255), new Color(0, 0, 0), "", new Color(255, 255, 255), new Color(0, 0, 0));
 /*ALCODEEND*/}
 
 double[] f_calculateCustomPolygonCoordinates(List<Pair<Double,Double>> coordinateList)

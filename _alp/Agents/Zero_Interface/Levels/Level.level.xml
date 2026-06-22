@@ -2468,9 +2468,10 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 					<EnableExpression>user.GCAccessType == OL_UserGCAccessType.FULL &amp;&amp; (!gr_ForceMapSelectionMessageText.isVisible() || b_inManualFilterSelectionMode)</EnableExpression>
 					<ActionCode>if(!b_inManualFilterSelectionMode){
 	b_inManualFilterSelectionMode = true;
-	f_setForcedClickScreenTitleText("");
+	
 	f_setForcedClickScreenMessageText("(De)Selecteer gebouwen");
 	if(!b_inEnergyHubSelectionMode){
+		f_setForcedClickScreenTitleText("");
 		f_setForcedClickScreenVisibility(true);
 	}
 	
@@ -8497,7 +8498,7 @@ else{
 		<Id>1778088271551</Id>
 		<Name><![CDATA[gr_customGCSolarfarmSettings]]></Name>
 		<X>120</X>
-		<Y>-2660</Y>
+		<Y>-2750</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -9044,7 +9045,7 @@ f_resetSettings();
 		<Id>1778241988036</Id>
 		<Name><![CDATA[gr_customGCWindfarmSettings]]></Name>
 		<X>520</X>
-		<Y>-2660</Y>
+		<Y>-2750</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -9390,7 +9391,7 @@ f_resetSettings();</ActionCode>
 		<Id>1778278832476</Id>
 		<Name><![CDATA[gr_customGCGridBatterySettings]]></Name>
 		<X>920</X>
-		<Y>-2660</Y>
+		<Y>-2750</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
