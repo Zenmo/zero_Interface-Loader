@@ -4055,7 +4055,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<OnClickCode>f_resetCustomGCCreation();</OnClickCode>
+						<OnClickCode>f_stopCustomGCCreation();</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
@@ -4128,8 +4128,13 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
 						<VisibleCode>c_tempSavedCoordinates.size()&gt;=3 &amp;&amp; !b_customGCPolygonCreated</VisibleCode>
-						<OnClickCode>b_customGCPolygonCreated = true;
-f_setForcedClickScreenMessageText("Kies een trafo op de kaart");</OnClickCode>
+						<OnClickCode>if (f_checkCustomPolygonSelfIntersection()) { //Custom drawn polygon is self-intersecting
+    f_resetCustomGCCreation();
+    f_setForcedClickScreenMessageText("De getekende lijnen mogen elkaar niet snijden! Begin opnieuw.");
+} else {
+	b_customGCPolygonCreated = true;
+	f_setForcedClickScreenMessageText("Kies een trafo op de kaart");
+}</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>

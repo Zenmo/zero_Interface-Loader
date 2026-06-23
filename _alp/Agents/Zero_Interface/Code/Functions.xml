@@ -2760,7 +2760,7 @@
 		<Id>1777995108231</Id>
 		<Name><![CDATA[f_addCustomSolarfarmGC]]></Name>
 		<X>-520</X>
-		<Y>1440</Y>
+		<Y>1460</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2780,7 +2780,7 @@
 		<Id>1777995108233</Id>
 		<Name><![CDATA[f_removeCustomGC]]></Name>
 		<X>-520</X>
-		<Y>1660</Y>
+		<Y>1700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2800,7 +2800,7 @@
 		<Id>1777995108235</Id>
 		<Name><![CDATA[f_addCustomWindfarmGC]]></Name>
 		<X>-520</X>
-		<Y>1460</Y>
+		<Y>1480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2820,7 +2820,7 @@
 		<Id>1777995108237</Id>
 		<Name><![CDATA[f_addCustomGridBatteryGC]]></Name>
 		<X>-520</X>
-		<Y>1480</Y>
+		<Y>1500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2888,7 +2888,7 @@
 		<Id>1778854379860</Id>
 		<Name><![CDATA[f_getSliderOwnerForCustomGC]]></Name>
 		<X>-500</X>
-		<Y>1500</Y>
+		<Y>1520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2908,7 +2908,7 @@
 		<Id>1778855159263</Id>
 		<Name><![CDATA[f_createAndLinkGISObject]]></Name>
 		<X>-520</X>
-		<Y>1520</Y>
+		<Y>1540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2960,7 +2960,7 @@
 		<Id>1778997814360</Id>
 		<Name><![CDATA[f_calculateGISObjectArea]]></Name>
 		<X>-500</X>
-		<Y>1540</Y>
+		<Y>1560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2984,7 +2984,7 @@
 		<Id>1778997955081</Id>
 		<Name><![CDATA[f_calculateSquareCoordinates]]></Name>
 		<X>-500</X>
-		<Y>1560</Y>
+		<Y>1580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3012,7 +3012,7 @@
 		<Id>1781623122174</Id>
 		<Name><![CDATA[f_calculateCircleCoordinates]]></Name>
 		<X>-500</X>
-		<Y>1580</Y>
+		<Y>1600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3064,7 +3064,7 @@
 		<Id>1781677735606</Id>
 		<Name><![CDATA[f_addCustomGCTransformerSelection]]></Name>
 		<X>-540</X>
-		<Y>1420</Y>
+		<Y>1440</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3088,7 +3088,7 @@
 		<Id>1781678055851</Id>
 		<Name><![CDATA[f_removeCustomGCSelection]]></Name>
 		<X>-540</X>
-		<Y>1640</Y>
+		<Y>1680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3134,9 +3134,9 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1781688506944</Id>
-		<Name><![CDATA[f_resetCustomGCCreation]]></Name>
+		<Name><![CDATA[f_stopCustomGCCreation]]></Name>
 		<X>-540</X>
-		<Y>1620</Y>
+		<Y>1640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3152,7 +3152,7 @@
 		<Id>1781694164851</Id>
 		<Name><![CDATA[f_calculateCustomPolygonCoordinates]]></Name>
 		<X>-500</X>
-		<Y>1600</Y>
+		<Y>1620</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3304,6 +3304,38 @@
 			<Name><![CDATA[defaultFontSize]]></Name>
 			<Type><![CDATA[int]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1782220715178</Id>
+		<Name><![CDATA[f_resetCustomGCCreation]]></Name>
+		<X>-520</X>
+		<Y>1660</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>boolean</ReturnType>
+		<Id>1782222661974</Id>
+		<Name><![CDATA[f_checkCustomPolygonSelfIntersection]]></Name>
+		<X>-520</X>
+		<Y>1420</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

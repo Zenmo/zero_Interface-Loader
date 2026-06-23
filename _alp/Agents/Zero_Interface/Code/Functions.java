@@ -4466,7 +4466,7 @@ if (clickedGN != null) {
     	f_addCustomGridBatteryGC(clickedGN);
     }
     // Clean up coordinate temporary dots, state variables, lists
-    f_resetCustomGCCreation();
+    f_stopCustomGCCreation();
     
     return;
 } else {
@@ -4518,32 +4518,18 @@ dot.setLineWidth(1.0);
 return dot;
 /*ALCODEEND*/}
 
-double f_resetCustomGCCreation()
+double f_stopCustomGCCreation()
 {/*ALCODESTART::1781688506944*/
-// 1. Clean up temporary dot markers
-for (GISRegion dot : c_tempSavedDots) {
-    if (dot != null) {
-        dot.remove();
-    }
-}
-c_tempSavedDots.clear();
+// Clean up temporary dot markers, preview polygon, and coordinates list
+f_resetCustomGCCreation();
 
-// 2. Clean up preview polygon
-if (previewGISRegion != null) {
-    previewGISRegion.remove();
-    previewGISRegion = null;
-}
-
-// 3. Clear coordinates list
-c_tempSavedCoordinates.clear();
-
-// 4. Reset state variables
+// Reset state variables
 b_customGCPolygonCreated = false;
 b_addCustomGC = false;
 v_addCustomGCType = null;
 b_removeCustomGC = false;
 
-// 5. Hide forced click screen, if needed
+// Hide forced click screen, if needed
 f_setForcedClickScreenVisibility(false);
 f_setForcedClickScreenTextBoxes("", new Color(255, 255, 255), new Color(0, 0, 0), "", new Color(255, 255, 255), new Color(0, 0, 0));
 /*ALCODEEND*/}
@@ -4646,5 +4632,90 @@ try {
 } finally {
 	g2d.dispose();
 }
+/*ALCODEEND*/}
+
+double f_resetCustomGCCreation()
+{/*ALCODESTART::1782220715178*/
+// Clean up temporary dot markers
+for (GISRegion dot : c_tempSavedDots) {
+    if (dot != null) {
+        dot.remove();
+    }
+}
+c_tempSavedDots.clear();
+
+// Clean up preview polygon
+if (previewGISRegion != null) {
+    previewGISRegion.remove();
+    previewGISRegion = null;
+}
+
+// Clear coordinates list
+c_tempSavedCoordinates.clear();
+/*ALCODEEND*/}
+
+boolean f_checkCustomPolygonSelfIntersection()
+{/*ALCODESTART::1782222661974*/
+int n = c_tempSavedCoordinates.size();
+if (n < 4) {
+    return false; // A polygon with less than 4 vertices cannot self-intersect
+}
+// Helper class for robust geometric computations
+class GeoUtil {
+    // Checks if point q lies on line segment pr
+    boolean onSegment(double px, double py, double qx, double qy, double rx, double ry) {
+        return qx <= Math.max(px, rx) && qx >= Math.min(px, rx) &&
+               qy <= Math.max(py, ry) && qy >= Math.min(py, ry);
+    }
+    // Finds the orientation of ordered triplet (p, q, r).
+    // Returns:
+    // 0 -> p, q and r are collinear
+    // 1 -> Clockwise
+    // 2 -> Counterclockwise
+    int orientation(double px, double py, double qx, double qy, double rx, double ry) {
+        double val = (qy - py) * (rx - qx) - (qx - px) * (ry - qy);
+        if (Math.abs(val) < 1e-9) return 0; // Collinear within precision threshold
+        return (val > 0) ? 1 : 2;
+    }
+    // Checks if line segment p1q1 and p2q2 intersect
+    boolean doIntersect(double p1x, double p1y, double q1x, double q1y,
+                        double p2x, double p2y, double q2x, double q2y) {
+        int o1 = orientation(p1x, p1y, q1x, q1y, p2x, p2y);
+        int o2 = orientation(p1x, p1y, q1x, q1y, q2x, q2y);
+        int o3 = orientation(p2x, p2y, q2x, q2y, p1x, p1y);
+        int o4 = orientation(p2x, p2y, q2x, q2y, q1x, q1y);
+        // General Case: Segments cross each other
+        if (o1 != o2 && o3 != o4) return true;
+        // Special Cases (Collinear segments overlapping)
+        if (o1 == 0 && onSegment(p1x, p1y, p2x, p2y, q1x, q1y)) return true;
+        if (o2 == 0 && onSegment(p1x, p1y, q2x, q2y, q1x, q1y)) return true;
+        if (o3 == 0 && onSegment(p2x, p2y, p1x, p1y, q2x, q2y)) return true;
+        if (o4 == 0 && onSegment(p2x, p2y, q1x, q1y, q2x, q2y)) return true;
+        return false;
+    }
+}
+
+GeoUtil geo = new GeoUtil();
+// Verify every pair of non-adjacent edges for intersection
+for (int i = 0; i < n; i++) {
+    double p1x = c_tempSavedCoordinates.get(i).getFirst();
+    double p1y = c_tempSavedCoordinates.get(i).getSecond();
+    double q1x = c_tempSavedCoordinates.get((i + 1) % n).getFirst();
+    double q1y = c_tempSavedCoordinates.get((i + 1) % n).getSecond();
+    for (int j = i + 2; j < n; j++) {
+        // Skip adjacent edges (they naturally touch at their common vertex)
+        if (i == 0 && j == n - 1) {
+            continue;
+        }
+        double p2x = c_tempSavedCoordinates.get(j).getFirst();
+        double p2y = c_tempSavedCoordinates.get(j).getSecond();
+        double q2x = c_tempSavedCoordinates.get((j + 1) % n).getFirst();
+        double q2y = c_tempSavedCoordinates.get((j + 1) % n).getSecond();
+        if (geo.doIntersect(p1x, p1y, q1x, q1y, p2x, p2y, q2x, q2y)) {
+            return true; // Self-intersection detected
+        }
+    }
+}
+return false; // Polygon is valid
 /*ALCODEEND*/}
 
