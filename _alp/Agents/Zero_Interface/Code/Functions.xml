@@ -2759,8 +2759,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1777995108231</Id>
 		<Name><![CDATA[f_addCustomSolarfarmGC]]></Name>
-		<X>60</X>
-		<Y>1720</Y>
+		<X>-520</X>
+		<Y>1440</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2779,8 +2779,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1777995108233</Id>
 		<Name><![CDATA[f_removeCustomGC]]></Name>
-		<X>60</X>
-		<Y>1630</Y>
+		<X>-520</X>
+		<Y>1660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2799,8 +2799,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1777995108235</Id>
 		<Name><![CDATA[f_addCustomWindfarmGC]]></Name>
-		<X>60</X>
-		<Y>1810</Y>
+		<X>-520</X>
+		<Y>1460</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2819,8 +2819,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1777995108237</Id>
 		<Name><![CDATA[f_addCustomGridBatteryGC]]></Name>
-		<X>60</X>
-		<Y>1900</Y>
+		<X>-520</X>
+		<Y>1480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2887,8 +2887,8 @@
 		<ReturnType>ConnectionOwner</ReturnType>
 		<Id>1778854379860</Id>
 		<Name><![CDATA[f_getSliderOwnerForCustomGC]]></Name>
-		<X>80</X>
-		<Y>1930</Y>
+		<X>-500</X>
+		<Y>1500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2907,8 +2907,8 @@
 		<ReturnType>GIS_Object</ReturnType>
 		<Id>1778855159263</Id>
 		<Name><![CDATA[f_createAndLinkGISObject]]></Name>
-		<X>80</X>
-		<Y>2070</Y>
+		<X>-520</X>
+		<Y>1520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2959,8 +2959,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1778997814360</Id>
 		<Name><![CDATA[f_calculateGISObjectArea]]></Name>
-		<X>100</X>
-		<Y>2090</Y>
+		<X>-500</X>
+		<Y>1540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2983,8 +2983,8 @@
 		<ReturnType>double[]</ReturnType>
 		<Id>1778997955081</Id>
 		<Name><![CDATA[f_calculateSquareCoordinates]]></Name>
-		<X>100</X>
-		<Y>2110</Y>
+		<X>-500</X>
+		<Y>1560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3011,8 +3011,8 @@
 		<ReturnType>double[]</ReturnType>
 		<Id>1781623122174</Id>
 		<Name><![CDATA[f_calculateCircleCoordinates]]></Name>
-		<X>100</X>
-		<Y>2130</Y>
+		<X>-500</X>
+		<Y>1580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3039,8 +3039,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1781677700343</Id>
 		<Name><![CDATA[f_addCustomGCLocationSelection]]></Name>
-		<X>60</X>
-		<Y>1970</Y>
+		<X>-540</X>
+		<Y>1320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3063,8 +3063,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1781677735606</Id>
 		<Name><![CDATA[f_addCustomGCTransformerSelection]]></Name>
-		<X>60</X>
-		<Y>1990</Y>
+		<X>-540</X>
+		<Y>1420</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3087,8 +3087,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1781678055851</Id>
 		<Name><![CDATA[f_removeCustomGCSelection]]></Name>
-		<X>60</X>
-		<Y>2030</Y>
+		<X>-540</X>
+		<Y>1640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3111,8 +3111,8 @@
 		<ReturnType>GISRegion</ReturnType>
 		<Id>1781682728045</Id>
 		<Name><![CDATA[f_drawTempCoordinateDot]]></Name>
-		<X>100</X>
-		<Y>2170</Y>
+		<X>-520</X>
+		<Y>1400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3135,8 +3135,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1781688506944</Id>
 		<Name><![CDATA[f_resetCustomGCCreation]]></Name>
-		<X>60</X>
-		<Y>2010</Y>
+		<X>-540</X>
+		<Y>1620</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3151,8 +3151,8 @@
 		<ReturnType>double[]</ReturnType>
 		<Id>1781694164851</Id>
 		<Name><![CDATA[f_calculateCustomPolygonCoordinates]]></Name>
-		<X>100</X>
-		<Y>2150</Y>
+		<X>-500</X>
+		<Y>1600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3271,6 +3271,38 @@
 		<Parameter>
 			<Name><![CDATA[lineColor]]></Name>
 			<Type><![CDATA[Color]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1782206478165</Id>
+		<Name><![CDATA[f_adjustTextToFitRectangle]]></Name>
+		<X>-540</X>
+		<Y>1730</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[textShape]]></Name>
+			<Type><![CDATA[ShapeText]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[rectShape]]></Name>
+			<Type><![CDATA[ShapeRectangle]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[margin]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[defaultFontSize]]></Name>
+			<Type><![CDATA[int]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

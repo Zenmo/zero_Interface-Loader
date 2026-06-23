@@ -19,6 +19,9 @@ import java.time.DayOfWeek;
 import java.time.Instant;
 import java.text.SimpleDateFormat;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 //Possibility to turn of traceln
 import java.io.OutputStream;

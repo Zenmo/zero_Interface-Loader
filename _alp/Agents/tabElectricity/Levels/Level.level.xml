@@ -2139,8 +2139,9 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<ActionCode>zero_Interface.b_addCustomSolarfarmGC = true;
-zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets toevoegen", new Color(255, 255, 255), new Color(0, 0, 0), "Teken je locatie op de kaart. Kies minimaal 3 hoekpunten.", new Color(255, 255, 255), new Color(0, 0, 0));
+					<ActionCode>zero_Interface.b_addCustomGC = true;
+zero_Interface.v_addCustomGCType = OL_EnergyAssetType.PHOTOVOLTAIC;
+zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets toevoegen", new Color(255, 255, 255), new Color(0, 0, 0), "Teken je locatie op de kaart. Kies nog minimaal 3 hoekpunten.", new Color(255, 255, 255), new Color(0, 0, 0));
 zero_Interface.f_setForcedClickScreenVisibility(true);
 traceln("Adding solarfarm: Please click on the map to set the location.");</ActionCode>
 				</BasicProperties>
@@ -2167,7 +2168,8 @@ traceln("Adding solarfarm: Please click on the map to set the location.");</Acti
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<ActionCode>zero_Interface.b_addCustomGridBatteryGC = true;
+					<ActionCode>zero_Interface.b_addCustomGC = true;
+zero_Interface.v_addCustomGCType = OL_EnergyAssetType.STORAGE_ELECTRIC;
 zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets toevoegen", new Color(255, 255, 255), new Color(0, 0, 0), "Kies een locatie op de kaart", new Color(255, 255, 255), new Color(0, 0, 0));
 zero_Interface.f_setForcedClickScreenVisibility(true);
 traceln("Adding grid battery: Please click on the map to set the location.");</ActionCode>
@@ -2195,7 +2197,8 @@ traceln("Adding grid battery: Please click on the map to set the location.");</A
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<ActionCode>zero_Interface.b_addCustomWindfarmGC = true;
+					<ActionCode>zero_Interface.b_addCustomGC = true;
+zero_Interface.v_addCustomGCType = OL_EnergyAssetType.WINDMILL;
 zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets toevoegen", new Color(255, 255, 255), new Color(0, 0, 0), "Kies een locatie op de kaart", new Color(255, 255, 255), new Color(0, 0, 0));
 zero_Interface.f_setForcedClickScreenVisibility(true);
 traceln("Adding windfarm: Please click on the map to set the location.");</ActionCode>

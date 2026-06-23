@@ -4037,7 +4037,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>b_addCustomSolarfarmGC || b_addCustomWindfarmGC || b_addCustomGridBatteryGC || b_removeCustomGC</VisibleCode>
+				<VisibleCode>b_addCustomGC || b_removeCustomGC</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>

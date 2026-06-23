@@ -1547,11 +1547,10 @@ if(clickedObject != null){
 double f_setForcedClickScreenMessageText(String forcedClickScreenMessageText)
 {/*ALCODESTART::1742300624199*/
 t_forcedClickMessage.setText(forcedClickScreenMessageText);
+gr_ForceMapSelectionMessageText.setVisible(false);
 
-if(t_forcedClickMessage.getText().equals("")){
-	gr_ForceMapSelectionMessageText.setVisible(false);
-}
-else{
+if(!t_forcedClickMessage.getText().equals("")){
+	f_adjustTextToFitRectangle(t_forcedClickMessage, rect_selectText, 25.0, 36);
 	gr_ForceMapSelectionMessageText.setVisible(true);
 }
 /*ALCODEEND*/}
@@ -3869,7 +3868,7 @@ if(b_inEnergyHubMode ){
 else if(b_inManualFilterSelectionMode){
 	f_selectManualFilteredGC(clickx, clicky);
 }
-else if (b_addCustomSolarfarmGC || b_addCustomWindfarmGC || b_addCustomGridBatteryGC) {
+else if (b_addCustomGC) {
 	if (!b_customGCPolygonCreated) {
 		f_addCustomGCLocationSelection(clickx, clicky);
 	} else {
@@ -4419,7 +4418,7 @@ c_tempSavedCoordinates.add(clickedCoord);
 // Place a small square dot on the map representing this vertex
 c_tempSavedDots.add(f_drawTempCoordinateDot(clickx, clicky));
 
-if (b_addCustomWindfarmGC || b_addCustomGridBatteryGC){
+if (v_addCustomGCType == OL_EnergyAssetType.WINDMILL || v_addCustomGCType == OL_EnergyAssetType.STORAGE_ELECTRIC){
 	b_customGCPolygonCreated = true;
 	f_setForcedClickScreenMessageText("Kies een trafo op de kaart");
 } else {
@@ -4427,10 +4426,10 @@ if (b_addCustomWindfarmGC || b_addCustomGridBatteryGC){
 	int minNbRequiredVertices = 3;
 	int currentNbOfSavedCoordinates = c_tempSavedCoordinates.size();
 	if(minNbRequiredVertices - currentNbOfSavedCoordinates > 1){
-		f_setForcedClickScreenMessageText("Teken je locatie op de kaart. Kies nog minimaal" + (minNbRequiredVertices - currentNbOfSavedCoordinates) + " hoekpunten.");
+		f_setForcedClickScreenMessageText("Teken je locatie op de kaart. Kies nog minimaal " + (minNbRequiredVertices - currentNbOfSavedCoordinates) + " hoekpunten.");
 	}
 	else if(minNbRequiredVertices - currentNbOfSavedCoordinates == 1){
-		f_setForcedClickScreenMessageText("Teken je locatie op de kaart. Kies nog minimaal" + (minNbRequiredVertices - currentNbOfSavedCoordinates) + " hoekpunt.");
+		f_setForcedClickScreenMessageText("Teken je locatie op de kaart. Kies nog minimaal " + (minNbRequiredVertices - currentNbOfSavedCoordinates) + " hoekpunt.");
 	} else {
 		if (previewGISRegion != null) {
 	        previewGISRegion.remove();
@@ -4459,11 +4458,11 @@ for (GridNode GN : energyModel.pop_gridNodes) {
 }
 
 if (clickedGN != null) {    
-	if (b_addCustomSolarfarmGC){
+	if (v_addCustomGCType == OL_EnergyAssetType.PHOTOVOLTAIC){
     	f_addCustomSolarfarmGC(clickedGN);
-    } else if (b_addCustomWindfarmGC){
+    } else if (v_addCustomGCType == OL_EnergyAssetType.WINDMILL){
     	f_addCustomWindfarmGC(clickedGN);
-    } else if (b_addCustomGridBatteryGC){
+    } else if (v_addCustomGCType == OL_EnergyAssetType.STORAGE_ELECTRIC){
     	f_addCustomGridBatteryGC(clickedGN);
     }
     // Clean up coordinate temporary dots, state variables, lists
@@ -4540,9 +4539,8 @@ c_tempSavedCoordinates.clear();
 
 // 4. Reset state variables
 b_customGCPolygonCreated = false;
-b_addCustomSolarfarmGC = false;
-b_addCustomWindfarmGC = false;
-b_addCustomGridBatteryGC = false;
+b_addCustomGC = false;
+v_addCustomGCType = null;
 b_removeCustomGC = false;
 
 // 5. Hide forced click screen, if needed
@@ -4565,11 +4563,10 @@ return polyCoords;
 double f_setForcedClickScreenTitleText(String forcedClickScreenText)
 {/*ALCODESTART::1781861106301*/
 txt_forcedClickTitle.setText(forcedClickScreenText);
+gr_forcedClickTitleTxt.setVisible(false);
 
-if(txt_forcedClickTitle.getText().equals("")){
-	gr_forcedClickTitleTxt.setVisible(false);
-}
-else{
+if(!txt_forcedClickTitle.getText().equals("")){
+	f_adjustTextToFitRectangle(txt_forcedClickTitle, rect_forcedClickTitle, 25.0, 48);
 	gr_forcedClickTitleTxt.setVisible(true);
 }
 /*ALCODEEND*/}
@@ -4592,5 +4589,62 @@ double f_setForcedClickScreenMessageBackgroundColor(Color fillColor,Color lineCo
 {/*ALCODESTART::1782123808280*/
 rect_selectText.setFillColor(fillColor);
 rect_selectText.setLineColor(lineColor);
+/*ALCODEEND*/}
+
+double f_adjustTextToFitRectangle(ShapeText textShape,ShapeRectangle rectShape,double margin,int defaultFontSize)
+{/*ALCODESTART::1782206478165*/
+if (textShape == null || textShape.getText() == null || textShape.getText().isEmpty() || rectShape == null) {
+    return;
+}
+
+// Resetting of default fontsize to prevent overflow
+Font font = textShape.getFont();
+if (font != null) {
+	Font defaultFont = font.deriveFont((float) defaultFontSize);
+	textShape.setFont(defaultFont);
+}
+
+double rectWidth = rectShape.getWidth();
+double rectHeight = rectShape.getHeight();
+double rectX = rectShape.getX();
+double rectY = rectShape.getY();
+double targetWidth = rectWidth - 2 * margin;
+
+
+String text = textShape.getText();
+Font currentFont = textShape.getFont();
+BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+Graphics2D g2d = img.createGraphics();
+try {
+	FontMetrics fm = g2d.getFontMetrics(currentFont);
+	
+	// Find longest line of text (if ShapeText contains multiple sentences)
+	String[] lines = text.split("\n");
+	double maxLineWidth = 0;
+	for (String line : lines) {
+		double lineWidth = fm.stringWidth(line);
+		if (lineWidth > maxLineWidth) {
+			maxLineWidth = lineWidth;
+		}
+	}
+	
+	// Scale down the font if it exceeds the maximum target width
+	if (maxLineWidth > targetWidth) {
+		double scaleFactor = targetWidth / maxLineWidth;
+		double newSizeDouble = defaultFontSize * scaleFactor;
+		float newSize = (float) Math.floor(newSizeDouble);
+		
+		Font scaledFont = currentFont.deriveFont(newSize);
+		textShape.setFont(scaledFont);
+		fm = g2d.getFontMetrics(scaledFont);
+	}
+	
+	double textHeight = lines.length * fm.getHeight();
+	double newY = rectY + 0.5*(rectHeight - textHeight);
+	textShape.setY(newY);
+	
+} finally {
+	g2d.dispose();
+}
 /*ALCODEEND*/}
 
