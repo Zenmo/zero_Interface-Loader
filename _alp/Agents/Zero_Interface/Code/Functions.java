@@ -419,7 +419,7 @@ if(previousClickedObjectType != null){
 	}
 	
 	if(v_customEnergyCoop != null){
-		energyModel.f_removeEnergyCoop(v_customEnergyCoop, energyModel.p_timeVariables);
+		energyModel.f_removeEnergyCoop(v_customEnergyCoop, energyModel.p_timeParameters, energyModel.p_timeVariables);
 		v_customEnergyCoop = null;
 	}
 }
