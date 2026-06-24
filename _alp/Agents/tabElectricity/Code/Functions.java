@@ -558,6 +558,7 @@ zero_Interface.f_resetSettings();
 
 double f_initializeTab_Electricity(List<GridConnection> electricityTabEASliderGCs)
 {/*ALCODESTART::1756302457919*/
+c_electricityTabEASliderGCs.clear();
 c_electricityTabEASliderGCs.addAll(electricityTabEASliderGCs);
 
 f_getCurrentPVOnLandAndWindturbineValues();
