@@ -8351,4 +8351,239 @@ else{
 		<Latitude>52.51902183517265</Latitude>
 		<Longitude>6.169494834925871</Longitude>
 	</EmbeddedObjectPresentation>
+	<Control Type="Button">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1782214231670</Id>
+		<Name><![CDATA[ISIE_Export_button_1]]></Name>
+		<X>-760</X>
+		<Y>-680</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<BasicProperties Width="100" Height="30">
+			<EmbeddedIcon>false</EmbeddedIcon>
+			<TextColor>-16777216</TextColor>
+			<Enabled>true</Enabled>
+			<ActionCode>if (energyModel.pop_energyCoops.size() &gt; 0) {
+	EnergyCoop coop = energyModel.pop_energyCoops.get(0);
+	v_customEnergyCoop = coop;
+	
+	f_deselectPreviousSelect();
+	//v_clickedObjectType = OL_GISObjectType.BUILDING;
+	c_selectedGridConnections = coop.f_getAllChildMemberGridConnections();
+	uI_Results.f_updateResultsUI(coop);
+}</ActionCode>
+		</BasicProperties>
+		<ExtendedProperties>
+			<Font Name="Dialog" Size="11" Style="0"/>
+			<LabelText>Select Coop</LabelText>
+		</ExtendedProperties>
+	</Control>
+	<Control Type="Button">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1782214287644</Id>
+		<Name><![CDATA[button]]></Name>
+		<X>-760</X>
+		<Y>-550</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<BasicProperties Width="100" Height="30">
+			<EmbeddedIcon>false</EmbeddedIcon>
+			<TextColor>-16777216</TextColor>
+			<Enabled>true</Enabled>
+			<ActionCode>GridConnection gc = findFirst(energyModel.c_gridConnections, x -&gt; x.p_gridConnectionID.equals(houseID));
+
+if (gc == null) {
+	traceln("Could not find GC with ID: %s", houseID);
+}
+else {
+	f_deselectPreviousSelect();
+	v_clickedObjectType = OL_GISObjectType.BUILDING;
+	c_selectedGridConnections.add(gc);
+	uI_Results.f_updateResultsUI(gc);
+}</ActionCode>
+		</BasicProperties>
+		<ExtendedProperties>
+			<Font Name="Dialog" Size="11" Style="0"/>
+			<LabelText>Select House</LabelText>
+		</ExtendedProperties>
+	</Control>
+	<Control Type="EditBox">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1782214296980</Id>
+		<Name><![CDATA[editbox]]></Name>
+		<X>-950</X>
+		<Y>-550</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<BasicProperties Width="170" Height="30">
+			<EmbeddedIcon>false</EmbeddedIcon>
+			<FillColor>-1</FillColor>
+			<TextColor>-16777216</TextColor>
+			<Enabled>true</Enabled>
+		</BasicProperties>
+		<ExtendedProperties>
+			<Font Name="Dialog" Size="11" Style="0"/>
+			<LinkTo>true</LinkTo>
+			<Link>houseID</Link>
+		</ExtendedProperties>
+	</Control>
+	<Control Type="Button">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1782219978485</Id>
+		<Name><![CDATA[ISIE_Test_button_1]]></Name>
+		<X>-980</X>
+		<Y>-810</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<BasicProperties Width="140" Height="30">
+			<EmbeddedIcon>false</EmbeddedIcon>
+			<TextColor>-16777216</TextColor>
+			<Enabled>true</Enabled>
+			<ActionCode>int nbHouses = 0;
+int nbHousesWithPV = 0;
+int nbEVs = 0;
+int nbElectricHPs = 0;
+int nbHybridHPs = 0;
+int nbBatteries = 0;
+double installedPV_kWp = 0;
+double installedBatteries_kWh = 0;
+double installedBatteries_kW = 0;
+
+for (GridConnection gc : energyModel.c_gridConnections) {
+	if (!(gc instanceof GCEnergyProduction || gc instanceof GCGridBattery)) {
+		nbHouses++;
+		
+		if (gc.v_liveAssetsMetaData.totalInstalledPVPower_kW &gt; 0) {
+			nbHousesWithPV++;
+			installedPV_kWp += gc.v_liveAssetsMetaData.totalInstalledPVPower_kW;
+		}
+		
+		if (gc.c_electricVehicles.size() == 1) {
+			nbEVs++;
+		}
+		else if (gc.c_electricVehicles.size() &gt; 1) {
+			throw new RuntimeException("More than 1 EV in a house");
+		}
+		
+		if (gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP) {
+			nbElectricHPs++;
+		}
+		else if (gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.HYBRID_HEATPUMP) {
+			nbHybridHPs++;
+		}
+		
+
+		
+		if (gc.p_batteryAsset != null) {
+			nbBatteries++;
+			installedBatteries_kW += gc.p_batteryAsset.getCapacityElectric_kW();
+			installedBatteries_kWh += gc.p_batteryAsset.getStorageCapacity_kWh();
+		}
+	}
+}
+
+traceln("---ISIE Scenario Info---");
+traceln("nbHouses: %s", nbHouses);
+traceln("nbHousesWithPV: %s", nbHousesWithPV);
+traceln("nbEVs: %s", nbEVs);
+traceln("nbElectricHPs: %s", nbElectricHPs);
+traceln("nbHybridHPs: %s", nbHybridHPs);
+traceln("nbBatteries: %s", nbBatteries);
+traceln("installedPV_kWp: %s", installedPV_kWp);
+traceln("installedBatteries_kWh: %s", installedBatteries_kWh);
+traceln("installedBatteries_kW: %s", installedBatteries_kW);</ActionCode>
+		</BasicProperties>
+		<ExtendedProperties>
+			<Font Name="Dialog" Size="11" Style="0"/>
+			<LabelText>ISIE Totals Info</LabelText>
+		</ExtendedProperties>
+	</Control>
+	<Control Type="Button">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1782220002108</Id>
+		<Name><![CDATA[ISIE_Test_button_2]]></Name>
+		<X>-830</X>
+		<Y>-810</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<BasicProperties Width="140" Height="30">
+			<EmbeddedIcon>false</EmbeddedIcon>
+			<TextColor>-16777216</TextColor>
+			<Enabled>true</Enabled>
+			<ActionCode>double installedPV_kWp = 0;
+double EV_chargingPower_kW = 0;
+double EV_annualDistance_km = 0;
+double ElectricHPPower_kW = 0;
+double GasBurnerPower_kW = 0;
+double installedBatteries_kWh = 0;
+double installedBatteries_kW = 0;
+
+GridConnection gc = findFirst(energyModel.c_gridConnections, x -&gt; x.p_gridConnectionID.equals(houseID));
+
+installedPV_kWp = gc.v_liveAssetsMetaData.totalInstalledPVPower_kW;
+if (gc.c_electricVehicles.size() == 1) {
+	EV_chargingPower_kW = gc.c_electricVehicles.get(0).getVehicleChargingCapacity_kW();
+	EV_annualDistance_km = gc.c_tripTrackers.get(0).getAnnualDistance_km();
+}
+
+if (gc.p_batteryAsset != null) {
+	installedBatteries_kW += gc.p_batteryAsset.getCapacityElectric_kW();
+	installedBatteries_kWh += gc.p_batteryAsset.getStorageCapacity_kWh();
+}
+
+if (gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP) {
+	ElectricHPPower_kW = gc.c_heatingAssets.get(0).getInputCapacity_kW();
+}
+else if (gc.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.HYBRID_HEATPUMP) {
+	J_EAConversion hp = findFirst(gc.c_heatingAssets, x -&gt; x instanceof J_EAConversionHeatPump);
+	ElectricHPPower_kW = hp.getInputCapacity_kW();
+	J_EAConversion gasburner = findFirst(gc.c_heatingAssets, x -&gt; x instanceof J_EAConversionGasBurner);
+	GasBurnerPower_kW = gasburner.getOutputCapacity_kW();
+}
+
+traceln("---ISIE Scenario Info---");
+traceln("House ID: %s", houseID);
+traceln("installedPV_kWp: %s", installedPV_kWp);
+traceln("EV_chargingPower_kW: %s", EV_chargingPower_kW);
+traceln("EV_annualDistance_km: %s", EV_annualDistance_km);
+traceln("ElectricHPPower_kW: %s", ElectricHPPower_kW);
+traceln("GasBurnerPower_kW: %s", GasBurnerPower_kW);
+traceln("installedBatteries_kWh: %s", installedBatteries_kWh);
+traceln("installedBatteries_kW: %s", installedBatteries_kW);</ActionCode>
+		</BasicProperties>
+		<ExtendedProperties>
+			<Font Name="Dialog" Size="11" Style="0"/>
+			<LabelText>ISIE House Info</LabelText>
+		</ExtendedProperties>
+	</Control>
 </Presentation>
