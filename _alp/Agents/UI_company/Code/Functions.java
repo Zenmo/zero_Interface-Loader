@@ -85,7 +85,7 @@ sl_electricTrucksCompany.setValue(p_scenarioSettings_Future.getPlannedEVTrucks()
 //sl_petroleumFuelTrucksCompany.setValue(c_scenarioSettings_Future.getPlannedPetroleumFuelTrucks(), true);
 
 //set active if active in future
-p_gridConnection.f_setActive(p_scenarioSettings_Future.getIsActiveInFuture(), zero_Interface.energyModel.p_timeVariables);
+p_gridConnection.f_setActive(p_scenarioSettings_Future.getIsActiveInFuture(), zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.p_timeVariables);
 
 //Reset triptrackers
 f_resetAllVehiclesToOriginalTripTracker();
@@ -221,7 +221,7 @@ sl_electricTrucksCompany.setValue(p_scenarioSettings_Current.getCurrentEVTrucks(
 //sl_petroleumFuelTrucksCompany.setValue(c_scenarioSettings_Current.getCurrentPetroleumFuelTrucks(), true);
 
 //set active if active in present
-p_gridConnection.f_setActive(p_scenarioSettings_Current.getIsCurrentlyActive(), zero_Interface.energyModel.p_timeVariables);
+p_gridConnection.f_setActive(p_scenarioSettings_Current.getIsCurrentlyActive(), zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.p_timeVariables);
 
 //Reset triptrackers
 f_resetAllVehiclesToOriginalTripTracker();
