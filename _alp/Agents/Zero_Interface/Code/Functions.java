@@ -3928,7 +3928,7 @@ double f_addCustomSolarfarmGC(GridNode gn)
 String id = "Custom_Solarfarm_" + v_customSolarfarmGCCounter++;
 
 // 0. Get existic sliderGC owner
-ConnectionOwner owner = findFirst(energyModel.EnergyProductionSites, gc -> gc.p_actorID.equals(p_defaultMainSliderGCName_solarfarm)).p_owner;
+ConnectionOwner owner = findFirst(energyModel.EnergyProductionSites, gc -> gc.p_gridConnectionID.equals(p_defaultMainSliderGCName_solarfarm)).p_owner;
 
 // 1. Create the GCEnergyProduction agent
 GCEnergyProduction solarpark = energyModel.add_EnergyProductionSites();
@@ -4030,7 +4030,7 @@ double f_addCustomWindfarmGC(GridNode gn)
 String id = "Custom_Windfarm_" + v_customWindfarmGCCounter++;
 
 // 0. Get existic sliderGC owner
-ConnectionOwner owner = findFirst(energyModel.EnergyProductionSites, gc -> gc.p_actorID.equals(p_defaultMainSliderGCName_windfarm)).p_owner;
+ConnectionOwner owner = findFirst(energyModel.EnergyProductionSites, gc -> gc.p_gridConnectionID.equals(p_defaultMainSliderGCName_windfarm)).p_owner;
 
 // 1. Create the GCEnergyProduction agent
 GCEnergyProduction windpark = energyModel.add_EnergyProductionSites();
@@ -4077,7 +4077,7 @@ double f_addCustomGridBatteryGC(GridNode gn)
 String id = "Custom_Grid_Battery_" + v_customGridBatteryGCCounter++;
 
 // 0. Get existic sliderGC owner
-ConnectionOwner owner = findFirst(energyModel.GridBatteries, gc -> gc.p_actorID.equals(p_defaultMainSliderGCName_battery)).p_owner;
+ConnectionOwner owner = findFirst(energyModel.GridBatteries, gc -> gc.p_gridConnectionID.equals(p_defaultMainSliderGCName_battery)).p_owner;
 
 // 1. Create the GCGridBattery agent
 GCGridBattery battery = energyModel.add_GridBatteries();
