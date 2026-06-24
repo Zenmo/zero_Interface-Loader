@@ -1494,19 +1494,10 @@ double GCContractCapacityCurrent_Feedin = p_gridConnection.v_liveConnectionMetaD
 f_getNFATOValues();
 
 //Find the current battery capacity
-int BatteryCapacityCurrent = 0;
-J_EAStorage batteryAsset = findFirst(p_gridConnection.c_storageAssets, p -> p.getEAType() == OL_EnergyAssetType.STORAGE_ELECTRIC );
-if (batteryAsset != null){
-	BatteryCapacityCurrent = roundToInt(((J_EAStorageElectric)batteryAsset).getStorageCapacity_kWh());
-}
+double BatteryCapacityCurrent_kWh = p_gridConnection.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000.0;
 
 //Find the current PV capacity
-int PVCapacityCurrent = 0;
-List<J_EAProduction> pvAssets = findAll(p_gridConnection.c_productionAssets, p -> p.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC );
-for(J_EAProduction pvAsset : pvAssets){
-	PVCapacityCurrent += roundToInt(pvAsset.getCapacityElectric_kW());
-}
-
+double PVCapacityCurrent_kW = p_gridConnection.v_liveAssetsMetaData.totalInstalledPVPower_kW;
 
 //Find the current curtailment setting
 boolean currentCurtailmentSetting = p_gridConnection.f_isAssetManagementActive(I_CurtailManagement.class);
@@ -1560,12 +1551,12 @@ sl_GCCapacityCompany_Feedin.setValue(GCContractCapacityCurrent_Feedin, false);
 v_defaultContractFeedinCapacity_kW = GCContractCapacityCurrent_Feedin;
 
 //Battery capacity
-sl_batteryCompany.setValue(BatteryCapacityCurrent, false);
-v_defaultBatSlider = BatteryCapacityCurrent;
+sl_batteryCompany.setValue(roundToInt(BatteryCapacityCurrent_kWh), false);
+v_defaultBatSlider = BatteryCapacityCurrent_kWh;
 
 //Solar panel power
-sl_rooftopPVCompany.setValue(PVCapacityCurrent, false);
-v_defaultPVSlider = PVCapacityCurrent;
+sl_rooftopPVCompany.setValue(roundToInt(PVCapacityCurrent_kW), false);
+v_defaultPVSlider = PVCapacityCurrent_kW;
 
 //Curtailment setting
 cb_curtailmentCompany.setSelected(currentCurtailmentSetting, false);
