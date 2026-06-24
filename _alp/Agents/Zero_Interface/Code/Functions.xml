@@ -2780,7 +2780,7 @@
 		<Id>1777995108233</Id>
 		<Name><![CDATA[f_removeCustomGC]]></Name>
 		<X>-520</X>
-		<Y>1700</Y>
+		<Y>1680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2884,31 +2884,11 @@
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>ConnectionOwner</ReturnType>
-		<Id>1778854379860</Id>
-		<Name><![CDATA[f_getSliderOwnerForCustomGC]]></Name>
-		<X>-500</X>
-		<Y>1520</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[eaType]]></Name>
-			<Type><![CDATA[OL_EnergyAssetType]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>GIS_Object</ReturnType>
 		<Id>1778855159263</Id>
 		<Name><![CDATA[f_createAndLinkGISObject]]></Name>
-		<X>-520</X>
-		<Y>1540</Y>
+		<X>-500</X>
+		<Y>1520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2959,8 +2939,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1778997814360</Id>
 		<Name><![CDATA[f_calculateGISObjectArea]]></Name>
-		<X>-500</X>
-		<Y>1560</Y>
+		<X>-480</X>
+		<Y>1540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2983,8 +2963,8 @@
 		<ReturnType>double[]</ReturnType>
 		<Id>1778997955081</Id>
 		<Name><![CDATA[f_calculateSquareCoordinates]]></Name>
-		<X>-500</X>
-		<Y>1580</Y>
+		<X>-480</X>
+		<Y>1560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3011,8 +2991,8 @@
 		<ReturnType>double[]</ReturnType>
 		<Id>1781623122174</Id>
 		<Name><![CDATA[f_calculateCircleCoordinates]]></Name>
-		<X>-500</X>
-		<Y>1600</Y>
+		<X>-480</X>
+		<Y>1580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3088,7 +3068,7 @@
 		<Id>1781678055851</Id>
 		<Name><![CDATA[f_removeCustomGCSelection]]></Name>
 		<X>-540</X>
-		<Y>1680</Y>
+		<Y>1660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3136,7 +3116,7 @@
 		<Id>1781688506944</Id>
 		<Name><![CDATA[f_stopCustomGCCreation]]></Name>
 		<X>-540</X>
-		<Y>1640</Y>
+		<Y>1620</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3151,8 +3131,8 @@
 		<ReturnType>double[]</ReturnType>
 		<Id>1781694164851</Id>
 		<Name><![CDATA[f_calculateCustomPolygonCoordinates]]></Name>
-		<X>-500</X>
-		<Y>1620</Y>
+		<X>-480</X>
+		<Y>1600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3280,7 +3260,7 @@
 		<Id>1782206478165</Id>
 		<Name><![CDATA[f_adjustTextToFitRectangle]]></Name>
 		<X>-540</X>
-		<Y>1730</Y>
+		<Y>1710</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3312,7 +3292,7 @@
 		<Id>1782220715178</Id>
 		<Name><![CDATA[f_resetCustomGCCreation]]></Name>
 		<X>-520</X>
-		<Y>1660</Y>
+		<Y>1640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

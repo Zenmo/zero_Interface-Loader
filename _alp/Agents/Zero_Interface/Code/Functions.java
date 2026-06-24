@@ -3928,10 +3928,7 @@ double f_addCustomSolarfarmGC(GridNode gn)
 String id = "Custom_Solarfarm_" + v_customSolarfarmGCCounter++;
 
 // 0. Get existic sliderGC owner
-ConnectionOwner owner = f_getSliderOwnerForCustomGC(OL_EnergyAssetType.PHOTOVOLTAIC);
-if(owner == null){
-	throw new RuntimeException("No owner made your custom EA type!");
-}
+ConnectionOwner owner = findFirst(energyModel.EnergyProductionSites, gc -> gc.p_actorID.equals(p_defaultMainSliderGCName_solarfarm)).p_owner;
 
 // 1. Create the GCEnergyProduction agent
 GCEnergyProduction solarpark = energyModel.add_EnergyProductionSites();
@@ -4033,10 +4030,7 @@ double f_addCustomWindfarmGC(GridNode gn)
 String id = "Custom_Windfarm_" + v_customWindfarmGCCounter++;
 
 // 0. Get existic sliderGC owner
-ConnectionOwner owner = f_getSliderOwnerForCustomGC(OL_EnergyAssetType.WINDMILL);
-if(owner == null){
-	throw new RuntimeException("No owner made your custom EA type!");
-}
+ConnectionOwner owner = findFirst(energyModel.EnergyProductionSites, gc -> gc.p_actorID.equals(p_defaultMainSliderGCName_windfarm)).p_owner;
 
 // 1. Create the GCEnergyProduction agent
 GCEnergyProduction windpark = energyModel.add_EnergyProductionSites();
@@ -4083,10 +4077,7 @@ double f_addCustomGridBatteryGC(GridNode gn)
 String id = "Custom_Grid_Battery_" + v_customGridBatteryGCCounter++;
 
 // 0. Get existic sliderGC owner
-ConnectionOwner owner = f_getSliderOwnerForCustomGC(OL_EnergyAssetType.STORAGE_ELECTRIC);
-if(owner == null){
-	throw new RuntimeException("No owner made your custom EA type!");
-}
+ConnectionOwner owner = findFirst(energyModel.GridBatteries, gc -> gc.p_actorID.equals(p_defaultMainSliderGCName_battery)).p_owner;
 
 // 1. Create the GCGridBattery agent
 GCGridBattery battery = energyModel.add_GridBatteries();
@@ -4239,29 +4230,6 @@ if (currentBatteryManagement instanceof J_BatteryManagementSelfConsumptionGridNo
     currentBMS_str = "Prijssturing";
 }
 cb_customGCGridBatteryAlgorithm.setValue(currentBMS_str, false);
-/*ALCODEEND*/}
-
-ConnectionOwner f_getSliderOwnerForCustomGC(OL_EnergyAssetType eaType)
-{/*ALCODESTART::1778854379860*/
-if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
-    tabElectricity tabElec = uI_Tabs.pop_tabElectricity.get(0);
-    for (GridConnection gc : tabElec.c_electricityTabEASliderGCs) {
-        if (eaType == OL_EnergyAssetType.PHOTOVOLTAIC || eaType == OL_EnergyAssetType.WINDMILL) {
-            if (gc instanceof GCEnergyProduction) {
-                for (J_EAProduction ea : ((GCEnergyProduction)gc).c_productionAssets) {
-                    if (ea.getEAType() == eaType) {
-                        return gc.p_owner;
-                    }
-                }
-            }
-        } else if (eaType == OL_EnergyAssetType.STORAGE_ELECTRIC) {
-            if (gc instanceof GCGridBattery) {
-                return gc.p_owner;
-            }
-        }
-    }
-}
-return null;
 /*ALCODEEND*/}
 
 GIS_Object f_createAndLinkGISObject(GridConnection gc,String id,OL_GISObjectType gisType,Color fillColor,Color lineColor)
