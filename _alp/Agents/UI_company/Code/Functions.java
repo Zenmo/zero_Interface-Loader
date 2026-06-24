@@ -85,7 +85,7 @@ sl_electricTrucksCompany.setValue(p_scenarioSettings_Future.getPlannedEVTrucks()
 //sl_petroleumFuelTrucksCompany.setValue(c_scenarioSettings_Future.getPlannedPetroleumFuelTrucks(), true);
 
 //set active if active in future
-p_gridConnection.f_setActive(p_scenarioSettings_Future.getIsActiveInFuture(), zero_Interface.energyModel.p_timeVariables);
+p_gridConnection.f_setActive(p_scenarioSettings_Future.getIsActiveInFuture(), zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.p_timeVariables);
 
 //Reset triptrackers
 f_resetAllVehiclesToOriginalTripTracker();
@@ -221,7 +221,7 @@ sl_electricTrucksCompany.setValue(p_scenarioSettings_Current.getCurrentEVTrucks(
 //sl_petroleumFuelTrucksCompany.setValue(c_scenarioSettings_Current.getCurrentPetroleumFuelTrucks(), true);
 
 //set active if active in present
-p_gridConnection.f_setActive(p_scenarioSettings_Current.getIsCurrentlyActive(), zero_Interface.energyModel.p_timeVariables);
+p_gridConnection.f_setActive(p_scenarioSettings_Current.getIsCurrentlyActive(), zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.p_timeVariables);
 
 //Reset triptrackers
 f_resetAllVehiclesToOriginalTripTracker();
@@ -1469,30 +1469,20 @@ switch (p_gridConnection.f_getCurrentHeatingType()){
 //Find the current heat saving percentage
 int currentHeatSavings = 0;
 
-J_EAConsumption consumptionEAHEAT = findFirst(p_gridConnection.c_consumptionAssets, consumptionAsset -> consumptionAsset.getEAType() == OL_EnergyAssetType.HEAT_DEMAND);
-if (consumptionEAHEAT != null){
-	currentHeatSavings = roundToInt((consumptionEAHEAT.getConsumptionScaling_fr() - 1)*-100);
+J_EAProfile profileEAHEAT = findFirst(p_gridConnection.c_profileAssets, profileAsset -> profileAsset.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
+if (profileEAHEAT != null){
+	currentHeatSavings = roundToInt((profileEAHEAT.getProfileScaling_fr() - 1)*-100);
 }
-else{   
-	J_EAProfile profileEAHEAT = findFirst(p_gridConnection.c_profileAssets, profileAsset -> profileAsset.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
-	if (profileEAHEAT != null){
-		currentHeatSavings = roundToInt((profileEAHEAT.getProfileScaling_fr() - 1)*-100);
-	}
-}
+
 
 //Find the current electricity savings percentage
 int currentElectricitySavings = 0;
 
-J_EAConsumption consumptionEAELECTRIC = findFirst(p_gridConnection.c_consumptionAssets, consumptionAsset -> consumptionAsset.getEAType() == OL_EnergyAssetType.ELECTRICITY_DEMAND);
-if (consumptionEAELECTRIC != null){
-	currentElectricitySavings = roundToInt((consumptionEAELECTRIC.getConsumptionScaling_fr() - 1)*-100);
+J_EAProfile profileEAELECTRIC = findFirst(p_gridConnection.c_profileAssets, profileAsset -> profileAsset.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
+if (profileEAELECTRIC != null){
+	currentElectricitySavings = roundToInt((profileEAELECTRIC.getProfileScaling_fr() - 1)*-100);
 }
-else{
-	J_EAProfile profileEAELECTRIC = findFirst(p_gridConnection.c_profileAssets, profileAsset -> profileAsset.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
-	if (profileEAELECTRIC != null){
-		currentElectricitySavings = roundToInt((profileEAELECTRIC.getProfileScaling_fr() - 1)*-100);
-	}
-}
+
 
 //Find the current Connection capacity (delivery)
 double GCContractCapacityCurrent_Delivery = p_gridConnection.v_liveConnectionMetaData.getDefaultContractedDeliveryCapacity_kW();
@@ -1504,18 +1494,10 @@ double GCContractCapacityCurrent_Feedin = p_gridConnection.v_liveConnectionMetaD
 f_getNFATOValues();
 
 //Find the current battery capacity
-int BatteryCapacityCurrent = 0;
-J_EAStorage batteryAsset = findFirst(p_gridConnection.c_storageAssets, p -> p.getEAType() == OL_EnergyAssetType.STORAGE_ELECTRIC );
-if (batteryAsset != null){
-	BatteryCapacityCurrent = roundToInt(((J_EAStorageElectric)batteryAsset).getStorageCapacity_kWh());
-}
+double BatteryCapacityCurrent_kWh = p_gridConnection.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000.0;
 
 //Find the current PV capacity
-int PVCapacityCurrent = 0;
-if (p_gridConnection.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
-	J_EAProduction pvAsset = findFirst(p_gridConnection.c_productionAssets, p -> p.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC );
-	PVCapacityCurrent = roundToInt(pvAsset.getCapacityElectric_kW());
-}
+double PVCapacityCurrent_kW = p_gridConnection.v_liveAssetsMetaData.totalInstalledPVPower_kW;
 
 //Find the current curtailment setting
 boolean currentCurtailmentSetting = p_gridConnection.f_isAssetManagementActive(I_CurtailManagement.class);
@@ -1569,12 +1551,12 @@ sl_GCCapacityCompany_Feedin.setValue(GCContractCapacityCurrent_Feedin, false);
 v_defaultContractFeedinCapacity_kW = GCContractCapacityCurrent_Feedin;
 
 //Battery capacity
-sl_batteryCompany.setValue(BatteryCapacityCurrent, false);
-v_defaultBatSlider = BatteryCapacityCurrent;
+sl_batteryCompany.setValue(roundToInt(BatteryCapacityCurrent_kWh), false);
+v_defaultBatSlider = BatteryCapacityCurrent_kWh;
 
 //Solar panel power
-sl_rooftopPVCompany.setValue(PVCapacityCurrent, false);
-v_defaultPVSlider = PVCapacityCurrent;
+sl_rooftopPVCompany.setValue(roundToInt(PVCapacityCurrent_kW), false);
+v_defaultPVSlider = PVCapacityCurrent_kW;
 
 //Curtailment setting
 cb_curtailmentCompany.setSelected(currentCurtailmentSetting, false);
