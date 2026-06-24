@@ -4461,7 +4461,7 @@ for (GIS_Object GISObject : allGISObjects) {
             // Only allow deletion of specific energy asset types
             if (gc instanceof GCEnergyProduction || gc instanceof GCGridBattery) {
                 f_removeCustomGC(gc);
-                b_removeCustomGC = false; // Reset mode after deletion
+                f_stopCustomGCCreation();
                 traceln("Removed the energy asset: " + gc.p_gridConnectionID);
                 return;
             }
@@ -4469,7 +4469,7 @@ for (GIS_Object GISObject : allGISObjects) {
     }
 }
 // If the user clicks elsewhere, cancel the deletion mode
-b_removeCustomGC = false;
+f_stopCustomGCCreation();
 traceln("Deletion mode cancelled.");
 /*ALCODEEND*/}
 
