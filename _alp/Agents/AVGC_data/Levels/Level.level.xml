@@ -786,4 +786,29 @@
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
+	<Text>
+		<Id>1782374220601</Id>
+		<Name><![CDATA[txt_districtHeatingLosses]]></Name>
+		<X>40</X>
+		<Y>700</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[District Heating GridNode losses]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>12</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
 </Presentation>

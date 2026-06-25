@@ -481,6 +481,30 @@
 			<Parameter>
 				<Name><![CDATA[map_avgAssetBaseOPEX_eurpyr]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatLossFactorTransportHT_kWpm]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatLossFactorTransportMT_kWpm]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatLossFactorTransportLT_kWpm]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatLossFactorTransportLT5thgen_kWpm]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatLossFactorDistributionHT_kW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatLossFactorDistributionMT_kW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatLossFactorDistributionLT_kW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatLossFactorDistributionLT5thgen_kW]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">

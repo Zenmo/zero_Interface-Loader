@@ -3768,4 +3768,252 @@ Definition: In the Netherlands each year every GridConnection that is considered
 			</ParameterEditor>
 		</Properties>
 	</Variable>
+	<Variable Class="Parameter">
+		<Id>1782374322587</Id>
+		<Name><![CDATA[p_heatLossFactorTransportHT_kWpm]]></Name>
+		<Description><![CDATA[Simplified transport heat loss factor for HT district heating network (kW/m). Transport definition: GCDistrictHeating -> P6 Heat GridNode
+
+FIND SOURCE]]></Description>
+		<X>50</X>
+		<Y>730</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.06]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1782374322585</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1782374459675</Id>
+		<Name><![CDATA[p_heatLossFactorTransportMT_kWpm]]></Name>
+		<Description><![CDATA[Simplified transport heat loss factor for MT district heating network (kW/m). Transport definition: GCDistrictHeating -> P6 Heat GridNode
+
+FIND SOURCE]]></Description>
+		<X>50</X>
+		<Y>750</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.04]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1782374459673</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1782374488735</Id>
+		<Name><![CDATA[p_heatLossFactorTransportLT_kWpm]]></Name>
+		<Description><![CDATA[Simplified transport heat loss factor for LT district heating network (kW/m). Transport definition: GCDistrictHeating -> P6 Heat GridNode
+
+FIND SOURCE]]></Description>
+		<X>50</X>
+		<Y>770</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.02]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1782374488733</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1782374515870</Id>
+		<Name><![CDATA[p_heatLossFactorTransportLT5thgen_kWpm]]></Name>
+		<Description><![CDATA[Simplified transport heat loss factor for ZLT district heating network (kW/m). Transport definition: GCDistrictHeating -> P6 Heat GridNode
+
+FIND SOURCE]]></Description>
+		<X>50</X>
+		<Y>790</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.005]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1782374515868</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1782374601384</Id>
+		<Name><![CDATA[p_heatLossFactorDistributionHT_kW]]></Name>
+		<Description><![CDATA[Simplified distribution heat loss factor per HT building connection (kW). Distribution definition: P6 Heat GridNode -> GCHouse/GCUtility connection
+
+FIND SOURCE]]></Description>
+		<X>50</X>
+		<Y>810</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.30]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1782374601382</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1782374648296</Id>
+		<Name><![CDATA[p_heatLossFactorDistributionMT_kW]]></Name>
+		<Description><![CDATA[Simplified distribution heat loss factor per MT building connection (kW). Distribution definition: P6 Heat GridNode -> GCHouse/GCUtility connection
+
+FIND SOURCE]]></Description>
+		<X>50</X>
+		<Y>830</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.20]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1782374648294</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1782374668850</Id>
+		<Name><![CDATA[p_heatLossFactorDistributionLT_kW]]></Name>
+		<Description><![CDATA[Simplified distribution heat loss factor per LT building connection (kW). Distribution definition: P6 Heat GridNode -> GCHouse/GCUtility connection
+
+FIND SOURCE]]></Description>
+		<X>50</X>
+		<Y>850</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.10]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1782374668848</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1782374681967</Id>
+		<Name><![CDATA[p_heatLossFactorDistributionLT5thgen_kW]]></Name>
+		<Description><![CDATA[Simplified distribution heat loss factor per ZLT building connection (kW). Distribution definition: P6 Heat GridNode -> GCHouse/GCUtility connection
+
+FIND SOURCE]]></Description>
+		<X>50</X>
+		<Y>870</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.02]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1782374681965</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
 </Variables>
