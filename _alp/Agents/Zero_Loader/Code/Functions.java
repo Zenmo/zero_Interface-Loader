@@ -3963,7 +3963,7 @@ double yearlyGasDelivery_m3pa = Arrays.stream(profile_m3pqh).sum();
 
 String energyAssetName = engineGC.p_ownerID + " custom gas profile";
 // We assume all delivery is consumption and convert m3 to kWh
-double[] profile_kW = ZeroMath.arrayMultiply(profile_m3pqh, avgc_data.p_gas_kWhpm3);
+double[] profile_kW = LUXMath.multiplyArray(profile_m3pqh, avgc_data.p_gas_kWhpm3);
 J_ProfilePointer profilePointer = f_createEngineProfile(energyAssetName, a_arguments_hr, profile_m3pqh, OL_ProfileUnits.KWHPQUARTERHOUR);
 
 // Then we create the profile asset and name it
@@ -4113,7 +4113,7 @@ double gasToHeatEfficiency = f_getGasToHeatEfficiency(heatingType);
 // Then check which part of the gas consumption is used for heating
 double ratioGasUsedForHeating = f_getRatioGasUsedForHeating(surveyGC);
 // Finally, multiply the gas profile with the total conversion factor to get the heat profile
-double[] profile_kWhpqh = ZeroMath.arrayMultiply(profile_m3pqh, avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
+double[] profile_kWhpqh = LUXMath.multiplyArray(profile_m3pqh, avgc_data.p_gas_kWhpm3 * gasToHeatEfficiency * ratioGasUsedForHeating);
 J_ProfilePointer profilePointer = f_createEngineProfile(energyAssetName, a_arguments_hr, profile_kWhpqh, OL_ProfileUnits.KWHPQUARTERHOUR);
 
 // Then we create the profile asset and name it
@@ -4218,7 +4218,7 @@ if ( profile_kWhpqh.length > 10000) { // if longer than 10_000 values, conclude 
 	//dataTimeStep_h = 1;
 	throw new RuntimeException("Assumed heatprofile was quarter-hourly, but it has less than 10_000 datapoints!");
 }
-ZeroMath.arrayMultiply(profile_kWhpqh, avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr);
+profile_kWhpqh = LUXMath.multiplyArray(profile_kWhpqh, avgc_data.p_avgEfficiencyDistrictHeatingDeliverySet_fr);
 J_ProfilePointer profilePointer = f_createEngineProfile(energyAssetName, a_arguments_hr, profile_kWhpqh, OL_ProfileUnits.KWHPQUARTERHOUR);
 // We multiply by the delivery set efficiency to go from delivery to consumption
 // TODO: Fix this for LT_DISTRICTHEAT, they have a different efficiency!
