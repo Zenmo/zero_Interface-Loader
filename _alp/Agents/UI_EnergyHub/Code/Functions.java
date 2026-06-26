@@ -212,7 +212,7 @@ zero_Interface.f_setScenarioToCustom();
 
 for (UI_Results ui_results : zero_Interface.c_UIResultsInstances) {
 	if (ui_results.f_getSelectedObjectData() != null) {	
-		zero_Interface.f_enableLivePlotsOnly(ui_results);
+		ui_results.f_enableLivePlotsOnly();
 	}
 }
 

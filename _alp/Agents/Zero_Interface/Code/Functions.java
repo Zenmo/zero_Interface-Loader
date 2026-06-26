@@ -461,7 +461,7 @@ if(!b_runningMainInterfaceScenarios){
 	// Switch to the live plots and do not allow the user to switch away from the live plot when the year is not yet simulated	
 	for (UI_Results ui_results : c_UIResultsInstances) {
 		if (ui_results.f_getSelectedObjectData() != null) {	
-			f_enableLivePlotsOnly(ui_results);
+			ui_results.f_enableLivePlotsOnly();
 		}
 	}
 	
@@ -1370,27 +1370,6 @@ if(gridConnectionsInNeighborhood.isEmpty() && !c_filterSelectedNeighborhoods.isE
 }
 
 c_selectedGridConnections = new ArrayList<>(gridConnectionsInNeighborhood);
-/*ALCODEEND*/}
-
-double f_enableLivePlotsOnly(UI_Results resultsUI)
-{/*ALCODESTART::1740043548084*/
-if (resultsUI.f_getSelectedObjectData() != null) {
-	if(resultsUI.getGr_resultsUIHeader().isVisible()){
-		if(resultsUI.getResultsUIModeRadioButtons() != null){
-			resultsUI.getResultsUIModeRadioButtons().setValue(0, true);
-		}
-		resultsUI.getEnergyRadioButtons().setValue(0, true);
-	}
-	resultsUI.chartProfielen.getPeriodRadioButton().setValue(0, true);
-	resultsUI.f_enableNonLivePlotRadioButtons(false);
-}
-//for (ShapeRadioButtonGroup rb :resultsUI.chartProfielen.getAllPeriodRadioButtons()) {
-	//rb.setValue(0, false);
-//}
-
-resultsUI.chartProfielen.getPeriodRadioButton().setValue(0, true);
-
-resultsUI.f_enableNonLivePlotRadioButtons(false);
 /*ALCODEEND*/}
 
 double f_filterManualSelection(ArrayList<GridConnection> toBeFilteredGC)
