@@ -18,7 +18,7 @@
               StaticVariable="false">
 			<Type><![CDATA[Color]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new Color( 204, 72, 118); ]]></Code>
+				<Code><![CDATA[new Color(95, 188, 191);]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -40,7 +40,7 @@
               StaticVariable="false">
 			<Type><![CDATA[Color]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[black]]></Code>
+				<Code><![CDATA[new Color(0, 126, 132)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -1195,6 +1195,25 @@
 			</InitialValue>
 		</Properties>
 	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1780048211151</Id>
+		<Name><![CDATA[v_currentTripConfiguringVehicleType]]></Name>
+		<X>-510</X>
+		<Y>2030</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="private"
+              StaticVariable="false">
+			<Type><![CDATA[OL_VehicleType]]></Type>
+		</Properties>
+	</Variable>
 	<Variable Class="Parameter">
 		<Id>1708522385741</Id>
 		<Name><![CDATA[p_companyName]]></Name>
@@ -1378,6 +1397,521 @@
 				<MaxSliderValue>100</MaxSliderValue>
 				<DelimeterType>NO_DELIMETER</DelimeterType>
 			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1780047198411</Id>
+		<Name><![CDATA[matrix_vehicleTripsConfigurationButtons]]></Name>
+		<X>-510</X>
+		<Y>2160</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[ShapeRectangle[][]]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[{
+    { // Monday (0)
+        rect_configureVehicleTrips_monday_0,
+        rect_configureVehicleTrips_monday_1,
+        rect_configureVehicleTrips_monday_2,
+        rect_configureVehicleTrips_monday_3,
+        rect_configureVehicleTrips_monday_4,
+        rect_configureVehicleTrips_monday_5,
+        rect_configureVehicleTrips_monday_6,
+        rect_configureVehicleTrips_monday_7,
+        rect_configureVehicleTrips_monday_8,
+        rect_configureVehicleTrips_monday_9,
+        rect_configureVehicleTrips_monday_10,
+        rect_configureVehicleTrips_monday_11,
+        rect_configureVehicleTrips_monday_12,
+        rect_configureVehicleTrips_monday_13,
+        rect_configureVehicleTrips_monday_14,
+        rect_configureVehicleTrips_monday_15,
+        rect_configureVehicleTrips_monday_16,
+        rect_configureVehicleTrips_monday_17,
+        rect_configureVehicleTrips_monday_18,
+        rect_configureVehicleTrips_monday_19,
+        rect_configureVehicleTrips_monday_20,
+        rect_configureVehicleTrips_monday_21,
+        rect_configureVehicleTrips_monday_22,
+        rect_configureVehicleTrips_monday_23
+    },
+    { // Tuesday (1)
+        rect_configureVehicleTrips_tuesday_0,
+        rect_configureVehicleTrips_tuesday_1,
+        rect_configureVehicleTrips_tuesday_2,
+        rect_configureVehicleTrips_tuesday_3,
+        rect_configureVehicleTrips_tuesday_4,
+        rect_configureVehicleTrips_tuesday_5,
+        rect_configureVehicleTrips_tuesday_6,
+        rect_configureVehicleTrips_tuesday_7,
+        rect_configureVehicleTrips_tuesday_8,
+        rect_configureVehicleTrips_tuesday_9,
+        rect_configureVehicleTrips_tuesday_10,
+        rect_configureVehicleTrips_tuesday_11,
+        rect_configureVehicleTrips_tuesday_12,
+        rect_configureVehicleTrips_tuesday_13,
+        rect_configureVehicleTrips_tuesday_14,
+        rect_configureVehicleTrips_tuesday_15,
+        rect_configureVehicleTrips_tuesday_16,
+        rect_configureVehicleTrips_tuesday_17,
+        rect_configureVehicleTrips_tuesday_18,
+        rect_configureVehicleTrips_tuesday_19,
+        rect_configureVehicleTrips_tuesday_20,
+        rect_configureVehicleTrips_tuesday_21,
+        rect_configureVehicleTrips_tuesday_22,
+        rect_configureVehicleTrips_tuesday_23
+    },
+    { // Wednesday (2)
+        rect_configureVehicleTrips_wednesday_0,
+        rect_configureVehicleTrips_wednesday_1,
+        rect_configureVehicleTrips_wednesday_2,
+        rect_configureVehicleTrips_wednesday_3,
+        rect_configureVehicleTrips_wednesday_4,
+        rect_configureVehicleTrips_wednesday_5,
+        rect_configureVehicleTrips_wednesday_6,
+        rect_configureVehicleTrips_wednesday_7,
+        rect_configureVehicleTrips_wednesday_8,
+        rect_configureVehicleTrips_wednesday_9,
+        rect_configureVehicleTrips_wednesday_10,
+        rect_configureVehicleTrips_wednesday_11,
+        rect_configureVehicleTrips_wednesday_12,
+        rect_configureVehicleTrips_wednesday_13,
+        rect_configureVehicleTrips_wednesday_14,
+        rect_configureVehicleTrips_wednesday_15,
+        rect_configureVehicleTrips_wednesday_16,
+        rect_configureVehicleTrips_wednesday_17,
+        rect_configureVehicleTrips_wednesday_18,
+        rect_configureVehicleTrips_wednesday_19,
+        rect_configureVehicleTrips_wednesday_20,
+        rect_configureVehicleTrips_wednesday_21,
+        rect_configureVehicleTrips_wednesday_22,
+        rect_configureVehicleTrips_wednesday_23
+    },
+    { // Thursday (3)
+        rect_configureVehicleTrips_thursday_0,
+        rect_configureVehicleTrips_thursday_1,
+        rect_configureVehicleTrips_thursday_2,
+        rect_configureVehicleTrips_thursday_3,
+        rect_configureVehicleTrips_thursday_4,
+        rect_configureVehicleTrips_thursday_5,
+        rect_configureVehicleTrips_thursday_6,
+        rect_configureVehicleTrips_thursday_7,
+        rect_configureVehicleTrips_thursday_8,
+        rect_configureVehicleTrips_thursday_9,
+        rect_configureVehicleTrips_thursday_10,
+        rect_configureVehicleTrips_thursday_11,
+        rect_configureVehicleTrips_thursday_12,
+        rect_configureVehicleTrips_thursday_13,
+        rect_configureVehicleTrips_thursday_14,
+        rect_configureVehicleTrips_thursday_15,
+        rect_configureVehicleTrips_thursday_16,
+        rect_configureVehicleTrips_thursday_17,
+        rect_configureVehicleTrips_thursday_18,
+        rect_configureVehicleTrips_thursday_19,
+        rect_configureVehicleTrips_thursday_20,
+        rect_configureVehicleTrips_thursday_21,
+        rect_configureVehicleTrips_thursday_22,
+        rect_configureVehicleTrips_thursday_23
+    },
+    { // Friday (4)
+        rect_configureVehicleTrips_friday_0,
+        rect_configureVehicleTrips_friday_1,
+        rect_configureVehicleTrips_friday_2,
+        rect_configureVehicleTrips_friday_3,
+        rect_configureVehicleTrips_friday_4,
+        rect_configureVehicleTrips_friday_5,
+        rect_configureVehicleTrips_friday_6,
+        rect_configureVehicleTrips_friday_7,
+        rect_configureVehicleTrips_friday_8,
+        rect_configureVehicleTrips_friday_9,
+        rect_configureVehicleTrips_friday_10,
+        rect_configureVehicleTrips_friday_11,
+        rect_configureVehicleTrips_friday_12,
+        rect_configureVehicleTrips_friday_13,
+        rect_configureVehicleTrips_friday_14,
+        rect_configureVehicleTrips_friday_15,
+        rect_configureVehicleTrips_friday_16,
+        rect_configureVehicleTrips_friday_17,
+        rect_configureVehicleTrips_friday_18,
+        rect_configureVehicleTrips_friday_19,
+        rect_configureVehicleTrips_friday_20,
+        rect_configureVehicleTrips_friday_21,
+        rect_configureVehicleTrips_friday_22,
+        rect_configureVehicleTrips_friday_23
+    },
+    { // Saturday (5)
+        rect_configureVehicleTrips_saturday_0,
+        rect_configureVehicleTrips_saturday_1,
+        rect_configureVehicleTrips_saturday_2,
+        rect_configureVehicleTrips_saturday_3,
+        rect_configureVehicleTrips_saturday_4,
+        rect_configureVehicleTrips_saturday_5,
+        rect_configureVehicleTrips_saturday_6,
+        rect_configureVehicleTrips_saturday_7,
+        rect_configureVehicleTrips_saturday_8,
+        rect_configureVehicleTrips_saturday_9,
+        rect_configureVehicleTrips_saturday_10,
+        rect_configureVehicleTrips_saturday_11,
+        rect_configureVehicleTrips_saturday_12,
+        rect_configureVehicleTrips_saturday_13,
+        rect_configureVehicleTrips_saturday_14,
+        rect_configureVehicleTrips_saturday_15,
+        rect_configureVehicleTrips_saturday_16,
+        rect_configureVehicleTrips_saturday_17,
+        rect_configureVehicleTrips_saturday_18,
+        rect_configureVehicleTrips_saturday_19,
+        rect_configureVehicleTrips_saturday_20,
+        rect_configureVehicleTrips_saturday_21,
+        rect_configureVehicleTrips_saturday_22,
+        rect_configureVehicleTrips_saturday_23
+    },
+    { // Sunday (6)
+        rect_configureVehicleTrips_sunday_0,
+        rect_configureVehicleTrips_sunday_1,
+        rect_configureVehicleTrips_sunday_2,
+        rect_configureVehicleTrips_sunday_3,
+        rect_configureVehicleTrips_sunday_4,
+        rect_configureVehicleTrips_sunday_5,
+        rect_configureVehicleTrips_sunday_6,
+        rect_configureVehicleTrips_sunday_7,
+        rect_configureVehicleTrips_sunday_8,
+        rect_configureVehicleTrips_sunday_9,
+        rect_configureVehicleTrips_sunday_10,
+        rect_configureVehicleTrips_sunday_11,
+        rect_configureVehicleTrips_sunday_12,
+        rect_configureVehicleTrips_sunday_13,
+        rect_configureVehicleTrips_sunday_14,
+        rect_configureVehicleTrips_sunday_15,
+        rect_configureVehicleTrips_sunday_16,
+        rect_configureVehicleTrips_sunday_17,
+        rect_configureVehicleTrips_sunday_18,
+        rect_configureVehicleTrips_sunday_19,
+        rect_configureVehicleTrips_sunday_20,
+        rect_configureVehicleTrips_sunday_21,
+        rect_configureVehicleTrips_sunday_22,
+        rect_configureVehicleTrips_sunday_23
+    }
+}]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1780047198409</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1780063210798</Id>
+		<Name><![CDATA[map_customTripTrackerToOriginal]]></Name>
+		<Description><![CDATA[Map of GC_UUID to
+	Map<J_TripTracker, Triptracker> New triptracker to original triptracker.
+-> When new triptracker is replaced again, the newest triptracker should get the original triptracker as value again.]]></Description>
+		<X>-470</X>
+		<Y>2440</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<String, Map<J_ActivityTrackerTrips, J_ActivityTrackerTrips>>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[new HashMap<>()]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1780063210796</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1780063471821</Id>
+		<Name><![CDATA[map_storedCustomTripButtonConfiguration]]></Name>
+		<Description><![CDATA[Map of GC_UUID to
+	Map of vehicleType to
+		Boolean matrix of created weekly configuration]]></Description>
+		<X>-490</X>
+		<Y>2360</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<String, Map<OL_VehicleType, J_CustomTripTrackerGenerator.StoredTripConfiguration>>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[new HashMap<>()]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1780063471819</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1780321005273</Id>
+		<Name><![CDATA[matrix_defaultValuesCustomTripButtons]]></Name>
+		<X>-490</X>
+		<Y>2070</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[boolean[][]]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[{
+	//  0      1      2      3      4      5      6      7      8      9      10     11     12     13     14     15     16     17     18     19     20     21     22     23
+	{ false, false, false, false, false, false, false, false, true,  true,  true,  true,  true,  true,  true,  true,  true,  false, false, false, false, false, false, false },
+	{ false, false, false, false, false, false, false, false, true,  true,  true,  true,  true,  true,  true,  true,  true,  false, false, false, false, false, false, false },
+	{ false, false, false, false, false, false, false, false, true,  true,  true,  true,  true,  true,  true,  true,  true,  false, false, false, false, false, false, false },
+	{ false, false, false, false, false, false, false, false, true,  true,  true,  true,  true,  true,  true,  true,  true,  false, false, false, false, false, false, false },
+	{ false, false, false, false, false, false, false, false, true,  true,  true,  true,  true,  true,  true,  true,  true,  false, false, false, false, false, false, false },
+	{ false, false, false, false, false, false, false, false, true,  true,  true,  true,  true,  true,  true,  true,  true,  false, false, false, false, false, false, false },
+	{ false, false, false, false, false, false, false, false, true,  true,  true,  true,  true,  true,  true,  true,  true,  false, false, false, false, false, false, false }
+}]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1780321005271</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1780322253514</Id>
+		<Name><![CDATA[map_dayToEnableDayButtons]]></Name>
+		<X>-510</X>
+		<Y>2180</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_Days, ShapeCheckBox>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[Map.ofEntries(
+	Map.entry(OL_Days.MONDAY, cb_configureVehicleTripsMonday),
+	Map.entry(OL_Days.TUESDAY,cb_configureVehicleTripsTuesday),
+	Map.entry(OL_Days.WEDNESDAY, cb_configureVehicleTripsWednesday),
+	Map.entry(OL_Days.THURSDAY, cb_configureVehicleTripsThursday),
+	Map.entry(OL_Days.FRIDAY, cb_configureVehicleTripsFriday),
+	Map.entry(OL_Days.SATURDAY, cb_configureVehicleTripsSaturday),
+	Map.entry(OL_Days.SUNDAY, cb_configureVehicleTripsSunday)
+)]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1780322253512</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1780499544873</Id>
+		<Name><![CDATA[p_configureVehicleTripsOnColor]]></Name>
+		<X>-530</X>
+		<Y>1940</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Color]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[new Color(252, 194, 0)]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1780499544871</Id>
+				<EditorContolType>COLOR_PICKER</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1780499581744</Id>
+		<Name><![CDATA[p_configureVehicleTripsOffColor]]></Name>
+		<X>-530</X>
+		<Y>1960</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Color]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[white]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1780499581742</Id>
+				<EditorContolType>COLOR_PICKER</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1780919514410</Id>
+		<Name><![CDATA[map_dayToDisableRectangles]]></Name>
+		<X>-510</X>
+		<Y>2200</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<OL_Days, ShapeGroup>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1780919514408</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1780941333458</Id>
+		<Name><![CDATA[map_createdCustomTripWeeklyConfiguration]]></Name>
+		<Description><![CDATA[Map of GC_UUID to
+	Map of vehicleType to
+		Boolean matrix of created weekly configuration]]></Description>
+		<X>-490</X>
+		<Y>2380</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Map<String, Map<OL_VehicleType, List<J_ActivityTrackerTrips.TripRecord>>>]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[new HashMap<>()]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1780941333456</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1780945965668</Id>
+		<Name><![CDATA[p_defaultTravelDistance_km]]></Name>
+		<X>-530</X>
+		<Y>1980</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[200]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1780945965666</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1780043469444</Id>
+		<Name><![CDATA[c_activeVehicleConfigurationDays]]></Name>
+		<X>-510</X>
+		<Y>2240</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>LinkedHashSet</CollectionClass>
+			<ElementClass>OL_Days</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+			<CollectionInitializer Class="CodeValue">
+				<Code><![CDATA[{
+	OL_Days.MONDAY,
+	OL_Days.TUESDAY,
+	OL_Days.WEDNESDAY,
+	OL_Days.THURSDAY,
+	OL_Days.FRIDAY,
+	OL_Days.SATURDAY,
+	OL_Days.SUNDAY
+}]]></Code>
+			</CollectionInitializer>
 		</Properties>
 	</Variable>
 </Variables>

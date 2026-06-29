@@ -45,6 +45,36 @@
 			<Parameter>
 				<Name><![CDATA[p_minSavingsSliders_default]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[matrix_vehicleTripsConfigurationButtons]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_customTripTrackerToOriginal]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_storedCustomTripButtonConfiguration]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[matrix_defaultValuesCustomTripButtons]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_dayToEnableDayButtons]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_configureVehicleTripsOnColor]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_configureVehicleTripsOffColor]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_dayToDisableRectangles]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_createdCustomTripWeeklyConfiguration]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultTravelDistance_km]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -408,7 +438,7 @@
 		</LocationNameCode>
 		<InitializationType>EMPTY</InitializationType>
 		<InitializationDatabaseTableQuery>
-			<Id>0</Id>
+			<Id>1658477069999</Id>
 			<TableReference/>
 		</InitializationDatabaseTableQuery>
 		<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>

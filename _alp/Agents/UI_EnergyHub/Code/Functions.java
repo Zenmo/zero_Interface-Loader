@@ -57,18 +57,20 @@ uI_Results.f_updateResultsUI(v_energyHubCoop);
 double f_initializeEnergyHubTabs()
 {/*ALCODESTART::1753694406870*/
 //Initialize the ui_tabs
-uI_Tabs.add_pop_tabElectricity();
-uI_Tabs.add_pop_tabHeating();
-uI_Tabs.add_pop_tabMobility();
-
-//Adjust location of buttons to account for missing e-hub tab
-uI_Tabs.gr_energyDemandSettings.setX(zero_Interface.uI_Tabs.gr_energyDemandSettings.getX()+40);
+if(uI_Tabs.pop_tabElectricity.size() == 0){
+	uI_Tabs.add_pop_tabElectricity();
+	uI_Tabs.add_pop_tabHeating();
+	uI_Tabs.add_pop_tabMobility();
+	
+	//Adjust location of buttons to account for missing e-hub tab
+	uI_Tabs.gr_energyDemandSettings.setX(zero_Interface.uI_Tabs.gr_energyDemandSettings.getX()+40);
+	
+	uI_Tabs.v_presentationXOffset += zero_Interface.va_EHubDashboard.getX();
+	uI_Tabs.v_presentationYOffset += zero_Interface.va_EHubDashboard.getY();
+}
 
 //Initialize slider gcs and set sliders
 uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollectionPointer(), new ArrayList<>(), c_sliderEAGCs);
-
-uI_Tabs.v_presentationXOffset += zero_Interface.va_EHubDashboard.getX();
-uI_Tabs.v_presentationYOffset += zero_Interface.va_EHubDashboard.getY();
 /*ALCODEEND*/}
 
 double f_styleEnergyHubResultsUI()

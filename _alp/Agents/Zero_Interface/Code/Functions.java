@@ -419,7 +419,7 @@ if(previousClickedObjectType != null){
 	}
 	
 	if(v_customEnergyCoop != null){
-		energyModel.f_removeEnergyCoop(v_customEnergyCoop, energyModel.p_timeVariables);
+		energyModel.f_removeEnergyCoop(v_customEnergyCoop, energyModel.p_timeParameters, energyModel.p_timeVariables);
 		v_customEnergyCoop = null;
 	}
 }
@@ -433,6 +433,11 @@ if(selectedChartTypes_Energy == null){ // Temporary backup till all models have 
 	selectedChartTypes_Energy = f_getSelectedChartTypes_Energy();
 }
 List<OL_ChartTypes> selectedChartTypes_Economic = settings.resultsUISelectedChartTypes_Economic();
+
+//Disable export functionality in profiles if not full access.
+if(settings.isPublicModel() || user.GCAccessType != OL_UserGCAccessType.FULL){
+	uI_Results.f_enablePublicVersion(true);
+}
 
 //Disable summary button if summary is not selected
 if(settings.showKPISummary() == null || !settings.showKPISummary()){
@@ -508,7 +513,11 @@ for(J_EA vehicle : EAs){
 	}
 }
 
-c_orderedVehicles = otherEAs;
+ArrayList<I_Vehicle> orderedVehicleList = new ArrayList<>();
+for(J_EA vehicle : otherEAs){
+	orderedVehicleList.add((I_Vehicle)vehicle);
+}
+c_orderedVehicles = orderedVehicleList;
 /*ALCODEEND*/}
 
 double f_initialHeatingSystemsOrder()
@@ -785,9 +794,9 @@ if(MVsubstations != null){
 	}
 }
 else if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
-	int totalNotToplevelGridNodes = energyModel.f_getGridNodesNotTopLevel().size();
+	int totalNotToplevelGridNodes = energyModel.f_getNonRootGridNodes().size();
 	//Set all unique grid topology colors for each substation and its children if the gridloops are defined
-	for (GridNode node : energyModel.f_getGridNodesNotTopLevel()){
+	for (GridNode node : energyModel.f_getNonRootGridNodes()){
 		
 		//Create a unique color from a spectrum and assign it to the subMV
 		node.p_uniqueColor = spectrumColor(v_amountOfDefinedGridLoops, totalNotToplevelGridNodes);
@@ -1120,8 +1129,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 			if (b.c_containedGridConnections.size() > 0 ) { // only allow buildings with gridconnections
 				GridConnection clickedGridConnection = b.c_containedGridConnections.get(0); // Find buildings powered by the same GC as the clicked building
 				GridNode clickedGridConnectionConnectedGridNode = clickedGridConnection.p_parentNodeElectric;
-				ArrayList<GridNode> allGridNodes = new ArrayList<GridNode>(energyModel.f_getGridNodesTopLevel());
-				allGridNodes.addAll(energyModel.f_getGridNodesNotTopLevel());
+				var allGridNodes = energyModel.pop_gridNodes;
 				
 				while(	clickedGridConnectionConnectedGridNode.p_parentNodeID != null && 
 					  	clickedGridConnectionConnectedGridNode.p_nodeType != OL_GridNodeType.SUBMV &&
@@ -1955,11 +1963,11 @@ for (GCPublicCharger gc : energyModel.PublicChargers) {
 		collectionPointerV2GChargers.add(gc);
 	}
 	
-	if ( !gc.p_isChargingCentre ) { //Should maybe be a check for charger capabilities as well? 
-		c_orderedPublicChargers.add(gc);
-	}
+	//Add to total public charger collection
+	c_orderedPublicChargers.add(gc);
 }
 
+//Add all inactive chargers at the end of the list.
 c_orderedV1GChargers.addAll( c_inactiveV1GChargers );
 c_orderedV2GChargers.addAll( c_inactiveV2GChargers );
 
@@ -3697,7 +3705,12 @@ if(electricityTabEASliderGCs_prod.size() == 2){
 	electricityTabEASliderGCs.addAll(electricityTabEASliderGCs_prod);
 }
 else{
-	throw new RuntimeException("electricityTabEASliderGCs_prod.size() != 2 -> Should be exactly 2, one solarfarm and one windfarm.");
+	throw new RuntimeException(
+		String.format(
+			"electricityTabEASliderGCs_prod.size() Should be exactly 2, one solarfarm and one windfarm, got %s",
+			electricityTabEASliderGCs_prod.size()
+		)
+	);
 }
 
 //Find the GridBattery slider gcs that are not specificly for the EnergyHub

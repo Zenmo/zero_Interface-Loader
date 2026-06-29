@@ -85,8 +85,10 @@ sl_electricTrucksCompany.setValue(p_scenarioSettings_Future.getPlannedEVTrucks()
 //sl_petroleumFuelTrucksCompany.setValue(c_scenarioSettings_Future.getPlannedPetroleumFuelTrucks(), true);
 
 //set active if active in future
-p_gridConnection.f_setActive(p_scenarioSettings_Future.getIsActiveInFuture(), zero_Interface.energyModel.p_timeVariables);
+p_gridConnection.f_setActive(p_scenarioSettings_Future.getIsActiveInFuture(), zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.p_timeVariables);
 
+//Reset triptrackers
+f_resetAllVehiclesToOriginalTripTracker();
 
 //Reset button to future, due to sliders putting it on custom
 rb_scenariosPrivateUI.setValue(1, false);
@@ -219,10 +221,14 @@ sl_electricTrucksCompany.setValue(p_scenarioSettings_Current.getCurrentEVTrucks(
 //sl_petroleumFuelTrucksCompany.setValue(c_scenarioSettings_Current.getCurrentPetroleumFuelTrucks(), true);
 
 //set active if active in present
-p_gridConnection.f_setActive(p_scenarioSettings_Current.getIsCurrentlyActive(), zero_Interface.energyModel.p_timeVariables);
+p_gridConnection.f_setActive(p_scenarioSettings_Current.getIsCurrentlyActive(), zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.p_timeVariables);
+
+//Reset triptrackers
+f_resetAllVehiclesToOriginalTripTracker();
 
 //Reset button to current, due to sliders putting it on custom
 rb_scenariosPrivateUI.setValue(0, false);
+
 /*ALCODEEND*/}
 
 double f_setHeatingType(GridConnection GC,OL_GridConnectionHeatingType selectedHeatingType)
@@ -348,10 +354,9 @@ switch (selectedHeatingType){
 		new J_EAConversionHeatDeliverySet(GC, capacityThermal_kW, efficiency, timeParameters, outputTemperature_degC);
 		
 		//Add GC to heat grid if it exists, else create new one
-		GC.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getGridNodesTopLevel(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
+		GC.p_parentNodeHeat = findFirst(zero_Interface.energyModel.f_getRootGridNodes(), node -> node.p_energyCarrier == OL_EnergyCarriers.HEAT);
 		if(GC.p_parentNodeHeat == null){
 			GridNode GN_heat = zero_Interface.energyModel.add_pop_gridNodes();
-			zero_Interface.energyModel.f_getGridNodesTopLevel().add(GN_heat);
 			GN_heat.p_gridNodeID = "Heatgrid";
 			
 			// Check wether transformer capacity is known or estimated
@@ -479,6 +484,7 @@ f_setBatSliderPresets();
 
 //Vehicles sliders
 f_setVehicleSliderPresets();
+f_closeVehicleTripsConfigurationMenu();
 
 //Demand Reduction sliders
 f_setDemandReductionSliderPresets();
@@ -660,29 +666,29 @@ sl_hydrogenTrucksCompany.setValue(v_nbHydrogenTrucks, false);
 
 /*ALCODEEND*/}
 
-double f_createVehicle(GridConnection parentGC,OL_EnergyAssetType vehicleType,J_ActivityTrackerTrips tripTracker,boolean available,boolean isAdditionalVehicle)
+double f_createVehicle(GridConnection parentGC,OL_VehicleType vehicleType,OL_EnergyCarriers fuelType,J_ActivityTrackerTrips tripTracker,boolean available,boolean isAdditionalVehicle)
 {/*ALCODESTART::1714410040303*/
 double energyConsumption_kWhpkm = 0;
 double vehicleScaling 			= 1.0;
 J_TimeParameters timeParameters	= zero_Interface.energyModel.p_timeParameters;
 
-if (vehicleType == OL_EnergyAssetType.ELECTRIC_VEHICLE || vehicleType == OL_EnergyAssetType.ELECTRIC_VAN || vehicleType == OL_EnergyAssetType.ELECTRIC_TRUCK ){ // Create EVS
+if (fuelType == OL_EnergyCarriers.ELECTRICITY){ // Create EVS
 	double storageCapacity_kWh 		= 0;
 	double capacityElectricity_kW 	= 0;
 	double stateOfCharge_fr  		= 1; // Initial state of charge
 
 	switch(vehicleType){
-		case ELECTRIC_VEHICLE:
+		case CAR:
 			capacityElectricity_kW	= (p_scenarioSettings_Current.getCurrentEVCarChargePower_kW() > 0) ? p_scenarioSettings_Current.getCurrentEVCarChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerCar_kW;
 			storageCapacity_kWh		= zero_Interface.energyModel.avgc_data.p_avgEVStorageCar_kWh;
 			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionCar_kWhpkm;
 		break;
-		case ELECTRIC_VAN:
+		case VAN:
 			capacityElectricity_kW	= (p_scenarioSettings_Current.getCurrentEVVanChargePower_kW() > 0) ? p_scenarioSettings_Current.getCurrentEVVanChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerVan_kW;
 			storageCapacity_kWh		= zero_Interface.energyModel.avgc_data.p_avgEVStorageVan_kWh;
 			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionVan_kWhpkm;
 		break;
-		case ELECTRIC_TRUCK:
+		case TRUCK:
 			capacityElectricity_kW	= (p_scenarioSettings_Current.getCurrentEVTruckChargePower_kW() > 0) ? p_scenarioSettings_Current.getCurrentEVTruckChargePower_kW() : zero_Interface.energyModel.avgc_data.p_avgEVMaxChargePowerTruck_kW;
 			storageCapacity_kWh		= zero_Interface.energyModel.avgc_data.p_avgEVStorageTruck_kWh;
 			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgEVEnergyConsumptionTruck_kWhpkm;
@@ -693,9 +699,12 @@ if (vehicleType == OL_EnergyAssetType.ELECTRIC_VEHICLE || vehicleType == OL_Ener
 	//Create EV and connect to GC and selected trip tracker
 	J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timeParameters, energyConsumption_kWhpkm, vehicleScaling, vehicleType, tripTracker, available);	
 	
-	
 	if (isAdditionalVehicle){
+		electricVehicle.getTripTracker().setDistanceScaling_fr(1-sl_mobilityDemandCompanyReduction.getValue()/100.0);
 		zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).add(electricVehicle);
+		if(tripTracker == null){
+			f_addNewInstanceOfCustomTripTrackerToAdditionalVehicle(electricVehicle);
+		}
 	}
 	else{
 		zero_Interface.c_orderedVehicles.add(0, electricVehicle);
@@ -706,131 +715,89 @@ if (vehicleType == OL_EnergyAssetType.ELECTRIC_VEHICLE || vehicleType == OL_Ener
 		parentGC.f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
 	}
 }
+else {
+    if (fuelType == OL_EnergyCarriers.PETROLEUM_FUEL) { // Create petroleumFuel vehicles
+        switch (vehicleType) {
+            case CAR:
+                energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgGasolineConsumptionCar_kWhpkm;
+                break;
+            case VAN:
+                energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionVan_kWhpkm;
+                break;
+            case TRUCK:
+                energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionTruck_kWhpkm;
+                break;
+        }
+    } else if (fuelType == OL_EnergyCarriers.HYDROGEN) { // Create hydrogen vehicles
+        switch (vehicleType) {
+            case CAR:
+                energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgHydrogenConsumptionCar_kWhpkm;
+                break;
+            case VAN:
+                energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgHydrogenConsumptionVan_kWhpkm;
+                break;
+            case TRUCK:
+                energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgHydrogenConsumptionTruck_kWhpkm;
+                break;
+        }
+    }
 
-else if (vehicleType == OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE || vehicleType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN || vehicleType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK ){ // Create petroleumFuel vehicles
-	switch (vehicleType){
-		
-		case PETROLEUM_FUEL_VEHICLE:
-			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgGasolineConsumptionCar_kWhpkm;
-		break;
-		
-		case PETROLEUM_FUEL_VAN:
-			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionVan_kWhpkm;
-		break;
-		
-		case PETROLEUM_FUEL_TRUCK:
-			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgDieselConsumptionTruck_kWhpkm;
-		break;
-	}
-	
-	//Create PetroleumFuel vehicle and connect to GC and selected trip tracker
-	J_EAFuelVehicle petroleumFuelVehicle = new J_EAFuelVehicle(parentGC, energyConsumption_kWhpkm, timeParameters, vehicleScaling, vehicleType, tripTracker, OL_EnergyCarriers.PETROLEUM_FUEL, available);
-	
-	
-	
-	if (isAdditionalVehicle){
-		zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).add(petroleumFuelVehicle);
-	}
-	else{
-		zero_Interface.c_orderedVehicles.add(0, petroleumFuelVehicle);
-	}
-}
+    // Create fuel vehicle and connect to GC and selected trip tracker
+    J_EAFuelVehicle fuelVehicle = new J_EAFuelVehicle(parentGC, energyConsumption_kWhpkm, timeParameters, vehicleScaling, vehicleType, tripTracker, fuelType, available);
 
-else{ // (Hydrogen vehicles)
-	switch (vehicleType){
-		case HYDROGEN_VEHICLE:
-			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgHydrogenConsumptionCar_kWhpkm;
-		break;
-		case HYDROGEN_VAN:
-			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgHydrogenConsumptionVan_kWhpkm;
-		break;
-		case HYDROGEN_TRUCK:
-			energyConsumption_kWhpkm = zero_Interface.energyModel.avgc_data.p_avgHydrogenConsumptionTruck_kWhpkm;
-		break;
-		
-	}
-	
-	//Create Hydrogen vehicle and connect to GC and selected trip tracker
-	J_EAFuelVehicle hydrogenVehicle = new J_EAFuelVehicle(parentGC, energyConsumption_kWhpkm, timeParameters, vehicleScaling, vehicleType, tripTracker, OL_EnergyCarriers.HYDROGEN, available);
-	
-	
-	
-	if (isAdditionalVehicle){
-		zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).add(hydrogenVehicle);
-	}
-	else{
-		zero_Interface.c_orderedVehicles.add(0, hydrogenVehicle);
-	}
+    if (isAdditionalVehicle) {
+		fuelVehicle.getTripTracker().setDistanceScaling_fr(1-sl_mobilityDemandCompanyReduction.getValue()/100.0);
+        zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).add(fuelVehicle);
+        if(tripTracker == null){
+			f_addNewInstanceOfCustomTripTrackerToAdditionalVehicle(fuelVehicle);
+		}
+    } else {
+        zero_Interface.c_orderedVehicles.add(0, fuelVehicle);
+    }
 }
 
 
 /*ALCODEEND*/}
 
-int f_setElectricVehicleSliders(GridConnection GC,OL_EnergyAssetType vehicleType,int setAmountOfVehicles)
+int f_setElectricVehicleSliders(GridConnection GC,OL_VehicleType vehicleType,int setAmountOfVehicles)
 {/*ALCODESTART::1714411599586*/
 int local_EV_nb;
 int local_PetroleumFuelV_nb;
 int local_HydrogenV_nb;
 int max_amount_petroleumFuel_vehicles;
 
-OL_EnergyAssetType vehicleType_petroleumFuel;
-OL_EnergyAssetType vehicleType_hydrogen;
-
 switch (vehicleType){
-	
-	case ELECTRIC_VEHICLE:
-
-	vehicleType_petroleumFuel = OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE;
-	vehicleType_hydrogen = OL_EnergyAssetType.HYDROGEN_VEHICLE;
-
-	local_EV_nb = v_nbEVCars;
-	local_PetroleumFuelV_nb = v_nbPetroleumFuelCars;
-	local_HydrogenV_nb = v_nbHydrogenCars;
-	
-	max_amount_petroleumFuel_vehicles = v_maxPetroleumFuelCarSlider;
-	
-	break;
-	
-	case ELECTRIC_VAN:
-	
-	vehicleType_petroleumFuel = OL_EnergyAssetType.PETROLEUM_FUEL_VAN;
-	vehicleType_hydrogen = OL_EnergyAssetType.HYDROGEN_VAN;
-	
-	local_EV_nb = v_nbEVVans;
-	local_PetroleumFuelV_nb = v_nbPetroleumFuelVans;
-	local_HydrogenV_nb = v_nbHydrogenVans;
-	
-	max_amount_petroleumFuel_vehicles = v_maxPetroleumFuelVanSlider;
-	
-	break;
-	
-	case ELECTRIC_TRUCK:
-
-	vehicleType_petroleumFuel = OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK;
-	vehicleType_hydrogen = OL_EnergyAssetType.HYDROGEN_TRUCK;
-	
-	local_EV_nb = v_nbEVTrucks;
-	local_PetroleumFuelV_nb = v_nbPetroleumFuelTrucks;
-	local_HydrogenV_nb = v_nbHydrogenTrucks;
-	
-	max_amount_petroleumFuel_vehicles = v_maxPetroleumFuelTruckSlider;
-		
-	break;
-	
+	case CAR:
+		local_EV_nb = v_nbEVCars;
+		local_PetroleumFuelV_nb = v_nbPetroleumFuelCars;
+		local_HydrogenV_nb = v_nbHydrogenCars;
+		max_amount_petroleumFuel_vehicles = v_maxPetroleumFuelCarSlider;
+		break;
+	case VAN:
+		local_EV_nb = v_nbEVVans;
+		local_PetroleumFuelV_nb = v_nbPetroleumFuelVans;
+		local_HydrogenV_nb = v_nbHydrogenVans;
+		max_amount_petroleumFuel_vehicles = v_maxPetroleumFuelVanSlider;
+		break;
+	case TRUCK:
+		local_EV_nb = v_nbEVTrucks;
+		local_PetroleumFuelV_nb = v_nbPetroleumFuelTrucks;
+		local_HydrogenV_nb = v_nbHydrogenTrucks;
+		max_amount_petroleumFuel_vehicles = v_maxPetroleumFuelTruckSlider;
+		break;
 	default:
-	traceln("SLIDER SET TO WRONG VEHICLE TYPE, DO NOTHING");
-	return;
+		traceln("SLIDER SET TO WRONG VEHICLE TYPE, DO NOTHING");
+		return;
 }
 
 
 if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of selected vehicles
 	
 	//First convert all other existing additional vehicles
-	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.getEAType() == vehicleType_petroleumFuel || p.getEAType() == vehicleType_hydrogen).size();
+	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.getVehicleType() == vehicleType && (vehicle.getFuelType() == OL_EnergyCarriers.PETROLEUM_FUEL || vehicle.getFuelType() == OL_EnergyCarriers.HYDROGEN)).size();
 	while(setAmountOfVehicles > local_EV_nb && nbOfOtherAdditionalVehiclesOfThisClass > 0 ){
-		
 		// Find an additional PetroleumFuel vehicle
-		J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.getEAType() == vehicleType_petroleumFuel);
+		J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.getVehicleType() == vehicleType && vehicle.getFuelType() == OL_EnergyCarriers.PETROLEUM_FUEL);
 		
 		if(petroleumFuelVehicle != null){
 			J_ActivityTrackerTrips tripTracker = petroleumFuelVehicle.getTripTracker();
@@ -842,7 +809,7 @@ if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of se
 			zero_Interface.c_orderedVehicles.remove(petroleumFuelVehicle);
 			
 			//Create new additional EV
-			f_createVehicle(GC, vehicleType, tripTracker, available, true);			
+			f_createVehicle(GC, vehicleType, OL_EnergyCarriers.ELECTRICITY, tripTracker, available, true);			
 
 			//Update local variables
 			local_EV_nb++;
@@ -851,7 +818,7 @@ if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of se
 		}
 		else{
 			// Find an additional Hydrogen vehicle
-			J_EAFuelVehicle hydrogenVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.getEAType() == vehicleType_hydrogen);
+			J_EAFuelVehicle hydrogenVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.getVehicleType() == vehicleType && vehicle.getFuelType() == OL_EnergyCarriers.HYDROGEN);
 			J_ActivityTrackerTrips tripTracker = hydrogenVehicle.getTripTracker();
 			
 			// Remove Hydrogen vehicle		
@@ -861,7 +828,7 @@ if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of se
 			zero_Interface.c_orderedVehicles.remove(hydrogenVehicle);
 			
 			//Create new additional EV
-			f_createVehicle(GC, vehicleType, tripTracker, available, true);
+			f_createVehicle(GC, vehicleType, OL_EnergyCarriers.ELECTRICITY, tripTracker, available, true);
 
 			//Update local variables
 			local_EV_nb++;
@@ -871,9 +838,8 @@ if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of se
 	}
 	
 	while ( setAmountOfVehicles > local_EV_nb && local_PetroleumFuelV_nb > 0) {
-		
 		// Find a PetroleumFuel vehicle
-		J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == vehicleType_petroleumFuel && ((GridConnection)p.getOwner()) == GC);
+		J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, vehicle -> vehicle.getVehicleType() == vehicleType && vehicle.getFuelType() == OL_EnergyCarriers.PETROLEUM_FUEL && vehicle.getOwner() == GC);
 		J_ActivityTrackerTrips tripTracker = petroleumFuelVehicle.getTripTracker(); 
 		
 		// Remove PetroleumFuel vehicle		
@@ -882,16 +848,15 @@ if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of se
 		petroleumFuelVehicle.removeEnergyAsset();
 
 		//Create new EV
-		f_createVehicle(GC, vehicleType, tripTracker, available, false);
+		f_createVehicle(GC, vehicleType, OL_EnergyCarriers.ELECTRICITY, tripTracker, available, false);
 			
 		//Update variables
 		local_EV_nb++;
 		local_PetroleumFuelV_nb--;
 	}
 	while (setAmountOfVehicles > local_EV_nb && local_HydrogenV_nb > 0){
-	
 		// Find a Hydrogen vehicle
-		J_EAFuelVehicle hydrogenVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == vehicleType_hydrogen  && ((GridConnection)p.getOwner()) == GC);
+		J_EAFuelVehicle hydrogenVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, vehicle -> vehicle.getVehicleType() == vehicleType && vehicle.getFuelType() == OL_EnergyCarriers.HYDROGEN  && vehicle.getOwner() == GC);
 		J_ActivityTrackerTrips tripTracker = hydrogenVehicle.getTripTracker();
 		
 		// Remove Hydrogen vehicle		
@@ -900,27 +865,24 @@ if (setAmountOfVehicles > local_EV_nb){ // Slider has increased the amount of se
 		hydrogenVehicle.removeEnergyAsset();
 
 		//Create new EV
-		f_createVehicle(GC, vehicleType, tripTracker, available, false);
+		f_createVehicle(GC, vehicleType, OL_EnergyCarriers.ELECTRICITY, tripTracker, available, false);
 	
 		//Update variables
 		local_EV_nb++;
 		local_HydrogenV_nb--;
 	}
 	while (setAmountOfVehicles > local_EV_nb){ //If still not enough EV:
-		
 		// Create additional vehicles
-		f_createVehicle(GC, vehicleType, null, true, true);
+		f_createVehicle(GC, vehicleType, OL_EnergyCarriers.ELECTRICITY, null, true, true);
 		
 		//Update variables
 		local_EV_nb++;
 	}
-	
 }
 else if(setAmountOfVehicles < local_EV_nb){ // Slider has decreased the amount of selected vehicles
 	
-	ArrayList<I_Vehicle> additionalVehicles = new ArrayList<>(findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.getEAType() == vehicleType ));
+	ArrayList<I_Vehicle> additionalVehicles = new ArrayList<>(findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.getVehicleType() == vehicleType && vehicle.getFuelType() == OL_EnergyCarriers.ELECTRICITY ));
 	while(setAmountOfVehicles < local_EV_nb && additionalVehicles.size() > 0){ //If there are additional EV, remove them first
-
 		//Find additional created vehicle
 		J_EAEV ev = (J_EAEV)additionalVehicles.get(additionalVehicles.size()-1); // Get latest added
 		
@@ -934,9 +896,8 @@ else if(setAmountOfVehicles < local_EV_nb){ // Slider has decreased the amount o
 		local_EV_nb--;
 	}
 	while ( setAmountOfVehicles < local_EV_nb && local_PetroleumFuelV_nb < max_amount_petroleumFuel_vehicles) {
-
 		//Find a to be removed EV
-		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == vehicleType && !zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).contains(p)  && ((GridConnection)p.getOwner()) == GC);
+		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, vehicle -> vehicle.getVehicleType() == vehicleType && vehicle.getFuelType() == OL_EnergyCarriers.ELECTRICITY && !zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).contains(vehicle)  && vehicle.getOwner() == GC);
 		J_ActivityTrackerTrips tripTracker = ev.getTripTracker();
 
 		//Remove EV
@@ -945,45 +906,34 @@ else if(setAmountOfVehicles < local_EV_nb){ // Slider has decreased the amount o
 		ev.removeEnergyAsset();
 		
 		// Create petroleumFuel vehicle	
-		f_createVehicle(GC, vehicleType_petroleumFuel, tripTracker, available, false);				
+		f_createVehicle(GC, vehicleType, OL_EnergyCarriers.PETROLEUM_FUEL, tripTracker, available, false);				
 		
 		local_EV_nb--;
 		local_PetroleumFuelV_nb++;
-		}
+	}
 }
-
-
 
 //Update variables
 switch (vehicleType){
-	
-	case ELECTRIC_VEHICLE:
-	
-	v_nbEVCars = local_EV_nb;
-	v_nbPetroleumFuelCars = local_PetroleumFuelV_nb;
-	v_nbHydrogenCars = local_HydrogenV_nb;
-	
-	break;
-	
-	case ELECTRIC_VAN:
-	
-	v_nbEVVans = local_EV_nb;
-	v_nbPetroleumFuelVans = local_PetroleumFuelV_nb;
-	v_nbHydrogenVans = local_HydrogenV_nb;
-	
-	break;
-	
-	case ELECTRIC_TRUCK:
-	
-	v_nbEVTrucks = local_EV_nb;
-	v_nbPetroleumFuelTrucks = local_PetroleumFuelV_nb;
-	v_nbHydrogenTrucks = local_HydrogenV_nb;
-		
-	break;
+	case CAR:
+		v_nbEVCars = local_EV_nb;
+		v_nbPetroleumFuelCars = local_PetroleumFuelV_nb;
+		v_nbHydrogenCars = local_HydrogenV_nb;
+		break;
+	case VAN:
+		v_nbEVVans = local_EV_nb;
+		v_nbPetroleumFuelVans = local_PetroleumFuelV_nb;
+		v_nbHydrogenVans = local_HydrogenV_nb;
+		break;
+	case TRUCK:
+		v_nbEVTrucks = local_EV_nb;
+		v_nbPetroleumFuelTrucks = local_PetroleumFuelV_nb;
+		v_nbHydrogenTrucks = local_HydrogenV_nb;
+		break;
 }
 /*ALCODEEND*/}
 
-int f_setPetroleumFuelVehicleSliders(GridConnection GC,OL_EnergyAssetType vehicleType,int setAmountOfVehicles)
+int f_setPetroleumFuelVehicleSliders(GridConnection GC,OL_VehicleType vehicleType,int setAmountOfVehicles)
 {/*ALCODESTART::1714471183392*/
 int local_EV_nb;
 int local_PetroleumFuelV_nb;
@@ -992,66 +942,40 @@ int local_HydrogenV_nb;
 int min_amount_EV;
 int	max_amount_EV;
 
-OL_EnergyAssetType vehicleType_electric;
-OL_EnergyAssetType vehicleType_hydrogen;
-	
 switch (vehicleType){
-	
-	case PETROLEUM_FUEL_VEHICLE:
-
-	vehicleType_electric = OL_EnergyAssetType.ELECTRIC_VEHICLE;
-	vehicleType_hydrogen = OL_EnergyAssetType.HYDROGEN_VEHICLE;
-
-	local_EV_nb = v_nbEVCars;
-	local_PetroleumFuelV_nb = v_nbPetroleumFuelCars;
-	local_HydrogenV_nb = v_nbHydrogenCars;
-	
-	min_amount_EV = v_minEVCarSlider;
-	max_amount_EV = v_maxEVCarSlider;
-	
-	break;
-	
-	case PETROLEUM_FUEL_VAN:
-	
-	vehicleType_electric = OL_EnergyAssetType.ELECTRIC_VAN;
-	vehicleType_hydrogen = OL_EnergyAssetType.HYDROGEN_VAN;
-	
-	local_EV_nb = v_nbEVVans;
-	local_PetroleumFuelV_nb = v_nbPetroleumFuelVans;
-	local_HydrogenV_nb = v_nbHydrogenVans;
-	
-	min_amount_EV = v_minEVVanSlider;
-	max_amount_EV = v_maxEVVanSlider;
-	
-	break;
-	
-	case PETROLEUM_FUEL_TRUCK:
-
-	vehicleType_electric = OL_EnergyAssetType.ELECTRIC_TRUCK;
-	vehicleType_hydrogen = OL_EnergyAssetType.HYDROGEN_TRUCK;
-	
-	local_EV_nb = v_nbEVTrucks;
-	local_PetroleumFuelV_nb = v_nbPetroleumFuelTrucks;
-	local_HydrogenV_nb = v_nbHydrogenTrucks;
-	
-	min_amount_EV = v_minEVTruckSlider;
-	max_amount_EV = v_maxEVTruckSlider;
-		
-	break;
-	
+	case CAR:
+		local_EV_nb = v_nbEVCars;
+		local_PetroleumFuelV_nb = v_nbPetroleumFuelCars;
+		local_HydrogenV_nb = v_nbHydrogenCars;
+		min_amount_EV = v_minEVCarSlider;
+		max_amount_EV = v_maxEVCarSlider;
+		break;
+	case VAN:
+		local_EV_nb = v_nbEVVans;
+		local_PetroleumFuelV_nb = v_nbPetroleumFuelVans;
+		local_HydrogenV_nb = v_nbHydrogenVans;
+		min_amount_EV = v_minEVVanSlider;
+		max_amount_EV = v_maxEVVanSlider;
+		break;
+	case TRUCK:
+		local_EV_nb = v_nbEVTrucks;
+		local_PetroleumFuelV_nb = v_nbPetroleumFuelTrucks;
+		local_HydrogenV_nb = v_nbHydrogenTrucks;
+		min_amount_EV = v_minEVTruckSlider;
+		max_amount_EV = v_maxEVTruckSlider;
+		break;
 	default:
-	traceln("SLIDER SET TO WRONG VEHICLE TYPE, DO NOTHING");
-	return;
+		traceln("SLIDER SET TO WRONG VEHICLE TYPE, DO NOTHING");
+		return;
 }
 
 
 if (setAmountOfVehicles > local_PetroleumFuelV_nb){ // Slider has increased the amount of selected vehicles
 	//First convert all other existing additional vehicles
-	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.getEAType() == vehicleType_hydrogen || p.getEAType() == vehicleType_electric).size();
+	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.getVehicleType() == vehicleType && (vehicle.getFuelType() == OL_EnergyCarriers.HYDROGEN || vehicle.getFuelType() == OL_EnergyCarriers.ELECTRICITY)).size();
 	while(setAmountOfVehicles > local_PetroleumFuelV_nb && nbOfOtherAdditionalVehiclesOfThisClass > 0 ){
-
 		// Find an additional EV vehicle
-		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.getEAType() == vehicleType_electric);
+		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.getVehicleType() == vehicleType && vehicle.getFuelType() == OL_EnergyCarriers.ELECTRICITY);
 			
 		if(ev != null){
 			J_ActivityTrackerTrips tripTracker = ev.getTripTracker();
@@ -1063,7 +987,7 @@ if (setAmountOfVehicles > local_PetroleumFuelV_nb){ // Slider has increased the 
 			zero_Interface.c_orderedVehicles.remove(ev);
 			
 			//Create new additional PetroleumFuel vehicle
-			f_createVehicle(GC, vehicleType, tripTracker, available, true);
+			f_createVehicle(GC, vehicleType, OL_EnergyCarriers.PETROLEUM_FUEL, tripTracker, available, true);
 
 			//Update local variables
 			local_PetroleumFuelV_nb++;
@@ -1072,7 +996,7 @@ if (setAmountOfVehicles > local_PetroleumFuelV_nb){ // Slider has increased the 
 		}
 		else{
 			// Find an additional Hydrogen vehicle
-			J_EAFuelVehicle hydrogenVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.getEAType() == vehicleType_hydrogen);
+			J_EAFuelVehicle hydrogenVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.getVehicleType() == vehicleType && vehicle.getFuelType() == OL_EnergyCarriers.HYDROGEN);
 			J_ActivityTrackerTrips tripTracker = hydrogenVehicle.getTripTracker();
 			
 			// Remove Hydrogen vehicle		
@@ -1082,7 +1006,7 @@ if (setAmountOfVehicles > local_PetroleumFuelV_nb){ // Slider has increased the 
 			zero_Interface.c_orderedVehicles.remove(hydrogenVehicle);
 			
 			//Create new additional PetroleumFuel vehicle
-			f_createVehicle(GC, vehicleType, tripTracker, available, true);
+			f_createVehicle(GC, vehicleType, OL_EnergyCarriers.PETROLEUM_FUEL, tripTracker, available, true);
 
 			//Update local variables
 			local_PetroleumFuelV_nb++;
@@ -1091,9 +1015,8 @@ if (setAmountOfVehicles > local_PetroleumFuelV_nb){ // Slider has increased the 
 		}
 	}
 	while ( setAmountOfVehicles > local_PetroleumFuelV_nb && local_EV_nb > min_amount_EV) {
-
 		// Find an EV
-		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == vehicleType_electric  && ((GridConnection)p.getOwner()) == GC);
+		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, vehicle -> vehicle.getVehicleType() == vehicleType && vehicle.getFuelType() == OL_EnergyCarriers.ELECTRICITY  && vehicle.getOwner() == GC);
 		J_ActivityTrackerTrips tripTracker = ev.getTripTracker();
 		
 		//Remove one EV
@@ -1102,16 +1025,15 @@ if (setAmountOfVehicles > local_PetroleumFuelV_nb){ // Slider has increased the 
 		ev.removeEnergyAsset();
 		
 		//Create new PetroleumFuel vehicle
-		f_createVehicle(GC, vehicleType, tripTracker, available, false);
+		f_createVehicle(GC, vehicleType, OL_EnergyCarriers.PETROLEUM_FUEL, tripTracker, available, false);
 			
 		//Update variables
 		local_PetroleumFuelV_nb++;
 		local_EV_nb--;
 	}
 	while (setAmountOfVehicles > local_PetroleumFuelV_nb && local_HydrogenV_nb > 0){
-	
 		// Find a Hydrogen vehicle
-		J_EAFuelVehicle hydrogenVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == vehicleType_hydrogen  && ((GridConnection)p.getOwner()) == GC);
+		J_EAFuelVehicle hydrogenVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, vehicle -> vehicle.getVehicleType() == vehicleType && vehicle.getFuelType() == OL_EnergyCarriers.HYDROGEN  && vehicle.getOwner() == GC);
 		J_ActivityTrackerTrips tripTracker = hydrogenVehicle.getTripTracker();
 		
 		// Remove hydrogen vehicle			
@@ -1120,40 +1042,36 @@ if (setAmountOfVehicles > local_PetroleumFuelV_nb){ // Slider has increased the 
 		hydrogenVehicle.removeEnergyAsset();
 		
 		//Create new PetroleumFuel vehicle
-		f_createVehicle(GC, vehicleType, tripTracker, available, false);
+		f_createVehicle(GC, vehicleType, OL_EnergyCarriers.PETROLEUM_FUEL, tripTracker, available, false);
 	
 		//Update variables
 		local_PetroleumFuelV_nb++;
 		local_HydrogenV_nb--;
 	}
 	while (setAmountOfVehicles > local_PetroleumFuelV_nb){ // Create additional vehicles
-	
-	f_createVehicle(GC, vehicleType, null, true, true);
-
-	local_PetroleumFuelV_nb++;
+		f_createVehicle(GC, vehicleType, OL_EnergyCarriers.PETROLEUM_FUEL, null, true, true);
+		local_PetroleumFuelV_nb++;
 	}
 }
 else if(setAmountOfVehicles < local_PetroleumFuelV_nb){ // Slider has decreased the amount of selected vehicles
 	
-	ArrayList<I_Vehicle> additionalVehicles = new ArrayList<>(findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.getEAType() == vehicleType ));
+	ArrayList<I_Vehicle> additionalVehicles = new ArrayList<>(findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.getVehicleType() == vehicleType && vehicle.getFuelType() == OL_EnergyCarriers.PETROLEUM_FUEL ));
 	while(setAmountOfVehicles < local_PetroleumFuelV_nb && additionalVehicles.size() > 0){ //Remove additional PetroleumFuel vehicles first
-	
-	//Find additional created vehicle
-	J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle)additionalVehicles.get(additionalVehicles.size()-1); // Get latest added
-	
-	// Remove petroleumFuel vehicle
-	additionalVehicles.remove(petroleumFuelVehicle);
-	zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).remove(petroleumFuelVehicle);
-	petroleumFuelVehicle.removeEnergyAsset();
-	zero_Interface.c_orderedVehicles.remove(petroleumFuelVehicle);
-	
-	//Update variable
-	local_PetroleumFuelV_nb--;
+		//Find additional created vehicle
+		J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle)additionalVehicles.get(additionalVehicles.size()-1); // Get latest added
+		
+		// Remove petroleumFuel vehicle
+		additionalVehicles.remove(petroleumFuelVehicle);
+		zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).remove(petroleumFuelVehicle);
+		petroleumFuelVehicle.removeEnergyAsset();
+		zero_Interface.c_orderedVehicles.remove(petroleumFuelVehicle);
+		
+		//Update variable
+		local_PetroleumFuelV_nb--;
 	}
 	while ( setAmountOfVehicles < local_PetroleumFuelV_nb && local_EV_nb < max_amount_EV) {
-	
-	// Find a to be removed PetroleumFuel vehicle
-		J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == vehicleType && !zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).contains(p)  && ((GridConnection)p.getOwner()) == GC);
+		// Find a to be removed PetroleumFuel vehicle
+		J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, vehicle -> vehicle.getVehicleType() == vehicleType && vehicle.getFuelType() == OL_EnergyCarriers.PETROLEUM_FUEL && !zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).contains(vehicle)  && vehicle.getOwner() == GC);
 		J_ActivityTrackerTrips tripTracker = petroleumFuelVehicle.getTripTracker();
 		
 		// Remove petroleumFuel vehicle		
@@ -1162,7 +1080,7 @@ else if(setAmountOfVehicles < local_PetroleumFuelV_nb){ // Slider has decreased 
 		petroleumFuelVehicle.removeEnergyAsset();
 		
 		//Create new EV
-		f_createVehicle(GC, vehicleType_electric, tripTracker, available, false);
+		f_createVehicle(GC, vehicleType, OL_EnergyCarriers.ELECTRICITY, tripTracker, available, false);
 			
 		//Update variables
 		local_PetroleumFuelV_nb--;
@@ -1170,32 +1088,27 @@ else if(setAmountOfVehicles < local_PetroleumFuelV_nb){ // Slider has decreased 
 	}
 }
 
-
-
 //Update variables
 switch (vehicleType){
-	
-	case PETROLEUM_FUEL_VEHICLE:
-	v_nbEVCars = local_EV_nb;
-	v_nbPetroleumFuelCars = local_PetroleumFuelV_nb;
-	v_nbHydrogenCars = local_HydrogenV_nb;
-	break;
-	
-	case PETROLEUM_FUEL_VAN:
-	v_nbEVVans = local_EV_nb;
-	v_nbPetroleumFuelVans = local_PetroleumFuelV_nb;
-	v_nbHydrogenVans = local_HydrogenV_nb;
-	break;
-	
-	case PETROLEUM_FUEL_TRUCK:
-	v_nbEVTrucks = local_EV_nb;
-	v_nbPetroleumFuelTrucks = local_PetroleumFuelV_nb;
-	v_nbHydrogenTrucks = local_HydrogenV_nb;
-	break;
+	case CAR:
+		v_nbEVCars = local_EV_nb;
+		v_nbPetroleumFuelCars = local_PetroleumFuelV_nb;
+		v_nbHydrogenCars = local_HydrogenV_nb;
+		break;
+	case VAN:
+		v_nbEVVans = local_EV_nb;
+		v_nbPetroleumFuelVans = local_PetroleumFuelV_nb;
+		v_nbHydrogenVans = local_HydrogenV_nb;
+		break;
+	case TRUCK:
+		v_nbEVTrucks = local_EV_nb;
+		v_nbPetroleumFuelTrucks = local_PetroleumFuelV_nb;
+		v_nbHydrogenTrucks = local_HydrogenV_nb;
+		break;
 }
 /*ALCODEEND*/}
 
-int f_setHydrogenVehicleSliders(GridConnection GC,OL_EnergyAssetType vehicleType,int setAmountOfVehicles)
+int f_setHydrogenVehicleSliders(GridConnection GC,OL_VehicleType vehicleType,int setAmountOfVehicles)
 {/*ALCODESTART::1714474430338*/
 int local_EV_nb;
 int local_PetroleumFuelV_nb;
@@ -1204,66 +1117,40 @@ int local_HydrogenV_nb;
 int min_amount_EV;
 int	max_amount_EV;
 
-OL_EnergyAssetType vehicleType_electric;
-OL_EnergyAssetType vehicleType_petroleumFuel;
-	
 switch (vehicleType){
-	
-	case HYDROGEN_VEHICLE:
-
-	vehicleType_electric = OL_EnergyAssetType.ELECTRIC_VEHICLE;
-	vehicleType_petroleumFuel = OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE;
-
-	local_EV_nb = v_nbEVCars;
-	local_PetroleumFuelV_nb = v_nbPetroleumFuelCars;
-	local_HydrogenV_nb = v_nbHydrogenCars;
-	
-	min_amount_EV = v_minEVCarSlider;
-	max_amount_EV = v_maxEVCarSlider;
-	
-	break;
-	
-	case HYDROGEN_VAN:
-	
-	vehicleType_electric = OL_EnergyAssetType.ELECTRIC_VAN;
-	vehicleType_petroleumFuel = OL_EnergyAssetType.PETROLEUM_FUEL_VAN;
-	
-	local_EV_nb = v_nbEVVans;
-	local_PetroleumFuelV_nb = v_nbPetroleumFuelVans;
-	local_HydrogenV_nb = v_nbHydrogenVans;
-	
-	min_amount_EV = v_minEVVanSlider;
-	max_amount_EV = v_maxEVVanSlider;
-	
-	break;
-	
-	case HYDROGEN_TRUCK:
-
-	vehicleType_electric = OL_EnergyAssetType.ELECTRIC_TRUCK;
-	vehicleType_petroleumFuel = OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK;
-	
-	local_EV_nb = v_nbEVTrucks;
-	local_PetroleumFuelV_nb = v_nbPetroleumFuelTrucks;
-	local_HydrogenV_nb = v_nbHydrogenTrucks;
-	
-	min_amount_EV = v_minEVTruckSlider;
-	max_amount_EV = v_maxEVTruckSlider;
-		
-	break;
-	
+	case CAR:
+		local_EV_nb = v_nbEVCars;
+		local_PetroleumFuelV_nb = v_nbPetroleumFuelCars;
+		local_HydrogenV_nb = v_nbHydrogenCars;
+		min_amount_EV = v_minEVCarSlider;
+		max_amount_EV = v_maxEVCarSlider;
+		break;
+	case VAN:
+		local_EV_nb = v_nbEVVans;
+		local_PetroleumFuelV_nb = v_nbPetroleumFuelVans;
+		local_HydrogenV_nb = v_nbHydrogenVans;
+		min_amount_EV = v_minEVVanSlider;
+		max_amount_EV = v_maxEVVanSlider;
+		break;
+	case TRUCK:
+		local_EV_nb = v_nbEVTrucks;
+		local_PetroleumFuelV_nb = v_nbPetroleumFuelTrucks;
+		local_HydrogenV_nb = v_nbHydrogenTrucks;
+		min_amount_EV = v_minEVTruckSlider;
+		max_amount_EV = v_maxEVTruckSlider;
+		break;
 	default:
-	traceln("SLIDER SET TO WRONG VEHICLE TYPE, DO NOTHING");
-	return;
+		traceln("SLIDER SET TO WRONG VEHICLE TYPE, DO NOTHING");
+		return;
 }
 
 if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amount of selected vehicles
 	
 	//First convert all other existing additional vehicles
-	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.getEAType() == vehicleType_petroleumFuel || p.getEAType() == vehicleType_electric).size();
+	int nbOfOtherAdditionalVehiclesOfThisClass = findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.getVehicleType() == vehicleType && (vehicle.getFuelType() == OL_EnergyCarriers.PETROLEUM_FUEL || vehicle.getFuelType() == OL_EnergyCarriers.ELECTRICITY)).size();
 	while(setAmountOfVehicles > local_HydrogenV_nb && nbOfOtherAdditionalVehiclesOfThisClass > 0 ){
-		
 		// Find an additional PetroleumFuel vehicle
-		J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.getEAType() == vehicleType_petroleumFuel);
+		J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.getVehicleType() == vehicleType && vehicle.getFuelType() == OL_EnergyCarriers.PETROLEUM_FUEL);
 		
 		if(petroleumFuelVehicle != null){
 			J_ActivityTrackerTrips tripTracker = petroleumFuelVehicle.getTripTracker();
@@ -1275,7 +1162,7 @@ if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amoun
 			zero_Interface.c_orderedVehicles.remove(petroleumFuelVehicle);
 			
 			//Create new additional Hydrogen vehicle
-			f_createVehicle(GC, vehicleType, tripTracker, available, true);			
+			f_createVehicle(GC, vehicleType, OL_EnergyCarriers.HYDROGEN, tripTracker, available, true);			
 
 			//Update local variables
 			local_HydrogenV_nb++;
@@ -1284,7 +1171,7 @@ if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amoun
 		}
 		else{
 			// Find an additional EV vehicle
-			J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), p -> p.getEAType() == vehicleType_electric);
+			J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.getVehicleType() == vehicleType && vehicle.getFuelType() == OL_EnergyCarriers.ELECTRICITY);
 			J_ActivityTrackerTrips tripTracker = ev.getTripTracker();
 		
 			// Remove EV
@@ -1294,7 +1181,7 @@ if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amoun
 			zero_Interface.c_orderedVehicles.remove(ev);
 			
 			//Create new additional Hydrogen vehicle
-			f_createVehicle(GC, vehicleType, tripTracker, available, true);
+			f_createVehicle(GC, vehicleType, OL_EnergyCarriers.HYDROGEN, tripTracker, available, true);
 
 			//Update local variables
 			local_HydrogenV_nb++;
@@ -1303,9 +1190,8 @@ if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amoun
 		}
 	}
 	while ( setAmountOfVehicles > local_HydrogenV_nb && local_PetroleumFuelV_nb > 0) {
-
 		// Find a to be removed PetroleumFuel vehicle
-		J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == vehicleType_petroleumFuel  && ((GridConnection)p.getOwner()) == GC);
+		J_EAFuelVehicle petroleumFuelVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, vehicle -> vehicle.getVehicleType() == vehicleType && vehicle.getFuelType() == OL_EnergyCarriers.PETROLEUM_FUEL  && vehicle.getOwner() == GC);
 		J_ActivityTrackerTrips tripTracker = petroleumFuelVehicle.getTripTracker();
 
 		//Remove petroleumFuel vehicle
@@ -1314,7 +1200,7 @@ if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amoun
 		petroleumFuelVehicle.removeEnergyAsset();
 		
 		//Create new Hydrogen vehicle
-		f_createVehicle(GC, vehicleType, tripTracker, available, false);
+		f_createVehicle(GC, vehicleType, OL_EnergyCarriers.HYDROGEN, tripTracker, available, false);
 			
 		//Update variables
 		local_HydrogenV_nb++;
@@ -1322,9 +1208,8 @@ if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amoun
 		
 	}
 	while (setAmountOfVehicles > local_HydrogenV_nb && local_EV_nb > min_amount_EV){
-		
 		// Find a to be removed EV
-		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == vehicleType_electric  && ((GridConnection)p.getOwner()) == GC);
+		J_EAEV ev = (J_EAEV)findFirst(zero_Interface.c_orderedVehicles, vehicle -> vehicle.getVehicleType() == vehicleType && vehicle.getFuelType() == OL_EnergyCarriers.ELECTRICITY  && vehicle.getOwner() == GC);
 		J_ActivityTrackerTrips tripTracker = ev.getTripTracker();
 		
 		// Remove EV
@@ -1333,41 +1218,36 @@ if (setAmountOfVehicles > local_HydrogenV_nb){ // Slider has increased the amoun
 		ev.removeEnergyAsset();
 		
 		//Create new Hydrogen vehicle
-		f_createVehicle(GC, vehicleType, tripTracker, available, false);
+		f_createVehicle(GC, vehicleType, OL_EnergyCarriers.HYDROGEN, tripTracker, available, false);
 			
 		//Update variables
 		local_HydrogenV_nb++;
 		local_EV_nb--;
 	}
 	while (setAmountOfVehicles > local_HydrogenV_nb){ // Create additional vehicles
-	
-	f_createVehicle(GC, vehicleType, null, true, true);
-	local_HydrogenV_nb++;	
+		f_createVehicle(GC, vehicleType, OL_EnergyCarriers.HYDROGEN, null, true, true);
+		local_HydrogenV_nb++;	
 	}
-
-	
 }
 else if(setAmountOfVehicles < local_HydrogenV_nb){ // Slider has decreased the amount of selected vehicles
 	
-	ArrayList<I_Vehicle> additionalVehicles = new ArrayList<>(findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.getEAType() == vehicleType ));
+	ArrayList<I_Vehicle> additionalVehicles = new ArrayList<>(findAll(zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid), vehicle -> vehicle.getVehicleType() == vehicleType && vehicle.getFuelType() == OL_EnergyCarriers.HYDROGEN ));
 	while(setAmountOfVehicles < local_HydrogenV_nb && additionalVehicles.size() > 0){//Remove additional Hydrogen vehicles first
-
-	//Find additional created vehicle
-	J_EAFuelVehicle hydrogenVehicle = (J_EAFuelVehicle)additionalVehicles.get(additionalVehicles.size()-1); // Get latest added
-	
-	// Remove hydrogen vehicle
-	additionalVehicles.remove(hydrogenVehicle);
-	zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).remove(hydrogenVehicle);
-	hydrogenVehicle.removeEnergyAsset();
-	zero_Interface.c_orderedVehicles.remove(hydrogenVehicle);
-	
-	//Update variable
-	local_HydrogenV_nb--;
+		//Find additional created vehicle
+		J_EAFuelVehicle hydrogenVehicle = (J_EAFuelVehicle)additionalVehicles.get(additionalVehicles.size()-1); // Get latest added
+		
+		// Remove hydrogen vehicle
+		additionalVehicles.remove(hydrogenVehicle);
+		zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).remove(hydrogenVehicle);
+		hydrogenVehicle.removeEnergyAsset();
+		zero_Interface.c_orderedVehicles.remove(hydrogenVehicle);
+		
+		//Update variable
+		local_HydrogenV_nb--;
 	}
 	while ( setAmountOfVehicles < local_HydrogenV_nb && local_EV_nb < max_amount_EV) {
-	
 		// Find a to be removed Hydrogen vehicle
-		J_EAFuelVehicle hydrogenVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, p -> p.getEAType() == vehicleType && !zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).contains(p)  && ((GridConnection)p.getOwner()) == GC);
+		J_EAFuelVehicle hydrogenVehicle = (J_EAFuelVehicle)findFirst(zero_Interface.c_orderedVehicles, vehicle -> vehicle.getVehicleType() == vehicleType && vehicle.getFuelType() == OL_EnergyCarriers.HYDROGEN && !zero_Interface.c_additionalVehicles.get(p_gridConnection.p_uid).contains(vehicle)  && vehicle.getOwner() == GC);
 		J_ActivityTrackerTrips tripTracker = hydrogenVehicle.getTripTracker();
 		
 		// Remove hydrogen vehicle			
@@ -1376,7 +1256,7 @@ else if(setAmountOfVehicles < local_HydrogenV_nb){ // Slider has decreased the a
 		hydrogenVehicle.removeEnergyAsset();
 		
 		//Create new EV vehicle
-		f_createVehicle(GC, vehicleType_electric, tripTracker, available, false);
+		f_createVehicle(GC, vehicleType, OL_EnergyCarriers.ELECTRICITY, tripTracker, available, false);
 	
 		//Update variables
 		local_HydrogenV_nb--;
@@ -1386,45 +1266,28 @@ else if(setAmountOfVehicles < local_HydrogenV_nb){ // Slider has decreased the a
 
 //Update variables
 switch (vehicleType){
-	
-	case HYDROGEN_VEHICLE:
-	
-	v_nbEVCars = local_EV_nb;
-	v_nbPetroleumFuelCars = local_PetroleumFuelV_nb;
-	v_nbHydrogenCars = local_HydrogenV_nb;
-	
-	break;
-	
-	case HYDROGEN_VAN:
-	
-	v_nbEVVans = local_EV_nb;
-	v_nbPetroleumFuelVans = local_PetroleumFuelV_nb;
-	v_nbHydrogenVans = local_HydrogenV_nb;
-	
-	break;
-	
-	case HYDROGEN_TRUCK:
-	
-	v_nbEVTrucks = local_EV_nb;
-	v_nbPetroleumFuelTrucks = local_PetroleumFuelV_nb;
-	v_nbHydrogenTrucks = local_HydrogenV_nb;
-	
-	break;
+	case CAR:
+		v_nbEVCars = local_EV_nb;
+		v_nbPetroleumFuelCars = local_PetroleumFuelV_nb;
+		v_nbHydrogenCars = local_HydrogenV_nb;
+		break;
+	case VAN:
+		v_nbEVVans = local_EV_nb;
+		v_nbPetroleumFuelVans = local_PetroleumFuelV_nb;
+		v_nbHydrogenVans = local_HydrogenV_nb;
+		break;
+	case TRUCK:
+		v_nbEVTrucks = local_EV_nb;
+		v_nbPetroleumFuelTrucks = local_PetroleumFuelV_nb;
+		v_nbHydrogenTrucks = local_HydrogenV_nb;
+		break;
 }
 /*ALCODEEND*/}
 
 double f_setResultsUIPresets()
 {/*ALCODESTART::1714654645264*/
-//Set the order of the resultsUI to front but behind simulation screen group and load icon
-presentation.remove(uI_Results_presentation);
-presentation.insert(presentation.size()-1, uI_Results_presentation);
-presentation.remove(gr_loadIcon);
-presentation.insert(presentation.size()-1, gr_loadIcon);
-presentation.remove(gr_simulateYearScreen);
-presentation.insert(presentation.size()-1, gr_simulateYearScreen);
-presentation.remove(gr_GCisPausedScreen);
-presentation.insert(presentation.size()-1, gr_GCisPausedScreen);
-
+//Set the order of the presentation objects
+f_setPresentationOrder();
 
 
 //Set the locations and visibilities of the ResultsUI agents
@@ -1606,30 +1469,20 @@ switch (p_gridConnection.f_getCurrentHeatingType()){
 //Find the current heat saving percentage
 int currentHeatSavings = 0;
 
-J_EAConsumption consumptionEAHEAT = findFirst(p_gridConnection.c_consumptionAssets, consumptionAsset -> consumptionAsset.getEAType() == OL_EnergyAssetType.HEAT_DEMAND);
-if (consumptionEAHEAT != null){
-	currentHeatSavings = roundToInt((consumptionEAHEAT.getConsumptionScaling_fr() - 1)*-100);
+J_EAProfile profileEAHEAT = findFirst(p_gridConnection.c_profileAssets, profileAsset -> profileAsset.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
+if (profileEAHEAT != null){
+	currentHeatSavings = roundToInt((profileEAHEAT.getProfileScaling_fr() - 1)*-100);
 }
-else{   
-	J_EAProfile profileEAHEAT = findFirst(p_gridConnection.c_profileAssets, profileAsset -> profileAsset.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
-	if (profileEAHEAT != null){
-		currentHeatSavings = roundToInt((profileEAHEAT.getProfileScaling_fr() - 1)*-100);
-	}
-}
+
 
 //Find the current electricity savings percentage
 int currentElectricitySavings = 0;
 
-J_EAConsumption consumptionEAELECTRIC = findFirst(p_gridConnection.c_consumptionAssets, consumptionAsset -> consumptionAsset.getEAType() == OL_EnergyAssetType.ELECTRICITY_DEMAND);
-if (consumptionEAELECTRIC != null){
-	currentElectricitySavings = roundToInt((consumptionEAELECTRIC.getConsumptionScaling_fr() - 1)*-100);
+J_EAProfile profileEAELECTRIC = findFirst(p_gridConnection.c_profileAssets, profileAsset -> profileAsset.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
+if (profileEAELECTRIC != null){
+	currentElectricitySavings = roundToInt((profileEAELECTRIC.getProfileScaling_fr() - 1)*-100);
 }
-else{
-	J_EAProfile profileEAELECTRIC = findFirst(p_gridConnection.c_profileAssets, profileAsset -> profileAsset.getAssetFlowCategory() == OL_AssetFlowCategories.fixedConsumptionElectric_kW);
-	if (profileEAELECTRIC != null){
-		currentElectricitySavings = roundToInt((profileEAELECTRIC.getProfileScaling_fr() - 1)*-100);
-	}
-}
+
 
 //Find the current Connection capacity (delivery)
 double GCContractCapacityCurrent_Delivery = p_gridConnection.v_liveConnectionMetaData.getDefaultContractedDeliveryCapacity_kW();
@@ -1641,18 +1494,10 @@ double GCContractCapacityCurrent_Feedin = p_gridConnection.v_liveConnectionMetaD
 f_getNFATOValues();
 
 //Find the current battery capacity
-int BatteryCapacityCurrent = 0;
-J_EAStorage batteryAsset = findFirst(p_gridConnection.c_storageAssets, p -> p.getEAType() == OL_EnergyAssetType.STORAGE_ELECTRIC );
-if (batteryAsset != null){
-	BatteryCapacityCurrent = roundToInt(((J_EAStorageElectric)batteryAsset).getStorageCapacity_kWh());
-}
+double BatteryCapacityCurrent_kWh = p_gridConnection.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000.0;
 
 //Find the current PV capacity
-int PVCapacityCurrent = 0;
-if (p_gridConnection.v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.pvProductionElectric_kW)){
-	J_EAProduction pvAsset = findFirst(p_gridConnection.c_productionAssets, p -> p.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC );
-	PVCapacityCurrent = roundToInt(pvAsset.getCapacityElectric_kW());
-}
+double PVCapacityCurrent_kW = p_gridConnection.v_liveAssetsMetaData.totalInstalledPVPower_kW;
 
 //Find the current curtailment setting
 boolean currentCurtailmentSetting = p_gridConnection.f_isAssetManagementActive(I_CurtailManagement.class);
@@ -1706,12 +1551,12 @@ sl_GCCapacityCompany_Feedin.setValue(GCContractCapacityCurrent_Feedin, false);
 v_defaultContractFeedinCapacity_kW = GCContractCapacityCurrent_Feedin;
 
 //Battery capacity
-sl_batteryCompany.setValue(BatteryCapacityCurrent, false);
-v_defaultBatSlider = BatteryCapacityCurrent;
+sl_batteryCompany.setValue(roundToInt(BatteryCapacityCurrent_kWh), false);
+v_defaultBatSlider = BatteryCapacityCurrent_kWh;
 
 //Solar panel power
-sl_rooftopPVCompany.setValue(PVCapacityCurrent, false);
-v_defaultPVSlider = PVCapacityCurrent;
+sl_rooftopPVCompany.setValue(roundToInt(PVCapacityCurrent_kW), false);
+v_defaultPVSlider = PVCapacityCurrent_kW;
 
 //Curtailment setting
 cb_curtailmentCompany.setSelected(currentCurtailmentSetting, false);
@@ -1965,5 +1810,344 @@ new Thread( () -> {
 	
 }).start();
 
+/*ALCODEEND*/}
+
+double f_activateDailyDifferenceButtons(boolean activate)
+{/*ALCODESTART::1779979626408*/
+map_dayToEnableDayButtons.values().forEach(cb -> cb.setEnabled(activate));
+
+if(!activate){
+	map_dayToEnableDayButtons.values().forEach(cb -> cb.setSelected(true, true));
+}
+
+map_dayToDisableRectangles.entrySet().stream()
+    .filter(entry -> entry.getKey() != OL_Days.MONDAY)
+    .forEach(entry -> entry.getValue().setVisible(!activate));
+    
+/*ALCODEEND*/}
+
+double f_confirmVehicleTripsConfiguration(OL_VehicleType vehicleType)
+{/*ALCODESTART::1780045148927*/
+if(f_createCustomTripConfiguration(vehicleType)){
+	f_replaceAllCurrentTripTrackersWithCustom(vehicleType);
+}
+/*ALCODEEND*/}
+
+double f_openVehicleTripsConfigurationMenu(OL_VehicleType vehicleType)
+{/*ALCODESTART::1780047941753*/
+String vehicleTypeString = "";
+String pluralAddition = "";
+switch(vehicleType){
+	case CAR:
+		vehicleTypeString = "Auto";
+		pluralAddition = "'s";
+		break;
+	case VAN:
+		vehicleTypeString = "Busje";
+		pluralAddition = "s";
+		break;
+	case TRUCK:
+		vehicleTypeString = "Truck";
+		pluralAddition = "s";
+		break;
+}
+
+t_tripConfiguratorExplanation.setText("Wanneer zijn je " + vehicleTypeString + pluralAddition + " onderweg?");
+t_configureVehicleTrips_km.setText("Weeklijks gereden afstand per " + vehicleTypeString + ":");
+v_currentTripConfiguringVehicleType = vehicleType;
+f_initializeVehicleTripsConfigurationMenuButtons(vehicleType);
+gr_configureVehicleTrips.setVisible(true);
+/*ALCODEEND*/}
+
+boolean f_createCustomTripConfiguration(OL_VehicleType vehicleType)
+{/*ALCODESTART::1780056555300*/
+
+boolean[][] tripMatrix = f_getTripBooleanMatrix();
+double weeklyTravelDistance_km = eb_configureVehicleTrips_weeklyDistance_km.getDoubleValue();
+
+//Validate values and continue
+if(J_CustomTripTrackerGenerator.checkIfCustomTripInputsAreValid(tripMatrix, weeklyTravelDistance_km)){
+	//Store this setting, so buttons can be brought back to this when reopening the menu for this gc and vehicle type
+	Map<OL_VehicleType, J_CustomTripTrackerGenerator.StoredTripConfiguration> storeGCVehicleCustomTripValuesMap = map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid);
+	if(storeGCVehicleCustomTripValuesMap == null){
+		map_storedCustomTripButtonConfiguration.put(p_gridConnection.p_uid, new HashMap<>());
+	}
+	
+	J_CustomTripTrackerGenerator.StoredTripConfiguration storedTripButtonConfiguration = new J_CustomTripTrackerGenerator.StoredTripConfiguration(tripMatrix, weeklyTravelDistance_km, cb_configureVehicleTrips_dailyDistinction.isSelected(), c_activeVehicleConfigurationDays);
+	map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).put(vehicleType, storedTripButtonConfiguration);
+	
+	//Create customTripRecords
+	List<J_ActivityTrackerTrips.TripRecord> customTripRecords = J_CustomTripTrackerGenerator.getCustomTripTrackerRecords(f_getTripBooleanMatrix(), weeklyTravelDistance_km); 
+	
+	//Add it to stored custom trip values maps
+	Map<OL_VehicleType, List<J_ActivityTrackerTrips.TripRecord>> GCCustomTripRecordsMap = map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid);
+	if(GCCustomTripRecordsMap == null){
+		map_createdCustomTripWeeklyConfiguration.put(p_gridConnection.p_uid, new HashMap<>());
+	}
+	map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid).put(vehicleType, customTripRecords);
+	
+	return true;
+}
+else{
+	f_setErrorScreen("De custom rijtijden configuratie is niet doorgevoerd, door een onbekende error.");
+	return false;
+}
+/*ALCODEEND*/}
+
+double f_replaceAllCurrentTripTrackersWithCustom(OL_VehicleType vehicleType)
+{/*ALCODESTART::1780057851211*/
+List<J_ActivityTrackerTrips.TripRecord> customTripRecords = map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid).get(vehicleType);
+
+J_TimeVariables timeVariables = zero_Interface.energyModel.p_timeVariables;
+J_TimeParameters timeParameters = zero_Interface.energyModel.p_timeParameters;
+
+for(I_Vehicle vehicle : findAll(p_gridConnection.c_vehicleAssets, veh -> veh.getVehicleType() == vehicleType)){
+	//First get the old trip tracker
+	J_ActivityTrackerTrips currentTripTracker = vehicle.getTripTracker();
+	
+	//Before creating new triptracker, that automatically connects EV again to chargepoint, remove it from chargepoint first.
+	if(vehicle instanceof J_EAEV ev && p_gridConnection.f_getChargePoint().isRegistered(ev)){
+		p_gridConnection.f_getChargePoint().deregisterChargingRequest(ev);
+	}
+	
+	//Create new triptracker and add to vehicle
+	J_ActivityTrackerTrips newCustomTripTracker = new J_ActivityTrackerTrips(customTripRecords, vehicle, p_gridConnection.f_getChargePoint(), timeParameters, timeVariables); 	
+	
+	//Replace current with new one
+	f_replaceTripTrackerWithOtherTripTracker(currentTripTracker, newCustomTripTracker);
+	
+	//Create/maintain link with original and new trip tracker
+	f_storeOriginalTripTracker(currentTripTracker, newCustomTripTracker);
+}
+
+/*ALCODEEND*/}
+
+double f_storeOriginalTripTracker(J_ActivityTrackerTrips oldTripTracker,J_ActivityTrackerTrips newTripTracker)
+{/*ALCODESTART::1780063188067*/
+Map<J_ActivityTrackerTrips, J_ActivityTrackerTrips> thisGCCustomToOriginalTripTrackerMap = map_customTripTrackerToOriginal.get(p_gridConnection.p_uid);
+
+//Check if map already exists, if not: initialize new map for this GC
+if(thisGCCustomToOriginalTripTrackerMap == null){
+	thisGCCustomToOriginalTripTrackerMap = new HashMap();
+	map_customTripTrackerToOriginal.put(p_gridConnection.p_uid, thisGCCustomToOriginalTripTrackerMap);
+}
+
+//Update or add custom to original Triptracker link.
+if(thisGCCustomToOriginalTripTrackerMap.get(oldTripTracker) != null){
+	thisGCCustomToOriginalTripTrackerMap.put(newTripTracker, thisGCCustomToOriginalTripTrackerMap.get(oldTripTracker));
+	thisGCCustomToOriginalTripTrackerMap.remove(oldTripTracker);
+}
+else{
+	thisGCCustomToOriginalTripTrackerMap.put(newTripTracker, oldTripTracker);
+}
+/*ALCODEEND*/}
+
+double f_initializeVehicleTripsConfigurationMenuButtons(OL_VehicleType vehicleType)
+{/*ALCODESTART::1780063352490*/
+if(map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid) != null &&
+	map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).get(vehicleType) != null){
+	boolean[][] previousButtonConfigurationMatrix = map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).get(vehicleType).buttonConfigurationMatrix();
+	double previousWeeklyTravelDistance_km = map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).get(vehicleType).weeklyTravelDistance_km();
+	boolean dailyDistinctionEnabled = map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).get(vehicleType).dailyDistinctionEnabled();
+    Set<OL_Days> activeDays = map_storedCustomTripButtonConfiguration.get(p_gridConnection.p_uid).get(vehicleType).activeDays();
+
+	//Set dailyDifferenceEnabled button correctly
+	cb_configureVehicleTrips_dailyDistinction.setSelected(dailyDistinctionEnabled, true);
+
+	for(OL_Days day : J_TimeParameters.getOrderedDaysList()){
+		map_dayToEnableDayButtons.get(day).setSelected(activeDays.contains(day), true);
+	}
+	//Set all buttons to correct values
+	f_setAllVehicleTripsConfigurationButtonsToInputMatrix(previousButtonConfigurationMatrix);
+	
+	//Set weekly travel distance to correct value;
+	eb_configureVehicleTrips_weeklyDistance_km.setText(BigDecimal.valueOf(previousWeeklyTravelDistance_km).stripTrailingZeros().toPlainString(), false);
+}
+else{ // No previous configuration for this GC and/or vehicle type -> Everything at default values
+	f_setAllVehicleTripsConfigurationButtonsToDefault();
+}
+
+/*ALCODEEND*/}
+
+double f_closeVehicleTripsConfigurationMenu()
+{/*ALCODESTART::1780307953910*/
+gr_configureVehicleTrips.setVisible(false);
+v_currentTripConfiguringVehicleType = null;
+/*ALCODEEND*/}
+
+double f_addNewInstanceOfCustomTripTrackerToAdditionalVehicle(I_Vehicle vehicle)
+{/*ALCODESTART::1780312282022*/
+//Check if this vehicle should get a custom triptracker
+if(map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid) != null && map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid).get(vehicle) != null){
+	//Get the records for the custom triptracker
+	List<J_ActivityTrackerTrips.TripRecord> customTripRecords = map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid).get(vehicle);
+	
+	J_TimeVariables timeVariables = zero_Interface.energyModel.p_timeVariables;
+	J_TimeParameters timeParameters = zero_Interface.energyModel.p_timeParameters;
+	
+	//Get the old trip tracker
+	J_ActivityTrackerTrips currentTripTracker = vehicle.getTripTracker();
+	
+	//Before creating new triptracker, that automatically connects EV again to chargepoint, remove it from chargepoint first.
+	if(vehicle instanceof J_EAEV ev && p_gridConnection.f_getChargePoint().isRegistered(ev)){
+		p_gridConnection.f_getChargePoint().deregisterChargingRequest(ev);
+	}
+	
+	//Create new triptracker
+	J_ActivityTrackerTrips newCustomTripTracker = new J_ActivityTrackerTrips(customTripRecords, vehicle, p_gridConnection.f_getChargePoint(), timeParameters, timeVariables); 	
+	
+	//Replace current with new one
+	f_replaceTripTrackerWithOtherTripTracker(currentTripTracker, newCustomTripTracker);
+} 	
+/*ALCODEEND*/}
+
+double f_resetAllVehiclesToOriginalTripTracker()
+{/*ALCODESTART::1780327676306*/
+Map<J_ActivityTrackerTrips, J_ActivityTrackerTrips> GCcustomTripTrackerToOriginalMap = map_customTripTrackerToOriginal.get(p_gridConnection.p_uid);
+
+if(GCcustomTripTrackerToOriginalMap != null && !GCcustomTripTrackerToOriginalMap.isEmpty()){
+	for(I_Vehicle vehicle : p_gridConnection.c_vehicleAssets){
+		J_ActivityTrackerTrips originalTripTracker = GCcustomTripTrackerToOriginalMap.get(vehicle.getTripTracker());
+		if(originalTripTracker != null){
+			//Reverse custom triptracker to original
+			originalTripTracker.setVehicle(vehicle); //Needed, cause vehicleEA might have changed for this trip tracker
+			f_replaceTripTrackerWithOtherTripTracker(vehicle.getTripTracker(), originalTripTracker);
+		}
+	}
+	//Clear the links
+	GCcustomTripTrackerToOriginalMap.clear();
+}
+
+
+/*ALCODEEND*/}
+
+double f_replaceTripTrackerWithOtherTripTracker(J_ActivityTrackerTrips currentTripTracker,J_ActivityTrackerTrips newTripTracker)
+{/*ALCODESTART::1780327998135*/
+I_Vehicle vehicle = currentTripTracker.getVehicle();
+J_ChargePoint chargePoint = p_gridConnection.f_getChargePoint();
+
+//Remove current
+p_gridConnection.c_tripTrackers.remove(currentTripTracker);
+currentTripTracker.setVehicle(null);
+
+if(vehicle instanceof J_EAEV ev && chargePoint.isRegistered(ev)){
+	chargePoint.deregisterChargingRequest(ev);
+}
+
+//Add new one, and set scaling equally as old one.
+newTripTracker.setDistanceScaling_fr(currentTripTracker.getDistanceScaling_fr());
+p_gridConnection.c_tripTrackers.add(newTripTracker);
+vehicle.setTripTracker(newTripTracker);
+vehicle.setAvailability(true);
+newTripTracker.setStartIndex(zero_Interface.energyModel.p_timeVariables, chargePoint);
+/*ALCODEEND*/}
+
+double f_resetVehicleTypeToOriginalTripTracker(OL_VehicleType vehicleType)
+{/*ALCODESTART::1780328883341*/
+Map<J_ActivityTrackerTrips, J_ActivityTrackerTrips> GCcustomTripTrackerToOriginalMap = map_customTripTrackerToOriginal.get(p_gridConnection.p_uid);
+
+if(GCcustomTripTrackerToOriginalMap != null && !GCcustomTripTrackerToOriginalMap.isEmpty()){
+    for(I_Vehicle vehicle : p_gridConnection.c_vehicleAssets){
+    	if(vehicle.getVehicleType() == vehicleType){
+            J_ActivityTrackerTrips customTripTracker = vehicle.getTripTracker();
+	        J_ActivityTrackerTrips originalTripTracker = GCcustomTripTrackerToOriginalMap.get(customTripTracker);
+	        if(originalTripTracker != null){
+	            
+	            //Reverse custom triptracker to original
+	            originalTripTracker.setVehicle(vehicle); //Needed, cause vehicleEA might have changed for this trip tracker
+	            f_replaceTripTrackerWithOtherTripTracker(customTripTracker, originalTripTracker);
+				
+	            //Remove previous link
+	            GCcustomTripTrackerToOriginalMap.remove(customTripTracker);
+	        }
+        }
+    }
+}
+/*ALCODEEND*/}
+
+double f_setAllVehicleTripsConfigurationButtonsToDefault()
+{/*ALCODESTART::1780475468522*/
+//Disable distinction button
+cb_configureVehicleTrips_dailyDistinction.setSelected(false, true);
+f_setAllVehicleTripsConfigurationButtonsToInputMatrix(matrix_defaultValuesCustomTripButtons);
+eb_configureVehicleTrips_weeklyDistance_km.setValueToDefault();
+/*ALCODEEND*/}
+
+boolean[][] f_getTripBooleanMatrix()
+{/*ALCODESTART::1780922799439*/
+int rows = matrix_vehicleTripsConfigurationButtons.length;
+int cols = rows > 0 ? matrix_vehicleTripsConfigurationButtons[0].length : 0;
+
+boolean[][] booleanMatrix = new boolean[rows][cols];
+
+for (int i = 0; i < rows; i++) {
+	for (int j = 0; j < cols; j++) {
+    
+        Color fillColor = matrix_vehicleTripsConfigurationButtons[i][j].getFillColor();
+        if (fillColor.equals(p_configureVehicleTripsOnColor)) {
+            booleanMatrix[i][j] = true;
+        } 
+        else { // default for unrecognized colors
+            booleanMatrix[i][j] = false;
+        }
+    }
+}
+
+return booleanMatrix;
+/*ALCODEEND*/}
+
+double f_setAllVehicleTripsConfigurationButtonsToInputMatrix(boolean[][] booleanMatrix)
+{/*ALCODESTART::1780928240644*/
+for (int day = 0; day < matrix_vehicleTripsConfigurationButtons.length; day++) {
+    for (int hour = 0; hour < matrix_vehicleTripsConfigurationButtons[day].length; hour++) {
+        if (booleanMatrix[day][hour]) {
+            matrix_vehicleTripsConfigurationButtons[day][hour].setFillColor(p_configureVehicleTripsOnColor);
+        } else {
+            matrix_vehicleTripsConfigurationButtons[day][hour].setFillColor(p_configureVehicleTripsOffColor);
+        }
+    }
+}
+/*ALCODEEND*/}
+
+double f_initializeDayToDisableRectanglesMap()
+{/*ALCODESTART::1780997445385*/
+//Needed, cause groups are created after map initialization, creating errors if done in default value
+map_dayToDisableRectangles = new LinkedHashMap<OL_Days, ShapeGroup>();
+map_dayToDisableRectangles.put(OL_Days.MONDAY,    gr_disableTripConfigurationButtons_monday);
+map_dayToDisableRectangles.put(OL_Days.TUESDAY,   gr_disableTripConfigurationButtons_tuesday);
+map_dayToDisableRectangles.put(OL_Days.WEDNESDAY, gr_disableTripConfigurationButtons_wednesday);
+map_dayToDisableRectangles.put(OL_Days.THURSDAY,  gr_disableTripConfigurationButtons_thursday);
+map_dayToDisableRectangles.put(OL_Days.FRIDAY,    gr_disableTripConfigurationButtons_friday);
+map_dayToDisableRectangles.put(OL_Days.SATURDAY,  gr_disableTripConfigurationButtons_saturday);
+map_dayToDisableRectangles.put(OL_Days.SUNDAY,    gr_disableTripConfigurationButtons_sunday);
+/*ALCODEEND*/}
+
+double f_setPresentationOrder()
+{/*ALCODESTART::1780999540461*/
+presentation.remove(uI_Results_presentation);
+presentation.insert(presentation.size()-1, uI_Results_presentation);
+presentation.remove(gr_loadIcon);
+presentation.insert(presentation.size()-1, gr_loadIcon);
+presentation.remove(gr_simulateYearScreen);
+presentation.insert(presentation.size()-1, gr_simulateYearScreen);
+presentation.remove(gr_configureVehicleTrips);
+presentation.insert(presentation.size()-1, gr_configureVehicleTrips);
+presentation.remove(gr_GCisPausedScreen);
+presentation.insert(presentation.size()-1, gr_GCisPausedScreen);
+/*ALCODEEND*/}
+
+double f_enableSingleDay(boolean enable,OL_Days day)
+{/*ALCODESTART::1781094625996*/
+if(enable){
+	c_activeVehicleConfigurationDays.add(day);
+}
+else{
+	c_activeVehicleConfigurationDays.remove(day);
+	//Set color of entire row to off, if turned off.
+	for(ShapeRectangle rectangle : matrix_vehicleTripsConfigurationButtons[J_TimeParameters.getDayIndexFromDay(day)]){
+		rectangle.setFillColor(p_configureVehicleTripsOffColor);
+	}
+}
+map_dayToDisableRectangles.get(day).setVisible(!enable);
 /*ALCODEEND*/}
 

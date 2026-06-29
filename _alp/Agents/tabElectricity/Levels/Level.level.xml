@@ -1840,12 +1840,9 @@ zero_Interface.f_setSelectedGNText();</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<ActionCode>for (GridNode GN : zero_Interface.energyModel.f_getGridNodesNotTopLevel() ){
+					<ActionCode>for (GridNode GN : zero_Interface.energyModel.pop_gridNodes){
 	GN.p_capacity_kW = GN.p_originalCapacity_kW;
 }
-for (GridNode GN : zero_Interface.energyModel.f_getGridNodesTopLevel() ){
-	GN.p_capacity_kW = GN.p_originalCapacity_kW;
-} 
 zero_Interface.f_setSelectedGNText();
 </ActionCode>
 				</BasicProperties>

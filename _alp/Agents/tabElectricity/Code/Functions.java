@@ -6,7 +6,7 @@ for ( GCEnergyProduction GCEP : gcListProduction) {
 	for(J_EAProduction j_ea : GCEP.c_productionAssets) {
 		if (j_ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC) {
 			if (!GCEP.v_isActive) {
-				GCEP.f_setActive(true, zero_Interface.energyModel.p_timeVariables);
+				GCEP.f_setActive(true, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.p_timeVariables);
 			}
 			
 			double solarFieldPower_kW = (double)roundToInt(hectare * zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha);
@@ -14,7 +14,7 @@ for ( GCEnergyProduction GCEP : gcListProduction) {
 			GCEP.v_liveConnectionMetaData.setCapacities_kW(GCEP.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW(), solarFieldPower_kW, solarFieldPower_kW);
 			
 			if(hectare == 0){
-				GCEP.f_setActive(false, zero_Interface.energyModel.p_timeVariables);
+				GCEP.f_setActive(false, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.p_timeVariables);
 			}
 			
 			break;
@@ -97,14 +97,14 @@ for ( GCEnergyProduction GCEP : gcListProduction) {
 	for(J_EAProduction j_ea : GCEP.c_productionAssets) {
 		if (j_ea.getEAType() == OL_EnergyAssetType.WINDMILL) {
 			if (!GCEP.v_isActive) {
-				GCEP.f_setActive(true, zero_Interface.energyModel.p_timeVariables);
+				GCEP.f_setActive(true, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.p_timeVariables);
 			}
 			double setCapacity_kW = roundToInt(1000*AllocatedWindPower_MW);
 			j_ea.setCapacityElectric_kW(setCapacity_kW, GCEP);
 			GCEP.v_liveConnectionMetaData.setCapacities_kW(GCEP.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW(), setCapacity_kW, setCapacity_kW);
 			
 			if(AllocatedWindPower_MW == 0){
-				GCEP.f_setActive(false, zero_Interface.energyModel.p_timeVariables);
+				GCEP.f_setActive(false, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.p_timeVariables);
 			}
 			break;
 		}
@@ -336,7 +336,7 @@ for ( GCGridBattery battery : gcListGridBatteries) {
 	
 	J_EAStorageElectric batteryAsset = battery.p_batteryAsset;
 	if (!battery.v_isActive) {
-		battery.f_setActive(true, zero_Interface.energyModel.p_timeVariables);
+		battery.f_setActive(true, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.p_timeVariables);
 	}
 	
 	
@@ -349,7 +349,7 @@ for ( GCGridBattery battery : gcListGridBatteries) {
 	battery.v_liveConnectionMetaData.setCapacities_kW(capacity_kW, capacity_kW, capacity_kW);
 	
 	if(storageCapacity_kWh == 0){
-		battery.f_setActive(false, zero_Interface.energyModel.p_timeVariables);
+		battery.f_setActive(false, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.p_timeVariables);
 	}
 }
 
@@ -375,7 +375,7 @@ while ( nbHousesWithElectricCooking > nbHousesWithElectricCookingGoal ) { // rem
 		cookingAsset.removeEnergyAsset();
    		
    		J_ProfilePointer pp = zero_Interface.energyModel.f_findProfile("default_house_cooking_demand_fr");
-		new J_EAConsumption(house, OL_EnergyAssetType.GAS_PIT, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, zero_Interface.energyModel.p_timeParameters, pp);
+		new J_EAConsumption(house, OL_EnergyAssetType.GAS_HOB, "default_house_cooking_demand_fr", yearlyCookingDemand_kWh, OL_EnergyCarriers.METHANE, zero_Interface.energyModel.p_timeParameters, pp);
 		house.p_cookingMethod = OL_HouseholdCookingMethod.GAS;
 		nbHousesWithElectricCooking --; 
 	}
@@ -390,7 +390,7 @@ while ( nbHousesWithElectricCooking < nbHousesWithElectricCookingGoal) {
 		throw new RuntimeException("No gridconnection without GAS cooking asset found! Current electric cooking count: " + nbHousesWithElectricCooking);
 	}
 	else {
-		J_EAConsumption cookingAsset = findFirst(house.c_consumptionAssets, p -> p.getEAType() == OL_EnergyAssetType.GAS_PIT );
+		J_EAConsumption cookingAsset = findFirst(house.c_consumptionAssets, p -> p.getEAType() == OL_EnergyAssetType.GAS_HOB );
 		if (cookingAsset != null) {
 			double yearlyCookingDemand_kWh = cookingAsset.getBaseConsumption_kWh();
 			cookingAsset.removeEnergyAsset();
@@ -558,6 +558,7 @@ zero_Interface.f_resetSettings();
 
 double f_initializeTab_Electricity(List<GridConnection> electricityTabEASliderGCs)
 {/*ALCODESTART::1756302457919*/
+c_electricityTabEASliderGCs.clear();
 c_electricityTabEASliderGCs.addAll(electricityTabEASliderGCs);
 
 f_getCurrentPVOnLandAndWindturbineValues();
