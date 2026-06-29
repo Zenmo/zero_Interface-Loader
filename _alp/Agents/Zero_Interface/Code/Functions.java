@@ -109,16 +109,8 @@ if (gis_area instanceof GIS_Parcel ||
 	return;
 }
 
-//Get selected map overlay type, based on loaded order of the radio buttons
-OL_MapOverlayTypes selectedMapOverlayType;
-if(rb_mapOverlay != null){
-	selectedMapOverlayType = c_loadedMapOverlayTypes.get(rb_mapOverlay.getValue());
-}
-else{
-	selectedMapOverlayType = OL_MapOverlayTypes.DEFAULT;
-}
 //Set the correct map overlay
-switch(selectedMapOverlayType){
+switch(v_activeMapOverlay){
 	case DEFAULT:
 		gis_area.f_style(null, white, null, null);
 		break;
@@ -179,16 +171,8 @@ switch( area.p_GISObjectType ) {
 
 double f_styleGridNodes(GridNode GN)
 {/*ALCODESTART::1705499586056*/
-//Get selected map overlay type, based on loaded order of the radio buttons
-OL_MapOverlayTypes selectedMapOverlayType;
-if(rb_mapOverlay != null){
-	selectedMapOverlayType = c_loadedMapOverlayTypes.get(rb_mapOverlay.getValue());
-}
-else{
-	selectedMapOverlayType = OL_MapOverlayTypes.DEFAULT;
-}
 //Set the correct map overlay
-switch(selectedMapOverlayType){
+switch(v_activeMapOverlay){
 	case DEFAULT:
 	case ELECTRICITY_CONSUMPTION:
 	case PV_PRODUCTION:
@@ -433,10 +417,13 @@ if(selectedChartTypes_Energy == null){ // Temporary backup till all models have 
 	selectedChartTypes_Energy = f_getSelectedChartTypes_Energy();
 }
 List<OL_ChartTypes> selectedChartTypes_Economic = settings.resultsUISelectedChartTypes_Economic();
+List<OL_ChartTypes> selectedChartTypes_Sustainability = settings.resultsUISelectedChartTypes_Sustainability();
 
-//Disable export functionality in profiles if not full access.
+
+//Check if version is public
+boolean enablePublicVersion = false;
 if(settings.isPublicModel() || user.GCAccessType != OL_UserGCAccessType.FULL){
-	uI_Results.f_enablePublicVersion(true);
+	enablePublicVersion = true;
 }
 
 //Disable summary button if summary is not selected
@@ -444,9 +431,10 @@ if(settings.showKPISummary() == null || !settings.showKPISummary()){
 	uI_Results.getCheckbox_KPISummary().setVisible(false);
 }
 
-//Connect resultsUI
-uI_Results.f_initializeResultsUI(selectedChartTypes_Energy, selectedChartTypes_Economic);
+//Initialize the resultsUI
+uI_Results.f_initializeResultsUI(selectedChartTypes_Energy, selectedChartTypes_Economic, selectedChartTypes_Sustainability, enablePublicVersion);
 
+//Store resultsUI
 c_UIResultsInstances.add(uI_Results);
 /*ALCODEEND*/}
 
@@ -631,7 +619,7 @@ f_initializeScenarioRadioButton();
 f_initializeLegend();
 
 //Initialize map overlay buttons
-//f_initializeMapOverlayRadioButton();
+f_initializeMapOverlayButtons();
 
 //Set ui button visibility false at startup
 f_createAdditionalUIs();
@@ -1010,7 +998,7 @@ switch(selectedFilter){
 			}
 
 			if(c_loadedMapOverlayTypes.contains(OL_MapOverlayTypes.GRID_NEIGHBOURS)){
-				rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.GRID_NEIGHBOURS),true);			
+				f_selectMapOverlayButton(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.GRID_NEIGHBOURS));			
 			}
 			if(c_selectedFilterOptions.size() > 1){
 				c_selectedGridConnections = new ArrayList<>(toBeFilteredGC);	
@@ -2340,7 +2328,7 @@ gisregion.setLineWidth(2);
 gisregion.setFillColor(v_LVLVNodeColor);
 /*ALCODEEND*/}
 
-double f_initializeMapOverlayRadioButton()
+double f_initializeMapOverlayButtons()
 {/*ALCODESTART::1753085860778*/
 //Set active map overlay types if they are set in the project settings
 if(settings.activeMapOverlayTypes() != null && settings.activeMapOverlayTypes().size() > 0){
@@ -2361,77 +2349,28 @@ else{//Take the default
 }
 
 
-//Adjust the visualisation of the radiobuttons
-Presentable presentable = gr_mapOverlayLegenda.getPresentable();
-boolean ispublic = true;
-double x = 756;
-double y = c_loadedMapOverlayTypes.size() < 6 ? 837 : 837 - 18;
-double width = 130;
-double height = 0;//Not needed, automatically adjust by adding options
-Color textColor = Color.BLACK;
-boolean enabled = true;
-Font font = new Font("Dialog", Font.PLAIN, 11);
-boolean vertical = true;
+map_mapOverlayButtonToOverlayType = new HashMap<>();
+c_mapOverlayButtons.forEach(button -> button.setVisible(false));
+int currentMapOverlayButtonIndex = 0;
+CustomButton currentMapOverlayButton;
 
-
-//Set words for the radiobutton options
-List<String> RadioButtonOptions_list = new ArrayList<String>();
-for(OL_MapOverlayTypes mapOverlayType : c_loadedMapOverlayTypes){
-	switch(mapOverlayType){
-		case DEFAULT:
-			RadioButtonOptions_list.add("Standaard");
-			break;
-		case ELECTRICITY_CONSUMPTION:
-			RadioButtonOptions_list.add("Elektriciteitsverbruik");
-			break;
-		case PV_PRODUCTION:
-			RadioButtonOptions_list.add("PV Opwek");
-			break;
-		case GRID_NEIGHBOURS:
-			RadioButtonOptions_list.add("Energie Buren");
-			break;
-		case CONGESTION:
-			RadioButtonOptions_list.add("Netbelasting");
-			break;
-		case ENERGY_LABEL:
-			RadioButtonOptions_list.add("Energielabel");
-			break;
-		case PARKING_TYPE:
-			RadioButtonOptions_list.add("Parkeer type");
-			break;
-		case CUSTOM:
-			RadioButtonOptions_list.add(p_customMapOverlayName);
-			break;
-	}
-} 
-
-String[] RadioButtonOptions = RadioButtonOptions_list.toArray(String[]::new);
-
-//Create the radiobutton and set the correct action.
-rb_mapOverlay = new ShapeRadioButtonGroup(presentable, ispublic, x ,y, width, height, textColor, enabled, font, vertical, RadioButtonOptions){
-	@Override
-	public void action() {
-		f_setMapOverlay();
-	}
-};
-
-presentation.add(rb_mapOverlay);
-
-//For now: Adjust location of radiobutton title if 6 buttons
-if(c_loadedMapOverlayTypes.size() > 5){
-	gr_colorings.setY(-17);
+//Initialize Energy Charts (Is mandatory, and has a fall back!)
+for(OL_MapOverlayTypes loadedMapOverlay : c_loadedMapOverlayTypes){
+	currentMapOverlayButton = c_mapOverlayButtons.get(currentMapOverlayButtonIndex);
+	map_mapOverlayButtonToOverlayType.put(currentMapOverlayButton, loadedMapOverlay);
+	currentMapOverlayButton.setText(map_mapOverlayTypeToName.get(loadedMapOverlay));
+	currentMapOverlayButton.setImageIndex(map_mapOverlayToImageIndex.get(loadedMapOverlay));
+	currentMapOverlayButton.setVisible(true);
+	currentMapOverlayButtonIndex++;
 }
 /*ALCODEEND*/}
 
 double f_setMapOverlay()
 {/*ALCODESTART::1753096794863*/
-f_resetMap();
-
-//Get selected map overlay type, based on loaded order of the radio buttons
-//OL_MapOverlayTypes selectedMapOverlayType = c_loadedMapOverlayTypes.get(rb_mapOverlay.getValue());
+f_resetMapOverlay();
 
 //Set the correct map overlay
-switch(v_activeMapLayer){
+switch(v_activeMapOverlay){
 	case DEFAULT:
 		f_setMapOverlay_Default();
 		break;
@@ -2463,7 +2402,7 @@ double f_setMapOverlay_ElectricityConsumption()
 {/*ALCODESTART::1753097345978*/
 if(energyModel.v_rapidRunData == null || !b_resultsUpToDate){
 	f_setErrorScreen("Dit overzicht wordt pas beschikbaar na het uitvoeren van een jaarsimulatie. In plaats daarvan is de standaard kaart geselecteerd.", 0, 0);
-	rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT),true);
+	f_selectMapOverlayButton(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT));
 	return;			
 }
 
@@ -2480,7 +2419,7 @@ if (project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 else {
 	if(energyModel.v_rapidRunData == null){
 		f_setErrorScreen("Dit overzicht wordt pas beschikbaar na het uitvoeren van een jaarsimulatie. In plaats daarvan is de standaard kaart geselecteerd.", 0, 0);
-		rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT),true);
+		f_selectMapOverlayButton(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT));
 		return;			
 	}
 	gr_mapOverlayLegend_ElectricityConsumption.setVisible(true);
@@ -2532,7 +2471,7 @@ double f_setMapOverlay_Congestion()
 {/*ALCODESTART::1753097518541*/
 if(energyModel.v_rapidRunData == null || !b_resultsUpToDate){
 	f_setErrorScreen("Dit overzicht wordt pas beschikbaar na het uitvoeren van een jaarsimulatie. In plaats daarvan is de standaard kaart geselecteerd.", 0, 0);
-	rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT),true);
+	f_selectMapOverlayButton(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT));
 	return;			
 }
 
@@ -2620,6 +2559,7 @@ double f_initializePresentationOrder()
 //Set order of certain layovers and submenus
 f_setShapePresentationOnTop(map);
 f_setShapePresentationOnTop(gr_zoomButton);
+f_setShapePresentationOnTop(gr_mapOverlayButtons);
 f_setShapePresentationOnTop(gr_sliderClickBlocker);
 f_setShapePresentationOnTop(gr_forceMapSelection);
 f_setShapePresentationOnTop(gr_filterInterface);
@@ -3518,7 +3458,7 @@ if(!selected_scenario.equals("Custom")){
 	f_updateMainInterfaceSliders();
 	
 	//Colour recolor pv map again if it is active
-	if(v_activeMapLayer == OL_MapOverlayTypes.PV_PRODUCTION){
+	if(v_activeMapOverlay == OL_MapOverlayTypes.PV_PRODUCTION){
 		f_setMapOverlay_PVProduction();
 	}
 }
@@ -3857,7 +3797,7 @@ formatter.applyPattern("dd MMM yyyy");
 return formatter.format(date);
 /*ALCODEEND*/}
 
-double f_resetMap()
+double f_resetMapOverlay()
 {/*ALCODESTART::1780217802554*/
 //reset legend
 gr_defaultLegenda.setVisible(false);
@@ -4108,7 +4048,7 @@ switch(selectedFilter){
 			}
 
 			if(c_loadedMapOverlayTypes.contains(OL_MapOverlayTypes.GRID_NEIGHBOURS)){
-				rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.GRID_NEIGHBOURS),true);			
+				f_selectMapOverlayButton(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.GRID_NEIGHBOURS));			
 			}
 			if(c_selectedFilterOptions.size() > 1){
 				c_selectedGridConnections = new ArrayList<>(c_filterDummy);	
@@ -4299,5 +4239,27 @@ for (GridConnection gc : gcList){
 	}
 }
 
+/*ALCODEEND*/}
+
+double f_selectMapOverlayButton(int selectedMapOverlayButtonIndex)
+{/*ALCODESTART::1782740249995*/
+//Get selected button
+CustomButton selectedButton = c_mapOverlayButtons.get(selectedMapOverlayButtonIndex);
+
+//Find selected chart type
+v_activeMapOverlay = map_mapOverlayButtonToOverlayType.get(selectedButton);
+
+//Color selected button
+selectedButton.setLineWidth(v_mapOverlayButtonSelectedLineWidth);
+
+//Deselect other chart buttons
+for(CustomButton customButton : c_mapOverlayButtons){
+	if(customButton != selectedButton){
+		customButton.setLineWidth(v_mapOverlayButtonDefaultLineWidth);
+	}
+}
+
+//Show correct chart
+f_setMapOverlay();
 /*ALCODEEND*/}
 
