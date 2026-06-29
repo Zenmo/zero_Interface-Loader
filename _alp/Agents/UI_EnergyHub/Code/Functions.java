@@ -1,7 +1,7 @@
 double f_initializeEnergyHubDashboard()
 {/*ALCODESTART::1753446461346*/
 //Set map to correct layout
-zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT),true);
+zero_Interface.f_selectMapOverlayButton(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT));
 zero_Interface.b_updateLiveCongestionColors = false;
 
 // Zoom map to the selected EHub members
@@ -49,8 +49,15 @@ List<OL_ChartTypes> selectedChartTypes_Energy = new ArrayList<>(List.of(
 //Set the selected radiobutton setup Economic
 List<OL_ChartTypes> selectedChartTypes_Economic = new ArrayList<>();// Leave empty for now!
 
+//Set the selected radiobutton setup Sustainability
+List<OL_ChartTypes> selectedChartTypes_Sustainability = new ArrayList<>(List.of(
+														OL_ChartTypes.CO2));
+
+//Public version?
+boolean publicVersion = false; // Energyhub is never accesible in public version for now, so can always just leave it off for now.
+
 //Connect resultsUI
-uI_Results.f_initializeResultsUI(selectedChartTypes_Energy, selectedChartTypes_Economic);
+uI_Results.f_initializeResultsUI(selectedChartTypes_Energy, selectedChartTypes_Economic, selectedChartTypes_Sustainability, publicVersion);
 uI_Results.f_updateResultsUI(v_energyHubCoop);
 /*ALCODEEND*/}
 

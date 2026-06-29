@@ -139,32 +139,50 @@
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Id>1780226379361</Id>
-		<Path>icoon congestie mapoverlay.png</Path>
+		<Id>1782747298925</Id>
+		<Path>icon_mapoverlay_congestion.png</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Id>1780226379362</Id>
-		<Path>icoon default mapoverlay.png</Path>
+		<Id>1782747305615</Id>
+		<Path>icon_mapoverlay_default.png</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Id>1780226379363</Id>
-		<Path>icoon parkeer mapoverlay.png</Path>
+		<Id>1782747317106</Id>
+		<Path>icon_mapoverlay_parking.png</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Id>1780226379364</Id>
-		<Path>icoon pv mapoverlay.png</Path>
+		<Id>1782747321460</Id>
+		<Path>icon_mapoverlay_pv.png</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Id>1780226379365</Id>
-		<Path>icoon verbruik mapoverlay.png</Path>
+		<Id>1782747327452</Id>
+		<Path>icon_mapoverlay_electricity_use.png</Path>
+		<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		<Location>FILE_SYSTEM</Location>
+	</Resource>
+	<Resource>
+		<Id>1782747361713</Id>
+		<Path>icon_mapoverlay_black.png</Path>
+		<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		<Location>FILE_SYSTEM</Location>
+	</Resource>
+	<Resource>
+		<Id>1782747415703</Id>
+		<Path>icon_mapoverlay_gridneighbours.png</Path>
+		<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		<Location>FILE_SYSTEM</Location>
+	</Resource>
+	<Resource>
+		<Id>1782747427733</Id>
+		<Path>icon_mapoverlay_energylabel.png</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
