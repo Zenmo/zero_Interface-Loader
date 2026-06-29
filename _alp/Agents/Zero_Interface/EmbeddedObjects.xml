@@ -235,6 +235,30 @@
 					<Code><![CDATA[p_currentActiveInfoBubble]]></Code>
 				</Value>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_chartButtonToCurrentChartType]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_ResultsUIModeToChartTypes]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_ResultsUIModeToLoadedChartTypes]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_resultsUIModeButtonToResultsUIMode]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_chartTypeToName]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_resultsUIModeToName]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_ResultsUIModeToSelectedImageIndex]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[map_ResultsUIModeToDefaultImageIndex]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">
