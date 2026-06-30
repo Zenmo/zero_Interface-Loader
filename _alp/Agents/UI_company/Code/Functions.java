@@ -1978,10 +1978,10 @@ v_currentTripConfiguringVehicleType = null;
 double f_addNewInstanceOfCustomTripTrackerToAdditionalVehicle(I_Vehicle vehicle)
 {/*ALCODESTART::1780312282022*/
 //Check if this vehicle should get a custom triptracker
-if(map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid) != null && map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid).get(vehicle) != null){
+if(map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid) != null && map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid).get(vehicle.getVehicleType()) != null){
 	//Get the records for the custom triptracker
-	List<J_ActivityTrackerTrips.TripRecord> customTripRecords = map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid).get(vehicle);
-	
+	List<J_ActivityTrackerTrips.TripRecord> customTripRecords = map_createdCustomTripWeeklyConfiguration.get(p_gridConnection.p_uid).get(vehicle.getVehicleType());
+
 	J_TimeVariables timeVariables = zero_Interface.energyModel.p_timeVariables;
 	J_TimeParameters timeParameters = zero_Interface.energyModel.p_timeParameters;
 	
@@ -2083,7 +2083,9 @@ boolean[][] booleanMatrix = new boolean[rows][cols];
 for (int i = 0; i < rows; i++) {
 	for (int j = 0; j < cols; j++) {
     
-        Color fillColor = matrix_vehicleTripsConfigurationButtons[i][j].getFillColor();
+    	int rowIndex = (i+1)%7; // Sunday is on row 0 of the matrix, but the Activity Tracker starts on mondays.
+    	
+        Color fillColor = matrix_vehicleTripsConfigurationButtons[rowIndex][j].getFillColor();
         if (fillColor.equals(p_configureVehicleTripsOnColor)) {
             booleanMatrix[i][j] = true;
         } 
@@ -2144,7 +2146,8 @@ if(enable){
 else{
 	c_activeVehicleConfigurationDays.remove(day);
 	//Set color of entire row to off, if turned off.
-	for(ShapeRectangle rectangle : matrix_vehicleTripsConfigurationButtons[J_TimeParameters.getDayIndexFromDay(day)]){
+	int dayIndex = J_TimeParameters.getDayIndexFromDay(day) % 7; // Sunday is day 7, but has index 0 in matrix
+	for(ShapeRectangle rectangle : matrix_vehicleTripsConfigurationButtons[dayIndex]){
 		rectangle.setFillColor(p_configureVehicleTripsOffColor);
 	}
 }
