@@ -8683,7 +8683,7 @@ f_resetSettings();</ActionCode>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<Step>100</Step>
+					<Step>10</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -8887,7 +8887,7 @@ f_resetSettings();</ActionCode>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<Step>50</Step>
+					<Step>10</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -9386,7 +9386,7 @@ f_resetSettings();</ActionCode>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<Step>0.05</Step>
+					<Step>0.1</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>

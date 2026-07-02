@@ -4145,7 +4145,7 @@ double area_m2 = gc.c_connectedGISObjects.get(0).gisRegion.area();
 double area_ha = area_m2 / 10000.0;
 double currentCapacity_kWpha = currentCapacity_kW / area_ha;
 
-sl_customGCSolarfarmInstalledCapacity_kWpha.setRange((int)(0.5*energyModel.avgc_data.p_avgSolarFieldPower_kWppha), (int)(1.2*energyModel.avgc_data.p_avgSolarFieldPower_kWppha));
+sl_customGCSolarfarmInstalledCapacity_kWpha.setRange((int)(0.5*energyModel.avgc_data.p_avgSolarFieldPower_kWppha), (int)(1.5*energyModel.avgc_data.p_avgSolarFieldPower_kWppha));
 sl_customGCSolarfarmInstalledCapacity_kWpha.setValue(currentCapacity_kWpha, false);
 
 // PV Orientation
@@ -4185,7 +4185,7 @@ J_EAProduction windAsset = (J_EAProduction) gc.c_productionAssets.get(0);
 // Installed capacity
 double currentCapacity_MW = windAsset.getCapacityElectric_kW()/1000;
 
-sl_customGCWindfarmInstalledCapacity_MW.setRange(0.1, 3);
+sl_customGCWindfarmInstalledCapacity_MW.setRange(0.1, 5);
 sl_customGCWindfarmInstalledCapacity_MW.setValue(currentCapacity_MW, false); // false prevents triggering ActionCode
 
 // Curtailment
