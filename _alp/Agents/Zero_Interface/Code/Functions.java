@@ -3950,7 +3950,7 @@ solarpark.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
 solarpark.v_liveAssetsMetaData.PVOrientation = OL_PVOrientation.SOUTH;
 
 // 3. Initialize GridConnection
-solarpark.f_initialize(energyModel.p_timeParameters);
+solarpark.f_initialize(energyModel.p_timeParameters, energyModel.p_timeVariables);
 
 // 4. Create the energy asset
 J_EAProduction pvAsset = new J_EAProduction(solarpark, OL_EnergyAssetType.PHOTOVOLTAIC, "Custom PV", OL_EnergyCarriers.ELECTRICITY, installedCapacity_kW, energyModel.p_timeParameters, energyModel.pp_PVProduction35DegSouth_fr);
@@ -3975,7 +3975,7 @@ traceln("Successfully added custom solarfarm");
 
 double f_removeCustomGC(GridConnection gc)
 {/*ALCODESTART::1777995108233*/
-gc.f_setActive(false, energyModel.p_timeVariables);
+gc.f_setActive(false, energyModel.p_timeParameters, energyModel.p_timeVariables);
 
 // 1. Remove energy assets
 for(J_EA ea : new ArrayList<>(gc.c_energyAssets)) {
@@ -4046,7 +4046,7 @@ windpark.v_liveConnectionMetaData.setCapacities_kW(0, defaultCapacity_kW, defaul
 windpark.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
 
 // 3. Initialize GridConnection
-windpark.f_initialize(energyModel.p_timeParameters);
+windpark.f_initialize(energyModel.p_timeParameters, energyModel.p_timeVariables);
 
 // 4. Create the Energy Asset
 J_EAProduction windAsset = new J_EAProduction(windpark, OL_EnergyAssetType.WINDMILL, "Custom Windpark", OL_EnergyCarriers.ELECTRICITY, defaultCapacity_kW, energyModel.p_timeParameters, energyModel.pp_windProduction_fr);
@@ -4094,7 +4094,7 @@ battery.v_liveConnectionMetaData.setCapacities_kW(defaultCapacity_kW, defaultCap
 battery.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
 
 // 3. Initialize GridConnection
-battery.f_initialize(energyModel.p_timeParameters);
+battery.f_initialize(energyModel.p_timeParameters, energyModel.p_timeVariables);
 
 // 4. Create the energy asset + pick default operation mode management class
 J_EAStorageElectric batteryAsset = new J_EAStorageElectric(battery, defaultCapacity_kW, defaultStorageCapacity_kWh, 0.5, energyModel.p_timeParameters);
