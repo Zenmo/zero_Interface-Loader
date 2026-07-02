@@ -4043,7 +4043,7 @@ windpark.p_parentNodeElectricID = gn.p_gridNodeID;
 windpark.p_isSliderGC = false; // Do not add to c_electricityTabEASliderGCs
 
 // 2. Set capacity
-double defaultCapacity_kW = 500;
+double defaultCapacity_kW = 1000;
 windpark.v_liveConnectionMetaData.setCapacities_kW(0, defaultCapacity_kW, defaultCapacity_kW);
 windpark.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
 
@@ -4091,8 +4091,8 @@ battery.p_parentNodeElectricID = gn.p_gridNodeID;
 battery.p_isSliderGC = false; // Do not add to c_electricityTabEASliderGCs
 
 // 2. Set capacity
-double defaultCapacity_kW = 250;
-double defaultStorageCapacity_kWh = 2*defaultCapacity_kW;
+double defaultCapacity_kW = 1000;
+double defaultStorageCapacity_kWh = energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power*defaultCapacity_kW;
 battery.v_liveConnectionMetaData.setCapacities_kW(defaultCapacity_kW, defaultCapacity_kW, defaultCapacity_kW);
 battery.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
 
@@ -4145,7 +4145,7 @@ double area_m2 = gc.c_connectedGISObjects.get(0).gisRegion.area();
 double area_ha = area_m2 / 10000.0;
 double currentCapacity_kWpha = currentCapacity_kW / area_ha;
 
-sl_customGCSolarfarmInstalledCapacity_kWpha.setRange((int)(0.5*energyModel.avgc_data.p_avgSolarFieldPower_kWppha), (int)(2*energyModel.avgc_data.p_avgSolarFieldPower_kWppha));
+sl_customGCSolarfarmInstalledCapacity_kWpha.setRange((int)(0.5*energyModel.avgc_data.p_avgSolarFieldPower_kWppha), (int)(1.2*energyModel.avgc_data.p_avgSolarFieldPower_kWppha));
 sl_customGCSolarfarmInstalledCapacity_kWpha.setValue(currentCapacity_kWpha, false);
 
 // PV Orientation
@@ -4185,7 +4185,7 @@ J_EAProduction windAsset = (J_EAProduction) gc.c_productionAssets.get(0);
 // Installed capacity
 double currentCapacity_MW = windAsset.getCapacityElectric_kW()/1000;
 
-sl_customGCWindfarmInstalledCapacity_MW.setRange(0.1, 10);
+sl_customGCWindfarmInstalledCapacity_MW.setRange(0.1, 3);
 sl_customGCWindfarmInstalledCapacity_MW.setValue(currentCapacity_MW, false); // false prevents triggering ActionCode
 
 // Curtailment
@@ -4245,18 +4245,16 @@ area.p_longitude = c_tempSavedCoordinates.get(0).getY();
 
 // 2. Generate coordinates (circular for windfarm, square for others) and assign to region
 double[] polyCoords;
-if (gisType == OL_GISObjectType.WINDFARM || gisType == OL_GISObjectType.BATTERY) {
-	double area_m2 = f_calculateGISObjectArea(gc, gisType);
-	if (gisType == OL_GISObjectType.WINDFARM) {
-    	polyCoords = f_calculateCircleCoordinates(area.p_latitude, area.p_longitude, area_m2);
-    	area.gisRegion = f_createGISObject(polyCoords);
-    	area.p_annotation = "Windpark " + v_customWindfarmGCCounter;
-	} else if (gisType == OL_GISObjectType.BATTERY) {
-    	polyCoords = f_calculateSquareCoordinates(area.p_latitude, area.p_longitude, area_m2);
-    	area.gisRegion = f_createGISObject(polyCoords);
-    	area.p_annotation = "Buurtbatterij " + v_customGridBatteryGCCounter;
-
-    }
+if (gisType == OL_GISObjectType.WINDFARM) {
+	double area_m2 = 1000; // Rule-of-Thumb windfarm: 1 hectare per 5 MW (5000 kW) capacity
+	polyCoords = f_calculateCircleCoordinates(area.p_latitude, area.p_longitude, area_m2);
+	area.gisRegion = f_createGISObject(polyCoords);
+	area.p_annotation = "Windpark " + v_customWindfarmGCCounter;
+} else if (gisType == OL_GISObjectType.BATTERY) {
+	double area_m2 = 400; // Rule-of-Thumb grid battery: 1 hectare per 100 MWh storage capacity (100 m2 per MWh)
+	polyCoords = f_calculateSquareCoordinates(area.p_latitude, area.p_longitude, area_m2);
+	area.gisRegion = f_createGISObject(polyCoords);
+	area.p_annotation = "Buurtbatterij " + v_customGridBatteryGCCounter;
 } else {
 	polyCoords = f_calculateCustomPolygonCoordinates(c_tempSavedCoordinates);
 	area.gisRegion = f_createGISObject(polyCoords);
@@ -4292,44 +4290,6 @@ for (int i = 1; i <= 10; i++) {
 }
 // Rebuild the legend using existing functionality
 f_initializeLegend();
-/*ALCODEEND*/}
-
-double f_calculateGISObjectArea(GridConnection gc,OL_GISObjectType gisType)
-{/*ALCODESTART::1778997814360*/
-/**
- * Calculates the footprint area in square meters (m2) of a custom energy asset based on its capacity.
- * 
- * - Solar farm: 1 hectare per 'p_avgSolarFieldPower_kWppha' kW
- * - Wind farm: 1 hectare per 5 MW (5000 kW) capacity
- * - Battery: 1 hectare per 100 MWh storage capacity (100 m2 per MWh)
- */
-
-double area_m2 = 100.0; // Default fallback size
-if (gc instanceof GCEnergyProduction prodGC) {
-    if (gisType == OL_GISObjectType.SOLARFARM) {
-        double capacity_kW = 0.0;
-        for (J_EAProduction asset : prodGC.c_productionAssets) {
-            if (asset.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC) {
-                capacity_kW += asset.getCapacityElectric_kW();
-            }
-        }
-        double capacity_ha = capacity_kW / energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
-        area_m2 = capacity_ha * 10000.0;
-    } 
-    else if (gisType == OL_GISObjectType.WINDFARM) {
-        double defaultCapacity_kW = 500.0;
-        double defaultCapacity_ha = (defaultCapacity_kW / 1000.0) / 5.0; // 5 MW per hectare -> 0.1
-        area_m2 = defaultCapacity_ha * 10000.0;
-    }
-} 
-else if (gc instanceof GCGridBattery batteryGC) {
-    if (gisType == OL_GISObjectType.BATTERY) {
-        double defaultCapacity_MWh = 500.0 / 1000.0;
-        double defaultCapacity_ha = defaultCapacity_MWh / 100.0; // 100 MWh per hectare -> 0.005 ha
-            area_m2 = defaultCapacity_ha * 10000.0;
-        }
-    }
-return area_m2;
 /*ALCODEEND*/}
 
 double[] f_calculateSquareCoordinates(double lat,double lon,double area_m2)
