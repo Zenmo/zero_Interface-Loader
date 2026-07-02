@@ -2215,7 +2215,7 @@ else{
 					<FillColor>-1</FillColor>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<EnableExpression>!gr_ForceMapSelectionText.isVisible()</EnableExpression>
+					<EnableExpression>!gr_ForceMapSelectionMessageText.isVisible()</EnableExpression>
 					<ActionCode>if(!cb_filterOptions.getValue().equals("-")){
 	f_setFilter(map_UINamesFilterOption.get(cb_filterOptions.getValue()));
 	
@@ -2341,7 +2341,7 @@ if (c_manualFilterSelectedGC.isEmpty() &amp;&amp; c_manualFilterDeselectedGC.isE
 	f_setFilter(OL_FilterOptionsGC.MANUAL_SELECTION);
 }
 
-f_setForcedClickScreenText("");
+f_setForcedClickScreenMessageText("");
 if(!b_inEnergyHubSelectionMode){
 	f_setForcedClickScreenVisibility(false);
 }
@@ -2431,7 +2431,7 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 	c_manualFilterSelectedGC.clear();
 	c_manualFilterDeselectedGC.clear();
 	
-	f_setForcedClickScreenText("");
+	f_setForcedClickScreenMessageText("");
 	if(!b_inEnergyHubSelectionMode){
 		f_setForcedClickScreenVisibility(false);
 	}
@@ -2465,12 +2465,13 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<EnableExpression>user.GCAccessType == OL_UserGCAccessType.FULL &amp;&amp; (!gr_ForceMapSelectionText.isVisible() || b_inManualFilterSelectionMode)</EnableExpression>
+					<EnableExpression>user.GCAccessType == OL_UserGCAccessType.FULL &amp;&amp; (!gr_ForceMapSelectionMessageText.isVisible() || b_inManualFilterSelectionMode)</EnableExpression>
 					<ActionCode>if(!b_inManualFilterSelectionMode){
 	b_inManualFilterSelectionMode = true;
 	
-	f_setForcedClickScreenText("(De)Selecteer gebouwen");
+	f_setForcedClickScreenMessageText("(De)Selecteer gebouwen");
 	if(!b_inEnergyHubSelectionMode){
+		f_setForcedClickScreenTitleText("");
 		f_setForcedClickScreenVisibility(true);
 	}
 	
@@ -2481,7 +2482,7 @@ traceln("Alle filters zijn verwijderd.");</ActionCode>
 else{ 
 	b_inManualFilterSelectionMode = false;
 	
-	f_setForcedClickScreenText("");
+	f_setForcedClickScreenMessageText("");
 	if(!b_inEnergyHubSelectionMode){
 		f_setForcedClickScreenVisibility(false);
 	}
@@ -3689,7 +3690,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 			</Rectangle>
 			<Group>
 				<Id>1753446087501</Id>
-				<Name><![CDATA[gr_ForceMapSelectionText]]></Name>
+				<Name><![CDATA[gr_ForceMapSelectionMessageText]]></Name>
 				<X>-40</X>
 				<Y>-320</Y>
 				<Label>
@@ -3748,7 +3749,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						<BasicProperties Width="170" Height="50">
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<TextColor>-16777216</TextColor>
-							<VisibleCode>gr_ForceMapSelectionText.isVisible() &amp;&amp; b_inManualFilterSelectionMode </VisibleCode>
+							<VisibleCode>gr_ForceMapSelectionMessageText.isVisible() &amp;&amp; b_inManualFilterSelectionMode </VisibleCode>
 							<Enabled>true</Enabled>
 							<EnableExpression>button_completeManualSelectionMode.isVisible()</EnableExpression>
 							<ActionCode>if(b_inManualFilterSelectionMode){
@@ -3950,79 +3951,6 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						</Presentation>
 					</Group>
 					<Group>
-						<Id>1760015470898</Id>
-						<Name><![CDATA[gr_energieHubConfiguratorTxt]]></Name>
-						<X>-60</X>
-						<Y>-190</Y>
-						<Label>
-							<X>10</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Presentation>
-							<RoundedRectangle>
-								<Id>1760015470900</Id>
-								<Name><![CDATA[rect_energyHubConfigurator]]></Name>
-								<X>-500</X>
-								<Y>-50</Y>
-								<Label>
-									<X>10</X>
-									<Y>10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<ZHeight>10</ZHeight>
-								<LineWidth>2</LineWidth>
-								<LineColor>-16777216</LineColor>
-								<LineColorCode>uI_EnergyHub.p_energyHubLineColor</LineColorCode>
-								<LineMaterial>null</LineMaterial>
-								<LineStyle>SOLID</LineStyle>
-								<Width>1000</Width>
-								<Height>90</Height>
-								<Rotation>0.0</Rotation>
-								<FillColor>-1</FillColor>
-								<FillColorCode>uI_EnergyHub.p_energyHubBackGroundColor</FillColorCode>
-								<FillMaterial>null</FillMaterial>
-								<ArcRadius>10</ArcRadius>
-							</RoundedRectangle>
-							<Text>
-								<Id>1760015470902</Id>
-								<Name><![CDATA[txt_energyHubConfigurator]]></Name>
-								<X>0</X>
-								<Y>-35</Y>
-								<Label>
-									<X>0</X>
-									<Y>-10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<Rotation>0.0</Rotation>
-								<Color>-16777216</Color>
-								<Text><![CDATA[Energie Hub Configurator]]></Text>
-								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>48</Size>
-									<Style>0</Style>
-								</Font>
-								<Alignment>CENTER</Alignment>
-							</Text>
-						</Presentation>
-					</Group>
-					<Group>
 						<Id>1760015470904</Id>
 						<Name><![CDATA[gr_cancelEnergyHubConfiguration]]></Name>
 						<X>-820</X>
@@ -4094,6 +4022,248 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							</Text>
 						</Presentation>
 					</Group>
+				</Presentation>
+			</Group>
+			<Group>
+				<Id>1777996495548</Id>
+				<Name><![CDATA[gr_addingCustomGCToMapButtons]]></Name>
+				<X>10</X>
+				<Y>-240</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>b_addCustomGC || b_removeCustomGC</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Group>
+						<Id>1777996495568</Id>
+						<Name><![CDATA[gr_cancelAddingCustomEAToMap]]></Name>
+						<X>-820</X>
+						<Y>630</Y>
+						<Label>
+							<X>10</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<OnClickCode>f_stopCustomGCCreation();</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Presentation>
+							<RoundedRectangle>
+								<Id>1777996495570</Id>
+								<Name><![CDATA[button_cancelAddingCustomEAToMap]]></Name>
+								<X>-90</X>
+								<Y>-30</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>3</LineWidth>
+								<LineColor>-2345659</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>275</Width>
+								<Height>75</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-1</FillColor>
+								<FillMaterial>null</FillMaterial>
+								<ArcRadius>10</ArcRadius>
+							</RoundedRectangle>
+							<Text>
+								<Id>1777996495572</Id>
+								<Name><![CDATA[txt_cancelAddingCustomEAToMap]]></Name>
+								<X>48</X>
+								<Y>-10</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[Annuleer]]></Text>
+								<Font>
+									<Name><![CDATA[SansSerif]]></Name>
+									<Size>28</Size>
+									<Style>1</Style>
+								</Font>
+								<Alignment>CENTER</Alignment>
+							</Text>
+						</Presentation>
+					</Group>
+					<Group>
+						<Id>1781530425858</Id>
+						<Name><![CDATA[gr_completeAddingCustomEAToMap]]></Name>
+						<X>-770</X>
+						<Y>550</Y>
+						<Label>
+							<X>10</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<VisibleCode>c_tempSavedCoordinates.size()&gt;=3 &amp;&amp; !b_customGCPolygonCreated</VisibleCode>
+						<OnClickCode>if (f_checkCustomPolygonSelfIntersection()) { //Custom drawn polygon is self-intersecting
+    f_resetCustomGCCreation();
+    f_setForcedClickScreenMessageText("De getekende lijnen mogen elkaar niet snijden! Begin opnieuw.");
+} else {
+	b_customGCPolygonCreated = true;
+	f_setForcedClickScreenMessageText("Kies een trafo op de kaart");
+}</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Presentation>
+							<RoundedRectangle>
+								<Id>1781530425860</Id>
+								<Name><![CDATA[button_completeAddingCustomEAToMap]]></Name>
+								<X>-140</X>
+								<Y>-40</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>3</LineWidth>
+								<LineColor>-16777216</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>275</Width>
+								<Height>75</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-1</FillColor>
+								<FillMaterial>null</FillMaterial>
+								<ArcRadius>10</ArcRadius>
+							</RoundedRectangle>
+							<Text>
+								<Id>1781530425862</Id>
+								<Name><![CDATA[txt_completeAddingCustomEAToMap]]></Name>
+								<X>0</X>
+								<Y>-20</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[Voltooien]]></Text>
+								<Font>
+									<Name><![CDATA[SansSerif]]></Name>
+									<Size>28</Size>
+									<Style>1</Style>
+								</Font>
+								<Alignment>CENTER</Alignment>
+							</Text>
+						</Presentation>
+					</Group>
+				</Presentation>
+			</Group>
+			<Group>
+				<Id>1760015470898</Id>
+				<Name><![CDATA[gr_forcedClickTitleTxt]]></Name>
+				<X>-50</X>
+				<Y>-430</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<RoundedRectangle>
+						<Id>1760015470900</Id>
+						<Name><![CDATA[rect_forcedClickTitle]]></Name>
+						<X>-500</X>
+						<Y>-50</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>2</LineWidth>
+						<LineColor>-16777216</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>1000</Width>
+						<Height>90</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-1</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>10</ArcRadius>
+					</RoundedRectangle>
+					<Text>
+						<Id>1760015470902</Id>
+						<Name><![CDATA[txt_forcedClickTitle]]></Name>
+						<X>0</X>
+						<Y>-35</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[<txt_forcedClickTitle>]]></Text>
+						<Font>
+							<Name><![CDATA[SansSerif]]></Name>
+							<Size>48</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
+					</Text>
 				</Presentation>
 			</Group>
 		</Presentation>
@@ -8329,6 +8499,1262 @@ else{
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
+	<Group>
+		<Id>1778088271551</Id>
+		<Name><![CDATA[gr_customGCSolarfarmSettings]]></Name>
+		<X>120</X>
+		<Y>-2750</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>15</XCode>
+		<YCode>630</YCode>
+		<VisibleCode>v_clickedObjectType == OL_GISObjectType.SOLARFARM &amp;&amp; !c_selectedGridConnections.isEmpty() &amp;&amp; c_customSolarfarmGCs.contains((GCEnergyProduction)c_selectedGridConnections.get(0))</VisibleCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Rectangle>
+				<Id>1778088176151</Id>
+				<Name><![CDATA[rect_customEASolarfarmSettings]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>3</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>370</Width>
+				<Height>350</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-32</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Rectangle>
+			<Text>
+				<Id>1778088438360</Id>
+				<Name><![CDATA[txt_customGCSettingsSolarfarm]]></Name>
+				<X>20</X>
+				<Y>20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Instellingen - Zonnepark]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>22</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778088565568</Id>
+				<Name><![CDATA[txt_customGCSettingsSolarfarmInstalledCapacity_ha]]></Name>
+				<X>20</X>
+				<Y>150</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Geïnstalleerd vermogen]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778089224407</Id>
+				<Name><![CDATA[txt_customGCSolarfarmTotalSolarfarmArea_ha]]></Name>
+				<X>245</X>
+				<Y>120</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0 ha]]></Text>
+				<TextCode>c_selectedGridConnections.isEmpty() ? "" : (round((c_selectedGridConnections.get(0).c_connectedGISObjects.get(0).gisRegion.area() / 10000.0) * 10.0) / 10.0) + " ha"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1778089224409</Id>
+				<Name><![CDATA[sl_customGCSolarfarmInstalledCapacity_kWpha]]></Name>
+				<X>260</X>
+				<Y>85</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>double installedCapacity_kWpha = sl_customGCSolarfarmInstalledCapacity_kWpha.getValue();
+
+GCEnergyProduction gc = (GCEnergyProduction)c_selectedGridConnections.get(0);
+J_EAProduction pvAsset = (J_EAProduction)gc.c_productionAssets.get(0);
+
+// Calculate new installed capacity solarfarm and update text objects
+double area_m2 = gc.c_connectedGISObjects.get(0).gisRegion.area();
+double area_ha = area_m2 / 10000.0;
+double installedCapacity_kW = installedCapacity_kWpha * area_ha;
+
+traceln("installedCapacity_kW: " + installedCapacity_kW);
+
+// Calculate max contracted range to be the next multiple of 50 kW above installed capacity
+double maxContractedCapacity_kW = Math.ceil(installedCapacity_kW / 50.0) * 50.0;
+//if (maxContractedCapacity_kW == 0) maxContractedCapacity_kW = 50.0; // fallback to prevent 0 range
+traceln("maxContractedCapacity_kW: " + maxContractedCapacity_kW);
+//txt_customGCSolarfarmTotalSolarfarmArea_ha.setText(area_ha + " ha");
+//txt_customGCSolarfarmInstalledCapacity_kW.setText(installedCapacity_kW + " kW");
+
+// If needed, adjust the contracted capacity
+double contractedCapacity_kW = sl_customGCSolarfarmContractedCapacity_kW.getValue();
+traceln("contractedCapacity_kW: " + contractedCapacity_kW);
+if (contractedCapacity_kW &gt; maxContractedCapacity_kW) {
+    contractedCapacity_kW = maxContractedCapacity_kW;
+    traceln("contractedCapacity_kW after: " + contractedCapacity_kW);
+    sl_customGCSolarfarmContractedCapacity_kW.setValue(contractedCapacity_kW, false);
+}
+// Dynamically clamp the range of the contracted capacity slider
+sl_customGCSolarfarmContractedCapacity_kW.setRange(0,  maxContractedCapacity_kW);
+
+// Update backend
+pvAsset.setCapacityElectric_kW(installedCapacity_kW, gc);
+gc.v_liveConnectionMetaData.setCapacities_kW(0, maxContractedCapacity_kW, maxContractedCapacity_kW);
+
+// Update the active instance of tabElectricity sliders
+if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
+    uI_Tabs.pop_tabElectricity.get(0).f_updateSliders_Electricity();
+}
+
+if (!b_runningMainInterfaceScenarios) f_setScenarioToCustom();
+f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<Step>10</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1778157224958</Id>
+				<Name><![CDATA[txt_customGCSettingsSolarfarmName]]></Name>
+				<X>20</X>
+				<Y>60</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Naam: ]]></Text>
+				<TextCode>c_selectedGridConnections.isEmpty() || c_selectedGridConnections.get(0).c_connectedGISObjects.isEmpty()  ? "" : "Naam: " + c_selectedGridConnections.get(0).c_connectedGISObjects.get(0).p_annotation</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778157755373</Id>
+				<Name><![CDATA[txt_customGCSolarfarmInstalledCapacity_kW]]></Name>
+				<X>245</X>
+				<Y>150</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0 kW]]></Text>
+				<TextCode>c_selectedGridConnections.isEmpty() ? "" : (round(c_selectedGridConnections.get(0).c_productionAssets.get(0).getCapacityElectric_kW() * 10.0) / 10.0) + " kW"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778157960511</Id>
+				<Name><![CDATA[txt_customGCSettingsSolarfarmContractedCapacity_kW]]></Name>
+				<X>20</X>
+				<Y>240</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>cb_customGCSolarfarmCurtailment.isSelected()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Gecontracteerd vermogen]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778158102891</Id>
+				<Name><![CDATA[txt_customGCSettingsSolarfarmCurtailment]]></Name>
+				<X>20</X>
+				<Y>210</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Curtailment]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778158258122</Id>
+				<Name><![CDATA[txt_customEASolarfarmContractedCapacity_kW]]></Name>
+				<X>245</X>
+				<Y>240</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>cb_customGCSolarfarmCurtailment.isSelected()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0 kW]]></Text>
+				<TextCode>sl_customGCSolarfarmContractedCapacity_kW.getValue() + " kW"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1778158369195</Id>
+				<Name><![CDATA[cb_customGCSolarfarmCurtailment]]></Name>
+				<X>302</X>
+				<Y>202</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="40" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>GCEnergyProduction gc = (GCEnergyProduction) c_selectedGridConnections.get(0);
+if (cb_customGCSolarfarmCurtailment.isSelected()) {
+    gc.f_setExternalAssetManagement(new J_CurtailManagementContractCapacity(gc, energyModel.p_timeParameters));
+} else {
+    gc.f_removeExternalAssetManagement(I_CurtailManagement.class);
+}
+
+if (!b_runningMainInterfaceScenarios) f_setScenarioToCustom();
+f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText/>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1778158173095</Id>
+				<Name><![CDATA[sl_customGCSolarfarmContractedCapacity_kW]]></Name>
+				<X>260</X>
+				<Y>235</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<VisibleCode>cb_customGCSolarfarmCurtailment.isSelected()</VisibleCode>
+					<Enabled>true</Enabled>
+					<ActionCode>GCEnergyProduction gc = (GCEnergyProduction) c_selectedGridConnections.get(0);
+double physicalCapacity_kW = gc.v_liveConnectionMetaData.getPhysicalCapacity_kW();
+
+double contractedCapacity_kW = sl_customGCSolarfarmContractedCapacity_kW.getValue();
+
+if (contractedCapacity_kW &gt; physicalCapacity_kW) {
+    contractedCapacity_kW = physicalCapacity_kW;
+    sl_customGCSolarfarmContractedCapacity_kW.setValue(contractedCapacity_kW, false);
+}
+
+gc.v_liveConnectionMetaData.setCapacities_kW(0, contractedCapacity_kW, physicalCapacity_kW);
+
+if (!b_runningMainInterfaceScenarios) f_setScenarioToCustom();
+f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<Step>10</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1781771512388</Id>
+				<Name><![CDATA[txt_customGCSettingsSolarfarmInstalledCapacityPerHectare_kWpha]]></Name>
+				<X>20</X>
+				<Y>90</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Vermogen per hectare]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1781772075017</Id>
+				<Name><![CDATA[txt_customGCSettingsSolarfarmInstalledCapacityPerHectare_kWpha1]]></Name>
+				<X>20</X>
+				<Y>120</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Totaal oppervlak]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1781772181108</Id>
+				<Name><![CDATA[txt_customGCSolarfarmInstalledCapacity_kWpha]]></Name>
+				<X>245</X>
+				<Y>90</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0 kW/ha]]></Text>
+				<TextCode>(round(sl_customGCSolarfarmInstalledCapacity_kWpha.getValue() * 10.0) / 10.0) + " kW/ha"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Control Type="ComboBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1781878970701</Id>
+				<Name><![CDATA[cb_customGCSolarfarmPVOrientation]]></Name>
+				<X>220</X>
+				<Y>180</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="140" Height="20">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<FillColor>-1</FillColor>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>GCEnergyProduction solarpark = (GCEnergyProduction) (c_selectedGridConnections.get(0));
+J_EAProduction pvAsset = (J_EAProduction) solarpark.c_productionAssets.get(0);
+J_ProfilePointer profile;
+OL_PVOrientation pvOrientation;
+
+switch(cb_customGCSolarfarmPVOrientation.getValue()){
+	case "Zuid (15°)":
+    	profile = energyModel.pp_PVProduction35DegSouth_fr;
+        pvOrientation = OL_PVOrientation.SOUTH;
+    	break;
+	case "Oost/West (35°)":
+    	profile = energyModel.pp_PVProduction15DegEastWest_fr;
+        pvOrientation = OL_PVOrientation.EASTWEST;
+    	break;
+    default:
+        return;
+}
+
+solarpark.v_liveAssetsMetaData.PVOrientation = pvOrientation;
+pvAsset.setProfilePointer(profile);
+
+if (!b_runningMainInterfaceScenarios) f_setScenarioToCustom();
+f_resetSettings();
+//f_updateUIResultsData();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<Editable>false</Editable>
+					<Button>Zuid (15°)</Button>
+					<Button>Oost/West (35°)</Button>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1781879229854</Id>
+				<Name><![CDATA[txt_customGCSettingsSolarfarmPVOrientation]]></Name>
+				<X>20</X>
+				<Y>180</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Oriëntatie]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+		</Presentation>
+	</Group>
+	<Group>
+		<Id>1778241988036</Id>
+		<Name><![CDATA[gr_customGCWindfarmSettings]]></Name>
+		<X>520</X>
+		<Y>-2750</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>15</XCode>
+		<YCode>630</YCode>
+		<VisibleCode>v_clickedObjectType == OL_GISObjectType.WINDFARM &amp;&amp; !c_selectedGridConnections.isEmpty() &amp;&amp; c_customWindfarmGCs.contains((GCEnergyProduction)c_selectedGridConnections.get(0))</VisibleCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Rectangle>
+				<Id>1778241988038</Id>
+				<Name><![CDATA[rect_customEAWindfarmSettings]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>3</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>370</Width>
+				<Height>350</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-32</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Rectangle>
+			<Text>
+				<Id>1778241988040</Id>
+				<Name><![CDATA[txt_customGCSettingsWindfarm]]></Name>
+				<X>20</X>
+				<Y>20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Instellingen - Windpark]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>22</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778241988042</Id>
+				<Name><![CDATA[txt_customGCSettingsWindfarmInstalledCapacity_MW]]></Name>
+				<X>20</X>
+				<Y>90</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Geïnstalleerd vermogen]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778241988044</Id>
+				<Name><![CDATA[txt_customGCWindfarmInstalledCapacity_MW]]></Name>
+				<X>245</X>
+				<Y>90</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0 MW]]></Text>
+				<TextCode>sl_customGCWindfarmInstalledCapacity_MW.getValue() + " MW"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1778241988046</Id>
+				<Name><![CDATA[sl_customGCWindfarmInstalledCapacity_MW]]></Name>
+				<X>260</X>
+				<Y>85</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>double installedCapacity_MW = sl_customGCWindfarmInstalledCapacity_MW.getValue();
+
+GCEnergyProduction gc = (GCEnergyProduction)c_selectedGridConnections.get(0);
+J_EAProduction windAsset = (J_EAProduction)gc.c_productionAssets.get(0);
+
+// If needed, adjust the contracted capacity 
+double contractedCapacity_MW = sl_customGCWindfarmContractedCapacity_MW.getValue();
+if (contractedCapacity_MW &gt; installedCapacity_MW) {
+    contractedCapacity_MW = installedCapacity_MW;
+    sl_customGCWindfarmContractedCapacity_MW.setValue(contractedCapacity_MW, false);
+}
+// Dynamically clamp the range of the contracted capacity slider
+sl_customGCWindfarmContractedCapacity_MW.setRange(0, installedCapacity_MW);
+
+// Update backend
+windAsset.setCapacityElectric_kW(installedCapacity_MW*1000, gc);
+gc.v_liveConnectionMetaData.setCapacities_kW(0, contractedCapacity_MW*1000, installedCapacity_MW*1000);
+
+// Update the active instance of tabElectricity sliders
+if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
+    uI_Tabs.pop_tabElectricity.get(0).f_updateSliders_Electricity();
+}
+
+if (!b_runningMainInterfaceScenarios) f_setScenarioToCustom();
+f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<Step>0.1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1778241988050</Id>
+				<Name><![CDATA[txt_customGCSettingsWindfarmName]]></Name>
+				<X>20</X>
+				<Y>60</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Naam: ]]></Text>
+				<TextCode>c_selectedGridConnections.isEmpty() || c_selectedGridConnections.get(0).c_connectedGISObjects.isEmpty()  ? "" : "Naam: " + c_selectedGridConnections.get(0).c_connectedGISObjects.get(0).p_annotation</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778241988056</Id>
+				<Name><![CDATA[txt_customGCSettingsWindfarmContractedCapacity_MW]]></Name>
+				<X>20</X>
+				<Y>150</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>cb_customGCWindfarmCurtailment.isSelected()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Gecontracteerd vermogen]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778241988058</Id>
+				<Name><![CDATA[txt_customGCSettingsWindfarmCurtailment]]></Name>
+				<X>20</X>
+				<Y>120</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Curtailment]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778241988060</Id>
+				<Name><![CDATA[txt_customGCWindfarmContractedCapacity_MW]]></Name>
+				<X>245</X>
+				<Y>150</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>cb_customGCWindfarmCurtailment.isSelected()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0 MW]]></Text>
+				<TextCode>sl_customGCWindfarmContractedCapacity_MW.getValue() + " MW"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1778241988062</Id>
+				<Name><![CDATA[cb_customGCWindfarmCurtailment]]></Name>
+				<X>302</X>
+				<Y>112</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="40" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>GCEnergyProduction gc = (GCEnergyProduction) c_selectedGridConnections.get(0);
+if (cb_customGCWindfarmCurtailment.isSelected()) {
+    gc.f_setExternalAssetManagement(new J_CurtailManagementContractCapacity(gc, energyModel.p_timeParameters));
+} else {
+    gc.f_removeExternalAssetManagement(I_CurtailManagement.class);
+}
+
+if (!b_runningMainInterfaceScenarios) f_setScenarioToCustom();
+f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText/>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1778241988064</Id>
+				<Name><![CDATA[sl_customGCWindfarmContractedCapacity_MW]]></Name>
+				<X>260</X>
+				<Y>145</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<VisibleCode>cb_customGCWindfarmCurtailment.isSelected()</VisibleCode>
+					<Enabled>true</Enabled>
+					<ActionCode>double contractedCapacity_MW = sl_customGCWindfarmContractedCapacity_MW.getValue();
+
+// Update backend
+GCEnergyProduction gc = (GCEnergyProduction) c_selectedGridConnections.get(0);
+gc.v_liveConnectionMetaData.setCapacities_kW(0, contractedCapacity_MW*1000, gc.v_liveConnectionMetaData.getPhysicalCapacity_kW());
+
+if (!b_runningMainInterfaceScenarios) f_setScenarioToCustom();
+f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<Step>0.1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+		</Presentation>
+	</Group>
+	<Group>
+		<Id>1778278832476</Id>
+		<Name><![CDATA[gr_customGCGridBatterySettings]]></Name>
+		<X>920</X>
+		<Y>-2750</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>15</XCode>
+		<YCode>630</YCode>
+		<VisibleCode>v_clickedObjectType == OL_GISObjectType.BATTERY &amp;&amp; !c_selectedGridConnections.isEmpty() &amp;&amp; c_customGridBatteryGCs.contains((GCGridBattery)c_selectedGridConnections.get(0))</VisibleCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Rectangle>
+				<Id>1778278832478</Id>
+				<Name><![CDATA[rect_customEASolarfarmSettings1]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>3</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>370</Width>
+				<Height>350</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-32</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Rectangle>
+			<Text>
+				<Id>1778278832480</Id>
+				<Name><![CDATA[txt_customGCSettingsGridBattery]]></Name>
+				<X>20</X>
+				<Y>20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Instellingen - Buurtbatterij]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>22</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778278832482</Id>
+				<Name><![CDATA[txt_customGCSettingsGridBatteryInstalledCapacity_kWh]]></Name>
+				<X>20</X>
+				<Y>90</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Opslagcapaciteit]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778278832484</Id>
+				<Name><![CDATA[txt_customGCGridBatteryInstalledCapacity_kWh]]></Name>
+				<X>245</X>
+				<Y>90</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0 kWh]]></Text>
+				<TextCode>sl_customGCGridBatteryInstalledCapacity_kWh.getValue() + " kWh"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1778278832486</Id>
+				<Name><![CDATA[sl_customGCGridBatteryInstalledCapacity_kWh]]></Name>
+				<X>260</X>
+				<Y>85</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>double installedCapacity_kWh = sl_customGCGridBatteryInstalledCapacity_kWh.getValue();
+double installedCapacity_kW = sl_customGCGridBatteryInstalledCapacity_kW.getValue();
+
+if(installedCapacity_kW &gt; 0.5*installedCapacity_kWh){
+	installedCapacity_kW = 0.5*installedCapacity_kWh;
+	sl_customGCGridBatteryInstalledCapacity_kW.setValue(0.5*installedCapacity_kWh, false);
+}
+sl_customGCGridBatteryInstalledCapacity_kW.setRange(25, 0.5*installedCapacity_kWh);
+
+GCGridBattery gc = (GCGridBattery)c_selectedGridConnections.get(0);
+J_EAStorageElectric batteryAsset = (J_EAStorageElectric)gc.c_storageAssets.get(0);
+
+// Update backend
+batteryAsset.setStorageCapacity_kWh(installedCapacity_kWh, gc);
+batteryAsset.setCapacityElectric_kW(installedCapacity_kW);
+gc.v_liveConnectionMetaData.setCapacities_kW(installedCapacity_kW, installedCapacity_kW, installedCapacity_kW);
+
+// Update the active instance of tabElectricity sliders
+if (!uI_Tabs.pop_tabElectricity.isEmpty()) {
+    uI_Tabs.pop_tabElectricity.get(0).f_updateSliders_Electricity();
+}
+
+if (!b_runningMainInterfaceScenarios) f_setScenarioToCustom();
+f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<Step>50</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1778278832490</Id>
+				<Name><![CDATA[txt_customGCSettingsGridBatteryName]]></Name>
+				<X>20</X>
+				<Y>60</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Naam: ]]></Text>
+				<TextCode>c_selectedGridConnections.isEmpty() || c_selectedGridConnections.get(0).c_connectedGISObjects.isEmpty()  ? "" : "Naam: " + c_selectedGridConnections.get(0).c_connectedGISObjects.get(0).p_annotation</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778278832492</Id>
+				<Name><![CDATA[txt_customGCGridBatteryInstalledCapacity_kW]]></Name>
+				<X>245</X>
+				<Y>120</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0 kW]]></Text>
+				<TextCode>sl_customGCGridBatteryInstalledCapacity_kW.getValue() + " kW"</TextCode>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1778278832494</Id>
+				<Name><![CDATA[sl_customGCGridBatteryInstalledCapacity_kW]]></Name>
+				<X>260</X>
+				<Y>115</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="100" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>double installedCapacity_kW = sl_customGCGridBatteryInstalledCapacity_kW.getValue();
+
+GCGridBattery gc = (GCGridBattery)c_selectedGridConnections.get(0);
+J_EAStorageElectric batteryAsset = (J_EAStorageElectric)gc.c_storageAssets.get(0);
+
+batteryAsset.setCapacityElectric_kW(installedCapacity_kW);
+gc.v_liveConnectionMetaData.setCapacities_kW(installedCapacity_kW, installedCapacity_kW, installedCapacity_kW);
+
+if (!b_runningMainInterfaceScenarios) f_setScenarioToCustom();
+f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<Step>25</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1778278832496</Id>
+				<Name><![CDATA[txt_customGCSettingsGridBatteryAlgorithm]]></Name>
+				<X>20</X>
+				<Y>150</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Sturing]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1778278946812</Id>
+				<Name><![CDATA[txt_customGCSettingsGridBatteryInstalledCapacity_kW]]></Name>
+				<X>20</X>
+				<Y>120</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[(Ont)laad vermogen]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="ComboBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1778279933335</Id>
+				<Name><![CDATA[cb_customGCGridBatteryAlgorithm]]></Name>
+				<X>220</X>
+				<Y>150</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="140" Height="20">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<FillColor>-1</FillColor>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>if (c_selectedGridConnections.isEmpty() || !(c_selectedGridConnections.get(0) instanceof GCGridBattery)) {
+    return;
+}
+GCGridBattery gc = (GCGridBattery)c_selectedGridConnections.get(0);
+GridNode gn = gc.p_parentNodeElectric;
+I_BatteryManagement batteryAlgorithm = null;
+
+switch(cb_customGCGridBatteryAlgorithm.getValue()){
+	case "Zelfverbruik":
+    	batteryAlgorithm = new J_BatteryManagementSelfConsumptionGridNode(gc, energyModel.p_timeParameters);
+    	break;
+	case "Peak shaving":
+    	batteryAlgorithm = new J_BatteryManagementPeakShaving(gc, energyModel.p_timeParameters);
+    	((J_BatteryManagementPeakShaving)batteryAlgorithm).setTarget(gn);
+    	break;
+	case "Prijssturing":
+    	batteryAlgorithm = new J_BatteryManagementPrice(gc, energyModel.p_timeParameters);
+    	break;
+}
+
+gc.f_setBatteryManagement(batteryAlgorithm);
+
+if (!b_runningMainInterfaceScenarios) f_setScenarioToCustom();
+f_resetSettings();</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<Editable>false</Editable>
+					<Button>Zelfverbruik</Button>
+					<Button>Peak shaving</Button>
+					<Button>Prijssturing</Button>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+		</Presentation>
+	</Group>
 	<EmbeddedObjectPresentation>
 		<Id>1722252542596</Id>
 		<Name><![CDATA[uI_Tabs_presentation]]></Name>

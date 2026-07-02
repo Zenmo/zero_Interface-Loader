@@ -1,7 +1,6 @@
 double f_setPVOnLand(double hectare,List<GCEnergyProduction> gcListProduction)
 {/*ALCODESTART::1722256117103*/
-// TODO: Change to work for multiple solar fields in one model.
-// to do so it should probably first calculate the total installed pv in all solar fields
+// Single solarfarm at GridNode T0
 for ( GCEnergyProduction GCEP : gcListProduction) {
 	for(J_EAProduction j_ea : GCEP.c_productionAssets) {
 		if (j_ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC) {
@@ -90,9 +89,7 @@ zero_Interface.f_resetSettings();
 
 double f_setWindTurbines(double AllocatedWindPower_MW,List<GCEnergyProduction> gcListProduction)
 {/*ALCODESTART::1722256248965*/
-// TODO: Change to work for multiple wind farms in one model.
-// to do so it should probably first calculate the total installed wind power in all wind farms
-
+// Single windfarm at GridNode T0
 for ( GCEnergyProduction GCEP : gcListProduction) {
 	for(J_EAProduction j_ea : GCEP.c_productionAssets) {
 		if (j_ea.getEAType() == OL_EnergyAssetType.WINDMILL) {
@@ -140,18 +137,18 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-double f_getCurrentPVOnLandAndWindturbineValues()
+double f_getInitialPVOnLandAndWindturbineValues()
 {/*ALCODESTART::1745483988251*/
-p_currentPVOnLand_ha = 0;
-p_currentWindTurbines_MW = 0;
+p_initialPVOnLand_ha = 0;
+p_initialWindTurbines_MW = 0;
 for(GCEnergyProduction GCProd : uI_Tabs.f_getAllSliderGridConnections_production()){
-	if(!c_electricityTabEASliderGCs.contains(GCProd) && GCProd.v_isActive){
+	if(!c_electricityTabEASliderGCs.contains(GCProd) && !zero_Interface.c_customSolarfarmGCs.contains(GCProd) && !zero_Interface.c_customWindfarmGCs.contains(GCProd) && GCProd.v_isActive){
 		for(J_EAProduction ea : GCProd.c_productionAssets){
 			if(ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC){
-				p_currentPVOnLand_ha += ea.getCapacityElectric_kW()/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
+				p_initialPVOnLand_ha += ea.getCapacityElectric_kW()/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
 			}
 			else if(ea.getEAType() == OL_EnergyAssetType.WINDMILL){
-				p_currentWindTurbines_MW += ea.getCapacityElectric_kW()/1000;
+				p_initialWindTurbines_MW += ea.getCapacityElectric_kW()/1000;
 			}
 		}
 	}
@@ -561,18 +558,18 @@ double f_initializeTab_Electricity(List<GridConnection> electricityTabEASliderGC
 c_electricityTabEASliderGCs.clear();
 c_electricityTabEASliderGCs.addAll(electricityTabEASliderGCs);
 
-f_getCurrentPVOnLandAndWindturbineValues();
-f_getCurrentGridBatterySize();
+f_getInitialPVOnLandAndWindturbineValues();
+f_getInitialGridBatterySize();
 
 f_initializeElectricityPages();
 /*ALCODEEND*/}
 
-double f_getCurrentGridBatterySize()
+double f_getInitialGridBatterySize()
 {/*ALCODESTART::1765276703854*/
-p_currentTotalGridBatteryCapacity_MWh = 0;
+p_initialTotalGridBatteryCapacity_MWh = 0;
 for(GCGridBattery GCBat : uI_Tabs.f_getAllSliderGridConnections_gridBatteries()){
-	if(!c_electricityTabEASliderGCs.contains(GCBat) && GCBat.v_isActive){
-		p_currentTotalGridBatteryCapacity_MWh += (GCBat.p_batteryAsset.getStorageCapacity_kWh()/1000.0);
+	if(!c_electricityTabEASliderGCs.contains(GCBat) && !zero_Interface.c_customGridBatteryGCs.contains(GCBat) && GCBat.v_isActive){
+		p_initialTotalGridBatteryCapacity_MWh += (GCBat.p_batteryAsset.getStorageCapacity_kWh()/1000.0);
 	}
 }
 /*ALCODEEND*/}
@@ -638,12 +635,12 @@ double f_updateElectricitySliders_collective()
 List<GridConnection> productionGridConnections = new ArrayList<>(uI_Tabs.f_getAllSliderGridConnections_production());
 
 //Large scale EA production systems (PV/Wind on land)
-f_getCurrentPVOnLandAndWindturbineValues(); // Used for slider minimum: non adjustable GCProductions
+f_getInitialPVOnLandAndWindturbineValues(); // Used for slider minimum: non adjustable GCProductions
 
 double totalPVOnLand_kW = 0; // Of movable slider GC
 double totalWind_kW = 0; // Of movable slider GC
 
-for(GridConnection productionGC : c_electricityTabEASliderGCs){
+for(GridConnection productionGC : c_electricityTabEASliderGCs){ // Default slider solarfarm/windfarm collection
 	if(productionGC instanceof GCEnergyProduction && productionGC.v_isActive){
 		for(J_EAProduction productionEA : productionGC.c_productionAssets){
 			if(productionEA.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC){
@@ -657,25 +654,61 @@ for(GridConnection productionGC : c_electricityTabEASliderGCs){
 		}
 	}
 }
-sl_largeScalePV_ha.setRange(0, 1000); // Needed to prevent anylogic range bug
-sl_largeScalePV_ha.setValue((totalPVOnLand_kW/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha) + p_currentPVOnLand_ha, false);
-sl_largeScaleWind_MW.setRange(0, 1000); // Needed to prevent anylogic range bug
-sl_largeScaleWind_MW.setValue((totalWind_kW/1000) + p_currentWindTurbines_MW, false);
+
+double totalCustomPVOnLand_kW = 0;
+for(GCEnergyProduction customSF : zero_Interface.c_customSolarfarmGCs){
+    if(customSF.v_isActive){
+        for(J_EAProduction ea : customSF.c_productionAssets){
+            if(ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC){
+                totalCustomPVOnLand_kW += ea.getCapacityElectric_kW();
+            }
+        }
+    }
+}
+
+double totalCustomWind_kW = 0;
+for(GCEnergyProduction customWF : zero_Interface.c_customWindfarmGCs){
+    if(customWF.v_isActive){
+        for(J_EAProduction ea : customWF.c_productionAssets){
+            if(ea.getEAType() == OL_EnergyAssetType.WINDMILL){
+                totalCustomWind_kW += ea.getCapacityElectric_kW();
+            }
+        }
+    }
+}
+
+double minSliderPVOnLand_ha = p_initialPVOnLand_ha + totalCustomPVOnLand_kW/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
+double maxSliderPVOnLand_ha = minSliderPVOnLand_ha + 50;
+sl_largeScalePV_ha.setRange(minSliderPVOnLand_ha, maxSliderPVOnLand_ha);
+sl_largeScalePV_ha.setValue((totalPVOnLand_kW/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha) + minSliderPVOnLand_ha, false);
+
+double minSliderWind_MW = p_initialWindTurbines_MW + totalCustomWind_kW/1000;
+double maxSliderWind_MW = minSliderWind_MW + 100;
+sl_largeScaleWind_MW.setRange(minSliderWind_MW, maxSliderWind_MW);
+sl_largeScaleWind_MW.setValue((totalWind_kW/1000) + minSliderWind_MW, false);
 
 
 //Grid batteries
-List<GCGridBattery> sliderGridBatteryGridConnections = new ArrayList<>();
-for(GridConnection sliderGC : c_electricityTabEASliderGCs){
+f_getInitialGridBatterySize(); // Used for slider minimum: non adjustable GCGridBatteries
+
+double totalDefaultBatteryCapacity_kWh = 0;
+for(GridConnection sliderGC : c_electricityTabEASliderGCs){ // Default slider battery collection
 	if(sliderGC.v_isActive && sliderGC instanceof GCGridBattery sliderGridBattery){
-		sliderGridBatteryGridConnections.add(sliderGridBattery);
+		totalDefaultBatteryCapacity_kWh += sliderGridBattery.p_batteryAsset.getStorageCapacity_kWh();
 	}
 }
 
-double averageNeighbourhoodBatterySize_kWh = 0;
-for (GCGridBattery gc : sliderGridBatteryGridConnections) {
-	averageNeighbourhoodBatterySize_kWh += gc.p_batteryAsset.getStorageCapacity_kWh()/sliderGridBatteryGridConnections.size();
+double totalCustomBatteryCapacity_kWh = 0;
+for(GridConnection customGB : zero_Interface.c_customGridBatteryGCs){
+	if(customGB.v_isActive && customGB.p_batteryAsset != null){
+		totalCustomBatteryCapacity_kWh += customGB.p_batteryAsset.getStorageCapacity_kWh();
+	}
 }
-sl_gridBatteries_kWh.setValue(averageNeighbourhoodBatterySize_kWh, false);
+
+double minSliderGridBattery_kWh = p_initialTotalGridBatteryCapacity_MWh*1000 + totalCustomBatteryCapacity_kWh;
+double maxSliderGridBattery_kWh = minSliderGridBattery_kWh + 20000;
+sl_gridBatteries_kWh.setRange(minSliderGridBattery_kWh, maxSliderGridBattery_kWh);
+sl_gridBatteries_kWh.setValue(totalDefaultBatteryCapacity_kWh + minSliderGridBattery_kWh, false);
 
 //Curtailment large scale PV and wind
 boolean curtailment = true;

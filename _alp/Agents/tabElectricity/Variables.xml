@@ -24,7 +24,7 @@
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1745483322704</Id>
-		<Name><![CDATA[p_currentPVOnLand_ha]]></Name>
+		<Name><![CDATA[p_initialPVOnLand_ha]]></Name>
 		<X>50</X>
 		<Y>1270</Y>
 		<Label>
@@ -52,7 +52,7 @@
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1745483371462</Id>
-		<Name><![CDATA[p_currentWindTurbines_MW]]></Name>
+		<Name><![CDATA[p_initialWindTurbines_MW]]></Name>
 		<X>50</X>
 		<Y>1290</Y>
 		<Label>
@@ -80,7 +80,7 @@
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1765276731422</Id>
-		<Name><![CDATA[p_currentTotalGridBatteryCapacity_MWh]]></Name>
+		<Name><![CDATA[p_initialTotalGridBatteryCapacity_MWh]]></Name>
 		<X>50</X>
 		<Y>1340</Y>
 		<Label>

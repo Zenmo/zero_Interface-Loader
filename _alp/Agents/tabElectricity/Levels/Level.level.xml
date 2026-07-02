@@ -1636,7 +1636,7 @@ zero_Interface.f_setSelectedGNText();
 				<Id>1750063382243</Id>
 				<Name><![CDATA[sl_gridBatteries_kWh]]></Name>
 				<X>260</X>
-				<Y>115</Y>
+				<Y>135</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1655,17 +1655,18 @@ for(GridConnection gc : c_electricityTabEASliderGCs){
 	}
 }
 
-if(gcListGridBatteries.size() == 0){
-	throw new IllegalStateException("Model does not contain any GCGridBattery agent");
+double totalCustomBatteryCapacity_kWh = 0;
+for(GCGridBattery customGB : zero_Interface.c_customGridBatteryGCs){
+	if(customGB.v_isActive &amp;&amp; customGB.p_batteryAsset != null){
+		totalCustomBatteryCapacity_kWh += customGB.p_batteryAsset.getStorageCapacity_kWh();
+	}
 }
 
-f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</ActionCode>
+f_setGridBatteries(sl_gridBatteries_kWh.getValue() - totalCustomBatteryCapacity_kWh - p_initialTotalGridBatteryCapacity_MWh*1000.0, gcListGridBatteries);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>1000</MaxValue>
 					<Step>10</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
@@ -1674,7 +1675,7 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 				<Id>1750063382245</Id>
 				<Name><![CDATA[txt_gridBatteriesDescription]]></Name>
 				<X>20</X>
-				<Y>120</Y>
+				<Y>140</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1700,7 +1701,7 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 				<Id>1750063382247</Id>
 				<Name><![CDATA[txt_gridBatteries_kWh]]></Name>
 				<X>245</X>
-				<Y>120</Y>
+				<Y>140</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1727,7 +1728,7 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 				<Id>1752232850473</Id>
 				<Name><![CDATA[i_gridBatteries]]></Name>
 				<X>165</X>
-				<Y>118</Y>
+				<Y>138</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1755,7 +1756,7 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 				<Id>1770118893494</Id>
 				<Name><![CDATA[txt_largeScalePV_ha]]></Name>
 				<X>245</X>
-				<Y>60</Y>
+				<Y>80</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1769,7 +1770,7 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[0 ha]]></Text>
-				<TextCode>sl_largeScalePV_ha.getValue() + " ha"</TextCode>
+				<TextCode>(round(sl_largeScalePV_ha.getValue() * 10.0) / 10.0) + " ha"</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -1782,7 +1783,7 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 				<Id>1770118893505</Id>
 				<Name><![CDATA[sl_largeScalePV_ha]]></Name>
 				<X>260</X>
-				<Y>55</Y>
+				<Y>75</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1794,7 +1795,8 @@ f_setGridBatteries(sl_gridBatteries_kWh.getValue(), gcListGridBatteries);</Actio
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>List&lt;GCEnergyProduction&gt; sliderPVFarmGCList = new ArrayList&lt;&gt;();
+					<ActionCode>// 1. Construct list containing ONLY the default global solarfarms (excluding custom ones)
+List&lt;GCEnergyProduction&gt; sliderPVFarmGCList = new ArrayList&lt;&gt;();
 for(GridConnection gc : c_electricityTabEASliderGCs){
 	if(gc instanceof GCEnergyProduction energyProductionSite){
 		for(J_EAProduction j_ea : energyProductionSite.c_productionAssets) {
@@ -1810,14 +1812,23 @@ if(sliderPVFarmGCList.size() == 0){
 	throw new IllegalStateException("Model does not contain any PVFarmSliderGC agent");
 }
 
+// 2. Calculate sum of active custom solarfarms capacity
+double totalCustomPVOnLand_kW = 0;
+for(GCEnergyProduction customSF : zero_Interface.c_customSolarfarmGCs){
+    if(customSF.v_isActive){
+        for(J_EAProduction ea : customSF.c_productionAssets){
+            if(ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC){
+                totalCustomPVOnLand_kW += ea.getCapacityElectric_kW();
+            }
+        }
+    }
+}
 
-f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_currentPVOnLand_ha, sliderPVFarmGCList);</ActionCode>
+f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_initialPVOnLand_ha - totalCustomPVOnLand_kW/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha, sliderPVFarmGCList);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>p_currentPVOnLand_ha</MinValue>
-					<MaxValue>p_currentPVOnLand_ha + 50</MaxValue>
 					<Step>0.1</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
@@ -1826,7 +1837,7 @@ f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_currentPVOnLand_ha, sliderPVFarm
 				<Id>1770118893516</Id>
 				<Name><![CDATA[txt_largeScalePVDescription]]></Name>
 				<X>20</X>
-				<Y>60</Y>
+				<Y>80</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1852,7 +1863,7 @@ f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_currentPVOnLand_ha, sliderPVFarm
 				<Id>1770118893524</Id>
 				<Name><![CDATA[sl_largeScaleWind_MW]]></Name>
 				<X>260</X>
-				<Y>85</Y>
+				<Y>105</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1864,7 +1875,8 @@ f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_currentPVOnLand_ha, sliderPVFarm
 				<BasicProperties Width="100" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
-					<ActionCode>List&lt;GCEnergyProduction&gt; sliderWindFarmGCList = new ArrayList&lt;&gt;();
+					<ActionCode>// 1. Construct list containing ONLY the default global windfarms (excluding custom ones)
+List&lt;GCEnergyProduction&gt; sliderWindFarmGCList = new ArrayList&lt;&gt;();
 for(GridConnection gc : c_electricityTabEASliderGCs){
 	if(gc instanceof GCEnergyProduction energyProductionSite){
 		for(J_EAProduction j_ea : energyProductionSite.c_productionAssets) {
@@ -1880,13 +1892,23 @@ if(sliderWindFarmGCList.size() == 0){
 	throw new IllegalStateException("Model does not contain any sliderWindFarmGC agent");
 }
 
-f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, sliderWindFarmGCList);</ActionCode>
+// 2. Calculate sum of active custom solarfarms capacity
+double totalCustomWind_kW = 0;
+for(GCEnergyProduction customWF : zero_Interface.c_customWindfarmGCs){
+    if(customWF.v_isActive){
+        for(J_EAProduction ea : customWF.c_productionAssets){
+            if(ea.getEAType() == OL_EnergyAssetType.WINDMILL){
+                totalCustomWind_kW += ea.getCapacityElectric_kW();
+            }
+        }
+    }
+}
+
+f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - totalCustomWind_kW/1000, sliderWindFarmGCList);</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<DefaultValueCode>0</DefaultValueCode>
 					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>p_currentWindTurbines_MW</MinValue>
-					<MaxValue>p_currentWindTurbines_MW + 10</MaxValue>
 					<Step>0.1</Step>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
@@ -1895,7 +1917,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 				<Id>1770118893533</Id>
 				<Name><![CDATA[txt_largeScaleWindDescription]]></Name>
 				<X>20</X>
-				<Y>90</Y>
+				<Y>110</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1920,7 +1942,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 				<Id>1770118893541</Id>
 				<Name><![CDATA[txt_largeScaleWind_MW]]></Name>
 				<X>245</X>
-				<Y>90</Y>
+				<Y>110</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1946,7 +1968,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 				<Id>1770118893549</Id>
 				<Name><![CDATA[i_largeScalePV]]></Name>
 				<X>165</X>
-				<Y>58</Y>
+				<Y>78</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1973,7 +1995,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 				<Id>1770118893567</Id>
 				<Name><![CDATA[i_largeScaleWind]]></Name>
 				<X>165</X>
-				<Y>88</Y>
+				<Y>108</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2000,7 +2022,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 				<Id>1777620991223</Id>
 				<Name><![CDATA[txt_gridCurtailmentDescription]]></Name>
 				<X>20</X>
-				<Y>150</Y>
+				<Y>170</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2026,7 +2048,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 				<Id>1777620991268</Id>
 				<Name><![CDATA[cb_gridCurtailment]]></Name>
 				<X>302</X>
-				<Y>142</Y>
+				<Y>162</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2051,7 +2073,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 				<Id>1777620991324</Id>
 				<Name><![CDATA[i_gridCurtailment]]></Name>
 				<X>165</X>
-				<Y>148</Y>
+				<Y>168</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2074,6 +2096,217 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_currentWindTurbines_MW, s
 				</ImageFiles>
 				<OriginalSize>false</OriginalSize>
 			</Image>
+			<Text>
+				<Id>1777995324604</Id>
+				<Name><![CDATA[txt_addIndividualEA]]></Name>
+				<X>20</X>
+				<Y>200</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Lokaal niveau — Individuele assets toevoegen]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1777995277264</Id>
+				<Name><![CDATA[button_AddCustomSolarfarmGC]]></Name>
+				<X>20</X>
+				<Y>220</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="110" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>zero_Interface.b_addCustomGC = true;
+zero_Interface.v_addCustomGCType = OL_EnergyAssetType.PHOTOVOLTAIC;
+zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets toevoegen", new Color(255, 255, 255), new Color(0, 0, 0), "Teken je locatie op de kaart. Kies nog minimaal 3 hoekpunten.", new Color(255, 255, 255), new Color(0, 0, 0));
+zero_Interface.f_setForcedClickScreenVisibility(true);
+traceln("Adding solarfarm: Please click on the map to set the location.");</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Zonnepark</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1777995277266</Id>
+				<Name><![CDATA[button_AddCustomGridBattery]]></Name>
+				<X>20</X>
+				<Y>280</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="110" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>zero_Interface.b_addCustomGC = true;
+zero_Interface.v_addCustomGCType = OL_EnergyAssetType.STORAGE_ELECTRIC;
+zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets toevoegen", new Color(255, 255, 255), new Color(0, 0, 0), "Kies een locatie op de kaart", new Color(255, 255, 255), new Color(0, 0, 0));
+zero_Interface.f_setForcedClickScreenVisibility(true);
+traceln("Adding grid battery: Please click on the map to set the location.");</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Buurtbatterij</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1777995277268</Id>
+				<Name><![CDATA[button_AddCustomWindparkGC]]></Name>
+				<X>20</X>
+				<Y>250</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="110" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>zero_Interface.b_addCustomGC = true;
+zero_Interface.v_addCustomGCType = OL_EnergyAssetType.WINDMILL;
+zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets toevoegen", new Color(255, 255, 255), new Color(0, 0, 0), "Kies een locatie op de kaart", new Color(255, 255, 255), new Color(0, 0, 0));
+zero_Interface.f_setForcedClickScreenVisibility(true);
+traceln("Adding windfarm: Please click on the map to set the location.");</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Windpark</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1777995277270</Id>
+				<Name><![CDATA[button_DeleteCustomGC]]></Name>
+				<X>250</X>
+				<Y>220</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="110" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<EnableExpression>!zero_Interface.c_customSolarfarmGCs.isEmpty() || !zero_Interface.c_customWindfarmGCs.isEmpty() || !zero_Interface.c_customGridBatteryGCs.isEmpty()</EnableExpression>
+					<ActionCode>if(!zero_Interface.c_customSolarfarmGCs.isEmpty() || !zero_Interface.c_customWindfarmGCs.isEmpty() || !zero_Interface.c_customGridBatteryGCs.isEmpty()) {
+	zero_Interface.b_removeCustomGC = true;
+	zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets verwijderen", new Color(255, 255, 255), new Color(0, 0, 0), "Kies een energieasset op de kaart", new Color(255, 255, 255), new Color(0, 0, 0));
+	zero_Interface.f_setForcedClickScreenVisibility(true);
+	traceln("Click on the energy asset you want to remove.");
+} else {
+	throw new RuntimeException("There is no custom energy asset loaded in.");
+}</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Verwijderen...</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Control Type="Button">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1777995277272</Id>
+				<Name><![CDATA[button_DeleteAllCustomGCs]]></Name>
+				<X>250</X>
+				<Y>250</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="110" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<EnableExpression>!zero_Interface.c_customSolarfarmGCs.isEmpty() || !zero_Interface.c_customWindfarmGCs.isEmpty() || !zero_Interface.c_customGridBatteryGCs.isEmpty()</EnableExpression>
+					<ActionCode>if(!zero_Interface.c_customSolarfarmGCs.isEmpty() || !zero_Interface.c_customWindfarmGCs.isEmpty() || !zero_Interface.c_customGridBatteryGCs.isEmpty()) {
+	
+	while (!zero_Interface.c_customSolarfarmGCs.isEmpty()) {
+		zero_Interface.f_removeCustomGC(zero_Interface.c_customSolarfarmGCs.get(0));
+	}
+	while (!zero_Interface.c_customWindfarmGCs.isEmpty()) {
+		zero_Interface.f_removeCustomGC(zero_Interface.c_customWindfarmGCs.get(0));
+	}
+	while (!zero_Interface.c_customGridBatteryGCs.isEmpty()) {
+		zero_Interface.f_removeCustomGC(zero_Interface.c_customGridBatteryGCs.get(0));
+	}
+	traceln("Removed all custom EAs.");
+
+} else {
+	throw new RuntimeException("There is no custom energy asset loaded in.");
+}</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText>Verwijder alles</LabelText>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1778953362982</Id>
+				<Name><![CDATA[txt_addIndividualEA1]]></Name>
+				<X>20</X>
+				<Y>60</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Regionaal niveau]]></Text>
+				<Font>
+					<Name><![CDATA[Dialog]]></Name>
+					<Size>12</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
 		</Presentation>
 	</Group>
 	<Group>
