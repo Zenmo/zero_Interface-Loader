@@ -3142,7 +3142,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
 			<Name><![CDATA[coordinateList]]></Name>
-			<Type><![CDATA[List<Pair<Double,Double>>]]></Type>
+			<Type><![CDATA[List<Point>]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

@@ -8705,7 +8705,7 @@ f_resetSettings();</ActionCode>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[Naam: ]]></Text>
-				<TextCode>c_selectedGridConnections.isEmpty() ? "" : "Naam: " + c_selectedGridConnections.get(0).p_gridConnectionID</TextCode>
+				<TextCode>c_selectedGridConnections.isEmpty() || c_selectedGridConnections.get(0).c_connectedGISObjects.isEmpty()  ? "" : "Naam: " + c_selectedGridConnections.get(0).c_connectedGISObjects.get(0).p_annotation</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -9236,7 +9236,7 @@ f_resetSettings();</ActionCode>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[Naam: ]]></Text>
-				<TextCode>c_selectedGridConnections.isEmpty() ? "" : "Naam: " + c_selectedGridConnections.get(0).p_gridConnectionID</TextCode>
+				<TextCode>c_selectedGridConnections.isEmpty() || c_selectedGridConnections.get(0).c_connectedGISObjects.isEmpty()  ? "" : "Naam: " + c_selectedGridConnections.get(0).c_connectedGISObjects.get(0).p_annotation</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -9581,7 +9581,7 @@ f_resetSettings();</ActionCode>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[Naam: ]]></Text>
-				<TextCode>c_selectedGridConnections.isEmpty() ? "" : "Naam: " + c_selectedGridConnections.get(0).p_gridConnectionID</TextCode>
+				<TextCode>c_selectedGridConnections.isEmpty() || c_selectedGridConnections.get(0).c_connectedGISObjects.isEmpty()  ? "" : "Naam: " + c_selectedGridConnections.get(0).c_connectedGISObjects.get(0).p_annotation</TextCode>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>

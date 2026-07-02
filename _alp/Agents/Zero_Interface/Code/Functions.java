@@ -3925,18 +3925,19 @@ uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
 
 double f_addCustomSolarfarmGC(GridNode gn)
 {/*ALCODESTART::1777995108231*/
-String id = "Custom_Solarfarm_" + v_customSolarfarmGCCounter++;
+v_customSolarfarmGCCounter++;
+String id = "Custom_Solarfarm_" + v_customSolarfarmGCCounter;
 
 // 0. Get existic sliderGC owner
 ConnectionOwner owner = findFirst(energyModel.EnergyProductionSites, gc -> gc.p_gridConnectionID.equals(p_defaultMainSliderGCName_solarfarm)).p_owner;
 
 // 1. Create the GCEnergyProduction agent
 GCEnergyProduction solarpark = energyModel.add_EnergyProductionSites();
-solarpark.set_p_gridConnectionID(id);
-solarpark.set_p_ownerID(owner.p_actorID);
-solarpark.set_p_owner(owner);
+solarpark.p_gridConnectionID = id;
+solarpark.p_ownerID = owner.p_actorID;
+solarpark.p_owner = owner;
 solarpark.p_parentNodeElectricID = gn.p_gridNodeID;
-solarpark.p_isSliderGC = false; // This affects the slider range + setValue
+solarpark.p_isSliderGC = false; // Do not add to c_electricityTabEASliderGCs
 
 // 2. Create the GIS Object
 GIS_Object area = f_createAndLinkGISObject(solarpark, id, OL_GISObjectType.SOLARFARM, v_solarParkColor, v_solarParkLineColor);
@@ -4027,18 +4028,19 @@ f_refreshLegend();
 
 double f_addCustomWindfarmGC(GridNode gn)
 {/*ALCODESTART::1777995108235*/
-String id = "Custom_Windfarm_" + v_customWindfarmGCCounter++;
+v_customWindfarmGCCounter++;
+String id = "Custom_Windfarm_" + v_customWindfarmGCCounter;
 
 // 0. Get existic sliderGC owner
 ConnectionOwner owner = findFirst(energyModel.EnergyProductionSites, gc -> gc.p_gridConnectionID.equals(p_defaultMainSliderGCName_windfarm)).p_owner;
 
 // 1. Create the GCEnergyProduction agent
 GCEnergyProduction windpark = energyModel.add_EnergyProductionSites();
-windpark.set_p_gridConnectionID(id);
-windpark.set_p_ownerID(owner.p_actorID);
-windpark.set_p_owner(owner);
+windpark.p_gridConnectionID = id;
+windpark.p_ownerID = owner.p_actorID;
+windpark.p_owner = owner;
 windpark.p_parentNodeElectricID = gn.p_gridNodeID;
-windpark.p_isSliderGC = false; // This affects the slider range + setValue
+windpark.p_isSliderGC = false; // Do not add to c_electricityTabEASliderGCs
 
 // 2. Set capacity
 double defaultCapacity_kW = 500;
@@ -4074,18 +4076,19 @@ traceln("Successfully added custom windfarm");
 
 double f_addCustomGridBatteryGC(GridNode gn)
 {/*ALCODESTART::1777995108237*/
-String id = "Custom_Grid_Battery_" + v_customGridBatteryGCCounter++;
+v_customGridBatteryGCCounter++;
+String id = "Custom_Grid_Battery_" + v_customGridBatteryGCCounter;
 
 // 0. Get existic sliderGC owner
 ConnectionOwner owner = findFirst(energyModel.GridBatteries, gc -> gc.p_gridConnectionID.equals(p_defaultMainSliderGCName_battery)).p_owner;
 
 // 1. Create the GCGridBattery agent
 GCGridBattery battery = energyModel.add_GridBatteries();
-battery.set_p_gridConnectionID(id);
-battery.set_p_ownerID(owner.p_actorID);
-battery.set_p_owner(owner);
+battery.p_gridConnectionID = id;
+battery.p_ownerID = owner.p_actorID;
+battery.p_owner = owner;
 battery.p_parentNodeElectricID = gn.p_gridNodeID;
-battery.p_isSliderGC = false; // This affects the slider range + setValue
+battery.p_isSliderGC = false; // Do not add to c_electricityTabEASliderGCs
 
 // 2. Set capacity
 double defaultCapacity_kW = 250;
@@ -4237,8 +4240,8 @@ GIS_Object f_createAndLinkGISObject(GridConnection gc,String id,OL_GISObjectType
 GIS_Object area = energyModel.add_pop_GIS_Objects();
 area.p_id = id;
 area.p_GISObjectType = gisType;
-area.p_latitude = c_tempSavedCoordinates.get(0).getFirst();
-area.p_longitude = c_tempSavedCoordinates.get(0).getSecond();
+area.p_latitude = c_tempSavedCoordinates.get(0).getX();
+area.p_longitude = c_tempSavedCoordinates.get(0).getY();
 
 // 2. Generate coordinates (circular for windfarm, square for others) and assign to region
 double[] polyCoords;
@@ -4247,13 +4250,17 @@ if (gisType == OL_GISObjectType.WINDFARM || gisType == OL_GISObjectType.BATTERY)
 	if (gisType == OL_GISObjectType.WINDFARM) {
     	polyCoords = f_calculateCircleCoordinates(area.p_latitude, area.p_longitude, area_m2);
     	area.gisRegion = f_createGISObject(polyCoords);
+    	area.p_annotation = "Windpark " + v_customWindfarmGCCounter;
 	} else if (gisType == OL_GISObjectType.BATTERY) {
     	polyCoords = f_calculateSquareCoordinates(area.p_latitude, area.p_longitude, area_m2);
     	area.gisRegion = f_createGISObject(polyCoords);
+    	area.p_annotation = "Buurtbatterij " + v_customGridBatteryGCCounter;
+
     }
 } else {
 	polyCoords = f_calculateCustomPolygonCoordinates(c_tempSavedCoordinates);
 	area.gisRegion = f_createGISObject(polyCoords);
+	area.p_annotation = "Zonnepark " + v_customSolarfarmGCCounter;
 }
 
 // 3. Add to collections
@@ -4261,9 +4268,9 @@ area.c_containedGridConnections.add(gc);
 gc.c_connectedGISObjects.add(area);
 
 // 4. Apply styling
-area.set_p_defaultFillColor(fillColor);
-area.set_p_defaultLineColor(lineColor);
-area.set_p_defaultLineWidth(v_energyAssetLineWidth);
+area.p_defaultFillColor = fillColor;
+area.p_defaultLineColor = lineColor;
+area.p_defaultLineWidth = v_energyAssetLineWidth;
 f_styleAreas(area);
 
 return area;
@@ -4380,7 +4387,7 @@ double f_addCustomGCLocationSelection(double clickx,double clicky)
 // --- PHASE 1: Drawing Polygon Vertices ---
 
 // Add a vertex to the coordinates list
-Pair<Double, Double> clickedCoord = new Pair<>(clickx, clicky);
+Point clickedCoord = new Point(clickx, clicky);
 c_tempSavedCoordinates.add(clickedCoord);
 
 // Place a small square dot on the map representing this vertex
@@ -4457,9 +4464,8 @@ for (GIS_Object GISObject : allGISObjects) {
     if (GISObject.gisRegion != null && GISObject.gisRegion.contains(clickx, clicky) && GISObject.gisRegion.isVisible()) {
         if (GISObject.c_containedGridConnections.size() > 0) {
             GridConnection gc = GISObject.c_containedGridConnections.get(0);
-            
-            // Only allow deletion of specific energy asset types
-            if (gc instanceof GCEnergyProduction || gc instanceof GCGridBattery) {
+            // Only allow deletion of custom created GCs
+            if (c_customSolarfarmGCs.contains(gc) || c_customWindfarmGCs.contains(gc) || c_customGridBatteryGCs.contains(gc)) {
                 f_removeCustomGC(gc);
                 f_stopCustomGCCreation();
                 traceln("Removed the energy asset: " + gc.p_gridConnectionID);
@@ -4502,14 +4508,14 @@ f_setForcedClickScreenVisibility(false);
 f_setForcedClickScreenTextBoxes("", new Color(255, 255, 255), new Color(0, 0, 0), "", new Color(255, 255, 255), new Color(0, 0, 0));
 /*ALCODEEND*/}
 
-double[] f_calculateCustomPolygonCoordinates(List<Pair<Double,Double>> coordinateList)
+double[] f_calculateCustomPolygonCoordinates(List<Point> coordinateList)
 {/*ALCODESTART::1781694164851*/
 int size = coordinateList.size();
 double[] polyCoords = new double[size * 2];
 for (int i = 0; i < size; i++) {
-    Pair<Double, Double> p = coordinateList.get(i);
-    polyCoords[2 * i] = p.getFirst();
-    polyCoords[2 * i + 1] = p.getSecond();
+    Point p = coordinateList.get(i);
+    polyCoords[2 * i] = p.getX();
+    polyCoords[2 * i + 1] = p.getY();
 }
 return polyCoords;
 /*ALCODEEND*/}
@@ -4666,19 +4672,19 @@ class GeoUtil {
 GeoUtil geo = new GeoUtil();
 // Verify every pair of non-adjacent edges for intersection
 for (int i = 0; i < n; i++) {
-    double p1x = c_tempSavedCoordinates.get(i).getFirst();
-    double p1y = c_tempSavedCoordinates.get(i).getSecond();
-    double q1x = c_tempSavedCoordinates.get((i + 1) % n).getFirst();
-    double q1y = c_tempSavedCoordinates.get((i + 1) % n).getSecond();
+    double p1x = c_tempSavedCoordinates.get(i).getX();
+    double p1y = c_tempSavedCoordinates.get(i).getY();
+    double q1x = c_tempSavedCoordinates.get((i + 1) % n).getX();
+    double q1y = c_tempSavedCoordinates.get((i + 1) % n).getY();
     for (int j = i + 2; j < n; j++) {
         // Skip adjacent edges (they naturally touch at their common vertex)
         if (i == 0 && j == n - 1) {
             continue;
         }
-        double p2x = c_tempSavedCoordinates.get(j).getFirst();
-        double p2y = c_tempSavedCoordinates.get(j).getSecond();
-        double q2x = c_tempSavedCoordinates.get((j + 1) % n).getFirst();
-        double q2y = c_tempSavedCoordinates.get((j + 1) % n).getSecond();
+        double p2x = c_tempSavedCoordinates.get(j).getX();
+        double p2y = c_tempSavedCoordinates.get(j).getY();
+        double q2x = c_tempSavedCoordinates.get((j + 1) % n).getX();
+        double q2y = c_tempSavedCoordinates.get((j + 1) % n).getY();
         if (geo.doIntersect(p1x, p1y, q1x, q1y, p2x, p2y, q2x, q2y)) {
             return true; // Self-intersection detected
         }
