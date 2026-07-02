@@ -3944,7 +3944,7 @@ GIS_Object area = f_createAndLinkGISObject(solarpark, id, OL_GISObjectType.SOLAR
 
 double area_ha = area.gisRegion.area() / 10000;
 double installedCapacity_kW = area_ha * energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
-double maxContractedCapacity_kW = Math.ceil(installedCapacity_kW / 50.0) * 50.0;
+double maxContractedCapacity_kW = Math.ceil(installedCapacity_kW / 10.0) * 10.0;
 solarpark.v_liveConnectionMetaData.setCapacities_kW(0, maxContractedCapacity_kW, maxContractedCapacity_kW);
 solarpark.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
 
@@ -4161,7 +4161,7 @@ boolean hasCurtailment = gc.f_isAssetManagementActive(I_CurtailManagement.class)
 cb_customGCSolarfarmCurtailment.setSelected(hasCurtailment, false);
 
 // Contracted capacity limit
-double maxContractedCapacity_kW = Math.ceil(currentCapacity_kW / 50.0) * 50.0;
+double maxContractedCapacity_kW = ceil(currentCapacity_kW / 10.0) * 10.0;
 
 sl_customGCSolarfarmContractedCapacity_kW.setRange(0, maxContractedCapacity_kW);
 sl_customGCSolarfarmContractedCapacity_kW.setValue(gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW(), false);
@@ -4218,7 +4218,7 @@ double currentCapacity_kW = batteryAsset.getCapacityElectric_kW();
 sl_customGCGridBatteryInstalledCapacity_kWh.setRange(100, 5000);
 sl_customGCGridBatteryInstalledCapacity_kWh.setValue(currentCapacity_kWh, false);
 
-sl_customGCGridBatteryInstalledCapacity_kW.setRange(50, 2500);
+sl_customGCGridBatteryInstalledCapacity_kW.setRange(50, currentCapacity_kWh / energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power);
 sl_customGCGridBatteryInstalledCapacity_kW.setValue(currentCapacity_kW, false);
 
 // Battery management selection
