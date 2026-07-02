@@ -1640,7 +1640,7 @@ van het gebied, en de huidige gasconsumptie voor verwarming.]]></Text>
 	v_selectedGridConnectionIndex += 1;
 
 	if(v_customEnergyCoop != null){
-		energyModel.f_removeEnergyCoop(v_customEnergyCoop, energyModel.p_timeVariables);
+		energyModel.f_removeEnergyCoop(v_customEnergyCoop, energyModel.p_timeParameters, energyModel.p_timeVariables);
 		v_customEnergyCoop = null;
 	}
 	
