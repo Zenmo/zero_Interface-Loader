@@ -1550,7 +1550,7 @@ t_forcedClickMessage.setText(forcedClickScreenMessageText);
 gr_ForceMapSelectionMessageText.setVisible(false);
 
 if(!t_forcedClickMessage.getText().equals("")){
-	f_adjustTextToFitRectangle(t_forcedClickMessage, rect_selectText, 25.0, 36);
+	UIUtil.fitTextInRectangle(t_forcedClickMessage, rect_selectText, 15.0, 15.0, 15.0, 15.0);
 	gr_ForceMapSelectionMessageText.setVisible(true);
 }
 /*ALCODEEND*/}
@@ -3970,8 +3970,6 @@ f_refreshLegend();
 ArrayList<GIS_Object> selectedList = new ArrayList<>();
 selectedList.add(area);
 f_selectBuilding(area, selectedList);
-
-traceln("Successfully added custom solarfarm");
 /*ALCODEEND*/}
 
 double f_removeCustomGC(GridConnection gc)
@@ -4070,8 +4068,6 @@ f_refreshLegend();
 ArrayList<GIS_Object> selectedList = new ArrayList<>();
 selectedList.add(area);
 f_selectBuilding(area, selectedList);
-
-traceln("Successfully added custom windfarm");
 /*ALCODEEND*/}
 
 double f_addCustomGridBatteryGC(GridNode gn)
@@ -4121,8 +4117,6 @@ f_refreshLegend();
 ArrayList<GIS_Object> selectedList = new ArrayList<>();
 selectedList.add(area);
 f_selectBuilding(area, selectedList);
-
-traceln("Successfully added custom grid battery");
 /*ALCODEEND*/}
 
 double f_updateCustomGCSolarfarmSettings()
@@ -4247,16 +4241,16 @@ area.p_longitude = c_tempSavedCoordinates.get(0).getY();
 double[] polyCoords;
 if (gisType == OL_GISObjectType.WINDFARM) {
 	double area_m2 = 1000; // Rule-of-Thumb windfarm: 1 hectare per 5 MW (5000 kW) capacity
-	polyCoords = f_calculateCircleCoordinates(area.p_latitude, area.p_longitude, area_m2);
+	polyCoords = GISUtil.calculateCircleCoordinates(area.p_latitude, area.p_longitude, area_m2);
 	area.gisRegion = f_createGISObject(polyCoords);
 	area.p_annotation = "Windpark " + v_customWindfarmGCCounter;
 } else if (gisType == OL_GISObjectType.BATTERY) {
 	double area_m2 = 400; // Rule-of-Thumb grid battery: 1 hectare per 100 MWh storage capacity (100 m2 per MWh)
-	polyCoords = f_calculateSquareCoordinates(area.p_latitude, area.p_longitude, area_m2);
+	polyCoords = GISUtil.calculateSquareCoordinates(area.p_latitude, area.p_longitude, area_m2);
 	area.gisRegion = f_createGISObject(polyCoords);
 	area.p_annotation = "Buurtbatterij " + v_customGridBatteryGCCounter;
 } else {
-	polyCoords = f_calculateCustomPolygonCoordinates(c_tempSavedCoordinates);
+	polyCoords = GISUtil.calculateCustomPolygonCoordinates(c_tempSavedCoordinates);
 	area.gisRegion = f_createGISObject(polyCoords);
 	area.p_annotation = "Zonnepark " + v_customSolarfarmGCCounter;
 }
@@ -4292,56 +4286,6 @@ for (int i = 1; i <= 10; i++) {
 f_initializeLegend();
 /*ALCODEEND*/}
 
-double[] f_calculateSquareCoordinates(double lat,double lon,double area_m2)
-{/*ALCODESTART::1778997955081*/
-/**
- * Computes a list of double coordinates representing a perfectly square polygon centered
- * at (lat, lon) with a physical area of 'area_m2' in square meters, correcting for local latitude "deformation".
- */
-
-double side_m = Math.sqrt(area_m2);
-double halfSide_m = side_m / 2.0;
-
-// Earth conversion factors (approximate for localized areas)
-double metersPerDegLat = 111320.0;
-double metersPerDegLon = 111320.0 * Math.cos(Math.toRadians(lat));
-
-double offsetLat = halfSide_m / metersPerDegLat;
-double offsetLon = halfSide_m / metersPerDegLon;
-
-return new double[]{
-    lat + offsetLat, lon - offsetLon, // Top-left
-    lat + offsetLat, lon + offsetLon, // Top-right
-    lat - offsetLat, lon + offsetLon, // Bottom-right
-    lat - offsetLat, lon - offsetLon  // Bottom-left
-};
-/*ALCODEEND*/}
-
-double[] f_calculateCircleCoordinates(double lat,double lon,double area_m2)
-{/*ALCODESTART::1781623122174*/
-// A circle's radius in meters from its area in m²: Area = pi * r^2  =>  r = sqrt(Area / pi)
-double radius_m = Math.sqrt(area_m2 / Math.PI);
-
-// Number of points (vertices) to approximate the circle
-int numPoints = 32;
-double[] polyCoords = new double[numPoints * 2];
-
-// Earth conversion factors (approximate for localized areas)
-double metersPerDegLat = 111320.0;
-double metersPerDegLon = 111320.0 * Math.cos(Math.toRadians(lat));
-
-for (int i = 0; i < numPoints; i++) {
-    double angle = 2.0 * Math.PI * i / numPoints;
-    double offsetLat = (radius_m * Math.sin(angle)) / metersPerDegLat;
-    double offsetLon = (radius_m * Math.cos(angle)) / metersPerDegLon;
-    
-    polyCoords[2 * i] = lat + offsetLat;
-    polyCoords[2 * i + 1] = lon + offsetLon;
-}
-
-return polyCoords;
-/*ALCODEEND*/}
-
 double f_addCustomGCLocationSelection(double clickx,double clicky)
 {/*ALCODESTART::1781677700343*/
 // --- PHASE 1: Drawing Polygon Vertices ---
@@ -4369,7 +4313,7 @@ if (v_addCustomGCType == OL_EnergyAssetType.WINDMILL || v_addCustomGCType == OL_
 		if (previewGISRegion != null) {
 	        previewGISRegion.remove();
 	    }
-	    double[] previewCoords = f_calculateCustomPolygonCoordinates(c_tempSavedCoordinates);
+	    double[] previewCoords = GISUtil.calculateCustomPolygonCoordinates(c_tempSavedCoordinates);
 	    previewGISRegion = f_createGISObject(previewCoords);
 	    previewGISRegion.setFillColor(new Color(255, 0, 0, 50)); // Semi-transparent red
 	    previewGISRegion.setLineColor(Color.RED);
@@ -4405,7 +4349,6 @@ if (clickedGN != null) {
     
     return;
 } else {
-    traceln("Please click on a valid transformer (GridNode).");
     return;
 }
 /*ALCODEEND*/}
@@ -4428,7 +4371,6 @@ for (GIS_Object GISObject : allGISObjects) {
             if (c_customSolarfarmGCs.contains(gc) || c_customWindfarmGCs.contains(gc) || c_customGridBatteryGCs.contains(gc)) {
                 f_removeCustomGC(gc);
                 f_stopCustomGCCreation();
-                traceln("Removed the energy asset: " + gc.p_gridConnectionID);
                 return;
             }
         }
@@ -4436,13 +4378,12 @@ for (GIS_Object GISObject : allGISObjects) {
 }
 // If the user clicks elsewhere, cancel the deletion mode
 f_stopCustomGCCreation();
-traceln("Deletion mode cancelled.");
 /*ALCODEEND*/}
 
 GISRegion f_drawTempCoordinateDot(double lat,double lon)
 {/*ALCODESTART::1781682728045*/
 //Draw a small dot (2m x 2m square = 4m²) on map at clicked coordinates
-double[] polyCoords = f_calculateSquareCoordinates(lat, lon, 25);
+double[] polyCoords = GISUtil.calculateSquareCoordinates(lat, lon, 25);
 
 GISRegion dot = f_createGISObject(polyCoords);
 dot.setFillColor(Color.RED);
@@ -4468,25 +4409,13 @@ f_setForcedClickScreenVisibility(false);
 f_setForcedClickScreenTextBoxes("", new Color(255, 255, 255), new Color(0, 0, 0), "", new Color(255, 255, 255), new Color(0, 0, 0));
 /*ALCODEEND*/}
 
-double[] f_calculateCustomPolygonCoordinates(List<Point> coordinateList)
-{/*ALCODESTART::1781694164851*/
-int size = coordinateList.size();
-double[] polyCoords = new double[size * 2];
-for (int i = 0; i < size; i++) {
-    Point p = coordinateList.get(i);
-    polyCoords[2 * i] = p.getX();
-    polyCoords[2 * i + 1] = p.getY();
-}
-return polyCoords;
-/*ALCODEEND*/}
-
 double f_setForcedClickScreenTitleText(String forcedClickScreenText)
 {/*ALCODESTART::1781861106301*/
 txt_forcedClickTitle.setText(forcedClickScreenText);
 gr_forcedClickTitleTxt.setVisible(false);
 
 if(!txt_forcedClickTitle.getText().equals("")){
-	f_adjustTextToFitRectangle(txt_forcedClickTitle, rect_forcedClickTitle, 25.0, 48);
+	UIUtil.fitTextInRectangle(txt_forcedClickTitle, rect_forcedClickTitle, 15.0, 15.0, 15.0, 15.0);
 	gr_forcedClickTitleTxt.setVisible(true);
 }
 /*ALCODEEND*/}
@@ -4511,63 +4440,6 @@ rect_selectText.setFillColor(fillColor);
 rect_selectText.setLineColor(lineColor);
 /*ALCODEEND*/}
 
-double f_adjustTextToFitRectangle(ShapeText textShape,ShapeRectangle rectShape,double margin,int defaultFontSize)
-{/*ALCODESTART::1782206478165*/
-if (textShape == null || textShape.getText() == null || textShape.getText().isEmpty() || rectShape == null) {
-    return;
-}
-
-// Resetting of default fontsize to prevent overflow
-Font font = textShape.getFont();
-if (font != null) {
-	Font defaultFont = font.deriveFont((float) defaultFontSize);
-	textShape.setFont(defaultFont);
-}
-
-double rectWidth = rectShape.getWidth();
-double rectHeight = rectShape.getHeight();
-double rectX = rectShape.getX();
-double rectY = rectShape.getY();
-double targetWidth = rectWidth - 2 * margin;
-
-
-String text = textShape.getText();
-Font currentFont = textShape.getFont();
-BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-Graphics2D g2d = img.createGraphics();
-try {
-	FontMetrics fm = g2d.getFontMetrics(currentFont);
-	
-	// Find longest line of text (if ShapeText contains multiple sentences)
-	String[] lines = text.split("\n");
-	double maxLineWidth = 0;
-	for (String line : lines) {
-		double lineWidth = fm.stringWidth(line);
-		if (lineWidth > maxLineWidth) {
-			maxLineWidth = lineWidth;
-		}
-	}
-	
-	// Scale down the font if it exceeds the maximum target width
-	if (maxLineWidth > targetWidth) {
-		double scaleFactor = targetWidth / maxLineWidth;
-		double newSizeDouble = defaultFontSize * scaleFactor;
-		float newSize = (float) Math.floor(newSizeDouble);
-		
-		Font scaledFont = currentFont.deriveFont(newSize);
-		textShape.setFont(scaledFont);
-		fm = g2d.getFontMetrics(scaledFont);
-	}
-	
-	double textHeight = lines.length * fm.getHeight();
-	double newY = rectY + 0.5*(rectHeight - textHeight);
-	textShape.setY(newY);
-	
-} finally {
-	g2d.dispose();
-}
-/*ALCODEEND*/}
-
 double f_resetCustomGCCreation()
 {/*ALCODESTART::1782220715178*/
 // Clean up temporary dot markers
@@ -4586,70 +4458,5 @@ if (previewGISRegion != null) {
 
 // Clear coordinates list
 c_tempSavedCoordinates.clear();
-/*ALCODEEND*/}
-
-boolean f_checkCustomPolygonSelfIntersection()
-{/*ALCODESTART::1782222661974*/
-int n = c_tempSavedCoordinates.size();
-if (n < 4) {
-    return false; // A polygon with less than 4 vertices cannot self-intersect
-}
-// Helper class for robust geometric computations
-class GeoUtil {
-    // Checks if point q lies on line segment pr
-    boolean onSegment(double px, double py, double qx, double qy, double rx, double ry) {
-        return qx <= Math.max(px, rx) && qx >= Math.min(px, rx) &&
-               qy <= Math.max(py, ry) && qy >= Math.min(py, ry);
-    }
-    // Finds the orientation of ordered triplet (p, q, r).
-    // Returns:
-    // 0 -> p, q and r are collinear
-    // 1 -> Clockwise
-    // 2 -> Counterclockwise
-    int orientation(double px, double py, double qx, double qy, double rx, double ry) {
-        double val = (qy - py) * (rx - qx) - (qx - px) * (ry - qy);
-        if (Math.abs(val) < 1e-9) return 0; // Collinear within precision threshold
-        return (val > 0) ? 1 : 2;
-    }
-    // Checks if line segment p1q1 and p2q2 intersect
-    boolean doIntersect(double p1x, double p1y, double q1x, double q1y,
-                        double p2x, double p2y, double q2x, double q2y) {
-        int o1 = orientation(p1x, p1y, q1x, q1y, p2x, p2y);
-        int o2 = orientation(p1x, p1y, q1x, q1y, q2x, q2y);
-        int o3 = orientation(p2x, p2y, q2x, q2y, p1x, p1y);
-        int o4 = orientation(p2x, p2y, q2x, q2y, q1x, q1y);
-        // General Case: Segments cross each other
-        if (o1 != o2 && o3 != o4) return true;
-        // Special Cases (Collinear segments overlapping)
-        if (o1 == 0 && onSegment(p1x, p1y, p2x, p2y, q1x, q1y)) return true;
-        if (o2 == 0 && onSegment(p1x, p1y, q2x, q2y, q1x, q1y)) return true;
-        if (o3 == 0 && onSegment(p2x, p2y, p1x, p1y, q2x, q2y)) return true;
-        if (o4 == 0 && onSegment(p2x, p2y, q1x, q1y, q2x, q2y)) return true;
-        return false;
-    }
-}
-
-GeoUtil geo = new GeoUtil();
-// Verify every pair of non-adjacent edges for intersection
-for (int i = 0; i < n; i++) {
-    double p1x = c_tempSavedCoordinates.get(i).getX();
-    double p1y = c_tempSavedCoordinates.get(i).getY();
-    double q1x = c_tempSavedCoordinates.get((i + 1) % n).getX();
-    double q1y = c_tempSavedCoordinates.get((i + 1) % n).getY();
-    for (int j = i + 2; j < n; j++) {
-        // Skip adjacent edges (they naturally touch at their common vertex)
-        if (i == 0 && j == n - 1) {
-            continue;
-        }
-        double p2x = c_tempSavedCoordinates.get(j).getX();
-        double p2y = c_tempSavedCoordinates.get(j).getY();
-        double q2x = c_tempSavedCoordinates.get((j + 1) % n).getX();
-        double q2y = c_tempSavedCoordinates.get((j + 1) % n).getY();
-        if (geo.doIntersect(p1x, p1y, q1x, q1y, p2x, p2y, q2x, q2y)) {
-            return true; // Self-intersection detected
-        }
-    }
-}
-return false; // Polygon is valid
 /*ALCODEEND*/}
 

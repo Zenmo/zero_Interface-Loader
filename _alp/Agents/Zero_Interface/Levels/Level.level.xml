@@ -4128,7 +4128,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
 						<VisibleCode>c_tempSavedCoordinates.size()&gt;=3 &amp;&amp; !b_customGCPolygonCreated</VisibleCode>
-						<OnClickCode>if (f_checkCustomPolygonSelfIntersection()) { //Custom drawn polygon is self-intersecting
+						<OnClickCode>if (GISUtil.arePolygonEdgesSelfIntersecting(c_tempSavedCoordinates)) { // Check if custom drawn polygon is self-intersecting
     f_resetCustomGCCreation();
     f_setForcedClickScreenMessageText("De getekende lijnen mogen elkaar niet snijden! Begin opnieuw.");
 } else {
@@ -8648,21 +8648,13 @@ double area_m2 = gc.c_connectedGISObjects.get(0).gisRegion.area();
 double area_ha = area_m2 / 10000.0;
 double installedCapacity_kW = installedCapacity_kWpha * area_ha;
 
-traceln("installedCapacity_kW: " + installedCapacity_kW);
-
 // Calculate max contracted range to be the next multiple of 50 kW above installed capacity
-double maxContractedCapacity_kW = Math.ceil(installedCapacity_kW / 50.0) * 50.0;
-//if (maxContractedCapacity_kW == 0) maxContractedCapacity_kW = 50.0; // fallback to prevent 0 range
-traceln("maxContractedCapacity_kW: " + maxContractedCapacity_kW);
-//txt_customGCSolarfarmTotalSolarfarmArea_ha.setText(area_ha + " ha");
-//txt_customGCSolarfarmInstalledCapacity_kW.setText(installedCapacity_kW + " kW");
+double maxContractedCapacity_kW = ceil(installedCapacity_kW / 50.0) * 50.0;
 
 // If needed, adjust the contracted capacity
 double contractedCapacity_kW = sl_customGCSolarfarmContractedCapacity_kW.getValue();
-traceln("contractedCapacity_kW: " + contractedCapacity_kW);
 if (contractedCapacity_kW &gt; maxContractedCapacity_kW) {
     contractedCapacity_kW = maxContractedCapacity_kW;
-    traceln("contractedCapacity_kW after: " + contractedCapacity_kW);
     sl_customGCSolarfarmContractedCapacity_kW.setValue(contractedCapacity_kW, false);
 }
 // Dynamically clamp the range of the contracted capacity slider
@@ -9008,8 +9000,7 @@ solarpark.v_liveAssetsMetaData.PVOrientation = pvOrientation;
 pvAsset.setProfilePointer(profile);
 
 if (!b_runningMainInterfaceScenarios) f_setScenarioToCustom();
-f_resetSettings();
-//f_updateUIResultsData();</ActionCode>
+f_resetSettings();</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>
