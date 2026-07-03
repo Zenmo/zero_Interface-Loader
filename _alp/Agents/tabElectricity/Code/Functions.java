@@ -142,7 +142,7 @@ double f_getInitialPVOnLandAndWindturbineValues()
 p_initialPVOnLand_ha = 0;
 p_initialWindTurbines_MW = 0;
 for(GCEnergyProduction GCProd : uI_Tabs.f_getAllSliderGridConnections_production()){
-	if(!c_electricityTabEASliderGCs.contains(GCProd) && !zero_Interface.c_customSolarfarmGCs.contains(GCProd) && !zero_Interface.c_customWindfarmGCs.contains(GCProd) && GCProd.v_isActive){
+	if(!c_electricityTabEASliderGCs.contains(GCProd) && !c_customSolarfarmGCs.contains(GCProd) && !c_customWindfarmGCs.contains(GCProd) && GCProd.v_isActive){
 		for(J_EAProduction ea : GCProd.c_productionAssets){
 			if(ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC){
 				p_initialPVOnLand_ha += ea.getCapacityElectric_kW()/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
@@ -485,7 +485,6 @@ for(GCHouse GC : houseGridConnections){
 
 double electricityDemandIncrease_pct = totalBaseConsumption_kWh > 0 ? ( (- totalSavedConsumption_kWh)/totalBaseConsumption_kWh * 100) : 0;
 sl_householdElectricityDemandIncrease_pct.setValue(roundToInt(electricityDemandIncrease_pct), false);
-
 /*ALCODEEND*/}
 
 double f_updateElectricitySliders_companies()
@@ -568,7 +567,7 @@ double f_getInitialGridBatterySize()
 {/*ALCODESTART::1765276703854*/
 p_initialTotalGridBatteryCapacity_MWh = 0;
 for(GCGridBattery GCBat : uI_Tabs.f_getAllSliderGridConnections_gridBatteries()){
-	if(!c_electricityTabEASliderGCs.contains(GCBat) && !zero_Interface.c_customGridBatteryGCs.contains(GCBat) && GCBat.v_isActive){
+	if(!c_electricityTabEASliderGCs.contains(GCBat) && !c_customGridBatteryGCs.contains(GCBat) && GCBat.v_isActive){
 		p_initialTotalGridBatteryCapacity_MWh += (GCBat.p_batteryAsset.getStorageCapacity_kWh()/1000.0);
 	}
 }
@@ -656,7 +655,7 @@ for(GridConnection productionGC : c_electricityTabEASliderGCs){ // Default slide
 }
 
 double totalCustomPVOnLand_kW = 0;
-for(GCEnergyProduction customSF : zero_Interface.c_customSolarfarmGCs){
+for(GCEnergyProduction customSF : c_customSolarfarmGCs){
     if(customSF.v_isActive){
         for(J_EAProduction ea : customSF.c_productionAssets){
             if(ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC){
@@ -667,7 +666,7 @@ for(GCEnergyProduction customSF : zero_Interface.c_customSolarfarmGCs){
 }
 
 double totalCustomWind_kW = 0;
-for(GCEnergyProduction customWF : zero_Interface.c_customWindfarmGCs){
+for(GCEnergyProduction customWF : c_customWindfarmGCs){
     if(customWF.v_isActive){
         for(J_EAProduction ea : customWF.c_productionAssets){
             if(ea.getEAType() == OL_EnergyAssetType.WINDMILL){
@@ -699,7 +698,7 @@ for(GridConnection sliderGC : c_electricityTabEASliderGCs){ // Default slider ba
 }
 
 double totalCustomBatteryCapacity_kWh = 0;
-for(GridConnection customGB : zero_Interface.c_customGridBatteryGCs){
+for(GridConnection customGB : c_customGridBatteryGCs){
 	if(customGB.v_isActive && customGB.p_batteryAsset != null){
 		totalCustomBatteryCapacity_kWh += customGB.p_batteryAsset.getStorageCapacity_kWh();
 	}
@@ -737,6 +736,9 @@ if (hasCompanies) {
 }
 c_loadedPageGroups.add(gr_electricitySliders_collective);
 
+// Add custom GC settings pages
+f_addCustomGCSettingsPage();
+
 // If you have a custom page, add it by using f_addCustomPage:
 f_addCustomPage();
 
@@ -746,9 +748,24 @@ if (c_loadedPageGroups.size() <= 1) {
 } else {
     gr_pageIndicator.setVisible(true);
 }
-// Navigate to the first page
+
+// Navigate to the correct page
 if (!c_loadedPageGroups.isEmpty()) {
-    f_goToPage(0);
+    int targetPage = 0; // Default to page 0
+    if (!zero_Interface.c_selectedGridConnections.isEmpty()) {
+        GridConnection selectedGC = zero_Interface.c_selectedGridConnections.get(0);
+        if (c_customSolarfarmGCs.contains(selectedGC)) {
+            targetPage = c_loadedPageGroups.indexOf(gr_customGCSolarfarmSettings);
+        } else if (c_customWindfarmGCs.contains(selectedGC)) {
+            targetPage = c_loadedPageGroups.indexOf(gr_customGCWindfarmSettings);
+        } else if (c_customGridBatteryGCs.contains(selectedGC)) {
+            targetPage = c_loadedPageGroups.indexOf(gr_customGCGridBatterySettings);
+        }
+    }
+    if (targetPage < 0) {
+        targetPage = 0;
+    }
+    f_goToPage(targetPage);
 }
 /*ALCODEEND*/}
 
@@ -756,5 +773,523 @@ double f_addCustomPage()
 {/*ALCODESTART::1778055837807*/
 // Override this function to add your custom page to c_loadedPageGroups, for instance, like this:
 //c_loadedPageGroups.add(gr_electricitySliders_custom);
+/*ALCODEEND*/}
+
+double f_updateCustomGCSolarfarmSettings()
+{/*ALCODESTART::1783088206556*/
+if (zero_Interface.c_selectedGridConnections.isEmpty()) {
+    return;
+}
+
+GridConnection selectedGC = zero_Interface.c_selectedGridConnections.get(0);
+if (!(selectedGC instanceof GCEnergyProduction) || !c_customSolarfarmGCs.contains(selectedGC)) {
+    return;
+}
+
+GCEnergyProduction gc = (GCEnergyProduction) selectedGC;
+J_EAProduction pvAsset = (J_EAProduction) gc.c_productionAssets.get(0);
+
+// Installed capacity per hectare
+double currentCapacity_kW = pvAsset.getCapacityElectric_kW();
+double area_m2 = gc.c_connectedGISObjects.get(0).gisRegion.area();
+double area_ha = area_m2 / 10000.0;
+double currentCapacity_kWpha = currentCapacity_kW / area_ha;
+
+sl_customGCSolarfarmInstalledCapacity_kWpha.setRange((int)(0.5*zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha), (int)(1.5*zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha));
+sl_customGCSolarfarmInstalledCapacity_kWpha.setValue(currentCapacity_kWpha, false);
+
+// PV Orientation
+J_ProfilePointer currentProfile = pvAsset.getProfilePointer();
+String currentOrientationLabel = "Zuid (15°)"; // Default
+if (currentProfile == zero_Interface.energyModel.pp_PVProduction15DegEastWest_fr) {
+    currentOrientationLabel = "Oost/West (35°)";
+}
+cb_customGCSolarfarmPVOrientation.setValue(currentOrientationLabel, false);
+
+// Curtailment
+boolean hasCurtailment = gc.f_isAssetManagementActive(I_CurtailManagement.class);
+cb_customGCSolarfarmCurtailment.setSelected(hasCurtailment, false);
+
+// Contracted capacity limit
+double maxContractedCapacity_kW = ceil(currentCapacity_kW / 10.0) * 10.0;
+
+sl_customGCSolarfarmContractedCapacity_kW.setRange(0, maxContractedCapacity_kW);
+sl_customGCSolarfarmContractedCapacity_kW.setValue(gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW(), false);
+
+/*ALCODEEND*/}
+
+double f_updateCustomGCWindfarmSettings()
+{/*ALCODESTART::1783088206569*/
+if (zero_Interface.c_selectedGridConnections.isEmpty()) { 
+    return;
+}
+
+GridConnection selectedGC = zero_Interface.c_selectedGridConnections.get(0);
+if (!(selectedGC instanceof GCEnergyProduction) || !c_customWindfarmGCs.contains(selectedGC)) {
+    return;
+}
+
+GCEnergyProduction gc = (GCEnergyProduction) selectedGC;
+J_EAProduction windAsset = (J_EAProduction) gc.c_productionAssets.get(0);
+
+// Installed capacity
+double currentCapacity_MW = windAsset.getCapacityElectric_kW()/1000;
+
+sl_customGCWindfarmInstalledCapacity_MW.setRange(0.1, 5);
+sl_customGCWindfarmInstalledCapacity_MW.setValue(currentCapacity_MW, false); // false prevents triggering ActionCode
+
+// Curtailment
+boolean hasCurtailment = gc.f_isAssetManagementActive(I_CurtailManagement.class);
+cb_customGCWindfarmCurtailment.setSelected(hasCurtailment, false);
+
+// Contracted capacity limit
+sl_customGCWindfarmContractedCapacity_MW.setRange(0, currentCapacity_MW);
+sl_customGCWindfarmContractedCapacity_MW.setValue(gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW()/1000, false);
+/*ALCODEEND*/}
+
+double f_updateCustomGCGridBatterySettings()
+{/*ALCODESTART::1783088206581*/
+if (zero_Interface.c_selectedGridConnections.isEmpty()) {
+    return;
+}
+
+GridConnection selectedGC = zero_Interface.c_selectedGridConnections.get(0);
+if (!(selectedGC instanceof GCGridBattery) || !c_customGridBatteryGCs.contains(selectedGC)) {
+    return;
+}
+
+GCGridBattery gc = (GCGridBattery) selectedGC;
+J_EAStorageElectric batteryAsset = (J_EAStorageElectric)gc.c_storageAssets.get(0);
+
+// Installed capacity
+double currentCapacity_kWh = batteryAsset.getStorageCapacity_kWh();
+double currentCapacity_kW = batteryAsset.getCapacityElectric_kW();
+
+sl_customGCGridBatteryInstalledCapacity_kWh.setRange(100, 5000);
+sl_customGCGridBatteryInstalledCapacity_kWh.setValue(currentCapacity_kWh, false);
+
+sl_customGCGridBatteryInstalledCapacity_kW.setRange(50, currentCapacity_kWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power);
+sl_customGCGridBatteryInstalledCapacity_kW.setValue(currentCapacity_kW, false);
+
+// Battery management selection
+I_BatteryManagement currentBatteryManagement = gc.f_getBatteryManagement();
+String currentBMS_str = "Zelfverbruik"; // Default fallback
+
+if (currentBatteryManagement instanceof J_BatteryManagementSelfConsumptionGridNode) {
+    currentBMS_str = "Zelfverbruik";
+} else if (currentBatteryManagement instanceof J_BatteryManagementPeakShaving) {
+    currentBMS_str = "Peak shaving";
+} else if (currentBatteryManagement instanceof J_BatteryManagementPrice) {
+    currentBMS_str = "Prijssturing";
+}
+cb_customGCGridBatteryAlgorithm.setValue(currentBMS_str, false);
+/*ALCODEEND*/}
+
+double f_updateCustomGCSettings()
+{/*ALCODESTART::1783088235401*/
+boolean hasCustomGCSelected = false;
+ShapeGroup expectedPage = null;
+if (!zero_Interface.c_selectedGridConnections.isEmpty()) {
+    GridConnection selectedGC = zero_Interface.c_selectedGridConnections.get(0);
+    if (c_customSolarfarmGCs.contains(selectedGC)) {
+        hasCustomGCSelected = true;
+        expectedPage = gr_customGCSolarfarmSettings;
+    } else if (c_customWindfarmGCs.contains(selectedGC)) {
+        hasCustomGCSelected = true;
+        expectedPage = gr_customGCWindfarmSettings;
+    } else if (c_customGridBatteryGCs.contains(selectedGC)) {
+        hasCustomGCSelected = true;
+        expectedPage = gr_customGCGridBatterySettings;
+    }
+}
+boolean isExpectedPageLoaded = (expectedPage != null && c_loadedPageGroups.contains(expectedPage));
+boolean hasCustomPageLoaded = c_loadedPageGroups.contains(gr_customGCSolarfarmSettings) || 
+                              c_loadedPageGroups.contains(gr_customGCWindfarmSettings) || 
+                              c_loadedPageGroups.contains(gr_customGCGridBatterySettings);
+// Reinitialize pages only if selection transitioned into or out of a custom GC
+if ((hasCustomGCSelected && !isExpectedPageLoaded) || (!hasCustomGCSelected && hasCustomPageLoaded)) {
+    f_initializeElectricityPages();
+}
+
+f_updateCustomGCSolarfarmSettings();
+f_updateCustomGCWindfarmSettings();
+f_updateCustomGCGridBatterySettings();
+/*ALCODEEND*/}
+
+double f_addCustomSolarfarmGC(GridNode gn)
+{/*ALCODESTART::1783089962320*/
+v_customSolarfarmGCCounter++;
+String id = "Custom_Solarfarm_" + v_customSolarfarmGCCounter;
+
+// 0. Get existic sliderGC owner
+ConnectionOwner owner = findFirst(zero_Interface.energyModel.EnergyProductionSites, gc -> gc.p_gridConnectionID.equals(zero_Interface.p_defaultMainSliderGCName_solarfarm)).p_owner;
+
+// 1. Create the GCEnergyProduction agent
+GCEnergyProduction solarpark = zero_Interface.energyModel.add_EnergyProductionSites();
+solarpark.p_gridConnectionID = id;
+solarpark.p_ownerID = owner.p_actorID;
+solarpark.p_owner = owner;
+solarpark.p_parentNodeElectricID = gn.p_gridNodeID;
+solarpark.p_isSliderGC = false; // Do not add to c_electricityTabEASliderGCs
+
+// 2. Create the GIS Object
+GIS_Object area = f_createAndLinkGISObjectCustomGC(solarpark, id, OL_GISObjectType.SOLARFARM, zero_Interface.v_solarParkColor, zero_Interface.v_solarParkLineColor);
+
+double area_ha = area.gisRegion.area() / 10000;
+double installedCapacity_kW = area_ha * zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha;
+double maxContractedCapacity_kW = ceil(installedCapacity_kW / 10.0) * 10.0;
+solarpark.v_liveConnectionMetaData.setCapacities_kW(0, maxContractedCapacity_kW, maxContractedCapacity_kW);
+solarpark.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
+
+solarpark.v_liveAssetsMetaData.PVOrientation = OL_PVOrientation.SOUTH;
+
+// 3. Initialize GridConnection
+solarpark.f_initialize(zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.p_timeVariables);
+
+// 4. Create the energy asset
+J_EAProduction pvAsset = new J_EAProduction(solarpark, OL_EnergyAssetType.PHOTOVOLTAIC, "Custom PV", OL_EnergyCarriers.ELECTRICITY, installedCapacity_kW, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.pp_PVProduction35DegSouth_fr);
+
+// 6. Update collections, sliders and legend
+c_customSolarfarmGCs.add(solarpark);
+if (!zero_Interface.c_modelActiveSpecialGISObjects.contains(area.p_GISObjectType)) {
+    zero_Interface.c_modelActiveSpecialGISObjects.add(area.p_GISObjectType);
+}
+f_updateSliders_Electricity();
+zero_Interface.f_refreshLegend();
+
+// 7. Select the newly created asset immediately to update and set settings panel sliders
+ArrayList<GIS_Object> selectedList = new ArrayList<>();
+selectedList.add(area);
+zero_Interface.f_selectBuilding(area, selectedList);
+/*ALCODEEND*/}
+
+double f_removeCustomGC(GridConnection gc)
+{/*ALCODESTART::1783089962332*/
+gc.f_setActive(false, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.p_timeVariables);
+
+// 1. Remove energy assets
+for(J_EA ea : new ArrayList<>(gc.c_energyAssets)) {
+    ea.removeEnergyAsset();
+}
+
+// 2. Remove GIS Object
+OL_GISObjectType removedGISType = null;
+for (GIS_Object obj : new ArrayList<>(gc.c_connectedGISObjects)) {
+	removedGISType = obj.p_GISObjectType;
+    obj.gisRegion.setVisible(false);
+    zero_Interface.energyModel.remove_pop_GIS_Objects(obj);
+}
+
+// 3. Remove from collections
+zero_Interface.energyModel.c_pausedGridConnections.remove(gc);
+if (gc instanceof GCEnergyProduction) {
+	zero_Interface.energyModel.remove_EnergyProductionSites((GCEnergyProduction)gc);
+	if(c_customSolarfarmGCs.contains((GCEnergyProduction)gc)){
+		c_customSolarfarmGCs.remove(gc);
+	}
+	else if(c_customWindfarmGCs.contains((GCEnergyProduction)gc)){
+		c_customWindfarmGCs.remove(gc);
+	}
+} else if (gc instanceof GCGridBattery) {
+    zero_Interface.energyModel.remove_GridBatteries((GCGridBattery)gc);
+    c_customGridBatteryGCs.remove((GCGridBattery)gc);
+}
+
+// 4. Refresh slider + legend to account for changes
+if (removedGISType != null) {
+    boolean typeExists = false;
+    // Verify if any assets of this type still exist in the simulation
+    for (GIS_Object obj : zero_Interface.energyModel.pop_GIS_Objects) {
+        if (obj.p_GISObjectType == removedGISType && obj.gisRegion != null && obj.gisRegion.isVisible()) {
+            typeExists = true;
+            break;
+        }
+    }
+    if (!typeExists) {
+        zero_Interface.c_modelActiveSpecialGISObjects.remove(removedGISType);
+    }
+}
+
+f_updateSliders_Electricity();
+zero_Interface.f_refreshLegend();
+/*ALCODEEND*/}
+
+double f_addCustomWindfarmGC(GridNode gn)
+{/*ALCODESTART::1783089962343*/
+v_customWindfarmGCCounter++;
+String id = "Custom_Windfarm_" + v_customWindfarmGCCounter;
+
+// 0. Get existic sliderGC owner
+ConnectionOwner owner = findFirst(zero_Interface.energyModel.EnergyProductionSites, gc -> gc.p_gridConnectionID.equals(zero_Interface.p_defaultMainSliderGCName_windfarm)).p_owner;
+
+// 1. Create the GCEnergyProduction agent
+GCEnergyProduction windpark = zero_Interface.energyModel.add_EnergyProductionSites();
+windpark.p_gridConnectionID = id;
+windpark.p_ownerID = owner.p_actorID;
+windpark.p_owner = owner;
+windpark.p_parentNodeElectricID = gn.p_gridNodeID;
+windpark.p_isSliderGC = false; // Do not add to c_electricityTabEASliderGCs
+
+// 2. Set capacity
+double defaultCapacity_kW = 1000;
+windpark.v_liveConnectionMetaData.setCapacities_kW(0, defaultCapacity_kW, defaultCapacity_kW);
+windpark.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
+
+// 3. Initialize GridConnection
+windpark.f_initialize(zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.p_timeVariables);
+
+// 4. Create the Energy Asset
+J_EAProduction windAsset = new J_EAProduction(windpark, OL_EnergyAssetType.WINDMILL, "Custom Windpark", OL_EnergyCarriers.ELECTRICITY, defaultCapacity_kW, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.pp_windProduction_fr);
+
+// 5. Create the GIS Object
+GIS_Object area = f_createAndLinkGISObjectCustomGC(windpark, id, OL_GISObjectType.WINDFARM, zero_Interface.v_windFarmColor, zero_Interface.v_windFarmLineColor);
+
+// 6. Update collections, sliders and legend
+c_customWindfarmGCs.add(windpark);
+if (!zero_Interface.c_modelActiveSpecialGISObjects.contains(area.p_GISObjectType)) {
+    zero_Interface.c_modelActiveSpecialGISObjects.add(area.p_GISObjectType);
+}
+f_updateSliders_Electricity();
+zero_Interface.f_refreshLegend();
+
+// 7. Select the newly created asset immediately to update and set settings panel sliders
+ArrayList<GIS_Object> selectedList = new ArrayList<>();
+selectedList.add(area);
+zero_Interface.f_selectBuilding(area, selectedList);
+/*ALCODEEND*/}
+
+double f_addCustomGridBatteryGC(GridNode gn)
+{/*ALCODESTART::1783089962354*/
+v_customGridBatteryGCCounter++;
+String id = "Custom_Grid_Battery_" + v_customGridBatteryGCCounter;
+
+// 0. Get existic sliderGC owner
+ConnectionOwner owner = findFirst(zero_Interface.energyModel.GridBatteries, gc -> gc.p_gridConnectionID.equals(zero_Interface.p_defaultMainSliderGCName_battery)).p_owner;
+
+// 1. Create the GCGridBattery agent
+GCGridBattery battery = zero_Interface.energyModel.add_GridBatteries();
+battery.p_gridConnectionID = id;
+battery.p_ownerID = owner.p_actorID;
+battery.p_owner = owner;
+battery.p_parentNodeElectricID = gn.p_gridNodeID;
+battery.p_isSliderGC = false; // Do not add to c_electricityTabEASliderGCs
+
+// 2. Set capacity
+double defaultCapacity_kW = 1000;
+double defaultStorageCapacity_kWh = zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power*defaultCapacity_kW;
+battery.v_liveConnectionMetaData.setCapacities_kW(defaultCapacity_kW, defaultCapacity_kW, defaultCapacity_kW);
+battery.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
+
+// 3. Initialize GridConnection
+battery.f_initialize(zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.p_timeVariables);
+
+// 4. Create the energy asset + pick default operation mode management class
+J_EAStorageElectric batteryAsset = new J_EAStorageElectric(battery, defaultCapacity_kW, defaultStorageCapacity_kWh, 0.5, zero_Interface.energyModel.p_timeParameters);
+I_BatteryManagement batteryAlgorithm = new J_BatteryManagementSelfConsumptionGridNode(battery, zero_Interface.energyModel.p_timeParameters);
+battery.f_setBatteryManagement(batteryAlgorithm);
+		
+// 5. Create GIS Object 
+GIS_Object area = f_createAndLinkGISObjectCustomGC(battery, id, OL_GISObjectType.BATTERY, zero_Interface.v_batteryColor, zero_Interface.v_batteryLineColor);
+
+// 6. Update collections, sliders and legend
+c_customGridBatteryGCs.add(battery);
+if (!zero_Interface.c_modelActiveSpecialGISObjects.contains(area.p_GISObjectType)) {
+    zero_Interface.c_modelActiveSpecialGISObjects.add(area.p_GISObjectType);
+}
+f_updateSliders_Electricity();
+zero_Interface.f_refreshLegend();
+
+// 7. Select the newly created asset immediately to update and set settings panel sliders
+ArrayList<GIS_Object> selectedList = new ArrayList<>();
+selectedList.add(area);
+zero_Interface.f_selectBuilding(area, selectedList);
+/*ALCODEEND*/}
+
+GIS_Object f_createAndLinkGISObjectCustomGC(GridConnection gc,String id,OL_GISObjectType gisType,Color fillColor,Color lineColor)
+{/*ALCODESTART::1783089962365*/
+GIS_Object area = zero_Interface.energyModel.add_pop_GIS_Objects();
+area.p_id = id;
+area.p_GISObjectType = gisType;
+area.p_latitude = c_tempSavedPointCoordinatesCustomGC.get(0).getX();
+area.p_longitude = c_tempSavedPointCoordinatesCustomGC.get(0).getY();
+
+// 2. Generate coordinates (circular for windfarm, square for others) and assign to region
+double[] polyCoords;
+if (gisType == OL_GISObjectType.WINDFARM) {
+	double area_m2 = 1000; // Rule-of-Thumb windfarm: 1 hectare per 5 MW (5000 kW) capacity
+	polyCoords = GISUtil.calculateCircleCoordinates(area.p_latitude, area.p_longitude, area_m2);
+	area.p_annotation = "Windpark " + v_customWindfarmGCCounter;
+} else if (gisType == OL_GISObjectType.BATTERY) {
+	double area_m2 = 400; // Rule-of-Thumb grid battery: 1 hectare per 100 MWh storage capacity (100 m2 per MWh)
+	polyCoords = GISUtil.calculateSquareCoordinates(area.p_latitude, area.p_longitude, area_m2);
+	area.p_annotation = "Buurtbatterij " + v_customGridBatteryGCCounter;
+} else {
+	polyCoords = GISUtil.calculateCustomPolygonCoordinates(c_tempSavedPointCoordinatesCustomGC);
+	area.p_annotation = "Zonnepark " + v_customSolarfarmGCCounter;
+}
+area.gisRegion = zero_Interface.f_createGISObject(polyCoords);
+
+// 3. Add to collections
+area.c_containedGridConnections.add(gc);
+gc.c_connectedGISObjects.add(area);
+
+// 4. Apply styling
+area.p_defaultFillColor = fillColor;
+area.p_defaultLineColor = lineColor;
+area.p_defaultLineWidth = zero_Interface.v_energyAssetLineWidth;
+zero_Interface.f_styleAreas(area);
+
+return area;
+/*ALCODEEND*/}
+
+double f_addCustomGCLocationSelection(double clickx,double clicky)
+{/*ALCODESTART::1783089962376*/
+// --- PHASE 1: Drawing Polygon Vertices ---
+
+// Add a vertex to the coordinates list
+Point clickedCoord = new Point(clickx, clicky);
+c_tempSavedPointCoordinatesCustomGC.add(clickedCoord);
+
+// Place a small square dot on the map representing this vertex
+double[] polyCoords = GISUtil.calculateSquareCoordinates(lat, lon, 25);
+GISRegion dot = zero_Interface.f_createGISObject(polyCoords);
+dot.setFillColor(Color.RED);
+dot.setLineColor(Color.WHITE);
+dot.setLineWidth(1.0);
+c_tempSavedDotGISRegionsCustomGC.add(dot);
+
+if (v_addCustomGCType == OL_EnergyAssetType.WINDMILL || v_addCustomGCType == OL_EnergyAssetType.STORAGE_ELECTRIC){
+	b_customGCPolygonCreated = true;
+	zero_Interface.f_setForcedClickScreenMessageText("Kies een trafo op de kaart");
+} else {
+	// Update instruction text
+	int minNbRequiredVertices = 3;
+	int currentNbOfSavedCoordinates = c_tempSavedPointCoordinatesCustomGC.size();
+	if(minNbRequiredVertices - currentNbOfSavedCoordinates > 1){
+		zero_Interface.f_setForcedClickScreenMessageText("Teken je locatie op de kaart. Kies nog minimaal " + (minNbRequiredVertices - currentNbOfSavedCoordinates) + " hoekpunten.");
+	}
+	else if(minNbRequiredVertices - currentNbOfSavedCoordinates == 1){
+		zero_Interface.f_setForcedClickScreenMessageText("Teken je locatie op de kaart. Kies nog minimaal " + (minNbRequiredVertices - currentNbOfSavedCoordinates) + " hoekpunt.");
+	} else {
+		if (previewGISRegionCustomGC != null) {
+	        previewGISRegionCustomGC.remove();
+	    }
+	    double[] previewCoords = GISUtil.calculateCustomPolygonCoordinates(c_tempSavedPointCoordinatesCustomGC);
+	    previewGISRegionCustomGC = zero_Interface.f_createGISObject(previewCoords);
+	    previewGISRegionCustomGC.setFillColor(new Color(255, 0, 0, 50)); // Semi-transparent red
+	    previewGISRegionCustomGC.setLineColor(Color.RED);
+	    previewGISRegionCustomGC.setLineWidth(1.0);
+		zero_Interface.f_setForcedClickScreenMessageText("Huidig aantal hoekpunten: " + currentNbOfSavedCoordinates + ". Klik op 'Voltooien' om te bevestigen.");
+	}
+}
+
+zero_Interface.f_deselectPreviousSelect();
+/*ALCODEEND*/}
+
+double f_addCustomGCTransformerSelection(double clickx,double clicky)
+{/*ALCODESTART::1783089962387*/
+// --- PHASE 2: Choose transformer to connect to ---
+GridNode clickedGN = null;
+for (GridNode GN : zero_Interface.energyModel.pop_gridNodes) {
+    if (GN.gisRegion != null && GN.gisRegion.contains(clickx, clicky) && GN.gisRegion.isVisible()) {
+        clickedGN = GN;
+        break;
+    }
+}
+
+if (clickedGN != null) {    
+	if (v_addCustomGCType == OL_EnergyAssetType.PHOTOVOLTAIC){
+    	f_addCustomSolarfarmGC(clickedGN);
+    } else if (v_addCustomGCType == OL_EnergyAssetType.WINDMILL){
+    	f_addCustomWindfarmGC(clickedGN);
+    } else if (v_addCustomGCType == OL_EnergyAssetType.STORAGE_ELECTRIC){
+    	f_addCustomGridBatteryGC(clickedGN);
+    }
+    // Clean up coordinate temporary dots, state variables, lists
+    f_stopCustomGCCreation();
+}
+/*ALCODEEND*/}
+
+double f_removeCustomGCSelection(double clickx,double clicky)
+{/*ALCODESTART::1783089962397*/
+// Group all GIS objects to check for the click
+List<GIS_Object> allGISObjects = new ArrayList<>();
+for(GIS_Building b : zero_Interface.energyModel.pop_GIS_Buildings) {
+	allGISObjects.add(b);
+}
+for(GIS_Object object : zero_Interface.energyModel.pop_GIS_Objects){
+	allGISObjects.add(object);
+}
+for (GIS_Object GISObject : allGISObjects) {
+    if (GISObject.gisRegion != null && GISObject.gisRegion.contains(clickx, clicky) && GISObject.gisRegion.isVisible()) {
+        if (GISObject.c_containedGridConnections.size() > 0) {
+            GridConnection gc = GISObject.c_containedGridConnections.get(0);
+            // Only allow deletion of custom created GCs
+            if (c_customSolarfarmGCs.contains(gc) || c_customWindfarmGCs.contains(gc) || c_customGridBatteryGCs.contains(gc)) {
+                f_removeCustomGC(gc);
+                f_stopCustomGCCreation();
+                return;
+            }
+        }
+    }
+}
+// If the user clicks elsewhere, cancel the deletion mode
+f_stopCustomGCCreation();
+/*ALCODEEND*/}
+
+double f_stopCustomGCCreation()
+{/*ALCODESTART::1783089962419*/
+// Clean up temporary dot markers, preview polygon, and coordinates list
+f_resetCustomGCCreation();
+
+// Reset state variables
+b_customGCPolygonCreated = false;
+b_addCustomGC = false;
+v_addCustomGCType = null;
+b_removeCustomGC = false;
+
+// Hide forced click screen, if needed
+zero_Interface.f_setForcedClickScreenVisibility(false);
+zero_Interface.f_setForcedClickScreenTextBoxes("", new Color(255, 255, 255), new Color(0, 0, 0), "", new Color(255, 255, 255), new Color(0, 0, 0));
+/*ALCODEEND*/}
+
+double f_resetCustomGCCreation()
+{/*ALCODESTART::1783089962430*/
+// Clean up temporary dot markers
+for (GISRegion dot : c_tempSavedDotGISRegionsCustomGC) {
+    if (dot != null) {
+        dot.remove();
+    }
+}
+c_tempSavedDotGISRegionsCustomGC.clear();
+
+// Clean up preview polygon
+if (previewGISRegionCustomGC != null) {
+    previewGISRegionCustomGC.remove();
+    previewGISRegionCustomGC = null;
+}
+
+// Clear coordinates list
+c_tempSavedPointCoordinatesCustomGC.clear();
+/*ALCODEEND*/}
+
+double f_addCustomGCSettingsPage()
+{/*ALCODESTART::1783101013511*/
+// Hide custom settings pages by default so they are not visible when deselected
+gr_customGCSolarfarmSettings.setVisible(false);
+gr_customGCWindfarmSettings.setVisible(false);
+gr_customGCGridBatterySettings.setVisible(false);
+
+//Adding custom GC settings page
+if (!zero_Interface.c_selectedGridConnections.isEmpty()) {
+    GridConnection selectedGC = zero_Interface.c_selectedGridConnections.get(0);
+    if (c_customSolarfarmGCs.contains(selectedGC)) {
+        c_loadedPageGroups.add(gr_customGCSolarfarmSettings);
+    } else if (c_customWindfarmGCs.contains(selectedGC)) {
+        c_loadedPageGroups.add(gr_customGCWindfarmSettings);
+    } else if (c_customGridBatteryGCs.contains(selectedGC)) {
+        c_loadedPageGroups.add(gr_customGCGridBatterySettings);
+    }
+}
 /*ALCODEEND*/}
 
