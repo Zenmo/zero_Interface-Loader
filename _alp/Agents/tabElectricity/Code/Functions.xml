@@ -463,7 +463,7 @@
 		<Id>1777552836057</Id>
 		<Name><![CDATA[f_goToPage]]></Name>
 		<X>-330</X>
-		<Y>210</Y>
+		<Y>190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -483,7 +483,7 @@
 		<Id>1777552936318</Id>
 		<Name><![CDATA[f_nextPage]]></Name>
 		<X>-330</X>
-		<Y>230</Y>
+		<Y>210</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -499,7 +499,7 @@
 		<Id>1777553025667</Id>
 		<Name><![CDATA[f_previousPage]]></Name>
 		<X>-330</X>
-		<Y>250</Y>
+		<Y>230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -515,7 +515,7 @@
 		<Id>1777553071510</Id>
 		<Name><![CDATA[f_updatePageIndicator]]></Name>
 		<X>-330</X>
-		<Y>270</Y>
+		<Y>250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -563,7 +563,7 @@
 		<Id>1778055837807</Id>
 		<Name><![CDATA[f_addCustomPage]]></Name>
 		<X>-330</X>
-		<Y>190</Y>
+		<Y>170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -862,8 +862,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1783101013511</Id>
 		<Name><![CDATA[f_addCustomGCSettingsPage]]></Name>
-		<X>-330</X>
-		<Y>170</Y>
+		<X>-800</X>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

@@ -1682,7 +1682,7 @@ for(GridConnection gc : c_electricityTabEASliderGCs){
 }
 
 double totalCustomBatteryCapacity_kWh = 0;
-for(GCGridBattery customGB : c_customGridBatteryGCs){
+for(GridConnection customGB : c_customGridBatteryGCs){
 	if(customGB.v_isActive &amp;&amp; customGB.p_batteryAsset != null){
 		totalCustomBatteryCapacity_kWh += customGB.p_batteryAsset.getStorageCapacity_kWh();
 	}
@@ -1840,7 +1840,7 @@ if(sliderPVFarmGCList.size() == 0){
 
 // 2. Calculate sum of active custom solarfarms capacity
 double totalCustomPVOnLand_kW = 0;
-for(GCEnergyProduction customSF : c_customSolarfarmGCs){
+for(GridConnection customSF : c_customSolarfarmGCs){
     if(customSF.v_isActive){
         for(J_EAProduction ea : customSF.c_productionAssets){
             if(ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC){
@@ -1920,7 +1920,7 @@ if(sliderWindFarmGCList.size() == 0){
 
 // 2. Calculate sum of active custom solarfarms capacity
 double totalCustomWind_kW = 0;
-for(GCEnergyProduction customWF : c_customWindfarmGCs){
+for(GridConnection customWF : c_customWindfarmGCs){
     if(customWF.v_isActive){
         for(J_EAProduction ea : customWF.c_productionAssets){
             if(ea.getEAType() == OL_EnergyAssetType.WINDMILL){

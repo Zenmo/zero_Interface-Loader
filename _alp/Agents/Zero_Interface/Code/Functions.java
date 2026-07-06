@@ -372,14 +372,20 @@ else {
 //Update the resultsUI
 f_updateUIResultsData();
 
+//Update sliders and ranges of customGC
+if (c_selectedGridConnections.size() > 0){
+	if (uI_Tabs.pop_tabElectricity.get(0).c_customSolarfarmGCs.contains(c_selectedGridConnections.get(0))
+		|| uI_Tabs.pop_tabElectricity.get(0).c_customWindfarmGCs.contains(c_selectedGridConnections.get(0))
+		|| uI_Tabs.pop_tabElectricity.get(0).c_customGridBatteryGCs.contains(c_selectedGridConnections.get(0))){
+		uI_Tabs.pop_tabElectricity.get(0).f_updateCustomGCSettings();
+	}
+}
+
 //Set the button for going to the company UI (needs to be at the end of this function!)
 f_setUIButton();
 
 //alle panden met meerdere adressen hebben op dit moment (16-7-24) dezelfde functie(s) voor ieder adres, dus dit is op dit moment zinloos
 //f_listFunctions();
-
-//Update sliders and ranges of customGC
-if (!uI_Tabs.pop_tabElectricity.isEmpty()) uI_Tabs.pop_tabElectricity.get(0).f_updateCustomGCSettings();
 /*ALCODEEND*/}
 
 double f_deselectPreviousSelect()

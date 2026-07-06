@@ -329,7 +329,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>GCEnergyProduction</ElementClass>
+			<ElementClass>GridConnection</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>
@@ -347,7 +347,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>GCEnergyProduction</ElementClass>
+			<ElementClass>GridConnection</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>
@@ -365,7 +365,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>GCGridBattery</ElementClass>
+			<ElementClass>GridConnection</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>
