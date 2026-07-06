@@ -612,6 +612,7 @@ for (ShapeGroup group : c_loadedPageGroups) {
 
 if (c_loadedPageGroups.isEmpty()) return;
 
+v_previousPageIndex = v_currentPageIndex;
 v_currentPageIndex = pageIndex;
 c_loadedPageGroups.get(v_currentPageIndex).setVisible(true); // Show the selected page group
 f_updatePageIndicator(); // Update the page indicator text
@@ -1227,26 +1228,67 @@ c_tempSavedPointCoordinatesCustomGC.clear();
 
 double f_addCustomGCSettingsPage()
 {/*ALCODESTART::1783101013511*/
+// Identify the active page group before removing custom settings pages
+ShapeGroup activePageGroup = null;
+if (v_currentPageIndex >= 0 && v_currentPageIndex < c_loadedPageGroups.size()) {
+    activePageGroup = c_loadedPageGroups.get(v_currentPageIndex);
+}
+
 // Hide custom settings pages by default so they are not visible when deselected
 gr_customGCSolarfarmSettings.setVisible(false);
 gr_customGCWindfarmSettings.setVisible(false);
 gr_customGCGridBatterySettings.setVisible(false);
+c_loadedPageGroups.remove(gr_customGCSolarfarmSettings);
+c_loadedPageGroups.remove(gr_customGCWindfarmSettings);
+c_loadedPageGroups.remove(gr_customGCGridBatterySettings);
 
-//Adding custom GC settings page
+boolean customGCAdded = false;
+int targetPage = 0;
 if (!zero_Interface.c_selectedGridConnections.isEmpty()) {
-	int targetPage = 0; // Default to page 0
     GridConnection selectedGC = zero_Interface.c_selectedGridConnections.get(0);
     if (c_customSolarfarmGCs.contains(selectedGC)) {
         c_loadedPageGroups.add(gr_customGCSolarfarmSettings);
         targetPage = c_loadedPageGroups.indexOf(gr_customGCSolarfarmSettings);
+        customGCAdded = true;
     } else if (c_customWindfarmGCs.contains(selectedGC)) {
         c_loadedPageGroups.add(gr_customGCWindfarmSettings);
         targetPage = c_loadedPageGroups.indexOf(gr_customGCWindfarmSettings);
+        customGCAdded = true;
     } else if (c_customGridBatteryGCs.contains(selectedGC)) {
         c_loadedPageGroups.add(gr_customGCGridBatterySettings);
         targetPage = c_loadedPageGroups.indexOf(gr_customGCGridBatterySettings);
+        customGCAdded = true;
     }
+}
+
+// Show/hide page indicator based on number of active pages
+if (c_loadedPageGroups.size() <= 1) {
+    gr_pageIndicator.setVisible(false);
+} else {
+    gr_pageIndicator.setVisible(true);
+}
+
+// Navigate to the correct page: the selected custom settings page, stay on the current page, or go to previous/default page
+if (customGCAdded) { // Custom GC is selected
     f_goToPage(targetPage);
+} else { // Custom GC is deselected
+    int newPageIndex = -1;
+    if (activePageGroup != null) {
+        newPageIndex = c_loadedPageGroups.indexOf(activePageGroup);
+    }
+    
+    if (newPageIndex >= 0) { // Stay on the current page
+        f_goToPage(newPageIndex);
+    } else { // Go to previously shown page if settings page was currently shown 
+        int fallbackPageIndex = 0;
+        if (v_previousPageIndex >= 0 && v_previousPageIndex < c_loadedPageGroups.size()) {
+        	ShapeGroup prevGroup = c_loadedPageGroups.get(v_previousPageIndex);
+            if (prevGroup != gr_customGCSolarfarmSettings && prevGroup != gr_customGCWindfarmSettings && prevGroup != gr_customGCGridBatterySettings) {
+                fallbackPageIndex = v_previousPageIndex;
+            }
+        }
+        f_goToPage(fallbackPageIndex);
+    }
 }
 /*ALCODEEND*/}
 

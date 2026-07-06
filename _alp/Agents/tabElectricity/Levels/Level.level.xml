@@ -2135,6 +2135,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>!zero_Interface.b_inEnergyHubMode</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -2164,6 +2165,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 				<BasicProperties Width="110" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
+					<VisibleCode>!zero_Interface.b_inEnergyHubMode</VisibleCode>
 					<Enabled>true</Enabled>
 					<ActionCode>b_addCustomGC = true;
 v_addCustomGCType = OL_EnergyAssetType.PHOTOVOLTAIC;
@@ -2192,6 +2194,7 @@ zero_Interface.f_setForcedClickScreenVisibility(true);</ActionCode>
 				<BasicProperties Width="110" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
+					<VisibleCode>!zero_Interface.b_inEnergyHubMode</VisibleCode>
 					<Enabled>true</Enabled>
 					<ActionCode>b_addCustomGC = true;
 v_addCustomGCType = OL_EnergyAssetType.STORAGE_ELECTRIC;
@@ -2220,6 +2223,7 @@ zero_Interface.f_setForcedClickScreenVisibility(true);</ActionCode>
 				<BasicProperties Width="110" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
+					<VisibleCode>!zero_Interface.b_inEnergyHubMode</VisibleCode>
 					<Enabled>true</Enabled>
 					<ActionCode>b_addCustomGC = true;
 v_addCustomGCType = OL_EnergyAssetType.WINDMILL;
@@ -2248,6 +2252,7 @@ zero_Interface.f_setForcedClickScreenVisibility(true);</ActionCode>
 				<BasicProperties Width="110" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
+					<VisibleCode>!zero_Interface.b_inEnergyHubMode</VisibleCode>
 					<Enabled>true</Enabled>
 					<EnableExpression>!c_customSolarfarmGCs.isEmpty() || !c_customWindfarmGCs.isEmpty() || !c_customGridBatteryGCs.isEmpty()</EnableExpression>
 					<ActionCode>if(!c_customSolarfarmGCs.isEmpty() || !c_customWindfarmGCs.isEmpty() || !c_customGridBatteryGCs.isEmpty()) {
@@ -2280,6 +2285,7 @@ zero_Interface.f_setForcedClickScreenVisibility(true);</ActionCode>
 				<BasicProperties Width="110" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
+					<VisibleCode>!zero_Interface.b_inEnergyHubMode</VisibleCode>
 					<Enabled>true</Enabled>
 					<EnableExpression>!c_customSolarfarmGCs.isEmpty() || !c_customWindfarmGCs.isEmpty() || !c_customGridBatteryGCs.isEmpty()</EnableExpression>
 					<ActionCode>if(!c_customSolarfarmGCs.isEmpty() || !c_customWindfarmGCs.isEmpty() || !c_customGridBatteryGCs.isEmpty()) {
@@ -2914,17 +2920,19 @@ switch(cb_customGCSolarfarmPVOrientation.getValue()){
 	case "Zuid (15°)":
     	profile = zero_Interface.energyModel.pp_PVProduction35DegSouth_fr;
         pvOrientation = OL_PVOrientation.SOUTH;
-    	break;
+		break;
 	case "Oost/West (35°)":
     	profile = zero_Interface.energyModel.pp_PVProduction15DegEastWest_fr;
         pvOrientation = OL_PVOrientation.EASTWEST;
-    	break;
+        break;
     default:
         return;
 }
 
+double installedCapacity_kW = pvAsset.getCapacityElectric_kW();
+pvAsset.removeEnergyAsset();
+new J_EAProduction(solarpark, OL_EnergyAssetType.PHOTOVOLTAIC, "Custom PV", OL_EnergyCarriers.ELECTRICITY, installedCapacity_kW, zero_Interface.energyModel.p_timeParameters, profile);
 solarpark.v_liveAssetsMetaData.PVOrientation = pvOrientation;
-pvAsset.setProfilePointer(profile);
 
 if (!zero_Interface.b_runningMainInterfaceScenarios) zero_Interface.f_setScenarioToCustom();
 zero_Interface.f_resetSettings();</ActionCode>
