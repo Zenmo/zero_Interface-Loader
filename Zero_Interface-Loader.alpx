@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.9.202606170507"
+                   AnyLogicVersion="8.9.9.202607020720"
                    AlpVersion="8.9.9">
 	<Model>
 		<Id>1658477103134</Id>
@@ -205,6 +205,34 @@
 				<Option>
 					<Id>1763648379985</Id>
 					<Name><![CDATA[SPECIFIED]]></Name>
+				</Option>
+			</OptionList>
+			<OptionList>
+				<Id>1783357632691</Id>
+				<Name><![CDATA[OL_UIMode]]></Name>
+				<Option>
+					<Id>1783357632692</Id>
+					<Name><![CDATA[NORMAL]]></Name>
+				</Option>
+				<Option>
+					<Id>1783357632693</Id>
+					<Name><![CDATA[FILTER]]></Name>
+				</Option>
+				<Option>
+					<Id>1783357632694</Id>
+					<Name><![CDATA[EHUB]]></Name>
+				</Option>
+				<Option>
+					<Id>1783357632695</Id>
+					<Name><![CDATA[MANUALSELECTION]]></Name>
+				</Option>
+				<Option>
+					<Id>1783357632696</Id>
+					<Name><![CDATA[NODESELECTION]]></Name>
+				</Option>
+				<Option>
+					<Id>1783426935141</Id>
+					<Name><![CDATA[EHUBSELECTION]]></Name>
 				</Option>
 			</OptionList>
 		</OptionLists>
