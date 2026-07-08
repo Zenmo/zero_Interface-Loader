@@ -3322,8 +3322,8 @@ double largeScaleWind_MW = p_residentialScenario_Current.getLargeScaleWind_MW();
 tabElec.sl_largeScaleWind_MW.setValue(largeScaleWind_MW, true);
 
 //Gridbatteries
-double averageNeighbourhoodBatterySize_kWh = p_residentialScenario_Current.getAverageNeighbourhoodBatterySize_kWh();
-tabElec.sl_gridBatteries_kWh.setValue(averageNeighbourhoodBatterySize_kWh, true);
+double averageNeighbourhoodBatterySize_MWh = p_residentialScenario_Current.getAverageNeighbourhoodBatterySize_MWh();
+tabElec.sl_gridBatteries_MWh.setValue(averageNeighbourhoodBatterySize_MWh, true);
 
 //Curtailment rooftop PV
 boolean cb_gridCurtailmentActive = p_residentialScenario_Current.getCb_gridCurtailmentActive();
@@ -3444,8 +3444,8 @@ if(uI_Tabs.pop_tabElectricity.size() > 0){
 	p_residentialScenario_Current.setLargeScaleWind_MW(largeScaleWind_MW);
 	
 	//Grid batteries
-	double averageNeighbourhoodBatterySize_kWh = tabElec.sl_gridBatteries_kWh.getValue();
-	p_residentialScenario_Current.setAverageNeighbourhoodBatterySize_kWh(averageNeighbourhoodBatterySize_kWh);
+	double averageNeighbourhoodBatterySize_MWh = tabElec.sl_gridBatteries_MWh.getValue();
+	p_residentialScenario_Current.setAverageNeighbourhoodBatterySize_MWh(averageNeighbourhoodBatterySize_MWh);
 	
 	//Large-scale grid curtailment EAs
 	boolean cb_gridCurtailmentActive = tabElec.cb_gridCurtailment.isSelected();

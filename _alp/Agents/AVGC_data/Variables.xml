@@ -1276,7 +1276,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[2]]></Code>
+				<Code><![CDATA[2.0]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1726584205694</Id>

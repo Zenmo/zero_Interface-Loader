@@ -692,7 +692,7 @@ sl_largeScalePV_ha.setRange(minSliderPVOnLand_ha, maxSliderPVOnLand_ha);
 sl_largeScalePV_ha.setValue((totalPVOnLand_kW/zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha) + minSliderPVOnLand_ha, false);
 
 double minSliderWind_MW = p_initialWindTurbines_MW + totalCustomWind_kW/1000;
-double maxSliderWind_MW = minSliderWind_MW + 100;
+double maxSliderWind_MW = minSliderWind_MW + 20;
 sl_largeScaleWind_MW.setRange(minSliderWind_MW, maxSliderWind_MW);
 sl_largeScaleWind_MW.setValue((totalWind_kW/1000) + minSliderWind_MW, false);
 
@@ -700,24 +700,24 @@ sl_largeScaleWind_MW.setValue((totalWind_kW/1000) + minSliderWind_MW, false);
 //Grid batteries
 f_getInitialGridBatterySize(); // Used for slider minimum: non adjustable GCGridBatteries
 
-double totalDefaultBatteryCapacity_kWh = 0;
+double totalDefaultBatteryCapacity_MWh = 0;
 for(GridConnection sliderGC : c_electricityTabEASliderGCs){ // Default slider battery collection
 	if(sliderGC.v_isActive && sliderGC instanceof GCGridBattery sliderGridBattery){
-		totalDefaultBatteryCapacity_kWh += sliderGridBattery.p_batteryAsset.getStorageCapacity_kWh();
+		totalDefaultBatteryCapacity_MWh += sliderGridBattery.p_batteryAsset.getStorageCapacity_kWh()/1000;
 	}
 }
 
-double totalCustomBatteryCapacity_kWh = 0;
+double totalCustomBatteryCapacity_MWh = 0;
 for(GridConnection customGB : c_customGridBatteryGCs){
 	if(customGB.v_isActive && customGB.p_batteryAsset != null){
-		totalCustomBatteryCapacity_kWh += customGB.p_batteryAsset.getStorageCapacity_kWh();
+		totalCustomBatteryCapacity_MWh += customGB.p_batteryAsset.getStorageCapacity_kWh()/1000;
 	}
 }
 
-double minSliderGridBattery_kWh = p_initialTotalGridBatteryCapacity_MWh*1000 + totalCustomBatteryCapacity_kWh;
-double maxSliderGridBattery_kWh = minSliderGridBattery_kWh + 20000;
-sl_gridBatteries_kWh.setRange(minSliderGridBattery_kWh, maxSliderGridBattery_kWh);
-sl_gridBatteries_kWh.setValue(totalDefaultBatteryCapacity_kWh + minSliderGridBattery_kWh, false);
+double minSliderGridBattery_MWh = p_initialTotalGridBatteryCapacity_MWh + totalCustomBatteryCapacity_MWh;
+double maxSliderGridBattery_MWh = minSliderGridBattery_MWh + 50;
+sl_gridBatteries_MWh.setRange(minSliderGridBattery_MWh, maxSliderGridBattery_MWh);
+sl_gridBatteries_MWh.setValue(totalDefaultBatteryCapacity_MWh + minSliderGridBattery_MWh, false);
 
 //Curtailment large scale PV and wind
 boolean curtailment = true;
@@ -834,8 +834,8 @@ boolean hasCurtailment = gc.f_isAssetManagementActive(I_CurtailManagement.class)
 cb_customGCWindfarmCurtailment.setSelected(hasCurtailment, false);
 
 // Contracted capacity limit
-sl_customGCWindfarmContractedCapacity_MW.setRange(0, currentCapacity_MW);
-sl_customGCWindfarmContractedCapacity_MW.setValue(gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW()/1000, false);
+sl_customGCWindfarmContractedCapacity_MW.setRange(0, currentCapacity_MW + 1E-10);
+sl_customGCWindfarmContractedCapacity_MW.setValue(gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW()/1000 + 1E-10, false);
 /*ALCODEEND*/}
 
 double f_updateCustomGCGridBatterySettings()
@@ -853,14 +853,14 @@ GCGridBattery gc = (GCGridBattery) selectedGC;
 J_EAStorageElectric batteryAsset = (J_EAStorageElectric)gc.c_storageAssets.get(0);
 
 // Installed capacity
-double currentCapacity_kWh = batteryAsset.getStorageCapacity_kWh();
-double currentCapacity_kW = batteryAsset.getCapacityElectric_kW();
+double currentCapacity_MWh = batteryAsset.getStorageCapacity_kWh() / 1000;
+double currentCapacity_MW = batteryAsset.getCapacityElectric_kW() / 1000;
 
-sl_customGCGridBatteryInstalledCapacity_kWh.setRange(100, 5000);
-sl_customGCGridBatteryInstalledCapacity_kWh.setValue(currentCapacity_kWh, false);
+sl_customGCGridBatteryInstalledCapacity_MWh.setRange(0.2, 20);
+sl_customGCGridBatteryInstalledCapacity_MWh.setValue(currentCapacity_MWh, false);
 
-sl_customGCGridBatteryInstalledCapacity_kW.setRange(50, currentCapacity_kWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power);
-sl_customGCGridBatteryInstalledCapacity_kW.setValue(currentCapacity_kW, false);
+sl_customGCGridBatteryInstalledCapacity_MW.setRange(0.05, currentCapacity_MWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power + 1E-10);
+sl_customGCGridBatteryInstalledCapacity_MW.setValue(currentCapacity_MW, false);
 
 // Battery management selection
 I_BatteryManagement currentBatteryManagement = gc.f_getBatteryManagement();
@@ -1003,6 +1003,8 @@ GridConnection windpark = zero_Interface.energyModel.f_createGridConnectionDurin
 
 // 2. Set capacity
 double defaultCapacity_kW = 1000;
+windpark.v_liveConnectionMetaData.setCapacities_kW(0.0, defaultCapacity_kW, defaultCapacity_kW);
+windpark.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
 
 // 3. Create the Energy Asset
 J_EAProduction windAsset = new J_EAProduction(windpark, OL_EnergyAssetType.WINDMILL, "Custom Windpark", OL_EnergyCarriers.ELECTRICITY, defaultCapacity_kW, zero_Interface.energyModel.p_timeParameters, zero_Interface.energyModel.pp_windProduction_fr);
@@ -1035,6 +1037,8 @@ GridConnection battery = zero_Interface.energyModel.f_createGridConnectionDuring
 // 2. Set capacity
 double defaultCapacity_kW = 1000;
 double defaultStorageCapacity_kWh = zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power*defaultCapacity_kW;
+battery.v_liveConnectionMetaData.setCapacities_kW(defaultCapacity_kW, defaultCapacity_kW, defaultCapacity_kW);
+battery.v_liveConnectionMetaData.setCapacitiesKnown(true, true, true);
 
 // 3. Create the energy asset + pick default operation mode management class
 J_EAStorageElectric batteryAsset = new J_EAStorageElectric(battery, defaultCapacity_kW, defaultStorageCapacity_kWh, 0.5, zero_Interface.energyModel.p_timeParameters);
@@ -1270,6 +1274,7 @@ if (c_loadedPageGroups.size() <= 1) {
 
 // Navigate to the correct page: the selected custom settings page, stay on the current page, or go to previous/default page
 if (customGCAdded) { // Custom GC is selected
+	zero_Interface.uI_Tabs.f_setTab(OL_CustomScenarioTabs.ELECTRICITY);
     f_goToPage(targetPage);
 } else { // Custom GC is deselected
     int newPageIndex = -1;

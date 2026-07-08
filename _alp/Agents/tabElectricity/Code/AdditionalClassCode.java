@@ -58,5 +58,5 @@ public ShapeSlider getSliderLargeScaleWind(){
 }
 
 public ShapeSlider getSliderGridBatteries(){
-	return this.sl_gridBatteries_kWh;
+	return this.sl_gridBatteries_MWh;
 }
