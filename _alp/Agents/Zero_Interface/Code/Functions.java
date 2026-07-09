@@ -1144,7 +1144,8 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 					c_filterSelectedGridLoops.add(clickedGridConnectionConnectedGridNode);
 				}
 			
-				if(gr_forceMapSelection.isVisible()){
+				
+				if(gr_ehubSelectionOverlay.isVisible()){
 					f_setForcedClickScreenText("");
 					if(!b_inEnergyHubSelectionMode){
 						f_setForcedClickScreenVisibility(false);
@@ -1325,7 +1326,7 @@ for ( GIS_Object region : c_GISNeighborhoods ){
 				c_filterSelectedNeighborhoods.add(clickedNeighborhood);
 			}
 
-			if(gr_forceMapSelection.isVisible()){
+			if(gr_ehubSelectionOverlay.isVisible()){
 				f_setForcedClickScreenText("");
 				if(!b_inEnergyHubSelectionMode){
 					f_setForcedClickScreenVisibility(false);
@@ -2561,7 +2562,7 @@ f_setShapePresentationOnTop(map);
 f_setShapePresentationOnTop(gr_zoomButton);
 f_setShapePresentationOnTop(gr_mapOverlayButtons);
 f_setShapePresentationOnTop(gr_sliderClickBlocker);
-f_setShapePresentationOnTop(gr_forceMapSelection);
+f_setShapePresentationOnTop(gr_ehubSelectionOverlay);
 f_setShapePresentationOnTop(gr_filterInterface);
 f_setShapePresentationOnTop(gr_infoText);
 f_setShapePresentationOnTop(gr_filterOverlay);
@@ -2570,7 +2571,7 @@ f_setShapePresentationOnTop(gr_filterOverlay);
 
 double f_setForcedClickScreenVisibility(boolean showForcedClickScreen)
 {/*ALCODESTART::1753445407428*/
-gr_forceMapSelection.setVisible(showForcedClickScreen);
+//gr_forceMapSelection.setVisible(showForcedClickScreen);
 /*ALCODEEND*/}
 
 double f_selectEnergyHubGC(double clickx,double clicky)
@@ -2590,16 +2591,12 @@ double f_startEnergyHubConfiguration()
 {/*ALCODESTART::1753698716095*/
 pauseSimulation();
 
-b_inHubSelectionMode = true;
-
-//b_inEnergyHubMode = true;
-//b_inEnergyHubSelectionMode = true;
-
 f_setForcedClickScreenText("");
 f_setForcedClickScreenVisibility(true);
 
-cb_showFilterInterface.setSelected(true, true);
-gr_filterInterface.setPos(170, 580);
+//cb_showFilterInterface.setSelected(true, true);
+v_currentUIMode = OL_UIMode.EHUBSELECTION;
+//gr_filterInterface.setPos(170, 580);
 /*ALCODEEND*/}
 
 double f_finalizeEnergyHubConfiguration()
@@ -3728,8 +3725,11 @@ else if(b_inManualFilterSelectionMode){
 	f_selectManualFilteredGC(clickx, clicky);
 }
 */
-if( b_inFilterMode || b_inHubSelectionMode){
+if( v_currentUIMode == FILTER || v_currentUIMode == MANUALSELECTION ){
 	f_manualSelectionClickOnMap(clickx, clicky);	
+}
+if(  v_currentUIMode == EHUBSELECTION  ){
+	f_selectionEHub(clickx, clicky);	
 }
 
 else{
@@ -3854,34 +3854,6 @@ if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
 }
 /*ALCODEEND*/}
 
-double f_finishManualSelection()
-{/*ALCODESTART::1780225465387*/
-if(!b_inManualFilterSelectionMode){
-	b_inManualFilterSelectionMode = true;
-	
-	f_setForcedClickScreenText("Je kunt gebouwen op de kaart selecteren");
-	if(!b_inEnergyHubSelectionMode){
-		f_setForcedClickScreenVisibility(true);
-	}
-	
-	if(!c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
-		f_setFilter(OL_FilterOptionsGC.MANUAL_SELECTION);
-	}
-}
-else{ 
-	b_inManualFilterSelectionMode = false;
-	
-	f_setForcedClickScreenText("");
-	if(!b_inEnergyHubSelectionMode){
-		f_setForcedClickScreenVisibility(false);
-	}
-	
-	if (c_manualFilterSelectedGC.isEmpty() && c_manualFilterDeselectedGC.isEmpty() && c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
-		f_setFilter(OL_FilterOptionsGC.MANUAL_SELECTION);
-	}
-}
-/*ALCODEEND*/}
-
 double f_initiateManualSelection()
 {/*ALCODESTART::1780767446900*/
 //f_setForcedClickScreenText("Je kunt gebouwen op de kaart selecteren");
@@ -3904,10 +3876,9 @@ ArrayList<GridConnection> clickedGC = f_checkIfClickedOnGC(clickx, clicky);
 
 if( clickedGC != null){
 	//So you clicked on a GC, now we check if you just need to start a new manual selection
-	//Or wheter you already selected some 
-	if (!b_manualSelectionMode){
-		//traceln("manual selection started");
-		b_manualSelectionMode = true;
+	//Or wheter you already selected some buildings 
+	if (v_currentUIMode != OL_UIMode.MANUALSELECTION ){
+		v_currentUIMode = MANUALSELECTION;
 		if( c_filterMatrix.size() > 0){
 			c_filterDummy = new ArrayList<>(c_filterMatrix.get(c_filterMatrix.size()-1));
 		}
@@ -3995,8 +3966,6 @@ c_selectedFilterOptions.add(selectedFilter);
 
 //After a filter selecttion, reset previous clicked building/gridNode colors and text
 f_deselectPreviousSelect();
-
-//Can filter return 0? (Only allowed for filters who are not inmediately active (gridLoops, nbh, etc.)
 boolean filterCanReturnZero = false;
 
 switch(selectedFilter){
@@ -4023,7 +3992,6 @@ switch(selectedFilter){
 	case HAS_PV:
 		f_filterHasPV();
 		c_filterMatrix.add(new ArrayList<>(c_selectedGridConnections));
-
 		break;
 		
 	case HAS_TRANSPORT:
@@ -4076,40 +4044,10 @@ switch(selectedFilter){
 			}
 		}
 		break;
-	/*case MANUAL_SELECTION:
-		if(c_manualFilterSelectedGC.size() > 0){
-			f_filterManualSelection(c_filterDummy);
-		}
-		else if(c_selectedFilterOptions.size() > 1){ 
-			if(c_manualFilterDeselectedGC.size() > 0){
-				f_filterManualSelection(c_filterDummy);
-			}
-			else{
-				c_selectedGridConnections = new ArrayList<>(c_filterDummy);
-			}
-		}
-		else{
-			filterCanReturnZero = true;
-		}
-			
-		break;
-	*/
 }
 
-if(c_selectedGridConnections.size() == 0 && !filterCanReturnZero){ // Not allowed to return zero, while returning zero
-	//f_removeFilter(selectedFilter, selectedFilterName);
-	f_removeLastFilter();
-	f_setFilterInfoText();
-	
-	//Notify filter has not been applied, cause no results are given
-	f_setErrorScreen("Er zijn geen panden die voldoen aan de selectiecritia. De laatst geselecteerde filter wordt niet toegepast", 0, 0);
-}
-else if(c_selectedGridConnections.size() == 0 && filterCanReturnZero){//Allowed to return zero filtered gc, while returning zero
 
-}
-else{//Filtered GC returns GC
-
-	//Set color of all gis objects of new filter selection
+if( c_filterMatrix.get(c_filterMatrix.size()-1).size() == 0 && !filterCanReturnZero ){
 	v_clickedObjectType = OL_GISObjectType.BUILDING;
 		
 	for (GridConnection GC: c_selectedGridConnections){
@@ -4132,7 +4070,7 @@ else{//Filtered GC returns GC
 
 double f_setPrefixFilter()
 {/*ALCODESTART::1780913618251*/
-if( b_manualSelectionMode){ //End manual selection filter if its active
+if( v_currentUIMode == OL_UIMode.MANUALSELECTION){ //End manual selection filter if its active
 	f_finishManualFilter();
 }
 
@@ -4149,10 +4087,24 @@ else {
 
 // Set filter
 f_applyPrefixFilter(selectedFilter, selectedFilterName);
-v_filterNames.add( selectedFilterName);
-v_filterCount.add( c_filterMatrix.get(c_filterMatrix.size()-1).size()); 
-v_filterIndex.add(String.valueOf( c_filterMatrix.size()));
-f_setFilterInfoText();
+if( v_currentUIMode == OL_UIMode.NODESELECTION ){
+	f_launchGridnodeSelection();
+}
+else{
+	v_filterNames.add( selectedFilterName);
+	v_filterCount.add( c_filterMatrix.get(c_filterMatrix.size()-1).size()); 
+	v_filterIndex.add(String.valueOf( c_filterMatrix.size()));
+	f_setFilterInfoText();
+}
+
+
+//Can filter return 0? (Only allowed for filters who are not inmediately active (gridLoops, nbh, etc.)
+boolean filterCanReturnZero = false;
+if( c_filterMatrix.get(c_filterMatrix.size()-1).size() == 0 && !filterCanReturnZero){ // Not allowed to return zero, while returning zero
+	f_removeLastFilter();
+	f_setFilterInfoText();
+	f_setErrorScreen("Er zijn geen panden die voldoen aan de selectiecritia. De laatst geselecteerde filter wordt niet toegepast", 0, 0);
+}
 /*ALCODEEND*/}
 
 double f_setFilterInfoText()
@@ -4226,7 +4178,7 @@ else {
 
 double f_finishManualFilter()
 {/*ALCODESTART::1781865687377*/
-b_manualSelectionMode = false;
+v_currentUIMode = FILTER;
 c_filterMatrix.add(new ArrayList<>(c_filterDummy));
 
 /*ALCODEEND*/}
@@ -4261,5 +4213,73 @@ for(CustomButton customButton : c_mapOverlayButtons){
 
 //Show correct chart
 f_setMapOverlay();
+/*ALCODEEND*/}
+
+double f_launchGridnodeSelection()
+{/*ALCODESTART::1783365376466*/
+
+/*ALCODEEND*/}
+
+double f_manualSelectionClickOnMap1(double clickx,double clicky)
+{/*ALCODESTART::1783438093323*/
+//you clicked on the map and the Filter or the Energy Hub screen is active. 
+//That means you want to do some manual selection. 
+//Lets first check if you actually clicked on a gridconnection. 
+
+ArrayList<GridConnection> clickedGC = f_checkIfClickedOnGC(clickx, clicky);
+
+if( clickedGC != null){
+	//So you clicked on a GC, now we check if you just need to start a new manual selection
+	//Or wheter you already selected some buildings 
+	if (v_currentUIMode != OL_UIMode.MANUALSELECTION ){
+		traceln("test1");
+		if(  v_currentUIMode != EHUBSELECTION){ //dont switch yo manual selection when in ehub selection mode, as it would switch to a differnt map overlay
+			v_currentUIMode = MANUALSELECTION;
+		}
+		if( c_filterMatrix.size() > 0){
+			c_filterDummy = new ArrayList<>(c_filterMatrix.get(c_filterMatrix.size()-1));
+		}
+		else {
+			c_filterDummy = new ArrayList<>();//this is the first filter so a new empty list is created
+		}
+		v_filterNames.add( "Handmatige selectie");
+		v_filterIndex.add(String.valueOf(1 + c_filterMatrix.size()));
+		v_filterCount.add( 1 );
+	}
+	f_addOrRemoveGCFromFilter(clickedGC);
+	if (v_filterCount.size() == 0){
+		//v_filterCount.add( 1 );
+	}
+	v_filterCount.set(v_filterCount.size()-1, c_filterDummy.size());
+	f_setFilterInfoText();
+	f_setMapOverlay(); //Go back to base coloring of map							
+	f_colorSelectedBuildings(c_filterDummy); //geen null check nodig want na selecteren van filter is er altijd 1	
+}
+/*ALCODEEND*/}
+
+double f_selectionEHub(double clickx,double clicky)
+{/*ALCODESTART::1783438131374*/
+//you clicked on the map and the Filter or the Energy Hub screen is active. 
+//That means you want to do some manual selection. 
+//Lets first check if you actually clicked on a gridconnection. 
+
+ArrayList<GridConnection> clickedGC = f_checkIfClickedOnGC(clickx, clicky);
+
+if( clickedGC != null){
+	if (c_filterDummy.size() == 0 ){
+		c_filterDummy = new ArrayList<>();//this is the first filter so a new empty list is created
+		v_filterNames.add( "Handmatige selectie");
+		v_filterIndex.add(String.valueOf(1 + c_filterMatrix.size()));
+		v_filterCount.add( 1 );
+	}
+	f_addOrRemoveGCFromFilter(clickedGC);
+	if (v_filterCount.size() == 0){
+		//v_filterCount.add( 1 );
+	}
+	v_filterCount.set(v_filterCount.size()-1, c_filterDummy.size());
+	f_setFilterInfoText();
+	f_setMapOverlay(); //Go back to base coloring of map							
+	f_colorSelectedBuildings(c_filterDummy); //geen null check nodig want na selecteren van filter is er altijd 1	
+}
 /*ALCODEEND*/}
 

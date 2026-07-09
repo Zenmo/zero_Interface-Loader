@@ -2360,7 +2360,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 	</Group>
 	<Group>
 		<Id>1742296970246</Id>
-		<Name><![CDATA[gr_forceMapSelection]]></Name>
+		<Name><![CDATA[gr_ehubSelectionOverlay]]></Name>
 		<X>820</X>
 		<Y>-1480</Y>
 		<Label>
@@ -2373,6 +2373,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<XCode>960</XCode>
 		<YCode>470</YCode>
+		<VisibleCode>v_currentUIMode == EHUBSELECTION</VisibleCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -2707,83 +2708,11 @@ officia deserunt mollit anim id est laborum."]]></Text>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>b_inEnergyHubSelectionMode //&amp;&amp; gr_forceMapSelection.isVisible()</VisibleCode>
+				<VisibleCode>v_currentUIMode == EHUBSELECTION</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Presentation>
-					<Group>
-						<Id>1760020289242</Id>
-						<Name><![CDATA[gr_completeEnergyHubSelection_grayedOut]]></Name>
-						<ExcludeFromBuild>true</ExcludeFromBuild>
-						<X>1150</X>
-						<Y>280</Y>
-						<Label>
-							<X>10</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Presentation>
-							<RoundedRectangle>
-								<Id>1760020289244</Id>
-								<Name><![CDATA[button_completeSelection_grayedOut]]></Name>
-								<X>-155</X>
-								<Y>-45</Y>
-								<Label>
-									<X>10</X>
-									<Y>10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<ZHeight>10</ZHeight>
-								<LineWidth>3</LineWidth>
-								<LineColor>-8355712</LineColor>
-								<LineMaterial>null</LineMaterial>
-								<LineStyle>SOLID</LineStyle>
-								<Width>155</Width>
-								<Height>45</Height>
-								<Rotation>0.0</Rotation>
-								<FillColor>-2302756</FillColor>
-								<FillMaterial>null</FillMaterial>
-								<ArcRadius>10</ArcRadius>
-							</RoundedRectangle>
-							<Text>
-								<Id>1760020289246</Id>
-								<Name><![CDATA[txt_completeEnergyHubSelection_grayedOut]]></Name>
-								<X>-78</X>
-								<Y>-38</Y>
-								<Label>
-									<X>0</X>
-									<Y>-10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<Rotation>0.0</Rotation>
-								<Color>-8355712</Color>
-								<Text><![CDATA[Voltooien]]></Text>
-								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>22</Size>
-									<Style>1</Style>
-								</Font>
-								<Alignment>CENTER</Alignment>
-							</Text>
-						</Presentation>
-					</Group>
 					<Group>
 						<Id>1760015470898</Id>
 						<Name><![CDATA[gr_energieHubConfiguratorTxt]]></Name>
@@ -2833,8 +2762,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 							<Text>
 								<Id>1760015470902</Id>
 								<Name><![CDATA[txt_energyHubConfigurator]]></Name>
-								<X>-418</X>
-								<Y>-36</Y>
+								<X>-430</X>
+								<Y>0</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -2848,11 +2777,10 @@ officia deserunt mollit anim id est laborum."]]></Text>
 								<Rotation>0.0</Rotation>
 								<Color>-1</Color>
 								<Text><![CDATA[Selecteer minimaal twee panden voor de energiehub
-Klik op de knop 'voltooi energiehub'
-Je kunt ook gebruik maken van de filters (venster rechts)]]></Text>
+Klik op de knop 'Start energiehub']]></Text>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>16</Size>
+									<Name><![CDATA[HOLONline2]]></Name>
+									<Size>14</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>LEFT</Alignment>
@@ -2862,7 +2790,7 @@ Je kunt ook gebruik maken van de filters (venster rechts)]]></Text>
 					<Group>
 						<Id>1760015470904</Id>
 						<Name><![CDATA[gr_cancelEnergyHubConfiguration]]></Name>
-						<X>271</X>
+						<X>266</X>
 						<Y>-196</Y>
 						<Label>
 							<X>10</X>
@@ -2908,7 +2836,7 @@ Je kunt ook gebruik maken van de filters (venster rechts)]]></Text>
 								<Id>1760015470908</Id>
 								<Name><![CDATA[txt_cancelEnergyHubConfiguration]]></Name>
 								<X>40</X>
-								<Y>30</Y>
+								<Y>33</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -2923,7 +2851,7 @@ Je kunt ook gebruik maken van de filters (venster rechts)]]></Text>
 								<Color>-16777216</Color>
 								<Text><![CDATA[Annuleren]]></Text>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
+									<Name><![CDATA[HOLONline2]]></Name>
 									<Size>10</Size>
 									<Style>0</Style>
 								</Font>
@@ -2957,7 +2885,7 @@ else {
 							<RoundedRectangle>
 								<Id>1760015470894</Id>
 								<Name><![CDATA[button_completeSelection]]></Name>
-								<X>-113</X>
+								<X>-110</X>
 								<Y>-6</Y>
 								<Label>
 									<X>10</X>
@@ -2974,7 +2902,7 @@ else {
 								<LineColor>-3150612</LineColor>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
-								<Width>205</Width>
+								<Width>200</Width>
 								<Height>32</Height>
 								<Rotation>0.0</Rotation>
 								<FillColor>-657931</FillColor>
@@ -2985,7 +2913,7 @@ else {
 								<Id>1760015470896</Id>
 								<Name><![CDATA[txt_completeEnergyHubSelection]]></Name>
 								<X>-10</X>
-								<Y>-1</Y>
+								<Y>4</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -2998,10 +2926,10 @@ else {
 								<Z>0</Z>
 								<Rotation>0.0</Rotation>
 								<Color>-16744320</Color>
-								<Text><![CDATA[Voltooi energiehub]]></Text>
+								<Text><![CDATA[START ENERGIEHUB]]></Text>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>18</Size>
+									<Name><![CDATA[HolonBLOCK2]]></Name>
+									<Size>14</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>CENTER</Alignment>
@@ -3012,7 +2940,7 @@ else {
 						<Id>1780603802914</Id>
 						<Name><![CDATA[oval]]></Name>
 						<X>-505</X>
-						<Y>-206</Y>
+						<Y>-174</Y>
 						<Label>
 							<X>0</X>
 							<Y>0</Y>
@@ -3028,7 +2956,7 @@ else {
 						<LineColor/>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
-						<RadiusX>4</RadiusX>
+						<RadiusX>3</RadiusX>
 						<RadiusY>40</RadiusY>
 						<Rotation>0.0</Rotation>
 						<FillColor>-1</FillColor>
@@ -3038,7 +2966,7 @@ else {
 						<Id>1780603826817</Id>
 						<Name><![CDATA[oval2]]></Name>
 						<X>-505</X>
-						<Y>-186</Y>
+						<Y>-161</Y>
 						<Label>
 							<X>0</X>
 							<Y>0</Y>
@@ -3054,169 +2982,17 @@ else {
 						<LineColor/>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
-						<RadiusX>4</RadiusX>
-						<RadiusY>40</RadiusY>
-						<Rotation>0.0</Rotation>
-						<FillColor>-1</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Oval>
-					<Oval>
-						<Id>1780603830939</Id>
-						<Name><![CDATA[oval3]]></Name>
-						<X>-505</X>
-						<Y>-166</Y>
-						<Label>
-							<X>0</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor/>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<RadiusX>4</RadiusX>
-						<RadiusY>40</RadiusY>
-						<Rotation>0.0</Rotation>
-						<FillColor>-1</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Oval>
-				</Presentation>
-			</Group>
-			<Group>
-				<Id>1780771313330</Id>
-				<Name><![CDATA[gr_filterInfoText]]></Name>
-				<X>-90</X>
-				<Y>-540</Y>
-				<Label>
-					<X>10</X>
-					<Y>0</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<XCode>-90</XCode>
-				<YCode>-420</YCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Presentation>
-					<RoundedRectangle>
-						<Id>1780768882582</Id>
-						<Name><![CDATA[rect_filterUpperScreenblock1]]></Name>
-						<X>-460</X>
-						<Y>-50</Y>
-						<Label>
-							<X>10</X>
-							<Y>10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>2</LineWidth>
-						<LineColor/>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<Width>910</Width>
-						<Height>89.011</Height>
-						<Rotation>0.0</Rotation>
-						<FillColor>-16744320</FillColor>
-						<FillMaterial>null</FillMaterial>
-						<ArcRadius>1</ArcRadius>
-					</RoundedRectangle>
-					<Oval>
-						<Id>1780769461083</Id>
-						<Name><![CDATA[oval7]]></Name>
-						<X>-405</X>
-						<Y>-27</Y>
-						<Label>
-							<X>0</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor/>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<RadiusX>4</RadiusX>
-						<RadiusY>40</RadiusY>
-						<Rotation>0.0</Rotation>
-						<FillColor>-1</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Oval>
-					<Oval>
-						<Id>1780769461085</Id>
-						<Name><![CDATA[oval8]]></Name>
-						<X>-405</X>
-						<Y>-7</Y>
-						<Label>
-							<X>0</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor/>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<RadiusX>4</RadiusX>
-						<RadiusY>40</RadiusY>
-						<Rotation>0.0</Rotation>
-						<FillColor>-1</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Oval>
-					<Oval>
-						<Id>1780769461087</Id>
-						<Name><![CDATA[oval9]]></Name>
-						<X>-405</X>
-						<Y>13</Y>
-						<Label>
-							<X>0</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor/>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<RadiusX>4</RadiusX>
+						<RadiusX>3</RadiusX>
 						<RadiusY>40</RadiusY>
 						<Rotation>0.0</Rotation>
 						<FillColor>-1</FillColor>
 						<FillMaterial>null</FillMaterial>
 					</Oval>
 					<Text>
-						<Id>1780769477618</Id>
-						<Name><![CDATA[txt_energyHubConfigurator2]]></Name>
-						<X>-380</X>
-						<Y>-37</Y>
+						<Id>1783427117729</Id>
+						<Name><![CDATA[text13]]></Name>
+						<X>-492</X>
+						<Y>-212</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -3229,13 +3005,10 @@ else {
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
 						<Color>-1</Color>
-						<Text><![CDATA[Selecteer gebouwen met het filtermenu (rechts) of door op panden op de kaart te klikken 
-Filteren gaat in volgerde van wat u selecteert
-Met de kaart kunt u zowel gebouwen toevoegen aan als uitsluiten van uw lopende selectie
-]]></Text>
+						<Text><![CDATA[EHUB SELECTIE]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
-							<Size>16</Size>
+							<Name><![CDATA[HolonBLOCK2]]></Name>
+							<Size>20</Size>
 							<Style>0</Style>
 						</Font>
 						<Alignment>LEFT</Alignment>
@@ -7666,13 +7439,11 @@ gr_cablesLegend.setVisible(showCables);</ActionCode>
 			<ActionCode>gr_filterInterface.setVisible(cb_showFilterInterface.isSelected());
 
 if(! cb_showFilterInterface.isSelected()){
-	b_inFilterMode = false;
-	b_manualSelectionMode = false; //turn of manual selection mode cus you might be in it
-	//f_clearFilters();
+	v_currentUIMode = NORMAL;
 	gr_sliderClickBlocker.setVisible(false);
 }
 else{
-	b_inFilterMode = true;
+	v_currentUIMode = FILTER;
 	gr_sliderClickBlocker.setVisible(true);
 	gr_filterInterface.setPos(170, 710);
 }</ActionCode>
@@ -8091,7 +7862,7 @@ cb_filterOptions.setValueIndex(0, false);</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<OnClickCode>if( b_manualSelectionMode){ //End manual selection filter if its active
+				<OnClickCode>if(  v_currentUIMode == OL_UIMode.MANUALSELECTION){ //End manual selection filter if its active
 	f_finishManualFilter();
 }
 f_clearAllFilters();
@@ -8351,7 +8122,7 @@ if( c_filterMatrix.size() &gt; 0 ){ //color selected buildings
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<OnClickCode>if( b_manualSelectionMode){ //End manual selection filter if its active
+						<OnClickCode>if( v_currentUIMode == OL_UIMode.MANUALSELECTION){ //End manual selection filter if its active
 	f_finishManualFilter();
 }
 f_removeLastFilter();
@@ -8832,6 +8603,33 @@ getExperimentHost().openWebSite("https://lux.energy/");
 		</ImageFiles>
 		<OriginalSize>false</OriginalSize>
 	</Image>
+		<Oval>
+		<Id>1780603825771</Id>
+		<Name><![CDATA[oval1]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-1136</X>
+		<Y>1111</Y>
+		<Label>
+			<X>0</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor/>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<RadiusX>4</RadiusX>
+		<RadiusY>40</RadiusY>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Oval>
 	<Control Type="Button">
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1734446701124</Id>
@@ -9003,7 +8801,7 @@ Je kunt ook gebruik maken van de filters (venster rechts)]]></Text>
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<VisibleCode>b_inFilterMode </VisibleCode>
+		<VisibleCode>v_currentUIMode == FILTER || v_currentUIMode == MANUALSELECTION</VisibleCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -10128,6 +9926,157 @@ type]]></Text>
 					</Image>
 				</Presentation>
 			</Group>
+		</Presentation>
+	</Group>
+	<Group>	
+		<Id>1780771313330</Id>
+		<Name><![CDATA[gr_filterInfoText]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>720</X>
+		<Y>-2320</Y>	
+				<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>-90</XCode>
+		<YCode>-420</YCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<RoundedRectangle>
+				<Id>1780768882582</Id>
+				<Name><![CDATA[rect_filterUpperScreenblock1]]></Name>
+				<X>-460</X>
+				<Y>-50</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>	
+				<ZHeight>10</ZHeight>
+				<LineWidth>2</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>910</Width>
+				<Height>89.011</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-16744320</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>1</ArcRadius>
+			</RoundedRectangle>
+			<Oval>
+				<Id>1780769461083</Id>
+				<Name><![CDATA[oval7]]></Name>
+				<X>-405</X>
+				<Y>-27</Y>
+				<Label>
+					<X>0</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<RadiusX>4</RadiusX>
+				<RadiusY>40</RadiusY>
+				<Rotation>0.0</Rotation>
+				<FillColor>-1</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Oval>
+			<Oval>
+				<Id>1780769461085</Id>
+				<Name><![CDATA[oval8]]></Name>
+				<X>-405</X>
+				<Y>-7</Y>
+				<Label>
+					<X>0</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<RadiusX>4</RadiusX>
+				<RadiusY>40</RadiusY>
+				<Rotation>0.0</Rotation>
+				<FillColor>-1</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Oval>
+			<Oval>
+				<Id>1780769461087</Id>
+				<Name><![CDATA[oval9]]></Name>
+				<X>-405</X>
+				<Y>13</Y>
+				<Label>
+					<X>0</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<RadiusX>4</RadiusX>
+				<RadiusY>40</RadiusY>
+				<Rotation>0.0</Rotation>
+				<FillColor>-1</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Oval>
+			<Text>
+				<Id>1780769477618</Id>
+				<Name><![CDATA[txt_energyHubConfigurator2]]></Name>
+				<X>-380</X>
+				<Y>-37</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-1</Color>
+				<Text><![CDATA[Selecteer gebouwen met het filtermenu (rechts) of door op panden op de kaart te klikken 
+Filteren gaat in volgerde van wat u selecteert
+Met de kaart kunt u zowel gebouwen toevoegen aan als uitsluiten van uw lopende selectie
+]]></Text>
+				<Font>
+					<Name><![CDATA[SansSerif]]></Name>
+					<Size>16</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
 		</Presentation>
 	</Group>
 </Presentation>
