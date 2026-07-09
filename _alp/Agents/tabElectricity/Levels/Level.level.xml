@@ -2583,17 +2583,11 @@ double area_m2 = gc.c_connectedGISObjects.get(0).gisRegion.area();
 double area_ha = area_m2 / 10000.0;
 double installedCapacity_kW = installedCapacity_kWpha * area_ha;
 
-// Calculate max contracted range to be the next multiple of 50 kW above installed capacity
-double maxContractedCapacity_kW = ceil(installedCapacity_kW / 50.0) * 50.0;
+// Calculate max contracted range to be the next multiple of 10 kW above installed capacity
+double maxContractedCapacity_kW = ceil(installedCapacity_kW / 10.0) * 10.0;
 
-// If needed, adjust the contracted capacity
-/*double contractedCapacity_kW = sl_customGCSolarfarmContractedCapacity_kW.getValue();
-if (contractedCapacity_kW &gt; maxContractedCapacity_kW) {
-    contractedCapacity_kW = maxContractedCapacity_kW;
-    sl_customGCSolarfarmContractedCapacity_kW.setValue(contractedCapacity_kW, false);
-}*/
 // Dynamically clamp the range of the contracted capacity slider
-sl_customGCSolarfarmContractedCapacity_kW.setRange(0, maxContractedCapacity_kW);
+sl_customGCSolarfarmContractedCapacity_kW.setRange(0, maxContractedCapacity_kW + 1E-10);
 sl_customGCSolarfarmContractedCapacity_kW.setValue(maxContractedCapacity_kW, false);
 
 // Update backend
@@ -2799,11 +2793,6 @@ zero_Interface.f_resetSettings();</ActionCode>
 double physicalCapacity_kW = gc.v_liveConnectionMetaData.getPhysicalCapacity_kW();
 
 double contractedCapacity_kW = sl_customGCSolarfarmContractedCapacity_kW.getValue();
-
-if (contractedCapacity_kW &gt; physicalCapacity_kW) {
-    contractedCapacity_kW = physicalCapacity_kW;
-    sl_customGCSolarfarmContractedCapacity_kW.setValue(contractedCapacity_kW, false);
-}
 
 gc.v_liveConnectionMetaData.setCapacities_kW(0, contractedCapacity_kW, physicalCapacity_kW);
 
@@ -3116,12 +3105,6 @@ zero_Interface.f_resetSettings();</ActionCode>
 GCEnergyProduction gc = (GCEnergyProduction)(zero_Interface.c_selectedGridConnections).get(0);
 J_EAProduction windAsset = (J_EAProduction)gc.c_productionAssets.get(0);
 
-// If needed, adjust the contracted capacity 
-/*double contractedCapacity_MW = sl_customGCWindfarmContractedCapacity_MW.getValue();
-if (contractedCapacity_MW &gt; installedCapacity_MW) {
-    contractedCapacity_MW = installedCapacity_MW;
-    sl_customGCWindfarmContractedCapacity_MW.setValue(contractedCapacity_MW, false);
-}*/
 // Dynamically clamp the range of the contracted capacity slider
 sl_customGCWindfarmContractedCapacity_MW.setRange(0, installedCapacity_MW + 1E-10);
 sl_customGCWindfarmContractedCapacity_MW.setValue(installedCapacity_MW, false);
@@ -3458,10 +3441,6 @@ zero_Interface.f_resetSettings();</ActionCode>
 					<ActionCode>double installedCapacity_MWh = sl_customGCGridBatteryInstalledCapacity_MWh.getValue();
 double installedCapacity_MW = installedCapacity_MWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power;
 
-/*if(installedCapacity_MW &gt; installedCapacity_MWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power){
-	installedCapacity_MW = installedCapacity_MWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power;
-	sl_customGCGridBatteryInstalledCapacity_MW.setValue(installedCapacity_MWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power, false);
-}*/
 sl_customGCGridBatteryInstalledCapacity_MW.setRange(0.05, installedCapacity_MW + 1E-10);
 sl_customGCGridBatteryInstalledCapacity_MW.setValue(installedCapacity_MW, false);
 

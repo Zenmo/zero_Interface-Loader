@@ -715,7 +715,7 @@ for(GridConnection customGB : c_customGridBatteryGCs){
 }
 
 double minSliderGridBattery_MWh = p_initialTotalGridBatteryCapacity_MWh + totalCustomBatteryCapacity_MWh;
-double maxSliderGridBattery_MWh = minSliderGridBattery_MWh + 50;
+double maxSliderGridBattery_MWh = minSliderGridBattery_MWh + zero_Interface.energyModel.avgc_data.p_maxGridBatteryStorageCapacityMVMVBusinesspark_MW;
 sl_gridBatteries_MWh.setRange(minSliderGridBattery_MWh, maxSliderGridBattery_MWh);
 sl_gridBatteries_MWh.setValue(totalDefaultBatteryCapacity_MWh + minSliderGridBattery_MWh, false);
 
@@ -786,7 +786,7 @@ double area_m2 = gc.c_connectedGISObjects.get(0).gisRegion.area();
 double area_ha = area_m2 / 10000.0;
 double currentCapacity_kWpha = currentCapacity_kW / area_ha;
 
-sl_customGCSolarfarmInstalledCapacity_kWpha.setRange((int)(0.5*zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha), (int)(1.5*zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha));
+sl_customGCSolarfarmInstalledCapacity_kWpha.setRange((int)(0.8*zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha), (int)(1.2*zero_Interface.energyModel.avgc_data.p_avgSolarFieldPower_kWppha));
 sl_customGCSolarfarmInstalledCapacity_kWpha.setValue(currentCapacity_kWpha, false);
 
 // PV Orientation
@@ -856,7 +856,7 @@ J_EAStorageElectric batteryAsset = (J_EAStorageElectric)gc.c_storageAssets.get(0
 double currentCapacity_MWh = batteryAsset.getStorageCapacity_kWh() / 1000;
 double currentCapacity_MW = batteryAsset.getCapacityElectric_kW() / 1000;
 
-sl_customGCGridBatteryInstalledCapacity_MWh.setRange(0.2, 20);
+sl_customGCGridBatteryInstalledCapacity_MWh.setRange(zero_Interface.energyModel.avgc_data.p_minGridBatteryStorageCapacityMVLVResidential_kW/1000, zero_Interface.energyModel.avgc_data.p_maxGridBatteryStorageCapacityMVMVBusinesspark_MW);
 sl_customGCGridBatteryInstalledCapacity_MWh.setValue(currentCapacity_MWh, false);
 
 sl_customGCGridBatteryInstalledCapacity_MW.setRange(0.05, currentCapacity_MWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power + 1E-10);

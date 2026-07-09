@@ -481,6 +481,24 @@
 			<Parameter>
 				<Name><![CDATA[map_avgAssetBaseOPEX_eurpyr]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_maxGridBatteryStorageCapacityMVCableBusinesspark_MW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_maxGridBatteryStorageCapacityMVMVBusinesspark_MW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_maxGridBatteryStorageCapacityMVCableResidential_kW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_maxGridBatteryStorageCapacityMVLVResidential_kW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_maxGridBatteryStorageCapacityLVCableResidential_kW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_minGridBatteryStorageCapacityMVLVResidential_kW]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">
