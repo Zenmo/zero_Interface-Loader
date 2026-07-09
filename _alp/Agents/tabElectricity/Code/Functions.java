@@ -991,6 +991,7 @@ if (removedGISType != null) {
 
 f_updateSliders_Electricity();
 zero_Interface.f_refreshLegend();
+zero_Interface.f_clearSelectionAndSelectEnergyModel();
 /*ALCODEEND*/}
 
 double f_addCustomWindfarmGC(GridNode gn)
