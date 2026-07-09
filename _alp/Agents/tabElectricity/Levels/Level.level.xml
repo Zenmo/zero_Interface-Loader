@@ -2587,7 +2587,7 @@ double installedCapacity_kW = installedCapacity_kWpha * area_ha;
 double maxContractedCapacity_kW = ceil(installedCapacity_kW / 10.0) * 10.0;
 
 // Dynamically clamp the range of the contracted capacity slider
-sl_customGCSolarfarmContractedCapacity_kW.setRange(0, maxContractedCapacity_kW + 1E-10);
+sl_customGCSolarfarmContractedCapacity_kW.setRange(0, maxContractedCapacity_kW);
 sl_customGCSolarfarmContractedCapacity_kW.setValue(maxContractedCapacity_kW, false);
 
 // Update backend
