@@ -8603,7 +8603,7 @@ getExperimentHost().openWebSite("https://lux.energy/");
 		</ImageFiles>
 		<OriginalSize>false</OriginalSize>
 	</Image>
-		<Oval>
+	<Oval>
 		<Id>1780603825771</Id>
 		<Name><![CDATA[oval1]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
@@ -9919,7 +9919,7 @@ type]]></Text>
 						<ImageFiles>
 							<ImageResourceReference>
 								<PackageName>zerointerfaceloader</PackageName>
-								<ClassName>Lagen icoon zwart.png</ClassName>
+								<ClassName>icon_mapoverlay_black.png</ClassName>
 							</ImageResourceReference>
 						</ImageFiles>
 						<OriginalSize>false</OriginalSize>
@@ -9928,13 +9928,13 @@ type]]></Text>
 			</Group>
 		</Presentation>
 	</Group>
-	<Group>	
+	<Group>
 		<Id>1780771313330</Id>
 		<Name><![CDATA[gr_filterInfoText]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>720</X>
-		<Y>-2320</Y>	
-				<Label>
+		<Y>-2320</Y>
+		<Label>
 			<X>10</X>
 			<Y>0</Y>
 		</Label>
@@ -9958,7 +9958,11 @@ type]]></Text>
 					<Y>10</Y>
 				</Label>
 				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>	
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
 				<ZHeight>10</ZHeight>
 				<LineWidth>2</LineWidth>
 				<LineColor/>
