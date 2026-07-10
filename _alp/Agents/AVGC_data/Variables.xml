@@ -1233,7 +1233,7 @@ https://nos.nl/artikel/2483604-elektrische-vrachtwagens-blijven-achter-door-comp
 https://www.zonneplan.nl/kenniscentrum/zonnepanelen/vermogen --> 212 W/m2
 https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Description>
 		<X>520</X>
-		<Y>855</Y>
+		<Y>845</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1263,7 +1263,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Description><![CDATA[Average ratio of battery capacity over battery power.
 --> If battery capacity (in kWh) is twice the battery power (in kW) --> ratio = 2.]]></Description>
 		<X>520</X>
-		<Y>985</Y>
+		<Y>1035</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1276,7 +1276,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[2]]></Code>
+				<Code><![CDATA[2.0]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1726584205694</Id>
@@ -1386,7 +1386,7 @@ https://www.zonnepanelennoord.nl/vermogen-zonnepanelen/ --> 215 W/m2]]></Descrip
 		<Name><![CDATA[p_avgRatioRoofPotentialPV]]></Name>
 		<Description><![CDATA[value for the ratio of the avg Usable Roof Area For PV fr]]></Description>
 		<X>520</X>
-		<Y>875</Y>
+		<Y>865</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1720,7 +1720,7 @@ https://www.mdpi.com/1999-4893/18/7/416 -> 100-104 % efficiency, based on gas en
 		<Description><![CDATA[Parameter used to estimate the total solar production in a year in a function like:
 p_avgFullLoadHoursPV_hr * kWp_of_PV_panels = XXX kWh pv production in a year.]]></Description>
 		<X>520</X>
-		<Y>895</Y>
+		<Y>885</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1844,9 +1844,9 @@ to 18 m3 p m2 for label G
 	<Variable Class="Parameter">
 		<Id>1733155392379</Id>
 		<Name><![CDATA[p_avgSolarFieldPower_kWppha]]></Name>
-		<Description><![CDATA[1000]]></Description>
+		<Description><![CDATA[https://www.lokaleenergieoverijssel.nl/wp-content/uploads/2022/06/2022-Factsheet-Zon-PV-Grootschalig.pdf]]></Description>
 		<X>520</X>
-		<Y>915</Y>
+		<Y>905</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2322,7 +2322,7 @@ Voor nu gekozen voor 4185.
 		<Name><![CDATA[p_avgRatioHouseBatteryStorageCapacity_v_PVPower]]></Name>
 		<Description><![CDATA[https://www.essent.nl/thuisbatterij/capaciteit-thuisbatterij : Essent: "Over het algemeen kun je ervan uitgaan dat een thuisbatterij zo'n 1 à 1,5 kWh capaciteit nodig heeft per kWp zonnepanelen vermogen. " ]]></Description>
 		<X>520</X>
-		<Y>1005</Y>
+		<Y>1055</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2652,7 +2652,7 @@ https://warmtepomp-panel.nl/afgiftesysteem.html? -> 35 graden afgifte bij -10 gr
 		<Name><![CDATA[p_PBL_HeatingLossFactor_fr]]></Name>
 		<Description><![CDATA[Manually calibrated value tested on 3 neighborhoods to get the total nbh yearly total to match with the expected outcome.]]></Description>
 		<X>520</X>
-		<Y>1060</Y>
+		<Y>1110</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2680,7 +2680,7 @@ https://warmtepomp-panel.nl/afgiftesysteem.html? -> 35 graden afgifte bij -10 gr
 		<Id>1768314112512</Id>
 		<Name><![CDATA[map_insulationLabel_lossfactorPerFloorSurface_WpKm2]]></Name>
 		<X>520</X>
-		<Y>1080</Y>
+		<Y>1130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2718,7 +2718,7 @@ OL_GridConnectionInsulationLabel.G, 1.45
 		<Name><![CDATA[p_solarAbsorptionFloorSurfaceScalingFactor_fr]]></Name>
 		<Description><![CDATA[Roughly aligned with data-analysis/fitting by Zin Li (TU/e PhD) based on measured data of 100 houses in Dalenm during DACS-HW project. Increased by a factor ~2 after manual testing/calibration by Gillis and Naud.]]></Description>
 		<X>520</X>
-		<Y>1100</Y>
+		<Y>1150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2830,7 +2830,7 @@ OL_GridConnectionInsulationLabel.G, 1.45
 		<Id>1768497744964</Id>
 		<Name><![CDATA[p_heatCapacitySizingConstant_JpK]]></Name>
 		<X>520</X>
-		<Y>1150</Y>
+		<Y>1200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2858,7 +2858,7 @@ OL_GridConnectionInsulationLabel.G, 1.45
 		<Id>1768497744970</Id>
 		<Name><![CDATA[p_heatCapacitySizingSlope_JpKm2]]></Name>
 		<X>520</X>
-		<Y>1170</Y>
+		<Y>1220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2887,7 +2887,7 @@ OL_GridConnectionInsulationLabel.G, 1.45
 		<Id>1768497744974</Id>
 		<Name><![CDATA[p_heatCapacitySizingFactor_fr]]></Name>
 		<X>520</X>
-		<Y>1190</Y>
+		<Y>1240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2975,7 +2975,7 @@ The cooldown period is defined as the duration of time before a building  is coo
 
 FIND SOURCE AND CORRECT THE NUMBERS BEFORE USE!]]></Description>
 		<X>520</X>
-		<Y>1130</Y>
+		<Y>1180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3016,7 +3016,7 @@ OL_GridConnectionInsulationLabel.G, 4.0
 		<Description><![CDATA[Cooldown timescale as approximately 'measured' on an energy label A, free-standing, wooden house. Modern, terraced and stone houses might have longer cooldown timescale. (meaning it can more effectively buffer heat)]]></Description>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>520</X>
-		<Y>1240</Y>
+		<Y>1260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3481,7 +3481,7 @@ OL_GridConnectionInsulationLabel.G, 4.0
 		<Id>1775145927207</Id>
 		<Name><![CDATA[p_defaultPVOrientation]]></Name>
 		<X>520</X>
-		<Y>935</Y>
+		<Y>925</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3761,6 +3761,245 @@ Definition: In the Netherlands each year every GridConnection that is considered
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1775477256799</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1783542712305</Id>
+		<Name><![CDATA[p_maxCapacityMVMVStation_kW]]></Name>
+		<Description><![CDATA[Het vermogen van de buurtbatterij is afhankelijk van de locatie:
+— voor een woonwijk is het vermogen beperkt tot een middenspanningskabel (< 2.000-
+5.000 kW) en/of MS/LS-station (max. 1.500 kW) en/of laagspanningskabel (<100 kW);
+— voor een bedrijventerrein is het vermogen beperkt tot een middenspanningsverdeelstation (<50 MW) en/of middenspanningskabel (<5 MW).
+Voor het vermogen van de buurtbatterij worden twee formaten aangenomen: 200 kW en
+2 MW.
+
+https://ce.nl/wp-content/uploads/2023/12/CE_Delft_WitteveenBos_230315_Thuis-_en_buurtbatterijen_Def.pdf]]></Description>
+		<X>50</X>
+		<Y>800</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[50000]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1783542712303</Id>
+				<Label><![CDATA[p_maxGridBatteryStorageCapacityMVMVBusinesspark_MW]]></Label>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1783542843312</Id>
+		<Name><![CDATA[p_maxNominalPowerMVCable_kW]]></Name>
+		<Description><![CDATA[Het vermogen van de buurtbatterij is afhankelijk van de locatie:
+— voor een woonwijk is het vermogen beperkt tot een middenspanningskabel (< 2.000-
+5.000 kW) en/of MS/LS-station (max. 1.500 kW) en/of laagspanningskabel (<100 kW);
+— voor een bedrijventerrein is het vermogen beperkt tot een middenspanningsverdeelstation (<50 MW) en/of middenspanningskabel (<5 MW).
+Voor het vermogen van de buurtbatterij worden twee formaten aangenomen: 200 kW en
+2 MW.
+
+https://ce.nl/wp-content/uploads/2023/12/CE_Delft_WitteveenBos_230315_Thuis-_en_buurtbatterijen_Def.pdf]]></Description>
+		<X>50</X>
+		<Y>730</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[5000.0]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1783542843310</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1783542843330</Id>
+		<Name><![CDATA[p_maxCapacityMVLVStation_kW]]></Name>
+		<Description><![CDATA[Het vermogen van de buurtbatterij is afhankelijk van de locatie:
+— voor een woonwijk is het vermogen beperkt tot een middenspanningskabel (< 2.000-
+5.000 kW) en/of MS/LS-station (max. 1.500 kW) en/of laagspanningskabel (<100 kW);
+— voor een bedrijventerrein is het vermogen beperkt tot een middenspanningsverdeelstation (<50 MW) en/of middenspanningskabel (<5 MW).
+Voor het vermogen van de buurtbatterij worden twee formaten aangenomen: 200 kW en
+2 MW.
+
+https://ce.nl/wp-content/uploads/2023/12/CE_Delft_WitteveenBos_230315_Thuis-_en_buurtbatterijen_Def.pdf]]></Description>
+		<X>50</X>
+		<Y>780</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[1500.0]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1783542843328</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1783542921570</Id>
+		<Name><![CDATA[p_maxNominalPowerLVCable_kW]]></Name>
+		<Description><![CDATA[Het vermogen van de buurtbatterij is afhankelijk van de locatie:
+— voor een woonwijk is het vermogen beperkt tot een middenspanningskabel (< 2.000-
+5.000 kW) en/of MS/LS-station (max. 1.500 kW) en/of laagspanningskabel (<100 kW);
+— voor een bedrijventerrein is het vermogen beperkt tot een middenspanningsverdeelstation (<50 MW) en/of middenspanningskabel (<5 MW).
+Voor het vermogen van de buurtbatterij worden twee formaten aangenomen: 200 kW en
+2 MW.
+
+https://ce.nl/wp-content/uploads/2023/12/CE_Delft_WitteveenBos_230315_Thuis-_en_buurtbatterijen_Def.pdf]]></Description>
+		<X>50</X>
+		<Y>710</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[100.0]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1783542921568</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1783543294238</Id>
+		<Name><![CDATA[p_minCapacityMVLVStation_kW]]></Name>
+		<Description><![CDATA[Het vermogen van de buurtbatterij is afhankelijk van de locatie:
+— voor een woonwijk is het vermogen beperkt tot een middenspanningskabel (< 2.000-
+5.000 kW) en/of MS/LS-station (max. 1.500 kW) en/of laagspanningskabel (<100 kW);
+— voor een bedrijventerrein is het vermogen beperkt tot een middenspanningsverdeelstation (<50 MW) en/of middenspanningskabel (<5 MW).
+Voor het vermogen van de buurtbatterij worden twee formaten aangenomen: 200 kW en
+2 MW.
+
+https://ce.nl/wp-content/uploads/2023/12/CE_Delft_WitteveenBos_230315_Thuis-_en_buurtbatterijen_Def.pdf]]></Description>
+		<X>50</X>
+		<Y>760</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[200.0]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1783543294236</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1783672840633</Id>
+		<Name><![CDATA[p_largestWindTurbine_land_MW]]></Name>
+		<Description><![CDATA[https://windparkwieringermeer.nl/]]></Description>
+		<X>520</X>
+		<Y>970</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[7.5]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1783672840631</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1783672903235</Id>
+		<Name><![CDATA[p_largestWindTurbine_sea_MW]]></Name>
+		<Description><![CDATA[https://www.energy-innovation.nl/nl/projecten/haliade-x/]]></Description>
+		<X>520</X>
+		<Y>990</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[14]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1783672903233</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
