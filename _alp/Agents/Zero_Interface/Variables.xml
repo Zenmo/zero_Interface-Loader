@@ -287,7 +287,7 @@
 		<Id>1701879001472</Id>
 		<Name><![CDATA[v_clickedObjectText]]></Name>
 		<X>60</X>
-		<Y>1470</Y>
+		<Y>1490</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -661,7 +661,7 @@
 		<Id>1705673181898</Id>
 		<Name><![CDATA[v_clickedGridNode]]></Name>
 		<X>60</X>
-		<Y>1410</Y>
+		<Y>1430</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -789,7 +789,7 @@
 		<Id>1707918668189</Id>
 		<Name><![CDATA[v_clickedObjectType]]></Name>
 		<X>60</X>
-		<Y>1300</Y>
+		<Y>1320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1544,7 +1544,7 @@
 		<Id>1739980192808</Id>
 		<Name><![CDATA[v_customEnergyCoop]]></Name>
 		<X>60</X>
-		<Y>1390</Y>
+		<Y>1410</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1563,7 +1563,7 @@
 		<Id>1742298194173</Id>
 		<Name><![CDATA[v_forcedClickScreenColor]]></Name>
 		<X>-1570</X>
-		<Y>790</Y>
+		<Y>780</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2061,7 +2061,7 @@
 		<Id>1777565007741</Id>
 		<Name><![CDATA[v_clickedObject]]></Name>
 		<X>60</X>
-		<Y>1280</Y>
+		<Y>1300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2146,7 +2146,7 @@
 		<Id>1781178958319</Id>
 		<Name><![CDATA[v_filterCount]]></Name>
 		<X>-1190</X>
-		<Y>960</Y>
+		<Y>980</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2168,7 +2168,7 @@
 		<Id>1781179023118</Id>
 		<Name><![CDATA[v_filterNames]]></Name>
 		<X>-1190</X>
-		<Y>980</Y>
+		<Y>1000</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2190,7 +2190,7 @@
 		<Id>1781179093385</Id>
 		<Name><![CDATA[v_filterIndex]]></Name>
 		<X>-1190</X>
-		<Y>1000</Y>
+		<Y>1020</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2211,8 +2211,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1783357538928</Id>
 		<Name><![CDATA[v_currentUIMode]]></Name>
-		<X>560</X>
-		<Y>770</Y>
+		<X>60</X>
+		<Y>1080</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3280,7 +3280,7 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 		<Id>1721302080638</Id>
 		<Name><![CDATA[c_selectedGridConnections]]></Name>
 		<X>60</X>
-		<Y>1360</Y>
+		<Y>1380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3352,7 +3352,7 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 		<Id>1734513139372</Id>
 		<Name><![CDATA[c_selectedObjects]]></Name>
 		<X>60</X>
-		<Y>1340</Y>
+		<Y>1360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3733,7 +3733,7 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 		<Id>1780851331005</Id>
 		<Name><![CDATA[c_filterMatrix]]></Name>
 		<X>-1190</X>
-		<Y>940</Y>
+		<Y>960</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3750,8 +3750,8 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 	<Variable Class="CollectionVariable">
 		<Id>1780855750367</Id>
 		<Name><![CDATA[c_filterDummy]]></Name>
-		<X>-980</X>
-		<Y>720</Y>
+		<X>-1190</X>
+		<Y>940</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

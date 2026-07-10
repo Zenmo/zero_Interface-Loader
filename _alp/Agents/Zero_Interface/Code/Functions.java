@@ -1158,8 +1158,8 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 				}
 			
 				
-				if(gr_ehubSelectionOverlay.isVisible()){
-					f_setForcedClickScreenText("");
+				if(gr_forceMapSelection.isVisible()){
+					f_setForcedClickScreenMessageText("");
 					if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 						f_setForcedClickScreenVisibility(false);
 					}
@@ -1339,8 +1339,8 @@ for ( GIS_Object region : c_GISNeighborhoods ){
 				c_filterSelectedNeighborhoods.add(clickedNeighborhood);
 			}
 
-			if(gr_ehubSelectionOverlay.isVisible()){
-				f_setForcedClickScreenText("");
+			if(gr_forceMapSelection.isVisible()){
+				f_setForcedClickScreenMessageText("");
 				if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 					f_setForcedClickScreenVisibility(false);
 				}
@@ -1478,17 +1478,6 @@ if(clickedObject != null){
 	return true;
 }
 return false; 
-/*ALCODEEND*/}
-
-double f_setForcedClickScreenText(String forcedClickScreenMessageText)
-{/*ALCODESTART::1742300624199*/
-t_forcedClickMessage.setText(forcedClickScreenMessageText);
-gr_ForceMapSelectionMessageText.setVisible(false);
-
-if(!t_forcedClickMessage.getText().equals("")){
-	UIUtil.fitTextInRectangle(t_forcedClickMessage, rect_selectText, 15.0, 15.0, 15.0, 15.0);
-	gr_ForceMapSelectionMessageText.setVisible(true);
-}
 /*ALCODEEND*/}
 
 double f_setMapViewBounds(List<GIS_Object> GISObjects)
@@ -2573,17 +2562,11 @@ double f_initializePresentationOrder()
 f_setShapePresentationOnTop(map);
 f_setShapePresentationOnTop(gr_zoomButton);
 f_setShapePresentationOnTop(gr_mapOverlayButtons);
-f_setShapePresentationOnTop(gr_sliderClickBlocker);
-f_setShapePresentationOnTop(gr_ehubSelectionOverlay);
+f_setShapePresentationOnTop(gr_forceMapSelection);
 f_setShapePresentationOnTop(gr_filterInterface);
 f_setShapePresentationOnTop(gr_infoText);
 f_setShapePresentationOnTop(gr_filterOverlay);
 
-/*ALCODEEND*/}
-
-double f_setForcedClickScreenVisibility(boolean showForcedClickScreen)
-{/*ALCODESTART::1753445407428*/
-//gr_forceMapSelection.setVisible(showForcedClickScreen);
 /*ALCODEEND*/}
 
 double f_selectEnergyHubGC(double clickx,double clicky)
@@ -2603,12 +2586,10 @@ double f_startEnergyHubConfiguration()
 {/*ALCODESTART::1753698716095*/
 pauseSimulation();
 
-f_setForcedClickScreenText("");
+f_setForcedClickScreenMessageText("");
 f_setForcedClickScreenVisibility(true);
 
-//cb_showFilterInterface.setSelected(true, true);
 v_currentUIMode = OL_UIMode.EHUBSELECTION;
-//gr_filterInterface.setPos(170, 580);
 /*ALCODEEND*/}
 
 double f_finalizeEnergyHubConfiguration()
@@ -3809,7 +3790,7 @@ if (c_manualFilterSelectedGC.isEmpty() && c_manualFilterDeselectedGC.isEmpty() &
 	f_setFilter(OL_FilterOptionsGC.MANUAL_SELECTION);
 }
 
-f_setForcedClickScreenText("");
+f_setForcedClickScreenMessageText("");
 if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 	f_setForcedClickScreenVisibility(false);
 }
@@ -3845,40 +3826,6 @@ if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 }
 if(!c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
 	f_setFilter(OL_FilterOptionsGC.MANUAL_SELECTION);
-}
-/*ALCODEEND*/}
-
-double f_manualSelectionClickOnMap(double clickx,double clicky)
-{/*ALCODESTART::1780854316419*/
-//you clicked on the map and the Filter or the Energy Hub screen is active. 
-//That means you want to do some manual selection. 
-//Lets first check if you actually clicked on a gridconnection. 
-
-ArrayList<GridConnection> clickedGC = f_checkIfClickedOnGC(clickx, clicky);
-
-if( clickedGC != null){
-	//So you clicked on a GC, now we check if you just need to start a new manual selection
-	//Or wheter you already selected some buildings 
-	if (v_currentUIMode != OL_UIMode.MANUALSELECTION ){
-		v_currentUIMode = MANUALSELECTION;
-		if( c_filterMatrix.size() > 0){
-			c_filterDummy = new ArrayList<>(c_filterMatrix.get(c_filterMatrix.size()-1));
-		}
-		else {
-			c_filterDummy = new ArrayList<>();//this is the first filter so a new empty list is created
-		}
-		v_filterNames.add( "Handmatige selectie");
-		v_filterIndex.add(String.valueOf(1 + c_filterMatrix.size()));
-		v_filterCount.add( 1 );
-	}
-	f_addOrRemoveGCFromFilter(clickedGC);
-	if (v_filterCount.size() == 0){
-		//v_filterCount.add( 1 );
-	}
-	v_filterCount.set(v_filterCount.size()-1, c_filterDummy.size());
-	f_setFilterInfoText();
-	f_setMapOverlay(); //Go back to base coloring of map							
-	f_colorSelectedBuildings(c_filterDummy); //geen null check nodig want na selecteren van filter is er altijd 1	
 }
 /*ALCODEEND*/}
 
@@ -3991,8 +3938,7 @@ switch(selectedFilter){
 			f_filterGridLoops(c_filterDummy);
 		}
 		else{
-		
-			f_setForcedClickScreenText("Selecteer een lus");
+			f_setForcedClickScreenMessageText("Selecteer een lus");
 			if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 				f_setForcedClickScreenVisibility(true);
 			}
@@ -4014,7 +3960,7 @@ switch(selectedFilter){
 			f_filterNeighborhoods(c_filterDummy);
 		}
 		else{
-			f_setForcedClickScreenText("Selecteer een buurt");
+			f_setForcedClickScreenMessageText("Selecteer een buurt");
 			if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 				f_setForcedClickScreenVisibility(true);
 			}
@@ -4119,7 +4065,7 @@ v_filterIndex = new ArrayList<String>();
 c_filterMatrix.clear();
 
 
-f_setForcedClickScreenText("");
+f_setForcedClickScreenMessageText("");
 if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 	f_setForcedClickScreenVisibility(false);
 }
@@ -4197,7 +4143,7 @@ double f_launchGridnodeSelection()
 
 /*ALCODEEND*/}
 
-double f_manualSelectionClickOnMap1(double clickx,double clicky)
+double f_manualSelectionClickOnMap(double clickx,double clicky)
 {/*ALCODESTART::1783438093323*/
 //you clicked on the map and the Filter or the Energy Hub screen is active. 
 //That means you want to do some manual selection. 
@@ -4210,7 +4156,7 @@ if( clickedGC != null){
 	//Or wheter you already selected some buildings 
 	if (v_currentUIMode != OL_UIMode.MANUALSELECTION ){
 		traceln("test1");
-		if(  v_currentUIMode != EHUBSELECTION){ //dont switch yo manual selection when in ehub selection mode, as it would switch to a differnt map overlay
+		if(  v_currentUIMode != EHUBSELECTION){ //dont switch to manual selection when in ehub selection mode, as it would switch to a differnt map overlay
 			v_currentUIMode = MANUALSELECTION;
 		}
 		if( c_filterMatrix.size() > 0){
@@ -4276,5 +4222,52 @@ for (int i = 1; i <= 10; i++) {
 }
 // Rebuild the legend using existing functionality
 f_initializeLegend();
+/*ALCODEEND*/}
+
+double f_setForcedClickScreenMessageText(String forcedClickScreenMessageText)
+{/*ALCODESTART::1783690031491*/
+t_forcedClickMessage.setText(forcedClickScreenMessageText);
+gr_ForceMapSelectionMessageText.setVisible(false);
+
+if(!t_forcedClickMessage.getText().equals("")){
+	UIUtil.fitTextInRectangle(t_forcedClickMessage, rect_selectText, 15.0, 15.0, 15.0, 15.0);
+	gr_ForceMapSelectionMessageText.setVisible(true);
+}
+/*ALCODEEND*/}
+
+double f_setForcedClickScreenVisibility(boolean showForcedClickScreen)
+{/*ALCODESTART::1783690031493*/
+gr_forceMapSelection.setVisible(showForcedClickScreen);
+/*ALCODEEND*/}
+
+double f_setForcedClickScreenTitleText(String forcedClickScreenText)
+{/*ALCODESTART::1783690031495*/
+txt_forcedClickTitle.setText(forcedClickScreenText);
+gr_forcedClickTitleTxt.setVisible(false);
+
+if(!txt_forcedClickTitle.getText().equals("")){
+	UIUtil.fitTextInRectangle(txt_forcedClickTitle, rect_forcedClickTitle, 15.0, 15.0, 15.0, 15.0);
+	gr_forcedClickTitleTxt.setVisible(true);
+}
+/*ALCODEEND*/}
+
+double f_setForcedClickScreenTitleBackgroundColor(Color fillColor,Color lineColor)
+{/*ALCODESTART::1783690031497*/
+rect_forcedClickTitle.setFillColor(fillColor);
+rect_forcedClickTitle.setLineColor(lineColor);
+/*ALCODEEND*/}
+
+double f_setForcedClickScreenTextBoxes(String titleText,Color titleBackgroundFillColor,Color titleBackgroundLineColor,String messageText,Color messageBackgroundFillColor,Color messageBackgroundLineColor)
+{/*ALCODESTART::1783690031499*/
+f_setForcedClickScreenTitleText(titleText);
+f_setForcedClickScreenTitleBackgroundColor(titleBackgroundFillColor, titleBackgroundLineColor);
+f_setForcedClickScreenMessageText(messageText);
+f_setForcedClickScreenMessageBackgroundColor(messageBackgroundFillColor, messageBackgroundLineColor);
+/*ALCODEEND*/}
+
+double f_setForcedClickScreenMessageBackgroundColor(Color fillColor,Color lineColor)
+{/*ALCODESTART::1783690031501*/
+rect_selectText.setFillColor(fillColor);
+rect_selectText.setLineColor(lineColor);
 /*ALCODEEND*/}
 
