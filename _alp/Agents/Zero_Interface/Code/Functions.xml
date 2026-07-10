@@ -1069,7 +1069,7 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[forcedClickScreenText]]></Name>
+			<Name><![CDATA[forcedClickScreenMessageText]]></Name>
 			<Type><![CDATA[String]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>

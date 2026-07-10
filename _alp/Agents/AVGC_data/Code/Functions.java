@@ -37,6 +37,13 @@ dataAVGC.p_avgCompanyElectricityConsumption_kWhpm2 = p_avgCompanyElectricityCons
 dataAVGC.p_avgCompanyGasConsumption_m3pm2 = p_avgCompanyGasConsumption_m3pm2;
 dataAVGC.p_avgCompanyHeatConsumption_kWhpm2 = p_avgCompanyHeatConsumption_kWhpm2;
 
+//Gridnodes/cables
+dataAVGC.p_maxNominalPowerLVCable_kW = p_maxNominalPowerLVCable_kW;
+dataAVGC.p_maxNominalPowerMVCable_kW = p_maxNominalPowerMVCable_kW;
+dataAVGC.p_minCapacityMVLVStation_kW = p_minCapacityMVLVStation_kW;
+dataAVGC.p_maxCapacityMVLVStation_kW = p_maxCapacityMVLVStation_kW;
+dataAVGC.p_maxCapacityMVMVStation_kW = p_maxCapacityMVMVStation_kW;
+
 //Vehicles
 dataAVGC.p_avgEVMaxChargePowerCar_kW = p_avgEVMaxChargePowerCar_kW;
 dataAVGC.p_avgEVMaxChargePowerVan_kW = p_avgEVMaxChargePowerVan_kW;
@@ -109,6 +116,9 @@ dataAVGC.p_avgRatioRoofPotentialPV = p_avgRatioRoofPotentialPV;
 dataAVGC.p_avgRatioBatteryCapacity_v_Power = p_avgRatioBatteryCapacity_v_Power;
 dataAVGC.p_avgSolarFieldPower_kWppha = p_avgSolarFieldPower_kWppha;
 dataAVGC.p_defaultPVOrientation = p_defaultPVOrientation;
+
+dataAVGC.p_largestWindTurbine_land_MW = p_largestWindTurbine_land_MW;
+dataAVGC.p_largestWindTurbine_sea_MW = p_largestWindTurbine_sea_MW;
 
 //Thermal model parameters
 dataAVGC.p_PBL_HeatingLossFactor_fr = p_PBL_HeatingLossFactor_fr;

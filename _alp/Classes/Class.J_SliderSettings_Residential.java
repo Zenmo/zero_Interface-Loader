@@ -11,7 +11,7 @@ public class J_SliderSettings_Residential {
 	private double electricityDemandIncrease_pct;
 	private double largeScalePV_ha;
 	private double largeScaleWind_MW;
-	private double averageNeighbourhoodBatterySize_kWh;
+	private double averageNeighbourhoodBatterySize_MWh;
 	private boolean cb_gridCurtailmentActive;
 
 	////Heating
@@ -73,8 +73,8 @@ public class J_SliderSettings_Residential {
 	    this.largeScaleWind_MW = largeScaleWind_MW;
 	}
 
-	public void setAverageNeighbourhoodBatterySize_kWh(double averageNeighbourhoodBatterySize_kWh) {
-	    this.averageNeighbourhoodBatterySize_kWh = averageNeighbourhoodBatterySize_kWh;
+	public void setAverageNeighbourhoodBatterySize_MWh(double averageNeighbourhoodBatterySize_MWh) {
+	    this.averageNeighbourhoodBatterySize_MWh = averageNeighbourhoodBatterySize_MWh;
 	}
 	
 	public void setCb_gridCurtailmentActive(boolean cb_gridCurtailmentActive) {
@@ -181,8 +181,8 @@ public class J_SliderSettings_Residential {
 	    return largeScaleWind_MW;
 	}
 
-	public double getAverageNeighbourhoodBatterySize_kWh() {
-	    return averageNeighbourhoodBatterySize_kWh;
+	public double getAverageNeighbourhoodBatterySize_MWh() {
+	    return averageNeighbourhoodBatterySize_MWh;
 	}
 	
 	public boolean getCb_gridCurtailmentActive() {

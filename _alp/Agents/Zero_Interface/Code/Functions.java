@@ -356,9 +356,20 @@ else {
 //Update the resultsUI
 f_updateUIResultsData();
 
+//Update sliders and ranges of customGC
+if (c_selectedGridConnections.size() > 0){
+	if (uI_Tabs.pop_tabElectricity.get(0).c_customSolarfarmGCs.contains(c_selectedGridConnections.get(0))
+		|| uI_Tabs.pop_tabElectricity.get(0).c_customWindfarmGCs.contains(c_selectedGridConnections.get(0))
+		|| uI_Tabs.pop_tabElectricity.get(0).c_customGridBatteryGCs.contains(c_selectedGridConnections.get(0))){
+		uI_Tabs.pop_tabElectricity.get(0).f_updateCustomGCSettings();
+	}
+}
+
 //Set the button for going to the company UI (needs to be at the end of this function!)
 f_setUIButton();
 
+//alle panden met meerdere adressen hebben op dit moment (16-7-24) dezelfde functie(s) voor ieder adres, dus dit is op dit moment zinloos
+//f_listFunctions();
 /*ALCODEEND*/}
 
 double f_deselectPreviousSelect()
@@ -407,6 +418,9 @@ if(previousClickedObjectType != null){
 		v_customEnergyCoop = null;
 	}
 }
+
+// Notify tabElectricity of deselection so it can remove and hide the custom settings pages
+if (!uI_Tabs.pop_tabElectricity.isEmpty()) uI_Tabs.pop_tabElectricity.get(0).f_updateCustomGCSettings();
 /*ALCODEEND*/}
 
 double f_connectResultsUI()
@@ -991,8 +1005,7 @@ switch(selectedFilter){
 			f_filterGridLoops(toBeFilteredGC);
 		}
 		else{
-		
-			f_setForcedClickScreenText("Selecteer een lus");
+			f_setForcedClickScreenMessageText("Selecteer een lus");
 			if(!b_inEnergyHubSelectionMode){
 				f_setForcedClickScreenVisibility(true);
 			}
@@ -1014,7 +1027,7 @@ switch(selectedFilter){
 			f_filterNeighborhoods(toBeFilteredGC);
 		}
 		else{
-			f_setForcedClickScreenText("Selecteer een buurt");
+			f_setForcedClickScreenMessageText("Selecteer een buurt");
 			if(!b_inEnergyHubSelectionMode){
 				f_setForcedClickScreenVisibility(true);
 			}
@@ -1467,15 +1480,14 @@ if(clickedObject != null){
 return false; 
 /*ALCODEEND*/}
 
-double f_setForcedClickScreenText(String forcedClickScreenText)
+double f_setForcedClickScreenMessageText(String forcedClickScreenMessageText)
 {/*ALCODESTART::1742300624199*/
-t_forcedClickMessage.setText(forcedClickScreenText);
+t_forcedClickMessage.setText(forcedClickScreenMessageText);
+gr_ForceMapSelectionMessageText.setVisible(false);
 
-if(t_forcedClickMessage.getText().equals("")){
-	gr_ForceMapSelectionText.setVisible(false);
-}
-else{
-	gr_ForceMapSelectionText.setVisible(true);
+if(!t_forcedClickMessage.getText().equals("")){
+	UIUtil.fitTextInRectangle(t_forcedClickMessage, rect_selectText, 15.0, 15.0, 15.0, 15.0);
+	gr_ForceMapSelectionMessageText.setVisible(true);
 }
 /*ALCODEEND*/}
 
@@ -2915,7 +2927,7 @@ f_clearFilters();
 b_inEnergyHubMode = false;
 b_inEnergyHubSelectionMode = false;
 
-//f_setForcedClickScreenText("");
+f_setForcedClickScreenTextBoxes("", new Color(255, 255, 255), new Color(0, 0, 0), "", new Color(255, 255, 255), new Color(0, 0, 0));
 f_setForcedClickScreenVisibility(false);
 va_Interface.navigateTo();
 
@@ -3088,6 +3100,9 @@ return scenarioOptions;
 
 double f_setScenario_Future()
 {/*ALCODESTART::1761119479231*/
+//First reset specific buttons (Has to be before setting scenario settings)
+f_resetSpecialSlidersAndButtons();
+
 if(c_scenarioMap_Future != null){
 	f_setCompaniesScenario(c_scenarioMap_Future);
 }
@@ -3100,7 +3115,9 @@ f_projectSpecificScenarioSettings("Future");
 
 double f_setScenario_Current()
 {/*ALCODESTART::1761119479233*/
-//if(project_data.project_type() == OL_ProjectType.BUSINESSPARK && c_scenarioMap_Current != null){
+//First reset specific buttons (Has to be before setting scenario settings)
+f_resetSpecialSlidersAndButtons();
+
 if(c_scenarioMap_Current != null){
 	f_setCompaniesScenario(c_scenarioMap_Current);
 }
@@ -3122,6 +3139,12 @@ double f_resetSpecialSlidersAndButtons()
 if (uI_Tabs.pop_tabEHub.size() > 0){
 	if (uI_Tabs.pop_tabEHub.get(0).getButton_remove_nfato() != null){
 		uI_Tabs.pop_tabEHub.get(0).getButton_remove_nfato().action();
+	}
+}
+
+if(uI_Tabs.pop_tabElectricity.size() > 0){
+	if(uI_Tabs.pop_tabElectricity.size() > 0){
+		uI_Tabs.pop_tabElectricity.get(0).f_deleteAllCustomGCs();
 	}
 }
 
@@ -3196,8 +3219,8 @@ double largeScaleWind_MW = p_residentialScenario_Current.getLargeScaleWind_MW();
 tabElec.sl_largeScaleWind_MW.setValue(largeScaleWind_MW, true);
 
 //Gridbatteries
-double averageNeighbourhoodBatterySize_kWh = p_residentialScenario_Current.getAverageNeighbourhoodBatterySize_kWh();
-tabElec.sl_gridBatteries_kWh.setValue(averageNeighbourhoodBatterySize_kWh, true);
+double averageNeighbourhoodBatterySize_MWh = p_residentialScenario_Current.getAverageNeighbourhoodBatterySize_MWh();
+tabElec.sl_gridBatteries_MWh.setValue(averageNeighbourhoodBatterySize_MWh, true);
 
 //Curtailment rooftop PV
 boolean cb_gridCurtailmentActive = p_residentialScenario_Current.getCb_gridCurtailmentActive();
@@ -3318,8 +3341,8 @@ if(uI_Tabs.pop_tabElectricity.size() > 0){
 	p_residentialScenario_Current.setLargeScaleWind_MW(largeScaleWind_MW);
 	
 	//Grid batteries
-	double averageNeighbourhoodBatterySize_kWh = tabElec.sl_gridBatteries_kWh.getValue();
-	p_residentialScenario_Current.setAverageNeighbourhoodBatterySize_kWh(averageNeighbourhoodBatterySize_kWh);
+	double averageNeighbourhoodBatterySize_MWh = tabElec.sl_gridBatteries_MWh.getValue();
+	p_residentialScenario_Current.setAverageNeighbourhoodBatterySize_MWh(averageNeighbourhoodBatterySize_MWh);
 	
 	//Large-scale grid curtailment EAs
 	boolean cb_gridCurtailmentActive = tabElec.cb_gridCurtailment.isSelected();
@@ -3459,48 +3482,6 @@ if(!selected_scenario.equals("Custom")){
 		f_setMapOverlay_PVProduction();
 	}
 }
-
-
-
-/*
-//Pause simulation and set loading screen
-pauseSimulation();
-f_setLoadingScreen(true, 0, 0);
-
-new Thread( () -> {
-	
-	//Set selected scenario
-	String selected_scenario = f_setSelectedScenario();		
-	
-	//Set scenario name text to the correct scenario
-	t_scenarioName.setText("Scenario: " + selected_scenario);
-	traceln("Selected scenario: \"" + selected_scenario + "\"");
-	
-	//Deselect the selected building, if selected GC is now paused
-	if(c_selectedGridConnections.size()>0 && !c_selectedGridConnections.get(0).v_isActive){
-		f_clearSelectionAndSelectEnergyModel();
-	}
-	
-	//Set boolean of running main interface scenario true
-	b_runningMainInterfaceScenarios = false;
-	
-	if(!selected_scenario.equals("Custom")){
-		f_resetSettings();
-		
-		f_updateMainInterfaceSliders();
-		
-		//Colour recolor pv map again if it is active
-		if(c_loadedMapOverlayTypes.get(rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
-			rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
-		}
-	}
-	
-	//Resume live simulation and remove loading screen
-	runSimulation();
-	f_setLoadingScreen(false, 0, 0);
-	
-}).start();
-*/
 /*ALCODEEND*/}
 
 double f_setScenarioToCustom()
@@ -3716,7 +3697,16 @@ return loadedChartTypes_Energy;
 
 double f_clickOnMap(double clickx,double clicky)
 {/*ALCODESTART::1777565261922*/
-/*if(b_inEnergyHubMode ){
+if (!uI_Tabs.pop_tabElectricity.isEmpty() && uI_Tabs.pop_tabElectricity.get(0).b_addCustomGC) {
+	if (!uI_Tabs.pop_tabElectricity.get(0).b_customGCPolygonCreated) {
+		uI_Tabs.pop_tabElectricity.get(0).f_addCustomGCLocationSelection(clickx, clicky);
+	} else {
+		uI_Tabs.pop_tabElectricity.get(0).f_addCustomGCTransformerSelection(clickx, clicky);
+	}
+} else if (!uI_Tabs.pop_tabElectricity.isEmpty() && uI_Tabs.pop_tabElectricity.get(0).b_removeCustomGC) {
+	uI_Tabs.pop_tabElectricity.get(0).f_removeCustomGCSelection(clickx,clicky);
+}
+else if(b_inEnergyHubMode ){
 	if(b_inEnergyHubSelectionMode){
 		f_selectEnergyHubGC(clickx, clicky);
 	}
@@ -3724,7 +3714,6 @@ double f_clickOnMap(double clickx,double clicky)
 else if(b_inManualFilterSelectionMode){
 	f_selectManualFilteredGC(clickx, clicky);
 }
-*/
 if( v_currentUIMode == FILTER || v_currentUIMode == MANUALSELECTION ){
 	f_manualSelectionClickOnMap(clickx, clicky);	
 }
@@ -3754,6 +3743,7 @@ else{
 		f_selectGISRegion(clickx, clicky);
 	}
 }
+
 /*ALCODEEND*/}
 
 double f_clearAdditionalGCBuildingSelection()
@@ -4135,12 +4125,7 @@ v_filterNames = new ArrayList<String>();
 v_filterIndex = new ArrayList<String>();
 
 c_filterMatrix.clear();
-//c_filter1.clear();
-//c_filter2.clear();
-//c_filter3.clear();
-//c_filter4.clear();
-//c_filter5.clear();
-//c_filter6.clear();
+
 
 f_setForcedClickScreenText("");
 if(!b_inEnergyHubSelectionMode){
