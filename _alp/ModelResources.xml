@@ -109,12 +109,6 @@
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Id>1776931836069</Id>
-		<Path>uplux-4.jar</Path>
-		<ReferencedFromUserCode>false</ReferencedFromUserCode>
-		<Location>FILE_SYSTEM</Location>
-	</Resource>
-	<Resource>
 		<Id>1777376766232</Id>
 		<Path>icon_arrow.png</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
