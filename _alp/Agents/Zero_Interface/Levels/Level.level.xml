@@ -2099,7 +2099,7 @@ fileChooser_exportBalanceLoadSelectedEnergyCoop.setEnabled(true);</ActionCode>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>470</Width>
-		<Height>310</Height>
+		<Height>320</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -2698,8 +2698,8 @@ officia deserunt mollit anim id est laborum."]]></Text>
 			<Group>
 				<Id>1760015470890</Id>
 				<Name><![CDATA[gr_energyHubSelectionButtons]]></Name>
-				<X>10</X>
-				<Y>-240</Y>
+				<X>240</X>
+				<Y>-940</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -3028,7 +3028,7 @@ else {
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>uI_Tabs.pop_tabElectricity.get(0).b_addCustomGC || uI_Tabs.pop_tabElectricity.get(0).b_removeCustomGC</VisibleCode>
+				<VisibleCode>v_currentUIMode == OL_UIMode.REMOVE_CUSTOMGC || v_currentUIMode == OL_UIMode.ADD_CUSTOMGC</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -3189,8 +3189,8 @@ else {
 			<Group>
 				<Id>1760015470898</Id>
 				<Name><![CDATA[gr_forcedClickTitleTxt]]></Name>
-				<X>-50</X>
-				<Y>-430</Y>
+				<X>-860</X>
+				<Y>-1060</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -7681,11 +7681,11 @@ gr_cablesLegend.setVisible(showCables);</ActionCode>
 			<ActionCode>gr_filterInterface.setVisible(cb_showFilterInterface.isSelected());
 
 if(! cb_showFilterInterface.isSelected()){
-	v_currentUIMode = NORMAL;
+	v_currentUIMode = OL_UIMode.DEFAULT;
 	gr_sliderClickBlocker.setVisible(false);
 }
 else{
-	v_currentUIMode = FILTER;
+	v_currentUIMode = OL_UIMode.FILTER;
 	gr_sliderClickBlocker.setVisible(true);
 	gr_filterInterface.setPos(170, 710);
 }</ActionCode>

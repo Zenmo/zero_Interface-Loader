@@ -1006,7 +1006,7 @@ switch(selectedFilter){
 		}
 		else{
 			f_setForcedClickScreenMessageText("Selecteer een lus");
-			if(!b_inEnergyHubSelectionMode){
+			if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 				f_setForcedClickScreenVisibility(true);
 			}
 
@@ -1028,7 +1028,7 @@ switch(selectedFilter){
 		}
 		else{
 			f_setForcedClickScreenMessageText("Selecteer een buurt");
-			if(!b_inEnergyHubSelectionMode){
+			if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 				f_setForcedClickScreenVisibility(true);
 			}
 			if(c_selectedFilterOptions.size() > 1){
@@ -1160,7 +1160,7 @@ for ( GIS_Building b : energyModel.pop_GIS_Buildings ){
 				
 				if(gr_ehubSelectionOverlay.isVisible()){
 					f_setForcedClickScreenText("");
-					if(!b_inEnergyHubSelectionMode){
+					if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 						f_setForcedClickScreenVisibility(false);
 					}
 				}
@@ -1341,7 +1341,7 @@ for ( GIS_Object region : c_GISNeighborhoods ){
 
 			if(gr_ehubSelectionOverlay.isVisible()){
 				f_setForcedClickScreenText("");
-				if(!b_inEnergyHubSelectionMode){
+				if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 					f_setForcedClickScreenVisibility(false);
 				}
 			}
@@ -1480,7 +1480,7 @@ if(clickedObject != null){
 return false; 
 /*ALCODEEND*/}
 
-double f_setForcedClickScreenMessageText(String forcedClickScreenMessageText)
+double f_setForcedClickScreenText(String forcedClickScreenMessageText)
 {/*ALCODESTART::1742300624199*/
 t_forcedClickMessage.setText(forcedClickScreenMessageText);
 gr_ForceMapSelectionMessageText.setVisible(false);
@@ -2613,7 +2613,7 @@ v_currentUIMode = OL_UIMode.EHUBSELECTION;
 
 double f_finalizeEnergyHubConfiguration()
 {/*ALCODESTART::1753698810590*/
-if(b_inEnergyHubSelectionMode){
+if(v_currentUIMode == OL_UIMode.EHUBSELECTION){
 	//if(button_completeManualSelectionMode.isVisible()){
 		//button_completeManualSelectionMode.action();
 	//}
@@ -2639,7 +2639,7 @@ if(b_inEnergyHubSelectionMode){
 	uI_EnergyHub.v_energyHubCoop = v_customEnergyCoop;
 	
 	//Set E-hub selection mode false
-	b_inEnergyHubSelectionMode = false;
+	v_currentUIMode = OL_UIMode.DEFAULT;
 	
 	uI_EnergyHub.f_initializeEnergyHubDashboard();
 }
@@ -2924,8 +2924,7 @@ double f_cancelEnergyHubConfiguration()
 {/*ALCODESTART::1760014973975*/
 f_clearFilters();
 
-b_inEnergyHubMode = false;
-b_inEnergyHubSelectionMode = false;
+v_currentUIMode = OL_UIMode.DEFAULT;
 
 f_setForcedClickScreenTextBoxes("", new Color(255, 255, 255), new Color(0, 0, 0), "", new Color(255, 255, 255), new Color(0, 0, 0));
 f_setForcedClickScreenVisibility(false);
@@ -3697,53 +3696,46 @@ return loadedChartTypes_Energy;
 
 double f_clickOnMap(double clickx,double clicky)
 {/*ALCODESTART::1777565261922*/
-if (!uI_Tabs.pop_tabElectricity.isEmpty() && uI_Tabs.pop_tabElectricity.get(0).b_addCustomGC) {
-	if (!uI_Tabs.pop_tabElectricity.get(0).b_customGCPolygonCreated) {
-		uI_Tabs.pop_tabElectricity.get(0).f_addCustomGCLocationSelection(clickx, clicky);
-	} else {
-		uI_Tabs.pop_tabElectricity.get(0).f_addCustomGCTransformerSelection(clickx, clicky);
-	}
-} else if (!uI_Tabs.pop_tabElectricity.isEmpty() && uI_Tabs.pop_tabElectricity.get(0).b_removeCustomGC) {
-	uI_Tabs.pop_tabElectricity.get(0).f_removeCustomGCSelection(clickx,clicky);
-}
-else if(b_inEnergyHubMode ){
-	if(b_inEnergyHubSelectionMode){
-		f_selectEnergyHubGC(clickx, clicky);
-	}
-}
-else if(b_inManualFilterSelectionMode){
-	f_selectManualFilteredGC(clickx, clicky);
-}
-if( v_currentUIMode == FILTER || v_currentUIMode == MANUALSELECTION ){
-	f_manualSelectionClickOnMap(clickx, clicky);	
-}
-if(  v_currentUIMode == EHUBSELECTION  ){
-	f_selectionEHub(clickx, clicky);	
-}
+switch(v_currentUIMode){
 
-else{
-	if (uI_Tabs.pop_tabEHub.size() > 0 && uI_Tabs.pop_tabEHub.get(0).b_inCapacitySharingSelectionMode) {
-		uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
-	}
-	else if (c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP) || 
-			c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
-		
+	case ADD_CUSTOMGC:
+		if (!uI_Tabs.pop_tabElectricity.get(0).b_customGCPolygonCreated) {
+		uI_Tabs.pop_tabElectricity.get(0).f_addCustomGCLocationSelection(clickx, clicky);
+		} else {
+			uI_Tabs.pop_tabElectricity.get(0).f_addCustomGCTransformerSelection(clickx, clicky);
+		}
+		break;
+	
+	case REMOVE_CUSTOMGC:
+		uI_Tabs.pop_tabElectricity.get(0).f_removeCustomGCSelection(clickx,clicky);		
+		break;
+	
+	case FILTER:
+	case MANUALSELECTION:
+		f_manualSelectionClickOnMap(clickx, clicky);
 		if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.GRIDTOPOLOGY_SELECTEDLOOP)){
 			f_selectGridLoop(clickx, clicky);
 		}
 		if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.SELECTED_NEIGHBORHOOD)){
 			f_selectNeighborhood(clickx, clicky);
 		}
-	}
+		break;
 	
-	else {
+	case EHUBSELECTION:
+		f_selectionEHub(clickx, clicky);			
+		break;
+	
+	case CAPACITY_SHARING_SELECTION:
+		uI_Tabs.pop_tabEHub.get(0).f_checkGISRegion(clickx, clicky);
+		break;
+	
+	case DEFAULT:
 		if(c_selectedFilterOptions.size() > 0){
 			f_removeAllFilters();
 		}
 		f_selectGISRegion(clickx, clicky);
-	}
+		break;
 }
-
 /*ALCODEEND*/}
 
 double f_clearAdditionalGCBuildingSelection()
@@ -3801,7 +3793,7 @@ if (p_customMapOverlayLegend != null) {
 }
 b_updateLiveCongestionColors = false;
 
-if(!b_inEnergyHubMode){
+if(v_currentUIMode != OL_UIMode.EHUB){
 	//f_clearSelectionAndSelectEnergyModel();  //deze voior nu even uit, volgens mij hebben we die niet nodig (PH 19-06-2026)
 }
 /*ALCODEEND*/}
@@ -3818,7 +3810,7 @@ if (c_manualFilterSelectedGC.isEmpty() && c_manualFilterDeselectedGC.isEmpty() &
 }
 
 f_setForcedClickScreenText("");
-if(!b_inEnergyHubSelectionMode){
+if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 	f_setForcedClickScreenVisibility(false);
 }
 
@@ -3833,7 +3825,7 @@ if(c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
 	c_manualFilterDeselectedGC.clear();
 	
 	//f_setForcedClickScreenText("");
-	if(!b_inEnergyHubSelectionMode){
+	if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 		f_setForcedClickScreenVisibility(false);
 	}
 	
@@ -3848,7 +3840,7 @@ double f_initiateManualSelection()
 {/*ALCODESTART::1780767446900*/
 //f_setForcedClickScreenText("Je kunt gebouwen op de kaart selecteren");
 
-if(!b_inEnergyHubSelectionMode){
+if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 	f_setForcedClickScreenVisibility(true);
 }
 if(!c_selectedFilterOptions.contains(OL_FilterOptionsGC.MANUAL_SELECTION)){
@@ -4001,7 +3993,7 @@ switch(selectedFilter){
 		else{
 		
 			f_setForcedClickScreenText("Selecteer een lus");
-			if(!b_inEnergyHubSelectionMode){
+			if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 				f_setForcedClickScreenVisibility(true);
 			}
 
@@ -4023,7 +4015,7 @@ switch(selectedFilter){
 		}
 		else{
 			f_setForcedClickScreenText("Selecteer een buurt");
-			if(!b_inEnergyHubSelectionMode){
+			if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 				f_setForcedClickScreenVisibility(true);
 			}
 			if(c_selectedFilterOptions.size() > 1){
@@ -4128,7 +4120,7 @@ c_filterMatrix.clear();
 
 
 f_setForcedClickScreenText("");
-if(!b_inEnergyHubSelectionMode){
+if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 	f_setForcedClickScreenVisibility(false);
 }
 
@@ -4266,5 +4258,23 @@ if( clickedGC != null){
 	f_setMapOverlay(); //Go back to base coloring of map							
 	f_colorSelectedBuildings(c_filterDummy); //geen null check nodig want na selecteren van filter is er altijd 1	
 }
+/*ALCODEEND*/}
+
+GIS_Object f_refreshLegend()
+{/*ALCODESTART::1783688351774*/
+// Hide the maximum possible special legend items before rebuilding to prevent UI overlap
+for (int i = 1; i <= 10; i++) {
+    try {
+        Pair<ShapeText, ShapeRectangle> legendShapes = f_getNextSpecialLegendShapes(i);
+        if (legendShapes != null && legendShapes.getFirst() != null && legendShapes.getSecond() != null) {
+            legendShapes.getFirst().setVisible(false);
+            legendShapes.getSecond().setVisible(false);
+        }
+    } catch (Exception e) {
+        break; // Stop if we run out of defined legend shapes in the UI
+    }
+}
+// Rebuild the legend using existing functionality
+f_initializeLegend();
 /*ALCODEEND*/}
 

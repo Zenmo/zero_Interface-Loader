@@ -592,7 +592,7 @@ zero_Interface.f_setStartView();
 
 v_energyHubCoop = null;
 
-zero_Interface.b_inEnergyHubMode = false;
+zero_Interface.v_currentUIMode = OL_UIMode.DEFAULT;
 
 runSimulation();</ActionCode>
 				</BasicProperties>
@@ -1304,7 +1304,7 @@ zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
 	
 v_energyHubCoop = null;
 
-zero_Interface.b_inEnergyHubSelectionMode = true;</OnClickCode>
+zero_Interface.v_currentUIMode = OL_UIMode.EHUBSELECTION;</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<ZHeight>10</ZHeight>

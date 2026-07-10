@@ -1212,9 +1212,8 @@ f_resetCustomGCCreation();
 
 // Reset state variables
 b_customGCPolygonCreated = false;
-b_addCustomGC = false;
 v_addCustomGCType = null;
-b_removeCustomGC = false;
+uI_Tabs.zero_Interface.v_currentUIMode = OL_UIMode.DEFAULT;
 
 // Hide forced click screen, if needed
 zero_Interface.f_setForcedClickScreenVisibility(false);

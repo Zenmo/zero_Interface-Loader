@@ -1518,7 +1518,7 @@ if (zero_Interface.v_clickedObjectType != null &amp;&amp; zero_Interface.v_click
 }
 
 // When this boolean is true clicking on the GIS Map will select another building for the NF ATO
-b_inCapacitySharingSelectionMode = true;
+uI_Tabs.zero_Interface.v_currentUIMode = OL_UIMode.CAPACITY_SHARING_SELECTION;
 f_setTab(NFATO);
 
 

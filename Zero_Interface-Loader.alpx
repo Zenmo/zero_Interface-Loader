@@ -212,7 +212,7 @@
 				<Name><![CDATA[OL_UIMode]]></Name>
 				<Option>
 					<Id>1783357632692</Id>
-					<Name><![CDATA[NORMAL]]></Name>
+					<Name><![CDATA[DEFAULT]]></Name>
 				</Option>
 				<Option>
 					<Id>1783357632693</Id>
@@ -233,6 +233,18 @@
 				<Option>
 					<Id>1783426935141</Id>
 					<Name><![CDATA[EHUBSELECTION]]></Name>
+				</Option>
+				<Option>
+					<Id>1783687002075</Id>
+					<Name><![CDATA[ADD_CUSTOMGC]]></Name>
+				</Option>
+				<Option>
+					<Id>1783687007531</Id>
+					<Name><![CDATA[REMOVE_CUSTOMGC]]></Name>
+				</Option>
+				<Option>
+					<Id>1783687881585</Id>
+					<Name><![CDATA[CAPACITY_SHARING_SELECTION]]></Name>
 				</Option>
 			</OptionList>
 		</OptionLists>

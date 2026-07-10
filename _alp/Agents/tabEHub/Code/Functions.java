@@ -63,7 +63,7 @@ for ( GIS_Building b : zero_Interface.energyModel.pop_GIS_Buildings ){
 						//b.gisRegion.setFillColor(v_selectionColorAddBuildings);
 					//}
 					// We found two buildings, return to the default clicking functionality
-					b_inCapacitySharingSelectionMode = false;
+					uI_Tabs.zero_Interface.v_currentUIMode = OL_UIMode.DEFAULT;
 				}
 			}
 		}
@@ -220,7 +220,7 @@ t_capacitySharingRecievingGC.setText("Klik op een gebouw dat capaciteit gaat ont
 t_capacitySharingSendingGC.setText("");
 v_recievingGC = null;
 v_sendingGC = null;
-b_inCapacitySharingSelectionMode = false;
+uI_Tabs.zero_Interface.v_currentUIMode = OL_UIMode.DEFAULT;
 /*ALCODEEND*/}
 
 double f_setTab(OL_CustomScenarioTabs selectedTabType)

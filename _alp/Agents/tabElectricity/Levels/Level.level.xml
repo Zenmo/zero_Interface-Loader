@@ -549,7 +549,7 @@ if(zero_Interface.v_activeMapOverlay == OL_MapOverlayTypes.PV_PRODUCTION){
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>400</Width>
-		<Height>750</Height>
+		<Height>680</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -2638,7 +2638,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>!zero_Interface.b_inEnergyHubMode</VisibleCode>
+				<VisibleCode>zero_Interface.v_currentUIMode != OL_UIMode.EHUB</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -2668,9 +2668,9 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 				<BasicProperties Width="110" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
-					<VisibleCode>!zero_Interface.b_inEnergyHubMode</VisibleCode>
+					<VisibleCode>zero_Interface.v_currentUIMode != OL_UIMode.EHUB</VisibleCode>
 					<Enabled>true</Enabled>
-					<ActionCode>b_addCustomGC = true;
+					<ActionCode>zero_Interface.v_currentUIMode = OL_UIMode.ADD_CUSTOMGC;
 v_addCustomGCType = OL_EnergyAssetType.PHOTOVOLTAIC;
 zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets toevoegen", new Color(255, 255, 255), new Color(0, 0, 0), "Teken je locatie op de kaart. Kies nog minimaal 3 hoekpunten.", new Color(255, 255, 255), new Color(0, 0, 0));
 zero_Interface.f_setForcedClickScreenVisibility(true);</ActionCode>
@@ -2697,9 +2697,9 @@ zero_Interface.f_setForcedClickScreenVisibility(true);</ActionCode>
 				<BasicProperties Width="110" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
-					<VisibleCode>!zero_Interface.b_inEnergyHubMode</VisibleCode>
+					<VisibleCode>zero_Interface.v_currentUIMode != OL_UIMode.EHUB</VisibleCode>
 					<Enabled>true</Enabled>
-					<ActionCode>b_addCustomGC = true;
+					<ActionCode>zero_Interface.v_currentUIMode = OL_UIMode.ADD_CUSTOMGC;
 v_addCustomGCType = OL_EnergyAssetType.STORAGE_ELECTRIC;
 zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets toevoegen", new Color(255, 255, 255), new Color(0, 0, 0), "Kies een locatie op de kaart", new Color(255, 255, 255), new Color(0, 0, 0));
 zero_Interface.f_setForcedClickScreenVisibility(true);</ActionCode>
@@ -2726,9 +2726,9 @@ zero_Interface.f_setForcedClickScreenVisibility(true);</ActionCode>
 				<BasicProperties Width="110" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
-					<VisibleCode>!zero_Interface.b_inEnergyHubMode</VisibleCode>
+					<VisibleCode>zero_Interface.v_currentUIMode != OL_UIMode.EHUB</VisibleCode>
 					<Enabled>true</Enabled>
-					<ActionCode>b_addCustomGC = true;
+					<ActionCode>zero_Interface.v_currentUIMode = OL_UIMode.ADD_CUSTOMGC;
 v_addCustomGCType = OL_EnergyAssetType.WINDMILL;
 zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets toevoegen", new Color(255, 255, 255), new Color(0, 0, 0), "Kies een locatie op de kaart", new Color(255, 255, 255), new Color(0, 0, 0));
 zero_Interface.f_setForcedClickScreenVisibility(true);</ActionCode>
@@ -2755,11 +2755,11 @@ zero_Interface.f_setForcedClickScreenVisibility(true);</ActionCode>
 				<BasicProperties Width="110" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
-					<VisibleCode>!zero_Interface.b_inEnergyHubMode</VisibleCode>
+					<VisibleCode>zero_Interface.v_currentUIMode != OL_UIMode.EHUB</VisibleCode>
 					<Enabled>true</Enabled>
 					<EnableExpression>!c_customSolarfarmGCs.isEmpty() || !c_customWindfarmGCs.isEmpty() || !c_customGridBatteryGCs.isEmpty()</EnableExpression>
 					<ActionCode>if(!c_customSolarfarmGCs.isEmpty() || !c_customWindfarmGCs.isEmpty() || !c_customGridBatteryGCs.isEmpty()) {
-	b_removeCustomGC = true;
+	uI_Tabs.zero_Interface.v_currentUIMode = OL_UIMode.REMOVE_CUSTOMGC;
 	zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets verwijderen", new Color(255, 255, 255), new Color(0, 0, 0), "Kies een energieasset op de kaart", new Color(255, 255, 255), new Color(0, 0, 0));
 	zero_Interface.f_setForcedClickScreenVisibility(true);
 } else {
@@ -2788,7 +2788,7 @@ zero_Interface.f_setForcedClickScreenVisibility(true);</ActionCode>
 				<BasicProperties Width="110" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
-					<VisibleCode>!zero_Interface.b_inEnergyHubMode</VisibleCode>
+					<VisibleCode>zero_Interface.v_currentUIMode != OL_UIMode.EHUB</VisibleCode>
 					<Enabled>true</Enabled>
 					<EnableExpression>!c_customSolarfarmGCs.isEmpty() || !c_customWindfarmGCs.isEmpty() || !c_customGridBatteryGCs.isEmpty()</EnableExpression>
 					<ActionCode>f_deleteAllCustomGCs();</ActionCode>
