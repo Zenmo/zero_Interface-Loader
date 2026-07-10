@@ -21,7 +21,7 @@
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>400</Width>
-		<Height>700</Height>
+		<Height>750</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -1715,7 +1715,7 @@ f_setGridBatteries((sl_gridBatteries_MWh.getValue() - totalCustomBatteryCapacity
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Trafo batterij capaciteit]]></Text>
+				<Text><![CDATA[Buurtbatterij capaciteit]]></Text>
 				<Font>
 					<Name><![CDATA[Dialog]]></Name>
 					<Size>12</Size>
@@ -2288,21 +2288,7 @@ zero_Interface.f_setForcedClickScreenVisibility(true);</ActionCode>
 					<VisibleCode>!zero_Interface.b_inEnergyHubMode</VisibleCode>
 					<Enabled>true</Enabled>
 					<EnableExpression>!c_customSolarfarmGCs.isEmpty() || !c_customWindfarmGCs.isEmpty() || !c_customGridBatteryGCs.isEmpty()</EnableExpression>
-					<ActionCode>if(!c_customSolarfarmGCs.isEmpty() || !c_customWindfarmGCs.isEmpty() || !c_customGridBatteryGCs.isEmpty()) {
-	
-	while (!c_customSolarfarmGCs.isEmpty()) {
-		f_removeCustomGC(c_customSolarfarmGCs.get(0));
-	}
-	while (!c_customWindfarmGCs.isEmpty()) {
-		f_removeCustomGC(c_customWindfarmGCs.get(0));
-	}
-	while (!c_customGridBatteryGCs.isEmpty()) {
-		f_removeCustomGC(c_customGridBatteryGCs.get(0));
-	}
-
-} else {
-	throw new RuntimeException("There is no custom energy asset loaded in.");
-}</ActionCode>
+					<ActionCode>f_deleteAllCustomGCs();</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="Dialog" Size="11" Style="0"/>

@@ -311,7 +311,7 @@
 		<Id>1726584205560</Id>
 		<Name><![CDATA[txt_avgPV]]></Name>
 		<X>510</X>
-		<Y>825</Y>
+		<Y>815</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -336,7 +336,7 @@
 		<Id>1726584205562</Id>
 		<Name><![CDATA[txt_avgBat]]></Name>
 		<X>510</X>
-		<Y>960</Y>
+		<Y>1010</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -689,7 +689,7 @@
 		<Id>1768315329120</Id>
 		<Name><![CDATA[txt_thermalModelParameters]]></Name>
 		<X>510</X>
-		<Y>1150</Y>
+		<Y>1080</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -779,6 +779,56 @@
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
 		<Text><![CDATA[Average values for CO2 emissions]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>12</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Text>
+		<Id>1783672835019</Id>
+		<Name><![CDATA[txt_avgWind]]></Name>
+		<X>510</X>
+		<Y>940</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Wind turbines]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>12</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Text>
+		<Id>1783673719376</Id>
+		<Name><![CDATA[txt_avgGridNodes]]></Name>
+		<X>40</X>
+		<Y>680</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Average values for GridNodes/Cables]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>12</Size>

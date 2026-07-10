@@ -715,7 +715,7 @@ for(GridConnection customGB : c_customGridBatteryGCs){
 }
 
 double minSliderGridBattery_MWh = p_initialTotalGridBatteryCapacity_MWh + totalCustomBatteryCapacity_MWh;
-double maxSliderGridBattery_MWh = minSliderGridBattery_MWh + zero_Interface.energyModel.avgc_data.p_maxGridBatteryStorageCapacityMVMVBusinesspark_MW;
+double maxSliderGridBattery_MWh = minSliderGridBattery_MWh + 20;
 sl_gridBatteries_MWh.setRange(minSliderGridBattery_MWh, maxSliderGridBattery_MWh);
 sl_gridBatteries_MWh.setValue(totalDefaultBatteryCapacity_MWh + minSliderGridBattery_MWh, false);
 
@@ -826,7 +826,7 @@ J_EAProduction windAsset = (J_EAProduction) gc.c_productionAssets.get(0);
 // Installed capacity
 double currentCapacity_MW = windAsset.getCapacityElectric_kW()/1000;
 
-sl_customGCWindfarmInstalledCapacity_MW.setRange(0.1, 5);
+sl_customGCWindfarmInstalledCapacity_MW.setRange(0.1, zero_Interface.energyModel.avgc_data.p_largestWindTurbine_land_MW);
 sl_customGCWindfarmInstalledCapacity_MW.setValue(currentCapacity_MW, false); // false prevents triggering ActionCode
 
 // Curtailment
@@ -834,8 +834,9 @@ boolean hasCurtailment = gc.f_isAssetManagementActive(I_CurtailManagement.class)
 cb_customGCWindfarmCurtailment.setSelected(hasCurtailment, false);
 
 // Contracted capacity limit
-sl_customGCWindfarmContractedCapacity_MW.setRange(0, currentCapacity_MW + 1E-10);
-sl_customGCWindfarmContractedCapacity_MW.setValue(gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW()/1000 + 1E-10, false);
+double anylogicSliderBinaryFloatingPointErrorCompensation = 1E-10; // Anylogic sliders dont round to int, but floor the numbers, -> Due to floating point error Slider range doesnt become what it should be. -> Adding this fixes it.
+sl_customGCWindfarmContractedCapacity_MW.setRange(0, currentCapacity_MW + anylogicSliderBinaryFloatingPointErrorCompensation);
+sl_customGCWindfarmContractedCapacity_MW.setValue(gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW()/1000, false);
 /*ALCODEEND*/}
 
 double f_updateCustomGCGridBatterySettings()
@@ -856,10 +857,16 @@ J_EAStorageElectric batteryAsset = (J_EAStorageElectric)gc.c_storageAssets.get(0
 double currentCapacity_MWh = batteryAsset.getStorageCapacity_kWh() / 1000;
 double currentCapacity_MW = batteryAsset.getCapacityElectric_kW() / 1000;
 
-sl_customGCGridBatteryInstalledCapacity_MWh.setRange(zero_Interface.energyModel.avgc_data.p_minGridBatteryStorageCapacityMVLVResidential_kW/1000, zero_Interface.energyModel.avgc_data.p_maxGridBatteryStorageCapacityMVMVBusinesspark_MW);
+//Minimum of slider battery storage capacity has to be 0.2, to prevent bugs in charge capacity slider;
+double minSliderBatteryStorageCapacity_MWh = 0.2;
+double minSliderBatteryChargeCapacity_MW = minSliderBatteryStorageCapacity_MWh/zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power/2; // -> Divided by two, cause otherwise, at storage capacity minimum, the charge slider can not slide -> anylogic error.
+double maxSliderBatteryStorageCapacity_MWh = 20;
+double anylogicSliderBinaryFloatingPointErrorCompensation = 1E-10; // Anylogic sliders dont round to int, but floor the numbers, -> Due to floating point error Slider range doesnt become what it should be. -> Adding this fixes it.
+
+sl_customGCGridBatteryInstalledCapacity_MWh.setRange(minSliderBatteryStorageCapacity_MWh, maxSliderBatteryStorageCapacity_MWh);
 sl_customGCGridBatteryInstalledCapacity_MWh.setValue(currentCapacity_MWh, false);
 
-sl_customGCGridBatteryInstalledCapacity_MW.setRange(0.05, currentCapacity_MWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power + 1E-10);
+sl_customGCGridBatteryInstalledCapacity_MW.setRange(minSliderBatteryChargeCapacity_MW, currentCapacity_MWh / zero_Interface.energyModel.avgc_data.p_avgRatioBatteryCapacity_v_Power + anylogicSliderBinaryFloatingPointErrorCompensation);
 sl_customGCGridBatteryInstalledCapacity_MW.setValue(currentCapacity_MW, false);
 
 // Battery management selection
@@ -1082,7 +1089,7 @@ if (gisType == OL_GISObjectType.WINDFARM) {
 	polyCoords = GISUtil.calculateSquareCoordinates(area.p_latitude, area.p_longitude, area_m2);
 	area.p_annotation = "Buurtbatterij " + v_customGridBatteryGCCounter;
 } else {
-	polyCoords = GISUtil.calculateCustomPolygonCoordinates(c_tempSavedPointCoordinatesCustomGC);
+	polyCoords = GISUtil.convertCoordinatePointsToLatLonArray(c_tempSavedPointCoordinatesCustomGC);
 	area.p_annotation = "Zonnepark " + v_customSolarfarmGCCounter;
 }
 area.gisRegion = zero_Interface.f_createGISObject(polyCoords);
@@ -1132,7 +1139,7 @@ if (v_addCustomGCType == OL_EnergyAssetType.WINDMILL || v_addCustomGCType == OL_
 		if (previewGISRegionCustomGC != null) {
 	        previewGISRegionCustomGC.remove();
 	    }
-	    double[] previewCoords = GISUtil.calculateCustomPolygonCoordinates(c_tempSavedPointCoordinatesCustomGC);
+	    double[] previewCoords = GISUtil.convertCoordinatePointsToLatLonArray(c_tempSavedPointCoordinatesCustomGC);
 	    previewGISRegionCustomGC = zero_Interface.f_createGISObject(previewCoords);
 	    previewGISRegionCustomGC.setFillColor(new Color(255, 0, 0, 50)); // Semi-transparent red
 	    previewGISRegionCustomGC.setLineColor(Color.RED);
@@ -1165,6 +1172,9 @@ if (clickedGN != null) {
     }
     // Clean up coordinate temporary dots, state variables, lists
     f_stopCustomGCCreation();
+    
+    if (!zero_Interface.b_runningMainInterfaceScenarios) zero_Interface.f_setScenarioToCustom();
+	zero_Interface.f_resetSettings();
 }
 /*ALCODEEND*/}
 
@@ -1295,6 +1305,19 @@ if (customGCAdded) { // Custom GC is selected
         }
         f_goToPage(fallbackPageIndex);
     }
+}
+/*ALCODEEND*/}
+
+double f_deleteAllCustomGCs()
+{/*ALCODESTART::1783676210934*/
+while (!c_customSolarfarmGCs.isEmpty()) {
+	f_removeCustomGC(c_customSolarfarmGCs.get(0));
+}
+while (!c_customWindfarmGCs.isEmpty()) {
+	f_removeCustomGC(c_customWindfarmGCs.get(0));
+}
+while (!c_customGridBatteryGCs.isEmpty()) {
+	f_removeCustomGC(c_customGridBatteryGCs.get(0));
 }
 /*ALCODEEND*/}
 

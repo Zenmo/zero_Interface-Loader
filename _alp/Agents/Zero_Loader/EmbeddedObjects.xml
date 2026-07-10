@@ -482,22 +482,25 @@
 				<Name><![CDATA[map_avgAssetBaseOPEX_eurpyr]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_maxGridBatteryStorageCapacityMVCableBusinesspark_MW]]></Name>
+				<Name><![CDATA[p_maxCapacityMVMVStation_kW]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_maxGridBatteryStorageCapacityMVMVBusinesspark_MW]]></Name>
+				<Name><![CDATA[p_maxNominalPowerMVCable_kW]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_maxGridBatteryStorageCapacityMVCableResidential_kW]]></Name>
+				<Name><![CDATA[p_maxCapacityMVLVStation_kW]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_maxGridBatteryStorageCapacityMVLVResidential_kW]]></Name>
+				<Name><![CDATA[p_maxNominalPowerLVCable_kW]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_maxGridBatteryStorageCapacityLVCableResidential_kW]]></Name>
+				<Name><![CDATA[p_minCapacityMVLVStation_kW]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_minGridBatteryStorageCapacityMVLVResidential_kW]]></Name>
+				<Name><![CDATA[p_largestWindTurbine_land_MW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_largestWindTurbine_sea_MW]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>false</ReplicationFlag>

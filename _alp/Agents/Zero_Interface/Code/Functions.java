@@ -3214,6 +3214,9 @@ return scenarioOptions;
 
 double f_setScenario_Future()
 {/*ALCODESTART::1761119479231*/
+//First reset specific buttons (Has to be before setting scenario settings)
+f_resetSpecialSlidersAndButtons();
+
 if(c_scenarioMap_Future != null){
 	f_setCompaniesScenario(c_scenarioMap_Future);
 }
@@ -3226,7 +3229,9 @@ t_scenarioDescription.setText(t_scenario_future);
 
 double f_setScenario_Current()
 {/*ALCODESTART::1761119479233*/
-//if(project_data.project_type() == OL_ProjectType.BUSINESSPARK && c_scenarioMap_Current != null){
+//First reset specific buttons (Has to be before setting scenario settings)
+f_resetSpecialSlidersAndButtons();
+
 if(c_scenarioMap_Current != null){
 	f_setCompaniesScenario(c_scenarioMap_Current);
 }
@@ -3248,6 +3253,12 @@ double f_resetSpecialSlidersAndButtons()
 if (uI_Tabs.pop_tabEHub.size() > 0){
 	if (uI_Tabs.pop_tabEHub.get(0).getButton_remove_nfato() != null){
 		uI_Tabs.pop_tabEHub.get(0).getButton_remove_nfato().action();
+	}
+}
+
+if(uI_Tabs.pop_tabElectricity.size() > 0){
+	if(uI_Tabs.pop_tabElectricity.size() > 0){
+		uI_Tabs.pop_tabElectricity.get(0).f_deleteAllCustomGCs();
 	}
 }
 
@@ -3584,48 +3595,6 @@ if(!selected_scenario.equals("Custom")){
 		rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
 	}
 }
-
-
-
-/*
-//Pause simulation and set loading screen
-pauseSimulation();
-f_setLoadingScreen(true, 0, 0);
-
-new Thread( () -> {
-	
-	//Set selected scenario
-	String selected_scenario = f_setSelectedScenario();		
-	
-	//Set scenario name text to the correct scenario
-	t_scenarioName.setText("Scenario: " + selected_scenario);
-	traceln("Selected scenario: \"" + selected_scenario + "\"");
-	
-	//Deselect the selected building, if selected GC is now paused
-	if(c_selectedGridConnections.size()>0 && !c_selectedGridConnections.get(0).v_isActive){
-		f_clearSelectionAndSelectEnergyModel();
-	}
-	
-	//Set boolean of running main interface scenario true
-	b_runningMainInterfaceScenarios = false;
-	
-	if(!selected_scenario.equals("Custom")){
-		f_resetSettings();
-		
-		f_updateMainInterfaceSliders();
-		
-		//Colour recolor pv map again if it is active
-		if(c_loadedMapOverlayTypes.get(rb_mapOverlay.getValue()) == OL_MapOverlayTypes.PV_PRODUCTION){
-			rb_mapOverlay.setValue(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.PV_PRODUCTION),true);
-		}
-	}
-	
-	//Resume live simulation and remove loading screen
-	runSimulation();
-	f_setLoadingScreen(false, 0, 0);
-	
-}).start();
-*/
 /*ALCODEEND*/}
 
 double f_setScenarioToCustom()
