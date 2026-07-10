@@ -39,7 +39,7 @@
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>371</Width>
-				<Height>247</Height>
+				<Height>246</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-4343957</FillColor>
 				<FillMaterial>null</FillMaterial>
@@ -531,13 +531,13 @@ if(zero_Interface.v_activeMapOverlay == OL_MapOverlayTypes.PV_PRODUCTION){
 	<Rectangle>
 		<Id>1783113239411</Id>
 		<Name><![CDATA[rect_customGCFunctions]]></Name>
-		<X>-850</X>
-		<Y>0</Y>
+		<X>760</X>
+		<Y>1000</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
 		</Label>
-		<PublicFlag>true</PublicFlag>
+		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
@@ -557,8 +557,8 @@ if(zero_Interface.v_activeMapOverlay == OL_MapOverlayTypes.PV_PRODUCTION){
 	<Rectangle>
 		<Id>1722349953637</Id>
 		<Name><![CDATA[rect_genericFunctions]]></Name>
-		<X>10</X>
-		<Y>480</Y>
+		<X>0</X>
+		<Y>1000</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -574,8 +574,8 @@ if(zero_Interface.v_activeMapOverlay == OL_MapOverlayTypes.PV_PRODUCTION){
 		<LineColor>-4144960</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>370</Width>
-		<Height>730</Height>
+		<Width>700</Width>
+		<Height>540</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -583,8 +583,8 @@ if(zero_Interface.v_activeMapOverlay == OL_MapOverlayTypes.PV_PRODUCTION){
 	<Rectangle>
 		<Id>1722334503404</Id>
 		<Name><![CDATA[rect_PVFunctions]]></Name>
-		<X>40</X>
-		<Y>670</Y>
+		<X>360</X>
+		<Y>1060</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -609,8 +609,8 @@ if(zero_Interface.v_activeMapOverlay == OL_MapOverlayTypes.PV_PRODUCTION){
 	<Text>
 		<Id>1722334611918</Id>
 		<Name><![CDATA[txt_ProductionFunctionsDescription]]></Name>
-		<X>190</X>
-		<Y>680</Y>
+		<X>510</X>
+		<Y>1070</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -634,8 +634,8 @@ if(zero_Interface.v_activeMapOverlay == OL_MapOverlayTypes.PV_PRODUCTION){
 	<Rectangle>
 		<Id>1722335253828</Id>
 		<Name><![CDATA[rect_demandFunctions]]></Name>
-		<X>40</X>
-		<Y>540</Y>
+		<X>30</X>
+		<Y>1060</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -660,8 +660,8 @@ if(zero_Interface.v_activeMapOverlay == OL_MapOverlayTypes.PV_PRODUCTION){
 	<Text>
 		<Id>1722335253832</Id>
 		<Name><![CDATA[t_demandFunctionsDescription]]></Name>
-		<X>190</X>
-		<Y>550</Y>
+		<X>180</X>
+		<Y>1070</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -685,8 +685,8 @@ if(zero_Interface.v_activeMapOverlay == OL_MapOverlayTypes.PV_PRODUCTION){
 	<Text>
 		<Id>1722349990233</Id>
 		<Name><![CDATA[t_genericFunctions]]></Name>
-		<X>100</X>
-		<Y>500</Y>
+		<X>90</X>
+		<Y>1020</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1623,8 +1623,8 @@ gr_trafoReinforcement.setVisible(true);
 	<Group>
 		<Id>1750063382277</Id>
 		<Name><![CDATA[gr_trafoReinforcement]]></Name>
-		<X>1200</X>
-		<Y>40</Y>
+		<X>2860</X>
+		<Y>0</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1721,7 +1721,7 @@ gr_trafoReinforcement.setVisible(true);
 				<Id>1750063382285</Id>
 				<Name><![CDATA[t_minTrafoReinforcement]]></Name>
 				<X>20</X>
-				<Y>120</Y>
+				<Y>160</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1988,8 +1988,8 @@ zero_Interface.f_setSelectedGNText();
 	<Rectangle>
 		<Id>1754985710083</Id>
 		<Name><![CDATA[rect_batteryFunctions]]></Name>
-		<X>39</X>
-		<Y>991</Y>
+		<X>30</X>
+		<Y>1220</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -2014,8 +2014,8 @@ zero_Interface.f_setSelectedGNText();
 	<Text>
 		<Id>1754985710085</Id>
 		<Name><![CDATA[t_batteryFunctionsDescription]]></Name>
-		<X>189</X>
-		<Y>996</Y>
+		<X>180</X>
+		<Y>1225</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -2075,7 +2075,7 @@ zero_Interface.f_setSelectedGNText();
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>370</Width>
-				<Height>291</Height>
+				<Height>481</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-4343957</FillColor>
 				<FillMaterial>null</FillMaterial>
@@ -2102,7 +2102,7 @@ zero_Interface.f_setSelectedGNText();
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>370</Width>
-				<Height>290</Height>
+				<Height>480</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-132906</FillColor>
 				<FillMaterial>null</FillMaterial>
@@ -2164,8 +2164,8 @@ zero_Interface.f_setSelectedGNText();
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1750063382243</Id>
 				<Name><![CDATA[sl_gridBatteries_MWh]]></Name>
-				<X>260</X>
-				<Y>135</Y>
+				<X>30</X>
+				<Y>250</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2204,7 +2204,7 @@ f_setGridBatteries((sl_gridBatteries_MWh.getValue() - totalCustomBatteryCapacity
 				<Id>1750063382245</Id>
 				<Name><![CDATA[txt_gridBatteriesDescription]]></Name>
 				<X>20</X>
-				<Y>140</Y>
+				<Y>220</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2229,8 +2229,8 @@ f_setGridBatteries((sl_gridBatteries_MWh.getValue() - totalCustomBatteryCapacity
 			<Text>
 				<Id>1750063382247</Id>
 				<Name><![CDATA[txt_gridBatteries_MWh]]></Name>
-				<X>245</X>
-				<Y>140</Y>
+				<X>360</X>
+				<Y>220</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2257,7 +2257,7 @@ f_setGridBatteries((sl_gridBatteries_MWh.getValue() - totalCustomBatteryCapacity
 				<Id>1752232850473</Id>
 				<Name><![CDATA[i_gridBatteries]]></Name>
 				<X>165</X>
-				<Y>138</Y>
+				<Y>218</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2284,7 +2284,7 @@ f_setGridBatteries((sl_gridBatteries_MWh.getValue() - totalCustomBatteryCapacity
 			<Text>
 				<Id>1770118893494</Id>
 				<Name><![CDATA[txt_largeScalePV_ha]]></Name>
-				<X>245</X>
+				<X>360</X>
 				<Y>80</Y>
 				<Label>
 					<X>0</X>
@@ -2311,8 +2311,8 @@ f_setGridBatteries((sl_gridBatteries_MWh.getValue() - totalCustomBatteryCapacity
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1770118893505</Id>
 				<Name><![CDATA[sl_largeScalePV_ha]]></Name>
-				<X>260</X>
-				<Y>75</Y>
+				<X>30</X>
+				<Y>110</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2391,8 +2391,8 @@ f_setPVOnLand(sl_largeScalePV_ha.getValue() - p_initialPVOnLand_ha - totalCustom
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1770118893524</Id>
 				<Name><![CDATA[sl_largeScaleWind_MW]]></Name>
-				<X>260</X>
-				<Y>105</Y>
+				<X>30</X>
+				<Y>180</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2446,7 +2446,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 				<Id>1770118893533</Id>
 				<Name><![CDATA[txt_largeScaleWindDescription]]></Name>
 				<X>20</X>
-				<Y>110</Y>
+				<Y>150</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2470,8 +2470,8 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 			<Text>
 				<Id>1770118893541</Id>
 				<Name><![CDATA[txt_largeScaleWind_MW]]></Name>
-				<X>245</X>
-				<Y>110</Y>
+				<X>360</X>
+				<Y>150</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2496,7 +2496,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 			<Image>
 				<Id>1770118893549</Id>
 				<Name><![CDATA[i_largeScalePV]]></Name>
-				<X>165</X>
+				<X>105</X>
 				<Y>78</Y>
 				<Label>
 					<X>0</X>
@@ -2523,8 +2523,8 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 			<Image>
 				<Id>1770118893567</Id>
 				<Name><![CDATA[i_largeScaleWind]]></Name>
-				<X>165</X>
-				<Y>108</Y>
+				<X>115</X>
+				<Y>148</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2551,7 +2551,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 				<Id>1777620991223</Id>
 				<Name><![CDATA[txt_gridCurtailmentDescription]]></Name>
 				<X>20</X>
-				<Y>170</Y>
+				<Y>300</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2576,8 +2576,8 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1777620991268</Id>
 				<Name><![CDATA[cb_gridCurtailment]]></Name>
-				<X>302</X>
-				<Y>162</Y>
+				<X>332</X>
+				<Y>292</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2601,8 +2601,8 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 			<Image>
 				<Id>1777620991324</Id>
 				<Name><![CDATA[i_gridCurtailment]]></Name>
-				<X>165</X>
-				<Y>168</Y>
+				<X>145</X>
+				<Y>298</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2629,7 +2629,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 				<Id>1777995324604</Id>
 				<Name><![CDATA[txt_addIndividualEA]]></Name>
 				<X>20</X>
-				<Y>200</Y>
+				<Y>340</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2656,7 +2656,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 				<Id>1777995277264</Id>
 				<Name><![CDATA[button_AddCustomSolarfarmGC]]></Name>
 				<X>20</X>
-				<Y>220</Y>
+				<Y>370</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2685,7 +2685,7 @@ zero_Interface.f_setForcedClickScreenVisibility(true);</ActionCode>
 				<Id>1777995277266</Id>
 				<Name><![CDATA[button_AddCustomGridBattery]]></Name>
 				<X>20</X>
-				<Y>280</Y>
+				<Y>430</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2714,7 +2714,7 @@ zero_Interface.f_setForcedClickScreenVisibility(true);</ActionCode>
 				<Id>1777995277268</Id>
 				<Name><![CDATA[button_AddCustomWindparkGC]]></Name>
 				<X>20</X>
-				<Y>250</Y>
+				<Y>400</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2743,7 +2743,7 @@ zero_Interface.f_setForcedClickScreenVisibility(true);</ActionCode>
 				<Id>1777995277270</Id>
 				<Name><![CDATA[button_DeleteCustomGC]]></Name>
 				<X>250</X>
-				<Y>220</Y>
+				<Y>370</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2776,7 +2776,7 @@ zero_Interface.f_setForcedClickScreenVisibility(true);</ActionCode>
 				<Id>1777995277272</Id>
 				<Name><![CDATA[button_DeleteAllCustomGCs]]></Name>
 				<X>250</X>
-				<Y>250</Y>
+				<Y>400</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2980,8 +2980,8 @@ zero_Interface.f_setForcedClickScreenVisibility(true);</ActionCode>
 	<Group>
 		<Id>1783088125058</Id>
 		<Name><![CDATA[gr_customGCSolarfarmSettings]]></Name>
-		<X>1600</X>
-		<Y>0</Y>
+		<X>1220</X>
+		<Y>40</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3507,8 +3507,8 @@ zero_Interface.f_resetSettings();</ActionCode>
 	<Group>
 		<Id>1783088125272</Id>
 		<Name><![CDATA[gr_customGCWindfarmSettings]]></Name>
-		<X>2000</X>
-		<Y>0</Y>
+		<X>1620</X>
+		<Y>40</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3845,8 +3845,8 @@ zero_Interface.f_resetSettings();</ActionCode>
 	<Group>
 		<Id>1783088125399</Id>
 		<Name><![CDATA[gr_customGCGridBatterySettings]]></Name>
-		<X>2400</X>
-		<Y>0</Y>
+		<X>2020</X>
+		<Y>40</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4203,8 +4203,8 @@ zero_Interface.f_resetSettings();</ActionCode>
 	<Text>
 		<Id>1783113325300</Id>
 		<Name><![CDATA[txt_customGCFunctions]]></Name>
-		<X>-810</X>
-		<Y>30</Y>
+		<X>800</X>
+		<Y>1030</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -4225,4 +4225,60 @@ zero_Interface.f_resetSettings();</ActionCode>
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
+	<Line>
+		<Id>1783691721431</Id>
+		<Name><![CDATA[max_size_tabs1]]></Name>
+		<X>0</X>
+		<Y>520</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor>-16777216</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<BeginArrowSize>1</BeginArrowSize>
+		<BeginArrowStyle>0</BeginArrowStyle>
+		<EndArrowSize>1</EndArrowSize>
+		<EndArrowStyle>0</EndArrowStyle>
+		<Dx>1920</Dx>
+		<Dy>0</Dy>
+		<Dz>0</Dz>
+	</Line>
+	<Line>
+		<Id>1783691745022</Id>
+		<Name><![CDATA[max_size_tabs]]></Name>
+		<X>0</X>
+		<Y>40</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor>-16777216</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<BeginArrowSize>1</BeginArrowSize>
+		<BeginArrowStyle>0</BeginArrowStyle>
+		<EndArrowSize>1</EndArrowSize>
+		<EndArrowStyle>0</EndArrowStyle>
+		<Dx>1920</Dx>
+		<Dy>0</Dy>
+		<Dz>0</Dz>
+	</Line>
 </Presentation>

@@ -2909,7 +2909,6 @@ v_currentUIMode = OL_UIMode.DEFAULT;
 
 f_setForcedClickScreenTextBoxes("", new Color(255, 255, 255), new Color(0, 0, 0), "", new Color(255, 255, 255), new Color(0, 0, 0));
 f_setForcedClickScreenVisibility(false);
-va_Interface.navigateTo();
 
 cb_showFilterInterface.setSelected(false, true);
 /*ALCODEEND*/}
