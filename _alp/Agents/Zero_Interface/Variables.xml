@@ -2651,7 +2651,7 @@
 			<DefaultValue Class="CodeValue">
 				<Code><![CDATA["Het huidige scenario bevat de energie dynamieken van dit moment. " +
 "Dit omvat o.a. de huidige zonnepanelen, het aantal elektrische " +
-"voertuigen in per buurt, de energie consumptie profielen van bedrijven " + 
+"voertuigen per buurt, de energie consumptie profielen van bedrijven " + 
 "en de huidige gasconsumptie voor verwarming."]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
@@ -2682,9 +2682,9 @@
 			<DefaultValue Class="CodeValue">
 				<Code><![CDATA["Het toekomstige scenario bevat de energie dynamieken van dit moment, " +
 "plus de toekomst plannen van alle bedrijven die de enquete hebben " +
-"ingevuld. Deze plannen kunnen bevatten: het instaleren van extra " +
+"ingevuld. Deze plannen kunnen bevatten: het installeren van extra " +
 "zonnepanelen, aangevraagde net uitbereiding, maar ook plannen voor " + 
-"het electrificeren van het transport."]]></Code>
+"het elektrificeren van het transport."]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1761119479240</Id>
