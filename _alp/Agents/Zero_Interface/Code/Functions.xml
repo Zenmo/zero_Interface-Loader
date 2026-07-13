@@ -2027,7 +2027,7 @@
 		<Id>1756369604291</Id>
 		<Name><![CDATA[f_getScenarioButtons]]></Name>
 		<X>-1020</X>
-		<Y>100</Y>
+		<Y>120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2163,7 +2163,7 @@
 		<Id>1761060882101</Id>
 		<Name><![CDATA[f_setCompaniesScenario]]></Name>
 		<X>-1160</X>
-		<Y>445</Y>
+		<Y>465</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2199,7 +2199,7 @@
 		<Id>1761119066060</Id>
 		<Name><![CDATA[f_setSelectedScenario]]></Name>
 		<X>-1170</X>
-		<Y>200</Y>
+		<Y>220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2231,7 +2231,7 @@
 		<Id>1761119479231</Id>
 		<Name><![CDATA[f_setScenario_Future]]></Name>
 		<X>-1160</X>
-		<Y>270</Y>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2247,7 +2247,7 @@
 		<Id>1761119479233</Id>
 		<Name><![CDATA[f_setScenario_Current]]></Name>
 		<X>-1160</X>
-		<Y>225</Y>
+		<Y>245</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2263,7 +2263,7 @@
 		<Id>1761119842140</Id>
 		<Name><![CDATA[f_resetSpecialSlidersAndButtons]]></Name>
 		<X>-1160</X>
-		<Y>365</Y>
+		<Y>385</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2279,7 +2279,7 @@
 		<Id>1761121949197</Id>
 		<Name><![CDATA[f_resetProjectSpecificSlidersAndButtons]]></Name>
 		<X>-1140</X>
-		<Y>385</Y>
+		<Y>405</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2295,7 +2295,7 @@
 		<Id>1761122139097</Id>
 		<Name><![CDATA[f_projectSpecificScenarioSettings]]></Name>
 		<X>-1160</X>
-		<Y>415</Y>
+		<Y>435</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2315,7 +2315,7 @@
 		<Id>1761132028131</Id>
 		<Name><![CDATA[f_setResidentialScenario_Current]]></Name>
 		<X>-1160</X>
-		<Y>465</Y>
+		<Y>485</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2331,7 +2331,7 @@
 		<Id>1761134737334</Id>
 		<Name><![CDATA[f_storeResidentialScenario_Current]]></Name>
 		<X>-1180</X>
-		<Y>130</Y>
+		<Y>150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2407,7 +2407,7 @@
 		<Id>1762533624267</Id>
 		<Name><![CDATA[f_scenarioRadioButtonAction]]></Name>
 		<X>-1180</X>
-		<Y>180</Y>
+		<Y>200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2423,7 +2423,7 @@
 		<Id>1762775121080</Id>
 		<Name><![CDATA[f_setScenarioToCustom]]></Name>
 		<X>-1160</X>
-		<Y>315</Y>
+		<Y>335</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3159,6 +3159,22 @@
 			<Name><![CDATA[lineColor]]></Name>
 			<Type><![CDATA[Color]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="protected" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1783932188071</Id>
+		<Name><![CDATA[f_initializeScenarioInformation]]></Name>
+		<X>-1150</X>
+		<Y>100</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

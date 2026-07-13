@@ -3003,6 +3003,9 @@ boolean vertical = true;
 //Set words for the radiobutton options
 String[] RadioButtonOptions = f_getScenarioOptions();
 
+//Set scenario information
+f_initializeScenarioInformation();
+
 //Check if it contains the custom option
 boolean containsCustomOption = false;
 for(String scenarioOption : RadioButtonOptions){
@@ -3015,6 +3018,10 @@ if(!containsCustomOption){
 	traceln("WARNING: Scenario radiobutton option 'Custom' was not included in the custom scenario options, it has automatically been added!");
     RadioButtonOptions = Arrays.copyOf(RadioButtonOptions, RadioButtonOptions.length + 1);
     RadioButtonOptions[RadioButtonOptions.length - 1] = "Custom";										
+}
+
+if(RadioButtonOptions.length > 6){
+	throw new RuntimeException("Not possible to have more than 6 scenario options. This includes the mandatory 'Custom' scenario!");
 }
 
 //Create the radiobutton and set the correct action.
@@ -4268,5 +4275,33 @@ double f_setForcedClickScreenMessageBackgroundColor(Color fillColor,Color lineCo
 {/*ALCODESTART::1783690031501*/
 rect_selectText.setFillColor(fillColor);
 rect_selectText.setLineColor(lineColor);
+/*ALCODEEND*/}
+
+double f_initializeScenarioInformation()
+{/*ALCODESTART::1783932188071*/
+//Override this if you have project specific scenario Options!!
+v_infoText.scenario1 = t_scenario_current;
+i_scenario1.setVisible(true);
+
+if(project_data.project_type() == OL_ProjectType.BUSINESSPARK){
+	v_infoText.scenario2 = t_scenario_future;
+	i_scenario2.setVisible(true);
+	
+	v_infoText.scenario3 = t_scenario_custom;
+	i_scenario3.setVisible(true);
+}
+else if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
+	v_infoText.scenario2 = t_scenario_custom;
+	i_scenario2.setVisible(true);
+}
+
+/*
+v_infoText.scenario4 = "";
+i_scenario4.setVisible(true);
+v_infoText.scenario5 = "";
+i_scenario5.setVisible(true);
+v_infoText.scenario6 = "";
+i_scenario6.setVisible(true);
+*/
 /*ALCODEEND*/}
 
