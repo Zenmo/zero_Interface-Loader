@@ -2231,10 +2231,10 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1782740302651</Id>
-		<Name><![CDATA[v_mapOverlayButtonDefaultColor]]></Name>
-		<X>2260</X>
-		<Y>1590</Y>
+		<Id>1784037159032</Id>
+		<Name><![CDATA[v_mapOverlayButtonDefaultStyling]]></Name>
+		<X>2310</X>
+		<Y>1600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2246,17 +2246,17 @@
               Constant="false"
               AccessType="public"
               StaticVariable="false">
-			<Type><![CDATA[Color]]></Type>
+			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new Color(239, 239, 239)]]></Code>
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(new Color(239, 239, 239), black, new Color(148, 215, 209), LINE_STYLE_SOLID, 1)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1782740360576</Id>
-		<Name><![CDATA[v_mapOverlayButtonDefaultLineColor]]></Name>
-		<X>2260</X>
-		<Y>1610</Y>
+		<Id>1784037159034</Id>
+		<Name><![CDATA[v_mapOverlayButtonSelectedStyling]]></Name>
+		<X>2310</X>
+		<Y>1620</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2268,17 +2268,17 @@
               Constant="false"
               AccessType="public"
               StaticVariable="false">
-			<Type><![CDATA[Color]]></Type>
+			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new Color(148, 215, 209)]]></Code>
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(white, black, new Color(148, 215, 209), LINE_STYLE_SOLID, 2)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1782740794063</Id>
-		<Name><![CDATA[v_mapOverlayButtonDefaultLineWidth]]></Name>
-		<X>2260</X>
-		<Y>1630</Y>
+		<Id>1784037159036</Id>
+		<Name><![CDATA[v_mapOverlayButtonDisabledStyling]]></Name>
+		<X>2310</X>
+		<Y>1640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2290,31 +2290,9 @@
               Constant="false"
               AccessType="public"
               StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
+			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[2]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1782740812829</Id>
-		<Name><![CDATA[v_mapOverlayButtonSelectedLineWidth]]></Name>
-		<X>2260</X>
-		<Y>1650</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[2]]></Code>
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(silver, black, gray, LINE_STYLE_SOLID, 1)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -3108,19 +3086,19 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[Map<OL_MapOverlayTypes, Integer>]]></Type>
+			<Type><![CDATA[Map<OL_MapOverlayTypes, CustomButton.CustomButtonImageSelection>]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
 				<Code><![CDATA[Map.of(
-	OL_MapOverlayTypes.DEFAULT, 0,
-	OL_MapOverlayTypes.ELECTRICITY_CONSUMPTION, 1,
-	OL_MapOverlayTypes.PV_PRODUCTION, 2,
-	OL_MapOverlayTypes.CONGESTION, 3,
-	OL_MapOverlayTypes.PARKING_TYPE, 4,
-	OL_MapOverlayTypes.ENERGY_LABEL, 5,
-	OL_MapOverlayTypes.GRID_NEIGHBOURS, 6,
-	OL_MapOverlayTypes.CUSTOM, 7
+	OL_MapOverlayTypes.DEFAULT, CustomButton.createCustomButtonImageSelection(0),
+	OL_MapOverlayTypes.ELECTRICITY_CONSUMPTION, CustomButton.createCustomButtonImageSelection(1),
+	OL_MapOverlayTypes.PV_PRODUCTION, CustomButton.createCustomButtonImageSelection(2),
+	OL_MapOverlayTypes.CONGESTION, CustomButton.createCustomButtonImageSelection(3),
+	OL_MapOverlayTypes.PARKING_TYPE, CustomButton.createCustomButtonImageSelection(4),
+	OL_MapOverlayTypes.ENERGY_LABEL, CustomButton.createCustomButtonImageSelection(5),
+	OL_MapOverlayTypes.GRID_NEIGHBOURS, CustomButton.createCustomButtonImageSelection(6),
+	OL_MapOverlayTypes.CUSTOM, CustomButton.createCustomButtonImageSelection(7)
 )]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
@@ -3783,14 +3761,14 @@ OL_FilterOptionsGC.MANUAL_SELECTION, "Handmatige selectie"
 			<ValueElementClass>String</ValueElementClass>
 			<CollectionInitializer Class="CodeValue">
 				<Code><![CDATA[{
-new CustomButton(rect_mapOverlayButton0, txt_mapOverlayButton0, image_mapOverlayButton0),
-new CustomButton(rect_mapOverlayButton1, txt_mapOverlayButton1, image_mapOverlayButton1),
-new CustomButton(rect_mapOverlayButton2, txt_mapOverlayButton2, image_mapOverlayButton2),
-new CustomButton(rect_mapOverlayButton3, txt_mapOverlayButton3, image_mapOverlayButton3),
-new CustomButton(rect_mapOverlayButton4, txt_mapOverlayButton4, image_mapOverlayButton4),
-new CustomButton(rect_mapOverlayButton5, txt_mapOverlayButton5, image_mapOverlayButton5),
-new CustomButton(rect_mapOverlayButton6, txt_mapOverlayButton6, image_mapOverlayButton6),
-new CustomButton(rect_mapOverlayButton7, txt_mapOverlayButton7, image_mapOverlayButton7)
+new CustomButton(rect_mapOverlayButton0, txt_mapOverlayButton0, image_mapOverlayButton0, new CustomButton.CustomButtonStyling(v_mapOverlayButtonDefaultStyling, v_mapOverlayButtonSelectedStyling, v_mapOverlayButtonDisabledStyling, v_mapOverlayButtonDisabledStyling)),
+new CustomButton(rect_mapOverlayButton1, txt_mapOverlayButton1, image_mapOverlayButton1, new CustomButton.CustomButtonStyling(v_mapOverlayButtonDefaultStyling, v_mapOverlayButtonSelectedStyling, v_mapOverlayButtonDisabledStyling, v_mapOverlayButtonDisabledStyling)),
+new CustomButton(rect_mapOverlayButton2, txt_mapOverlayButton2, image_mapOverlayButton2, new CustomButton.CustomButtonStyling(v_mapOverlayButtonDefaultStyling, v_mapOverlayButtonSelectedStyling, v_mapOverlayButtonDisabledStyling, v_mapOverlayButtonDisabledStyling)),
+new CustomButton(rect_mapOverlayButton3, txt_mapOverlayButton3, image_mapOverlayButton3, new CustomButton.CustomButtonStyling(v_mapOverlayButtonDefaultStyling, v_mapOverlayButtonSelectedStyling, v_mapOverlayButtonDisabledStyling, v_mapOverlayButtonDisabledStyling)),
+new CustomButton(rect_mapOverlayButton4, txt_mapOverlayButton4, image_mapOverlayButton4, new CustomButton.CustomButtonStyling(v_mapOverlayButtonDefaultStyling, v_mapOverlayButtonSelectedStyling, v_mapOverlayButtonDisabledStyling, v_mapOverlayButtonDisabledStyling)),
+new CustomButton(rect_mapOverlayButton5, txt_mapOverlayButton5, image_mapOverlayButton5, new CustomButton.CustomButtonStyling(v_mapOverlayButtonDefaultStyling, v_mapOverlayButtonSelectedStyling, v_mapOverlayButtonDisabledStyling, v_mapOverlayButtonDisabledStyling)),
+new CustomButton(rect_mapOverlayButton6, txt_mapOverlayButton6, image_mapOverlayButton6, new CustomButton.CustomButtonStyling(v_mapOverlayButtonDefaultStyling, v_mapOverlayButtonSelectedStyling, v_mapOverlayButtonDisabledStyling, v_mapOverlayButtonDisabledStyling)),
+new CustomButton(rect_mapOverlayButton7, txt_mapOverlayButton7, image_mapOverlayButton7, new CustomButton.CustomButtonStyling(v_mapOverlayButtonDefaultStyling, v_mapOverlayButtonSelectedStyling, v_mapOverlayButtonDisabledStyling, v_mapOverlayButtonDisabledStyling))
 }]]></Code>
 			</CollectionInitializer>
 		</Properties>
