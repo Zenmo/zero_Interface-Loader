@@ -3882,3 +3882,50 @@ if(c_selectedGridConnections.get(0).c_connectedGISObjects.size() > 1){ //Also co
 uI_Results.f_updateResultsUI(c_selectedGridConnections.get(0));
 /*ALCODEEND*/}
 
+double f_forecastDebug()
+{/*ALCODESTART::1784019094839*/
+if (energyModel.p_timeVariables.getTimeOfDay_h() % 24 != 0) {
+	return;
+}
+
+GridConnection GC = c_selectedGridConnections.get(0);
+
+debug_chart.removeAll();
+
+double startTime_h = energyModel.p_timeVariables.getT_h();
+double endTime_h = startTime_h + 24;
+
+// Fixed (can be negative)
+double[] fixedLoad = GC.f_getFixedAssetForecast(startTime_h, endTime_h, OL_EnergyCarriers.ELECTRICITY, energyModel.p_timeParameters);
+DataSet dsFixed = new DataSet(96);
+for (int i = 0; i < 96; i++) {
+	double t = startTime_h + i * 0.25;
+	dsFixed.add(t, max(0, fixedLoad[i]));
+}		
+debug_chart.addDataSet(dsFixed, "Fixed Asset Load", Color.BLUE);
+
+// Flex
+Map<Class<? extends I_AssetManagement>, J_AssetTypeForecast> assetForecasts = GC.f_getForecast(startTime_h, endTime_h, energyModel.p_timeParameters);
+
+for (Class<? extends I_AssetManagement> assetType : assetForecasts.keySet()) {
+	DataSet ds = new DataSet(96);
+	J_AssetTypeForecast assetForecast = assetForecasts.get(assetType);
+	if (assetForecast.load_kW() != null) {
+		Double[] load = assetForecast.load_kW().get(OL_EnergyCarriers.ELECTRICITY);
+		if (load != null) {
+			for (int i = 0; i < 96; i++) {
+				if (load[i] < 0 ) {
+					traceln("Negatieve waarde in Forecast");
+				}
+				double t = startTime_h + i * 0.25;
+				ds.add(t, max(0.001, load[i]));
+			}
+			
+			debug_chart.addDataSet(ds, assetType.toString(), Color.RED);
+		}
+	}
+}
+
+
+/*ALCODEEND*/}
+

@@ -24,6 +24,8 @@ if(uI_Company != null){
 
 // Get the weather info
 f_getWeatherInfo();
+
+if (b_forecastingDebugActive) f_forecastDebug();
 /*ALCODEEND*/}
 
 void e_setStartView()
