@@ -275,7 +275,7 @@ presentation.remove(gr_pageIndicator);
 presentation.add(gr_pageIndicator);
 /*ALCODEEND*/}
 
-double f_initializeElectricityPages()
+double f_initializeEHubPages()
 {/*ALCODESTART::1780125279830*/
 // CHOOSE WHICH PAGES IN YOUR TAB YOU WANT TO BE ABLE TO SHOW FOR YOUR PROJECT 
 boolean hasHouses = uI_Tabs.f_getActiveSliderGridConnections_houses().size() > 0;
@@ -304,5 +304,10 @@ double f_addCustomPage()
 {/*ALCODESTART::1780125279836*/
 // Override this function to add your custom page to c_loadedPageGroups, for instance, like this:
 //c_loadedPageGroups.add(gr_electricitySliders_custom);
+/*ALCODEEND*/}
+
+double f_initializeTab_EHub()
+{/*ALCODESTART::1784057853587*/
+f_initializeEHubPages();
 /*ALCODEEND*/}
 
