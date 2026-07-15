@@ -391,9 +391,9 @@
 					</Oval>
 					<Image>
 						<Id>1722248369304</Id>
-						<Name><![CDATA[image3]]></Name>
-						<X>-14</X>
-						<Y>-12</Y>
+						<Name><![CDATA[im_UITabsElectricityIcon]]></Name>
+						<X>-9</X>
+						<Y>-10.5</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -404,16 +404,16 @@
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
-						<Width>28</Width>
-						<Height>24</Height>
+						<Width>18</Width>
+						<Height>21</Height>
 						<Rotation>0.0</Rotation>
 						<ImageFiles>
 							<ImageResourceReference>
 								<PackageName>zerointerfaceloader</PackageName>
-								<ClassName>noun-electricity-3408805.png</ClassName>
+								<ClassName>electricity-icon_black.png</ClassName>
 							</ImageResourceReference>
 						</ImageFiles>
-						<OriginalSize>false</OriginalSize>
+						<OriginalSize>true</OriginalSize>
 					</Image>
 				</Presentation>
 			</Group>
@@ -463,7 +463,7 @@
 					</Oval>
 					<Image>
 						<Id>1722248369310</Id>
-						<Name><![CDATA[image10]]></Name>
+						<Name><![CDATA[im_UITabsHeatIcon]]></Name>
 						<X>-14</X>
 						<Y>-12</Y>
 						<Label>
@@ -535,7 +535,7 @@
 					</Oval>
 					<Image>
 						<Id>1722248369316</Id>
-						<Name><![CDATA[image15]]></Name>
+						<Name><![CDATA[im_UITabsMobilityIcon]]></Name>
 						<X>-14</X>
 						<Y>-12</Y>
 						<Label>
@@ -843,7 +843,7 @@
 				<Color>-9868951</Color>
 				<Text><![CDATA[Elektriciteit]]></Text>
 				<Font>
-					<Name><![CDATA[Centaur]]></Name>
+					<Name><![CDATA[HOLONline]]></Name>
 					<Size>11</Size>
 					<Style>0</Style>
 				</Font>
@@ -869,7 +869,7 @@
 				<Color>-9868951</Color>
 				<Text><![CDATA[Warmte]]></Text>
 				<Font>
-					<Name><![CDATA[Centaur]]></Name>
+					<Name><![CDATA[HOLONline]]></Name>
 					<Size>11</Size>
 					<Style>0</Style>
 				</Font>
@@ -895,7 +895,7 @@
 				<Color>-9868951</Color>
 				<Text><![CDATA[Transport]]></Text>
 				<Font>
-					<Name><![CDATA[Centaur]]></Name>
+					<Name><![CDATA[HOLONline]]></Name>
 					<Size>11</Size>
 					<Style>0</Style>
 				</Font>
@@ -921,7 +921,7 @@
 				<Color>-9868951</Color>
 				<Text><![CDATA[E-hub]]></Text>
 				<Font>
-					<Name><![CDATA[Centaur]]></Name>
+					<Name><![CDATA[HOLONline]]></Name>
 					<Size>11</Size>
 					<Style>0</Style>
 				</Font>
