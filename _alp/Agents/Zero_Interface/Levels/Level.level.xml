@@ -5707,8 +5707,8 @@ else{
 	<Image>
 		<Id>1779964785512</Id>
 		<Name><![CDATA[i_scenario1]]></Name>
-		<X>400</X>
-		<Y>149</Y>
+		<X>406</X>
+		<Y>152</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -5720,8 +5720,8 @@ else{
 		<OnClickCode>f_setInfoText(i_scenario1, v_infoText.scenario1, i_scenario1.getX(), i_scenario1.getY());</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
-		<Width>20</Width>
-		<Height>20</Height>
+		<Width>14</Width>
+		<Height>14</Height>
 		<Rotation>0.0</Rotation>
 		<ImageFiles>
 			<ImageResourceReference>
@@ -5734,8 +5734,8 @@ else{
 	<Image>
 		<Id>1779964814847</Id>
 		<Name><![CDATA[i_scenario2]]></Name>
-		<X>400</X>
-		<Y>174</Y>
+		<X>406</X>
+		<Y>177</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -5747,8 +5747,8 @@ else{
 		<OnClickCode>f_setInfoText(i_scenario2, v_infoText.scenario2, i_scenario2.getX(), i_scenario2.getY());</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
-		<Width>20</Width>
-		<Height>20</Height>
+		<Width>14</Width>
+		<Height>14</Height>
 		<Rotation>0.0</Rotation>
 		<ImageFiles>
 			<ImageResourceReference>
@@ -5761,8 +5761,8 @@ else{
 	<Image>
 		<Id>1779964817988</Id>
 		<Name><![CDATA[i_scenario3]]></Name>
-		<X>400</X>
-		<Y>199</Y>
+		<X>406</X>
+		<Y>202</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -5774,8 +5774,8 @@ else{
 		<OnClickCode>f_setInfoText(i_scenario3, v_infoText.scenario3, i_scenario3.getX(), i_scenario3.getY());</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
-		<Width>20</Width>
-		<Height>20</Height>
+		<Width>14</Width>
+		<Height>14</Height>
 		<Rotation>0.0</Rotation>
 		<ImageFiles>
 			<ImageResourceReference>
@@ -5788,8 +5788,8 @@ else{
 	<Image>
 		<Id>1779964832924</Id>
 		<Name><![CDATA[i_scenario4]]></Name>
-		<X>400</X>
-		<Y>224</Y>
+		<X>406</X>
+		<Y>227</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -5801,8 +5801,8 @@ else{
 		<OnClickCode>f_setInfoText(i_scenario4, v_infoText.scenario4, i_scenario4.getX(), i_scenario4.getY());</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
-		<Width>20</Width>
-		<Height>20</Height>
+		<Width>14</Width>
+		<Height>14</Height>
 		<Rotation>0.0</Rotation>
 		<ImageFiles>
 			<ImageResourceReference>
@@ -5815,8 +5815,8 @@ else{
 	<Image>
 		<Id>1779964837664</Id>
 		<Name><![CDATA[i_scenario5]]></Name>
-		<X>400</X>
-		<Y>249</Y>
+		<X>406</X>
+		<Y>252</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -5828,8 +5828,8 @@ else{
 		<OnClickCode>f_setInfoText(i_scenario5, v_infoText.scenario5, i_scenario5.getX(), i_scenario5.getY());</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
-		<Width>20</Width>
-		<Height>20</Height>
+		<Width>14</Width>
+		<Height>14</Height>
 		<Rotation>0.0</Rotation>
 		<ImageFiles>
 			<ImageResourceReference>
@@ -9882,8 +9882,8 @@ else {
 	<Image>
 		<Id>1783933243165</Id>
 		<Name><![CDATA[i_scenario6]]></Name>
-		<X>400</X>
-		<Y>274</Y>
+		<X>406</X>
+		<Y>277</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -9895,8 +9895,8 @@ else {
 		<OnClickCode>f_setInfoText(i_scenario6, v_infoText.scenario6, i_scenario6.getX(), i_scenario6.getY());</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
-		<Width>20</Width>
-		<Height>20</Height>
+		<Width>14</Width>
+		<Height>14</Height>
 		<Rotation>0.0</Rotation>
 		<ImageFiles>
 			<ImageResourceReference>
