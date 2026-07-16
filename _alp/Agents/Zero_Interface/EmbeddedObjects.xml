@@ -254,9 +254,6 @@
 				<Name><![CDATA[map_resultsUIModeToName]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[map_ResultsUIModeToSelectedImageIndex]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[map_ResultsUIModeToDefaultImageIndex]]></Name>
 			</Parameter>
 		</Parameters>
