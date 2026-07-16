@@ -2361,7 +2361,7 @@ for(OL_MapOverlayTypes loadedMapOverlay : c_loadedMapOverlayTypes){
 	currentMapOverlayButton = c_mapOverlayButtons.get(currentMapOverlayButtonIndex);
 	map_mapOverlayButtonToOverlayType.put(currentMapOverlayButton, loadedMapOverlay);
 	currentMapOverlayButton.setText(map_mapOverlayTypeToName.get(loadedMapOverlay));
-	currentMapOverlayButton.setImageIndex(map_mapOverlayToImageIndex.get(loadedMapOverlay));
+	currentMapOverlayButton.reConfigureImageIndexes(map_mapOverlayToImageIndex.get(loadedMapOverlay));
 	currentMapOverlayButton.setVisible(true);
 	currentMapOverlayButtonIndex++;
 }
@@ -4128,21 +4128,23 @@ double f_selectMapOverlayButton(int selectedMapOverlayButtonIndex)
 //Get selected button
 CustomButton selectedButton = c_mapOverlayButtons.get(selectedMapOverlayButtonIndex);
 
-//Find selected chart type
-v_activeMapOverlay = map_mapOverlayButtonToOverlayType.get(selectedButton);
-
-//Color selected button
-selectedButton.setLineWidth(v_mapOverlayButtonSelectedLineWidth);
-
-//Deselect other chart buttons
-for(CustomButton customButton : c_mapOverlayButtons){
-	if(customButton != selectedButton){
-		customButton.setLineWidth(v_mapOverlayButtonDefaultLineWidth);
+if(selectedButton.isEnabled() && !selectedButton.isSelected()){
+	//Find selected chart type
+	v_activeMapOverlay = map_mapOverlayButtonToOverlayType.get(selectedButton);
+	
+	//Select button
+	selectedButton.setSelected(true, false);
+	
+	//Deselect other chart buttons
+	for(CustomButton customButton : c_mapOverlayButtons){
+		if(customButton != selectedButton && customButton.isSelected()){
+			customButton.setSelected(false, false);
+		}
 	}
+	
+	//Show correct chart
+	f_setMapOverlay();
 }
-
-//Show correct chart
-f_setMapOverlay();
 /*ALCODEEND*/}
 
 double f_launchGridnodeSelection()

@@ -8101,14 +8101,12 @@ instelling aanpassen]]></Text>
 						<ZHeight>10</ZHeight>
 						<LineWidth>1</LineWidth>
 						<LineColor>-7022639</LineColor>
-						<LineColorCode>v_mapOverlayButtonDefaultLineColor</LineColorCode>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
 						<Width>60</Width>
 						<Height>60</Height>
 						<Rotation>0.0</Rotation>
 						<FillColor>-855310</FillColor>
-						<FillColorCode>v_mapOverlayButtonDefaultColor</FillColorCode>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>6</ArcRadius>
 					</RoundedRectangle>
@@ -8131,14 +8129,12 @@ instelling aanpassen]]></Text>
 						<ZHeight>10</ZHeight>
 						<LineWidth>1</LineWidth>
 						<LineColor>-7022639</LineColor>
-						<LineColorCode>v_mapOverlayButtonDefaultLineColor</LineColorCode>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
 						<Width>60</Width>
 						<Height>60</Height>
 						<Rotation>0.0</Rotation>
 						<FillColor>-855310</FillColor>
-						<FillColorCode>v_mapOverlayButtonDefaultColor</FillColorCode>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>6</ArcRadius>
 					</RoundedRectangle>
@@ -8161,14 +8157,12 @@ instelling aanpassen]]></Text>
 						<ZHeight>10</ZHeight>
 						<LineWidth>1</LineWidth>
 						<LineColor>-7022639</LineColor>
-						<LineColorCode>v_mapOverlayButtonDefaultLineColor</LineColorCode>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
 						<Width>60</Width>
 						<Height>60</Height>
 						<Rotation>0.0</Rotation>
 						<FillColor>-855310</FillColor>
-						<FillColorCode>v_mapOverlayButtonDefaultColor</FillColorCode>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>6</ArcRadius>
 					</RoundedRectangle>
@@ -8191,14 +8185,12 @@ instelling aanpassen]]></Text>
 						<ZHeight>10</ZHeight>
 						<LineWidth>1</LineWidth>
 						<LineColor>-7022639</LineColor>
-						<LineColorCode>v_mapOverlayButtonDefaultLineColor</LineColorCode>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
 						<Width>60</Width>
 						<Height>60</Height>
 						<Rotation>0.0</Rotation>
 						<FillColor>-855310</FillColor>
-						<FillColorCode>v_mapOverlayButtonDefaultColor</FillColorCode>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>6</ArcRadius>
 					</RoundedRectangle>
@@ -8221,14 +8213,12 @@ instelling aanpassen]]></Text>
 						<ZHeight>10</ZHeight>
 						<LineWidth>1</LineWidth>
 						<LineColor>-7022639</LineColor>
-						<LineColorCode>v_mapOverlayButtonDefaultLineColor</LineColorCode>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
 						<Width>60</Width>
 						<Height>60</Height>
 						<Rotation>0.0</Rotation>
 						<FillColor>-855310</FillColor>
-						<FillColorCode>v_mapOverlayButtonDefaultColor</FillColorCode>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>6</ArcRadius>
 					</RoundedRectangle>
@@ -8251,14 +8241,12 @@ instelling aanpassen]]></Text>
 						<ZHeight>10</ZHeight>
 						<LineWidth>1</LineWidth>
 						<LineColor>-7022639</LineColor>
-						<LineColorCode>v_mapOverlayButtonDefaultLineColor</LineColorCode>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
 						<Width>60</Width>
 						<Height>60</Height>
 						<Rotation>0.0</Rotation>
 						<FillColor>-855310</FillColor>
-						<FillColorCode>v_mapOverlayButtonDefaultColor</FillColorCode>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>6</ArcRadius>
 					</RoundedRectangle>
@@ -8281,14 +8269,12 @@ instelling aanpassen]]></Text>
 						<ZHeight>10</ZHeight>
 						<LineWidth>1</LineWidth>
 						<LineColor>-7022639</LineColor>
-						<LineColorCode>v_mapOverlayButtonDefaultLineColor</LineColorCode>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
 						<Width>60</Width>
 						<Height>60</Height>
 						<Rotation>0.0</Rotation>
 						<FillColor>-855310</FillColor>
-						<FillColorCode>v_mapOverlayButtonDefaultColor</FillColorCode>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>6</ArcRadius>
 					</RoundedRectangle>
@@ -8311,14 +8297,12 @@ instelling aanpassen]]></Text>
 						<ZHeight>10</ZHeight>
 						<LineWidth>1</LineWidth>
 						<LineColor>-7022639</LineColor>
-						<LineColorCode>v_mapOverlayButtonDefaultLineColor</LineColorCode>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
 						<Width>60</Width>
 						<Height>60</Height>
 						<Rotation>0.0</Rotation>
 						<FillColor>-855310</FillColor>
-						<FillColorCode>v_mapOverlayButtonDefaultColor</FillColorCode>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>6</ArcRadius>
 					</RoundedRectangle>
@@ -9003,7 +8987,7 @@ type]]></Text>
 						<Height>60</Height>
 						<Rotation>0.0</Rotation>
 						<FillColor>-1052689</FillColor>
-						<FillColorCode>v_mapOverlayButtonDefaultColor</FillColorCode>
+						<FillColorCode>v_mapOverlayButtonDefaultStyling.fillColor()</FillColorCode>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>6</ArcRadius>
 					</RoundedRectangle>
