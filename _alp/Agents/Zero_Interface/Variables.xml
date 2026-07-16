@@ -2161,28 +2161,6 @@
 			</InitialValue>
 		</Properties>
 	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1784019199639</Id>
-		<Name><![CDATA[b_forecastingDebugActive]]></Name>
-		<X>1400</X>
-		<Y>-720</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[boolean]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[false]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
 	<Variable Class="Parameter">
 		<Id>1715858732720</Id>
 		<Name><![CDATA[energyModel]]></Name>
