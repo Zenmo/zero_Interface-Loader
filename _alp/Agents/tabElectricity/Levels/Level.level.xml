@@ -2634,7 +2634,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 				<VisibleCode>zero_Interface.v_currentUIMode != OL_UIMode.EHUB &amp;&amp; (!c_customSolarfarmGCs.isEmpty() || !c_customWindfarmGCs.isEmpty() || !c_customGridBatteryGCs.isEmpty())</VisibleCode>
 				<OnClickCode>if(!c_customSolarfarmGCs.isEmpty() || !c_customWindfarmGCs.isEmpty() || !c_customGridBatteryGCs.isEmpty()) {
 	uI_Tabs.zero_Interface.v_currentUIMode = OL_UIMode.REMOVE_CUSTOMGC;
-	zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets verwijderen", (Color)teal, null, "Kies een energieasset op de kaart", new Color(148, 215, 209), null);
+	zero_Interface.f_setForcedClickScreenTextBoxes("ENERGIEASSETS VERWIJDEREN", (Color)teal, null, "Kies een energieasset op de kaart", new Color(148, 215, 209), null);
 	zero_Interface.f_setForcedClickScreenVisibility(true);
 } else {
 	throw new RuntimeException("There is no custom energy asset loaded in.");
@@ -2845,7 +2845,7 @@ f_setWindTurbines( sl_largeScaleWind_MW.getValue() - p_initialWindTurbines_MW - 
 				<VisibleCode>zero_Interface.v_currentUIMode != OL_UIMode.EHUB</VisibleCode>
 				<OnClickCode>zero_Interface.v_currentUIMode = OL_UIMode.ADD_CUSTOMGC;
 v_addCustomGCType = OL_EnergyAssetType.PHOTOVOLTAIC;
-zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets toevoegen", (Color)teal, null, "Teken je locatie op de kaart. Kies nog minimaal 3 hoekpunten.", new Color(148, 215, 209), null);
+zero_Interface.f_setForcedClickScreenTextBoxes("ENERGIEASSETS TOEVOEGEN", (Color)teal, null, "Teken je locatie op de kaart. Kies nog minimaal 3 hoekpunten.", new Color(148, 215, 209), null);
 zero_Interface.f_setForcedClickScreenVisibility(true);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
@@ -3023,7 +3023,7 @@ zero_Interface.f_setForcedClickScreenVisibility(true);</OnClickCode>
 				<VisibleCode>zero_Interface.v_currentUIMode != OL_UIMode.EHUB</VisibleCode>
 				<OnClickCode>zero_Interface.v_currentUIMode = OL_UIMode.ADD_CUSTOMGC;
 v_addCustomGCType = OL_EnergyAssetType.WINDMILL;
-zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets toevoegen", (Color)teal, null, "Kies een locatie op de kaart", new Color(148, 215, 209), null);
+zero_Interface.f_setForcedClickScreenTextBoxes("ENERGIEASSETS TOEVOEGEN", (Color)teal, null, "Kies een locatie op de kaart", new Color(148, 215, 209), null);
 zero_Interface.f_setForcedClickScreenVisibility(true);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
@@ -3201,7 +3201,7 @@ zero_Interface.f_setForcedClickScreenVisibility(true);</OnClickCode>
 				<VisibleCode>zero_Interface.v_currentUIMode != OL_UIMode.EHUB</VisibleCode>
 				<OnClickCode>zero_Interface.v_currentUIMode = OL_UIMode.ADD_CUSTOMGC;
 v_addCustomGCType = OL_EnergyAssetType.STORAGE_ELECTRIC;
-zero_Interface.f_setForcedClickScreenTextBoxes("Energieassets toevoegen", (Color)teal, null, "Kies een locatie op de kaart", new Color(148, 215, 209), null);
+zero_Interface.f_setForcedClickScreenTextBoxes("ENERGIEASSETS TOEVOEGEN", (Color)teal, null, "Kies een locatie op de kaart", new Color(148, 215, 209), null);
 zero_Interface.f_setForcedClickScreenVisibility(true);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>

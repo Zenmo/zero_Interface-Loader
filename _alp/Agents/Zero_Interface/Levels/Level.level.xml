@@ -6602,7 +6602,7 @@ if(! cb_showFilterInterface.isSelected()){
 }
 else{
 	v_currentUIMode = OL_UIMode.FILTER;
-	f_setForcedClickScreenTextBoxes("Filtermodus", (Color)teal, null, "", null, null);
+	f_setForcedClickScreenTextBoxes("FILTERMODUS", (Color)teal, null, "", null, null);
 }</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
@@ -9610,7 +9610,7 @@ Met de kaart kunt u zowel gebouwen toevoegen aan als uitsluiten van uw lopende s
 			<Group>
 				<Id>1760015470890</Id>
 				<Name><![CDATA[gr_energyHubSelectionButtons]]></Name>
-				<X>20</X>
+				<X>0</X>
 				<Y>-380</Y>
 				<Label>
 					<X>10</X>
@@ -9621,7 +9621,7 @@ Met de kaart kunt u zowel gebouwen toevoegen aan als uitsluiten van uw lopende s
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
 				<XCode>0</XCode>
-				<YCode>-270</YCode>
+				<YCode>-250</YCode>
 				<VisibleCode>v_currentUIMode == EHUBSELECTION</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
@@ -9630,7 +9630,7 @@ Met de kaart kunt u zowel gebouwen toevoegen aan als uitsluiten van uw lopende s
 					<Group>
 						<Id>1760015470898</Id>
 						<Name><![CDATA[gr_energieHubConfiguratorTxt]]></Name>
-						<X>-60</X>
+						<X>-50</X>
 						<Y>-180</Y>
 						<Label>
 							<X>9.98</X>
@@ -9647,8 +9647,8 @@ Met de kaart kunt u zowel gebouwen toevoegen aan als uitsluiten van uw lopende s
 							<RoundedRectangle>
 								<Id>1760015470900</Id>
 								<Name><![CDATA[rect_energyHubConfigurator]]></Name>
-								<X>-500</X>
-								<Y>-49.451</Y>
+								<X>-450</X>
+								<Y>-50</Y>
 								<Label>
 									<X>10</X>
 									<Y>10</Y>
@@ -9665,8 +9665,8 @@ Met de kaart kunt u zowel gebouwen toevoegen aan als uitsluiten van uw lopende s
 								<LineColorCode>//uI_EnergyHub.p_energyHubLineColor</LineColorCode>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
-								<Width>910</Width>
-								<Height>89.011</Height>
+								<Width>840</Width>
+								<Height>90</Height>
 								<Rotation>0.0</Rotation>
 								<FillColor>-16744320</FillColor>
 								<FillColorCode>//uI_EnergyHub.p_energyHubBackGroundColor</FillColorCode>
@@ -9676,7 +9676,7 @@ Met de kaart kunt u zowel gebouwen toevoegen aan als uitsluiten van uw lopende s
 							<Text>
 								<Id>1760015470902</Id>
 								<Name><![CDATA[txt_energyHubConfigurator]]></Name>
-								<X>-430</X>
+								<X>-432</X>
 								<Y>0</Y>
 								<Label>
 									<X>0</X>
@@ -9704,7 +9704,7 @@ Klik op de knop 'Start energiehub']]></Text>
 					<Group>
 						<Id>1760015470904</Id>
 						<Name><![CDATA[gr_cancelEnergyHubConfiguration]]></Name>
-						<X>266</X>
+						<X>247</X>
 						<Y>-196</Y>
 						<Label>
 							<X>10</X>
@@ -9776,7 +9776,7 @@ Klik op de knop 'Start energiehub']]></Text>
 					<Group>
 						<Id>1760015470892</Id>
 						<Name><![CDATA[gr_completeEnergyHubSelection]]></Name>
-						<X>250</X>
+						<X>230</X>
 						<Y>-210</Y>
 						<Label>
 							<X>10</X>
@@ -9850,62 +9850,10 @@ else {
 							</Text>
 						</Presentation>
 					</Group>
-					<Oval>
-						<Id>1780603802914</Id>
-						<Name><![CDATA[oval]]></Name>
-						<X>-505</X>
-						<Y>-174</Y>
-						<Label>
-							<X>0</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor/>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<RadiusX>3</RadiusX>
-						<RadiusY>40</RadiusY>
-						<Rotation>0.0</Rotation>
-						<FillColor>-1</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Oval>
-					<Oval>
-						<Id>1780603826817</Id>
-						<Name><![CDATA[oval2]]></Name>
-						<X>-505</X>
-						<Y>-161</Y>
-						<Label>
-							<X>0</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor/>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<RadiusX>3</RadiusX>
-						<RadiusY>40</RadiusY>
-						<Rotation>0.0</Rotation>
-						<FillColor>-1</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Oval>
 					<Text>
 						<Id>1783427117729</Id>
 						<Name><![CDATA[text13]]></Name>
-						<X>-492</X>
+						<X>-482</X>
 						<Y>-212</Y>
 						<Label>
 							<X>0</X>
@@ -10041,7 +9989,7 @@ else {
 			<Y>0</Y>
 		</Label>
 		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
+		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D</DrawMode>
 		<XCode>450</XCode>
@@ -10094,7 +10042,7 @@ else {
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-1</Color>
-				<Text><![CDATA[<txt_forcedClickTitle>]]></Text>
+				<Text><![CDATA[<TXT_FORCEDCLICKTITLE>]]></Text>
 				<Font>
 					<Name><![CDATA[HolonBLOCK2]]></Name>
 					<Size>28</Size>
