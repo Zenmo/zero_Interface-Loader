@@ -1,37 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Presentation>
-	<RoundedRectangle>
-		<Id>1780125881346</Id>
-		<Name><![CDATA[roundRectangle]]></Name>
-		<X>0</X>
-		<Y>40</Y>
-		<Label>
-			<X>10</X>
-			<Y>10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>1</LineWidth>
-		<LineColor/>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<Width>370</Width>
-		<Height>305</Height>
-		<Rotation>0.0</Rotation>
-		<FillColor>-6943</FillColor>
-		<FillMaterial>null</FillMaterial>
-		<ArcRadius>10</ArcRadius>
-	</RoundedRectangle>
 	<Rectangle>
 		<Id>1722350093699</Id>
 		<Name><![CDATA[rect_genericFunctions]]></Name>
 		<X>10</X>
-		<Y>460</Y>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -57,7 +30,7 @@
 		<Id>1722350093702</Id>
 		<Name><![CDATA[t_genericFunctions]]></Name>
 		<X>140</X>
-		<Y>480</Y>
+		<Y>680</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -81,7 +54,7 @@
 	<Group>
 		<Id>1722326800106</Id>
 		<Name><![CDATA[gr_heatingSliders_companies]]></Name>
-		<X>800</X>
+		<X>430</X>
 		<Y>40</Y>
 		<Label>
 			<X>10</X>
@@ -98,8 +71,8 @@
 		<Presentation>
 			<RoundedRectangle>
 				<Id>1784125651633</Id>
-				<Name><![CDATA[roundRectangle2]]></Name>
-				<X>0</X>
+				<Name><![CDATA[rect_heatingSliders_companies]]></Name>
+				<X>5</X>
 				<Y>0</Y>
 				<Label>
 					<X>10</X>
@@ -116,7 +89,7 @@
 				<LineColor/>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>370</Width>
+				<Width>400</Width>
 				<Height>455</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-6943</FillColor>
@@ -127,8 +100,8 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722326800142</Id>
 				<Name><![CDATA[sl_companiesHeatDemandReduction_pct]]></Name>
-				<X>20</X>
-				<Y>70</Y>
+				<X>25</X>
+				<Y>73</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -137,7 +110,7 @@
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="335" Height="30">
+				<BasicProperties Width="360" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setDemandReductionHeating( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), sl_companiesHeatDemandReduction_pct.getValue());</ActionCode>
@@ -154,8 +127,8 @@
 			<Text>
 				<Id>1722326800144</Id>
 				<Name><![CDATA[txt_companiesHeatDemandReductionDescription]]></Name>
-				<X>20</X>
-				<Y>55</Y>
+				<X>25</X>
+				<Y>61</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -180,8 +153,8 @@
 			<Text>
 				<Id>1722326800146</Id>
 				<Name><![CDATA[txt_companiesHeatDemandReduction_pct]]></Name>
-				<X>353</X>
-				<Y>55</Y>
+				<X>384</X>
+				<Y>61</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -207,8 +180,8 @@
 			<Text>
 				<Id>1722326800148</Id>
 				<Name><![CDATA[txt_companiesGasBurnerDescription]]></Name>
-				<X>20</X>
-				<Y>110</Y>
+				<X>25</X>
+				<Y>113</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -233,8 +206,8 @@
 			<Text>
 				<Id>1722326800150</Id>
 				<Name><![CDATA[txt_companiesHybridHeatPumpDescription]]></Name>
-				<X>20</X>
-				<Y>165</Y>
+				<X>25</X>
+				<Y>166</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -259,8 +232,8 @@
 			<Text>
 				<Id>1722326800152</Id>
 				<Name><![CDATA[txt_companiesElectricHeatPumpDescription]]></Name>
-				<X>20</X>
-				<Y>220</Y>
+				<X>25</X>
+				<Y>219</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -285,8 +258,8 @@
 			<Text>
 				<Id>1722326800154</Id>
 				<Name><![CDATA[txt_companiesDistrictHeatingCompaniesDescription]]></Name>
-				<X>20</X>
-				<Y>275</Y>
+				<X>25</X>
+				<Y>271</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -311,8 +284,8 @@
 			<Text>
 				<Id>1722326800156</Id>
 				<Name><![CDATA[txt_companiesElectricHeatPump_pct]]></Name>
-				<X>353</X>
-				<Y>220</Y>
+				<X>384</X>
+				<Y>219</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -338,8 +311,8 @@
 			<Text>
 				<Id>1722326800158</Id>
 				<Name><![CDATA[txt_companiesGasBurner_pct]]></Name>
-				<X>353</X>
-				<Y>110</Y>
+				<X>384</X>
+				<Y>113</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -365,8 +338,8 @@
 			<Text>
 				<Id>1722326800160</Id>
 				<Name><![CDATA[txt_companiesDistrictHeating_pct]]></Name>
-				<X>353</X>
-				<Y>275</Y>
+				<X>384</X>
+				<Y>271</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -392,8 +365,8 @@
 			<Text>
 				<Id>1722326800162</Id>
 				<Name><![CDATA[txt_companiesHybridHeatPump_pct]]></Name>
-				<X>350</X>
-				<Y>165</Y>
+				<X>386</X>
+				<Y>166</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -420,8 +393,8 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722326800164</Id>
 				<Name><![CDATA[sl_companiesDistrictHeating_pct]]></Name>
-				<X>20</X>
-				<Y>290</Y>
+				<X>25</X>
+				<Y>283</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -430,7 +403,7 @@
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="335" Height="30">
+				<BasicProperties Width="360" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), new ArrayList&lt;GridConnection&gt;(zero_Interface.c_orderedHeatingSystemsCompanies), OL_GridConnectionHeatingType.DISTRICTHEAT, sl_companiesGasBurner_pct, sl_companiesHybridHeatPump_pct, sl_companiesElectricHeatPump_pct, sl_companiesDistrictHeating_pct, null, sl_companiesCustom_pct );
@@ -449,7 +422,7 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722326800166</Id>
 				<Name><![CDATA[sl_companiesGasBurner_pct]]></Name>
-				<X>20</X>
+				<X>25</X>
 				<Y>125</Y>
 				<Label>
 					<X>0</X>
@@ -459,7 +432,7 @@
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="335" Height="30">
+				<BasicProperties Width="360" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), new ArrayList&lt;GridConnection&gt;(zero_Interface.c_orderedHeatingSystemsCompanies), OL_GridConnectionHeatingType.GAS_BURNER, sl_companiesGasBurner_pct, sl_companiesHybridHeatPump_pct, sl_companiesElectricHeatPump_pct, sl_companiesDistrictHeating_pct, null, sl_companiesCustom_pct );
@@ -478,8 +451,8 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722326800168</Id>
 				<Name><![CDATA[sl_companiesHybridHeatPump_pct]]></Name>
-				<X>20</X>
-				<Y>180</Y>
+				<X>25</X>
+				<Y>178</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -488,7 +461,7 @@
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="335" Height="30">
+				<BasicProperties Width="360" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), new ArrayList&lt;GridConnection&gt;(zero_Interface.c_orderedHeatingSystemsCompanies), OL_GridConnectionHeatingType.HYBRID_HEATPUMP, sl_companiesGasBurner_pct, sl_companiesHybridHeatPump_pct, sl_companiesElectricHeatPump_pct, sl_companiesDistrictHeating_pct, null, sl_companiesCustom_pct );
@@ -507,8 +480,8 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722326800170</Id>
 				<Name><![CDATA[sl_companiesElectricHeatPump_pct]]></Name>
-				<X>20</X>
-				<Y>235</Y>
+				<X>25</X>
+				<Y>231</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -517,7 +490,7 @@
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="335" Height="30">
+				<BasicProperties Width="360" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), new ArrayList&lt;GridConnection&gt;(zero_Interface.c_orderedHeatingSystemsCompanies), OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, sl_companiesGasBurner_pct, sl_companiesHybridHeatPump_pct, sl_companiesElectricHeatPump_pct, sl_companiesDistrictHeating_pct, null, sl_companiesCustom_pct );</ActionCode>
@@ -534,8 +507,8 @@
 			<Text>
 				<Id>1722326800172</Id>
 				<Name><![CDATA[txt_heatingDemandSlidersCompaniesDescription]]></Name>
-				<X>53</X>
-				<Y>23</Y>
+				<X>58</X>
+				<Y>20</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -559,8 +532,8 @@
 			<Text>
 				<Id>1734371025574</Id>
 				<Name><![CDATA[txt_companiesEBoiler_pct]]></Name>
-				<X>353</X>
-				<Y>330</Y>
+				<X>384</X>
+				<Y>325</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -587,8 +560,8 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1734371025600</Id>
 				<Name><![CDATA[sl_companiesEBoiler_pct]]></Name>
-				<X>20</X>
-				<Y>345</Y>
+				<X>25</X>
+				<Y>337</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -597,7 +570,7 @@
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="335" Height="30">
+				<BasicProperties Width="360" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<VisibleCode>sl_companiesEBoiler_pct.isEnabled()</VisibleCode>
 					<Enabled>false</Enabled>
@@ -616,8 +589,8 @@
 			<Text>
 				<Id>1734371025534</Id>
 				<Name><![CDATA[txt_companiesEBoilerDescription]]></Name>
-				<X>20</X>
-				<Y>330</Y>
+				<X>25</X>
+				<Y>325</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -642,8 +615,8 @@
 			<Image>
 				<Id>1746093187570</Id>
 				<Name><![CDATA[i_companyReduction]]></Name>
-				<X>134</X>
-				<Y>54</Y>
+				<X>139</X>
+				<Y>60</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -656,8 +629,8 @@
 				<OnClickCode>zero_Interface.f_setInfoText(i_companyReduction, zero_Interface.v_infoText.companyHeatDemandReduction, i_companyReduction.getX() + uI_Tabs.v_presentationXOffset, i_companyReduction.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>12</Width>
-				<Height>12</Height>
+				<Width>14</Width>
+				<Height>14</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -670,8 +643,8 @@
 			<Image>
 				<Id>1746093187613</Id>
 				<Name><![CDATA[i_companyGasBoiler]]></Name>
-				<X>128</X>
-				<Y>109</Y>
+				<X>133</X>
+				<Y>112</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -684,8 +657,8 @@
 				<OnClickCode>zero_Interface.f_setInfoText(i_companyGasBoiler, zero_Interface.v_infoText.companyGasBoiler, i_companyGasBoiler.getX() + uI_Tabs.v_presentationXOffset, i_companyGasBoiler.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>12</Width>
-				<Height>12</Height>
+				<Width>14</Width>
+				<Height>14</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -698,8 +671,8 @@
 			<Image>
 				<Id>1746093187656</Id>
 				<Name><![CDATA[i_companyElectricHeatpump]]></Name>
-				<X>169</X>
-				<Y>220</Y>
+				<X>174</X>
+				<Y>218</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -712,8 +685,8 @@
 				<OnClickCode>zero_Interface.f_setInfoText(i_companyElectricHeatpump, zero_Interface.v_infoText.companyElectricHeatpump, i_companyElectricHeatpump.getX() + uI_Tabs.v_presentationXOffset, i_companyElectricHeatpump.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>12</Width>
-				<Height>12</Height>
+				<Width>14</Width>
+				<Height>14</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -726,8 +699,8 @@
 			<Image>
 				<Id>1746093187698</Id>
 				<Name><![CDATA[i_companyHybridHeatpump]]></Name>
-				<X>153</X>
-				<Y>166</Y>
+				<X>158</X>
+				<Y>167</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -740,8 +713,8 @@
 				<OnClickCode>zero_Interface.f_setInfoText(i_companyHybridHeatpump, zero_Interface.v_infoText.companyHybridHeatpump, i_companyHybridHeatpump.getX() + uI_Tabs.v_presentationXOffset, i_companyHybridHeatpump.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>12</Width>
-				<Height>12</Height>
+				<Width>14</Width>
+				<Height>14</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -754,8 +727,8 @@
 			<Image>
 				<Id>1746093187741</Id>
 				<Name><![CDATA[i_companyHeatGrid]]></Name>
-				<X>88</X>
-				<Y>274</Y>
+				<X>93</X>
+				<Y>270</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -768,8 +741,8 @@
 				<OnClickCode>zero_Interface.f_setInfoText(i_companyHeatGrid, zero_Interface.v_infoText.companyHeatGrid, i_companyHeatGrid.getX() + uI_Tabs.v_presentationXOffset, i_companyHeatGrid.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>12</Width>
-				<Height>12</Height>
+				<Width>14</Width>
+				<Height>14</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -782,8 +755,8 @@
 			<Image>
 				<Id>1746093187784</Id>
 				<Name><![CDATA[i_companyEBoiler]]></Name>
-				<X>71</X>
-				<Y>329</Y>
+				<X>76</X>
+				<Y>324</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -796,8 +769,8 @@
 				<OnClickCode>zero_Interface.f_setInfoText(i_companyEBoiler, zero_Interface.v_infoText.companyElectricBoiler, i_companyEBoiler.getX() + uI_Tabs.v_presentationXOffset, i_companyEBoiler.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>12</Width>
-				<Height>12</Height>
+				<Width>14</Width>
+				<Height>14</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -810,8 +783,8 @@
 			<Text>
 				<Id>1754382990780</Id>
 				<Name><![CDATA[txt_companiesCustom_pct]]></Name>
-				<X>354</X>
-				<Y>384</Y>
+				<X>385</X>
+				<Y>380</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -838,8 +811,8 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1754382990782</Id>
 				<Name><![CDATA[sl_companiesCustom_pct]]></Name>
-				<X>20</X>
-				<Y>400</Y>
+				<X>25</X>
+				<Y>392</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -848,7 +821,7 @@
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="335" Height="30">
+				<BasicProperties Width="360" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>false</Enabled>
 					<ActionCode>new RuntimeException("This slider action should not be called, this slider is purely for visualisation of the amount of custom heating types for companies");</ActionCode>
@@ -865,8 +838,8 @@
 			<Text>
 				<Id>1754382990784</Id>
 				<Name><![CDATA[txt_companiesCustomDescription]]></Name>
-				<X>20</X>
-				<Y>384</Y>
+				<X>25</X>
+				<Y>380</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -891,8 +864,8 @@
 			<Image>
 				<Id>1754382990787</Id>
 				<Name><![CDATA[i_companyCustom]]></Name>
-				<X>122</X>
-				<Y>382</Y>
+				<X>127</X>
+				<Y>378</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -905,8 +878,8 @@
 				<OnClickCode>zero_Interface.f_setInfoText(i_companyCustom, zero_Interface.v_infoText.companyCustomHeating, i_companyCustom.getX() + uI_Tabs.v_presentationXOffset, i_companyCustom.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>12</Width>
-				<Height>12</Height>
+				<Width>14</Width>
+				<Height>14</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -919,7 +892,7 @@
 			<Image>
 				<Id>1784125806952</Id>
 				<Name><![CDATA[im_electricityIconElectricityDemandSlidersHousesholds3]]></Name>
-				<X>20</X>
+				<X>25</X>
 				<Y>20</Y>
 				<Label>
 					<X>0</X>
@@ -942,13 +915,377 @@
 				</ImageFiles>
 				<OriginalSize>true</OriginalSize>
 			</Image>
+			<Text>
+				<Id>1784239660890</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct6]]></Name>
+				<X>30</X>
+				<Y>96</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_companiesHeatDemandReduction_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239660892</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct6]]></Name>
+				<X>385</X>
+				<Y>96</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_companiesHeatDemandReduction_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239660894</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct7]]></Name>
+				<X>26</X>
+				<Y>148</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_companiesGasBurner_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239660896</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct7]]></Name>
+				<X>385</X>
+				<Y>148</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_companiesGasBurner_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239660898</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct8]]></Name>
+				<X>26</X>
+				<Y>201</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_companiesHybridHeatPump_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239660900</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct8]]></Name>
+				<X>385</X>
+				<Y>201</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_companiesHybridHeatPump_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239660902</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct9]]></Name>
+				<X>26</X>
+				<Y>254</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_companiesElectricHeatPump_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239660904</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct9]]></Name>
+				<X>385</X>
+				<Y>254</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_companiesElectricHeatPump_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239660906</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct10]]></Name>
+				<X>26</X>
+				<Y>306</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_companiesDistrictHeating_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239660908</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct10]]></Name>
+				<X>385</X>
+				<Y>306</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_companiesDistrictHeating_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239660910</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct11]]></Name>
+				<X>26</X>
+				<Y>360</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_companiesEBoiler_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239660912</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct11]]></Name>
+				<X>385</X>
+				<Y>360</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_companiesEBoiler_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239660914</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct12]]></Name>
+				<X>26</X>
+				<Y>415</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_companiesCustom_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239660916</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct12]]></Name>
+				<X>384</X>
+				<Y>415</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_companiesCustom_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
 		</Presentation>
 	</Group>
 	<Rectangle>
 		<Id>1722335783989</Id>
 		<Name><![CDATA[rect_demandFunctions]]></Name>
 		<X>40</X>
-		<Y>510</Y>
+		<Y>710</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -974,7 +1311,7 @@
 		<Id>1722335783991</Id>
 		<Name><![CDATA[txt_demandFunctionsDescription]]></Name>
 		<X>240</X>
-		<Y>520</Y>
+		<Y>720</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -999,7 +1336,7 @@
 		<Id>1722338183031</Id>
 		<Name><![CDATA[rect_heatingFunctions]]></Name>
 		<X>40</X>
-		<Y>640</Y>
+		<Y>840</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -1025,7 +1362,7 @@
 		<Id>1722338183033</Id>
 		<Name><![CDATA[txt_heatingFunctionsDescription]]></Name>
 		<X>130</X>
-		<Y>650</Y>
+		<Y>850</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1063,6 +1400,33 @@
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Presentation>
+			<RoundedRectangle>
+				<Id>1780125881346</Id>
+				<Name><![CDATA[rect_heatingSliders_households]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>400</Width>
+				<Height>460</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-6943</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>10</ArcRadius>
+			</RoundedRectangle>
 			<Text>
 				<Id>1749738869817</Id>
 				<Name><![CDATA[txt_householdGasBurnerDescription]]></Name>
@@ -1093,7 +1457,7 @@
 				<Id>1749738869821</Id>
 				<Name><![CDATA[txt_householdElectricHeatPumpDescription]]></Name>
 				<X>20</X>
-				<Y>170</Y>
+				<Y>166</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1118,8 +1482,8 @@
 			<Text>
 				<Id>1749738869823</Id>
 				<Name><![CDATA[txt_householdElectricHeatPump_pct]]></Name>
-				<X>354</X>
-				<Y>170</Y>
+				<X>379</X>
+				<Y>166</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1147,7 +1511,7 @@
 				<Id>1749738869829</Id>
 				<Name><![CDATA[sl_householdGasBurner_pct]]></Name>
 				<X>20</X>
-				<Y>75</Y>
+				<Y>72</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1156,7 +1520,7 @@
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="335" Height="30">
+				<BasicProperties Width="360" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>if (cb_householdHTDistrictHeating.isSelected()) {
@@ -1185,7 +1549,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1749738869833</Id>
 				<Name><![CDATA[sl_householdElectricHeatPump_pct]]></Name>
 				<X>20</X>
-				<Y>185</Y>
+				<Y>178</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1194,7 +1558,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="335" Height="30">
+				<BasicProperties Width="360" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>if (cb_householdHTDistrictHeating.isSelected()) {
@@ -1248,7 +1612,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1749738869849</Id>
 				<Name><![CDATA[cb_householdHTDistrictHeating]]></Name>
 				<X>20</X>
-				<Y>222</Y>
+				<Y>218</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1257,7 +1621,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="335" Height="30">
+				<BasicProperties Width="360" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
@@ -1285,7 +1649,7 @@ else{
 				<Id>1749738869851</Id>
 				<Name><![CDATA[cb_householdLTDistrictHeating]]></Name>
 				<X>20</X>
-				<Y>252</Y>
+				<Y>248</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1294,7 +1658,7 @@ else{
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="335" Height="30">
+				<BasicProperties Width="360" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
@@ -1320,8 +1684,8 @@ else{
 			<Image>
 				<Id>1752231559982</Id>
 				<Name><![CDATA[i_householdHeatPump]]></Name>
-				<X>167</X>
-				<Y>170</Y>
+				<X>172</X>
+				<Y>165</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1334,8 +1698,8 @@ else{
 				<OnClickCode>zero_Interface.f_setInfoText(i_householdHeatPump, zero_Interface.v_infoText.householdElectricHeatpump, i_householdHeatPump.getX() + uI_Tabs.v_presentationXOffset, i_householdHeatPump.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>12</Width>
-				<Height>12</Height>
+				<Width>14</Width>
+				<Height>14</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -1349,7 +1713,7 @@ else{
 				<Id>1752231560000</Id>
 				<Name><![CDATA[i_householdHTDistrictHeating]]></Name>
 				<X>340</X>
-				<Y>230</Y>
+				<Y>226</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1362,8 +1726,8 @@ else{
 				<OnClickCode>zero_Interface.f_setInfoText(i_householdHTDistrictHeating, zero_Interface.v_infoText.householdHTDistrictHeating, i_householdHTDistrictHeating.getX() + uI_Tabs.v_presentationXOffset, i_householdHTDistrictHeating.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>12</Width>
-				<Height>12</Height>
+				<Width>14</Width>
+				<Height>14</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -1377,7 +1741,7 @@ else{
 				<Id>1752231560019</Id>
 				<Name><![CDATA[i_householdLTDistrictHeating]]></Name>
 				<X>340</X>
-				<Y>260</Y>
+				<Y>256</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1390,8 +1754,8 @@ else{
 				<OnClickCode>zero_Interface.f_setInfoText(i_householdLTDistrictHeating, zero_Interface.v_infoText.householdElectricHeatpump, i_householdLTDistrictHeating.getX() + uI_Tabs.v_presentationXOffset, i_householdLTDistrictHeating.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>12</Width>
-				<Height>12</Height>
+				<Width>14</Width>
+				<Height>14</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -1405,7 +1769,7 @@ else{
 				<Id>1760349016791</Id>
 				<Name><![CDATA[txt_householdHybridHeatpumpDescription]]></Name>
 				<X>20</X>
-				<Y>115</Y>
+				<Y>113</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1432,7 +1796,7 @@ else{
 				<Id>1760349016817</Id>
 				<Name><![CDATA[sl_householdHybridHeatpump_pct]]></Name>
 				<X>20</X>
-				<Y>130</Y>
+				<Y>125</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1441,7 +1805,7 @@ else{
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="335" Height="30">
+				<BasicProperties Width="360" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>if (cb_householdHTDistrictHeating.isSelected()) {
@@ -1468,8 +1832,8 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 			<Image>
 				<Id>1760349016828</Id>
 				<Name><![CDATA[i_householdHybridHeatPump]]></Name>
-				<X>150</X>
-				<Y>115</Y>
+				<X>155</X>
+				<Y>112</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1482,8 +1846,8 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<OnClickCode>zero_Interface.f_setInfoText(i_householdHybridHeatPump, zero_Interface.v_infoText.householdHybridHeatpump, i_householdHybridHeatPump.getX() + uI_Tabs.v_presentationXOffset, i_householdHybridHeatPump.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>12</Width>
-				<Height>12</Height>
+				<Width>14</Width>
+				<Height>14</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -1496,8 +1860,8 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 			<Text>
 				<Id>1760349443892</Id>
 				<Name><![CDATA[t_householdHybridHeatPump_pct]]></Name>
-				<X>354</X>
-				<Y>116</Y>
+				<X>379</X>
+				<Y>113</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1520,13 +1884,733 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				</Font>
 				<Alignment>RIGHT</Alignment>
 			</Text>
+			<Image>
+				<Id>1784239770123</Id>
+				<Name><![CDATA[im_electricityIconElectricityDemandSlidersHousesholds]]></Name>
+				<X>20</X>
+				<Y>20</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>18</Width>
+				<Height>21</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>flame_black.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>true</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1784239770125</Id>
+				<Name><![CDATA[i_heatingGasBrander]]></Name>
+				<X>105</X>
+				<Y>59</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>gr_heatingSliders_households.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_heatingGasBrander, zero_Interface.v_infoText.householdRooftopPV, i_heatingGasBrander.getX() + uI_Tabs.v_presentationXOffset, i_heatingGasBrander.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>14</Width>
+				<Height>14</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1784239770127</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct]]></Name>
+				<X>22</X>
+				<Y>94</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_householdGasBurner_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239770129</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct]]></Name>
+				<X>380</X>
+				<Y>94</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_householdGasBurner_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239770131</Id>
+				<Name><![CDATA[txt_heatingGasBrander_pct]]></Name>
+				<X>380</X>
+				<Y>61</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>gr_heatingSliders_households.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[10%]]></Text>
+				<TextCode>sl_householdGasBurner_pct.getIntValue() + "%"</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239770133</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct1]]></Name>
+				<X>22</X>
+				<Y>147</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_householdHybridHeatpump_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239770135</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct1]]></Name>
+				<X>380</X>
+				<Y>147</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_householdHybridHeatpump_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239770137</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct2]]></Name>
+				<X>22</X>
+				<Y>200</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_householdElectricHeatPump_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239770139</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct2]]></Name>
+				<X>381</X>
+				<Y>200</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_householdElectricHeatPump_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1784123684988</Id>
+				<Name><![CDATA[sl_householdHeatDemandReduction_pct]]></Name>
+				<X>20</X>
+				<Y>347</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="360" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>f_householdInsulation( uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_householdHeatDemandReduction_pct.getValue() );</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>100</MaxValue>
+					<Step>1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1784123684990</Id>
+				<Name><![CDATA[txt_householdHeatDemandReduction_pct1]]></Name>
+				<X>380</X>
+				<Y>336</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_householdHeatDemandReduction_pct.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[10%]]></Text>
+				<TextCode>sl_householdHeatDemandReduction_pct.getIntValue() + "%"</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784123684992</Id>
+				<Name><![CDATA[txt_householdHeatDemandReductionDescription1]]></Name>
+				<X>20</X>
+				<Y>336</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_householdHeatDemandReduction_pct.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Huizen met betere isolatie]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1784123684996</Id>
+				<Name><![CDATA[sl_householdAirco_pct]]></Name>
+				<X>20</X>
+				<Y>295</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="360" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setAircos(uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_householdAirco_pct.getValue() / 100.0);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>100</MaxValue>
+					<Step>5</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1784123684998</Id>
+				<Name><![CDATA[txt_householdAircoDescription1]]></Name>
+				<X>20</X>
+				<Y>284</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_householdAirco_pct.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Huizen met Airco]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784123685000</Id>
+				<Name><![CDATA[txt_householdAirco_pct1]]></Name>
+				<X>380</X>
+				<Y>284</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_householdAirco_pct.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[10%]]></Text>
+				<TextCode>sl_householdAirco_pct.getIntValue() + "%"</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Image>
+				<Id>1784123685012</Id>
+				<Name><![CDATA[i_householdAirconditioning]]></Name>
+				<X>122</X>
+				<Y>282</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_householdAirco_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdAirconditioning, zero_Interface.v_infoText.householdAirconditioning, i_householdAirconditioning.getX() + uI_Tabs.v_presentationXOffset, i_householdAirconditioning.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>14</Width>
+				<Height>14</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1784123685014</Id>
+				<Name><![CDATA[i_householdAdditionalInsulation]]></Name>
+				<X>178</X>
+				<Y>334</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_householdHeatDemandReduction_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdAdditionalInsulation, zero_Interface.v_infoText.householdAdditionalInsulation, i_householdAdditionalInsulation.getX() + uI_Tabs.v_presentationXOffset, i_householdAdditionalInsulation.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>14</Width>
+				<Height>14</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1784123685016</Id>
+				<Name><![CDATA[txt_householdRooftopPT_pct1]]></Name>
+				<X>380</X>
+				<Y>391</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_householdRooftopPT_pct.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[10%]]></Text>
+				<TextCode>sl_householdRooftopPT_pct.getIntValue() + "%"</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1784123685018</Id>
+				<Name><![CDATA[sl_householdRooftopPT_pct]]></Name>
+				<X>20</X>
+				<Y>402</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="360" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setPTSystemHouses( uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_householdRooftopPT_pct.getValue() );</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>100</MaxValue>
+					<Step>1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1784123685020</Id>
+				<Name><![CDATA[txt_householdRooftopPTDescription1]]></Name>
+				<X>20</X>
+				<Y>391</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_householdRooftopPT_pct.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Huizen met PT]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Image>
+				<Id>1784123685022</Id>
+				<Name><![CDATA[i_householdPT]]></Name>
+				<X>103</X>
+				<Y>389</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_householdRooftopPT_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdPT, zero_Interface.v_infoText.householdRooftopPT, i_householdPT.getX() + uI_Tabs.v_presentationXOffset, i_householdPT.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>14</Width>
+				<Height>14</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1784239558407</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct3]]></Name>
+				<X>21</X>
+				<Y>318</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_householdAirco_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239558409</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct3]]></Name>
+				<X>380</X>
+				<Y>318</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_householdAirco_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239558411</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct4]]></Name>
+				<X>21</X>
+				<Y>370</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_householdHeatDemandReduction_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239558413</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct4]]></Name>
+				<X>380</X>
+				<Y>370</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_householdHeatDemandReduction_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239558415</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct5]]></Name>
+				<X>22</X>
+				<Y>425</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_householdRooftopPT_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784239558417</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct5]]></Name>
+				<X>381</X>
+				<Y>425</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_householdRooftopPT_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
 		</Presentation>
 	</Group>
 	<Rectangle>
 		<Id>1755004749570</Id>
 		<Name><![CDATA[rect_districtHeatingFunctions]]></Name>
 		<X>40</X>
-		<Y>800</Y>
+		<Y>1000</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -1552,7 +2636,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 		<Id>1755004766095</Id>
 		<Name><![CDATA[txt_districtheatingFunctionsDescription]]></Name>
 		<X>160</X>
-		<Y>810</Y>
+		<Y>1010</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1577,7 +2661,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 		<Id>1755004809972</Id>
 		<Name><![CDATA[rect_heatingProductionFunctions]]></Name>
 		<X>40</X>
-		<Y>960</Y>
+		<Y>1160</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -1603,7 +2687,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 		<Id>1755004834735</Id>
 		<Name><![CDATA[txt_heatingProductionFunctionsDescription]]></Name>
 		<X>160</X>
-		<Y>970</Y>
+		<Y>1170</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1776,1211 +2860,4 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 			</Text>
 		</Presentation>
 	</Group>
-	<Image>
-		<Id>1784111788500</Id>
-		<Name><![CDATA[im_electricityIconElectricityDemandSlidersHousesholds]]></Name>
-		<X>20</X>
-		<Y>60</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Width>18</Width>
-		<Height>21</Height>
-		<Rotation>0.0</Rotation>
-		<ImageFiles>
-			<ImageResourceReference>
-				<PackageName>zerointerfaceloader</PackageName>
-				<ClassName>flame_black.png</ClassName>
-			</ImageResourceReference>
-		</ImageFiles>
-		<OriginalSize>true</OriginalSize>
-	</Image>
-	<Image>
-		<Id>1784119471819</Id>
-		<Name><![CDATA[i_heatingGasBrander]]></Name>
-		<X>100</X>
-		<Y>100</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<VisibleCode>gr_heatingSliders_households.isVisible()</VisibleCode>
-		<OnClickCode>zero_Interface.f_setInfoText(i_heatingGasBrander, zero_Interface.v_infoText.householdRooftopPV, i_heatingGasBrander.getX() + uI_Tabs.v_presentationXOffset, i_heatingGasBrander.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Width>12</Width>
-		<Height>12</Height>
-		<Rotation>0.0</Rotation>
-		<ImageFiles>
-			<ImageResourceReference>
-				<PackageName>zerointerfaceloader</PackageName>
-				<ClassName>icon_i.png</ClassName>
-			</ImageResourceReference>
-		</ImageFiles>
-		<OriginalSize>false</OriginalSize>
-	</Image>
-	<Text>
-		<Id>1784119607308</Id>
-		<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct]]></Name>
-		<X>25</X>
-		<Y>131</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[min]]></Text>
-		<TextCode>roundToInt(sl_householdGasBurner_pct.getMin())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784119607320</Id>
-		<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct]]></Name>
-		<X>351</X>
-		<Y>131</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[max]]></Text>
-		<TextCode>roundToInt(sl_householdGasBurner_pct.getMax())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>RIGHT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784119707470</Id>
-		<Name><![CDATA[txt_heatingGasBrander_pct]]></Name>
-		<X>355</X>
-		<Y>101</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<VisibleCode>gr_heatingSliders_households.isVisible()</VisibleCode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[10%]]></Text>
-		<TextCode>sl_householdGasBurner_pct.getIntValue() + "%"</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline2]]></Name>
-			<Size>14</Size>
-			<Style>1</Style>
-		</Font>
-		<Alignment>RIGHT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784123008129</Id>
-		<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct1]]></Name>
-		<X>25</X>
-		<Y>186</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[min]]></Text>
-		<TextCode>roundToInt(sl_householdHybridHeatpump_pct.getMin())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784123008142</Id>
-		<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct1]]></Name>
-		<X>351</X>
-		<Y>186</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[max]]></Text>
-		<TextCode>roundToInt(sl_householdHybridHeatpump_pct.getMax())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>RIGHT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784123390050</Id>
-		<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct2]]></Name>
-		<X>26</X>
-		<Y>241</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[min]]></Text>
-		<TextCode>roundToInt(sl_householdElectricHeatPump_pct.getMin())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784123390064</Id>
-		<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct2]]></Name>
-		<X>352</X>
-		<Y>241</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[max]]></Text>
-		<TextCode>roundToInt(sl_householdElectricHeatPump_pct.getMax())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>RIGHT</Alignment>
-	</Text>
-	<Image>
-		<Id>1784123684854</Id>
-		<Name><![CDATA[im_electricityIconElectricityDemandSlidersHousesholds1]]></Name>
-		<X>420</X>
-		<Y>60</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Width>18</Width>
-		<Height>21</Height>
-		<Rotation>0.0</Rotation>
-		<ImageFiles>
-			<ImageResourceReference>
-				<PackageName>zerointerfaceloader</PackageName>
-				<ClassName>flame_black.png</ClassName>
-			</ImageResourceReference>
-		</ImageFiles>
-		<OriginalSize>true</OriginalSize>
-	</Image>
-	<RoundedRectangle>
-		<Id>1784123684920</Id>
-		<Name><![CDATA[roundRectangle1]]></Name>
-		<X>400</X>
-		<Y>39</Y>
-		<Label>
-			<X>10</X>
-			<Y>10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>1</LineWidth>
-		<LineColor/>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<Width>370</Width>
-		<Height>231</Height>
-		<Rotation>0.0</Rotation>
-		<FillColor>-6943</FillColor>
-		<FillMaterial>null</FillMaterial>
-		<ArcRadius>10</ArcRadius>
-	</RoundedRectangle>
-	<Group>
-		<Id>1784123684976</Id>
-		<Name><![CDATA[gr_heatingSliders_households1]]></Name>
-		<X>400</X>
-		<Y>40</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>false</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Presentation>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1784123684988</Id>
-				<Name><![CDATA[sl_householdHeatDemandReduction_pct]]></Name>
-				<X>20</X>
-				<Y>125</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="335" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>f_householdInsulation( uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_householdHeatDemandReduction_pct.getValue() );</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>100</MaxValue>
-					<Step>1</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1784123684990</Id>
-				<Name><![CDATA[txt_householdHeatDemandReduction_pct1]]></Name>
-				<X>354</X>
-				<Y>110</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_householdHeatDemandReduction_pct.isVisible()</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[10%]]></Text>
-				<TextCode>sl_householdHeatDemandReduction_pct.getIntValue() + "%"</TextCode>
-				<Font>
-					<Name><![CDATA[HOLONline2]]></Name>
-					<Size>14</Size>
-					<Style>1</Style>
-				</Font>
-				<Alignment>RIGHT</Alignment>
-			</Text>
-			<Text>
-				<Id>1784123684992</Id>
-				<Name><![CDATA[txt_householdHeatDemandReductionDescription1]]></Name>
-				<X>20</X>
-				<Y>110</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_householdHeatDemandReduction_pct.isVisible()</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Huizen met betere isolatie]]></Text>
-				<Font>
-					<Name><![CDATA[HOLONline2]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1784123684994</Id>
-				<Name><![CDATA[txt_heatingDemandSlidersHousesholdsDescription1]]></Name>
-				<X>50</X>
-				<Y>20</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[HUIZEN]]></Text>
-				<Font>
-					<Name><![CDATA[HolonBLOCK2]]></Name>
-					<Size>26</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1784123684996</Id>
-				<Name><![CDATA[sl_householdAirco_pct]]></Name>
-				<X>20</X>
-				<Y>70</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="335" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>f_setAircos(uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_householdAirco_pct.getValue() / 100.0);</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>100</MaxValue>
-					<Step>5</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1784123684998</Id>
-				<Name><![CDATA[txt_householdAircoDescription1]]></Name>
-				<X>20</X>
-				<Y>55</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_householdAirco_pct.isVisible()</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Huizen met Airco]]></Text>
-				<Font>
-					<Name><![CDATA[HOLONline2]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1784123685000</Id>
-				<Name><![CDATA[txt_householdAirco_pct1]]></Name>
-				<X>354</X>
-				<Y>55</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_householdAirco_pct.isVisible()</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[10%]]></Text>
-				<TextCode>sl_householdAirco_pct.getIntValue() + "%"</TextCode>
-				<Font>
-					<Name><![CDATA[HOLONline2]]></Name>
-					<Size>14</Size>
-					<Style>1</Style>
-				</Font>
-				<Alignment>RIGHT</Alignment>
-			</Text>
-			<Image>
-				<Id>1784123685012</Id>
-				<Name><![CDATA[i_householdAirconditioning]]></Name>
-				<X>122</X>
-				<Y>54</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>sl_householdAirco_pct.isVisible()</VisibleCode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_householdAirconditioning, zero_Interface.v_infoText.householdAirconditioning, i_householdAirconditioning.getX() + uI_Tabs.v_presentationXOffset, i_householdAirconditioning.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>12</Width>
-				<Height>12</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>icon_i.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-			<Image>
-				<Id>1784123685014</Id>
-				<Name><![CDATA[i_householdAdditionalInsulation]]></Name>
-				<X>178</X>
-				<Y>109</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>sl_householdHeatDemandReduction_pct.isVisible()</VisibleCode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_householdAdditionalInsulation, zero_Interface.v_infoText.householdAdditionalInsulation, i_householdAdditionalInsulation.getX() + uI_Tabs.v_presentationXOffset, i_householdAdditionalInsulation.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>12</Width>
-				<Height>12</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>icon_i.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-			<Text>
-				<Id>1784123685016</Id>
-				<Name><![CDATA[txt_householdRooftopPT_pct1]]></Name>
-				<X>354</X>
-				<Y>165</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_householdRooftopPT_pct.isVisible()</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[10%]]></Text>
-				<TextCode>sl_householdRooftopPT_pct.getIntValue() + "%"</TextCode>
-				<Font>
-					<Name><![CDATA[HOLONline2]]></Name>
-					<Size>14</Size>
-					<Style>1</Style>
-				</Font>
-				<Alignment>RIGHT</Alignment>
-			</Text>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1784123685018</Id>
-				<Name><![CDATA[sl_householdRooftopPT_pct]]></Name>
-				<X>20</X>
-				<Y>180</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="335" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>f_setPTSystemHouses( uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_householdRooftopPT_pct.getValue() );</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>100</MaxValue>
-					<Step>1</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1784123685020</Id>
-				<Name><![CDATA[txt_householdRooftopPTDescription1]]></Name>
-				<X>20</X>
-				<Y>165</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_householdRooftopPT_pct.isVisible()</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Huizen met PT]]></Text>
-				<Font>
-					<Name><![CDATA[HOLONline2]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Image>
-				<Id>1784123685022</Id>
-				<Name><![CDATA[i_householdPT]]></Name>
-				<X>103</X>
-				<Y>164</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>sl_householdRooftopPT_pct.isVisible()</VisibleCode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_householdPT, zero_Interface.v_infoText.householdRooftopPT, i_householdPT.getX() + uI_Tabs.v_presentationXOffset, i_householdPT.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>12</Width>
-				<Height>12</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>icon_i.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-		</Presentation>
-	</Group>
-	<Image>
-		<Id>1784123703650</Id>
-		<Name><![CDATA[im_electricityIconElectricityDemandSlidersHousesholds2]]></Name>
-		<X>420</X>
-		<Y>60</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Width>18</Width>
-		<Height>21</Height>
-		<Rotation>0.0</Rotation>
-		<ImageFiles>
-			<ImageResourceReference>
-				<PackageName>zerointerfaceloader</PackageName>
-				<ClassName>flame_black.png</ClassName>
-			</ImageResourceReference>
-		</ImageFiles>
-		<OriginalSize>true</OriginalSize>
-	</Image>
-	<Text>
-		<Id>1784125034832</Id>
-		<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct3]]></Name>
-		<X>425</X>
-		<Y>126</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[min]]></Text>
-		<TextCode>roundToInt(sl_householdAirco_pct.getMin())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784125034847</Id>
-		<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct3]]></Name>
-		<X>751</X>
-		<Y>126</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[max]]></Text>
-		<TextCode>roundToInt(sl_householdAirco_pct.getMax())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>RIGHT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784125523158</Id>
-		<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct4]]></Name>
-		<X>425</X>
-		<Y>181</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[min]]></Text>
-		<TextCode>roundToInt(sl_householdHeatDemandReduction_pct.getMin())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784125523172</Id>
-		<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct4]]></Name>
-		<X>751</X>
-		<Y>181</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[max]]></Text>
-		<TextCode>roundToInt(sl_householdHeatDemandReduction_pct.getMax())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>RIGHT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784125542288</Id>
-		<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct5]]></Name>
-		<X>426</X>
-		<Y>235</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[min]]></Text>
-		<TextCode>roundToInt(sl_householdRooftopPT_pct.getMin())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784125542301</Id>
-		<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct5]]></Name>
-		<X>752</X>
-		<Y>235</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[max]]></Text>
-		<TextCode>roundToInt(sl_householdRooftopPT_pct.getMax())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>RIGHT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784126234533</Id>
-		<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct6]]></Name>
-		<X>825</X>
-		<Y>125</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[min]]></Text>
-		<TextCode>roundToInt(sl_companiesHeatDemandReduction_pct.getMin())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784126234549</Id>
-		<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct6]]></Name>
-		<X>1151</X>
-		<Y>125</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[max]]></Text>
-		<TextCode>roundToInt(sl_companiesHeatDemandReduction_pct.getMax())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>RIGHT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784126434009</Id>
-		<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct7]]></Name>
-		<X>825</X>
-		<Y>180</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[min]]></Text>
-		<TextCode>roundToInt(sl_companiesGasBurner_pct.getMin())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784126434024</Id>
-		<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct7]]></Name>
-		<X>1151</X>
-		<Y>180</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[max]]></Text>
-		<TextCode>roundToInt(sl_companiesGasBurner_pct.getMax())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>RIGHT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784126778550</Id>
-		<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct8]]></Name>
-		<X>825</X>
-		<Y>235</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[min]]></Text>
-		<TextCode>roundToInt(sl_companiesHybridHeatPump_pct.getMin())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784126778564</Id>
-		<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct8]]></Name>
-		<X>1151</X>
-		<Y>235</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[max]]></Text>
-		<TextCode>roundToInt(sl_companiesHybridHeatPump_pct.getMax())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>RIGHT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784126993925</Id>
-		<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct9]]></Name>
-		<X>826</X>
-		<Y>290</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[min]]></Text>
-		<TextCode>roundToInt(sl_companiesElectricHeatPump_pct.getMin())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784126993941</Id>
-		<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct9]]></Name>
-		<X>1152</X>
-		<Y>290</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[max]]></Text>
-		<TextCode>roundToInt(sl_companiesElectricHeatPump_pct.getMax())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>RIGHT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784127153179</Id>
-		<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct10]]></Name>
-		<X>824</X>
-		<Y>345</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[min]]></Text>
-		<TextCode>roundToInt(sl_companiesDistrictHeating_pct.getMin())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784127153197</Id>
-		<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct10]]></Name>
-		<X>1150</X>
-		<Y>345</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[max]]></Text>
-		<TextCode>roundToInt(sl_companiesDistrictHeating_pct.getMax())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>RIGHT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784127416419</Id>
-		<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct11]]></Name>
-		<X>825</X>
-		<Y>400</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[min]]></Text>
-		<TextCode>roundToInt(sl_companiesEBoiler_pct.getMin())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784127416432</Id>
-		<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct11]]></Name>
-		<X>1151</X>
-		<Y>400</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[max]]></Text>
-		<TextCode>roundToInt(sl_companiesEBoiler_pct.getMax())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>RIGHT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784127600024</Id>
-		<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct12]]></Name>
-		<X>825</X>
-		<Y>455</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[min]]></Text>
-		<TextCode>roundToInt(sl_companiesCustom_pct.getMin())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1784127600039</Id>
-		<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct12]]></Name>
-		<X>1151</X>
-		<Y>455</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-4144960</Color>
-		<Text><![CDATA[max]]></Text>
-		<TextCode>roundToInt(sl_companiesCustom_pct.getMax())</TextCode>
-		<Font>
-			<Name><![CDATA[HOLONline]]></Name>
-			<Size>10</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>RIGHT</Alignment>
-	</Text>
 </Presentation>
