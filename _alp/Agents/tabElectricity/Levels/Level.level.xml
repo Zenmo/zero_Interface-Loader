@@ -929,7 +929,7 @@ f_setHouseholdBatteries( sl_householdBatteries_pct.getValue(), uI_Tabs.f_getActi
 					<Y>-10</Y>
 				</Label>
 				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
+				<PresentationFlag>false</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
 				<VisibleCode>sl_householdBatteries_pct.isVisible()</VisibleCode>
