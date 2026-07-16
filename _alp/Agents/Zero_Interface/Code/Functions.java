@@ -2566,7 +2566,8 @@ f_setShapePresentationOnTop(gr_forceMapSelection);
 f_setShapePresentationOnTop(gr_filterInterface);
 f_setShapePresentationOnTop(gr_infoText);
 f_setShapePresentationOnTop(gr_filterOverlay);
-
+f_setShapePresentationOnTop(gr_ForceMapSelectionMessageText);
+f_setShapePresentationOnTop(gr_forcedClickTitleTxt);
 /*ALCODEEND*/}
 
 double f_selectEnergyHubGC(double clickx,double clicky)
@@ -4071,7 +4072,7 @@ v_filterIndex = new ArrayList<String>();
 c_filterMatrix.clear();
 
 
-f_setForcedClickScreenMessageText("");
+f_setForcedClickScreenTextBoxes("", null, null, "", null, null);
 if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 	f_setForcedClickScreenVisibility(false);
 }
@@ -4238,7 +4239,7 @@ t_forcedClickMessage.setText(forcedClickScreenMessageText);
 gr_ForceMapSelectionMessageText.setVisible(false);
 
 if(!t_forcedClickMessage.getText().equals("")){
-	UIUtil.fitTextInRectangle(t_forcedClickMessage, rect_selectText, 15.0, 15.0, 15.0, 15.0);
+	UIUtil.fitTextInRectangle(t_forcedClickMessage, rect_selectText, 35.0, 35.0, 25.0, 25.0);
 	gr_ForceMapSelectionMessageText.setVisible(true);
 }
 /*ALCODEEND*/}
@@ -4254,7 +4255,7 @@ txt_forcedClickTitle.setText(forcedClickScreenText);
 gr_forcedClickTitleTxt.setVisible(false);
 
 if(!txt_forcedClickTitle.getText().equals("")){
-	UIUtil.fitTextInRectangle(txt_forcedClickTitle, rect_forcedClickTitle, 15.0, 15.0, 15.0, 15.0);
+	UIUtil.fitTextInRectangle(txt_forcedClickTitle, rect_forcedClickTitle, 30.0, 30.0, 25.0, 25.0);
 	gr_forcedClickTitleTxt.setVisible(true);
 }
 /*ALCODEEND*/}
