@@ -359,7 +359,7 @@
 		<Id>1704210756310</Id>
 		<Name><![CDATA[gr_clickedObjectInfo]]></Name>
 		<X>90</X>
-		<Y>-25</Y>
+		<Y>-15</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -875,7 +875,7 @@ else{
 		<Id>1720909739871</Id>
 		<Name><![CDATA[gr_multipleBuildingInfo]]></Name>
 		<X>1245</X>
-		<Y>760</Y>
+		<Y>770</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1123,7 +1123,7 @@ v_selectedGridConnectionIndex &gt; 0 ?
 		<Id>1725020138710</Id>
 		<Name><![CDATA[map]]></Name>
 		<X>450</X>
-		<Y>88</Y>
+		<Y>90</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1211,7 +1211,7 @@ v_selectedGridConnectionIndex &gt; 0 ?
 	<Group>
 		<Id>1730113808401</Id>
 		<Name><![CDATA[gr_uI_Results_presentation]]></Name>
-		<X>1350</X>
+		<X>1321</X>
 		<Y>260</Y>
 		<Label>
 			<X>10</X>
@@ -1244,8 +1244,8 @@ v_selectedGridConnectionIndex &gt; 0 ?
 				<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
 				<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
 				<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
-				<Latitude>52.5332614633099</Latitude>
-				<Longitude>6.206915486889641</Longitude>
+				<Latitude>52.53700225372832</Latitude>
+				<Longitude>6.2044994800130375</Longitude>
 			</EmbeddedObjectPresentation>
 		</Presentation>
 	</Group>
@@ -2278,7 +2278,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 		<Id>1701951640330</Id>
 		<Name><![CDATA[gr_legenda]]></Name>
 		<X>950</X>
-		<Y>870</Y>
+		<Y>880</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -6514,7 +6514,7 @@ else{
 		<Id>1780212818564</Id>
 		<Name><![CDATA[roundRectangle2]]></Name>
 		<X>450</X>
-		<Y>770</Y>
+		<Y>780</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -6531,7 +6531,7 @@ else{
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>840</Width>
-		<Height>200</Height>
+		<Height>180</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor/>
 		<FillMaterial>null</FillMaterial>
@@ -6579,7 +6579,7 @@ gr_cablesLegend.setVisible(showCables);</ActionCode>
 		<Id>1734444497900</Id>
 		<Name><![CDATA[cb_showFilterInterface]]></Name>
 		<X>1230</X>
-		<Y>770</Y>
+		<Y>780</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -6668,7 +6668,7 @@ else{
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<XCode>720</XCode>
-		<YCode>770</YCode>
+		<YCode>780</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -7362,7 +7362,7 @@ f_setFilterInfoText();
 	<Group>
 		<Id>1780416814773</Id>
 		<Name><![CDATA[gr_loadIconYearSimulation]]></Name>
-		<X>1351</X>
+		<X>1320</X>
 		<Y>120</Y>
 		<Label>
 			<X>10</X>
@@ -7372,6 +7372,8 @@ f_setFilterInfoText();
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>1320.5</XCode>
+		<YCode>120.5</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -7392,11 +7394,11 @@ f_setFilterInfoText();
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor/>
+				<LineWidth>0.5</LineWidth>
+				<LineColor>-1052689</LineColor>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>556</Width>
+				<Width>581</Width>
 				<Height>60</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-118098443</FillColor>
@@ -7419,11 +7421,11 @@ f_setFilterInfoText();
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor/>
+				<LineWidth>0.5</LineWidth>
+				<LineColor>-1052689</LineColor>
 				<LineMaterial>null</LineMaterial>
-				<LineStyle>DASHED</LineStyle>
-				<Width>556</Width>
+				<LineStyle>SOLID</LineStyle>
+				<Width>581</Width>
 				<Height>100</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-118098443</FillColor>
@@ -7432,7 +7434,7 @@ f_setFilterInfoText();
 			<Image>
 				<Id>1780416814777</Id>
 				<Name><![CDATA[image_loadIconSmall]]></Name>
-				<X>240</X>
+				<X>260.5</X>
 				<Y>60</Y>
 				<Label>
 					<X>0</X>
@@ -7458,7 +7460,7 @@ f_setFilterInfoText();
 			<Text>
 				<Id>1780416814779</Id>
 				<Name><![CDATA[t_loadIconSmall]]></Name>
-				<X>270</X>
+				<X>290.5</X>
 				<Y>30</Y>
 				<Label>
 					<X>0</X>
@@ -7485,7 +7487,7 @@ f_setFilterInfoText();
 	<Group>
 		<Id>1709717180367</Id>
 		<Name><![CDATA[gr_simulateYear]]></Name>
-		<X>1351</X>
+		<X>1320</X>
 		<Y>280</Y>
 		<Label>
 			<X>10</X>
@@ -7495,7 +7497,8 @@ f_setFilterInfoText();
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<YCode>120</YCode>
+		<XCode>1320.5</XCode>
+		<YCode>120.5</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -7503,8 +7506,8 @@ f_setFilterInfoText();
 			<Group>
 				<Id>1780418218970</Id>
 				<Name><![CDATA[gr_simulateYearBackground]]></Name>
-				<X>279</X>
-				<Y>70</Y>
+				<X>0</X>
+				<Y>0</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -7519,10 +7522,10 @@ f_setFilterInfoText();
 				<Rotation>0.0</Rotation>
 				<Presentation>
 					<RoundedRectangle>
-						<Id>1780417510615</Id>
-						<Name><![CDATA[roundRectangle15]]></Name>
-						<X>-279</X>
-						<Y>50</Y>
+						<Id>1784294057289</Id>
+						<Name><![CDATA[roundedRect_simulatedYearScreenSmall]]></Name>
+						<X>0</X>
+						<Y>120</Y>
 						<Label>
 							<X>10</X>
 							<Y>10</Y>
@@ -7538,7 +7541,7 @@ f_setFilterInfoText();
 						<LineColor/>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
-						<Width>555</Width>
+						<Width>581</Width>
 						<Height>20</Height>
 						<Rotation>0.0</Rotation>
 						<FillColor>-1052689</FillColor>
@@ -7546,10 +7549,10 @@ f_setFilterInfoText();
 						<ArcRadius>10</ArcRadius>
 					</RoundedRectangle>
 					<Rectangle>
-						<Id>1709717180369</Id>
+						<Id>1784294057291</Id>
 						<Name><![CDATA[rect_simulateYearScreenSmall]]></Name>
-						<X>-279</X>
-						<Y>-70</Y>
+						<X>0</X>
+						<Y>0</Y>
 						<Label>
 							<X>10</X>
 							<Y>10</Y>
@@ -7561,11 +7564,11 @@ f_setFilterInfoText();
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor/>
+						<LineWidth>0.5</LineWidth>
+						<LineColor>-1052689</LineColor>
 						<LineMaterial>null</LineMaterial>
-						<LineStyle>DASHED</LineStyle>
-						<Width>555</Width>
+						<LineStyle>SOLID</LineStyle>
+						<Width>581</Width>
 						<Height>130</Height>
 						<Rotation>0.0</Rotation>
 						<FillColor>-1052689</FillColor>
@@ -7576,8 +7579,8 @@ f_setFilterInfoText();
 			<Group>
 				<Id>1709717180371</Id>
 				<Name><![CDATA[gr_simulateYearButton]]></Name>
-				<X>270</X>
-				<Y>115</Y>
+				<X>290.5</X>
+				<Y>70</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -7591,10 +7594,10 @@ f_setFilterInfoText();
 				<Rotation>0.0</Rotation>
 				<Presentation>
 					<Text>
-						<Id>1709717180373</Id>
+						<Id>1784294285182</Id>
 						<Name><![CDATA[t_simulateYearToCalculateCostsSmall]]></Name>
-						<X>-121</X>
-						<Y>-58</Y>
+						<X>-100</X>
+						<Y>-17</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -7617,10 +7620,10 @@ en meer resultaten te bekijken]]></Text>
 						<Alignment>LEFT</Alignment>
 					</Text>
 					<Image>
-						<Id>1709717180375</Id>
+						<Id>1784294285184</Id>
 						<Name><![CDATA[image_simulateYearToCalculateCostsSmall]]></Name>
-						<X>-195</X>
-						<Y>-65</Y>
+						<X>-180</X>
+						<Y>-22.5</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -7666,7 +7669,7 @@ en meer resultaten te bekijken]]></Text>
 		<LineColor/>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>555</Width>
+		<Width>580</Width>
 		<Height>60</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-205396250</FillColor>
@@ -7676,8 +7679,8 @@ en meer resultaten te bekijken]]></Text>
 	<Image>
 		<Id>1724074987235</Id>
 		<Name><![CDATA[image_tueLogo]]></Name>
-		<X>1680</X>
-		<Y>11.861</Y>
+		<X>1762</X>
+		<Y>30</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -7689,8 +7692,8 @@ en meer resultaten te bekijken]]></Text>
 		<OnClickCode>getExperimentHost().openWebSite("https://www.tue.nl/en/");</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
-		<Width>214</Width>
-		<Height>62.139</Height>
+		<Width>138</Width>
+		<Height>40</Height>
 		<Rotation>0.0</Rotation>
 		<ImageFiles>
 			<ImageResourceReference>
@@ -7736,8 +7739,8 @@ getExperimentHost().openWebSite("https://lux.energy/");
 	<Image>
 		<Id>1758877617096</Id>
 		<Name><![CDATA[image_zenmoLogo]]></Name>
-		<X>1520</X>
-		<Y>0</Y>
+		<X>1647</X>
+		<Y>20</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -7749,8 +7752,8 @@ getExperimentHost().openWebSite("https://lux.energy/");
 		<OnClickCode>getExperimentHost().openWebSite("https://zenmo.com/");</OnClickCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
-		<Width>153</Width>
-		<Height>80.068</Height>
+		<Width>115</Width>
+		<Height>60</Height>
 		<Rotation>0.0</Rotation>
 		<ImageFiles>
 			<ImageResourceReference>
