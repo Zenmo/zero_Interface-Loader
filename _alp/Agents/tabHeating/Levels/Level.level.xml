@@ -64,7 +64,8 @@
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>0</XCode>
+		<XCode>20</XCode>
+		<YCode>40</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -72,7 +73,7 @@
 			<RoundedRectangle>
 				<Id>1784125651633</Id>
 				<Name><![CDATA[rect_heatingSliders_companies]]></Name>
-				<X>5</X>
+				<X>0</X>
 				<Y>0</Y>
 				<Label>
 					<X>10</X>
@@ -90,7 +91,7 @@
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>400</Width>
-				<Height>455</Height>
+				<Height>480</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-6943</FillColor>
 				<FillMaterial>null</FillMaterial>
@@ -100,8 +101,8 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722326800142</Id>
 				<Name><![CDATA[sl_companiesHeatDemandReduction_pct]]></Name>
-				<X>25</X>
-				<Y>73</Y>
+				<X>20</X>
+				<Y>77</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -127,8 +128,8 @@
 			<Text>
 				<Id>1722326800144</Id>
 				<Name><![CDATA[txt_companiesHeatDemandReductionDescription]]></Name>
-				<X>25</X>
-				<Y>61</Y>
+				<X>20</X>
+				<Y>65</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -153,7 +154,7 @@
 			<Text>
 				<Id>1722326800146</Id>
 				<Name><![CDATA[txt_companiesHeatDemandReduction_pct]]></Name>
-				<X>384</X>
+				<X>380</X>
 				<Y>61</Y>
 				<Label>
 					<X>0</X>
@@ -180,8 +181,8 @@
 			<Text>
 				<Id>1722326800148</Id>
 				<Name><![CDATA[txt_companiesGasBurnerDescription]]></Name>
-				<X>25</X>
-				<Y>113</Y>
+				<X>20</X>
+				<Y>118</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -206,8 +207,8 @@
 			<Text>
 				<Id>1722326800150</Id>
 				<Name><![CDATA[txt_companiesHybridHeatPumpDescription]]></Name>
-				<X>25</X>
-				<Y>166</Y>
+				<X>20</X>
+				<Y>171</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -232,8 +233,8 @@
 			<Text>
 				<Id>1722326800152</Id>
 				<Name><![CDATA[txt_companiesElectricHeatPumpDescription]]></Name>
-				<X>25</X>
-				<Y>219</Y>
+				<X>20</X>
+				<Y>224</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -258,8 +259,8 @@
 			<Text>
 				<Id>1722326800154</Id>
 				<Name><![CDATA[txt_companiesDistrictHeatingCompaniesDescription]]></Name>
-				<X>25</X>
-				<Y>271</Y>
+				<X>20</X>
+				<Y>277</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -284,8 +285,8 @@
 			<Text>
 				<Id>1722326800156</Id>
 				<Name><![CDATA[txt_companiesElectricHeatPump_pct]]></Name>
-				<X>384</X>
-				<Y>219</Y>
+				<X>380</X>
+				<Y>224</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -311,8 +312,8 @@
 			<Text>
 				<Id>1722326800158</Id>
 				<Name><![CDATA[txt_companiesGasBurner_pct]]></Name>
-				<X>384</X>
-				<Y>113</Y>
+				<X>380</X>
+				<Y>118</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -338,8 +339,8 @@
 			<Text>
 				<Id>1722326800160</Id>
 				<Name><![CDATA[txt_companiesDistrictHeating_pct]]></Name>
-				<X>384</X>
-				<Y>271</Y>
+				<X>380</X>
+				<Y>277</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -365,8 +366,8 @@
 			<Text>
 				<Id>1722326800162</Id>
 				<Name><![CDATA[txt_companiesHybridHeatPump_pct]]></Name>
-				<X>386</X>
-				<Y>166</Y>
+				<X>380</X>
+				<Y>171</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -393,8 +394,8 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722326800164</Id>
 				<Name><![CDATA[sl_companiesDistrictHeating_pct]]></Name>
-				<X>25</X>
-				<Y>283</Y>
+				<X>20</X>
+				<Y>289</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -422,8 +423,8 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722326800166</Id>
 				<Name><![CDATA[sl_companiesGasBurner_pct]]></Name>
-				<X>25</X>
-				<Y>125</Y>
+				<X>20</X>
+				<Y>130</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -451,8 +452,8 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722326800168</Id>
 				<Name><![CDATA[sl_companiesHybridHeatPump_pct]]></Name>
-				<X>25</X>
-				<Y>178</Y>
+				<X>20</X>
+				<Y>183</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -480,8 +481,8 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722326800170</Id>
 				<Name><![CDATA[sl_companiesElectricHeatPump_pct]]></Name>
-				<X>25</X>
-				<Y>231</Y>
+				<X>20</X>
+				<Y>236</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -507,8 +508,8 @@
 			<Text>
 				<Id>1722326800172</Id>
 				<Name><![CDATA[txt_heatingDemandSlidersCompaniesDescription]]></Name>
-				<X>58</X>
-				<Y>20</Y>
+				<X>50</X>
+				<Y>27</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -524,7 +525,7 @@
 				<Text><![CDATA[BEDRIJVEN]]></Text>
 				<Font>
 					<Name><![CDATA[HolonBLOCK2]]></Name>
-					<Size>22</Size>
+					<Size>20</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -532,8 +533,8 @@
 			<Text>
 				<Id>1734371025574</Id>
 				<Name><![CDATA[txt_companiesEBoiler_pct]]></Name>
-				<X>384</X>
-				<Y>325</Y>
+				<X>380</X>
+				<Y>330</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -560,8 +561,8 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1734371025600</Id>
 				<Name><![CDATA[sl_companiesEBoiler_pct]]></Name>
-				<X>25</X>
-				<Y>337</Y>
+				<X>20</X>
+				<Y>342</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -589,8 +590,8 @@
 			<Text>
 				<Id>1734371025534</Id>
 				<Name><![CDATA[txt_companiesEBoilerDescription]]></Name>
-				<X>25</X>
-				<Y>325</Y>
+				<X>20</X>
+				<Y>330</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -615,8 +616,8 @@
 			<Image>
 				<Id>1746093187570</Id>
 				<Name><![CDATA[i_companyReduction]]></Name>
-				<X>139</X>
-				<Y>60</Y>
+				<X>134</X>
+				<Y>65</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -643,8 +644,8 @@
 			<Image>
 				<Id>1746093187613</Id>
 				<Name><![CDATA[i_companyGasBoiler]]></Name>
-				<X>133</X>
-				<Y>112</Y>
+				<X>128</X>
+				<Y>118</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -671,8 +672,8 @@
 			<Image>
 				<Id>1746093187656</Id>
 				<Name><![CDATA[i_companyElectricHeatpump]]></Name>
-				<X>174</X>
-				<Y>218</Y>
+				<X>169</X>
+				<Y>224</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -699,8 +700,8 @@
 			<Image>
 				<Id>1746093187698</Id>
 				<Name><![CDATA[i_companyHybridHeatpump]]></Name>
-				<X>158</X>
-				<Y>167</Y>
+				<X>153</X>
+				<Y>171</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -727,8 +728,8 @@
 			<Image>
 				<Id>1746093187741</Id>
 				<Name><![CDATA[i_companyHeatGrid]]></Name>
-				<X>93</X>
-				<Y>270</Y>
+				<X>88</X>
+				<Y>277</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -755,8 +756,8 @@
 			<Image>
 				<Id>1746093187784</Id>
 				<Name><![CDATA[i_companyEBoiler]]></Name>
-				<X>76</X>
-				<Y>324</Y>
+				<X>71</X>
+				<Y>330</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -783,7 +784,7 @@
 			<Text>
 				<Id>1754382990780</Id>
 				<Name><![CDATA[txt_companiesCustom_pct]]></Name>
-				<X>385</X>
+				<X>380</X>
 				<Y>380</Y>
 				<Label>
 					<X>0</X>
@@ -811,7 +812,7 @@
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1754382990782</Id>
 				<Name><![CDATA[sl_companiesCustom_pct]]></Name>
-				<X>25</X>
+				<X>20</X>
 				<Y>392</Y>
 				<Label>
 					<X>0</X>
@@ -838,7 +839,7 @@
 			<Text>
 				<Id>1754382990784</Id>
 				<Name><![CDATA[txt_companiesCustomDescription]]></Name>
-				<X>25</X>
+				<X>20</X>
 				<Y>380</Y>
 				<Label>
 					<X>0</X>
@@ -864,8 +865,8 @@
 			<Image>
 				<Id>1754382990787</Id>
 				<Name><![CDATA[i_companyCustom]]></Name>
-				<X>127</X>
-				<Y>378</Y>
+				<X>120</X>
+				<Y>380</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -892,8 +893,8 @@
 			<Image>
 				<Id>1784125806952</Id>
 				<Name><![CDATA[im_electricityIconElectricityDemandSlidersHousesholds3]]></Name>
-				<X>25</X>
-				<Y>20</Y>
+				<X>20</X>
+				<Y>25</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -918,8 +919,8 @@
 			<Text>
 				<Id>1784239660890</Id>
 				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct6]]></Name>
-				<X>30</X>
-				<Y>96</Y>
+				<X>20</X>
+				<Y>102</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -944,8 +945,8 @@
 			<Text>
 				<Id>1784239660892</Id>
 				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct6]]></Name>
-				<X>385</X>
-				<Y>96</Y>
+				<X>380</X>
+				<Y>102</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -970,8 +971,8 @@
 			<Text>
 				<Id>1784239660894</Id>
 				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct7]]></Name>
-				<X>26</X>
-				<Y>148</Y>
+				<X>20</X>
+				<Y>155</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -996,8 +997,8 @@
 			<Text>
 				<Id>1784239660896</Id>
 				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct7]]></Name>
-				<X>385</X>
-				<Y>148</Y>
+				<X>380</X>
+				<Y>155</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1022,8 +1023,8 @@
 			<Text>
 				<Id>1784239660898</Id>
 				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct8]]></Name>
-				<X>26</X>
-				<Y>201</Y>
+				<X>20</X>
+				<Y>208</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1048,8 +1049,8 @@
 			<Text>
 				<Id>1784239660900</Id>
 				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct8]]></Name>
-				<X>385</X>
-				<Y>201</Y>
+				<X>380</X>
+				<Y>208</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1074,8 +1075,8 @@
 			<Text>
 				<Id>1784239660902</Id>
 				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct9]]></Name>
-				<X>26</X>
-				<Y>254</Y>
+				<X>20</X>
+				<Y>261</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1100,8 +1101,8 @@
 			<Text>
 				<Id>1784239660904</Id>
 				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct9]]></Name>
-				<X>385</X>
-				<Y>254</Y>
+				<X>380</X>
+				<Y>261</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1126,8 +1127,8 @@
 			<Text>
 				<Id>1784239660906</Id>
 				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct10]]></Name>
-				<X>26</X>
-				<Y>306</Y>
+				<X>20</X>
+				<Y>314</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1152,8 +1153,8 @@
 			<Text>
 				<Id>1784239660908</Id>
 				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct10]]></Name>
-				<X>385</X>
-				<Y>306</Y>
+				<X>380</X>
+				<Y>314</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1178,8 +1179,8 @@
 			<Text>
 				<Id>1784239660910</Id>
 				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct11]]></Name>
-				<X>26</X>
-				<Y>360</Y>
+				<X>20</X>
+				<Y>367</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1204,8 +1205,8 @@
 			<Text>
 				<Id>1784239660912</Id>
 				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct11]]></Name>
-				<X>385</X>
-				<Y>360</Y>
+				<X>380</X>
+				<Y>367</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1230,8 +1231,8 @@
 			<Text>
 				<Id>1784239660914</Id>
 				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct12]]></Name>
-				<X>26</X>
-				<Y>415</Y>
+				<X>20</X>
+				<Y>417</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1256,8 +1257,8 @@
 			<Text>
 				<Id>1784239660916</Id>
 				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct12]]></Name>
-				<X>384</X>
-				<Y>415</Y>
+				<X>380</X>
+				<Y>417</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1396,6 +1397,8 @@
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>20</XCode>
+		<YCode>40</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -1421,7 +1424,7 @@
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>400</Width>
-				<Height>460</Height>
+				<Height>480</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-6943</FillColor>
 				<FillMaterial>null</FillMaterial>
@@ -1431,7 +1434,7 @@
 				<Id>1749738869817</Id>
 				<Name><![CDATA[txt_householdGasBurnerDescription]]></Name>
 				<X>20</X>
-				<Y>60</Y>
+				<Y>65</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1457,7 +1460,7 @@
 				<Id>1749738869821</Id>
 				<Name><![CDATA[txt_householdElectricHeatPumpDescription]]></Name>
 				<X>20</X>
-				<Y>166</Y>
+				<Y>171</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1483,7 +1486,7 @@
 				<Id>1749738869823</Id>
 				<Name><![CDATA[txt_householdElectricHeatPump_pct]]></Name>
 				<X>379</X>
-				<Y>166</Y>
+				<Y>171</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1511,7 +1514,7 @@
 				<Id>1749738869829</Id>
 				<Name><![CDATA[sl_householdGasBurner_pct]]></Name>
 				<X>20</X>
-				<Y>72</Y>
+				<Y>77</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1549,7 +1552,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1749738869833</Id>
 				<Name><![CDATA[sl_householdElectricHeatPump_pct]]></Name>
 				<X>20</X>
-				<Y>178</Y>
+				<Y>183</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1586,7 +1589,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1749738869841</Id>
 				<Name><![CDATA[txt_heatingDemandSlidersHousesholdsDescription]]></Name>
 				<X>50</X>
-				<Y>20</Y>
+				<Y>27</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1602,7 +1605,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Text><![CDATA[HUIZEN]]></Text>
 				<Font>
 					<Name><![CDATA[HolonBLOCK2]]></Name>
-					<Size>26</Size>
+					<Size>20</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -1685,7 +1688,7 @@ else{
 				<Id>1752231559982</Id>
 				<Name><![CDATA[i_householdHeatPump]]></Name>
 				<X>172</X>
-				<Y>165</Y>
+				<Y>171</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1712,7 +1715,7 @@ else{
 			<Image>
 				<Id>1752231560000</Id>
 				<Name><![CDATA[i_householdHTDistrictHeating]]></Name>
-				<X>340</X>
+				<X>367</X>
 				<Y>226</Y>
 				<Label>
 					<X>0</X>
@@ -1740,7 +1743,7 @@ else{
 			<Image>
 				<Id>1752231560019</Id>
 				<Name><![CDATA[i_householdLTDistrictHeating]]></Name>
-				<X>340</X>
+				<X>367</X>
 				<Y>256</Y>
 				<Label>
 					<X>0</X>
@@ -1769,7 +1772,7 @@ else{
 				<Id>1760349016791</Id>
 				<Name><![CDATA[txt_householdHybridHeatpumpDescription]]></Name>
 				<X>20</X>
-				<Y>113</Y>
+				<Y>118</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1796,7 +1799,7 @@ else{
 				<Id>1760349016817</Id>
 				<Name><![CDATA[sl_householdHybridHeatpump_pct]]></Name>
 				<X>20</X>
-				<Y>125</Y>
+				<Y>130</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1833,7 +1836,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1760349016828</Id>
 				<Name><![CDATA[i_householdHybridHeatPump]]></Name>
 				<X>155</X>
-				<Y>112</Y>
+				<Y>118</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1861,7 +1864,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1760349443892</Id>
 				<Name><![CDATA[t_householdHybridHeatPump_pct]]></Name>
 				<X>379</X>
-				<Y>113</Y>
+				<Y>118</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1888,7 +1891,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784239770123</Id>
 				<Name><![CDATA[im_electricityIconElectricityDemandSlidersHousesholds]]></Name>
 				<X>20</X>
-				<Y>20</Y>
+				<Y>25</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1914,7 +1917,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784239770125</Id>
 				<Name><![CDATA[i_heatingGasBrander]]></Name>
 				<X>105</X>
-				<Y>59</Y>
+				<Y>64</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1942,7 +1945,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784239770127</Id>
 				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct]]></Name>
 				<X>22</X>
-				<Y>94</Y>
+				<Y>102</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1968,7 +1971,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784239770129</Id>
 				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct]]></Name>
 				<X>380</X>
-				<Y>94</Y>
+				<Y>102</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1994,7 +1997,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784239770131</Id>
 				<Name><![CDATA[txt_heatingGasBrander_pct]]></Name>
 				<X>380</X>
-				<Y>61</Y>
+				<Y>65</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2021,7 +2024,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784239770133</Id>
 				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct1]]></Name>
 				<X>22</X>
-				<Y>147</Y>
+				<Y>155</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2047,7 +2050,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784239770135</Id>
 				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct1]]></Name>
 				<X>380</X>
-				<Y>147</Y>
+				<Y>155</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2073,7 +2076,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784239770137</Id>
 				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct2]]></Name>
 				<X>22</X>
-				<Y>200</Y>
+				<Y>208</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2099,7 +2102,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784239770139</Id>
 				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct2]]></Name>
 				<X>381</X>
-				<Y>200</Y>
+				<Y>208</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2126,7 +2129,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784123684988</Id>
 				<Name><![CDATA[sl_householdHeatDemandReduction_pct]]></Name>
 				<X>20</X>
-				<Y>347</Y>
+				<Y>349</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2153,7 +2156,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784123684990</Id>
 				<Name><![CDATA[txt_householdHeatDemandReduction_pct1]]></Name>
 				<X>380</X>
-				<Y>336</Y>
+				<Y>337</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2180,7 +2183,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784123684992</Id>
 				<Name><![CDATA[txt_householdHeatDemandReductionDescription1]]></Name>
 				<X>20</X>
-				<Y>336</Y>
+				<Y>337</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2207,7 +2210,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784123684996</Id>
 				<Name><![CDATA[sl_householdAirco_pct]]></Name>
 				<X>20</X>
-				<Y>295</Y>
+				<Y>296</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2287,7 +2290,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784123685012</Id>
 				<Name><![CDATA[i_householdAirconditioning]]></Name>
 				<X>122</X>
-				<Y>282</Y>
+				<Y>284</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2315,7 +2318,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784123685014</Id>
 				<Name><![CDATA[i_householdAdditionalInsulation]]></Name>
 				<X>178</X>
-				<Y>334</Y>
+				<Y>337</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2343,7 +2346,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784123685016</Id>
 				<Name><![CDATA[txt_householdRooftopPT_pct1]]></Name>
 				<X>380</X>
-				<Y>391</Y>
+				<Y>390</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2398,7 +2401,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784123685020</Id>
 				<Name><![CDATA[txt_householdRooftopPTDescription1]]></Name>
 				<X>20</X>
-				<Y>391</Y>
+				<Y>390</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2424,7 +2427,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784123685022</Id>
 				<Name><![CDATA[i_householdPT]]></Name>
 				<X>103</X>
-				<Y>389</Y>
+				<Y>390</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2452,7 +2455,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784239558407</Id>
 				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct3]]></Name>
 				<X>21</X>
-				<Y>318</Y>
+				<Y>321</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2478,7 +2481,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784239558409</Id>
 				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct3]]></Name>
 				<X>380</X>
-				<Y>318</Y>
+				<Y>321</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2504,7 +2507,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784239558411</Id>
 				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct4]]></Name>
 				<X>21</X>
-				<Y>370</Y>
+				<Y>374</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2530,7 +2533,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784239558413</Id>
 				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct4]]></Name>
 				<X>380</X>
-				<Y>370</Y>
+				<Y>374</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2556,7 +2559,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784239558415</Id>
 				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct5]]></Name>
 				<X>22</X>
-				<Y>425</Y>
+				<Y>427</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2582,7 +2585,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1784239558417</Id>
 				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct5]]></Name>
 				<X>381</X>
-				<Y>425</Y>
+				<Y>427</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2711,7 +2714,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 	<Group>
 		<Id>1780139159555</Id>
 		<Name><![CDATA[gr_pageIndicator]]></Name>
-		<X>180</X>
+		<X>200</X>
 		<Y>20</Y>
 		<Label>
 			<X>7.073</X>
@@ -2721,6 +2724,8 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>220</XCode>
+		<YCode>20</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -2755,7 +2760,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 			<Oval>
 				<Id>1780139159559</Id>
 				<Name><![CDATA[oval]]></Name>
-				<X>-51</X>
+				<X>-52</X>
 				<Y>-5</Y>
 				<Label>
 					<X>0</X>
@@ -2783,7 +2788,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1780139159561</Id>
 				<Name><![CDATA[arrowLeftResidential]]></Name>
 				<X>-46</X>
-				<Y>-11</Y>
+				<Y>-10</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2809,7 +2814,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1780139159563</Id>
 				<Name><![CDATA[arrowRightResidential1]]></Name>
 				<X>47</X>
-				<Y>0</Y>
+				<Y>1</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2860,4 +2865,60 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 			</Text>
 		</Presentation>
 	</Group>
+	<Line>
+		<Id>1784478706020</Id>
+		<Name><![CDATA[max_size_tabs1]]></Name>
+		<X>0</X>
+		<Y>520</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor>-16777216</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<BeginArrowSize>1</BeginArrowSize>
+		<BeginArrowStyle>0</BeginArrowStyle>
+		<EndArrowSize>1</EndArrowSize>
+		<EndArrowStyle>0</EndArrowStyle>
+		<Dx>1920</Dx>
+		<Dy>0</Dy>
+		<Dz>0</Dz>
+	</Line>
+	<Line>
+		<Id>1784478706068</Id>
+		<Name><![CDATA[max_size_tabs]]></Name>
+		<X>0</X>
+		<Y>40</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor>-16777216</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<BeginArrowSize>1</BeginArrowSize>
+		<BeginArrowStyle>0</BeginArrowStyle>
+		<EndArrowSize>1</EndArrowSize>
+		<EndArrowStyle>0</EndArrowStyle>
+		<Dx>1920</Dx>
+		<Dy>0</Dy>
+		<Dz>0</Dz>
+	</Line>
 </Presentation>

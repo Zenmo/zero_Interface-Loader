@@ -932,8 +932,8 @@
 	<Group>
 		<Id>1744964727616</Id>
 		<Name><![CDATA[gr_tabElectricity_presentation]]></Name>
-		<X>5</X>
-		<Y>450</Y>
+		<X>0</X>
+		<Y>454</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -973,8 +973,8 @@
 	<Group>
 		<Id>1744964732289</Id>
 		<Name><![CDATA[gr_tabHeating_presentation]]></Name>
-		<X>15</X>
-		<Y>450</Y>
+		<X>0</X>
+		<Y>454</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1014,8 +1014,8 @@
 	<Group>
 		<Id>1744964737688</Id>
 		<Name><![CDATA[gr_tabEHub_presentation]]></Name>
-		<X>15</X>
-		<Y>450</Y>
+		<X>0</X>
+		<Y>454</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1055,8 +1055,8 @@
 	<Group>
 		<Id>1744964742286</Id>
 		<Name><![CDATA[gr_tabMobility_presentation]]></Name>
-		<X>15</X>
-		<Y>450</Y>
+		<X>0</X>
+		<Y>454</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
