@@ -6667,7 +6667,7 @@ else{
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>720</XCode>
+		<XCode>710</XCode>
 		<YCode>780</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
@@ -6693,8 +6693,8 @@ else{
 				<LineColor>-16727358</LineColor>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>570</Width>
-				<Height>200</Height>
+				<Width>580</Width>
+				<Height>180</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-33521536</FillColor>
 				<FillMaterial>null</FillMaterial>
@@ -6829,7 +6829,7 @@ cb_filterOptions.setValueIndex(0, false);</ActionCode>
 				<Id>1734444671650</Id>
 				<Name><![CDATA[txt_filterInterface]]></Name>
 				<X>25</X>
-				<Y>165</Y>
+				<Y>145</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -7010,7 +7010,7 @@ cb_filterOptions.setValueIndex(0, false);</ActionCode>
 				<Id>1780224601258</Id>
 				<Name><![CDATA[roundRectangle11]]></Name>
 				<X>420</X>
-				<Y>170</Y>
+				<Y>150</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -7048,7 +7048,7 @@ if( c_filterMatrix.size() &gt; 0 ){ //color selected buildings
 				<Id>1780224601260</Id>
 				<Name><![CDATA[text7]]></Name>
 				<X>496</X>
-				<Y>179</Y>
+				<Y>159</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -10055,4 +10055,30 @@ else {
 			</Text>
 		</Presentation>
 	</Group>
+	<Rectangle>
+		<Id>1784529817846</Id>
+		<Name><![CDATA[rectangle]]></Name>
+		<X>20</X>
+		<Y>20</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor>-16777216</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>1880</Width>
+		<Height>940</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor/>
+		<FillMaterial>null</FillMaterial>
+	</Rectangle>
 </Presentation>
