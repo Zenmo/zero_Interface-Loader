@@ -2090,7 +2090,7 @@ zero_Interface.f_resetSettings();</OnClickCode>
 	<Group>
 		<Id>1780139191012</Id>
 		<Name><![CDATA[gr_pageIndicator]]></Name>
-		<X>180</X>
+		<X>200</X>
 		<Y>20</Y>
 		<Label>
 			<X>7.073</X>
@@ -2100,6 +2100,8 @@ zero_Interface.f_resetSettings();</OnClickCode>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>220</XCode>
+		<YCode>20</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
