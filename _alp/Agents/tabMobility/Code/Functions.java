@@ -1924,16 +1924,25 @@ for (GridConnection gc : allUtilityGridConnections) {
 				break;
 			}
 		}
+		for (J_EAFuelVehicle vehicle : gc.c_hydrogenVehicles) {
+			switch(vehicle.getEAType()){
+				case HYDROGEN_VEHICLE:
+					HydrogenCars += 1;
+				break;
+			}
+		}
 	}
 }
 
 //Set CAR sliders
-int totalCars = PetroleumFuelCars + ElectricCars;
+int totalCars = PetroleumFuelCars + ElectricCars + HydrogenCars;
 int PetroleumFuelCars_pct = 0;
 int ElectricCars_pct = 0;
+int HydrogenCars_pct = 0;
 if (totalCars != 0) {
 	PetroleumFuelCars_pct = roundToInt((100.0 * PetroleumFuelCars) / totalCars);
 	ElectricCars_pct = roundToInt((100.0 * ElectricCars) / totalCars);
+	HydrogenCars_pct = roundToInt((100.0 * HydrogenCars) / totalCars);
 }
 else{
 	sl_companiesFossilFuelCars_pct.setEnabled(false);
