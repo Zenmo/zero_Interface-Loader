@@ -1314,10 +1314,12 @@ List<OL_ChartTypes> selectedCharts_Sustainability = new ArrayList<>();
 selectedCharts_Sustainability.add(OL_ChartTypes.CO2);
 
 uI_Results.f_initializeResultsUI(selectedChartTypes_Energy, selectedChartTypes_Economic, selectedCharts_Sustainability, false);
+uI_Results2.f_initializeResultsUI(selectedChartTypes_Energy, selectedChartTypes_Economic, selectedCharts_Sustainability, false);
 
 //Disable KPIsummary button if KPIsummary is not selected
 if(zero_Interface.settings.showKPISummary() == null || !zero_Interface.settings.showKPISummary()){
 	uI_Results.getCheckbox_KPISummary().setVisible(false);
+	uI_Results2.getCheckbox_KPISummary().setVisible(false);
 }
 else{
 	//uI_Results.f_setCB_KPISummary_Presentation(10, -30, true);
@@ -1325,9 +1327,11 @@ else{
 
 //Set selected object display false
 uI_Results.b_isCompanyUIResultsUI = true;
+uI_Results2.b_isCompanyUIResultsUI = true;
 
 //Set the color of the charts
 uI_Results.f_styleAllCharts(v_chartBackgroundColor, v_companyUILineColor, v_chartLineWidth, LINE_STYLE_SOLID);
+uI_Results2.f_styleAllCharts(v_chartBackgroundColor, v_companyUILineColor, v_chartLineWidth, LINE_STYLE_SOLID);
 /*ALCODEEND*/}
 
 double f_setCompanyUI(GridConnection GC)
@@ -1362,6 +1366,7 @@ double f_updateUIResultsCompanyUI()
 {/*ALCODESTART::1714656835269*/
 //Update data
 uI_Results.f_updateResultsUI(p_gridConnection);
+uI_Results2.f_updateResultsUI(p_gridConnection);
 
 //Set all charts
 /*
@@ -2146,6 +2151,8 @@ double f_setPresentationOrder()
 {/*ALCODESTART::1780999540461*/
 presentation.remove(uI_Results_presentation);
 presentation.insert(presentation.size()-1, uI_Results_presentation);
+presentation.remove(uI_Results2_presentation);
+presentation.insert(presentation.size()-1, uI_Results2_presentation);
 presentation.remove(gr_loadIcon);
 presentation.insert(presentation.size()-1, gr_loadIcon);
 presentation.remove(gr_simulateYearScreen);

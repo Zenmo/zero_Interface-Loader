@@ -11,6 +11,7 @@ import java.math.BigDecimal;]]></Import>
 f_setResultsUIPresets();
 
 zero_Interface.c_UIResultsInstances.add(uI_Results);
+zero_Interface.c_UIResultsInstances.add(uI_Results2);
 
 f_initializeDayToDisableRectanglesMap();]]></StartupCode>
 	<Generic>false</Generic>

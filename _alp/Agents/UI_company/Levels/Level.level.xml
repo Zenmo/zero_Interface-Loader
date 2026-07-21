@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Presentation>
 	<EmbeddedObjectPresentation>
+		<Id>1784649396246</Id>
+		<Name><![CDATA[uI_Results2_presentation]]></Name>
+		<X>1240</X>
+		<Y>270</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<Lock>true</Lock>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
+		<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
+		<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
+		<Latitude>0.0</Latitude>
+		<Longitude>0.0</Longitude>
+	</EmbeddedObjectPresentation>
+	<EmbeddedObjectPresentation>
 		<Id>1714652081119</Id>
 		<Name><![CDATA[uI_Results_presentation]]></Name>
-		<X>380</X>
+		<X>460</X>
 		<Y>270</Y>
 		<Label>
 			<X>10</X>
@@ -2602,7 +2625,7 @@ f_setSimulateYearScreen();</ActionCode>
 		<Id>1708523022017</Id>
 		<Name><![CDATA[button_returnToMainUI]]></Name>
 		<X>1670</X>
-		<Y>20</Y>
+		<Y>10</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -2726,60 +2749,6 @@ zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
 			</Text>
 		</Presentation>
 	</Group>
-	<Rectangle>
-		<Id>1725381132369</Id>
-		<Name><![CDATA[mask_resultsUI1]]></Name>
-		<X>370</X>
-		<Y>60</Y>
-		<Label>
-			<X>10</X>
-			<Y>10</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>false</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<Lock>true</Lock>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>3</LineWidth>
-		<LineColor>-1</LineColor>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<Width>470</Width>
-		<Height>110</Height>
-		<Rotation>0.0</Rotation>
-		<FillColor>-1</FillColor>
-		<FillMaterial>null</FillMaterial>
-	</Rectangle>
-	<Rectangle>
-		<Id>1725381214835</Id>
-		<Name><![CDATA[mask_resultsUI2]]></Name>
-		<X>845</X>
-		<Y>270</Y>
-		<Label>
-			<X>10</X>
-			<Y>10</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>false</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<Lock>true</Lock>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>3</LineWidth>
-		<LineColor>-1</LineColor>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<Width>2495</Width>
-		<Height>700</Height>
-		<Rotation>0.0</Rotation>
-		<FillColor>-1</FillColor>
-		<FillMaterial>null</FillMaterial>
-	</Rectangle>
 	<Group>
 		<Id>1725606178083</Id>
 		<Name><![CDATA[gr_simulateYearScreen]]></Name>
@@ -2801,8 +2770,8 @@ zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
 			<Rectangle>
 				<Id>1725606178085</Id>
 				<Name><![CDATA[rect_simulateYearScreen2]]></Name>
-				<X>-535</X>
-				<Y>-320</Y>
+				<X>-165</X>
+				<Y>-440</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -2820,8 +2789,8 @@ zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
 				<LineColorCode>v_companyUIBackgroundColor</LineColorCode>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>1060</Width>
-				<Height>750</Height>
+				<Width>690</Width>
+				<Height>870</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
 				<FillColorCode>v_companyUIBackgroundColor</FillColorCode>
@@ -2830,8 +2799,8 @@ zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
 			<Group>
 				<Id>1725606178087</Id>
 				<Name><![CDATA[gr_simulateYearToCalculateKPIs]]></Name>
-				<X>-35</X>
-				<Y>40</Y>
+				<X>205</X>
+				<Y>-110</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -2848,7 +2817,7 @@ zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
 					<Text>
 						<Id>1725606178089</Id>
 						<Name><![CDATA[t_simulateYearToCalculateCostsSmall]]></Name>
-						<X>-140</X>
+						<X>-80</X>
 						<Y>-40</Y>
 						<Label>
 							<X>0</X>
@@ -2864,7 +2833,7 @@ zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
 						<Color>-16777216</Color>
 						<Text><![CDATA[Simuleer jaar voor KPI's]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
+							<Name><![CDATA[holonBLOCK]]></Name>
 							<Size>28</Size>
 							<Style>1</Style>
 						</Font>
@@ -2921,8 +2890,8 @@ zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
 			<Rectangle>
 				<Id>1725606178113</Id>
 				<Name><![CDATA[rect_loadIcon]]></Name>
-				<X>-1520</X>
-				<Y>-60.969</Y>
+				<X>-1150</X>
+				<Y>-180</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -2940,8 +2909,8 @@ zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
 				<LineColorCode>v_loadScreenColor</LineColorCode>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>1065</Width>
-				<Height>755.969</Height>
+				<Width>690</Width>
+				<Height>870</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-369756683</FillColor>
 				<FillColorCode>v_loadScreenColor</FillColorCode>
@@ -2951,7 +2920,7 @@ zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
 				<Id>1729516584700</Id>
 				<Name><![CDATA[rect_GCisPausedScreen3]]></Name>
 				<X>-1990</X>
-				<Y>-60</Y>
+				<Y>-180</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -2969,8 +2938,8 @@ zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
 				<LineColorCode>v_loadScreenColor</LineColorCode>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>480</Width>
-				<Height>755</Height>
+				<Width>880</Width>
+				<Height>875</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1</FillColor>
 				<FillColorCode>v_loadScreenColor</FillColorCode>
@@ -2979,8 +2948,8 @@ zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
 			<Group>
 				<Id>1725606744485</Id>
 				<Name><![CDATA[gr_loadIconText]]></Name>
-				<X>-1220</X>
-				<Y>280</Y>
+				<X>-910</X>
+				<Y>150</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -3038,7 +3007,7 @@ zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
 						<Color>-16777216</Color>
 						<Text><![CDATA[Jaar wordt gesimuleerd ]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
+							<Name><![CDATA[holonBLOCK]]></Name>
 							<Size>28</Size>
 							<Style>1</Style>
 						</Font>
