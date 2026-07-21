@@ -1291,11 +1291,29 @@ f_setPresentationOrder();
 
 
 //Set the locations and visibilities of the ResultsUI agents
-uI_Results.f_setChartProfiles_Presentation(0, 0, true);
-uI_Results.f_setChartBalance_Presentation(530, 0, true);
-uI_Results.f_setChartGridLoad_Presentation(1060, 0, false);
-uI_Results.f_setChartSankey_Presentation(1060, 0, true);
-uI_Results.f_setResultsUIHeader(null, null, false);
+//uI_Results.f_setChartProfiles_Presentation(0, 0, true);
+//uI_Results.f_setChartBalance_Presentation(530, 0, true);
+//uI_Results.f_setChartGridLoad_Presentation(1060, 0, false);
+//uI_Results.f_setChartSankey_Presentation(1060, 0, true);
+//uI_Results.f_setResultsUIHeader(null, null, false);
+
+////TEMPORARY FUNCTION TO LET ALL CURRENT PROJECTS FUNCTION STILL!
+List<OL_ChartTypes> selectedChartTypes_Energy = new ArrayList<>();
+selectedChartTypes_Energy.add(OL_ChartTypes.PROFILES);
+selectedChartTypes_Energy.add(OL_ChartTypes.BAR_TOTALS);
+selectedChartTypes_Energy.add(OL_ChartTypes.LOAD_DURATION_CURVES);
+selectedChartTypes_Energy.add(OL_ChartTypes.SANKEY);
+
+List<OL_ChartTypes> selectedChartTypes_Economic = new ArrayList<>();
+selectedChartTypes_Economic.add(OL_ChartTypes.ENERGY_COSTS);
+selectedChartTypes_Economic.add(OL_ChartTypes.CONNECTION_COSTS);
+selectedChartTypes_Economic.add(OL_ChartTypes.CAPEX_AND_OPEX);
+selectedChartTypes_Economic.add(OL_ChartTypes.TOTAL_COSTS);
+
+List<OL_ChartTypes> selectedCharts_Sustainability = new ArrayList<>();
+selectedCharts_Sustainability.add(OL_ChartTypes.CO2);
+
+uI_Results.f_initializeResultsUI(selectedChartTypes_Energy, selectedChartTypes_Economic, selectedCharts_Sustainability, false);
 
 //Disable KPIsummary button if KPIsummary is not selected
 if(zero_Interface.settings.showKPISummary() == null || !zero_Interface.settings.showKPISummary()){
@@ -1305,7 +1323,7 @@ else{
 	//uI_Results.f_setCB_KPISummary_Presentation(10, -30, true);
 }
 
-//Set selected object display flase
+//Set selected object display false
 uI_Results.b_isCompanyUIResultsUI = true;
 
 //Set the color of the charts
@@ -1346,6 +1364,7 @@ double f_updateUIResultsCompanyUI()
 uI_Results.f_updateResultsUI(p_gridConnection);
 
 //Set all charts
+/*
 if(p_gridConnection.v_rapidRunData != null){
 	uI_Results.f_setAllCharts();
 }
@@ -1359,6 +1378,7 @@ if(cb_showGridloadPlot.isSelected())
 else{
 	uI_Results.f_setChartSankey_Presentation(null, null, true);
 }
+*/
 /*ALCODEEND*/}
 
 double f_setHeatingRB()
