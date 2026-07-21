@@ -674,9 +674,9 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1754928402694</Id>
-		<Name><![CDATA[f_updateMobilitySliders_companies]]></Name>
+		<Name><![CDATA[f_updateMobilitySliders_companies2]]></Name>
 		<X>-330</X>
-		<Y>310</Y>
+		<Y>350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -692,7 +692,7 @@
 		<Id>1754928402700</Id>
 		<Name><![CDATA[f_updateMobilitySliders_custom]]></Name>
 		<X>-330</X>
-		<Y>330</Y>
+		<Y>370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -730,7 +730,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1758183013077</Id>
-		<Name><![CDATA[f_updateMobilitySliders_households]]></Name>
+		<Name><![CDATA[f_updateMobilitySliders_households1]]></Name>
 		<X>-330</X>
 		<Y>290</Y>
 		<Label>
@@ -1018,25 +1018,9 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1784624030466</Id>
-		<Name><![CDATA[f_updateMobilitySliders_households_publicCharging]]></Name>
+		<Name><![CDATA[f_updateMobilitySliders_households2]]></Name>
 		<X>-330</X>
-		<Y>350</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1784642432946</Id>
-		<Name><![CDATA[f_updateMobilitySliders_companies_autos]]></Name>
-		<X>-330</X>
-		<Y>370</Y>
+		<Y>310</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1050,9 +1034,9 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1784642521189</Id>
-		<Name><![CDATA[f_updateMobilitySliders_companies_transportSavings]]></Name>
+		<Name><![CDATA[f_updateMobilitySliders_companies1]]></Name>
 		<X>-330</X>
-		<Y>390</Y>
+		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

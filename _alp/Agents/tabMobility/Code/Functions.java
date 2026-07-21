@@ -1208,20 +1208,17 @@ v_totalNumberOfGhostVehicle_Trucks = triple.getRight();
 
 // Update all loaded pages
 for (ShapeGroup page : c_loadedPageGroups) {
-	if(page == gr_mobilitySliders_households){
-		f_updateMobilitySliders_households();
+	if(page == gr_mobilitySliders_households1){
+		f_updateMobilitySliders_households1();
 	}
-	else if(page == gr_mobilitySliders_households_publicCharging){
-		f_updateMobilitySliders_households_publicCharging();
+	else if(page == gr_mobilitySliders_households2){
+		f_updateMobilitySliders_households2();
 	}
-	else if(page == gr_mobilitySliders_companies){
-		f_updateMobilitySliders_companies();
+	else if(page == gr_mobilitySliders_companies1){
+		f_updateMobilitySliders_companies1();
 	}
-	else if(page == gr_mobilitySliders_companies_autos){
-		f_updateMobilitySliders_companies_autos();
-	}
-	else if(page == gr_mobilitySliders_companies_transportSavings){
-		f_updateMobilitySliders_companies_transportSavings();
+	else if(page == gr_mobilitySliders_companies2){
+		f_updateMobilitySliders_companies2();
 	}
 	else{
 		f_updateMobilitySliders_custom(); 
@@ -1229,89 +1226,89 @@ for (ShapeGroup page : c_loadedPageGroups) {
 }
 /*ALCODEEND*/}
 
-double f_updateMobilitySliders_companies()
+double f_updateMobilitySliders_companies2()
 {/*ALCODESTART::1754928402694*/
-	List<GCUtility> allUtilityGridConnections = uI_Tabs.f_getActiveSliderGridConnections_utilities();
+List<GCUtility> allUtilityGridConnections = uI_Tabs.f_getActiveSliderGridConnections_utilities();
 
-	int PetroleumFuelVans = 0;
-	int ElectricVans = v_totalNumberOfGhostVehicle_Vans;
-	int HydrogenVans = 0;
+int PetroleumFuelVans = 0;
+int ElectricVans = v_totalNumberOfGhostVehicle_Vans;
+int HydrogenVans = 0;
 
-	int PetroleumFuelTrucks = 0;
-	int ElectricTrucks = v_totalNumberOfGhostVehicle_Trucks;
-	int HydrogenTrucks = 0;
+int PetroleumFuelTrucks = 0;
+int ElectricTrucks = v_totalNumberOfGhostVehicle_Trucks;
+int HydrogenTrucks = 0;
 
-	for (GridConnection gc : allUtilityGridConnections) {
-		if(gc.v_isActive){
-			for (J_EAFuelVehicle vehicle : gc.c_petroleumFuelVehicles) {
-				switch(vehicle.getEAType()){
-					case PETROLEUM_FUEL_VAN:
-						PetroleumFuelVans += 1;
-					break;
-					case PETROLEUM_FUEL_TRUCK:
-						PetroleumFuelTrucks += 1;
-					break;
-				}
+for (GridConnection gc : allUtilityGridConnections) {
+	if(gc.v_isActive){
+		for (J_EAFuelVehicle vehicle : gc.c_petroleumFuelVehicles) {
+			switch(vehicle.getEAType()){
+				case PETROLEUM_FUEL_VAN:
+					PetroleumFuelVans += 1;
+				break;
+				case PETROLEUM_FUEL_TRUCK:
+					PetroleumFuelTrucks += 1;
+				break;
 			}
-			for (J_EAEV vehicle : gc.c_electricVehicles) {
-				switch(vehicle.getEAType()){
-					case ELECTRIC_VAN:
-						ElectricVans += 1;
-					break;
-					case ELECTRIC_TRUCK:
-						ElectricTrucks += 1;
-					break;
-				}
+		}
+		for (J_EAEV vehicle : gc.c_electricVehicles) {
+			switch(vehicle.getEAType()){
+				case ELECTRIC_VAN:
+					ElectricVans += 1;
+				break;
+				case ELECTRIC_TRUCK:
+					ElectricTrucks += 1;
+				break;
 			}
-			for (J_EAFuelVehicle vehicle : gc.c_hydrogenVehicles) {
-				switch(vehicle.getEAType()){
-					case HYDROGEN_VAN:
-						HydrogenVans += 1;
-					break;
-					case HYDROGEN_TRUCK:
-						HydrogenTrucks += 1;
-					break;
-				}
+		}
+		for (J_EAFuelVehicle vehicle : gc.c_hydrogenVehicles) {
+			switch(vehicle.getEAType()){
+				case HYDROGEN_VAN:
+					HydrogenVans += 1;
+				break;
+				case HYDROGEN_TRUCK:
+					HydrogenTrucks += 1;
+				break;
 			}
 		}
 	}
+}
 
-	//Set VAN sliders
-	int totalVans = PetroleumFuelVans + ElectricVans + HydrogenVans;
-	int PetroleumFuelVans_pct = 0;
-	int ElectricVans_pct = 0;
-	int HydrogenVans_pct = 0;
-	if (totalVans != 0) {
-		PetroleumFuelVans_pct = roundToInt(100.0 * PetroleumFuelVans / totalVans);
-		ElectricVans_pct = roundToInt(100.0 * ElectricVans / totalVans);
-		HydrogenVans_pct = roundToInt(100.0 * HydrogenVans / totalVans);
-	}
-	else{
-		sl_companiesFossilFuelVans_pct.setEnabled(false);
-		sl_companiesElectricVans_pct.setEnabled(false);
-	}
-	sl_companiesFossilFuelVans_pct.setValue(PetroleumFuelVans_pct, false);
-	sl_companiesElectricVans_pct.setValue(ElectricVans_pct, false);
+//Set VAN sliders
+int totalVans = PetroleumFuelVans + ElectricVans + HydrogenVans;
+int PetroleumFuelVans_pct = 0;
+int ElectricVans_pct = 0;
+int HydrogenVans_pct = 0;
+if (totalVans != 0) {
+	PetroleumFuelVans_pct = roundToInt(100.0 * PetroleumFuelVans / totalVans);
+	ElectricVans_pct = roundToInt(100.0 * ElectricVans / totalVans);
+	HydrogenVans_pct = roundToInt(100.0 * HydrogenVans / totalVans);
+}
+else{
+	sl_companiesFossilFuelVans_pct.setEnabled(false);
+	sl_companiesElectricVans_pct.setEnabled(false);
+}
+sl_companiesFossilFuelVans_pct.setValue(PetroleumFuelVans_pct, false);
+sl_companiesElectricVans_pct.setValue(ElectricVans_pct, false);
 
-	//Set TRUCK sliders
-	int totalTrucks = PetroleumFuelTrucks + ElectricTrucks + HydrogenTrucks;
-	int PetroleumFuelTrucks_pct = 0;
-	int ElectricTrucks_pct = 0;
-	int HydrogenTrucks_pct = 0;
-	if (totalTrucks != 0) {
-		PetroleumFuelTrucks_pct = roundToInt(100.0 * PetroleumFuelTrucks / totalTrucks);
-		ElectricTrucks_pct = roundToInt(100.0 * ElectricTrucks / totalTrucks);
-		HydrogenTrucks_pct = roundToInt(100.0 * HydrogenTrucks / totalTrucks);
-	}
-	else{
-		sl_companiesFossilFuelTrucks_pct.setEnabled(false);
-		sl_companiesElectricTrucks_pct.setEnabled(false);
-		sl_companiesHydrogenTrucks_pct.setEnabled(false);
-	}
-	sl_companiesFossilFuelTrucks_pct.setValue(PetroleumFuelTrucks_pct, false);
-	sl_companiesElectricTrucks_pct.setValue(ElectricTrucks_pct, false);
-	sl_companiesHydrogenTrucks_pct.setValue(HydrogenTrucks_pct, false);
-	
+//Set TRUCK sliders
+int totalTrucks = PetroleumFuelTrucks + ElectricTrucks + HydrogenTrucks;
+int PetroleumFuelTrucks_pct = 0;
+int ElectricTrucks_pct = 0;
+int HydrogenTrucks_pct = 0;
+if (totalTrucks != 0) {
+	PetroleumFuelTrucks_pct = roundToInt(100.0 * PetroleumFuelTrucks / totalTrucks);
+	ElectricTrucks_pct = roundToInt(100.0 * ElectricTrucks / totalTrucks);
+	HydrogenTrucks_pct = roundToInt(100.0 * HydrogenTrucks / totalTrucks);
+}
+else{
+	sl_companiesFossilFuelTrucks_pct.setEnabled(false);
+	sl_companiesElectricTrucks_pct.setEnabled(false);
+	sl_companiesHydrogenTrucks_pct.setEnabled(false);
+}
+sl_companiesFossilFuelTrucks_pct.setValue(PetroleumFuelTrucks_pct, false);
+sl_companiesElectricTrucks_pct.setValue(ElectricTrucks_pct, false);
+sl_companiesHydrogenTrucks_pct.setValue(HydrogenTrucks_pct, false);
+
 /*ALCODEEND*/}
 
 double f_updateMobilitySliders_custom()
@@ -1333,7 +1330,7 @@ if(!zero_Interface.b_runningMainInterfaceScenarios){
 zero_Interface.f_resetSettings();
 /*ALCODEEND*/}
 
-double f_updateMobilitySliders_households()
+double f_updateMobilitySliders_households1()
 {/*ALCODESTART::1758183013077*/
 ////Private EV
 gr_householdActivateV2GPrivateParkedCars.setVisible(false);
@@ -1738,13 +1735,12 @@ boolean hasCompanies = uI_Tabs.f_getActiveSliderGridConnections_utilities().size
 c_loadedPageGroups = new ArrayList<>();
 // Load in the existing pages you want to include in the tab
 if (hasHouses) {
-	c_loadedPageGroups.add(gr_mobilitySliders_households);
-	c_loadedPageGroups.add(gr_mobilitySliders_households_publicCharging);
+	c_loadedPageGroups.add(gr_mobilitySliders_households1);
+	c_loadedPageGroups.add(gr_mobilitySliders_households2);
 } 
 if (hasCompanies) {
-	c_loadedPageGroups.add(gr_mobilitySliders_companies);
-	c_loadedPageGroups.add(gr_mobilitySliders_companies_autos);
-	c_loadedPageGroups.add(gr_mobilitySliders_companies_transportSavings);
+	c_loadedPageGroups.add(gr_mobilitySliders_companies1);
+	c_loadedPageGroups.add(gr_mobilitySliders_companies2);
 }
 
 // If you have a custom page, add it by using f_addCustomPage:
@@ -1802,7 +1798,7 @@ double f_addCustomPage()
 //c_loadedPageGroups.add(gr_mobilitySliders_custom);
 /*ALCODEEND*/}
 
-double f_updateMobilitySliders_households_publicCharging()
+double f_updateMobilitySliders_households2()
 {/*ALCODESTART::1784624030466*/
 ////Chargers
 OL_ChargingAttitude selectedChargingAttitude = null;
@@ -1879,76 +1875,71 @@ else{
 }
 /*ALCODEEND*/}
 
-double f_updateMobilitySliders_companies_autos()
-{/*ALCODESTART::1784642432946*/
-List<GCUtility> allUtilityGridConnections = uI_Tabs.f_getActiveSliderGridConnections_utilities();
-
-	int PetroleumFuelCars = 0;
-	int ElectricCars = v_totalNumberOfGhostVehicle_Cars;
-
-	for (GridConnection gc : allUtilityGridConnections) {
-		if(gc.v_isActive){
-			for (J_EAFuelVehicle vehicle : gc.c_petroleumFuelVehicles) {
-				switch(vehicle.getEAType()){
-					case PETROLEUM_FUEL_VEHICLE:
-						PetroleumFuelCars += 1;
-					break;
-				}
-			}
-			for (J_EAEV vehicle : gc.c_electricVehicles) {
-				switch(vehicle.getEAType()){
-					case ELECTRIC_VEHICLE:
-						ElectricCars += 1;
-					break;
-				}
-			}
-		}
-	}
-
-	//Set CAR sliders
-	int totalCars = PetroleumFuelCars + ElectricCars;
-	int PetroleumFuelCars_pct = 0;
-	int ElectricCars_pct = 0;
-	if (totalCars != 0) {
-		PetroleumFuelCars_pct = roundToInt((100.0 * PetroleumFuelCars) / totalCars);
-		ElectricCars_pct = roundToInt((100.0 * ElectricCars) / totalCars);
-	}
-	else{
-		sl_companiesFossilFuelCars_pct.setEnabled(false);
-		sl_companiesElectricCars_pct.setEnabled(false);
-	}
-	sl_companiesFossilFuelCars_pct.setValue(PetroleumFuelCars_pct, false);
-	sl_companiesElectricCars_pct.setValue(ElectricCars_pct, false);
-	
-/*ALCODEEND*/}
-
-double f_updateMobilitySliders_companies_transportSavings()
+double f_updateMobilitySliders_companies1()
 {/*ALCODESTART::1784642521189*/
 List<GCUtility> allUtilityGridConnections = uI_Tabs.f_getActiveSliderGridConnections_utilities();
 
-	////Savings
-	double totalBaseTravelDistance_km = 0;
-	double totalSavedTravelDistance_km = 0;
-	for(GridConnection GC : allUtilityGridConnections){
-		if(GC.v_isActive){
-			for(J_ActivityTrackerTrips tripTracker : GC.c_tripTrackers){
-				totalBaseTravelDistance_km += tripTracker.getAnnualDistance_km();
-				totalSavedTravelDistance_km += (1-tripTracker.getDistanceScaling_fr())*tripTracker.getAnnualDistance_km();
+////Savings
+double totalBaseTravelDistance_km = 0;
+double totalSavedTravelDistance_km = 0;
+for(GridConnection GC : allUtilityGridConnections){
+	if(GC.v_isActive){
+		for(J_ActivityTrackerTrips tripTracker : GC.c_tripTrackers){
+			totalBaseTravelDistance_km += tripTracker.getAnnualDistance_km();
+			totalSavedTravelDistance_km += (1-tripTracker.getDistanceScaling_fr())*tripTracker.getAnnualDistance_km();
+		}
+	}
+}
+
+double mobilitySavings_pct = totalBaseTravelDistance_km > 0 ? (totalSavedTravelDistance_km/totalBaseTravelDistance_km * 100) : 0;
+sl_companiesMobilityDemandReduction_pct.setValue(roundToInt(mobilitySavings_pct), false);
+
+//Smart charging
+boolean smartCharging = false;
+for(GridConnection GC : allUtilityGridConnections){
+	if(GC.c_electricVehicles.size() > 0 && GC.f_getCurrentChargingType() != OL_ChargingAttitude.SIMPLE){
+		smartCharging = true;
+		break;
+	}
+}
+cb_companiesSpreadChargingEVs.setSelected(smartCharging, false);
+
+// Cars
+int PetroleumFuelCars = 0;
+int ElectricCars = v_totalNumberOfGhostVehicle_Cars;
+
+for (GridConnection gc : allUtilityGridConnections) {
+	if(gc.v_isActive){
+		for (J_EAFuelVehicle vehicle : gc.c_petroleumFuelVehicles) {
+			switch(vehicle.getEAType()){
+				case PETROLEUM_FUEL_VEHICLE:
+					PetroleumFuelCars += 1;
+				break;
+			}
+		}
+		for (J_EAEV vehicle : gc.c_electricVehicles) {
+			switch(vehicle.getEAType()){
+				case ELECTRIC_VEHICLE:
+					ElectricCars += 1;
+				break;
 			}
 		}
 	}
+}
 
-	double mobilitySavings_pct = totalBaseTravelDistance_km > 0 ? (totalSavedTravelDistance_km/totalBaseTravelDistance_km * 100) : 0;
-	sl_companiesMobilityDemandReduction_pct.setValue(roundToInt(mobilitySavings_pct), false);
-
-	//Smart charging
-	boolean smartCharging = false;
-	for(GridConnection GC : allUtilityGridConnections){
-		if(GC.c_electricVehicles.size() > 0 && GC.f_getCurrentChargingType() != OL_ChargingAttitude.SIMPLE){
-			smartCharging = true;
-			break;
-		}
-	}
-	cb_companiesSpreadChargingEVs.setSelected(smartCharging, false);
+//Set CAR sliders
+int totalCars = PetroleumFuelCars + ElectricCars;
+int PetroleumFuelCars_pct = 0;
+int ElectricCars_pct = 0;
+if (totalCars != 0) {
+	PetroleumFuelCars_pct = roundToInt((100.0 * PetroleumFuelCars) / totalCars);
+	ElectricCars_pct = roundToInt((100.0 * ElectricCars) / totalCars);
+}
+else{
+	sl_companiesFossilFuelCars_pct.setEnabled(false);
+	sl_companiesElectricCars_pct.setEnabled(false);
+}
+sl_companiesFossilFuelCars_pct.setValue(PetroleumFuelCars_pct, false);
+sl_companiesElectricCars_pct.setValue(ElectricCars_pct, false);
 /*ALCODEEND*/}
 
