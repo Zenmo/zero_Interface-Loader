@@ -4,7 +4,7 @@
 		<Id>1722344806530</Id>
 		<Name><![CDATA[rect_generalFunctions]]></Name>
 		<X>430</X>
-		<Y>650</Y>
+		<Y>670</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -30,7 +30,7 @@
 		<Id>1722344586686</Id>
 		<Name><![CDATA[rect_nfatoFunctions]]></Name>
 		<X>700</X>
-		<Y>650</Y>
+		<Y>670</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -55,7 +55,7 @@
 	<Group>
 		<Id>1722253487925</Id>
 		<Name><![CDATA[gr_hubSlidersOld]]></Name>
-		<X>430</X>
+		<X>500</X>
 		<Y>40</Y>
 		<Label>
 			<X>10</X>
@@ -362,7 +362,7 @@ new Thread( () -&gt; {
 		<Id>1722253509588</Id>
 		<Name><![CDATA[gr_nfatoSettings]]></Name>
 		<X>0</X>
-		<Y>430</Y>
+		<Y>450</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -897,7 +897,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 		<Id>1722256365442</Id>
 		<Name><![CDATA[txt_capacitySharingFunctionsDescription]]></Name>
 		<X>840</X>
-		<Y>665</Y>
+		<Y>685</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -922,7 +922,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 		<Id>1722344870135</Id>
 		<Name><![CDATA[t_generalFunctionsDescription]]></Name>
 		<X>460</X>
-		<Y>660</Y>
+		<Y>680</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -946,8 +946,8 @@ f_resetCapacitySharingSettings();</ActionCode>
 	<Group>
 		<Id>1780089498203</Id>
 		<Name><![CDATA[gr_hubSliders]]></Name>
-		<X>190</X>
-		<Y>220</Y>
+		<X>0</X>
+		<Y>40</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -963,8 +963,8 @@ f_resetCapacitySharingSettings();</ActionCode>
 			<RoundedRectangle>
 				<Id>1780085796999</Id>
 				<Name><![CDATA[roundRectangle]]></Name>
-				<X>-190</X>
-				<Y>-180</Y>
+				<X>0</X>
+				<Y>0</Y>
 				<Label>
 					<X>10</X>
 					<Y>10</Y>
@@ -980,7 +980,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 				<LineColor/>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>370</Width>
+				<Width>400</Width>
 				<Height>350</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1516972079</FillColor>
@@ -990,8 +990,8 @@ f_resetCapacitySharingSettings();</ActionCode>
 			<Group>
 				<Id>1780088551564</Id>
 				<Name><![CDATA[gr_energieHubButton1]]></Name>
-				<X>0</X>
-				<Y>-70</Y>
+				<X>20</X>
+				<Y>65</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -1007,8 +1007,8 @@ f_resetCapacitySharingSettings();</ActionCode>
 					<RoundedRectangle>
 						<Id>1780088551566</Id>
 						<Name><![CDATA[roundRectangle3]]></Name>
-						<X>-165</X>
-						<Y>-40</Y>
+						<X>0</X>
+						<Y>0</Y>
 						<Label>
 							<X>10</X>
 							<Y>10</Y>
@@ -1025,7 +1025,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 						<LineColor/>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
-						<Width>320</Width>
+						<Width>360</Width>
 						<Height>60</Height>
 						<Rotation>0.0</Rotation>
 						<FillColor>-16744320</FillColor>
@@ -1035,8 +1035,8 @@ f_resetCapacitySharingSettings();</ActionCode>
 					<RoundedRectangle>
 						<Id>1780088551568</Id>
 						<Name><![CDATA[roundRectangle4]]></Name>
-						<X>-145</X>
-						<Y>-25</Y>
+						<X>10</X>
+						<Y>15</Y>
 						<Label>
 							<X>10</X>
 							<Y>10</Y>
@@ -1055,71 +1055,15 @@ f_resetCapacitySharingSettings();</ActionCode>
 						<Width>30</Width>
 						<Height>30</Height>
 						<Rotation>0.0</Rotation>
-						<FillColor>-10239303</FillColor>
+						<FillColor>687865855</FillColor>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>7</ArcRadius>
 					</RoundedRectangle>
-					<Line>
-						<Id>1780088551570</Id>
-						<Name><![CDATA[line2]]></Name>
-						<X>-130</X>
-						<Y>-5</Y>
-						<Label>
-							<X>10</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-1</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<BeginArrowSize>1</BeginArrowSize>
-						<BeginArrowStyle>0</BeginArrowStyle>
-						<EndArrowSize>1</EndArrowSize>
-						<EndArrowStyle>0</EndArrowStyle>
-						<Dx>0</Dx>
-						<Dy>-12</Dy>
-						<Dz>0</Dz>
-					</Line>
-					<Line>
-						<Id>1780088551572</Id>
-						<Name><![CDATA[line3]]></Name>
-						<X>-124</X>
-						<Y>-11</Y>
-						<Label>
-							<X>10</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-1</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<BeginArrowSize>1</BeginArrowSize>
-						<BeginArrowStyle>0</BeginArrowStyle>
-						<EndArrowSize>1</EndArrowSize>
-						<EndArrowStyle>0</EndArrowStyle>
-						<Dx>-12</Dx>
-						<Dy>0</Dy>
-						<Dz>0</Dz>
-					</Line>
 					<Text>
 						<Id>1780088551574</Id>
 						<Name><![CDATA[text2]]></Name>
-						<X>-102</X>
-						<Y>-27</Y>
+						<X>50</X>
+						<Y>18</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1134,8 +1078,8 @@ f_resetCapacitySharingSettings();</ActionCode>
 						<Color>-1</Color>
 						<Text><![CDATA[Start een energiehub]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
-							<Size>13</Size>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>14</Size>
 							<Style>0</Style>
 						</Font>
 						<Alignment>LEFT</Alignment>
@@ -1143,8 +1087,8 @@ f_resetCapacitySharingSettings();</ActionCode>
 					<Text>
 						<Id>1780088551576</Id>
 						<Name><![CDATA[text3]]></Name>
-						<X>-102</X>
-						<Y>-7</Y>
+						<X>50</X>
+						<Y>36</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1156,22 +1100,48 @@ f_resetCapacitySharingSettings();</ActionCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
-						<Color>-1</Color>
+						<Color>-922746881</Color>
 						<Text><![CDATA[Groepeer bedrijven, verken GTO's en collectieve assets]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
-							<Size>9</Size>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>11</Size>
 							<Style>0</Style>
 						</Font>
 						<Alignment>LEFT</Alignment>
 					</Text>
+					<Image>
+						<Id>1784733215896</Id>
+						<Name><![CDATA[image1]]></Name>
+						<X>16</X>
+						<Y>21</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>18</Width>
+						<Height>18</Height>
+						<Rotation>0.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>plus.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
 				</Presentation>
 			</Group>
 			<Text>
 				<Id>1780088562967</Id>
 				<Name><![CDATA[text4]]></Name>
-				<X>-111</X>
-				<Y>-158</Y>
+				<X>50</X>
+				<Y>25</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1186,252 +1156,17 @@ f_resetCapacitySharingSettings();</ActionCode>
 				<Color>-16777216</Color>
 				<Text><![CDATA[Energie hub acties]]></Text>
 				<Font>
-					<Name><![CDATA[Centaur]]></Name>
-					<Size>26</Size>
-					<Style>1</Style>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>18</Size>
+					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
 			<Group>
-				<Id>1780088636035</Id>
-				<Name><![CDATA[gr_eHubButton]]></Name>
-				<X>-140</X>
-				<Y>-145</Y>
-				<Label>
-					<X>10</X>
-					<Y>0</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Presentation>
-					<Line>
-						<Id>1780088636039</Id>
-						<Name><![CDATA[line4]]></Name>
-						<X>-10</X>
-						<Y>-7</Y>
-						<Label>
-							<X>10</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1.5</LineWidth>
-						<LineColor>-16777216</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<BeginArrowSize>1</BeginArrowSize>
-						<BeginArrowStyle>0</BeginArrowStyle>
-						<EndArrowSize>1</EndArrowSize>
-						<EndArrowStyle>0</EndArrowStyle>
-						<Dx>20</Dx>
-						<Dy>-2</Dy>
-						<Dz>0</Dz>
-					</Line>
-					<Line>
-						<Id>1780088636041</Id>
-						<Name><![CDATA[line5]]></Name>
-						<X>-6</X>
-						<Y>6</Y>
-						<Label>
-							<X>10</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1.5</LineWidth>
-						<LineColor>-16777216</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<BeginArrowSize>1</BeginArrowSize>
-						<BeginArrowStyle>0</BeginArrowStyle>
-						<EndArrowSize>1</EndArrowSize>
-						<EndArrowStyle>0</EndArrowStyle>
-						<Dx>16</Dx>
-						<Dy>-15</Dy>
-						<Dz>0</Dz>
-					</Line>
-					<Line>
-						<Id>1780088636043</Id>
-						<Name><![CDATA[line6]]></Name>
-						<X>-10</X>
-						<Y>-4</Y>
-						<Label>
-							<X>10</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1.5</LineWidth>
-						<LineColor>-16777216</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<BeginArrowSize>1</BeginArrowSize>
-						<BeginArrowStyle>0</BeginArrowStyle>
-						<EndArrowSize>1</EndArrowSize>
-						<EndArrowStyle>0</EndArrowStyle>
-						<Dx>18</Dx>
-						<Dy>15</Dy>
-						<Dz>0</Dz>
-					</Line>
-					<Oval>
-						<Id>1780088636045</Id>
-						<Name><![CDATA[oval]]></Name>
-						<X>-11</X>
-						<Y>-6</Y>
-						<Label>
-							<X>0</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-16777216</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<RadiusX>3</RadiusX>
-						<RadiusY>40</RadiusY>
-						<Rotation>0.0</Rotation>
-						<FillColor>-657931</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Oval>
-					<Oval>
-						<Id>1780088636047</Id>
-						<Name><![CDATA[oval1]]></Name>
-						<X>-8</X>
-						<Y>8</Y>
-						<Label>
-							<X>0</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-16777216</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<RadiusX>3</RadiusX>
-						<RadiusY>40</RadiusY>
-						<Rotation>0.0</Rotation>
-						<FillColor>-657931</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Oval>
-					<Line>
-						<Id>1780088636049</Id>
-						<Name><![CDATA[line7]]></Name>
-						<X>8</X>
-						<Y>10</Y>
-						<Label>
-							<X>10</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-16777216</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>DOTTED</LineStyle>
-						<BeginArrowSize>1</BeginArrowSize>
-						<BeginArrowStyle>0</BeginArrowStyle>
-						<EndArrowSize>1</EndArrowSize>
-						<EndArrowStyle>0</EndArrowStyle>
-						<Dx>1</Dx>
-						<Dy>-17</Dy>
-						<Dz>0</Dz>
-					</Line>
-					<Oval>
-						<Id>1780088636051</Id>
-						<Name><![CDATA[oval4]]></Name>
-						<X>8</X>
-						<Y>10</Y>
-						<Label>
-							<X>0</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-16777216</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<RadiusX>3</RadiusX>
-						<RadiusY>40</RadiusY>
-						<Rotation>0.0</Rotation>
-						<FillColor>-657931</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Oval>
-					<Oval>
-						<Id>1780088636053</Id>
-						<Name><![CDATA[oval3]]></Name>
-						<X>10</X>
-						<Y>-9</Y>
-						<Label>
-							<X>0</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-16777216</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<RadiusX>3</RadiusX>
-						<RadiusY>40</RadiusY>
-						<Rotation>0.0</Rotation>
-						<FillColor>-657931</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Oval>
-				</Presentation>
-			</Group>
-			<Group>
 				<Id>1780089428049</Id>
 				<Name><![CDATA[gr_ATObutton]]></Name>
-				<X>70</X>
-				<Y>10</Y>
+				<X>20</X>
+				<Y>245</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -1444,11 +1179,38 @@ f_resetCapacitySharingSettings();</ActionCode>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Presentation>
+					<RoundedRectangle>
+						<Id>1780085942471</Id>
+						<Name><![CDATA[rect_ATObutton]]></Name>
+						<X>0</X>
+						<Y>0</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor/>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>360</Width>
+						<Height>75</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-657931</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>10</ArcRadius>
+					</RoundedRectangle>
 					<Group>
 						<Id>1780088416178</Id>
 						<Name><![CDATA[gr_energieHubButton]]></Name>
-						<X>-70</X>
-						<Y>-5</Y>
+						<X>10</X>
+						<Y>30</Y>
 						<Label>
 							<X>10</X>
 							<Y>0</Y>
@@ -1462,37 +1224,10 @@ f_resetCapacitySharingSettings();</ActionCode>
 						<Rotation>0.0</Rotation>
 						<Presentation>
 							<RoundedRectangle>
-								<Id>1780085942471</Id>
-								<Name><![CDATA[roundRectangle1]]></Name>
-								<X>-165</X>
-								<Y>-40</Y>
-								<Label>
-									<X>10</X>
-									<Y>10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<ZHeight>10</ZHeight>
-								<LineWidth>1</LineWidth>
-								<LineColor/>
-								<LineMaterial>null</LineMaterial>
-								<LineStyle>SOLID</LineStyle>
-								<Width>320</Width>
-								<Height>70</Height>
-								<Rotation>0.0</Rotation>
-								<FillColor>-657931</FillColor>
-								<FillMaterial>null</FillMaterial>
-								<ArcRadius>10</ArcRadius>
-							</RoundedRectangle>
-							<RoundedRectangle>
 								<Id>1780085963323</Id>
 								<Name><![CDATA[roundRectangle2]]></Name>
-								<X>-142</X>
-								<Y>-5</Y>
+								<X>0</X>
+								<Y>0</Y>
 								<Label>
 									<X>10</X>
 									<Y>10</Y>
@@ -1545,99 +1280,18 @@ else {
 								<LineColor/>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
-								<Width>135</Width>
-								<Height>25</Height>
+								<Width>165</Width>
+								<Height>35</Height>
 								<Rotation>0.0</Rotation>
 								<FillColor>-16744320</FillColor>
 								<FillMaterial>null</FillMaterial>
 								<ArcRadius>7</ArcRadius>
 							</RoundedRectangle>
-							<Line>
-								<Id>1780086018863</Id>
-								<Name><![CDATA[line]]></Name>
-								<X>-131</X>
-								<Y>12</Y>
-								<Label>
-									<X>10</X>
-									<Y>0</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<ZHeight>10</ZHeight>
-								<LineWidth>1</LineWidth>
-								<LineColor>-1</LineColor>
-								<LineMaterial>null</LineMaterial>
-								<LineStyle>SOLID</LineStyle>
-								<BeginArrowSize>1</BeginArrowSize>
-								<BeginArrowStyle>0</BeginArrowStyle>
-								<EndArrowSize>1</EndArrowSize>
-								<EndArrowStyle>0</EndArrowStyle>
-								<Dx>0</Dx>
-								<Dy>-10</Dy>
-								<Dz>0</Dz>
-							</Line>
-							<Line>
-								<Id>1780086028339</Id>
-								<Name><![CDATA[line1]]></Name>
-								<X>-126</X>
-								<Y>7</Y>
-								<Label>
-									<X>10</X>
-									<Y>0</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<ZHeight>10</ZHeight>
-								<LineWidth>1</LineWidth>
-								<LineColor>-1</LineColor>
-								<LineMaterial>null</LineMaterial>
-								<LineStyle>SOLID</LineStyle>
-								<BeginArrowSize>1</BeginArrowSize>
-								<BeginArrowStyle>0</BeginArrowStyle>
-								<EndArrowSize>1</EndArrowSize>
-								<EndArrowStyle>0</EndArrowStyle>
-								<Dx>-10</Dx>
-								<Dy>0</Dy>
-								<Dz>0</Dz>
-							</Line>
-							<Text>
-								<Id>1780088178319</Id>
-								<Name><![CDATA[text]]></Name>
-								<X>-142</X>
-								<Y>-31</Y>
-								<Label>
-									<X>0</X>
-									<Y>-10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<Rotation>0.0</Rotation>
-								<Color>-16777216</Color>
-								<Text><![CDATA[Deel netcapaciteit tussen bedrijven]]></Text>
-								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>13</Size>
-									<Style>0</Style>
-								</Font>
-								<Alignment>LEFT</Alignment>
-							</Text>
 							<Text>
 								<Id>1780088233588</Id>
 								<Name><![CDATA[text1]]></Name>
-								<X>-117</X>
-								<Y>1</Y>
+								<X>39</X>
+								<Y>12</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -1658,15 +1312,253 @@ else {
 								</Font>
 								<Alignment>LEFT</Alignment>
 							</Text>
+							<Image>
+								<Id>1784735769939</Id>
+								<Name><![CDATA[image5]]></Name>
+								<X>24</X>
+								<Y>12</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Width>12</Width>
+								<Height>12</Height>
+								<Rotation>0.0</Rotation>
+								<ImageFiles>
+									<ImageResourceReference>
+										<PackageName>zerointerfaceloader</PackageName>
+										<ClassName>plus.png</ClassName>
+									</ImageResourceReference>
+								</ImageFiles>
+								<OriginalSize>false</OriginalSize>
+							</Image>
 						</Presentation>
 					</Group>
+					<Group>
+						<Id>1784732913381</Id>
+						<Name><![CDATA[gr_removeCapacitySharingContracts]]></Name>
+						<X>185</X>
+						<Y>30</Y>
+						<Label>
+							<X>10</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Presentation>
+							<RoundedRectangle>
+								<Id>1784732913383</Id>
+								<Name><![CDATA[roundRectangle5]]></Name>
+								<X>0</X>
+								<Y>0</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>false</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<VisibleCode>!zero_Interface.settings.isPublicModel()</VisibleCode>
+								<OnClickCode>for (GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()) {
+	GC.v_liveConnectionMetaData.clearSharedCapacityManagers();
+}
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.f_setScenarioToCustom();
+}
+
+gr_removeCapacitySharingContracts.setVisible(false);
+
+zero_Interface.f_resetSettings();</OnClickCode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-1834917</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>165</Width>
+								<Height>34</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-1</FillColor>
+								<FillMaterial>null</FillMaterial>
+								<ArcRadius>7</ArcRadius>
+							</RoundedRectangle>
+							<Text>
+								<Id>1784732913385</Id>
+								<Name><![CDATA[text5]]></Name>
+								<X>55</X>
+								<Y>12</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-1834917</Color>
+								<Text><![CDATA[Verwijder alle]]></Text>
+								<Font>
+									<Name><![CDATA[SansSerif]]></Name>
+									<Size>10</Size>
+									<Style>0</Style>
+								</Font>
+								<Alignment>LEFT</Alignment>
+							</Text>
+							<Image>
+								<Id>1784735615782</Id>
+								<Name><![CDATA[image4]]></Name>
+								<X>38</X>
+								<Y>12</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Width>12</Width>
+								<Height>12</Height>
+								<Rotation>0.0</Rotation>
+								<ImageFiles>
+									<ImageResourceReference>
+										<PackageName>zerointerfaceloader</PackageName>
+										<ClassName>delete-bin-icon_pink.png</ClassName>
+									</ImageResourceReference>
+								</ImageFiles>
+								<OriginalSize>false</OriginalSize>
+							</Image>
+						</Presentation>
+					</Group>
+					<Text>
+						<Id>1780088178319</Id>
+						<Name><![CDATA[text]]></Name>
+						<X>10</X>
+						<Y>10</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Deel netcapaciteit tussen bedrijven]]></Text>
+						<Font>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>14</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
 				</Presentation>
 			</Group>
+			<Image>
+				<Id>1784732431326</Id>
+				<Name><![CDATA[image]]></Name>
+				<X>20</X>
+				<Y>22</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>20</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>settings.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1784733674647</Id>
+				<Name><![CDATA[image3]]></Name>
+				<X>20</X>
+				<Y>210</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>18</Width>
+				<Height>18</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>share-2.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1784733726942</Id>
+				<Name><![CDATA[text8]]></Name>
+				<X>50</X>
+				<Y>213</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Capaciteitsdeling]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>16</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
 			<Group>
-				<Id>1780089441900</Id>
+				<Id>1780089017183</Id>
 				<Name><![CDATA[gr_scenarioLoadingButton]]></Name>
-				<X>-70</X>
-				<Y>126</Y>
+				<X>20</X>
+				<Y>135</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -1675,24 +1567,7 @@ else {
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Presentation>
-					<Group>
-						<Id>1780089017183</Id>
-						<Name><![CDATA[gr_energieHubButton2]]></Name>
-						<X>70</X>
-						<Y>0</Y>
-						<Label>
-							<X>10</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<OnClickCode>// First check if there are any save files, if there are none we display an error screen
+				<OnClickCode>// First check if there are any save files, if there are none we display an error screen
 
 zero_Interface.uI_EnergyHub.f_initializeUserSavedScenarios(zero_Interface.uI_EnergyHub.combobox_selectScenario);
 if (zero_Interface.uI_EnergyHub.combobox_selectScenario.getItems().length == 0) {
@@ -1720,181 +1595,123 @@ new Thread( () -&gt; {
 	// Select load scenario in the E-Hub configurator
 	zero_Interface.uI_EnergyHub.f_loadScenarioButtonAction();
 }).start();</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<RoundedRectangle>
+						<Id>1780089017185</Id>
+						<Name><![CDATA[roundRectangle6]]></Name>
+						<X>0</X>
+						<Y>0</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<OnClickCode>zero_Interface.f_startEnergyHubConfiguration();</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor/>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>360</Width>
+						<Height>60</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-657931</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>10</ArcRadius>
+					</RoundedRectangle>
+					<RoundedRectangle>
+						<Id>1780089017187</Id>
+						<Name><![CDATA[roundRectangle7]]></Name>
+						<X>10</X>
+						<Y>15</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor/>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>30</Width>
+						<Height>30</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-2302756</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>7</ArcRadius>
+					</RoundedRectangle>
+					<Text>
+						<Id>1780089017193</Id>
+						<Name><![CDATA[text6]]></Name>
+						<X>50</X>
+						<Y>18</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
-						<Presentation>
-							<RoundedRectangle>
-								<Id>1780089017185</Id>
-								<Name><![CDATA[roundRectangle6]]></Name>
-								<X>-165</X>
-								<Y>-40</Y>
-								<Label>
-									<X>10</X>
-									<Y>10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<OnClickCode>zero_Interface.f_startEnergyHubConfiguration();</OnClickCode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<ZHeight>10</ZHeight>
-								<LineWidth>1</LineWidth>
-								<LineColor/>
-								<LineMaterial>null</LineMaterial>
-								<LineStyle>SOLID</LineStyle>
-								<Width>320</Width>
-								<Height>60</Height>
-								<Rotation>0.0</Rotation>
-								<FillColor>-657931</FillColor>
-								<FillMaterial>null</FillMaterial>
-								<ArcRadius>10</ArcRadius>
-							</RoundedRectangle>
-							<RoundedRectangle>
-								<Id>1780089017187</Id>
-								<Name><![CDATA[roundRectangle7]]></Name>
-								<X>-145</X>
-								<Y>-25</Y>
-								<Label>
-									<X>10</X>
-									<Y>10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<ZHeight>10</ZHeight>
-								<LineWidth>1</LineWidth>
-								<LineColor/>
-								<LineMaterial>null</LineMaterial>
-								<LineStyle>SOLID</LineStyle>
-								<Width>30</Width>
-								<Height>30</Height>
-								<Rotation>0.0</Rotation>
-								<FillColor>-2302756</FillColor>
-								<FillMaterial>null</FillMaterial>
-								<ArcRadius>7</ArcRadius>
-							</RoundedRectangle>
-							<Line>
-								<Id>1780089017189</Id>
-								<Name><![CDATA[line8]]></Name>
-								<X>-130</X>
-								<Y>-5</Y>
-								<Label>
-									<X>10</X>
-									<Y>0</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<ZHeight>10</ZHeight>
-								<LineWidth>1</LineWidth>
-								<LineColor>-16777216</LineColor>
-								<LineMaterial>null</LineMaterial>
-								<LineStyle>SOLID</LineStyle>
-								<BeginArrowSize>1</BeginArrowSize>
-								<BeginArrowStyle>0</BeginArrowStyle>
-								<EndArrowSize>1</EndArrowSize>
-								<EndArrowStyle>0</EndArrowStyle>
-								<Dx>0</Dx>
-								<Dy>-12</Dy>
-								<Dz>0</Dz>
-							</Line>
-							<Line>
-								<Id>1780089017191</Id>
-								<Name><![CDATA[line9]]></Name>
-								<X>-130</X>
-								<Y>-5</Y>
-								<Label>
-									<X>10</X>
-									<Y>0</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<ZHeight>10</ZHeight>
-								<LineWidth>1</LineWidth>
-								<LineColor>-16777216</LineColor>
-								<LineMaterial>null</LineMaterial>
-								<LineStyle>SOLID</LineStyle>
-								<BeginArrowSize>1</BeginArrowSize>
-								<BeginArrowStyle>0</BeginArrowStyle>
-								<EndArrowSize>1</EndArrowSize>
-								<EndArrowStyle>0</EndArrowStyle>
-								<Dx>-5</Dx>
-								<Dy>-4</Dy>
-								<Dz>0</Dz>
-							</Line>
-							<Text>
-								<Id>1780089017193</Id>
-								<Name><![CDATA[text6]]></Name>
-								<X>-102</X>
-								<Y>-27</Y>
-								<Label>
-									<X>0</X>
-									<Y>-10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<Rotation>0.0</Rotation>
-								<Color>-16777216</Color>
-								<Text><![CDATA[Scenario laden]]></Text>
-								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>13</Size>
-									<Style>0</Style>
-								</Font>
-								<Alignment>LEFT</Alignment>
-							</Text>
-							<Text>
-								<Id>1780089017195</Id>
-								<Name><![CDATA[text7]]></Name>
-								<X>-102</X>
-								<Y>-7</Y>
-								<Label>
-									<X>0</X>
-									<Y>-10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<EmbeddedIcon>false</EmbeddedIcon>
-								<Z>0</Z>
-								<Rotation>0.0</Rotation>
-								<Color>-16777216</Color>
-								<Text><![CDATA[Laad een opgeslagen scenario in]]></Text>
-								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>9</Size>
-									<Style>0</Style>
-								</Font>
-								<Alignment>LEFT</Alignment>
-							</Text>
-						</Presentation>
-					</Group>
-					<Line>
-						<Id>1780089137483</Id>
-						<Name><![CDATA[line10]]></Name>
-						<X>-60</X>
-						<Y>-5</Y>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Scenario laden]]></Text>
+						<Font>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>14</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1780089017195</Id>
+						<Name><![CDATA[text7]]></Name>
+						<X>50</X>
+						<Y>36</Y>
 						<Label>
-							<X>10</X>
-							<Y>0</Y>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-520093696</Color>
+						<Text><![CDATA[Laad een opgeslagen scenario in]]></Text>
+						<Font>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>11</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Image>
+						<Id>1784733586072</Id>
+						<Name><![CDATA[image2]]></Name>
+						<X>16</X>
+						<Y>21</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
 						</Label>
 						<PublicFlag>true</PublicFlag>
 						<PresentationFlag>true</PresentationFlag>
@@ -1902,189 +1719,19 @@ new Thread( () -&gt; {
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-16777216</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<BeginArrowSize>1</BeginArrowSize>
-						<BeginArrowStyle>0</BeginArrowStyle>
-						<EndArrowSize>1</EndArrowSize>
-						<EndArrowStyle>0</EndArrowStyle>
-						<Dx>5</Dx>
-						<Dy>-4</Dy>
-						<Dz>0</Dz>
-					</Line>
-					<Line>
-						<Id>1780089178053</Id>
-						<Name><![CDATA[line11]]></Name>
-						<X>-67</X>
-						<Y>0</Y>
-						<Label>
-							<X>10</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-16777216</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<BeginArrowSize>1</BeginArrowSize>
-						<BeginArrowStyle>0</BeginArrowStyle>
-						<EndArrowSize>1</EndArrowSize>
-						<EndArrowStyle>0</EndArrowStyle>
-						<Dx>14</Dx>
-						<Dy>0</Dy>
-						<Dz>0</Dz>
-					</Line>
-					<Line>
-						<Id>1780089188349</Id>
-						<Name><![CDATA[line12]]></Name>
-						<X>-67</X>
-						<Y>0</Y>
-						<Label>
-							<X>10</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-16777216</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<BeginArrowSize>1</BeginArrowSize>
-						<BeginArrowStyle>0</BeginArrowStyle>
-						<EndArrowSize>1</EndArrowSize>
-						<EndArrowStyle>0</EndArrowStyle>
-						<Dx>0</Dx>
-						<Dy>-6</Dy>
-						<Dz>0</Dz>
-					</Line>
-					<Line>
-						<Id>1780089197620</Id>
-						<Name><![CDATA[line13]]></Name>
-						<X>-53</X>
-						<Y>0</Y>
-						<Label>
-							<X>10</X>
-							<Y>0</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-16777216</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<BeginArrowSize>1</BeginArrowSize>
-						<BeginArrowStyle>0</BeginArrowStyle>
-						<EndArrowSize>1</EndArrowSize>
-						<EndArrowStyle>0</EndArrowStyle>
-						<Dx>0</Dx>
-						<Dy>-6</Dy>
-						<Dz>0</Dz>
-					</Line>
+						<Width>18</Width>
+						<Height>18</Height>
+						<Rotation>0.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>download.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
 				</Presentation>
 			</Group>
-		</Presentation>
-	</Group>
-	<Group>
-		<Id>1780089671048</Id>
-		<Name><![CDATA[gr_removeCapacitySharingContracts]]></Name>
-		<X>260</X>
-		<Y>235</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Presentation>
-			<RoundedRectangle>
-				<Id>1780088886290</Id>
-				<Name><![CDATA[roundRectangle5]]></Name>
-				<X>-70</X>
-				<Y>-15</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>false</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>!zero_Interface.settings.isPublicModel()</VisibleCode>
-				<OnClickCode>for (GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()) {
-	GC.v_liveConnectionMetaData.clearSharedCapacityManagers();
-}
-
-//Update variable to change to custom scenario
-if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.f_setScenarioToCustom();
-}
-
-gr_removeCapacitySharingContracts.setVisible(false);
-
-zero_Interface.f_resetSettings();</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor>-1834917</LineColor>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>135</Width>
-				<Height>25</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-1</FillColor>
-				<FillMaterial>null</FillMaterial>
-				<ArcRadius>7</ArcRadius>
-			</RoundedRectangle>
-			<Text>
-				<Id>1780088920495</Id>
-				<Name><![CDATA[text5]]></Name>
-				<X>-36</X>
-				<Y>-9</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-1834917</Color>
-				<Text><![CDATA[Verwijder alle]]></Text>
-				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
-					<Size>10</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
 		</Presentation>
 	</Group>
 	<Group>

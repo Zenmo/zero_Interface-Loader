@@ -4,7 +4,7 @@
 		<Id>1722256365499</Id>
 		<Name><![CDATA[v_recievingGC]]></Name>
 		<X>740</X>
-		<Y>865</Y>
+		<Y>885</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -23,7 +23,7 @@
 		<Id>1722256365507</Id>
 		<Name><![CDATA[v_sendingGC]]></Name>
 		<X>740</X>
-		<Y>885</Y>
+		<Y>905</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -42,7 +42,7 @@
 		<Id>1722256365515</Id>
 		<Name><![CDATA[b_capacitySharingContractWeekendDistinction]]></Name>
 		<X>740</X>
-		<Y>905</Y>
+		<Y>925</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
