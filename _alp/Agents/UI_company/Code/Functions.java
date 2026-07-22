@@ -69,6 +69,9 @@ cb_curtailmentCompany.setSelected(p_scenarioSettings_Future.getPlannedCurtailmen
 //Mobility savings
 sl_mobilityDemandCompanyReduction.setValue(p_scenarioSettings_Future.getPlannedTransportSavings_pct(), true);
 
+//Smart Charging setting
+cb_smartChargingCompany.setSelected(false, true);
+
 //Cars (VOLGORDE BELANGRIJK)
 sl_hydrogenCarsCompany.setValue(p_scenarioSettings_Future.getPlannedHydrogenCars(), true);
 sl_electricCarsCompany.setValue(p_scenarioSettings_Future.getPlannedEVCars(), true);
@@ -198,12 +201,15 @@ sl_rooftopPVCompany.setValue(v_minPVSlider, true);
 sl_batteryCompany.setValue(v_minBatSlider, true);
 
 //Curtailment setting
-cb_curtailmentCompany.setSelected(false, false);
+cb_curtailmentCompany.setSelected(false, true);
 
 ////Mobility
 
 //Mobility savings
 sl_mobilityDemandCompanyReduction.setValue(0, true);
+
+//Smart Charging setting
+cb_smartChargingCompany.setSelected(false, true);
 
 //Cars (VOLGORDE BELANGRIJK)
 sl_hydrogenCarsCompany.setValue(p_scenarioSettings_Current.getCurrentHydrogenCars(), true);
@@ -1291,25 +1297,47 @@ f_setPresentationOrder();
 
 
 //Set the locations and visibilities of the ResultsUI agents
-uI_Results.f_setChartProfiles_Presentation(0, 0, true);
-uI_Results.f_setChartBalance_Presentation(530, 0, true);
-uI_Results.f_setChartGridLoad_Presentation(1060, 0, false);
-uI_Results.f_setChartSankey_Presentation(1060, 0, true);
-uI_Results.f_setResultsUIHeader(null, null, false);
+//uI_Results.f_setChartProfiles_Presentation(0, 0, true);
+//uI_Results.f_setChartBalance_Presentation(530, 0, true);
+//uI_Results.f_setChartGridLoad_Presentation(1060, 0, false);
+//uI_Results.f_setChartSankey_Presentation(1060, 0, true);
+//uI_Results.f_setResultsUIHeader(null, null, false);
+
+////TEMPORARY FUNCTION TO LET ALL CURRENT PROJECTS FUNCTION STILL!
+List<OL_ChartTypes> selectedChartTypes_Energy = new ArrayList<>();
+selectedChartTypes_Energy.add(OL_ChartTypes.PROFILES);
+selectedChartTypes_Energy.add(OL_ChartTypes.BAR_TOTALS);
+selectedChartTypes_Energy.add(OL_ChartTypes.LOAD_DURATION_CURVES);
+selectedChartTypes_Energy.add(OL_ChartTypes.SANKEY);
+
+List<OL_ChartTypes> selectedChartTypes_Economic = new ArrayList<>();
+selectedChartTypes_Economic.add(OL_ChartTypes.ENERGY_COSTS);
+selectedChartTypes_Economic.add(OL_ChartTypes.CONNECTION_COSTS);
+selectedChartTypes_Economic.add(OL_ChartTypes.CAPEX_AND_OPEX);
+selectedChartTypes_Economic.add(OL_ChartTypes.TOTAL_COSTS);
+
+List<OL_ChartTypes> selectedCharts_Sustainability = new ArrayList<>();
+selectedCharts_Sustainability.add(OL_ChartTypes.CO2);
+
+uI_Results.f_initializeResultsUI(selectedChartTypes_Energy, selectedChartTypes_Economic, selectedCharts_Sustainability, false);
+uI_Results2.f_initializeResultsUI(selectedChartTypes_Energy, selectedChartTypes_Economic, selectedCharts_Sustainability, false);
 
 //Disable KPIsummary button if KPIsummary is not selected
 if(zero_Interface.settings.showKPISummary() == null || !zero_Interface.settings.showKPISummary()){
 	uI_Results.getCheckbox_KPISummary().setVisible(false);
+	uI_Results2.getCheckbox_KPISummary().setVisible(false);
 }
 else{
 	//uI_Results.f_setCB_KPISummary_Presentation(10, -30, true);
 }
 
-//Set selected object display flase
+//Set selected object display false
 uI_Results.b_isCompanyUIResultsUI = true;
+uI_Results2.b_isCompanyUIResultsUI = true;
 
 //Set the color of the charts
 uI_Results.f_styleAllCharts(v_chartBackgroundColor, v_companyUILineColor, v_chartLineWidth, LINE_STYLE_SOLID);
+uI_Results2.f_styleAllCharts(v_chartBackgroundColor, v_companyUILineColor, v_chartLineWidth, LINE_STYLE_SOLID);
 /*ALCODEEND*/}
 
 double f_setCompanyUI(GridConnection GC)
@@ -1344,8 +1372,10 @@ double f_updateUIResultsCompanyUI()
 {/*ALCODESTART::1714656835269*/
 //Update data
 uI_Results.f_updateResultsUI(p_gridConnection);
+uI_Results2.f_updateResultsUI(p_gridConnection);
 
 //Set all charts
+/*
 if(p_gridConnection.v_rapidRunData != null){
 	uI_Results.f_setAllCharts();
 }
@@ -1359,6 +1389,7 @@ if(cb_showGridloadPlot.isSelected())
 else{
 	uI_Results.f_setChartSankey_Presentation(null, null, true);
 }
+*/
 /*ALCODEEND*/}
 
 double f_setHeatingRB()
@@ -1508,6 +1539,11 @@ if (p_gridConnection.c_tripTrackers.size() > 0){
 	currentTransportSavings = - roundToInt(p_gridConnection.c_tripTrackers.get(0).getDistanceScaling_fr()*100) + 100;
 }
 
+//Find the current smart charging setting
+boolean smartChargingSetting = false;
+if(p_gridConnection.f_isAssetManagementActive(I_ChargingManagement.class)){
+	smartChargingSetting = p_gridConnection.f_getExternalAssetManagement(I_ChargingManagement.class) instanceof J_ChargingManagementMaxAvailablePower;
+}
 
 //Find the current number of vehicles for each type
 int nbEcarsCurrent = count(p_gridConnection.c_electricVehicles, p->p.getEAType() == OL_EnergyAssetType.ELECTRIC_VEHICLE);
@@ -1564,6 +1600,9 @@ cb_curtailmentCompany.setSelected(currentCurtailmentSetting, false);
 
 //Mobility savings
 sl_mobilityDemandCompanyReduction.setValue(currentTransportSavings, false);
+
+//Smart charging
+cb_smartChargingCompany.setSelected(smartChargingSetting, false);
 
 //Cars 
 sl_electricCarsCompany.setValue(nbEcarsCurrent, false);
@@ -1714,7 +1753,7 @@ sl_rooftopPVCompany.setEnabled(enable);
 cb_curtailmentCompany.setEnabled(enable);
 
 sl_mobilityDemandCompanyReduction.setEnabled(enable);
-
+cb_smartChargingCompany.setEnabled(enable);
 sl_electricCarsCompany.setEnabled(enable);
 sl_hydrogenCarsCompany.setEnabled(enable);
 sl_petroleumFuelCarsCompany.setEnabled(enable);
@@ -2126,6 +2165,8 @@ double f_setPresentationOrder()
 {/*ALCODESTART::1780999540461*/
 presentation.remove(uI_Results_presentation);
 presentation.insert(presentation.size()-1, uI_Results_presentation);
+presentation.remove(uI_Results2_presentation);
+presentation.insert(presentation.size()-1, uI_Results2_presentation);
 presentation.remove(gr_loadIcon);
 presentation.insert(presentation.size()-1, gr_loadIcon);
 presentation.remove(gr_simulateYearScreen);

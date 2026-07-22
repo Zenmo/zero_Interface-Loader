@@ -61,12 +61,6 @@
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Id>1756975183276</Id>
-		<Path>noun-electricity-3408805.png</Path>
-		<ReferencedFromUserCode>false</ReferencedFromUserCode>
-		<Location>FILE_SYSTEM</Location>
-	</Resource>
-	<Resource>
 		<Id>1756975183277</Id>
 		<Path>noun-fire-2429630.png</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
