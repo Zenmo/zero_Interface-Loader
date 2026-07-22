@@ -180,4 +180,10 @@
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
+	<Resource>
+		<Id>1784537966840</Id>
+		<Path>car_black.png</Path>
+		<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		<Location>FILE_SYSTEM</Location>
+	</Resource>
 </ModelResources>

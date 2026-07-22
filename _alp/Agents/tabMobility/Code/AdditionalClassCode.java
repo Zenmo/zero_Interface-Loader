@@ -12,12 +12,20 @@ public int getCurrentPageIndex() {
 }
 
 // Slider groups
-public ShapeGroup getGroupMobilitySliders_Households() {
-	return this.gr_mobilitySliders_households;
+public ShapeGroup getGroupMobilitySliders_Households1() {
+	return this.gr_mobilitySliders_households1;
 }
 
-public ShapeGroup getGroupMobilitySliders_Companies() {
-	return this.gr_mobilitySliders_companies;
+public ShapeGroup getGroupMobilitySliders_Households2() {
+	return this.gr_mobilitySliders_households2;
+}
+
+public ShapeGroup getGroupMobilitySliders_Companies1() {
+	return this.gr_mobilitySliders_companies1;
+}
+
+public ShapeGroup getGroupMobilitySliders_Companies2() {
+	return this.gr_mobilitySliders_companies2;
 }
 
 //Household sliders
