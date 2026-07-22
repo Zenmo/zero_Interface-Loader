@@ -557,8 +557,8 @@ v_clickedObjectText</TextCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1708522580070</Id>
 		<Name><![CDATA[button_goToUI]]></Name>
-		<X>1160</X>
-		<Y>940</Y>
+		<X>1110</X>
+		<Y>910</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -567,7 +567,7 @@ v_clickedObjectText</TextCode>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="110" Height="23">
+		<BasicProperties Width="170.87" Height="35.727">
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
@@ -6537,123 +6537,6 @@ else{
 		<FillMaterial>null</FillMaterial>
 		<ArcRadius>3</ArcRadius>
 	</RoundedRectangle>
-	<Control Type="CheckBox">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1725017697644</Id>
-		<Name><![CDATA[checkbox_cables]]></Name>
-		<X>1145</X>
-		<Y>58</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="105" Height="20">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor>-16777216</TextColor>
-			<Enabled>true</Enabled>
-			<ActionCode>boolean showCables = checkbox_cables.isSelected();
-
-for(GISRoute GISCable : c_LVCables){
-	GISCable.setVisible(showCables);
-}
-
-for(GISRoute GISCable : c_MVCables){
-	GISCable.setVisible(showCables);
-}
-
-gr_cablesLegend.setVisible(showCables);</ActionCode>
-		</BasicProperties>
-		<ExtendedProperties>
-			<Font Name="HOLONline2" Size="11" Style="0"/>
-			<LabelText>Toon stroomnet</LabelText>
-			<DefaultValueCode>false</DefaultValueCode>
-			<LinkTo>false</LinkTo>
-		</ExtendedProperties>
-	</Control>
-	<Control Type="CheckBox">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1734444497900</Id>
-		<Name><![CDATA[cb_showFilterInterface]]></Name>
-		<X>1230</X>
-		<Y>780</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="60" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor>-16777216</TextColor>
-			<VisibleCode>cb_showFilterInterface.isEnabled()</VisibleCode>
-			<Enabled>true</Enabled>
-			<EnableExpression>!settings.isPublicModel() &amp;&amp; c_cbFilterOptions.size() &gt; 0</EnableExpression>
-			<ActionCode>gr_filterInterface.setVisible(cb_showFilterInterface.isSelected());
-
-if(! cb_showFilterInterface.isSelected()){
-	v_currentUIMode = OL_UIMode.DEFAULT;
-	f_setForcedClickScreenTextBoxes("", null, null, "", null, null);
-}
-else{
-	v_currentUIMode = OL_UIMode.FILTER;
-	f_setForcedClickScreenTextBoxes("FILTERMODUS", (Color)teal, null, "", null, null);
-}</ActionCode>
-		</BasicProperties>
-		<ExtendedProperties>
-			<Font Name="HOLONline2" Size="11" Style="0"/>
-			<LabelText>Filters</LabelText>
-			<LinkTo>false</LinkTo>
-		</ExtendedProperties>
-	</Control>
-	<Control Type="CheckBox">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1780213147396</Id>
-		<Name><![CDATA[checkbox_netPlanes]]></Name>
-		<X>1145</X>
-		<Y>28</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="110" Height="23">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor>-16777216</TextColor>
-			<Enabled>true</Enabled>
-			<ActionCode>if( checkbox_netPlanes.isSelected() ){
-	java.util.Random rand = new java.util.Random(12345);
-	for (GISRegion plane : c_GISNetplanes) {
-	    plane.setVisible(true);
-	    // Generate random colors with slight transparency
-	    int red = 50 + rand.nextInt(200);
-	    int green = 50 + rand.nextInt(200);
-	    int blue = 50 + rand.nextInt(200);
-	    plane.setFillColor(new java.awt.Color(red, green, blue, 128));
-	    plane.setLineColor(java.awt.Color.BLACK);
-	}
-}
-else{
-	for (GISRegion plane : c_GISNetplanes) {
-	    plane.setVisible(false);
-	}
-}</ActionCode>
-		</BasicProperties>
-		<ExtendedProperties>
-			<Font Name="HOLONline2" Size="11" Style="0"/>
-			<LabelText>Toon netvlakken</LabelText>
-			<DefaultValueCode>false</DefaultValueCode>
-			<LinkTo>false</LinkTo>
-		</ExtendedProperties>
-	</Control>
 	<Group>
 		<Id>1734444441402</Id>
 		<Name><![CDATA[gr_filterInterface]]></Name>
@@ -6744,7 +6627,6 @@ else{
 					<FillColor>-1</FillColor>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
-					<EnableExpression>!gr_forceMapSelection.isVisible()</EnableExpression>
 					<ActionCode>if( ! cb_filterOptions.getValue().equals("-")){
 	if( c_selectedFilterOptions.contains(map_UINamesFilterOption.get(cb_filterOptions.getValue()))){
 		f_setErrorScreen("Deze filter is al geselecteerd", 0, 0);
@@ -6906,7 +6788,7 @@ cb_filterOptions.setValueIndex(0, false);</ActionCode>
 			</Text>
 			<Group>
 				<Id>1780213504540</Id>
-				<Name><![CDATA[gr_closeInfoText1]]></Name>
+				<Name><![CDATA[gr_closeFilterMenu]]></Name>
 				<X>550</X>
 				<Y>21</Y>
 				<Label>
@@ -6917,7 +6799,8 @@ cb_filterOptions.setValueIndex(0, false);</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>cb_showFilterInterface.setSelected(false, true);</OnClickCode>
+				<VisibleCode>v_filterButton.isEnabled()</VisibleCode>
+				<OnClickCode>v_filterButton.setSelected(false, true);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -10053,6 +9936,354 @@ else {
 				</Font>
 				<Alignment>CENTER</Alignment>
 			</Text>
+		</Presentation>
+	</Group>
+	<Rectangle>
+		<Id>1784730291300</Id>
+		<Name><![CDATA[rectangle]]></Name>
+		<X>2720</X>
+		<Y>1400</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>3</LineWidth>
+		<LineColor>-16744320</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>460</Width>
+		<Height>220</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Rectangle>
+	<Text>
+		<Id>1784730306870</Id>
+		<Name><![CDATA[txt_additionalOptions]]></Name>
+		<X>2740</X>
+		<Y>1410</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Additional Option button initialization]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>18</Size>
+			<Style>1</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Group>
+		<Id>1784733259040</Id>
+		<Name><![CDATA[gr_additionalOptionsButtons]]></Name>
+		<X>1170</X>
+		<Y>110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Group>
+				<Id>1784730053983</Id>
+				<Name><![CDATA[gr_filterButton]]></Name>
+				<X>55</X>
+				<Y>2</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<RoundedRectangle>
+						<Id>1784730053985</Id>
+						<Name><![CDATA[rect_filterButton]]></Name>
+						<X>0</X>
+						<Y>0</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<OnClickCode>if(v_filterButton.isEnabled()){
+	v_filterButton.setSelected(!v_filterButton.isSelected(), false);
+	
+	gr_filterInterface.setVisible(v_filterButton.isSelected());
+	
+	if(! v_filterButton.isSelected()){
+		v_currentUIMode = OL_UIMode.DEFAULT;
+		f_setForcedClickScreenTextBoxes("", null, null, "", null, null);
+	}
+	else{
+		v_currentUIMode = OL_UIMode.FILTER;
+		f_setForcedClickScreenTextBoxes("FILTERMODUS", (Color)teal, null, "", null, null);
+	}
+}</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor>-1</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>44</Width>
+						<Height>44</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-1052689</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>6</ArcRadius>
+					</RoundedRectangle>
+					<Image>
+						<Id>1784730053989</Id>
+						<Name><![CDATA[image_filterButton]]></Name>
+						<X>13</X>
+						<Y>13</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>18</Width>
+						<Height>18</Height>
+						<Rotation>0.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>filter-icon_black.png</ClassName>
+							</ImageResourceReference>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>filter-icon_white.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
+				</Presentation>
+			</Group>
+			<Group>
+				<Id>1784730124875</Id>
+				<Name><![CDATA[gr_cableButton]]></Name>
+				<X>1</X>
+				<Y>2</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<RoundedRectangle>
+						<Id>1784730124877</Id>
+						<Name><![CDATA[rect_cableButton]]></Name>
+						<X>0</X>
+						<Y>0</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<OnClickCode>if(v_cableButton.isEnabled()){
+	v_cableButton.setSelected(!v_cableButton.isSelected(), false);
+	
+	boolean showCables = v_cableButton.isSelected();
+	
+	for(GISRoute GISCable : c_LVCables){
+		GISCable.setVisible(showCables);
+	}
+	
+	for(GISRoute GISCable : c_MVCables){
+		GISCable.setVisible(showCables);
+	}
+	
+	gr_cablesLegend.setVisible(showCables);
+}</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor>-1</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>44</Width>
+						<Height>44</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-1052689</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>6</ArcRadius>
+					</RoundedRectangle>
+					<Image>
+						<Id>1784730124881</Id>
+						<Name><![CDATA[image_cableButton]]></Name>
+						<X>13</X>
+						<Y>13</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>18</Width>
+						<Height>18</Height>
+						<Rotation>0.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>cables_icon_black.png</ClassName>
+							</ImageResourceReference>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>cables_icon_white.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
+				</Presentation>
+			</Group>
+			<Group>
+				<Id>1784730134399</Id>
+				<Name><![CDATA[gr_gridAreasButton]]></Name>
+				<X>-55</X>
+				<Y>2</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<RoundedRectangle>
+						<Id>1784730134401</Id>
+						<Name><![CDATA[rect_gridAreasButton]]></Name>
+						<X>0</X>
+						<Y>0</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<OnClickCode>if(v_gridAreasButton.isEnabled()){
+	v_gridAreasButton.setSelected(!v_gridAreasButton.isSelected(), false);
+	
+	if( v_gridAreasButton.isSelected() ){
+		java.util.Random rand = new java.util.Random(12345);
+		for (GISRegion plane : c_GISNetplanes) {
+		    plane.setVisible(true);
+		    // Generate random colors with slight transparency
+		    int red = 50 + rand.nextInt(200);
+		    int green = 50 + rand.nextInt(200);
+		    int blue = 50 + rand.nextInt(200);
+		    plane.setFillColor(new java.awt.Color(red, green, blue, 128));
+		    plane.setLineColor(java.awt.Color.BLACK);
+		}
+	}
+	else{
+		for (GISRegion plane : c_GISNetplanes) {
+		    plane.setVisible(false);
+		}
+	}
+}</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor>-1</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>44</Width>
+						<Height>44</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-1052689</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>6</ArcRadius>
+					</RoundedRectangle>
+					<Image>
+						<Id>1784730134405</Id>
+						<Name><![CDATA[image_gridAreasButton]]></Name>
+						<X>13</X>
+						<Y>13</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>18</Width>
+						<Height>18</Height>
+						<Rotation>0.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>gridAreas-icon_black.png</ClassName>
+							</ImageResourceReference>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>gridAreas-icon_white.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
+				</Presentation>
+			</Group>
 		</Presentation>
 	</Group>
 </Presentation>

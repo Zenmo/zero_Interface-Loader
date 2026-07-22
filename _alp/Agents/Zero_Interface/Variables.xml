@@ -2296,6 +2296,138 @@
 			</InitialValue>
 		</Properties>
 	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1784730362290</Id>
+		<Name><![CDATA[v_additionalOptionButtonDefaultStyling]]></Name>
+		<X>2760</X>
+		<Y>1560</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(teal, null, teal, LINE_STYLE_SOLID, 1)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1784730365711</Id>
+		<Name><![CDATA[v_additionalOptionButtonSelectedStyling]]></Name>
+		<X>2760</X>
+		<Y>1580</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(white, black, white, LINE_STYLE_SOLID, 1)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1784730368501</Id>
+		<Name><![CDATA[v_additionalOptionButtonDisabledStyling]]></Name>
+		<X>2760</X>
+		<Y>1600</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(silver, black, white, LINE_STYLE_SOLID, 1)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1784730492313</Id>
+		<Name><![CDATA[v_filterButton]]></Name>
+		<X>2760</X>
+		<Y>1490</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[CustomButton]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new CustomButton(rect_filterButton, null, image_filterButton, new CustomButton.CustomButtonStyling(v_additionalOptionButtonDefaultStyling, v_additionalOptionButtonSelectedStyling, v_additionalOptionButtonDisabledStyling, v_additionalOptionButtonDisabledStyling), new CustomButton.CustomButtonImageSelection(1, 0, 1, 1))]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1784730719951</Id>
+		<Name><![CDATA[v_cableButton]]></Name>
+		<X>2760</X>
+		<Y>1510</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[CustomButton]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new CustomButton(rect_cableButton, null, image_cableButton, new CustomButton.CustomButtonStyling(v_additionalOptionButtonDefaultStyling, v_additionalOptionButtonSelectedStyling, v_additionalOptionButtonDisabledStyling, v_additionalOptionButtonDisabledStyling), new CustomButton.CustomButtonImageSelection(1, 0, 1, 1))]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1784730720964</Id>
+		<Name><![CDATA[v_gridAreasButton]]></Name>
+		<X>2760</X>
+		<Y>1530</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[CustomButton]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new CustomButton(rect_gridAreasButton, null, image_gridAreasButton, new CustomButton.CustomButtonStyling(v_additionalOptionButtonDefaultStyling, v_additionalOptionButtonSelectedStyling, v_additionalOptionButtonDisabledStyling, v_additionalOptionButtonDisabledStyling), new CustomButton.CustomButtonImageSelection(1, 0, 1, 1))]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
 	<Variable Class="Parameter">
 		<Id>1715858732720</Id>
 		<Name><![CDATA[energyModel]]></Name>

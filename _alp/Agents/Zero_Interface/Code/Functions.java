@@ -642,11 +642,6 @@ button_goToUI.setVisible(false);
 //Create and set the grid topology colors (Netvlakken)
 f_setGridTopologyColors();
 
-//Disable cable button if no cables have been loaded in
-if(c_LVCables.size() == 0 && c_MVCables.size() == 0){
-	checkbox_cables.setVisible(false);
-}
-
 //Set order of certain layovers and submenus
 f_initializePresentationOrder();
 
@@ -660,6 +655,9 @@ b_updateLiveCongestionColors = true;
 
 //Set filter combo box options
 f_setFilterComboBoxOptions();
+
+//Disable/Enable additional options buttons
+f_initializeAdditionalOptionsButtons();
 /*ALCODEEND*/}
 
 GISRegion f_createGISObject(double[] gisTokens)
@@ -2560,6 +2558,7 @@ double f_initializePresentationOrder()
 {/*ALCODESTART::1753440184174*/
 //Set order of certain layovers and submenus
 f_setShapePresentationOnTop(map);
+f_setShapePresentationOnTop(gr_additionalOptionsButtons);
 f_setShapePresentationOnTop(gr_zoomButton);
 f_setShapePresentationOnTop(gr_mapOverlayButtons);
 f_setShapePresentationOnTop(gr_forceMapSelection);
@@ -2591,6 +2590,10 @@ f_setForcedClickScreenMessageText("");
 f_setForcedClickScreenVisibility(true);
 
 v_currentUIMode = OL_UIMode.EHUBSELECTION;
+v_filterButton.setSelected(true, false);
+v_filterButton.setEnabled(false);
+gr_filterInterface.setVisible(true);
+
 /*ALCODEEND*/}
 
 double f_finalizeEnergyHubConfiguration()
@@ -2621,7 +2624,7 @@ if(v_currentUIMode == OL_UIMode.EHUBSELECTION){
 	uI_EnergyHub.v_energyHubCoop = v_customEnergyCoop;
 	
 	//Set E-hub selection mode false
-	v_currentUIMode = OL_UIMode.DEFAULT;
+	v_currentUIMode = OL_UIMode.EHUB;
 	
 	uI_EnergyHub.f_initializeEnergyHubDashboard();
 }
@@ -2911,7 +2914,8 @@ v_currentUIMode = OL_UIMode.DEFAULT;
 f_setForcedClickScreenTextBoxes("", new Color(255, 255, 255), new Color(0, 0, 0), "", new Color(255, 255, 255), new Color(0, 0, 0));
 f_setForcedClickScreenVisibility(false);
 
-cb_showFilterInterface.setSelected(false, true);
+v_filterButton.setSelected(false, true);
+v_filterButton.setEnabled(true);
 /*ALCODEEND*/}
 
 double f_filterHasEV()
@@ -4306,5 +4310,32 @@ i_scenario5.setVisible(true);
 v_infoText.scenario6 = "";
 i_scenario6.setVisible(true);
 */
+/*ALCODEEND*/}
+
+double f_initializeAdditionalOptionsButtons()
+{/*ALCODESTART::1784730430353*/
+//Filter options
+if(!settings.isPublicModel() && c_cbFilterOptions.size()>0){
+	v_filterButton.setVisible(true);
+}
+else{
+	v_filterButton.setVisible(false);
+}
+
+//Cables
+if(c_LVCables.size() + c_MVCables.size()>0){
+	v_cableButton.setVisible(true);
+}
+else{
+	v_cableButton.setVisible(false);
+}
+
+//Grid areas
+if(c_GISNetplanes.size()>0){
+	v_gridAreasButton.setVisible(true);
+}
+else{
+	v_gridAreasButton.setVisible(false);
+}
 /*ALCODEEND*/}
 

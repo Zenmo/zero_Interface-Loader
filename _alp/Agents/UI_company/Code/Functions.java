@@ -1839,14 +1839,15 @@ new Thread( () -> {
 	//Update and show kpi summary chart after run
 	if(zero_Interface.settings.showKPISummary() != null && zero_Interface.settings.showKPISummary()){
 		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
+		uI_Results2.getCheckbox_KPISummary().setSelected(true, true);
 	}
 	
 	//Update results up to date boolean
 	uI_Results.f_enableNonLivePlotRadioButtons(true);
+	uI_Results2.f_enableNonLivePlotRadioButtons(true);
 	zero_Interface.b_resultsUpToDate = true;
 	zero_Interface.gr_simulateYear.setVisible(false);
 	zero_Interface.uI_Results.f_enableNonLivePlotRadioButtons(true);
-	
 }).start();
 
 /*ALCODEEND*/}

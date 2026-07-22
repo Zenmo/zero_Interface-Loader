@@ -585,7 +585,7 @@ zero_Interface.map.setPos(410, 130);
 
 zero_Interface.f_clearFilters();
 zero_Interface.f_selectMapOverlayButton(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT));
-zero_Interface.cb_showFilterInterface.setSelected(false, true);
+zero_Interface.v_filterButton.setSelected(false, true);
 zero_Interface.f_updateMainInterfaceSliders();
 
 zero_Interface.f_setStartView();
