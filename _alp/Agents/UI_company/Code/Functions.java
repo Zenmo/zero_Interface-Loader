@@ -69,6 +69,9 @@ cb_curtailmentCompany.setSelected(p_scenarioSettings_Future.getPlannedCurtailmen
 //Mobility savings
 sl_mobilityDemandCompanyReduction.setValue(p_scenarioSettings_Future.getPlannedTransportSavings_pct(), true);
 
+//Smart Charging setting
+cb_smartChargingCompany.setSelected(false, true);
+
 //Cars (VOLGORDE BELANGRIJK)
 sl_hydrogenCarsCompany.setValue(p_scenarioSettings_Future.getPlannedHydrogenCars(), true);
 sl_electricCarsCompany.setValue(p_scenarioSettings_Future.getPlannedEVCars(), true);
@@ -198,12 +201,15 @@ sl_rooftopPVCompany.setValue(v_minPVSlider, true);
 sl_batteryCompany.setValue(v_minBatSlider, true);
 
 //Curtailment setting
-cb_curtailmentCompany.setSelected(false, false);
+cb_curtailmentCompany.setSelected(false, true);
 
 ////Mobility
 
 //Mobility savings
 sl_mobilityDemandCompanyReduction.setValue(0, true);
+
+//Smart Charging setting
+cb_smartChargingCompany.setSelected(false, true);
 
 //Cars (VOLGORDE BELANGRIJK)
 sl_hydrogenCarsCompany.setValue(p_scenarioSettings_Current.getCurrentHydrogenCars(), true);
@@ -1533,6 +1539,11 @@ if (p_gridConnection.c_tripTrackers.size() > 0){
 	currentTransportSavings = - roundToInt(p_gridConnection.c_tripTrackers.get(0).getDistanceScaling_fr()*100) + 100;
 }
 
+//Find the current smart charging setting
+boolean smartChargingSetting = false;
+if(p_gridConnection.f_isAssetManagementActive(I_ChargingManagement.class)){
+	smartChargingSetting = p_gridConnection.f_getExternalAssetManagement(I_ChargingManagement.class) instanceof J_ChargingManagementMaxAvailablePower;
+}
 
 //Find the current number of vehicles for each type
 int nbEcarsCurrent = count(p_gridConnection.c_electricVehicles, p->p.getEAType() == OL_EnergyAssetType.ELECTRIC_VEHICLE);
@@ -1589,6 +1600,9 @@ cb_curtailmentCompany.setSelected(currentCurtailmentSetting, false);
 
 //Mobility savings
 sl_mobilityDemandCompanyReduction.setValue(currentTransportSavings, false);
+
+//Smart charging
+cb_smartChargingCompany.setSelected(smartChargingSetting, false);
 
 //Cars 
 sl_electricCarsCompany.setValue(nbEcarsCurrent, false);
@@ -1739,7 +1753,7 @@ sl_rooftopPVCompany.setEnabled(enable);
 cb_curtailmentCompany.setEnabled(enable);
 
 sl_mobilityDemandCompanyReduction.setEnabled(enable);
-
+cb_smartChargingCompany.setEnabled(enable);
 sl_electricCarsCompany.setEnabled(enable);
 sl_hydrogenCarsCompany.setEnabled(enable);
 sl_petroleumFuelCarsCompany.setEnabled(enable);
