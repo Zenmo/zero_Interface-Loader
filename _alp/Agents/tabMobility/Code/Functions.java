@@ -1907,7 +1907,7 @@ cb_companiesSpreadChargingEVs.setSelected(smartCharging, false);
 // Cars
 int PetroleumFuelCars = 0;
 int ElectricCars = v_totalNumberOfGhostVehicle_Cars;
-
+int HydrogenCars = 0;
 for (GridConnection gc : allUtilityGridConnections) {
 	if(gc.v_isActive){
 		for (J_EAFuelVehicle vehicle : gc.c_petroleumFuelVehicles) {
