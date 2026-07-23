@@ -2787,7 +2787,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 			<Image>
 				<Id>1780139159561</Id>
 				<Name><![CDATA[arrowLeftResidential]]></Name>
-				<X>-46</X>
+				<X>-47</X>
 				<Y>-10</Y>
 				<Label>
 					<X>0</X>
