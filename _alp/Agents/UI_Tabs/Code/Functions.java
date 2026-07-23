@@ -7,16 +7,32 @@ pop_tabEHub_presentation.setVisible(false);
 
 switch (v_selectedTabType) {
 	case ELECTRICITY:
+		v_UITabsElectricityButton.setSelected(true, false);
+		v_UITabsHeatingButton.setSelected(false, false);
+		v_UITabsMobilityButton.setSelected(false, false);
+		v_UITabsEHubButton.setSelected(false, false);
 		pop_tabElectricity_presentation.setVisible(true);
 		break;
 	case HEAT:
+		v_UITabsElectricityButton.setSelected(false, false);
+		v_UITabsHeatingButton.setSelected(true, false);
+		v_UITabsMobilityButton.setSelected(false, false);
+		v_UITabsEHubButton.setSelected(false, false);
 		pop_tabHeating_presentation.setVisible(true);
 		break;
 	case MOBILITY:
+		v_UITabsElectricityButton.setSelected(false, false);
+		v_UITabsHeatingButton.setSelected(false, false);
+		v_UITabsMobilityButton.setSelected(true, false);
+		v_UITabsEHubButton.setSelected(false, false);
 		pop_tabMobility_presentation.setVisible(true);
 		break;
 	case HUB:
 	case NFATO:
+		v_UITabsElectricityButton.setSelected(false, false);
+		v_UITabsHeatingButton.setSelected(false, false);
+		v_UITabsMobilityButton.setSelected(false, false);
+		v_UITabsEHubButton.setSelected(true, false);
 		pop_tabEHub_presentation.setVisible(true);
 		break;
 }

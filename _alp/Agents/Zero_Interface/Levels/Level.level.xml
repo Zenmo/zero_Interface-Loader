@@ -5683,7 +5683,7 @@ else{
 		<Id>1779958399038</Id>
 		<Name><![CDATA[txt_sliderHeader]]></Name>
 		<X>20</X>
-		<Y>310</Y>
+		<Y>300</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -5696,7 +5696,7 @@ else{
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16744320</Color>
-		<Text><![CDATA[CUSTOM INPUT]]></Text>
+		<Text><![CDATA[TYPES]]></Text>
 		<Font>
 			<Name><![CDATA[HolonBLOCK2]]></Name>
 			<Size>20</Size>

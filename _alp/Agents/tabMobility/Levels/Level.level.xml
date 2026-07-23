@@ -4,7 +4,7 @@
 		<Id>1784478882806</Id>
 		<Name><![CDATA[max_size_tabs]]></Name>
 		<X>0</X>
-		<Y>40</Y>
+		<Y>0</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -83,7 +83,7 @@
 		<Id>1722247567090</Id>
 		<Name><![CDATA[gr_mobilitySliders_companies2]]></Name>
 		<X>1290</X>
-		<Y>40</Y>
+		<Y>0</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -92,8 +92,8 @@
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>20</XCode>
-		<YCode>40</YCode>
+		<XCode>0</XCode>
+		<YCode>0</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -483,7 +483,7 @@ f_setPetroleumFuelTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiv
 				<Id>1784581600279</Id>
 				<Name><![CDATA[txt_mobilitySlidersHousesholdsDescription3]]></Name>
 				<X>50</X>
-				<Y>25</Y>
+				<Y>27</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -520,7 +520,7 @@ f_setPetroleumFuelTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiv
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
-				<Height>17</Height>
+				<Height>21</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -528,7 +528,7 @@ f_setPetroleumFuelTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiv
 						<ClassName>car_icon_black.png</ClassName>
 					</ImageResourceReference>
 				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
+				<OriginalSize>true</OriginalSize>
 			</Image>
 			<Text>
 				<Id>1784583355089</Id>
@@ -1196,7 +1196,7 @@ if(selectedChargingAttitude != null){
 		<Id>1758182984074</Id>
 		<Name><![CDATA[gr_mobilitySliders_households1]]></Name>
 		<X>0</X>
-		<Y>40</Y>
+		<Y>0</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1205,8 +1205,8 @@ if(selectedChargingAttitude != null){
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>20</XCode>
-		<YCode>40</YCode>
+		<XCode>0</XCode>
+		<YCode>0</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -1242,7 +1242,7 @@ if(selectedChargingAttitude != null){
 				<Id>1777651310496</Id>
 				<Name><![CDATA[txt_mobilitySlidersHousesholdsDescription]]></Name>
 				<X>50</X>
-				<Y>25</Y>
+				<Y>27</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1617,8 +1617,8 @@ gr_householdSettingsV2G_privateParkedCars.setVisible(cb_householdActivateV2GPriv
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>20</Width>
-				<Height>17</Height>
+				<Width>21</Width>
+				<Height>21</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -1996,7 +1996,7 @@ else{
 		<Id>1780139178078</Id>
 		<Name><![CDATA[gr_pageIndicator]]></Name>
 		<X>200</X>
-		<Y>20</Y>
+		<Y>-20</Y>
 		<Label>
 			<X>7.073</X>
 			<Y>0</Y>
@@ -2005,8 +2005,8 @@ else{
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>220</XCode>
-		<YCode>20</YCode>
+		<XCode>200</XCode>
+		<YCode>-20</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -2150,7 +2150,7 @@ else{
 		<Id>1784478882793</Id>
 		<Name><![CDATA[max_size_tabs1]]></Name>
 		<X>0</X>
-		<Y>520</Y>
+		<Y>480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2178,7 +2178,7 @@ else{
 		<Id>1784577080164</Id>
 		<Name><![CDATA[gr_mobilitySliders_households2]]></Name>
 		<X>430</X>
-		<Y>40</Y>
+		<Y>0</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2187,8 +2187,8 @@ else{
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>20</XCode>
-		<YCode>40</YCode>
+		<XCode>0</XCode>
+		<YCode>0</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -2224,7 +2224,7 @@ else{
 				<Id>1784577080168</Id>
 				<Name><![CDATA[txt_mobilitySlidersHousesholdsDescription2]]></Name>
 				<X>50</X>
-				<Y>25</Y>
+				<Y>27</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2261,7 +2261,7 @@ else{
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
-				<Height>17</Height>
+				<Height>21</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -2269,7 +2269,7 @@ else{
 						<ClassName>car_icon_black.png</ClassName>
 					</ImageResourceReference>
 				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
+				<OriginalSize>true</OriginalSize>
 			</Image>
 			<Text>
 				<Id>1758183152912</Id>
@@ -3047,7 +3047,7 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 		<Id>1784585597752</Id>
 		<Name><![CDATA[gr_mobilitySliders_companies1]]></Name>
 		<X>860</X>
-		<Y>40</Y>
+		<Y>0</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3056,8 +3056,8 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>20</XCode>
-		<YCode>40</YCode>
+		<XCode>0</XCode>
+		<YCode>0</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -3093,7 +3093,7 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 				<Id>1784585597832</Id>
 				<Name><![CDATA[txt_mobilitySlidersHousesholdsDescription4]]></Name>
 				<X>50</X>
-				<Y>25</Y>
+				<Y>27</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -3130,7 +3130,7 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
-				<Height>17</Height>
+				<Height>21</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -3138,7 +3138,7 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 						<ClassName>car_icon_black.png</ClassName>
 					</ImageResourceReference>
 				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
+				<OriginalSize>true</OriginalSize>
 			</Image>
 			<Text>
 				<Id>1722247567106</Id>

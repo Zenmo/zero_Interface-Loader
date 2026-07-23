@@ -61,12 +61,6 @@
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Id>1756975183277</Id>
-		<Path>noun-fire-2429630.png</Path>
-		<ReferencedFromUserCode>false</ReferencedFromUserCode>
-		<Location>FILE_SYSTEM</Location>
-	</Resource>
-	<Resource>
 		<Id>1756975183279</Id>
 		<Path>save_icon.png</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
@@ -243,6 +237,36 @@
 	<Resource>
 		<Id>1784796283799</Id>
 		<Path>car_icon_black.png</Path>
+		<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		<Location>FILE_SYSTEM</Location>
+	</Resource>
+	<Resource>
+		<Id>1784814403536</Id>
+		<Path>electricity-icon_yellow.png</Path>
+		<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		<Location>FILE_SYSTEM</Location>
+	</Resource>
+	<Resource>
+		<Id>1784814403537</Id>
+		<Path>flame_red.png</Path>
+		<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		<Location>FILE_SYSTEM</Location>
+	</Resource>
+	<Resource>
+		<Id>1784815194098</Id>
+		<Path>EHub-icon_black.png</Path>
+		<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		<Location>FILE_SYSTEM</Location>
+	</Resource>
+	<Resource>
+		<Id>1784815194122</Id>
+		<Path>EHub-icon_teal.png</Path>
+		<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		<Location>FILE_SYSTEM</Location>
+	</Resource>
+	<Resource>
+		<Id>1784817713866</Id>
+		<Path>car_icon_blue.png</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
