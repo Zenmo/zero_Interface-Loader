@@ -2700,9 +2700,7 @@ f_setSimulateYearScreen();</ActionCode>
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
-			<ActionCode>zero_Interface.uI_Results.getCheckbox_KPISummary().setSelected(false, true);
-
-zero_Interface.va_Interface.navigateTo();
+			<ActionCode>zero_Interface.va_Interface.navigateTo();
 zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
 </ActionCode>
 		</BasicProperties>
@@ -3909,11 +3907,6 @@ new Thread( () -&gt; {
 	//Update map selection and resultsUIs
 	f_selectGCOnMainInterface();
 	f_updateUIResultsCompanyUI();
-	
-	//Update and show kpi summary chart after run
-	if(zero_Interface.settings.showKPISummary() != null &amp;&amp; zero_Interface.settings.showKPISummary()){
-		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
-	}
 	
 	//Remove all simulation screens
 	zero_Interface.f_removeAllSimulateYearScreens();
