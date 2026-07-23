@@ -371,7 +371,7 @@ new Thread( () -&gt; {
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>0</XCode>
+		<XCode>20</XCode>
 		<YCode>40</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
@@ -379,7 +379,7 @@ new Thread( () -&gt; {
 		<Presentation>
 			<RoundedRectangle>
 				<Id>1780090453570</Id>
-				<Name><![CDATA[roundRectangle8]]></Name>
+				<Name><![CDATA[rect_capacitySharingBackground]]></Name>
 				<X>0</X>
 				<Y>0</Y>
 				<Label>
@@ -397,7 +397,7 @@ new Thread( () -&gt; {
 				<LineColor/>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>370</Width>
+				<Width>400</Width>
 				<Height>350</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-1516972079</FillColor>
@@ -423,7 +423,7 @@ new Thread( () -&gt; {
 				<Color>-16777216</Color>
 				<Text><![CDATA[Klik het bedrijf dat capaciteit gaat ontvangen]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
+					<Name><![CDATA[HOLONline2]]></Name>
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
@@ -448,7 +448,7 @@ new Thread( () -&gt; {
 				<Color>-16777216</Color>
 				<Text/>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
+					<Name><![CDATA[HOLONline2]]></Name>
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
@@ -515,8 +515,8 @@ else {
 }</ActionCode>
 				</BasicProperties>
 				<ExtendedProperties>
-					<Font Name="Dialog" Size="14" Style="0"/>
-					<LabelText>verschil week &amp; weekend</LabelText>
+					<Font Name="HOLONline2" Size="14" Style="0"/>
+					<LabelText>Verschil week &amp; weekend</LabelText>
 					<LinkTo>true</LinkTo>
 					<Link>b_capacitySharingContractWeekendDistinction</Link>
 				</ExtendedProperties>
@@ -575,90 +575,11 @@ else {
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
-			<Control Type="Button">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1722253509604</Id>
-				<Name><![CDATA[button_confirm_capacitySharingContract]]></Name>
-				<X>25</X>
-				<Y>295</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="195" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor>-16777216</TextColor>
-					<Enabled>true</Enabled>
-					<ActionCode>if (sl_capacitySharingWeekStartTime.getValue() == sl_capacitySharingWeekEndTime.getValue()) {
-	traceln("Week start time is the same as end time");
-}
-else if (sl_capacitySharingWeekendStartTime.getValue() == sl_capacitySharingWeekendEndTime.getValue()) {
-	traceln("Weekend start time is the same as end time");
-}
-else {
-	double[][] arr = f_constructCapacitySharingArrays();
-	
-	double[] weekCapacities = arr[0];
-	double[] weekendCapacities = arr[1];
-	
-	if (f_checkCapacitySharingContract(weekCapacities, weekendCapacities)) {	
-		f_setCapacitySharingContract(weekCapacities, weekendCapacities);
-		f_setTab(HUB);
-		// reset the nfato settings
-		f_resetCapacitySharingSettings();
-		zero_Interface.f_resetSettings();
-		
-		gr_removeCapacitySharingContracts.setVisible(true);
-		
-		//Update variable to change to custom scenario
-		if(!zero_Interface.b_runningMainInterfaceScenarios){
-			zero_Interface.f_setScenarioToCustom();
-		}
-	}
-}
-
-</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<Font Name="Dialog" Size="11" Style="0"/>
-					<LabelText>Voltooi capaciteitsdeling contract</LabelText>
-				</ExtendedProperties>
-			</Control>
-			<Control Type="Button">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1722253509606</Id>
-				<Name><![CDATA[button_cancel_capacitySharging]]></Name>
-				<X>275</X>
-				<Y>295</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="75" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor>-16777216</TextColor>
-					<Enabled>true</Enabled>
-					<ActionCode>f_setTab(HUB);
-f_resetCapacitySharingSettings();</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<Font Name="Dialog" Size="11" Style="0"/>
-					<LabelText>Cancel</LabelText>
-				</ExtendedProperties>
-			</Control>
 			<Text>
 				<Id>1722253509608</Id>
 				<Name><![CDATA[txt_capacitySharingWeekStartTime]]></Name>
 				<X>20</X>
-				<Y>185</Y>
+				<Y>187</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -673,7 +594,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 				<Color>-16777216</Color>
 				<Text><![CDATA[Start tijd (uur)]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
+					<Name><![CDATA[HOLONline2]]></Name>
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
@@ -683,7 +604,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 				<Id>1722253509610</Id>
 				<Name><![CDATA[txt_capacitySharingWeekEndTime]]></Name>
 				<X>20</X>
-				<Y>215</Y>
+				<Y>217</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -698,7 +619,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 				<Color>-16777216</Color>
 				<Text><![CDATA[Eind tijd (uur)]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
+					<Name><![CDATA[HOLONline2]]></Name>
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
@@ -707,8 +628,8 @@ f_resetCapacitySharingSettings();</ActionCode>
 			<Text>
 				<Id>1722253509612</Id>
 				<Name><![CDATA[txt_capacitySharingCapacity]]></Name>
-				<X>10</X>
-				<Y>250</Y>
+				<X>20</X>
+				<Y>252</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -723,7 +644,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 				<Color>-16777216</Color>
 				<Text><![CDATA[Capaciteit (kW)]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
+					<Name><![CDATA[HOLONline2]]></Name>
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
@@ -732,7 +653,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 			<Text>
 				<Id>1722253509614</Id>
 				<Name><![CDATA[txt_capacitySharingWeek]]></Name>
-				<X>155</X>
+				<X>175</X>
 				<Y>155</Y>
 				<Label>
 					<X>0</X>
@@ -749,16 +670,16 @@ f_resetCapacitySharingSettings();</ActionCode>
 				<Text><![CDATA[Week
 ]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
+					<Name><![CDATA[HOLONline2]]></Name>
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>LEFT</Alignment>
+				<Alignment>CENTER</Alignment>
 			</Text>
 			<Text>
 				<Id>1722253509616</Id>
 				<Name><![CDATA[txt_capacitySharingWeekend]]></Name>
-				<X>265</X>
+				<X>296</X>
 				<Y>155</Y>
 				<Label>
 					<X>0</X>
@@ -775,11 +696,11 @@ f_resetCapacitySharingSettings();</ActionCode>
 				<Text><![CDATA[Weekend
 ]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
+					<Name><![CDATA[HOLONline2]]></Name>
 					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>LEFT</Alignment>
+				<Alignment>CENTER</Alignment>
 			</Text>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
@@ -876,21 +797,94 @@ f_resetCapacitySharingSettings();</ActionCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="70" Height="70">
+				<BasicProperties Width="95" Height="70">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
 				</BasicProperties>
 				<ExtendedProperties>
-					<Font Name="Dialog" Size="11" Style="0"/>
+					<Font Name="HOLONline2" Size="11" Style="0"/>
 					<DefaultValueCode>2</DefaultValueCode>
 					<Orientation>VERTICAL</Orientation>
-					<Button>Delivery</Button>
-					<Button>Feed in</Button>
-					<Button>Both</Button>
+					<Button>Afname</Button>
+					<Button>Teruglevering</Button>
+					<Button>Beide</Button>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
+			<Group>
+				<Id>1784799285684</Id>
+				<Name><![CDATA[button_cancelCapacitySharging]]></Name>
+				<X>280</X>
+				<Y>290</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<OnClickCode>f_setTab(HUB);
+f_resetCapacitySharingSettings();</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<RoundedRectangle>
+						<Id>1784799285686</Id>
+						<Name><![CDATA[rect_cancelCapacitySharging]]></Name>
+						<X>0</X>
+						<Y>0</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor>-1834917</LineColor>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>100</Width>
+						<Height>34</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-1</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>10</ArcRadius>
+					</RoundedRectangle>
+					<Text>
+						<Id>1784799285688</Id>
+						<Name><![CDATA[txt_cancelCapacitySharging]]></Name>
+						<X>50</X>
+						<Y>14</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-1834917</Color>
+						<Text><![CDATA[Annuleer]]></Text>
+						<Font>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>12</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
+					</Text>
+				</Presentation>
+			</Group>
 		</Presentation>
 	</Group>
 	<Text>
@@ -956,13 +950,15 @@ f_resetCapacitySharingSettings();</ActionCode>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>20</XCode>
+		<YCode>40</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Presentation>
 			<RoundedRectangle>
 				<Id>1780085796999</Id>
-				<Name><![CDATA[roundRectangle]]></Name>
+				<Name><![CDATA[rect_backgroundEHubTab]]></Name>
 				<X>0</X>
 				<Y>0</Y>
 				<Label>
@@ -989,7 +985,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 			</RoundedRectangle>
 			<Group>
 				<Id>1780088551564</Id>
-				<Name><![CDATA[gr_energieHubButton1]]></Name>
+				<Name><![CDATA[button_startEHub]]></Name>
 				<X>20</X>
 				<Y>65</Y>
 				<Label>
@@ -1006,7 +1002,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 				<Presentation>
 					<RoundedRectangle>
 						<Id>1780088551566</Id>
-						<Name><![CDATA[roundRectangle3]]></Name>
+						<Name><![CDATA[rect_backgroundStartEHub]]></Name>
 						<X>0</X>
 						<Y>0</Y>
 						<Label>
@@ -1034,7 +1030,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 					</RoundedRectangle>
 					<RoundedRectangle>
 						<Id>1780088551568</Id>
-						<Name><![CDATA[roundRectangle4]]></Name>
+						<Name><![CDATA[rect_backgroundStartEHubSign]]></Name>
 						<X>10</X>
 						<Y>15</Y>
 						<Label>
@@ -1061,7 +1057,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 					</RoundedRectangle>
 					<Text>
 						<Id>1780088551574</Id>
-						<Name><![CDATA[text2]]></Name>
+						<Name><![CDATA[txt_startEHub]]></Name>
 						<X>50</X>
 						<Y>18</Y>
 						<Label>
@@ -1086,7 +1082,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 					</Text>
 					<Text>
 						<Id>1780088551576</Id>
-						<Name><![CDATA[text3]]></Name>
+						<Name><![CDATA[rect_startEHubDescription]]></Name>
 						<X>50</X>
 						<Y>36</Y>
 						<Label>
@@ -1111,7 +1107,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 					</Text>
 					<Image>
 						<Id>1784733215896</Id>
-						<Name><![CDATA[image1]]></Name>
+						<Name><![CDATA[im_startEHubSign]]></Name>
 						<X>16</X>
 						<Y>21</Y>
 						<Label>
@@ -1139,7 +1135,7 @@ f_resetCapacitySharingSettings();</ActionCode>
 			</Group>
 			<Text>
 				<Id>1780088562967</Id>
-				<Name><![CDATA[text4]]></Name>
+				<Name><![CDATA[txt_EHub]]></Name>
 				<X>50</X>
 				<Y>25</Y>
 				<Label>
@@ -1154,9 +1150,9 @@ f_resetCapacitySharingSettings();</ActionCode>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Energie hub acties]]></Text>
+				<Text><![CDATA[ENERGY HUB]]></Text>
 				<Font>
-					<Name><![CDATA[HOLONline2]]></Name>
+					<Name><![CDATA[HolonBLOCK2]]></Name>
 					<Size>18</Size>
 					<Style>0</Style>
 				</Font>
@@ -1291,7 +1287,7 @@ else {
 								<Id>1780088233588</Id>
 								<Name><![CDATA[text1]]></Name>
 								<X>39</X>
-								<Y>12</Y>
+								<Y>14</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -1306,8 +1302,8 @@ else {
 								<Color>-1</Color>
 								<Text><![CDATA[Voeg non-firm ATO toe]]></Text>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
-									<Size>9</Size>
+									<Name><![CDATA[HOLONline2]]></Name>
+									<Size>10</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>LEFT</Alignment>
@@ -1399,9 +1395,9 @@ zero_Interface.f_resetSettings();</OnClickCode>
 							</RoundedRectangle>
 							<Text>
 								<Id>1784732913385</Id>
-								<Name><![CDATA[text5]]></Name>
-								<X>55</X>
-								<Y>12</Y>
+								<Name><![CDATA[txt_deleteContractedCapacitySharing]]></Name>
+								<X>60</X>
+								<Y>14</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -1414,9 +1410,9 @@ zero_Interface.f_resetSettings();</OnClickCode>
 								<Z>0</Z>
 								<Rotation>0.0</Rotation>
 								<Color>-1834917</Color>
-								<Text><![CDATA[Verwijder alle]]></Text>
+								<Text><![CDATA[Verwijder alles]]></Text>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
+									<Name><![CDATA[HOLONline2]]></Name>
 									<Size>10</Size>
 									<Style>0</Style>
 								</Font>
@@ -1452,7 +1448,7 @@ zero_Interface.f_resetSettings();</OnClickCode>
 					</Group>
 					<Text>
 						<Id>1780088178319</Id>
-						<Name><![CDATA[text]]></Name>
+						<Name><![CDATA[txt_shareCapacity]]></Name>
 						<X>10</X>
 						<Y>10</Y>
 						<Label>
@@ -1479,7 +1475,7 @@ zero_Interface.f_resetSettings();</OnClickCode>
 			</Group>
 			<Image>
 				<Id>1784732431326</Id>
-				<Name><![CDATA[image]]></Name>
+				<Name><![CDATA[im_configuration]]></Name>
 				<X>20</X>
 				<Y>22</Y>
 				<Label>
@@ -1505,7 +1501,7 @@ zero_Interface.f_resetSettings();</OnClickCode>
 			</Image>
 			<Image>
 				<Id>1784733674647</Id>
-				<Name><![CDATA[image3]]></Name>
+				<Name><![CDATA[im_capacitySharing]]></Name>
 				<X>20</X>
 				<Y>210</Y>
 				<Label>
@@ -1531,7 +1527,7 @@ zero_Interface.f_resetSettings();</OnClickCode>
 			</Image>
 			<Text>
 				<Id>1784733726942</Id>
-				<Name><![CDATA[text8]]></Name>
+				<Name><![CDATA[txt_capacitySharing]]></Name>
 				<X>50</X>
 				<Y>213</Y>
 				<Label>
@@ -1601,7 +1597,7 @@ new Thread( () -&gt; {
 				<Presentation>
 					<RoundedRectangle>
 						<Id>1780089017185</Id>
-						<Name><![CDATA[roundRectangle6]]></Name>
+						<Name><![CDATA[rect_backgroundLoadScenario]]></Name>
 						<X>0</X>
 						<Y>0</Y>
 						<Label>
@@ -1629,7 +1625,7 @@ new Thread( () -&gt; {
 					</RoundedRectangle>
 					<RoundedRectangle>
 						<Id>1780089017187</Id>
-						<Name><![CDATA[roundRectangle7]]></Name>
+						<Name><![CDATA[rect_backgroundLoadScenarioSign]]></Name>
 						<X>10</X>
 						<Y>15</Y>
 						<Label>
@@ -1656,7 +1652,7 @@ new Thread( () -&gt; {
 					</RoundedRectangle>
 					<Text>
 						<Id>1780089017193</Id>
-						<Name><![CDATA[text6]]></Name>
+						<Name><![CDATA[txt_loadScenarioButton]]></Name>
 						<X>50</X>
 						<Y>18</Y>
 						<Label>
@@ -1681,7 +1677,7 @@ new Thread( () -&gt; {
 					</Text>
 					<Text>
 						<Id>1780089017195</Id>
-						<Name><![CDATA[text7]]></Name>
+						<Name><![CDATA[txt_loadScenarioDescription]]></Name>
 						<X>50</X>
 						<Y>36</Y>
 						<Label>
@@ -1706,7 +1702,7 @@ new Thread( () -&gt; {
 					</Text>
 					<Image>
 						<Id>1784733586072</Id>
-						<Name><![CDATA[image2]]></Name>
+						<Name><![CDATA[im_loadScenarioSign]]></Name>
 						<X>16</X>
 						<Y>21</Y>
 						<Label>
@@ -1755,7 +1751,7 @@ new Thread( () -&gt; {
 		<Presentation>
 			<Oval>
 				<Id>1780139191014</Id>
-				<Name><![CDATA[oval2]]></Name>
+				<Name><![CDATA[oval_arrowRight]]></Name>
 				<X>52</X>
 				<Y>-5</Y>
 				<Label>
@@ -1782,7 +1778,7 @@ new Thread( () -&gt; {
 			</Oval>
 			<Oval>
 				<Id>1780139191016</Id>
-				<Name><![CDATA[oval5]]></Name>
+				<Name><![CDATA[oval_arrowLeft]]></Name>
 				<X>-51</X>
 				<Y>-5</Y>
 				<Label>
@@ -1809,7 +1805,7 @@ new Thread( () -&gt; {
 			</Oval>
 			<Image>
 				<Id>1780139191018</Id>
-				<Name><![CDATA[arrowLeftResidential]]></Name>
+				<Name><![CDATA[im_arrowLeft]]></Name>
 				<X>-46</X>
 				<Y>-11</Y>
 				<Label>
@@ -1835,7 +1831,7 @@ new Thread( () -&gt; {
 			</Image>
 			<Image>
 				<Id>1780139191020</Id>
-				<Name><![CDATA[arrowRightResidential1]]></Name>
+				<Name><![CDATA[im_arrowRight]]></Name>
 				<X>47</X>
 				<Y>0</Y>
 				<Label>
@@ -1882,6 +1878,106 @@ new Thread( () -&gt; {
 				<Font>
 					<Name><![CDATA[HOLONline]]></Name>
 					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+		</Presentation>
+	</Group>
+	<Group>
+		<Id>1784799333696</Id>
+		<Name><![CDATA[button_confirmCapacitySharingContract]]></Name>
+		<X>20</X>
+		<Y>740</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<OnClickCode>if (sl_capacitySharingWeekStartTime.getValue() == sl_capacitySharingWeekEndTime.getValue()) {
+	traceln("Week start time is the same as end time");
+}
+else if (sl_capacitySharingWeekendStartTime.getValue() == sl_capacitySharingWeekendEndTime.getValue()) {
+	traceln("Weekend start time is the same as end time");
+}
+else {
+	double[][] arr = f_constructCapacitySharingArrays();
+	
+	double[] weekCapacities = arr[0];
+	double[] weekendCapacities = arr[1];
+	
+	if (f_checkCapacitySharingContract(weekCapacities, weekendCapacities)) {	
+		f_setCapacitySharingContract(weekCapacities, weekendCapacities);
+		f_setTab(HUB);
+		// reset the nfato settings
+		f_resetCapacitySharingSettings();
+		zero_Interface.f_resetSettings();
+		
+		gr_removeCapacitySharingContracts.setVisible(true);
+		
+		//Update variable to change to custom scenario
+		if(!zero_Interface.b_runningMainInterfaceScenarios){
+			zero_Interface.f_setScenarioToCustom();
+		}
+	}
+}
+
+</OnClickCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<RoundedRectangle>
+				<Id>1784799333698</Id>
+				<Name><![CDATA[rect_confirmCapacitySharingContract]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>220</Width>
+				<Height>34</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-16744320</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>10</ArcRadius>
+			</RoundedRectangle>
+			<Text>
+				<Id>1784799333700</Id>
+				<Name><![CDATA[txt_confirmCapacitySharingContract]]></Name>
+				<X>110</X>
+				<Y>14</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-1</Color>
+				<Text><![CDATA[Voltooi capaciteitsdeling contract]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>CENTER</Alignment>

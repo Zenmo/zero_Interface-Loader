@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Presentation>
+	<Line>
+		<Id>1784478882806</Id>
+		<Name><![CDATA[max_size_tabs]]></Name>
+		<X>0</X>
+		<Y>40</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor>-16777216</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<BeginArrowSize>1</BeginArrowSize>
+		<BeginArrowStyle>0</BeginArrowStyle>
+		<EndArrowSize>1</EndArrowSize>
+		<EndArrowStyle>0</EndArrowStyle>
+		<Dx>1920</Dx>
+		<Dy>0</Dy>
+		<Dz>0</Dz>
+	</Line>
 	<Rectangle>
 		<Id>1722350199532</Id>
 		<Name><![CDATA[rect_genericFunctions]]></Name>
@@ -455,7 +483,7 @@ f_setPetroleumFuelTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiv
 				<Id>1784581600279</Id>
 				<Name><![CDATA[txt_mobilitySlidersHousesholdsDescription3]]></Name>
 				<X>50</X>
-				<Y>26</Y>
+				<Y>25</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -492,12 +520,12 @@ f_setPetroleumFuelTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiv
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
-				<Height>20</Height>
+				<Height>17</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
 						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>car_black.png</ClassName>
+						<ClassName>car_icon_black.png</ClassName>
 					</ImageResourceReference>
 				</ImageFiles>
 				<OriginalSize>false</OriginalSize>
@@ -1214,7 +1242,7 @@ if(selectedChargingAttitude != null){
 				<Id>1777651310496</Id>
 				<Name><![CDATA[txt_mobilitySlidersHousesholdsDescription]]></Name>
 				<X>50</X>
-				<Y>26</Y>
+				<Y>25</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1590,12 +1618,12 @@ gr_householdSettingsV2G_privateParkedCars.setVisible(cb_householdActivateV2GPriv
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
-				<Height>20</Height>
+				<Height>17</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
 						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>car_black.png</ClassName>
+						<ClassName>car_icon_black.png</ClassName>
 					</ImageResourceReference>
 				</ImageFiles>
 				<OriginalSize>false</OriginalSize>
@@ -2013,7 +2041,7 @@ else{
 			<Oval>
 				<Id>1780139178082</Id>
 				<Name><![CDATA[oval]]></Name>
-				<X>-51</X>
+				<X>-52</X>
 				<Y>-5</Y>
 				<Label>
 					<X>0</X>
@@ -2040,7 +2068,7 @@ else{
 			<Image>
 				<Id>1780139178084</Id>
 				<Name><![CDATA[arrowLeftResidential]]></Name>
-				<X>-46</X>
+				<X>-47</X>
 				<Y>-10</Y>
 				<Label>
 					<X>0</X>
@@ -2146,34 +2174,6 @@ else{
 		<Dy>0</Dy>
 		<Dz>0</Dz>
 	</Line>
-	<Line>
-		<Id>1784478882806</Id>
-		<Name><![CDATA[max_size_tabs]]></Name>
-		<X>0</X>
-		<Y>40</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>1</LineWidth>
-		<LineColor>-16777216</LineColor>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<BeginArrowSize>1</BeginArrowSize>
-		<BeginArrowStyle>0</BeginArrowStyle>
-		<EndArrowSize>1</EndArrowSize>
-		<EndArrowStyle>0</EndArrowStyle>
-		<Dx>1920</Dx>
-		<Dy>0</Dy>
-		<Dz>0</Dz>
-	</Line>
 	<Group>
 		<Id>1784577080164</Id>
 		<Name><![CDATA[gr_mobilitySliders_households2]]></Name>
@@ -2224,7 +2224,7 @@ else{
 				<Id>1784577080168</Id>
 				<Name><![CDATA[txt_mobilitySlidersHousesholdsDescription2]]></Name>
 				<X>50</X>
-				<Y>26</Y>
+				<Y>25</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2261,12 +2261,12 @@ else{
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
-				<Height>20</Height>
+				<Height>17</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
 						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>car_black.png</ClassName>
+						<ClassName>car_icon_black.png</ClassName>
 					</ImageResourceReference>
 				</ImageFiles>
 				<OriginalSize>false</OriginalSize>
@@ -3093,7 +3093,7 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 				<Id>1784585597832</Id>
 				<Name><![CDATA[txt_mobilitySlidersHousesholdsDescription4]]></Name>
 				<X>50</X>
-				<Y>26</Y>
+				<Y>25</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -3130,15 +3130,15 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Width>20</Width>
-				<Height>20</Height>
+				<Height>17</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
 						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>car_black.png</ClassName>
+						<ClassName>car_icon_black.png</ClassName>
 					</ImageResourceReference>
 				</ImageFiles>
-				<OriginalSize>true</OriginalSize>
+				<OriginalSize>false</OriginalSize>
 			</Image>
 			<Text>
 				<Id>1722247567106</Id>
