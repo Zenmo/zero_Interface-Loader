@@ -188,7 +188,7 @@
               StaticVariable="false">
 			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(new Color(252, 194, 0), black, null, LINE_STYLE_SOLID, 0)]]></Code>
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(new Color(234, 58, 129), black, null, LINE_STYLE_SOLID, 0)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -232,7 +232,7 @@
               StaticVariable="false">
 			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(new Color(252, 194, 0), black, null, LINE_STYLE_SOLID, 0)]]></Code>
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(new Color(177, 205, 251), black, null, LINE_STYLE_SOLID, 0)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -298,7 +298,7 @@
               StaticVariable="false">
 			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(new Color(252, 194, 0), black, null, LINE_STYLE_SOLID, 0)]]></Code>
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(new Color(193, 230, 230), black, null, LINE_STYLE_SOLID, 0)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
