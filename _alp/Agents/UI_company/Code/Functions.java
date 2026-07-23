@@ -1322,15 +1322,6 @@ selectedCharts_Sustainability.add(OL_ChartTypes.CO2);
 uI_Results.f_initializeResultsUI(selectedChartTypes_Energy, selectedChartTypes_Economic, selectedCharts_Sustainability, false);
 uI_Results2.f_initializeResultsUI(selectedChartTypes_Energy, selectedChartTypes_Economic, selectedCharts_Sustainability, false);
 
-//Disable KPIsummary button if KPIsummary is not selected
-if(zero_Interface.settings.showKPISummary() == null || !zero_Interface.settings.showKPISummary()){
-	uI_Results.getCheckbox_KPISummary().setVisible(false);
-	uI_Results2.getCheckbox_KPISummary().setVisible(false);
-}
-else{
-	//uI_Results.f_setCB_KPISummary_Presentation(10, -30, true);
-}
-
 //Set selected object display false
 uI_Results.b_isCompanyUIResultsUI = true;
 uI_Results2.b_isCompanyUIResultsUI = true;
@@ -1835,12 +1826,6 @@ new Thread( () -> {
 	zero_Interface.uI_Results.f_updateResultsUI(zero_Interface.energyModel);
 	f_updateUIResultsCompanyUI();
 	gr_loadIcon.setVisible(false);
-	
-	//Update and show kpi summary chart after run
-	if(zero_Interface.settings.showKPISummary() != null && zero_Interface.settings.showKPISummary()){
-		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
-		uI_Results2.getCheckbox_KPISummary().setSelected(true, true);
-	}
 	
 	//Update results up to date boolean
 	uI_Results.f_enableNonLivePlotRadioButtons(true);

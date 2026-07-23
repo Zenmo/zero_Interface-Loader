@@ -265,11 +265,6 @@ double f_selectGridNode(GridNode GN)
 v_clickedGridNode = GN;
 v_clickedObjectType = OL_GISObjectType.GRIDNODE;
 
-//Disable the KPI summary (button)
-uI_Results.getCheckbox_KPISummary().setSelected(false, true);
-uI_Results.getCheckbox_KPISummary().setEnabled(false);
-
-
 // Set info text
 f_setSelectedGNText();
 
@@ -295,9 +290,6 @@ double f_selectBuilding(GIS_Object b,ArrayList<GIS_Object> buildingsConnectedToS
 v_clickedObject = b;
 c_selectedObjects = new ArrayList<GIS_Object>(buildingsConnectedToSelectedGC_list);
 v_clickedObjectType = b.p_GISObjectType;
-
-//Enable checkbox
-uI_Results.getCheckbox_KPISummary().setEnabled(true);
 
 // Color all buildings of the GridConnection associated with the selected building
 //if (!c_selectedObjects.get(0).c_containedGridConnections.get(0).p_ownerID.equals("-") && !c_selectedObjects.get(0).c_containedGridConnections.get(0).p_ownerID.contains("woonfunctie") && !c_selectedObjects.get(0).c_containedGridConnections.get(0).p_ownerID.contains("Onbekend")){
@@ -438,11 +430,6 @@ List<OL_ChartTypes> selectedChartTypes_Sustainability = settings.resultsUISelect
 boolean enablePublicVersion = false;
 if(settings.isPublicModel() || user.GCAccessType != OL_UserGCAccessType.FULL){
 	enablePublicVersion = true;
-}
-
-//Disable summary button if summary is not selected
-if(settings.showKPISummary() == null || !settings.showKPISummary()){
-	uI_Results.getCheckbox_KPISummary().setVisible(false);
 }
 
 //Initialize the resultsUI
@@ -2759,11 +2746,6 @@ new Thread( () -> {
 		uI_EnergyHub.uI_Results.f_updateResultsUI(uI_EnergyHub.v_energyHubCoop);
 	}
 	
-	//Update and show kpi summary chart after run
-	if(settings.showKPISummary() != null && settings.showKPISummary() && v_clickedObjectType != OL_GISObjectType.GRIDNODE){
-		uI_Results.getCheckbox_KPISummary().setSelected(true, true);
-	}
-	
 	//Enable radio buttons again
 	uI_Results.f_enableNonLivePlotRadioButtons(true);
 	if(uI_EnergyHub != null){
@@ -3556,9 +3538,6 @@ double f_selectEnergyModel()
 {/*ALCODESTART::1764776636006*/
 v_clickedObjectType = OL_GISObjectType.REGION;
 uI_Results.f_updateResultsUI(energyModel);
-
-//Enable kpi summary button
-uI_Results.getCheckbox_KPISummary().setEnabled(true);
 /*ALCODEEND*/}
 
 boolean f_checkIfGCsAreAccesible(List<GridConnection> GCList)
