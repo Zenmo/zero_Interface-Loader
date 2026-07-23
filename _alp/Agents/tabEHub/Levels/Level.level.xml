@@ -424,8 +424,8 @@ new Thread( () -&gt; {
 				<Text><![CDATA[Klik het bedrijf dat capaciteit gaat ontvangen]]></Text>
 				<Font>
 					<Name><![CDATA[HOLONline2]]></Name>
-					<Size>14</Size>
-					<Style>0</Style>
+					<Size>16</Size>
+					<Style>1</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
@@ -885,6 +885,106 @@ f_resetCapacitySharingSettings();</OnClickCode>
 					</Text>
 				</Presentation>
 			</Group>
+			<Group>
+				<Id>1784799333696</Id>
+				<Name><![CDATA[button_confirmCapacitySharingContract]]></Name>
+				<X>20</X>
+				<Y>290</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<OnClickCode>if (sl_capacitySharingWeekStartTime.getValue() == sl_capacitySharingWeekEndTime.getValue()) {
+	traceln("Week start time is the same as end time");
+}
+else if (sl_capacitySharingWeekendStartTime.getValue() == sl_capacitySharingWeekendEndTime.getValue()) {
+	traceln("Weekend start time is the same as end time");
+}
+else {
+	double[][] arr = f_constructCapacitySharingArrays();
+	
+	double[] weekCapacities = arr[0];
+	double[] weekendCapacities = arr[1];
+	
+	if (f_checkCapacitySharingContract(weekCapacities, weekendCapacities)) {	
+		f_setCapacitySharingContract(weekCapacities, weekendCapacities);
+		f_setTab(HUB);
+		// reset the nfato settings
+		f_resetCapacitySharingSettings();
+		zero_Interface.f_resetSettings();
+		
+		gr_removeCapacitySharingContracts.setVisible(true);
+		
+		//Update variable to change to custom scenario
+		if(!zero_Interface.b_runningMainInterfaceScenarios){
+			zero_Interface.f_setScenarioToCustom();
+		}
+	}
+}
+
+</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<RoundedRectangle>
+						<Id>1784799333698</Id>
+						<Name><![CDATA[rect_confirmCapacitySharingContract]]></Name>
+						<X>0</X>
+						<Y>0</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor/>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>220</Width>
+						<Height>34</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-16744320</FillColor>
+						<FillMaterial>null</FillMaterial>
+						<ArcRadius>10</ArcRadius>
+					</RoundedRectangle>
+					<Text>
+						<Id>1784799333700</Id>
+						<Name><![CDATA[txt_confirmCapacitySharingContract]]></Name>
+						<X>110</X>
+						<Y>14</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-1</Color>
+						<Text><![CDATA[Voltooi capaciteitsdeling contract]]></Text>
+						<Font>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>12</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
+					</Text>
+				</Presentation>
+			</Group>
 		</Presentation>
 	</Group>
 	<Text>
@@ -996,6 +1096,7 @@ f_resetCapacitySharingSettings();</OnClickCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>!zero_Interface.settings.isPublicModel() &amp;&amp; zero_Interface.user.GCAccessType == OL_UserGCAccessType.FULL</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -1215,24 +1316,8 @@ f_resetCapacitySharingSettings();</OnClickCode>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Presentation>
-							<RoundedRectangle>
-								<Id>1780085963323</Id>
-								<Name><![CDATA[roundRectangle2]]></Name>
-								<X>0</X>
-								<Y>0</Y>
-								<Label>
-									<X>10</X>
-									<Y>10</Y>
-								</Label>
-								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>true</PresentationFlag>
-								<ShowLabel>false</ShowLabel>
-								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<OnClickCode>/*
+						<VisibleCode>!zero_Interface.settings.isPublicModel() &amp;&amp; zero_Interface.user.GCAccessType == OL_UserGCAccessType.FULL</VisibleCode>
+						<OnClickCode>/*
 if (v_NFATOListener) {
 	// This should not be reachable anymore
 	traceln("Quitting NF ATO settings");
@@ -1269,6 +1354,23 @@ else {
 
 
 // TODO: Color the companies on the GIS Map (e.g. according to grid topology)</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Presentation>
+							<RoundedRectangle>
+								<Id>1780085963323</Id>
+								<Name><![CDATA[roundRectangle2]]></Name>
+								<X>0</X>
+								<Y>0</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
 								<EmbeddedIcon>false</EmbeddedIcon>
 								<Z>0</Z>
 								<ZHeight>10</ZHeight>
@@ -1346,9 +1448,21 @@ else {
 							<Y>0</Y>
 						</Label>
 						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
+						<PresentationFlag>false</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<OnClickCode>for (GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()) {
+	GC.v_liveConnectionMetaData.clearSharedCapacityManagers();
+}
+
+//Update variable to change to custom scenario
+if(!zero_Interface.b_runningMainInterfaceScenarios){
+	zero_Interface.f_setScenarioToCustom();
+}
+
+gr_removeCapacitySharingContracts.setVisible(false);
+
+zero_Interface.f_resetSettings();</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
@@ -1363,22 +1477,9 @@ else {
 									<Y>10</Y>
 								</Label>
 								<PublicFlag>true</PublicFlag>
-								<PresentationFlag>false</PresentationFlag>
+								<PresentationFlag>true</PresentationFlag>
 								<ShowLabel>false</ShowLabel>
 								<DrawMode>SHAPE_DRAW_2D</DrawMode>
-								<VisibleCode>!zero_Interface.settings.isPublicModel()</VisibleCode>
-								<OnClickCode>for (GridConnection GC : zero_Interface.energyModel.f_getActiveGridConnections()) {
-	GC.v_liveConnectionMetaData.clearSharedCapacityManagers();
-}
-
-//Update variable to change to custom scenario
-if(!zero_Interface.b_runningMainInterfaceScenarios){
-	zero_Interface.f_setScenarioToCustom();
-}
-
-gr_removeCapacitySharingContracts.setVisible(false);
-
-zero_Interface.f_resetSettings();</OnClickCode>
 								<EmbeddedIcon>false</EmbeddedIcon>
 								<Z>0</Z>
 								<ZHeight>10</ZHeight>
@@ -1563,6 +1664,7 @@ zero_Interface.f_resetSettings();</OnClickCode>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>!zero_Interface.settings.isPublicModel() &amp;&amp; zero_Interface.user.GCAccessType == OL_UserGCAccessType.FULL</VisibleCode>
 				<OnClickCode>// First check if there are any save files, if there are none we display an error screen
 
 zero_Interface.uI_EnergyHub.f_initializeUserSavedScenarios(zero_Interface.uI_EnergyHub.combobox_selectScenario);
@@ -1878,106 +1980,6 @@ new Thread( () -&gt; {
 				<Font>
 					<Name><![CDATA[HOLONline]]></Name>
 					<Size>14</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-		</Presentation>
-	</Group>
-	<Group>
-		<Id>1784799333696</Id>
-		<Name><![CDATA[button_confirmCapacitySharingContract]]></Name>
-		<X>20</X>
-		<Y>740</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<OnClickCode>if (sl_capacitySharingWeekStartTime.getValue() == sl_capacitySharingWeekEndTime.getValue()) {
-	traceln("Week start time is the same as end time");
-}
-else if (sl_capacitySharingWeekendStartTime.getValue() == sl_capacitySharingWeekendEndTime.getValue()) {
-	traceln("Weekend start time is the same as end time");
-}
-else {
-	double[][] arr = f_constructCapacitySharingArrays();
-	
-	double[] weekCapacities = arr[0];
-	double[] weekendCapacities = arr[1];
-	
-	if (f_checkCapacitySharingContract(weekCapacities, weekendCapacities)) {	
-		f_setCapacitySharingContract(weekCapacities, weekendCapacities);
-		f_setTab(HUB);
-		// reset the nfato settings
-		f_resetCapacitySharingSettings();
-		zero_Interface.f_resetSettings();
-		
-		gr_removeCapacitySharingContracts.setVisible(true);
-		
-		//Update variable to change to custom scenario
-		if(!zero_Interface.b_runningMainInterfaceScenarios){
-			zero_Interface.f_setScenarioToCustom();
-		}
-	}
-}
-
-</OnClickCode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Presentation>
-			<RoundedRectangle>
-				<Id>1784799333698</Id>
-				<Name><![CDATA[rect_confirmCapacitySharingContract]]></Name>
-				<X>0</X>
-				<Y>0</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor/>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>220</Width>
-				<Height>34</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-16744320</FillColor>
-				<FillMaterial>null</FillMaterial>
-				<ArcRadius>10</ArcRadius>
-			</RoundedRectangle>
-			<Text>
-				<Id>1784799333700</Id>
-				<Name><![CDATA[txt_confirmCapacitySharingContract]]></Name>
-				<X>110</X>
-				<Y>14</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-1</Color>
-				<Text><![CDATA[Voltooi capaciteitsdeling contract]]></Text>
-				<Font>
-					<Name><![CDATA[HOLONline2]]></Name>
-					<Size>12</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>CENTER</Alignment>
