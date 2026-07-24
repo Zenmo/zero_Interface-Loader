@@ -55,8 +55,8 @@
 	<Group>
 		<Id>1722253487925</Id>
 		<Name><![CDATA[gr_hubSlidersOld]]></Name>
-		<X>500</X>
-		<Y>40</Y>
+		<X>860</X>
+		<Y>0</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -361,8 +361,8 @@ new Thread( () -&gt; {
 	<Group>
 		<Id>1722253509588</Id>
 		<Name><![CDATA[gr_nfatoSettings]]></Name>
-		<X>0</X>
-		<Y>450</Y>
+		<X>430</X>
+		<Y>0</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -371,8 +371,8 @@ new Thread( () -&gt; {
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>20</XCode>
-		<YCode>40</YCode>
+		<XCode>0</XCode>
+		<YCode>0</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -1041,7 +1041,7 @@ else {
 		<Id>1780089498203</Id>
 		<Name><![CDATA[gr_hubSliders]]></Name>
 		<X>0</X>
-		<Y>40</Y>
+		<Y>0</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1050,8 +1050,8 @@ else {
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>20</XCode>
-		<YCode>40</YCode>
+		<XCode>0</XCode>
+		<YCode>0</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -1836,7 +1836,7 @@ new Thread( () -&gt; {
 		<Id>1780139191012</Id>
 		<Name><![CDATA[gr_pageIndicator]]></Name>
 		<X>200</X>
-		<Y>20</Y>
+		<Y>-20</Y>
 		<Label>
 			<X>7.073</X>
 			<Y>0</Y>
@@ -1845,8 +1845,8 @@ new Thread( () -&gt; {
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<XCode>220</XCode>
-		<YCode>20</YCode>
+		<XCode>200</XCode>
+		<YCode>-20</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
@@ -1975,7 +1975,7 @@ new Thread( () -&gt; {
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-8355712</Color>
-				<Text><![CDATA[Pagina 1/2]]></Text>
+				<Text><![CDATA[Pagina 1/1]]></Text>
 				<TextCode>"Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPageGroups.size()</TextCode>
 				<Font>
 					<Name><![CDATA[HOLONline]]></Name>
@@ -1986,4 +1986,32 @@ new Thread( () -&gt; {
 			</Text>
 		</Presentation>
 	</Group>
+	<Line>
+		<Id>1784816107921</Id>
+		<Name><![CDATA[line_max_size_tabs]]></Name>
+		<X>0</X>
+		<Y>480</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor>-16777216</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<BeginArrowSize>1</BeginArrowSize>
+		<BeginArrowStyle>0</BeginArrowStyle>
+		<EndArrowSize>1</EndArrowSize>
+		<EndArrowStyle>0</EndArrowStyle>
+		<Dx>2600</Dx>
+		<Dy>0</Dy>
+		<Dz>0</Dz>
+	</Line>
 </Presentation>
