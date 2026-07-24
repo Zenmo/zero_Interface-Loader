@@ -1355,7 +1355,7 @@ v_energyHubCoop.f_removeMemberGCs(c_sliderEAGCs, zero_Interface.energyModel.p_ti
 zero_Interface.f_getScenarioButtons().setPos( 19, 144);
 
 zero_Interface.map.setScale( 1.0, 1.0);
-zero_Interface.map.setPos(410, 130);
+zero_Interface.map.setPos(450, 90);
 
 zero_Interface.va_Interface.navigateTo();
 zero_Interface.v_currentViewArea = zero_Interface.va_Interface;
@@ -1762,12 +1762,13 @@ c_sliderEAGCs.clear();
 zero_Interface.f_getScenarioButtons().setPos( 19, 144);
 
 zero_Interface.map.setScale( 1.0, 1.0);
-zero_Interface.map.setPos(410, 130);
+zero_Interface.map.setPos(450, 90);
 
 
 zero_Interface.button_clearFilters.onClick(0,0);
 zero_Interface.f_selectMapOverlayButton(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT));
 if(zero_Interface.v_filterButton.isSelected()){
+	zero_Interface.v_filterButton.setEnabled(true);
 	zero_Interface.v_filterButton.clickButton();
 }
 zero_Interface.f_updateMainInterfaceSliders();
