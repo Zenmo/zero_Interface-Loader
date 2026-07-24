@@ -30,7 +30,6 @@
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>!pop_tabElectricity.isEmpty()</VisibleCode>
 				<OnClickCode>f_setTab(OL_CustomScenarioTabs.ELECTRICITY);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
@@ -134,7 +133,6 @@
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>!pop_tabHeating.isEmpty()</VisibleCode>
 				<OnClickCode>f_setTab(OL_CustomScenarioTabs.HEAT);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
@@ -238,7 +236,6 @@
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>!pop_tabMobility.isEmpty()</VisibleCode>
 				<OnClickCode>f_setTab(OL_CustomScenarioTabs.MOBILITY);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
@@ -342,7 +339,6 @@
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>!pop_tabEHub.isEmpty()</VisibleCode>
 				<OnClickCode>f_setTab(OL_CustomScenarioTabs.HUB);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>

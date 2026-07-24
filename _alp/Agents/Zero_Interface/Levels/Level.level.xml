@@ -1416,15 +1416,15 @@ v_selectedGridConnectionIndex &gt; 0 ?
 				<Z>0</Z>
 				<ZHeight>10</ZHeight>
 				<LineWidth>2</LineWidth>
-				<LineColor>-1834917</LineColor>
+				<LineColor/>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
 				<Width>540</Width>
 				<Height>200</Height>
 				<Rotation>0.0</Rotation>
-				<FillColor>-1</FillColor>
+				<FillColor>-534065</FillColor>
 				<FillMaterial>null</FillMaterial>
-				<ArcRadius>5</ArcRadius>
+				<ArcRadius>10</ArcRadius>
 			</RoundedRectangle>
 			<Text>
 				<Id>1736337707551</Id>
@@ -1454,7 +1454,7 @@ v_selectedGridConnectionIndex &gt; 0 ?
 			<Group>
 				<Id>1736338014404</Id>
 				<Name><![CDATA[button_errorOK]]></Name>
-				<X>910</X>
+				<X>1110</X>
 				<Y>510</Y>
 				<Label>
 					<X>10</X>
@@ -1469,37 +1469,11 @@ v_selectedGridConnectionIndex &gt; 0 ?
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Presentation>
-					<Rectangle>
-						<Id>1736338014406</Id>
-						<Name><![CDATA[rect_errorOK]]></Name>
-						<X>-60</X>
-						<Y>-20</Y>
-						<Label>
-							<X>10</X>
-							<Y>10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor>-542254</LineColor>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<Width>120</Width>
-						<Height>40</Height>
-						<Rotation>0.0</Rotation>
-						<FillColor>-886359</FillColor>
-						<FillMaterial>null</FillMaterial>
-					</Rectangle>
 					<Text>
 						<Id>1736338014408</Id>
 						<Name><![CDATA[txt_errorOK]]></Name>
-						<X>0</X>
-						<Y>-10</Y>
+						<X>50</X>
+						<Y>-7</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1508,17 +1482,18 @@ v_selectedGridConnectionIndex &gt; 0 ?
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<OnClickCode>gr_errorScreen.setVisible(false);</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
-						<Color>-16777216</Color>
-						<Text><![CDATA[Ok]]></Text>
+						<Color>-1834917</Color>
+						<Text><![CDATA[Bevestig]]></Text>
 						<Font>
-							<Name><![CDATA[SansSerif]]></Name>
+							<Name><![CDATA[HOLONline2]]></Name>
 							<Size>18</Size>
 							<Style>0</Style>
 						</Font>
-						<Alignment>CENTER</Alignment>
+						<Alignment>RIGHT</Alignment>
 					</Text>
 				</Presentation>
 			</Group>

@@ -121,9 +121,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[CustomButton]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new CustomButton(rect_electricityButton, txt_electricityButtonDescription, im_UITabsElectricityIcon, new CustomButton.CustomButtonStyling(v_UITabsButtonDefaultStyling, v_UITabsElectricityButtonSelectedStyling, v_UITabsButtonDisabledStyling, v_UITabsButtonDisabledStyling), new CustomButton.CustomButtonImageSelection(0, 1, 1, 1))]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -253,9 +250,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[CustomButton]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new CustomButton(rect_heatingButton, txt_heatingButtonDescription, im_UITabsHeatingIcon, new CustomButton.CustomButtonStyling(v_UITabsButtonDefaultStyling, v_UITabsHeatingButtonSelectedStyling, v_UITabsButtonDisabledStyling, v_UITabsButtonDisabledStyling), new CustomButton.CustomButtonImageSelection(0, 1, 1, 1))]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -275,9 +269,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[CustomButton]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new CustomButton(rect_mobilityButton, txt_mobilityButtonDescription, im_UITabsMobilityIcon, new CustomButton.CustomButtonStyling(v_UITabsButtonDefaultStyling, v_UITabsMobilityButtonSelectedStyling, v_UITabsButtonDisabledStyling, v_UITabsButtonDisabledStyling), new CustomButton.CustomButtonImageSelection(0, 1, 1, 1))]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -319,9 +310,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[CustomButton]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new CustomButton(rect_eHubButton, txt_eHubButtonDescription, im_UITabsEHubIcon, new CustomButton.CustomButtonStyling(v_UITabsButtonDefaultStyling, v_UITabsEHubButtonSelectedStyling, v_UITabsButtonDisabledStyling, v_UITabsButtonDisabledStyling), new CustomButton.CustomButtonImageSelection(0, 1, 1, 1))]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="CollectionVariable">
