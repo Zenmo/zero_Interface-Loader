@@ -1343,7 +1343,7 @@ if(selectedChargingAttitude != null){
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1784573071511</Id>
 						<Name><![CDATA[cb_householdActivateV2GPrivateParkedCars]]></Name>
-						<X>-150</X>
+						<X>190</X>
 						<Y>-18</Y>
 						<Label>
 							<X>0</X>
@@ -1369,7 +1369,7 @@ gr_householdSettingsV2G_privateParkedCars.setVisible(cb_householdActivateV2GPriv
 					<Image>
 						<Id>1784573071513</Id>
 						<Name><![CDATA[i_householdActivateV2GPrivateParkedCars]]></Name>
-						<X>195</X>
+						<X>-65</X>
 						<Y>-10</Y>
 						<Label>
 							<X>0</X>
@@ -1397,8 +1397,8 @@ gr_householdSettingsV2G_privateParkedCars.setVisible(cb_householdActivateV2GPriv
 					<Text>
 						<Id>1784573071515</Id>
 						<Name><![CDATA[txt_householdActivateV2GPrivateParkedCars]]></Name>
-						<X>-120</X>
-						<Y>-10</Y>
+						<X>-150</X>
+						<Y>-9</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -2910,7 +2910,7 @@ else{
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1784572334891</Id>
 						<Name><![CDATA[cb_householdActivateV2GPublicChargers]]></Name>
-						<X>-150</X>
+						<X>190</X>
 						<Y>-20</Y>
 						<Label>
 							<X>0</X>
@@ -2936,7 +2936,7 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 					<Image>
 						<Id>1784572334893</Id>
 						<Name><![CDATA[i_householdActivateV2GPrivatePublicChargers]]></Name>
-						<X>-30</X>
+						<X>-65</X>
 						<Y>-12</Y>
 						<Label>
 							<X>0</X>
@@ -2964,7 +2964,7 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 					<Text>
 						<Id>1784572334895</Id>
 						<Name><![CDATA[txt_activateV2GPrivatePublicChargers]]></Name>
-						<X>-120</X>
+						<X>-150</X>
 						<Y>-10</Y>
 						<Label>
 							<X>0</X>
@@ -3253,7 +3253,7 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1754990132964</Id>
 				<Name><![CDATA[cb_companiesSpreadChargingEVs]]></Name>
-				<X>20</X>
+				<X>360</X>
 				<Y>138</Y>
 				<Label>
 					<X>0</X>
@@ -3283,7 +3283,7 @@ f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&
 			<Text>
 				<Id>1754990186800</Id>
 				<Name><![CDATA[txt_companiesSpreadChargingEVsDescription]]></Name>
-				<X>50</X>
+				<X>20</X>
 				<Y>146</Y>
 				<Label>
 					<X>0</X>
@@ -3309,7 +3309,7 @@ f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&
 			<Image>
 				<Id>1754991641604</Id>
 				<Name><![CDATA[i_companiesMobilityChargingAttitude]]></Name>
-				<X>120</X>
+				<X>90</X>
 				<Y>145</Y>
 				<Label>
 					<X>0</X>

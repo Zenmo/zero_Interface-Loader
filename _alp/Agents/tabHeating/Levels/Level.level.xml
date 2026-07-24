@@ -1614,7 +1614,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1749738869849</Id>
 				<Name><![CDATA[cb_householdHTDistrictHeating]]></Name>
-				<X>20</X>
+				<X>360</X>
 				<Y>218</Y>
 				<Label>
 					<X>0</X>
@@ -1624,7 +1624,7 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="360" Height="30">
+				<BasicProperties Width="27" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
@@ -1643,7 +1643,7 @@ else{
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="HOLONline2" Size="14" Style="0"/>
-					<LabelText>HT-Warmtenet</LabelText>
+					<LabelText/>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -1651,7 +1651,7 @@ else{
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1749738869851</Id>
 				<Name><![CDATA[cb_householdLTDistrictHeating]]></Name>
-				<X>20</X>
+				<X>360</X>
 				<Y>248</Y>
 				<Label>
 					<X>0</X>
@@ -1661,7 +1661,7 @@ else{
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="360" Height="30">
+				<BasicProperties Width="27" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<TextColor>-16777216</TextColor>
 					<Enabled>true</Enabled>
@@ -1680,7 +1680,7 @@ else{
 				</BasicProperties>
 				<ExtendedProperties>
 					<Font Name="HOLONline2" Size="14" Style="0"/>
-					<LabelText>LT-Warmtenet</LabelText>
+					<LabelText/>
 					<LinkTo>false</LinkTo>
 				</ExtendedProperties>
 			</Control>
@@ -1715,7 +1715,7 @@ else{
 			<Image>
 				<Id>1752231560000</Id>
 				<Name><![CDATA[i_householdHTDistrictHeating]]></Name>
-				<X>367</X>
+				<X>100</X>
 				<Y>226</Y>
 				<Label>
 					<X>0</X>
@@ -1743,7 +1743,7 @@ else{
 			<Image>
 				<Id>1752231560019</Id>
 				<Name><![CDATA[i_householdLTDistrictHeating]]></Name>
-				<X>367</X>
+				<X>100</X>
 				<Y>256</Y>
 				<Label>
 					<X>0</X>
@@ -2607,6 +2607,32 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				</Font>
 				<Alignment>RIGHT</Alignment>
 			</Text>
+			<Text>
+				<Id>1784894392357</Id>
+				<Name><![CDATA[txt_householdElectricHeatPumpDescription1]]></Name>
+				<X>20</X>
+				<Y>227</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>cb_householdHTDistrictHeating.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[HT-Warmtenet]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
 		</Presentation>
 	</Group>
 	<Rectangle>
@@ -2921,4 +2947,30 @@ f_setHeatingSliders( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 		<Dy>0</Dy>
 		<Dz>0</Dz>
 	</Line>
+	<Text>
+		<Id>1784894430170</Id>
+		<Name><![CDATA[txt_householdElectricHeatPumpDescription2]]></Name>
+		<X>20</X>
+		<Y>257</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<VisibleCode>cb_householdLTDistrictHeating.isVisible()</VisibleCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[LT-Warmtenet]]></Text>
+		<Font>
+			<Name><![CDATA[HOLONline2]]></Name>
+			<Size>14</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
 </Presentation>
