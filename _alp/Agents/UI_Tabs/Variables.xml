@@ -185,7 +185,7 @@
               StaticVariable="false">
 			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(new Color(234, 58, 129), black, null, LINE_STYLE_SOLID, 0)]]></Code>
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(new Color(242, 121, 169), black, null, LINE_STYLE_SOLID, 0)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
