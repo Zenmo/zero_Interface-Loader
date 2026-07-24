@@ -144,6 +144,8 @@ t_energyHubMember4.setVisible(false);
 t_energyHubMember5.setVisible(false);
 t_energyHubMember6.setVisible(false);
 t_energyHubMember7.setVisible(false);
+t_energyHubMember8.setVisible(false);
+t_energyHubMember9.setVisible(false);
 t_energyHubMemberOthers.setVisible(false);
 
 int maxChars = 25;
@@ -176,13 +178,20 @@ try {
 	name = members.get(6).p_ownerID;
 	t_energyHubMember7.setText(f_formatName(name, maxChars));
 	t_energyHubMember7.setVisible(true);
-	if (members.size() == 8) {
-		name = members.get(7).p_ownerID;		
+	name = members.get(7).p_ownerID;
+	t_energyHubMember8.setText(f_formatName(name, maxChars));
+	t_energyHubMember8.setVisible(true);
+	name = members.get(8).p_ownerID;
+	t_energyHubMember9.setText(f_formatName(name, maxChars));
+	t_energyHubMember9.setVisible(true);
+	
+	if (members.size() == 10) {
+		name = members.get(9).p_ownerID;		
 		t_energyHubMemberOthers.setText(f_formatName(name, maxChars));
 		t_energyHubMemberOthers.setVisible(true);
 	}
-	else if (members.size() > 8) {
-		int nbOthers = members.size() - 7;
+	else if (members.size() > 10) {
+		int nbOthers = members.size() - 9;
 		t_energyHubMemberOthers.setText("En nog " + nbOthers + " andere leden");
 		t_energyHubMemberOthers.setVisible(true);
 	}
@@ -726,11 +735,20 @@ if (combobox_selectScenario.getItems().length == 0) {
 	return;
 }
 
-gr_saveScenario.setVisible(false);
-gr_forceSaveLoadScenario.setVisible(true);
-gr_scenarioLoad.setVisible(true);
-line4.setX(33);
-s_saveScenarioText.setColor(black);
-s_loadScenarioText.setColor(teal);
+if(!gr_scenarioLoad.isVisible()){
+	gr_saveScenario.setVisible(false);
+	gr_forceSaveLoadScenario.setVisible(true);
+	gr_scenarioLoad.setVisible(true);
+	line_scenarioSaveLoadSelection.setVisible(true);
+	line_scenarioSaveLoadSelection.setX(33);
+	s_saveScenarioText.setColor(black);
+	s_loadScenarioText.setColor(teal);
+}
+else{
+	line_scenarioSaveLoadSelection.setVisible(false);
+	s_loadScenarioText.setColor(black);
+	gr_scenarioLoad.setVisible(false);
+	gr_forceSaveLoadScenario.setVisible(false);
+}
 /*ALCODEEND*/}
 
