@@ -766,7 +766,7 @@ if(MVsubstations.size() > 0 || project_data.project_type() == OL_ProjectType.RES
 
 v_amountOfDefinedGridLoops = 0;
 
-if(MVsubstations != null){
+if(!MVsubstations.isEmpty()){
 	//Set all unique grid topology colors for each substation and its children if the gridloops are defined
 	for (GridNode MVsub : MVsubstations){
 		
@@ -1852,6 +1852,7 @@ for(OL_MapOverlayTypes loadedMapOverlay : c_loadedMapOverlayTypes){
 	currentMapOverlayButton.setVisible(true);
 	currentMapOverlayButtonIndex++;
 }
+f_selectMapOverlayButton(0);
 /*ALCODEEND*/}
 
 double f_setMapOverlay()
@@ -3940,6 +3941,11 @@ v_filterButton.setEnabled(false);
 gr_filterInterface.setVisible(true);
 	
 gr_filterInterface.setPos(170, 580);
+
+if(gr_extendedLegend.isVisible()){
+	gr_extendedLegend.setVisible(false);
+	t_seeMoreLegend.setText("Zie meer...");
+}
 /*ALCODEEND*/}
 
 double f_finalizeEnergyHubConfiguration()

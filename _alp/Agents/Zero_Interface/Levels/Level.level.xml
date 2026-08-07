@@ -875,7 +875,7 @@ else{
 		<Id>1720909739871</Id>
 		<Name><![CDATA[gr_multipleBuildingInfo]]></Name>
 		<X>1245</X>
-		<Y>770</Y>
+		<Y>775</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3317,6 +3317,7 @@ officia deserunt mollit anim id est laborum."]]></Text>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
 				<XCode>-310</XCode>
 				<YCode>-80</YCode>
+				<VisibleCode>v_currentUIMode == OL_UIMode.DEFAULT</VisibleCode>
 				<OnClickCode>if(!gr_extendedLegend.isVisible()){
 	gr_extendedLegend.setVisible(true);
 	t_seeMoreLegend.setText("Zie minder...");
@@ -7860,8 +7861,8 @@ type]]></Text>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
 						<Color>-16777216</Color>
-						<Text><![CDATA[Parkeer-
-type]]></Text>
+						<Text><![CDATA[Energie
+label]]></Text>
 						<Font>
 							<Name><![CDATA[HOLONline2]]></Name>
 							<Size>10</Size>
@@ -7886,8 +7887,7 @@ type]]></Text>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
 						<Color>-16777216</Color>
-						<Text><![CDATA[Parkeer-
-type]]></Text>
+						<Text><![CDATA[Netburen]]></Text>
 						<Font>
 							<Name><![CDATA[HOLONline2]]></Name>
 							<Size>10</Size>
@@ -7912,8 +7912,7 @@ type]]></Text>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
 						<Color>-16777216</Color>
-						<Text><![CDATA[Parkeer-
-type]]></Text>
+						<Text><![CDATA[Custom]]></Text>
 						<Font>
 							<Name><![CDATA[HOLONline2]]></Name>
 							<Size>10</Size>
@@ -8391,13 +8390,14 @@ type]]></Text>
 						<ZHeight>10</ZHeight>
 						<LineWidth>1</LineWidth>
 						<LineColor>-1</LineColor>
+						<LineColorCode>!gr_layerButtons.isVisible() ? white : v_mapOverlayButtonSelectedStyling.fillColor()</LineColorCode>
 						<LineMaterial>null</LineMaterial>
 						<LineStyle>SOLID</LineStyle>
 						<Width>60</Width>
 						<Height>60</Height>
 						<Rotation>0.0</Rotation>
-						<FillColor>-1052689</FillColor>
-						<FillColorCode>v_mapOverlayButtonDefaultStyling.fillColor()</FillColorCode>
+						<FillColor>-855310</FillColor>
+						<FillColorCode>!gr_layerButtons.isVisible() ? v_mapOverlayButtonDefaultStyling.fillColor() : v_mapOverlayButtonSelectedStyling.fillColor()</FillColorCode>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>6</ArcRadius>
 					</RoundedRectangle>
@@ -8405,7 +8405,7 @@ type]]></Text>
 						<Id>1782737775635</Id>
 						<Name><![CDATA[txt_mapOverlayButtonOpening]]></Name>
 						<X>0</X>
-						<Y>13</Y>
+						<Y>10</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -8418,10 +8418,11 @@ type]]></Text>
 						<Z>0</Z>
 						<Rotation>0.0</Rotation>
 						<Color>-16777216</Color>
+						<ColorCode>!gr_layerButtons.isVisible() ? v_mapOverlayButtonDefaultStyling.textColor() : v_mapOverlayButtonSelectedStyling.textColor()</ColorCode>
 						<Text><![CDATA[Lagen]]></Text>
 						<Font>
 							<Name><![CDATA[HOLONline2]]></Name>
-							<Size>12</Size>
+							<Size>10</Size>
 							<Style>0</Style>
 						</Font>
 						<Alignment>CENTER</Alignment>
@@ -8429,7 +8430,7 @@ type]]></Text>
 					<Image>
 						<Id>1782737775637</Id>
 						<Name><![CDATA[image_mapOverlayButtonOpening]]></Name>
-						<X>-22</X>
+						<X>-20.5</X>
 						<Y>-21</Y>
 						<Label>
 							<X>0</X>
@@ -8449,7 +8450,12 @@ type]]></Text>
 								<PackageName>zerointerfaceloader</PackageName>
 								<ClassName>icon_mapoverlay_black.png</ClassName>
 							</ImageResourceReference>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>icon_mapoverlay_white.png</ClassName>
+							</ImageResourceReference>
 						</ImageFiles>
+						<ImageIndexCode>!gr_layerButtons.isVisible() ? 0 : 1</ImageIndexCode>
 						<OriginalSize>false</OriginalSize>
 					</Image>
 				</Presentation>
@@ -9380,9 +9386,7 @@ else {
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
 						<OnClickCode>if(v_filterButton.isEnabled()){
 	v_filterButton.setSelected(!v_filterButton.isSelected(), false);
-	
 	gr_filterInterface.setVisible(v_filterButton.isSelected());
-	
 	if(! v_filterButton.isSelected()){
 		v_currentUIMode = OL_UIMode.DEFAULT;
 		f_setForcedClickScreenTextBoxes("", null, null, "", null, null);
@@ -9390,6 +9394,10 @@ else {
 	else{
 		v_currentUIMode = OL_UIMode.FILTER;
 		f_setForcedClickScreenTextBoxes("FILTERMODUS", (Color)teal, null, "", null, null);
+		if(gr_extendedLegend.isVisible()){
+			gr_extendedLegend.setVisible(false);
+			t_seeMoreLegend.setText("Zie meer...");
+		}
 	}
 }</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
@@ -9402,7 +9410,7 @@ else {
 						<Width>44</Width>
 						<Height>44</Height>
 						<Rotation>0.0</Rotation>
-						<FillColor>-1052689</FillColor>
+						<FillColor>-855310</FillColor>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>6</ArcRadius>
 					</RoundedRectangle>
@@ -9493,7 +9501,7 @@ else {
 						<Width>44</Width>
 						<Height>44</Height>
 						<Rotation>0.0</Rotation>
-						<FillColor>-1052689</FillColor>
+						<FillColor>-855310</FillColor>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>6</ArcRadius>
 					</RoundedRectangle>
@@ -9590,7 +9598,7 @@ else {
 						<Width>44</Width>
 						<Height>44</Height>
 						<Rotation>0.0</Rotation>
-						<FillColor>-1052689</FillColor>
+						<FillColor>-855310</FillColor>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>6</ArcRadius>
 					</RoundedRectangle>

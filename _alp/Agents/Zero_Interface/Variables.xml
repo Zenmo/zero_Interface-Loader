@@ -2160,7 +2160,7 @@
               StaticVariable="false">
 			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(new Color(239, 239, 239), black, new Color(148, 215, 209), LINE_STYLE_SOLID, 1)]]></Code>
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(new Color(242, 242, 242), black, new Color(148, 215, 209), LINE_STYLE_SOLID, 1)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2182,7 +2182,7 @@
               StaticVariable="false">
 			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(white, black, new Color(148, 215, 209), LINE_STYLE_SOLID, 2)]]></Code>
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(teal, white, null, LINE_STYLE_SOLID, 1)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2204,7 +2204,7 @@
               StaticVariable="false">
 			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(silver, black, gray, LINE_STYLE_SOLID, 1)]]></Code>
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(silver, black, white, LINE_STYLE_SOLID, 1)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2226,7 +2226,7 @@
               StaticVariable="false">
 			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(teal, null, teal, LINE_STYLE_SOLID, 1)]]></Code>
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(new Color(242, 242, 242), null, white, LINE_STYLE_SOLID, 1)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2248,7 +2248,7 @@
               StaticVariable="false">
 			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(white, black, white, LINE_STYLE_SOLID, 1)]]></Code>
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(teal, null, teal, LINE_STYLE_SOLID, 1)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2292,7 +2292,7 @@
               StaticVariable="false">
 			<Type><![CDATA[CustomButton]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new CustomButton(rect_filterButton, null, image_filterButton, new CustomButton.CustomButtonStyling(v_additionalOptionButtonDefaultStyling, v_additionalOptionButtonSelectedStyling, v_additionalOptionButtonDisabledStyling, v_additionalOptionButtonDisabledStyling), new CustomButton.CustomButtonImageSelection(1, 0, 1, 1))]]></Code>
+				<Code><![CDATA[new CustomButton(rect_filterButton, null, image_filterButton, new CustomButton.CustomButtonStyling(v_additionalOptionButtonDefaultStyling, v_additionalOptionButtonSelectedStyling, v_additionalOptionButtonDisabledStyling, v_additionalOptionButtonDisabledStyling), new CustomButton.CustomButtonImageSelection(0, 1, 1, 1))]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2314,7 +2314,7 @@
               StaticVariable="false">
 			<Type><![CDATA[CustomButton]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new CustomButton(rect_cableButton, null, image_cableButton, new CustomButton.CustomButtonStyling(v_additionalOptionButtonDefaultStyling, v_additionalOptionButtonSelectedStyling, v_additionalOptionButtonDisabledStyling, v_additionalOptionButtonDisabledStyling), new CustomButton.CustomButtonImageSelection(1, 0, 1, 1))]]></Code>
+				<Code><![CDATA[new CustomButton(rect_cableButton, null, image_cableButton, new CustomButton.CustomButtonStyling(v_additionalOptionButtonDefaultStyling, v_additionalOptionButtonSelectedStyling, v_additionalOptionButtonDisabledStyling, v_additionalOptionButtonDisabledStyling), new CustomButton.CustomButtonImageSelection(0, 1, 1, 1))]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2336,7 +2336,7 @@
               StaticVariable="false">
 			<Type><![CDATA[CustomButton]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new CustomButton(rect_gridAreasButton, null, image_gridAreasButton, new CustomButton.CustomButtonStyling(v_additionalOptionButtonDefaultStyling, v_additionalOptionButtonSelectedStyling, v_additionalOptionButtonDisabledStyling, v_additionalOptionButtonDisabledStyling), new CustomButton.CustomButtonImageSelection(1, 0, 1, 1))]]></Code>
+				<Code><![CDATA[new CustomButton(rect_gridAreasButton, null, image_gridAreasButton, new CustomButton.CustomButtonStyling(v_additionalOptionButtonDefaultStyling, v_additionalOptionButtonSelectedStyling, v_additionalOptionButtonDisabledStyling, v_additionalOptionButtonDisabledStyling), new CustomButton.CustomButtonImageSelection(0, 1, 1, 1))]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
