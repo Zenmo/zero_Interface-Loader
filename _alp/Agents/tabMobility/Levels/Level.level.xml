@@ -1425,7 +1425,7 @@ gr_householdSettingsV2G_privateParkedCars.setVisible(cb_householdActivateV2GPriv
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<BasicProperties Width="355" Height="30">
+						<BasicProperties Width="360" Height="30">
 							<EmbeddedIcon>false</EmbeddedIcon>
 							<Enabled>true</Enabled>
 							<ActionCode>f_setV2GEVCapabilities( uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_householdEVsThatSupportV2G_pct.getValue() );</ActionCode>
@@ -1600,58 +1600,6 @@ gr_householdSettingsV2G_privateParkedCars.setVisible(cb_householdActivateV2GPriv
 				</ImageFiles>
 				<OriginalSize>false</OriginalSize>
 			</Image>
-			<Text>
-				<Id>1784573154805</Id>
-				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct]]></Name>
-				<X>22</X>
-				<Y>124</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-4144960</Color>
-				<Text><![CDATA[min]]></Text>
-				<TextCode>roundToInt(sl_householdPrivateEVs_pct.getMin())</TextCode>
-				<Font>
-					<Name><![CDATA[HOLONline]]></Name>
-					<Size>10</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1784573154807</Id>
-				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct]]></Name>
-				<X>380</X>
-				<Y>124</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-4144960</Color>
-				<Text><![CDATA[max]]></Text>
-				<TextCode>roundToInt(sl_householdPrivateEVs_pct.getMax())</TextCode>
-				<Font>
-					<Name><![CDATA[HOLONline]]></Name>
-					<Size>10</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>RIGHT</Alignment>
-			</Text>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1784573415215</Id>
@@ -1886,6 +1834,58 @@ else{
 				</ImageFiles>
 				<OriginalSize>false</OriginalSize>
 			</Image>
+			<Text>
+				<Id>1784573154805</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct]]></Name>
+				<X>22</X>
+				<Y>124</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_householdPrivateEVs_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784573154807</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct]]></Name>
+				<X>380</X>
+				<Y>124</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_householdPrivateEVs_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
 		</Presentation>
 	</Group>
 	<Text>
