@@ -895,14 +895,8 @@ gr_loadScenario.setVisible(true);
 	gr_scenarioLoad.setVisible(false);
 	gr_forceSaveLoadScenario.setVisible(true);
 	gr_saveScenario.setVisible(true);
-	line_scenarioSaveLoadSelection.setVisible(true);
-	line_scenarioSaveLoadSelection.setX(-115);
-	s_saveScenarioText.setColor(teal);
-	s_loadScenarioText.setColor(black);
 }
 else{
-	line_scenarioSaveLoadSelection.setVisible(false);
-	s_saveScenarioText.setColor(black);
 	gr_saveScenario.setVisible(false);
 	gr_forceSaveLoadScenario.setVisible(false);
 }</OnClickCode>
@@ -932,9 +926,7 @@ else{
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>f_loadScenarioButtonAction();
-
-</OnClickCode>
+				<OnClickCode>f_loadScenarioButtonAction();</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<ZHeight>10</ZHeight>
@@ -951,8 +943,8 @@ else{
 			<Text>
 				<Id>1780586423804</Id>
 				<Name><![CDATA[s_saveScenarioText]]></Name>
-				<X>-76</X>
-				<Y>-51</Y>
+				<X>-75</X>
+				<Y>-49</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -976,8 +968,8 @@ else{
 			<Text>
 				<Id>1780586440336</Id>
 				<Name><![CDATA[s_loadScenarioText]]></Name>
-				<X>70</X>
-				<Y>-51</Y>
+				<X>75</X>
+				<Y>-49</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -998,39 +990,11 @@ else{
 				</Font>
 				<Alignment>CENTER</Alignment>
 			</Text>
-			<Line>
-				<Id>1780586640979</Id>
-				<Name><![CDATA[line_scenarioSaveLoadSelection]]></Name>
-				<X>-115</X>
-				<Y>-30</Y>
-				<Label>
-					<X>10</X>
-					<Y>0</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>false</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor>-16744320</LineColor>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<BeginArrowSize>1</BeginArrowSize>
-				<BeginArrowStyle>0</BeginArrowStyle>
-				<EndArrowSize>1</EndArrowSize>
-				<EndArrowStyle>0</EndArrowStyle>
-				<Dx>80</Dx>
-				<Dy>0</Dy>
-				<Dz>0</Dz>
-			</Line>
 			<Group>
 				<Id>1780586971515</Id>
 				<Name><![CDATA[gr_saveScenario]]></Name>
-				<X>0</X>
-				<Y>15</Y>
+				<X>-430</X>
+				<Y>315</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -1085,6 +1049,7 @@ else{
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<OnClickCode>f_saveScenarioButton();</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<ZHeight>10</ZHeight>
@@ -1163,7 +1128,6 @@ else{
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<OnClickCode>f_saveScenarioButton();</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Width>16</Width>
@@ -1182,8 +1146,8 @@ else{
 			<Group>
 				<Id>1780586995548</Id>
 				<Name><![CDATA[gr_scenarioLoad]]></Name>
-				<X>0</X>
-				<Y>55</Y>
+				<X>-430</X>
+				<Y>435</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -1192,6 +1156,7 @@ else{
 				<PresentationFlag>false</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<XCode>0</XCode>
 				<YCode>15</YCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
@@ -1237,6 +1202,7 @@ else{
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<OnClickCode>f_loadScenarioButton();</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<ZHeight>10</ZHeight>
@@ -1264,7 +1230,6 @@ else{
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<OnClickCode>f_loadScenarioButton();</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<Width>17</Width>

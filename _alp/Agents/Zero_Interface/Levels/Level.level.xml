@@ -1378,7 +1378,7 @@ v_selectedGridConnectionIndex &gt; 0 ?
 				<Id>1736337707551</Id>
 				<Name><![CDATA[t_errorMessage]]></Name>
 				<X>960</X>
-				<Y>390</Y>
+				<Y>430</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -5529,10 +5529,6 @@ else{
 				<PackageName>zerointerfaceloader</PackageName>
 				<ClassName>zenmo-loading-ccw.gif</ClassName>
 			</ImageResourceReference>
-			<ImageResourceReference>
-				<PackageName>zerointerfaceloader</PackageName>
-				<ClassName>icon_loading.gif</ClassName>
-			</ImageResourceReference>
 		</ImageFiles>
 		<OriginalSize>false</OriginalSize>
 	</Image>
@@ -6652,7 +6648,7 @@ traceln("Alle filters zijn verwijderd.");</OnClickCode>
 				<LineColor>-1</LineColor>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
-				<Width>145</Width>
+				<Width>150</Width>
 				<Height>25</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-7022639</FillColor>
@@ -6675,7 +6671,7 @@ traceln("Alle filters zijn verwijderd.");</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
-				<Color>-12566464</Color>
+				<Color>-16777216</Color>
 				<Text><![CDATA[Verwijder alle filters]]></Text>
 				<Font>
 					<Name><![CDATA[HOLONline2]]></Name>

@@ -1097,6 +1097,7 @@ else {
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<VisibleCode>!zero_Interface.settings.isPublicModel() &amp;&amp; zero_Interface.user.GCAccessType == OL_UserGCAccessType.FULL</VisibleCode>
+				<OnClickCode>zero_Interface.f_startEnergyHubConfiguration();</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -1114,7 +1115,6 @@ else {
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<OnClickCode>zero_Interface.f_startEnergyHubConfiguration();</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<ZHeight>10</ZHeight>
@@ -1666,7 +1666,6 @@ zero_Interface.f_resetSettings();</OnClickCode>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<VisibleCode>!zero_Interface.settings.isPublicModel() &amp;&amp; zero_Interface.user.GCAccessType == OL_UserGCAccessType.FULL</VisibleCode>
 				<OnClickCode>// First check if there are any save files, if there are none we display an error screen
-
 zero_Interface.uI_EnergyHub.f_initializeUserSavedScenarios(zero_Interface.uI_EnergyHub.combobox_selectScenario);
 if (zero_Interface.uI_EnergyHub.combobox_selectScenario.getItems().length == 0) {
 	zero_Interface.f_setErrorScreen("Er zijn nog geen scenario's opgeslagen.", 0, 0);
@@ -1710,7 +1709,6 @@ new Thread( () -&gt; {
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<OnClickCode>zero_Interface.f_startEnergyHubConfiguration();</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
 						<ZHeight>10</ZHeight>

@@ -739,14 +739,8 @@ if(!gr_scenarioLoad.isVisible()){
 	gr_saveScenario.setVisible(false);
 	gr_forceSaveLoadScenario.setVisible(true);
 	gr_scenarioLoad.setVisible(true);
-	line_scenarioSaveLoadSelection.setVisible(true);
-	line_scenarioSaveLoadSelection.setX(33);
-	s_saveScenarioText.setColor(black);
-	s_loadScenarioText.setColor(teal);
 }
 else{
-	line_scenarioSaveLoadSelection.setVisible(false);
-	s_loadScenarioText.setColor(black);
 	gr_scenarioLoad.setVisible(false);
 	gr_forceSaveLoadScenario.setVisible(false);
 }

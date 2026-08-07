@@ -944,7 +944,8 @@ gr_errorScreen.setPos(xOffset, yOffset);
 button_errorOK.setY(550);
 rect_errorMessage.setY(380);
 rect_errorMessage.setHeight(200);
-t_errorMessage.setY(430);
+t_errorMessage.setY(460);
+im_i_iconErrorScreen.setY(t_errorMessage.getY() - 50);
 
 //Set position above all other things
 f_setShapePresentationOnTop(gr_errorScreen);
@@ -962,6 +963,7 @@ rect_errorMessage.setHeight(rect_errorMessage.getHeight() + additionalLines * 40
 rect_errorMessage.setY(rect_errorMessage.getY() - 40 * additionalLines);
 //button_errorOK.setY(button_errorOK.getY() - 10 * additionalLines);
 t_errorMessage.setY(t_errorMessage.getY() - 40 * additionalLines);
+im_i_iconErrorScreen.setY(t_errorMessage.getY() - 50);
 
 t_errorMessage.setText(errorMessage);
 gr_errorScreen.setVisible(true);
