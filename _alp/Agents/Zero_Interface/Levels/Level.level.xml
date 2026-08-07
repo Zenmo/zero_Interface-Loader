@@ -5526,6 +5526,10 @@ else{
 		<ImageFiles>
 			<ImageResourceReference>
 				<PackageName>zerointerfaceloader</PackageName>
+				<ClassName>zenmo-loading-ccw.gif</ClassName>
+			</ImageResourceReference>
+			<ImageResourceReference>
+				<PackageName>zerointerfaceloader</PackageName>
 				<ClassName>icon_loading.gif</ClassName>
 			</ImageResourceReference>
 		</ImageFiles>
@@ -8747,7 +8751,7 @@ type]]></Text>
 								<Z>0</Z>
 								<ZHeight>10</ZHeight>
 								<LineWidth>3</LineWidth>
-								<LineColor>-16777216</LineColor>
+								<LineColor>-16744320</LineColor>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
 								<Width>275</Width>
@@ -8761,7 +8765,7 @@ type]]></Text>
 								<Id>1783689173536</Id>
 								<Name><![CDATA[txt_completeAddingCustomEAToMap]]></Name>
 								<X>0</X>
-								<Y>-20</Y>
+								<Y>-13</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -8773,10 +8777,10 @@ type]]></Text>
 								<EmbeddedIcon>false</EmbeddedIcon>
 								<Z>0</Z>
 								<Rotation>0.0</Rotation>
-								<Color>-16777216</Color>
+								<Color>-16744320</Color>
 								<Text><![CDATA[Voltooien]]></Text>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
+									<Name><![CDATA[HOLONline2]]></Name>
 									<Size>28</Size>
 									<Style>1</Style>
 								</Font>
@@ -8819,7 +8823,7 @@ type]]></Text>
 								<Z>0</Z>
 								<ZHeight>10</ZHeight>
 								<LineWidth>3</LineWidth>
-								<LineColor>-2345659</LineColor>
+								<LineColor>-1834917</LineColor>
 								<LineMaterial>null</LineMaterial>
 								<LineStyle>SOLID</LineStyle>
 								<Width>275</Width>
@@ -8833,7 +8837,7 @@ type]]></Text>
 								<Id>1783689173530</Id>
 								<Name><![CDATA[txt_cancelAddingCustomEAToMap]]></Name>
 								<X>48</X>
-								<Y>-10</Y>
+								<Y>-3</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -8845,10 +8849,10 @@ type]]></Text>
 								<EmbeddedIcon>false</EmbeddedIcon>
 								<Z>0</Z>
 								<Rotation>0.0</Rotation>
-								<Color>-16777216</Color>
+								<Color>-1834917</Color>
 								<Text><![CDATA[Annuleer]]></Text>
 								<Font>
-									<Name><![CDATA[SansSerif]]></Name>
+									<Name><![CDATA[HOLONline2]]></Name>
 									<Size>28</Size>
 									<Style>1</Style>
 								</Font>
