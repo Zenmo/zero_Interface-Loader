@@ -193,7 +193,7 @@ catch (Exception exception) {
 
 double f_initializeUserSavedScenarios(ShapeComboBox combo)
 {/*ALCODESTART::1756395572049*/
-if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToken() == "") {
+if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToken().isEmpty()) {
 	return;
 }
 UserScenarioRepository repository = f_getUserScenarioRepository();
@@ -218,7 +218,7 @@ for (UI_Results ui_results : zero_Interface.c_UIResultsInstances) {
 }
 
 
-if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToken() == "") {
+if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToken().isEmpty()) {
 	zero_Interface.f_setErrorScreen("Niet mogelijk om scenario's in te laden. Er is geen gebruiker ingelogd.", zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
 	return;
 }
@@ -334,7 +334,7 @@ try {
 		traceln("ModelSave loaded succesfully!");
 	}
 		
-} catch (IOException e) {
+} catch (Exception e) {
 	e.printStackTrace();
 }
 
@@ -343,7 +343,7 @@ try {
 
 double f_saveScenario(String scenarioName)
 {/*ALCODESTART::1756805443177*/
-if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToken() == "") {
+if ( zero_Interface.user.userIdToken() == null || zero_Interface.user.userIdToken().isEmpty()) {
 	zero_Interface.f_setErrorScreen("Niet mogelijk om scenario's op te slaan. Er is geen gebruiker ingelogd.", zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
 	return;
 }
@@ -458,6 +458,10 @@ ArrayList<GridConnection> allConnections = new ArrayList<>();
 allConnections.addAll(deserializedEnergyModel.c_gridConnections);
 allConnections.addAll(deserializedEnergyModel.c_pausedGridConnections);
 
+ArrayList<GridConnection> pausedConnections = new ArrayList<>(deserializedEnergyModel.c_pausedGridConnections);
+deserializedEnergyModel.c_gridConnections.clear();
+deserializedEnergyModel.c_pausedGridConnections.clear();
+
 for(GridConnection GC : allConnections){
 	GC.energyModel = deserializedEnergyModel;
 	if (GC instanceof GCHouse){
@@ -479,7 +483,11 @@ for(GridConnection GC : allConnections){
 	//GC.f_startAfterDeserialisation();
 }
 
-
+// onCreate() put every connection in c_gridConnections - restore the paused/active split
+for (GridConnection GC : pausedConnections) {
+	deserializedEnergyModel.c_gridConnections.remove(GC);
+	deserializedEnergyModel.c_pausedGridConnections.add(GC);
+}
 /*ALCODEEND*/}
 
 double f_reconstructEnergyModel(EnergyModel energyModel)
@@ -539,24 +547,33 @@ agent.create();
 
 double f_reconstructActors(EnergyModel deserializedEnergyModel)
 {/*ALCODESTART::1756806501050*/
-for(Actor AC : deserializedEnergyModel.c_actors){
-		
-		if (AC instanceof ConnectionOwner) {
-			((ConnectionOwner)AC).energyModel = deserializedEnergyModel;
-			f_reconstructAgent(AC, deserializedEnergyModel.pop_connectionOwners, deserializedEnergyModel);
-		} else if (AC instanceof EnergySupplier) {
-			((EnergySupplier)AC).energyModel = deserializedEnergyModel;
-			f_reconstructAgent(AC, deserializedEnergyModel.pop_energySuppliers, deserializedEnergyModel);
-		} else if (AC instanceof EnergyCoop) {
-			((EnergyCoop)AC).energyModel = deserializedEnergyModel;
-			f_reconstructAgent(AC, deserializedEnergyModel.pop_energyCoops, deserializedEnergyModel);
-			//((EnergyCoop)AC).f_startAfterDeserialisation();
-		} else if (AC instanceof GridOperator) {
-			((GridOperator)AC).energyModel = deserializedEnergyModel;
-			f_reconstructAgent(AC, deserializedEnergyModel.pop_gridOperators, deserializedEnergyModel);
-		}
-	}
+ArrayList<Actor> allActors = new ArrayList<>(deserializedEnergyModel.c_actors);
+deserializedEnergyModel.c_actors.clear();
+deserializedEnergyModel.c_connectionOwners.clear();
 
+for(Actor AC : allActors){
+		
+	if (AC instanceof ConnectionOwner) {
+		((ConnectionOwner)AC).energyModel = deserializedEnergyModel;
+		f_reconstructAgent(AC, deserializedEnergyModel.pop_connectionOwners, deserializedEnergyModel);
+	} else if (AC instanceof EnergySupplier) {
+		((EnergySupplier)AC).energyModel = deserializedEnergyModel;
+		f_reconstructAgent(AC, deserializedEnergyModel.pop_energySuppliers, deserializedEnergyModel);
+	} else if (AC instanceof EnergyCoop) {
+		((EnergyCoop)AC).energyModel = deserializedEnergyModel;
+		f_reconstructAgent(AC, deserializedEnergyModel.pop_energyCoops, deserializedEnergyModel);
+		//((EnergyCoop)AC).f_startAfterDeserialisation();
+	} else if (AC instanceof GridOperator) {
+		((GridOperator)AC).energyModel = deserializedEnergyModel;
+		f_reconstructAgent(AC, deserializedEnergyModel.pop_gridOperators, deserializedEnergyModel);
+	}
+}
+
+for (Actor AC : allActors) {
+	if (!deserializedEnergyModel.c_actors.contains(AC)) {
+		deserializedEnergyModel.c_actors.add(AC);
+	}
+}
 /*ALCODEEND*/}
 
 double f_reconstructGIS_Objects(EnergyModel deserializedEnergyModel,ArrayList<GIS_Object> c_GISObjects)
