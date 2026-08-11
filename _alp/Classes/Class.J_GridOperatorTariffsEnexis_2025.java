@@ -1,6 +1,18 @@
 /**
  * J_GridOperatorTariffsEnexis_2025
  */	
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+ 
+@JsonAutoDetect(
+    fieldVisibility = Visibility.ANY,    //
+    getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE,
+    creatorVisibility = Visibility.NONE
+)
+
 public class J_GridOperatorTariffsEnexis_2025 implements I_GridOperatorTariffs {
 	//Data source: https://www.enexis.nl/zakelijk/aansluitingen/tarieven/tariefbladen (2025)
 	//			&&	https://www.enexis.nl/tarieven/oudere-tarieven    (2025)  
