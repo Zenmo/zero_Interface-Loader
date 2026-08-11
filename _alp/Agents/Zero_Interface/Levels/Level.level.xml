@@ -6891,6 +6891,7 @@ traceln("Alle filters zijn verwijderd.");</OnClickCode>
 	b_inManualFilterSelectionMode = true;
 	
 	f_setForcedClickScreenMessageText("(De)Selecteer gebouwen");
+	f_setForcedClickScreenMessageBackgroundColor(new Color(148, 215, 209), null);
 	if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 		f_setForcedClickScreenTitleText("");
 		f_setForcedClickScreenVisibility(true);

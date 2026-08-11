@@ -3413,6 +3413,7 @@ switch(selectedFilter){
 		}
 		else{
 			f_setForcedClickScreenMessageText("Selecteer een lus");
+			f_setForcedClickScreenMessageBackgroundColor(new Color(148, 215, 209), null);
 			if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 				f_setForcedClickScreenVisibility(true);
 			}
@@ -3435,6 +3436,7 @@ switch(selectedFilter){
 		}
 		else{
 			f_setForcedClickScreenMessageText("Selecteer een buurt");
+			f_setForcedClickScreenMessageBackgroundColor(new Color(148, 215, 209), null);
 			if(v_currentUIMode != OL_UIMode.EHUBSELECTION){
 				f_setForcedClickScreenVisibility(true);
 			}

@@ -1690,7 +1690,8 @@ new Thread( () -&gt; {
 	zero_Interface.f_finalizeEnergyHubConfiguration();	
 	
 	// Select load scenario in the E-Hub configurator
-	zero_Interface.uI_EnergyHub.f_loadScenarioButtonAction();
+	zero_Interface.uI_EnergyHub.button_loadScenario.onClick(0,0);
+	
 }).start();</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>

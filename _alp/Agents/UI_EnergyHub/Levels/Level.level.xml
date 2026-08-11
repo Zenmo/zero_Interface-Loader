@@ -114,9 +114,9 @@
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
-		<Text><![CDATA[Scenario's]]></Text>
+		<Text><![CDATA[SCENARIO'S]]></Text>
 		<Font>
-			<Name><![CDATA[HOLONBLOCK]]></Name>
+			<Name><![CDATA[HolonBLOCK2]]></Name>
 			<Size>20</Size>
 			<Style>1</Style>
 		</Font>
@@ -156,9 +156,9 @@
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16744320</Color>
-				<Text><![CDATA[Energy Hub Configurator]]></Text>
+				<Text><![CDATA[ENERGIE HUB CONFIGURATOR]]></Text>
 				<Font>
-					<Name><![CDATA[HOLONBlock]]></Name>
+					<Name><![CDATA[HolonBLOCK2]]></Name>
 					<Size>24</Size>
 					<Style>1</Style>
 				</Font>
@@ -727,141 +727,6 @@ en meer resultaten te bekijken]]></Text>
 		</Presentation>
 	</Group>
 	<Group>
-		<Id>1756805661168</Id>
-		<Name><![CDATA[gr_saveScenario1]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>250</X>
-		<Y>-340</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>false</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Presentation>
-			<Control Type="EditBox">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1756805661172</Id>
-				<Name><![CDATA[eb_scenarioName2]]></Name>
-				<X>0</X>
-				<Y>0</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="220" Height="25">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<FillColor>-1</FillColor>
-					<TextColor>-16777216</TextColor>
-					<Enabled>true</Enabled>
-				</BasicProperties>
-				<ExtendedProperties>
-					<Font Name="Dialog" Size="11" Style="0"/>
-					<LinkTo>true</LinkTo>
-					<Link>v_scenarioName</Link>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1758545634906</Id>
-				<Name><![CDATA[t_saveScenarioInstructions]]></Name>
-				<X>5</X>
-				<Y>-20</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Geef je scenario een naam en klik rechts op het icoontje]]></Text>
-				<Font>
-					<Name><![CDATA[SansSerif]]></Name>
-					<Size>10</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-		</Presentation>
-	</Group>
-	<Control Type="Button">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1758532628277</Id>
-		<Name><![CDATA[button_saveScenario1]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>249</X>
-		<Y>-395</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="140" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor>-16777216</TextColor>
-			<Enabled>true</Enabled>
-			<ActionCode>gr_loadScenario.setVisible(false);
-gr_forceSaveLoadScenario.setVisible(true);
-gr_saveScenario.setVisible(true);</ActionCode>
-		</BasicProperties>
-		<ExtendedProperties>
-			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText>Bewaar een scenario</LabelText>
-		</ExtendedProperties>
-	</Control>
-	<Control Type="Button">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1758532628290</Id>
-		<Name><![CDATA[button_loadScenario2]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>399</X>
-		<Y>-395</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="140" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor>-16777216</TextColor>
-			<Enabled>true</Enabled>
-			<ActionCode>f_initializeUserSavedScenarios(combobox_selectScenario);
-if (combobox_selectScenario.getItems().length == 0) {
-	zero_Interface.f_setErrorScreen("Er zijn nog geen scenario's opgeslagen.", zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
-	return;
-}
-
-gr_saveScenario.setVisible(false);
-gr_forceSaveLoadScenario.setVisible(true);
-gr_loadScenario.setVisible(true);
-
-</ActionCode>
-		</BasicProperties>
-		<ExtendedProperties>
-			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText>Laad een scenario in</LabelText>
-		</ExtendedProperties>
-	</Control>
-	<Group>
 		<Id>1780587071437</Id>
 		<Name><![CDATA[gr_saveAndLoadScenarios]]></Name>
 		<X>210</X>
@@ -878,118 +743,6 @@ gr_loadScenario.setVisible(true);
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Presentation>
-			<Rectangle>
-				<Id>1780586386920</Id>
-				<Name><![CDATA[button_saveScenario]]></Name>
-				<X>-145</X>
-				<Y>-60</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>if(!gr_saveScenario.isVisible()){
-	gr_scenarioLoad.setVisible(false);
-	gr_forceSaveLoadScenario.setVisible(true);
-	gr_saveScenario.setVisible(true);
-}
-else{
-	gr_saveScenario.setVisible(false);
-	gr_forceSaveLoadScenario.setVisible(false);
-}</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor/>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>140</Width>
-				<Height>30</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-657931</FillColor>
-				<FillMaterial>null</FillMaterial>
-			</Rectangle>
-			<Rectangle>
-				<Id>1780586400453</Id>
-				<Name><![CDATA[button_loadScenario]]></Name>
-				<X>5</X>
-				<Y>-60</Y>
-				<Label>
-					<X>10</X>
-					<Y>10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>f_loadScenarioButtonAction();</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<ZHeight>10</ZHeight>
-				<LineWidth>1</LineWidth>
-				<LineColor/>
-				<LineMaterial>null</LineMaterial>
-				<LineStyle>SOLID</LineStyle>
-				<Width>140</Width>
-				<Height>30</Height>
-				<Rotation>0.0</Rotation>
-				<FillColor>-657931</FillColor>
-				<FillMaterial>null</FillMaterial>
-			</Rectangle>
-			<Text>
-				<Id>1780586423804</Id>
-				<Name><![CDATA[s_saveScenarioText]]></Name>
-				<X>-75</X>
-				<Y>-49</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Bewaar een scenario]]></Text>
-				<Font>
-					<Name><![CDATA[HOLONLine2]]></Name>
-					<Size>10</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
-			<Text>
-				<Id>1780586440336</Id>
-				<Name><![CDATA[s_loadScenarioText]]></Name>
-				<X>75</X>
-				<Y>-49</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Laad een scenario in]]></Text>
-				<Font>
-					<Name><![CDATA[HOLONLine2]]></Name>
-					<Size>10</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>CENTER</Alignment>
-			</Text>
 			<Group>
 				<Id>1780586971515</Id>
 				<Name><![CDATA[gr_saveScenario]]></Name>
@@ -1011,7 +764,7 @@ else{
 				<Presentation>
 					<RoundedRectangle>
 						<Id>1784893492522</Id>
-						<Name><![CDATA[rect_saveScenario]]></Name>
+						<Name><![CDATA[rect_saveScenarioSelectionBackground]]></Name>
 						<X>-190</X>
 						<Y>-40</Y>
 						<Label>
@@ -1035,34 +788,6 @@ else{
 						<FillColor>-1</FillColor>
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>10</ArcRadius>
-					</RoundedRectangle>
-					<RoundedRectangle>
-						<Id>1780586533996</Id>
-						<Name><![CDATA[roundRectangle3]]></Name>
-						<X>120</X>
-						<Y>-5</Y>
-						<Label>
-							<X>10</X>
-							<Y>10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<OnClickCode>f_saveScenarioButton();</OnClickCode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor/>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<Width>25</Width>
-						<Height>25</Height>
-						<Rotation>0.0</Rotation>
-						<FillColor>-4069658</FillColor>
-						<FillMaterial>null</FillMaterial>
-						<ArcRadius>5</ArcRadius>
 					</RoundedRectangle>
 					<Text>
 						<Id>1780586463036</Id>
@@ -1115,37 +840,188 @@ else{
 							<Link>v_scenarioName</Link>
 						</ExtendedProperties>
 					</Control>
-					<Image>
-						<Id>1756805661170</Id>
-						<Name><![CDATA[image_saveScenario]]></Name>
-						<X>125</X>
-						<Y>1</Y>
+					<Group>
+						<Id>1786359894180</Id>
+						<Name><![CDATA[button_saveScenarioIcon]]></Name>
+						<X>130</X>
+						<Y>10</Y>
 						<Label>
-							<X>0</X>
-							<Y>-10</Y>
+							<X>10</X>
+							<Y>0</Y>
 						</Label>
 						<PublicFlag>true</PublicFlag>
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>false</ShowLabel>
 						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<OnClickCode>f_saveScenarioButton();</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
-						<Width>16</Width>
-						<Height>14</Height>
 						<Rotation>0.0</Rotation>
-						<ImageFiles>
-							<ImageResourceReference>
-								<PackageName>zerointerfaceloader</PackageName>
-								<ClassName>save_icon.png</ClassName>
-							</ImageResourceReference>
-						</ImageFiles>
-						<OriginalSize>false</OriginalSize>
-					</Image>
+						<Presentation>
+							<RoundedRectangle>
+								<Id>1786359894182</Id>
+								<Name><![CDATA[roundRectangle3]]></Name>
+								<X>-10</X>
+								<Y>-15</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor/>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>25</Width>
+								<Height>25</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-4069658</FillColor>
+								<FillMaterial>null</FillMaterial>
+								<ArcRadius>5</ArcRadius>
+							</RoundedRectangle>
+							<Image>
+								<Id>1786359894184</Id>
+								<Name><![CDATA[image_saveScenario]]></Name>
+								<X>-5</X>
+								<Y>-9</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Width>16</Width>
+								<Height>14</Height>
+								<Rotation>0.0</Rotation>
+								<ImageFiles>
+									<ImageResourceReference>
+										<PackageName>zerointerfaceloader</PackageName>
+										<ClassName>save_icon.png</ClassName>
+									</ImageResourceReference>
+								</ImageFiles>
+								<OriginalSize>false</OriginalSize>
+							</Image>
+						</Presentation>
+					</Group>
+					<Group>
+						<Id>1786367345272</Id>
+						<Name><![CDATA[button_cancelSaveScenario]]></Name>
+						<X>165</X>
+						<Y>-25</Y>
+						<Label>
+							<X>10</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<OnClickCode>gr_saveScenario.setVisible(false);
+gr_forceSaveLoadScenario.setVisible(false);</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Presentation>
+							<RoundedRectangle>
+								<Id>1786367103846</Id>
+								<Name><![CDATA[roundRectangle1]]></Name>
+								<X>-9</X>
+								<Y>-9</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-1834917</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>16</Width>
+								<Height>16</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>400818267</FillColor>
+								<FillMaterial>null</FillMaterial>
+								<ArcRadius>5</ArcRadius>
+							</RoundedRectangle>
+							<Line>
+								<Id>1786367156102</Id>
+								<Name><![CDATA[line]]></Name>
+								<X>-3</X>
+								<Y>1</Y>
+								<Label>
+									<X>10</X>
+									<Y>0</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-1834917</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<BeginArrowSize>1</BeginArrowSize>
+								<BeginArrowStyle>0</BeginArrowStyle>
+								<EndArrowSize>1</EndArrowSize>
+								<EndArrowStyle>0</EndArrowStyle>
+								<Dx>4</Dx>
+								<Dy>-4</Dy>
+								<Dz>0</Dz>
+							</Line>
+							<Line>
+								<Id>1786367243979</Id>
+								<Name><![CDATA[line1]]></Name>
+								<X>1</X>
+								<Y>1</Y>
+								<Label>
+									<X>10</X>
+									<Y>0</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-1834917</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<BeginArrowSize>1</BeginArrowSize>
+								<BeginArrowStyle>0</BeginArrowStyle>
+								<EndArrowSize>1</EndArrowSize>
+								<EndArrowStyle>0</EndArrowStyle>
+								<Dx>-4</Dx>
+								<Dy>-4</Dy>
+								<Dz>0</Dz>
+							</Line>
+						</Presentation>
+					</Group>
 				</Presentation>
 			</Group>
 			<Group>
 				<Id>1780586995548</Id>
-				<Name><![CDATA[gr_scenarioLoad]]></Name>
+				<Name><![CDATA[gr_loadScenario]]></Name>
 				<X>-430</X>
 				<Y>435</Y>
 				<Label>
@@ -1164,7 +1040,7 @@ else{
 				<Presentation>
 					<RoundedRectangle>
 						<Id>1784893581875</Id>
-						<Name><![CDATA[rect_loadScenario]]></Name>
+						<Name><![CDATA[rect_loadScenarioSelectionBackground]]></Name>
 						<X>-190</X>
 						<Y>-40</Y>
 						<Label>
@@ -1189,60 +1065,6 @@ else{
 						<FillMaterial>null</FillMaterial>
 						<ArcRadius>10</ArcRadius>
 					</RoundedRectangle>
-					<RoundedRectangle>
-						<Id>1780586859701</Id>
-						<Name><![CDATA[roundRectangle4]]></Name>
-						<X>120</X>
-						<Y>-5</Y>
-						<Label>
-							<X>10</X>
-							<Y>10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<OnClickCode>f_loadScenarioButton();</OnClickCode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<ZHeight>10</ZHeight>
-						<LineWidth>1</LineWidth>
-						<LineColor/>
-						<LineMaterial>null</LineMaterial>
-						<LineStyle>SOLID</LineStyle>
-						<Width>25</Width>
-						<Height>25</Height>
-						<Rotation>0.0</Rotation>
-						<FillColor>-4069658</FillColor>
-						<FillMaterial>null</FillMaterial>
-						<ArcRadius>5</ArcRadius>
-					</RoundedRectangle>
-					<Image>
-						<Id>1756805661210</Id>
-						<Name><![CDATA[image_loadScenario]]></Name>
-						<X>124</X>
-						<Y>0</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Width>17</Width>
-						<Height>14</Height>
-						<Rotation>0.0</Rotation>
-						<ImageFiles>
-							<ImageResourceReference>
-								<PackageName>zerointerfaceloader</PackageName>
-								<ClassName>load_icon.png</ClassName>
-							</ImageResourceReference>
-						</ImageFiles>
-						<OriginalSize>false</OriginalSize>
-					</Image>
 					<Control Type="ComboBox">
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Id>1756805661212</Id>
@@ -1294,6 +1116,347 @@ else{
 							<Style>0</Style>
 						</Font>
 						<Alignment>LEFT</Alignment>
+					</Text>
+					<Group>
+						<Id>1786359957809</Id>
+						<Name><![CDATA[button_loadScenarioIcon]]></Name>
+						<X>130</X>
+						<Y>10</Y>
+						<Label>
+							<X>10</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<OnClickCode>f_loadScenarioButton();</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Presentation>
+							<RoundedRectangle>
+								<Id>1786359957811</Id>
+								<Name><![CDATA[roundRectangle4]]></Name>
+								<X>-10</X>
+								<Y>-15</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor/>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>25</Width>
+								<Height>25</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-4069658</FillColor>
+								<FillMaterial>null</FillMaterial>
+								<ArcRadius>5</ArcRadius>
+							</RoundedRectangle>
+							<Image>
+								<Id>1786359957813</Id>
+								<Name><![CDATA[image_loadScenario]]></Name>
+								<X>-6</X>
+								<Y>-10</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Width>17</Width>
+								<Height>14</Height>
+								<Rotation>0.0</Rotation>
+								<ImageFiles>
+									<ImageResourceReference>
+										<PackageName>zerointerfaceloader</PackageName>
+										<ClassName>load_icon.png</ClassName>
+									</ImageResourceReference>
+								</ImageFiles>
+								<OriginalSize>false</OriginalSize>
+							</Image>
+						</Presentation>
+					</Group>
+					<Group>
+						<Id>1786367448021</Id>
+						<Name><![CDATA[button_cancelLoadScenario]]></Name>
+						<X>165</X>
+						<Y>-25</Y>
+						<Label>
+							<X>10</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<OnClickCode>gr_loadScenario.setVisible(false);
+gr_forceSaveLoadScenario.setVisible(false);</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Presentation>
+							<RoundedRectangle>
+								<Id>1786367448023</Id>
+								<Name><![CDATA[roundRectangle2]]></Name>
+								<X>-9</X>
+								<Y>-9</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-1834917</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>16</Width>
+								<Height>16</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>400818267</FillColor>
+								<FillMaterial>null</FillMaterial>
+								<ArcRadius>5</ArcRadius>
+							</RoundedRectangle>
+							<Line>
+								<Id>1786367448025</Id>
+								<Name><![CDATA[line2]]></Name>
+								<X>-3</X>
+								<Y>1</Y>
+								<Label>
+									<X>10</X>
+									<Y>0</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-1834917</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<BeginArrowSize>1</BeginArrowSize>
+								<BeginArrowStyle>0</BeginArrowStyle>
+								<EndArrowSize>1</EndArrowSize>
+								<EndArrowStyle>0</EndArrowStyle>
+								<Dx>4</Dx>
+								<Dy>-4</Dy>
+								<Dz>0</Dz>
+							</Line>
+							<Line>
+								<Id>1786367448027</Id>
+								<Name><![CDATA[line3]]></Name>
+								<X>1</X>
+								<Y>1</Y>
+								<Label>
+									<X>10</X>
+									<Y>0</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-1834917</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<BeginArrowSize>1</BeginArrowSize>
+								<BeginArrowStyle>0</BeginArrowStyle>
+								<EndArrowSize>1</EndArrowSize>
+								<EndArrowStyle>0</EndArrowStyle>
+								<Dx>-4</Dx>
+								<Dy>-4</Dy>
+								<Dz>0</Dz>
+							</Line>
+						</Presentation>
+					</Group>
+				</Presentation>
+			</Group>
+			<Group>
+				<Id>1786365882798</Id>
+				<Name><![CDATA[button_saveScenario]]></Name>
+				<X>-70</X>
+				<Y>-45</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>if(!gr_saveScenario.isVisible()){
+	gr_loadScenario.setVisible(false);
+	gr_forceSaveLoadScenario.setVisible(true);
+	gr_saveScenario.setVisible(true);
+}
+else{
+	gr_saveScenario.setVisible(false);
+	gr_forceSaveLoadScenario.setVisible(false);
+}</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Rectangle>
+						<Id>1786365882800</Id>
+						<Name><![CDATA[rect_saveScenario]]></Name>
+						<X>-75</X>
+						<Y>-15</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor/>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>140</Width>
+						<Height>30</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-657931</FillColor>
+						<FillMaterial>null</FillMaterial>
+					</Rectangle>
+					<Text>
+						<Id>1786365882802</Id>
+						<Name><![CDATA[s_saveScenarioText]]></Name>
+						<X>-5</X>
+						<Y>-4</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Bewaar een scenario]]></Text>
+						<Font>
+							<Name><![CDATA[HOLONLine2]]></Name>
+							<Size>10</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
+					</Text>
+				</Presentation>
+			</Group>
+			<Group>
+				<Id>1786365942018</Id>
+				<Name><![CDATA[button_loadScenario]]></Name>
+				<X>80</X>
+				<Y>-45</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>f_initializeUserSavedScenarios(combobox_selectScenario);
+if (combobox_selectScenario.getItems().length == 0) {
+	zero_Interface.f_setErrorScreen("Er zijn nog geen scenario's opgeslagen.", zero_Interface.va_EHubDashboard.getX(), zero_Interface.va_EHubDashboard.getY());
+	return true;
+}
+
+if(!gr_loadScenario.isVisible()){
+	gr_saveScenario.setVisible(false);
+	gr_forceSaveLoadScenario.setVisible(true);
+	gr_loadScenario.setVisible(true);
+}
+else{
+	gr_loadScenario.setVisible(false);
+	gr_forceSaveLoadScenario.setVisible(false);
+}</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Rectangle>
+						<Id>1786365942020</Id>
+						<Name><![CDATA[rect_loadScenario]]></Name>
+						<X>-75</X>
+						<Y>-15</Y>
+						<Label>
+							<X>10</X>
+							<Y>10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<ZHeight>10</ZHeight>
+						<LineWidth>1</LineWidth>
+						<LineColor/>
+						<LineMaterial>null</LineMaterial>
+						<LineStyle>SOLID</LineStyle>
+						<Width>140</Width>
+						<Height>30</Height>
+						<Rotation>0.0</Rotation>
+						<FillColor>-657931</FillColor>
+						<FillMaterial>null</FillMaterial>
+					</Rectangle>
+					<Text>
+						<Id>1786365942022</Id>
+						<Name><![CDATA[s_loadScenarioText]]></Name>
+						<X>-5</X>
+						<Y>-4</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Laad een scenario in]]></Text>
+						<Font>
+							<Name><![CDATA[HOLONLine2]]></Name>
+							<Size>10</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>CENTER</Alignment>
 					</Text>
 				</Presentation>
 			</Group>
@@ -1472,9 +1635,9 @@ zero_Interface.v_currentUIMode = OL_UIMode.EHUBSELECTION;</OnClickCode>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[E-Hub Members]]></Text>
+				<Text><![CDATA[E-HUB LEDEN]]></Text>
 				<Font>
-					<Name><![CDATA[HOLONBLOCK]]></Name>
+					<Name><![CDATA[HolonBLOCK2]]></Name>
 					<Size>20</Size>
 					<Style>1</Style>
 				</Font>
