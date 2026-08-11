@@ -245,7 +245,7 @@ try {
 	J_ModelSave saveObject = v_objectMapper.readValue(jsonStream, J_ModelSave.class);
 	
 	// Check last saved date, compare to current status of projectdata.
-	if (!saveObject.projectDataLastModifiedDate.equals(zero_Interface.zero_loader.v_projectDataLastChangedDate)) {
+	if (!java.util.Objects.equals(saveObject.projectDataLastModifiedDate, zero_Interface.zero_loader.v_projectDataLastChangedDate)) {
 		traceln("Current data last modified date: %s", zero_Interface.zero_loader.v_projectDataLastChangedDate);
 		traceln("Save-file data last modified date: %s", saveObject.projectDataLastModifiedDate);
 		getExperimentHost().showMessageDialog("Het opgeslagen scenario bevat data die niet overeenkomt met de huidige dataset in de data portal."); 
