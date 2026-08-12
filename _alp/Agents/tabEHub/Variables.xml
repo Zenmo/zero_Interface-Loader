@@ -1,29 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Variables>
 	<Variable Class="PlainVariable">
-		<Id>1722256365490</Id>
-		<Name><![CDATA[b_inCapacitySharingSelectionMode]]></Name>
-		<X>740</X>
-		<Y>925</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[boolean]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1722256365499</Id>
 		<Name><![CDATA[v_recievingGC]]></Name>
 		<X>740</X>
-		<Y>865</Y>
+		<Y>885</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -42,7 +23,7 @@
 		<Id>1722256365507</Id>
 		<Name><![CDATA[v_sendingGC]]></Name>
 		<X>740</X>
-		<Y>885</Y>
+		<Y>905</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -61,7 +42,7 @@
 		<Id>1722256365515</Id>
 		<Name><![CDATA[b_capacitySharingContractWeekendDistinction]]></Name>
 		<X>740</X>
-		<Y>905</Y>
+		<Y>925</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -77,6 +58,46 @@
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[false]]></Code>
 			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1780125279843</Id>
+		<Name><![CDATA[v_currentPageIndex]]></Name>
+		<X>-400</X>
+		<Y>90</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[int]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1780125279790</Id>
+		<Name><![CDATA[c_loadedPageGroups]]></Name>
+		<X>-400</X>
+		<Y>110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>ShapeGroup</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>
 </Variables>

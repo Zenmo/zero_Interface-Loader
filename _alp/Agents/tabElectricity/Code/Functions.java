@@ -1212,13 +1212,12 @@ f_resetCustomGCCreation();
 
 // Reset state variables
 b_customGCPolygonCreated = false;
-b_addCustomGC = false;
 v_addCustomGCType = null;
-b_removeCustomGC = false;
+uI_Tabs.zero_Interface.v_currentUIMode = OL_UIMode.DEFAULT;
 
 // Hide forced click screen, if needed
 zero_Interface.f_setForcedClickScreenVisibility(false);
-zero_Interface.f_setForcedClickScreenTextBoxes("", new Color(255, 255, 255), new Color(0, 0, 0), "", new Color(255, 255, 255), new Color(0, 0, 0));
+zero_Interface.f_setForcedClickScreenTextBoxes("", null, null, "", null, null);
 /*ALCODEEND*/}
 
 double f_resetCustomGCCreation()

@@ -1,11 +1,19 @@
 /**
  * J_InfoText
  */	
-public class J_InfoText implements Serializable {
+public class J_InfoText{
 
 	
 	public String lorumIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui	officia deserunt mollit anim id est laborum.";
     
+	//Scenarios (Dynamic)
+	public String scenario1 = "";
+	public String scenario2 = "";
+	public String scenario3 = "";
+	public String scenario4 = "";
+	public String scenario5 = "";
+	public String scenario6 = "";
+	
 	//// Main Interface \\\\
 	// TODO
 	
@@ -135,11 +143,4 @@ public class J_InfoText implements Serializable {
 	public String toString() {
 		return super.toString();
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }

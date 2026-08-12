@@ -4,7 +4,7 @@
 		<Id>1777551482069</Id>
 		<Name><![CDATA[v_currentPageIndex]]></Name>
 		<X>-350</X>
-		<Y>140</Y>
+		<Y>180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -25,8 +25,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1783089426576</Id>
 		<Name><![CDATA[v_customSolarfarmGCCounter]]></Name>
-		<X>-800</X>
-		<Y>160</Y>
+		<X>810</X>
+		<Y>1120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -47,8 +47,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1783089426588</Id>
 		<Name><![CDATA[v_customWindfarmGCCounter]]></Name>
-		<X>-800</X>
-		<Y>180</Y>
+		<X>810</X>
+		<Y>1140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -69,8 +69,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1783089426600</Id>
 		<Name><![CDATA[v_customGridBatteryGCCounter]]></Name>
-		<X>-800</X>
-		<Y>200</Y>
+		<X>810</X>
+		<Y>1160</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -89,54 +89,10 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1783089962441</Id>
-		<Name><![CDATA[b_addCustomGC]]></Name>
-		<X>-800</X>
-		<Y>90</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[boolean]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[false]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1783089962453</Id>
-		<Name><![CDATA[b_removeCustomGC]]></Name>
-		<X>-800</X>
-		<Y>130</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[boolean]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[false]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1783089962464</Id>
 		<Name><![CDATA[b_customGCPolygonCreated]]></Name>
-		<X>-800</X>
-		<Y>70</Y>
+		<X>810</X>
+		<Y>1070</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -157,8 +113,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1783089962476</Id>
 		<Name><![CDATA[previewGISRegionCustomGC]]></Name>
-		<X>-780</X>
-		<Y>360</Y>
+		<X>830</X>
+		<Y>1320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -176,8 +132,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1783089962487</Id>
 		<Name><![CDATA[v_addCustomGCType]]></Name>
-		<X>-800</X>
-		<Y>110</Y>
+		<X>810</X>
+		<Y>1090</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -199,7 +155,7 @@
 		<Id>1783332413594</Id>
 		<Name><![CDATA[v_previousPageIndex]]></Name>
 		<X>-350</X>
-		<Y>120</Y>
+		<Y>160</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -220,8 +176,8 @@
 	<Variable Class="Parameter">
 		<Id>1745483322704</Id>
 		<Name><![CDATA[p_initialPVOnLand_ha]]></Name>
-		<X>50</X>
-		<Y>1270</Y>
+		<X>60</X>
+		<Y>1420</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -248,8 +204,8 @@
 	<Variable Class="Parameter">
 		<Id>1745483371462</Id>
 		<Name><![CDATA[p_initialWindTurbines_MW]]></Name>
-		<X>50</X>
-		<Y>1290</Y>
+		<X>60</X>
+		<Y>1440</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -276,8 +232,8 @@
 	<Variable Class="Parameter">
 		<Id>1765276731422</Id>
 		<Name><![CDATA[p_initialTotalGridBatteryCapacity_MWh]]></Name>
-		<X>50</X>
-		<Y>1340</Y>
+		<X>60</X>
+		<Y>1490</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -305,7 +261,7 @@
 		<Id>1765206938406</Id>
 		<Name><![CDATA[c_electricityTabEASliderGCs]]></Name>
 		<X>-330</X>
-		<Y>70</Y>
+		<Y>110</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -323,7 +279,7 @@
 		<Id>1777551557373</Id>
 		<Name><![CDATA[c_loadedPageGroups]]></Name>
 		<X>-350</X>
-		<Y>160</Y>
+		<Y>200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -340,8 +296,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1783089426523</Id>
 		<Name><![CDATA[c_customSolarfarmGCs]]></Name>
-		<X>-800</X>
-		<Y>230</Y>
+		<X>810</X>
+		<Y>1190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -358,8 +314,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1783089426542</Id>
 		<Name><![CDATA[c_customWindfarmGCs]]></Name>
-		<X>-800</X>
-		<Y>250</Y>
+		<X>810</X>
+		<Y>1210</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -376,8 +332,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1783089426559</Id>
 		<Name><![CDATA[c_customGridBatteryGCs]]></Name>
-		<X>-800</X>
-		<Y>270</Y>
+		<X>810</X>
+		<Y>1230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -395,8 +351,8 @@
 		<Id>1783089962285</Id>
 		<Name><![CDATA[c_tempSavedPointCoordinatesCustomGC]]></Name>
 		<Description><![CDATA[Temporary saved Pair list of various latitude/longitude combinations (for creating a custom EA GC GIS region polygon]]></Description>
-		<X>-780</X>
-		<Y>320</Y>
+		<X>830</X>
+		<Y>1280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -414,8 +370,8 @@
 		<Id>1783089962303</Id>
 		<Name><![CDATA[c_tempSavedDotGISRegionsCustomGC]]></Name>
 		<Description><![CDATA[Temporary saved GIS_Object which represent the latitude/longitude coordinates saved in c_tempSavedCoordinates]]></Description>
-		<X>-780</X>
-		<Y>340</Y>
+		<X>830</X>
+		<Y>1300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

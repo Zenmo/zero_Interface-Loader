@@ -1,7 +1,7 @@
 double f_initializeEnergyHubDashboard()
 {/*ALCODESTART::1753446461346*/
 //Set map to correct layout
-zero_Interface.rb_mapOverlay.setValue(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT),true);
+zero_Interface.f_selectMapOverlayButton(zero_Interface.c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT));
 zero_Interface.b_updateLiveCongestionColors = false;
 
 // Zoom map to the selected EHub members
@@ -49,8 +49,15 @@ List<OL_ChartTypes> selectedChartTypes_Energy = new ArrayList<>(List.of(
 //Set the selected radiobutton setup Economic
 List<OL_ChartTypes> selectedChartTypes_Economic = new ArrayList<>();// Leave empty for now!
 
+//Set the selected radiobutton setup Sustainability
+List<OL_ChartTypes> selectedChartTypes_Sustainability = new ArrayList<>(List.of(
+														OL_ChartTypes.CO2));
+
+//Public version?
+boolean publicVersion = false; // Energyhub is never accesible in public version for now, so can always just leave it off for now.
+
 //Connect resultsUI
-uI_Results.f_initializeResultsUI(selectedChartTypes_Energy, selectedChartTypes_Economic);
+uI_Results.f_initializeResultsUI(selectedChartTypes_Energy, selectedChartTypes_Economic, selectedChartTypes_Sustainability, publicVersion);
 uI_Results.f_updateResultsUI(v_energyHubCoop);
 /*ALCODEEND*/}
 
@@ -76,7 +83,6 @@ uI_Tabs.f_initializeUI_Tabs(v_energyHubCoop.f_getMemberGridConnectionsCollection
 double f_styleEnergyHubResultsUI()
 {/*ALCODESTART::1753694556229*/
 uI_Results.f_styleAllCharts(white, p_energyHubLineColor, p_energyHubLineWidth, p_energyHubLineStyle);
-uI_Results.f_styleResultsUIHeader(p_energyHubLineColor, p_energyHubLineColor, p_energyHubLineWidth, p_energyHubLineStyle);
 /*ALCODEEND*/}
 
 double f_addSliderEAGridConnections()
@@ -138,6 +144,8 @@ t_energyHubMember4.setVisible(false);
 t_energyHubMember5.setVisible(false);
 t_energyHubMember6.setVisible(false);
 t_energyHubMember7.setVisible(false);
+t_energyHubMember8.setVisible(false);
+t_energyHubMember9.setVisible(false);
 t_energyHubMemberOthers.setVisible(false);
 
 int maxChars = 25;
@@ -170,13 +178,20 @@ try {
 	name = members.get(6).p_ownerID;
 	t_energyHubMember7.setText(f_formatName(name, maxChars));
 	t_energyHubMember7.setVisible(true);
-	if (members.size() == 8) {
-		name = members.get(7).p_ownerID;		
+	name = members.get(7).p_ownerID;
+	t_energyHubMember8.setText(f_formatName(name, maxChars));
+	t_energyHubMember8.setVisible(true);
+	name = members.get(8).p_ownerID;
+	t_energyHubMember9.setText(f_formatName(name, maxChars));
+	t_energyHubMember9.setVisible(true);
+	
+	if (members.size() == 10) {
+		name = members.get(9).p_ownerID;		
 		t_energyHubMemberOthers.setText(f_formatName(name, maxChars));
 		t_energyHubMemberOthers.setVisible(true);
 	}
-	else if (members.size() > 8) {
-		int nbOthers = members.size() - 7;
+	else if (members.size() > 10) {
+		int nbOthers = members.size() - 9;
 		t_energyHubMemberOthers.setText("En nog " + nbOthers + " andere leden");
 		t_energyHubMemberOthers.setVisible(true);
 	}
@@ -213,7 +228,7 @@ zero_Interface.f_setScenarioToCustom();
 
 for (UI_Results ui_results : zero_Interface.c_UIResultsInstances) {
 	if (ui_results.f_getSelectedObjectData() != null) {	
-		zero_Interface.f_enableLivePlotsOnly(ui_results);
+		ui_results.f_enableLivePlotsOnly();
 	}
 }
 

@@ -4,7 +4,7 @@
 		<Id>1722350199532</Id>
 		<Name><![CDATA[rect_genericFunctions]]></Name>
 		<X>10</X>
-		<Y>470</Y>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -30,7 +30,7 @@
 		<Id>1722350199535</Id>
 		<Name><![CDATA[t_genericFunctions]]></Name>
 		<X>100</X>
-		<Y>490</Y>
+		<Y>700</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -53,8 +53,8 @@
 	</Text>
 	<Group>
 		<Id>1722247567090</Id>
-		<Name><![CDATA[gr_mobilitySliders_companies]]></Name>
-		<X>400</X>
+		<Name><![CDATA[gr_mobilitySliders_companies2]]></Name>
+		<X>1290</X>
 		<Y>0</Y>
 		<Label>
 			<X>10</X>
@@ -70,8 +70,8 @@
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Presentation>
-			<Rectangle>
-				<Id>1722247567092</Id>
+			<RoundedRectangle>
+				<Id>1784586476490</Id>
 				<Name><![CDATA[rect_mobilityDemandSliders_default]]></Name>
 				<X>0</X>
 				<Y>0</Y>
@@ -82,55 +82,27 @@
 				<PublicFlag>true</PublicFlag>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<ZHeight>10</ZHeight>
 				<LineWidth>1</LineWidth>
 				<LineColor/>
 				<LineMaterial>null</LineMaterial>
-				<LineStyle>DOTTED</LineStyle>
-				<Width>370</Width>
-				<Height>350</Height>
+				<LineStyle>SOLID</LineStyle>
+				<Width>400</Width>
+				<Height>390</Height>
 				<Rotation>0.0</Rotation>
-				<FillColor>-2625550</FillColor>
+				<FillColor>-1315080</FillColor>
 				<FillMaterial>null</FillMaterial>
-			</Rectangle>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1722247567094</Id>
-				<Name><![CDATA[sl_companiesFossilFuelCars_pct]]></Name>
-				<X>260</X>
-				<Y>309</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>sl_companiesElectricCars_pct.setValue(100 - sl_companiesFossilFuelCars_pct.getIntValue(), false);
-f_setPetroleumFuelCars( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), sl_companiesElectricCars_pct, sl_companiesFossilFuelCars_pct );</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>100</MaxValue>
-					<Step>1</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
+				<ArcRadius>10</ArcRadius>
+			</RoundedRectangle>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567096</Id>
 				<Name><![CDATA[sl_companiesElectricTrucks_pct]]></Name>
-				<X>260</X>
-				<Y>125</Y>
+				<X>20</X>
+				<Y>99</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -139,7 +111,7 @@ f_setPetroleumFuelCars( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveS
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
+				<BasicProperties Width="360" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setVehicleSliders( 0, sl_companiesElectricTrucks_pct, sl_companiesHydrogenTrucks_pct, sl_companiesFossilFuelTrucks_pct );
@@ -155,63 +127,10 @@ f_setElectricTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				</ExtendedProperties>
 			</Control>
 			<Text>
-				<Id>1722247567098</Id>
-				<Name><![CDATA[txt_companiesFossilFuelCars_pct]]></Name>
-				<X>245</X>
-				<Y>314</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_companiesFossilFuelCars_pct.isVisible()</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_companiesFossilFuelCars_pct.getIntValue() + "%"</TextCode>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>RIGHT</Alignment>
-			</Text>
-			<Text>
-				<Id>1722247567100</Id>
-				<Name><![CDATA[txt_companiesFossilFuelCarsDescription]]></Name>
-				<X>20</X>
-				<Y>314</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_companiesFossilFuelCars_pct.isVisible()</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Fossiele brandstof]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
 				<Id>1722247567102</Id>
 				<Name><![CDATA[txt_companiesElectricTrucksDescription]]></Name>
 				<X>20</X>
-				<Y>130</Y>
+				<Y>85</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -227,8 +146,8 @@ f_setElectricTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Color>-16777216</Color>
 				<Text><![CDATA[Elektrisch]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -236,8 +155,8 @@ f_setElectricTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 			<Text>
 				<Id>1722247567104</Id>
 				<Name><![CDATA[txt_companiesElectricTrucks_pct]]></Name>
-				<X>245</X>
-				<Y>130</Y>
+				<X>380</X>
+				<Y>85</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -251,93 +170,12 @@ f_setElectricTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[#]]></Text>
+				<Text><![CDATA[0%]]></Text>
 				<TextCode>sl_companiesElectricTrucks_pct.getIntValue() + "%"</TextCode>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>RIGHT</Alignment>
-			</Text>
-			<Text>
-				<Id>1722247567106</Id>
-				<Name><![CDATA[txt_companiesMobilityDemandReductionDescription]]></Name>
-				<X>20</X>
-				<Y>60</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_companiesMobilityDemandReduction_pct.isVisible()</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Besparing transport]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1722247567108</Id>
-				<Name><![CDATA[sl_companiesMobilityDemandReduction_pct]]></Name>
-				<X>260</X>
-				<Y>55</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>f_setDemandReduction( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), sl_companiesMobilityDemandReduction_pct.getValue() );</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>-50</MinValue>
-					<MaxValue>50</MaxValue>
-					<Step>1</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1722247567110</Id>
-				<Name><![CDATA[txt_companiesMobilityDemandReduction_pct]]></Name>
-				<X>245</X>
-				<Y>60</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_companiesMobilityDemandReduction_pct.isVisible()</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_companiesMobilityDemandReduction_pct.getIntValue() + "%"</TextCode>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
-					<Style>0</Style>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
 				</Font>
 				<Alignment>RIGHT</Alignment>
 			</Text>
@@ -345,8 +183,8 @@ f_setElectricTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567112</Id>
 				<Name><![CDATA[sl_companiesHydrogenTrucks_pct]]></Name>
-				<X>260</X>
-				<Y>147</Y>
+				<X>20</X>
+				<Y>152</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -355,7 +193,7 @@ f_setElectricTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
+				<BasicProperties Width="360" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setVehicleSliders( 1, sl_companiesElectricTrucks_pct, sl_companiesHydrogenTrucks_pct, sl_companiesFossilFuelTrucks_pct );
@@ -374,7 +212,7 @@ f_setHydrogenTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Id>1722247567114</Id>
 				<Name><![CDATA[txt_companiesHydrogenTrucksDescription]]></Name>
 				<X>20</X>
-				<Y>152</Y>
+				<Y>140</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -390,8 +228,8 @@ f_setHydrogenTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Color>-16777216</Color>
 				<Text><![CDATA[Waterstof]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -399,8 +237,8 @@ f_setHydrogenTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 			<Text>
 				<Id>1722247567116</Id>
 				<Name><![CDATA[txt_companiesHydrogenTrucks_pct]]></Name>
-				<X>245</X>
-				<Y>152</Y>
+				<X>380</X>
+				<Y>140</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -413,12 +251,12 @@ f_setHydrogenTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[#]]></Text>
+				<Text><![CDATA[0%]]></Text>
 				<TextCode>sl_companiesHydrogenTrucks_pct.getIntValue() + "%"</TextCode>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
-					<Style>0</Style>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
 				</Font>
 				<Alignment>RIGHT</Alignment>
 			</Text>
@@ -426,8 +264,8 @@ f_setHydrogenTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567118</Id>
 				<Name><![CDATA[sl_companiesFossilFuelTrucks_pct]]></Name>
-				<X>260</X>
-				<Y>169</Y>
+				<X>20</X>
+				<Y>205</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -436,7 +274,7 @@ f_setHydrogenTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlid
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
+				<BasicProperties Width="360" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>f_setVehicleSliders( 2, sl_companiesElectricTrucks_pct, sl_companiesHydrogenTrucks_pct, sl_companiesFossilFuelTrucks_pct );
@@ -455,7 +293,7 @@ f_setPetroleumFuelTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiv
 				<Id>1722247567120</Id>
 				<Name><![CDATA[txt_companiesFossilFuelTrucksDescription]]></Name>
 				<X>20</X>
-				<Y>174</Y>
+				<Y>193</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -471,8 +309,8 @@ f_setPetroleumFuelTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiv
 				<Color>-16777216</Color>
 				<Text><![CDATA[Fossiele brandstof]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -480,8 +318,8 @@ f_setPetroleumFuelTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiv
 			<Text>
 				<Id>1722247567122</Id>
 				<Name><![CDATA[t_fossilFuelTrucks_pct]]></Name>
-				<X>245</X>
-				<Y>174</Y>
+				<X>380</X>
+				<Y>193</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -495,12 +333,12 @@ f_setPetroleumFuelTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiv
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[#]]></Text>
+				<Text><![CDATA[0%]]></Text>
 				<TextCode>sl_companiesFossilFuelTrucks_pct.getIntValue() + "%"</TextCode>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
-					<Style>0</Style>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
 				</Font>
 				<Alignment>RIGHT</Alignment>
 			</Text>
@@ -508,7 +346,7 @@ f_setPetroleumFuelTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiv
 				<Id>1722247567124</Id>
 				<Name><![CDATA[t_trucksDescription]]></Name>
 				<X>20</X>
-				<Y>110</Y>
+				<Y>65</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -521,20 +359,19 @@ f_setPetroleumFuelTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiv
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Vrachtwagens]]></Text>
+				<Text><![CDATA[Verhouding - Vrachtwagens]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
 					<Style>1</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1722247567126</Id>
-				<Name><![CDATA[sl_companiesElectricCars_pct]]></Name>
-				<X>260</X>
-				<Y>287</Y>
+			<Image>
+				<Id>1746096716217</Id>
+				<Name><![CDATA[i_companiesElectricTruck]]></Name>
+				<X>80</X>
+				<Y>85</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -543,26 +380,82 @@ f_setPetroleumFuelTrucks( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiv
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>sl_companiesFossilFuelCars_pct.setValue(100 - sl_companiesElectricCars_pct.getIntValue(), false);
-f_setElectricCars( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), sl_companiesElectricCars_pct, sl_companiesFossilFuelCars_pct );</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>100</MaxValue>
-					<Step>1</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
+				<VisibleCode>sl_companiesElectricTrucks_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_companiesElectricTruck, zero_Interface.v_infoText.electricTrucks, i_companiesElectricTruck.getX() + uI_Tabs.v_presentationXOffset, i_companiesElectricTruck.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>14</Width>
+				<Height>14</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746096716230</Id>
+				<Name><![CDATA[i_companiesHydrogenTruck]]></Name>
+				<X>85</X>
+				<Y>140</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_companiesHydrogenTrucks_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_companiesHydrogenTruck, zero_Interface.v_infoText.hydrogenTrucks, i_companiesHydrogenTruck.getX() + uI_Tabs.v_presentationXOffset, i_companiesHydrogenTruck.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>14</Width>
+				<Height>14</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746096716242</Id>
+				<Name><![CDATA[i_companiesFossilFuelTruck]]></Name>
+				<X>135</X>
+				<Y>193</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_companiesFossilFuelTrucks_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_companiesFossilFuelTruck, zero_Interface.v_infoText.fossilTrucks, i_companiesFossilFuelTruck.getX() + uI_Tabs.v_presentationXOffset, i_companiesFossilFuelTruck.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>14</Width>
+				<Height>14</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
 			<Text>
-				<Id>1722247567128</Id>
-				<Name><![CDATA[txt_companiesElectricCarsDescription]]></Name>
-				<X>20</X>
-				<Y>292</Y>
+				<Id>1784581600279</Id>
+				<Name><![CDATA[txt_mobilitySlidersHousesholdsDescription3]]></Name>
+				<X>50</X>
+				<Y>27</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -571,24 +464,75 @@ f_setElectricCars( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlider
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_companiesElectricCars_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Elektrisch]]></Text>
+				<Text><![CDATA[BEDRIJVEN]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
+					<Name><![CDATA[HolonBLOCK2]]></Name>
+					<Size>20</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Image>
+				<Id>1784581600281</Id>
+				<Name><![CDATA[image18]]></Name>
+				<X>20</X>
+				<Y>25</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>21</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>car_icon_black.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>true</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1784583355089</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct5]]></Name>
+				<X>20</X>
+				<Y>124</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_companiesElectricTrucks_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
 			<Text>
-				<Id>1722247567130</Id>
-				<Name><![CDATA[txt_companiesElectricCars_pct]]></Name>
-				<X>245</X>
-				<Y>292</Y>
+				<Id>1784583355091</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct5]]></Name>
+				<X>380</X>
+				<Y>124</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -597,25 +541,24 @@ f_setElectricCars( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlider
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_companiesElectricCars_pct.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[#]]></Text>
-				<TextCode>sl_companiesElectricCars_pct.getIntValue() + "%"</TextCode>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_companiesElectricTrucks_pct.getMax())</TextCode>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Text>
-				<Id>1722247567132</Id>
-				<Name><![CDATA[t_carsDescription]]></Name>
+				<Id>1784583638543</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct6]]></Name>
 				<X>20</X>
-				<Y>272</Y>
+				<Y>177</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -627,21 +570,100 @@ f_setElectricCars( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlider
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Auto's]]></Text>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_companiesHydrogenTrucks_pct.getMin())</TextCode>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
-					<Style>1</Style>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784583638545</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct6]]></Name>
+				<X>380</X>
+				<Y>177</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_companiesHydrogenTrucks_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784583937307</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct7]]></Name>
+				<X>20</X>
+				<Y>230</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_companiesHydrogenTrucks_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784583937309</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct7]]></Name>
+				<X>380</X>
+				<Y>230</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_companiesHydrogenTrucks_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 			<Control Type="Slider">
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567134</Id>
 				<Name><![CDATA[sl_companiesFossilFuelVans_pct]]></Name>
-				<X>260</X>
-				<Y>239</Y>
+				<X>20</X>
+				<Y>331</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -650,7 +672,7 @@ f_setElectricCars( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlider
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
+				<BasicProperties Width="360" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>sl_companiesElectricVans_pct.setValue(100 - sl_companiesFossilFuelVans_pct.getIntValue(), false);
@@ -668,8 +690,8 @@ f_setPetroleumFuelVans( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveS
 			<Text>
 				<Id>1722247567136</Id>
 				<Name><![CDATA[txt_companiesFossilFuelVans_pct]]></Name>
-				<X>245</X>
-				<Y>244</Y>
+				<X>380</X>
+				<Y>319</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -683,12 +705,12 @@ f_setPetroleumFuelVans( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveS
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[#]]></Text>
+				<Text><![CDATA[0%]]></Text>
 				<TextCode>sl_companiesFossilFuelVans_pct.getIntValue() + "%"</TextCode>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
-					<Style>0</Style>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
 				</Font>
 				<Alignment>RIGHT</Alignment>
 			</Text>
@@ -696,7 +718,7 @@ f_setPetroleumFuelVans( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveS
 				<Id>1722247567138</Id>
 				<Name><![CDATA[txt_companiesFossilFuelVansDescription]]></Name>
 				<X>20</X>
-				<Y>244</Y>
+				<Y>319</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -712,8 +734,8 @@ f_setPetroleumFuelVans( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveS
 				<Color>-16777216</Color>
 				<Text><![CDATA[Fossiele brandstof]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -722,8 +744,8 @@ f_setPetroleumFuelVans( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveS
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Id>1722247567140</Id>
 				<Name><![CDATA[sl_companiesElectricVans_pct]]></Name>
-				<X>260</X>
-				<Y>217</Y>
+				<X>20</X>
+				<Y>278</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -732,7 +754,7 @@ f_setPetroleumFuelVans( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveS
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
+				<BasicProperties Width="360" Height="30">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Enabled>true</Enabled>
 					<ActionCode>sl_companiesFossilFuelVans_pct.setValue(100 - sl_companiesElectricVans_pct.getIntValue(), false);
@@ -751,7 +773,7 @@ f_setElectricVans( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlider
 				<Id>1722247567142</Id>
 				<Name><![CDATA[txt_companiesElectricVansDescription]]></Name>
 				<X>20</X>
-				<Y>222</Y>
+				<Y>266</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -767,8 +789,8 @@ f_setElectricVans( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlider
 				<Color>-16777216</Color>
 				<Text><![CDATA[Elektrisch]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
@@ -776,8 +798,8 @@ f_setElectricVans( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlider
 			<Text>
 				<Id>1722247567144</Id>
 				<Name><![CDATA[txt_companiesElectricVans_pct]]></Name>
-				<X>245</X>
-				<Y>222</Y>
+				<X>380</X>
+				<Y>266</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -791,12 +813,12 @@ f_setElectricVans( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlider
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[#]]></Text>
+				<Text><![CDATA[0%]]></Text>
 				<TextCode>sl_companiesElectricVans_pct.getIntValue() + "%"</TextCode>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
-					<Style>0</Style>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
 				</Font>
 				<Alignment>RIGHT</Alignment>
 			</Text>
@@ -804,7 +826,7 @@ f_setElectricVans( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlider
 				<Id>1722247567146</Id>
 				<Name><![CDATA[t_vansDescription]]></Name>
 				<X>20</X>
-				<Y>202</Y>
+				<Y>246</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -817,131 +839,19 @@ f_setElectricVans( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlider
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Busjes]]></Text>
+				<Text><![CDATA[Verhouding - Busjes]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
 					<Style>1</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
 			<Image>
-				<Id>1746096199769</Id>
-				<Name><![CDATA[i_companiesMobilityReduction]]></Name>
-				<X>180</X>
-				<Y>58</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>sl_companiesMobilityDemandReduction_pct.isVisible()</VisibleCode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_companiesMobilityReduction, zero_Interface.v_infoText.mobilityDemandReduction, i_companiesMobilityReduction.getX() + uI_Tabs.v_presentationXOffset, i_companiesMobilityReduction.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>20</Width>
-				<Height>20</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>icon_i.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-			<Image>
-				<Id>1746096716217</Id>
-				<Name><![CDATA[i_companiesElectricTruck]]></Name>
-				<X>180</X>
-				<Y>128</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>sl_companiesElectricTrucks_pct.isVisible()</VisibleCode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_companiesElectricTruck, zero_Interface.v_infoText.electricTrucks, i_companiesElectricTruck.getX() + uI_Tabs.v_presentationXOffset, i_companiesElectricTruck.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>20</Width>
-				<Height>20</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>icon_i.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-			<Image>
-				<Id>1746096716230</Id>
-				<Name><![CDATA[i_companiesHydrogenTruck]]></Name>
-				<X>180</X>
-				<Y>150</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>sl_companiesHydrogenTrucks_pct.isVisible()</VisibleCode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_companiesHydrogenTruck, zero_Interface.v_infoText.hydrogenTrucks, i_companiesHydrogenTruck.getX() + uI_Tabs.v_presentationXOffset, i_companiesHydrogenTruck.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>20</Width>
-				<Height>20</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>icon_i.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-			<Image>
-				<Id>1746096716242</Id>
-				<Name><![CDATA[i_companiesFossilFuelTruck]]></Name>
-				<X>180</X>
-				<Y>172</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>sl_companiesFossilFuelTrucks_pct.isVisible()</VisibleCode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_companiesFossilFuelTruck, zero_Interface.v_infoText.fossilTrucks, i_companiesFossilFuelTruck.getX() + uI_Tabs.v_presentationXOffset, i_companiesFossilFuelTruck.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>20</Width>
-				<Height>20</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>icon_i.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-			<Image>
 				<Id>1746096716255</Id>
 				<Name><![CDATA[i_companiesElectricVans]]></Name>
-				<X>180</X>
-				<Y>220</Y>
+				<X>80</X>
+				<Y>266</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -954,8 +864,8 @@ f_setElectricVans( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlider
 				<OnClickCode>zero_Interface.f_setInfoText(i_companiesElectricVans, zero_Interface.v_infoText.electricVans, i_companiesElectricVans.getX() + uI_Tabs.v_presentationXOffset, i_companiesElectricVans.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>20</Width>
-				<Height>20</Height>
+				<Width>14</Width>
+				<Height>14</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -968,8 +878,8 @@ f_setElectricVans( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlider
 			<Image>
 				<Id>1746096716267</Id>
 				<Name><![CDATA[i_companiesFossilFuelVans]]></Name>
-				<X>180</X>
-				<Y>242</Y>
+				<X>135</X>
+				<Y>319</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -982,8 +892,8 @@ f_setElectricVans( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlider
 				<OnClickCode>zero_Interface.f_setInfoText(i_companiesFossilFuelVans, zero_Interface.v_infoText.fossilVans, i_companiesFossilFuelVans.getX() + uI_Tabs.v_presentationXOffset, i_companiesFossilFuelVans.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>20</Width>
-				<Height>20</Height>
+				<Width>14</Width>
+				<Height>14</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -993,98 +903,11 @@ f_setElectricVans( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSlider
 				</ImageFiles>
 				<OriginalSize>false</OriginalSize>
 			</Image>
-			<Image>
-				<Id>1746096716280</Id>
-				<Name><![CDATA[i_companiesElectricCars]]></Name>
-				<X>180</X>
-				<Y>290</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>sl_companiesElectricCars_pct.isVisible()</VisibleCode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_companiesElectricCars, zero_Interface.v_infoText.electricCars, i_companiesElectricCars.getX() + uI_Tabs.v_presentationXOffset, i_companiesElectricCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>20</Width>
-				<Height>20</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>icon_i.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-			<Image>
-				<Id>1746096716293</Id>
-				<Name><![CDATA[i_companiesFossilFuelCars]]></Name>
-				<X>180</X>
-				<Y>312</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>sl_companiesFossilFuelCars_pct.isVisible()</VisibleCode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_companiesFossilFuelCars, zero_Interface.v_infoText.fossilCars, i_companiesFossilFuelCars.getX() + uI_Tabs.v_presentationXOffset, i_companiesFossilFuelCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>20</Width>
-				<Height>20</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>icon_i.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-			<Control Type="CheckBox">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1754990132964</Id>
-				<Name><![CDATA[cb_companiesSpreadChargingEVs]]></Name>
-				<X>302</X>
-				<Y>74</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="40" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<TextColor>-16777216</TextColor>
-					<Enabled>true</Enabled>
-					<ActionCode>OL_ChargingAttitude selectedChargingAttitude = OL_ChargingAttitude.SIMPLE; 
-if(cb_companiesSpreadChargingEVs.isSelected()){
-	selectedChargingAttitude = OL_ChargingAttitude.MAX_POWER; 
-}
-
-f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getAllSliderGridConnections_utilities()));</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<Font Name="Dialog" Size="11" Style="0"/>
-					<LabelText/>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
 			<Text>
-				<Id>1754990186800</Id>
-				<Name><![CDATA[txt_companiesSpreadChargingEVsDescription]]></Name>
+				<Id>1784584160179</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct8]]></Name>
 				<X>20</X>
-				<Y>82</Y>
+				<Y>303</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1093,52 +916,24 @@ f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>cb_companiesSpreadChargingEVs.isVisible()</VisibleCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Slim laden]]></Text>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_companiesElectricVans_pct.getMin())</TextCode>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
-			<Image>
-				<Id>1754991641604</Id>
-				<Name><![CDATA[i_companiesMobilityChargingAttitude]]></Name>
-				<X>180</X>
-				<Y>80</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>cb_companiesSpreadChargingEVs.isVisible()</VisibleCode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_companiesMobilityChargingAttitude, zero_Interface.v_infoText.mobilitySmartCharging, i_companiesMobilityChargingAttitude.getX() + uI_Tabs.v_presentationXOffset, i_companiesMobilityChargingAttitude.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>20</Width>
-				<Height>20</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>icon_i.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
 			<Text>
-				<Id>1777652928131</Id>
-				<Name><![CDATA[txt_mobilitySlidersCompaniesDescription]]></Name>
-				<X>20</X>
-				<Y>20</Y>
+				<Id>1784584160181</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct8]]></Name>
+				<X>380</X>
+				<Y>303</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1150,14 +945,67 @@ f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Bedrijven]]></Text>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_companiesElectricVans_pct.getMax())</TextCode>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>22</Size>
-					<Style>1</Style>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784584520744</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct9]]></Name>
+				<X>20</X>
+				<Y>356</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_companiesFossilFuelVans_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784584520748</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct9]]></Name>
+				<X>380</X>
+				<Y>356</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_companiesFossilFuelVans_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
 			</Text>
 		</Presentation>
 	</Group>
@@ -1165,7 +1013,7 @@ f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&
 		<Id>1722342418259</Id>
 		<Name><![CDATA[rect_demandFunctions]]></Name>
 		<X>50</X>
-		<Y>550</Y>
+		<Y>760</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -1191,7 +1039,7 @@ f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&
 		<Id>1722342418261</Id>
 		<Name><![CDATA[t_demandFunctionsDescription]]></Name>
 		<X>200</X>
-		<Y>560</Y>
+		<Y>770</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1216,7 +1064,7 @@ f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&
 		<Id>1722342719680</Id>
 		<Name><![CDATA[rect_mobilityFunctions]]></Name>
 		<X>50</X>
-		<Y>690</Y>
+		<Y>900</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -1242,7 +1090,7 @@ f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&
 		<Id>1722342719682</Id>
 		<Name><![CDATA[t_mobilityFunctionsDescription]]></Name>
 		<X>170</X>
-		<Y>700</Y>
+		<Y>910</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1268,7 +1116,7 @@ f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&
 		<Id>1754990738497</Id>
 		<Name><![CDATA[cb_setChargingAttitude]]></Name>
 		<X>265</X>
-		<Y>640</Y>
+		<Y>850</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1318,7 +1166,7 @@ if(selectedChargingAttitude != null){
 	</Control>
 	<Group>
 		<Id>1758182984074</Id>
-		<Name><![CDATA[gr_mobilitySliders_households]]></Name>
+		<Name><![CDATA[gr_mobilitySliders_households1]]></Name>
 		<X>0</X>
 		<Y>0</Y>
 		<Label>
@@ -1335,9 +1183,9 @@ if(selectedChargingAttitude != null){
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Presentation>
-			<Rectangle>
-				<Id>1758182947156</Id>
-				<Name><![CDATA[rect_mobilityDemandSliders_residential]]></Name>
+			<RoundedRectangle>
+				<Id>1780124941301</Id>
+				<Name><![CDATA[rect_mobilitySliders_households]]></Name>
 				<X>0</X>
 				<Y>0</Y>
 				<Label>
@@ -1347,25 +1195,85 @@ if(selectedChargingAttitude != null){
 				<PublicFlag>true</PublicFlag>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<ZHeight>10</ZHeight>
 				<LineWidth>1</LineWidth>
 				<LineColor/>
 				<LineMaterial>null</LineMaterial>
-				<LineStyle>DOTTED</LineStyle>
-				<Width>370</Width>
-				<Height>350</Height>
+				<LineStyle>SOLID</LineStyle>
+				<Width>400</Width>
+				<Height>290</Height>
 				<Rotation>0.0</Rotation>
-				<FillColor>-2625550</FillColor>
+				<FillColor>-1315080</FillColor>
 				<FillMaterial>null</FillMaterial>
-			</Rectangle>
+				<ArcRadius>10</ArcRadius>
+			</RoundedRectangle>
 			<Text>
-				<Id>1758183089010</Id>
+				<Id>1777651310496</Id>
+				<Name><![CDATA[txt_mobilitySlidersHousesholdsDescription]]></Name>
+				<X>50</X>
+				<Y>27</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[HUIZEN]]></Text>
+				<Font>
+					<Name><![CDATA[HolonBLOCK2]]></Name>
+					<Size>20</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Group>
+				<Id>1784573071473</Id>
+				<Name><![CDATA[gr_householdSettings_loadingStrategy]]></Name>
+				<X>200</X>
+				<Y>170</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+			</Group>
+			<Group>
+				<Id>1784573071481</Id>
+				<Name><![CDATA[gr_householdSettings_sharedElectric]]></Name>
+				<X>200</X>
+				<Y>125</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+			</Group>
+			<Text>
+				<Id>1784573071507</Id>
 				<Name><![CDATA[txt_privateParkedCars]]></Name>
 				<X>20</X>
-				<Y>60</Y>
+				<Y>65</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -1380,516 +1288,17 @@ if(selectedChargingAttitude != null){
 				<Color>-16777216</Color>
 				<Text><![CDATA[Privé geparkeerde autos]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
 					<Style>1</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
-			<Text>
-				<Id>1758183152912</Id>
-				<Name><![CDATA[txt_publicChargePoints]]></Name>
-				<X>20</X>
-				<Y>190</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Publieke laadpalen]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
-					<Style>1</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1758183196756</Id>
-				<Name><![CDATA[sl_householdPublicChargers_pct]]></Name>
-				<X>260</X>
-				<Y>205</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>f_setPublicChargingStations(uI_Tabs.f_getAllSliderGridConnections_chargers(), sl_householdPublicChargers_pct.getIntValue(), sl_householdChargersThatSupportV1G_pct, sl_householdChargersThatSupportV2G_pct);</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>100</MaxValue>
-					<Step>1</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1758183196774</Id>
-				<Name><![CDATA[txt_householdPublicEVsResidentialAreaDescription]]></Name>
-				<X>20</X>
-				<Y>210</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_householdPublicChargers_pct.isVisible()</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Actieve laadpalen in gebied]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Text>
-				<Id>1758183196782</Id>
-				<Name><![CDATA[txt_householdPublicEVs_pct]]></Name>
-				<X>245</X>
-				<Y>210</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_householdPublicChargers_pct.isVisible()</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[0%]]></Text>
-				<TextCode>sl_householdPublicChargers_pct.getIntValue() + " %"</TextCode>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>RIGHT</Alignment>
-			</Text>
-			<Text>
-				<Id>1758183196796</Id>
-				<Name><![CDATA[txt_householdPrivateEVsDescription]]></Name>
-				<X>20</X>
-				<Y>80</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_householdPrivateEVs_pct.isVisible()</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Aandeel Elektrisch]]></Text>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>LEFT</Alignment>
-			</Text>
-			<Control Type="Slider">
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1758183196803</Id>
-				<Name><![CDATA[sl_householdPrivateEVs_pct]]></Name>
-				<X>260</X>
-				<Y>75</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="100" Height="30">
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Enabled>true</Enabled>
-					<ActionCode>f_setVehiclesPrivateParking(uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_householdPrivateEVs_pct.getValue(), sl_householdEVsThatSupportV2G_pct);</ActionCode>
-				</BasicProperties>
-				<ExtendedProperties>
-					<DefaultValueCode>0</DefaultValueCode>
-					<Orientation>HORIZONTAL</Orientation>
-					<MinValue>0</MinValue>
-					<MaxValue>100</MaxValue>
-					<Step>1</Step>
-					<LinkTo>false</LinkTo>
-				</ExtendedProperties>
-			</Control>
-			<Text>
-				<Id>1758183196811</Id>
-				<Name><![CDATA[txt_householdPrivateEVs_pct]]></Name>
-				<X>245</X>
-				<Y>80</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D</DrawMode>
-				<VisibleCode>sl_householdPrivateEVs_pct.isVisible()</VisibleCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[0%]]></Text>
-				<TextCode>sl_householdPrivateEVs_pct.getIntValue() + " %"</TextCode>
-				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
-					<Style>0</Style>
-				</Font>
-				<Alignment>RIGHT</Alignment>
-			</Text>
 			<Group>
-				<Id>1758183196871</Id>
-				<Name><![CDATA[gr_householdSettingsV2G_publicChargers]]></Name>
-				<X>10</X>
-				<Y>300</Y>
-				<Label>
-					<X>10</X>
-					<Y>0</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>false</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Presentation>
-					<Control Type="Slider">
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Id>1758183196873</Id>
-						<Name><![CDATA[sl_householdChargersThatSupportV2G_pct]]></Name>
-						<X>251</X>
-						<Y>5</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<BasicProperties Width="100" Height="30">
-							<EmbeddedIcon>false</EmbeddedIcon>
-							<Enabled>true</Enabled>
-							<ActionCode>f_setV2GChargerCapabilities( uI_Tabs.f_getActiveSliderGridConnections_chargers(), sl_householdChargersThatSupportV2G_pct.getValue() );</ActionCode>
-						</BasicProperties>
-						<ExtendedProperties>
-							<DefaultValueCode>0</DefaultValueCode>
-							<Orientation>HORIZONTAL</Orientation>
-							<MinValue>0</MinValue>
-							<MaxValue>100</MaxValue>
-							<Step>1</Step>
-							<LinkTo>false</LinkTo>
-						</ExtendedProperties>
-					</Control>
-					<Text>
-						<Id>1758183196875</Id>
-						<Name><![CDATA[txt_chargersThatSupportV2GDescription]]></Name>
-						<X>10</X>
-						<Y>10</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>sl_householdChargersThatSupportV2G_pct.isVisible()</VisibleCode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Color>-16777216</Color>
-						<Text><![CDATA[Laadpalen met V2G]]></Text>
-						<Font>
-							<Name><![CDATA[Dialog]]></Name>
-							<Size>12</Size>
-							<Style>0</Style>
-						</Font>
-						<Alignment>LEFT</Alignment>
-					</Text>
-					<Text>
-						<Id>1758183196877</Id>
-						<Name><![CDATA[txt_householdChargersThatSupportV2G_pct]]></Name>
-						<X>235</X>
-						<Y>10</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>sl_householdChargersThatSupportV2G_pct.isVisible()</VisibleCode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Color>-16777216</Color>
-						<Text><![CDATA[0%]]></Text>
-						<TextCode>sl_householdChargersThatSupportV2G_pct.getIntValue() + " %"</TextCode>
-						<Font>
-							<Name><![CDATA[Dialog]]></Name>
-							<Size>12</Size>
-							<Style>0</Style>
-						</Font>
-						<Alignment>RIGHT</Alignment>
-					</Text>
-					<Image>
-						<Id>1758183196879</Id>
-						<Name><![CDATA[i_householdPublicChargersV2G]]></Name>
-						<X>170</X>
-						<Y>8</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<VisibleCode>sl_householdChargersThatSupportV2G_pct.isVisible()</VisibleCode>
-						<OnClickCode>zero_Interface.f_setInfoText(i_householdPublicChargersV2G, zero_Interface.v_infoText.householdPublicParkingV2G, i_householdPublicChargersV2G.getX() + gr_householdSettingsV2G_publicChargers.getX() + uI_Tabs.v_presentationXOffset, i_householdPublicChargersV2G.getY() + gr_householdSettingsV2G_publicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Width>20</Width>
-						<Height>20</Height>
-						<Rotation>0.0</Rotation>
-						<ImageFiles>
-							<ImageResourceReference>
-								<PackageName>zerointerfaceloader</PackageName>
-								<ClassName>icon_i.png</ClassName>
-							</ImageResourceReference>
-						</ImageFiles>
-						<OriginalSize>false</OriginalSize>
-					</Image>
-				</Presentation>
-			</Group>
-			<Image>
-				<Id>1758183196924</Id>
-				<Name><![CDATA[i_householdPrivateEV]]></Name>
-				<X>180</X>
-				<Y>78</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>sl_householdPrivateEVs_pct.isVisible()</VisibleCode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_householdPrivateEV, zero_Interface.v_infoText.householdPrivateParking, i_householdPrivateEV.getX() + uI_Tabs.v_presentationXOffset, i_householdPrivateEV.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>20</Width>
-				<Height>20</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>icon_i.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-			<Image>
-				<Id>1758183196939</Id>
-				<Name><![CDATA[i_householdPublicChargers]]></Name>
-				<X>180</X>
-				<Y>208</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<VisibleCode>sl_householdPublicChargers_pct.isVisible()</VisibleCode>
-				<OnClickCode>zero_Interface.f_setInfoText(i_householdPublicChargers, zero_Interface.v_infoText.householdPublicParking, i_householdPublicChargers.getX() + uI_Tabs.v_presentationXOffset, i_householdPublicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>20</Width>
-				<Height>20</Height>
-				<Rotation>0.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>icon_i.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-			<Group>
-				<Id>1758183196817</Id>
-				<Name><![CDATA[gr_householdSettingsV1G_publicChargers]]></Name>
-				<X>5</X>
-				<Y>255</Y>
-				<Label>
-					<X>10</X>
-					<Y>0</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>false</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Presentation>
-					<Control Type="Slider">
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Id>1758183196819</Id>
-						<Name><![CDATA[sl_householdChargersThatSupportV1G_pct]]></Name>
-						<X>255</X>
-						<Y>0</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<BasicProperties Width="100" Height="30">
-							<EmbeddedIcon>false</EmbeddedIcon>
-							<Enabled>true</Enabled>
-							<ActionCode>f_setV1GChargerCapabilities( uI_Tabs.f_getActiveSliderGridConnections_chargers(), sl_householdChargersThatSupportV1G_pct.getValue() );</ActionCode>
-						</BasicProperties>
-						<ExtendedProperties>
-							<DefaultValueCode>0</DefaultValueCode>
-							<Orientation>HORIZONTAL</Orientation>
-							<MinValue>0</MinValue>
-							<MaxValue>100</MaxValue>
-							<Step>1</Step>
-							<LinkTo>false</LinkTo>
-						</ExtendedProperties>
-					</Control>
-					<Text>
-						<Id>1758183196821</Id>
-						<Name><![CDATA[txt_householdChargersThatSupportV1GDescription]]></Name>
-						<X>15</X>
-						<Y>5</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>sl_householdChargersThatSupportV1G_pct.isVisible()</VisibleCode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Color>-16777216</Color>
-						<Text><![CDATA[Laadpalen met V1G]]></Text>
-						<Font>
-							<Name><![CDATA[Dialog]]></Name>
-							<Size>12</Size>
-							<Style>0</Style>
-						</Font>
-						<Alignment>LEFT</Alignment>
-					</Text>
-					<Text>
-						<Id>1758183196823</Id>
-						<Name><![CDATA[txt_householdChargersThatSupportV1G_pct]]></Name>
-						<X>240</X>
-						<Y>5</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>sl_householdChargersThatSupportV1G_pct.isVisible()</VisibleCode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Color>-16777216</Color>
-						<Text><![CDATA[0%]]></Text>
-						<TextCode>sl_householdChargersThatSupportV1G_pct.getIntValue() + " %"</TextCode>
-						<Font>
-							<Name><![CDATA[Dialog]]></Name>
-							<Size>12</Size>
-							<Style>0</Style>
-						</Font>
-						<Alignment>RIGHT</Alignment>
-					</Text>
-					<Image>
-						<Id>1758183196825</Id>
-						<Name><![CDATA[i_householdPublicChargersV1G]]></Name>
-						<X>175</X>
-						<Y>3</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<VisibleCode>sl_householdChargersThatSupportV1G_pct.isVisible()</VisibleCode>
-						<OnClickCode>zero_Interface.f_setInfoText(i_householdPublicChargersV1G, zero_Interface.v_infoText.householdPublicParkingV1G, i_householdPublicChargersV1G.getX() + gr_householdSettingsV1G_publicChargers.getX() + uI_Tabs.v_presentationXOffset, i_householdPublicChargersV1G.getY() + gr_householdSettingsV1G_publicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Width>20</Width>
-						<Height>20</Height>
-						<Rotation>0.0</Rotation>
-						<ImageFiles>
-							<ImageResourceReference>
-								<PackageName>zerointerfaceloader</PackageName>
-								<ClassName>icon_i.png</ClassName>
-							</ImageResourceReference>
-						</ImageFiles>
-						<OriginalSize>false</OriginalSize>
-					</Image>
-				</Presentation>
-			</Group>
-			<Group>
-				<Id>1758191125495</Id>
+				<Id>1784573071509</Id>
 				<Name><![CDATA[gr_householdActivateV2GPrivateParkedCars]]></Name>
 				<X>170</X>
-				<Y>140</Y>
+				<Y>195</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -1904,9 +1313,9 @@ if(selectedChargingAttitude != null){
 				<Presentation>
 					<Control Type="CheckBox">
 						<EmbeddedIcon>false</EmbeddedIcon>
-						<Id>1758190979055</Id>
+						<Id>1784573071511</Id>
 						<Name><![CDATA[cb_householdActivateV2GPrivateParkedCars]]></Name>
-						<X>132</X>
+						<X>190</X>
 						<Y>-18</Y>
 						<Label>
 							<X>0</X>
@@ -1930,10 +1339,10 @@ gr_householdSettingsV2G_privateParkedCars.setVisible(cb_householdActivateV2GPriv
 						</ExtendedProperties>
 					</Control>
 					<Image>
-						<Id>1758191012105</Id>
+						<Id>1784573071513</Id>
 						<Name><![CDATA[i_householdActivateV2GPrivateParkedCars]]></Name>
-						<X>10</X>
-						<Y>-12</Y>
+						<X>-65</X>
+						<Y>-10</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1946,8 +1355,8 @@ gr_householdSettingsV2G_privateParkedCars.setVisible(cb_householdActivateV2GPriv
 						<OnClickCode>zero_Interface.f_setInfoText(i_householdActivateV2GPrivateParkedCars, zero_Interface.v_infoText.activateV2GPrivateParkedCars, i_householdActivateV2GPrivateParkedCars.getX() + gr_householdActivateV2GPrivateParkedCars.getX() + uI_Tabs.v_presentationXOffset, i_householdActivateV2GPrivateParkedCars.getY() + gr_householdActivateV2GPrivateParkedCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
-						<Width>20</Width>
-						<Height>20</Height>
+						<Width>14</Width>
+						<Height>14</Height>
 						<Rotation>0.0</Rotation>
 						<ImageFiles>
 							<ImageResourceReference>
@@ -1958,10 +1367,10 @@ gr_householdSettingsV2G_privateParkedCars.setVisible(cb_householdActivateV2GPriv
 						<OriginalSize>false</OriginalSize>
 					</Image>
 					<Text>
-						<Id>1758191030984</Id>
+						<Id>1784573071515</Id>
 						<Name><![CDATA[txt_householdActivateV2GPrivateParkedCars]]></Name>
 						<X>-150</X>
-						<Y>-10</Y>
+						<Y>-9</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -1977,19 +1386,334 @@ gr_householdSettingsV2G_privateParkedCars.setVisible(cb_householdActivateV2GPriv
 						<Color>-16777216</Color>
 						<Text><![CDATA[Activeer V2G]]></Text>
 						<Font>
-							<Name><![CDATA[Dialog]]></Name>
-							<Size>12</Size>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>14</Size>
 							<Style>0</Style>
 						</Font>
 						<Alignment>LEFT</Alignment>
 					</Text>
 				</Presentation>
 			</Group>
+			<Group>
+				<Id>1784573071529</Id>
+				<Name><![CDATA[gr_householdSettingsV2G_privateParkedCars]]></Name>
+				<X>10</X>
+				<Y>205</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Control Type="Slider">
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Id>1784573071531</Id>
+						<Name><![CDATA[sl_householdEVsThatSupportV2G_pct]]></Name>
+						<X>10</X>
+						<Y>22</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<BasicProperties Width="360" Height="30">
+							<EmbeddedIcon>false</EmbeddedIcon>
+							<Enabled>true</Enabled>
+							<ActionCode>f_setV2GEVCapabilities( uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_householdEVsThatSupportV2G_pct.getValue() );</ActionCode>
+						</BasicProperties>
+						<ExtendedProperties>
+							<DefaultValueCode>0</DefaultValueCode>
+							<Orientation>HORIZONTAL</Orientation>
+							<MinValue>0</MinValue>
+							<MaxValue>100</MaxValue>
+							<Step>1</Step>
+							<LinkTo>false</LinkTo>
+						</ExtendedProperties>
+					</Control>
+					<Text>
+						<Id>1784573071533</Id>
+						<Name><![CDATA[txt_householdEVsThatSupportV2GDescription]]></Name>
+						<X>10</X>
+						<Y>10</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<VisibleCode>sl_householdEVsThatSupportV2G_pct.isVisible()</VisibleCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[EVs die V2G ondersteunen]]></Text>
+						<Font>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>14</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1784573071535</Id>
+						<Name><![CDATA[txt_householdEVsThatSupportV2G_pct]]></Name>
+						<X>365</X>
+						<Y>10</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<VisibleCode>sl_householdEVsThatSupportV2G_pct.isVisible()</VisibleCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[0%]]></Text>
+						<TextCode>sl_householdEVsThatSupportV2G_pct.getIntValue() + " %"</TextCode>
+						<Font>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>14</Size>
+							<Style>1</Style>
+						</Font>
+						<Alignment>RIGHT</Alignment>
+					</Text>
+					<Image>
+						<Id>1784573071537</Id>
+						<Name><![CDATA[i_householdEVsThatSupportV2G]]></Name>
+						<X>170</X>
+						<Y>8</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<VisibleCode>sl_householdEVsThatSupportV2G_pct.isVisible()</VisibleCode>
+						<OnClickCode>zero_Interface.f_setInfoText(i_householdEVsThatSupportV2G, zero_Interface.v_infoText.EVsThatSupportV2G, i_householdEVsThatSupportV2G.getX() + gr_householdSettingsV2G_privateParkedCars.getX() + uI_Tabs.v_presentationXOffset, i_householdEVsThatSupportV2G.getY() + gr_householdSettingsV2G_privateParkedCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>14</Width>
+						<Height>14</Height>
+						<Rotation>0.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>icon_i.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
+					<Text>
+						<Id>1784635651358</Id>
+						<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct12]]></Name>
+						<X>10</X>
+						<Y>47</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-4144960</Color>
+						<Text><![CDATA[min]]></Text>
+						<TextCode>roundToInt(sl_householdEVsThatSupportV2G_pct.getMin())</TextCode>
+						<Font>
+							<Name><![CDATA[HOLONline]]></Name>
+							<Size>10</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1784635651360</Id>
+						<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct12]]></Name>
+						<X>368</X>
+						<Y>47</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-4144960</Color>
+						<Text><![CDATA[max]]></Text>
+						<TextCode>roundToInt(sl_householdEVsThatSupportV2G_pct.getMax())</TextCode>
+						<Font>
+							<Name><![CDATA[HOLONline]]></Name>
+							<Size>10</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>RIGHT</Alignment>
+					</Text>
+				</Presentation>
+			</Group>
+			<Image>
+				<Id>1784573071551</Id>
+				<Name><![CDATA[image15]]></Name>
+				<X>20</X>
+				<Y>25</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>21</Width>
+				<Height>21</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>car_icon_black.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1784573415215</Id>
+				<Name><![CDATA[sl_householdPrivateEVs_pct]]></Name>
+				<X>20</X>
+				<Y>99</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="360" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setVehiclesPrivateParking(uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_householdPrivateEVs_pct.getValue(), sl_householdEVsThatSupportV2G_pct);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>100</MaxValue>
+					<Step>1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
 			<Text>
-				<Id>1758189201608</Id>
+				<Id>1784573537480</Id>
+				<Name><![CDATA[txt_householdPrivateEVs_pct]]></Name>
+				<X>380</X>
+				<Y>87</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_householdPrivateEVs_pct.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0%]]></Text>
+				<TextCode>sl_householdPrivateEVs_pct.getIntValue() + " %"</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784573563376</Id>
+				<Name><![CDATA[txt_householdPrivateEVsDescription]]></Name>
+				<X>20</X>
+				<Y>87</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_householdPrivateEVs_pct.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Aandeel Elektrisch]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Image>
+				<Id>1784573563378</Id>
+				<Name><![CDATA[i_householdPrivateEV]]></Name>
+				<X>135</X>
+				<Y>85</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_householdPrivateEVs_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdPrivateEV, zero_Interface.v_infoText.householdPrivateParking, i_householdPrivateEV.getX() + uI_Tabs.v_presentationXOffset, i_householdPrivateEV.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>14</Width>
+				<Height>14</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1784573611290</Id>
 				<Name><![CDATA[txt_householdChargingStrategyPrivateParkedCars]]></Name>
 				<X>20</X>
-				<Y>105</Y>
+				<Y>140</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2005,18 +1729,18 @@ gr_householdSettingsV2G_privateParkedCars.setVisible(cb_householdActivateV2GPriv
 				<Color>-16777216</Color>
 				<Text><![CDATA[Laad strategie]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
 			<Control Type="ComboBox">
 				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1758189233415</Id>
+				<Id>1784573611292</Id>
 				<Name><![CDATA[cb_householdChargingStrategyPrivateParkedCars]]></Name>
-				<X>221</X>
-				<Y>103</Y>
+				<X>20</X>
+				<Y>155</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2025,7 +1749,7 @@ gr_householdSettingsV2G_privateParkedCars.setVisible(cb_householdActivateV2GPriv
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="140" Height="20">
+				<BasicProperties Width="360" Height="20">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<FillColor>-1</FillColor>
 					<TextColor>-16777216</TextColor>
@@ -2083,10 +1807,10 @@ else{
 				</ExtendedProperties>
 			</Control>
 			<Image>
-				<Id>1758189262812</Id>
+				<Id>1784573611294</Id>
 				<Name><![CDATA[i_householdChargingStrategyPrivateParkedCars]]></Name>
-				<X>180</X>
-				<Y>103</Y>
+				<X>115</X>
+				<Y>140</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2099,8 +1823,8 @@ else{
 				<OnClickCode>zero_Interface.f_setInfoText(i_householdChargingStrategyPrivateParkedCars, zero_Interface.v_infoText.chargingAttitudePrivateParkedCars, i_householdChargingStrategyPrivateParkedCars.getX() + uI_Tabs.v_presentationXOffset, i_householdChargingStrategyPrivateParkedCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>20</Width>
-				<Height>20</Height>
+				<Width>14</Width>
+				<Height>14</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -2111,10 +1835,885 @@ else{
 				<OriginalSize>false</OriginalSize>
 			</Image>
 			<Text>
-				<Id>1758192054421</Id>
+				<Id>1784573154805</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct]]></Name>
+				<X>22</X>
+				<Y>124</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_householdPrivateEVs_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784573154807</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct]]></Name>
+				<X>380</X>
+				<Y>124</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_householdPrivateEVs_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+		</Presentation>
+	</Group>
+	<Text>
+		<Id>1758183975194</Id>
+		<Name><![CDATA[txt_mobilityFunctionsDescription]]></Name>
+		<X>590</X>
+		<Y>720</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Mobility Functions]]></Text>
+		<Font>
+			<Name><![CDATA[Dialog]]></Name>
+			<Size>18</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>CENTER</Alignment>
+	</Text>
+	<Rectangle>
+		<Id>1758183975205</Id>
+		<Name><![CDATA[rect_mobilityFunctions1]]></Name>
+		<X>440</X>
+		<Y>710</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>3</LineWidth>
+		<LineColor>-16711936</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>310</Width>
+		<Height>170</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Rectangle>
+	<Text>
+		<Id>1758184003102</Id>
+		<Name><![CDATA[t_mobilityFunctionsDescription1]]></Name>
+		<X>590</X>
+		<Y>720</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Mobility Functions (residential)]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>14</Size>
+			<Style>1</Style>
+		</Font>
+		<Alignment>CENTER</Alignment>
+	</Text>
+	<Group>
+		<Id>1780139178078</Id>
+		<Name><![CDATA[gr_pageIndicator]]></Name>
+		<X>200</X>
+		<Y>-20</Y>
+		<Label>
+			<X>7.073</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>200</XCode>
+		<YCode>-20</YCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<Oval>
+				<Id>1780139178080</Id>
+				<Name><![CDATA[oval1]]></Name>
+				<X>52</X>
+				<Y>-5</Y>
+				<Label>
+					<X>0</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>f_nextPage();</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>0.8</LineWidth>
+				<LineColor>-4144960</LineColor>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<RadiusX>13</RadiusX>
+				<RadiusY>40</RadiusY>
+				<Rotation>0.0</Rotation>
+				<FillColor>-1</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Oval>
+			<Oval>
+				<Id>1780139178082</Id>
+				<Name><![CDATA[oval]]></Name>
+				<X>-52</X>
+				<Y>-5</Y>
+				<Label>
+					<X>0</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>f_previousPage();</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>0.8</LineWidth>
+				<LineColor>-4144960</LineColor>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<RadiusX>13</RadiusX>
+				<RadiusY>40</RadiusY>
+				<Rotation>0.0</Rotation>
+				<FillColor>-1</FillColor>
+				<FillMaterial>null</FillMaterial>
+			</Oval>
+			<Image>
+				<Id>1780139178084</Id>
+				<Name><![CDATA[arrowLeftResidential]]></Name>
+				<X>-47</X>
+				<Y>-10</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>11</Width>
+				<Height>11</Height>
+				<Rotation>90.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_arrow.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1780139178086</Id>
+				<Name><![CDATA[arrowRightResidential1]]></Name>
+				<X>47</X>
+				<Y>1</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<OnClickCode>f_nextPage();</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>11</Width>
+				<Height>11</Height>
+				<Rotation>270.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_arrow.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1780139178088</Id>
+				<Name><![CDATA[t_pageIndicator]]></Name>
+				<X>0</X>
+				<Y>-10</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-8355712</Color>
+				<Text><![CDATA[Pagina 1/4]]></Text>
+				<TextCode>"Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPageGroups.size()</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>CENTER</Alignment>
+			</Text>
+		</Presentation>
+	</Group>
+	<Group>
+		<Id>1784577080164</Id>
+		<Name><![CDATA[gr_mobilitySliders_households2]]></Name>
+		<X>430</X>
+		<Y>0</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>0</XCode>
+		<YCode>0</YCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Presentation>
+			<RoundedRectangle>
+				<Id>1784577080166</Id>
+				<Name><![CDATA[rect_mobilitySliders_households1]]></Name>
+				<X>0</X>
+				<Y>0</Y>
+				<Label>
+					<X>10</X>
+					<Y>10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>400</Width>
+				<Height>360</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-1315080</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>10</ArcRadius>
+			</RoundedRectangle>
+			<Text>
+				<Id>1784577080168</Id>
+				<Name><![CDATA[txt_mobilitySlidersHousesholdsDescription2]]></Name>
+				<X>50</X>
+				<Y>27</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[HUIZEN]]></Text>
+				<Font>
+					<Name><![CDATA[HolonBLOCK2]]></Name>
+					<Size>20</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Image>
+				<Id>1784577080196</Id>
+				<Name><![CDATA[image17]]></Name>
+				<X>20</X>
+				<Y>25</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>21</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>car_icon_black.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>true</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1758183152912</Id>
+				<Name><![CDATA[txt_publicChargePoints]]></Name>
+				<X>20</X>
+				<Y>65</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Publieke laadpalen]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Group>
+				<Id>1784572333867</Id>
+				<Name><![CDATA[gr_householdSettingsV2G_publicChargers]]></Name>
+				<X>10</X>
+				<Y>275</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Control Type="Slider">
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Id>1784572333869</Id>
+						<Name><![CDATA[sl_householdChargersThatSupportV2G_pct]]></Name>
+						<X>10</X>
+						<Y>22</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<BasicProperties Width="360" Height="30">
+							<EmbeddedIcon>false</EmbeddedIcon>
+							<Enabled>true</Enabled>
+							<ActionCode>f_setV2GChargerCapabilities( uI_Tabs.f_getActiveSliderGridConnections_chargers(), sl_householdChargersThatSupportV2G_pct.getValue() );</ActionCode>
+						</BasicProperties>
+						<ExtendedProperties>
+							<DefaultValueCode>0</DefaultValueCode>
+							<Orientation>HORIZONTAL</Orientation>
+							<MinValue>0</MinValue>
+							<MaxValue>100</MaxValue>
+							<Step>1</Step>
+							<LinkTo>false</LinkTo>
+						</ExtendedProperties>
+					</Control>
+					<Text>
+						<Id>1784572333871</Id>
+						<Name><![CDATA[txt_chargersThatSupportV2GDescription]]></Name>
+						<X>10</X>
+						<Y>10</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<VisibleCode>sl_householdChargersThatSupportV2G_pct.isVisible()</VisibleCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Laadpalen met V2G]]></Text>
+						<Font>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>14</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1784572333873</Id>
+						<Name><![CDATA[txt_householdChargersThatSupportV2G_pct]]></Name>
+						<X>370</X>
+						<Y>10</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<VisibleCode>sl_householdChargersThatSupportV2G_pct.isVisible()</VisibleCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[0%]]></Text>
+						<TextCode>sl_householdChargersThatSupportV2G_pct.getIntValue() + " %"</TextCode>
+						<Font>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>14</Size>
+							<Style>1</Style>
+						</Font>
+						<Alignment>RIGHT</Alignment>
+					</Text>
+					<Image>
+						<Id>1784572333875</Id>
+						<Name><![CDATA[i_householdPublicChargersV2G]]></Name>
+						<X>135</X>
+						<Y>8</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<VisibleCode>sl_householdChargersThatSupportV2G_pct.isVisible()</VisibleCode>
+						<OnClickCode>zero_Interface.f_setInfoText(i_householdPublicChargersV2G, zero_Interface.v_infoText.householdPublicParkingV2G, i_householdPublicChargersV2G.getX() + gr_householdSettingsV2G_publicChargers.getX() + uI_Tabs.v_presentationXOffset, i_householdPublicChargersV2G.getY() + gr_householdSettingsV2G_publicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>14</Width>
+						<Height>14</Height>
+						<Rotation>0.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>icon_i.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
+					<Text>
+						<Id>1784580180207</Id>
+						<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct3]]></Name>
+						<X>10</X>
+						<Y>47</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-4144960</Color>
+						<Text><![CDATA[min]]></Text>
+						<TextCode>roundToInt(sl_householdChargersThatSupportV2G_pct.getMin())</TextCode>
+						<Font>
+							<Name><![CDATA[HOLONline]]></Name>
+							<Size>10</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1784580180209</Id>
+						<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct3]]></Name>
+						<X>368</X>
+						<Y>47</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-4144960</Color>
+						<Text><![CDATA[max]]></Text>
+						<TextCode>roundToInt(sl_householdChargersThatSupportV2G_pct.getMax())</TextCode>
+						<Font>
+							<Name><![CDATA[HOLONline]]></Name>
+							<Size>10</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>RIGHT</Alignment>
+					</Text>
+				</Presentation>
+			</Group>
+			<Group>
+				<Id>1784572333877</Id>
+				<Name><![CDATA[gr_householdSettingsV1G_publicChargers]]></Name>
+				<X>5</X>
+				<Y>185</Y>
+				<Label>
+					<X>10</X>
+					<Y>0</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Presentation>
+					<Control Type="Slider">
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Id>1784572333879</Id>
+						<Name><![CDATA[sl_householdChargersThatSupportV1G_pct]]></Name>
+						<X>15</X>
+						<Y>12</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<BasicProperties Width="360" Height="30">
+							<EmbeddedIcon>false</EmbeddedIcon>
+							<Enabled>true</Enabled>
+							<ActionCode>f_setV1GChargerCapabilities( uI_Tabs.f_getActiveSliderGridConnections_chargers(), sl_householdChargersThatSupportV1G_pct.getValue() );</ActionCode>
+						</BasicProperties>
+						<ExtendedProperties>
+							<DefaultValueCode>0</DefaultValueCode>
+							<Orientation>HORIZONTAL</Orientation>
+							<MinValue>0</MinValue>
+							<MaxValue>100</MaxValue>
+							<Step>1</Step>
+							<LinkTo>false</LinkTo>
+						</ExtendedProperties>
+					</Control>
+					<Text>
+						<Id>1784572333881</Id>
+						<Name><![CDATA[txt_householdChargersThatSupportV1GDescription]]></Name>
+						<X>15</X>
+						<Y>0</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<VisibleCode>sl_householdChargersThatSupportV1G_pct.isVisible()</VisibleCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[Laadpalen met V1G]]></Text>
+						<Font>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>14</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1784572333883</Id>
+						<Name><![CDATA[txt_householdChargersThatSupportV1G_pct]]></Name>
+						<X>375</X>
+						<Y>0</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<VisibleCode>sl_householdChargersThatSupportV1G_pct.isVisible()</VisibleCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-16777216</Color>
+						<Text><![CDATA[0%]]></Text>
+						<TextCode>sl_householdChargersThatSupportV1G_pct.getIntValue() + " %"</TextCode>
+						<Font>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>14</Size>
+							<Style>1</Style>
+						</Font>
+						<Alignment>RIGHT</Alignment>
+					</Text>
+					<Image>
+						<Id>1784572333885</Id>
+						<Name><![CDATA[i_householdPublicChargersV1G]]></Name>
+						<X>135</X>
+						<Y>-1</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+						<VisibleCode>sl_householdChargersThatSupportV1G_pct.isVisible()</VisibleCode>
+						<OnClickCode>zero_Interface.f_setInfoText(i_householdPublicChargersV1G, zero_Interface.v_infoText.householdPublicParkingV1G, i_householdPublicChargersV1G.getX() + gr_householdSettingsV1G_publicChargers.getX() + uI_Tabs.v_presentationXOffset, i_householdPublicChargersV1G.getY() + gr_householdSettingsV1G_publicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Width>14</Width>
+						<Height>14</Height>
+						<Rotation>0.0</Rotation>
+						<ImageFiles>
+							<ImageResourceReference>
+								<PackageName>zerointerfaceloader</PackageName>
+								<ClassName>icon_i.png</ClassName>
+							</ImageResourceReference>
+						</ImageFiles>
+						<OriginalSize>false</OriginalSize>
+					</Image>
+					<Text>
+						<Id>1784579973899</Id>
+						<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct2]]></Name>
+						<X>15</X>
+						<Y>37</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-4144960</Color>
+						<Text><![CDATA[min]]></Text>
+						<TextCode>roundToInt(sl_householdChargersThatSupportV1G_pct.getMin())</TextCode>
+						<Font>
+							<Name><![CDATA[HOLONline]]></Name>
+							<Size>10</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>LEFT</Alignment>
+					</Text>
+					<Text>
+						<Id>1784579973901</Id>
+						<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct2]]></Name>
+						<X>373</X>
+						<Y>37</Y>
+						<Label>
+							<X>0</X>
+							<Y>-10</Y>
+						</Label>
+						<PublicFlag>true</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>false</ShowLabel>
+						<DrawMode>SHAPE_DRAW_2D</DrawMode>
+						<EmbeddedIcon>false</EmbeddedIcon>
+						<Z>0</Z>
+						<Rotation>0.0</Rotation>
+						<Color>-4144960</Color>
+						<Text><![CDATA[max]]></Text>
+						<TextCode>roundToInt(sl_householdChargersThatSupportV1G_pct.getMax())</TextCode>
+						<Font>
+							<Name><![CDATA[HOLONline]]></Name>
+							<Size>10</Size>
+							<Style>0</Style>
+						</Font>
+						<Alignment>RIGHT</Alignment>
+					</Text>
+				</Presentation>
+			</Group>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1784572334875</Id>
+				<Name><![CDATA[sl_householdPublicChargers_pct]]></Name>
+				<X>20</X>
+				<Y>99</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="360" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setPublicChargingStations(uI_Tabs.f_getAllSliderGridConnections_chargers(), sl_householdPublicChargers_pct.getIntValue(), sl_householdChargersThatSupportV1G_pct, sl_householdChargersThatSupportV2G_pct);</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>100</MaxValue>
+					<Step>1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1784572334877</Id>
+				<Name><![CDATA[txt_householdPublicEVsResidentialAreaDescription]]></Name>
+				<X>20</X>
+				<Y>87</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_householdPublicChargers_pct.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Actieve laadpalen in gebied]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784572334879</Id>
+				<Name><![CDATA[txt_householdPublicEVs_pct]]></Name>
+				<X>380</X>
+				<Y>87</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_householdPublicChargers_pct.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0%]]></Text>
+				<TextCode>sl_householdPublicChargers_pct.getIntValue() + " %"</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Image>
+				<Id>1784572334881</Id>
+				<Name><![CDATA[i_householdPublicChargers]]></Name>
+				<X>195</X>
+				<Y>85</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_householdPublicChargers_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_householdPublicChargers, zero_Interface.v_infoText.householdPublicParking, i_householdPublicChargers.getX() + uI_Tabs.v_presentationXOffset, i_householdPublicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>14</Width>
+				<Height>14</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1784572334883</Id>
 				<Name><![CDATA[txt_chargingStrategyPublicChargers]]></Name>
 				<X>20</X>
-				<Y>235</Y>
+				<Y>140</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2130,18 +2729,18 @@ else{
 				<Color>-16777216</Color>
 				<Text><![CDATA[Laad strategie]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>12</Size>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
 					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
 			<Control Type="ComboBox">
 				<EmbeddedIcon>false</EmbeddedIcon>
-				<Id>1758192054440</Id>
+				<Id>1784572334885</Id>
 				<Name><![CDATA[cb_householdChargingStrategyPrivatePublicChargers]]></Name>
-				<X>221</X>
-				<Y>233</Y>
+				<X>20</X>
+				<Y>155</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2150,7 +2749,7 @@ else{
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<BasicProperties Width="140" Height="20">
+				<BasicProperties Width="359" Height="20">
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<FillColor>-1</FillColor>
 					<TextColor>-16777216</TextColor>
@@ -2207,10 +2806,10 @@ else{
 				</ExtendedProperties>
 			</Control>
 			<Image>
-				<Id>1758192054460</Id>
+				<Id>1784572334887</Id>
 				<Name><![CDATA[i_householdChargingStrategyPublicChargers]]></Name>
-				<X>180</X>
-				<Y>233</Y>
+				<X>110</X>
+				<Y>140</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2223,8 +2822,8 @@ else{
 				<OnClickCode>zero_Interface.f_setInfoText(i_householdChargingStrategyPublicChargers, zero_Interface.v_infoText.chargingStrategyPublicChargers, i_householdChargingStrategyPublicChargers.getX() + uI_Tabs.v_presentationXOffset, i_householdChargingStrategyPublicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>20</Width>
-				<Height>20</Height>
+				<Width>14</Width>
+				<Height>14</Height>
 				<Rotation>0.0</Rotation>
 				<ImageFiles>
 					<ImageResourceReference>
@@ -2235,10 +2834,10 @@ else{
 				<OriginalSize>false</OriginalSize>
 			</Image>
 			<Group>
-				<Id>1758192011387</Id>
+				<Id>1784572334889</Id>
 				<Name><![CDATA[gr_householdActivateV2GPublicChargers]]></Name>
 				<X>170</X>
-				<Y>295</Y>
+				<Y>265</Y>
 				<Label>
 					<X>10</X>
 					<Y>0</Y>
@@ -2253,10 +2852,10 @@ else{
 				<Presentation>
 					<Control Type="CheckBox">
 						<EmbeddedIcon>false</EmbeddedIcon>
-						<Id>1758192011389</Id>
+						<Id>1784572334891</Id>
 						<Name><![CDATA[cb_householdActivateV2GPublicChargers]]></Name>
-						<X>132</X>
-						<Y>-18</Y>
+						<X>190</X>
+						<Y>-20</Y>
 						<Label>
 							<X>0</X>
 							<Y>-10</Y>
@@ -2279,9 +2878,9 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 						</ExtendedProperties>
 					</Control>
 					<Image>
-						<Id>1758192011391</Id>
+						<Id>1784572334893</Id>
 						<Name><![CDATA[i_householdActivateV2GPrivatePublicChargers]]></Name>
-						<X>10</X>
+						<X>-65</X>
 						<Y>-12</Y>
 						<Label>
 							<X>0</X>
@@ -2295,8 +2894,8 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 						<OnClickCode>zero_Interface.f_setInfoText(i_householdActivateV2GPrivatePublicChargers, zero_Interface.v_infoText.activateV2GPrivatePublicChargers, i_householdActivateV2GPrivatePublicChargers.getX() + gr_householdActivateV2GPublicChargers.getX() + uI_Tabs.v_presentationXOffset, i_householdActivateV2GPrivatePublicChargers.getY() + gr_householdActivateV2GPublicChargers.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
 						<EmbeddedIcon>false</EmbeddedIcon>
 						<Z>0</Z>
-						<Width>20</Width>
-						<Height>20</Height>
+						<Width>14</Width>
+						<Height>14</Height>
 						<Rotation>0.0</Rotation>
 						<ImageFiles>
 							<ImageResourceReference>
@@ -2307,7 +2906,7 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 						<OriginalSize>false</OriginalSize>
 					</Image>
 					<Text>
-						<Id>1758192011393</Id>
+						<Id>1784572334895</Id>
 						<Name><![CDATA[txt_activateV2GPrivatePublicChargers]]></Name>
 						<X>-150</X>
 						<Y>-10</Y>
@@ -2326,147 +2925,19 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 						<Color>-16777216</Color>
 						<Text><![CDATA[Activeer V2G]]></Text>
 						<Font>
-							<Name><![CDATA[Dialog]]></Name>
-							<Size>12</Size>
+							<Name><![CDATA[HOLONline2]]></Name>
+							<Size>14</Size>
 							<Style>0</Style>
 						</Font>
 						<Alignment>LEFT</Alignment>
 					</Text>
-				</Presentation>
-			</Group>
-			<Group>
-				<Id>1758274187930</Id>
-				<Name><![CDATA[gr_householdSettingsV2G_privateParkedCars]]></Name>
-				<X>10</X>
-				<Y>145</Y>
-				<Label>
-					<X>10</X>
-					<Y>0</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>false</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Rotation>0.0</Rotation>
-				<Presentation>
-					<Control Type="Slider">
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Id>1758274187932</Id>
-						<Name><![CDATA[sl_householdEVsThatSupportV2G_pct]]></Name>
-						<X>251</X>
-						<Y>5</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<BasicProperties Width="100" Height="30">
-							<EmbeddedIcon>false</EmbeddedIcon>
-							<Enabled>true</Enabled>
-							<ActionCode>f_setV2GEVCapabilities( uI_Tabs.f_getActiveSliderGridConnections_houses(), sl_householdEVsThatSupportV2G_pct.getValue() );</ActionCode>
-						</BasicProperties>
-						<ExtendedProperties>
-							<DefaultValueCode>0</DefaultValueCode>
-							<Orientation>HORIZONTAL</Orientation>
-							<MinValue>0</MinValue>
-							<MaxValue>100</MaxValue>
-							<Step>1</Step>
-							<LinkTo>false</LinkTo>
-						</ExtendedProperties>
-					</Control>
-					<Text>
-						<Id>1758274187934</Id>
-						<Name><![CDATA[txt_householdEVsThatSupportV2GDescription]]></Name>
-						<X>10</X>
-						<Y>10</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>sl_householdEVsThatSupportV2G_pct.isVisible()</VisibleCode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Color>-16777216</Color>
-						<Text><![CDATA[EVs die V2G ondersteunen]]></Text>
-						<Font>
-							<Name><![CDATA[Dialog]]></Name>
-							<Size>12</Size>
-							<Style>0</Style>
-						</Font>
-						<Alignment>LEFT</Alignment>
-					</Text>
-					<Text>
-						<Id>1758274187936</Id>
-						<Name><![CDATA[txt_householdEVsThatSupportV2G_pct]]></Name>
-						<X>235</X>
-						<Y>10</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D</DrawMode>
-						<VisibleCode>sl_householdEVsThatSupportV2G_pct.isVisible()</VisibleCode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Rotation>0.0</Rotation>
-						<Color>-16777216</Color>
-						<Text><![CDATA[0%]]></Text>
-						<TextCode>sl_householdEVsThatSupportV2G_pct.getIntValue() + " %"</TextCode>
-						<Font>
-							<Name><![CDATA[Dialog]]></Name>
-							<Size>12</Size>
-							<Style>0</Style>
-						</Font>
-						<Alignment>RIGHT</Alignment>
-					</Text>
-					<Image>
-						<Id>1758274187938</Id>
-						<Name><![CDATA[i_householdEVsThatSupportV2G]]></Name>
-						<X>170</X>
-						<Y>8</Y>
-						<Label>
-							<X>0</X>
-							<Y>-10</Y>
-						</Label>
-						<PublicFlag>true</PublicFlag>
-						<PresentationFlag>true</PresentationFlag>
-						<ShowLabel>false</ShowLabel>
-						<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-						<VisibleCode>sl_householdEVsThatSupportV2G_pct.isVisible()</VisibleCode>
-						<OnClickCode>zero_Interface.f_setInfoText(i_householdEVsThatSupportV2G, zero_Interface.v_infoText.EVsThatSupportV2G, i_householdEVsThatSupportV2G.getX() + gr_householdSettingsV2G_privateParkedCars.getX() + uI_Tabs.v_presentationXOffset, i_householdEVsThatSupportV2G.getY() + gr_householdSettingsV2G_privateParkedCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
-						<EmbeddedIcon>false</EmbeddedIcon>
-						<Z>0</Z>
-						<Width>20</Width>
-						<Height>20</Height>
-						<Rotation>0.0</Rotation>
-						<ImageFiles>
-							<ImageResourceReference>
-								<PackageName>zerointerfaceloader</PackageName>
-								<ClassName>icon_i.png</ClassName>
-							</ImageResourceReference>
-						</ImageFiles>
-						<OriginalSize>false</OriginalSize>
-					</Image>
 				</Presentation>
 			</Group>
 			<Text>
-				<Id>1777651310496</Id>
-				<Name><![CDATA[txt_mobilitySlidersHousesholdsDescription]]></Name>
+				<Id>1784577836087</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct1]]></Name>
 				<X>20</X>
-				<Y>20</Y>
+				<Y>124</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2478,169 +2949,95 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
-				<Color>-16777216</Color>
-				<Text><![CDATA[Huizen]]></Text>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_householdPublicChargers_pct.getMin())</TextCode>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
-					<Size>22</Size>
-					<Style>1</Style>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
 				</Font>
 				<Alignment>LEFT</Alignment>
 			</Text>
+			<Text>
+				<Id>1784577836089</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct1]]></Name>
+				<X>378</X>
+				<Y>124</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_householdPublicChargers_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
 		</Presentation>
 	</Group>
-	<Text>
-		<Id>1758183975194</Id>
-		<Name><![CDATA[txt_mobilityFunctionsDescription]]></Name>
-		<X>590</X>
-		<Y>510</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Mobility Functions]]></Text>
-		<Font>
-			<Name><![CDATA[Dialog]]></Name>
-			<Size>18</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>CENTER</Alignment>
-	</Text>
-	<Rectangle>
-		<Id>1758183975205</Id>
-		<Name><![CDATA[rect_mobilityFunctions1]]></Name>
-		<X>440</X>
-		<Y>500</Y>
+	<Group>
+		<Id>1784585597752</Id>
+		<Name><![CDATA[gr_mobilitySliders_companies1]]></Name>
+		<X>860</X>
+		<Y>0</Y>
 		<Label>
 			<X>10</X>
-			<Y>10</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>3</LineWidth>
-		<LineColor>-16711936</LineColor>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<Width>310</Width>
-		<Height>170</Height>
-		<Rotation>0.0</Rotation>
-		<FillColor>-1</FillColor>
-		<FillMaterial>null</FillMaterial>
-	</Rectangle>
-	<Text>
-		<Id>1758184003102</Id>
-		<Name><![CDATA[t_mobilityFunctionsDescription1]]></Name>
-		<X>590</X>
-		<Y>510</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Mobility Functions (residential)]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>14</Size>
-			<Style>1</Style>
-		</Font>
-		<Alignment>CENTER</Alignment>
-	</Text>
-	<Group>
-		<Id>1777644598792</Id>
-		<Name><![CDATA[gr_pageIndicator]]></Name>
-		<X>185</X>
-		<Y>20</Y>
-		<Label>
-			<X>7.073</X>
 			<Y>0</Y>
 		</Label>
 		<PublicFlag>true</PublicFlag>
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<XCode>0</XCode>
+		<YCode>0</YCode>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Presentation>
-			<Image>
-				<Id>1777644598794</Id>
-				<Name><![CDATA[arrowLeftResidential]]></Name>
-				<X>-35</X>
-				<Y>-12</Y>
-				<Label>
-					<X>0</X>
-					<Y>-10</Y>
-				</Label>
-				<PublicFlag>true</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>f_previousPage();</OnClickCode>
-				<EmbeddedIcon>false</EmbeddedIcon>
-				<Z>0</Z>
-				<Width>12</Width>
-				<Height>12</Height>
-				<Rotation>90.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>icon_arrow.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
-			<Image>
-				<Id>1777644598796</Id>
-				<Name><![CDATA[arrowRightResidential1]]></Name>
-				<X>35</X>
+			<RoundedRectangle>
+				<Id>1784586472346</Id>
+				<Name><![CDATA[rect_mobilityDemandSliders_default1]]></Name>
+				<X>0</X>
 				<Y>0</Y>
 				<Label>
-					<X>0</X>
-					<Y>-10</Y>
+					<X>10</X>
+					<Y>10</Y>
 				</Label>
 				<PublicFlag>true</PublicFlag>
 				<PresentationFlag>true</PresentationFlag>
 				<ShowLabel>false</ShowLabel>
-				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-				<OnClickCode>f_nextPage();</OnClickCode>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
-				<Width>12</Width>
-				<Height>12</Height>
-				<Rotation>270.0</Rotation>
-				<ImageFiles>
-					<ImageResourceReference>
-						<PackageName>zerointerfaceloader</PackageName>
-						<ClassName>icon_arrow.png</ClassName>
-					</ImageResourceReference>
-				</ImageFiles>
-				<OriginalSize>false</OriginalSize>
-			</Image>
+				<ZHeight>10</ZHeight>
+				<LineWidth>1</LineWidth>
+				<LineColor/>
+				<LineMaterial>null</LineMaterial>
+				<LineStyle>SOLID</LineStyle>
+				<Width>400</Width>
+				<Height>330</Height>
+				<Rotation>0.0</Rotation>
+				<FillColor>-1315080</FillColor>
+				<FillMaterial>null</FillMaterial>
+				<ArcRadius>10</ArcRadius>
+			</RoundedRectangle>
 			<Text>
-				<Id>1777644598798</Id>
-				<Name><![CDATA[t_pageIndicator]]></Name>
-				<X>0</X>
-				<Y>-12</Y>
+				<Id>1784585597832</Id>
+				<Name><![CDATA[txt_mobilitySlidersHousesholdsDescription4]]></Name>
+				<X>50</X>
+				<Y>27</Y>
 				<Label>
 					<X>0</X>
 					<Y>-10</Y>
@@ -2653,14 +3050,659 @@ gr_householdSettingsV2G_publicChargers.setVisible(cb_householdActivateV2GPublicC
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
-				<Text><![CDATA[Pagina 1/2]]></Text>
-				<TextCode>"Pagina " + (v_currentPageIndex + 1) + "/" + c_loadedPageGroups.size()</TextCode>
+				<Text><![CDATA[BEDRIJVEN]]></Text>
 				<Font>
-					<Name><![CDATA[Dialog]]></Name>
+					<Name><![CDATA[HolonBLOCK2]]></Name>
+					<Size>20</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Image>
+				<Id>1784585597834</Id>
+				<Name><![CDATA[image19]]></Name>
+				<X>20</X>
+				<Y>25</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>20</Width>
+				<Height>21</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>car_icon_black.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>true</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1722247567106</Id>
+				<Name><![CDATA[txt_companiesMobilityDemandReductionDescription]]></Name>
+				<X>20</X>
+				<Y>85</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesMobilityDemandReduction_pct.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Besparing transport]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1722247567108</Id>
+				<Name><![CDATA[sl_companiesMobilityDemandReduction_pct]]></Name>
+				<X>20</X>
+				<Y>97</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="360" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>f_setDemandReduction( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), sl_companiesMobilityDemandReduction_pct.getValue() );</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>-50</MinValue>
+					<MaxValue>50</MaxValue>
+					<Step>1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1722247567110</Id>
+				<Name><![CDATA[txt_companiesMobilityDemandReduction_pct]]></Name>
+				<X>380</X>
+				<Y>85</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesMobilityDemandReduction_pct.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0%]]></Text>
+				<TextCode>sl_companiesMobilityDemandReduction_pct.getIntValue() + "%"</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Image>
+				<Id>1746096199769</Id>
+				<Name><![CDATA[i_companiesMobilityReduction]]></Name>
+				<X>150</X>
+				<Y>84</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_companiesMobilityDemandReduction_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_companiesMobilityReduction, zero_Interface.v_infoText.mobilityDemandReduction, i_companiesMobilityReduction.getX() + uI_Tabs.v_presentationXOffset, i_companiesMobilityReduction.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>14</Width>
+				<Height>14</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Control Type="CheckBox">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1754990132964</Id>
+				<Name><![CDATA[cb_companiesSpreadChargingEVs]]></Name>
+				<X>360</X>
+				<Y>138</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="20" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<TextColor>-16777216</TextColor>
+					<Enabled>true</Enabled>
+					<ActionCode>OL_ChargingAttitude selectedChargingAttitude = OL_ChargingAttitude.SIMPLE; 
+if(cb_companiesSpreadChargingEVs.isSelected()){
+	selectedChargingAttitude = OL_ChargingAttitude.MAX_POWER; 
+}
+
+f_setChargingAttitude(selectedChargingAttitude, new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getAllSliderGridConnections_utilities()));</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<Font Name="Dialog" Size="11" Style="0"/>
+					<LabelText/>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1754990186800</Id>
+				<Name><![CDATA[txt_companiesSpreadChargingEVsDescription]]></Name>
+				<X>20</X>
+				<Y>146</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>cb_companiesSpreadChargingEVs.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Slim laden]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Image>
+				<Id>1754991641604</Id>
+				<Name><![CDATA[i_companiesMobilityChargingAttitude]]></Name>
+				<X>90</X>
+				<Y>145</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>cb_companiesSpreadChargingEVs.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_companiesMobilityChargingAttitude, zero_Interface.v_infoText.mobilitySmartCharging, i_companiesMobilityChargingAttitude.getX() + uI_Tabs.v_presentationXOffset, i_companiesMobilityChargingAttitude.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>14</Width>
+				<Height>14</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1784582703518</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct4]]></Name>
+				<X>20</X>
+				<Y>122</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_householdPublicChargers_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
 					<Size>10</Size>
 					<Style>0</Style>
 				</Font>
-				<Alignment>CENTER</Alignment>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784582703520</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct4]]></Name>
+				<X>380</X>
+				<Y>122</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_householdPublicChargers_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1722247567094</Id>
+				<Name><![CDATA[sl_companiesFossilFuelCars_pct]]></Name>
+				<X>20</X>
+				<Y>265</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="360" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>sl_companiesElectricCars_pct.setValue(100 - sl_companiesFossilFuelCars_pct.getIntValue(), false);
+f_setPetroleumFuelCars( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), sl_companiesElectricCars_pct, sl_companiesFossilFuelCars_pct );</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>100</MaxValue>
+					<Step>1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1722247567098</Id>
+				<Name><![CDATA[txt_companiesFossilFuelCars_pct]]></Name>
+				<X>380</X>
+				<Y>253</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesFossilFuelCars_pct.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0%]]></Text>
+				<TextCode>sl_companiesFossilFuelCars_pct.getIntValue() + "%"</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1722247567100</Id>
+				<Name><![CDATA[txt_companiesFossilFuelCarsDescription]]></Name>
+				<X>20</X>
+				<Y>253</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesFossilFuelCars_pct.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Fossiele brandstof]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Control Type="Slider">
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Id>1722247567126</Id>
+				<Name><![CDATA[sl_companiesElectricCars_pct]]></Name>
+				<X>20</X>
+				<Y>212</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<BasicProperties Width="360" Height="30">
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Enabled>true</Enabled>
+					<ActionCode>sl_companiesFossilFuelCars_pct.setValue(100 - sl_companiesElectricCars_pct.getIntValue(), false);
+f_setElectricCars( new ArrayList&lt;GridConnection&gt;(uI_Tabs.f_getActiveSliderGridConnections_utilities()), sl_companiesElectricCars_pct, sl_companiesFossilFuelCars_pct );</ActionCode>
+				</BasicProperties>
+				<ExtendedProperties>
+					<DefaultValueCode>0</DefaultValueCode>
+					<Orientation>HORIZONTAL</Orientation>
+					<MinValue>0</MinValue>
+					<MaxValue>100</MaxValue>
+					<Step>1</Step>
+					<LinkTo>false</LinkTo>
+				</ExtendedProperties>
+			</Control>
+			<Text>
+				<Id>1722247567128</Id>
+				<Name><![CDATA[txt_companiesElectricCarsDescription]]></Name>
+				<X>20</X>
+				<Y>200</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesElectricCars_pct.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Elektrisch]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1722247567130</Id>
+				<Name><![CDATA[txt_companiesElectricCars_pct]]></Name>
+				<X>380</X>
+				<Y>200</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<VisibleCode>sl_companiesElectricCars_pct.isVisible()</VisibleCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[0%]]></Text>
+				<TextCode>sl_companiesElectricCars_pct.getIntValue() + "%"</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1722247567132</Id>
+				<Name><![CDATA[t_carsDescription]]></Name>
+				<X>20</X>
+				<Y>180</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Verhouding - Auto's]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Image>
+				<Id>1746096716280</Id>
+				<Name><![CDATA[i_companiesElectricCars]]></Name>
+				<X>80</X>
+				<Y>199</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_companiesElectricCars_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_companiesElectricCars, zero_Interface.v_infoText.electricCars, i_companiesElectricCars.getX() + uI_Tabs.v_presentationXOffset, i_companiesElectricCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>14</Width>
+				<Height>14</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Image>
+				<Id>1746096716293</Id>
+				<Name><![CDATA[i_companiesFossilFuelCars]]></Name>
+				<X>135</X>
+				<Y>253</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<VisibleCode>sl_companiesFossilFuelCars_pct.isVisible()</VisibleCode>
+				<OnClickCode>zero_Interface.f_setInfoText(i_companiesFossilFuelCars, zero_Interface.v_infoText.fossilCars, i_companiesFossilFuelCars.getX() + uI_Tabs.v_presentationXOffset, i_companiesFossilFuelCars.getY() + uI_Tabs.v_presentationYOffset);</OnClickCode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Width>14</Width>
+				<Height>14</Height>
+				<Rotation>0.0</Rotation>
+				<ImageFiles>
+					<ImageResourceReference>
+						<PackageName>zerointerfaceloader</PackageName>
+						<ClassName>icon_i.png</ClassName>
+					</ImageResourceReference>
+				</ImageFiles>
+				<OriginalSize>false</OriginalSize>
+			</Image>
+			<Text>
+				<Id>1784586188343</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct10]]></Name>
+				<X>20</X>
+				<Y>237</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_companiesElectricCars_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784586188345</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct10]]></Name>
+				<X>380</X>
+				<Y>237</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_companiesElectricCars_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784586201697</Id>
+				<Name><![CDATA[txt_minSliderHouseholdRooftopPV_pct11]]></Name>
+				<X>20</X>
+				<Y>290</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[min]]></Text>
+				<TextCode>roundToInt(sl_companiesFossilFuelCars_pct.getMin())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784586201699</Id>
+				<Name><![CDATA[txt_maxSliderHouseholdRooftopPV_pct11]]></Name>
+				<X>380</X>
+				<Y>290</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-4144960</Color>
+				<Text><![CDATA[max]]></Text>
+				<TextCode>roundToInt(sl_companiesFossilFuelCars_pct.getMax())</TextCode>
+				<Font>
+					<Name><![CDATA[HOLONline]]></Name>
+					<Size>10</Size>
+					<Style>0</Style>
+				</Font>
+				<Alignment>RIGHT</Alignment>
+			</Text>
+			<Text>
+				<Id>1784655507915</Id>
+				<Name><![CDATA[t_generalDescription]]></Name>
+				<X>20</X>
+				<Y>65</Y>
+				<Label>
+					<X>0</X>
+					<Y>-10</Y>
+				</Label>
+				<PublicFlag>true</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D</DrawMode>
+				<EmbeddedIcon>false</EmbeddedIcon>
+				<Z>0</Z>
+				<Rotation>0.0</Rotation>
+				<Color>-16777216</Color>
+				<Text><![CDATA[Algemeen]]></Text>
+				<Font>
+					<Name><![CDATA[HOLONline2]]></Name>
+					<Size>14</Size>
+					<Style>1</Style>
+				</Font>
+				<Alignment>LEFT</Alignment>
 			</Text>
 		</Presentation>
 	</Group>

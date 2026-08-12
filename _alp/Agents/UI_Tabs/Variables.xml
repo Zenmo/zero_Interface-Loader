@@ -40,7 +40,7 @@
               StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[15]]></Code>
+				<Code><![CDATA[20]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -62,7 +62,7 @@
               StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[630]]></Code>
+				<Code><![CDATA[540]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -102,6 +102,214 @@
               AccessType="private"
               StaticVariable="false">
 			<Type><![CDATA[List<GridConnection>]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1784819296743</Id>
+		<Name><![CDATA[v_UITabsElectricityButton]]></Name>
+		<X>-359.514</X>
+		<Y>350</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[CustomButton]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1784819500728</Id>
+		<Name><![CDATA[v_UITabsElectricityButtonSelectedStyling]]></Name>
+		<X>-359.514</X>
+		<Y>440</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(new Color(252, 194, 0), black, null, LINE_STYLE_SOLID, 0)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1784819500762</Id>
+		<Name><![CDATA[v_UITabsButtonDisabledStyling]]></Name>
+		<X>-359.514</X>
+		<Y>540</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(silver, black, white, LINE_STYLE_SOLID, 1)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1784820395366</Id>
+		<Name><![CDATA[v_UITabsHeatingButtonSelectedStyling]]></Name>
+		<X>-359.514</X>
+		<Y>460</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(new Color(242, 121, 169), black, null, LINE_STYLE_SOLID, 0)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1784820400471</Id>
+		<Name><![CDATA[v_UITabsButtonDefaultStyling]]></Name>
+		<X>-359.514</X>
+		<Y>520</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(white, dimGray, silver, LINE_STYLE_SOLID, 1)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1784820400517</Id>
+		<Name><![CDATA[v_UITabsMobilityButtonSelectedStyling]]></Name>
+		<X>-359.514</X>
+		<Y>480</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(new Color(177, 205, 251), black, null, LINE_STYLE_SOLID, 0)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1784820454796</Id>
+		<Name><![CDATA[v_UITabsHeatingButton]]></Name>
+		<X>-359.514</X>
+		<Y>370</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[CustomButton]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1784820472025</Id>
+		<Name><![CDATA[v_UITabsMobilityButton]]></Name>
+		<X>-359.514</X>
+		<Y>390</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[CustomButton]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1784820591768</Id>
+		<Name><![CDATA[v_UITabsEHubButtonSelectedStyling]]></Name>
+		<X>-359.514</X>
+		<Y>500</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[CustomButton.CustomButtonStateStyle]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new CustomButton.CustomButtonStateStyle(new Color(193, 230, 230), black, null, LINE_STYLE_SOLID, 0)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1784820591815</Id>
+		<Name><![CDATA[v_UITabsEHubButton]]></Name>
+		<X>-359.514</X>
+		<Y>410</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[CustomButton]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="CollectionVariable">

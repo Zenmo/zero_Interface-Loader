@@ -8,7 +8,6 @@ public class Project_data {
 		
 		//Project settings
 		String project_name;
-		OL_ProjectType project_type;
 		OL_SurveyType survey_type;
 		
 		//Zorm project names
