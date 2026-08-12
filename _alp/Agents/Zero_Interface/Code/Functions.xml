@@ -6,7 +6,7 @@
 		<Id>1696837759924</Id>
 		<Name><![CDATA[f_setColorsBasedOnEnergyLabels]]></Name>
 		<X>1960</X>
-		<Y>2060</Y>
+		<Y>2040</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -317,33 +317,13 @@
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1715116336665</Id>
-		<Name><![CDATA[f_setColorsBasedOnElectricityConsumption]]></Name>
-		<X>1960</X>
-		<Y>1800</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[gis_area]]></Name>
-			<Type><![CDATA[GIS_Object]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
 	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1715118739710</Id>
 		<Name><![CDATA[f_setColorsBasedOnProduction]]></Name>
 		<X>1960</X>
-		<Y>1870</Y>
+		<Y>1850</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -446,26 +426,6 @@
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1718263685462</Id>
-		<Name><![CDATA[f_setColorsBasedOnConsumptionProfileHouseholds]]></Name>
-		<X>1960</X>
-		<Y>1820</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[gis_area]]></Name>
-			<Type><![CDATA[GIS_Object]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
 	<Function AccessType="protected" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
@@ -488,7 +448,7 @@
 		<Id>1718566260603</Id>
 		<Name><![CDATA[f_setColorsBasedOnGridTopology_objects]]></Name>
 		<X>1960</X>
-		<Y>1920</Y>
+		<Y>1900</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -652,7 +612,7 @@
 		<Id>1725968656820</Id>
 		<Name><![CDATA[f_setColorsBasedOnGridTopology_gridnodes]]></Name>
 		<X>1960</X>
-		<Y>1940</Y>
+		<Y>1920</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1200,7 +1160,7 @@
 		<Id>1752756002220</Id>
 		<Name><![CDATA[f_setColorsBasedOnCongestion_objects]]></Name>
 		<X>1960</X>
-		<Y>1990</Y>
+		<Y>1970</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1220,7 +1180,7 @@
 		<Id>1752756016324</Id>
 		<Name><![CDATA[f_setColorsBasedOnCongestion_gridnodes]]></Name>
 		<X>1960</X>
-		<Y>2010</Y>
+		<Y>1990</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1328,7 +1288,7 @@
 		<Id>1753097409446</Id>
 		<Name><![CDATA[f_setMapOverlay_PVProduction]]></Name>
 		<X>1940</X>
-		<Y>1850</Y>
+		<Y>1830</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1344,7 +1304,7 @@
 		<Id>1753097484078</Id>
 		<Name><![CDATA[f_setMapOverlay_GridTopology]]></Name>
 		<X>1940</X>
-		<Y>1900</Y>
+		<Y>1880</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1360,7 +1320,7 @@
 		<Id>1753097518541</Id>
 		<Name><![CDATA[f_setMapOverlay_Congestion]]></Name>
 		<X>1940</X>
-		<Y>1970</Y>
+		<Y>1950</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1392,7 +1352,7 @@
 		<Id>1753108764992</Id>
 		<Name><![CDATA[f_setMapOverlay_EnergyLabel]]></Name>
 		<X>1940</X>
-		<Y>2040</Y>
+		<Y>2020</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1638,7 +1598,7 @@
 		<Id>1754312747144</Id>
 		<Name><![CDATA[f_setMapOverlay_ParkingType]]></Name>
 		<X>1940</X>
-		<Y>2090</Y>
+		<Y>2070</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1654,7 +1614,7 @@
 		<Id>1754312755135</Id>
 		<Name><![CDATA[f_setColorsBasedOnParkingType_objects]]></Name>
 		<X>1960</X>
-		<Y>2110</Y>
+		<Y>2090</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1674,7 +1634,7 @@
 		<Id>1754314128315</Id>
 		<Name><![CDATA[f_setColorsBasedOnParkingType_gridnodes]]></Name>
 		<X>1960</X>
-		<Y>2130</Y>
+		<Y>2110</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2188,7 +2148,7 @@
 		<Id>1769001821281</Id>
 		<Name><![CDATA[f_setMapOverlay_Custom]]></Name>
 		<X>1940</X>
-		<Y>2160</Y>
+		<Y>2140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2204,7 +2164,7 @@
 		<Id>1769007351261</Id>
 		<Name><![CDATA[f_setColorsBasedOnCustom_objects]]></Name>
 		<X>1960</X>
-		<Y>2180</Y>
+		<Y>2160</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2224,7 +2184,7 @@
 		<Id>1769007434081</Id>
 		<Name><![CDATA[f_setColorsBasedOnCustom_gridnodes]]></Name>
 		<X>1960</X>
-		<Y>2200</Y>
+		<Y>2180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3013,6 +2973,26 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1786522618768</Id>
+		<Name><![CDATA[f_setColorsBasedOnElectricityConsumption]]></Name>
+		<X>1960</X>
+		<Y>1800</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[gis_area]]></Name>
+			<Type><![CDATA[GIS_Object]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

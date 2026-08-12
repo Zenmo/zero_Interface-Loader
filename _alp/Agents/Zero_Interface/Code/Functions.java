@@ -115,12 +115,7 @@ switch(v_activeMapOverlay){
 		gis_area.f_style(null, white, null, null);
 		break;
 	case ELECTRICITY_CONSUMPTION:
-		if (project_data.project_type() == OL_ProjectType.RESIDENTIAL) {
-			f_setColorsBasedOnConsumptionProfileHouseholds(gis_area);
-		}
-		else {
-			f_setColorsBasedOnElectricityConsumption(gis_area);
-		}
+		f_setColorsBasedOnElectricityConsumption(gis_area);
 		break;
 	case PV_PRODUCTION:
 		f_setColorsBasedOnProduction(gis_area);
@@ -309,26 +304,16 @@ if ( v_nbGridConnectionsInSelectedBuilding > 1 ){
 }
 else {
 	String text = "";
-	if (project_data.project_type() == OL_ProjectType.BUSINESSPARK) {
-		if (b instanceof GIS_Building) {
-			if(b.c_containedGridConnections.get(0).p_owner.p_detailedCompany){
-				text = b.c_containedGridConnections.get(0).p_owner.p_actorID + ", ";
-			}
-			else if(b.p_annotation != null){
-				text = b.p_annotation + ", ";
-			}
+	if (b instanceof GIS_Building) {
+		if(b.c_containedGridConnections.get(0).p_owner.p_detailedCompany){
+			text = b.c_containedGridConnections.get(0).p_owner.p_actorID + ", ";
 		}
-		else {
-			text = b.p_id + ", ";
-		}
-	}
-	else{
-		if(b.p_annotation != null){
+		else if(b.p_annotation != null){
 			text = b.p_annotation + ", ";
 		}
-		else{
-			text = b.p_id + ", ";
-		}		
+	}
+	else {
+		text = b.p_id + ", ";
 	}
 	
 	//Set adres text
@@ -443,7 +428,12 @@ double f_resetSettings()
 {/*ALCODESTART::1709718252272*/
 if(!b_runningMainInterfaceScenarios){
 	b_resultsUpToDate = false;
-
+	
+	// Check if map overlay needs to have rapid run results -> If so, select DEFAULT map overlay
+	if(v_activeMapOverlay == OL_MapOverlayTypes.ELECTRICITY_CONSUMPTION || v_activeMapOverlay == OL_MapOverlayTypes.CONGESTION) {
+		f_selectMapOverlayButton(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT)); 
+	}
+	
 	// Update asset flow categories of all agents
 	energyModel.f_updateActiveAssetsMetaData();
 	
@@ -548,29 +538,9 @@ f_projectSpecificOrderedCollectionAdjustments();
 
 /*ALCODEEND*/}
 
-double f_setColorsBasedOnElectricityConsumption(GIS_Object gis_area)
-{/*ALCODESTART::1715116336665*/
-if(gis_area.c_containedGridConnections.size() > 0){
-
-	double yearlyEnergyConsumption = sum( gis_area.c_containedGridConnections, x -> x.v_rapidRunData.getTotalElectricityConsumed_MWh());
-	
-	if ( yearlyEnergyConsumption < 10){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption1.getFillColor(), null, null, null);}
-	else if ( yearlyEnergyConsumption < 50){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption2.getFillColor(), null, null, null);}
-	else if ( yearlyEnergyConsumption < 150){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption3.getFillColor(), null, null, null);}
-	else if ( yearlyEnergyConsumption < 500){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption4.getFillColor(), null, null, null);}
-	else if ( yearlyEnergyConsumption > 500){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption5.getFillColor(), null, null, null);}
-}
-/*ALCODEEND*/}
-
 double f_setColorsBasedOnProduction(GIS_Object gis_area)
 {/*ALCODESTART::1715118739710*/
 if (gis_area.c_containedGridConnections.size() > 0) {
-	
-	//Define medium PV Value
-	double mediumPVValue_kWp = 100;
-	if (project_data.project_type() == OL_ProjectType.RESIDENTIAL){
-		mediumPVValue_kWp = 5;
-	}
 	
 	//Calculate total pv capacity on the gis object
 	double totalPVCapacity_kWp = 0;
@@ -578,16 +548,15 @@ if (gis_area.c_containedGridConnections.size() > 0) {
 		totalPVCapacity_kWp += GC.v_liveAssetsMetaData.totalInstalledPVPower_kW;
 	}
 	
+	double totalEstimatedPVProduction_MWh = (totalPVCapacity_kWp * zero_loader.avgc_data.p_avgFullLoadHoursPV_hr) / 1000; // If you want to calculate the exact production in kWh, a rapid-run needs to done -> consequence: no direct feedback when adjusting PV slider -> Therefore, estimation is applied 
+	
 	//Set color of object based on total pv capacity
-	if(totalPVCapacity_kWp == 0){
-		gis_area.f_style(rect_mapOverlayLegend_PVProduction1.getFillColor(), lightGrey, null, null);
-	}
-	else if (totalPVCapacity_kWp < mediumPVValue_kWp){
-		gis_area.f_style(rect_mapOverlayLegend_PVProduction2.getFillColor(), whiteSmoke, null, null);
-	}
-	else{
-		gis_area.f_style(rect_mapOverlayLegend_PVProduction3.getFillColor(), white, null, null);
-	}
+	if ( totalEstimatedPVProduction_MWh == 0){ gis_area.f_style( rect_mapOverlayLegend_PVProduction1.getFillColor(), lightGrey, null, null);}
+	else if ( totalEstimatedPVProduction_MWh < 2.5){ gis_area.f_style( rect_mapOverlayLegend_PVProduction2.getFillColor(), whiteSmoke, null, null);}
+	else if ( totalEstimatedPVProduction_MWh < 10){ gis_area.f_style( rect_mapOverlayLegend_PVProduction3.getFillColor(), white, null, null);}
+	else if ( totalEstimatedPVProduction_MWh < 25){ gis_area.f_style( rect_mapOverlayLegend_PVProduction4.getFillColor(), white, null, null);}
+	else if ( totalEstimatedPVProduction_MWh < 100){ gis_area.f_style( rect_mapOverlayLegend_PVProduction5.getFillColor(), white, null, null);}
+	else if ( totalEstimatedPVProduction_MWh > 100){ gis_area.f_style( rect_mapOverlayLegend_PVProduction6.getFillColor(), white, null, null);}
 }
 /*ALCODEEND*/}
 
@@ -619,15 +588,15 @@ f_initializeScenarioRadioButton();
 //Initialize the legend
 f_initializeLegend();
 
+//Create and set the grid topology colors (Netvlakken)
+f_setGridTopologyColors();
+
 //Initialize map overlay buttons
 f_initializeMapOverlayButtons();
 
 //Set ui button visibility false at startup
 f_createAdditionalUIs();
 button_goToUI.setVisible(false);
-
-//Create and set the grid topology colors (Netvlakken)
-f_setGridTopologyColors();
 
 //Set order of certain layovers and submenus
 f_initializePresentationOrder();
@@ -667,32 +636,6 @@ System.setOut(new PrintStream(new OutputStream() {
         }
     }));
 return originalPrintStream;
-/*ALCODEEND*/}
-
-double f_setColorsBasedOnConsumptionProfileHouseholds(GIS_Object gis_area)
-{/*ALCODESTART::1718263685462*/
-double yearlyElectricityConsumption_kWh = 0;
-for( GridConnection gc : gis_area.c_containedGridConnections){
-	if(gc.v_rapidRunData != null){
-		yearlyElectricityConsumption_kWh += gc.v_rapidRunData.getTotalElectricityConsumed_MWh()*1000;
-	}
-	else{
-		for ( J_EAConsumption consumptionAsset : gc.c_consumptionAssets){
-			if( consumptionAsset.getEAType() == OL_EnergyAssetType.ELECTRICITY_DEMAND ){
-				yearlyElectricityConsumption_kWh += consumptionAsset.getBaseConsumption_kWh();
-			}
-		}
-	}
-}
-
-if ( yearlyElectricityConsumption_kWh == 0) { gis_area.f_style( v_unknownConsumptionColor, null, null, null );}
-else if ( yearlyElectricityConsumption_kWh < 1500){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption1.getFillColor(), rect_mapOverlayLegend_ElectricityConsumption1.getFillColor().brighter(), null, null);}
-else if ( yearlyElectricityConsumption_kWh < 2500){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption2.getFillColor(), rect_mapOverlayLegend_ElectricityConsumption2.getFillColor().brighter(), null, null);}
-else if ( yearlyElectricityConsumption_kWh < 4000){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption3.getFillColor(), rect_mapOverlayLegend_ElectricityConsumption3.getFillColor().brighter(), null, null);}
-else if ( yearlyElectricityConsumption_kWh < 6000){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption4.getFillColor(), rect_mapOverlayLegend_ElectricityConsumption4.getFillColor().brighter(), null, null);}
-else if ( yearlyElectricityConsumption_kWh > 6000){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption5.getFillColor(), rect_mapOverlayLegend_ElectricityConsumption5.getFillColor().brighter(), null, null);}
-	
-
 /*ALCODEEND*/}
 
 double f_updateMainInterfaceSliders()
@@ -760,13 +703,11 @@ double f_setGridTopologyColors()
 //Find all MV substations
 List<GridNode> MVsubstations = findAll(energyModel.pop_gridNodes, GN -> GN.p_nodeType == OL_GridNodeType.SUBMV);
 
-if(MVsubstations.size() > 0 || project_data.project_type() == OL_ProjectType.RESIDENTIAL){
-	b_gridLoopsAreDefined = true;
-}
-
 v_amountOfDefinedGridLoops = 0;
 
 if(!MVsubstations.isEmpty()){
+	b_gridLoopsAreDefined = true;
+	
 	//Set all unique grid topology colors for each substation and its children if the gridloops are defined
 	for (GridNode MVsub : MVsubstations){
 		
@@ -780,7 +721,7 @@ if(!MVsubstations.isEmpty()){
 		v_amountOfDefinedGridLoops++;
 	}
 }
-else if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
+/*else if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 	int totalNotToplevelGridNodes = energyModel.f_getNonRootGridNodes().size();
 	//Set all unique grid topology colors for each substation and its children if the gridloops are defined
 	for (GridNode node : energyModel.f_getNonRootGridNodes()){
@@ -791,7 +732,7 @@ else if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
 		//Update spectrum color index and total defined colours
 		v_amountOfDefinedGridLoops++;
 	}
-}
+}*/
 /*ALCODEEND*/}
 
 double f_styleSUBMV(GISRegion gisregion)
@@ -1743,7 +1684,7 @@ if (gis_area.c_containedGridConnections.size() > 0) {
 	}
 	
 	//Set colour based on found parameters
-	if(!capacityKnown && project_data.project_type() != RESIDENTIAL){
+	if(!capacityKnown){
 		gis_area.gisRegion.setFillColor(v_gridNodeColorCapacityUnknown);
 		gis_area.gisRegion.setLineColor(v_gridNodeLineColorCapacityUnknown);
 	} else if (maxLoad_fr_gis_object > 1) {
@@ -1784,7 +1725,7 @@ if (gn!=null && gn.gisRegion != null){
 		}
 	}
 	
-	if(!isLiveSim && !gn.p_realCapacityAvailable && project_data.project_type() != RESIDENTIAL){
+	if(!isLiveSim && !gn.p_realCapacityAvailable){
 		gn.gisRegion.setFillColor(v_gridNodeColorCapacityUnknown);
 		gn.gisRegion.setLineColor(v_gridNodeLineColorCapacityUnknown);
 	} else if (maxLoad_fr > 1) {
@@ -1832,10 +1773,9 @@ else{//Take the default
 	c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.DEFAULT);
 	c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.ELECTRICITY_CONSUMPTION);
 	c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.PV_PRODUCTION);
-	c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.GRID_NEIGHBOURS);
 	c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.CONGESTION);
-	if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
-		c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.PARKING_TYPE);
+	if(b_gridLoopsAreDefined) {
+		c_loadedMapOverlayTypes.add(OL_MapOverlayTypes.GRID_NEIGHBOURS);
 	}
 }
 
@@ -1903,27 +1843,18 @@ b_updateLiveCongestionColors = true;
 gr_mapOverlayLegend_ElectricityConsumption.setVisible(true);
 
 //Colour gis objects
-if (project_data.project_type() == OL_ProjectType.RESIDENTIAL){
-	for (GIS_Building building : energyModel.pop_GIS_Buildings){
-		f_setColorsBasedOnConsumptionProfileHouseholds(building);
+if(energyModel.v_rapidRunData == null){
+	f_setErrorScreen("Dit overzicht wordt pas beschikbaar na het uitvoeren van een jaarsimulatie. In plaats daarvan is de standaard kaart geselecteerd.", 0, 0);
+	f_selectMapOverlayButton(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT));
+	return;			
+}
+gr_mapOverlayLegend_ElectricityConsumption.setVisible(true);
+for (GIS_Building building : energyModel.pop_GIS_Buildings){
+	if(building.gisRegion.isVisible()){
+		f_setColorsBasedOnElectricityConsumption(building);
 	}
 }
-else {
-	if(energyModel.v_rapidRunData == null){
-		f_setErrorScreen("Dit overzicht wordt pas beschikbaar na het uitvoeren van een jaarsimulatie. In plaats daarvan is de standaard kaart geselecteerd.", 0, 0);
-		f_selectMapOverlayButton(c_loadedMapOverlayTypes.indexOf(OL_MapOverlayTypes.DEFAULT));
-		return;			
-	}
-	gr_mapOverlayLegend_ElectricityConsumption.setVisible(true);
-	for (GIS_Building building : energyModel.pop_GIS_Buildings){
-		if(building.gisRegion.isVisible()){
-			f_setColorsBasedOnElectricityConsumption(building);
-		}
-	}
-	/*for (GIS_Object object : energyModel.pop_GIS_Objects){
-		f_setColorsBasedOnConsumpion(object);
-	}*/
-}
+
 /*ALCODEEND*/}
 
 double f_setMapOverlay_PVProduction()
@@ -2530,21 +2461,13 @@ switch(rb_scenarios.getValue()){
 	case 0:
 		selected_scenario = "Huidige situatie";
 		f_setScenario_Current();
-
 	break;
 	case 1:
-		if(project_data.project_type() == OL_ProjectType.BUSINESSPARK){
-			selected_scenario = "Toekomstplannen";
-			f_setScenario_Future();
-		}
-		else if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
-			selected_scenario = "Custom";
-			//t_scenarioDescription.setText(t_scenario_custom);
-		}
+		selected_scenario = "Toekomstplannen";
+		f_setScenario_Future();
 	break;
 	case 2:
 		selected_scenario = "Custom";
-		//t_scenarioDescription.setText(t_scenario_custom);
 	break;
 	
 	default:
@@ -2559,12 +2482,9 @@ String[] f_getScenarioOptions()
 //OVERRIDE THIS FUNCTION IF YOU WANT TO ADJUST THE SCENARIO OPTIONS.
 // -> MAKE SURE TO ALWAYS INCLUDE A CUSTOM
 String[] scenarioOptions = null;
-if(project_data.project_type() == OL_ProjectType.BUSINESSPARK){
-	scenarioOptions = new String[]{"Huidige situatie", "Toekomstplannen", "Custom"};
-}
-else if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
-	scenarioOptions = new String[]{"Huidige situatie", "Custom"};
-}
+
+scenarioOptions = new String[]{"Huidige situatie", "Toekomstplannen", "Custom"};
+
 return scenarioOptions;
 /*ALCODEEND*/}
 
@@ -2575,12 +2495,16 @@ f_resetSpecialSlidersAndButtons();
 
 if(c_scenarioMap_Future != null){
 	f_setCompaniesScenario(c_scenarioMap_Future);
+} else{
+	f_setCompaniesScenario(c_scenarioMap_Current);
 }
+
+if(p_residentialScenario_Current != null){
+	f_setResidentialScenario_Current();
+}
+
 //Set specifc assets active/non-active
 f_projectSpecificScenarioSettings("Future");
-
-//Set the scenario text
-//t_scenarioDescription.setText(t_scenario_future);
 /*ALCODEEND*/}
 
 double f_setScenario_Current()
@@ -2591,17 +2515,15 @@ f_resetSpecialSlidersAndButtons();
 if(c_scenarioMap_Current != null){
 	f_setCompaniesScenario(c_scenarioMap_Current);
 }
+
 //Reset sliders for households
-if(project_data.project_type() == OL_ProjectType.RESIDENTIAL && p_residentialScenario_Current != null){
+if(p_residentialScenario_Current != null){
 	f_setResidentialScenario_Current();
 }
 
 
 //Set specifc assets active/non-active
 f_projectSpecificScenarioSettings("Current");
-
-//Set the scenario text
-//t_scenarioDescription.setText(t_scenario_current);
 /*ALCODEEND*/}
 
 double f_resetSpecialSlidersAndButtons()
@@ -2887,8 +2809,8 @@ String f_getTimeString()
 Date date = energyModel.f_getDate();
 
 SimpleDateFormat formatter = new SimpleDateFormat();
-//formatter.applyPattern("dd MMM yyyy, kk:mm");
-formatter.applyPattern("kk:mm");
+//formatter.applyPattern("dd MMM yyyy, HH:mm");
+formatter.applyPattern("HH:mm");
 
 return formatter.format(date);
 /*ALCODEEND*/}
@@ -3019,8 +2941,8 @@ else{
 List<GCGridBattery> electricityTabEASliderGCs_bat = findAll(energyModel.GridBatteries, sliderBat -> sliderBat.p_isSliderGC && 
 																									!sliderBat.p_gridConnectionID.equals("EnergyHub battery slider"));
 
-if(project_data.project_type() == OL_ProjectType.BUSINESSPARK && electricityTabEASliderGCs_bat.size() != 1){
-	throw new RuntimeException("electricityTabEASliderGCs_bat.size() != 1 -> Should be exactly 1 for businesspark models.");
+if(electricityTabEASliderGCs_bat.size() != 1){
+	throw new RuntimeException("electricityTabEASliderGCs_bat.size() != 1 -> Should be exactly 1.");
 }
 else{
 	electricityTabEASliderGCs.addAll(electricityTabEASliderGCs_bat);
@@ -3309,17 +3231,11 @@ double f_initializeScenarioInformation()
 v_infoText.scenario1 = t_scenario_current;
 i_scenario1.setVisible(true);
 
-if(project_data.project_type() == OL_ProjectType.BUSINESSPARK){
-	v_infoText.scenario2 = t_scenario_future;
-	i_scenario2.setVisible(true);
-	
-	v_infoText.scenario3 = t_scenario_custom;
-	i_scenario3.setVisible(true);
-}
-else if(project_data.project_type() == OL_ProjectType.RESIDENTIAL){
-	v_infoText.scenario2 = t_scenario_custom;
-	i_scenario2.setVisible(true);
-}
+v_infoText.scenario2 = t_scenario_future;
+i_scenario2.setVisible(true);
+
+v_infoText.scenario3 = t_scenario_custom;
+i_scenario3.setVisible(true);
 
 /*
 v_infoText.scenario4 = "";
@@ -3996,6 +3912,24 @@ f_setForcedClickScreenVisibility(false);
 if(v_filterButton.isSelected()){
 	v_filterButton.setEnabled(true);
 	v_filterButton.clickButton();
+}
+/*ALCODEEND*/}
+
+double f_setColorsBasedOnElectricityConsumption(GIS_Object gis_area)
+{/*ALCODESTART::1786522618768*/
+if(gis_area.c_containedGridConnections.size() > 0){
+
+	double yearlyEnergyConsumption_MWh = sum( gis_area.c_containedGridConnections, x -> x.v_rapidRunData.getTotalElectricityConsumed_MWh());
+	
+	if ( yearlyEnergyConsumption_MWh < 1.5){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption1.getFillColor(), null, null, null);}
+	else if ( yearlyEnergyConsumption_MWh < 3){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption2.getFillColor(), null, null, null);}
+	else if ( yearlyEnergyConsumption_MWh < 5){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption3.getFillColor(), null, null, null);}
+	else if ( yearlyEnergyConsumption_MWh < 10){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption4.getFillColor(), null, null, null);}
+	else if ( yearlyEnergyConsumption_MWh < 50){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption5.getFillColor(), null, null, null);}
+	else if ( yearlyEnergyConsumption_MWh < 150){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption6.getFillColor(), null, null, null);}
+	else if ( yearlyEnergyConsumption_MWh < 500){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption7.getFillColor(), null, null, null);}
+	else if ( yearlyEnergyConsumption_MWh > 500){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption8.getFillColor(), null, null, null);}
+
 }
 /*ALCODEEND*/}
 

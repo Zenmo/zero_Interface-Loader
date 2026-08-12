@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.9.202607020720"
+                   AnyLogicVersion="8.9.9.202606170507"
                    AlpVersion="8.9.9">
 	<Model>
 		<Id>1658477103134</Id>
@@ -84,18 +84,6 @@
 				<Option>
 					<Id>1750173992447</Id>
 					<Name><![CDATA[REMAINING]]></Name>
-				</Option>
-			</OptionList>
-			<OptionList>
-				<Id>1660743989798</Id>
-				<Name><![CDATA[OL_ProjectType]]></Name>
-				<Option>
-					<Id>1660743990769</Id>
-					<Name><![CDATA[BUSINESSPARK]]></Name>
-				</Option>
-				<Option>
-					<Id>1676307694256</Id>
-					<Name><![CDATA[RESIDENTIAL]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>

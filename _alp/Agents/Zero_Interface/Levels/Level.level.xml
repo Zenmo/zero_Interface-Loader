@@ -3710,7 +3710,7 @@ else{
 								<Id>1753868816353</Id>
 								<Name><![CDATA[rect_mapOverlayLegend_ElectricityConsumption2]]></Name>
 								<X>-60</X>
-								<Y>-28</Y>
+								<Y>-35</Y>
 								<Label>
 									<X>10</X>
 									<Y>10</Y>
@@ -3729,14 +3729,14 @@ else{
 								<Width>25</Width>
 								<Height>15</Height>
 								<Rotation>0.0</Rotation>
-								<FillColor>-32</FillColor>
+								<FillColor>-3931</FillColor>
 								<FillMaterial>null</FillMaterial>
 							</Rectangle>
 							<Rectangle>
 								<Id>1753868816355</Id>
 								<Name><![CDATA[rect_mapOverlayLegend_ElectricityConsumption3]]></Name>
 								<X>-60</X>
-								<Y>-4</Y>
+								<Y>-18</Y>
 								<Label>
 									<X>10</X>
 									<Y>10</Y>
@@ -3755,14 +3755,14 @@ else{
 								<Width>25</Width>
 								<Height>15</Height>
 								<Rotation>0.0</Rotation>
-								<FillColor>-263774</FillColor>
+								<FillColor>-9938</FillColor>
 								<FillMaterial>null</FillMaterial>
 							</Rectangle>
 							<Rectangle>
 								<Id>1753868816357</Id>
 								<Name><![CDATA[rect_mapOverlayLegend_ElectricityConsumption4]]></Name>
 								<X>-60</X>
-								<Y>20</Y>
+								<Y>-1</Y>
 								<Label>
 									<X>10</X>
 									<Y>10</Y>
@@ -3781,14 +3781,14 @@ else{
 								<Width>25</Width>
 								<Height>15</Height>
 								<Rotation>0.0</Rotation>
-								<FillColor>-1063822</FillColor>
+								<FillColor>-154054</FillColor>
 								<FillMaterial>null</FillMaterial>
 							</Rectangle>
 							<Rectangle>
 								<Id>1753868816359</Id>
 								<Name><![CDATA[rect_mapOverlayLegend_ElectricityConsumption5]]></Name>
 								<X>-60</X>
-								<Y>44</Y>
+								<Y>16</Y>
 								<Label>
 									<X>10</X>
 									<Y>10</Y>
@@ -3807,14 +3807,92 @@ else{
 								<Width>25</Width>
 								<Height>15</Height>
 								<Rotation>0.0</Rotation>
-								<FillColor>-3318692</FillColor>
+								<FillColor>-757729</FillColor>
 								<FillMaterial>null</FillMaterial>
 							</Rectangle>
 							<Text>
 								<Id>1753868816361</Id>
 								<Name><![CDATA[txt_mapOverlayLegend_ElectricityConsumption1]]></Name>
-								<X>-21</X>
-								<Y>-49</Y>
+								<X>-20</X>
+								<Y>-48</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[< 1.5 MWh / jaar]]></Text>
+								<TextCode>"&lt; 1.5 MWh / jaar"</TextCode>
+								<Font>
+									<Name><![CDATA[HOLONline2]]></Name>
+									<Size>10</Size>
+									<Style>0</Style>
+								</Font>
+								<Alignment>LEFT</Alignment>
+							</Text>
+							<Text>
+								<Id>1753868816363</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_ElectricityConsumption2]]></Name>
+								<X>-20</X>
+								<Y>-31</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[< 3 MWh / jaar]]></Text>
+								<TextCode>"&lt; 3 MWh / jaar"</TextCode>
+								<Font>
+									<Name><![CDATA[HOLONline2]]></Name>
+									<Size>10</Size>
+									<Style>0</Style>
+								</Font>
+								<Alignment>LEFT</Alignment>
+							</Text>
+							<Text>
+								<Id>1753868816365</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_ElectricityConsumption3]]></Name>
+								<X>-20</X>
+								<Y>-14</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[< 5 MWh / jaar]]></Text>
+								<TextCode>"&lt; 5 MWh / jaar"</TextCode>
+								<Font>
+									<Name><![CDATA[HOLONline2]]></Name>
+									<Size>10</Size>
+									<Style>0</Style>
+								</Font>
+								<Alignment>LEFT</Alignment>
+							</Text>
+							<Text>
+								<Id>1753868816367</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_ElectricityConsumption4]]></Name>
+								<X>-20</X>
+								<Y>3</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -3828,19 +3906,19 @@ else{
 								<Rotation>0.0</Rotation>
 								<Color>-16777216</Color>
 								<Text><![CDATA[< 10 MWh / jaar]]></Text>
-								<TextCode>project_data.project_type() == OL_ProjectType.RESIDENTIAL ? "&lt; 1500 kWh / jaar" : "&lt; 10 MWh / jaar"</TextCode>
+								<TextCode>"&lt; 10 MWh / jaar"</TextCode>
 								<Font>
 									<Name><![CDATA[HOLONline2]]></Name>
-									<Size>11</Size>
+									<Size>10</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>LEFT</Alignment>
 							</Text>
 							<Text>
-								<Id>1753868816363</Id>
-								<Name><![CDATA[txt_mapOverlayLegend_ElectricityConsumption2]]></Name>
-								<X>-21</X>
-								<Y>-26</Y>
+								<Id>1753868816369</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_ElectricityConsumption5]]></Name>
+								<X>-20</X>
+								<Y>20</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -3854,19 +3932,97 @@ else{
 								<Rotation>0.0</Rotation>
 								<Color>-16777216</Color>
 								<Text><![CDATA[< 50 MWh / jaar]]></Text>
-								<TextCode>project_data.project_type() == OL_ProjectType.RESIDENTIAL ? "&lt; 2500 kWh / jaar" : "&lt; 50 MWh / jaar"</TextCode>
+								<TextCode>"&lt; 50 MWh / jaar"</TextCode>
 								<Font>
 									<Name><![CDATA[HOLONline2]]></Name>
-									<Size>11</Size>
+									<Size>10</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>LEFT</Alignment>
 							</Text>
+							<Rectangle>
+								<Id>1786520910231</Id>
+								<Name><![CDATA[rect_mapOverlayLegend_ElectricityConsumption6]]></Name>
+								<X>-60</X>
+								<Y>33</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-8355712</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>25</Width>
+								<Height>15</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-2347234</FillColor>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Rectangle>
+								<Id>1786520910233</Id>
+								<Name><![CDATA[rect_mapOverlayLegend_ElectricityConsumption7]]></Name>
+								<X>-60</X>
+								<Y>50</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-8355712</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>25</Width>
+								<Height>15</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-7597807</FillColor>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Rectangle>
+								<Id>1786520910235</Id>
+								<Name><![CDATA[rect_mapOverlayLegend_ElectricityConsumption8]]></Name>
+								<X>-60</X>
+								<Y>67</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-8355712</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>25</Width>
+								<Height>15</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-16777216</FillColor>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
 							<Text>
-								<Id>1753868816365</Id>
-								<Name><![CDATA[txt_mapOverlayLegend_ElectricityConsumption3]]></Name>
-								<X>-21</X>
-								<Y>-1</Y>
+								<Id>1786521087223</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_ElectricityConsumption6]]></Name>
+								<X>-20</X>
+								<Y>37</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -3880,19 +4036,19 @@ else{
 								<Rotation>0.0</Rotation>
 								<Color>-16777216</Color>
 								<Text><![CDATA[< 150 MWh / jaar]]></Text>
-								<TextCode>project_data.project_type() == OL_ProjectType.RESIDENTIAL ? "&lt; 4000 kWh / jaar" : "&lt; 150 MWh / jaar"</TextCode>
+								<TextCode>"&lt; 150 MWh / jaar"</TextCode>
 								<Font>
 									<Name><![CDATA[HOLONline2]]></Name>
-									<Size>11</Size>
+									<Size>10</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>LEFT</Alignment>
 							</Text>
 							<Text>
-								<Id>1753868816367</Id>
-								<Name><![CDATA[txt_mapOverlayLegend_ElectricityConsumption4]]></Name>
-								<X>-21</X>
-								<Y>23</Y>
+								<Id>1786521087225</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_ElectricityConsumption7]]></Name>
+								<X>-20</X>
+								<Y>54</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -3906,19 +4062,19 @@ else{
 								<Rotation>0.0</Rotation>
 								<Color>-16777216</Color>
 								<Text><![CDATA[< 500 MWh / jaar]]></Text>
-								<TextCode>project_data.project_type() == OL_ProjectType.RESIDENTIAL ? "&lt; 6000 kWh / jaar" : "&lt; 500 MWh / jaar"</TextCode>
+								<TextCode>"&lt; 500 MWh / jaar"</TextCode>
 								<Font>
 									<Name><![CDATA[HOLONline2]]></Name>
-									<Size>11</Size>
+									<Size>10</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>LEFT</Alignment>
 							</Text>
 							<Text>
-								<Id>1753868816369</Id>
-								<Name><![CDATA[txt_mapOverlayLegend_ElectricityConsumption5]]></Name>
-								<X>-21</X>
-								<Y>47</Y>
+								<Id>1786521087227</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_ElectricityConsumption8]]></Name>
+								<X>-20</X>
+								<Y>71</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -3932,10 +4088,10 @@ else{
 								<Rotation>0.0</Rotation>
 								<Color>-16777216</Color>
 								<Text><![CDATA[> 500 MWh / jaar]]></Text>
-								<TextCode>project_data.project_type() == OL_ProjectType.RESIDENTIAL ? "&gt; 6000 kWh / jaar" : "&gt; 500 MWh / jaar"</TextCode>
+								<TextCode>"&gt; 500 MWh / jaar"</TextCode>
 								<Font>
 									<Name><![CDATA[HOLONline2]]></Name>
-									<Size>11</Size>
+									<Size>10</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>LEFT</Alignment>
@@ -3991,7 +4147,7 @@ else{
 								<Id>1753868816397</Id>
 								<Name><![CDATA[rect_mapOverlayLegend_PVProduction2]]></Name>
 								<X>-60</X>
-								<Y>-28</Y>
+								<Y>-35</Y>
 								<Label>
 									<X>10</X>
 									<Y>10</Y>
@@ -4017,7 +4173,7 @@ else{
 								<Id>1753868816399</Id>
 								<Name><![CDATA[rect_mapOverlayLegend_PVProduction3]]></Name>
 								<X>-60</X>
-								<Y>-4</Y>
+								<Y>-18</Y>
 								<Label>
 									<X>10</X>
 									<Y>10</Y>
@@ -4043,7 +4199,7 @@ else{
 								<Id>1753868816401</Id>
 								<Name><![CDATA[txt_mapOverlayLegend_PVProduction1]]></Name>
 								<X>-20</X>
-								<Y>-49</Y>
+								<Y>-48</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -4059,7 +4215,7 @@ else{
 								<Text><![CDATA[Geen opwek]]></Text>
 								<Font>
 									<Name><![CDATA[HOLONline2]]></Name>
-									<Size>11</Size>
+									<Size>10</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>LEFT</Alignment>
@@ -4068,7 +4224,163 @@ else{
 								<Id>1753868816403</Id>
 								<Name><![CDATA[txt_mapOverlayLegend_PVProduction2]]></Name>
 								<X>-20</X>
-								<Y>-26</Y>
+								<Y>-31</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[< 2.5 MWh / jaar]]></Text>
+								<TextCode>"&lt; 2.5 MWh / jaar"</TextCode>
+								<Font>
+									<Name><![CDATA[HOLONline2]]></Name>
+									<Size>10</Size>
+									<Style>0</Style>
+								</Font>
+								<Alignment>LEFT</Alignment>
+							</Text>
+							<Text>
+								<Id>1753868816405</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_PVProduction3]]></Name>
+								<X>-20</X>
+								<Y>-14</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[< 10 MWh / jaar]]></Text>
+								<TextCode>"&lt; 10 MWh / jaar"</TextCode>
+								<Font>
+									<Name><![CDATA[HOLONline2]]></Name>
+									<Size>10</Size>
+									<Style>0</Style>
+								</Font>
+								<Alignment>LEFT</Alignment>
+							</Text>
+							<Rectangle>
+								<Id>1786533867842</Id>
+								<Name><![CDATA[rect_mapOverlayLegend_PVProduction4]]></Name>
+								<X>-60</X>
+								<Y>-1</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-8355712</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>25</Width>
+								<Height>15</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-154054</FillColor>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Rectangle>
+								<Id>1786533867844</Id>
+								<Name><![CDATA[rect_mapOverlayLegend_PVProduction5]]></Name>
+								<X>-60</X>
+								<Y>16</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-8355712</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>25</Width>
+								<Height>15</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-757729</FillColor>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Rectangle>
+								<Id>1786533867846</Id>
+								<Name><![CDATA[rect_mapOverlayLegend_PVProduction6]]></Name>
+								<X>-60</X>
+								<Y>33</Y>
+								<Label>
+									<X>10</X>
+									<Y>10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<ZHeight>10</ZHeight>
+								<LineWidth>1</LineWidth>
+								<LineColor>-8355712</LineColor>
+								<LineMaterial>null</LineMaterial>
+								<LineStyle>SOLID</LineStyle>
+								<Width>25</Width>
+								<Height>15</Height>
+								<Rotation>0.0</Rotation>
+								<FillColor>-2347234</FillColor>
+								<FillMaterial>null</FillMaterial>
+							</Rectangle>
+							<Text>
+								<Id>1786534016220</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_PVProduction4]]></Name>
+								<X>-20</X>
+								<Y>3</Y>
+								<Label>
+									<X>0</X>
+									<Y>-10</Y>
+								</Label>
+								<PublicFlag>true</PublicFlag>
+								<PresentationFlag>true</PresentationFlag>
+								<ShowLabel>false</ShowLabel>
+								<DrawMode>SHAPE_DRAW_2D</DrawMode>
+								<EmbeddedIcon>false</EmbeddedIcon>
+								<Z>0</Z>
+								<Rotation>0.0</Rotation>
+								<Color>-16777216</Color>
+								<Text><![CDATA[< 25 MWh / jaar]]></Text>
+								<TextCode>"&lt; 25 MWh / jaar"</TextCode>
+								<Font>
+									<Name><![CDATA[HOLONline2]]></Name>
+									<Size>10</Size>
+									<Style>0</Style>
+								</Font>
+								<Alignment>LEFT</Alignment>
+							</Text>
+							<Text>
+								<Id>1786534016222</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_PVProduction5]]></Name>
+								<X>-20</X>
+								<Y>20</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -4082,19 +4394,19 @@ else{
 								<Rotation>0.0</Rotation>
 								<Color>-16777216</Color>
 								<Text><![CDATA[< 100 MWh / jaar]]></Text>
-								<TextCode>project_data.project_type() == OL_ProjectType.RESIDENTIAL ? "&lt; 5000 kWh / jaar" : "&lt; 100 MWh / jaar"</TextCode>
+								<TextCode>"&lt; 100 MWh / jaar"</TextCode>
 								<Font>
 									<Name><![CDATA[HOLONline2]]></Name>
-									<Size>11</Size>
+									<Size>10</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>LEFT</Alignment>
 							</Text>
 							<Text>
-								<Id>1753868816405</Id>
-								<Name><![CDATA[txt_mapOverlayLegend_PVProduction3]]></Name>
+								<Id>1786534016224</Id>
+								<Name><![CDATA[txt_mapOverlayLegend_PVProduction6]]></Name>
 								<X>-20</X>
-								<Y>-1</Y>
+								<Y>37</Y>
 								<Label>
 									<X>0</X>
 									<Y>-10</Y>
@@ -4108,10 +4420,10 @@ else{
 								<Rotation>0.0</Rotation>
 								<Color>-16777216</Color>
 								<Text><![CDATA[> 100 MWh / jaar]]></Text>
-								<TextCode>project_data.project_type() == OL_ProjectType.RESIDENTIAL ? "&gt; 5000 kWh / jaar" : "&gt; 100 MWh / jaar"</TextCode>
+								<TextCode>"&gt; 100 MWh / jaar"</TextCode>
 								<Font>
 									<Name><![CDATA[HOLONline2]]></Name>
-									<Size>11</Size>
+									<Size>10</Size>
 									<Style>0</Style>
 								</Font>
 								<Alignment>LEFT</Alignment>

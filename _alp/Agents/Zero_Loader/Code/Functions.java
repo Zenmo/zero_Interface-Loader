@@ -136,6 +136,8 @@ for (GridNode_data GN_data : c_gridNode_data) {
 				
 				//Add to hashmap
 				zero_Interface.c_GISNetplanes.add( GN.p_serviceAreaGisRegion );
+				//Initially set visible false
+				GN.p_serviceAreaGisRegion.setVisible(false);
 			}
 			
 			//Gridnode profile
@@ -1939,13 +1941,12 @@ traceln(" ");
 if( settings.runHeadlessAtStartup() ){
 	energyModel.f_runRapidSimulation(); // Do a full year run to have KPIs right away!
 	
-	if(project_data.project_type() == BUSINESSPARK){
-		for(GCUtility GC : energyModel.UtilityConnections){
-			if(GC.p_owner.p_detailedCompany){ // For now only detailed companies
-				GC.v_originalRapidRunData = GC.v_rapidRunData;
-			}
+	for(GCUtility GC : energyModel.UtilityConnections){
+		if(GC.p_owner.p_detailedCompany){ // For now only detailed companies
+			GC.v_originalRapidRunData = GC.v_rapidRunData;
 		}
 	}
+	
 	zero_Interface.gr_simulateYear.setVisible(false);
 	zero_Interface.gr_loadIconYearSimulation.setVisible(false);
 	zero_Interface.b_resultsUpToDate = true;
