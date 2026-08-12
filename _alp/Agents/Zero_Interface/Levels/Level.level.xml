@@ -6835,7 +6835,8 @@ else{
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<VisibleCode>v_filterButton.isEnabled()</VisibleCode>
-				<OnClickCode>v_filterButton.clickButton();</OnClickCode>
+				<OnClickCode>v_filterButton.clickButton();
+f_removeAllFilters();</OnClickCode>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Z>0</Z>
 				<Rotation>0.0</Rotation>
@@ -9697,6 +9698,7 @@ else {
 	v_filterButton.setSelected(!v_filterButton.isSelected(), false);
 	gr_filterInterface.setVisible(v_filterButton.isSelected());
 	if(! v_filterButton.isSelected()){
+		f_removeAllFilters();
 		v_currentUIMode = OL_UIMode.DEFAULT;
 		f_setForcedClickScreenTextBoxes("", null, null, "", null, null);
 	}

@@ -1850,11 +1850,17 @@ if(energyModel.v_rapidRunData == null){
 }
 gr_mapOverlayLegend_ElectricityConsumption.setVisible(true);
 for (GIS_Building building : energyModel.pop_GIS_Buildings){
-	if(building.gisRegion.isVisible()){
+	boolean buildingIsCurrentlySelected = false;
+	for( GridConnection gc : building.c_containedGridConnections) {
+		if(c_selectedGridConnections.contains(gc)){
+			buildingIsCurrentlySelected = true;
+			break;
+		}
+	}
+	if(building.gisRegion.isVisible() && !buildingIsCurrentlySelected){
 		f_setColorsBasedOnElectricityConsumption(building);
 	}
 }
-
 /*ALCODEEND*/}
 
 double f_setMapOverlay_PVProduction()
@@ -1865,7 +1871,16 @@ gr_mapOverlayLegend_PVProduction.setVisible(true);
 
 //Colour gis objects
 for (GIS_Building building : energyModel.pop_GIS_Buildings){
-	f_setColorsBasedOnProduction(building);
+	boolean buildingIsCurrentlySelected = false;
+	for( GridConnection gc : building.c_containedGridConnections) {
+		if(c_selectedGridConnections.contains(gc)){
+			buildingIsCurrentlySelected = true;
+			break;
+		}
+	}
+	if(!buildingIsCurrentlySelected){
+		f_setColorsBasedOnProduction(building);
+	}
 }
 /*for (GIS_Object object : energyModel.pop_GIS_Objects){
 	f_setColorsBasedOnProduction(object);
@@ -1880,7 +1895,16 @@ b_updateLiveCongestionColors = false;
 
 //Colour gis objects
 for (GIS_Building building : energyModel.pop_GIS_Buildings){
-	f_setColorsBasedOnGridTopology_objects(building);
+	boolean buildingIsCurrentlySelected = false;
+	for( GridConnection gc : building.c_containedGridConnections) {
+		if(c_selectedGridConnections.contains(gc)){
+			buildingIsCurrentlySelected = true;
+			break;
+		}
+	}
+	if(!buildingIsCurrentlySelected){
+		f_setColorsBasedOnGridTopology_objects(building);
+	}
 }
 /*for (GIS_Object object : energyModel.pop_GIS_Objects){
 	f_setColorsBasedOnGridTopology_objects(object);
@@ -1904,7 +1928,16 @@ b_updateLiveCongestionColors = false;
 
 //Colour gis objects
 for (GIS_Building building : energyModel.pop_GIS_Buildings){
-	f_setColorsBasedOnCongestion_objects(building);
+	boolean buildingIsCurrentlySelected = false;
+	for( GridConnection gc : building.c_containedGridConnections) {
+		if(c_selectedGridConnections.contains(gc)){
+			buildingIsCurrentlySelected = true;
+			break;
+		}
+	}
+	if(!buildingIsCurrentlySelected){
+		f_setColorsBasedOnCongestion_objects(building);
+	}
 }
 /*
 for (GIS_Object object : energyModel.pop_GIS_Objects){
@@ -1921,7 +1954,16 @@ double f_setMapOverlay_Default()
 b_updateLiveCongestionColors = true;
 gr_defaultLegenda.setVisible(true);	
 for (GIS_Building b: energyModel.pop_GIS_Buildings) {
-	f_styleAreas(b);
+	boolean buildingIsCurrentlySelected = false;
+	for( GridConnection gc : b.c_containedGridConnections) {
+		if(c_selectedGridConnections.contains(gc)){
+			buildingIsCurrentlySelected = true;
+			break;
+		}
+	}
+	if(!buildingIsCurrentlySelected){
+		f_styleAreas(b);
+	}
 }
 /*for (GIS_Object object : energyModel.pop_GIS_Objects){
 	f_styleAreas(object);
@@ -1935,7 +1977,16 @@ b_updateLiveCongestionColors = true;
 gr_mapOverlayLegend_EnergyLabel.setVisible(true);
 
 for (GIS_Building building : energyModel.pop_GIS_Buildings){
-	f_setColorsBasedOnEnergyLabels(building);
+	boolean buildingIsCurrentlySelected = false;
+	for( GridConnection gc : building.c_containedGridConnections) {
+		if(c_selectedGridConnections.contains(gc)){
+			buildingIsCurrentlySelected = true;
+			break;
+		}
+	}
+	if(!buildingIsCurrentlySelected){
+		f_setColorsBasedOnEnergyLabels(building);
+	}
 }
 /*ALCODEEND*/}
 
@@ -2214,7 +2265,16 @@ b_updateLiveCongestionColors = true;
 
 //Colour gis objects
 for (GIS_Building building : energyModel.pop_GIS_Buildings){
-	f_setColorsBasedOnParkingType_objects(building);
+	boolean buildingIsCurrentlySelected = false;
+	for( GridConnection gc : building.c_containedGridConnections) {
+		if(c_selectedGridConnections.contains(gc)){
+			buildingIsCurrentlySelected = true;
+			break;
+		}
+	}
+	if(!buildingIsCurrentlySelected){
+		f_setColorsBasedOnParkingType_objects(building);
+	}
 }
 for (GridNode GN : energyModel.pop_gridNodes){
 	f_setColorsBasedOnParkingType_gridnodes(GN);
@@ -3120,10 +3180,6 @@ if (p_customMapOverlayLegend != null) {
 	p_customMapOverlayLegend.setVisible(false);
 }
 b_updateLiveCongestionColors = false;
-
-if(v_currentUIMode != OL_UIMode.EHUB){
-	//f_clearSelectionAndSelectEnergyModel();  //deze voior nu even uit, volgens mij hebben we die niet nodig (PH 19-06-2026)
-}
 /*ALCODEEND*/}
 
 double f_colorSelectedBuildings(ArrayList<GridConnection> gcList)
