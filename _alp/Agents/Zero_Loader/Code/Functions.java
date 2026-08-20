@@ -4136,7 +4136,7 @@ if(engineGC.p_owner.p_detailedCompany){
 	p_remainingTotals.adjustRemainingGasDeliveryCompanies_m3(engineGC,  - yearlyGasDelivery_m3pa);
 }
 
-return max(profile_m3pqh)/dataTimeStep_h;
+return max(profile_kWhpqh)/dataTimeStep_h;
 /*ALCODEEND*/}
 
 double f_reconstructAgent(Agent agent,AgentArrayList pop,EnergyModel energyModel)
