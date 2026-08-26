@@ -255,16 +255,16 @@ public class J_GridOperatorTariffsEnexis_2025 implements I_GridOperatorTariffs {
     	else if(contractCapacityUsedForCalculation_kW <=1500) {
     		keyString = "MS-D (contract vermogen meer dan 125 kW t/m 1500 kW)";
     	}
-    	else if(contractCapacityUsedForCalculation_kW <1500 && physicalCapacity_kW <=1750) { // Op basis van onderzoek, tot 1750 KVA is MS-D
+    	else if(contractCapacityUsedForCalculation_kW >1500 && physicalCapacity_kW <=1750) { // Op basis van onderzoek, tot 1750 KVA is MS-D
     		keyString = "MS-D > 1500 kW";
     	}
-    	else if(contractCapacityUsedForCalculation_kW <1500 && physicalCapacity_kW <=6000) { // Volgens mij is tot 6000 MS-T (Oud project was dat zo.)
+    	else if(contractCapacityUsedForCalculation_kW >1500 && physicalCapacity_kW <=6000) { // Volgens mij is tot 6000 MS-T (Oud project was dat zo.)
     		keyString = "MS-T > 1500 kW";
     	}
-    	else if(contractCapacityUsedForCalculation_kW <1500 && physicalCapacity_kW <=100_000) {
+    	else if(contractCapacityUsedForCalculation_kW >1500 && physicalCapacity_kW <=100_000) {
     		keyString = "HS/MS > 1500 kW";
     	}
-    	else{// if(contractCapacityUsedForCalculation_kW <1500 && physicalCapacity_kW >100_000) {
+    	else{// if(contractCapacityUsedForCalculation_kW >1500 && physicalCapacity_kW >100_000) {
     		keyString = "TS > 1500 kW";
     	}
     	return keyString;

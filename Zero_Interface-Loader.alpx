@@ -437,13 +437,11 @@
 			<JavaClass>
 				<Id>1774003694447</Id>
 				<Name><![CDATA[J_GridOperatorTariffsLiander_2025]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1773320047333</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1774003704262</Id>
 				<Name><![CDATA[J_GridOperatorTariffsStedin_2025]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1773320047333</Folder>
 			</JavaClass>
 			<JavaClass>
