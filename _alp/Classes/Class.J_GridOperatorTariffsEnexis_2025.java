@@ -187,40 +187,40 @@ public class J_GridOperatorTariffsEnexis_2025 implements I_GridOperatorTariffs {
     	if(physicalCapacity_kW <=2.3 && !connectionIsMeasured) {
     		keyString = "t/m 1 x 10 A (onbemeten)";
     	}
-    	else if(physicalCapacity_kW <=2.3) {
+    	else if(physicalCapacity_kW <= 2.3) {
     		keyString = "t/m 1 x 10 A";
     	}
-    	else if(physicalCapacity_kW <=17.25 && !connectionIsMeasured) {
+    	else if(physicalCapacity_kW <= 17.25 && !connectionIsMeasured) {
     		keyString = "> 1 x 10 A t/m 3 x 25 A / 1 x 80 A (onbemeten)";
     	} 
-    	else if(physicalCapacity_kW <=17.25) {
+    	else if(physicalCapacity_kW <= 17.25) {
     		keyString = "> 1 x 10 A t/m 3 x 25 A / 1 x 80 A";
     	}
-    	else if(physicalCapacity_kW <=24.15) {
+    	else if(physicalCapacity_kW <= 24.15) {
     		keyString = "> 3 x 25 A t/m 3 x 35 A";
     	}   
-    	else if(physicalCapacity_kW <=34.5) {
+    	else if(physicalCapacity_kW <= 34.5) {
     		keyString = "> 3 x 35 A t/m 3 x 50 A";
     	}  
-    	else if(physicalCapacity_kW <=43.47) {
+    	else if(physicalCapacity_kW <= 43.47) {
     		keyString = "> 3 x 50 A t/m 3 x 63 A";
     	}     	
-    	else if(physicalCapacity_kW <=55.2) {
+    	else if(physicalCapacity_kW <= 55.2) {
     		keyString = "> 3 x 63 A t/m 3 x 80 A";
     	}
-    	else if(physicalCapacity_kW <=173) {
+    	else if(physicalCapacity_kW <= 173) {
     		keyString = "> 3 x 80 A t/m 3 x 250 A (173 kVA)";
     	}
-    	else if(physicalCapacity_kW <=1750) {
+    	else if(physicalCapacity_kW <= 1750) {
     		keyString = "> 3 x 250 A (173 kVA) t/m 1.750 kVA";
     	}
-    	else if(physicalCapacity_kW <=3000) {
+    	else if(physicalCapacity_kW <= 3000) {
     		keyString = "> 1.750 kVA t/m 3 MVA";
     	}
-    	else if(physicalCapacity_kW <=6000) {
+    	else if(physicalCapacity_kW <= 6000) {
     		keyString = "> 3 MVA t/m 6 MVA";
     	}
-    	else if(physicalCapacity_kW <=10000) {
+    	else if(physicalCapacity_kW <= 10000) {
     		keyString = "> 6 MVA t/m 10 MVA";
     	}
     	else{// if(physicalCapacity_kW >10000) {
@@ -237,7 +237,7 @@ public class J_GridOperatorTariffsEnexis_2025 implements I_GridOperatorTariffs {
     	}
     	
     	//Enexis tariff info says: "Als u zowel afneemt als (terug)levert wordt het	vastrecht transportdienst gebaseerd op de contractwaarde levering."
-		double contractCapacityUsedForCalculation_kW =0; 
+		double contractCapacityUsedForCalculation_kW = 0; 
 		if(connectionMetaData.getContractedDeliveryCapacity_kW() > 0) {
 			contractCapacityUsedForCalculation_kW = connectionMetaData.getContractedDeliveryCapacity_kW(); 
 		}
@@ -246,25 +246,25 @@ public class J_GridOperatorTariffsEnexis_2025 implements I_GridOperatorTariffs {
 		}
 		double physicalCapacity_kW = connectionMetaData.getPhysicalCapacity_kW();
     	
-        if(contractCapacityUsedForCalculation_kW <=50) {
+        if(contractCapacityUsedForCalculation_kW <= 50) {
     		keyString = "LS (contract vermogen t/m 50 kW)";
     	}
-    	else if(contractCapacityUsedForCalculation_kW <=125) {
+    	else if(contractCapacityUsedForCalculation_kW <= 125) {
     		keyString = "MS/LS (contract vermogen meer dan 50 kW t/m 125 kW)";
     	}
-    	else if(contractCapacityUsedForCalculation_kW <=1500) {
+    	else if(contractCapacityUsedForCalculation_kW <= 1500) {
     		keyString = "MS-D (contract vermogen meer dan 125 kW t/m 1500 kW)";
     	}
-    	else if(contractCapacityUsedForCalculation_kW <1500 && physicalCapacity_kW <=1750) { // Op basis van onderzoek, tot 1750 KVA is MS-D
+    	else if(contractCapacityUsedForCalculation_kW > 1500 && physicalCapacity_kW <= 1750) { // Op basis van onderzoek, tot 1750 KVA is MS-D
     		keyString = "MS-D > 1500 kW";
     	}
-    	else if(contractCapacityUsedForCalculation_kW <1500 && physicalCapacity_kW <=6000) { // Volgens mij is tot 6000 MS-T (Oud project was dat zo.)
+    	else if(contractCapacityUsedForCalculation_kW > 1500 && physicalCapacity_kW <= 6000) { // Volgens mij is tot 6000 MS-T (Oud project was dat zo.)
     		keyString = "MS-T > 1500 kW";
     	}
-    	else if(contractCapacityUsedForCalculation_kW <1500 && physicalCapacity_kW <=100_000) {
+    	else if(contractCapacityUsedForCalculation_kW > 1500 && physicalCapacity_kW <= 100_000) {
     		keyString = "HS/MS > 1500 kW";
     	}
-    	else{// if(contractCapacityUsedForCalculation_kW <1500 && physicalCapacity_kW >100_000) {
+    	else{// if(contractCapacityUsedForCalculation_kW > 1500 && physicalCapacity_kW >100_000) {
     		keyString = "TS > 1500 kW";
     	}
     	return keyString;

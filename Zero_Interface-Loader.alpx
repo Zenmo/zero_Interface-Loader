@@ -437,13 +437,11 @@
 			<JavaClass>
 				<Id>1774003694447</Id>
 				<Name><![CDATA[J_GridOperatorTariffsLiander_2025]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1773320047333</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1774003704262</Id>
 				<Name><![CDATA[J_GridOperatorTariffsStedin_2025]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1773320047333</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -454,6 +452,51 @@
 			<JavaClass>
 				<Id>1780057244152</Id>
 				<Name><![CDATA[J_CustomTripTrackerGenerator]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1787757321866</Id>
+				<Name><![CDATA[J_GridOperatorTariffsEnexis_2023]]></Name>
+				<Folder>1773320047333</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1787757364160</Id>
+				<Name><![CDATA[J_GridOperatorTariffsEnexis_2024]]></Name>
+				<Folder>1773320047333</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1787757389656</Id>
+				<Name><![CDATA[J_GridOperatorTariffsLiander_2023]]></Name>
+				<Folder>1773320047333</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1787757448599</Id>
+				<Name><![CDATA[J_GridOperatorTariffsLiander_2024]]></Name>
+				<Folder>1773320047333</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1787757478750</Id>
+				<Name><![CDATA[J_GridOperatorTariffsEnexis_2026]]></Name>
+				<Folder>1773320047333</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1787757504815</Id>
+				<Name><![CDATA[J_GridOperatorTariffsLiander_2026]]></Name>
+				<Folder>1773320047333</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1787757527912</Id>
+				<Name><![CDATA[J_GridOperatorTariffsStedin_2023]]></Name>
+				<Folder>1773320047333</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1787757699197</Id>
+				<Name><![CDATA[J_GridOperatorTariffsStedin_2024]]></Name>
+				<Folder>1773320047333</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1787757708960</Id>
+				<Name><![CDATA[J_GridOperatorTariffsStedin_2026]]></Name>
+				<Folder>1773320047333</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
