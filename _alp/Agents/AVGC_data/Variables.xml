@@ -3308,22 +3308,22 @@ OL_GridConnectionInsulationLabel.G, 4.0
 			<DefaultValue Class="CodeValue">
 				<Code><![CDATA[Map.of(
       	OL_GridOperator.ENEXIS, Map.of(
-	       //2026, J_GridOperatorTariffsEnexis_2026.class,
+	       2026, J_GridOperatorTariffsEnexis_2026.class,
 	       2025, J_GridOperatorTariffsEnexis_2025.class,
-	       2024, J_GridOperatorTariffsEnexis_2025.class,
-	       2023, J_GridOperatorTariffsEnexis_2025.class
+	       2024, J_GridOperatorTariffsEnexis_2024.class,
+	       2023, J_GridOperatorTariffsEnexis_2023.class
 		),
 		OL_GridOperator.LIANDER, Map.of(
-	       //2026, J_GridOperatorTariffsLiander_2026.class,
+	       2026, J_GridOperatorTariffsLiander_2026.class,
 	       2025, J_GridOperatorTariffsLiander_2025.class,
-	       2024, J_GridOperatorTariffsLiander_2025.class,
-	       2023, J_GridOperatorTariffsLiander_2025.class
+	       2024, J_GridOperatorTariffsLiander_2024.class,
+	       2023, J_GridOperatorTariffsLiander_2023.class
 		),
 		OL_GridOperator.STEDIN, Map.of(
-	       //2026, J_GridOperatorTariffsStedin_2026.class,
+	       2026, J_GridOperatorTariffsStedin_2026.class,
 	       2025, J_GridOperatorTariffsStedin_2025.class,
-	       2024, J_GridOperatorTariffsStedin_2025.class,
-	       2023, J_GridOperatorTariffsStedin_2025.class
+	       2024, J_GridOperatorTariffsStedin_2024.class,
+	       2023, J_GridOperatorTariffsStedin_2023.class
 		)
 	)]]></Code>
 			</DefaultValue>
