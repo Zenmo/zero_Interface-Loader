@@ -3867,7 +3867,6 @@ if(heatingType == OL_GridConnectionHeatingType.CUSTOM){
 else{
 	// Create building profiles, peakHeatConsumption_kW is null if there is no heat consumption
 	Double peakHeatConsumption_kW = f_createSurveyHeatProfiles( engineGC, surveyGC, heatingType );
-	
 	// Create EA conversions
 	if (peakHeatConsumption_kW != null) {
 		f_addHeatAsset(engineGC, heatingType, peakHeatConsumption_kW);
@@ -3920,11 +3919,11 @@ if (surveyGC.getNaturalGas().checkHasConnection()) {
 			}
 			else {
 				f_createGasProfileFromSurvey( engineGC, surveyGC );
-				return null;				
+				//No return here, because apparently there is a differnt heating type present together with a gas profile not used for heating.			
 			}
 	}
 }
-else if ( heatingType == OL_GridConnectionHeatingType.DISTRICTHEAT || heatingType == OL_GridConnectionHeatingType.LT_DISTRICTHEAT ) {
+if ( heatingType == OL_GridConnectionHeatingType.DISTRICTHEAT || heatingType == OL_GridConnectionHeatingType.LT_DISTRICTHEAT ) {
 	return f_createHeatProfileFromSurvey(engineGC, surveyGC);
 }
 else if ( heatingType == OL_GridConnectionHeatingType.NONE ) {
@@ -4211,12 +4210,24 @@ return f_createHeatProfileFromAnnualHeatTotal( engineGC, yearlyHeatConsumption_k
 
 double f_createHeatProfileFromHeatTS(GridConnection engineGC,com.zenmo.zummon.companysurvey.GridConnection surveyGC)
 {/*ALCODESTART::1753964366889*/
-
 String energyAssetName = engineGC.p_ownerID + " custom heat profile";
 // Heat profile
 
 //double[] profile_kWhpqh = f_convertFloatArrayToDoubleArray(surveyGC.getHeat().getHeatDeliveryTimeSeries_kWh().getFlatDataPoints());
 double[] profile_kWhpqh = f_timeSeriesToQuarterHourlyDoubleArray(surveyGC.getHeat().getHeatDeliveryTimeSeries_kWh());
+
+//Make data at least 0: negative heat flow is not supported (yet).
+int numberOfNegativeValues = 0;
+for(int j = 0; j < profile_kWhpqh.length; j++){
+	if(profile_kWhpqh[j] < 0){
+		numberOfNegativeValues++;
+		profile_kWhpqh[j] = max(0, profile_kWhpqh[j]);
+	}
+}
+
+if(numberOfNegativeValues > 0){
+	logger.warn("GC: " + engineGC.p_gridConnectionID + " has " + numberOfNegativeValues + " negative values in its heat delivery time series: Capped at 0.");
+}
 
 double[] a_arguments_hr;
 double dataTimeStep_h;
