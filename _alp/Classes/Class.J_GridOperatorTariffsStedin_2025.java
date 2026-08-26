@@ -34,10 +34,6 @@ public class J_GridOperatorTariffsStedin_2025 implements I_GridOperatorTariffs {
 		  en MS-Distributie apart tarifeert. Stedin heeft één MS deelmarkt.
 		- Stedin kent geen HS deelmarkt ("NVT").
 		- De grenzen liggen anders: Trafo MS/LS t/m 150 kW (Enexis 125 kW).
-
-		//Aanname: boven 1,5 MW splitst de ACM op "fysieke aansluitwijze" (spanningsniveau). J_ConnectionMetaData
-		//kent geen spanningsniveau, dus dat wordt hier benaderd met de fysieke aansluitcapaciteit.
-		//Zelfde benadering als in J_GridOperatorTariffsEnexis_2025.
 	*/
 
 	double vat_fr = 0.21; // 21% BTW
@@ -174,37 +170,37 @@ public class J_GridOperatorTariffsStedin_2025 implements I_GridOperatorTariffs {
     private String getPhysicalConnectionKey(J_ConnectionMetaData connectionMetaData) {
     	String keyString = null;
     	double physicalCapacity_kW = connectionMetaData.getPhysicalCapacity_kW();
-    	if(physicalCapacity_kW <=1.38) {
+    	if(physicalCapacity_kW <= 1.38) {
     		keyString = "t/m 1 x 6 A (geschakeld)";
     	}
-    	else if(physicalCapacity_kW <=2.3) {
+    	else if(physicalCapacity_kW <= 2.3) {
     		keyString = "t/m 1 x 10 A";
     	}
-    	else if(physicalCapacity_kW <=17.25) {
+    	else if(physicalCapacity_kW <= 17.25) {
     		keyString = "> 1 x 10 A t/m 3 x 25 A";
     	}
-    	else if(physicalCapacity_kW <=24.15) {
+    	else if(physicalCapacity_kW <= 24.15) {
     		keyString = "> 3 x 25 A t/m 3 x 35 A";
     	}
-    	else if(physicalCapacity_kW <=34.5) {
+    	else if(physicalCapacity_kW <= 34.5) {
     		keyString = "> 3 x 35 A t/m 3 x 50 A";
     	}
-    	else if(physicalCapacity_kW <=43.47) {
+    	else if(physicalCapacity_kW <= 43.47) {
     		keyString = "> 3 x 50 A t/m 3 x 63 A";
     	}
-    	else if(physicalCapacity_kW <=55.2) {
+    	else if(physicalCapacity_kW <= 55.2) {
     		keyString = "> 3 x 63 A t/m 3 x 80 A";
     	}
-    	else if(physicalCapacity_kW <=175) {	//kVA gelijkgesteld aan kW, zelfde aanname als bij Enexis.
+    	else if(physicalCapacity_kW <= 175) {
     		keyString = "> 3 x 80 A t/m 175 kVA";
     	}
-    	else if(physicalCapacity_kW <=1750) {
+    	else if(physicalCapacity_kW <= 1750) {
     		keyString = "> 175 kVA t/m 1.750 kVA";
     	}
-    	else if(physicalCapacity_kW <=5000) {
+    	else if(physicalCapacity_kW <= 5000) {
     		keyString = "> 1.750 kVA t/m 5 MVA";
     	}
-    	else if(physicalCapacity_kW <=10000) {
+    	else if(physicalCapacity_kW <= 10000) {
     		keyString = "> 5 MVA t/m 10 MVA";
     	}
     	else{// if(physicalCapacity_kW >10000) {
@@ -220,7 +216,7 @@ public class J_GridOperatorTariffsStedin_2025 implements I_GridOperatorTariffs {
     		throw new RuntimeException("getLargeConnectionContractKey not useable for small connnection meta data.");
     	}
 
-		double contractCapacityUsedForCalculation_kW =0;
+		double contractCapacityUsedForCalculation_kW = 0;
 		if(connectionMetaData.getContractedDeliveryCapacity_kW() > 0) {
 			contractCapacityUsedForCalculation_kW = connectionMetaData.getContractedDeliveryCapacity_kW();
 		}
@@ -229,17 +225,17 @@ public class J_GridOperatorTariffsStedin_2025 implements I_GridOperatorTariffs {
 		}
 		double physicalCapacity_kW = connectionMetaData.getPhysicalCapacity_kW();
 
-        if(contractCapacityUsedForCalculation_kW <=50) {
+        if(contractCapacityUsedForCalculation_kW <= 50) {
     		keyString = "LS (contract vermogen t/m 50 kW)";
     	}
-    	else if(contractCapacityUsedForCalculation_kW <=150) {
+    	else if(contractCapacityUsedForCalculation_kW <= 150) {
     		keyString = "Trafo MS/LS (contract vermogen meer dan 50 kW t/m 150 kW)";
     	}
-    	else if(contractCapacityUsedForCalculation_kW <=1500) {
+    	else if(contractCapacityUsedForCalculation_kW <= 1500) {
     		keyString = "MS (contract vermogen meer dan 150 kW t/m 1500 kW)";
     	}
     	//Boven 1,5 MW splitst de ACM op fysieke aansluitwijze (Trafo HS+TS/MS of TS). Benaderd met fysieke capaciteit:
-    	else if(physicalCapacity_kW <=100_000) {
+    	else if(physicalCapacity_kW <= 100_000) {
     		keyString = "Trafo HS+TS/MS > 1500 kW";
     	}
     	else{// if(physicalCapacity_kW >100_000) {

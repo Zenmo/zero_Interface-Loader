@@ -15,7 +15,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
 public class J_GridOperatorTariffsLiander_2025 implements I_GridOperatorTariffs {
 	//Data source: https://www.acm.nl/system/files/documents/tarievenblad-liander-elektriciteit-2025.xlsx   (Bijlage 2a + 2b bij Tarievenbesluit Elektriciteit 2025 Liander)
-	//			&&	https://www.liander.nl/-/media/files/tarieven/consument/2025/jaarlijkse-netwerkkosten-stroom-2025.pdf   (kleinverbruik, incl. meetdienst)
+	//			&& https://www.liander.nl/-/media/files/tarieven/consument/2025/jaarlijkse-netwerkkosten-stroom-2025.pdf   (kleinverbruik, incl. meetdienst)
+	//			&& https://www.liander.nl/-/media/files/tarieven/grootzakelijk/tarieven-2025/tarieven-voor-aansluiting-en-transport-elektriciteit-2025.pdf?v=1&d=20241129T122349Z	(grootverbruik, incl. meetdienst)
 
 	//Additional Info:
 	/*
@@ -31,10 +32,6 @@ public class J_GridOperatorTariffsLiander_2025 implements I_GridOperatorTariffs 
 		  en MS-Distributie apart tarifeert. Liander heeft één MS deelmarkt.
 		- Liander kent WEL een eigen HS deelmarkt (110-150 kV), die bij Enexis "n.v.t. ingaande 2009" is.
 		- De grenzen liggen anders: Trafo MS/LS t/m 136 kW (Enexis 125 kW) en MS t/m 2 MW (Enexis 1500 kW).
-
-		//Aanname: boven 2 MW splitst de ACM op "fysieke aansluitwijze" (spanningsniveau). J_ConnectionMetaData
-		//kent geen spanningsniveau, dus dat wordt hier benaderd met de fysieke aansluitcapaciteit.
-		//Zelfde benadering als in J_GridOperatorTariffsEnexis_2025.
 	*/
 
 	double vat_fr = 0.21; // 21% BTW
@@ -44,7 +41,6 @@ public class J_GridOperatorTariffsLiander_2025 implements I_GridOperatorTariffs 
 	double transportCostsVastRecht_smallConnections_eurpday = 17.9945/365;	//Vastrecht transportdienst t/m 3*80A op LS. Assumed as contract capacity costs for small consumers.
 
 	//Periodieke aansluitvergoeding (PAV). Kleinverbruik incl. meetdienst.
-	//NOTE: onbemeten aansluitingen worden niet apart gemodelleerd - alles telt als bemeten, net als bij Enexis.
 	Map<String, Double> periodicalPhyscialConnectionCapacityCostsTable_eurpyr = Map.ofEntries(
 			//Small
 			Map.entry("t/m 1 x 6 A (geschakeld)", 15.0015 + 30.6235),
@@ -181,40 +177,40 @@ public class J_GridOperatorTariffsLiander_2025 implements I_GridOperatorTariffs 
     	if(physicalCapacity_kW <=1.38) {
     		keyString = "t/m 1 x 6 A (geschakeld)";
     	}
-    	else if(physicalCapacity_kW <=2.3) {
+    	else if(physicalCapacity_kW <= 2.3) {
     		keyString = "t/m 1 x 10 A";
     	}
-    	else if(physicalCapacity_kW <=17.25) {
+    	else if(physicalCapacity_kW <= 17.25) {
     		keyString = "> 1 x 10 A t/m 3 x 25 A";
     	}
-    	else if(physicalCapacity_kW <=24.15) {
+    	else if(physicalCapacity_kW <= 24.15) {
     		keyString = "> 3 x 25 A t/m 3 x 35 A";
     	}
-    	else if(physicalCapacity_kW <=34.5) {
+    	else if(physicalCapacity_kW <= 34.5) {
     		keyString = "> 3 x 35 A t/m 3 x 50 A";
     	}
-    	else if(physicalCapacity_kW <=43.47) {
+    	else if(physicalCapacity_kW <= 43.47) {
     		keyString = "> 3 x 50 A t/m 3 x 63 A";
     	}
-    	else if(physicalCapacity_kW <=55.2) {
+    	else if(physicalCapacity_kW <= 55.2) {
     		keyString = "> 3 x 63 A t/m 3 x 80 A";
     	}
-    	else if(physicalCapacity_kW <=100) {	//kVA gelijkgesteld aan kW, zelfde aanname als bij Enexis.
+    	else if(physicalCapacity_kW <= 100) {	//kVA gelijkgesteld aan kW, zelfde aanname als bij Enexis.
     		keyString = "> 3 x 80 A t/m 100 kVA";
     	}
-    	else if(physicalCapacity_kW <=160) {
+    	else if(physicalCapacity_kW <= 160) {
     		keyString = "> 100 kVA t/m 160 kVA";
     	}
-    	else if(physicalCapacity_kW <=1000) {
+    	else if(physicalCapacity_kW <= 1000) {
     		keyString = "> 160 kVA t/m 1.000 kVA";
     	}
-    	else if(physicalCapacity_kW <=2000) {
+    	else if(physicalCapacity_kW <= 2000) {
     		keyString = "> 1.000 kVA t/m 2 MVA";
     	}
-    	else if(physicalCapacity_kW <=5000) {
+    	else if(physicalCapacity_kW <= 5000) {
     		keyString = "> 2 MVA t/m 5 MVA";
     	}
-    	else if(physicalCapacity_kW <=10000) {
+    	else if(physicalCapacity_kW <= 10000) {
     		keyString = "> 5 MVA t/m 10 MVA";
     	}
     	else{// if(physicalCapacity_kW >10000) {
@@ -239,20 +235,20 @@ public class J_GridOperatorTariffsLiander_2025 implements I_GridOperatorTariffs 
 		}
 		double physicalCapacity_kW = connectionMetaData.getPhysicalCapacity_kW();
 
-        if(contractCapacityUsedForCalculation_kW <=50) {
+        if(contractCapacityUsedForCalculation_kW <= 50) {
     		keyString = "LS (contract vermogen t/m 50 kW)";
     	}
-    	else if(contractCapacityUsedForCalculation_kW <=136) {
+    	else if(contractCapacityUsedForCalculation_kW <= 136) {
     		keyString = "Trafo MS/LS (contract vermogen meer dan 50 kW t/m 136 kW)";
     	}
-    	else if(contractCapacityUsedForCalculation_kW <=2000) {
+    	else if(contractCapacityUsedForCalculation_kW <= 2000) {
     		keyString = "MS (contract vermogen meer dan 136 kW t/m 2 MW)";
     	}
     	//Boven 2 MW splitst de ACM op fysieke aansluitwijze (1-25 kV / 25-50 kV / 110-150 kV). Benaderd met fysieke capaciteit:
-    	else if(physicalCapacity_kW <=10_000) {	// t/m 10 MVA is de bovenste PAV-staffel van Liander -> aangesloten via trafo op MS.
+    	else if(physicalCapacity_kW <= 10_000) {	// t/m 10 MVA is de bovenste PAV-staffel van Liander -> aangesloten via trafo op MS.
     		keyString = "Trafo HS+TS/MS > 2 MW";
     	}
-    	else if(physicalCapacity_kW <=100_000) {
+    	else if(physicalCapacity_kW <= 100_000) {
     		keyString = "TS > 2 MW";
     	}
     	else{// if(physicalCapacity_kW >100_000) {
