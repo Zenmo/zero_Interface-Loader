@@ -2,6 +2,7 @@
 <ActiveObjectClass>
 	<Id>1726584205735</Id>
 	<Name><![CDATA[Zero_Loader]]></Name>
+	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Import><![CDATA[import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -54,7 +55,10 @@ import energy.lux.uplux.*;
 //import java.util.UUID;
 import kotlin.uuid.Uuid;
 import org.eclipse.jetty.server.LowResourceMonitor.MaxConnectionsLowResourceCheck;
-import com.zenmo.zummon.companysurvey.PVOrientation;]]></Import>
+import com.zenmo.zummon.companysurvey.PVOrientation;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;]]></Import>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1726584205730</Id>
