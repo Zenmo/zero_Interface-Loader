@@ -614,6 +614,11 @@ f_setFilterComboBoxOptions();
 
 //Disable/Enable additional options buttons
 f_initializeAdditionalOptionsButtons();
+
+//Move holon fonts up for cloud
+if(java.awt.GraphicsEnvironment.isHeadless()){ // Check to see if cloud run or not.
+	f_shiftTextObjectsHolonFont();
+}
 /*ALCODEEND*/}
 
 GISRegion f_createGISObject(double[] gisTokens)
@@ -3986,6 +3991,90 @@ if(gis_area.c_containedGridConnections.size() > 0){
 	else if ( yearlyEnergyConsumption_MWh < 500){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption7.getFillColor(), null, null, null);}
 	else if ( yearlyEnergyConsumption_MWh > 500){ gis_area.f_style( rect_mapOverlayLegend_ElectricityConsumption8.getFillColor(), null, null, null);}
 
+}
+/*ALCODEEND*/}
+
+double f_shiftTextObjectsHolonFont()
+{/*ALCODESTART::1787921969723*/
+//The text objects of the embedded interface agents (the tabs, companies, batteries, hydrogen and energy hubs) live in populations that are
+//only filled at runtime, so they cannot be part of the default value of c_allTextObjects. They are gathered here instead, walking the
+//embedded agents of this interface. Agents of the external packages (results UI and engine) are skipped.
+class TextObjectCollector{
+
+	List<Object> c_visitedAgents = new ArrayList<Object>();
+
+	boolean f_isExternalPackageAgent( Object agent){
+
+		String className = agent.getClass().getName();
+
+		return className.startsWith("zero_engine.") || className.startsWith("digital_twin_results.") || className.startsWith("com.anylogic.");
+	}
+
+	boolean f_isVisitedAgent( Object agent){
+
+		for( Object visitedAgent : c_visitedAgents){
+			if( visitedAgent == agent){ return true;}
+		}
+		return false;
+	}
+
+	void f_collectTextObjects( Object agent){
+
+		if( agent == null || f_isExternalPackageAgent( agent) || f_isVisitedAgent( agent)){ return;}
+
+		c_visitedAgents.add( agent);
+
+		for( Class<?> agentClass = agent.getClass(); agentClass != null && !agentClass.getName().startsWith("com.anylogic."); agentClass = agentClass.getSuperclass()){
+
+			for( java.lang.reflect.Field field : agentClass.getDeclaredFields()){
+
+				Object fieldValue;
+
+				try{
+					field.setAccessible( true);
+					fieldValue = field.get( agent);
+				}
+				catch( Exception exception){ continue;}
+
+				if( fieldValue instanceof ShapeText){
+
+					ShapeText textObject = (ShapeText) fieldValue;
+
+					if( !c_allTextObjects.contains( textObject)){ c_allTextObjects.add( textObject);}
+				}
+				else if( fieldValue instanceof Agent){
+
+					f_collectTextObjects( fieldValue);
+				}
+				else if( fieldValue instanceof Iterable){
+
+					try{
+						for( Object element : (Iterable<?>) fieldValue){
+							if( element instanceof Agent){ f_collectTextObjects( element);}
+						}
+					}
+					catch( Exception exception){}
+				}
+			}
+		}
+	}
+}
+
+new TextObjectCollector().f_collectTextObjects( this);
+
+c_UIResultsInstances.forEach(ui -> c_allTextObjects.addAll(ui.c_allTextObjects));
+
+//Shift every text object that uses one of the Holon fonts
+for( ShapeText textObject : c_allTextObjects){
+
+	if( textObject == null){ continue;}
+
+	String fontName = textObject.getFont().getName().replace(" ", "").toLowerCase();
+
+	if( fontName.equals("holonblock") || fontName.equals("holonblock2") || fontName.equals("holonline") || fontName.equals("holonline2")){
+
+		textObject.setY( textObject.getY() - 3);
+	}
 }
 /*ALCODEEND*/}
 
