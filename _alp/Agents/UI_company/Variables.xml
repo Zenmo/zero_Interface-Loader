@@ -1417,7 +1417,33 @@
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
 				<Code><![CDATA[{
-    { // Monday (0)
+	{ // Sunday (7)
+        rect_configureVehicleTrips_sunday_0,
+        rect_configureVehicleTrips_sunday_1,
+        rect_configureVehicleTrips_sunday_2,
+        rect_configureVehicleTrips_sunday_3,
+        rect_configureVehicleTrips_sunday_4,
+        rect_configureVehicleTrips_sunday_5,
+        rect_configureVehicleTrips_sunday_6,
+        rect_configureVehicleTrips_sunday_7,
+        rect_configureVehicleTrips_sunday_8,
+        rect_configureVehicleTrips_sunday_9,
+        rect_configureVehicleTrips_sunday_10,
+        rect_configureVehicleTrips_sunday_11,
+        rect_configureVehicleTrips_sunday_12,
+        rect_configureVehicleTrips_sunday_13,
+        rect_configureVehicleTrips_sunday_14,
+        rect_configureVehicleTrips_sunday_15,
+        rect_configureVehicleTrips_sunday_16,
+        rect_configureVehicleTrips_sunday_17,
+        rect_configureVehicleTrips_sunday_18,
+        rect_configureVehicleTrips_sunday_19,
+        rect_configureVehicleTrips_sunday_20,
+        rect_configureVehicleTrips_sunday_21,
+        rect_configureVehicleTrips_sunday_22,
+        rect_configureVehicleTrips_sunday_23
+    },
+    { // Monday (1)
         rect_configureVehicleTrips_monday_0,
         rect_configureVehicleTrips_monday_1,
         rect_configureVehicleTrips_monday_2,
@@ -1443,7 +1469,7 @@
         rect_configureVehicleTrips_monday_22,
         rect_configureVehicleTrips_monday_23
     },
-    { // Tuesday (1)
+    { // Tuesday (2)
         rect_configureVehicleTrips_tuesday_0,
         rect_configureVehicleTrips_tuesday_1,
         rect_configureVehicleTrips_tuesday_2,
@@ -1469,7 +1495,7 @@
         rect_configureVehicleTrips_tuesday_22,
         rect_configureVehicleTrips_tuesday_23
     },
-    { // Wednesday (2)
+    { // Wednesday (3)
         rect_configureVehicleTrips_wednesday_0,
         rect_configureVehicleTrips_wednesday_1,
         rect_configureVehicleTrips_wednesday_2,
@@ -1495,7 +1521,7 @@
         rect_configureVehicleTrips_wednesday_22,
         rect_configureVehicleTrips_wednesday_23
     },
-    { // Thursday (3)
+    { // Thursday (4)
         rect_configureVehicleTrips_thursday_0,
         rect_configureVehicleTrips_thursday_1,
         rect_configureVehicleTrips_thursday_2,
@@ -1521,7 +1547,7 @@
         rect_configureVehicleTrips_thursday_22,
         rect_configureVehicleTrips_thursday_23
     },
-    { // Friday (4)
+    { // Friday (5)
         rect_configureVehicleTrips_friday_0,
         rect_configureVehicleTrips_friday_1,
         rect_configureVehicleTrips_friday_2,
@@ -1547,7 +1573,7 @@
         rect_configureVehicleTrips_friday_22,
         rect_configureVehicleTrips_friday_23
     },
-    { // Saturday (5)
+    { // Saturday (6)
         rect_configureVehicleTrips_saturday_0,
         rect_configureVehicleTrips_saturday_1,
         rect_configureVehicleTrips_saturday_2,
@@ -1573,32 +1599,6 @@
         rect_configureVehicleTrips_saturday_22,
         rect_configureVehicleTrips_saturday_23
     },
-    { // Sunday (6)
-        rect_configureVehicleTrips_sunday_0,
-        rect_configureVehicleTrips_sunday_1,
-        rect_configureVehicleTrips_sunday_2,
-        rect_configureVehicleTrips_sunday_3,
-        rect_configureVehicleTrips_sunday_4,
-        rect_configureVehicleTrips_sunday_5,
-        rect_configureVehicleTrips_sunday_6,
-        rect_configureVehicleTrips_sunday_7,
-        rect_configureVehicleTrips_sunday_8,
-        rect_configureVehicleTrips_sunday_9,
-        rect_configureVehicleTrips_sunday_10,
-        rect_configureVehicleTrips_sunday_11,
-        rect_configureVehicleTrips_sunday_12,
-        rect_configureVehicleTrips_sunday_13,
-        rect_configureVehicleTrips_sunday_14,
-        rect_configureVehicleTrips_sunday_15,
-        rect_configureVehicleTrips_sunday_16,
-        rect_configureVehicleTrips_sunday_17,
-        rect_configureVehicleTrips_sunday_18,
-        rect_configureVehicleTrips_sunday_19,
-        rect_configureVehicleTrips_sunday_20,
-        rect_configureVehicleTrips_sunday_21,
-        rect_configureVehicleTrips_sunday_22,
-        rect_configureVehicleTrips_sunday_23
-    }
 }]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
