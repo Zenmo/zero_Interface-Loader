@@ -5197,8 +5197,10 @@ if(pvtOrientation == null){
 switch (pvtOrientation){
 	case EASTWEST:
 		profilePointer = energyModel.pp_PVProduction15DegEastWest_fr;
+		break;
 	case SOUTH:
 		profilePointer = energyModel.pp_PVProduction35DegSouth_fr;
+		break;
 }
 
 return profilePointer;
