@@ -1295,14 +1295,6 @@ double f_setResultsUIPresets()
 //Set the order of the presentation objects
 f_setPresentationOrder();
 
-
-//Set the locations and visibilities of the ResultsUI agents
-//uI_Results.f_setChartProfiles_Presentation(0, 0, true);
-//uI_Results.f_setChartBalance_Presentation(530, 0, true);
-//uI_Results.f_setChartGridLoad_Presentation(1060, 0, false);
-//uI_Results.f_setChartSankey_Presentation(1060, 0, true);
-//uI_Results.f_setResultsUIHeader(null, null, false);
-
 ////TEMPORARY FUNCTION TO LET ALL CURRENT PROJECTS FUNCTION STILL!
 List<OL_ChartTypes> selectedChartTypes_Energy = new ArrayList<>();
 selectedChartTypes_Energy.add(OL_ChartTypes.PROFILES);
@@ -1312,9 +1304,9 @@ selectedChartTypes_Energy.add(OL_ChartTypes.SANKEY);
 
 List<OL_ChartTypes> selectedChartTypes_Economic = new ArrayList<>();
 selectedChartTypes_Economic.add(OL_ChartTypes.ENERGY_COSTS);
-selectedChartTypes_Economic.add(OL_ChartTypes.CONNECTION_COSTS);
-selectedChartTypes_Economic.add(OL_ChartTypes.CAPEX_AND_OPEX);
-selectedChartTypes_Economic.add(OL_ChartTypes.TOTAL_COSTS);
+//selectedChartTypes_Economic.add(OL_ChartTypes.CONNECTION_COSTS);
+//selectedChartTypes_Economic.add(OL_ChartTypes.CAPEX_AND_OPEX);
+//selectedChartTypes_Economic.add(OL_ChartTypes.TOTAL_COSTS);
 
 List<OL_ChartTypes> selectedCharts_Sustainability = new ArrayList<>();
 selectedCharts_Sustainability.add(OL_ChartTypes.CO2);
