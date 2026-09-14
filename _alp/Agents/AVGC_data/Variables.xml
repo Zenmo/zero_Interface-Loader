@@ -2453,6 +2453,7 @@ Voor nu gekozen voor 4185.
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
 				<Code><![CDATA[Map.of(
+2050, new Pair<>(2042.0, 7251.0), // DST 2050: 27 March 02:00, 30 October 03:00
 2023, new Pair<>(2018.0, 7247.0), 
 2024, new Pair<>(2162.0, 7203.0),
 2025, new Pair<>(2114.0, 7131.0)
@@ -3115,6 +3116,13 @@ OL_GridConnectionInsulationLabel.G, 4.0
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
 				<Code><![CDATA[Map.of(
+		2050, Map.of( // 2050 aliased to the 2025 values; replace with real projections when available.
+		       OL_EnergyCarriers.ELECTRICITY, 0.0850,
+		       OL_EnergyCarriers.HEAT, 0.1576,
+		       OL_EnergyCarriers.METHANE, 0.0407,
+		       OL_EnergyCarriers.PETROLEUM_FUEL, 0.1864,
+		       OL_EnergyCarriers.HYDROGEN, 0.066
+		),
 		2025, Map.of(
 		       OL_EnergyCarriers.ELECTRICITY, 0.0850,
 		       OL_EnergyCarriers.HEAT, 0.1576,
@@ -3308,6 +3316,7 @@ OL_GridConnectionInsulationLabel.G, 4.0
 			<DefaultValue Class="CodeValue">
 				<Code><![CDATA[Map.of(
       	OL_GridOperator.ENEXIS, Map.of(
+	       2050, J_GridOperatorTariffsEnexis_2025.class,
 	       //2026, J_GridOperatorTariffsEnexis_2026.class,
 	       2025, J_GridOperatorTariffsEnexis_2025.class,
 	       2024, J_GridOperatorTariffsEnexis_2025.class,
@@ -3352,6 +3361,12 @@ OL_GridConnectionInsulationLabel.G, 4.0
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
 				<Code><![CDATA[Map.of(
+		2050, Map.of( // 2050 aliased to the 2025 values; replace with real projections when available.
+	       OL_EnergyCarriers.HEAT, 0.0,
+	       OL_EnergyCarriers.PETROLEUM_FUEL, 0.04367,
+	       OL_EnergyCarriers.HYDROGEN, 0.0,
+	       OL_EnergyCarriers.IRON_POWDER, 0.0
+		),
       	2025, Map.of(
 	       OL_EnergyCarriers.HEAT, 0.0,
 	       OL_EnergyCarriers.PETROLEUM_FUEL, 0.04367,
@@ -3569,6 +3584,7 @@ Definition: In the Netherlands each year every GridConnection that is considered
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
 				<Code><![CDATA[Map.of(
+   2050, 524.95, // 2050 aliased to the 2025 values; replace with real projections when available.
    2026, 519.80,
    2025, 524.95,
    2024, 521.81,
@@ -3603,6 +3619,22 @@ Definition: In the Netherlands each year every GridConnection that is considered
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
 				<Code><![CDATA[Map.of(
+2050, Map.of( // 2050 aliased to the 2025 values; replace with real projections when available.
+    OL_EnergyCarriers.ELECTRICITY, Map.of(
+        OL_EnergyTaxesBracket.BRACKET_1, 0.10154,
+        OL_EnergyTaxesBracket.BRACKET_2, 0.10154,
+        OL_EnergyTaxesBracket.BRACKET_3, 0.06937,
+        OL_EnergyTaxesBracket.BRACKET_4, 0.03868,
+        OL_EnergyTaxesBracket.BRACKET_5, 0.00321
+    ),
+    OL_EnergyCarriers.METHANE, Map.of(
+        OL_EnergyTaxesBracket.BRACKET_1, 0.57816,
+        OL_EnergyTaxesBracket.BRACKET_2, 0.57816,
+        OL_EnergyTaxesBracket.BRACKET_3, 0.31573,
+        OL_EnergyTaxesBracket.BRACKET_4, 0.20347,
+        OL_EnergyTaxesBracket.BRACKET_5, 0.05385
+    )
+),
 2026, Map.of(
     OL_EnergyCarriers.ELECTRICITY, Map.of(
         OL_EnergyTaxesBracket.BRACKET_1, 0.09161,
