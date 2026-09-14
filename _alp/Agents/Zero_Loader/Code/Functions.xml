@@ -463,6 +463,10 @@
 			<Name><![CDATA[chargingAttitude]]></Name>
 			<Type><![CDATA[OL_ChargingAttitude]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[tripTracker]]></Name>
+			<Type><![CDATA[J_ActivityTrackerTrips]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="public" StaticFunction="false">

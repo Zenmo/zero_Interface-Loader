@@ -1290,7 +1290,7 @@ if (heatingType == null) {
 return heatingType;
 /*ALCODEEND*/}
 
-J_EAEV f_addElectricVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_type,boolean isDefaultVehicle,double annualTravelDistance_km,double maxChargingPower_kW,OL_ChargingAttitude chargingAttitude)
+J_EAEV f_addElectricVehicle(GridConnection parentGC,OL_EnergyAssetType vehicle_type,boolean isDefaultVehicle,double annualTravelDistance_km,double maxChargingPower_kW,OL_ChargingAttitude chargingAttitude,J_ActivityTrackerTrips tripTracker)
 {/*ALCODESTART::1726584205827*/
 double storageCapacity_kWh 		= 0;
 double energyConsumption_kWhpkm = 0;
@@ -1337,15 +1337,17 @@ if (!isDefaultVehicle && maxChargingPower_kW <= 0) {
 }
 
 //Create the EV vehicle energy asset with the set parameters + links
-J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timeParameters, energyConsumption_kWhpkm, vehicleScaling, vehicle_type, null);	
+J_EAEV electricVehicle = new J_EAEV(parentGC, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timeParameters, energyConsumption_kWhpkm, vehicleScaling, vehicle_type, tripTracker);	
 
-if (!isDefaultVehicle && annualTravelDistance_km > avgc_data.p_minAnnualTravelDistanceSurveyVehicle_km){
-		electricVehicle.getTripTracker().setAnnualDistance_km(annualTravelDistance_km);
+// the two setAnnualDistance_km calls wrapped, so handed-in trips keep their real distances
+if (tripTracker == null) {
+	if (!isDefaultVehicle && annualTravelDistance_km > avgc_data.p_minAnnualTravelDistanceSurveyVehicle_km){
+			electricVehicle.getTripTracker().setAnnualDistance_km(annualTravelDistance_km);
+	}
+	else if (vehicle_type == OL_EnergyAssetType.ELECTRIC_VAN){
+			electricVehicle.getTripTracker().setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
+	}
 }
-else if (vehicle_type == OL_EnergyAssetType.ELECTRIC_VAN){
-		electricVehicle.getTripTracker().setAnnualDistance_km(avgc_data.p_avgAnnualTravelDistanceVan_km);
-}
-
 if (parentGC.f_getChargingManagement() == null) {
 	parentGC.f_addChargingManagement(chargingAttitude);
 }
@@ -1747,7 +1749,7 @@ for (Chargingstation_data dataChargingStation : f_getChargingstationsInSubScope(
 	}
 	else{
 		for(int k = 0; k < numberOfSockets*avgc_data.p_defaultNrOfVehiclesPerChargerSocket; k++ ){
-			f_addElectricVehicle(chargingStation, dataChargingStation.vehicle_type(), true, 0, maxPowerPerSocket_kW, OL_ChargingAttitude.SIMPLE);
+			f_addElectricVehicle(chargingStation, dataChargingStation.vehicle_type(), true, 0, maxPowerPerSocket_kW, OL_ChargingAttitude.SIMPLE, null);
 		}
 	}
 	
@@ -2463,7 +2465,7 @@ if (nbDailyCarCommuters_notNull + nbDailyCarVisitors_notNull > 0){
 	
 	if (createElectricEA){ // Check if electric demand EA should be created
 		for (int j = 0; j< nbEVCarsComute; j++){
-			f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VEHICLE, isDefaultVehicle, 0, maxChargingPower_kW, OL_ChargingAttitude.SIMPLE);
+			f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VEHICLE, isDefaultVehicle, 0, maxChargingPower_kW, OL_ChargingAttitude.SIMPLE, null);
 		}
 	}
 	
@@ -2527,7 +2529,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		//create EV
 		if (createElectricEA){ // Check if electric demand EA should be created
 			for (int j = 0; j< nbEVCars; j++){
-				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VEHICLE, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW, OL_ChargingAttitude.SIMPLE);
+				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VEHICLE, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW, OL_ChargingAttitude.SIMPLE, null);
 			}
 		}
 		
@@ -2588,7 +2590,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		//create electric vehicles
 		if (createElectricEA){ // Check if electric demand EA should be created
 			for (int j = 0; j< nbEVVans; j++){
-				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VAN, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW, OL_ChargingAttitude.SIMPLE);
+				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_VAN, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW, OL_ChargingAttitude.SIMPLE, null);
 			}
 		}
 		
@@ -2649,7 +2651,7 @@ if (gridConnection.getTransport().getHasVehicles() != null && gridConnection.get
 		//create electric vehicles
 		if (createElectricEA){ // Check if electric demand EA should be created
 			for (int j = 0; j< nbEVTrucks; j++){
-				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_TRUCK, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW, OL_ChargingAttitude.SIMPLE);
+				f_addElectricVehicle(companyGC, OL_EnergyAssetType.ELECTRIC_TRUCK, isDefaultVehicle, annualTravelDistance_km, maxChargingPower_kW, OL_ChargingAttitude.SIMPLE, null);
 			}
 		}
 		
@@ -4479,7 +4481,7 @@ for(int i = 0; i < amountOfOwnedCars ; i++){
 	//Oprit? -> only then you should have a chance to start with EV (public ev is not supported by sliders, public chargepoint is then used instead)
 	if( house.p_eigenOprit){
 		if (randomTrue( avgc_data.p_shareOfElectricVehicleOwnership)){
-			J_EAEV ev = f_addElectricVehicle(house, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, 0, 0, OL_ChargingAttitude.SIMPLE);
+			J_EAEV ev = f_addElectricVehicle(house, OL_EnergyAssetType.ELECTRIC_VEHICLE, true, 0, 0, OL_ChargingAttitude.SIMPLE, null);
 			ev.getTripTracker().setAnnualDistance_km(ev.getTripTracker().getAnnualDistance_km()*tripTrackerScaling);
 			//Set Default charging management
 			//if(house.f_getCurrentChargingType() == OL_ChargingAttitude.NONE){
